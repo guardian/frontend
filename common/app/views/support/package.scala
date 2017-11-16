@@ -18,7 +18,7 @@ import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 import layout.slices.ContainerDefinition
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 /**
  * Encapsulates previous and next urls
@@ -84,7 +84,9 @@ object ContributorLinks {
 
 object `package` {
 
-  def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) { cleaners: _* }
+  def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) {
+    cleaners: _*
+  }
 
   def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(html)) { case (html, cleaner) => cleaner.clean(html) }
@@ -163,7 +165,7 @@ object StripHtmlTagsAndUnescapeEntities{
 
 object TableEmbedComplimentaryToP extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    document.getElementsByClass("element-table").foreach { element =>
+    document.getElementsByClass("element-table").asScala.foreach { element =>
       Option(element.nextElementSibling).map { nextSibling =>
         if (nextSibling.tagName == "p") element.addClass("element-table--complimentary")
       }

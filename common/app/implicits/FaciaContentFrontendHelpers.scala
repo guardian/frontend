@@ -5,10 +5,9 @@ import implicits.Dates._
 import model._
 import model.content.{MediaAssetPlatform, MediaAtom}
 import model.pressed._
-import org.joda.time.DateTime
+import org.joda.time.{DateTime, Period, PeriodType}
 import org.jsoup.Jsoup
-import org.scala_tools.time.Imports._
-
+import com.github.nscala_time.time.Implicits._
 import scala.util.Try
 
 object FaciaContentFrontendHelpers {

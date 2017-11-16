@@ -1,10 +1,9 @@
-@import views.html.fragments.form.checkboxField
 @import views.html.fragments.registrationFooter
-@import _root_.form.IdFormHelpers.{Checkbox, nonInputFields}
+@import _root_.form.IdFormHelpers.nonInputFields
 @import com.gu.identity.model.ConsentText
 @import com.gu.identity.model.ConsentText._
 @import conf.switches.Switches.IdentityGdprMarketingConsentSwitch
-@import model.{ApplicationContext, EmailNewsletters, IdentityPage}
+@import model.{EmailNewsletters, IdentityPage}
 @import services.EmailPrefsData
 
 @(idUrlBuilder: services.IdentityUrlBuilder,
@@ -15,26 +14,18 @@
   emailSubscriptions: List[String],
   availableLists: EmailNewsletters)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
-
-@v2ConsentCheckbox(consentField: Field) = {
-
-    @* hidden input fields *@
-    @helper.inputText(consentField("actor"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("consentIdentifier"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("consentIdentifierVersion"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("timestamp"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("privacyPolicy"), 'type -> "hidden")(nonInputFields, messages)
-
-    @checkboxField(
-        Checkbox(
-            consentField("hasConsented"),
-            '_label -> getConsentText(consentField)
-        )
+@consentCheckbox(consentField: Field) = {
+    @fragments.form.switchboardLabel(
+        title = getConsentText(consentField).toString(),
+        description = None,
+        behaviour = Some("consent"),
+        field = consentField("hasConsented"),
+        extraFields = Some(
+            List("actor","consentIdentifier","consentIdentifierVersion","timestamp","privacyPolicy").map(field =>
+                fragments.form.hidden(consentField(field))
+            )
+    )
     )(nonInputFields, messages)
-}
-
-@v2consentCheckboxes = {
-  @helper.repeat(privacyForm("consents"), min=1) { consentField => @v2ConsentCheckbox(consentField) }
 }
 
 @getConsentText(consentField: Field) = {
@@ -43,86 +34,58 @@
         consentField("consentIdentifierVersion").value.getOrElse("0").toInt)
 }
 
-@v1consentCheckboxes = {
-    @checkboxField(Checkbox(privacyForm("receiveGnmMarketing"), '_label -> currentConsents(FirstParty.name)))(nonInputFields, messages)
-    @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> currentConsents(ThirdParty.name)))(nonInputFields, messages)
-}
+@marketingConsentForm = {
+    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+        @views.html.helper.CSRF.formField
 
-@* MARKETING CONSENT *@
-<h1 class="identity-title">Marketing</h1>
-<form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
-    @views.html.helper.CSRF.formField
-
-    @* This displays both global and key-bound errors *@
-    @if(privacyForm.hasErrors) {
-        <div class="form__error">
-            Error processing the form. Your changes have not been saved:
-            <p>@privacyForm.errors.map(formError => (formError.key, formError.message)).mkString(", ")</p>
-        </div>
-    }
-
-    @* Marketing Consent *@
-    <fieldset class="fieldset">
-
-        <div class="fieldset__heading">
-            <h2 class="form__heading">Marketing</h2>
-        </div>
-
-        <div class="fieldset__fields">
-            <ul class="u-unstyled">
-                <li class="form-field">
-                    <label class="label">Would you like to receive information from the Guardian and their partners?</label>
-                    <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
-
-                    <div class="form-fields-group">
-
-                    @if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
-                        @v2consentCheckboxes
-                    } else {
-                        @v1consentCheckboxes
-                    }
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </fieldset>
-
-    @if(!IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
-        @* Profiling *@
-        <fieldset class="fieldset">
-            <div class="fieldset__heading">
-                <h2 class="form__heading">Profiling</h2>
+        @* This displays both global and key-bound errors *@
+        @if(privacyForm.hasErrors) {
+            <div class="form__error">
+                Error processing the form. Your changes have not been saved:
+                <p>@privacyForm.errors.map(formError => (formError.key, formError.message)).mkString(", ")</p>
             </div>
+        }
+
+        <div class="js-errorHolder manage-account__errors"></div>
+
+        <h2 class="manage-account-header">Would you like to receive information from the Guardian and their partners?</h2>
+        <p class="manage-account-headerNote">The Guardian and their partners would like to occasionally send you information about their products, services and events</p>
+        <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
+            <div class="manage-account__switchboard">
+                <ul>
+                @helper.repeat(privacyForm("consents"), min=1) { consentField =>
+                    <li>
+                        @consentCheckbox(consentField)
+                    </li>
+                }
+                </ul>
+            </div>
+        </div>
+
+        <fieldset class="fieldset fieldset--manage-account-rightsubmit js-manage-account__consentCheckboxesSubmit">
+            <div class="fieldset__heading"></div>
             <div class="fieldset__fields">
                 <ul class="u-unstyled">
-                    <li class="form-field">
-                        <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
-
-                        <div class="form-fields-group">
-                        @checkboxField(Checkbox(privacyForm("allowThirdPartyProfiling"), '_label -> "Allow matching with third party data"))(nonInputFields, messages)
-                        </div>
+                    <li>
+                        <button type="submit" class="manage-account__button" data-link-name="Save privacy preferences">Save changes</button>
                     </li>
                 </ul>
             </div>
+
         </fieldset>
-    }
+    </form>
+}
 
-    @* Submit button *@
-    <fieldset class="fieldset">
-        <div class="fieldset__heading"></div>
-        <div class="fieldset__fields">
-            <ul class="u-unstyled">
-                <li>
-                    <button type="submit" class="manage-account__button" data-link-name="Save privacy preferences">Save changes</button>
-                </li>
-            </ul>
-        </div>
-
-    </fieldset>
-</form>
+@* MARKETING CONSENT *@
+@if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
+    @marketingConsentForm
+} else {
+    @profile.marketingConsentFormV1(idUrlBuilder, idRequest, privacyForm)
+}
 
 @* NEWSLETTERS *@
+<hr class="manage-account-divider" />
+<h2 class="manage-account-header">Select which newsletters you would like to receive</h2>
 @profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
-
 
 @registrationFooter(idRequest, idUrlBuilder)

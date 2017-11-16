@@ -101,7 +101,7 @@ object NavLinks {
   val classical = NavLink("classical", "/music/classicalmusicandopera", "music/classicalmusicandopera")
 
   /* LIFE */
-  val lifestyle = NavLink("life", "/lifeandstyle", "lifeandstyle", longTitle = "lifestyle home", iconName = "home")
+  val lifestyle = NavLink("lifestyle", "/lifeandstyle", "lifeandstyle", longTitle = "lifestyle home", iconName = "home")
   val fashion = NavLink("fashion", "/fashion", "fashion")
   val fashionAu = NavLink("fashion", "/au/lifeandstyle/fashion", "au/lifeandstyle/fashion")
   val food = NavLink("food", "/lifeandstyle/food-and-drink", "lifeandstyle/food-and-drink")

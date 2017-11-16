@@ -1,8 +1,10 @@
 package tools
 
-import common.{Logging, AkkaAgent}
+import common.Logging
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
-import scala.collection.JavaConversions._
+import com.gu.Box
+
+import scala.collection.JavaConverters._
 
 case class LoadBalancer(id: String,
                         name: String,
@@ -33,7 +35,7 @@ object LoadBalancer extends Logging {
     )
 
 
-  private val agent =  AkkaAgent(loadBalancers)
+  private val agent =  Box(loadBalancers)
 
   def refresh() {
     log.info("starting refresh LoadBalancer ELB DNS names")
@@ -46,7 +48,7 @@ object LoadBalancer extends Logging {
       val elbs = client.describeLoadBalancers().getLoadBalancerDescriptions
       client.shutdown()
       val newLoadBalancers = loadBalancers.map{ lb =>
-        lb.copy(url = elbs.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
+        lb.copy(url = elbs.asScala.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
       }
       agent.send(newLoadBalancers)
     }

@@ -10,8 +10,8 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Content, ContentType}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
-import org.scala_tools.time.Imports
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports
+import com.github.nscala_time.time.Imports._
 import pa.FootballMatch
 import play.api.libs.json._
 import play.api.mvc._

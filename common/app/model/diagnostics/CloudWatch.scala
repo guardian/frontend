@@ -8,7 +8,7 @@ import conf.Configuration
 import conf.Configuration._
 import metrics.{FrontendMetric, FrontendStatisticSet}
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 trait CloudWatch extends Logging {
 
@@ -65,13 +65,14 @@ trait CloudWatch extends Logging {
       val request = new PutMetricDataRequest()
         .withNamespace(metricNamespace)
         .withMetricData {
-          for(metricStatistic <- metricsAsStatistics) yield {
+          val metricDatum = for(metricStatistic <- metricsAsStatistics) yield {
             new MetricDatum()
               .withStatisticValues(frontendMetricToStatisticSet(metricStatistic))
               .withUnit(metricStatistic.unit)
               .withMetricName(metricStatistic.name)
-              .withDimensions(dimensions)
+              .withDimensions(dimensions.asJava)
           }
+          metricDatum.asJava
         }
       CloudWatch.cloudwatch.foreach(_.putMetricDataAsync(request, AsyncHandlerForMetric(metricsAsStatistics)))
     }

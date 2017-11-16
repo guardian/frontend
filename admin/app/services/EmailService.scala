@@ -8,7 +8,7 @@ import com.amazonaws.services.simpleemail.model.{Destination => EmailDestination
 import common.{AkkaAsync, Logging}
 import conf.Configuration.aws.mandatoryCredentials
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.control.NonFatal
@@ -57,16 +57,16 @@ class EmailService(akkaAsync: AkkaAsync) extends Logging {
 
     val request = new SendEmailRequest()
       .withSource(from)
-      .withDestination(new EmailDestination().withToAddresses(to).withCcAddresses(cc))
+      .withDestination(new EmailDestination().withToAddresses(to.asJava).withCcAddresses(cc.asJava))
       .withMessage(message)
 
     val futureResponse = sendAsync(request)
 
-    futureResponse onSuccess {
-      case response => log.info(s"Sent message ID ${response.getMessageId}")
+    futureResponse.foreach {
+      response => log.info(s"Sent message ID ${response.getMessageId}")
     }
 
-    futureResponse onFailure {
+    futureResponse.failed.foreach {
       case NonFatal(e) => log.error(s"Email send failed: ${e.getMessage}")
     }
 

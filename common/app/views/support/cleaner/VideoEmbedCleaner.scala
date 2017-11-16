@@ -6,7 +6,7 @@ import model.{Article, DotcomContentType, ShareLinks, VideoElement}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{HtmlCleaner, Item640}
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 /*
  * maxEmbedHeight: 812px - full height on an iPhone X
@@ -16,7 +16,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
   def facebookVideoEmbedUrlFor(url: String): String = s"$facebookVideoEmbedUrl${URLEncoder.encode(url, "UTF-8")}"
 
   def addShareButtons(document: Document): Unit = {
-    document.getElementsByClass("element-video").foreach(element => {
+    document.getElementsByClass("element-video").asScala.foreach(element => {
       val webUrl = element.attr("data-canonical-url")
       val blockId = element.attr("data-media-id")
       val mediaPath = element.attr("data-video-poster")
@@ -32,7 +32,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
         element.addClass("fig--has-shares")
         element.addClass("fig--narrow-caption")
         // add extra margin if there is no caption to fit the share buttons
-        val figcaption = element.getElementsByTag("figcaption")
+        val figcaption = element.getElementsByTag("figcaption").asScala
         if (figcaption.length < 1) {
           element.addClass("fig--no-caption")
         }
@@ -45,12 +45,12 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
       addShareButtons(document)
     }
 
-    document.getElementsByClass("element-video").foreach { figure: Element =>
+    document.getElementsByClass("element-video").asScala.foreach { figure: Element =>
       val canonicalUrl = figure.attr("data-canonical-url")
       val figcaption = figure.getElementsByTag("figcaption")
 
       figure.attr("data-component", "video-inbody-embed")
-      figure.getElementsByClass("gu-video").foreach { element: Element =>
+      figure.getElementsByClass("gu-video").asScala.foreach { element: Element =>
         element
           .removeClass("gu-video")
           .addClass("js-gu-media--enhance gu-media gu-media--video")
@@ -61,7 +61,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
           element.attr("data-canonical-url", new URL(canonicalUrl).getPath.stripPrefix("/"))
         }
 
-        if (figcaption.nonEmpty) {
+        if (figcaption.asScala.nonEmpty) {
             val informationIcon = views.html.fragments.inlineSvg("information", "icon", List("centered-icon", "rounded-icon")).toString()
             figcaption.prepend(informationIcon)
         }
@@ -97,11 +97,11 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
   }
 
   override def clean(document: Document): Document = {
-    document.getElementsByClass("element-video").filter { element: Element =>
+    document.getElementsByClass("element-video").asScala.filter { element: Element =>
       element.getElementsByClass("gu-video").isEmpty
     }.foreach { element: Element =>
       val canonicalUrl = element.attr("data-canonical-url")
-      element.children().headOption.foreach { child =>
+      element.children().asScala.headOption.foreach { child =>
         // As Facebook have declared that you have to use their video JS plugin, which in turn pulls in their whole JS API
         // We've decided to use the canonical URL, and create the video element here rather that CAPI, as, if it changes
         // again, we can change it here and it will also fix things retrospectively.
@@ -121,7 +121,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
 
     cleanVideo(document)
 
-    document.getElementsByClass("element-witness--main").foreach { element: Element =>
+    document.getElementsByClass("element-witness--main").asScala.foreach { element: Element =>
       element.select("iframe").wrap("<div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div>")
     }
 

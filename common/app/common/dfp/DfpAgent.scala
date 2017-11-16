@@ -1,7 +1,6 @@
 package common.dfp
 
-import akka.agent.Agent
-import common._
+import com.gu.Box
 import conf.Configuration.commercial._
 import conf.Configuration.environment
 import play.api.libs.json.Json
@@ -18,11 +17,11 @@ object DfpAgent
 
   override protected val environmentIsProd: Boolean = environment.isProd
 
-  private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
-  private lazy val targetedHighMerchandisingLineItemsAgent = AkkaAgent[Seq[HighMerchandisingLineItem]](Seq.empty)
-  private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
-  private lazy val lineItemAgent = AkkaAgent[Map[AdSlot, Seq[GuLineItem]]](Map.empty)
-  private lazy val takeoverWithEmptyMPUsAgent = AkkaAgent[Seq[TakeoverWithEmptyMPUs]](Nil)
+  private lazy val inlineMerchandisingTagsAgent = Box[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
+  private lazy val targetedHighMerchandisingLineItemsAgent = Box[Seq[HighMerchandisingLineItem]](Seq.empty)
+  private lazy val pageskinnedAdUnitAgent = Box[Seq[PageSkinSponsorship]](Nil)
+  private lazy val lineItemAgent = Box[Map[AdSlot, Seq[GuLineItem]]](Map.empty)
+  private lazy val takeoverWithEmptyMPUsAgent = Box[Seq[TakeoverWithEmptyMPUs]](Nil)
 
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
   protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] = targetedHighMerchandisingLineItemsAgent get()
@@ -33,7 +32,7 @@ object DfpAgent
 
   private def stringFromS3(key: String): Option[String] = S3.get(key)(UTF8)
 
-  private def update[T](agent: Agent[Seq[T]])(freshData: => Seq[T]) {
+  private def update[T](agent: Box[Seq[T]])(freshData: => Seq[T]) {
     if (freshData.nonEmpty) {
       agent send freshData
     }

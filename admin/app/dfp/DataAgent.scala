@@ -1,6 +1,7 @@
 package dfp
 
-import common.{AkkaAgent, Logging}
+import com.gu.Box
+import common.Logging
 import tools.BlockingOperations
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -9,7 +10,7 @@ import scala.util.{Failure, Success, Try}
 trait DataAgent[K, V] extends Logging with implicits.Strings {
 
   private val initialCache: DataCache[K, V] = DataCache(Map.empty[K, V])
-  private lazy val cache = AkkaAgent(initialCache)
+  private lazy val cache = Box(initialCache)
 
   def blockingOperations: BlockingOperations
 

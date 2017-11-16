@@ -2,7 +2,7 @@ package test
 
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 @DoNotDiscover class MatchFeatureTest
   extends FeatureSpec
@@ -19,7 +19,7 @@ import scala.collection.JavaConversions._
       goTo("/football/match/3834132") { browser =>
         import browser._
 
-        val teamsAndScore = $("h2").texts.map(_.replaceAll("\n", " "))
+        val teamsAndScore = $("h2").texts.asScala.map(_.replaceAll("\n", " "))
         Then("I should see the home team score")
         teamsAndScore should contain("Stoke 1")
 
@@ -54,7 +54,7 @@ import scala.collection.JavaConversions._
         el(".team-list").text should include("Mame Diouf")
 
         And("I should see the away team lineup")
-        $(".team-list")(1).text should include("Gabriel Agbonlahor")
+        $(".team-list").asScala(1).text should include("Gabriel Agbonlahor")
       }
     }
   }

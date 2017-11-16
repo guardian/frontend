@@ -45,6 +45,7 @@ rules:
         - overflow-scrolling
         - osx-font-smoothing
         - grid-column-gap
+        - grid-row-gap
   no-trailing-zero: 1
   no-url-protocols: 0
 

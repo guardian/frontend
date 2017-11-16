@@ -29,7 +29,7 @@
         text-decoration: none;
     }
 
-    @include mq(desktop) {
+    @include mq(tablet) {
         font-size: 15px;
     }
 }

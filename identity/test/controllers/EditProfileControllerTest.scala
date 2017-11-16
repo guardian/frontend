@@ -144,7 +144,7 @@ import scala.concurrent.Future
         when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
           .thenReturn(Future.successful(Right(user.copy(consents = List(consent)))))
 
-        val result = controller.submitPrivacyForm().apply(fakeRequest)
+        val result = controller.saveConsentPreferences().apply(fakeRequest)
 
         status(result) should be(200)
 
@@ -446,7 +446,7 @@ import scala.concurrent.Future
         val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken).withFormUrlEncodedBody("htmlPreference" -> "Text")
         when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
 
-        val result = controller.saveEmailPreferences().apply(fakeRequestEmailPrefs)
+        val result = controller.saveEmailPreferencesAjax().apply(fakeRequestEmailPrefs)
         status(result) should be(200)
         contentAsString(result) should include ("updated")
 
@@ -458,7 +458,7 @@ import scala.concurrent.Future
         val errors = List(Error("Test message", "Test description", 500))
         when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(errors))
 
-        val result = controller.saveEmailPreferences().apply(fakeRequestEmailPrefs)
+        val result = controller.saveEmailPreferencesAjax().apply(fakeRequestEmailPrefs)
         status(result) should not be(200)
         contentAsString(result) should include ("There was an error saving your preferences")
 

@@ -146,7 +146,7 @@ class AllIndexController(
       }
     }
 
-    result.onFailure {
+    result.failed.foreach {
       case GuardianContentApiError(404, _, _) =>
         log.warn(s"Cannot fetch content for request '${request.uri}'")
       case e: Exception =>
@@ -167,7 +167,7 @@ class AllIndexController(
       item.results.getOrElse(Nil).headOption.flatMap(_.webPublicationDate).map(_.toJoda.withZone(DateTimeZone.UTC))
     }
 
-    result.onFailure {
+    result.failed.foreach {
       case GuardianContentApiError(404, _, _) =>
         log.warn(s"Cannot fetch content for request '${request.uri}'")
       case e: Exception =>

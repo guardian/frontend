@@ -58,9 +58,8 @@ class EditProfileController(
 
   def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
-  def submitPrivacyForm(): Action[AnyContent] = submitForm(EmailPrefsProfilePage)
 
-  def saveEmailPreferences: Action[AnyContent] =
+  def saveEmailPreferencesAjax: Action[AnyContent] =
     csrfCheck {
       authActionWithUser.async { implicit request =>
         newsletterService.savePreferences().map { form  =>
@@ -99,7 +98,7 @@ class EditProfileController(
           },
 
           privacyFormData => {
-            identityApiClient.saveUser(userDO.id, privacyFormData.toUserUpdateDTO(userDO), userDO.auth) map {
+            identityApiClient.saveUser(userDO.id, privacyFormData.toUserUpdateDTOAjax(userDO), userDO.auth) map {
               case Left(idapiErrors) =>
                 logger.error(s"Failed to process marketing consent form submission for user ${userDO.getId}: $idapiErrors")
                 InternalServerError(Json.toJson(idapiErrors))
@@ -111,6 +110,32 @@ class EditProfileController(
         ) // end bindFromRequest.fold(
       } // end authActionWithUser
     } // end csrfCheck
+
+  def saveConsentPreferences: Action[AnyContent] =
+    csrfCheck {
+      authActionWithUser.async { implicit request =>
+        val page = EmailPrefsProfilePage
+        val userDO = request.user
+        val boundProfileForms =
+          ProfileForms(userDO, activePage = page).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
+
+        boundProfileForms.activeForm.fold(
+          formWithErrors => profileFormsView(page, boundProfileForms, userDO),
+          privacyFormData => {
+              identityApiClient.saveUser(userDO.id, privacyFormData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
+                case Left(idapiErrors) =>
+                  logger.error(s"Failed to process marketing consent form submission for user ${userDO.getId}: $idapiErrors")
+                  profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
+
+                case Right(updatedUser) =>
+                  profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
+              }
+          } // end of success
+        ) // end fold
+      } // end authActionWithUser.async
+    } // end csrfCheck
+
+
 
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
@@ -146,7 +171,7 @@ class EditProfileController(
 
             case formData: UserFormData =>
               identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
-                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
+                case Left(idapiErrors) => profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
                 case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
               }
           } // end of success
@@ -197,12 +222,14 @@ case class ProfileForms(
     case PublicEditProfilePage => publicForm
     case AccountEditProfilePage => accountForm
     case EmailPrefsProfilePage => privacyForm
+    case page => throw new RuntimeException(s"Unexpected page $page")
   }
 
   private lazy val activeMapping = activePage match {
     case PublicEditProfilePage => profileFormsMapping.profileMapping
     case AccountEditProfilePage => profileFormsMapping.accountDetailsMapping
     case EmailPrefsProfilePage => profileFormsMapping.privacyMapping
+    case page => throw new RuntimeException(s"Unexpected page $page")
   }
 
   /** Fills all Edit Profile forms (Public, Account, Privacy) with the provided User value */
@@ -252,6 +279,7 @@ case class ProfileForms(
       case PublicEditProfilePage => copy(publicForm = changeFunc(publicForm).asInstanceOf[Form[ProfileFormData]])
       case AccountEditProfilePage => copy(accountForm = changeFunc(accountForm).asInstanceOf[Form[AccountFormData]])
       case EmailPrefsProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
+      case page => throw new RuntimeException(s"Unexpected page $page")
     }
   }
 }

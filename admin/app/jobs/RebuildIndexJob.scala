@@ -77,8 +77,8 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
 
   implicit class RichFuture[A](future: Future[A]) {
     def withErrorLogging: Future[A] = {
-      future onFailure {
-        case throwable: Throwable => log.error("Error rebuilding index", throwable)
+      future.failed.foreach {
+        throwable: Throwable => log.error("Error rebuilding index", throwable)
       }
 
       future

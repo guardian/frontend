@@ -27,7 +27,7 @@ class TrafficDriverController(
     val content: Future[Option[model.ContentType]] =
       capiAgent.contentByShortUrls(specificIds).map(_.headOption)
 
-    content onFailure {
+    content.failed.foreach {
       case NonFatal(e) => log.error(
         s"Looking up content by short URL failed: ${e.getMessage}"
       )

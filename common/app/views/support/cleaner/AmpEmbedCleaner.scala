@@ -6,14 +6,14 @@ import model.{Article, VideoAsset}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.collection.mutable
 
 case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
 
   def cleanAmpVideos(document: Document): Unit = {
-    document.getElementsByTag("video").foreach(video => {
+    document.getElementsByTag("video").asScala.foreach(video => {
       val posterSrc = video.attr("poster")
       val newPosterSrc = AmpSrcCleaner(posterSrc).toString
       val mediaId = video.attr("data-media-id")
@@ -83,8 +83,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
     def clean(document: Document): mutable.Buffer[Unit] = {
       for {
-        videoElement <- document.getElementsByClass("element-video")
-        iframeElement <- videoElement.getElementsByTag("iframe")
+        videoElement <- document.getElementsByClass("element-video").asScala
+        iframeElement <- videoElement.getElementsByTag("iframe").asScala
         ampExternalVideo <- getAmpExternalVideoByUrl(videoElement.attr("data-canonical-url"))
       } yield {
         val ampVideoElement = createElement(document, ampExternalVideo.elementType, ampExternalVideo.attributes)
@@ -139,8 +139,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
     def clean(document: Document): mutable.Buffer[Unit] = {
       for {
-        audioElement <- document.getElementsByClass("element-audio")
-        iframeElement <- audioElement.getElementsByTag("iframe")
+        audioElement <- document.getElementsByClass("element-audio").asScala
+        iframeElement <- audioElement.getElementsByTag("iframe").asScala
       } yield {
         val soundcloudElement = AmpSoundcloud.getSoundCloudElement(document, iframeElement)
         if (soundcloudElement.nonEmpty) {
@@ -164,8 +164,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
 
   def cleanAmpInstagram(document: Document): Unit = {
-    document.getElementsByClass("element-instagram").foreach { embed: Element =>
-      embed.getElementsByTag("a").map { element: Element =>
+    document.getElementsByClass("element-instagram").asScala.foreach { embed: Element =>
+      embed.getElementsByTag("a").asScala.map { element: Element =>
         val src = element.attr("href")
         val list = src.split("""instagram\.com/p/""")
         (if (list.length == 1) None else list.lastOption).flatMap(_.split("/").headOption).map { shortcode =>
@@ -188,11 +188,11 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   def canRenderInteractive(element: Element): Boolean = {
     element.attributes().get("data-interactive").contains("iframe-wrapper") &&
-    element.getElementsByTag("a").nonEmpty
+    element.getElementsByTag("a").asScala.nonEmpty
   }
 
   def cleanAmpInteractives(document: Document): Unit = {
-    document.getElementsByClass("element-interactive").foreach {
+    document.getElementsByClass("element-interactive").asScala.foreach {
       interactive: Element =>
         if (canRenderInteractive(interactive)) {
           val link = interactive.getElementsByTag("a")
@@ -236,8 +236,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
 
   def cleanAmpMaps(document: Document): Unit = {
-    document.getElementsByClass("element-map").foreach { embed: Element =>
-      embed.getElementsByTag("iframe").foreach { element: Element =>
+    document.getElementsByClass("element-map").asScala.foreach { embed: Element =>
+      embed.getElementsByTag("iframe").asScala.foreach { element: Element =>
         val src = element.attr("src")
         val frameBorder = element.attr("frameborder")
         val elementMap = document.createElement("amp-iframe")
@@ -267,8 +267,8 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
   def cleanAmpComments(document: Document): Unit = {
 
-    document.getElementsByClass("element-comment").foreach { figure: Element =>
-      figure.getElementsByTag("img").foreach { image: Element =>
+    document.getElementsByClass("element-comment").asScala.foreach { figure: Element =>
+      figure.getElementsByTag("img").asScala.foreach { image: Element =>
         val validImage = image.hasAttr("class") && image.attr("class").contains("d2-avatar") && image.hasAttr("src") && image.hasAttr("height") && image.hasAttr("width") && image.hasAttr("alt")
         if (validImage) {
           val ampImg = document.createElement("amp-img")
@@ -292,9 +292,9 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
 
   def cleanAmpEmbed(document: Document): Unit = {
-    document.getElementsByClass("element-embed")
-      .filter(_.getElementsByTag("iframe").nonEmpty)
-      .foreach(_.getElementsByTag("iframe").foreach {
+    document.getElementsByClass("element-embed").asScala
+      .filter(_.getElementsByTag("iframe").asScala.nonEmpty)
+      .foreach(_.getElementsByTag("iframe").asScala.foreach {
         //check for soundcloud embeds and remove any others
         iframeElement: Element =>
           val soundcloudElement = AmpSoundcloud.getSoundCloudElement(document, iframeElement)
