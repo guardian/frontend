@@ -10,17 +10,16 @@ import idapiclient.IdApiClient
 import model._
 import play.api.data.{Form, FormError}
 import play.api.i18n.{I18nSupport, MessagesProvider}
-import play.api.libs.json.{Json, Reads, Writes}
+import play.api.libs.json.{Json, Writes}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{EmailPrefsData, _}
 import utils.SafeLogging
-
 import scala.concurrent.Future
 
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
 object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
-object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Privacy")
+object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Emails")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
@@ -111,31 +110,7 @@ class EditProfileController(
       } // end authActionWithUser
     } // end csrfCheck
 
-  def saveConsentPreferences: Action[AnyContent] =
-    csrfCheck {
-      authActionWithUser.async { implicit request =>
-        val page = EmailPrefsProfilePage
-        val userDO = request.user
-        val boundProfileForms =
-          ProfileForms(userDO, activePage = page).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
-
-        boundProfileForms.activeForm.fold(
-          formWithErrors => profileFormsView(page, boundProfileForms, userDO),
-          privacyFormData => {
-              identityApiClient.saveUser(userDO.id, privacyFormData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
-                case Left(idapiErrors) =>
-                  logger.error(s"Failed to process marketing consent form submission for user ${userDO.getId}: $idapiErrors")
-                  profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
-
-                case Right(updatedUser) =>
-                  profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
-              }
-          } // end of success
-        ) // end fold
-      } // end authActionWithUser.async
-    } // end csrfCheck
-
-
+  def saveConsentPreferences: Action[AnyContent] = submitForm(EmailPrefsProfilePage)
 
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
@@ -171,7 +146,10 @@ class EditProfileController(
 
             case formData: UserFormData =>
               identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
-                case Left(idapiErrors) => profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
+                case Left(idapiErrors) =>
+                  logger.error(s"Failed to process ${page.id} form submission for user ${userDO.getId}: $idapiErrors")
+                  profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
+
                 case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
               }
           } // end of success
