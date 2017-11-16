@@ -313,6 +313,56 @@ describe('Component', () => {
         });
     });
 
+    describe('attachTo()', () => {
+        let elem;
+
+        beforeEach(() => {
+            if (document) {
+                document.body.innerHTML = `
+                    <div class="component">
+                        <div class="component__element"></div>
+                    </div>
+                `;
+            }
+
+            elem = document.querySelector('.component');
+
+            if (!elem) {
+                throw new Error('required element not found');
+            }
+        });
+
+        test('calls ready() callback', () => {
+            const component = createComponent({
+                ready: jest.fn(),
+            });
+
+            component.attachTo(elem);
+
+            expect(component.ready).toBeCalled();
+        });
+
+        test('calls prerender() callback', () => {
+            const component = createComponent({
+                prerender: jest.fn(),
+            });
+
+            component.attachTo(elem);
+
+            expect(component.prerender).toBeCalled();
+        });
+
+        test('calls checkAttached() callback', () => {
+            const component = createComponent({
+                checkAttached: jest.fn(),
+            });
+
+            component.attachTo(elem);
+
+            expect(component.checkAttached).toBeCalled();
+        });
+    });
+
     describe('destroy()', () => {
         test('calls detach()', () => {
             const component = createComponent({
