@@ -59,10 +59,10 @@
     }
 
     .new-header--slim.new-header--open & {
-        margin-right: ($gs-gutter / 2) + ($veggie-burger-medium / 2);
+        margin-right: ($gs-gutter / 2) + ($veggie-burger-large / 2);
 
         @include mq(mobileLandscape) {
-            margin-right: $gs-gutter + ($veggie-burger-medium / 2);
+            margin-right: $gs-gutter + ($veggie-burger-large / 2);
         }
     }
 

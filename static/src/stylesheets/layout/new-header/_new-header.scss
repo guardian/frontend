@@ -83,10 +83,20 @@ from scrolling */
         bottom: -$gs-baseline / 2;
         position: absolute;
         right: $gutter-small;
+
+        .new-header--slim & {
+            right: $gs-gutter / 2;
+            margin-bottom: -$gs-baseline;
+            top: -$gs-baseline / 2;
+        }
     }
 
     @include mq(mobileLandscape) {
-        right: $gutter-medium;;
+        right: $gutter-medium;
+
+        .new-header--slim & {
+            right: $gs-gutter;
+        }
     }
 
     @include mq($from: tablet, $until: desktop) {

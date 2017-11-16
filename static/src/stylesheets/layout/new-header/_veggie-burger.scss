@@ -31,14 +31,7 @@
 
     .new-header--slim & {
         height: $veggie-burger-large;
-        margin-bottom: -$gs-baseline;
-        right: $gs-gutter / 2;
-        top: -$gs-baseline / 2;
         width: $veggie-burger-large;
-
-        @include mq(mobileLandscape) {
-            right: $gs-gutter;
-        }
     }
 }
 
