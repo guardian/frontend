@@ -20,6 +20,9 @@ ui/src/__flow__/types.js
 ui/src/__flow__/preact.js
 ui/src/__flow__/emotion.js
 
+####### ATOM LIBRARY #######
+node_modules/@guardian/atom-renderer/dist/__flow__/types
+
 [options]
 emoji=true
 

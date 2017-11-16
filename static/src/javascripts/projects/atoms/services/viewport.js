@@ -10,7 +10,7 @@ const cache: Map<number, ObserverRecord> = new Map();
 const observe = (
     element: Element,
     threshold: number,
-    callback: () => void
+    callback: number => void
 ): void => {
     let record = cache.get(threshold);
     if (!record) {
@@ -42,7 +42,12 @@ const observe = (
     record.observer.observe(element);
 };
 
-const unobserve = (element: Element, threshold: number): void => {
+const unobserve = (
+    element: Element,
+    threshold: number,
+    // eslint-disable-next-line no-unused-vars
+    callback: number => void
+): void => {
     const record = cache.get(threshold);
     if (!record) return;
 

@@ -3,7 +3,7 @@
 import config from 'lib/config';
 import { services } from 'projects/atoms/services';
 
-const bootstrapAtom = (atomMaker: AtomMaker, atomType: AtomType) => {
+const bootstrapAtom = <A>(atomMaker: AtomMaker<A>, atomType: AtomType) => {
     const atomBuilder = atomMaker[atomType].default(services);
     [
         ...document.querySelectorAll(`[data-atom-type='${atomType}']`),

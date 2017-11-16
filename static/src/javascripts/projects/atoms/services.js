@@ -1,6 +1,6 @@
 // @flow
 import ophan from 'ophan/ng';
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 import { viewport } from './services/viewport';
 
 // Need to pass in the API to native services, something that looks
@@ -14,12 +14,8 @@ import { viewport } from './services/viewport';
 const services: Services = {
     ophan,
     dom: {
-        write: (f: () => void) => {
-            fastdom.write(f);
-        },
-        read: (f: () => void) => {
-            fastdom.read(f);
-        },
+        write: (f: () => void) => fastdom.write(f),
+        read: <A>(f: () => A) => fastdom.read(f),
     },
     viewport,
 };
