@@ -45,14 +45,13 @@ const observe = (
 const unobserve = (
     element: Element,
     threshold: number,
-    // eslint-disable-next-line no-unused-vars
     callback: number => void
 ): void => {
     const record = cache.get(threshold);
     if (!record) return;
 
     const buddyIdx = record.registry.findIndex(
-        ({ element: e }) => e === element
+        ({ element: e, callback: c }) => e === element && c === callback
     );
     if (buddyIdx === -1) return;
 
