@@ -9,6 +9,7 @@ import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
 import html.HtmlPageHelpers.{ContentCSSFile,FaciaCSSFile,RichLinksCSSFile}
+import play.api.mvc.RequestHeader
 
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
@@ -56,7 +57,7 @@ object css {
 
   private val memoizedCss: ConcurrentMap[String, Try[String]] = TrieMap()
 
-  def head(projectOverride: Option[String])(implicit context: ApplicationContext): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
+  def head(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
   def inlineStoryPackage(implicit context: ApplicationContext): String = inline("story-package")
   def inlinePhotoEssay(implicit context: ApplicationContext): String = inline("article-photo-essay")
   def amp(implicit context: ApplicationContext): String = inline("head.amp")
@@ -67,7 +68,7 @@ object css {
   def interactive(implicit context: ApplicationContext): String = inline("head.interactive")
   def inlineAtom(atomType: String)(implicit content: ApplicationContext): String = inline(s"head.atom-$atomType")
 
-  def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext): String = project(projectOverride.getOrElse(context.applicationIdentity.name))
+  def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = project(projectOverride.getOrElse(context.applicationIdentity.name))
   def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext): String = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))
   def headIE9(projectOverride: Option[String])(implicit context: ApplicationContext): String = cssIE9(projectOverride.getOrElse(context.applicationIdentity.name))
 
@@ -81,14 +82,14 @@ object css {
     })
   }
 
-  private def project(project: String): String = {
+  private def project(project: String)(implicit request: RequestHeader): String = {
     project match {
       case "facia" => "stylesheets/facia.css"
       case _ => s"stylesheets/$ContentCSSFile.css"
     }
   }
 
-  private def cssHead(project: String): String =
+  private def cssHead(project: String)(implicit request: RequestHeader): String =
     project match {
       case "footballSnaps" => "head.footballSnaps"
       case "facia" => s"head.$FaciaCSSFile"

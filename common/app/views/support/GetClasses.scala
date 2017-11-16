@@ -39,7 +39,7 @@ object GetClasses {
     )
   }
 
-  def forSubLink(sublink: Sublink): String = RenderClasses(Map(
+  def forSubLink(sublink: Sublink)(implicit request: RequestHeader): String = RenderClasses(Map(
     ("fc-sublink", true),
     (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", !mvt.Garnet.isParticipating),
     (sublinkMediaTypeClass(sublink).getOrElse(""), true),
