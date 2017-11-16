@@ -1,0 +1,28 @@
+export const unrulyPerformanceTest: ABTest = {
+    id: 'UnrulyPerformanceTest',
+    start: '2017-11-10',
+    expiry: '2018-02-28',
+    author: 'Francis Carr',
+    description:
+        'This test removes 5% of users from Unruly to measure performance impact',
+    audience: 0.10,
+    audienceOffset: 0,
+    successMeasure:
+        'No negative impact on attention time',
+    audienceCriteria: 'All web traffic.',
+    dataLinkNames: '',
+    idealOutcome:
+        'We are informed on the impact of Unruly videos to users',
+    canRun: () => true,
+    variants: [
+        {
+            id: 'serve-unruly',
+            test: () => {
+            }
+        },
+        {
+            id: 'control',
+            test: () => {}
+        },
+    ],
+};
