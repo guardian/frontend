@@ -135,7 +135,32 @@ describe('Component - fetch()', () => {
     });
 });
 
-describe('Component - setOptions', () => {
+describe('Component - getClass()', () => {
+    test('should return proper class name with BEM', () => {
+        const component = createComponent({
+            componentClass: 'component',
+            useBem: true,
+        });
+
+        expect(component.getClass('element')).toBe('.component__element');
+        expect(component.getClass('element', true)).toBe('component__element');
+    });
+
+    test('should return proper class name without BEM', () => {
+        const component = createComponent({
+            classes: {
+                element: 'my-element-class',
+            },
+        });
+
+        expect(component.getClass('element')).toBe('.my-element-class');
+        expect(component.getClass('element', true)).toBe('my-element-class');
+        expect(component.getClass('element-2')).not.toBe(undefined);
+        expect(component.getClass('element-2', true)).not.toBe('.');
+    });
+});
+
+describe('Component - setOptions()', () => {
     test('extends options', () => {
         const component = createComponent();
 
@@ -187,7 +212,7 @@ describe('Component - setOptions', () => {
     });
 });
 
-describe('Component - destroy', () => {
+describe('Component - destroy()', () => {
     test('calls detach()', () => {
         const component = createComponent({
             detach: jest.fn(),
