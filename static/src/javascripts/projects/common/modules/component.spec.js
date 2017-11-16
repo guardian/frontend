@@ -52,7 +52,9 @@ describe('Component', () => {
 
             return component.fetch().then(() => {
                 if (!component.elem) {
-                    return Promise.reject(new Error('.elem property should exist'));
+                    return Promise.reject(
+                        new Error('.elem property should exist')
+                    );
                 }
 
                 if (component.elem) {
@@ -74,7 +76,9 @@ describe('Component', () => {
 
             return component.fetch(undefined, 'other').then(() => {
                 if (!component.elem) {
-                    return Promise.reject(new Error('.elem property should exist'));
+                    return Promise.reject(
+                        new Error('.elem property should exist')
+                    );
                 }
 
                 expect(component.fetched).toHaveBeenCalledWith(mockResponse);
@@ -144,7 +148,9 @@ describe('Component', () => {
             });
 
             expect(component.getClass('element')).toBe('.component__element');
-            expect(component.getClass('element', true)).toBe('component__element');
+            expect(component.getClass('element', true)).toBe(
+                'component__element'
+            );
         });
 
         test('should return proper class name without BEM', () => {
@@ -155,7 +161,9 @@ describe('Component', () => {
             });
 
             expect(component.getClass('element')).toBe('.my-element-class');
-            expect(component.getClass('element', true)).toBe('my-element-class');
+            expect(component.getClass('element', true)).toBe(
+                'my-element-class'
+            );
             expect(component.getClass('element-2')).not.toBe(undefined);
             expect(component.getClass('element-2', true)).not.toBe('.');
         });
@@ -249,9 +257,9 @@ describe('Component', () => {
 
         test('setState() should add class name to elem (with elementName)', () => {
             component.setState('state', 'element');
-            expect(subElem.classList.contains('component__element--state')).toBe(
-                true
-            );
+            expect(
+                subElem.classList.contains('component__element--state')
+            ).toBe(true);
         });
 
         test('removeState() should remove class name to elem (without elementName)', () => {
@@ -265,9 +273,9 @@ describe('Component', () => {
         test('removeState() should remove class name to elem (with elementName)', () => {
             component.setState('state', 'element');
             component.removeState('state', 'element');
-            expect(subElem.classList.contains('component__element--state')).toBe(
-                false
-            );
+            expect(
+                subElem.classList.contains('component__element--state')
+            ).toBe(false);
         });
 
         test('toggleState() should toggle class name to elem (without elementName)', () => {
@@ -283,13 +291,13 @@ describe('Component', () => {
 
         test('toggleState() should toggle class name to elem (with elementName)', () => {
             component.toggleState('state', 'element');
-            expect(subElem.classList.contains('component__element--state')).toBe(
-                true
-            );
+            expect(
+                subElem.classList.contains('component__element--state')
+            ).toBe(true);
             component.toggleState('state', 'element');
-            expect(subElem.classList.contains('component__element--state')).toBe(
-                false
-            );
+            expect(
+                subElem.classList.contains('component__element--state')
+            ).toBe(false);
         });
 
         test('hasState() should return the proper state (without elementName)', () => {
