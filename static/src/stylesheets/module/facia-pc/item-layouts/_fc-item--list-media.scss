@@ -95,16 +95,6 @@ Media list item. Looks a bit like this:
             margin-left: 0 - $image-width;
             padding-bottom: $gs-baseline * .25;
 
-            a {
-                padding-left: $fc-item-gutter;
-            }
-
-            .fc-sublink {
-                .fc-sublink__title:before {
-                    left: $fc-item-gutter;
-                }
-            }
-
             .fc-sublink:first-child {
                 margin-top: 0;
 
