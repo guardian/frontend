@@ -17,6 +17,7 @@
 @consentCheckbox(consentField: Field) = {
     @fragments.form.switchboardLabel(
         title = getConsentText(consentField).toString(),
+        subheading = None,
         description = None,
         behaviour = Some("consent"),
         field = consentField("hasConsented"),

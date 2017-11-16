@@ -17,11 +17,12 @@
 }
 
 @consentCheckboxes = {
-    <div class="manage-account__switchboard">
+    <div class="manage-account__switchboard manage-account__switchboard--narrow">
         <ul>
             <li>
                 @switchboardLabel(
                     title = currentConsents(FirstParty.name),
+                    subheading = None,
                     description = None,
                     behaviour = Some("consent"),
                     field = privacyForm("receiveGnmMarketing")
@@ -30,6 +31,7 @@
             <li>
                 @switchboardLabel(
                     title = currentConsents(ThirdParty.name),
+                    subheading = None,
                     description = None,
                     behaviour = Some("consent"),
                     field = privacyForm("receive3rdPartyMarketing")
@@ -92,6 +94,7 @@
                             <li>
                             @fragments.form.switchboardLabel(
                                 title = "Allow matching with third party data",
+                                subheading = None,
                                 description = None,
                                 behaviour = Some("consent"),
                                 field = privacyForm("allowThirdPartyProfiling")

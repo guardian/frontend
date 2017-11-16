@@ -2,6 +2,7 @@
 
 @(
     title: String,
+    subheading: Option[String],
     description: Option[String],
     behaviour: Option[String],
     field: Field,
@@ -21,9 +22,12 @@
     <div class="account__switchboardLabelContent">
         @fragments.form.checkbox(field, Checkbox(field).args:_*)
         <div class="manage-account__switchboardCheckbox"></div>
-        <p class="manage-account__switchboardTitle">
+        <h3 class="manage-account__switchboardTitle">
             @title
-        </p>
+            @if(subheading.isDefined){
+                <strong>@subheading</strong>
+            }
+        </h3>
         @if(description) {
             <p class="manage-account__switchboardCopy">
                 @description
