@@ -1,4 +1,5 @@
 @import views.html.fragments.form.checkboxField
+@import views.html.fragments.form.switchboardLabel
 @import views.html.fragments.registrationFooter
 @import _root_.form.IdFormHelpers.{Checkbox, nonInputFields}
 @import com.gu.identity.model.ConsentText
@@ -18,19 +19,19 @@
 
 @v2ConsentCheckbox(consentField: Field) = {
 
-    @* hidden input fields *@
-    @helper.inputText(consentField("actor"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("consentIdentifier"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("consentIdentifierVersion"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("timestamp"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("privacyPolicy"), 'type -> "hidden")(nonInputFields, messages)
-
-    @checkboxField(
-        Checkbox(
-            consentField("hasConsented"),
-            '_label -> getConsentText(consentField)
-        )
+    @fragments.form.switchboardLabel(
+        title = getConsentText(consentField).toString(),
+        description = None,
+        behaviour = Some("consent"),
+        field = consentField("hasConsented"),
+        extraFields = Some(
+            List("actor","consentIdentifier","consentIdentifierVersion","timestamp","privacyPolicy").map(field =>
+                fragments.form.hidden(consentField(field))
+            )
+    )
     )(nonInputFields, messages)
+
+
 }
 
 @v2consentCheckboxes = {
@@ -44,13 +45,30 @@
 }
 
 @v1consentCheckboxes = {
-    @checkboxField(Checkbox(privacyForm("receiveGnmMarketing"), '_label -> currentConsents(FirstParty.name)))(nonInputFields, messages)
-    @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> currentConsents(ThirdParty.name)))(nonInputFields, messages)
+    <div class="manage-account__switchboard">
+        <ul>
+            <li>
+                @fragments.form.switchboardLabel(
+                    title = currentConsents(FirstParty.name),
+                    description = None,
+                    behaviour = Some("consent"),
+                    field = privacyForm("receiveGnmMarketing")
+                )(nonInputFields, messages)
+            </li>
+            <li>
+                @fragments.form.switchboardLabel(
+                    title = currentConsents(ThirdParty.name),
+                    description = None,
+                    behaviour = Some("consent"),
+                    field = privacyForm("receive3rdPartyMarketing")
+                )(nonInputFields, messages)
+            </li>
+        </ul>
+    </div>
 }
 
 @* MARKETING CONSENT *@
-<h1 class="identity-title">Marketing</h1>
-<form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
 
     @* This displays both global and key-bound errors *@
@@ -61,8 +79,42 @@
         </div>
     }
 
-    @* Marketing Consent *@
-    <fieldset class="fieldset">
+        <div class="js-errorHolder manage-account__errors"></div>
+
+    @if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
+        <h2 class="manage-account-header">Would you like to receive information from the Guardian and their partners?</h2>
+        <p class="manage-account-headerNote">The Guardian and their partners would like to occasionally send you information about their products, services and events</p>
+        <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
+            <div class="manage-account__switchboard">
+                <ul>
+                    @helper.repeat(privacyForm("consents"), min=1) { consentField =>
+                        <li>
+                            @v2ConsentCheckbox(consentField)
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <fieldset class="fieldset fieldset--manage-account-rightsubmit js-manage-account__consentCheckboxesSubmit">
+            <div class="fieldset__heading"></div>
+            <div class="fieldset__fields">
+                <ul class="u-unstyled">
+                    <li>
+                        <button type="submit" class="manage-account__button" data-link-name="Save privacy preferences">Save changes</button>
+                    </li>
+                </ul>
+            </div>
+
+        </fieldset>
+    }
+
+    @if(!IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
+        @* Marketing Consent *@
+        <div class="manage-account-headerWrapper">
+            <h2 class="manage-account-header">Marketing preferences</h2>
+        </div>
+        <fieldset class="fieldset">
 
         <div class="fieldset__heading">
             <h2 class="form__heading">Marketing</h2>
@@ -75,19 +127,12 @@
                     <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
 
                     <div class="form-fields-group">
-
-                    @if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
-                        @v2consentCheckboxes
-                    } else {
                         @v1consentCheckboxes
-                    }
                     </div>
                 </li>
             </ul>
         </div>
     </fieldset>
-
-    @if(!IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
         @* Profiling *@
         <fieldset class="fieldset">
             <div class="fieldset__heading">
@@ -98,30 +143,43 @@
                     <li class="form-field">
                         <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
 
-                        <div class="form-fields-group">
-                        @checkboxField(Checkbox(privacyForm("allowThirdPartyProfiling"), '_label -> "Allow matching with third party data"))(nonInputFields, messages)
+                        <div class="manage-account__switchboard manage-account__switchboard--narrow">
+                            <ul>
+                                <li>
+                                @fragments.form.switchboardLabel(
+                                    title = "Allow matching with third party data",
+                                    description = None,
+                                    behaviour = Some("consent"),
+                                    field = privacyForm("allowThirdPartyProfiling")
+                                )(nonInputFields, messages)
+                                </li>
+                            </ul>
                         </div>
+
                     </li>
                 </ul>
             </div>
         </fieldset>
+        @* Submit button *@
+        <fieldset class="fieldset js-manage-account__consentCheckboxesSubmit">
+            <div class="fieldset__heading"></div>
+            <div class="fieldset__fields">
+                <ul class="u-unstyled">
+                    <li>
+                        <button type="submit" class="manage-account__button" data-link-name="Save privacy preferences">Save changes</button>
+                    </li>
+                </ul>
+            </div>
+
+        </fieldset>
     }
-
-    @* Submit button *@
-    <fieldset class="fieldset">
-        <div class="fieldset__heading"></div>
-        <div class="fieldset__fields">
-            <ul class="u-unstyled">
-                <li>
-                    <button type="submit" class="manage-account__button" data-link-name="Save privacy preferences">Save changes</button>
-                </li>
-            </ul>
-        </div>
-
-    </fieldset>
-</form>
+    </form>
 
 @* NEWSLETTERS *@
+
+    <hr class="manage-account-divider" />
+    <h2 class="manage-account-header">Select which newsletters you would like to receive</h2>
+
 @profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
 
 

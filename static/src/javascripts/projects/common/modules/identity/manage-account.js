@@ -5,8 +5,10 @@
 
 import bean from 'bean';
 import reqwest from 'reqwest';
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
+import { push as pushError } from './modules/show-errors';
+import { addSpinner, removeSpinner } from './modules/switchboardLabel';
 
 const addUpdatingState = buttonEl => {
     fastdom.write(() => {
@@ -171,22 +173,108 @@ const unsubscribeFromAll = buttonEl => {
 const toggleFormatFieldset = buttonEl => {
     bean.on(buttonEl, 'click', () => {
         fastdom.write(() => {
-            $('.email-subscriptions__modal--newsletterFormat')[0].classList.add(
-                'email-subscriptions__modal--active'
+            $('.manage-account__modal--newsletterFormat')[0].classList.add(
+                'manage-account__modal--active'
             );
         });
     });
 };
 
-const bindModalCloser = buttonEl => {
+const bindModalCloser = (buttonEl: HTMLElement): void => {
     bean.on(buttonEl, 'click', () => {
-        buttonEl
-            .closest('.email-subscriptions__modal')
-            .classList.remove('email-subscriptions__modal--active');
+        const modalEl: ?Element = buttonEl.closest('.manage-account__modal');
+        if (modalEl) {
+            modalEl.classList.remove('manage-account__modal--active');
+        }
     });
 };
 
-const enhanceEmailPreferences = () => {
+const buildFormDataForFields = (
+    csrfToken: string,
+    fields: NodeList<any> = new NodeList()
+): FormData => {
+    const formData: FormData = new FormData();
+    formData.append('csrfToken', csrfToken);
+    fields.forEach((field: HTMLInputElement) => {
+        switch (field.type) {
+            case 'checkbox':
+                formData.append(field.name, field.checked.toString());
+                break;
+            default:
+                formData.append(field.name, field.value.toString());
+                break;
+        }
+    });
+
+    return formData;
+};
+
+const getCsrfTokenFromElement = (originalEl: HTMLElement): Promise<any> =>
+    fastdom
+        .read(() => {
+            const closestFormEl: ?Element = originalEl.closest('form');
+            if (closestFormEl) {
+                return closestFormEl.querySelector('*[name=csrfToken]');
+            }
+
+            return Promise.reject();
+        })
+        .then((csrfTokenEl: HTMLInputElement) => csrfTokenEl.value.toString());
+
+const submitPartialFormStatus = (formData: FormData): Promise<void> =>
+    reqwest({
+        url: '/privacy/edit-ajax',
+        method: 'POST',
+        data: formData,
+        processData: false,
+    });
+
+const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
+    const getInputFields: Promise<NodeList<HTMLElement>> = fastdom.read(() =>
+        labelEl.querySelectorAll('*[name][value]')
+    );
+
+    bean.on(
+        labelEl,
+        'change',
+        (ev: Event, isNotUserInitiated: boolean = false) => {
+            if (isNotUserInitiated) {
+                return;
+            }
+
+            Promise.all([getInputFields, addSpinner(labelEl)])
+                .then(([inputFields: NodeList<HTMLElement>]) =>
+                    getCsrfTokenFromElement(labelEl).then((csrfToken: string) =>
+                        Promise.resolve([csrfToken, inputFields])
+                    )
+                )
+                .then(
+                    ([csrfToken: string, inputFields: NodeList<HTMLElement>]) =>
+                        buildFormDataForFields(
+                            csrfToken.toString(),
+                            inputFields
+                        )
+                )
+                .then((formData: FormData) => submitPartialFormStatus(formData))
+                .catch((err: Error) => {
+                    fastdom
+                        .read((): ?HTMLElement =>
+                            labelEl.querySelector('input')
+                        )
+                        .then((checkboxEl: HTMLInputElement) => {
+                            fastdom.write(() => {
+                                checkboxEl.checked = !checkboxEl.checked;
+                                pushError(err, 'reload');
+                            });
+                        });
+                })
+                .then(() => removeSpinner(labelEl));
+        },
+        false
+    );
+};
+
+const enhanceManageAccount = (): void => {
     $.forEachElement('.js-subscription-button', reqwestEmailSubscriptionUpdate);
     $.forEachElement('.js-save-button', reqwestEmailSubscriptionUpdate);
     $.forEachElement('.js-unsubscribe', unsubscribeFromAll);
@@ -194,8 +282,15 @@ const enhanceEmailPreferences = () => {
         '.js-email-subscription__formatFieldsetToggle',
         toggleFormatFieldset
     );
-    $.forEachElement('.js-email-subscriptions__modalCloser', bindModalCloser);
-    $.forEachElement('.js-email-subscriptions__modalCloser', bindModalCloser);
+    $.forEachElement('.js-manage-account__modalCloser', bindModalCloser);
+    $.forEachElement(
+        '.js-manage-account__consentCheckbox',
+        bindLabelFromSwitchboard
+    );
+    $.forEachElement(
+        '.js-manage-account__consentCheckboxesSubmit',
+        (el: HTMLElement) => el.remove()
+    );
 };
 
-export { enhanceEmailPreferences };
+export { enhanceManageAccount };

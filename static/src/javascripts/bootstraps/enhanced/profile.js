@@ -7,7 +7,7 @@ import { FormstackEmbedIframe } from 'common/modules/identity/formstack-iframe-e
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
 import { AccountProfile } from 'common/modules/identity/account-profile';
 import { init as initPublicProfile } from 'common/modules/identity/public-profile';
-import { enhanceEmailPreferences } from 'common/modules/identity/email-preferences';
+import { enhanceManageAccount } from 'common/modules/identity/manage-account';
 import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
 import { initUserAvatars } from 'common/modules/discussion/user-avatars';
 import { init as initTabs } from 'common/modules/ui/tabs';
@@ -45,7 +45,7 @@ const initProfile = (): void => {
     initTabs();
     // eslint-disable-next-line no-new
     new AccountProfile();
-    enhanceEmailPreferences();
+    enhanceManageAccount();
     setupLoadingAnimation();
     initPublicProfile();
 };

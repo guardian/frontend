@@ -8,6 +8,41 @@
     }
 }
 
+.identity-wrapper-for-bg {
+    background: $neutral-8;
+    overflow: hidden;
+    .tabs__container {
+        margin: $gs-gutter * 2 auto 0;
+    }
+    .tabs__content {
+        margin: $gs-gutter * 3 auto;
+        border: 0;
+    }
+    .gs-container {
+        background: #ffffff;
+        overflow: hidden;
+    }
+    .monocol-wrapper {
+        max-width: gs-span(10);
+        margin: auto;
+        @include mq($until: desktop) {
+            padding: 0 $gs-gutter * 1;
+        }
+    }
+    &--header {
+        background: darken($neutral-8, 5%);
+        .monocol-wrapper {
+            padding-bottom: 0;
+            overflow: hidden;
+        }
+        .gs-container {
+            background: darken(#ffffff, 5%);
+            padding-top: $gs-gutter;
+        }
+
+    }
+}
+
 .identity-wrapper {
     margin-left: auto;
     margin-right: auto;
@@ -49,10 +84,7 @@
 }
 
 .identity-section {
-    border-top: 1px solid $neutral-7;
     box-sizing: border-box;
-    margin: (($gs-baseline/3)*5) 0;
-    padding-top: (($gs-baseline/3)*5) - 1;
 
     .identity-section__head {
         @extend %type-5;
@@ -64,10 +96,10 @@
 }
 
 .identity-title {
-    @include fs-header(4);
+    @include fs-headline(4);
 
     @include mq(desktop) {
-        @include fs-header(5, $size-only: true);
+        @include fs-headline(6, $size-only: true);
     }
 }
 .identity-title--public-profile {
@@ -322,10 +354,6 @@
 .dropdown--email-subscription {
     .dropdown__label {
         @include fs-bodyHeading(3);
-        color: $guardian-brand;
-    }
-    &:hover .dropdown__label {
-        color: $guardian-brand-dark;
     }
     .dropdown__content {
         padding-bottom: 2em;
@@ -444,78 +472,6 @@
     display: none;
 }
 
-/* Email subcriptions modals
-   ========================================================================== */
-.email-subscriptions__modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-    display: none;
-
-    &--active {
-        display: block;
-        display: flex;
-    }
-
-    .email-subscriptions__modalBg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: $neutral-1;
-        opacity: .95;
-        z-index: 9;
-    }
-
-    .email-subscriptions__modalContent {
-        max-width: gs-span(10);
-        background: #ffffff;
-        width: 100%;
-        position: relative;
-        z-index: 10;
-        border-top: 1px solid $news-main-2;
-        padding: ($gs-gutter * 3.75) ($gs-gutter * 1) ($gs-gutter * 1);
-        margin: auto;
-        float: none;
-    }
-
-    .email-subscriptions__modalCloser {
-        width: $gs-gutter * 1.75;
-        height: $gs-gutter * 1.75;
-        border: 1px solid $guardian-brand;
-        border-radius: 100%;
-        display: block;
-        position: absolute;
-        top: $gs-gutter;
-        right: $gs-gutter;
-
-        svg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-        }
-
-        svg * {
-            fill: $guardian-brand;
-        }
-
-        &:hover {
-            border-color: #000000;
-            svg * {
-                fill: #000000;
-            }
-        }
-    }
-}
 
 /* Delete Account page
    ========================================================================== */
