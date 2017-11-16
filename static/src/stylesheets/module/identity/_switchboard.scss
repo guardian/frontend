@@ -15,7 +15,7 @@ $checkbox-size: $gs-gutter / 1.25;
 .manage-account__switchboard {
 
     ul {
-        grid-template-columns: repeat(auto-fit, minmax(gs-span(3), 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(gs-span(4), 1fr));
         grid-auto-rows: 1fr;
         display: grid;
         padding-top: $local-gutter;
@@ -24,8 +24,9 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 
     &--narrow ul {
+        grid-template-columns: repeat(1,1fr);
         @include mq(tablet) {
-            grid-template-columns: repeat(auto-fit, minmax(gs-span(3), .5fr));
+            grid-template-columns: repeat(2,1fr);
         }
     }
 
@@ -42,11 +43,12 @@ $checkbox-size: $gs-gutter / 1.25;
 .manage-account__switchboardLabel {
 
     @include fs-textSans(1);
-    display: block;
     background-color: $neutral-8;
     border-top: 1px solid $neutral-4;
     overflow: hidden;
     position: relative;
+    display: flex;
+    width: 100%;
 
     .account__switchboardLabelHeader {
         @include f-header;
@@ -73,6 +75,8 @@ $checkbox-size: $gs-gutter / 1.25;
         padding-left: $local-gutter * 2 + $checkbox-size;
         padding-top: $local-gutter * .9;
         position: relative;
+        display: flex;
+        flex-direction: column;
     }
 
     &:hover {
@@ -114,6 +118,7 @@ $checkbox-size: $gs-gutter / 1.25;
     .manage-account__switchboardCopy {
         cursor: pointer;
         opacity: .9;
+        flex: 1 1 auto;
     }
 
     .manage-account__switchboardTidbit {
@@ -130,6 +135,10 @@ $checkbox-size: $gs-gutter / 1.25;
         display: flex;
         justify-content: space-between;
         width: 100%;
+
+        > :last-child {
+            text-align: right;
+        }
     }
 
     &:before {
