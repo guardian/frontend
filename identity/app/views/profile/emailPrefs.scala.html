@@ -19,12 +19,12 @@
 @emailListCategoryList(theme: String, newsletters: List[EmailNewsletter], isActive: Boolean) = {
     @fragments.dropdown(theme, modifier = Some("email-subscription"), isActive = isActive, isAnimated = true) {
 
-        <div class="manage-account__switchboard"><ul>
+        <div class="manage-account__switches"><ul>
             @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
 
                 <li>
 
-                    @fragments.form.switchboardLabel(
+                    @fragments.form.switch(
                         title = newsletter.name,
                         subheading = newsletter.subheading,
                         description = Some(newsletter.description),

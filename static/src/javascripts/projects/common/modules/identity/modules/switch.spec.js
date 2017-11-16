@@ -1,6 +1,6 @@
 // @flow
 import $ from 'lib/$';
-import { addSpinner, removeSpinner } from './switchboardLabel';
+import { addSpinner, removeSpinner } from './switch';
 
 beforeEach(() => {
     if (document.body) {
