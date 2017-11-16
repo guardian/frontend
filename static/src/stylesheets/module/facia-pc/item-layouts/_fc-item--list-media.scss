@@ -92,6 +92,7 @@ Media list item. Looks a bit like this:
 
         .fc-item__footer--horizontal {
             display: block;
+            margin-top: 0 - $fc-item-gutter * 2;
             margin-left: 0 - $image-width;
             padding-bottom: $gs-baseline * .25;
             margin-right: $fc-item-gutter;
