@@ -46,7 +46,8 @@ x x x x x x x x x x x x x x x x x x
         }
 
         &:not(.fc-item--has-sublinks-1) {
-            @include fc-sublinks--below;
+            // @include fc-sublinks--below;
+            @include fc-sublinks--horizontal;
         }
     }
 }

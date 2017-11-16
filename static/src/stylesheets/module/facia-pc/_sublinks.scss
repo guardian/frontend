@@ -42,6 +42,10 @@
 
     .fc-sublink {
         flex: 1 1 100%;
+
+        & + * {
+            margin-left: $gs-gutter / 2;
+        }
     }
 }
 
