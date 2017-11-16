@@ -31,7 +31,9 @@ const initAtoms = () => {
         require.ensure(
             ['@guardian/atom-renderer/dist/guide/article/index.css'],
             require => {
+                const styles = require('@guardian/atom-renderer/dist/guide/article/index.css');
                 const atomMaker = require('@guardian/atom-renderer/dist/guide/article/index');
+                styles.use();
                 bootstrapAtom(atomMaker, 'guide');
             },
             'guide-atom'
@@ -42,7 +44,9 @@ const initAtoms = () => {
         require.ensure(
             ['@guardian/atom-renderer/dist/profile/article/index.css'],
             require => {
+                const styles = require('@guardian/atom-renderer/dist/profile/article/index.css');
                 const atomMaker = require('@guardian/atom-renderer/dist/profile/article/index');
+                styles.use();
                 bootstrapAtom(atomMaker, 'profile');
             },
             'profile-atom'
@@ -53,7 +57,9 @@ const initAtoms = () => {
         require.ensure(
             ['@guardian/atom-renderer/dist/qanda/article/index.css'],
             require => {
+                const styles = require('@guardian/atom-renderer/dist/qanda/article/index.css');
                 const atomMaker = require('@guardian/atom-renderer/dist/qanda/article/index');
+                styles.use();
                 bootstrapAtom(atomMaker, 'qanda');
             },
             'qanda-atom'
@@ -64,7 +70,9 @@ const initAtoms = () => {
         require.ensure(
             ['@guardian/atom-renderer/dist/timeline/article/index.css'],
             require => {
+                const styles = require('@guardian/atom-renderer/dist/timeline/article/index.css');
                 const atomMaker = require('@guardian/atom-renderer/dist/timeline/article/index');
+                styles.use();
                 bootstrapAtom(atomMaker, 'timeline');
             },
             'timeline-atom'
