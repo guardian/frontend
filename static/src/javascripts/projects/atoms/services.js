@@ -1,4 +1,8 @@
 // @flow
+
+// expose some frontend modules to atoms
+// managed by the atoms team
+
 import ophan from 'ophan/ng';
 import fastdom from 'lib/fastdom-promise';
 import { viewport } from './services/viewport';
