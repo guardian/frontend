@@ -135,6 +135,58 @@ describe('Component - fetch()', () => {
     });
 });
 
+describe('Component - setOptions', () => {
+    test('extends options', () => {
+        const component = createComponent();
+
+        component.setOptions({
+            a: 1,
+            b: 2,
+        });
+
+        expect(component.options.a).toBe(1);
+        expect(component.options.b).toBe(2);
+    });
+
+    test('extends options with defaultOptions', () => {
+        const component = createComponent({
+            defaultOptions: {
+                a: 1,
+                b: 2,
+            },
+        });
+
+        component.setOptions({
+            a: 3,
+        });
+
+        expect(component.options.a).toBe(3);
+        expect(component.options.b).toBe(2);
+    });
+
+    test('extends options with defaultOptions and options', () => {
+        const component = createComponent({
+            defaultOptions: {
+                a: 1,
+                b: 2,
+            },
+
+            options: {
+                a: 2,
+                c: 5,
+            },
+        });
+
+        component.setOptions({
+            c: 6,
+        });
+
+        expect(component.options.a).toBe(2);
+        expect(component.options.b).toBe(2);
+        expect(component.options.c).toBe(6);
+    });
+});
+
 describe('Component - destroy', () => {
     test('calls detach()', () => {
         const component = createComponent({
