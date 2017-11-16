@@ -5,15 +5,13 @@
 @import views.support.RenderClasses
 
 
-@subNavItem(link: NavLink, id: String, shouldHideUntilDesktop: Boolean) = {
+@subNavItem(link: NavLink, id: String) = {
     <li class="@RenderClasses(Map(
-            "hide-until-desktop" -> shouldHideUntilDesktop,
             "subnav__item--current-section" -> (id == link.uniqueSection)
         ), "subnav__item")">
         <a class="@RenderClasses(Map(
-                "subnav-link" -> true,
                 "subnav-link--current-section" -> (id == link.uniqueSection)
-            ))"
+            ), "subnav-link")"
             href="@LinkTo(link.url)"
             data-link-name="nav2 : subnav : @{if(link.longTitle.isEmpty) link.title else link.longTitle}">
 
@@ -31,14 +29,13 @@
 
                 @defining(
                     NavigationHelpers.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront)
-                ) { case (mostPopular, leastPopular) =>
-                    @mostPopular.map { link => @subNavItem(link, id, false)}
-                    @leastPopular.map { link => @subNavItem(link, id, true)}
+                ) { case subNav =>
+                    @subNav.map { link => @subNavItem(link, id)}
                 }
     	    </ul>
 
             @* Hiding the 'more' link on the homepage and footer *@
-            @if(!(id == "uk" ||  id == "us" ||  id == "au" ||  id == "international" || isFooter)) {
+            @if(!isFooter) {
                 <div class="subnav__item subnav__item--toggle-more js-visible hide-on-desktop">
                     <button class="
                         subnav-link

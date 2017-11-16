@@ -6,10 +6,10 @@ import NewNavigation._
 object SectionLinks {
 
   val sectionLinks = List (
-    SectionsLink ("uk", headlines, MostPopular),
-    SectionsLink ("us", headlines, MostPopular),
-    SectionsLink ("au", headlines, MostPopular),
-    SectionsLink ("international", headlines, MostPopular),
+    SectionsLink ("uk", headlines, News),
+    SectionsLink ("us", headlines, News),
+    SectionsLink ("au", headlines, News),
+    SectionsLink ("international", headlines, News),
     SectionsLink ("uk-news", ukNews, News),
     SectionsLink ("world", world, News),
     SectionsLink ("world/europe-news", europe, News),

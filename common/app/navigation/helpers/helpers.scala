@@ -11,13 +11,13 @@ import play.api.mvc.RequestHeader
 
 object NavigationHelpers {
 
-  def getMembershipLinks(edition: Edition)(implicit request: RequestHeader): NavLinkLists = {
+  def getMembershipLinks(edition: Edition)(implicit request: RequestHeader): List[NavLink] = {
     val editionId = edition.id.toLowerCase()
 
-    NavLinkLists(List(
+    List(
       NavLink("become a supporter", getSupportOrMembershipUrl(SideMenu)),
       NavLink("subscribe", getSupportOrSubscriptionUrl(SideMenu))
-    ))
+    )
   }
 
   def getSectionOrPageId(page: Page): String = {
@@ -49,26 +49,16 @@ object NavigationHelpers {
     }
   }
 
-  def getSectionLinks(sectionName: String, edition: Edition): Tuple2[Seq[NavLink], Seq[NavLink]] = {
+  def getSectionLinks(sectionName: String, edition: Edition): List[NavLink] = {
     val sectionList = sectionLinks.filter { item =>
       item.pageId == sectionName
     }
 
     if (sectionList.isEmpty) {
-      val mostPopular = News.getEditionalisedSubSectionLinks(edition).mostPopular.drop(1)
-      val leastPopular = News.getEditionalisedSubSectionLinks(edition).leastPopular
-
-      (mostPopular, leastPopular)
+      News.getEditionalisedNavLinks(edition).drop(1)
     } else {
       val section = sectionList.head
-      val mostPopular = section.parentSection.getEditionalisedSubSectionLinks(edition).mostPopular.drop(1)
-      val leastPopular = section.parentSection.getEditionalisedSubSectionLinks(edition).leastPopular
-
-      if (mostPopular.contains(section.navLink) || NewNavigation.PrimaryLinks.contains(section.navLink)) {
-        (mostPopular, leastPopular)
-      } else {
-        (Seq(section.navLink) ++ mostPopular, leastPopular.filter(_.title != section.navLink.title))
-      }
+      section.parentSection.getEditionalisedNavLinks(edition).drop(1)
     }
   }
 
@@ -136,21 +126,18 @@ object NavigationHelpers {
     sectionMap.getOrElse(sectionId, sectionId)
   }
 
-  def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean): Tuple2[Seq[NavLink], Seq[NavLink]] = {
+  def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean): List[NavLink] = {
     if (isEditionalistedSubSection(id)) {
       val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
 
-      (subNav.getEditionalisedSubSectionLinks(edition).mostPopular,
-        subNav.getEditionalisedSubSectionLinks(edition).leastPopular)
+      subNav.getEditionalisedNavLinks(edition)
     } else {
       val subSectionList = subSectionLinks.filter(_.pageId == simplifyFootball(id))
 
       if (subSectionList.isEmpty) {
         NavigationHelpers.getSectionLinks(id, edition)
       } else {
-        (subSectionList.head.parentSection.mostPopular,
-          subSectionList.head.parentSection.leastPopular)
-
+        subSectionList.head.parentSection
       }
     }
   }
