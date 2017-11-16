@@ -215,7 +215,7 @@ const bindConsentLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                     buildFormDataForFields(token, fields)
                 )
                 .then((formData: FormData) =>
-                    submitPartialFormStatus('newsletter', formData)
+                    submitPartialFormStatus('consent', formData)
                 )
                 .catch((err: Error) => {
                     pushError(err, 'reload');
