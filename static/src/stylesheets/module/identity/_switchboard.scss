@@ -24,9 +24,9 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 
     &--narrow ul {
-        grid-template-columns: repeat(1,1fr);
+        grid-template-columns: repeat(1, 1fr);
         @include mq(tablet) {
-            grid-template-columns: repeat(2,1fr);
+            grid-template-columns: repeat(2, 1fr);
         }
     }
 
