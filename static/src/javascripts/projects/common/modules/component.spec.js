@@ -212,6 +212,86 @@ describe('Component - setOptions()', () => {
     });
 });
 
+describe('Component - setState(), removeState(), toggleState()', () => {
+    let component;
+    let elem;
+    let subElem;
+
+    beforeEach(() => {
+        if (document) {
+            document.body.innerHTML = `
+                <div class="component">
+                    <div class="component__element"></div>
+                </div>
+            `;
+        }
+
+        elem = document.querySelector('.component');
+        subElem = document.querySelector('.component__element');
+        component = createComponent({
+            componentClass: 'component',
+        });
+
+        if (!elem || !subElem) {
+            throw new Error('required element not found');
+        }
+
+        component.attachTo(elem);
+    });
+
+    test('setState() should add class name to elem (without elementName)', () => {
+        component.setState('state');
+        expect(component.elem.classList.contains('component--state')).toBe(
+            true
+        );
+    });
+
+    test('setState() should add class name to elem (with elementName)', () => {
+        component.setState('state', 'element');
+        expect(subElem.classList.contains('component__element--state')).toBe(
+            true
+        );
+    });
+
+    test('removeState() should remove class name to elem (without elementName)', () => {
+        component.setState('state');
+        component.removeState('state');
+        expect(component.elem.classList.contains('component--state')).toBe(
+            false
+        );
+    });
+
+    test('removeState() should remove class name to elem (with elementName)', () => {
+        component.setState('state', 'element');
+        component.removeState('state', 'element');
+        expect(subElem.classList.contains('component__element--state')).toBe(
+            false
+        );
+    });
+
+    test('toggleState() should toggle class name to elem (without elementName)', () => {
+        component.toggleState('state');
+        expect(component.elem.classList.contains('component--state')).toBe(
+            true
+        );
+        component.toggleState('state');
+        expect(component.elem.classList.contains('component--state')).toBe(
+            false
+        );
+    });
+
+    test('toggleState() should toggle class name to elem (with elementName)', () => {
+        component.toggleState('state', 'element');
+        expect(subElem.classList.contains('component__element--state')).toBe(
+            true
+        );
+        component.toggleState('state', 'element');
+        expect(subElem.classList.contains('component__element--state')).toBe(
+            false
+        );
+    });
+});
+
 describe('Component - destroy()', () => {
     test('calls detach()', () => {
         const component = createComponent({
