@@ -75,32 +75,6 @@
     }
 }
 
-.subnav-link--toggle-more__icon {
-    top: 50%;
-    float: right;
-    transform: translateY(-50%);
-
-    &,
-    &:before,
-    &:after {
-        background-color: currentColor;
-        border-radius: 50%;
-        content: '';
-        height: 2px;
-        right: 0;
-        position: absolute;
-        width: 2px;
-    }
-
-    &:before {
-        top: -$gs-baseline / 4;
-    }
-
-    &:after {
-        bottom: -$gs-baseline / 4;
-    }
-}
-
 .subnav-link--current-section {
     font-weight: 700;
 
