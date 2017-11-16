@@ -23,6 +23,8 @@ const CONTRIBUTION_INFO = '.js-contribution-info';
 const LOADER = '.js-contribution-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
 const ERROR = '.js-contribution-error';
+const CANCEL_CONTRIBUTION = '.js-contribution-cancel';
+const CANCEL_CONTRIBUTION_BUTTON = '.js-manage-account-cancel-contribution';
 
 const hideLoader = (): void => {
     $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
@@ -38,6 +40,43 @@ const displaySupportUpSell = (): void => {
 
 const displayErrorMessage = (): void => {
     $(ERROR).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displayCancelContribution = (): void => {
+    $(CANCEL_CONTRIBUTION).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideCancelContribution = (): void => {
+    $(CANCEL_CONTRIBUTION).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideContributionInfo = (): void => {
+    $(CONTRIBUTION_INFO).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const cancelContribution = (): void => {
+    fetch(
+        `${config.get(
+            'page.userAttributesApiUrl'
+        )}/me/cancel-regular-contribution`,
+        {
+            method: 'post',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Csrf-Token': 'nocheck',
+            },
+            body: {
+                reason: 'Customer',
+            },
+        }
+    ).catch(err => {
+        hideLoader();
+        displayErrorMessage();
+        reportError(err, {
+            feature: 'mma-monthlycontribution',
+        });
+    });
 };
 
 const populateUserDetails = (contributorDetails: ContributorDetails): void => {
@@ -90,7 +129,22 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         $(PAYPAL_SHOW_EMAIL_BUTTON).addClass(IS_HIDDEN_CLASSNAME);
         $(PAYPAL).removeClass(IS_HIDDEN_CLASSNAME);
     }
+
+    if (!contributorDetails.subscription.cancelledAt) {
+        displayCancelContribution();
+        const cancelButton = document.querySelector(CANCEL_CONTRIBUTION_BUTTON);
+        if (cancelButton) {
+            cancelButton.addEventListener('click', () => {
+                cancelContribution();
+            });
+        }
+    } else {
+        hideCancelContribution();
+        displaySupportUpSell();
+        hideContributionInfo();
+    }
 };
+
 export const recurringContributionTab = (): void => {
     fetch(
         `${config.get('page.userAttributesApiUrl')}/me/mma-monthlycontribution`,
