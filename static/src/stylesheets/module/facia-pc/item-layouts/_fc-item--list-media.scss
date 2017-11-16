@@ -10,7 +10,7 @@ Media list item. Looks a bit like this:
 
  */
 
- @mixin fc-item--list-media ($text-lines-per-media-object: 4, $headline-size: 2) {
+@mixin fc-item--list-media ($text-lines-per-media-object: 4, $headline-size: 2) {
     @include fc-item--list;
 
     // calculate image width
@@ -100,8 +100,6 @@ Media list item. Looks a bit like this:
             .fc-sublink:first-child {
                 .fc-sublink__title:before {
                     position: absolute;
-                    left: 0;
-                    right: 0;
                     left: 0 - $fc-item-gutter;
                     right: 0 - $fc-item-gutter;
                     width: initial;

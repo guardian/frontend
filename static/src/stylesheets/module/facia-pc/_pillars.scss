@@ -9,7 +9,7 @@ $pillars: (
 @mixin colours($accent, $foreground, $background) {
     $midground: mix($foreground, $background, 75%);
 
-    border-top-color: fade-out($accent, 0.25);
+    border-top-color: fade-out($accent, .25);
     background-color: $background;
 
     &:hover {
@@ -69,7 +69,7 @@ $pillars: (
 
     .fc-sublink--pillar-#{$pillar} {
         .fc-sublink__kicker {
-            color: fade-out($colour, 0.25);
+            color: fade-out($colour, .25);
         }
     }
 }
