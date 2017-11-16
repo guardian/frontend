@@ -290,6 +290,26 @@ describe('Component - setState(), removeState(), toggleState()', () => {
             false
         );
     });
+
+    test('hasState() should return the proper state (without elementName)', () => {
+        component.setState('state');
+        expect(component.hasState('state')).toBe(true);
+        expect(component.hasState('whatever')).toBe(false);
+    });
+
+    test('hasState() should return the proper state (with elementName)', () => {
+        component.setState('state', 'element');
+        expect(component.hasState('state', 'element')).toBe(true);
+        expect(component.hasState('whatever', 'element')).toBe(false);
+    });
+
+    test('hasState() should always return false without componentClass', () => {
+        component.componentClass = false;
+
+        component.setState('state', 'element');
+        expect(component.hasState('state')).toBe(false);
+        expect(component.hasState('state', 'element')).toBe(false);
+    });
 });
 
 describe('Component - destroy()', () => {
