@@ -107,10 +107,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
 
         To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
      */
-    if (
-        config.get('switches.abIasAdTargetingV2', false) &&
-        getTestVariantId('IasAdTargetingV2') === 'variant'
-    ) {
+    if (config.get('switches.abIasAdTargeting', false)) {
         /* eslint-disable no-underscore-dangle */
         // this should all have been instantiated by commercial/modules/third-party-tags/ias.js
         window.__iasPET = window.__iasPET || {};
