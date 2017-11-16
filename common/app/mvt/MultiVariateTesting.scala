@@ -124,14 +124,14 @@ object ABImageTestService extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
 }
 
-object PillarCards extends TestDefinition(
-  name = "pillar-cards",
-  description = "Users in this test will see pillar cards.",
+object Garnet extends TestDefinition(
+  name = "garnet",
+  description = "Users in this test will see garnet styling.",
   owners = Seq(Owner.withName("dotcom.platform")),
   sellByDate = new LocalDate(2018, 2, 1)
 ) {
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-pillar-cards")
-  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("true")
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-garnet")
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
 }
 
 trait ServerSideABTests {
@@ -165,7 +165,7 @@ object ActiveTests extends ServerSideABTests {
     ABJavascriptRenderingVariant,
     ABJavascriptRenderingControl,
     ABImageTestService,
-    PillarCards
+    Garnet
   )
 }
 

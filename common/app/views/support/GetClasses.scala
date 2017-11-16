@@ -3,7 +3,6 @@ package views.support
 import layout._
 import model.pressed.{Audio, Gallery, Video}
 import slices.{Dynamic, DynamicSlowMPU}
-import conf.switches.Switches.PillarCards
 import play.api.mvc.RequestHeader
 
 object GetClasses {
@@ -19,16 +18,10 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--" + item.pillar.name.toLowerCase(),
-        PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating
-      ),
-      ("fc-item--" + item.contentType.name.toLowerCase(),
-        PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating
-      ),
+      ("fc-item--" + item.pillar.name.toLowerCase(), mvt.Garnet.isParticipating),
+      ("fc-item--" + item.contentType.name.toLowerCase(), mvt.Garnet.isParticipating),
       ("fc-item--has-cutout", item.cutOut.isDefined),
-      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item",
-        PillarCards.isSwitchedOff && !mvt.PillarCards.isParticipating
-      ),
+      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !mvt.Garnet.isParticipating),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
       ("fc-item--force-image-upgrade", isFirstContainer),
@@ -48,10 +41,10 @@ object GetClasses {
 
   def forSubLink(sublink: Sublink): String = RenderClasses(Map(
     ("fc-sublink", true),
-    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", PillarCards.isSwitchedOff),
+    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", !mvt.Garnet.isParticipating),
     (sublinkMediaTypeClass(sublink).getOrElse(""), true),
-    ("fc-sublink--pillar-" + sublink.pillar, PillarCards.isSwitchedOn),
-    ("fc-sublink--type-" + sublink.contentType, PillarCards.isSwitchedOn)
+    ("fc-sublink--pillar-" + sublink.pillar, mvt.Garnet.isParticipating),
+    ("fc-sublink--type-" + sublink.contentType, mvt.Garnet.isParticipating)
   ))
 
   def mediaTypeClass(faciaCard: ContentCard): Option[String] = faciaCard.mediaType map {
