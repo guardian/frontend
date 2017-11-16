@@ -94,20 +94,21 @@ Media list item. Looks a bit like this:
             display: block;
             margin-left: 0 - $image-width;
             padding-bottom: $gs-baseline * .25;
+            margin-right: $fc-item-gutter;
 
             .fc-sublink:first-child {
-                margin-top: 0;
-
                 .fc-sublink__title:before {
                     position: absolute;
-                    left: 0 - $fc-item-gutter;
+                    left: 0;
                     right: 0;
+                    left: 0 - $fc-item-gutter;
+                    right: 0 - $fc-item-gutter;
                     width: initial;
-
-                    @include mq(tablet) {
-                        left: 0;
-                    }
                 }
+            }
+
+            @include mq(tablet) {
+                padding-left: $fc-item-gutter;
             }
         }
     }
