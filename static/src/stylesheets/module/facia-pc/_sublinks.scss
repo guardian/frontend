@@ -36,30 +36,12 @@
 @mixin fc-sublinks--horizontal {
     .fc-sublinks {
         display: flex;
+        margin-left: $fc-item-gutter;
+        margin-right: $fc-item-gutter;
     }
 
     .fc-sublink {
         flex: 1 1 100%;
-        margin-left: $fc-item-gutter;
-        margin-right: $fc-item-gutter;
-        margin-top: $gs-baseline;
-        margin-bottom: $gs-baseline * .75;
-    }
-
-    .fc-sublink:first-child {
-        margin-left: 0;
-
-        .fc-sublink__title {
-            padding-left: $fc-item-gutter;
-
-            &:before {
-                left: $fc-item-gutter;
-            }
-        }
-    }
-
-    .fc-sublink:last-child {
-        margin-right: 0;
     }
 }
 
