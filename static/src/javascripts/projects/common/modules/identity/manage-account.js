@@ -150,6 +150,11 @@ const bindUnsubscribeFromAll = buttonEl => {
                 .then(([newsletterIds, csrfToken]) =>
                     submitNewsletterAction(csrfToken, 'remove', newsletterIds)
                 )
+                .catch((err: Error) => {
+                    pushError(err, 'reload').then(() => {
+                        window.scrollTo(0, 0);
+                    });
+                })
                 .then(() => {
                     removeUpdatingState(buttonEl);
                 });
@@ -189,7 +194,9 @@ const bindNewsletterLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                     )
                 )
                 .catch((err: Error) => {
-                    pushError(err, 'reload');
+                    pushError(err, 'reload').then(() => {
+                        window.scrollTo(0, 0);
+                    });
                     return flipCheckbox(labelEl);
                 })
                 .then(() => removeSpinner(labelEl));
@@ -218,7 +225,9 @@ const bindConsentLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                     submitPartialFormStatus('consent', formData)
                 )
                 .catch((err: Error) => {
-                    pushError(err, 'reload');
+                    pushError(err, 'reload').then(() => {
+                        window.scrollTo(0, 0);
+                    });
                     return flipCheckbox(labelEl);
                 })
                 .then(() => removeSpinner(labelEl));
