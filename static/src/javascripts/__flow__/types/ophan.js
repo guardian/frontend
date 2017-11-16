@@ -71,7 +71,3 @@ declare type OphanComponentEvent = {
         variant: string
     }
 };
-
-declare type OphanService = {
-    record: ({ componentEvent: OphanComponentEvent }) => void
-};
