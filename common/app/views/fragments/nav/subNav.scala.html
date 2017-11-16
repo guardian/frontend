@@ -7,7 +7,8 @@
 
 @subNavItem(link: NavLink, id: String, shouldHideUntilDesktop: Boolean) = {
     <li class="@RenderClasses(Map(
-            "hide-until-desktop" -> shouldHideUntilDesktop
+            "hide-until-desktop" -> shouldHideUntilDesktop,
+            "subnav__item--current-section" -> (id == link.uniqueSection)
         ), "subnav__item")">
         <a class="@RenderClasses(Map(
                 "subnav-link" -> true,
@@ -24,7 +25,6 @@
 
 <div class="subnav">
     <div class="gs-container">
-
         @defining(NavigationHelpers.getActivePillar(page)) { case (id, activePillarName) =>
             <ul class="subnav__list"
                 data-pillar-title="@activePillarName">
@@ -35,20 +35,21 @@
                     @mostPopular.map { link => @subNavItem(link, id, false)}
                     @leastPopular.map { link => @subNavItem(link, id, true)}
                 }
+    	    </ul>
 
             @* Hiding the 'more' link on the homepage and footer *@
             @if(!(id == "uk" ||  id == "us" ||  id == "au" ||  id == "international" || isFooter)) {
-                <li class="subnav__item js-visible hide-on-desktop">
+                <div class="subnav__item subnav__item--toggle-more js-visible hide-on-desktop">
                     <button class="
                         subnav-link
                         subnav-link--toggle-more
                         js-toggle-nav-section"
                         data-link-name="nav2 : subnav-toggle">
                         more
+                        <span class="subnav-link--toggle-more__icon"></span>
                     </button>
-                </li>
+                </div>
             }
-    	    </ul>
         }
     </div>
 </div>

@@ -6,12 +6,12 @@
 }
 
 .header__cta-container {
-    left: $gs-gutter / 4;
+    left: -$gs-gutter / 2;
     position: absolute;
     top: 0;
 
     @include mq(mobileLandscape) {
-        left: $gs-gutter / 2;
+        left: 0;
     }
 }
 
@@ -32,5 +32,9 @@
     @include mq(mobileMedium) {
         height: calc(3 / 16 * 225px);
         width: 225px;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-right: $gs-gutter
     }
 }

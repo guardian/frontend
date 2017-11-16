@@ -12,7 +12,7 @@ case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = 
 object NewNavigation {
 
   val PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
-  val topLevelSections = List(News, Opinion, Sport, Arts, Life)
+  val topLevelSections = List(News, Opinion, Sport, Arts, Lifestyle)
 
   trait EditionalisedNavigationSection {
     def name: String
@@ -42,7 +42,7 @@ object NewNavigation {
     case "opinion" => Opinion
     case "sport" => Sport
     case "arts" => Arts
-    case "life" => Life
+    case "lifestyle" => Lifestyle
   }
 
   case object MostPopular extends EditionalisedNavigationSection {
@@ -183,8 +183,8 @@ object NewNavigation {
     )
   }
 
-  case object Life extends EditionalisedNavigationSection {
-    val name = "life"
+  case object Lifestyle extends EditionalisedNavigationSection {
+    val name = "lifestyle"
 
     val uk = NavLinkLists(
       List(lifestyle, fashion, food, recipes, travel, loveAndSex, family),
