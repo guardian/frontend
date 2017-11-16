@@ -10,14 +10,14 @@ import $ from 'lib/$';
 import { push as pushError } from './modules/show-errors';
 import { addSpinner, removeSpinner, flip as flipCheckbox, getInfo as getCheckboxInfo } from './modules/switchboardLabel';
 
-const addUpdatingState = (buttonEl:HTMLElement) =>
+const addUpdatingState = (buttonEl:HTMLButtonElement) =>
     fastdom.write(() => {
         buttonEl.disabled = true;
         $(buttonEl).addClass('is-updating is-updating-subscriptions');
     });
 
 
-const removeUpdatingState = (buttonEl:HTMLElement) =>
+const removeUpdatingState = (buttonEl:HTMLButtonElement) =>
     fastdom.write(() => {
         buttonEl.disabled = false;
         $(buttonEl).removeClass('is-updating is-updating-subscriptions');
@@ -129,7 +129,7 @@ const submitPartialFormStatus = (type: ?string = null, formData: FormData): Prom
     });
 }
 
-const submitNewsletterAction = (csrfToken: string, action: ?string = null, newsletters: array = []) => {
+const submitNewsletterAction = (csrfToken: string, action: string = 'none', newsletters: Array<string> = []) => {
 
     const formData = new FormData();
     formData.append('csrfToken', csrfToken);
