@@ -4,6 +4,14 @@ import sortBy from 'lodash/collections/sortBy';
 
 import { AnagramHelper } from './main';
 
+jest.mock('react/addons', () => ({
+    createClass(args) {
+        return function() {
+            return args;
+        };
+    },
+}));
+
 const CASES = [
     {
         entries: ['', '', '', '', 'l', '', 'e'],
@@ -45,9 +53,11 @@ describe('Anagram Helper', () => {
         const sort = x => x.value + x.entered.toString();
 
         CASES.forEach(testCase => {
-            const helper = new AnagramHelper();
             const entries = testCase.entries.map(e => ({ value: e }));
-            const result = helper.shuffleWord(testCase.word, entries);
+            const result = new AnagramHelper().shuffleWord(
+                testCase.word,
+                entries
+            );
 
             expect(sortBy(result, sort)).toEqual(
                 sortBy(testCase.expected, sort)
