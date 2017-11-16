@@ -1,8 +1,10 @@
 // @flow
 
-import fetchJSON from 'lib/fetch-json';
+import fetchJSON_ from 'lib/fetch-json';
 
 import { Component } from './component';
+
+const fetchJSON: JestMockFn<*, *> = (fetchJSON_: any);
 
 const mockResponse = {
     html: '<p>html</p>',
@@ -227,7 +229,7 @@ describe('Component', () => {
         let subElem;
 
         beforeEach(() => {
-            if (document) {
+            if (document.body) {
                 document.body.innerHTML = `
                     <div class="component">
                         <div class="component__element"></div>
@@ -250,54 +252,80 @@ describe('Component', () => {
 
         test('setState() should add class name to elem (without elementName)', () => {
             component.setState('state');
-            expect(component.elem.classList.contains('component--state')).toBe(
-                true
-            );
+
+            if (component.elem) {
+                expect(
+                    component.elem.classList.contains('component--state')
+                ).toBe(true);
+            }
         });
 
         test('setState() should add class name to elem (with elementName)', () => {
             component.setState('state', 'element');
-            expect(
-                subElem.classList.contains('component__element--state')
-            ).toBe(true);
+
+            if (subElem) {
+                expect(
+                    subElem.classList.contains('component__element--state')
+                ).toBe(true);
+            }
         });
 
         test('removeState() should remove class name to elem (without elementName)', () => {
             component.setState('state');
             component.removeState('state');
-            expect(component.elem.classList.contains('component--state')).toBe(
-                false
-            );
+
+            if (component.elem) {
+                expect(
+                    component.elem.classList.contains('component--state')
+                ).toBe(false);
+            }
         });
 
         test('removeState() should remove class name to elem (with elementName)', () => {
             component.setState('state', 'element');
             component.removeState('state', 'element');
-            expect(
-                subElem.classList.contains('component__element--state')
-            ).toBe(false);
+
+            if (subElem) {
+                expect(
+                    subElem.classList.contains('component__element--state')
+                ).toBe(false);
+            }
         });
 
         test('toggleState() should toggle class name to elem (without elementName)', () => {
             component.toggleState('state');
-            expect(component.elem.classList.contains('component--state')).toBe(
-                true
-            );
+
+            if (component.elem) {
+                expect(
+                    component.elem.classList.contains('component--state')
+                ).toBe(true);
+            }
+
             component.toggleState('state');
-            expect(component.elem.classList.contains('component--state')).toBe(
-                false
-            );
+
+            if (component.elem) {
+                expect(
+                    component.elem.classList.contains('component--state')
+                ).toBe(false);
+            }
         });
 
         test('toggleState() should toggle class name to elem (with elementName)', () => {
             component.toggleState('state', 'element');
-            expect(
-                subElem.classList.contains('component__element--state')
-            ).toBe(true);
+
+            if (subElem) {
+                expect(
+                    subElem.classList.contains('component__element--state')
+                ).toBe(true);
+            }
+
             component.toggleState('state', 'element');
-            expect(
-                subElem.classList.contains('component__element--state')
-            ).toBe(false);
+
+            if (subElem) {
+                expect(
+                    subElem.classList.contains('component__element--state')
+                ).toBe(false);
+            }
         });
 
         test('hasState() should return the proper state (without elementName)', () => {
@@ -313,7 +341,7 @@ describe('Component', () => {
         });
 
         test('hasState() should always return false without componentClass', () => {
-            component.componentClass = false;
+            component.componentClass = '';
 
             component.setState('state', 'element');
             expect(component.hasState('state')).toBe(false);
@@ -325,7 +353,7 @@ describe('Component', () => {
         let elem;
 
         beforeEach(() => {
-            if (document) {
+            if (document.body) {
                 document.body.innerHTML = `
                     <div class="component">
                         <div class="component__element"></div>
@@ -345,9 +373,10 @@ describe('Component', () => {
                 ready: jest.fn(),
             });
 
-            component.attachTo(elem);
-
-            expect(component.ready).toBeCalled();
+            if (elem) {
+                component.attachTo(elem);
+                expect(component.ready).toBeCalled();
+            }
         });
 
         test('calls prerender() callback', () => {
@@ -355,9 +384,10 @@ describe('Component', () => {
                 prerender: jest.fn(),
             });
 
-            component.attachTo(elem);
-
-            expect(component.prerender).toBeCalled();
+            if (elem) {
+                component.attachTo(elem);
+                expect(component.prerender).toBeCalled();
+            }
         });
 
         test('calls checkAttached() callback', () => {
@@ -365,9 +395,10 @@ describe('Component', () => {
                 checkAttached: jest.fn(),
             });
 
-            component.attachTo(elem);
-
-            expect(component.checkAttached).toBeCalled();
+            if (elem) {
+                component.attachTo(elem);
+                expect(component.checkAttached).toBeCalled();
+            }
         });
     });
 
