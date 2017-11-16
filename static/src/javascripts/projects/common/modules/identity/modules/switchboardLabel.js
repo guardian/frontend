@@ -1,30 +1,22 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 
-export const getInfo = (labelEl: HTMLElement):Promise<any> =>
+export const getInfo = (labelEl: HTMLElement): Promise<any> =>
     fastdom
-        .read((): ?HTMLElement =>
-            labelEl.querySelector('input')
-        )
-        .then((checkboxEl: HTMLInputElement)=>{
-            return {
-                checked: checkboxEl.checked,
-                name: checkboxEl.name
-            };
-        });
-
+        .read((): ?HTMLElement => labelEl.querySelector('input'))
+        .then((checkboxEl: HTMLInputElement) => ({
+            checked: checkboxEl.checked,
+            name: checkboxEl.name,
+        }));
 
 export const flip = (labelEl: HTMLElement): Promise<any> =>
     fastdom
-        .read((): ?HTMLElement =>
-            labelEl.querySelector('input')
-        )
+        .read((): ?HTMLElement => labelEl.querySelector('input'))
         .then((checkboxEl: HTMLInputElement) => {
             fastdom.write(() => {
                 checkboxEl.checked = !checkboxEl.checked;
             });
         });
-
 
 export const addSpinner = (labelEl: HTMLElement): Promise<any> =>
     fastdom.write(() => {

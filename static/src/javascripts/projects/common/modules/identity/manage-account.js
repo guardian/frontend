@@ -8,77 +8,81 @@ import reqwest from 'reqwest';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import { push as pushError } from './modules/show-errors';
-import { addSpinner, removeSpinner, flip as flipCheckbox, getInfo as getCheckboxInfo } from './modules/switchboardLabel';
+import {
+    addSpinner,
+    removeSpinner,
+    flip as flipCheckbox,
+    getInfo as getCheckboxInfo,
+} from './modules/switchboardLabel';
+import { addUpdatingState, removeUpdatingState } from './modules/button';
 
-const addUpdatingState = (buttonEl:HTMLButtonElement) =>
-    fastdom.write(() => {
-        buttonEl.disabled = true;
-        $(buttonEl).addClass('is-updating is-updating-subscriptions');
-    });
-
-
-const removeUpdatingState = (buttonEl:HTMLButtonElement) =>
-    fastdom.write(() => {
-        buttonEl.disabled = false;
-        $(buttonEl).removeClass('is-updating is-updating-subscriptions');
-    });
-
-
-const resetUnsubscribeFromAll = buttonEl => {
-    fastdom.write(() => {
-        $(buttonEl).removeClass(
-            'email-unsubscribe--confirm js-confirm-unsubscribe'
-        );
-        $('.js-unsubscribe--confirm').addClass('hide');
-        $('.js-unsubscribe--basic').removeClass('hide');
-    });
-};
-
-const confirmUnsubscriptionFromAll = buttonEl => {
-    fastdom.write(() => {
-        $(buttonEl).addClass(
-            'email-unsubscribe--confirm js-confirm-unsubscribe'
-        );
-        $('.email-unsubscribe-all__label').toggleClass('hide');
-    });
-};
-
-const unsubscribeFromAll = buttonEl => {
-    bean.on(buttonEl, 'click', () => {
-        if ($(buttonEl).hasClass('js-confirm-unsubscribe')) {
-            addUpdatingState(buttonEl);
-            resetUnsubscribeFromAll(buttonEl);
-            debugger;
-            Promise.all([
-                fastdom.read(()=>{
-                    let subscribedNewsletterIds = []
-                    $('.js-manage-account__newsletterCheckbox input:checked').each(inputEl=>{
-                        subscribedNewsletterIds.push(inputEl.name);
-                        inputEl.checked = false;
-                    });
-                    return subscribedNewsletterIds;
-                }),
-                getCsrfTokenFromElement($('.js-manage-account__newsletterCheckbox').get(0))
-            ]).then(([newsletterIds,csrfToken])=>
-                submitNewsletterAction(csrfToken,'remove',newsletterIds)
-            ).then(()=>{
-                removeUpdatingState(buttonEl)
-            })
-        } else {
-            confirmUnsubscriptionFromAll(buttonEl);
+const submitPartialFormStatus = (
+    type: ?string = null,
+    formData: FormData
+): Promise<void> => {
+    const url = (() => {
+        switch (type) {
+            case 'consent':
+                return '/privacy/edit-ajax';
+            default:
+                throw new Error('Undefined form type');
         }
+    })();
+
+    return reqwest({
+        url,
+        method: 'POST',
+        data: formData,
+        processData: false,
     });
 };
 
+const submitNewsletterAction = (
+    csrfToken: string,
+    action: string = 'none',
+    newsletters: Array<string> = []
+) => {
+    const formData = new FormData();
+    formData.append('csrfToken', csrfToken);
+    formData.append(
+        'htmlPreference',
+        $('[name="htmlPreference"]:checked').val()
+    );
 
-const bindModalCloser = (buttonEl: HTMLElement): void => {
-    bean.on(buttonEl, 'click', () => {
-        const modalEl: ?Element = buttonEl.closest('.manage-account__modal');
-        if (modalEl) {
-            modalEl.classList.remove('manage-account__modal--active');
-        }
+    switch (action) {
+        case 'add':
+            newsletters.map(id =>
+                formData.append('addEmailSubscriptions[]', id)
+            );
+            break;
+        case 'remove':
+            newsletters.map(id =>
+                formData.append('removeEmailSubscriptions[]', id)
+            );
+            break;
+        default:
+            throw new Error(`Undefined newsletter action type (${action})`);
+    }
+
+    return reqwest({
+        url: '/email-prefs',
+        method: 'POST',
+        data: formData,
+        processData: false,
     });
 };
+
+const getCsrfTokenFromElement = (originalEl: HTMLElement): Promise<any> =>
+    fastdom
+        .read(() => {
+            const closestFormEl: ?Element = originalEl.closest('form');
+            if (closestFormEl) {
+                return closestFormEl.querySelector('*[name=csrfToken]');
+            }
+
+            return Promise.reject();
+        })
+        .then((csrfTokenEl: HTMLInputElement) => csrfTokenEl.value.toString());
 
 const buildFormDataForFields = (
     csrfToken: string,
@@ -100,71 +104,71 @@ const buildFormDataForFields = (
     return formData;
 };
 
-const getCsrfTokenFromElement = (originalEl: HTMLElement): Promise<any> =>
-    fastdom
-        .read(() => {
-            const closestFormEl: ?Element = originalEl.closest('form');
-            if (closestFormEl) {
-                return closestFormEl.querySelector('*[name=csrfToken]');
-            }
+const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
+    fastdom.read(() => labelEl.querySelectorAll('*[name][value]'));
 
-            return Promise.reject();
-        })
-        .then((csrfTokenEl: HTMLInputElement) => csrfTokenEl.value.toString());
-
-const submitPartialFormStatus = (type: ?string = null, formData: FormData): Promise<void> => {
-
-    const url = (()=>{switch (type) {
-        case 'consent':
-            return '/privacy/edit-ajax';
-        default:
-            throw new Error('Undefined form type');
-    }})();
-
-    return reqwest({
-        url: url,
-        method: 'POST',
-        data: formData,
-        processData: false,
+const resetUnsubscribeFromAll = buttonEl => {
+    fastdom.write(() => {
+        $(buttonEl).removeClass(
+            'email-unsubscribe--confirm js-confirm-unsubscribe'
+        );
+        $('.js-unsubscribe--confirm').addClass('hide');
+        $('.js-unsubscribe--basic').removeClass('hide');
     });
-}
+};
 
-const submitNewsletterAction = (csrfToken: string, action: string = 'none', newsletters: Array<string> = []) => {
-
-    const formData = new FormData();
-    formData.append('csrfToken', csrfToken);
-    formData.append('htmlPreference', $('[name="htmlPreference"]:checked').val());
-
-    switch (action) {
-        case 'add':
-            newsletters.map(id=>{
-                formData.append('addEmailSubscriptions[]',id);
-            })
-            break;
-        case 'remove':
-            newsletters.map(id=>{
-                formData.append('removeEmailSubscriptions[]',id);
-            })
-            break;
-        default:
-            throw new Error(`Undefined newsletter action type (${action})`);
-    }
-
-    return reqwest({
-        url: '/email-prefs',
-        method: 'POST',
-        data: formData,
-        processData: false,
+const confirmUnsubscriptionFromAll = buttonEl => {
+    fastdom.write(() => {
+        $(buttonEl).addClass(
+            'email-unsubscribe--confirm js-confirm-unsubscribe'
+        );
+        $('.email-unsubscribe-all__label').toggleClass('hide');
     });
+};
 
-}
+const bindUnsubscribeFromAll = buttonEl => {
+    bean.on(buttonEl, 'click', () => {
+        if ($(buttonEl).hasClass('js-confirm-unsubscribe')) {
+            addUpdatingState(buttonEl);
+            resetUnsubscribeFromAll(buttonEl);
 
-const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> => fastdom.read(() =>
-    labelEl.querySelectorAll('*[name][value]')
-);
+            Promise.all([
+                fastdom.read(() => {
+                    const subscribedNewsletterIds = [];
+                    $(
+                        '.js-manage-account__newsletterCheckbox input:checked'
+                    ).each(inputEl => {
+                        subscribedNewsletterIds.push(inputEl.name);
+                        inputEl.checked = false;
+                    });
+                    return subscribedNewsletterIds;
+                }),
+                getCsrfTokenFromElement(
+                    $('.js-manage-account__newsletterCheckbox').get(0)
+                ),
+            ])
+                .then(([newsletterIds, csrfToken]) =>
+                    submitNewsletterAction(csrfToken, 'remove', newsletterIds)
+                )
+                .then(() => {
+                    removeUpdatingState(buttonEl);
+                });
+        } else {
+            confirmUnsubscriptionFromAll(buttonEl);
+        }
+    });
+};
+
+const bindModalCloser = (buttonEl: HTMLElement): void => {
+    bean.on(buttonEl, 'click', () => {
+        const modalEl: ?Element = buttonEl.closest('.manage-account__modal');
+        if (modalEl) {
+            modalEl.classList.remove('manage-account__modal--active');
+        }
+    });
+};
 
 const bindNewsletterLabelFromSwitchboard = (labelEl: HTMLElement): void => {
-
     bean.on(
         labelEl,
         'change',
@@ -175,18 +179,18 @@ const bindNewsletterLabelFromSwitchboard = (labelEl: HTMLElement): void => {
             Promise.all([
                 getCsrfTokenFromElement(labelEl),
                 getCheckboxInfo(labelEl),
-                addSpinner(labelEl)
+                addSpinner(labelEl),
             ])
-                .then(([token, info])=>
+                .then(([token, info]) =>
                     submitNewsletterAction(
                         token,
-                        info.checked?'add':'remove',
+                        info.checked ? 'add' : 'remove',
                         [info.name]
                     )
                 )
                 .catch((err: Error) => {
                     pushError(err, 'reload');
-                    return flipCheckbox(labelEl)
+                    return flipCheckbox(labelEl);
                 })
                 .then(() => removeSpinner(labelEl));
         },
@@ -194,8 +198,7 @@ const bindNewsletterLabelFromSwitchboard = (labelEl: HTMLElement): void => {
     );
 };
 
-const bindConsentLabelFromSwitchboard= (labelEl: HTMLElement): void => {
-
+const bindConsentLabelFromSwitchboard = (labelEl: HTMLElement): void => {
     bean.on(
         labelEl,
         'change',
@@ -206,13 +209,17 @@ const bindConsentLabelFromSwitchboard= (labelEl: HTMLElement): void => {
             Promise.all([
                 getCsrfTokenFromElement(labelEl),
                 getInputFields(labelEl),
-                addSpinner(labelEl)
+                addSpinner(labelEl),
             ])
-                .then(([token, fields])=>buildFormDataForFields(token, fields))
-                .then((formData: FormData) => submitPartialFormStatus('newsletter',formData))
+                .then(([token, fields]) =>
+                    buildFormDataForFields(token, fields)
+                )
+                .then((formData: FormData) =>
+                    submitPartialFormStatus('newsletter', formData)
+                )
                 .catch((err: Error) => {
                     pushError(err, 'reload');
-                    return flipCheckbox(labelEl)
+                    return flipCheckbox(labelEl);
                 })
                 .then(() => removeSpinner(labelEl));
         },
@@ -221,7 +228,7 @@ const bindConsentLabelFromSwitchboard= (labelEl: HTMLElement): void => {
 };
 
 const enhanceManageAccount = (): void => {
-    $.forEachElement('.js-unsubscribe', unsubscribeFromAll);
+    $.forEachElement('.js-unsubscribe', bindUnsubscribeFromAll);
     $.forEachElement('.js-manage-account__modalCloser', bindModalCloser);
     $.forEachElement(
         '.js-manage-account__consentCheckbox',
