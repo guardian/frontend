@@ -9,8 +9,6 @@
 @import 'item-layouts/fc-item--three-quarters-right';
 @import 'item-layouts/fc-item--three-quarters-tall';
 @import 'item-layouts/fc-item--list';
-// @import 'item-layouts/fc-item--list-compact';
-// @import 'item-layouts/fc-item--list-compact--media';
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--full-media-50';
 @import 'item-layouts/fc-item--full-media-75';
@@ -89,15 +87,6 @@
         @include fc-item--list-media;
     }
 }
-
-// .fc-item--list-compact {
-// }
-
-// .fc-item--list-compact-tablet {
-// }
-
-// .fc-item--list-compact--media {
-// }
 
 .fc-item--three-quarters-tablet {
     @include mq(tablet) {
