@@ -1,4 +1,4 @@
-@(message: String)(implicit context: model.ApplicationContext)
+@(message: String)(implicit context: model.ApplicationContext, request: RequestHeader)
 
 @views.html.football.main(s"Error") {
     <h1>Error!</h1>
