@@ -2,11 +2,12 @@ package common
 
 import model.ApplicationIdentity
 import conf.switches.Switches.PolyfillIO
-import html.HtmlPageHelpers.{ContentCSSFile}
+import html.HtmlPageHelpers.ContentCSSFile
+import play.api.mvc.RequestHeader
 
 object Preload {
 
-  val articleDefaultPreloads: Seq[PreloadAsset] = Seq(
+  def articleDefaultPreloads(implicit request: RequestHeader): Seq[PreloadAsset] = Seq(
     CssPreloadAsset(s"$ContentCSSFile.css"),
     if (conf.switches.Switches.PolyfillIO.isSwitchedOn) {
       ThirdPartyJsPreload(common.Assets.js.polyfillioUrl)
@@ -28,7 +29,7 @@ object Preload {
     JsPreloadAsset("javascripts/graun.commercial.js")
   )
 
-  val config: Map[ApplicationIdentity, Seq[PreloadAsset]] = Map(
+  def config(implicit request: RequestHeader): Map[ApplicationIdentity, Seq[PreloadAsset]] = Map(
     ApplicationIdentity("article") -> articleDefaultPreloads,
     ApplicationIdentity("facia") -> faciaDefaultPreloads
   )
