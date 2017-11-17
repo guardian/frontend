@@ -1,6 +1,7 @@
 package rugby.jobs
 
-import common.{AkkaAgent, Logging}
+import com.gu.Box
+import common.Logging
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import rugby.model._
 import rugby.feed.{MatchNavigation, OptaEvent, OptaFeed, RugbyOptaFeedException}
@@ -12,11 +13,11 @@ import scala.util.Success
 
 
 class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
-  protected val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
-  protected val matchNavContent = AkkaAgent[Map[String, MatchNavigation]](Map.empty)
-  protected val pastScoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
-  protected val pastMatchesStat = AkkaAgent[Map[String, MatchStat]](Map.empty)
-  protected val groupTables =  AkkaAgent[Map[OptaEvent, Seq[GroupTable]]](Map.empty)
+  protected val fixturesAndResultsMatches = Box[Map[String, Match]](Map.empty)
+  protected val matchNavContent = Box[Map[String, MatchNavigation]](Map.empty)
+  protected val pastScoreEvents = Box[Map[String, Seq[ScoreEvent]]](Map.empty)
+  protected val pastMatchesStat = Box[Map[String, MatchStat]](Map.empty)
+  protected val groupTables =  Box[Map[OptaEvent, Seq[GroupTable]]](Map.empty)
 
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 

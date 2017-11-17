@@ -22,7 +22,7 @@ jest.mock('lib/ajax', () => ({
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
-jest.mock('common/modules/asyncCallMerger', () => ({
+jest.mock('common/modules/async-call-merger', () => ({
     mergeCalls(callback) {
         callback.reset = jest.fn();
 

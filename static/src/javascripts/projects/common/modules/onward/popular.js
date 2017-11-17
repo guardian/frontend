@@ -15,24 +15,19 @@ class MostPopular extends Component {
            property that tells us whether it shows most popular or not. */
         const sectionsWithoutPopular = ['info', 'global'];
         const pageSection = config.get('page.section');
+        const hasSection =
+            pageSection && !sectionsWithoutPopular.includes(pageSection);
+
+        this.endpoint = `/most-read${hasSection ? `/${pageSection}` : ''}.json`;
 
         mediator.emit('register:begin', 'popular-in-section');
 
-        this.hasSection =
-            pageSection && !sectionsWithoutPopular.includes(pageSection);
-        this.endpoint = `/most-read${this.hasSection
-            ? `/${pageSection}`
-            : ''}.json`;
-    }
-
-    hasSection: boolean;
-
-    init(): void {
         this.fetch(qwery('.js-popular-trails'), 'html');
     }
 
+    // eslint-disable-next-line class-methods-use-this
     ready() {
-        mediator.emit('modules:popular:loaded', this.elem);
+        mediator.emit('modules:popular:loaded');
         mediator.emit('register:end', 'popular-in-section');
     }
 }

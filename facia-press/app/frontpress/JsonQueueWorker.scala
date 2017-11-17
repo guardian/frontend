@@ -84,16 +84,18 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
             /** Ultimately, we ought to be able to recover from processing the same message twice anyway, as the nature
               * of SQS means you could get the same message delivered twice.
               */
-            queue.delete(receipt) onFailure {
-              case error => log.error(s"Error deleting message $id from queue", error)
+            queue.delete(receipt).failed.foreach {
+              error => log.error(s"Error deleting message $id from queue", error)
             }
 
             consecutiveProcessingErrors.recordSuccess()
 
           case Failure(error) =>
             if (deleteOnFailure) {
-              queue.delete(receipt) onFailure {
-                case e => log.error(s"Error deleting message $id from queue", e)}}
+              queue.delete(receipt).failed.foreach {
+                e => log.error(s"Error deleting message $id from queue", e)
+              }
+            }
             log.error(s"Error processing message $id", error)
             consecutiveProcessingErrors.recordError()
         }
@@ -106,8 +108,8 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
         Future.successful(())
     }
 
-    getRequest onFailure {
-      case error: Throwable => log.error("Encountered error receiving message from queue", error)
+    getRequest.failed.foreach {
+      error: Throwable => log.error("Encountered error receiving message from queue", error)
     }
 
     getRequest.map(_ => ())

@@ -9,7 +9,7 @@ import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
 import services.{CloudWatchStats, OphanApi}
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}
 
 class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
@@ -47,7 +47,7 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
       ophanViewsCount <- fOphanViews
     } yield {
 
-      def metricLastSum(stats: GetMetricStatisticsResult): Long = stats.getDatapoints.headOption.map(_.getSum.longValue).getOrElse(0L)
+      def metricLastSum(stats: GetMetricStatisticsResult): Long = stats.getDatapoints.asScala.headOption.map(_.getSum.longValue).getOrElse(0L)
 
       rawPageViews.set(metricLastSum(rawPageViewsStats))
       googlePageViews.set(metricLastSum(googlePageViewsStats))

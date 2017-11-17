@@ -1,17 +1,10 @@
 package common
 
-import akka.agent.Agent
-
 import scala.concurrent.duration._
 import play.api.{Environment, Mode}
 
 import scala.concurrent.ExecutionContext
 import akka.actor.ActorSystem
-
-object AkkaAgent {
-  implicit lazy val executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global //TODO
-  def apply[T](value: T): Agent[T] = Agent(value)
-}
 
 class AkkaAsync(env: Environment, actorSystem: ActorSystem) {
   implicit val ec: ExecutionContext = actorSystem.dispatcher

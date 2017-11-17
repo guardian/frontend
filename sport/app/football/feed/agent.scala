@@ -1,5 +1,6 @@
 package feed
 
+import com.gu.Box
 import pa._
 import conf.FootballClient
 import org.joda.time.LocalDate
@@ -104,7 +105,7 @@ trait Results extends Logging with implicits.Collections {
 
 class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: TeamNameBuilder, _competition: Competition) extends Fixtures with Results with LeagueTables with implicits.Football {
 
-  private lazy val agent = AkkaAgent(_competition)
+  private lazy val agent = Box(_competition)
 
   def competition: Competition = agent()
 

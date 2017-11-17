@@ -1,7 +1,7 @@
 package test
 
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
-import collection.JavaConversions._
+import collection.JavaConverters._
 import tools.MatchListFeatureTools
 
 @DoNotDiscover class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools with ConfiguredTestSuite  {
@@ -46,7 +46,7 @@ import tools.MatchListFeatureTools
       goTo("/football/fixtures/2012/oct/20") { browser =>
         import browser._
         Then("any links I click should be tracked")
-        $("a").filter(link => Option(link.attribute("data-link-name")).isEmpty).foreach { link =>
+        $("a").asScala.filter(link => Option(link.attribute("data-link-name")).isEmpty).foreach { link =>
           fail(s"Link with text ${link.text} has no data-link-name")
         }
       }

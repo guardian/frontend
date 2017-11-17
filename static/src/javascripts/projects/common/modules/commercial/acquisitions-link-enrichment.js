@@ -66,7 +66,7 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
             data.referrerData = addReferrerData({});
             [...document.getElementsByTagName('iframe')].forEach(iframe => {
                 iframe.contentWindow.postMessage(
-                    data,
+                    JSON.stringify(data),
                     'https://interactive.guim.co.uk'
                 );
             });

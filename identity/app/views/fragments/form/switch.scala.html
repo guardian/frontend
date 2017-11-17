@@ -1,0 +1,55 @@
+@import _root_.form.IdFormHelpers.{Checkbox}
+
+@(
+    title: String,
+    subheading: Option[String],
+    description: Option[String],
+    behaviour: Option[String],
+    field: Field,
+    extraFields: Option[List[play.twirl.api.HtmlFormat.Appendable]] = None,
+    newsletterFrequency: Option[String] = None,
+    newsletterPreview: Option[String] = None
+)(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
+
+<label class="
+    manage-account__switch
+    @{behaviour match {
+        case Some("consent") => "js-manage-account__consentCheckbox"
+        case Some("newsletter") => "js-manage-account__newsletterCheckbox"
+        case _ =>
+    }}
+">
+    <div class="manage-account__switch-content">
+        @fragments.form.checkbox(field, Checkbox(field).args:_*)
+        <div class="manage-account__switch-checkbox"></div>
+        <h3 class="manage-account__switch-title">
+            @title
+            @if(subheading.isDefined){
+                <strong>@subheading</strong>
+            }
+        </h3>
+        @if(description) {
+            <p class="manage-account__switch-copy">
+                @description
+            </p>
+        }
+        @if(extraFields.isDefined){
+            @extraFields
+        }
+        @if(newsletterFrequency.isDefined || newsletterPreview.isDefined) {
+            <div class="manage-account__switch-footer">
+                @if(newsletterFrequency.isDefined){
+                    <div class="manage-account__switch-footer-tidbit">
+                        @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
+                        @newsletterFrequency
+                    </div>
+                }
+                @if(newsletterPreview.isDefined){
+                    <a class="" href="#">
+                        See the latest email
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</label>

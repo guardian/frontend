@@ -2,7 +2,7 @@ package common
 
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import test.ConfiguredTestSuite
-import collection.JavaConversions._
+import collection.JavaConverters._
 
 @DoNotDiscover class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
@@ -16,7 +16,7 @@ import collection.JavaConversions._
         import browser._
         val trails = $(".fc-slice__item")
         Then("I should see content tagged with both tags")
-        trails.length should be > 1
+        trails.asScala.length should be > 1
       }
     }
 
@@ -29,7 +29,7 @@ import collection.JavaConversions._
         val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both the section and the tag")
         $("[data-test-id=header-title]").text.toLowerCase should be ("science + apple")
-        trails.length should be > 10
+        trails.asScala.length should be > 10
       }
     }
 
@@ -41,7 +41,7 @@ import collection.JavaConversions._
         import browser._
         val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both tags")
-        trails.length should be > 10
+        trails.asScala.length should be > 10
       }
     }
 
@@ -53,7 +53,7 @@ import collection.JavaConversions._
         import browser._
         val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both tags")
-        trails.length should be > 5
+        trails.asScala.length should be > 5
       }
     }
   }

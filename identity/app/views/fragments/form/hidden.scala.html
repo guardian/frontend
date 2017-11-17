@@ -1,0 +1,5 @@
+@(field: play.api.data.Field, args: (Symbol, Any)*)
+
+@import play.api.templates.PlayMagic.toHtmlArgs
+
+<input type="hidden" name="@field.name" id="@field.id" value="@field.value" @toHtmlArgs(args.toMap) />

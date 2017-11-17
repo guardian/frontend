@@ -2,6 +2,7 @@ package services
 
 import akka.util.Timeout
 import app.LifecycleComponent
+import com.gu.Box
 import com.gu.facia.api.models.{Front, _}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
@@ -21,7 +22,7 @@ case class CollectionConfigWithId(id: String, config: CollectionConfig)
 
 object ConfigAgent extends Logging {
   implicit lazy val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
-  private lazy val configAgent = AkkaAgent[Option[ConfigJson]](None)
+  private lazy val configAgent = Box[Option[ConfigJson]](None)
 
   def isLoaded(): Boolean = configAgent.get().isDefined
 
@@ -78,10 +79,6 @@ object ConfigAgent extends Logging {
   }
 
   def getConfig(id: String): Option[CollectionConfig] = configAgent.get().flatMap(_.collections.get(id).map(CollectionConfig.make))
-
-  def getConfigAfterUpdates(id: String)(implicit ec: ExecutionContext): Future[Option[CollectionConfig]] =
-    configAgent.future()
-      .map(_.flatMap(_.collections.get(id)).map(CollectionConfig.make))
 
   def getAllCollectionIds: List[String] = {
     val config = configAgent.get()

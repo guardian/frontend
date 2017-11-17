@@ -21,7 +21,7 @@
             data-edition="@{edition.id.toLowerCase}"
             aria-label="Submenu @{topLevelSection.name}"
             role="menu">
-            @topLevelSection.getAllEditionalisedNavLinks(edition).map { sectionItem =>
+            @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
                 <li class="@RenderClasses(Map(
                             "menu-item--home" -> (sectionItem.iconName == "home")
                         ), "menu-item")"
@@ -103,7 +103,7 @@
 
             <ul class="menu-group menu-group--membership"
                 role="menubar">
-                @NavigationHelpers.getMembershipLinks(edition).mostPopular.map { item =>
+                @NavigationHelpers.getMembershipLinks(edition).map { item =>
                     <li class="menu-item hide-on-desktop"
                         data-edition="@{edition.id.toLowerCase}"
                         role="menuitem">
@@ -127,7 +127,7 @@
                 data-edition="@{edition.id.toLowerCase}"
                 role="menubar">
 
-                @NewNavigation.BrandExtensions.getAllEditionalisedNavLinks(edition).map { item =>
+                @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
                     <li class="menu-item hide-on-desktop"
                         role="menuitem">
                         <a class="menu-item__title"
@@ -138,7 +138,7 @@
                     </li>
                 }
 
-                @NewNavigation.OtherLinks.getAllEditionalisedNavLinks(edition).map { item =>
+                @NewNavigation.OtherLinks.getEditionalisedNavLinks(edition).map { item =>
                     <li class="@RenderClasses(Map(
                             "hide-on-desktop" -> (item.title == "the guardian app"),
                             "menu-item--no-border" -> (item.title == "video")
@@ -179,7 +179,7 @@
             <div class="menu-brand-extensions__inner gs-container">
                 @fragments.inlineSvg("guardian-logo-160", "logo", List("menu-brand-extensions__logo"))
                 <ul class="menu-brand-extensions__list">
-                    @NewNavigation.BrandExtensions.getAllEditionalisedNavLinks(edition).map { item =>
+                    @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
                         @brandExtensions(item)
                     }
                 </ul>

@@ -15,10 +15,10 @@ import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
 import model.pressed._
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports._
 import play.api.libs.json._
 import views.support._
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.util.Try
 import implicits.Booleans._
 
@@ -197,7 +197,7 @@ final case class Content(
 
   lazy val linkCounts = LinkTo.countLinks(fields.body) + fields.standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
-  lazy val mainMediaVideo = Jsoup.parseBodyFragment(fields.main).body.getElementsByClass("element-video").headOption
+  lazy val mainMediaVideo = Jsoup.parseBodyFragment(fields.main).body.getElementsByClass("element-video").asScala.headOption
 
   lazy val mainVideoCanonicalPath: Option[String] = mainMediaVideo.flatMap(video => {
     video.attr("data-canonical-url") match {
@@ -503,17 +503,17 @@ final case class Article (
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
   val isPhotoEssay: Boolean = content.isPhotoEssay
-  lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
+  lazy val hasVideoAtTop: Boolean = soupedBody.body().children().asScala.headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
   lazy val hasSupporting: Boolean = {
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-    val leftColElements = soupedBody.body().select("body > *").find(_.classNames.intersect(supportingClasses).nonEmpty)
+    val leftColElements = soupedBody.body().select("body > *").asScala.find(_.classNames.asScala.intersect(supportingClasses).nonEmpty)
     leftColElements.isDefined
   }
 
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
-  lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
+  lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").asScala.nonEmpty
 
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
   lazy val blocks = content.fields.blocks
@@ -824,7 +824,7 @@ final case class Interactive(
   lazy val fallbackEl = {
     val noscriptEls = Jsoup.parseBodyFragment(fields.body).getElementsByTag("noscript")
 
-    if (noscriptEls.nonEmpty) {
+    if (noscriptEls.asScala.nonEmpty) {
       noscriptEls.html()
     } else {
       Jsoup.parseBodyFragment(fields.body).getElementsByTag("figure").html()

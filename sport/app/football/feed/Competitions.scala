@@ -6,7 +6,7 @@ import java.util.Comparator
 
 import model.{Competition, Table, TeamFixture, TeamNameBuilder}
 import org.joda.time.{DateTimeComparator, LocalDate}
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports._
 import pa._
 
 import scala.collection.immutable
@@ -52,7 +52,7 @@ trait Competitions extends implicits.Football {
       -(group.map(_.entries.length) getOrElse competition.leagueTable.length)
     }).headOption
 
-  lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
+  lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted(localDateOrdering)
 
   def nextMatchDates(startDate: LocalDate, numDays: Int): Seq[LocalDate] = matchDates.filter(_ >= startDate).take(numDays)
 

@@ -8,11 +8,11 @@ import conf.Configuration
 import conf.Configuration._
 import org.joda.time.DateTime
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}
 
 case class MaximumMetric(metric: GetMetricStatisticsResult) {
-  lazy val max: Double = metric.getDatapoints.headOption.map(_.getMaximum.doubleValue()).getOrElse(0.0)
+  lazy val max: Double = metric.getDatapoints.asScala.headOption.map(_.getMaximum.doubleValue()).getOrElse(0.0)
 }
 
 object CloudWatch extends Logging {
@@ -95,9 +95,8 @@ object CloudWatch extends Logging {
   )
 
   def withErrorLogging[A](future: Future[A])(implicit executionContext: ExecutionContext): Future[A] = {
-    future onFailure {
-      case exception: Exception =>
-        log.error(s"CloudWatch error: ${exception.getMessage}", exception)
+    future.failed.foreach { exception: Throwable =>
+      log.error(s"CloudWatch error: ${exception.getMessage}", exception)
     }
     future
   }
@@ -142,7 +141,7 @@ object CloudWatch extends Logging {
         latency <- fetchLatencyMetric(loadBalancer)
         healthyHosts <- fetchHealthyHostMetric(loadBalancer)
       } yield {
-        val chartTitle = s"${loadBalancer.name} - ${healthyHosts.getDatapoints.last.getMaximum.toInt} instances"
+        val chartTitle = s"${loadBalancer.name} - ${healthyHosts.getDatapoints.asScala.last.getMaximum.toInt} instances"
         new AwsDualYLineChart(chartTitle, ("Time", "2xx/minute", "latency (secs)"), ChartFormat(Colour.`tone-news-1`, Colour.`tone-comment-1`), oks, latency)
       }
     }
@@ -306,11 +305,11 @@ object CloudWatch extends Logging {
     def compare(pvCount: GetMetricStatisticsResult,
                 pvWithAdCount: GetMetricStatisticsResult): GetMetricStatisticsResult = {
 
-      val pvWithAdCountMap = pvWithAdCount.getDatapoints.map { point =>
+      val pvWithAdCountMap = pvWithAdCount.getDatapoints.asScala.map { point =>
         point.getTimestamp -> point.getSum.toDouble
       }.toMap
 
-      val confidenceValues = pvCount.getDatapoints.foldLeft(List.empty[Datapoint]) {
+      val confidenceValues = pvCount.getDatapoints.asScala.foldLeft(List.empty[Datapoint]) {
         case (soFar, pvCountValue) =>
           val confidenceValue = pvWithAdCountMap.get(pvCountValue.getTimestamp).map {
             pvWithAdCountValue => pvWithAdCountValue * 100 / pvCountValue.getSum.toDouble
@@ -318,7 +317,7 @@ object CloudWatch extends Logging {
           soFar :+ new Datapoint().withTimestamp(pvCountValue.getTimestamp).withSum(confidenceValue)
       }
 
-      new GetMetricStatisticsResult().withDatapoints(confidenceValues)
+      new GetMetricStatisticsResult().withDatapoints(confidenceValues.asJava)
     }
 
     for {
@@ -328,11 +327,11 @@ object CloudWatch extends Logging {
       val confidenceMetric = compare(pageViewCount, pageViewWithAdCount)
       val averageMetric = {
         val dataPoints = confidenceMetric.getDatapoints
-        val average = dataPoints.map(_.getSum.toDouble).sum / dataPoints.length
-        val averageDataPoints = dataPoints map { point =>
+        val average = dataPoints.asScala.map(_.getSum.toDouble).sum / dataPoints.asScala.length
+        val averageDataPoints = dataPoints.asScala map { point =>
           new Datapoint().withTimestamp(point.getTimestamp).withSum(average)
         }
-        new GetMetricStatisticsResult().withDatapoints(averageDataPoints)
+        new GetMetricStatisticsResult().withDatapoints(averageDataPoints.asJava)
       }
       new AwsLineChart(
         name = "Ad Response Confidence",

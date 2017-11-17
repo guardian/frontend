@@ -5,7 +5,7 @@ import play.api.mvc._
 import common.ImplicitControllerExecutionContext
 import services.{IdRequestParser, ReturnUrlVerifier}
 import utils.SafeLogging
-import scala.collection.convert.wrapAsJava._
+import scala.collection.JavaConverters._
 import conf.IdentityConfiguration
 import play.api.libs.ws.WSClient
 import exacttarget.SubscriptionDef
@@ -38,7 +38,7 @@ class ExactTargetController(
             val parameters = subscriptionDef.parameters ++ automaticParameters
 
             val triggeredEmailRequest =
-              exactTargetFactory.createRequest(emailAddress, parameters, "Create", dataExtId.businessUnitId, dataExtId.customerKey)
+              exactTargetFactory.createRequest(emailAddress, parameters.asJava, "Create", dataExtId.businessUnitId, dataExtId.customerKey)
 
             wsClient
               .url(exactTargetFactory.endPoint.toString)
@@ -46,9 +46,8 @@ class ExactTargetController(
                 "Content-Type" -> "text/xml; charset=utf-8",
                 "SOAPAction" -> triggeredEmailRequest.getSoapAction
               )
-              .post(triggeredEmailRequest.getSoapEnvelopeString).onSuccess {
-              case resp =>
-                (resp.xml \\ "CreateResponse" \ "Results") map {
+              .post(triggeredEmailRequest.getSoapEnvelopeString).foreach { resp =>
+                (resp.xml \\ "CreateResponse" \ "Results") foreach {
                   subscriberNode =>
                     val statusCode = (subscriberNode \ "StatusCode").text.trim
                     val statusMessage = (subscriberNode \ "StatusMessage").text.trim

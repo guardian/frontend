@@ -21,12 +21,12 @@ object ProjectSettings {
     maxErrors := 20,
     javacOptions := Seq("-g","-encoding", "utf8"),
     scalacOptions := Seq("-unchecked", "-deprecation", "-target:jvm-1.8",
-      "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings","-Xfatal-warnings"),
+      "-Xcheckinit", "-encoding", "utf8", "-feature","-Xfatal-warnings"),
     publishArtifact in (Compile, packageDoc) := false,
     sources in (Compile,doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
     incOptions := incOptions.value.withNameHashing(true),
-    scalaVersion := "2.11.11",
+    scalaVersion := "2.12.4",
     initialize := {
       val _ = initialize.value
       assert(sys.props("java.specification.version") == "1.8",
@@ -36,20 +36,6 @@ object ProjectSettings {
       val allProjects = ScopeFilter(inAnyProject)
       clean.all(allProjects)
     }.value
-  )
-
-  val frontendIntegrationTestsSettings = Seq (
-    concurrentRestrictions in ThisProject := List(Tags.limit(Tags.Test, 1)),
-    testOptions in Test += Tests.Argument("-oDF"),
-    resolvers ++= Seq(Resolver.typesafeRepo("releases")),
-    libraryDependencies ++= Seq(
-      scalaTest,
-      scalaTestPlus,
-      seleniumJava % Test,
-      jodaTime % Test,
-      jodaConvert % Test,
-      akkaAgent % Test
-    )
   )
 
   val frontendDependencyManagementSettings = Seq(

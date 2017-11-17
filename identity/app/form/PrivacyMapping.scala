@@ -12,11 +12,11 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
   private val dateTimeFormatISO8601: String = "yyyy-MM-dd'T'HH:mm:ssZZ"
 
-  protected def formMapping(implicit messagesProvider: MessagesProvider): Mapping[PrivacyFormData] =
+  def formMapping(implicit messagesProvider: MessagesProvider): Mapping[PrivacyFormData] =
     mapping(
-      "receiveGnmMarketing" -> boolean,     // TODO: statusFields to be removed once GDPR V2 is in PROD
-      "receive3rdPartyMarketing" -> boolean,
-      "allowThirdPartyProfiling" -> boolean,
+      "receiveGnmMarketing" -> optional(boolean),     // TODO: statusFields to be removed once GDPR V2 is in PROD
+      "receive3rdPartyMarketing" -> optional(boolean),
+      "allowThirdPartyProfiling" -> optional(boolean),
       "consents" -> list(
         mapping(
           "actor" -> text,
@@ -43,19 +43,69 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
   * Form specific DTO representing marketing consent subset of User model
   */
 case class PrivacyFormData(
-    receiveGnmMarketing: Boolean,
-    receive3rdPartyMarketing: Boolean,
-    allowThirdPartyProfiling: Boolean,
+    receiveGnmMarketing: Option[Boolean],
+    receive3rdPartyMarketing: Option[Boolean],
+    allowThirdPartyProfiling: Option[Boolean],
     consents: List[Consent]) extends UserFormData{
+
+  /**
+    * FIXME: Fix the semantic discrepancy between toUserUpdateDTO and toUserUpdateDTOAjax.
+    * In the non-ajax case no value means set it to false while in the ajax case no value means use the old value.
+    *
+    * If a checkbox is unchecked then nothing is sent to dotocom identity frontend,
+    * however IDAPI is expecting Some(false)
+    *
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox:
+    *
+    * "Note: If a checkbox is unchecked when its form is submitted, there is no value submitted to
+    * the server to represent its unchecked state (e.g. value=unchecked); the value is not submitted
+    * to the server at all."
+    */
 
   def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO =
     UserUpdateDTO(
       statusFields = Some(oldUserDO.statusFields.copy(
-      receive3rdPartyMarketing = Some(receive3rdPartyMarketing),
-      receiveGnmMarketing = Some(receiveGnmMarketing),
-      allowThirdPartyProfiling = Some(allowThirdPartyProfiling)
+        receive3rdPartyMarketing = Some(receive3rdPartyMarketing.getOrElse(false)),
+        receiveGnmMarketing = Some(receiveGnmMarketing.getOrElse(false)),
+        allowThirdPartyProfiling = Some(allowThirdPartyProfiling.getOrElse(false))
       )),
       consents = Some(consents))
+
+  def toUserUpdateDTOAjax(oldUserDO: User): UserUpdateDTO = {
+
+    val newReceiveGnmMarketing = receiveGnmMarketing match {
+      case None => oldUserDO.statusFields.receiveGnmMarketing
+      case Some(_) => receiveGnmMarketing
+    }
+
+    val newReceive3rdPartyMarketing = receive3rdPartyMarketing match {
+      case None => oldUserDO.statusFields.receive3rdPartyMarketing
+      case Some(_) => receive3rdPartyMarketing
+    }
+
+    val newAllowThirdPartyProfiling = allowThirdPartyProfiling match {
+      case None => oldUserDO.statusFields.allowThirdPartyProfiling
+      case Some(_) => allowThirdPartyProfiling
+    }
+
+    val newConsents = for {
+      oldConsent <- oldUserDO.consents
+      newConsent <- consents
+    } yield {
+      if (oldConsent.consentIdentifier == newConsent.consentIdentifier)
+        newConsent
+      else
+        oldConsent
+    }
+
+    UserUpdateDTO(
+      statusFields = Some(oldUserDO.statusFields.copy(
+        receive3rdPartyMarketing = newReceive3rdPartyMarketing,
+        receiveGnmMarketing = newReceiveGnmMarketing,
+        allowThirdPartyProfiling = newAllowThirdPartyProfiling
+      )),
+      consents = Some(newConsents))
+  }
 }
 
 object PrivacyFormData {
@@ -67,9 +117,9 @@ object PrivacyFormData {
     */
   def apply(userDO: User): PrivacyFormData =
     PrivacyFormData(
-      receiveGnmMarketing = userDO.statusFields.receiveGnmMarketing.getOrElse(false),
-      receive3rdPartyMarketing = userDO.statusFields.receive3rdPartyMarketing.getOrElse(false),
-      allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling.getOrElse(true),
+      receiveGnmMarketing = userDO.statusFields.receiveGnmMarketing,
+      receive3rdPartyMarketing = userDO.statusFields.receive3rdPartyMarketing,
+      allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling,
       consents = if (userDO.consents.isEmpty) defaultConsents else userDO.consents)
 
   private val defaultConsents =

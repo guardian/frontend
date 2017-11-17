@@ -15,7 +15,7 @@ import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
 import play.twirl.api.HtmlFormat
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.util.Try
 
 trait HtmlCleaner {
@@ -27,8 +27,8 @@ object BlockNumberCleaner extends HtmlCleaner {
   private val Block = """<!-- Block (\d*) -->""".r
 
   override def clean(document: Document): Document = {
-    document.getAllElements.foreach { element =>
-      val blockComments = element.childNodes.flatMap { node =>
+    document.getAllElements.asScala.foreach { element =>
+      val blockComments = element.childNodes.asScala.flatMap { node =>
         node.toString.trim match {
           case Block(num) =>
             Option(node.nextSibling).foreach(_.attr("id", s"block-$num"))
@@ -45,7 +45,7 @@ object BlockNumberCleaner extends HtmlCleaner {
 object BlockquoteCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
-    val quotedBlockquotes = document.getElementsByTag("blockquote").filter(_.hasClass("quoted"))
+    val quotedBlockquotes = document.getElementsByTag("blockquote").asScala.filter(_.hasClass("quoted"))
     val quoteSvg = views.html.fragments.inlineSvg("quote", "icon").toString()
     val wrapBlockquoteChildren = (blockquoteElement: Element) => {
       val container = document.createElement("div")
@@ -65,7 +65,7 @@ object BlockquoteCleaner extends HtmlCleaner {
 object PullquoteCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
-    val pullquotes = document.getElementsByTag("aside").filter(_.hasClass("element-pullquote"))
+    val pullquotes = document.getElementsByTag("aside").asScala.filter(_.hasClass("element-pullquote"))
     val openingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("inline-tone-fill")).toString()
     val closingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("closing", "inline-tone-fill")).toString()
 
@@ -84,7 +84,7 @@ case object R2VideoCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
-    val legacyVideos = document.getElementsByTag("video").filter(_.hasClass("gu-video")).filter(_.parent().tagName() != "figure")
+    val legacyVideos = document.getElementsByTag("video").asScala.filter(_.hasClass("gu-video")).filter(_.parent().tagName() != "figure")
 
     legacyVideos.foreach( videoElement => {
       videoElement.wrap("<figure class=\"test element element-video\"></figure>")
@@ -98,9 +98,9 @@ case object R2VideoCleaner extends HtmlCleaner {
 case class RecipeBodyImage(isRecipeArticle: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isRecipeArticle) {
-      document.getElementsByClass("element-image") foreach(_.remove())
-      document.getElementsByTag("aside").filter(_.hasClass("element-pullquote")) foreach( _.remove())
-      document.getElementsByClass("element-rich-link").foreach( _.remove())
+      document.getElementsByClass("element-image").asScala foreach(_.remove())
+      document.getElementsByTag("aside").asScala.filter(_.hasClass("element-pullquote")) foreach( _.remove())
+      document.getElementsByClass("element-rich-link").asScala.foreach( _.remove())
     }
     document
   }
@@ -110,8 +110,8 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
   def clean(body: Document): Document = {
     for {
-      figure <- body.getElementsByTag("figure")
-      image <- figure.getElementsByTag("img").headOption
+      figure <- body.getElementsByTag("figure").asScala
+      image <- figure.getElementsByTag("img").asScala.headOption
       if !(figure.hasClass("element-comment") ||
            figure.hasClass("element-witness") ||
            figure.hasClass("element-atom"))
@@ -188,12 +188,12 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
 
   def findBreakpointWidths(figure: Element): ContentHinting = {
 
-    figure.classNames().map(Some(_)) match {
-      case classes if classes.contains(Supporting.className) => Supporting
-      case classes if classes.contains(Showcase.className) => Showcase
-      case classes if classes.contains(Thumbnail.className) => Thumbnail
-      case classes if classes.contains(Immersive.className) => Immersive
-      case classes if classes.contains(Halfwidth.className) => Halfwidth
+    figure.classNames().asScala.map(Some(_)) match {
+      case classes if classes.asJava.contains(Supporting.className) => Supporting
+      case classes if classes.asJava.contains(Showcase.className) => Showcase
+      case classes if classes.asJava.contains(Thumbnail.className) => Thumbnail
+      case classes if classes.asJava.contains(Immersive.className) => Immersive
+      case classes if classes.asJava.contains(Halfwidth.className) => Halfwidth
       case _ => Inline
     }
   }
@@ -223,7 +223,7 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implici
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
-    links.foreach { link =>
+    links.asScala.foreach { link =>
       if (link.tagName == "a") {
         link.attr("href", LinkTo(link.attr("href"), edition))
         link.attr("data-link-name", dataLinkName)
@@ -242,7 +242,7 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implici
     // <a name="foo">bar</a> -> <a name="foo"></a>bar
     val anchors = body.getElementsByAttribute("name")
 
-    anchors.foreach { anchor =>
+    anchors.asScala.foreach { anchor =>
       if (anchor.tagName == "a") {
         val text = anchor.ownText()
         anchor.empty().after(text)
@@ -265,7 +265,7 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
     }
 
     def truncateElement(charLimit: Int, element: Element): Int = {
-      element.childNodes.foldLeft(charLimit) {
+      element.childNodes.asScala.foldLeft(charLimit) {
         (t, node) =>
           node match {
             case tNode: TextNode => truncateTextNode(t, tNode)
@@ -284,7 +284,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
-    document.getElementsByClass("element-tweet").foreach { tweet =>
+    document.getElementsByClass("element-tweet").asScala.foreach { tweet =>
 
       val tweetData: Option[Tweet] = Option(tweet.attr("data-canonical-url")).flatMap { url =>
         url.split('/').lastOption.flatMap { id =>
@@ -294,7 +294,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
 
       val tweetImage = tweetData.flatMap(_.firstImage)
 
-      tweet.getElementsByClass("twitter-tweet").foreach { element =>
+      tweet.getElementsByClass("twitter-tweet").asScala.foreach { element =>
 
         if (amp) {
           tweetData.foreach { elem =>
@@ -367,8 +367,8 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
     if (article.content.showInRelated) {
 
       // Get all paragraphs which are not contained in a pullquote or in an instagram caption
-      val paragraphs = doc.getElementsByTag("p").filterNot( p =>
-        p.parents.exists { ancestor =>
+      val paragraphs = doc.getElementsByTag("p").asScala.filterNot( p =>
+        p.parents.asScala.exists { ancestor =>
           val inPullquote = ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
           val inInstagramBlock = ancestor.hasClass("instagram-media")
           inPullquote || inInstagramBlock
@@ -421,7 +421,7 @@ object InBodyElementCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     // this code REMOVES unsupported embeds
     if(ShowAllArticleEmbedsSwitch.isSwitchedOff) {
-      val embeddedElements = document.getElementsByTag("figure").filter(_.hasClass("element"))
+      val embeddedElements = document.getElementsByTag("figure").asScala.filter(_.hasClass("element"))
       val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass))
       unsupportedElements.foreach(_.remove())
     }
@@ -431,7 +431,7 @@ object InBodyElementCleaner extends HtmlCleaner {
 
 case class Summary(amount: Int) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    val children = document.body().children().toList
+    val children = document.body().children().asScala.toList
     val para: Option[Element] = children.filter(_.nodeName() == "p").take(amount).lastOption
     // if there is are no p's, just take the first n things (could be a blog)
     para match {
@@ -445,10 +445,10 @@ case class Summary(amount: Int) extends HtmlCleaner {
 case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isPhotoEssay) {
-      document.getElementsByTag("figure").filter(_.hasClass("element-image"))foreach{ images =>
+      document.getElementsByTag("figure").asScala.filter(_.hasClass("element-image"))foreach{ images =>
         images.addClass("element-image--photo-essay")
       }
-      document.getElementsByClass("block-share--article").foreach{ shares =>
+      document.getElementsByClass("block-share--article").asScala.foreach{ shares =>
         shares.remove()
       }
     }
@@ -459,7 +459,7 @@ case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
 case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isPhotoEssay) {
-      document.getElementsByClass("element-pullquote").foreach{ quotes =>
+      document.getElementsByClass("element-pullquote").asScala.foreach{ quotes =>
         quotes.addClass("element-pullquote--photo-essay")
       }
     }
@@ -470,7 +470,7 @@ case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
 case class PhotoEssayCaptions(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isPhotoEssay) {
-      document.getElementsByClass("caption--img").foreach{ captions =>
+      document.getElementsByClass("caption--img").asScala.foreach{ captions =>
         captions.remove()
       }
     }
@@ -481,7 +481,7 @@ case class PhotoEssayCaptions(isPhotoEssay: Boolean) extends HtmlCleaner {
 case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isPhotoEssay) {
-      document.getElementsByTag("figure").filter(_.hasClass("element--halfWidth")).zipWithIndex.foreach{ case(halfWidthImage, index) =>
+      document.getElementsByTag("figure").asScala.filter(_.hasClass("element--halfWidth")).zipWithIndex.foreach{ case(halfWidthImage, index) =>
         if(index % 2 == 0) {
           halfWidthImage.addClass("half-width-odd")
         }
@@ -494,7 +494,7 @@ case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
 case class PhotoEssayBlockQuote(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isPhotoEssay) {
-      document.getElementsByTag("blockquote").foreach{ blockquotes =>
+      document.getElementsByTag("blockquote").asScala.foreach{ blockquotes =>
         if(!blockquotes.children().is(".pullquote-paragraph")){
           blockquotes.addClass("photo-essay-block-quote")
         }
@@ -507,7 +507,7 @@ case class PhotoEssayBlockQuote(isPhotoEssay: Boolean) extends HtmlCleaner {
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
-      document.getElementsByTag("a").foreach{ a =>
+      document.getElementsByTag("a").asScala.foreach{ a =>
         a.addClass("in-body-link--immersive")
       }
     }
@@ -518,7 +518,7 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
 case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isImmersive) {
-      document.getElementsByTag("h2").foreach{ h2 =>
+      document.getElementsByTag("h2").asScala.foreach{ h2 =>
         val beforeH2 = h2.previousElementSibling()
         if (beforeH2 != null) {
           if(beforeH2.hasClass("element--immersive") && beforeH2.hasClass("element-image")) {
@@ -543,7 +543,7 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
 
   override def clean(document: Document): Document = {
     if(isFeature && !isRecipeArticle) {
-      val children = document.body().children().toList
+      val children = document.body().children().asScala.toList
       children.headOption match {
         case Some(p) =>
           if (p.nodeName() == "p") p.html(setDropCap(p))
@@ -551,7 +551,7 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
       }
     }
 
-    document.getElementsByTag("h2").foreach{ h2 =>
+    document.getElementsByTag("h2").asScala.foreach{ h2 =>
         if (isImmersive && h2.text() == "* * *") {
             h2.before("""<hr class="section-rule" />""")
 
@@ -616,14 +616,14 @@ object InteractiveSrcdocCleaner extends HtmlCleaner {
 
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
+    document.getElementsByTag("figcaption").asScala.foreach{ _.addClass("caption caption--img")}
     document
   }
 }
 
 object MainFigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img caption--main")}
+    document.getElementsByTag("figcaption").asScala.foreach{ _.addClass("caption caption--img caption--main")}
     document
   }
 }
@@ -635,11 +635,11 @@ case class RichLinkCleaner(amp: Boolean = false) extends HtmlCleaner {
 
     richLinks
       .addClass("element-rich-link--not-upgraded")
-      .attr("data-component", "rich-link")
-      .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.length} | ${index+1}") }
+      .attr("data-component", "rich-link").asScala
+      .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.asScala.length} | ${index+1}") }
 
     if (!amp) {
-      richLinks
+      richLinks.asScala
         .map( richLink => {
             val link = richLink.getElementsByTag("a").first()
             val href = link.attr("href")
@@ -657,8 +657,8 @@ object MembershipEventCleaner extends HtmlCleaner {
       val membershipEvents = document.getElementsByClass("element-membership")
       membershipEvents
         .addClass("element-membership--not-upgraded")
-        .attr("data-component", "membership-events")
-        .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"membership-event-${membershipEvents.length} | ${index+1}") }
+        .attr("data-component", "membership-events").asScala
+        .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"membership-event-${membershipEvents.asScala.length} | ${index+1}") }
 
       document
     }
@@ -672,8 +672,8 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
   override def clean(document: Document): Document = {
     if (UseAtomsSwitch.isSwitchedOn) {
       for {
-        atomContainer <- document.getElementsByClass("element-atom")
-        bodyElement <- atomContainer.getElementsByTag("gu-atom")
+        atomContainer <- document.getElementsByClass("element-atom").asScala
+        bodyElement <- atomContainer.getElementsByTag("gu-atom").asScala
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomType <- Some(bodyElement.attr("data-atom-type"))
         atomData <- findAtom(atomId)
@@ -722,7 +722,7 @@ case class CommercialMPUForFronts(isNetworkFront: Boolean) extends HtmlCleaner {
 
     val sliceSlot = views.html.fragments.items.facia_cards.sliceSlot
 
-    val containers: List[Element] = document.getElementsByClass("fc-container").toList
+    val containers: List[Element] = document.getElementsByClass("fc-container").asScala.toList
 
     // On mobile, we remove the first container if it is a thrasher on a Network Front
     // and remove a container if it, or the next sibling, is a commercial container
@@ -738,7 +738,7 @@ case class CommercialMPUForFronts(isNetworkFront: Boolean) extends HtmlCleaner {
     }
 
     // On desktop, a MPU slot is simply inserted when there is a slice available
-    val slices: List[Element] = document.getElementsByClass("fc-slice__item--mpu-candidate").toList
+    val slices: List[Element] = document.getElementsByClass("fc-slice__item--mpu-candidate").asScala.toList
 
     for (slice <- slices) {
       slice.append(s"${sliceSlot(slices.indexOf(slice) + 1)}")
@@ -752,7 +752,7 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
 
   override def clean(document: Document): Document = {
 
-    val containers: List[(Element, Int)] = document.getElementsByClass("fc-container").toList.zipWithIndex
+    val containers: List[(Element, Int)] = document.getElementsByClass("fc-container").asScala.toList.zipWithIndex
 
     val minContainers = if (isPaidContent) 1 else 2
 
@@ -764,7 +764,7 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
 
       val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isPaidContent, hasPageSkin)
 
-      val adSlot: Option[Element] = Jsoup.parseBodyFragment(adSlotHtml.toString).body().children().toList.headOption
+      val adSlot: Option[Element] = Jsoup.parseBodyFragment(adSlotHtml.toString).body().children().asScala.toList.headOption
 
       for {
         (container, _) <- containers.lift(containerIndex)
@@ -786,7 +786,7 @@ case class ExplainerCleaner(explainers: Seq[ExplainerAtom]) extends HtmlCleaner 
 
   override def clean(document: Document): Document = {
     document
-      .getElementsByClass("element-interactive")
+      .getElementsByClass("element-interactive").asScala
       .foreach { i =>
         val eid = i.attr("data-canonical-url").drop(prefixLength)
         val eidInTest = eids.find(_.id == eid)

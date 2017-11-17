@@ -8,7 +8,7 @@ import org.jsoup.Jsoup
 import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, Request, RequestHeader, Result}
 import play.twirl.api.Html
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 /*
  * Builds absolute links to the core site (www.theguardian.com)
@@ -77,7 +77,7 @@ object LinkTo extends LinkTo {
 
   // we can assume www.theguardian.com here as this happens before any cleaning
   def countLinks(html: String): LinkCounts = {
-    val links = Jsoup.parseBodyFragment(html).getElementsByTag("a").flatMap(a => Option(a.attr("href")))
+    val links = Jsoup.parseBodyFragment(html).getElementsByTag("a").asScala.flatMap(a => Option(a.attr("href")))
     val guardianLinksCount = links.count(_ contains "www.theguardian.com")
     LinkCounts(
       internal = guardianLinksCount,

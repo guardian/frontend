@@ -25,6 +25,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    SwitchGroup.Commercial,
+    "ab-ias-ad-targeting",
+    "Enables the IAS slot-targeting optimisation.",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val SurveySwitch = Switch(
     SwitchGroup.Commercial,
     "surveys",

@@ -64,7 +64,7 @@ class CommercialLifecycle(
       val msgPrefix = s"Fetching $feedName feed"
       log.info(s"$msgPrefix from ${fetcher.feedMetaData.url} ...")
       val eventualResponse = fetcher.fetch()
-      eventualResponse onFailure {
+      eventualResponse.failed.foreach {
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
@@ -72,8 +72,8 @@ class CommercialLifecycle(
                                    e,
                                    toLogFields(feedName, "fetch", false))
       }
-      eventualResponse onSuccess {
-        case response =>
+      eventualResponse.foreach {
+        response =>
           S3FeedStore.put(feedName, response.feed)
           logInfoWithCustomFields(s"$msgPrefix succeeded in ${response.duration}",
                                   toLogFields(feedName, "fetch", true, Some(response.duration.toSeconds)))
@@ -88,7 +88,7 @@ class CommercialLifecycle(
       val msgPrefix = s"Parsing $feedName feed"
       log.info(s"$msgPrefix ...")
       val parsedFeed = parser.parse(S3FeedStore.get(parser.feedMetaData.name))
-      parsedFeed onFailure {
+      parsedFeed.failed.foreach {
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
@@ -96,8 +96,8 @@ class CommercialLifecycle(
                                    e,
                                    toLogFields(feedName, "parse", false))
       }
-      parsedFeed onSuccess {
-        case feed =>
+      parsedFeed.foreach {
+        feed =>
           logInfoWithCustomFields(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}",
                                   toLogFields(feedName, "parse", true, Some(feed.parseDuration.toSeconds), Some(feed.contents.size)))
       }
@@ -134,7 +134,7 @@ class CommercialLifecycle(
 
     akkaAsync.after1s {
 
-      industries.refresh() onFailure {
+      industries.refresh().failed.foreach {
         case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
       }
 

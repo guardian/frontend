@@ -3,6 +3,7 @@ package model
 import common._
 import contentapi.ContentApiClient
 import _root_.feed.Competitions
+import com.gu.Box
 import pa._
 
 import scala.concurrent.ExecutionContext
@@ -15,7 +16,7 @@ case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String])
 
 object TeamMap extends Logging {
 
-  val teamAgent = AkkaAgent(Map.empty[String, Tag])
+  val teamAgent = Box(Map.empty[String, Tag])
 
   // teamId -> manually curated short name
   val shortNames = Map(

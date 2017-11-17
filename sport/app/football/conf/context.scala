@@ -63,7 +63,7 @@ class FootballLifecycle(
 
     akkaAsync.after1s {
       val competitionUpdate = competitionsService.refreshCompetitionData()
-      competitionUpdate.onSuccess { case _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
+      competitionUpdate.foreach { _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
       competitionsService.refreshMatchDay()
       TeamMap.refresh()(contentApiClient, ec)
     }

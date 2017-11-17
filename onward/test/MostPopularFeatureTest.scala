@@ -1,7 +1,7 @@
 package test
 
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 @DoNotDiscover class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 

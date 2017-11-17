@@ -4,14 +4,12 @@ import java.net.URLEncoder
 
 import actions.AuthenticatedActions.AuthRequest
 import utils.Logging
-
 import idapiclient.IdApiClient
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
 import play.api.mvc._
 import services.{AuthenticatedUser, AuthenticationService, IdentityUrlBuilder}
 
-import scala.concurrent.ExecutionContext
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object AuthenticatedActions {
   type AuthRequest[A] = AuthenticatedRequest[A, AuthenticatedUser]
@@ -28,10 +26,13 @@ class AuthenticatedActions(
 
   def redirectWithReturn(request: RequestHeader, path: String): Result = {
     val returnUrl = URLEncoder.encode(identityUrlBuilder.buildUrl(request.uri), "UTF-8")
-    val signinUrl = request.getQueryString("INTCMP") match {
-      case Some(campaignCode) => s"$path?INTCMP=$campaignCode&returnUrl=$returnUrl"
-      case _ => s"$path?returnUrl=$returnUrl"
-    }
+
+    val paramsToPass =
+      List("INTCMP", "email")
+        .flatMap(name => request.getQueryString(name).map(value => s"&$name=$value"))
+        .mkString
+
+    val signinUrl = s"$path?returnUrl=$returnUrl$paramsToPass"
 
     SeeOther(identityUrlBuilder.buildUrl(signinUrl))
   }
@@ -42,8 +43,29 @@ class AuthenticatedActions(
   def sendUserToReauthenticate(request: RequestHeader): Result =
     redirectWithReturn(request, "/reauthenticate")
 
-  def authAction: AuthenticatedBuilder[AuthenticatedUser] =
-    new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, sendUserToSignin)
+  def sendUserToRegister(request: RequestHeader) : Result =
+    redirectWithReturn(request, "/register")
+
+ private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
+  request.getQueryString("email") match {
+    case None => Future.successful(Left(sendUserToSignin(request)))
+    case Some(email) =>
+      identityApiClient.userFromQueryParam(email, "emailAddress").map {
+        case Right(_) => Left(sendUserToSignin(request)) // user exists
+        case Left(_) => Left(sendUserToRegister(request))
+      }
+  }
+}
+
+  def authRefiner: ActionRefiner[Request, AuthRequest] = new ActionRefiner[Request, AuthRequest] {
+    override val executionContext = ec
+
+    def refine[A](request: Request[A]) =
+      authService.authenticatedUserFor(request) match {
+        case Some(authenticatedUser) => Future.successful(Right(new AuthenticatedRequest(authenticatedUser, request)))
+        case None => checkIdApiForUserAndRedirect(request)
+      }
+  }
 
   def agreeAction(unAuthorizedCallback: (RequestHeader) => Result): AuthenticatedBuilder[AuthenticatedUser] =
     new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
@@ -72,10 +94,16 @@ class AuthenticatedActions(
       if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToReauthenticate(request))
     }
   }
+  // Play will not let you set up an ActionBuilder with a Refiner hence this empty actionBuilder to set up Auth
+  def noOpActionBuilder: DefaultActionBuilder = DefaultActionBuilder(anyContentParser)
+
+  def authAction: ActionBuilder[AuthRequest, AnyContent] =
+    noOpActionBuilder andThen authRefiner
 
   def authActionWithUser: ActionBuilder[AuthRequest, AnyContent] =
     authAction andThen apiVerifiedUserRefiner
 
   def recentlyAuthenticated: ActionBuilder[AuthRequest, AnyContent] =
     authAction andThen recentlyAuthenticatedRefiner andThen apiVerifiedUserRefiner
+
 }

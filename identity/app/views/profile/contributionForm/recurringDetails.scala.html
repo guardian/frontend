@@ -1,3 +1,5 @@
+@import conf.switches.Switches.ProfileShowCancelContributor
+
 @(user: com.gu.identity.model.User)
 <div class="is-hidden js-contribution-info">
     <ul class="details-list u-unstyled js-contribution-details">
@@ -48,4 +50,10 @@
     <div class="js-contribution-paypal is-hidden" data-product="contribution">
         @views.html.profile.payPal()
     </div>
+    @if(ProfileShowCancelContributor.isSwitchedOn) {
+        <div class="js-contribution-cancel is-hidden" data-product="contribution">
+           @views.html.profile.cancelRegularContribution(user)
+        </div>
+    }
+
 </div>

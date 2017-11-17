@@ -3,7 +3,7 @@ package model
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import implicits.Dates._
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Implicits._
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
 import views.support.{ImgSrc, Naked}

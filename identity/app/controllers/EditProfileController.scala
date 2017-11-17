@@ -8,19 +8,18 @@ import form._
 import idapiclient.responses.Error
 import idapiclient.IdApiClient
 import model._
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.i18n.{I18nSupport, MessagesProvider}
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, Writes}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{EmailPrefsData, _}
 import utils.SafeLogging
-
 import scala.concurrent.Future
 
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
 object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
-object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Privacy")
+object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Emails")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
@@ -58,9 +57,8 @@ class EditProfileController(
 
   def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
-  def submitPrivacyForm(): Action[AnyContent] = submitForm(EmailPrefsProfilePage)
 
-  def saveEmailPreferences: Action[AnyContent] =
+  def saveEmailPreferencesAjax: Action[AnyContent] =
     csrfCheck {
       authActionWithUser.async { implicit request =>
         newsletterService.savePreferences().map { form  =>
@@ -78,6 +76,41 @@ class EditProfileController(
         }
       }
     }
+
+  def saveConsentPreferencesAjax: Action[AnyContent] =
+    csrfCheck {
+      authActionWithUser.async { implicit request =>
+        val userDO = request.user
+        val marketingConsentForm: Form[PrivacyFormData] = Form(profileFormsMapping.privacyMapping.formMapping)
+
+        marketingConsentForm.bindFromRequest.fold(
+          formWithErrors => {
+            implicit val formErrorWrites = new Writes[FormError] {
+              def writes(formError: FormError) = Json.obj(
+                "key" -> formError.key,
+                "message" -> formError.message
+              )
+            }
+            val formBindingErrorsJson = Json.toJson(formWithErrors.errors.toList)
+            logger.error(s"Failed to submit marketing consent form for user ${userDO.user.getId}: $formBindingErrorsJson")
+            Future(BadRequest(formBindingErrorsJson))
+          },
+
+          privacyFormData => {
+            identityApiClient.saveUser(userDO.id, privacyFormData.toUserUpdateDTOAjax(userDO), userDO.auth) map {
+              case Left(idapiErrors) =>
+                logger.error(s"Failed to process marketing consent form submission for user ${userDO.getId}: $idapiErrors")
+                InternalServerError(Json.toJson(idapiErrors))
+
+              case Right(updatedUser) =>
+                Ok(s"Successfully updated marketing consent for user ${userDO.getId}")
+            }
+          }
+        ) // end bindFromRequest.fold(
+      } // end authActionWithUser
+    } // end csrfCheck
+
+  def saveConsentPreferences: Action[AnyContent] = submitForm(EmailPrefsProfilePage)
 
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
@@ -113,7 +146,10 @@ class EditProfileController(
 
             case formData: UserFormData =>
               identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
-                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
+                case Left(idapiErrors) =>
+                  logger.error(s"Failed to process ${page.id} form submission for user ${userDO.getId}: $idapiErrors")
+                  profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
+
                 case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
               }
           } // end of success
@@ -164,12 +200,14 @@ case class ProfileForms(
     case PublicEditProfilePage => publicForm
     case AccountEditProfilePage => accountForm
     case EmailPrefsProfilePage => privacyForm
+    case page => throw new RuntimeException(s"Unexpected page $page")
   }
 
   private lazy val activeMapping = activePage match {
     case PublicEditProfilePage => profileFormsMapping.profileMapping
     case AccountEditProfilePage => profileFormsMapping.accountDetailsMapping
     case EmailPrefsProfilePage => profileFormsMapping.privacyMapping
+    case page => throw new RuntimeException(s"Unexpected page $page")
   }
 
   /** Fills all Edit Profile forms (Public, Account, Privacy) with the provided User value */
@@ -219,6 +257,7 @@ case class ProfileForms(
       case PublicEditProfilePage => copy(publicForm = changeFunc(publicForm).asInstanceOf[Form[ProfileFormData]])
       case AccountEditProfilePage => copy(accountForm = changeFunc(accountForm).asInstanceOf[Form[AccountFormData]])
       case EmailPrefsProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
+      case page => throw new RuntimeException(s"Unexpected page $page")
     }
   }
 }
