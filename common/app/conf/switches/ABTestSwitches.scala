@@ -136,4 +136,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 1, 4),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-unruly-performance-test",
+    "Removes 5% of users from Unruly to measure performance impact",
+    owners = Seq(Owner.withGithub("janua")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 2, 28),
+    exposeClientSide = true
+  )
 }

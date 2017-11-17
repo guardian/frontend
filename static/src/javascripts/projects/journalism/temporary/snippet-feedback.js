@@ -1,4 +1,8 @@
 // @flow
+
+// This will will be removed when the atom library is handling
+// the rendering of all snippet atoms
+
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import ophan from 'ophan/ng';

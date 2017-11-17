@@ -18,8 +18,8 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--" + item.pillar.name.toLowerCase(), PillarCards.isSwitchedOn),
-      ("fc-item--" + item.contentType.name.toLowerCase(), PillarCards.isSwitchedOn),
+      ("fc-item--pillar-" + item.pillar.name.toLowerCase(), PillarCards.isSwitchedOn),
+      ("fc-item--type-" + item.contentType.name.toLowerCase(), PillarCards.isSwitchedOn),
       ("fc-item--has-cutout", item.cutOut.isDefined),
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", PillarCards.isSwitchedOff),
       ("fc-item--has-no-image", !item.hasImage),
