@@ -14,6 +14,14 @@
     }
 }
 
+.subnav--expanded {
+    height: auto;
+
+    .subnav-link--toggle-more {
+        float: left;
+    }
+}
+
 // TODO: reset list-style mixin
 .subnav__list {
     box-sizing: border-box;
@@ -22,11 +30,17 @@
     margin: 0;
     // Width of the container minus the rough width of the more toggle
     max-width: calc(100% - 60px);
-    padding: 0 $gs-gutter / 2;
+    padding: 0 3px;
 
     @include mq(mobileLandscape) {
         max-width: calc(100% - 70px);
-        padding: 0 $gs-gutter;
+        padding: 0 ($gs-gutter / 2 + $gs-gutter / 4);
+    }
+
+    .subnav--expanded & {
+        padding-bottom: $gs-baseline;
+        max-width: 100%;
+        width: 100%;
     }
 }
 

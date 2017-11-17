@@ -350,11 +350,11 @@ const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
 
 const expandSubnavSections = (moreButton): void => {
     fastdom
-        .read(() => document.querySelector('.js-expand-subnav-list'))
-        .then(subnavList => {
-            if (subnavList) {
+        .read(() => document.querySelector('.js-expand-subnav'))
+        .then(subnav => {
+            if (subnav) {
                 fastdom.write(() => {
-                    subnavList.classList.add('subnav__list--expanded');
+                    subnav.classList.add('subnav--expanded');
 
                     // Todo: should be able to toggle this, but right now just expands
                     moreButton.innerText = 'less';
