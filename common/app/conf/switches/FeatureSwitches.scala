@@ -525,4 +525,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val ProfileShowCancelContributor = Switch(
+    SwitchGroup.Feature,
+    "profile-show-cancel-contributor",
+    "When ON, the edit profile page will include the cancel contribution button",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 12, 15),
+    exposeClientSide = true
+  )
 }

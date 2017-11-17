@@ -9,6 +9,7 @@ google.com, pub-3746578658400510, DIRECT, f08c47fec0942fa0
 google.com, pub-4979300716531995, DIRECT
 google.com, pub-5024059404294558, DIRECT
 google.com, pub-5107472231497753, DIRECT
+google.com, pub-5272761227951622, DIRECT
 google.com, pub-7526622147976638, DIRECT
 indexexchange.com, 184842, DIRECT
 indexexchange.com, 185406, DIRECT

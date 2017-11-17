@@ -88,13 +88,23 @@ case class PrivacyFormData(
       case Some(_) => allowThirdPartyProfiling
     }
 
+    val newConsents = for {
+      oldConsent <- oldUserDO.consents
+      newConsent <- consents
+    } yield {
+      if (oldConsent.consentIdentifier == newConsent.consentIdentifier)
+        newConsent
+      else
+        oldConsent
+    }
+
     UserUpdateDTO(
       statusFields = Some(oldUserDO.statusFields.copy(
         receive3rdPartyMarketing = newReceive3rdPartyMarketing,
         receiveGnmMarketing = newReceiveGnmMarketing,
         allowThirdPartyProfiling = newAllowThirdPartyProfiling
       )),
-      consents = Some(consents))
+      consents = Some(newConsents))
   }
 }
 

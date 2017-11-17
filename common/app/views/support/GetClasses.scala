@@ -18,8 +18,8 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--" + item.pillar.name.toLowerCase(), mvt.Garnet.isParticipating),
-      ("fc-item--" + item.contentType.name.toLowerCase(), mvt.Garnet.isParticipating),
+      ("fc-item--pillar-" + item.pillar.name.toLowerCase(), mvt.Garnet.isParticipating),
+      ("fc-item--type-" + item.contentType.name.toLowerCase(), mvt.Garnet.isParticipating),
       ("fc-item--has-cutout", item.cutOut.isDefined),
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !mvt.Garnet.isParticipating),
       ("fc-item--has-no-image", !item.hasImage),

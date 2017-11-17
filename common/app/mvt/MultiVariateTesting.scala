@@ -164,7 +164,6 @@ object ActiveTests extends ServerSideABTests {
     ABNewDesktopHeaderControl,
     ABJavascriptRenderingVariant,
     ABJavascriptRenderingControl,
-    ABImageTestService,
     Garnet
   )
 }

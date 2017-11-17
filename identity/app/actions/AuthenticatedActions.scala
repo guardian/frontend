@@ -26,10 +26,13 @@ class AuthenticatedActions(
 
   def redirectWithReturn(request: RequestHeader, path: String): Result = {
     val returnUrl = URLEncoder.encode(identityUrlBuilder.buildUrl(request.uri), "UTF-8")
-    val signinUrl = request.getQueryString("INTCMP") match {
-      case Some(campaignCode) => s"$path?INTCMP=$campaignCode&returnUrl=$returnUrl"
-      case _ => s"$path?returnUrl=$returnUrl"
-    }
+
+    val paramsToPass =
+      List("INTCMP", "email")
+        .flatMap(name => request.getQueryString(name).map(value => s"&$name=$value"))
+        .mkString
+
+    val signinUrl = s"$path?returnUrl=$returnUrl$paramsToPass"
 
     SeeOther(identityUrlBuilder.buildUrl(signinUrl))
   }
