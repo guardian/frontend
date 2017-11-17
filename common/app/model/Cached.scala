@@ -3,8 +3,11 @@ package model
 import conf.switches.Switches.LongCacheSwitch
 import org.joda.time.DateTime
 import com.github.nscala_time.time.Implicits._
+import common.GuardianConfiguration
+import conf.Configuration
 import play.api.http.Writeable
 import play.api.mvc._
+
 import scala.math.{max, min}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
@@ -20,7 +23,7 @@ object CacheTime {
   object LiveBlogActive extends CacheTime(5)
   object RecentlyUpdated extends CacheTime(60)
   // There is lambda which invalidates the cache on press events, so the facia cache time can be high.
-  object Facia extends CacheTime(3600)
+  object Facia extends CacheTime(Configuration.faciatool.adminPressJobLowPushRateInMinutes * 60)
   object ArchiveRedirect extends CacheTime(300)
   object ShareCount extends CacheTime(600)
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
