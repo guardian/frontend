@@ -24,7 +24,7 @@
 <div class="subnav">
     <div class="gs-container">
         @defining(NavigationHelpers.getActivePillar(page)) { case (id, activePillarName) =>
-            <ul class="subnav__list"
+            <ul class="subnav__list js-expand-subnav-list"
                 data-pillar-title="@activePillarName">
 
                 @defining(
@@ -40,7 +40,7 @@
                     <button class="
                         subnav-link
                         subnav-link--toggle-more
-                        js-toggle-nav-section"
+                        js-toggle-more-sections"
                         data-link-name="nav2 : subnav-toggle">
                         more
                     </button>

@@ -329,20 +329,6 @@ const enhanceMenuToggles = (): void => {
     });
 };
 
-const toggleMenuWithOpenSection = () => {
-    const menu = getMenu();
-    const subnav = document.querySelector('.subnav__list');
-    const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
-    const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
-    const section = menu && menu.querySelector(targetSelector);
-
-    if (section) {
-        openMenuSection(section, { scrollIntoView: true });
-    }
-
-    toggleMenu();
-};
-
 const getRecentSearch = (): ?string => local.get(SEARCH_STORAGE_KEY);
 
 const clearRecentSearch = (): void => local.remove(SEARCH_STORAGE_KEY);
@@ -362,11 +348,26 @@ const trackRecentSearch = (): void => {
 
 const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
 
+const expandSubnavSections = (moreButton): void => {
+    fastdom
+        .read(() => document.querySelector('.js-expand-subnav-list'))
+        .then(subnavList => {
+            if (subnavList) {
+                fastdom.write(() => {
+                    subnavList.classList.add('subnav__list--expanded');
+
+                    // Todo: should be able to toggle this, but right now just expands
+                    moreButton.innerText = 'less';
+                });
+            }
+        });
+};
+
 const addEventHandler = (): void => {
     const menu = getMenu();
     const search = menu && menu.querySelector('.js-menu-search');
     const toggleWithMoreButton = document.querySelector(
-        '.js-toggle-nav-section'
+        '.js-toggle-more-sections'
     );
 
     if (menu) {
@@ -400,7 +401,7 @@ const addEventHandler = (): void => {
 
     if (toggleWithMoreButton) {
         toggleWithMoreButton.addEventListener('click', () => {
-            toggleMenuWithOpenSection();
+            expandSubnavSections(toggleWithMoreButton);
         });
     }
 };
