@@ -8,7 +8,7 @@ type OutbrainPageConditions = {
     noMerchSlotsExpected: boolean,
     contributionsTestVisible: boolean,
     emailTestVisible: boolean,
-    storyQuestionsVisible: boolean
+    storyQuestionsVisible: boolean,
 };
 
 type OutbrainDfpConditions = {
@@ -35,9 +35,7 @@ const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
         waitForCheck('isUserInEmailAbTestAndEmailCanRun'),
         waitForCheck('isStoryQuestionsOnPage'),
     ]).then(
-        (
-            [outbrainDisabled, noMerchSlots, contributions, email, story]
-        ) => ({
+        ([outbrainDisabled, noMerchSlots, contributions, email, story]) => ({
             outbrainEnabled: !outbrainDisabled,
             noMerchSlotsExpected: noMerchSlots,
             contributionsTestVisible: contributions,

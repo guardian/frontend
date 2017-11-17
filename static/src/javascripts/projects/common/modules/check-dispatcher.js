@@ -1,6 +1,5 @@
 // @flow
 import config from 'lib/config';
-import mediator from 'lib/mediator';
 import { allEmailCanRun, listCanRun } from 'common/modules/email/run-checks';
 import { getListConfigs } from 'common/modules/email/email-article';
 import {
