@@ -24,7 +24,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
     }
   }
 
-  def redirectToCard(implicit request: RequestHeader, context: ApplicationContext): Action[AnyContent] = Action { implicit request =>
+  def redirectToCard: Action[AnyContent] = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val playerCardType = submission("playerCardType").head
     val playerId = submission("player").head
