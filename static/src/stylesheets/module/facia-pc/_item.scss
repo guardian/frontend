@@ -55,18 +55,16 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item {
     @include mq($until: tablet) {
         width: 100%;
-        padding-left: $gs-gutter * .5;
-        padding-right: $gs-gutter * .5;
+        padding-left: $fc-item-gutter  * 2;
+        padding-right: $fc-item-gutter  * 2;
         box-sizing: border-box;
     }
 
     @include mq(tablet) {
         flex: 1 1 auto;
         display: flex;
-        padding-left: 0;
-        padding-right: 0;
-        margin-left: $gs-gutter * .5;
-        margin-right: 0;
+        margin-left: $fc-item-gutter;
+        margin-right: $fc-item-gutter;
     }
 
     a {
