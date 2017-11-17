@@ -24,7 +24,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
     }
   }
 
-  def redirectToCard(implicit request: RequestHeader, context: ApplicationContext): Action[AnyContent] = Action { request =>
+  def redirectToCard(implicit request: RequestHeader, context: ApplicationContext): Action[AnyContent] = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val playerCardType = submission("playerCardType").head
     val playerId = submission("player").head
@@ -34,7 +34,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
         NoCache(SeeOther(s"/admin/football/player/card/competition/$playerCardType/$playerId/$teamId/$compId"))
       case (_, Some(Seq(startDate))) =>
         NoCache(SeeOther(s"/admin/football/player/card/date/$playerCardType/$playerId/$teamId/$startDate"))
-      case _ => NoCache(NotFound(views.html.football.error("Couldn't find competition or start date in submission")(context, request)))
+      case _ => NoCache(NotFound(views.html.football.error("Couldn't find competition or start date in submission")))
     }
     result
   }
