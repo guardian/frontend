@@ -63,8 +63,6 @@ export const addTrackingCodesToUrl = ({
     });
 
     const params = {
-        REFPVID: config.get('ophan.pageViewId') || 'not_found',
-        INTCMP: campaignCode,
         acquisitionData: JSON.stringify(acquisitionData),
     };
 
