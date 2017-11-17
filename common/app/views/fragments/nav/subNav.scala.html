@@ -24,7 +24,7 @@
 <div class="subnav js-expand-subnav">
     <div class="gs-container">
         @defining(NavigationHelpers.getActivePillar(page)) { case (id, activePillarName) =>
-            <ul class="subnav__list"
+            <ul class="subnav__list js-get-last-child-subnav"
                 data-pillar-title="@activePillarName">
 
                 @defining(
@@ -36,7 +36,7 @@
 
             @* Hiding the 'more' link on the homepage and footer *@
             @if(!isFooter) {
-                <div class="subnav__item subnav__item--toggle-more js-visible hide-from-tablet">
+                <div class="subnav__item subnav__item--toggle-more js-show-more-button is-hidden">
                     <button class="
                         subnav-link
                         subnav-link--toggle-more

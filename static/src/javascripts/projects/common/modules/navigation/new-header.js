@@ -348,6 +348,36 @@ const trackRecentSearch = (): void => {
 
 const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
 
+const showMoreButton = (): void => {
+    fastdom
+        .read(() => {
+            const moreButton = document.querySelector('.js-show-more-button');
+            const subnav = document.querySelector('.js-expand-subnav');
+            const subnavList = document.querySelector(
+                '.js-get-last-child-subnav'
+            );
+
+            if (subnav && subnavList) {
+                const subnavItems = subnavList.querySelectorAll('li');
+                const lastChild = subnavItems[subnavItems.length - 1];
+
+                const lastChildRect = lastChild.getBoundingClientRect();
+                const subnavRect = subnav.getBoundingClientRect();
+
+                return { moreButton, lastChildRect, subnavRect };
+            }
+        })
+        .then(els => {
+            const { moreButton, lastChildRect, subnavRect } = els;
+
+            if (subnavRect.top !== lastChildRect.top) {
+                fastdom.write(() => {
+                    moreButton.classList.remove('is-hidden');
+                });
+            }
+        });
+};
+
 const toggleSubnavSections = (moreButton: HTMLElement): void => {
     fastdom
         .read(() => document.querySelector('.js-expand-subnav'))
@@ -411,6 +441,7 @@ const addEventHandler = (): void => {
 
 export const newHeaderInit = (): void => {
     enhanceMenuToggles();
+    showMoreButton();
     addEventHandler();
     showMyAccountIfNecessary();
     initiateUserAccountDropdown();
