@@ -12,7 +12,6 @@ export const checks = [
     'hasLowPriorityAdLoaded',
     'hasLowPriorityAdNotLoaded',
     'isStoryQuestionsOnPage',
-    'isJTBDSurveyOnPage',
     'isOutbrainBlockedByAds',
     'isOutbrainMerchandiseCompliant',
     'isOutbrainMerchandiseCompliantOrBlockedByAds',

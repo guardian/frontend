@@ -1,3 +1,6 @@
+// This will will be removed when the atom library is handling
+// the rendering of all snippet atoms
+
 .explainer-snippet__image {
     float: left;
     margin-right: $gs-gutter / 2;
@@ -11,13 +14,16 @@
     padding-top: 33%;
 }
 
-.explainer-snippet__image img {
+.explainer-snippet__image amp-img {
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    object-fit: cover;
+
+    img {
+        object-fit: cover;
+    }
 }
 
 .explainer-snippet__item::before {
@@ -26,9 +32,6 @@
     width: 100px;
     height: 0;
     border-top: 1px dotted $neutral-3;
-    @include mq($until: mobileLandscape) {
-        width: 100px;
-    }
 }
 
 .explainer-snippet__heading {
@@ -67,6 +70,7 @@
 
     .explainer-snippet__item {
         padding-left: 17px;
+        padding-bottom: 16px;
 
         p {
             margin-bottom: 0;
@@ -75,7 +79,6 @@
 
     .explainer-snippet__item:not(:last-child) {
         border-left: 1px solid rgba($neutral-3, .5);
-        padding-bottom: 16px;
 
         .explainer-snippet__event-date::before {
             margin-left: -25px;
