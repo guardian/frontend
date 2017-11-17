@@ -7,60 +7,30 @@
     line-height: $veggie-burger-medium - $gs-baseline;
     padding: 0 ($gs-gutter / 4);
     position: relative;
+    transition: color 150ms ease-out;
 
-    &:before,
-    &:after {
-        bottom: 0;
-        content: '';
-        display: block;
-        left: 0;
-        position: absolute;
-    }
-
-    &:before {
-        // Dividing lines
-        border-left: 1px solid $neutral-4;
-        top: 14px;
-        z-index: 1;
-    }
-
-    &:after {
-        // Underlines
-        border-bottom: 0 solid $neutral-3;
-        right: 0;
-        transition: border 150ms ease-out;
-    }
-
-    @include mq($from: mobileMedium, $until: tablet) {
+    @include mq(mobileMedium) {
         font-size: 17px;
     }
 
     @include mq(tablet) {
         height: 42px;
         line-height: 42px;
-        padding: 0 ($gs-gutter / 2 + $gs-gutter / 4) 0 ($gs-gutter / 4);
+    }
 
-        &:before {
-            top: 18px;
-        }
+    &:after {
+        border-bottom: 1px solid $neutral-5;
+        bottom: -1px;
+        content: '';
+        left: $gs-gutter / 4;
+        position: absolute;
+        right: -9999px;
     }
 
     &:hover,
     &:focus {
-        color: $neutral-1;
+        color: $guardian-brand;
         text-decoration: none;
-
-        &:not(.subnav-link--toggle-more):after {
-            border-bottom-width: 4px;
-        }
-    }
-
-    .subnav__item:first-child > & {
-        padding-left: 0;
-
-        &:before {
-            content: none;
-        }
     }
 }
 
@@ -68,17 +38,19 @@
     background: transparent;
     border: 0;
     color: $neutral-2;
-    padding-right: $gs-gutter / 3;
 
+    &:hover,
     &:focus {
+        color: $neutral-2;
         outline: 0;
     }
 }
 
 .subnav-link--current-section {
-    font-weight: 700;
-
-    &:after {
-        border-bottom-width: 4px;
+    &,
+    &:hover,
+    &:focus {
+        font-weight: 700;
+        color: $guardian-brand;
     }
 }
