@@ -153,8 +153,7 @@ object ActiveTests extends ServerSideABTests {
     ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl,
     ABJavascriptRenderingVariant,
-    ABJavascriptRenderingControl,
-    ABImageTestService
+    ABJavascriptRenderingControl
   )
 }
 
