@@ -12,24 +12,24 @@
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
 <label class="
-    manage-account__switchboardLabel
+    manage-account__switch
     @{behaviour match {
         case Some("consent") => "js-manage-account__consentCheckbox"
         case Some("newsletter") => "js-manage-account__newsletterCheckbox"
         case _ =>
     }}
 ">
-    <div class="account__switchboardLabelContent">
+    <div class="manage-account__switch-content">
         @fragments.form.checkbox(field, Checkbox(field).args:_*)
-        <div class="manage-account__switchboardCheckbox"></div>
-        <h3 class="manage-account__switchboardTitle">
+        <div class="manage-account__switch-checkbox"></div>
+        <h3 class="manage-account__switch-title">
             @title
             @if(subheading.isDefined){
                 <strong>@subheading</strong>
             }
         </h3>
         @if(description) {
-            <p class="manage-account__switchboardCopy">
+            <p class="manage-account__switch-copy">
                 @description
             </p>
         }
@@ -37,9 +37,9 @@
             @extraFields
         }
         @if(newsletterFrequency.isDefined || newsletterPreview.isDefined) {
-            <div class="manage-account__switchboardFooter">
+            <div class="manage-account__switch-footer">
                 @if(newsletterFrequency.isDefined){
-                    <div class="manage-account__switchboardTidbit">
+                    <div class="manage-account__switch-footer-tidbit">
                         @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
                         @newsletterFrequency
                     </div>

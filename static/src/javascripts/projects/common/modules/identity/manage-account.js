@@ -13,7 +13,7 @@ import {
     removeSpinner,
     flip as flipCheckbox,
     getInfo as getCheckboxInfo,
-} from './modules/switchboardLabel';
+} from './modules/switch';
 import { addUpdatingState, removeUpdatingState } from './modules/button';
 
 const submitPartialFormStatus = (
@@ -173,7 +173,7 @@ const bindModalCloser = (buttonEl: HTMLElement): void => {
     });
 };
 
-const bindNewsletterLabelFromSwitchboard = (labelEl: HTMLElement): void => {
+const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
     bean.on(
         labelEl,
         'change',
@@ -205,7 +205,7 @@ const bindNewsletterLabelFromSwitchboard = (labelEl: HTMLElement): void => {
     );
 };
 
-const bindConsentLabelFromSwitchboard = (labelEl: HTMLElement): void => {
+const bindConsentSwitch = (labelEl: HTMLElement): void => {
     bean.on(
         labelEl,
         'change',
@@ -239,13 +239,10 @@ const bindConsentLabelFromSwitchboard = (labelEl: HTMLElement): void => {
 const enhanceManageAccount = (): void => {
     $.forEachElement('.js-unsubscribe', bindUnsubscribeFromAll);
     $.forEachElement('.js-manage-account__modalCloser', bindModalCloser);
-    $.forEachElement(
-        '.js-manage-account__consentCheckbox',
-        bindConsentLabelFromSwitchboard
-    );
+    $.forEachElement('.js-manage-account__consentCheckbox', bindConsentSwitch);
     $.forEachElement(
         '.js-manage-account__newsletterCheckbox',
-        bindNewsletterLabelFromSwitchboard
+        bindNewsletterSwitch
     );
     $.forEachElement(
         '.js-manage-account__consentCheckboxesSubmit',

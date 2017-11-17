@@ -1,6 +1,6 @@
 @* FIXME: To be deleted after GDPR goes live *@
 
-@import views.html.fragments.form.switchboardLabel
+@import views.html.fragments.form.switch
 @import _root_.form.IdFormHelpers.nonInputFields
 @import com.gu.identity.model.ConsentText
 @import com.gu.identity.model.ConsentText._
@@ -17,10 +17,10 @@
 }
 
 @consentCheckboxes = {
-    <div class="manage-account__switchboard manage-account__switchboard--narrow">
+    <div class="manage-account__switches manage-account__switches--narrow">
         <ul>
             <li>
-                @switchboardLabel(
+                @switch(
                     title = currentConsents(FirstParty.name),
                     subheading = None,
                     description = None,
@@ -29,7 +29,7 @@
                 )(nonInputFields, messages)
             </li>
             <li>
-                @switchboardLabel(
+                @switch(
                     title = currentConsents(ThirdParty.name),
                     subheading = None,
                     description = None,
@@ -89,10 +89,10 @@
                 <li class="form-field">
                     <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
 
-                    <div class="manage-account__switchboard manage-account__switchboard--narrow">
+                    <div class="manage-account__switches manage-account__switches--narrow">
                         <ul>
                             <li>
-                            @fragments.form.switchboardLabel(
+                            @fragments.form.switch(
                                 title = "Allow matching with third party data",
                                 subheading = None,
                                 description = None,

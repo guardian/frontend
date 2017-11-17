@@ -5,14 +5,14 @@
 $local-gutter: $gs-gutter / 1.75;
 $checkbox-size: $gs-gutter / 1.25;
 
-.manage-account__switchboard ul,
-.manage-account__switchboard li {
+.manage-account__switches ul,
+.manage-account__switches li {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.manage-account__switchboard {
+.manage-account__switches {
 
     ul {
         grid-template-columns: repeat(auto-fit, minmax(gs-span(4), 1fr));
@@ -40,7 +40,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
 }
 
-.manage-account__switchboardLabel {
+.manage-account__switch {
 
     @include fs-textSans(1);
     background-color: $neutral-8;
@@ -49,35 +49,6 @@ $checkbox-size: $gs-gutter / 1.25;
     position: relative;
     display: flex;
     width: 100%;
-
-    .account__switchboardLabelHeader {
-        @include f-header;
-        @include fs-headline(2, true);
-        background-size: 100% auto;
-        background-position: 0 0;
-        background-repeat: no-repeat;
-        padding: $local-gutter ($local-gutter * 1.5);
-        text-transform: lowercase;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        svg {
-            height: 2em;
-            width: 2em;
-            fill: #ffffff;
-            margin-top: $local-gutter;
-        }
-    }
-
-    .account__switchboardLabelContent {
-        width: auto;
-        padding: $local-gutter * 1.5;
-        padding-left: $local-gutter * 2 + $checkbox-size;
-        padding-top: $local-gutter * .9;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-    }
 
     &:hover {
         background-color: darken($neutral-8, 1%);
@@ -89,7 +60,7 @@ $checkbox-size: $gs-gutter / 1.25;
             position: absolute;
             top: 0;
             right: 0;
-            & + .manage-account__switchboardCheckbox {
+            & + .manage-account__switch-checkbox {
                 display: block;
                 width: $checkbox-size;
                 height: $checkbox-size;
@@ -102,42 +73,8 @@ $checkbox-size: $gs-gutter / 1.25;
                 left: $local-gutter;
                 cursor: pointer;
             }
-            &:checked + .manage-account__switchboardCheckbox {
+            &:checked + .manage-account__switch-checkbox {
                 background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20fill%3D%22%23005689%22%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')  }
-        }
-    }
-
-    .manage-account__switchboardTitle {
-        @include fs-bodyCopy(1);
-        font-weight: 400;
-        margin-bottom: $local-gutter * .5;
-        cursor: pointer;
-        display: block;
-    }
-
-    .manage-account__switchboardCopy {
-        cursor: pointer;
-        opacity: .9;
-        flex: 1 1 auto;
-    }
-
-    .manage-account__switchboardTidbit {
-        @include fs-textSans(1);
-        opacity: .75;
-        svg {
-            vertical-align: -10%;
-            margin-right: .25em;
-        }
-    }
-
-    .manage-account__switchboardFooter {
-        margin-top: $local-gutter * 2;
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-
-        > :last-child {
-            text-align: right;
         }
     }
 
@@ -164,7 +101,7 @@ $checkbox-size: $gs-gutter / 1.25;
         margin-top: 0;
 
         &:before {
-            animation: manage-account__switchboardLoading 1s infinite both;
+            animation: manage-account__switch-anim-loading 1s infinite both;
             opacity: 1;
         }
 
@@ -173,14 +110,14 @@ $checkbox-size: $gs-gutter / 1.25;
         }
 
         input[type=checkbox],
-        .manage-account__switchboardCheckbox {
+        .manage-account__switch-checkbox {
             display: none!important;
         }
     }
 
     &.is-just-updated {
         &:before {
-            animation: manage-account__switchboardLoaded .5s 1 both;
+            animation: manage-account__switch-anim-loaded .5s 1 both;
             background-color: $news-main-2;
             opacity: 1;
         }
@@ -188,7 +125,70 @@ $checkbox-size: $gs-gutter / 1.25;
 
 }
 
-@keyframes manage-account__switchboardLoading {
+.manage-account__switch-header {
+    @include f-header;
+    @include fs-headline(2, true);
+    background-size: 100% auto;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    padding: $local-gutter ($local-gutter * 1.5);
+    text-transform: lowercase;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    svg {
+        height: 2em;
+        width: 2em;
+        fill: #ffffff;
+        margin-top: $local-gutter;
+    }
+}
+
+.manage-account__switch-content {
+    width: auto;
+    padding: $local-gutter * 1.5;
+    padding-left: $local-gutter * 2 + $checkbox-size;
+    padding-top: $local-gutter * .9;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.manage-account__switch-title {
+    @include fs-bodyCopy(1);
+    font-weight: 400;
+    margin-bottom: $local-gutter * .5;
+    cursor: pointer;
+    display: block;
+}
+
+.manage-account__switch-copy {
+    cursor: pointer;
+    opacity: .9;
+    flex: 1 1 auto;
+}
+
+.manage-account__switch-footer-tidbit {
+    @include fs-textSans(1);
+    opacity: .75;
+    svg {
+        vertical-align: -10%;
+        margin-right: .25em;
+    }
+}
+
+.manage-account__switch-footer {
+    margin-top: $local-gutter * 2;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    > :last-child {
+        text-align: right;
+    }
+}
+
+@keyframes manage-account__switch-anim-loading {
     from {
         transform: translateX(-50%) scaleX(.75);
     }
@@ -196,7 +196,8 @@ $checkbox-size: $gs-gutter / 1.25;
         transform: translateX(100%) scaleX(1) ;
     }
 }
-@keyframes manage-account__switchboardLoaded {
+
+@keyframes manage-account__switch-anim-loaded {
     from {
         transform: translateX(-50%) scaleX(.1);
     }
