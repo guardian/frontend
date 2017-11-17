@@ -49,4 +49,35 @@ x x x x x x x x x x x x x x x x x x
             @include fc-sublinks--below;
         }
     }
+
+    &.fc-item--has-cutout {
+        // to show on slices where we're hiding standfirst for half cards but still need them on has-cutout
+        .fc-item__standfirst {
+            display: block;
+        }
+
+        .fc-item__standfirst {
+            padding-right: gs-span(2) + $gs-gutter * 2;
+
+            @include mq(desktop) {
+                padding-right: gs-span(3.5);
+            }
+        }
+    }
+
+    .fc-item__avatar {
+        height: gs-height(7);
+    }
+
+    .fc-item__avatar {
+        height: gs-height(5);
+
+        @include mq(desktop) {
+            height: gs-height(6);
+        }
+    }
+
+    .fc-item__avatar__media {
+        right: -15%;
+    }
 }
