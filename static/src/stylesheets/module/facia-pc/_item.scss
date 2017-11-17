@@ -55,8 +55,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item {
     @include mq($until: tablet) {
         width: 100%;
-        padding-left: $fc-item-gutter  * 2;
-        padding-right: $fc-item-gutter  * 2;
         box-sizing: border-box;
     }
 
