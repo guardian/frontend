@@ -368,12 +368,14 @@ const showMoreButton = (): void => {
             }
         })
         .then(els => {
-            const { moreButton, lastChildRect, subnavRect } = els;
+            if (els) {
+                const { moreButton, lastChildRect, subnavRect } = els;
 
-            if (subnavRect.top === lastChildRect.top) {
-                fastdom.write(() => {
-                    moreButton.classList.add('is-hidden');
-                });
+                if (subnavRect.top === lastChildRect.top) {
+                    fastdom.write(() => {
+                        moreButton.classList.add('is-hidden');
+                    });
+                }
             }
         });
 };
