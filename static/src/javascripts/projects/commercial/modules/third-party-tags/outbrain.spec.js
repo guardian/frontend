@@ -75,7 +75,6 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
-            resolveCheck('isJTBDSurveyOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).not.toHaveBeenCalled();
@@ -90,7 +89,6 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
-            resolveCheck('isJTBDSurveyOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();
@@ -105,7 +103,6 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
-            resolveCheck('isJTBDSurveyOnPage', false);
             // isOutbrainBlockedByAds checks
             resolveCheck('isOutbrainBlockedByAds', true);
             resolveCheck('isOutbrainMerchandiseCompliant', false);
@@ -122,7 +119,6 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
-            resolveCheck('isJTBDSurveyOnPage', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
             resolveCheck('isOutbrainBlockedByAds', false);
             resolveCheck('isOutbrainMerchandiseCompliant', true);
@@ -142,7 +138,6 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', true);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
-            resolveCheck('isJTBDSurveyOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
@@ -159,7 +154,6 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', true);
             resolveCheck('isStoryQuestionsOnPage', false);
-            resolveCheck('isJTBDSurveyOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
@@ -176,24 +170,6 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', true);
-            resolveCheck('isJTBDSurveyOnPage', false);
-
-            return initOutbrain().then(() => {
-                expect(load).toHaveBeenCalledWith('nonCompliant');
-            });
-        });
-
-        it('should load a non compliant component if jtbd survey on page', () => {
-            // isOutbrainDisabled check
-            resolveCheck('isOutbrainDisabled', false);
-            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            resolveCheck('isOutbrainBlockedByAds', false);
-            resolveCheck('isOutbrainMerchandiseCompliant', false);
-            // editorial tests
-            resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
-            resolveCheck('isStoryQuestionsOnPage', false);
-            resolveCheck('isJTBDSurveyOnPage', true);
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
@@ -210,7 +186,6 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
-            resolveCheck('isJTBDSurveyOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();

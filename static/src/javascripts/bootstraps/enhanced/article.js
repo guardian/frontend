@@ -18,7 +18,6 @@ import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog
 import { initTrails } from 'bootstraps/enhanced/trail';
 import ophan from 'ophan/ng';
 import { SnippetFeedback } from 'journalism/tmp/snippet-feedback';
-import { init as initJTBD } from 'journalism/jtbd-survey';
 
 const modules = {
     initCmpParam() {
@@ -67,7 +66,6 @@ const init = () => {
     handleQuizCompletion();
     storyQuestions.init();
     SnippetFeedback();
-    initJTBD();
 };
 
 export { init };
