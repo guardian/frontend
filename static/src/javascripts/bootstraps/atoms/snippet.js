@@ -5,7 +5,7 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { comready } from 'lib/comready';
 import { send } from 'commercial/modules/messenger/send';
-import { SnippetFeedback } from 'journalism/tmp/snippet-feedback';
+import { SnippetFeedback } from 'journalism/temporary/snippet-feedback';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
