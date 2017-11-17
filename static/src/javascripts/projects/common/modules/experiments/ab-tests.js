@@ -5,12 +5,14 @@ import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquis
 import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import { outstreamFrequencyCapHoldback } from 'common/modules/experiments/tests/outstream-cap-holdback';
 import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
+import { unrulyPerformanceTest } from 'common/modules/experiments/tests/unruly-performance';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     paidContentVsOutbrain2,
     getAcquisitionTest(),
     acquisitionsEpicElectionInteractiveEnd,
     outstreamFrequencyCapHoldback,
+    unrulyPerformanceTest,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
