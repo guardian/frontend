@@ -348,16 +348,19 @@ const trackRecentSearch = (): void => {
 
 const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
 
-const expandSubnavSections = (moreButton): void => {
+const toggleSubnavSections = (moreButton: HTMLElement): void => {
     fastdom
         .read(() => document.querySelector('.js-expand-subnav'))
         .then(subnav => {
             if (subnav) {
                 fastdom.write(() => {
-                    subnav.classList.add('subnav--expanded');
+                    const isOpen = subnav.classList.contains(
+                        'subnav--expanded'
+                    );
 
-                    // Todo: should be able to toggle this, but right now just expands
-                    moreButton.innerText = 'less';
+                    subnav.classList.toggle('subnav--expanded');
+
+                    moreButton.innerText = isOpen ? 'more' : 'less';
                 });
             }
         });
@@ -401,7 +404,7 @@ const addEventHandler = (): void => {
 
     if (toggleWithMoreButton) {
         toggleWithMoreButton.addEventListener('click', () => {
-            expandSubnavSections(toggleWithMoreButton);
+            toggleSubnavSections(toggleWithMoreButton);
         });
     }
 };
