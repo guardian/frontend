@@ -1,0 +1,62 @@
+.fc-sublink {
+    position: relative;
+    padding-top: $gs-baseline * .25;
+    margin: $gs-baseline * .75 0;
+
+    a {
+        display: block;
+        // make sure sublink always clickable, even on mobile/tablet
+        z-index: 1 !important;
+    }
+}
+
+.fc-sublink__title {
+    @include fs-headline(1);
+    color: $neutral-1;
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+
+    &:before {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+        width: 40%;
+        border-top: 1px solid $neutral-3;
+    }
+
+    .fc-sublink__kicker {
+        float: left;
+        margin-right: .2em;
+    }
+}
+
+@mixin fc-sublinks--horizontal {
+    .fc-sublinks {
+        display: flex;
+        margin-left: $fc-item-gutter;
+        margin-right: $fc-item-gutter;
+    }
+
+    .fc-sublink {
+        flex: 1 1 100%;
+
+        & + * {
+            margin-left: $gs-gutter / 2;
+        }
+    }
+}
+
+@mixin fc-sublinks--below {
+    .fc-item__footer--vertical {
+        display: none;
+    }
+
+    .fc-item__footer--horizontal {
+        display: block;
+    }
+
+    @include fc-sublinks--horizontal;
+}
