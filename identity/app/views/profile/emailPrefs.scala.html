@@ -1,10 +1,7 @@
 @import form.IdFormHelpers.nonInputFields
 @import model.{EmailNewsletter, EmailNewsletters}
 @import views.html.fragments.form.radioField
-@import views.support.RenderClasses
 @import views.support.`package`.Seq2zipWithRowInfo
-@import common.LinkTo
-@import conf.Configuration
 
 @import services.EmailPrefsData
 
@@ -23,23 +20,9 @@
             @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
 
                 <li>
-
-                    @fragments.form.switch(
-                        title = newsletter.name,
-                        subheading = newsletter.subheading,
-                        description = Some(newsletter.description),
-                        behaviour = Some("newsletter"),
-                        field = new Field(
-                            form = emailPrefsForm,
-                            name = newsletter.listId.toString(),
-                            constraints = Seq(),
-                            format = None,
-                            errors = Seq(),
-                            value = Some(newsletter.subscribedTo(emailSubscriptions).toString())
-                        ),
-                        newsletterPreview = newsletter.exampleUrl,
-                        newsletterFrequency = Some(newsletter.frequency)
-                    )(nonInputFields, messages)
+                    @fragments.form.switchNewsletter(
+                        newsletter = newsletter
+                    )(nonInputFields, messages, request, emailPrefsForm, emailSubscriptions)
                 </li>
             }
         </ul></div>
