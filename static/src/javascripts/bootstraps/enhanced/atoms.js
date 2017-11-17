@@ -29,7 +29,7 @@ const bootstrapAtom = <A>(atomMaker: AtomMaker<A>, atomType: AtomType) => {
 const initAtoms = () => {
     if (config.get('page.atomTypes.guide')) {
         require.ensure(
-            ['@guardian/atom-renderer/dist/guide/article/index.css'],
+            [],
             require => {
                 require('@guardian/atom-renderer/dist/guide/article/index.css');
                 const atomMaker = require('@guardian/atom-renderer/dist/guide/article/index');
@@ -41,7 +41,7 @@ const initAtoms = () => {
 
     if (config.get('page.atomTypes.profile')) {
         require.ensure(
-            ['@guardian/atom-renderer/dist/profile/article/index.css'],
+            [],
             require => {
                 require('@guardian/atom-renderer/dist/profile/article/index.css');
                 const atomMaker = require('@guardian/atom-renderer/dist/profile/article/index');
@@ -53,7 +53,7 @@ const initAtoms = () => {
 
     if (config.get('page.atomTypes.qanda')) {
         require.ensure(
-            ['@guardian/atom-renderer/dist/qanda/article/index.css'],
+            [],
             require => {
                 require('@guardian/atom-renderer/dist/qanda/article/index.css');
                 const atomMaker = require('@guardian/atom-renderer/dist/qanda/article/index');
@@ -65,7 +65,7 @@ const initAtoms = () => {
 
     if (config.get('page.atomTypes.timeline')) {
         require.ensure(
-            ['@guardian/atom-renderer/dist/timeline/article/index.css'],
+            [],
             require => {
                 require('@guardian/atom-renderer/dist/timeline/article/index.css');
                 const atomMaker = require('@guardian/atom-renderer/dist/timeline/article/index');
