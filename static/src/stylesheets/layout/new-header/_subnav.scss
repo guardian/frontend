@@ -30,7 +30,7 @@
     margin: 0;
     // Width of the container minus the rough width of the more toggle
     max-width: calc(100% - 60px);
-    padding: 0 3px;
+    padding: 0 ($gs-gutter / 4);
 
     @include mq(mobileLandscape) {
         max-width: calc(100% - 70px);
