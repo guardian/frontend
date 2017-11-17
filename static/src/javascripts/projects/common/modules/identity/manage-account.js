@@ -236,10 +236,24 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
     );
 };
 
+const toggleFormatModal = (buttonEl: HTMLElement): void => {
+    bean.on(buttonEl, 'click', () => {
+        fastdom.write(() => {
+            $('.manage-account__modal--newsletterFormat').addClass(
+                'manage-account__modal--active'
+            );
+        });
+    });
+};
+
 const enhanceManageAccount = (): void => {
     $.forEachElement('.js-unsubscribe', bindUnsubscribeFromAll);
     $.forEachElement('.js-manage-account__modalCloser', bindModalCloser);
     $.forEachElement('.js-manage-account__consentCheckbox', bindConsentSwitch);
+    $.forEachElement(
+        '.js-email-subscription__formatFieldsetToggle',
+        toggleFormatModal
+    );
     $.forEachElement(
         '.js-manage-account__newsletterCheckbox',
         bindNewsletterSwitch
