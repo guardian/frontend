@@ -1,5 +1,5 @@
 @import layout.ContentWidths.MainMedia
-@import views.support.{ImgSrc, RenderClasses, ImageService}
+@import views.support.{ImgSrc, RenderClasses}
 
 @(
     picture: model.ImageMedia,
@@ -48,10 +48,10 @@
     @widths.breakpoints.map { breakpointWidth =>
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
         sizes="@breakpointWidth.width"
-        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true)(ImageService.test)" />
+        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true)" />
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
         sizes="@breakpointWidth.width"
-        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))(ImageService.test)" />
+        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))" />
     }
 
     <!--[if IE 9]></video><![endif]-->
