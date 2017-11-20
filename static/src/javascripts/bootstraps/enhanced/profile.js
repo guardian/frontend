@@ -42,7 +42,7 @@ const initAccountProfile = (): void => {
 };
 
 const initProfile = (): void => {
-    const modules = [
+    const modules:Array<Function> = [
         initFormstack,
         forgottenEmail,
         passwordToggle,
@@ -55,9 +55,9 @@ const initProfile = (): void => {
         initPublicProfile,
     ];
 
-    const exceptions = [];
+    const exceptions:Array<Error> = [];
 
-    modules.map(module => {
+    modules.map((module:Function):(void|Error) => {
         try {
             return module();
         } catch (err) {
@@ -66,7 +66,7 @@ const initProfile = (): void => {
         }
     });
 
-    exceptions.map(err => {
+    exceptions.map((err:Error) => {
         throw err;
     });
 };
