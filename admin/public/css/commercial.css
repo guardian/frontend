@@ -62,7 +62,7 @@ th, td {
     color: limegreen;
 }
 
-.error {
+dl.error, dd.error {
     color: darkred;
     font-weight: bold;
 }
