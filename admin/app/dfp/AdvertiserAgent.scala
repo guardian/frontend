@@ -1,18 +1,18 @@
 package dfp
 
-import common.AkkaAgent
+import com.gu.Box
 import common.dfp.GuAdvertiser
+import tools.BlockingOperations
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object AdvertiserAgent {
+class AdvertiserAgent(blockingOperations: BlockingOperations, dfpApi: DfpApi) {
 
-  private lazy val cache = AkkaAgent(Seq.empty[GuAdvertiser])
+  private lazy val cache = Box(Seq.empty[GuAdvertiser])
 
   def refresh()(implicit executionContext: ExecutionContext): Future[Seq[GuAdvertiser]] = {
-    cache alterOff { oldData =>
-      val freshData = DfpApi.getAllAdvertisers
-      if (freshData.nonEmpty) freshData else oldData
+    blockingOperations.executeBlocking(dfpApi.getAllAdvertisers).flatMap { freshData =>
+      cache.alter(if (freshData.nonEmpty) freshData else _)
     }
   }
 

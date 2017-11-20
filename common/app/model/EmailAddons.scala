@@ -231,7 +231,17 @@ case object FashionStatement extends FrontEmailMetadata {
 
 case object TheGuardianB2b extends FrontEmailMetadata {
   val name = "The Guardian B2b"
-  override val banner = Some("the-guardian-b2b.png")
+  override val banner = Some("business-view.png")
+}
+
+case object BusinessView extends FrontEmailMetadata {
+  val name = "Business View"
+  override val banner = Some("business-view.png")
+}
+
+case object OpinionUs extends FrontEmailMetadata {
+  val name = "Opinion Us"
+  override val banner = Some("opinion-us.png")
 }
 
 object EmailAddons {
@@ -276,7 +286,9 @@ object EmailAddons {
     TheLongRead,
     TheCityscape,
     FashionStatement,
-    TheGuardianB2b
+    BusinessView,
+    TheGuardianB2b,
+    OpinionUs
   )
 
   implicit class EmailContentType(p: Page) {

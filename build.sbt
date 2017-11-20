@@ -7,7 +7,7 @@ import com.gu.ProjectSettings._
 
 val common = library("common").settings(
   libraryDependencies ++= Seq(
-    akkaAgent,
+    guBox,
     apacheCommonsMath3,
     awsCore,
     awsCloudwatch,
@@ -32,7 +32,7 @@ val common = library("common").settings(
     rome,
     romeModules,
     scalaCheck,
-    scalajTime,
+    nScalaTime,
     ws,
     faciaFapiScalaClient,
     closureCompiler,
@@ -158,10 +158,6 @@ val preview = application("preview").dependsOn(
   onward
 ).settings(
 )
-
-val integrationTests = Project("integrated-tests", file("integrated-tests"))
-  .settings(frontendCompilationSettings:_*)
-  .settings(frontendIntegrationTestsSettings:_*)
 
 val rss = application("rss")
   .dependsOn(commonWithTests)

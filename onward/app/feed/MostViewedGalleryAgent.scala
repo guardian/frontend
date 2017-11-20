@@ -1,14 +1,16 @@
 package feed
 
+import com.gu.Box
 import contentapi.ContentApiClient
 import common._
 import model.RelatedContentItem
+
 import scala.concurrent.{ExecutionContext, Future}
 import services.OphanApi
 
 class MostViewedGalleryAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
-  private val agent = AkkaAgent[Seq[RelatedContentItem]](Nil)
+  private val agent = Box[Seq[RelatedContentItem]](Nil)
 
   def mostViewedGalleries(): Seq[RelatedContentItem] = agent()
 

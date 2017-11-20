@@ -12,7 +12,7 @@ import conf.Configuration.contentApi
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.{Content, Trail}
 import org.joda.time.DateTime
-import org.scala_tools.time.Implicits._
+import com.github.nscala_time.time.Implicits._
 
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
@@ -104,7 +104,7 @@ trait MonitoredContentApiClientLogic extends ContentApiClientLogic with ApiQuery
     val futureContent = _httpClient.GET(url, headers) map { response: Response =>
       HttpResponse(response.body, response.status, response.statusText)
     }
-    futureContent.onFailure{ case t =>
+    futureContent.failed.foreach { t =>
       val tryDecodedUrl: String = Try(java.net.URLDecoder.decode(url, "UTF-8")).getOrElse(url)
       log.error(s"$t: $tryDecodedUrl")}
     futureContent

@@ -5,7 +5,7 @@ import model.Article
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpAd, AmpAdDataSlot, HtmlCleaner}
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 object AmpAdCleaner {
   val AD_LIMIT = 8
@@ -97,7 +97,7 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
   }
 
   override def clean(document: Document): Document = {
-    val children = document.body().children().toList
+    val children = document.body().children().asScala.toList
     val adsAfterAndEnd = AmpAdCleaner.findElementsNeedingAdsAfter(children)
     adsAfterAndEnd.foreach(adAfter) // side effects =(
     document

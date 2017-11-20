@@ -14,7 +14,7 @@ import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Implicits._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
@@ -241,6 +241,8 @@ final case class MetaData (
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
 
+  val shouldBlockAnalytics: Boolean = id.contains("help/ng-interactive/2017/mar/17/contact-the-guardian-securely")
+
   val requiresMembershipAccess: Boolean = membershipAccess.nonEmpty
 
   val hasSlimHeader: Boolean =
@@ -424,10 +426,11 @@ case class MediaAtomPage(
 case class StoryQuestionsAtomPage(
   override val atom: StoryQuestionsAtom,
   override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
+  override val withVerticalScrollbar: Boolean,
+  val inApp: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "storyquestions"
-  override val body = views.html.fragments.atoms.storyquestions(atom, isAmp = false)
+  override val body = views.html.fragments.atoms.storyquestions(atom, isAmp = false, inApp = inApp)
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Story questions"),

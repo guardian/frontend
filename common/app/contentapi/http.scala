@@ -36,13 +36,13 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
     val response = request.withHttpHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
 
     // record metrics
-    response.onSuccess {
+    response.foreach {
       case r if r.status == 404 => ContentApi404Metric.increment()
       case r if r.status == 200 => ContentApiMetrics.HttpLatencyTimingMetric.recordDuration(currentTimeMillis - start)
       case _ =>
     }
 
-    response.onFailure {
+    response.failed.foreach {
       case e: TimeoutException =>
         log.warn(s"Content API TimeoutException for $url in ${currentTimeMillis - start}: $e")
         ContentApiMetrics.HttpTimeoutCountMetric.increment()

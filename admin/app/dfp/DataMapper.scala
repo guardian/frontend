@@ -5,7 +5,10 @@ import common.dfp._
 import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
 
 // These mapping functions use libraries that are only available in admin to create common DFP data models.
-object DataMapper {
+class DataMapper(adUnitService: AdUnitService,
+                 placementService: PlacementService,
+                 customTargetingService: CustomTargetingService,
+                 customFieldService: CustomFieldService) {
 
   def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
     val ancestors = toSeq(dfpAdUnit.getParentPath)
@@ -13,42 +16,25 @@ object DataMapper {
     GuAdUnit(dfpAdUnit.getId, ancestorNames :+ dfpAdUnit.getName, dfpAdUnit.getStatus.getValue)
   }
 
-  def toGuCustomFieldOption(option: CustomFieldOption): GuCustomFieldOption =
-    GuCustomFieldOption(option.getId, option.getDisplayName)
-
-  def toGuCustomField(dfpCustomField: CustomField): GuCustomField = {
-
-    val options: List[GuCustomFieldOption] = {
-      dfpCustomField match {
-        case dropdown: DropDownCustomField => dropdown.getOptions.toList
-        case _ => Nil
-        }
-      } map toGuCustomFieldOption
-
-    GuCustomField(dfpCustomField.getId, dfpCustomField.getName, dfpCustomField.getDescription,
-      dfpCustomField.getIsActive, dfpCustomField.getEntityType.getValue, dfpCustomField.getDataType.getValue,
-      dfpCustomField.getVisibility.getValue, options)
-  }
-
   private def toGuTargeting(session: SessionWrapper)(dfpTargeting: Targeting): GuTargeting = {
 
     def toIncludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
 
       //noinspection MapFlatten
-      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(AdUnitService.activeAdUnit).flatten
+      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(adUnitService.activeAdUnit).flatten
 
 
 
       //noinspection MapFlatten
       val adUnitsDerivedFromPlacements = {
-        toSeq(inventoryTargeting.getTargetedPlacementIds).map(PlacementService.placementAdUnitIds(session)).flatten
+        toSeq(inventoryTargeting.getTargetedPlacementIds).map(placementService.placementAdUnitIds(session)).flatten
       }
 
       (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
     }
 
     def toExcludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
-      toSeq(inventoryTargeting.getExcludedAdUnits).map(_.getAdUnitId).flatMap(AdUnitService.activeAdUnit)
+      toSeq(inventoryTargeting.getExcludedAdUnits).map(_.getAdUnitId).flatMap(adUnitService.activeAdUnit)
     }
 
     def toCustomTargetSets(criteriaSets: CustomCriteriaSet): Seq[CustomTargetSet] = {
@@ -56,9 +42,9 @@ object DataMapper {
       def toCustomTargetSet(criteria: CustomCriteriaSet): CustomTargetSet = {
 
         def toCustomTarget(criterion: CustomCriteria) = CustomTarget(
-          CustomTargetingService.targetingKey(session)(criterion.getKeyId),
+          customTargetingService.targetingKey(session)(criterion.getKeyId),
           criterion.getOperator.getValue,
-          criterion.getValueIds map (valueId => CustomTargetingService.targetingValue(session)(criterion.getKeyId, valueId))
+          criterion.getValueIds map (valueId => customTargetingService.targetingValue(session)(criterion.getKeyId, valueId))
         )
 
         val targets = criteria.getChildren collect {
@@ -127,7 +113,7 @@ object DataMapper {
       else Some(toJodaTime(dfpLineItem.getEndDateTime))
     },
     isPageSkin = isPageSkin(dfpLineItem),
-    sponsor = CustomFieldService.sponsor(dfpLineItem),
+    sponsor = customFieldService.sponsor(dfpLineItem),
     creativePlaceholders = toGuCreativePlaceholders(session)(
       dfpLineItem
     ),
@@ -200,5 +186,23 @@ object DataMapper {
       id = dfpCompany.getId,
       name = dfpCompany.getName
     )
+  }
+}
+
+object DataMapper {
+  def toGuCustomFieldOption(option: CustomFieldOption): GuCustomFieldOption =
+    GuCustomFieldOption(option.getId, option.getDisplayName)
+
+  def toGuCustomField(dfpCustomField: CustomField): GuCustomField = {
+    val options: List[GuCustomFieldOption] = {
+      dfpCustomField match {
+        case dropdown: DropDownCustomField => dropdown.getOptions.toList
+        case _ => Nil
+      }
+    } map toGuCustomFieldOption
+
+    GuCustomField(dfpCustomField.getId, dfpCustomField.getName, dfpCustomField.getDescription,
+      dfpCustomField.getIsActive, dfpCustomField.getEntityType.getValue, dfpCustomField.getDataType.getValue,
+      dfpCustomField.getVisibility.getValue, options)
   }
 }

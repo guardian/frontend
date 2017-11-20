@@ -5,10 +5,10 @@
 */
 
 type Options = {
-    dom: Element,
-    expanded: boolean,
-    showCount: boolean,
-    buttonAfterEl?: Element,
+    dom: HTMLElement,
+    expanded?: boolean,
+    showCount?: boolean,
+    buttonAfterEl?: HTMLElement,
 };
 
 class Expandable {

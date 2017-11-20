@@ -18,8 +18,8 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--" + item.pillar.name.toLowerCase(), PillarCards.isSwitchedOn),
-      ("fc-item--" + item.contentType.name.toLowerCase(), PillarCards.isSwitchedOn),
+      ("fc-item--pillar-" + item.pillar.name.toLowerCase(), PillarCards.isSwitchedOn),
+      ("fc-item--type-" + item.contentType.name.toLowerCase(), PillarCards.isSwitchedOn),
       ("fc-item--has-cutout", item.cutOut.isDefined),
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", PillarCards.isSwitchedOff),
       ("fc-item--has-no-image", !item.hasImage),
@@ -39,11 +39,13 @@ object GetClasses {
     )
   }
 
-  def forSubLink(sublink: Sublink): String = RenderClasses(Seq(
-    Some("fc-sublink"),
-    Some(TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink"),
-    sublinkMediaTypeClass(sublink)
-  ).flatten: _*)
+  def forSubLink(sublink: Sublink): String = RenderClasses(Map(
+    ("fc-sublink", true),
+    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", PillarCards.isSwitchedOff),
+    (sublinkMediaTypeClass(sublink).getOrElse(""), true),
+    ("fc-sublink--pillar-" + sublink.pillar, PillarCards.isSwitchedOn),
+    ("fc-sublink--type-" + sublink.contentType, PillarCards.isSwitchedOn)
+  ))
 
   def mediaTypeClass(faciaCard: ContentCard): Option[String] = faciaCard.mediaType map {
     case Gallery => "fc-item--gallery"

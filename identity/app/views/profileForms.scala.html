@@ -1,17 +1,19 @@
-@(
-        page: model.Page,
-        user: com.gu.identity.model.User,
-        forms: controllers.ProfileForms,
-        idRequest: services.IdentityRequest,
-        idUrlBuilder: services.IdentityUrlBuilder
-)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
-
-@import views.html.fragments.form.{inputField, textareaField}
-@import views.html.fragments.registrationFooter
-@import views.html.fragments.socialSignin
 @import conf.Static
 @import views.support.RenderClasses
 @import conf.switches.Switches.ProfileShowContributorTab
+@import model.{ApplicationContext, EmailNewsletters, IdentityPage}
+@import services.EmailPrefsData
+
+@(
+    page: model.Page,
+    user: com.gu.identity.model.User,
+    forms: controllers.ProfileForms,
+    idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder,
+    emailPrefsForm: Form[EmailPrefsData],
+    emailSubscriptions: List[String],
+    availableLists: EmailNewsletters
+)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
     <li class="tabs__tab @if(hidden){is-hidden} @if(page.metadata.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.metadata.id == url)" aria-controls="tabs-account-profile-@i">
@@ -36,49 +38,60 @@
 @mainLegacy(page, projectName = Option("identity")){
     <link rel="stylesheet" id="stripe-sprite" type="text/css" media="all" href="@Static("stylesheets/membership-icons.css")"/>
 }{
+<div class="tabs">
 
-<div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-membership js-account-profile-forms">
+    <div class="identity-wrapper-for-bg identity-wrapper-for-bg--header">
+        <div class="gs-container">
+            <div class="monocol-wrapper">
+                <h1 class="identity-title" data-test-id="edit-profile-header">Edit your profile</h1>
+                <ol class="tabs__container tabs__container--multiple js-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
+                    @tab(1, "Public", "/public/edit", None)
 
-    <h1 class="identity-title" data-test-id="edit-profile-header">Edit your profile</h1>
+                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab")
 
-    <div class="tabs u-cf identity-section">
-        <ol class="tabs__container tabs__container--multiple js-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
-            @tab(1, "Public", "/public/edit", None)
+                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab")
 
-            @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab")
+                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
 
-            @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab")
+                    @if(ProfileShowContributorTab.isSwitchedOn) {
+                        @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab")
 
-            @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
-
-            @if(ProfileShowContributorTab.isSwitchedOn) {
-                @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab")
-
-                @tab(6, "Privacy", "/privacy/edit", None, optionalClass="qa-privacy-tab")
-            } else {
-                @tab(5, "Privacy", "/privacy/edit", None, optionalClass="qa-privacy-tab")
-            }
-        </ol>
-
-        <div class="tabs__content">
-            @content(1, "/public/edit")(fragments.profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm))
-
-            @content(2, "/account/edit")(fragments.profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm))
-
-            @content(3, "/membership/edit")(fragments.profile.membershipDetailsForm(idUrlBuilder, idRequest, user))
-
-            @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm(idUrlBuilder, idRequest, user))
-
-            @if(ProfileShowContributorTab.isSwitchedOn) {
-                @content(5, "/contribution/recurring/edit")(fragments.profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
-
-                @content(6, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
-            } else {
-                @content(5, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
-            }
+                        @tab(6, "Email", "/email-prefs", None, optionalClass="qa-privacy-tab")
+                    } else {
+                        @tab(5, "Email", "/email-prefs", None, optionalClass="qa-privacy-tab")
+                    }
+                </ol>
+            </div>
         </div>
     </div>
-</div>
-    <script src="https://checkout.stripe.com/checkout.js" async></script>
+    <div class="identity-wrapper-for-bg">
+        <div class="gs-container">
+            <div class="monocol-wrapper js-account-profile-forms">
 
+                <div class=" u-cf identity-section">
+
+                    <div class="tabs__content">
+                        @content(1, "/public/edit")(profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm))
+
+                        @content(2, "/account/edit")(profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm))
+
+                        @content(3, "/membership/edit")(profile.membershipDetailsForm(idUrlBuilder, idRequest, user))
+
+                        @content(4, "/digitalpack/edit")(profile.digitalPackDetailsForm(idUrlBuilder, idRequest, user))
+
+                        @if(ProfileShowContributorTab.isSwitchedOn) {
+                            @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
+
+                            @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists))
+                        } else {
+                            @content(5, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists)))
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://checkout.stripe.com/checkout.js" async></script>
+</div>
 }

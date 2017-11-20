@@ -329,20 +329,6 @@ const enhanceMenuToggles = (): void => {
     });
 };
 
-const toggleMenuWithOpenSection = () => {
-    const menu = getMenu();
-    const subnav = document.querySelector('.subnav__list');
-    const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
-    const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
-    const section = menu && menu.querySelector(targetSelector);
-
-    if (section) {
-        openMenuSection(section, { scrollIntoView: true });
-    }
-
-    toggleMenu();
-};
-
 const getRecentSearch = (): ?string => local.get(SEARCH_STORAGE_KEY);
 
 const clearRecentSearch = (): void => local.remove(SEARCH_STORAGE_KEY);
@@ -362,11 +348,61 @@ const trackRecentSearch = (): void => {
 
 const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
 
+const showMoreButton = (): void => {
+    fastdom
+        .read(() => {
+            const moreButton = document.querySelector('.js-show-more-button');
+            const subnav = document.querySelector('.js-expand-subnav');
+            const subnavList = document.querySelector(
+                '.js-get-last-child-subnav'
+            );
+
+            if (subnav && subnavList) {
+                const subnavItems = subnavList.querySelectorAll('li');
+                const lastChild = subnavItems[subnavItems.length - 1];
+
+                const lastChildRect = lastChild.getBoundingClientRect();
+                const subnavRect = subnav.getBoundingClientRect();
+
+                return { moreButton, lastChildRect, subnavRect };
+            }
+        })
+        .then(els => {
+            if (els) {
+                const { moreButton, lastChildRect, subnavRect } = els;
+
+                if (subnavRect.top === lastChildRect.top) {
+                    fastdom.write(() => {
+                        moreButton.classList.add('is-hidden');
+                    });
+                }
+            }
+        });
+};
+
+const toggleSubnavSections = (moreButton: HTMLElement): void => {
+    fastdom
+        .read(() => document.querySelector('.js-expand-subnav'))
+        .then(subnav => {
+            if (subnav) {
+                fastdom.write(() => {
+                    const isOpen = subnav.classList.contains(
+                        'subnav--expanded'
+                    );
+
+                    subnav.classList.toggle('subnav--expanded');
+
+                    moreButton.innerText = isOpen ? 'more' : 'less';
+                });
+            }
+        });
+};
+
 const addEventHandler = (): void => {
     const menu = getMenu();
     const search = menu && menu.querySelector('.js-menu-search');
     const toggleWithMoreButton = document.querySelector(
-        '.js-toggle-nav-section'
+        '.js-toggle-more-sections'
     );
 
     if (menu) {
@@ -400,13 +436,14 @@ const addEventHandler = (): void => {
 
     if (toggleWithMoreButton) {
         toggleWithMoreButton.addEventListener('click', () => {
-            toggleMenuWithOpenSection();
+            toggleSubnavSections(toggleWithMoreButton);
         });
     }
 };
 
 export const newHeaderInit = (): void => {
     enhanceMenuToggles();
+    showMoreButton();
     addEventHandler();
     showMyAccountIfNecessary();
     initiateUserAccountDropdown();

@@ -336,10 +336,10 @@ trait FapiFrontPress extends Logging {
       .pageSize(0)
     )
 
-    contentApiResponse.onSuccess { case _ =>
+    contentApiResponse.foreach { _ =>
       log.info(s"Getting SEO data from content API for $id")}
 
-    contentApiResponse.onFailure { case e: Exception =>
+    contentApiResponse.failed.foreach { e: Throwable =>
       log.warn(s"Error getting SEO data from content API for $id: $e")
     }
 

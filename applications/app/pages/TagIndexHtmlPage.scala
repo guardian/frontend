@@ -1,6 +1,7 @@
 package pages
 
 import common.Edition
+import conf.switches.Switches.WeAreHiring
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
 import model.{ApplicationContext, ContributorsListing, PreferencesMetaData, StandalonePage, SubjectsListing, TagIndexPage}
@@ -10,20 +11,21 @@ import views.html.fragments._
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
+import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.preferences.index
+import html.HtmlPageHelpers.ContentCSSFile
 
 object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("index")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("index"))))
-    override def linkCss: Html = stylesheetLink("stylesheets/content.css")
+    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.index.css")
-    override def oldIELinkCss: Html = stylesheetLink("stylesheets/old-ie.content.css")
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
     override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.index.css")
-    override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
   def html(page: StandalonePage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
@@ -40,6 +42,7 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
 
     htmlTag(
       headTag(
+        weAreHiring() when WeAreHiring.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(allStyles),

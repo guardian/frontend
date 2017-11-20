@@ -2,11 +2,12 @@ package common
 
 import model.ApplicationIdentity
 import conf.switches.Switches.PolyfillIO
+import html.HtmlPageHelpers.{ContentCSSFile}
 
 object Preload {
 
   val articleDefaultPreloads: Seq[PreloadAsset] = Seq(
-    CssPreloadAsset("content.css"),
+    CssPreloadAsset(s"$ContentCSSFile.css"),
     if (conf.switches.Switches.PolyfillIO.isSwitchedOn) {
       ThirdPartyJsPreload(common.Assets.js.polyfillioUrl)
     } else {

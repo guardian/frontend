@@ -3,9 +3,9 @@ package implicits
 import com.gu.contentapi.client.model.v1.CapiDateTime
 import common.Edition
 import java.time.Instant
-import org.joda.time.{DateTime, Days, LocalDate, Duration => JodaDuration}
-import org.scala_tools.time.Imports._
-import org.joda.time.format.ISODateTimeFormat
+
+import org.joda.time.{DateTime, DateTimeZone, Days, LocalDate, Period, Duration => JodaDuration}
+import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 
 import scala.concurrent.duration.Duration
 

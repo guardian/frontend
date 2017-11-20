@@ -6,7 +6,7 @@ import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.FakeRequest
 import test.ConfiguredTestSuite
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 @DoNotDiscover class NavigationTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
@@ -22,7 +22,7 @@ import scala.collection.JavaConversions._
 
     val currentSection = Jsoup.parseBodyFragment(tpl.toString).getElementsByClass("top-navigation__item--current")
 
-    currentSection.length shouldEqual 1
+    currentSection.asScala.length shouldEqual 1
 
     currentSection.first.
       getElementsByTag("a").first.
@@ -41,7 +41,7 @@ import scala.collection.JavaConversions._
 
     val currentSection = Jsoup.parseBodyFragment(tpl.toString).getElementsByClass("top-navigation__item--current")
 
-    currentSection.length shouldEqual 1
+    currentSection.asScala.length shouldEqual 1
 
     currentSection.first.
       getElementsByTag("a").first.

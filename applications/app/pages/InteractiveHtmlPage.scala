@@ -1,6 +1,7 @@
 package pages
 
 import common.Edition
+import conf.switches.Switches.WeAreHiring
 import controllers.InteractivePage
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
@@ -9,11 +10,12 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
+import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments._
 import views.html.stacked
+import html.HtmlPageHelpers.ContentCSSFile
 
 object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
@@ -26,11 +28,11 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
       Html(common.Assets.css.head(None)),
       Html(common.Assets.css.interactive)
     )
-    override def linkCss: Html = stylesheetLink("stylesheets/content.css")
+    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.content.css")
-    override def oldIELinkCss: Html = stylesheetLink("stylesheets/old-ie.content.css")
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
     override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.content.css")
-    override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
   def html(page: InteractivePage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
@@ -43,6 +45,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
     htmlTag(
       headTag(
+        weAreHiring() when WeAreHiring.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(allStyles),

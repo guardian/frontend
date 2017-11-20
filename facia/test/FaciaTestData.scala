@@ -2,8 +2,9 @@ package test
 
 import java.time.ZoneOffset
 
+import com.gu.Box
 import common.editions.{Au, Uk, Us}
-import common.{AkkaAgent, Edition}
+import common.Edition
 import controllers.front.Front
 import model.pressed.{CollectionConfig, PressedContent}
 import model.{PressedPage, _}
@@ -265,5 +266,5 @@ trait FaciaTestData extends ModelHelper {
 }
 
 class TestFront extends Front with FaciaTestData {
-  val pageFrontAgent = AkkaAgent[Map[String, TestPageFront]](defaultAgentContents)
+  val pageFrontAgent = Box[Map[String, TestPageFront]](defaultAgentContents)
 }

@@ -51,6 +51,30 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
     });
 };
 
+const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
+    window.addEventListener('message', event => {
+        let data;
+        try {
+            data = JSON.parse(event.data);
+        } catch (e) {
+            return;
+        }
+
+        // Expects enrich requests to be made via iframe-messenger:
+        // https://github.com/guardian/iframe-messenger
+        if (data.type === 'enrich-acquisition-links' && data.id) {
+            data.referrerData = addReferrerData({});
+            [...document.getElementsByTagName('iframe')].forEach(iframe => {
+                iframe.contentWindow.postMessage(
+                    JSON.stringify(data),
+                    'https://interactive.guim.co.uk'
+                );
+            });
+        }
+    });
+};
+
 export const init = (): void => {
+    addReferrerDataToAcquisitionLinksInInteractiveIframes();
     addReferrerDataToAcquisitionLinksOnPage();
 };

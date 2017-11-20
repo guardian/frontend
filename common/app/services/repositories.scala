@@ -7,7 +7,7 @@ import contentapi.{ContentApiClient, QueryDefaults, SectionTagLookUp, SectionsLo
 import implicits.Collections
 import model._
 import org.joda.time.DateTime
-import org.scala_tools.time.Implicits._
+import com.github.nscala_time.time.Implicits._
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future

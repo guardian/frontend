@@ -1,6 +1,7 @@
 package jobs
 
 import app.LifecycleComponent
+import com.gu.Box
 import common._
 import contentapi.ContentApiClient
 import services.{NewsSiteMap, VideoSiteMap}
@@ -30,7 +31,7 @@ class SiteMapJob(contentApiClient: ContentApiClient) extends Logging {
 
   private val newsSiteMap = new NewsSiteMap(contentApiClient)
   private val videoSiteMap = new VideoSiteMap(contentApiClient)
-  private val siteMapContent = AkkaAgent[Option[SiteMapContent]](None)
+  private val siteMapContent = Box[Option[SiteMapContent]](None)
 
   def update()(implicit executionContext: ExecutionContext): Unit = {
     for {

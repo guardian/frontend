@@ -1,13 +1,14 @@
 package contentapi
 
+import com.gu.Box
 import com.gu.contentapi.client.model.v1.Section
-import common.{AkkaAgent, Logging}
+import common.Logging
 
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 class SectionsLookUp(contentApiClient: ContentApiClient) extends Logging {
-  private val sections = AkkaAgent[Option[Map[String, Section]]](None)
+  private val sections = Box[Option[Map[String, Section]]](None)
 
   def refresh()(implicit executionContext: ExecutionContext): Unit = {
     contentApiClient.getResponse(contentApiClient.sections) onComplete {

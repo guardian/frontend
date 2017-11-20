@@ -7,9 +7,10 @@ import org.joda.time.DateTime
 
 import scala.concurrent.{ExecutionContext, Future}
 import awswrappers.cloudwatch._
+import com.gu.Box
 
 object AbTests {
-  private val abTests = common.AkkaAgent[Map[String, Seq[String]]](Map.empty)
+  private val abTests = Box[Map[String, Seq[String]]](Map.empty)
 
   def getTests(): Map[String, Seq[String]] = {
     abTests.get()

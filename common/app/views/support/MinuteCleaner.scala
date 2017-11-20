@@ -1,12 +1,12 @@
 package views.support
 
 import org.jsoup.nodes.{Document, Element}
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 case class TimestampCleaner(article: model.Article) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     // US Minute articles use liveblog blocks but we don't want to show timestamps
-    if (article.isTheMinute) document.getElementsByClass("published-time").foreach(_.remove)
+    if (article.isTheMinute) document.getElementsByClass("published-time").asScala.foreach(_.remove)
     document
   }
 }
@@ -36,7 +36,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
     if (article.isTheMinute) {
-      document.getElementsByClass("block").foreach { block =>
+      document.getElementsByClass("block").asScala.foreach { block =>
         val allElements = block.getAllElements
         val heading = block.select("h2.block-title")
         val headingNumRegEx = "^([0-9]+)[.]{1}[ ]*"
@@ -61,7 +61,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
 
         // Add relevant classes
         ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
-          if (allElements.exists(_.hasClass(childClass))) classes + parentClass
+          if (allElements.asScala.exists(_.hasClass(childClass))) classes + parentClass
           else classes
         } foreach block.addClass
 
@@ -71,23 +71,23 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         }
 
         // Remove Un-needed Classes
-        allElements.foreach(el => strippable.foreach(el.removeClass))
+        allElements.asScala.foreach(el => strippable.foreach(el.removeClass))
 
         // Re-order Elements
-        block.getElementsByClass("block-elements").headOption.map { outer =>
-          block.getElementsByClass("block-title").headOption.map(t => outer.insertChildren(0, Seq(t)))
-          outer.getElementsByClass("element-image").headOption.map(outer.after)
+        block.getElementsByClass("block-elements").asScala.headOption.map { outer =>
+          block.getElementsByClass("block-title").asScala.headOption.map(t => outer.insertChildren(0, t))
+          outer.getElementsByClass("element-image").asScala.headOption.map(outer.after)
         }
 
         // Inline (fullscreen) image mark-up
         // Move the picture element out of thumbnail anchor and responsive image
-        block.getElementsByClass("element--inline").headOption.map { figure =>
-          figure.getElementsByClass("u-responsive-ratio").headOption.map { outer => {
-            figure.insertChildren(0, Seq(outer))
-            outer.getElementsByClass("gu-image").headOption.map(image => image.addClass("js-is-fixed-height"))
+        block.getElementsByClass("element--inline").asScala.headOption.map { figure =>
+          figure.getElementsByClass("u-responsive-ratio").asScala.headOption.map { outer => {
+            figure.insertChildren(0, outer)
+            outer.getElementsByClass("gu-image").asScala.headOption.map(image => image.addClass("js-is-fixed-height"))
             outer.addClass("element--inline__image-wrapper")
           }}
-          figure.getElementsByClass("article__img-container").headOption.map(container => container.remove())
+          figure.getElementsByClass("article__img-container").asScala.headOption.map(container => container.remove())
         }
 
         // Remove Elements

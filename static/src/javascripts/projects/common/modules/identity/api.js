@@ -6,7 +6,7 @@ import config from 'lib/config';
 import { getCookie as getCookieByName } from 'lib/cookies';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
-import { mergeCalls } from 'common/modules/asyncCallMerger';
+import { mergeCalls } from 'common/modules/async-call-merger';
 
 let userFromCookieCache = null;
 

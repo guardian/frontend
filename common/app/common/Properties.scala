@@ -2,7 +2,7 @@ package common
 
 import java.io.{File, FileInputStream, InputStream}
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import java.net.URL
 import java.nio.charset.Charset
 
@@ -15,7 +15,7 @@ object Properties extends AutomaticResourceManagement {
   def apply(is: InputStream): Map[String, String] = {
     val properties = new java.util.Properties()
     withCloseable(is) { properties load _ }
-    properties.toMap
+    properties.asScala.toMap
   }
 
   def apply(text: String): Map[String, String] = apply(IOUtils.toInputStream(text, Charset.defaultCharset()))

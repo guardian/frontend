@@ -17,6 +17,9 @@
     ========================================================================== */
     .manage-account-up-sell {
         padding: $gs-gutter*2;
+        .manage-account__button {
+            margin-right: 1em;
+        }
     }
 
     .manage-account-up-sell__heading {
@@ -96,20 +99,6 @@
         &:active {
             color: $news-accent;
         }
-    }
-
-    /* Header
-       ========================================================================== */
-    .manage-account-header {
-        @include fs-header(3);
-    }
-
-    .manage-account-header--highlight {
-        padding: 15px 0 15px 4px;
-        margin: 32px 0 15px;
-        background-color: #fff8e5;
-        border-top: 1px solid $comment-accent;
-        border-bottom: 1px solid $comment-accent;
     }
 
     .subscription-changed-title {
@@ -278,6 +267,194 @@
                 height: $small-card !important;
                 background-size: 49px $small-card;
             }
+        }
+    }
+}
+.manage-account__errors:not(:empty) {
+    margin-bottom: $gs-gutter;
+}
+
+/* Header
+========================================================================== */
+.manage-account-header {
+    @include fs-header(3);
+    color: $guardian-brand-dark;
+}
+.manage-account-headerNote {
+    @include fs-bodyCopy(2);
+    margin-top: $gs-baseline / 2;
+}
+
+.manage-account-headerWrapper {
+    margin-bottom: $gs-baseline;
+}
+
+.manage-account-header--highlight {
+    padding: 15px 0 15px 4px;
+    margin: 32px 0 15px;
+    background-color: #fff8e5;
+    border-top: 1px solid $comment-accent;
+    border-bottom: 1px solid $comment-accent;
+}
+
+.manage-account-divider {
+    display: block;
+    width: 100%;
+    border-top: 1px solid $news-main-2;
+    margin-bottom: gs-span(.5);
+    transform: scaleX(3);
+    @include mq(desktop) {
+        margin-top: gs-span(1);
+    }
+}
+
+/* Modals
+   ========================================================================== */
+.manage-account__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    display: none;
+
+    &--active {
+        display: block;
+        display: flex;
+    }
+
+    .manage-account__modalBg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $neutral-1;
+        opacity: .95;
+        z-index: 9;
+    }
+
+    .manage-account__modalContent {
+        max-width: gs-span(10);
+        background: #ffffff;
+        width: 100%;
+        position: relative;
+        z-index: 10;
+        border-top: 1px solid $news-main-2;
+        padding: ($gs-gutter * 3.75) ($gs-gutter * 1) ($gs-gutter * 1);
+        margin: auto;
+        float: none;
+    }
+
+    .manage-account__modalCloser {
+        width: $gs-gutter * 1.75;
+        height: $gs-gutter * 1.75;
+        border: 1px solid $guardian-brand;
+        border-radius: 100%;
+        display: block;
+        position: absolute;
+        top: $gs-gutter;
+        right: $gs-gutter;
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        svg * {
+            fill: $guardian-brand;
+        }
+
+        &:hover {
+            border-color: #000000;
+            svg * {
+                fill: #000000;
+            }
+        }
+    }
+}
+
+/* Button styles
+========================================================================== */
+.manage-account__button {
+    @include fs-textSans(2);
+    background-color: $guardian-brand;
+    height: $gs-gutter * 2;
+    border-radius: 100px;
+    border: 0;
+    color: #ffffff;
+    cursor: pointer;
+    float: left;
+    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+    min-width: $gs-baseline * 14;
+    white-space: nowrap;
+    text-overflow: clip;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    box-sizing: border-box;
+    text-align: center;
+    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:not(.is-updating):hover {
+        background-color: $guardian-brand-dark;
+    }
+
+    &:hover, &:active, &:focus {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    &.is-updating {
+        border: 0;
+    }
+
+    &--light {
+        @extend %manage-account__button--light;
+    }
+
+    &--mini {
+        @extend %manage-account__button--light;
+        @include fs-textSans(1);
+        min-width: $gs-baseline * 10;
+        display: inline-flex;
+        height: $gs-gutter * 1.5;
+        line-height: .8;
+    }
+
+}
+%manage-account__button--light {
+    color: $guardian-brand;
+    background-color: transparent;
+    border: 1px solid $news-main-2;
+    &:not(.is-updating):hover {
+        color: $guardian-brand-dark;
+        background-color: transparent;
+        border-color: currentColor;
+    }
+}
+
+.fieldset {
+    &.fieldset--manage-account-noborder {
+        border: 0;
+    }
+    &.fieldset--manage-account-block {
+        display: block;
+    }
+    &.fieldset--manage-account-rightsubmit {
+        *[type=submit] {
+            float: right;
         }
     }
 }

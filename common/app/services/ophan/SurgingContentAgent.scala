@@ -1,6 +1,7 @@
 package services.ophan
 
 import app.LifecycleComponent
+import com.gu.Box
 import com.gu.commercial.display.SurgeLookupService
 import common._
 import org.joda.time.DateTime
@@ -12,7 +13,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object SurgingContentAgent extends SurgeLookupService with Logging {
 
-  private val agent = AkkaAgent[SurgingContent](SurgingContent())
+  private val agent = Box[SurgingContent](SurgingContent())
 
   def update(implicit ophanApi: OphanApi, executionContext: ExecutionContext): Unit = {
     log.info("Refreshing surging content.")

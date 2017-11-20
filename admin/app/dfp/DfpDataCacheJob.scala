@@ -2,15 +2,17 @@ package dfp
 
 import common.dfp._
 import common.Logging
-import dfp.DfpApi.DfpLineItems
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
 
-object DfpDataCacheJob extends Logging {
+class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
+                      customFieldAgent: CustomFieldAgent,
+                      customTargetingAgent: CustomTargetingAgent,
+                      placementAgent: PlacementAgent,
+                      dfpApi: DfpApi) extends Logging {
 
   case class LineItemLoadSummary(
     validLineItems: Seq[GuLineItem],
@@ -32,10 +34,10 @@ object DfpDataCacheJob extends Logging {
   def refreshAllDfpData()(implicit executionContext: ExecutionContext): Unit = {
 
     for {
-      _ <- AdUnitAgent.refresh()
-      _ <- CustomFieldAgent.refresh()
-      _ <- CustomTargetingAgent.refresh()
-      _ <- PlacementAgent.refresh()
+      _ <- adUnitAgent.refresh()
+      _ <- customFieldAgent.refresh()
+      _ <- customTargetingAgent.refresh()
+      _ <- placementAgent.refresh()
     } {
       loadLineItems()
     }
@@ -55,8 +57,8 @@ object DfpDataCacheJob extends Logging {
 
     val loadSummary = loadLineItems(
       fetchCachedLineItems(),
-      DfpApi.readLineItemsModifiedSince,
-      DfpApi.readCurrentLineItems
+      dfpApi.readLineItemsModifiedSince,
+      dfpApi.readCurrentLineItems
     )
 
     val loadDuration = System.currentTimeMillis - start

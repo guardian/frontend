@@ -1,7 +1,7 @@
 package pages
 
 import common.Edition
-import conf.switches.Switches.SurveySwitch
+import conf.switches.Switches.{SurveySwitch, WeAreHiring}
 import html.HtmlPageHelpers._
 import html.Styles
 import model.{ApplicationContext, Page}
@@ -12,18 +12,19 @@ import views.html.fragments.commercial.{pageSkin, survey}
 import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
+import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
+import html.HtmlPageHelpers.ContentCSSFile
 
 object StoryHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("content")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
-    override def linkCss: Html = stylesheetLink("stylesheets/content.css")
+    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.content.css")
-    override def oldIELinkCss: Html = stylesheetLink("stylesheets/old-ie.content.css")
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
     override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.content.css")
-    override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
   def html(
@@ -39,6 +40,7 @@ object StoryHtmlPage {
 
     htmlTag(
       headTag(
+        weAreHiring() when WeAreHiring.isSwitchedOn,
         titleTag(),
         metaData(),
         head,

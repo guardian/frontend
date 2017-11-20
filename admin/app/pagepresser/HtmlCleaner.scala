@@ -6,7 +6,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
 import conf.Configuration
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 abstract class HtmlCleaner extends Logging {
   lazy val fallbackCacheBustId = Configuration.r2Press.fallbackCachebustId
@@ -31,7 +31,7 @@ abstract class HtmlCleaner extends Logging {
   }
 
   def repairStaticLinks(document: Document): Document = {
-    document.getAllElements.filter { el =>
+    document.getAllElements.asScala.filter { el =>
       el.hasAttr("href") && el.attr("href").contains("/static/")
     }.foreach { el =>
       val staticLink = staticRegEx.findFirstMatchIn(el.attr("href"))
@@ -55,7 +55,7 @@ abstract class HtmlCleaner extends Logging {
   }
 
   def repairStaticSources(document: Document): Document = {
-    val elementsWithSrc = document.getAllElements.filter { el =>
+    val elementsWithSrc = document.getAllElements.asScala.filter { el =>
       el.hasAttr("src") && el.attr("src").contains("/static/")
     }
     elementsWithSrc.foreach { el =>
@@ -81,7 +81,7 @@ abstract class HtmlCleaner extends Logging {
 
   def replaceLinks(document: Document): Document = {
     try {
-      document.getAllElements.filter{ el =>
+      document.getAllElements.asScala.filter{ el =>
         (el.hasAttr("href") && el.attr("href").contains("http://")) || (el.hasAttr("src") && el.attr("src").contains("http://"))
       }.foreach{ el =>
 
@@ -101,7 +101,7 @@ abstract class HtmlCleaner extends Logging {
   }
 
   def removeScripts(document: Document): Document = {
-    document.getElementsByTag("script").toList.foreach(_.remove())
+    document.getElementsByTag("script").asScala.toList.foreach(_.remove())
     document
   }
 
@@ -109,10 +109,10 @@ abstract class HtmlCleaner extends Logging {
     val element = document.getElementById("sub-header")
 
     if (element != null) {
-      val ads = element.children().toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
+      val ads = element.children().asScala.toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
       ads.foreach(_.remove())
 
-      val htmlComments = element.childNodes().filter(node => node.nodeName().equals("#comment"))
+      val htmlComments = element.childNodes().asScala.filter(node => node.nodeName().equals("#comment"))
       htmlComments.foreach(_.remove())
 
       val promo = document.getElementById("promo")
@@ -129,12 +129,12 @@ abstract class HtmlCleaner extends Logging {
   }
 
   def removeByClass(document: Document, className: String): Document = {
-    document.getElementsByClass(className).foreach(_.remove())
+    document.getElementsByClass(className).asScala.foreach(_.remove())
     document
   }
 
   def removeByTagName(document: Document, tagName: String): Document = {
-    document.getElementsByTag(tagName).foreach(_.remove())
+    document.getElementsByTag(tagName).asScala.foreach(_.remove())
     document
   }
 
@@ -151,7 +151,7 @@ abstract class HtmlCleaner extends Logging {
   }
 
   def deComboLinks(document: Document): Document = {
-    document.getAllElements.filter( elementContainsCombo ) .foreach { el =>
+    document.getAllElements.asScala.filter( elementContainsCombo ) .foreach { el =>
 
       val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
       val microAppRegex = """^m-(\d+)~(.+)""".r

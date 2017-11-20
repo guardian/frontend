@@ -5,7 +5,7 @@ import dfp.DfpDataCacheJob
 import model.{ApplicationContext, NoCache}
 import play.api.mvc._
 
-class DfpDataController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
+class DfpDataController(val controllerComponents: ControllerComponents, dfpDataCacheJob: DfpDataCacheJob)(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext {
 
   def renderCacheFlushPage(): Action[AnyContent] = Action { implicit request =>
@@ -13,7 +13,7 @@ class DfpDataController(val controllerComponents: ControllerComponents)(implicit
   }
 
   def flushCache(): Action[AnyContent] = Action { implicit request =>
-    DfpDataCacheJob.refreshAllDfpData()
+    dfpDataCacheJob.refreshAllDfpData()
     NoCache(Redirect(routes.DfpDataController.renderCacheFlushPage()))
       .flashing("triggered" -> "true")
   }

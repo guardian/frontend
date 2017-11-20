@@ -2,6 +2,7 @@ package conf.switches
 
 import java.util.concurrent.TimeoutException
 
+import com.gu.Box
 import common._
 import org.joda.time.{DateTime, DateTimeZone, Days, LocalDate}
 
@@ -124,11 +125,8 @@ object Switch {
     exposeClientSide
   )
 
-  val switches = AkkaAgent[List[Switch]](Nil)
+  val switches = Box[List[Switch]](Nil)
   def allSwitches: Seq[Switch] = switches.get()
-
-  // the agent won't immediately return its switches
-  def eventuallyAllSwitches: Future[List[Switch]] = switches.future()
 
   case class Expiry(daysToExpiry: Option[Int], expiresSoon: Boolean, hasExpired: Boolean)
 
@@ -164,8 +162,6 @@ with MonitoringSwitches
 with JournalismSwitches {
 
   def all: Seq[Switch] = Switch.allSwitches
-
-  def eventuallyAll: Future[List[Switch]] = Switch.eventuallyAllSwitches
 
   def grouped: List[(SwitchGroup, Seq[Switch])] = {
     val sortedSwitches = all.groupBy(_.group).map { case (key, value) => (key, value.sortBy(_.name)) }

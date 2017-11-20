@@ -31,9 +31,8 @@ object CloudWatchStats extends Logging {
       .withMetricName(metric)
       .withDimensions(stage))
 
-    ftr onFailure {
-      case exception: Exception =>
-        log.error(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}", exception)
+    ftr.failed.foreach { exception: Throwable =>
+      log.error(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}", exception)
     }
 
     ftr

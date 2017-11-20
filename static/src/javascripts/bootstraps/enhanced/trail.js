@@ -62,7 +62,7 @@ const insertOrProximity = (selector, insert) => {
 const initPopular = () => {
     if (!config.get('page.isFront')) {
         insertOrProximity('.js-popular-trails', () => {
-            new MostPopular().init();
+            new MostPopular();
         });
     }
 };

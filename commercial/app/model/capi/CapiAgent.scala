@@ -1,6 +1,7 @@
 package commercial.model.capi
 
-import common.{AkkaAgent, Logging}
+import com.gu.Box
+import common.Logging
 import contentapi.ContentApiClient
 import model.ContentType
 
@@ -9,7 +10,7 @@ import scala.util.control.NonFatal
 
 class CapiAgent(contentApiClient: ContentApiClient) extends Logging {
 
-  private lazy val shortUrlAgent = AkkaAgent[Map[String, Option[ContentType]]](Map.empty)
+  private lazy val shortUrlAgent = Box[Map[String, Option[ContentType]]](Map.empty)
   private val lookup = new Lookup(contentApiClient)
 
   private lazy val cache = shortUrlAgent.get()

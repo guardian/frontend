@@ -28,6 +28,42 @@ object CommercialClientLoggingVariant extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("ccl-A")
 }
 
+object CommercialPaidContentTemplateVariant extends TestDefinition(
+  name = "commercial-paid-content-variant",
+  description = "A slice of the audience who will see labs content with a background colour variant",
+  owners = Seq(Owner.withGithub("rich-nguyen")),
+  sellByDate = new LocalDate(2018, 2, 1)
+  ) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-labs")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant") &&
+    testUrls.contains(request.path)
+
+  val testUrls = List(
+    "/discover-cool-canada/2017/sep/25/can-you-tell-a-canadien-from-a-canuck-test-your-canadian-sport-knowledge-quiz",
+    "/discover-cool-canada/2017/sep/18/poutine-and-beyond-10-local-eats-you-have-to-try-when-youre-in-canada",
+    "/discover-cool-canada/2017/sep/07/lights-canada-action-why-film-makers-are-heading-north-of-the-us-border",
+    "/discover-cool-canada/2017/sep/04/canada-is-one-of-the-coolest-countries-on-the-planet-if-you-want-proof-take-a-look-at-its-festivals",
+    "/discover-cool-canada/2017/sep/04/canadas-10-most-electrifying-sports-venues",
+    "/discover-cool-canada/gallery/2016/sep/09/your-guide-to-canada-in-pictures",
+    "/discover-canal-river-trust/2017/oct/20/top-10-waterside-places-to-enjoy-in-autumn"
+  )
+}
+
+object CommercialPaidContentTemplateControl extends TestDefinition(
+  name = "commercial-paid-content-control",
+  description = "A slice of the audience who will are in the labs content control group",
+  owners = Seq(Owner.withGithub("rich-nguyen")),
+  sellByDate = new LocalDate(2018, 2, 1)
+  ) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-labs")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control") &&
+    CommercialPaidContentTemplateVariant.testUrls.contains(request.path)
+}
+
 object ABNewDesktopHeaderVariant extends TestDefinition(
   name = "ab-new-desktop-header-variant",
   description = "Users in this test will see the new desktop design.",
@@ -76,6 +112,18 @@ object ABJavascriptRenderingControl extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
 }
 
+object ABImageTestService extends TestDefinition(
+  name = "ab-image-test-service",
+  description = "Audience in this test will access the test image service (with imgx fallback)",
+  owners = Seq(Owner.withName("tbonnin")),
+  sellByDate = new LocalDate(2017, 12, 7)
+) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-imgix-fallback-test")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -100,6 +148,8 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
+    CommercialPaidContentTemplateVariant,
+    CommercialPaidContentTemplateControl,
     ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl,
     ABJavascriptRenderingVariant,

@@ -17,8 +17,7 @@ import storyQuestions from 'common/modules/atoms/story-questions';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import ophan from 'ophan/ng';
-import { SnippetFeedback } from 'journalism/snippet-feedback';
-import { init as initJTBD } from 'journalism/jtbd-survey';
+import { SnippetFeedback } from 'journalism/temporary/snippet-feedback';
 
 const modules = {
     initCmpParam() {
@@ -67,7 +66,6 @@ const init = () => {
     handleQuizCompletion();
     storyQuestions.init();
     SnippetFeedback();
-    initJTBD();
 };
 
 export { init };
