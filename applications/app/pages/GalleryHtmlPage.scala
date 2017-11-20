@@ -17,7 +17,7 @@ import html.HtmlPageHelpers.ContentCSSFile
 
 object GalleryHtmlPage extends HtmlPage[GalleryPage] {
 
-  def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
+  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("content")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")

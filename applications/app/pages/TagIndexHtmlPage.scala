@@ -18,7 +18,7 @@ import html.HtmlPageHelpers.ContentCSSFile
 
 object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
 
-  def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
+  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("index")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("index"))))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")

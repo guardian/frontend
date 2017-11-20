@@ -31,6 +31,7 @@ class OptInController(val controllerComponents: ControllerComponents) extends Ba
     Cached(60)(WithoutRevalidationResult(feature match {
       case "desktopheader" => newDesktopHeader.opt(choice)
       case "imgxfallbacktest" => imgxFallbackTest.opt(choice)
+      case "garnet" => garnet.opt(choice)
       case _ => NotFound
     }))
   }
@@ -38,4 +39,5 @@ class OptInController(val controllerComponents: ControllerComponents) extends Ba
   //cookies should correspond with those checked by fastly-edge-cache
   val newDesktopHeader = OptInFeature("new_desktop_header", controllerComponents)
   val imgxFallbackTest = OptInFeature("imgix-fallback-test", controllerComponents)
+  val garnet = OptInFeature("garnet", controllerComponents)
 }

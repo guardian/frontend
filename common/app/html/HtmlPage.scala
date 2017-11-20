@@ -8,7 +8,6 @@ import views.html.stacked
 import views.html.fragments._
 import views.html.fragments.page.body._
 import views.support.Commercial
-import conf.switches.Switches.PillarCards
 
 trait HtmlPage[P <: model.Page] {
   def html(page: P)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html
@@ -42,8 +41,8 @@ object HtmlPageHelpers {
     )
   }
 
-  def FaciaCSSFile: String = if (PillarCards.isSwitchedOn) "facia.pc" else "facia"
-  def ContentCSSFile: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
-  def RichLinksCSSFile: String = if (PillarCards.isSwitchedOn) "rich-links.pc" else "rich-links"
+  def FaciaCSSFile(implicit request: RequestHeader): String = if (mvt.Garnet.isParticipating) "facia.pc" else "facia"
+  def ContentCSSFile(implicit request: RequestHeader): String = if (mvt.Garnet.isParticipating) "content.pc" else "content"
+  def RichLinksCSSFile(implicit request: RequestHeader): String = if (mvt.Garnet.isParticipating) "rich-links.pc" else "rich-links"
 
 }

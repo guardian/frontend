@@ -2,14 +2,14 @@ package http
 
 import common.{CssPreloadAsset, JsPreloadAsset, PreloadAsset, ThirdPartyJsPreload, UrlPreload}
 import model.ApplicationContext
-import play.api.mvc.Result
+import play.api.mvc.{RequestHeader, Result}
 
 trait ResultWithPreload {
   final implicit class RichResult(self: Result) {
 
     val linkHeaderKey = "Link"
 
-    def withPreload(assets: Seq[PreloadAsset])(implicit context: ApplicationContext): Result = {
+    def withPreload(assets: Seq[PreloadAsset])(implicit context: ApplicationContext, request: RequestHeader): Result = {
       if (assets.nonEmpty) {
         val preloadFiles = assets.map {
           case jsFile: JsPreloadAsset =>

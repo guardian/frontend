@@ -24,7 +24,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
     }
   }
 
-  def redirectToCard: Action[AnyContent] = Action { request =>
+  def redirectToCard: Action[AnyContent] = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val playerCardType = submission("playerCardType").head
     val playerId = submission("player").head
@@ -84,7 +84,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
     else NotFound
   }
 
-  private def createPlayerCard(cardType: String, playerId: String, playerProfile: PlayerProfile, playerStats: StatsSummary, playerAppearances: PlayerAppearances):
+  private def createPlayerCard(cardType: String, playerId: String, playerProfile: PlayerProfile, playerStats: StatsSummary, playerAppearances: PlayerAppearances)(implicit request: RequestHeader):
     Option[HtmlFormat.Appendable] = {
     cardType match {
       case "attack" => Some(views.html.football.player.cards.attack(playerId, playerProfile, playerStats, playerAppearances))
