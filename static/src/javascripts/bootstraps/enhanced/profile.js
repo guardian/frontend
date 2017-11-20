@@ -1,5 +1,6 @@
 // @flow
 
+import { catchErrorsWithContext } from 'lib/robust';
 import { forgottenEmail, passwordToggle } from 'common/modules/identity/forms';
 import { Formstack } from 'common/modules/identity/formstack';
 import { FormstackIframe } from 'common/modules/identity/formstack-iframe';
@@ -42,33 +43,19 @@ const initAccountProfile = (): void => {
 };
 
 const initProfile = (): void => {
-    const modules:Array<Function> = [
-        initFormstack,
-        forgottenEmail,
-        passwordToggle,
-        initValidationEmail,
-        initUserAvatars,
-        initTabs,
-        initAccountProfile,
-        enhanceManageAccount,
-        setupLoadingAnimation,
-        initPublicProfile,
+    const modules: Array<Array<string | Function>> = [
+        ['init-form-stack', initFormstack],
+        ['forgotten-email', forgottenEmail],
+        ['password-toggle', passwordToggle],
+        ['init-validation-email', initValidationEmail],
+        ['init-user-avatars', initUserAvatars],
+        ['init-tabs', initTabs],
+        ['init-account-profile', initAccountProfile],
+        ['enhance-manage-account', enhanceManageAccount],
+        ['setup-loading-animation', setupLoadingAnimation],
+        ['init-public-profile', initPublicProfile],
     ];
-
-    const exceptions:Array<Error> = [];
-
-    modules.map((module:Function):(void|Error) => {
-        try {
-            return module();
-        } catch (err) {
-            exceptions.push(err);
-            return err;
-        }
-    });
-
-    exceptions.map((err:Error) => {
-        throw err;
-    });
+    catchErrorsWithContext(modules);
 };
 
 export { initProfile };
