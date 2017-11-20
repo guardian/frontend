@@ -122,9 +122,9 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         }
 
         let count = 0;
-        const shouldFetchBlocks = `&isLivePage=${isLivePage
-            ? 'true'
-            : 'false'}`;
+        const shouldFetchBlocks = `&isLivePage=${
+            isLivePage ? 'true' : 'false'
+        }`;
         const latestBlockIdToUse = latestBlockId || 'block-0';
         const params = `?lastUpdate=${latestBlockIdToUse}${shouldFetchBlocks}`;
         const endpoint = `${window.location.pathname}.json${params}`;

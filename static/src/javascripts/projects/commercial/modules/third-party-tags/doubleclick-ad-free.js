@@ -13,6 +13,7 @@ export const doubleClickAdFree: ThirdPartyTag = {
     shouldRun:
         commercialFeatures.adFree && config.switches.doubleclickYoutubeAdFree,
     useImage: true,
-    url: `//pubads.g.doubleclick.net/activity;dc_iu=/${config.page
-        .dfpAccountId}/DFPAudiencePixel;ord=${doubleClickRandom()};dc_seg=482549580;af=T?`,
+    url: `//pubads.g.doubleclick.net/activity;dc_iu=/${
+        config.page.dfpAccountId
+    }/DFPAudiencePixel;ord=${doubleClickRandom()};dc_seg=482549580;af=T?`,
 };

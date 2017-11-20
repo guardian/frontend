@@ -27,9 +27,9 @@ export const send = (
 };
 
 export const postComment = (discussionId: number | string, comment: Object) => {
-    const endpoint = `/discussion/${discussionId}/comment${comment.replyTo
-        ? `/${comment.replyTo.commentId}/reply`
-        : ''}`;
+    const endpoint = `/discussion/${discussionId}/comment${
+        comment.replyTo ? `/${comment.replyTo.commentId}/reply` : ''
+    }`;
 
     return send(endpoint, 'post', comment);
 };

@@ -14,10 +14,11 @@ export const push = (error: mixed, action: string = 'none'): Promise<void> =>
         .then((errorHolderEl: HTMLElement) =>
             fastdom.write(() => {
                 const errorEl = document.createElement('div');
-                errorEl.innerHTML = `<p>${error instanceof Error &&
-                error.message
-                    ? error.message
-                    : genericErrorMessage}. </p>`;
+                errorEl.innerHTML = `<p>${
+                    error instanceof Error && error.message
+                        ? error.message
+                        : genericErrorMessage
+                }. </p>`;
                 errorEl.className = formErrorClassName;
                 errorHolderEl.appendChild(errorEl);
 

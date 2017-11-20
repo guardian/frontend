@@ -45,8 +45,9 @@ class FabricV1 {
             position:
                 this.params.videoPositionH === 'left' ||
                 this.params.videoPositionH === 'right'
-                    ? `${this.params.videoPositionH}:${this.params
-                          .videoHorizSpace}px;`
+                    ? `${this.params.videoPositionH}:${
+                          this.params.videoHorizSpace
+                      }px;`
                     : '',
         };
 
@@ -168,7 +169,9 @@ class FabricV1 {
                 Math.ceil(this.adSlot.getBoundingClientRect().top * 0.3) + 20;
             fastdom.write(() => {
                 if (this.scrollingBg) {
-                    this.scrollingBg.style.backgroundPosition = `50% ${scrollAmount}%`;
+                    this.scrollingBg.style.backgroundPosition = `50% ${
+                        scrollAmount
+                    }%`;
                     this.scrollingBg.classList.add('ad-scrolling-bg-parallax');
                 }
             });
@@ -199,18 +202,20 @@ class FabricV1 {
             fastdom.write(() => {
                 if (this.layer2) {
                     this.layer2.classList.add(
-                        `ad-scrolling-text-hide${this.params
-                            .layerTwoAnimationPosition
-                            ? `-${this.params.layerTwoAnimationPosition}`
-                            : ''}`
+                        `ad-scrolling-text-hide${
+                            this.params.layerTwoAnimationPosition
+                                ? `-${this.params.layerTwoAnimationPosition}`
+                                : ''
+                        }`
                     );
                 }
                 if (this.layer2 && inViewB) {
                     this.layer2.classList.add(
-                        `ad-scrolling-text-animate${this.params
-                            .layerTwoAnimationPosition
-                            ? `-${this.params.layerTwoAnimationPosition}`
-                            : ''}`
+                        `ad-scrolling-text-animate${
+                            this.params.layerTwoAnimationPosition
+                                ? `-${this.params.layerTwoAnimationPosition}`
+                                : ''
+                        }`
                     );
                 }
             });

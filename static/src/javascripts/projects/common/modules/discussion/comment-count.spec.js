@@ -61,9 +61,7 @@ describe('Comment Count', () => {
 
     afterEach(() => {
         expect(fetchJsonSpy).toHaveBeenCalled();
-        expect(
-            fetchJsonSpy
-        ).toHaveBeenCalledWith(
+        expect(fetchJsonSpy).toHaveBeenCalledWith(
             '/discussion/comment-counts.json?shortUrls=/p/3gh4n,/p/3ghNp,/p/3ghkT,/p/3ghv5,/p/3ghx3',
             { mode: 'cors' }
         );

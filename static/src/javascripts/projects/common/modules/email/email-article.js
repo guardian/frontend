@@ -260,7 +260,9 @@ const addListToPage = (
         fastdom.write(() => {
             listConfig.insertMethod($iframeEl);
             trackNonClickInteraction(
-                `rtrt | email form inline | article | ${listConfig.listId} | sign-up shown`
+                `rtrt | email form inline | article | ${
+                    listConfig.listId
+                } | sign-up shown`
             );
             onEmailAdded();
         });
@@ -268,7 +270,9 @@ const addListToPage = (
         spaceFiller.fillSpace(spacefinderRules, paras => {
             $iframeEl.insertBefore(paras[0]);
             trackNonClickInteraction(
-                `rtrt | email form inline | article | ${listConfig.listId} | sign-up shown`
+                `rtrt | email form inline | article | ${
+                    listConfig.listId
+                } | sign-up shown`
             );
             onEmailAdded();
         });
@@ -279,24 +283,24 @@ const init = (): void => {
     waitForCheck('emailCanRun')
         .then(emailCanRun => {
             if (emailCanRun) {
-                waitForCheck(
-                    'emailCanRunPostCheck'
-                ).then(emailCanRunPostCheck => {
-                    if (emailCanRunPostCheck) {
-                        getUserEmailSubscriptions()
-                            .then(() => {
-                                const listConfig = Object.keys(
-                                    listConfigs
-                                ).find(key => listCanRun(listConfigs[key]));
-                                if (listConfig) {
-                                    addListToPage(listConfigs[listConfig]);
-                                }
-                            })
-                            .catch(error => {
-                                logError('c-email', error);
-                            });
+                waitForCheck('emailCanRunPostCheck').then(
+                    emailCanRunPostCheck => {
+                        if (emailCanRunPostCheck) {
+                            getUserEmailSubscriptions()
+                                .then(() => {
+                                    const listConfig = Object.keys(
+                                        listConfigs
+                                    ).find(key => listCanRun(listConfigs[key]));
+                                    if (listConfig) {
+                                        addListToPage(listConfigs[listConfig]);
+                                    }
+                                })
+                                .catch(error => {
+                                    logError('c-email', error);
+                                });
+                        }
                     }
-                });
+                );
             }
         })
         .catch(error => {

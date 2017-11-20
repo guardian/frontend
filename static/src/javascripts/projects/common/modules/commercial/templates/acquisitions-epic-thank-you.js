@@ -19,6 +19,8 @@ export const acquisitionsEpicThankYouTemplate = ({
                 featuring your views and voices?
             </p>
     
-            <a href="${membershipUrl}" target="_blank" class="u-underline">You can learn more about how to get involved here.</a>
+            <a href="${
+                membershipUrl
+            }" target="_blank" class="u-underline">You can learn more about how to get involved here.</a>
         </div>
     </div>`;
