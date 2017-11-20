@@ -46,4 +46,4 @@ GET         /amp/remote.html                                                cont
 GET         /facebook-ia/remote.html                                        controllers.Assets.at(path="/public", file="facebook_ia_remote.html")
 
 # ADS.TXT Standard
-GET         /ads.txt                                                        controllers.Assets.at(path="/public", file="ads.txt")
+GET         /ads.txt                                                        commercial.controllers.AdsDotTextViewController.renderTextFile()

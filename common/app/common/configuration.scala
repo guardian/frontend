@@ -397,7 +397,7 @@ class GuardianConfiguration extends Logging {
       configuration.getMandatoryStringProperty("commercial.dfp.guMerchandising.advertiserId")
 
     // root dir relative to S3 bucket
-    private lazy val commercialRoot = {
+    lazy val commercialRoot = {
       configuration.getStringProperty("commercial.s3.root") getOrElse s"${environment.stage.toUpperCase}/commercial"
     }
 
@@ -412,7 +412,7 @@ class GuardianConfiguration extends Logging {
     lazy val dfpTemplateCreativesKey = s"$dfpRoot/template-creatives.json"
     lazy val dfpCustomTargetingKey = s"$dfpRoot/custom-targeting-key-values.json"
     lazy val topAboveNavSlotTakeoversKey = s"$dfpRoot/top-above-nav-slot-takeovers-v2.json"
-
+    lazy val adsTextObjectKey = s"$commercialRoot/ads.txt"
     lazy val takeoversWithEmptyMPUsKey = s"$commercialRoot/takeovers-with-empty-mpus.json"
 
     private lazy val merchandisingFeedsRoot = s"$commercialRoot/merchandising"
