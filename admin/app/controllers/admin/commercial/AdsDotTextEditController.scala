@@ -35,7 +35,7 @@ class AdsDotTextEditController(val controllerComponents: ControllerComponents)(i
       adsTextSellers => {
         S3.putPrivate(adsTextObjectKey, adsTextSellers.sellers, "text/plain")
         log.info(s"Wrote new ads.txt file to ${adsTextObjectKey}")
-        NoCache(Redirect(routes.AdsDotTextController.renderAdsDotText()))
+        NoCache(Redirect(routes.AdsDotTextEditController.renderAdsDotText()))
       }
     )
   }
