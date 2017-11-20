@@ -2,7 +2,7 @@ package controllers
 import com.softwaremill.macwire._
 import common.AkkaAsync
 import controllers.admin._
-import controllers.admin.commercial.{DfpDataController, SlotController, TakeoverWithEmptyMPUsController}
+import controllers.admin.commercial.{AdsDotTextController, DfpDataController, SlotController, TakeoverWithEmptyMPUsController}
 import controllers.cache.{ImageDecacheController, PageDecacheController}
 import dfp._
 import jobs.VideoEncodingsJob
@@ -71,4 +71,5 @@ trait AdminControllers {
   lazy val playerController = wire[PlayerController]
   lazy val tablesController = wire[TablesController]
   lazy val frontsController = wire[FrontsController]
+  lazy val adsDotTextController = wire[AdsDotTextController]
 }
