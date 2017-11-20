@@ -8,7 +8,7 @@
        case Some(date) => {
             val beginRange = DateTimeFormat.forPattern(format).print(item.date)
             val endRange = DateTimeFormat.forPattern(format).print(date)
-            s"$beginRange - $endRange"
+            s"$beginRange&ndash;$endRange"
        }
        case None => DateTimeFormat.forPattern(format).print(item.date)
    }
