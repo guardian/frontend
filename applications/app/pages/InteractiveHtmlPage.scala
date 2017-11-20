@@ -19,7 +19,7 @@ import html.HtmlPageHelpers.ContentCSSFile
 
 object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
-  def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
+  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = stacked(
       criticalStyleLink("content"),
       criticalStyleLink("interactive")

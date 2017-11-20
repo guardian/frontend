@@ -505,16 +505,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val PillarCards = Switch(
-    SwitchGroup.Feature,
-    "pillar-cards",
-    "DO NOT ENABLE IN PROD – when ON, enables pillar cards",
-    owners = Seq(Owner.withGithub("sndrs")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 1),
-    exposeClientSide = false
-  )
-
     // Owner: Journalism
   val ReaderAnswersDeliveryMechanism = Switch(
     SwitchGroup.Feature,

@@ -124,6 +124,16 @@ object ABImageTestService extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
 }
 
+object Garnet extends TestDefinition(
+  name = "garnet",
+  description = "Users in this test will see garnet styling.",
+  owners = Seq(Owner.withName("dotcom.platform")),
+  sellByDate = new LocalDate(2018, 2, 1)
+) {
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-garnet")
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -153,7 +163,8 @@ object ActiveTests extends ServerSideABTests {
     ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl,
     ABJavascriptRenderingVariant,
-    ABJavascriptRenderingControl
+    ABJavascriptRenderingControl,
+    Garnet
   )
 }
 

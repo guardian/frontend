@@ -1,4 +1,4 @@
-@(title: String)(content: Html)(implicit context: model.ApplicationContext)
+@(title: String)(content: Html)(implicit context: model.ApplicationContext, request: RequestHeader)
 
 @import controllers.admin.routes.UncachedAssets
 @import controllers.admin.routes.UncachedWebAssets

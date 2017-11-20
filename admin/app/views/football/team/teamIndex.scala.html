@@ -1,4 +1,4 @@
-@(teams: List[pa.Team])(implicit context: model.ApplicationContext)
+@(teams: List[pa.Team])(implicit context: model.ApplicationContext, request: RequestHeader)
 
 @views.html.football.main("Teams") {
     <hgroup class="page-header">
