@@ -28,6 +28,13 @@ final case class Atoms(
   timelines: Seq[TimelineAtom]
 ) {
   val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines
+
+  def atomTypes: Map[String, Boolean] = Map(
+    "guide" -> !guides.isEmpty,
+    "qanda" -> !qandas.isEmpty,
+    "profile" -> !profiles.isEmpty,
+    "timeline" -> !timelines.isEmpty
+  )
 }
 
 sealed trait Atom {

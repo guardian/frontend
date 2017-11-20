@@ -71,4 +71,3 @@ declare type OphanComponentEvent = {
         variant: string
     }
 };
-
