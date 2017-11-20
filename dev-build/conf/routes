@@ -283,6 +283,7 @@ GET            /advertiser-content/:campaignName/:pageName                      
 GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json                                                    commercial.controllers.HostedContentController.renderOnwardComponent(campaignName, pageName, cType)
 GET            /advertiser-content/:campaignName/:pageName/autoplay.json                                                         commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize
+GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextFileController.renderTextFile()
 
 # Commercial Admin
 GET            /commercial                                                                                                       controllers.admin.CommercialController.renderCommercialMenu()
@@ -303,6 +304,8 @@ GET            /commercial/adops/takeovers-empty-mpus                           
 GET            /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.viewForm()
 POST           /commercial/adops/takeovers-empty-mpus/create                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.create()
 POST           /commercial/adops/takeovers-empty-mpus/remove                                                                     controllers.admin.commercial.TakeoverWithEmptyMPUsController.remove(t)
+GET         /commercial/adops/ads-txt                                                                                            controllers.admin.commercial.AdsDotTextController.renderAdsDotText()
+POST        /commercial/adops/ads-txt                                                                                            controllers.admin.commercial.AdsDotTextController.postAdsDotText()
 
 # Breaking News
 GET            /news-alert/alerts                                                                                                controllers.NewsAlertController.alerts()
