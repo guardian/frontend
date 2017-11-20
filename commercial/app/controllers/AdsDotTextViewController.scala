@@ -9,7 +9,7 @@ import model.Cached.RevalidatableResult
 
 import scala.concurrent.duration._
 
-class AdsDotTextFileController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
+class AdsDotTextViewController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
   extends BaseController with I18nSupport {
 
   def renderTextFile(): Action[AnyContent] = Action { implicit request =>

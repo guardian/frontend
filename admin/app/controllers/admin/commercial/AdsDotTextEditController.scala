@@ -18,7 +18,7 @@ object AdsTextSellers {
       )(AdsTextSellers.apply)(AdsTextSellers.unapply))
 }
 
-class AdsDotTextController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
+class AdsDotTextEditController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
   extends BaseController with I18nSupport with Logging {
 
   def renderAdsDotText(): Action[AnyContent] = Action { implicit request =>
