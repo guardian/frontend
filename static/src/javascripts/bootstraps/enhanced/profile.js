@@ -3,6 +3,10 @@
 import { catchErrorsWithContext } from 'lib/robust';
 import { forgottenEmail, passwordToggle } from 'common/modules/identity/forms';
 import { Formstack } from 'common/modules/identity/formstack';
+import {
+    Wizard,
+    containerClassname as wizardContainerClassname,
+} from 'common/modules/identity/wizard';
 import { FormstackIframe } from 'common/modules/identity/formstack-iframe';
 import { FormstackEmbedIframe } from 'common/modules/identity/formstack-iframe-embed';
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
@@ -37,6 +41,16 @@ const initFormstack = (): void => {
     });
 };
 
+const initWizards = (): void => {
+    const wizards = [
+        ...document.querySelectorAll(`.${wizardContainerClassname}`),
+    ];
+    wizards.forEach(wizardEl => {
+        // eslint-disable-next-line no-new
+        new Wizard(wizardEl);
+    });
+};
+
 const initAccountProfile = (): void => {
     // eslint-disable-next-line no-new
     new AccountProfile();
@@ -54,6 +68,7 @@ const initProfile = (): void => {
         ['enhance-manage-account', enhanceManageAccount],
         ['setup-loading-animation', setupLoadingAnimation],
         ['init-public-profile', initPublicProfile],
+        ['init-wizards', initWizards],
     ];
     catchErrorsWithContext(modules);
 };
