@@ -36,18 +36,39 @@ const initFormstack = (): void => {
     });
 };
 
-const initProfile = (): void => {
-    initFormstack();
-    forgottenEmail();
-    passwordToggle();
-    initValidationEmail();
-    initUserAvatars();
-    initTabs();
+const initAccountProfile = (): void => {
     // eslint-disable-next-line no-new
     new AccountProfile();
-    enhanceManageAccount();
-    setupLoadingAnimation();
-    initPublicProfile();
+};
+
+const initProfile = (): void => {
+    const modules = [
+        initFormstack,
+        forgottenEmail,
+        passwordToggle,
+        initValidationEmail,
+        initUserAvatars,
+        initTabs,
+        initAccountProfile,
+        enhanceManageAccount,
+        setupLoadingAnimation,
+        initPublicProfile,
+    ];
+
+    const exceptions = [];
+
+    modules.map(module => {
+        try {
+            return module();
+        } catch (err) {
+            exceptions.push(err);
+            return err;
+        }
+    });
+
+    exceptions.map(err => {
+        throw err;
+    });
 };
 
 export { initProfile };
