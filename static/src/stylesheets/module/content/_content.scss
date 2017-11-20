@@ -34,7 +34,8 @@
         .content__article-body {
             padding-right: gs-span(1) + $gs-gutter;
 
-            .ad-slot:not(.ad-slot--im) {
+            // Unruly video expands to 100%; this negative right margin affects Unruly on Tablet
+            .ad-slot:not(.ad-slot--im):not(.ad-slot--unruly) {
                 margin-right: -1 * (gs-span(1) + $gs-gutter);
             }
 

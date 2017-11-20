@@ -492,3 +492,13 @@
     // out-of-page and shouldn't be seen
     height: 0;
 }
+
+.ad-slot--unruly {
+    width: 100%;
+
+    @include mq(tablet) {
+        float: none;
+        margin-left: 0;
+    }
+
+}
