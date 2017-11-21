@@ -13,7 +13,7 @@
 
 @import '_vars';
 @import '_mixins';
-@import 'module/facia/_mixins';
+@import 'module/facia-garnett/_mixins';
 @import 'module/_discussion-mixins';
 @import '_extends-only';
 
@@ -90,13 +90,13 @@
    Facia
    ========================================================================== */
 
-@import 'module/facia/_tag-meta';
-@import 'module/facia/_l-list';
-@import 'module/facia/_container';
-@import 'module/facia/_containers';
-@import 'module/facia-pc/_item';
-@import 'module/facia/_linkslist';
-@import 'module/facia/_treats';
+@import 'module/facia-garnett/_tag-meta';
+@import 'module/facia-garnett/_l-list';
+@import 'module/facia-garnett/_container';
+@import 'module/facia-garnett/_containers';
+@import 'module/facia-garnett/_item';
+@import 'module/facia-garnett/_linkslist';
+@import 'module/facia-garnett/_treats';
 
 /* ==========================================================================
    Experiments
