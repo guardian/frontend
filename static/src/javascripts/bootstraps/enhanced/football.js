@@ -368,9 +368,7 @@ const init = (): void => {
             e.preventDefault();
 
             const el =
-                e &&
-                e.currentTarget instanceof HTMLLinkElement &&
-                e.currentTarget;
+                e.currentTarget instanceof HTMLLinkElement && e.currentTarget;
 
             if (el) {
                 const href = el.getAttribute('href');
