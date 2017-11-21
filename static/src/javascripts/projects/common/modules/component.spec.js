@@ -25,13 +25,32 @@ const createComponent = (props?: Object = {}): Component => {
 jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve(mockResponse)));
 
 describe('Component', () => {
+    let elem;
+    let subElem;
+
+    beforeEach(() => {
+        if (document.body) {
+            document.body.innerHTML = `
+                <div class="component">
+                    <div class="component__element"></div>
+                </div>
+            `;
+        }
+
+        // Apologies for the typecast, but it makes things just way easier ...
+        elem = ((document.querySelector('.component'): any): HTMLElement);
+        subElem = ((document.querySelector(
+            '.component__element'
+        ): any): HTMLElement);
+    });
+
     describe('fetch()', () => {
         test('call fetched() with an endpoint', () => {
             const component = createComponent({
                 fetched: jest.fn(),
             });
 
-            return component.fetch().then(() => {
+            return component.fetch(elem).then(() => {
                 expect(component.fetched).toHaveBeenCalledWith(mockResponse);
             });
         });
@@ -42,7 +61,7 @@ describe('Component', () => {
                 fetched: jest.fn(),
             });
 
-            return component.fetch().then(() => {
+            return component.fetch(elem).then(() => {
                 expect(component.fetched).not.toHaveBeenCalled();
             });
         });
@@ -52,7 +71,7 @@ describe('Component', () => {
                 fetched: jest.fn(),
             });
 
-            return component.fetch().then(() => {
+            return component.fetch(elem).then(() => {
                 if (!component.elem) {
                     return Promise.reject(
                         new Error('.elem property should exist')
@@ -76,7 +95,7 @@ describe('Component', () => {
                 fetched: jest.fn(),
             });
 
-            return component.fetch(undefined, 'other').then(() => {
+            return component.fetch(elem, 'other').then(() => {
                 if (!component.elem) {
                     return Promise.reject(
                         new Error('.elem property should exist')
@@ -100,7 +119,7 @@ describe('Component', () => {
                 error: jest.fn(),
             });
 
-            return component.fetch().then(() => {
+            return component.fetch(elem).then(() => {
                 expect(component.ready).toHaveBeenCalledWith(component.elem);
                 expect(component.checkAttached).toHaveBeenCalled();
                 expect(component.prerender).toHaveBeenCalled();
@@ -118,7 +137,7 @@ describe('Component', () => {
                 error: jest.fn(),
             });
 
-            return component.fetch().then(() => {
+            return component.fetch(elem).then(() => {
                 expect(component.ready).not.toHaveBeenCalled();
                 expect(component.checkAttached).toHaveBeenCalled();
                 expect(component.prerender).toHaveBeenCalled();
@@ -135,7 +154,7 @@ describe('Component', () => {
 
             fetchJSON.mockReturnValueOnce(Promise.reject(mockError));
 
-            return component.fetch().catch(() => {
+            return component.fetch(elem).catch(() => {
                 expect(component.ready).toHaveBeenCalled();
                 expect(component.error).toHaveBeenCalledWith(mockError);
             });
@@ -225,27 +244,11 @@ describe('Component', () => {
 
     describe('setState(), removeState(), toggleState()', () => {
         let component;
-        let elem;
-        let subElem;
 
         beforeEach(() => {
-            if (document.body) {
-                document.body.innerHTML = `
-                    <div class="component">
-                        <div class="component__element"></div>
-                    </div>
-                `;
-            }
-
-            elem = document.querySelector('.component');
-            subElem = document.querySelector('.component__element');
             component = createComponent({
                 componentClass: 'component',
             });
-
-            if (!elem || !subElem) {
-                throw new Error('required element not found');
-            }
 
             component.attachTo(elem);
         });
@@ -350,24 +353,6 @@ describe('Component', () => {
     });
 
     describe('attachTo()', () => {
-        let elem;
-
-        beforeEach(() => {
-            if (document.body) {
-                document.body.innerHTML = `
-                    <div class="component">
-                        <div class="component__element"></div>
-                    </div>
-                `;
-            }
-
-            elem = document.querySelector('.component');
-
-            if (!elem) {
-                throw new Error('required element not found');
-            }
-        });
-
         test('calls ready() callback', () => {
             const component = createComponent({
                 ready: jest.fn(),

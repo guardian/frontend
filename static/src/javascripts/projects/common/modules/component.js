@@ -94,7 +94,7 @@ class Component {
         }
     }
 
-    fetch(parent: HTMLElement | ?Node, key?: string): Promise<void> {
+    fetch(parent: HTMLElement | Node, key?: string): Promise<void> {
         this.checkAttached();
 
         if (key) {
