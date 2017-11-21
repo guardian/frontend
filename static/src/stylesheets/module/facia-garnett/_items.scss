@@ -5,6 +5,7 @@
 }
 
 @import 'item-layouts/fc-item--standard';
+@import 'item-layouts/fc-item--third';
 @import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--three-quarters';
 @import 'item-layouts/fc-item--three-quarters-right';
@@ -117,6 +118,12 @@
         .fc-item__avatar__media {
             right: -20%;
         }
+    }
+}
+
+.fc-item--third-tablet {
+    @include mq(tablet) {
+        @include fc-item--third;
     }
 }
 
