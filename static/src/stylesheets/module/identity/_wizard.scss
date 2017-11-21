@@ -1,0 +1,27 @@
+.manage-account-wizard {
+    @include clearfix();
+    &--completed {
+        .manage-account-wizard__controls {
+            display: none;
+        }
+    }
+}
+
+.manage-account-wizard__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.manage-account-wizard__controls-pager {
+    @include fs-textSans(1);
+}
+
+@include mq($until: tablet) {
+    .manage-account-wizard__controls {
+        justify-content: center;
+    }
+    .manage-account-wizard__controls-pager {
+        display: none;
+    }
+}
