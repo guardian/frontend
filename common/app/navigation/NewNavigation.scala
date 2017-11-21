@@ -4,7 +4,7 @@ import NavLinks._
 import common.Edition
 import common.editions
 
-case class NavLink(title: String, url: String, uniqueSection: String = "", longTitle: String = "", iconName: String = "")
+case class NavLink(title: String, url: String, longTitle: String = "", iconName: String = "")
 case class SectionsLink(pageId: String, navLink: NavLink, parentSection: NewNavigation.EditionalisedNavigationSection)
 case class SubSectionLink(pageId: String, parentSection: List[NavLink])
 

@@ -7,10 +7,10 @@
 
 @subNavItem(link: NavLink, id: String) = {
     <li class="@RenderClasses(Map(
-            "subnav__item--current-section" -> (id == link.uniqueSection)
+            "subnav__item--current-section" -> (id == link.url.stripPrefix("/"))
         ), "subnav__item")">
         <a class="@RenderClasses(Map(
-                "subnav-link--current-section" -> (id == link.uniqueSection)
+                "subnav-link--current-section" -> (id == link.url.stripPrefix("/"))
             ), "subnav-link")"
             href="@LinkTo(link.url)"
             data-link-name="nav2 : subnav : @{if(link.longTitle.isEmpty) link.title else link.longTitle}">
