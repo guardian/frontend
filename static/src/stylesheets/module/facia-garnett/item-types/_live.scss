@@ -1,0 +1,55 @@
+$live-garnett-main-1: #dc0100;
+$live-garnett-main-2: #ffc5c2;
+
+.fc-item--type-liveblog {
+    .fc-item__container,
+    .u-faux-block-link--hover,
+    .fc-item__kicker,
+    &:hover .fc-item__kicker {
+        background-color: $live-garnett-main-1;
+    }
+
+    .live-pulse-icon::before {
+        background-color: $live-garnett-main-2;
+    }
+
+    .fc-item__kicker {
+        color: $live-garnett-main-2;
+        border: 0;
+
+        &::after {
+            background-color: $live-garnett-main-2;
+        }
+    }
+
+    .fc-item__headline {
+        color: #ffffff;
+    }
+
+    .fc-trail__count--commentcount {
+        color: $live-garnett-main-2;
+
+        .inline-icon {
+            fill: $live-garnett-main-2;
+        }
+    }
+
+    .fc-sublink__title::before {
+        border-top-color: #e1e1e1;
+    }
+
+    .fc-sublink__link {
+        color: #ffffff;
+    }
+
+    .fc-sublink__kicker {
+        color: $live-garnett-main-2;
+    }
+}
+
+
+/* TODO: Revisit these.... */
+
+.fc-sublink--type-liveblog {
+    background-color: $live-garnett-main-1;
+}
