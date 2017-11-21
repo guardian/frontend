@@ -25,12 +25,12 @@ import { ScoreBoard } from 'common/modules/sport/score-board';
 import { addComponent } from 'common/modules/ui/rhc';
 import { replaceLocaleTimestamps } from 'common/modules/ui/relativedates';
 
-declare type Extras = Array<?{
+declare type Extra = {
     content?: Element,
     importance?: number,
     name?: string,
     ready: boolean,
-}>;
+};
 
 const renderNav = (
     match: Object,
@@ -62,74 +62,74 @@ const renderNav = (
         });
 };
 
-const renderExtras = (_extras: Extras, dropdownTemplate: string): void => {
+const renderExtras = (
+    _extras: Array<?Extra>,
+    dropdownTemplate: string
+): void => {
     const extras = [..._extras].filter(extra => extra);
     const ready =
         extras.filter(extra => extra && extra.ready === false).length === 0;
+    const createDropdown = (
+        template: string,
+        extra: Extra,
+        container: HTMLElement,
+        count: number
+    ): void => {
+        $.create(template)
+            .each(dropdown => {
+                if (config.get('page.isLiveBlog')) {
+                    $(dropdown).addClass('dropdown--key-events');
+                }
+
+                if (extra && extra.name) {
+                    $('.dropdown__label', dropdown).append(extra.name);
+                }
+
+                if (extra && extra.content) {
+                    $('.dropdown__content', dropdown).append(extra.content);
+                }
+
+                if (extra && extra.name) {
+                    $('.dropdown__button', dropdown)
+                        .attr(
+                            'data-link-name',
+                            `Show dropdown: ${extra.name || ''}`
+                        )
+                        .each(el => {
+                            if (count === 0) {
+                                bean.fire(el, 'click');
+                            }
+                        });
+                }
+            })
+            .appendTo(container);
+    };
 
     if (ready) {
         belowArticleVisible(
             () => {
-                let b;
                 $('.js-after-article').append(
                     $.create(
                         '<div class="football-extras"></div>'
                     ).each(extrasContainer => {
-                        extras.forEach((extra, i) => {
+                        extras.filter(Boolean).forEach((extra, i) => {
                             if (dropdownTemplate) {
-                                $.create(dropdownTemplate)
-                                    .each(dropdown => {
-                                        if (config.get('page.isLiveBlog')) {
-                                            $(dropdown).addClass(
-                                                'dropdown--key-events'
-                                            );
-                                        }
-
-                                        if (extra && extra.name) {
-                                            $(
-                                                '.dropdown__label',
-                                                dropdown
-                                            ).append(extra.name);
-                                        }
-
-                                        if (extra && extra.content) {
-                                            $(
-                                                '.dropdown__content',
-                                                dropdown
-                                            ).append(extra.content);
-                                        }
-
-                                        if (extra && extra.name) {
-                                            $('.dropdown__button', dropdown)
-                                                .attr(
-                                                    'data-link-name',
-                                                    `Show dropdown: ${extra.name ||
-                                                        ''}`
-                                                )
-                                                .each(el => {
-                                                    if (i === 0) {
-                                                        b = el;
-                                                    }
-                                                });
-                                        }
-                                    })
-                                    .appendTo(extrasContainer);
-                            } else if (extra && extra.content) {
+                                createDropdown(
+                                    dropdownTemplate,
+                                    extra,
+                                    extrasContainer,
+                                    i
+                                );
+                            } else if (extra.content) {
                                 extrasContainer.appendChild(extra.content);
                             }
                         });
                     })
                 );
-
-                // unfortunately this is here as the buttons event is delegated
-                // so it needs to be in the dom
-                if (b) {
-                    bean.fire(b, 'click');
-                }
             },
             () => {
-                extras.forEach(extra => {
-                    if (extra && extra.content && extra.importance) {
+                extras.filter(Boolean).forEach(extra => {
+                    if (extra.content && extra.importance) {
                         addComponent(extra.content, extra.importance);
                     }
                 });
@@ -140,7 +140,7 @@ const renderExtras = (_extras: Extras, dropdownTemplate: string): void => {
 
 const renderTable = (
     competition: string,
-    extras: Extras,
+    extras: Array<?Extra>,
     template: string
 ): void => {
     extras[2] = {
