@@ -184,15 +184,15 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__kicker {
     position: relative;
-    padding-right: 4px;
-    margin-right: 4px;
+    padding-right: $gs-gutter / 5;
+    margin-right: $gs-gutter / 5;
 
     &:before {
         content: '';
         position: absolute;
         top: 0;
         bottom: 1.1em;
-        right: -3px;
+        right: 0 - $gs-gutter / 6;
         left: 0;
         z-index: -1;
     }
@@ -202,8 +202,8 @@ $fc-item-gutter: $gs-gutter / 4;
         position: absolute;
         width: 1px;
         height: 2em;
-        bottom: 2px;
-        right: -3px;
+        bottom: $gs-gutter / 10;
+        right: 0 - $gs-gutter / 6;
         z-index: -2;
     }
 }
