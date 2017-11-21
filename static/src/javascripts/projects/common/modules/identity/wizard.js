@@ -17,11 +17,14 @@ const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
             fastdom.write(() => {
                 wizardEl.classList.toggle(
                     completedClassname,
-                    parseInt(wizardEl.dataset.position, 10) >= parseInt(wizardEl.dataset.length) - 1
+                    parseInt(wizardEl.dataset.position, 10) >=
+                        parseInt(wizardEl.dataset.length, 10) - 1
                 );
                 pagerEls.forEach((pagerEl: HTMLElement) => {
-                    pagerEl.innerText = `${parseInt(wizardEl.dataset.position, 10) +
-                        1} / ${wizardEl.dataset.length}`;
+                    pagerEl.innerText = `${parseInt(
+                        wizardEl.dataset.position,
+                        10
+                    ) + 1} / ${wizardEl.dataset.length}`;
                 });
             })
         );
@@ -46,7 +49,10 @@ export const setPosition = (
                     steps[positionAt].style.display = 'block';
                     updateCounter(wizardEl);
                 } else {
-                    steps[parseInt(wizardEl.dataset.position, 10)].style.display = 'block';
+                    steps[
+                        parseInt(wizardEl.dataset.position, 10)
+                    ].style.display =
+                        'block';
                     throw new Error('Invalid position');
                 }
             })
