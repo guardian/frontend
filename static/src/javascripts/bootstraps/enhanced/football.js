@@ -236,7 +236,9 @@ const init = (): void => {
                         .replace(/^.*\/\/[^/]+/, '');
 
                     $.create(
-                        '<div class="match-stats__container js-match-stats"></div>'
+                        `
+                        <div class="match-stats__container js-match-stats"></div>
+                    `
                     ).each(container => {
                         statsFor(statsUrl)
                             .fetch(container)
@@ -275,7 +277,10 @@ const init = (): void => {
 
                     // Other games today
                     $.create(
-                        '<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>'
+                        `
+                        <div class="js-football-match-day"
+                             data-link-name="football-match-day-embed"></div>
+                    `
                     ).each(container => {
                         matchDayFor(competition, resp.matchDate)
                             .fetch(container)
