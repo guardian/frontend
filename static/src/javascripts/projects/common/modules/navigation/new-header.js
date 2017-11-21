@@ -260,6 +260,10 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
             '.js-edition-picker-trigger'
         );
 
+        const buttonClickHandlers = {};
+
+        buttonClickHandlers['main-menu-toggle'] = toggleMenu;
+
         if (
             menuEl &&
             menuEl instanceof HTMLElement &&
@@ -271,42 +275,39 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
                 trigger: triggerEl,
             };
 
-            const buttonClickHandlers = {
-                'main-menu-toggle': toggleMenu,
-                'edition-picker-toggle': toggleDropdown.bind(
-                    null,
-                    editionPickerDropdownEls
-                ),
-            };
-
-            const enhance = () => {
-                const eventHandler = buttonClickHandlers[checkboxId];
-
-                if (checkboxClassAttr) {
-                    button.setAttribute('class', checkboxClassAttr);
-                }
-
-                button.addEventListener('click', () => eventHandler());
-                button.setAttribute('id', checkboxId);
-                button.setAttribute('aria-expanded', 'false');
-
-                if (dataLinkName) {
-                    button.setAttribute('data-link-name', dataLinkName);
-                }
-
-                if (checkboxControls) {
-                    button.setAttribute('aria-controls', checkboxControls);
-                }
-
-                if (checkbox.parentNode) {
-                    checkbox.parentNode.replaceChild(button, checkbox);
-                }
-
-                enhanced[button.id] = true;
-            };
-
-            fastdom.write(enhance);
+            buttonClickHandlers['edition-picker-toggle'] = toggleDropdown.bind(
+                null,
+                editionPickerDropdownEls
+            );
         }
+
+        const enhance = () => {
+            const eventHandler = buttonClickHandlers[checkboxId];
+
+            if (checkboxClassAttr) {
+                button.setAttribute('class', checkboxClassAttr);
+            }
+
+            button.addEventListener('click', () => eventHandler());
+            button.setAttribute('id', checkboxId);
+            button.setAttribute('aria-expanded', 'false');
+
+            if (dataLinkName) {
+                button.setAttribute('data-link-name', dataLinkName);
+            }
+
+            if (checkboxControls) {
+                button.setAttribute('aria-controls', checkboxControls);
+            }
+
+            if (checkbox.parentNode) {
+                checkbox.parentNode.replaceChild(button, checkbox);
+            }
+
+            enhanced[button.id] = true;
+        };
+
+        fastdom.write(enhance);
     });
 };
 
