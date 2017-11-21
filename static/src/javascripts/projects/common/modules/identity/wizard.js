@@ -1,80 +1,86 @@
 // @flow
 /* eslint-disable no-underscore-dangle, react/sort-comp */
 
-import bean from 'bean';
-import $ from 'lib/$';
-import { Component } from 'common/modules/component';
+import fastdom from 'lib/fastdom-promise';
 
+const completedClassname = 'manage-account-wizard--completed';
+const pagerClassname = 'manage-account-wizard__controls-pager';
 const stepClassname = 'manage-account-wizard__step';
 const nextButtonElClassname = 'js-manage-account-wizard__next';
-const prevButtonClassname = 'js-manage-account-wizard__prev';
-export const containerClassname = 'manage-account-wizard';
+const prevButtonElClassname = 'js-manage-account-wizard__prev';
+const containerClassname = 'manage-account-wizard';
 
-export class Wizard extends Component {
-    position: number;
-    steps: NodeList<HTMLElement>;
-    nextButtonEls: NodeList<HTMLElement>;
-    prevButtonEls: NodeList<HTMLElement>;
 
-    constructor(): void {
-        super();
-        this.useBem = true;
-        this.componentClass = containerClassname;
-    }
+const updateCounter = (wizardEl: HTMLElement): Promise<void> => {
 
-    updateCounter(): void {
-        if (this.position >= this.steps.length - 1) {
-            this.setState('completed');
-        } else {
-            this.removeState('completed');
-        }
+    return fastdom.read(()=>
+        [...wizardEl.getElementsByClassName(pagerClassname)]
+    ).then((pagerEls:Array<HTMLElement>)=>
+        fastdom.write(()=>{
+            wizardEl.classList.toggle(
+                completedClassname,
+                (wizardEl.dataset.position >= wizardEl.dataset.length - 1)
+            )
+            pagerEls.forEach((pagerEl:HTMLElement)=>{
+                pagerEl.innerText = `${parseInt(wizardEl.dataset.position)+1} / ${wizardEl.dataset.length}`;
+            })
+        })
+    )
 
-        const pagerEl = this.getElem('controls-pager');
-        if (pagerEl) {
-            pagerEl.innerText = `${this.position + 1} / ${this.steps.length}`;
-        }
-    }
+};
 
-    setPosition(positionAt: number): void {
-        this.steps.forEach(stepEl => {
-            stepEl.style.display = 'none';
-        });
-        if (positionAt < 0) {
-            return this.setPosition(0);
-        }
-        if (this.steps[positionAt]) {
-            this.position = positionAt;
-            this.steps[positionAt].style.display = 'block';
-            this.updateCounter();
-        } else {
-            this.steps[this.position].style.display = 'block';
-            throw new Error('Invalid position');
-        }
-    }
+export const setPosition = (wizardEl: HTMLElement, positionAt: number): Promise<void> => {
 
-    prerender(): void {
-        super.prerender();
-
-        if (!this.elems) this.elems = {};
-
-        this.steps = $(`.${stepClassname}`, this.elem);
-        this.nextButtonEls = $(`.${nextButtonElClassname}`, this.elem);
-        this.prevButtonEls = $(`.${prevButtonClassname}`, this.elem);
-    }
-
-    ready(): void {
-        this.setPosition(0);
-        if (this.nextButtonEls)
-            this.nextButtonEls.forEach(elem => {
-                bean.on(elem, 'click', () => {
-                    this.setPosition(this.position + 1);
-                });
+    return fastdom.read(()=>(
+        [...wizardEl.getElementsByClassName(stepClassname)]
+    )).then((steps:Array<HTMLElement>)=>
+        fastdom.write(()=>{
+            wizardEl.dataset.length = steps.length;
+            steps.forEach(stepEl => {
+                stepEl.style.display = 'none';
             });
-        if (this.prevButtonEls)
-            this.prevButtonEls.forEach(elem => {
-                bean.on(elem, 'click', () => {
-                    this.setPosition(this.position - 1);
-                });
-            });
-    }
+            if (positionAt < 0) {
+                return setPosition(wizardEl, 0);
+            }
+            if (steps[positionAt]) {
+                wizardEl.dataset.position = positionAt;
+                steps[positionAt].style.display = 'block';
+                updateCounter(wizardEl);
+            } else {
+                steps[wizardEl.dataset.position].style.display = 'block';
+                throw new Error('Invalid position');
+            }
+        })
+    )
+
 }
+
+export const enhance = (wizardEl:HTMLElement): Promise<void> => {
+
+    return setPosition(wizardEl, 0).then(() =>
+        fastdom.read(() => {
+
+            const nextButtonEls = [...wizardEl.getElementsByClassName(nextButtonElClassname)];
+            const prevButtonEls = [...wizardEl.getElementsByClassName(prevButtonElClassname)];
+
+            if (nextButtonEls) {
+                nextButtonEls.forEach(elem => {
+                    elem.addEventListener('click', () => {
+                        setPosition(wizardEl, parseInt(wizardEl.dataset.position) + 1);
+                    })
+                })
+            }
+            if (prevButtonEls) {
+                prevButtonEls.forEach(elem => {
+                    elem.addEventListener('click', () => {
+                        setPosition(wizardEl, parseInt(wizardEl.dataset.position) - 1);
+                    })
+                })
+            }
+
+        })
+    )
+
+};
+
+export {containerClassname};

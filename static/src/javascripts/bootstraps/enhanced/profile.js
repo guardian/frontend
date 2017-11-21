@@ -1,10 +1,12 @@
 // @flow
 
+import fastdom from 'lib/fastdom-promise';
+
 import { catchErrorsWithContext } from 'lib/robust';
 import { forgottenEmail, passwordToggle } from 'common/modules/identity/forms';
 import { Formstack } from 'common/modules/identity/formstack';
 import {
-    Wizard,
+    enhance as enhanceWizard,
     containerClassname as wizardContainerClassname,
 } from 'common/modules/identity/wizard';
 import { FormstackIframe } from 'common/modules/identity/formstack-iframe';
@@ -42,13 +44,15 @@ const initFormstack = (): void => {
 };
 
 const initWizards = (): void => {
-    const wizards = [
-        ...document.querySelectorAll(`.${wizardContainerClassname}`),
-    ];
-    wizards.forEach(wizardEl => {
-        // eslint-disable-next-line no-new
-        new Wizard().attachTo(wizardEl);
-    });
+    fastdom.read(()=>{
+        return [
+            ...document.getElementsByClassName(wizardContainerClassname),
+        ];
+    }).then(wizards => {
+        wizards.forEach(wizardEl => {
+            enhanceWizard(wizardEl);
+        });
+    })
 };
 
 const initAccountProfile = (): void => {
