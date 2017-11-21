@@ -1,5 +1,6 @@
 // @flow
 
+import bean from 'bean';
 import fetchJSON_ from 'lib/fetch-json';
 
 import { Component } from './component';
@@ -23,6 +24,10 @@ const createComponent = (props?: Object = {}): Component => {
 };
 
 jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve(mockResponse)));
+
+jest.mock('bean', () => ({
+    off: jest.fn(),
+}));
 
 describe('Component', () => {
     let elem;
@@ -395,7 +400,9 @@ describe('Component', () => {
 
             component.destroy();
 
-            expect(component.detach).toBeCalled();
+            expect(component.elem).toBe(null);
+            expect(component.t).toBe(null);
+            expect(bean.off).toBeCalledWith(component.elem);
         });
 
         test('deletes .elem', () => {
