@@ -44,15 +44,15 @@ const initFormstack = (): void => {
 };
 
 const initWizards = (): void => {
-    fastdom.read(()=>{
-        return [
+    fastdom
+        .read(() => [
             ...document.getElementsByClassName(wizardContainerClassname),
-        ];
-    }).then(wizards => {
-        wizards.forEach(wizardEl => {
-            enhanceWizard(wizardEl);
+        ])
+        .then(wizards => {
+            wizards.forEach(wizardEl => {
+                enhanceWizard(wizardEl);
+            });
         });
-    })
 };
 
 const initAccountProfile = (): void => {

@@ -10,77 +10,79 @@ const nextButtonElClassname = 'js-manage-account-wizard__next';
 const prevButtonElClassname = 'js-manage-account-wizard__prev';
 const containerClassname = 'manage-account-wizard';
 
-
-const updateCounter = (wizardEl: HTMLElement): Promise<void> => {
-
-    return fastdom.read(()=>
-        [...wizardEl.getElementsByClassName(pagerClassname)]
-    ).then((pagerEls:Array<HTMLElement>)=>
-        fastdom.write(()=>{
-            wizardEl.classList.toggle(
-                completedClassname,
-                (wizardEl.dataset.position >= wizardEl.dataset.length - 1)
-            )
-            pagerEls.forEach((pagerEl:HTMLElement)=>{
-                pagerEl.innerText = `${parseInt(wizardEl.dataset.position)+1} / ${wizardEl.dataset.length}`;
+const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
+    fastdom
+        .read(() => [...wizardEl.getElementsByClassName(pagerClassname)])
+        .then((pagerEls: Array<HTMLElement>) =>
+            fastdom.write(() => {
+                wizardEl.classList.toggle(
+                    completedClassname,
+                    wizardEl.dataset.position >= wizardEl.dataset.length - 1
+                );
+                pagerEls.forEach((pagerEl: HTMLElement) => {
+                    pagerEl.innerText = `${parseInt(wizardEl.dataset.position, 10) +
+                        1} / ${wizardEl.dataset.length}`;
+                });
             })
-        })
-    )
+        );
 
-};
+export const setPosition = (
+    wizardEl: HTMLElement,
+    positionAt: number
+): Promise<void> =>
+    fastdom
+        .read(() => [...wizardEl.getElementsByClassName(stepClassname)])
+        .then((steps: Array<HTMLElement>) =>
+            fastdom.write(() => {
+                wizardEl.dataset.length = steps.length;
+                steps.forEach(stepEl => {
+                    stepEl.style.display = 'none';
+                });
+                if (positionAt < 0) {
+                    return setPosition(wizardEl, 0);
+                }
+                if (steps[positionAt]) {
+                    wizardEl.dataset.position = positionAt;
+                    steps[positionAt].style.display = 'block';
+                    updateCounter(wizardEl);
+                } else {
+                    steps[wizardEl.dataset.position].style.display = 'block';
+                    throw new Error('Invalid position');
+                }
+            })
+        );
 
-export const setPosition = (wizardEl: HTMLElement, positionAt: number): Promise<void> => {
-
-    return fastdom.read(()=>(
-        [...wizardEl.getElementsByClassName(stepClassname)]
-    )).then((steps:Array<HTMLElement>)=>
-        fastdom.write(()=>{
-            wizardEl.dataset.length = steps.length;
-            steps.forEach(stepEl => {
-                stepEl.style.display = 'none';
-            });
-            if (positionAt < 0) {
-                return setPosition(wizardEl, 0);
-            }
-            if (steps[positionAt]) {
-                wizardEl.dataset.position = positionAt;
-                steps[positionAt].style.display = 'block';
-                updateCounter(wizardEl);
-            } else {
-                steps[wizardEl.dataset.position].style.display = 'block';
-                throw new Error('Invalid position');
-            }
-        })
-    )
-
-}
-
-export const enhance = (wizardEl:HTMLElement): Promise<void> => {
-
-    return setPosition(wizardEl, 0).then(() =>
+export const enhance = (wizardEl: HTMLElement): Promise<void> =>
+    setPosition(wizardEl, 0).then(() =>
         fastdom.read(() => {
-
-            const nextButtonEls = [...wizardEl.getElementsByClassName(nextButtonElClassname)];
-            const prevButtonEls = [...wizardEl.getElementsByClassName(prevButtonElClassname)];
+            const nextButtonEls = [
+                ...wizardEl.getElementsByClassName(nextButtonElClassname),
+            ];
+            const prevButtonEls = [
+                ...wizardEl.getElementsByClassName(prevButtonElClassname),
+            ];
 
             if (nextButtonEls) {
                 nextButtonEls.forEach(elem => {
                     elem.addEventListener('click', () => {
-                        setPosition(wizardEl, parseInt(wizardEl.dataset.position) + 1);
-                    })
-                })
+                        setPosition(
+                            wizardEl,
+                            parseInt(wizardEl.dataset.position, 10) + 1
+                        );
+                    });
+                });
             }
             if (prevButtonEls) {
                 prevButtonEls.forEach(elem => {
                     elem.addEventListener('click', () => {
-                        setPosition(wizardEl, parseInt(wizardEl.dataset.position) - 1);
-                    })
-                })
+                        setPosition(
+                            wizardEl,
+                            parseInt(wizardEl.dataset.position, 10) - 1
+                        );
+                    });
+                });
             }
-
         })
-    )
+    );
 
-};
-
-export {containerClassname};
+export { containerClassname };
