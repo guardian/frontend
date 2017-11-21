@@ -38,55 +38,39 @@ export const setPosition = (
         .then((steps: Array<HTMLElement>) =>
             fastdom.write(() => {
                 wizardEl.dataset.length = steps.length.toString();
+                if (positionAt < 0 || !steps[positionAt]) {
+                    throw new Error('Invalid position');
+                }
                 steps.forEach(stepEl => {
                     stepEl.style.display = 'none';
                 });
-                if (positionAt < 0) {
-                    return setPosition(wizardEl, 0);
-                }
-                if (steps[positionAt]) {
-                    wizardEl.dataset.position = positionAt.toString();
-                    steps[positionAt].style.display = 'block';
-                    updateCounter(wizardEl);
-                } else {
-                    steps[
-                        parseInt(wizardEl.dataset.position, 10)
-                    ].style.display =
-                        'block';
-                    throw new Error('Invalid position');
-                }
+                wizardEl.dataset.position = positionAt.toString();
+                steps[positionAt].style.display = 'block';
+                updateCounter(wizardEl);
             })
-        );
+        )
+        .catch(() => setPosition(wizardEl, 0));
 
 export const enhance = (wizardEl: HTMLElement): Promise<void> =>
     setPosition(wizardEl, 0).then(() =>
-        fastdom.read(() => {
-            const nextButtonEls = [
-                ...wizardEl.getElementsByClassName(nextButtonElClassname),
-            ];
-            const prevButtonEls = [
-                ...wizardEl.getElementsByClassName(prevButtonElClassname),
-            ];
-
-            if (nextButtonEls) {
-                nextButtonEls.forEach(elem => {
-                    elem.addEventListener('click', () => {
-                        setPosition(
-                            wizardEl,
-                            parseInt(wizardEl.dataset.position, 10) + 1
-                        );
-                    });
-                });
+        wizardEl.addEventListener('click', (ev: Event) => {
+            if (
+                ev.target instanceof HTMLElement &&
+                ev.target.closest(`.${nextButtonElClassname}`)
+            ) {
+                setPosition(
+                    wizardEl,
+                    parseInt(wizardEl.dataset.position, 10) + 1
+                );
             }
-            if (prevButtonEls) {
-                prevButtonEls.forEach(elem => {
-                    elem.addEventListener('click', () => {
-                        setPosition(
-                            wizardEl,
-                            parseInt(wizardEl.dataset.position, 10) - 1
-                        );
-                    });
-                });
+            if (
+                ev.target instanceof HTMLElement &&
+                ev.target.closest(`.${prevButtonElClassname}`)
+            ) {
+                setPosition(
+                    wizardEl,
+                    parseInt(wizardEl.dataset.position, 10) - 1
+                );
             }
         })
     );
