@@ -47,7 +47,7 @@ const initWizards = (): void => {
     ];
     wizards.forEach(wizardEl => {
         // eslint-disable-next-line no-new
-        new Wizard(wizardEl);
+        new Wizard().attachTo(wizardEl);
     });
 };
 

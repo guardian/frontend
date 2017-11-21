@@ -33,23 +33,6 @@
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
 }
 
-hi test
-
-<div class="manage-account__wizard">
-    <div class="manage-account__wizard-step">
-        1
-    </div>
-    <div class="manage-account__wizard-step">
-        <img src="http://www.picgifs.com/graphics/n/numbers/graphics-numbers-367565.gif" />
-    </div>
-    <div class="manage-account__wizard-step">
-        3
-    </div>
-    <div class="manage-account__wizard-controls">
-        next
-    </div>
-</div>
-
 <form novalidate action="@buildIdentityUrl("email-prefs")" role="main" method="post">
     @views.html.helper.CSRF.formField
     @if(emailPrefsForm.globalError.isDefined) {
