@@ -186,7 +186,17 @@ $fc-item-gutter: $gs-gutter / 4;
     position: relative;
     padding-right: 4px;
     margin-right: 4px;
-    border-bottom: 2px solid;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 1.1em;
+        background-color: #f1f1f1;
+        right: -3px;
+        left: 0;
+        z-index: -1;
+    }
 
     &:after {
         content: '';
@@ -195,7 +205,7 @@ $fc-item-gutter: $gs-gutter / 4;
         height: 2em;
         bottom: 2px;
         right: -3px;
-        z-index: -1;
+        z-index: -2;
     }
 }
 

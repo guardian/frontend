@@ -17,7 +17,6 @@ $pillars: (
 
         .fc-item__kicker {
             background-color: darken($background, 3%);
-            border-bottom-color: darken($background, 3%);
         }
     }
 
@@ -32,7 +31,10 @@ $pillars: (
     .fc-item__kicker {
         color: $accent;
         background-color: $background;
-        border-bottom-color: $background; 
+
+        &:before {
+            background-color: $background;
+        }
 
         &:after {
             background-color: $accent;
