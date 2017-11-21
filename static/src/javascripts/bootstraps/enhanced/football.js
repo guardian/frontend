@@ -23,7 +23,7 @@ import { MatchListLive } from 'common/modules/sport/football/match-list-live';
 import { tagPageStats } from 'common/modules/sport/football/tag-page-stats';
 import { ScoreBoard } from 'common/modules/sport/score-board';
 import { addComponent } from 'common/modules/ui/rhc';
-import relativeDates from 'common/modules/ui/relativedates';
+import { replaceLocaleTimestamps } from 'common/modules/ui/relativedates';
 
 const renderNav = (match: Object, callback): Promise<void> => {
     const matchInfo = new MatchInfo(match, config.get('pageId'));
@@ -339,7 +339,7 @@ const init = () => {
                     );
 
                     if (htmlContainer) {
-                        relativeDates.replaceLocaleTimestamps(html);
+                        replaceLocaleTimestamps(html);
                         htmlContainer.appendChild(html);
                     }
 
