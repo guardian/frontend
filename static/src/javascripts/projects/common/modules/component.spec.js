@@ -190,7 +190,7 @@ describe('Component', () => {
             expect(component.getClass('element', true)).toBe(
                 'my-element-class'
             );
-            expect(component.getClass('element-2')).not.toBe(undefined);
+            expect(component.getClass('element-2')).toBeDefined();
             expect(component.getClass('element-2', true)).not.toBe('.');
         });
     });
@@ -365,7 +365,7 @@ describe('Component', () => {
 
             if (elem) {
                 component.attachTo(elem);
-                expect(component.ready).toBeCalled();
+                expect(component.ready).toHaveBeenCalled();
             }
         });
 
@@ -376,7 +376,7 @@ describe('Component', () => {
 
             if (elem) {
                 component.attachTo(elem);
-                expect(component.prerender).toBeCalled();
+                expect(component.prerender).toHaveBeenCalled();
             }
         });
 
@@ -387,25 +387,13 @@ describe('Component', () => {
 
             if (elem) {
                 component.attachTo(elem);
-                expect(component.checkAttached).toBeCalled();
+                expect(component.checkAttached).toHaveBeenCalled();
             }
         });
     });
 
     describe('destroy()', () => {
-        test('calls detach()', () => {
-            const component = createComponent({
-                detach: jest.fn(),
-            });
-
-            component.destroy();
-
-            expect(component.elem).toBe(null);
-            expect(component.t).toBe(null);
-            expect(bean.off).toBeCalledWith(component.elem);
-        });
-
-        test('deletes .elem', () => {
+        test('cleans up the instance', () => {
             const component = createComponent({
                 elem: document.createElement('p'),
             });
@@ -413,6 +401,8 @@ describe('Component', () => {
             component.destroy();
 
             expect(component.elem).not.toBeDefined();
+            expect(component.t).toBe(null);
+            expect(bean.off).toHaveBeenCalledWith(component.elem);
         });
     });
 });
