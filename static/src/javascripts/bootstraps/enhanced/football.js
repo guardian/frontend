@@ -25,7 +25,17 @@ import { ScoreBoard } from 'common/modules/sport/score-board';
 import { addComponent } from 'common/modules/ui/rhc';
 import { replaceLocaleTimestamps } from 'common/modules/ui/relativedates';
 
-const renderNav = (match: Object, callback): Promise<void> => {
+declare type Extras = Array<?{
+    content?: Element,
+    importance?: number,
+    name?: string,
+    ready: boolean,
+}>;
+
+const renderNav = (
+    match: Object,
+    callback?: (resp: Object, $nav: bonzo) => void
+): Promise<void> => {
     const matchInfo = new MatchInfo(match, config.get('pageId'));
 
     return matchInfo
@@ -43,7 +53,7 @@ const renderNav = (match: Object, callback): Promise<void> => {
             }
 
             if (callback) {
-                callback(resp, $nav, matchInfo.endpoint);
+                callback(resp, $nav);
             }
         })
         .catch(() => {
@@ -52,10 +62,11 @@ const renderNav = (match: Object, callback): Promise<void> => {
         });
 };
 
-const renderExtras = (_extras, dropdownTemplate) => {
+const renderExtras = (_extras: Extras, dropdownTemplate: string): void => {
     // clean
     const extras = [..._extras].filter(extra => extra);
-    const ready = extras.filter(extra => extra.ready === false).length === 0;
+    const ready =
+        extras.filter(extra => extra && extra.ready === false).length === 0;
 
     if (ready) {
         belowArticleVisible(
@@ -74,26 +85,37 @@ const renderExtras = (_extras, dropdownTemplate) => {
                                                 'dropdown--key-events'
                                             );
                                         }
-                                        $('.dropdown__label', dropdown).append(
-                                            extra.name
-                                        );
-                                        $(
-                                            '.dropdown__content',
-                                            dropdown
-                                        ).append(extra.content);
-                                        $('.dropdown__button', dropdown)
-                                            .attr(
-                                                'data-link-name',
-                                                `Show dropdown: ${extra.name}`
-                                            )
-                                            .each(el => {
-                                                if (i === 0) {
-                                                    b = el;
-                                                }
-                                            });
+
+                                        if (extra && extra.name) {
+                                            $(
+                                                '.dropdown__label',
+                                                dropdown
+                                            ).append(extra.name);
+                                        }
+
+                                        if (extra && extra.content) {
+                                            $(
+                                                '.dropdown__content',
+                                                dropdown
+                                            ).append(extra.content);
+                                        }
+
+                                        if (extra && extra.name) {
+                                            $('.dropdown__button', dropdown)
+                                                .attr(
+                                                    'data-link-name',
+                                                    `Show dropdown: ${extra.name ||
+                                                        ''}`
+                                                )
+                                                .each(el => {
+                                                    if (i === 0) {
+                                                        b = el;
+                                                    }
+                                                });
+                                        }
                                     })
                                     .appendTo(extrasContainer);
-                            } else {
+                            } else if (extra && extra.content) {
                                 extrasContainer.appendChild(extra.content);
                             }
                         });
@@ -108,62 +130,77 @@ const renderExtras = (_extras, dropdownTemplate) => {
             },
             () => {
                 extras.forEach(extra => {
-                    addComponent(extra.content, extra.importance);
+                    if (extra && extra.content && extra.importance) {
+                        addComponent(extra.content, extra.importance);
+                    }
                 });
             }
         );
     }
 };
 
-const renderTable = (competition: string, extras, template) => {
+const renderTable = (
+    competition: string,
+    extras: Extras,
+    template: string
+): void => {
     extras[2] = {
         ready: false,
     };
+
     $.create(
-        '<div class="js-football-table" data-link-name="football-table-embed"></div>'
+        `<div class="js-football-table"
+              data-link-name="football-table-embed"></div>
+        `
     ).each(container => {
         tableFor(competition)
             .fetch(container)
-            .then(
-                () => {
-                    extras[2] =
-                        $('.table__container', container).length > 0
-                            ? {
-                                  name: 'Table',
-                                  importance: 3,
-                                  content: container,
-                                  ready: true,
-                              }
-                            : undefined;
-                    renderExtras(extras, template);
-                },
-                () => {
-                    delete extras[2];
-                    renderExtras(extras, template);
+            .then(() => {
+                if ($('.table__container', container).length > 0) {
+                    extras[2] = {
+                        name: 'Table',
+                        importance: 3,
+                        content: container,
+                        ready: true,
+                    };
+                } else {
+                    extras[2] = undefined;
                 }
-            );
+
+                renderExtras(extras, template);
+            })
+            .catch(() => {
+                delete extras[2];
+                renderExtras(extras, template);
+            });
     });
 };
 
-const loading = (elem, message, link) => {
+const loading = (
+    elem: HTMLElement,
+    message: string = 'Loading…',
+    link: {
+        text: string,
+        href: string,
+    }
+): void => {
     bonzo(elem).append(
         bonzo.create(`
             <div class="loading">
-                <div class="loading__message">${message || 'Loading…'}</div>
-                ${link
-                    ? `<a href="${link.href}" class="loading__link">${link.text}</a>`
-                    : ''}
-                <div class="loading__animation"></div>
+                <div class="loading__message">${message}</div>
+                    <a href="${link.href}"
+                       class="loading__link">${link.text}</a>
+                    <div class="loading__animation"></div>
             </div>
         `)
     );
 };
 
-const loaded = elem => {
+const loaded = (elem: HTMLElement): void => {
     $('.loading', elem).remove();
 };
 
-const init = () => {
+const init = (): void => {
     // We're doing this as to have one redraw
     const extras = [];
 
@@ -184,12 +221,11 @@ const init = () => {
                 autoupdated: match.isLive,
             });
 
-            renderNav(match, (resp, $nav, endpoint): void => {
+            renderNav(match, (resp, $nav): void => {
                 dropdownTemplate = resp.dropdown;
 
                 // Test if template is not composed of just whitspace. A content validation check, apparently.
                 if (scoreBoard.template && !/^\s+$/.test(scoreBoard.template)) {
-                    scoreBoard.endpoint = endpoint;
                     scoreBoard.loadFromJson(resp.matchSummary);
                 } else {
                     $h.removeClass('u-h');
@@ -229,6 +265,7 @@ const init = () => {
                     extras[1] = {
                         ready: false,
                     };
+
                     // Group table
                     if (resp.group !== '') {
                         renderTable(
@@ -244,21 +281,19 @@ const init = () => {
                     ).each(container => {
                         matchDayFor(competition, resp.matchDate)
                             .fetch(container)
-                            .then(
-                                () => {
-                                    extras[1] = {
-                                        name: 'Today’s matches',
-                                        importance: 2,
-                                        content: container,
-                                        ready: true,
-                                    };
-                                    renderExtras(extras, dropdownTemplate);
-                                },
-                                () => {
-                                    delete extras[1];
-                                    renderExtras(extras, dropdownTemplate);
-                                }
-                            );
+                            .then(() => {
+                                extras[1] = {
+                                    name: 'Today’s matches',
+                                    importance: 2,
+                                    content: container,
+                                    ready: true,
+                                };
+                                renderExtras(extras, dropdownTemplate);
+                            })
+                            .catch(() => {
+                                delete extras[1];
+                                renderExtras(extras, dropdownTemplate);
+                            });
                     });
                 });
             });
@@ -302,7 +337,7 @@ const init = () => {
 
         $('.js-football-meta').append($matchListContainer);
 
-        const handleResponse = success => {
+        const handleResponse = (success: boolean): void => {
             if (
                 !success ||
                 $('.football-match', $matchListContainer[0]).length === 0
@@ -327,44 +362,60 @@ const init = () => {
     });
 
     // Binding
-    bean.on(document.body, 'click', '.js-show-more-football-matches', e => {
-        e.preventDefault();
-        const el = e.currentTarget;
-        fetchJson(`${el.getAttribute('href')}.json`)
-            .then(resp => {
-                $.create(resp.html).each(html => {
-                    const htmlContainer = document.querySelector(
-                        `[data-show-more-contains="${el.getAttribute(
-                            'data-puts-more-into'
-                        )}"]`
-                    );
+    bean.on(
+        document.body,
+        'click',
+        '.js-show-more-football-matches',
+        (e: Event): void => {
+            e.preventDefault();
 
-                    if (htmlContainer) {
-                        replaceLocaleTimestamps(html);
-                        htmlContainer.appendChild(html);
-                    }
+            const el =
+                e &&
+                e.currentTarget instanceof HTMLLinkElement &&
+                e.currentTarget;
 
-                    const nurl = resp[el.getAttribute('data-new-url')];
+            if (el) {
+                const href = el.getAttribute('href');
+                const putsMore = el.getAttribute('data-puts-more-into');
+                const newData = el.getAttribute('data-new-url');
 
-                    if (nurl) {
-                        bonzo(el).attr('href', nurl);
-                    } else {
-                        bonzo(el).remove();
-                    }
-                });
-            })
-            .catch(ex => {
-                reportError(ex, {
-                    feature: 'football-show-more',
-                });
-            });
-    });
+                if (href && putsMore && newData) {
+                    fetchJson(`${href}.json`)
+                        .then(resp => {
+                            $.create(resp.html).each(html => {
+                                const htmlContainer = document.querySelector(
+                                    `[data-show-more-contains="${putsMore}"]`
+                                );
+
+                                if (htmlContainer) {
+                                    replaceLocaleTimestamps(html);
+                                    htmlContainer.appendChild(html);
+                                }
+
+                                const nurl = resp[newData];
+
+                                if (nurl) {
+                                    bonzo(el).attr('href', nurl);
+                                } else {
+                                    bonzo(el).remove();
+                                }
+                            });
+                        })
+                        .catch(ex => {
+                            reportError(ex, {
+                                feature: 'football-show-more',
+                            });
+                        });
+                }
+            }
+        }
+    );
 
     bean.on(
         document.body,
         'change',
         $('form.football-leagues')[0],
-        function changeLeague() {
+        function onChange() {
             window.location = this.value;
         }
     );
