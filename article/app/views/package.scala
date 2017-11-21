@@ -45,6 +45,7 @@ object BodyCleaner {
 
     val cleaners = List(
       InBodyElementCleaner,
+      AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp),
       InBodyLinkCleaner("in body link", amp),
       BlockNumberCleaner,
       new TweetCleaner(article.content, amp),
@@ -53,7 +54,6 @@ object BodyCleaner {
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
       PictureCleaner(article, amp),
-      AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
@@ -62,7 +62,6 @@ object BodyCleaner {
       BlockquoteCleaner,
       PullquoteCleaner,
       CmpParamCleaner,
-      ExploreVideos(article.isExplore),
       PhotoEssayImages(article.isPhotoEssay),
       PhotoEssayQuotes(article.isPhotoEssay),
       PhotoEssayHalfWidth(article.isPhotoEssay),

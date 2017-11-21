@@ -2,10 +2,12 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# For dev machines
+GET         /assets/*path                           dev.DevAssetsController.at(path)
 
 GET        /_healthcheck                            controllers.HealthCheck.healthCheck()
 
-GET        /dev/ui                                  controllers.DevComponentController.renderComponent()
+GET        /dev/ui/props.json                       controllers.DevComponentController.props()
 
 # 404
 GET        /404$path</.*>                           controllers.ArchiveController.lookup(path)

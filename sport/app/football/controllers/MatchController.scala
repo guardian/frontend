@@ -38,7 +38,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
   override val metadata = MetaData.make(
     id = id,
-    section = Some(SectionSummary.fromId("football")),
+    section = Some(SectionId.fromId("football")),
     webTitle = s"${theMatch.homeTeam.name} ${theMatch.homeTeam.score.getOrElse("")} - ${theMatch.awayTeam.score.getOrElse("")} ${theMatch.awayTeam.name}",
     javascriptConfigOverrides = javascriptConfig
   )
@@ -66,7 +66,7 @@ class MatchController(
 
   private def render(maybeMatch: Option[FootballMatch]): Action[AnyContent] = Action.async { implicit request =>
     val response = maybeMatch map { theMatch =>
-      val lineup: Future[LineUp] = competitionsService.footballClient.lineUp(theMatch.id).recover(competitionsService.footballClient.logErrors)
+      val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
 
       page map { page =>

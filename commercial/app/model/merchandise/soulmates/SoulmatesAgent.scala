@@ -1,7 +1,7 @@
 package commercial.model.merchandise.soulmates
 
+import com.gu.Box
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}
-import common.AkkaAgent
 import commercial.model.merchandise.{Man, Member, Woman}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -11,7 +11,7 @@ case class SoulmatesAgent(groupName: String,
                               feed: SoulmatesFeed,
                               filter: Seq[Member] => Seq[Member]) {
 
-  private lazy val agent = AkkaAgent[Seq[Member]](Nil)
+  private lazy val agent = Box[Seq[Member]](Nil)
 
   def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])
     (implicit ec: ExecutionContext): Future[ParsedFeed[Member]] = {

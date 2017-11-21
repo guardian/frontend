@@ -45,6 +45,21 @@
     );
 }
 
+.button--primary-inverse {
+    @include button-colour(
+        transparent,
+        $news-main-1,
+        $news-main-1
+    );
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $news-main-1;
+        color: #ffffff;
+    }
+}
+
 .button--secondary {
     @include button-colour(
         $neutral-7,
@@ -248,12 +263,12 @@ $show-more-icon-spacing: $base-size + 1;
 .button--syndication-reprint {
     @include button-colour(
         transparent,
-        $news-main-2,
-        $news-main-2
+        $news-support-6,
+        rgba($news-support-6, .3)
     );
 
     @include button-hover-colour(
         transparent,
-        darken($news-main-2, 10%)
+        darken($news-support-6, 10%)
     );
 }

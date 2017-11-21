@@ -6,7 +6,7 @@ const integerCommas = (val: string | number): string | void => {
     let digits;
     let i;
     let len;
-    if (!isNaN(num)) {
+    if (!Number.isNaN(num)) {
         digits = num.toFixed(0).split('');
         len = digits.length;
         for (i = digits.length - 1; i >= 1; i -= 1) {

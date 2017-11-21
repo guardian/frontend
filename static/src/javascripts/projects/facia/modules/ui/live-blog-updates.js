@@ -1,6 +1,6 @@
 // @flow
 import bonzo from 'bonzo';
-import relativeDates from 'common/modules/ui/relativedates';
+import { makeRelativeDate } from 'common/modules/ui/relativedates';
 import $ from 'lib/$';
 import { getViewport } from 'lib/detect';
 import fastdomPromise from 'lib/fastdom-promise';
@@ -33,10 +33,7 @@ type Block = {
 
 const blockRelativeTime = (block: Block): string => {
     const pubDate = (block || {}).publishedDateTime;
-    const relDate = pubDate
-        ? relativeDates.makeRelativeDate(new Date(pubDate))
-        : false;
-
+    const relDate = pubDate ? makeRelativeDate(new Date(pubDate)) : false;
     return relDate || '';
 };
 

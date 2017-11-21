@@ -1,5 +1,6 @@
 package feed
 
+import com.gu.Box
 import pa._
 import conf.FootballClient
 import org.joda.time.LocalDate
@@ -11,8 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 trait Lineups extends Logging {
   def footballClient: FootballClient
-  def competitions: Competitions
-  def teamNameBuilder: TeamNameBuilder = new TeamNameBuilder(competitions)
+  def teamNameBuilder: TeamNameBuilder
   def getLineup(theMatch: FootballMatch)(implicit executionContext: ExecutionContext): Future[LineUp] =
     footballClient
       .lineUp(theMatch.id)
@@ -21,7 +21,7 @@ trait Lineups extends Logging {
         val awayTeam = m.awayTeam.copy(name = teamNameBuilder.withTeam(m.awayTeam))
         LineUp(homeTeam, awayTeam, m.homeTeamPossession)
       }
-      .recover(footballClient.logErrors)
+      .recover(footballClient.logErrorsWithMessage(s"Failed getting line-up for match ${theMatch.id}"))
 }
 
 trait LiveMatches extends Logging {
@@ -30,7 +30,8 @@ trait LiveMatches extends Logging {
   def teamNameBuilder: TeamNameBuilder
 
   def getLiveMatches()(implicit executionContext: ExecutionContext): Future[Map[String, Seq[MatchDay]]] =
-    footballClient.matchDay(LocalDate.now)
+    footballClient
+      .matchDay(LocalDate.now)
       .map { todaysMatches: List[MatchDay] =>
 
         val matchesWithCompetitions = todaysMatches.filter(_.competition.isDefined)
@@ -44,7 +45,7 @@ trait LiveMatches extends Logging {
         // we have checked above that the competition does exist for these matches
         matchesWithCleanedTeams.groupBy(_.competition.head.id)
       }
-      .recover(footballClient.logErrors)
+      .recover(footballClient.logErrorsWithMessage(s"Failed getting live matches"))
 }
 
 trait LeagueTables extends Logging {
@@ -60,7 +61,7 @@ trait LeagueTables extends Logging {
         t.copy(team = team)
       }
     }
-      .recover(footballClient.logErrors)
+      .recover(footballClient.logErrorsWithMessage(s"Failed getting league table for competition: ${competition.id}"))
   }
 }
 
@@ -78,7 +79,7 @@ trait Fixtures extends Logging {
         f.copy(homeTeam = homeTeam, awayTeam = awayTeam)
       }
     }
-      .recover(footballClient.logErrors)
+      .recover(footballClient.logErrorsWithMessage(s"Failed getting fixtures for competition: ${competition.id}"))
   }
 }
 
@@ -98,13 +99,13 @@ trait Results extends Logging with implicits.Collections {
         r.copy(homeTeam = homeTeam, awayTeam = awayTeam)
       }
     }
-      .recover(footballClient.logErrors)
+      .recover(footballClient.logErrorsWithMessage(s"Failed getting results for competition: ${competition.id}"))
   }
 }
 
 class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: TeamNameBuilder, _competition: Competition) extends Fixtures with Results with LeagueTables with implicits.Football {
 
-  private lazy val agent = AkkaAgent(_competition)
+  private lazy val agent = Box(_competition)
 
   def competition: Competition = agent()
 

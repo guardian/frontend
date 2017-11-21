@@ -6,10 +6,10 @@ import NewNavigation._
 object SectionLinks {
 
   val sectionLinks = List (
-    SectionsLink ("uk", headlines, MostPopular),
-    SectionsLink ("us", headlines, MostPopular),
-    SectionsLink ("au", headlines, MostPopular),
-    SectionsLink ("international", headlines, MostPopular),
+    SectionsLink ("uk", headlines, News),
+    SectionsLink ("us", headlines, News),
+    SectionsLink ("au", headlines, News),
+    SectionsLink ("international", headlines, News),
     SectionsLink ("uk-news", ukNews, News),
     SectionsLink ("world", world, News),
     SectionsLink ("world/europe-news", europe, News),
@@ -27,7 +27,6 @@ object SectionLinks {
     SectionsLink ("global-development", globalDevelopment, News),
     SectionsLink ("sustainable-business", sustainableBusiness, News),
     SectionsLink ("law", law, News),
-    SectionsLink ("technology/games", games, News),
     SectionsLink ("us-news/us-politics", usPolitics, News),
     SectionsLink ("australia-news/australian-politics", auPolitics, News),
     SectionsLink ("australia-news/australian-immigration-and-asylum", auImmigration, News),
@@ -70,20 +69,21 @@ object SectionLinks {
     SectionsLink ("artanddesign", artAndDesign, Arts),
     SectionsLink ("stage", stage, Arts),
     SectionsLink ("music/classicalmusicandopera", classical, Arts),
+    SectionsLink ("games", games, Arts),
 
-    SectionsLink ("lifeandstyle", lifestyle, Life),
-    SectionsLink ("fashion", fashion, Life),
-    SectionsLink ("travel", travel, Life),
-    SectionsLink ("society", society, Life),
-    SectionsLink ("lifeandstyle/food-and-drink", food, Life),
-    SectionsLink ("tone/recipes", recipes, Life),
-    SectionsLink ("lifeandstyle/women", women, Life),
-    SectionsLink ("lifeandstyle/health-and-wellbeing", health, Life),
-    SectionsLink ("lifeandstyle/family", family, Life),
-    SectionsLink ("lifeandstyle/love-and-sex", loveAndSex, Life),
-    SectionsLink ("au/lifeandstyle/fashion", fashionAu, Life),
-    SectionsLink ("au/lifeandstyle/food-and-drink", foodAu, Life),
-    SectionsLink ("au/lifeandstyle/relationships", relationshipsAu, Life),
-    SectionsLink ("au/lifeandstyle/health-and-wellbeing", healthAu, Life)
+    SectionsLink ("lifeandstyle", lifestyle, Lifestyle),
+    SectionsLink ("fashion", fashion, Lifestyle),
+    SectionsLink ("travel", travel, Lifestyle),
+    SectionsLink ("society", society, Lifestyle),
+    SectionsLink ("lifeandstyle/food-and-drink", food, Lifestyle),
+    SectionsLink ("tone/recipes", recipes, Lifestyle),
+    SectionsLink ("lifeandstyle/women", women, Lifestyle),
+    SectionsLink ("lifeandstyle/health-and-wellbeing", health, Lifestyle),
+    SectionsLink ("lifeandstyle/family", family, Lifestyle),
+    SectionsLink ("lifeandstyle/love-and-sex", loveAndSex, Lifestyle),
+    SectionsLink ("au/lifeandstyle/fashion", fashionAu, Lifestyle),
+    SectionsLink ("au/lifeandstyle/food-and-drink", foodAu, Lifestyle),
+    SectionsLink ("au/lifeandstyle/relationships", relationshipsAu, Lifestyle),
+    SectionsLink ("au/lifeandstyle/health-and-wellbeing", healthAu, Lifestyle)
   )
 }

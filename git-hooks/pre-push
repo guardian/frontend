@@ -4,53 +4,88 @@
 const path = require('path');
 const execa = require('execa');
 const chalk = require('chalk');
+const getChangedFiles = require('../tools/__tasks__/lib/get-changed-files');
 
-const diff = () =>
-    execa
-        .stdout('git', ['diff', '--name-only', '--cached', '--diff-filter=AM'])
-        .then(staged => staged.split('\n'));
+const confirmIfMasterMessage = `${chalk.red(
+    `${chalk.inverse(
+        'You are about to push master!'
+    )}\nIs that what you intended?`
+)} [y/N]`;
+const confirmIfMaster = execa
+    .shell(
+        `
+        protected_branch='master'
+        current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\\(.*\\),\\1,')
+
+        if [ $protected_branch = $current_branch ]
+        then
+            read -p "${confirmIfMasterMessage}" -n 1 -r < /dev/tty
+            echo
+            if echo $REPLY | grep -E '^[Yy]$' > /dev/null
+            then
+                exit 0 # push will execute
+            fi
+            exit 1 # push will not execute
+        else
+            exit 0 # push will execute
+        fi
+        `,
+        {
+            stdio: 'inherit',
+        }
+    )
+    .catch(() => Promise.reject(new Error('Ok, stopping 😉')));
 
 const validate = () =>
-    execa('./tools/task-runner/runner', ['validate-head/index'], {
-        stdio: 'inherit',
-    });
+    execa(
+        './tools/task-runner/runner',
+        ['validate-head/index', 'validate/check-for-disallowed-strings'],
+        {
+            stdio: 'inherit',
+        }
+    );
 
-const checkYarnLock = staged => {
+const checkYarnLock = changed => {
     if (
-        staged.some(file => file === 'package.json') &&
-        !staged.some(file => file === 'yarn.lock')
+        changed.some(file => file === 'package.json') &&
+        !changed.some(file => file === 'yarn.lock')
     ) {
         return Promise.reject(
-            `${chalk.red(
-                `${chalk.underline(
-                    'package.json'
-                )} has changed but ${chalk.underline(
-                    'yarn.lock'
-                )} is not included in this commit.`
-            )}\n${chalk.dim(
-                `If this is intentional, commit this change with --no-verify.`
-            )}`
+            new Error(
+                `${chalk.red(
+                    `${chalk.underline(
+                        'package.json'
+                    )} has changed but ${chalk.underline(
+                        'yarn.lock'
+                    )} is not included in this commit.`
+                )}\n${chalk.dim(
+                    `If this is intentional, commit this change with --no-verify.`
+                )}`
+            )
         );
     }
-    return staged;
+    return changed;
 };
 
-validate()
-    .then(diff)
+// make sure docs TOC stays up to date
+const updateTOC = changed => {
+    if (changed.some(file => file.includes('docs/'))) {
+        const docs = path.resolve('docs');
+        const readme = path.resolve(docs, 'README.md');
+        return execa(path.resolve(docs, 'generate-toc.sh'), ['>', readme], {
+            stdio: 'inherit',
+        })
+            .then(() => execa.sync('git', ['add', readme]))
+            .then(() => changed);
+    }
+    return changed;
+};
+
+confirmIfMaster
+    .then(validate)
+    .then(getChangedFiles)
     .then(checkYarnLock)
-    // make sure docs TOC stays up to date
-    .then(staged => {
-        if (staged.some(file => file.includes('docs/'))) {
-            const docs = path.resolve('docs');
-            const readme = path.resolve(docs, 'README.md');
-            return execa(path.resolve(docs, 'generate-toc.sh'), ['>', readme], {
-                stdio: 'inherit',
-            })
-                .then(() => execa.sync('git', ['add', readme]))
-                .then(() => staged);
-        }
-        return staged;
-    })
+    .then(updateTOC)
     .catch(e => {
         console.log(`\n${e}\n`);
         process.exit(1);

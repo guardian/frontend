@@ -1,32 +1,32 @@
 package staticpages
 
-import model.{SectionSummary, MetaData, SimplePage}
+import model.{DotcomContentType, MetaData, SectionId, SimplePage}
 
 object StaticPages {
   def simpleSurveyStaticPageForId(id: String): SimplePage = SimplePage(
     MetaData.make(
       id = id,
-      section = Option(SectionSummary(id="global")),
+      section = Option(SectionId(value="global")),
       webTitle = "Guardian Survey Page",
-      contentType = "survey",
+      contentType = Some(DotcomContentType.Survey),
       iosType = None,
       shouldGoogleIndex = false))
 
   def simpleEmailSignupPage(id: String, webTitle: String): SimplePage = SimplePage(
     MetaData.make(
       id = id,
-      section = Option(SectionSummary(id="email-signup-page")),
+      section = Option(SectionId(value="email-signup-page")),
       webTitle = webTitle,
-      contentType = "Signup",
+      contentType = Some(DotcomContentType.Signup),
       iosType = None,
       shouldGoogleIndex = false))
 
   def simpleNewslettersPage(id: String): SimplePage = SimplePage(
     MetaData.make(
       id = id,
-      section = Option(SectionSummary(id="newsletter-signup-page")),
+      section = Option(SectionId(value="newsletter-signup-page")),
       webTitle = "Sign up for Guardian emails",
-      contentType = "Signup",
+      contentType = Some(DotcomContentType.Signup),
       iosType = None,
       shouldGoogleIndex = false))
 }

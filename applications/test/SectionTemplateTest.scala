@@ -6,7 +6,7 @@ import org.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.TestBrowser
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 @DoNotDiscover class SectionTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
@@ -25,7 +25,7 @@ import scala.collection.JavaConversions._
 
   def getAlternateLinks(browser: TestBrowser): Seq[FluentWebElement] = {
     import browser._
-    $("link[rel='alternate']").toList
+    $("link[rel='alternate']").asScala.toList
       .filterNot(_.attribute("type") == "application/rss+xml")
       .filter(element => {
         val href: Option[String] = Option(element.attribute("href"))

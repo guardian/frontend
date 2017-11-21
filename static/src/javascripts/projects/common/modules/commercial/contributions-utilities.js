@@ -20,11 +20,14 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { noop } from 'lib/noop';
-import toArray from 'lodash/collections/toArray';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
+import {
+    useSupportDomain,
+    selectBaseUrl,
+} from 'common/modules/commercial/support-utilities';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -34,9 +37,12 @@ export type CtaUrls = {
     supportUrl?: string,
 };
 
-const membershipBaseURL = 'https://membership.theguardian.com/supporter';
-const contributionsBaseURL = 'https://contribute.theguardian.com';
-const supportBaseURL = 'https://support.theguardian.com/uk';
+const membershipBaseURL = selectBaseUrl(
+    'https://membership.theguardian.com/supporter'
+);
+const contributionsBaseURL = selectBaseUrl(
+    'https://contribute.theguardian.com'
+);
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -50,7 +56,8 @@ const defaultMaxViews: {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate = (urls: CtaUrls) => epicButtonsTemplate(urls);
+const defaultButtonTemplate = (urls: CtaUrls) =>
+    epicButtonsTemplate(urls, useSupportDomain());
 
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
     acquisitionsEpicControlTemplate({
@@ -71,11 +78,14 @@ const doTagsMatch = (test: EpicABTest): boolean =>
 // - the first element matching insertAtSelector, if isMultiple is false or not supplied
 // - all elements matching insertAtSelector, if isMultiple is true
 // - or an empty array if the selector doesn't match anything on the page
-const getTargets = (insertAtSelector, isMultiple) => {
+const getTargets = (
+    insertAtSelector: string,
+    isMultiple: boolean
+): Array<HTMLElement> => {
     const els = document.querySelectorAll(insertAtSelector);
 
     if (isMultiple) {
-        return toArray(els);
+        return [...els];
     } else if (els.length) {
         return [els[0]];
     }
@@ -183,34 +193,37 @@ const makeABTestVariant = (
     const {
         maxViews = defaultMaxViews,
         isUnlimited = false,
-        contributeURL = addTrackingCodesToUrl(
-            contributionsBaseURL,
-            parentTest.componentType,
+        contributeURL = addTrackingCodesToUrl({
+            base: contributionsBaseURL,
+            componentType: parentTest.componentType,
+            componentId: campaignCode,
             campaignCode,
-            {
+            abTest: {
                 name: parentTest.id,
                 variant: id,
-            }
-        ),
-        membershipURL = addTrackingCodesToUrl(
-            membershipBaseURL,
-            parentTest.componentType,
+            },
+        }),
+        membershipURL = addTrackingCodesToUrl({
+            base: membershipBaseURL,
+            componentType: parentTest.componentType,
+            componentId: campaignCode,
             campaignCode,
-            {
+            abTest: {
                 name: parentTest.id,
                 variant: id,
-            }
-        ),
+            },
+        }),
         supportCustomURL = null,
-        supportURL = addTrackingCodesToUrl(
-            supportCustomURL || supportBaseURL,
-            parentTest.componentType,
+        supportURL = addTrackingCodesToUrl({
+            base: supportCustomURL || selectBaseUrl(),
+            componentType: parentTest.componentType,
+            componentId: campaignCode,
             campaignCode,
-            {
+            abTest: {
                 name: parentTest.id,
                 variant: id,
-            }
-        ),
+            },
+        }),
         template = controlTemplate,
         buttonTemplate = defaultButtonTemplate,
         testimonialBlock = getTestimonialBlock(
@@ -234,6 +247,7 @@ const makeABTestVariant = (
                         componentType: parentTest.componentType,
                         products,
                         campaignCode,
+                        id: campaignCode,
                     },
                     abTest: {
                         name: parentTest.id,
@@ -250,6 +264,7 @@ const makeABTestVariant = (
                         componentType: parentTest.componentType,
                         products,
                         campaignCode,
+                        id: campaignCode,
                     },
                     abTest: {
                         name: parentTest.id,
@@ -298,8 +313,12 @@ const makeABTestVariant = (
         },
 
         test() {
+            const copyPromise =
+                (options.copy && Promise.resolve(options.copy)) ||
+                getCopy(useTailoredCopyForRegulars);
+
             const render = (templateFn: ?EpicTemplate) =>
-                getCopy(useTailoredCopyForRegulars)
+                copyPromise
                     .then((copy: AcquisitionsEpicTemplateCopy) => {
                         const renderTemplate: EpicTemplate =
                             templateFn ||
@@ -373,27 +392,29 @@ const makeABTestVariant = (
         success,
 
         contributionsURLBuilder(codeModifier) {
-            return addTrackingCodesToUrl(
-                contributionsBaseURL,
-                parentTest.componentType,
-                codeModifier(campaignCode),
-                {
+            return addTrackingCodesToUrl({
+                base: contributionsBaseURL,
+                componentType: parentTest.componentType,
+                componentId: codeModifier(campaignCode),
+                campaignCode: codeModifier(campaignCode),
+                abTest: {
                     name: parentTest.id,
                     variant: id,
-                }
-            );
+                },
+            });
         },
 
         membershipURLBuilder(codeModifier) {
-            return addTrackingCodesToUrl(
-                membershipBaseURL,
-                parentTest.componentType,
-                codeModifier(campaignCode),
-                {
+            return addTrackingCodesToUrl({
+                base: membershipBaseURL,
+                componentType: parentTest.componentType,
+                componentId: codeModifier(campaignCode),
+                campaignCode: codeModifier(campaignCode),
+                abTest: {
                     name: parentTest.id,
                     variant: id,
-                }
-            );
+                },
+            });
         },
     };
 };
@@ -470,11 +491,24 @@ const makeABTest = ({
     };
 
     test.variants = variants.map(variant =>
-        makeABTestVariant(variant.id, variant.products, variant.options, test)
+        makeABTestVariant(
+            variant.id,
+            variant.products,
+            variant.options || {},
+            test
+        )
     );
 
     return test;
 };
+
+const makeBannerABTestVariants = (
+    variants: Array<Object>
+): $ReadOnlyArray<Variant> =>
+    variants.map(x => {
+        x.test = noop;
+        return x;
+    });
 
 export {
     shouldShowReaderRevenue,
@@ -483,4 +517,5 @@ export {
     getTestimonialBlock,
     makeABTest,
     defaultButtonTemplate,
+    makeBannerABTestVariants,
 };

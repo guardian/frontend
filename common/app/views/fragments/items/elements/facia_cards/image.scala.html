@@ -2,7 +2,13 @@
 @import model.ImageMedia
 @import views.support.{ImgSrc, RenderClasses}
 
-@(classes: Seq[String], widths: WidthsByBreakpoint, maybeImageMedia: Option[ImageMedia] = None, maybePath: Option[String] = None, maybeSrc: Option[String] = None)
+@(
+    classes: Seq[String],
+    widths: WidthsByBreakpoint,
+    maybeImageMedia: Option[ImageMedia] = None,
+    maybePath: Option[String] = None,
+    maybeSrc: Option[String] = None
+)(implicit request: RequestHeader)
 
 <picture>
     @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@

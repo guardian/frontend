@@ -5,7 +5,7 @@ import conf.switches.Switches._
 import org.openqa.selenium.By
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import org.fluentlenium.core.filter.FilterConstructor._
-import collection.JavaConversions._
+import collection.JavaConverters._
 
 @DoNotDiscover class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
@@ -83,7 +83,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see a large byline image")
-        $(".byline-img img").attribute("src") should include("Pix/pictures/2014/3/13/1394733740842/JonathanFreedland.png")
+        $(".byline-img img").attribute("src") should include("2017/10/06/Jonathan-Freedland,-L.png")
       }
     }
 
@@ -113,7 +113,7 @@ import collection.JavaConversions._
         authors.last.attribute("content") should be("Mark Jones")
 
         And("it should handle escaping")
-        authors(4).attribute("content") should be("Phelim O'Neill")
+        authors.asScala(4).attribute("content") should be("Phelim O'Neill")
       }
     }
 
@@ -218,7 +218,7 @@ import collection.JavaConversions._
       goTo("/travel/2017/mar/20/10-best-things-to-do-tallinn-estonia-museums-cafe-art-beer") { browser =>
         import browser._
 
-        $(".ad-slot--right").length should be(1)
+        $(".ad-slot--right").asScala.length should be(1)
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
@@ -258,7 +258,7 @@ import collection.JavaConversions._
 
         Then("I should see pictures in the body of the article")
 
-        $(".content__article-body .element-image").length should be(2)
+        $(".content__article-body .element-image").asScala.length should be(2)
 
         val inBodyImage = el(".content__article-body .element-image")
 
@@ -312,12 +312,12 @@ import collection.JavaConversions._
         Then("It should automatically link to tags")
         val taglinks = $("a[data-link-name=auto-linked-tag]")
 
-        taglinks.length should be(2)
+        taglinks.asScala.length should be(2)
 
-        taglinks(0).text should be("GCHQ")
-        taglinks(0).attribute("href") should endWith("/uk/gchq")
+        taglinks.asScala(0).text should be("GCHQ")
+        taglinks.asScala(0).attribute("href") should endWith("/uk/gchq")
 
-        taglinks(1).text should be("Pakistan")
+        taglinks.asScala(1).text should be("Pakistan")
       }
     }
 
@@ -330,7 +330,7 @@ import collection.JavaConversions._
         Then("It should automatically link to tags")
         val taglinks = $("a[data-link-name=auto-linked-tag]")
 
-        taglinks.map(_.text) should not contain "Science"
+        taglinks.asScala.map(_.text) should not contain "Science"
       }
     }
 
@@ -344,10 +344,10 @@ import collection.JavaConversions._
         Then("It should automatically link to tags")
         val taglinks = $("a[data-link-name=auto-linked-tag]")
 
-        taglinks.length should be(1)
+        taglinks.asScala.length should be(1)
 
-        taglinks(0).text should be("Northern Ireland")
-        taglinks(0).attribute("href") should endWith("/uk/northernireland")
+        taglinks.asScala(0).text should be("Northern Ireland")
+        taglinks.asScala(0).attribute("href") should endWith("/uk/northernireland")
       }
     }
 
@@ -562,10 +562,10 @@ import collection.JavaConversions._
       goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         import browser._
         Then("I should see twitter cards")
-        $("meta[name='twitter:site']").attributes("content").head should be("@guardian")
-        $("meta[name='twitter:card']").attributes("content").head should be("summary_large_image")
-        $("meta[name='twitter:app:url:googleplay']").attributes("content").head should startWith("guardian://www.theguardian.com/world")
-        $("meta[name='twitter:image']").attributes("content").head should include("2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
+        $("meta[name='twitter:site']").attributes("content").asScala.head should be("@guardian")
+        $("meta[name='twitter:card']").attributes("content").asScala.head should be("summary_large_image")
+        $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.head should startWith("guardian://www.theguardian.com/world")
+        $("meta[name='twitter:image']").attributes("content").asScala.head should include("2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
       }
     }
 
@@ -574,9 +574,9 @@ import collection.JavaConversions._
       goTo("/us-news/live/2016/nov/11/donald-trump-news-us-politics-live") { browser =>
         import browser._
         Then("I should still see a large image twitter card")
-        $("meta[name='twitter:site']").attributes("content").head should be("@guardian")
-        $("meta[name='twitter:card']").attributes("content").head should be("summary_large_image")
-        $("meta[name='twitter:app:url:googleplay']").attributes("content").head should startWith("guardian://www.theguardian.com/us-news")
+        $("meta[name='twitter:site']").attributes("content").asScala.head should be("@guardian")
+        $("meta[name='twitter:card']").attributes("content").asScala.head should be("summary_large_image")
+        $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.head should startWith("guardian://www.theguardian.com/us-news")
       }
     }
 
@@ -608,11 +608,11 @@ import collection.JavaConversions._
         $(".breadcrumb .signposting__item").size() should be(3)
 
         val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Culture"))
-        link.length should be > 0
+        link.asScala.length should be > 0
         val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Books"))
-        link2.length should be > 0
+        link2.asScala.length should be > 0
         val link3 = browser.find(".breadcrumb .signposting__item a", withText().contains("Orwell prize"))
-        link3.length should be > 0
+        link3.asScala.length should be > 0
       }
 
       Given("I am on a piece of content with a primary nav and a key woro")
@@ -622,9 +622,9 @@ import collection.JavaConversions._
         $(".breadcrumb .signposting__item").size() should be(2)
 
         val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Opinion"))
-        link.length should be > 0
+        link.asScala.length should be > 0
         val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Heritage"))
-        link2.length should be > 0
+        link2.asScala.length should be > 0
       }
 
       Given("I am on a piece of content with no primary nav and a no key words")
@@ -634,7 +634,7 @@ import collection.JavaConversions._
         $(".breadcrumb .signposting__item").size() should be(1)
 
         val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Observer Ethical Awards"))
-        link.length should be > 0
+        link.asScala.length should be > 0
       }
     }
 

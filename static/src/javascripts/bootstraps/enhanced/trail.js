@@ -16,6 +16,36 @@ import { MostPopular } from 'common/modules/onward/popular';
 import { related } from 'common/modules/onward/related';
 import { TonalComponent } from 'common/modules/onward/tonal';
 import { loadShareCounts } from 'common/modules/social/share-count';
+import { onwardVideo } from 'common/modules/video/onward-container';
+import { moreInSeriesContainerInit } from 'common/modules/video/more-in-series-container';
+
+const initMoreInSection = (): void => {
+    const {
+        showRelatedContent,
+        isPaidContent,
+        section,
+        shortUrl,
+        seriesId,
+    } = config.get('page', {});
+
+    if (
+        !config.get('isMedia') ||
+        !showRelatedContent ||
+        isPaidContent ||
+        !section
+    ) {
+        return;
+    }
+
+    const el = $('.js-more-in-section')[0];
+    moreInSeriesContainerInit(
+        el,
+        config.get('page.contentType', '').toLowerCase(),
+        section,
+        shortUrl,
+        seriesId
+    );
+};
 
 const insertOrProximity = (selector, insert) => {
     if (window.location.hash) {
@@ -32,7 +62,7 @@ const insertOrProximity = (selector, insert) => {
 const initPopular = () => {
     if (!config.get('page.isFront')) {
         insertOrProximity('.js-popular-trails', () => {
-            new MostPopular().init();
+            new MostPopular();
         });
     }
 };
@@ -65,6 +95,23 @@ const initRelated = () => {
     }
 };
 
+const initOnwardVideoContainer = (): void => {
+    if (!config.get('isMedia')) {
+        return;
+    }
+
+    const mediaType = config.get('page.contentType', '').toLowerCase();
+    const els = $(
+        mediaType === 'video'
+            ? '.js-video-components-container'
+            : '.js-media-popular'
+    );
+
+    els.each(el => {
+        onwardVideo(el, mediaType);
+    });
+};
+
 const initOnwardContent = () => {
     insertOrProximity('.js-onward', () => {
         if (
@@ -82,6 +129,7 @@ const initOnwardContent = () => {
                 });
         }
     });
+    initOnwardVideoContainer();
 };
 
 const initDiscussion = () => {
@@ -121,6 +169,7 @@ const initTrails = () => {
         ['c-related', initRelated],
         ['c-onward', initOnwardContent],
         ['c-comment-adverts', commentAdverts],
+        ['c-more-in-section', initMoreInSection],
     ]);
 };
 

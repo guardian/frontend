@@ -3,7 +3,7 @@ package views.support.cleaner
 import org.jsoup.nodes.{Document, Element}
 import views.support.HtmlCleaner
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 object CmpParamCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
@@ -11,7 +11,7 @@ object CmpParamCleaner extends HtmlCleaner {
                                   "profile.theguardian.com/form/embed")     // Guardian embed wrapper
 
     for (url <- formstackSrcValues) {
-      document.getElementsByAttributeValueContaining("src", url).foreach { elem: Element =>
+      document.getElementsByAttributeValueContaining("src", url).asScala.foreach { elem: Element =>
         elem.addClass("element-pass-cmp")
       }
     }

@@ -6,7 +6,7 @@ import java.util.Comparator
 
 import model.{Competition, Table, TeamFixture, TeamNameBuilder}
 import org.joda.time.{DateTimeComparator, LocalDate}
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports._
 import pa._
 
 import scala.collection.immutable
@@ -52,7 +52,7 @@ trait Competitions extends implicits.Football {
       -(group.map(_.entries.length) getOrElse competition.leagueTable.length)
     }).headOption
 
-  lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
+  lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted(localDateOrdering)
 
   def nextMatchDates(startDate: LocalDate, numDays: Int): Seq[LocalDate] = matchDates.filter(_ >= startDate).take(numDays)
 
@@ -114,7 +114,7 @@ object CompetitionsProvider {
     Competition("751", "/football/euro-2016-qualifiers", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
     Competition("501", "/football/champions-league-qualifying", "Champions League qualifying", "Champions League qual.", "European"),
     Competition("510", "/football/uefa-europa-league", "Europa League", "Europa League", "European", tableDividers = List(2)),
-    Competition("301", "/football/efl-cup", "EFL Cup", "EFL Cup", "English"),
+    Competition("301", "/football/carabao-cup", "Carabao Cup", "Carabao Cup", "English"),
     Competition("400", "/football/community-shield", "Community Shield", "Community Shield", "English", showInTeamsList = true),
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
     Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
@@ -128,6 +128,7 @@ object CompetitionsProvider {
 class CompetitionsService(val footballClient: FootballClient, competitionDefinitions: Seq[Competition])
   extends Competitions
     with LiveMatches
+    with Lineups
     with Logging
     with implicits.Collections
     with implicits.Football {
@@ -176,7 +177,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
           }
         }
       }
-    }.recover(footballClient.logErrors)
+    }.recover(footballClient.logErrorsWithMessage("Failed refreshing competitions data"))
   }
 
   def refreshMatchDay()(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {

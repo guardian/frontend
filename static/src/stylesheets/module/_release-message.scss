@@ -108,48 +108,8 @@
     }
 }
 
-.site-message__message--membership {
-    max-width: none;
 
-    .membership__paypal-logo {
-        display: inline-block;
-    }
 
-    .membership__message-text {
-        @include mq(desktop) {
-            font-size: 25px;
-        }
-    }
-}
-
-.site-message__message--tall {
-    padding-bottom: ($gs-baseline/3)*11;
-}
-
-.site-message__message--has-headline {
-    padding-right: $gs-gutter/2;
-
-    @include mq(desktop) {
-        padding-top: $gs-baseline/2;
-        padding-bottom: $gs-baseline/2;
-        padding-right: $gs-gutter;
-    }
-}
-
-.site-message__headline {
-    display: block;
-}
-
-.site-message__message--has-headline {
-
-    .site-message__desc {
-        @include fs-textSans(1);
-
-        @include mq(desktop) {
-            @include fs-textSans(2, true);
-        }
-    }
-}
 
 .site-message__actions {
     margin-top: $gs-baseline;
@@ -518,7 +478,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 
 .membership__paypal-logo {
-    display: none;
+    display: inline-block;
     height: auto;
     margin-right: $gs-gutter/2;
     object-fit: contain;
@@ -527,23 +487,16 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     margin-bottom: 0;
     width: 175px;
 
-    @include mq(tablet) {
+    @include mq(desktop) {
         margin-top: 0;
         order: 1;
     }
 }
 
-.membership__paypal-container a {
-    text-decoration: none;
-    margin-bottom: $gs-gutter/4;
-}
-
-
 .membership__support-button {
     order: 1;
     margin-top: $gs-gutter/2;
-
-    @include mq(tablet) {
+    @include mq(desktop) {
         order: 2;
     }
 }
@@ -552,11 +505,18 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     margin-right: $gs-gutter/2;
 }
 
+
 .membership__paypal-container {
+    text-decoration: none;
+    margin-bottom: $gs-gutter/4;
     display: flex;
+    margin-top: auto;
     flex-direction: column;
 
-    @include mq(tablet) {
+    @include mq($from: 1140px) {
+        margin-left: 40px;
+    }
+    @include mq($from: wide) {
         display: inline-block;
     }
 }
@@ -602,7 +562,46 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         padding-right: 5px;
         padding-bottom: 10px;
     }
+
+    .big-test-container {
+        margin-top: 8px;
+        margin-left: 10px;
+    }
+
     .site-message__message--membership {
+
+        display: flex;
+        flex-direction: column;
+        @include mq($from: desktop) {
+            flex-direction: row;
+        }
+
+
+        max-width: none;
+
+        .membership__message-text {
+            @include mq(desktop) {
+                font-size: 25px;
+            }
+        }
+
+        .membership__message-text-long {
+            max-width: 630px;
+
+            line-height: 22px;
+            @include mq($from: tablet) {
+                line-height: 24px;
+            }
+
+            .membership__message-text {
+                font-weight: 400;
+                font-size: 16px;
+                @include mq($from: tablet) {
+                    font-size: 18px;
+                }
+            }
+        }
+
         margin-right: 5px;
         font-weight: 900;
         @include mq($from: mobile) {
@@ -628,6 +627,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         border: 0;
         display: inline-block;
         width: auto;
+        text-decoration: none;
         @include mq($from: mobile) {
             font-size: 12px;
             line-height: 24px;

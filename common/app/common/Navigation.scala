@@ -128,7 +128,7 @@ trait Navigation {
 
   //Technology
   val technologyblog = SectionLink("technology", "technology blog", "Technology blog", "/technology/blog")
-  val games = SectionLink("culture", "games", "Games", "/technology/games")
+  val games = SectionLink("culture", "games", "Games", "/games")
   val gamesblog = SectionLink("technology", "games blog", "Games blog", "/technology/gamesblog")
   val appsblog = SectionLink("technology", "apps blog", "Apps blog", "/technology/appsblog")
   val askjack = SectionLink("technology", "ask jack", "Ask Jack blog", "/technology/askjack")
@@ -155,7 +155,7 @@ trait Navigation {
   val eurozone = SectionLink("business", "eurozone", "Eurozone", "/business/eurozone")
   val businessToBusiness = SectionLink("business", "business to business", "Business to Business", "/business-to-business")
   val diversityequality = SectionLink("business", "diversity & equality in business", "Diversity & equality in business", "/business/diversity-and-equality")
-
+  val projectSyndicate = SectionLink("business", "project syndicate", "Project Syndicate", "/business/series/project-syndicate-economists")
 
   //Money
   val money = SectionLink("money", "money", "Money", "/money")

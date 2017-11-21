@@ -1,13 +1,26 @@
 // @flow
 import fastdom from 'fastdom';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
-import tracking from 'common/modules/atoms/youtube-tracking';
-import Component from 'common/modules/component';
+import {
+    trackYoutubeEvent,
+    initYoutubeEvents,
+} from 'common/modules/atoms/youtube-tracking';
+import { Component } from 'common/modules/component';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
 import debounce from 'lodash/functions/debounce';
 import { isOn as accessibilityIsOn } from 'common/modules/accessibility/main';
+
+declare class YoutubePlayerTarget extends EventTarget {
+    playVideo: () => void;
+}
+
+// This is imcomplete; see https://developers.google.com/youtube/iframe_api_reference#Events
+declare class YoutubePlayerEvent {
+    data: -1 | 0 | 1 | 2 | 3 | 4 | 5;
+    target: YoutubePlayerTarget;
+}
 
 const players = {};
 
@@ -30,7 +43,7 @@ const recordPlayerProgress = (atomId: string): void => {
     const percentPlayed = Math.round(currentTime / player.duration * 100);
 
     if (percentPlayed >= pendingTrackingCalls[0]) {
-        tracking.track(pendingTrackingCalls[0], getTrackingId(atomId));
+        trackYoutubeEvent(pendingTrackingCalls[0], getTrackingId(atomId));
         pendingTrackingCalls.shift();
     }
 };
@@ -52,22 +65,27 @@ const setProgressTracker = (atomId: string): number => {
 const onPlayerPlaying = (atomId: string): void => {
     const player = players[atomId];
 
+    if (!player) {
+        return;
+    }
+
     killProgressTracker(atomId);
     setProgressTracker(atomId);
-    tracking.track('play', getTrackingId(atomId));
+    trackYoutubeEvent('play', getTrackingId(atomId));
 
     const mainMedia =
         (player.iframe && player.iframe.closest('.immersive-main-media')) ||
         null;
+    const parentNode = player.overlay && player.overlay.parentNode;
+    const endSlateContainer =
+        parentNode && parentNode.querySelector('.end-slate-container');
+
     if (mainMedia) {
         mainMedia.classList.add('atom-playing');
     }
 
-    if (
-        player.endSlate &&
-        !player.overlay.parentNode.querySelector('.end-slate-container')
-    ) {
-        player.endSlate.fetch(player.overlay.parentNode, 'html');
+    if (player.endSlate && !endSlateContainer) {
+        player.endSlate.fetch(parentNode, 'html');
     }
 };
 
@@ -77,7 +95,7 @@ const onPlayerEnded = (atomId: string): void => {
     const player = players[atomId];
 
     killProgressTracker(atomId);
-    tracking.track('end', getTrackingId(atomId));
+    trackYoutubeEvent('end', getTrackingId(atomId));
     player.pendingTrackingCalls = [25, 50, 75];
 
     const mainMedia =
@@ -94,7 +112,7 @@ const STATES = {
     PAUSED: onPlayerPaused,
 };
 
-const checkState = (atomId, state, status): void => {
+const checkState = (atomId: string, state: number, status: string): void => {
     if (state === window.YT.PlayerState[status] && STATES[status]) {
         STATES[status](atomId);
     }
@@ -104,10 +122,11 @@ const shouldAutoplay = (atomId: string): boolean => {
     const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
 
     const isInternalReferrer = () => {
-        if (config.page.isDev) {
+        if (config.get('page.isDev')) {
             return document.referrer.indexOf(window.location.origin) === 0;
         }
-        return document.referrer.indexOf(config.page.host) === 0;
+
+        return document.referrer.indexOf(config.get('page.host')) === 0;
     };
 
     const isMainVideo = () =>
@@ -121,7 +140,7 @@ const shouldAutoplay = (atomId: string): boolean => {
         accessibilityIsOn('flashing-elements');
 
     return (
-        config.page.contentType === 'Video' &&
+        config.get('page.contentType') === 'Video' &&
         isInternalReferrer() &&
         !isAutoplayBlockingPlatform() &&
         isMainVideo() &&
@@ -129,15 +148,25 @@ const shouldAutoplay = (atomId: string): boolean => {
     );
 };
 
-const getEndSlate = (overlay: HTMLElement): Component => {
-    const overlayParent = ((overlay.parentNode: any): ?HTMLElement);
+const getEndSlate = (overlay: HTMLElement): ?Component => {
+    const overlayParent = overlay.parentNode;
 
-    const endSlatePath = overlayParent ? overlayParent.dataset.endSlate : null;
-    const endSlate = new Component();
+    if (overlayParent instanceof HTMLElement) {
+        const dataset = overlayParent.dataset || {};
+        const endSlate = dataset.endSlate;
 
-    endSlate.endpoint = endSlatePath;
+        if (endSlate) {
+            const component = new Component();
 
-    return endSlate;
+            component.endpoint = endSlate;
+
+            return component;
+        }
+
+        return undefined;
+    }
+
+    return undefined;
 };
 
 const updateImmersiveButtonPos = (): void => {
@@ -159,7 +188,12 @@ const updateImmersiveButtonPos = (): void => {
     }
 };
 
-const onPlayerReady = (atomId, overlay, iframe, event): void => {
+const onPlayerReady = (
+    atomId: string,
+    overlay: ?HTMLElement,
+    iframe: ?HTMLElement,
+    event: YoutubePlayerEvent
+): void => {
     players[atomId] = {
         player: event.target,
         pendingTrackingCalls: [25, 50, 75],
@@ -192,7 +226,7 @@ const onPlayerReady = (atomId, overlay, iframe, event): void => {
     }
 };
 
-const onPlayerStateChange = (atomId, event): void =>
+const onPlayerStateChange = (atomId: string, event: YoutubePlayerEvent): void =>
     Object.keys(STATES).forEach(checkState.bind(null, atomId, event.data));
 
 const checkElemForVideo = (elem: ?HTMLElement): void => {
@@ -215,7 +249,7 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
             el.setAttribute('data-unique-atom-id', atomId);
             const overlay = el.querySelector('.youtube-media-atom__overlay');
 
-            tracking.init(getTrackingId(atomId));
+            initYoutubeEvents(getTrackingId(atomId));
 
             initYoutubePlayer(
                 iframe,

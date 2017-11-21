@@ -10,8 +10,11 @@ const baseParams = {
     campaignCode: 'gdnwb_copts_memco_banner',
 };
 
-const engagementBannerCopy = (cta: string): string =>
-    `Unlike many others, we haven't put up a paywall &ndash; we want to keep our journalism as open as we can. ${cta}`;
+const engagementBannerCopy = (): string =>
+    `<strong>Unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we
+    can.</strong> The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to 
+    produce. But the revenue we get from advertising is falling, so we increasingly need our readers to fund us. If 
+    everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure.`;
 
 // Prices taken from https://membership.theguardian.com/<region>/supporter
 const monthlySupporterCost = (location: string): string => {
@@ -61,33 +64,36 @@ const monthlySupporterCost = (location: string): string => {
     return payment || '£5';
 };
 
-const supporterEngagementBannerCopy = (location: string): string =>
-    engagementBannerCopy(
-        `Support us for ${monthlySupporterCost(location)} per month.`
-    );
-
-const contributionEngagementBannerCopy = (): string =>
-    engagementBannerCopy('Support us with a one-off contribution');
+const supporterEngagementCtaCopy = (location: string): string =>
+    location === 'US'
+        ? `Support us with a one-time contribution`
+        : `Support us for ${monthlySupporterCost(location)} a month.`;
 
 const supporterParams = (location: string): EngagementBannerParams =>
+    Object.assign({}, baseParams, {
+        buttonCaption: 'Support the Guardian',
+        linkUrl: 'https://support.theguardian.com',
+        products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
+        messageText: engagementBannerCopy(),
+        ctaText: supporterEngagementCtaCopy(location),
+        pageviewId: config.get('ophan.pageViewId', 'not_found'),
+    });
+
+const membershipSupporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Become a Supporter',
         linkUrl: 'https://membership.theguardian.com/supporter',
         products: ['MEMBERSHIP_SUPPORTER'],
-        messageText: supporterEngagementBannerCopy(location),
-        pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
-    });
-
-const contributionParams = (): EngagementBannerParams =>
-    Object.assign({}, baseParams, {
-        buttonCaption: 'Make a Contribution',
-        linkUrl: 'https://contribute.theguardian.com',
-        products: ['CONTRIBUTION'],
-        messageText: contributionEngagementBannerCopy(),
-        pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
+        messageText: engagementBannerCopy(),
+        ctaText: supporterEngagementCtaCopy(location),
+        pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
 export const engagementBannerParams = (
     location: string
-): EngagementBannerParams =>
-    location === 'US' ? contributionParams() : supporterParams(location);
+): EngagementBannerParams => {
+    if (location === 'US' || location === 'GB') {
+        return supporterParams(location);
+    }
+    return membershipSupporterParams(location);
+};

@@ -6,7 +6,7 @@
     font-size: 20px;
     left: 0;
     line-height: 1;
-    margin-right: $gutter-small + ($veggie-burger-small / 2);
+    margin-right: $gutter-small + ($veggie-burger-medium / 2);
     padding-bottom: $gs-baseline * 2;
     top: 0;
     z-index: $zindex-main-menu;
@@ -26,15 +26,11 @@
     }
 
     @include mq(mobileMedium) {
-        margin-right: $gutter-medium + ($veggie-burger-medium / 2);
+        margin-right: $gutter-small + ($veggie-burger-medium / 2);
     }
 
     @include mq(mobileLandscape) {
-        margin-right: $gutter-large + ($veggie-burger-medium / 2);
-    }
-
-    @include mq(tablet) {
-        margin-right: $gutter-xlarge + ($veggie-burger-medium / 2);
+        margin-right: $gutter-medium + ($veggie-burger-medium / 2);
     }
 
     // based on https://css-tricks.com/full-width-containers-limited-width-parents/#article-header-id-6
@@ -63,10 +59,10 @@
     }
 
     .new-header--slim.new-header--open & {
-        margin-right: ($gs-gutter / 2) + ($veggie-burger-medium / 2);
+        margin-right: ($gs-gutter / 2) + ($veggie-burger-large / 2);
 
         @include mq(mobileLandscape) {
-            margin-right: $gs-gutter + ($veggie-burger-medium / 2);
+            margin-right: $gs-gutter + ($veggie-burger-large / 2);
         }
     }
 

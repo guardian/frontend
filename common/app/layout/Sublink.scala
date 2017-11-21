@@ -37,14 +37,21 @@ case class EditionalisedLink(
 }
 
 object Sublink {
-  def fromFaciaContent(faciaContent: PressedContent): Sublink =
+  def fromFaciaContent(faciaContent: PressedContent): Sublink = {
+    val storyContent: Option[PressedStory] = faciaContent.properties.maybeContent
+    val pillar: Pillar = Pillar(storyContent)
+    val contentType: DotcomContentType = DotcomContentType(storyContent)
+
     Sublink(
       faciaContent.header.kicker,
       faciaContent.header.headline,
       EditionalisedLink.fromFaciaContent(faciaContent),
       faciaContent.card.cardStyle,
-      faciaContent.card.mediaType
+      faciaContent.card.mediaType,
+      pillar.name.toLowerCase(),
+      contentType.name.toLowerCase()
     )
+  }
 }
 
 case class Sublink(
@@ -52,7 +59,9 @@ case class Sublink(
   headline: String,
   url: EditionalisedLink,
   cardStyle: CardStyle,
-  mediaType: Option[MediaType]
+  mediaType: Option[MediaType],
+  pillar: String,
+  contentType: String
 )
 
 object DiscussionSettings {
@@ -336,6 +345,9 @@ case class ContentCard(
     case Some(_: InlineYouTubeMediaAtom) if !isMediaLink => true
     case _ => false
   }
+
+  val pillar: Pillar = Pillar(storyContent)
+  val contentType: DotcomContentType = DotcomContentType(storyContent)
 }
 object ContentCard {
 

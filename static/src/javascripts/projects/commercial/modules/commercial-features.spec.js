@@ -15,11 +15,14 @@ import {
 } from 'commercial/modules/user-features';
 import { shouldShowReaderRevenue as shouldShowReaderRevenue_ } from 'common/modules/commercial/contributions-utilities';
 
-const isPayingMember: JestMockFn = (isPayingMember_: any);
-const isRecentContributor: JestMockFn = (isRecentContributor_: any);
-const shouldSeeReaderRevenue: JestMockFn = (shouldSeeReaderRevenue_: any);
-const isAdFreeUser: JestMockFn = (isAdFreeUser_: any);
-const shouldShowReaderRevenue: JestMockFn = (shouldShowReaderRevenue_: any);
+const isPayingMember: JestMockFn<*, *> = (isPayingMember_: any);
+const isRecentContributor: JestMockFn<*, *> = (isRecentContributor_: any);
+const shouldSeeReaderRevenue: JestMockFn<*, *> = (shouldSeeReaderRevenue_: any);
+const isAdFreeUser: JestMockFn<*, *> = (isAdFreeUser_: any);
+const shouldShowReaderRevenue: JestMockFn<
+    *,
+    *
+> = (shouldShowReaderRevenue_: any);
 const adblockInUse: any = adblockInUse_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
@@ -30,6 +33,7 @@ jest.mock('lib/config', () => ({
     switches: {},
     page: {},
     hasTone: jest.fn(),
+    get: jest.fn(() => ''),
 }));
 
 jest.mock('commercial/modules/user-features', () => ({
@@ -70,6 +74,7 @@ describe('Commercial features', () => {
             contentType: 'Article',
             isMinuteArticle: false,
             section: 'politics',
+            pageId: 'politics-article',
             shouldHideAdverts: false,
             shouldHideReaderRevenue: false,
             isFront: false,
@@ -82,6 +87,8 @@ describe('Commercial features', () => {
             enableDiscussionSwitch: true,
             adFreeSubscriptionTrial: false,
         };
+
+        config.get.mockReturnValue('');
 
         window.location.hash = '';
 
@@ -238,6 +245,19 @@ describe('Commercial features', () => {
             // This is needed for identity pages in the profile subdomain
             config.page.section = 'identity';
             const features = new CommercialFeatures();
+            expect(features.thirdPartyTags).toBe(false);
+        });
+
+        it('Does not run on secure contact pages', () => {
+            config.page.pageId =
+                'help/ng-interactive/2017/mar/17/contact-the-guardian-securely';
+
+            const mockConfig = {
+                get: () => config.page.pageId,
+                page: config.page,
+                switches: config.switches,
+            };
+            const features = new CommercialFeatures(mockConfig);
             expect(features.thirdPartyTags).toBe(false);
         });
     });

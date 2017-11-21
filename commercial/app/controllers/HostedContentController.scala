@@ -13,7 +13,7 @@ import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import views.html.commercialExpired
-import views.html.hosted.{hostedGalleryOnward, _}
+import views.html.hosted._
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
@@ -66,7 +66,7 @@ class HostedContentController(
     val capiResponse = {
       val itemId = s"advertiser-content/$campaignName/$pageName"
       val response = contentApiClient.getResponse(baseQuery(itemId))
-      response.onFailure {
+      response.failed.foreach {
         case NonFatal(e) => log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}", e)
       }
       response
@@ -91,7 +91,7 @@ class HostedContentController(
           )
           JsonComponent {
             "items" -> JsArray(Seq(Json.obj(
-              "owner" -> trails.headOption.map(_.campaign.owner),
+              "owner" -> trails.headOption.map(_.owner),
               "trails" -> JsArray(trails.take(defaultRowCount).map(toJson))
             )))
           }
@@ -126,7 +126,7 @@ class HostedContentController(
                     .pageSize(100)
                     .orderBy("oldest")
         val response = contentApiClient.getResponse(query)
-        response.onFailure {
+        response.failed.foreach {
           case NonFatal(e) => log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
         }
         response
@@ -163,7 +163,7 @@ class HostedContentController(
           .pageSize(100)
           .orderBy("oldest")
         val response = contentApiClient.getResponse(query)
-        response.onFailure {
+        response.failed.foreach {
           case NonFatal(e) => log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
         }
         response

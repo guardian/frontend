@@ -2,22 +2,22 @@ package form
 
 import play.api.data.Forms._
 import com.gu.identity.model.{PublicFields, User}
-import idapiclient.UserUpdate
+import idapiclient.UserUpdateDTO
 import play.api.data.Mapping
 import play.api.i18n.{MessagesApi, MessagesProvider}
 
 class ProfileMapping extends UserFormMapping[ProfileFormData] {
 
-  protected def formMapping(implicit messagesProvider: MessagesProvider): Mapping[ProfileFormData] = mapping(
+  def formMapping(implicit messagesProvider: MessagesProvider): Mapping[ProfileFormData] = mapping(
     "location" -> textField,
     "aboutMe" -> textArea,
     "interests" -> textField,
     "username" -> textField
   )(ProfileFormData.apply)(ProfileFormData.unapply)
 
-  protected def fromUser(user: User) = ProfileFormData(user)
+  protected def toUserFormData(user: User) = ProfileFormData(user)
 
-  protected lazy val contextMap =  Map(
+  protected lazy val idapiErrorContextToFormFieldKeyMap =  Map(
     "publicFields.location" -> "location",
     "publicFields.aboutMe" -> "aboutMe",
     "publicFields.interests" -> "interests",
@@ -32,7 +32,7 @@ case class ProfileFormData(
   username: String
 ) extends UserFormData{
 
-  def toUserUpdate(currentUser: User): UserUpdate = UserUpdate(
+  def toUserUpdateDTO(currentUser: User): UserUpdateDTO = UserUpdateDTO(
     publicFields = Some(PublicFields(
       location = toUpdate(location, currentUser.publicFields.location),
       aboutMe = toUpdate(aboutMe, currentUser.publicFields.aboutMe),

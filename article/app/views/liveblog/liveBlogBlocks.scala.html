@@ -2,7 +2,7 @@
 @import model.Article
 @import model.liveblog.{LiveBlogDate,BodyBlock}
 @import views.BodyCleaner
-
+@import model.DotcomContentType
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
@@ -12,7 +12,26 @@
         id="block-@block.id"
         data-sort-time="@block.publishedCreatedTimestamp()"
         class="block block--content@block.eventClass@block.attributes.membershipPlaceholder.map { _ => js-insert-epic-after}"
+        itemprop="liveBlogUpdate"
+        itemscope
+        itemtype="http://schema.org/BlogPosting"
     >
+
+        <meta itemprop="headline" content="@block.title.getOrElse[String](article.trail.headline)" />
+
+        <span itemprop="author" itemscope itemtype="http://schema.org/Organization">
+            <meta itemprop="name" content="https://www.theguardian.com#publisher" />
+        </span>
+
+        <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+            <meta itemprop="name" content="https://www.theguardian.com#publisher" />
+            <span itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+                <meta itemprop="url" content="https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/10/1/1443713974413/Guardiantitlepiecedigitalon.png" />
+                <meta itemprop="width" content="300" />
+                <meta itemprop="height" content="60" />
+            </span>
+        </span>
+
         <p class="block-time published-time">
             @if(amp){
                 <a href="@LinkTo{/@article.metadata.id?page=with:block-@block.id#block-@block.id}" itemprop="url" class="block-time__link">
@@ -24,14 +43,17 @@
                 </a>
             }
         </p>
+
         @block.title.map { title =>
-            <h2 class="block-title" itemprop="headline">@title</h2>
+            <h2 class="block-title">@title</h2>
         }
+
         @block.contributors.map { contributorId =>
             @article.tags.tags.find(_.id == s"profile/$contributorId").map{ contributorTag =>
                 @views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
             }
         }
+
         <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
         @BodyCleaner(article, block.bodyHtml, amp)
         </div>
@@ -40,6 +62,12 @@
             <time datetime="@republishedDate">at @ampm @gmt</time>
         </p>
         }
-        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
+        @views.html.fragments.share.blockLevelSharing(
+            s"block-${block.id}",
+            article.sharelinks.elementShares(s"block-${block.id}", None),
+            article.metadata.contentType.getOrElse(DotcomContentType.Unknown),
+            amp
+        )
+
     </div>
 }

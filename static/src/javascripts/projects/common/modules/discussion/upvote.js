@@ -8,19 +8,6 @@ import { recommendComment } from 'common/modules/discussion/api';
 const RECOMMENDATION_CLASS = 'js-recommend-comment';
 const TOOLTIP_CLASS = 'js-rec-tooltip';
 
-type User = {
-    userId: string,
-    displayName: string,
-    webUrl: string,
-    apiUrl: string,
-    avatar: string,
-    secureAvatarUrl: string,
-    badge: Array<?string>,
-    details: {
-        gender: string,
-    },
-};
-
 const updateReturnUrl = (
     links: NodeList<HTMLElement>,
     returnLink: ?string
@@ -82,7 +69,7 @@ const setRecommended = (target: Element): Promise<void> =>
 const handle = (
     target: Element,
     container: ?Element,
-    user: ?User
+    user: ?DiscussionProfile
 ): Promise<void> => {
     if (!config.switches.discussionAllowAnonymousRecommendsSwitch && !user) {
         target.setAttribute('data-link-name', 'Recommend comment anonymous');

@@ -6,7 +6,7 @@ import config from 'lib/config';
 import { getCookie as getCookieByName } from 'lib/cookies';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
-import { mergeCalls } from 'common/modules/asyncCallMerger';
+import { mergeCalls } from 'common/modules/async-call-merger';
 
 let userFromCookieCache = null;
 
@@ -15,7 +15,7 @@ const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 let idApiRoot = null;
 
-type IdentityUser = {
+export type IdentityUser = {
     id: number,
     primaryEmailAddress: string,
     displayName: string,

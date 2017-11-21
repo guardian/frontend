@@ -1,9 +1,11 @@
 package feed
 
+import com.gu.Box
 import contentapi.ContentApiClient
 import common._
 import services.OphanApi
 import model.RelatedContentItem
+
 import scala.concurrent.{ExecutionContext, Future}
 
 object MostPopularRefresh {
@@ -23,7 +25,7 @@ object MostPopularRefresh {
 
 class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging {
 
-  private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
+  private val agent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
 
@@ -46,7 +48,7 @@ case class Country(code: String, edition: Edition)
 
 class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
-  private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
+  private val ophanPopularAgent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   private val defaultCountry: Country = Country("row", Edition.defaultEdition)
 
@@ -87,7 +89,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
 class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
-  private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
+  private val ophanPopularAgent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   private val countries = Seq(
     Country("GB", editions.Uk),

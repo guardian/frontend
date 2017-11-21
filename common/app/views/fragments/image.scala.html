@@ -8,7 +8,7 @@
     imageAltText: String,
     isFeatureAndShowcase: Boolean = false,
     isImmersiveMainMedia: Boolean = false
-)
+)(implicit request: RequestHeader)
 
 @immersivePortraitSource(largestImage: model.ImageAsset, hidpi: Boolean = false) = {
     <source media="@if(hidpi) {

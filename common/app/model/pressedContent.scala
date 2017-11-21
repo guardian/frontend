@@ -7,9 +7,8 @@ import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata}
 import common.{Edition, HTML}
 import common.commercial.EditionBranding
-import model.{CardStylePicker, ContentType}
 import model.content.{Atoms, MediaAtom}
-import model.{Commercial, Elements, Fields, ImageMedia, MetaData, SupportedUrl, Tags, Trail, VideoElement}
+import model.{CardStylePicker, Commercial, DotcomContentType, Elements, Fields, ImageMedia, MetaData, Pillar, Pillars, SectionId, SupportedUrl, Tags, Trail, VideoElement}
 import org.joda.time.DateTime
 
 object DisplayHints {
@@ -114,25 +113,35 @@ case object Video extends MediaType
 case object Audio extends MediaType
 
 final case class PressedFields(
-                                main: String,
-                                body: String,
-                                standfirst: Option[String]
-                              )
+  main: String,
+  body: String,
+  standfirst: Option[String]
+)
 final case class PressedTrail(
-                               trailPicture: Option[ImageMedia],
-                               byline: Option[String],
-                               thumbnailPath: Option[String],
-                               webPublicationDate: DateTime
-                             )
-final case class PressedMetadata(id: String, webTitle: String, webUrl: String)
-final case class PressedElements(mainVideo: Option[VideoElement], mediaAtoms: Seq[MediaAtom])
+  trailPicture: Option[ImageMedia],
+  byline: Option[String],
+  thumbnailPath: Option[String],
+  webPublicationDate: DateTime
+)
+final case class PressedMetadata(
+  id: String,
+  webTitle: String,
+  webUrl: String,
+  `type`: Option[DotcomContentType],
+  pillar: Option[Pillar],
+  sectionId: Option[SectionId]
+)
+final case class PressedElements(
+  mainVideo: Option[VideoElement],
+  mediaAtoms: Seq[MediaAtom]
+)
 final case class PressedStory(
-                               trail: PressedTrail,
-                               metadata: PressedMetadata,
-                               fields: PressedFields,
-                               elements: PressedElements,
-                               tags: Tags
-                             )
+  trail: PressedTrail,
+  metadata: PressedMetadata,
+  fields: PressedFields,
+  elements: PressedElements,
+  tags: Tags
+)
 object PressedStory {
 
   def apply(apiContent: Content): PressedStory = {
@@ -144,6 +153,7 @@ object PressedStory {
     val commercial = Commercial.make(tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val atoms = Atoms.make(apiContent)
+    val sectionId: Option[SectionId] = metadata.section.map(s => SectionId(s.value))
 
     new PressedStory(
       PressedTrail(
@@ -155,7 +165,10 @@ object PressedStory {
       PressedMetadata(
         metadata.id,
         metadata.webTitle,
-        metadata.webUrl
+        metadata.webUrl,
+        metadata.contentType,
+        sectionId.flatMap(Pillars.pillarForSection),
+        sectionId
       ),
       PressedFields(
         fields.main,
@@ -189,13 +202,11 @@ object PressedProperties {
       isCrossword = FaciaContentUtils.isCrossword(content),
       byline = FaciaContentUtils.byline(content),
       image = FaciaContentUtils.image(content).map(Image.make),
-      maybeSection = FaciaContentUtils.maybeSection(content),
       webTitle = FaciaContentUtils.webTitle(content),
       linkText = FaciaContentUtils.linkText(content),
       embedType = FaciaContentUtils.embedType(content),
       embedCss = FaciaContentUtils.embedCss(content),
       embedUri = FaciaContentUtils.embedUri(content),
-      section = FaciaContentUtils.section(content),
       maybeFrontPublicationDate = FaciaContentUtils.maybeFrontPublicationDate(content),
       href = FaciaContentUtils.href(content),
       webUrl = FaciaContentUtils.webUrl(content),
@@ -227,13 +238,11 @@ final case class PressedProperties(
   isCrossword: Boolean,
   byline: Option[String],
   image: Option[Image],
-  maybeSection: Option[String],
   webTitle: String,
   linkText: Option[String],
   embedType: Option[String],
   embedCss: Option[String],
   embedUri: Option[String],
-  section: String,
   maybeFrontPublicationDate: Option[Long],
   href: Option[String],
   webUrl: Option[String],
@@ -308,7 +317,7 @@ final case class PressedDiscussionSettings(
 object PressedCard {
   def make(content: fapi.FaciaContent): PressedCard = PressedCard(
     id = FaciaContentUtils.id(content),
-    cardStyle = CardStyle.make(FaciaContentUtils.cardStyle(content)),
+    cardStyle = CardStyle.make(CardStylePicker(content)),
     isLive = FaciaContentUtils.isLive(content),
     webPublicationDateOption = FaciaContentUtils.webPublicationDateOption(content),
     mediaType = fapiutils.MediaType.fromFaciaContent(content).map(MediaType.make),

@@ -1,6 +1,6 @@
 package discussion
 
-import _root_.model.{MetaData, SectionSummary, StandalonePage}
+import _root_.model.{MetaData, SectionId, StandalonePage}
 import discussion.model.DiscussionComments
 
 trait CommentPage extends StandalonePage {
@@ -24,7 +24,7 @@ case class ThreadedCommentPage(val discussionComments: DiscussionComments)
 
     override val metadata = MetaData.make(
       id = id,
-      section = Some(SectionSummary.fromId("Global")),
+      section = Some(SectionId.fromId("Global")),
       webTitle = discussionComments.discussion.title,
       url = Some(s"/discussion$id"),
       pagination = Some(discussionComments.pagination))
@@ -35,7 +35,7 @@ case class UnthreadedCommentPage(val discussionComments: DiscussionComments)
 
     override val metadata = MetaData.make(
       id = id,
-      section = Some(SectionSummary.fromId("Discussion")),
+      section = Some(SectionId.fromId("Discussion")),
       webTitle = discussionComments.discussion.title,
       url = Some(s"/discussion$id"),
       pagination = Some(discussionComments.pagination))

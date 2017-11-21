@@ -44,6 +44,7 @@ object NavLinks {
   val sustainableBusiness = NavLink("sustainable business", "/us/sustainable-business", "us/sustainable-business")
   val diversityEquality = NavLink("diversity & equality in business", "/business/diversity-and-equality", "business/diversity-and-equality")
   val smallBusiness = NavLink("small business", "/business/us-small-business", "business/us-small-business")
+  val projectSyndicate = NavLink("project syndicate", "/business/series/project-syndicate-economists", "business/series/project-syndicate-economists")
   val climateChange = NavLink("climate change", "/environment/climate-change", "environment/climate-change")
   val wildlife = NavLink("wildlife", "/environment/wildlife", "environment/wildlife")
   val energy = NavLink("energy", "/environment/energy", "environment/energy")
@@ -93,14 +94,14 @@ object NavLinks {
   val film = NavLink("film", "/film", "film")
   val tvAndRadio = NavLink("tv & radio", "/tv-and-radio", "tv-and-radio")
   val music = NavLink("music", "/music", "music")
-  val games = NavLink("games", "/technology/games", "technology/games")
+  val games = NavLink("games", "/games", "games")
   val books = NavLink("books", "/books", "books")
   val artAndDesign = NavLink("art & design", "/artanddesign", "artanddesign")
   val stage = NavLink("stage", "/stage", "stage")
   val classical = NavLink("classical", "/music/classicalmusicandopera", "music/classicalmusicandopera")
 
   /* LIFE */
-  val lifestyle = NavLink("life", "/lifeandstyle", "lifeandstyle", longTitle = "lifestyle home", iconName = "home")
+  val lifestyle = NavLink("lifestyle", "/lifeandstyle", "lifeandstyle", longTitle = "lifestyle home", iconName = "home")
   val fashion = NavLink("fashion", "/fashion", "fashion")
   val fashionAu = NavLink("fashion", "/au/lifeandstyle/fashion", "au/lifeandstyle/fashion")
   val food = NavLink("food", "/lifeandstyle/food-and-drink", "lifeandstyle/food-and-drink")
@@ -132,12 +133,11 @@ object NavLinks {
   val jobs = NavLink("jobs", "https://jobs.theguardian.com")
   val dating = NavLink("dating", "https://soulmates.theguardian.com")
   val apps = NavLink("the guardian app", "https://app.adjust.com/f8qm1x_8q69t7?campaign=NewHeader&adgroup=Mobile&creative=generic")
-  val ukMasterClasses = NavLink("masterclasses", "/guardian-masterclasses?INTCMP=masterclasses_uk_web_newheader")
+  val ukMasterClasses = NavLink("masterclasses", "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader")
   val auEvents = NavLink("events", "/guardian-live-australia")
   var holidays = NavLink("holidays", "https://holidays.theguardian.com")
 
   val tagPages = List(
-    "technology/games",
     "us-news/us-politics",
     "australia-news/australian-politics",
     "australia-news/australian-immigration-and-asylum",

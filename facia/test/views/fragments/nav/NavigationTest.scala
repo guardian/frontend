@@ -1,12 +1,12 @@
 package views.fragments.nav
 
-import model.{MetaData, SectionSummary, SimplePage}
+import model.{MetaData, SectionId, SimplePage}
 import org.jsoup.Jsoup
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.FakeRequest
 import test.ConfiguredTestSuite
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 @DoNotDiscover class NavigationTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
@@ -15,14 +15,14 @@ import scala.collection.JavaConversions._
     val page = SimplePage(MetaData.make(
       id = "bla-bla",
       webTitle = "bla-bla",
-      section = Some(SectionSummary.fromId("football"))
+      section = Some(SectionId.fromId("football"))
     ))
 
     val tpl = views.html.fragments.nav.mainNavigation(page)(FakeRequest("GET", "/bla-bla"))
 
     val currentSection = Jsoup.parseBodyFragment(tpl.toString).getElementsByClass("top-navigation__item--current")
 
-    currentSection.length shouldEqual 1
+    currentSection.asScala.length shouldEqual 1
 
     currentSection.first.
       getElementsByTag("a").first.
@@ -34,14 +34,14 @@ import scala.collection.JavaConversions._
     val page = SimplePage(MetaData.make(
       id = "bla-bla",
       webTitle = "bla-bla",
-      section = Some(SectionSummary.fromId("football"))
+      section = Some(SectionId.fromId("football"))
     ))
 
     val tpl = views.html.fragments.nav.mainNavigation(page)(FakeRequest("GET", "/bla-bla?_edition=US"))
 
     val currentSection = Jsoup.parseBodyFragment(tpl.toString).getElementsByClass("top-navigation__item--current")
 
-    currentSection.length shouldEqual 1
+    currentSection.asScala.length shouldEqual 1
 
     currentSection.first.
       getElementsByTag("a").first.

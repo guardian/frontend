@@ -28,6 +28,13 @@ final case class Atoms(
   timelines: Seq[TimelineAtom]
 ) {
   val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines
+
+  def atomTypes: Map[String, Boolean] = Map(
+    "guide" -> !guides.isEmpty,
+    "qanda" -> !qandas.isEmpty,
+    "profile" -> !profiles.isEmpty,
+    "timeline" -> !timelines.isEmpty
+  )
 }
 
 sealed trait Atom {
@@ -148,21 +155,39 @@ final case class QandaAtom(
   atom: AtomApiAtom,
   data: atomapi.qanda.QAndAAtom,
   image: Option[ImageMedia]
-) extends Atom
+) extends Atom {
+  def credit: Option[String] = for {
+    img <- image
+    asset <- img.allImages.headOption
+    credit <- asset.credit
+  } yield credit
+}
 
 final case class GuideAtom(
   override val id: String,
   atom: AtomApiAtom,
   data: atomapi.guide.GuideAtom,
   image: Option[ImageMedia]
-) extends Atom
+) extends Atom {
+  def credit: Option[String] = for {
+    img <- image
+    asset <- img.allImages.headOption
+    credit <- asset.credit
+  } yield credit
+}
 
 final case class ProfileAtom(
   override val id: String,
   atom: AtomApiAtom,
   data: atomapi.profile.ProfileAtom,
   image: Option[ImageMedia]
-) extends Atom
+) extends Atom {
+  def credit: Option[String] = for {
+    img <- image
+    asset <- img.allImages.headOption
+    credit <- asset.credit
+  } yield credit
+}
 
 final case class TimelineAtom(
   override val id: String,
@@ -242,7 +267,7 @@ object Atoms extends common.Logging {
           fields = Map(
             "width" -> dims.width.toString,
             "height" -> dims.height.toString
-          ),
+          ) ++ asset.credit.map("credit" -> _),
           mediaType = "image",
           mimeType = asset.mimeType,
           url = Some(asset.file)

@@ -3,15 +3,20 @@
 import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
 import { isBreakpoint } from 'lib/detect';
+import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { local } from 'lib/storage';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
-import { showMyAccountIfNecessary, enhanceAvatar } from './user-account';
+import { showMyAccountIfNecessary } from './user-account';
+
+type MenuAndTriggerEls = {
+    menu: HTMLElement,
+    trigger: HTMLElement,
+};
 
 const enhanced = {};
 const SEARCH_STORAGE_KEY = 'gu.recent.search';
-let avatarIsEnhanced = false;
 
 const getMenu = (): ?HTMLElement =>
     document.getElementsByClassName('js-main-menu')[0];
@@ -177,15 +182,67 @@ const toggleMenu = (): void => {
             closeAllMenuSections();
         } else {
             focusFirstMenuSection();
-
-            if (!avatarIsEnhanced) {
-                enhanceAvatar();
-                avatarIsEnhanced = true;
-            }
         }
     };
 
     fastdom.write(update);
+};
+
+const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
+    const openClass = 'dropdown-menu--open';
+
+    fastdom.read(() => menuAndTriggerEls).then(els => {
+        const { menu, trigger } = els;
+
+        if (!menu) {
+            return;
+        }
+
+        const isOpen = menu.classList.contains(openClass);
+        const expandedAttr = isOpen ? 'false' : 'true';
+        const hiddenAttr = isOpen ? 'true' : 'false';
+
+        return fastdom.write(() => {
+            if (trigger) {
+                trigger.setAttribute('aria-expanded', expandedAttr);
+            }
+
+            menu.setAttribute('aria-hidden', hiddenAttr);
+            menu.classList.toggle(openClass, !isOpen);
+
+            if (!isOpen) {
+                mediator.on('module:clickstream:click', function triggerToggle(
+                    clickSpec
+                ) {
+                    const elem = clickSpec ? clickSpec.target : null;
+
+                    // if anywhere else but the links are clicked, the dropdown will close
+                    if (elem !== menu) {
+                        toggleDropdown(menuAndTriggerEls);
+                        // remove event when the dropdown closes
+                        mediator.off('module:clickstream:click', triggerToggle);
+                    }
+                });
+            }
+        });
+    });
+};
+
+const initiateUserAccountDropdown = (): void => {
+    fastdom
+        .read(() => ({
+            menu: document.querySelector('.js-user-account-dropdown-menu'),
+            trigger: document.querySelector('.js-user-account-trigger'),
+        }))
+        .then((userAccountDropdownEls: MenuAndTriggerEls) => {
+            const button = userAccountDropdownEls.trigger;
+
+            if (button && button instanceof HTMLButtonElement) {
+                button.addEventListener('click', () =>
+                    toggleDropdown(userAccountDropdownEls)
+                );
+            }
+        });
 };
 
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
@@ -193,64 +250,83 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
-        const enhance = () => {
-            const checkboxClassAttr = checkbox.getAttribute('class');
+        const checkboxClassAttr = checkbox.getAttribute('class');
+        const dataLinkName = checkbox.getAttribute('data-link-name');
 
-            if (checkboxClassAttr) {
-                button.setAttribute('class', checkboxClassAttr);
-            }
+        const menuEl: ?HTMLElement = document.querySelector(
+            '.js-edition-dropdown-menu'
+        );
+        const triggerEl: ?HTMLElement = document.querySelector(
+            '.js-edition-picker-trigger'
+        );
 
-            button.addEventListener('click', () => toggleMenu());
-            button.setAttribute('id', checkboxId);
-            button.setAttribute('aria-expanded', 'false');
-            button.setAttribute('data-link-name', 'nav2 : toggle');
+        if (
+            menuEl &&
+            menuEl instanceof HTMLElement &&
+            triggerEl &&
+            triggerEl instanceof HTMLElement
+        ) {
+            const editionPickerDropdownEls: MenuAndTriggerEls = {
+                menu: menuEl,
+                trigger: triggerEl,
+            };
 
-            if (checkboxControls) {
-                button.setAttribute('aria-controls', checkboxControls);
-            }
+            const buttonClickHandlers = {
+                'main-menu-toggle': toggleMenu,
+                'edition-picker-toggle': toggleDropdown.bind(
+                    null,
+                    editionPickerDropdownEls
+                ),
+            };
 
-            if (checkbox.parentNode) {
-                checkbox.parentNode.replaceChild(button, checkbox);
-            }
+            const enhance = () => {
+                const eventHandler = buttonClickHandlers[checkboxId];
 
-            enhanced[button.id] = true;
-        };
+                if (checkboxClassAttr) {
+                    button.setAttribute('class', checkboxClassAttr);
+                }
 
-        fastdom.write(enhance);
+                button.addEventListener('click', () => eventHandler());
+                button.setAttribute('id', checkboxId);
+                button.setAttribute('aria-expanded', 'false');
+
+                if (dataLinkName) {
+                    button.setAttribute('data-link-name', dataLinkName);
+                }
+
+                if (checkboxControls) {
+                    button.setAttribute('aria-controls', checkboxControls);
+                }
+
+                if (checkbox.parentNode) {
+                    checkbox.parentNode.replaceChild(button, checkbox);
+                }
+
+                enhanced[button.id] = true;
+            };
+
+            fastdom.write(enhance);
+        }
     });
 };
 
-const enhanceMenuToggle = (): void => {
-    const checkbox = document.getElementById('main-menu-toggle');
+const enhanceMenuToggles = (): void => {
+    const checkboxs = [
+        ...document.getElementsByClassName('js-enhance-checkbox'),
+    ];
 
-    if (!checkbox) {
-        return;
-    }
-
-    if (!enhanced[checkbox.id] && !checkbox.checked) {
-        enhanceCheckbox(checkbox);
-    } else {
-        const closeMenuHandler = (): void => {
+    checkboxs.forEach(checkbox => {
+        if (!enhanced[checkbox.id] && !checkbox.checked) {
             enhanceCheckbox(checkbox);
-            checkbox.removeEventListener('click', closeMenuHandler);
-        };
+        } else {
+            const closeMenuHandler = (): void => {
+                enhanceCheckbox(checkbox);
+                checkbox.removeEventListener('click', closeMenuHandler);
+            };
 
-        checkbox.addEventListener('click', closeMenuHandler);
-    }
-};
-
-const toggleMenuWithOpenSection = () => {
-    const menu = getMenu();
-    const subnav = document.querySelector('.subnav__list');
-    const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
-    const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
-    const section = menu && menu.querySelector(targetSelector);
-
-    if (section) {
-        openMenuSection(section, { scrollIntoView: true });
-    }
-
-    toggleMenu();
+            checkbox.addEventListener('click', closeMenuHandler);
+        }
+    });
 };
 
 const getRecentSearch = (): ?string => local.get(SEARCH_STORAGE_KEY);
@@ -272,11 +348,61 @@ const trackRecentSearch = (): void => {
 
 const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
 
+const showMoreButton = (): void => {
+    fastdom
+        .read(() => {
+            const moreButton = document.querySelector('.js-show-more-button');
+            const subnav = document.querySelector('.js-expand-subnav');
+            const subnavList = document.querySelector(
+                '.js-get-last-child-subnav'
+            );
+
+            if (subnav && subnavList) {
+                const subnavItems = subnavList.querySelectorAll('li');
+                const lastChild = subnavItems[subnavItems.length - 1];
+
+                const lastChildRect = lastChild.getBoundingClientRect();
+                const subnavRect = subnav.getBoundingClientRect();
+
+                return { moreButton, lastChildRect, subnavRect };
+            }
+        })
+        .then(els => {
+            if (els) {
+                const { moreButton, lastChildRect, subnavRect } = els;
+
+                if (subnavRect.top === lastChildRect.top) {
+                    fastdom.write(() => {
+                        moreButton.classList.add('is-hidden');
+                    });
+                }
+            }
+        });
+};
+
+const toggleSubnavSections = (moreButton: HTMLElement): void => {
+    fastdom
+        .read(() => document.querySelector('.js-expand-subnav'))
+        .then(subnav => {
+            if (subnav) {
+                fastdom.write(() => {
+                    const isOpen = subnav.classList.contains(
+                        'subnav--expanded'
+                    );
+
+                    subnav.classList.toggle('subnav--expanded');
+
+                    moreButton.innerText = isOpen ? 'more' : 'less';
+                });
+            }
+        });
+};
+
 const addEventHandler = (): void => {
     const menu = getMenu();
     const search = menu && menu.querySelector('.js-menu-search');
     const toggleWithMoreButton = document.querySelector(
-        '.js-toggle-nav-section'
+        '.js-toggle-more-sections'
     );
 
     if (menu) {
@@ -310,15 +436,17 @@ const addEventHandler = (): void => {
 
     if (toggleWithMoreButton) {
         toggleWithMoreButton.addEventListener('click', () => {
-            toggleMenuWithOpenSection();
+            toggleSubnavSections(toggleWithMoreButton);
         });
     }
 };
 
 export const newHeaderInit = (): void => {
-    enhanceMenuToggle();
+    enhanceMenuToggles();
+    showMoreButton();
     addEventHandler();
     showMyAccountIfNecessary();
+    initiateUserAccountDropdown();
     closeAllMenuSections();
     trackRecentSearch();
 };

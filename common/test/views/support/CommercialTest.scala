@@ -1,6 +1,6 @@
 package views.support
 
-import model.{MetaData, SectionSummary}
+import model.{MetaData, SectionId}
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers, OptionValues}
 import views.support.Commercial.topAboveNavSlot
 
@@ -8,7 +8,7 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
 
   private def metaDataFromId(pageId: String): MetaData = MetaData.make(
     id = pageId,
-    section = Some(SectionSummary.fromId("section")),
+    section = Some(SectionId.fromId("section")),
     webTitle = "webTitle",
     javascriptConfigOverrides = Map())
 

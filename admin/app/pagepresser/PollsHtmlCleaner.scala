@@ -4,7 +4,7 @@ import org.jsoup.nodes.Document
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.{Await, ExecutionContext}
 import scala.concurrent.duration._
 
@@ -21,7 +21,7 @@ case class Answer(id: Int, question: Int, count: Double)
 class PollsHtmlCleaner(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends HtmlCleaner with implicits.WSRequests {
 
   override def canClean(document: Document): Boolean = {
-    document.getElementsByAttribute("data-poll-url").nonEmpty
+    document.getElementsByAttribute("data-poll-url").asScala.nonEmpty
   }
 
   override def clean(document: Document, convertToHttps: Boolean): Document = {
@@ -43,14 +43,14 @@ class PollsHtmlCleaner(wsClient: WSClient)(implicit executionContext: ExecutionC
 
         for (answer <- question.answers) yield {
           val answerPercentage = Math.round(answer.count / question.count * 100)
-          document.getElementById(s"a-${answer.id}").getElementsByClass("container").foreach { element =>
+          document.getElementById(s"a-${answer.id}").getElementsByClass("container").asScala.foreach { element =>
             element.tagName("div")
             element.attr("title", s"Votes cast: ${answer.count} ($answerPercentage%)")
-            element.getElementsByClass("poll-result-bg").foreach { barResult =>
+            element.getElementsByClass("poll-result-bg").asScala.foreach { barResult =>
               if(answer.id == mostAnsweredAnswerId.id) barResult.attr("class", "poll-result-bg leader")
               barResult.attr("style", s"width: $answerPercentage%")
             }
-            element.getElementsByClass("poll-result-figure").foreach { value =>
+            element.getElementsByClass("poll-result-figure").asScala.foreach { value =>
               if(answerPercentage > 70) value.attr("class", "poll-result-figure large")
               value.text(s"$answerPercentage%")
             }

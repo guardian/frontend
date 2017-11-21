@@ -1,49 +1,107 @@
 @import common.commercial.hosted.HostedArticlePage
 @(page: HostedArticlePage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import views.html.hosted._
+@import views.CommercialBodyCleaner
 @import model.hosted.HostedArticleQuotes.prepareQuotes
 
 @mainLegacy(page, Some("commercial")) { } {
+
+    @inlineStyles()
+
+    <div class="hosted__header"><div class="hosted__headerwrap"><div class="hostedbadge">
+        @hostedLogo(page)
+    </div></div></div>
+    @guardianHostedHeader("hosted-article-page hosted__header--sticky" + (if(page.fontColour.isDark) " hosted-page--bright" else ""), page)
+    <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.fontColour.isDark) {hosted-page--bright}">
+
+        <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--paid-content" role="main">
+            @showcaseMedia(page)
+            <div class="content__main">
+                <div class="gs-container">
+                    <div class="hosted-article__main-column content__main-column content__main-column--article js-content-main-column">
+                        <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
+                            <div class="meta__extras" data-component="share">
+                            @guardianHostedShareButtons(page)
+                            </div>
+                        </div>
+
+                        @CommercialBodyCleaner(page, body(page).toString())(request, context)
+
+                        <div class="hosted__onward-journey">
+                            <div class="js-onward-placeholder"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        @guardianHostedCta(page, page.cta, isAMP = false)
+    </div>
+}
+
+@showcaseMedia(page: HostedArticlePage) = {
+    <div class="media-primary media-content media-primary--showcase" style="background-image: url(@{page.mainPicture});">
+        <div class="gs-container">
+            <h2 class="title content__main-column">@{page.title}</h2>
+        </div>
+        <span class="caption hosted-tone">@{page.mainPictureCaption}</span>
+    </div>
+}
+
+@body(page: HostedArticlePage) = {
+    <div class="content__article-body from-content-api js-article__body">
+        <p class="intro">@Html(page.standfirst)</p>
+
+        @Html(prepareQuotes(page.body))
+
+        <div class="hosted__standfirst">
+            @hostedExplainer()
+        </div>
+    </div>
+}
+
+@inlineStyles() = {
+
     <!--[if (gt IE 9)|(IEMobile)]><!-->
     <style>
     .hosted-tone {
-        color: @{page.campaign.fontColour.hexCode};
+        color: @{page.fontColour.hexCode};
     }
 
     .hosted-tone-bg {
-        background-color: @{page.campaign.fontColour.hexCode};
+        background-color: @{page.fontColour.hexCode};
     }
 
     .hosted-tone-btn {
-        color: @{page.campaign.fontColour.hexCode};
-        border: 1px solid @{page.campaign.fontColour.hexCode};
+        color: @{page.fontColour.hexCode};
+        border: 1px solid @{page.fontColour.hexCode};
     }
 
     .hosted__banner .hosted-tone-btn,
     .hosted-tone-btn:focus,
     .hosted-tone-btn:hover {
-        background-color: @{page.campaign.fontColour.hexCode};
+        background-color: @{page.fontColour.hexCode};
     }
 
     .hosted-page .hosted__link {
-        color: @{page.campaign.fontColour.hexCode};
+        color: @{page.fontColour.hexCode};
     }
 
     .hosted-page ~ .survey-overlay-simple .survey-text__header {
-        background-color: @{page.campaign.fontColour.hexCode};
+        background-color: @{page.fontColour.hexCode};
     }
 
     .hosted-article-page p.intro + p::first-letter {
-        background-color: @{page.campaign.fontColour.hexCode};
+        background-color: @{page.fontColour.hexCode};
     }
 
     .from-content-api ul > li:before {
-        background-color: @{page.campaign.fontColour.hexCode};
+        background-color: @{page.fontColour.hexCode};
     }
 
     .hosted__next-page__carousel-arrows .inline-icon {
-        fill: @{page.campaign.fontColour.hexCode};
-        border-color: @{page.campaign.fontColour.hexCode};
+        fill: @{page.fontColour.hexCode};
+        border-color: @{page.fontColour.hexCode};
     }
 
     /* To prevent video element from jumping */
@@ -58,54 +116,13 @@
     }
 
     blockquote {
-        border-left: 20px solid @{page.campaign.fontColour.hexCode}
+        border-left: 20px solid @{page.fontColour.hexCode}
     }
 
     blockquote .inline-hosted-quote__svg {
-        fill: @{page.campaign.fontColour.hexCode};
+        fill: @{page.fontColour.hexCode};
     }
 
     </style>
     <!--<![endif]-->
-    <div class="hosted__header"><div class="hosted__headerwrap"><div class="hostedbadge">
-        @hostedLogo(page.campaign)
-    </div></div></div>
-    @guardianHostedHeader("hosted-article-page hosted__header--sticky" + (if(page.campaign.fontColour.isDark) " hosted-page--bright" else ""), page)
-    <div class="hosted-page l-side-margins hosted__side hosted-article-page @if(page.campaign.fontColour.isDark) {hosted-page--bright}">
-
-        <article id="article" data-test-id="article-root" class="content content--article has-feature-showcase-element section-stage content--paid-content" role="main">
-            <div class="media-primary media-content media-primary--showcase" style="background-image: url(@{page.mainPicture});">
-                <div class="gs-container">
-                    <h2 class="title content__main-column">@{page.title}</h2>
-                </div>
-                <span class="caption hosted-tone">@{page.mainPictureCaption}</span>
-            </div>
-            <div class="content__main">
-                <div class="gs-container">
-                    <div class="hosted-article__main-column content__main-column content__main-column--article js-content-main-column">
-                        <div class="content__meta-container js-content-meta js-football-meta u-cf content__meta-container--showcase">
-                            <div class="meta__extras" data-component="share">
-                            @guardianHostedShareButtons(page)
-                            </div>
-                        </div>
-
-                        <div class="content__article-body from-content-api js-article__body">
-                            <p class="intro">@Html(page.standfirst)</p>
-
-                            @Html(prepareQuotes(page.body))
-
-                            <div class="hosted__standfirst">
-                                @hostedExplainer()
-                            </div>
-                        </div>
-                        <div class="hosted__onward-journey">
-                            <div class="js-onward-placeholder"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        @guardianHostedCta(page, page.cta, isAMP = false)
-    </div>
 }

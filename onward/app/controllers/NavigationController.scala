@@ -42,8 +42,8 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
   def renderAmpNav: Action[AnyContent] = Action { implicit request =>
     val edition = Edition(request)
     val navSecondarySections = List.concat(
-      NewNavigation.BrandExtensions.getAllEditionalisedNavLinks(edition).map(section => navSectionLink(section)),
-      NewNavigation.OtherLinks.getAllEditionalisedNavLinks(edition).map(section => navSectionLink(section))
+      NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map(section => navSectionLink(section)),
+      NewNavigation.OtherLinks.getEditionalisedNavLinks(edition).map(section => navSectionLink(section))
     )
 
     Cached(900) {
@@ -58,7 +58,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
       implicit val topLevelSectionWrites = new Writes[topLevelNavItems] {
         def writes(item: topLevelNavItems) = Json.obj(
           "title" -> item.editionalisedSection.name,
-          "subSections" -> item.editionalisedSection.getAllEditionalisedNavLinks(edition).map(subsection => navSectionLink(subsection))
+          "subSections" -> item.editionalisedSection.getEditionalisedNavLinks(edition).map(subsection => navSectionLink(subsection))
         )
       }
 
@@ -66,7 +66,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
         "items" -> Json.arr(
           Json.obj(
             "topLevelSections" -> NewNavigation.topLevelSections.map( section => topLevelNavItems(section) ),
-            "membershipLinks" -> NavigationHelpers.getMembershipLinks(edition).mostPopular.map( section => navSectionLink(section)),
+            "membershipLinks" -> NavigationHelpers.getMembershipLinks(edition).map( section => navSectionLink(section)),
             "secondarySections" -> navSecondarySections
           )
         )

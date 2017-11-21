@@ -6,30 +6,25 @@ import { commercialFeatures } from 'commercial/modules/commercial-features';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { inlineSvg } from 'common/views/svgs';
-import { variantFor } from 'common/modules/experiments/segment-util';
+import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
+import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
-import { get as getGeoLocation } from 'lib/geolocation';
-import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
+import { getSync as getGeoLocation } from 'lib/geolocation';
+
 import {
     submitComponentEvent,
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
+import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 
 // change messageCode to force redisplay of the message to users who already closed it.
-const messageCode = 'engagement-banner-2017-09-21';
+const messageCode = 'engagement-banner-2017-11-02';
 
-// This piece of code should be reverted when we remove this test.
 const getUserTest = (): ?AcquisitionsABTest =>
-    membershipEngagementBannerTests.find(test => {
-        const acquisitionTest = getAcquisitionTest();
-        let response = false;
-        if (acquisitionTest) {
-            response = acquisitionTest.id === test.id;
-        }
-
-        return response;
-    });
+    membershipEngagementBannerTests.find(
+        test => testCanBeRun(test) && isInTest(test)
+    );
 
 const getUserVariant = (test: ?ABTest): ?Variant =>
     test ? variantFor(test) : undefined;
@@ -57,6 +52,10 @@ const getUserVariantParams = (
         }
 
         return userVariantParams;
+    } else if (campaignId && userVariant) {
+        return {
+            campaignCode: buildCampaignCode(campaignId, userVariant.id),
+        };
     }
     return {};
 };
@@ -114,35 +113,39 @@ const showBanner = (params: EngagementBannerParams): void => {
 
     const test = getUserTest();
     const variant = getUserVariant(test);
-
     const paypalAndCreditCardImage =
         config.get('images.acquisitions.paypal-and-credit-card') || '';
     const colourClass = params.colourStrategy();
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
+    const ctaText = params.ctaText;
 
-    const linkUrl = addTrackingCodesToUrl(
-        params.linkUrl,
-        'ACQUISITIONS_ENGAGEMENT_BANNER',
-        params.campaignCode,
-        test && variant ? { name: test.id, variant: variant.id } : undefined
-    );
-
+    const linkUrl = addTrackingCodesToUrl({
+        base: params.linkUrl,
+        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        componentId: params.campaignCode,
+        campaignCode: params.campaignCode,
+        abTest:
+            test && variant
+                ? { name: test.id, variant: variant.id }
+                : undefined,
+    });
     const buttonCaption = params.buttonCaption;
     const buttonSvg = inlineSvg('arrowWhiteRight');
-    const renderedBanner = `
-    <div id="site-message__message">
-        <div class="site-message__message site-message__message--membership">
-            <span class = "membership__message-text">${messageText}</span>
-            <span class="membership__paypal-container">
-                <img class="membership__paypal-logo" src="${paypalAndCreditCardImage}" alt="Paypal and credit card">
-                <span class="membership__support-button"><a class="message-button-rounded__cta ${colourClass}" href="${linkUrl}">${buttonCaption}${buttonSvg}</a></span>
-            </span>
-        </div>
-        <a class="u-faux-block-link__overlay js-engagement-message-link" target="_blank" href="${linkUrl}" data-link-name="Read more link"></a>
-    </div>`;
+    const templateParams = {
+        messageText,
+        ctaText,
+        paypalAndCreditCardImage,
+        colourClass,
+        linkUrl,
+        buttonCaption,
+        buttonSvg,
+    };
 
+    const renderedBanner: string = params.template
+        ? params.template(templateParams)
+        : acquisitionsBannerControlTemplate(templateParams);
     const messageShown = new Message(messageCode, {
         pinOnHide: false,
         siteMessageLinkName: 'membership message',
@@ -159,6 +162,7 @@ const showBanner = (params: EngagementBannerParams): void => {
                     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
                     products: params.products,
                     campaignCode: params.campaignCode,
+                    id: params.campaignCode,
                 },
                 action,
                 ...(test && variant
@@ -176,26 +180,25 @@ const showBanner = (params: EngagementBannerParams): void => {
     }
 };
 
-const membershipEngagementBannerInit = (): Promise<void> =>
-    getGeoLocation().then(location => {
-        const bannerParams = deriveBannerParams(location);
-
-        if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
-            return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
-                canShow => {
-                    if (canShow) {
-                        mediator.on(
-                            'modules:onwards:breaking-news:ready',
-                            breakingShown => {
-                                if (!breakingShown) {
-                                    showBanner(bannerParams);
-                                }
+const membershipEngagementBannerInit = (): Promise<void> => {
+    const bannerParams = deriveBannerParams(getGeoLocation());
+    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
+        return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
+            canShow => {
+                if (canShow) {
+                    mediator.on(
+                        'modules:onwards:breaking-news:ready',
+                        breakingShown => {
+                            if (!breakingShown) {
+                                showBanner(bannerParams);
                             }
-                        );
-                    }
+                        }
+                    );
                 }
-            );
-        }
-    });
+            }
+        );
+    }
+    return Promise.resolve(undefined);
+};
 
 export { membershipEngagementBannerInit };

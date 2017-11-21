@@ -1,14 +1,14 @@
 package commercial.controllers
 
 import conf.Configuration
-import model.{ApplicationContext, GuardianContentTypes, MetaData, SectionSummary}
+import model.{ApplicationContext, DotcomContentType, MetaData, SectionId}
 import play.api.libs.json.{JsString, JsValue}
 import play.api.mvc._
 
 case class TestPage(specifiedKeywords : List[String] = Nil) extends model.StandalonePage {
 
   val isNetworkFront: Boolean = false
-  val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
+  val contentType = if (isNetworkFront) DotcomContentType.NetworkFront else DotcomContentType.Section
   private val webTitle = "Commercial components"
 
   val allTheKeywords = webTitle :: specifiedKeywords
@@ -23,10 +23,10 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
   override val metadata = MetaData.make(
     id = "1234567",
     description = None,
-    section = Some(SectionSummary.fromId("Comercial components test page")),
+    section = Some(SectionId.fromId("Comercial components test page")),
     webTitle = webTitle,
     isFront = true,
-    contentType = contentType,
+    contentType = Some(contentType),
     javascriptConfigOverrides = newMetaData)
 
   val navSection: String = "Commercial"

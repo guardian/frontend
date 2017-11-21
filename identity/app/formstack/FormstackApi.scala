@@ -1,9 +1,10 @@
 package formstack
 
-import client.parser.JodaJsonSerializer
-import client.{Error, Response}
 import com.gu.identity.model.LiftJsonConfig
 import conf.Configuration
+import idapiclient.Response
+import idapiclient.parser.JodaJsonSerializer
+import idapiclient.responses.Error
 import net.liftweb.json._
 import utils.SafeLogging
 
@@ -11,7 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class FormstackApi(httpClient: WsFormstackHttp) extends SafeLogging {
 
-  implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
+  implicit val formats = LiftJsonConfig.formats + JodaJsonSerializer
 
   def formstackUrl(formId: String): String = {
     val formstackUrl = Configuration.formstack.url

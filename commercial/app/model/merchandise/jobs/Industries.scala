@@ -1,7 +1,7 @@
 package commercial.model.merchandise.jobs
 
+import com.gu.Box
 import commercial.model.capi.Lookup
-import common.AkkaAgent
 import contentapi.ContentApiClient
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -41,7 +41,7 @@ object Industries {
 class Industries(contentApiClient: ContentApiClient) {
 
   private val lookup = new Lookup(contentApiClient)
-  private lazy val industryKeywordIds = AkkaAgent(Map.empty[Int, Seq[String]])
+  private lazy val industryKeywordIds = Box(Map.empty[Int, Seq[String]])
 
 
   def refresh()(implicit executionContext: ExecutionContext): Future[Iterable[Map[Int, Seq[String]]]] = Future.sequence {

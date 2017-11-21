@@ -287,7 +287,7 @@ describe('Storing new feature data', () => {
                 getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)
             ).toBeTruthy();
             expect(
-                isNaN(
+                Number.isNaN(
                     parseInt(
                         getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE),
                         10
@@ -303,7 +303,7 @@ describe('Storing new feature data', () => {
                 PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE
             );
             expect(expiryDate).toBeTruthy();
-            expect(isNaN(parseInt(expiryDate, 10))).toBe(false);
+            expect(Number.isNaN(parseInt(expiryDate, 10))).toBe(false);
         }));
 
     it('The expiry date is in the future', () =>

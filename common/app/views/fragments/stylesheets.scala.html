@@ -3,6 +3,7 @@
 @import conf.switches.Switches._
 @import play.api.Mode.Dev
 @import conf.Static
+@import html.HtmlPageHelpers.ContentCSSFile
 
 @* any images in head need to go here (or they'll be relative to the page)} *@
 <style class="js-loggable">
@@ -34,7 +35,7 @@
 *@
 <!--[if (lt IE 9)&(!IEMobile)]>
     @fragments.stylesheetLink(common.Assets.css.headOldIE(projectName), isCrossword)
-    @fragments.stylesheetLink("stylesheets/old-ie.content.css", isCrossword)
+    @fragments.stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css", isCrossword)
 <![endif]-->
 
 @*
@@ -43,7 +44,7 @@
 *@
 <!--[if (IE 9)&(!IEMobile)]>
     @fragments.stylesheetLink(common.Assets.css.headIE9(projectName), isCrossword)
-    @fragments.stylesheetLink("stylesheets/ie9.content.css", isCrossword)
+    @fragments.stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css", isCrossword)
 <![endif]-->
 
 @*

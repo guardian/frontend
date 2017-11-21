@@ -68,6 +68,12 @@ describe('userPrefs - Client-side preferences', () => {
         // string tests setting of prefs, switches of int, string, booleans
         const qs = { hash: `#${hashAsAnchor}` };
 
+        // jsdom didn't fully implement Number.isNaN :facepalm:
+        /* eslint-disable no-restricted-properties */
+        // $FlowFixMe
+        Number.isNaN = window.isNaN;
+        /* eslint-enable no-restricted-properties */
+
         userPrefs.setPrefs(qs);
 
         expect(userPrefs.get('a')).toBe(1); // int

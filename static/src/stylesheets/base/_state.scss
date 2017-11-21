@@ -50,6 +50,10 @@
     }
 }
 
+.is-updating-cursor {
+    cursor: wait;
+}
+
 .is-updating--dark {
     width: 36px;
     height: 12px;

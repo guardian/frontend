@@ -3,9 +3,10 @@ package commercial.model.merchandise.books
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import akka.util.Timeout
+import com.gu.Box
 import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import commercial.model.merchandise.Book
-import common.{AkkaAgent, Logging}
+import common.Logging
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
 import play.api.libs.json._
@@ -27,7 +28,7 @@ class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) exten
 
 object BookAgent extends Logging {
 
-  private lazy val cache = AkkaAgent(Map.empty[String, JsValue])
+  private lazy val cache = Box(Map.empty[String, JsValue])
 
   def get(isbn: String)(implicit magentoService: MagentoService, executionContext: ExecutionContext): Option[JsValue] = {
 
@@ -65,7 +66,7 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
         consumerKey = ConsumerKey(consumerKey, consumerSecret),
         token = RequestToken(token, tokenSecret)
       ),
-      urlPrefix = s"http://$domain/$path"
+      urlPrefix = s"https://$domain/$path"
     )
   }
 

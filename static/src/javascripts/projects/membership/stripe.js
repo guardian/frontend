@@ -50,6 +50,7 @@ export const display = (
     const $type = $('.js-manage-account-card-type', $parent);
     const $button = $('.js-manage-account-change-card', $parent);
     const $updating = $('.js-updating', $parent);
+    const stripePublicKey = maybeKey || config.get('page.stripePublicToken');
 
     /*  show/hide
      *   once we've sent the token, we don't want to change the state of the dots until we redisplay
@@ -117,6 +118,7 @@ export const display = (
             },
             body: {
                 stripeToken: token.id,
+                publicKey: stripePublicKey,
             },
         })
             .then(resp => resp.json())
@@ -142,7 +144,6 @@ export const display = (
         return e => {
             e.preventDefault();
             fastdom.write(loading.showDots);
-            const key = maybeKey ? { key: maybeKey } : {};
             checkoutHandler.open({
                 email,
                 description: 'Update your card details',
@@ -151,7 +152,7 @@ export const display = (
                 closed() {
                     fastdom.write(loading.hideDots);
                 },
-                ...key,
+                key: stripePublicKey,
             });
             /*
              Nonstandard javascript alert:

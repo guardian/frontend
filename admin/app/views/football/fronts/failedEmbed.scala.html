@@ -1,4 +1,4 @@
-@(message: Html, snapFields: _root_.football.model.SnapFields)(implicit context: model.ApplicationContext)
+@(message: Html, snapFields: _root_.football.model.SnapFields)(implicit context: model.ApplicationContext, request: RequestHeader)
 
 @views.html.football.main(snapFields.fallbackHeadline) {
     <div class="row">

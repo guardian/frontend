@@ -1,9 +1,10 @@
-@(title: String)(content: Html)(implicit context: model.ApplicationContext)
+@(title: String)(content: Html)(implicit context: model.ApplicationContext, request: RequestHeader)
 
 @import controllers.admin.routes.UncachedAssets
 @import controllers.admin.routes.UncachedWebAssets
 @import play.api.Mode.Dev
 @import conf.Static
+@import html.HtmlPageHelpers.ContentCSSFile
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +27,7 @@
         }
             <!--<![endif]-->
 
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/content.css")" />
+        <link rel="stylesheet" type="text/css" href="@Static(s"stylesheets/$ContentCSSFile.css")" />
 
         <script src='@UncachedWebAssets.at("lib/jquery/jquery.min.js")'></script>
         <script src='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.js")'></script>

@@ -20,6 +20,7 @@ const normalise = (length: string): string => {
 const resize = (
     specs: Specs,
     iframe: HTMLElement,
+    iframeContainer: ?HTMLElement,
     adSlot: HTMLElement
 ): ?Promise<any> => {
     if (
@@ -44,6 +45,10 @@ const resize = (
     return fastdom.write(() => {
         Object.assign(adSlot.style, styles);
         Object.assign(iframe.style, styles);
+
+        if (iframeContainer) {
+            Object.assign(iframeContainer.style, styles);
+        }
     });
 };
 
@@ -51,7 +56,9 @@ const init = (register: RegisterListeners) => {
     register('resize', (specs, ret, iframe) => {
         if (iframe && specs) {
             const adSlot = iframe && iframe.closest('.js-ad-slot');
-            return resize(specs, iframe, adSlot);
+            const iframeContainer =
+                iframe && iframe.closest('.ad-slot__content');
+            return resize(specs, iframe, iframeContainer, adSlot);
         }
     });
 };

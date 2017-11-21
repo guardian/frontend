@@ -3,14 +3,14 @@ package form
 import model.Titles
 import play.api.data.Forms._
 import com.gu.identity.model.{PrivateFields, User, UserDates}
-import idapiclient.UserUpdate
+import idapiclient.UserUpdateDTO
 import play.api.i18n.MessagesProvider
 
 class AccountDetailsMapping extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping with TelephoneNumberMapping {
 
   private val genders = List("Male", "Female", "Transgender", "Other", "unknown", "")
 
-  protected def formMapping(implicit messagesProvider: MessagesProvider) = {
+  def formMapping(implicit messagesProvider: MessagesProvider) = {
     mapping(
       ("primaryEmailAddress", idEmail),
       ("title", comboList("" :: Titles.titles)),
@@ -25,9 +25,9 @@ class AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addres
     )(AccountFormData.apply)(AccountFormData.unapply _)
   }
 
-  protected def fromUser(user: User) = AccountFormData(user)
+  protected def toUserFormData(user: User) = AccountFormData(user)
 
-  protected lazy val contextMap = Map(
+  protected lazy val idapiErrorContextToFormFieldKeyMap = Map(
     ("privateFields.title", "title"),
     ("privateFields.firstName", "firstName"),
     ("privateFields.secondName", "secondName"),
@@ -62,7 +62,7 @@ case class AccountFormData(
   deleteTelephone: Boolean = false
 ) extends UserFormData {
 
-  def toUserUpdate(currentUser: User): UserUpdate = UserUpdate(
+  def toUserUpdateDTO(currentUser: User): UserUpdateDTO = UserUpdateDTO(
     primaryEmailAddress = toUpdate(primaryEmailAddress, Some(currentUser.primaryEmailAddress)),
     dates = Some(UserDates(birthDate = birthDate.dateTime)),
     privateFields = Some(PrivateFields(

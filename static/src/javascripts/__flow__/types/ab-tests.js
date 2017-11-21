@@ -49,7 +49,7 @@ declare type EpicABTest = AcquisitionsABTest & {
 declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
-    options: Object
+    options?: Object
 };
 
 declare type InitEpicABTest = {

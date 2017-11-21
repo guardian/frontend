@@ -54,7 +54,7 @@ class DevAssetsController(val environment: Environment, val controllerComponents
       val result = Result(
         ResponseHeader(OK, Map(CONTENT_TYPE -> contentType)),
         HttpEntity.Streamed(
-          data = StreamConverters.fromInputStream(resolved.openStream),
+          data = StreamConverters.fromInputStream(resolved.openStream _),
           contentLength = file.map(_.length),
           contentType = Some(contentType))
       )

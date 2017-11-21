@@ -3,6 +3,7 @@ package views.support
 import layout._
 import model.pressed.{Audio, Gallery, Video}
 import slices.{Dynamic, DynamicSlowMPU}
+import play.api.mvc.RequestHeader
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob): String = {
@@ -13,12 +14,14 @@ object GetClasses {
     ) ++ item.customCssClasses: _*)
   }
 
-  def forItem(item: ContentCard, isFirstContainer: Boolean): String = {
+  def forItem(item: ContentCard, isFirstContainer: Boolean)(implicit request: RequestHeader): String = {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
+      ("fc-item--pillar-" + item.pillar.name.toLowerCase(), mvt.Garnet.isParticipating),
+      ("fc-item--type-" + item.contentType.name.toLowerCase(), mvt.Garnet.isParticipating),
       ("fc-item--has-cutout", item.cutOut.isDefined),
-      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", true),
+      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !mvt.Garnet.isParticipating),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
       ("fc-item--force-image-upgrade", isFirstContainer),
@@ -36,11 +39,13 @@ object GetClasses {
     )
   }
 
-  def forSubLink(sublink: Sublink): String = RenderClasses(Seq(
-    Some("fc-sublink"),
-    Some(TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink"),
-    sublinkMediaTypeClass(sublink)
-  ).flatten: _*)
+  def forSubLink(sublink: Sublink)(implicit request: RequestHeader): String = RenderClasses(Map(
+    ("fc-sublink", true),
+    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", !mvt.Garnet.isParticipating),
+    (sublinkMediaTypeClass(sublink).getOrElse(""), true),
+    ("fc-sublink--pillar-" + sublink.pillar, mvt.Garnet.isParticipating),
+    ("fc-sublink--type-" + sublink.contentType, mvt.Garnet.isParticipating)
+  ))
 
   def mediaTypeClass(faciaCard: ContentCard): Option[String] = faciaCard.mediaType map {
     case Gallery => "fc-item--gallery"

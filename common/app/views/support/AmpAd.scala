@@ -41,7 +41,7 @@ case class AmpAd(article: Article, uri: String, edition: String) {
 case class AmpAdDataSlot(article: Article) {
   override def toString(): String = {
     val section = article.metadata.sectionId
-    val contentType = article.metadata.contentType.toLowerCase
+    val contentType = article.metadata.contentType.map(_.name.toLowerCase).getOrElse("unknown")
 
     s"/59666047/theguardian.com/$section/$contentType/amp"
   }

@@ -164,8 +164,17 @@ data-test-id="facia-card"
                 }
             </div>
 
-            @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                <div class="fc-item__standfirst">@Html(text)</div>
+            @if(mvt.Garnet.isParticipating) {
+                <div class="fc-item__standfirst-wrapper">
+                    @item.trailText.filter(const(item.showStandfirst)).map { text =>
+                        <div class="fc-item__standfirst">@Html(text)</div>
+                    }
+                    @meta(item)
+                </div>
+            } else {
+                @item.trailText.filter(const(item.showStandfirst)).map { text =>
+                    <div class="fc-item__standfirst">@Html(text)</div>
+                }
             }
 
             @if(item.isLive && item.displaySettings.showLivePlayable && !isList) {
@@ -176,7 +185,9 @@ data-test-id="facia-card"
                 <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
             }
 
-            @meta(item)
+            @if(!mvt.Garnet.isParticipating) {
+                @meta(item)
+            }
         </div>
 
         @if(item.cardTypes.showCutOut) {

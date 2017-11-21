@@ -3,7 +3,7 @@
  Module: audience.js
  Description: Displays information about how the test users are divided.
  */
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { AudienceItem } from 'admin/modules/abtests/audience-item';
 
 class Audience extends Component {
@@ -20,6 +20,8 @@ class Audience extends Component {
             config
         );
     }
+
+    config: Object;
 
     prerender(): void {
         const testsContainer = this.getElem('tests');

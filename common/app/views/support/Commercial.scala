@@ -240,6 +240,24 @@ object Commercial {
     def mkInteractionTrackingCode(
       frontId: String,
       containerIndex: Int,
+      container: ContainerModel
+    )(implicit request: RequestHeader): String = mkString(
+      containerType = "Labs front container",
+      editionId = Edition(request).id,
+      frontId = frontId,
+      containerIndex = containerIndex,
+      containerTitle = container.content.title,
+      sponsorName = {
+        val containerSponsorName = container.branding collect { case b: Branding => b.sponsorName }
+        containerSponsorName getOrElse ""
+      },
+      cardIndex = -1,
+      cardTitle = container.content.title
+    )
+
+    def mkInteractionTrackingCode(
+      frontId: String,
+      containerIndex: Int,
       container: ContainerModel,
       card: PaidCard
     )(implicit request: RequestHeader): String =
@@ -266,16 +284,16 @@ object Commercial {
       frontId: Option[String]
     )(implicit request: RequestHeader): String = {
 
-      val isContentPage = frontId.isEmpty && containerDisplayName.contains("related content")
+      val isContentPage =
+        containerDisplayName.contains("more on this story") ||
+          containerDisplayName.contains("related content")
 
       mkString(
         containerType =
           if (isContentPage) "Onward container"
           else "Front container",
         editionId = Edition(request).id,
-        frontId =
-          if (isContentPage) "none"
-          else frontId.getOrElse("unknown front id"),
+        frontId = frontId.getOrElse("unknown front id"),
         containerIndex = containerIndex,
         containerTitle = containerDisplayName.getOrElse("unknown container"),
         sponsorName = card.branding.map(_.sponsorName) getOrElse "unknown",

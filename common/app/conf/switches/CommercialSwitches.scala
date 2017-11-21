@@ -21,7 +21,17 @@ trait CommercialSwitches {
     "Deactivates the sizecallback for videos (620x1) that hides the slot.",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 10, 26),
+    sellByDate = new LocalDate(2017, 11, 29),
+    exposeClientSide = true
+  )
+
+  Switch(
+    SwitchGroup.Commercial,
+    "ias-ad-targeting",
+    "Enables the IAS slot-targeting optimisation.",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -91,7 +101,7 @@ trait CommercialSwitches {
     "Enable Adomik traffic splitting.",
     owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 10, 25),
+    sellByDate = never,
     exposeClientSide = true
   )
 

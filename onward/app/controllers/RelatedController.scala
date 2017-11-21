@@ -23,7 +23,7 @@ class RelatedController(
 
   private val page = SimplePage(MetaData.make(
     "related-content",
-    Some(SectionSummary.fromId("related-content")),
+    Some(SectionId.fromId("related-content")),
     RelatedLabel)
   )
 

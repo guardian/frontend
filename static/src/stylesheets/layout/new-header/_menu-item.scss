@@ -31,32 +31,6 @@
             margin-top: $gs-baseline / 4;
         }
     }
-
-    .menu-group--editions > & {
-        @include mq(desktop) {
-            width: 100%;
-        }
-    }
-
-    .menu-group--editions > & {
-        @include mq(desktop) {
-            display: flex;
-        }
-    }
-
-    .menu-group--membership-actions & {
-        @include mq($from: desktop, $until: leftCol) {
-            margin-left: $gs-gutter / 2;
-            width: gs-span(2) + $gs-gutter / 2;
-        }
-
-        .has-page-skin & {
-            @include mq(wide) {
-                margin-left: $gs-gutter / 2;
-                width: gs-span(2) + $gs-gutter / 2;
-            }
-        }
-    }
 }
 
 .menu-item--home {
@@ -77,22 +51,6 @@
     .has-page-skin & {
         @include mq(wide) {
             width: gs-span(4) + $gs-gutter / 2;
-        }
-    }
-}
-
-.menu-item--membership {
-    @include mq($from: desktop, $until: leftCol) {
-        width: gs-span(6) + $gs-gutter;
-    }
-
-    @include mq(leftCol) {
-        width: 100%;
-    }
-
-    .has-page-skin & {
-        @include mq(wide) {
-            width: gs-span(6) + $gs-gutter;
         }
     }
 }
@@ -194,52 +152,6 @@
 
         &[aria-expanded='true'] {
             margin-bottom: 0;
-        }
-    }
-
-    .menu-group--membership & {
-        @include mq(desktop) {
-            color: #ffffff;
-
-            &:hover,
-            &:focus {
-                color: $highlight-blue;
-            }
-        }
-    }
-
-    .menu-group--editions & {
-        @include mq(desktop) {
-            background-color: $guardian-brand;
-            color: $news-support-1;
-            display: block;
-            font-size: 15px;
-            height: $search-and-edition-height-desktop;
-            border-radius: 50%;
-            line-height: $search-and-edition-height-desktop;
-            margin-right: $gs-gutter / 4;
-            padding: 0;
-            text-align: center;
-            width: $search-and-edition-height-desktop;
-        }
-
-        &:hover,
-        &:focus {
-            @include mq(desktop) {
-                background-color: lighten($guardian-brand, 4%);
-                color: #ffffff;
-            }
-        }
-    }
-
-    .menu-item--edition-active & {
-        @include mq(desktop) {
-            &,
-            &:hover,
-            &:focus {
-                background-color: $news-support-1;
-                color: $guardian-brand-dark;
-            }
         }
     }
 }

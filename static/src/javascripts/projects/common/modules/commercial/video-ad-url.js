@@ -7,9 +7,7 @@ const videoAdUrl = (): string => {
     const queryParams = {
         ad_rule: 1,
         correlator: new Date().getTime(),
-        cust_params: encodeURIComponent(
-            constructQuery(buildPageTargeting.buildPageTargeting())
-        ),
+        cust_params: encodeURIComponent(constructQuery(buildPageTargeting())),
         env: 'vp',
         gdfp_req: 1,
         impl: 's',

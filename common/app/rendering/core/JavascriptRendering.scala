@@ -12,24 +12,16 @@ import rendering.core.JavascriptEngine.EvalResult
 import scala.util.{Failure, Try}
 
 trait JavascriptRendering extends Logging {
-
   def javascriptFile: String
 
   private implicit val scriptContext = createContext()
   private val memoizedJs: Try[EvalResult] = loadJavascript()
 
-  private def getCommonProps(props: Option[JsValue] = None): Option[JsValue] = {
-    val bundleUrl = conf.Static("javascripts/ui.bundle.browser.js")
-    val polyfillioUrl =
-      if (conf.switches.Switches.PolyfillIO.isSwitchedOn) common.Assets.js.polyfillioUrl
-      else conf.Static("javascripts/vendor/polyfillio.fallback.js")
-    val commonProps = Json.obj("bundleUrl" -> bundleUrl, "polyfillioUrl" -> polyfillioUrl)
-
-    props.map(_.as[JsObject] ++ commonProps)
-  }
+  private def getProps(props: Option[JsValue] = None): JsValue =
+    JavascriptProps.default.asJsValue.as[JsObject] ++ props.map(_.as[JsObject]).getOrElse(Json.obj())
 
   def render(props: Option[JsValue] = None, forceReload: Boolean = false): Try[String] = for {
-      propsObject <- encodeProps(getCommonProps(props))
+      propsObject <- encodeProps(getProps(props))
       js <- if(forceReload) loadJavascript() else memoizedJs
       rendering <- JavascriptEngine.invoke(js, "render", propsObject)
     } yield rendering
@@ -40,12 +32,11 @@ trait JavascriptRendering extends Logging {
     context
   }
 
-  private def encodeProps(props: Option[JsValue] = None): Try[EvalResult] = {
+  private def encodeProps(props: JsValue): Try[EvalResult] = {
     val propsId = "props"
-    val emptyJson = Json.obj()
 
     for {
-      _ <- JavascriptEngine.put(propsId, props.getOrElse(emptyJson))
+      _ <- JavascriptEngine.put(propsId, props)
       propsObject <- JavascriptEngine.eval(s"JSON.parse($propsId)")
     } yield propsObject
   }

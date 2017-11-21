@@ -45,7 +45,7 @@ class FootballPage(
   override def metadata: MetaData = MetaData
     .make(
       id = id,
-      section = Some(SectionSummary.fromId(section)),
+      section = Some(SectionId.fromId(section)),
       webTitle = webTitle,
       pagination = pagination,
       description = description

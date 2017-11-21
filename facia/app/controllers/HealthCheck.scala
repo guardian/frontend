@@ -7,7 +7,7 @@ import services.ConfigAgent
 
 class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents) extends CachedHealthCheck(
   policy = HealthCheckPolicy.All,
-  preconditionMaybe = Some(HealthCheckPrecondition(ConfigAgent.isLoaded, "Facia config has not been loaded yet"))
+  preconditionMaybe = Some(HealthCheckPrecondition(ConfigAgent.isLoaded _, "Facia config has not been loaded yet"))
 )(
   NeverExpiresSingleHealthCheck("/uk/business")
 )(

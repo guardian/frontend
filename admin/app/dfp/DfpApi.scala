@@ -4,24 +4,24 @@ import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
 import com.google.api.ads.dfp.axis.v201705._
 import common.Logging
 import common.dfp._
-import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuCustomField, toGuLineItem, toGuTemplateCreative, toGuAdvertiser, toGuOrder}
 import org.joda.time.DateTime
 
-object DfpApi extends Logging {
+case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineItem])
 
-  case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineItem])
+class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Logging {
+  import DfpApi._
 
   private def readLineItems(stmtBuilder: StatementBuilder): DfpLineItems = {
 
     val lineItems = withDfpSession( session => {
       session.lineItems(stmtBuilder)
         .map( dfpLineItem => {
-          toGuLineItem(session)(dfpLineItem) -> dfpLineItem
+          dataMapper.toGuLineItem(session)(dfpLineItem) -> dfpLineItem
         })
     })
 
     val validatedLineItems = lineItems
-      .groupBy(Function.tupled(DataValidation.isGuLineItemValid))
+      .groupBy(Function.tupled(dataValidation.isGuLineItemValid))
       .mapValues(_.map(_._1))
 
     DfpLineItems(
@@ -31,12 +31,7 @@ object DfpApi extends Logging {
 
   def getAllOrders: Seq[GuOrder] = {
     val stmtBuilder = new StatementBuilder()
-    withDfpSession(_.orders(stmtBuilder).map(toGuOrder))
-  }
-
-  def getAllCustomFields: Seq[GuCustomField] = {
-    val stmtBuilder = new StatementBuilder()
-    withDfpSession(_.customFields(stmtBuilder).map(toGuCustomField))
+    withDfpSession(_.orders(stmtBuilder).map(dataMapper.toGuOrder))
   }
 
   def getAllAdvertisers: Seq[GuAdvertiser] = {
@@ -45,7 +40,7 @@ object DfpApi extends Logging {
                       .withBindVariableValue("type", CompanyType.ADVERTISER.toString)
                       .orderBy("id ASC")
 
-    withDfpSession(_.companies(stmtBuilder).map(toGuAdvertiser))
+    withDfpSession(_.companies(stmtBuilder).map(dataMapper.toGuAdvertiser))
   }
 
   def readCurrentLineItems: DfpLineItems = {
@@ -76,7 +71,7 @@ object DfpApi extends Logging {
                       .withBindVariableValue("userDefined", CreativeTemplateType._USER_DEFINED)
 
     withDfpSession {
-      _.creativeTemplates(stmtBuilder) map toGuCreativeTemplate filterNot (_.isForApps)
+      _.creativeTemplates(stmtBuilder) map dataMapper.toGuCreativeTemplate filterNot (_.isForApps)
     }
   }
 
@@ -87,7 +82,7 @@ object DfpApi extends Logging {
                       .withBindVariableValue("threshold", threshold.getMillis)
 
     withDfpSession {
-      _.creatives.get(stmtBuilder) collect { case creative: TemplateCreative => creative } map toGuTemplateCreative
+      _.creatives.get(stmtBuilder) collect { case creative: TemplateCreative => creative } map dataMapper.toGuTemplateCreative
     }
   }
 
@@ -99,7 +94,7 @@ object DfpApi extends Logging {
         def isDescendant(path: Array[AdUnitParent]) = path.length > 1 && path(1).getName == rootName
 
         Option(adUnit.getParentPath) exists { path => isRoot(path) || isDescendant(path) }
-      } map toGuAdUnit sortBy (_.id)
+      } map dataMapper.toGuAdUnit sortBy (_.id)
     }
   }
 
@@ -141,7 +136,10 @@ object DfpApi extends Logging {
       previewUrl <- session.lineItemCreativeAssociations.getPreviewUrl(lineItemId, creativeId, url)
     } yield previewUrl
 
-  private def withDfpSession[T](block: SessionWrapper => Seq[T]): Seq[T] = {
+}
+
+object DfpApi {
+  def withDfpSession[T](block: SessionWrapper => Seq[T]): Seq[T] = {
     val results = for (session <- SessionWrapper()) yield block(session)
     results getOrElse Nil
   }

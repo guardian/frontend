@@ -1,5 +1,6 @@
 .veggie-burger-fallback {
     &:checked {
+
         & ~ .menu {
             @include mq($until: desktop) {
                 @include menu-animation(0%);
@@ -14,26 +15,6 @@
             @include mq($until: desktop) {
                 opacity: 1;
                 width: 100%;
-            }
-        }
-
-        & ~ .pillars {
-            .pillars__item {
-                @include mq(desktop) {
-                    min-width: gs-span(2) + $gs-gutter / 2;
-                }
-            }
-
-            .pillars__item:not(:first-child) {
-                @include mq(desktop) {
-                    margin-left: $gs-gutter / 2;
-                }
-            }
-
-            .pillar-link--current-section:before {
-                @include mq(desktop) {
-                    display: none;
-                }
             }
         }
 
@@ -60,9 +41,22 @@
                 }
             }
         }
-    }
 
-    &:focus ~ .veggie-burger {
-        background-color: darken($news-main-2, 10%);
+        & ~ .new-header__menu-toggle .pillar-link--sections {
+            color: #ffffff;
+            background-color: $guardian-brand-dark;
+
+            &:before {
+                content: none;
+            }
+
+            .pillar-link--dropdown__icon {
+                transform: translateY(0) rotate(45deg);
+            }
+        }
+
+        & ~ .pillars {
+            color: $news-support-1;
+        }
     }
 }

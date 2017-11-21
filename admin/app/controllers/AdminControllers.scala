@@ -1,15 +1,14 @@
 package controllers
-
 import com.softwaremill.macwire._
 import common.AkkaAsync
 import controllers.admin._
-import controllers.admin.commercial.{DfpDataController, SlotController, TakeoverWithEmptyMPUsController}
+import controllers.admin.commercial._
 import controllers.cache.{ImageDecacheController, PageDecacheController}
+import dfp._
 import jobs.VideoEncodingsJob
 import model.ApplicationContext
 import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
-import play.api.i18n.Messages
 import play.api.mvc.ControllerComponents
 import services.{OphanApi, RedirectService}
 
@@ -23,6 +22,23 @@ trait AdminControllers {
   def httpConfiguration: HttpConfiguration
   def controllerComponents: ControllerComponents
   def assets: Assets
+  def adUnitAgent: AdUnitAgent
+  def adUnitService: AdUnitService
+  def advertiserAgent: AdvertiserAgent
+  def creativeTemplateAgent: CreativeTemplateAgent
+  def customFieldAgent: CustomFieldAgent
+  def customFieldService: CustomFieldService
+  def customTargetingAgent: CustomTargetingAgent
+  def customTargetingService: CustomTargetingService
+  def customTargetingKeyValueJob: CustomTargetingKeyValueJob
+  def dataMapper: DataMapper
+  def dataValidation: DataValidation
+  def dfpDataCacheJob: DfpDataCacheJob
+  def orderAgent: OrderAgent
+  def placementAgent: PlacementAgent
+  def placementService: PlacementService
+  def dfpApi: DfpApi
+
   lazy val oAuthLoginController = wire[OAuthLoginAdminController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
   lazy val uncachedAssets = wire[UncachedAssets]
@@ -55,4 +71,5 @@ trait AdminControllers {
   lazy val playerController = wire[PlayerController]
   lazy val tablesController = wire[TablesController]
   lazy val frontsController = wire[FrontsController]
+  lazy val adsDotTextController = wire[AdsDotTextEditController]
 }

@@ -10,8 +10,8 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Content, ContentType}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
-import org.scala_tools.time.Imports
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports
+import com.github.nscala_time.time.Imports._
 import pa.FootballMatch
 import play.api.libs.json._
 import play.api.mvc._
@@ -99,12 +99,14 @@ class MoreOnMatchController(
 
   def loadMoreOn(request: RequestHeader, theMatch: FootballMatch): Future[List[ContentType]] = {
     val matchDate = theMatch.date.toLocalDate
+    val startOfDateRange = matchDate.minusDays(2).toDateTimeAtStartOfDay
+    val endOfDateRange = matchDate.plusDays(2).toDateTimeAtStartOfDay
 
     contentApiClient.getResponse(contentApiClient.search(Edition(request))
       .section("football")
       .tag("tone/minutebyminute|tone/matchreports|football/series/squad-sheets|football/series/match-previews|football/series/saturday-clockwatch")
-      .fromDate(matchDate.minusDays(2).toDateTimeAtStartOfDay)
-      .toDate(matchDate.plusDays(2).toDateTimeAtStartOfDay)
+      .fromDate(jodaToJavaInstant(startOfDateRange))
+      .toDate(jodaToJavaInstant(endOfDateRange))
       .reference(s"pa-football-team/${theMatch.homeTeam.id},pa-football-team/${theMatch.awayTeam.id}")
     ).map{ response =>
         response.results.map(Content(_)).toList

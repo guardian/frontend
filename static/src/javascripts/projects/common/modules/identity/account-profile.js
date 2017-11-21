@@ -22,6 +22,7 @@ const classes = {
     avatarUploadForm: '.js-avatar-upload-form',
     avatarUploadButton: '.js-avatar-upload-button',
     memberShipContainer: '.js-memebership-tab-container',
+    tabsContainer: '.js-account-profile-tabs',
 };
 
 const messages = {
@@ -90,16 +91,14 @@ const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
     }
 };
 
-export class AccountProfile {
+class AccountProfile {
     unsavedFields: Array<HTMLElement>;
     accountProfileForms: HTMLFormElement;
     unsavedChangesForm: ?HTMLFormElement;
 
     constructor() {
         this.unsavedFields = [];
-    }
 
-    init() {
         this.accountProfileForms = ((document.querySelector(
             classes.forms
         ): any): HTMLFormElement);
@@ -114,7 +113,7 @@ export class AccountProfile {
                 this.accountProfileForms.querySelector(classes.publicForm)
             );
 
-            const tabs = this.accountProfileForms.querySelector(classes.tabs);
+            const tabs = document.querySelector(classes.tabsContainer);
 
             require.ensure(
                 [],
@@ -130,8 +129,9 @@ export class AccountProfile {
                 // enhance tab urls to work with JS tabs module
                 this.href = this.getAttribute('data-tabs-href');
             });
-
-            bean.on(tabs, 'click', event => this.handleTabsClick(event));
+            if (tabs) {
+                bean.on(tabs, 'click', event => this.handleTabsClick(event));
+            }
         }
     }
 
@@ -260,3 +260,5 @@ export class AccountProfile {
         }
     }
 }
+
+export { AccountProfile };

@@ -1,25 +1,12 @@
 package navigation
 
-import conf.Configuration
+import conf.switches.Switches.{UkSupportFrontendActive, UsSupportFrontendActive}
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import common.Edition
-import ophan.thrift.componentEvent.ComponentType
-import ophan.thrift.event.AcquisitionSource
+import navigation.ReaderRevenueSite._
 
 object UrlHelpers {
-  sealed trait ReaderRevenueSite {
-    val url: String
-  }
-  case object Membership extends ReaderRevenueSite {
-    val url: String = s"${Configuration.id.membershipUrl}/supporter"
-  }
-  case object Contribute extends ReaderRevenueSite {
-    val url: String = Configuration.id.contributeUrl
-  }
-  case object Subscribe extends ReaderRevenueSite {
-    val url: String = Configuration.id.subscribeUrl
-  }
 
   sealed trait Position
   case object NewHeader extends Position
@@ -56,6 +43,10 @@ object UrlHelpers {
       case (Subscribe, SlimHeaderDropdown, _) => Some(s"NGW_TOPNAV_${editionId}_GU_SUBSCRIBE")
       case (Subscribe, Footer, _) => Some(s"NGW_FOOTER_${editionId}_GU_SUBSCRIBE")
 
+      case (Support, Footer, _) => Some("gdnwb_copts_memco_dotcom_footer")
+      case (Support, AmpHeader, _) => Some("gdnwb_copts_memco_header_amp")
+      case (Support, _, _) => Some("gdnwb_copts_memco_header")
+
       case (_, _, _) => None
     }
   }
@@ -79,10 +70,14 @@ object UrlHelpers {
     }
 
     val acquisitionData = Json.obj(
-      "source" -> AcquisitionSource.GuardianWeb.originalName,
+      // GUARDIAN_WEB corresponds to a value in the Thrift enum
+      // https://dashboard.ophan.co.uk/docs/thrift/acquisition.html#Enum_AcquisitionSource
+      // ACQUISITIONS_HEADER and ACQUISITIONS_FOOTER correspond to values in the Thrift enum
+      // https://dashboard.ophan.co.uk/docs/thrift/componentevent.html#Enum_ComponentType
+      "source" -> "GUARDIAN_WEB",
       "componentType" -> (position match {
-        case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => ComponentType.AcquisitionsHeader.originalName
-        case Footer => ComponentType.AcquisitionsFooter.originalName
+        case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
+        case Footer => "ACQUISITIONS_FOOTER"
       })
     ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
       // Currently campaignCode is used to uniquely identify components that drove acquisition.
@@ -110,12 +105,36 @@ object UrlHelpers {
       s"https://jobs.theguardian.com?INTCMP=jobs_${editionId}_web_newheader"
     }
 
-  def getContributionOrSupporterUrl(editionId: String)(implicit request: RequestHeader): String =
-    if (editionId == "us") {
-      getReaderRevenueUrl(Contribute, NewHeader)
-    } else {
-      getReaderRevenueUrl(Membership, NewHeader)
+  def countryUrlLogic(editionId: String, position: Position, defaultDestination: ReaderRevenueSite)(implicit request: RequestHeader): String =
+    editionId match {
+      case "us" if UsSupportFrontendActive.isSwitchedOn => getReaderRevenueUrl(SupportUsContribute, position)
+      case "us" if !UsSupportFrontendActive.isSwitchedOn => getReaderRevenueUrl(Contribute, position)
+      case "uk" if UkSupportFrontendActive.isSwitchedOn => getReaderRevenueUrl(Support, position)
+      case _ => getReaderRevenueUrl(defaultDestination, position)
     }
+
+  def getContributionOrSupporterUrl(editionId: String)(implicit request: RequestHeader): String =
+    countryUrlLogic(editionId, NewHeader, Membership)
+
+  // This methods can be reverted once we decide to deploy the new support site to the rest of the world.
+  def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
+    val editionId = Edition(request).id.toLowerCase()
+    countryUrlLogic(editionId, position, Membership)
+  }
+
+  def getSupportOrContributeUrl(position: Position)(implicit request: RequestHeader): String = {
+    val editionId = Edition(request).id.toLowerCase()
+    countryUrlLogic(editionId, position, Contribute)
+  }
+
+  def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
+    val editionId = Edition(request).id.toLowerCase()
+    if (editionId == "uk" && UkSupportFrontendActive.isSwitchedOn) {
+      getReaderRevenueUrl(Support, position)
+    } else {
+      getReaderRevenueUrl(Subscribe, position)
+    }
+  }
 
   object oldNav {
     def jobsUrl(edition: String)(implicit request: RequestHeader): String =
@@ -141,9 +160,9 @@ object UrlHelpers {
 
     def masterclassesUrl(implicit request: RequestHeader): String =
       if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-        "https://www.theguardian.com/guardian-masterclasses?INTCMP=masterclasses_uk_web_newheader_control"
+        "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader_control"
       } else {
-        "https://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"
+        "https://membership.theguardian.com/masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"
       }
 
   }

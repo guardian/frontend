@@ -2,9 +2,8 @@ package metrics
 
 import java.util.concurrent.atomic.AtomicLong
 
-import akka.agent.Agent
+import com.gu.Box
 import com.amazonaws.services.cloudwatch.model.StandardUnit
-import common.AkkaAgent
 import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
 import scala.concurrent.Future
@@ -51,7 +50,7 @@ final case class SimpleMetric(override val name: String, datapoint: SimpleDataPo
 // Also, MetricUploader will upload in batches.
 final case class MetricUploader(namespace: String) {
 
-  private val datapoints: Agent[List[SimpleMetric]] = AkkaAgent(List.empty)
+  private val datapoints: Box[List[SimpleMetric]] = Box(List.empty)
 
   def put(metrics: Map[String, Double]): Unit = {
     val timedMetrics = metrics.map { case (key, value) =>
@@ -119,10 +118,7 @@ case class DurationDataPoint(value: Double, time: Option[DateTime] = None) exten
 
 final case class DurationMetric(override val name: String, override val metricUnit: StandardUnit) extends FrontendMetric {
 
-  private val dataPoints: Agent[List[DataPoint]] = AkkaAgent(List[DurationDataPoint]())
-
-  // For tests.
-  def getDataFuture: Future[List[DataPoint]] = dataPoints.future()
+  private val dataPoints: Box[List[DataPoint]] = Box(List[DurationDataPoint]())
 
   override def getAndResetDataPoints: List[DataPoint] = {
     val points = dataPoints.get()
@@ -144,7 +140,7 @@ case class SampledDataPoint(value: Double, sampleTime: DateTime) extends DataPoi
 
 final case class SamplerMetric(override val name: String, override val metricUnit: StandardUnit) extends FrontendMetric {
 
-  private val dataPoints: Agent[List[SampledDataPoint]] = AkkaAgent(List[SampledDataPoint]())
+  private val dataPoints: Box[List[SampledDataPoint]] = Box(List[SampledDataPoint]())
 
   override def getAndResetDataPoints: List[DataPoint] = {
     val points = dataPoints.get()

@@ -2,13 +2,15 @@ package views.support
 
 import java.net.{URI, URISyntaxException}
 import java.util.Base64
+
 import common.Logging
-import conf.switches.Switches.{ImageServerSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay}
+import conf.switches.Switches.{FacebookShareImageLogoOverlay, ImageServerSwitch, TwitterShareImageLogoOverlay}
 import conf.Configuration
 import layout.{BreakpointWidth, WidthsByBreakpoint}
 import model._
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
+
 import Function.const
 
 sealed trait ElementProfile {
@@ -33,9 +35,6 @@ sealed trait ElementProfile {
     else image.largestImage
   }
   def bestSrcFor(image: ImageMedia): Option[String] = toSrc(bestFor(image))
-
-  def largestFor(image: ImageMedia): Option[ImageAsset] = image.largestImage
-  def largestSrcFor(image: ImageMedia): Option[String] = toSrc(largestFor(image))
 
   def captionFor(image: ImageMedia): Option[String] =
     bestFor(image).flatMap(_.caption)
@@ -124,14 +123,16 @@ class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends
   }
 }
 
+// Despite the base64 codes looking similar, the twitter overlay is a different size to the facebook overlay. 
+
 object TwitterImage {
-  val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
-  val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8wOS8wOC9vcGluaW9uc19vdmVybGF5LnBuZw==", TwitterShareImageLogoOverlay.isSwitchedOn)
+  val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNi8wNy9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
+  val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8xMC8wNi9vcGluaW9uc19vdmVybGF5LXR3aXR0ZXIucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
 }
 
 object FacebookOpenGraphImage {
   val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n", FacebookShareImageLogoOverlay.isSwitchedOn)
-  val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8wOS8wOC9vcGluaW9uc19vdmVybGF5LnBuZw==", FacebookShareImageLogoOverlay.isSwitchedOn)
+  val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8xMC8wNi9vcGluaW9uc19vdmVybGF5LWZhY2Vib29rLnBuZz90ZXN0", FacebookShareImageLogoOverlay.isSwitchedOn)
 }
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {
@@ -172,7 +173,7 @@ object Naked extends Profile(None, None)
 
 object ImgSrc extends Logging with implicits.Strings {
 
-  private lazy val imageHost = Configuration.images.path
+  private val imageServiceHost: String = Configuration.images.path
 
   private case class HostMapping(prefix: String, token: String)
 
@@ -187,7 +188,10 @@ object ImgSrc extends Logging with implicits.Strings {
 
   private val supportedImages = Set(".jpg", ".jpeg", ".png")
 
-  def apply(url: String, imageType: ElementProfile): String = {
+  def apply(
+    url: String,
+    imageType: ElementProfile
+  ): String = {
     try {
       val uri = new URI(url.trim.encodeURI)
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
@@ -197,7 +201,7 @@ object ImgSrc extends Logging with implicits.Strings {
         .filter(const(isSupportedImage))
         .map { host =>
           val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}", host.token)
-          s"$imageHost/img/${host.prefix}$signedPath"
+          s"$imageServiceHost/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
       case error: URISyntaxException =>
@@ -210,7 +214,13 @@ object ImgSrc extends Logging with implicits.Strings {
     widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false) } mkString ", "
   }
 
-  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None, hidpi: Boolean = false): String = {
+  def srcsetForBreakpoint(
+    breakpointWidth: BreakpointWidth,
+    breakpointWidths: Seq[BreakpointWidth],
+    maybePath: Option[String] = None,
+    maybeImageMedia: Option[ImageMedia] = None,
+    hidpi: Boolean = false
+  ): String = {
     val isPng = maybePath.exists(path => path.toLowerCase.endsWith("png"))
     breakpointWidth.toPixels(breakpointWidths)
       .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
@@ -223,7 +233,11 @@ object ImgSrc extends Logging with implicits.Strings {
       .mkString(", ")
   }
 
-  def srcsetForProfile(profile: Profile, imageContainer: ImageMedia, hidpi: Boolean): String =
+  def srcsetForProfile(
+    profile: Profile,
+    imageContainer: ImageMedia,
+    hidpi: Boolean
+  ): String =
     s"${profile.bestSrcFor(imageContainer).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
 
   def srcsetForProfile(profile: Profile, path: String, hidpi: Boolean): String =

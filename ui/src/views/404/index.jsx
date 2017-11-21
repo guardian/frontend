@@ -1,36 +1,49 @@
 // @flow
 import Logo from 'assets/images/guardian-logo-320.svg';
+import ArrowRight from 'assets/images/arrow-right.svg';
+import NotFoundSvg from 'assets/images/404.svg';
+import Cta from './cta';
 
-import Navigation from './Navigation';
-import Footer from './Footer';
+import {
+    wrapper,
+    mainContent,
+    logoWrapper,
+    logo,
+    visuallyHidden,
+    fourOhFour,
+    contentText,
+    heading,
+    bodyCopy,
+    link,
+} from './style.css';
 
-import styles from './style.css';
-
-export default ({ beaconUrl }: Object) => (
-    <div style={styles.fluidWrap}>
-        <div style={styles.topBar}>
-            <a href="/" style={styles.topBarLink}>
-                Home
+export default ({ config }: { config: Object }) => (
+    <div style={wrapper}>
+        <div style={mainContent}>
+            <a href="https://www.theguardian.com/" style={logoWrapper}>
+                <Logo style={logo} />
+                <span style={visuallyHidden}>the Guardian</span>
             </a>
-        </div>
-        <Logo style={styles.logo} />
-        <h1 style={styles.heading}>
-            Sorry - we haven’t been able to serve the page you asked for.
-        </h1>
-        <div {...{ marginTop: '20px' }}>
-            <div style={styles.subHeadingContainer}>
-                <h2 style={styles.subHeading}>404</h2>
+            <NotFoundSvg style={fourOhFour} />
+            <div style={contentText}>
+                <h1 style={heading}>
+                    Sorry – the page you have requested does not exist
+                </h1>
+                <p style={bodyCopy}>
+                    You may have followed an outdated link, or have mistyped a
+                    URL. If you believe this to be an error, please&nbsp;
+                    <a
+                        href="https://www.theguardian.com/info/tech-feedback"
+                        style={link}>
+                        report it
+                    </a>.
+                </p>
+                <Cta href="https://www.theguardian.com/" icon={ArrowRight}>
+                    Go to the Guardian home page
+                </Cta>
             </div>
-            <p style={styles.para}>
-                You may have followed a broken or outdated link, or there may be
-                an error on our site.
-            </p>
-            <p style={styles.para}>
-                Please follow one of the links below to continue exploring.
-            </p>
-            <Navigation />
         </div>
-        <Footer />
+
         <script
             dangerouslySetInnerHTML={{
                 __html: `
@@ -63,7 +76,7 @@ export default ({ beaconUrl }: Object) => (
             }}
         />
         <img
-            src={`${beaconUrl}/count/40x.gif`}
+            src={`${config.beaconUrl}/count/40x.gif`}
             alt=""
             style={{ display: 'none' }}
             rel="nofollow"

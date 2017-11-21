@@ -229,6 +229,21 @@ case object FashionStatement extends FrontEmailMetadata {
   override val banner = Some("fashion-statement.png")
 }
 
+case object TheGuardianB2b extends FrontEmailMetadata {
+  val name = "The Guardian B2b"
+  override val banner = Some("business-view.png")
+}
+
+case object BusinessView extends FrontEmailMetadata {
+  val name = "Business View"
+  override val banner = Some("business-view.png")
+}
+
+case object OpinionUs extends FrontEmailMetadata {
+  val name = "Opinion Us"
+  override val banner = Some("opinion-us.png")
+}
+
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
@@ -270,7 +285,10 @@ object EmailAddons {
     Bookmarks,
     TheLongRead,
     TheCityscape,
-    FashionStatement
+    FashionStatement,
+    BusinessView,
+    TheGuardianB2b,
+    OpinionUs
   )
 
   implicit class EmailContentType(p: Page) {

@@ -18,6 +18,7 @@ import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { initCheckDispatcher } from 'common/modules/check-dispatcher';
+import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
 
 const bootEnhanced = (): void => {
     const bootstrapContext = (featureName, bootstrap) => {
@@ -80,6 +81,8 @@ const bootEnhanced = (): void => {
                 trackABTests();
             },
         ],
+
+        ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
     ]);
 
     bootstrapContext('common', initCommon);
@@ -178,24 +181,27 @@ const bootEnhanced = (): void => {
         );
     }
 
-    if (!config.page.isHosted) {
-        fastdom
-            .read(() => qwery('video, audio, .youtube-media-atom'))
-            .then(els => {
-                if (config.isMedia || els.length) {
-                    require.ensure(
-                        [],
-                        require => {
-                            bootstrapContext(
-                                'media',
-                                require('bootstraps/enhanced/media/main').init
-                            );
-                        },
-                        'media'
-                    );
-                }
-            });
-    }
+    fastdom
+        .read(() =>
+            qwery(
+                `${config.switches.enhancedVideoPlayer ? 'video, ' : ''} audio`
+            )
+        )
+        .then(els => {
+            if (els.length) {
+                require.ensure(
+                    [],
+                    require => {
+                        bootstrapContext(
+                            'media-player',
+                            require('bootstraps/enhanced/media-player')
+                                .initMediaPlayer
+                        );
+                    },
+                    'media-player'
+                );
+            }
+        });
 
     if (config.page.contentType === 'Gallery') {
         require.ensure(
@@ -255,7 +261,7 @@ const bootEnhanced = (): void => {
             require => {
                 bootstrapContext(
                     'profile',
-                    require('bootstraps/enhanced/profile').init
+                    require('bootstraps/enhanced/profile').initProfile
                 );
             },
             'profile'

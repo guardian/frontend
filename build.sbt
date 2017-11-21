@@ -7,7 +7,7 @@ import com.gu.ProjectSettings._
 
 val common = library("common").settings(
   libraryDependencies ++= Seq(
-    akkaAgent,
+    guBox,
     apacheCommonsMath3,
     awsCore,
     awsCloudwatch,
@@ -32,10 +32,9 @@ val common = library("common").settings(
     rome,
     romeModules,
     scalaCheck,
-    scalajTime,
+    nScalaTime,
     ws,
     faciaFapiScalaClient,
-    dispatchTest,
     closureCompiler,
     jerseyCore,
     jerseyClient,
@@ -51,7 +50,7 @@ val common = library("common").settings(
     playJsonJoda,
     jodaForms,
     jacksonDataFormat,
-    ophanEventModel
+    atomRenderer
   )
 ).settings(
     mappings in TestAssets ~= filterAssets
@@ -68,8 +67,7 @@ val facia = application("facia").dependsOn(commonWithTests).aggregate(common).se
 val article = application("article").dependsOn(commonWithTests).aggregate(common)
 
 val applications = application("applications")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
+  .dependsOn(commonWithTests).aggregate(common)
 
 val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
 )
@@ -122,10 +120,8 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
     identityRequest,
     identityCookie,
     liftJson,
-    commonsHttpClient,
     slf4jExt,
     exactTargetClient,
-    dispatch,
     libPhoneNumber
   )
 )
@@ -163,10 +159,6 @@ val preview = application("preview").dependsOn(
   onward
 ).settings(
 )
-
-val integrationTests = Project("integrated-tests", file("integrated-tests"))
-  .settings(frontendCompilationSettings:_*)
-  .settings(frontendIntegrationTestsSettings:_*)
 
 val rss = application("rss")
   .dependsOn(commonWithTests)

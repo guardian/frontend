@@ -63,7 +63,7 @@ class FootballLifecycle(
 
     akkaAsync.after1s {
       val competitionUpdate = competitionsService.refreshCompetitionData()
-      competitionUpdate.onSuccess { case _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
+      competitionUpdate.foreach { _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
       competitionsService.refreshMatchDay()
       TeamMap.refresh()(contentApiClient, ec)
     }
@@ -89,9 +89,9 @@ class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
 
   lazy val apiKey = SportConfiguration.pa.footballKey
 
-  def logErrors[T]: PartialFunction[Throwable, T] = {
+  def logErrorsWithMessage[T](message: String): PartialFunction[Throwable, T] = {
     case e: PaClientErrorsException =>
-      log.error(s"Football Client errors: ${e.getMessage}")
+      log.error(s"Football Client errors: $message (${e.getMessage})")
       throw e
   }
 

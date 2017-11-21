@@ -5,7 +5,6 @@
 node_modules
 __flow__
 flow-type*
-__mocks__
 __snapshots__
 dist
 coverage

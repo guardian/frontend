@@ -1,10 +1,9 @@
-@import form.IdFormHelpers._
+@import form.IdFormHelpers.nonInputFields
 @import model.{EmailNewsletter, EmailNewsletters}
 @import views.html.fragments.form.radioField
-@import views.support.RenderClasses
 @import views.support.`package`.Seq2zipWithRowInfo
-@import common.LinkTo
-@import conf.Configuration
+
+@import services.EmailPrefsData
 
 @(
     page: model.Page,
@@ -12,46 +11,21 @@
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
     idRequest: services.IdentityRequest,
-    idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+    idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @emailListCategoryList(theme: String, newsletters: List[EmailNewsletter], isActive: Boolean) = {
-    @fragments.dropdown(theme, isActive = isActive) {
-        @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
-            <div class="@RenderClasses(Map(
-                "u-cf" -> true,
-                "email-subscription" -> true,
-                "email-subscription--subscribed" -> newsletter.subscribedTo(emailSubscriptions),
-                "email-subscription--first" -> row.isFirst))">
-                @if(newsletter.subscribedTo(emailSubscriptions)){<input type="hidden" name="emailSubscription[]" value="@newsletter.listId" />}
-                <div class="email-subscription__name">
-                    <h2 class="email-subscription__heading">@newsletter.name</h2>
+    @fragments.dropdown(theme, modifier = Some("email-subscription"), isActive = isActive, isAnimated = true) {
 
-                    @if(newsletter.subheading.isDefined){
-                        <h3 class="email-subscription__subheading">@newsletter.subheading</h3>
-                    }
-                </div>
+        <div class="manage-account__switches"><ul>
+            @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
 
-                <div class="email-subscription__description">
-                  @newsletter.description
-                  @if(newsletter.exampleUrl.isDefined){<br>
-                  <a href="@LinkTo({ newsletter.exampleUrl.getOrElse("") })" target="preview-email-@newsletter.listId">See the latest email</a>}
-                </div>
-
-                <div class="email-subscription__meta u-cf">
-                    <button class="email-subscription__button js-subscription-button"
-                            data-link-name="@if(newsletter.subscribedTo(emailSubscriptions)){Unsubscribe}else{Subscribe} to @newsletter.name"
-                            name="addEmailSubscription"
-                            type="button"
-                            value="@if(newsletter.subscribedTo(emailSubscriptions)){unsubscribe-@{newsletter.allIds.mkString(",")}}else{@newsletter.listId}">
-                        @if(newsletter.subscribedTo(emailSubscriptions)){Unsubscribe}else{Subscribe}
-                    </button>
-                    <div class="email-subscription__frequency">
-                        @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
-                        @newsletter.frequency
-                    </div>
-                </div>
-            </div>
-        }
+                <li>
+                    @fragments.form.switchNewsletter(
+                        newsletter = newsletter
+                    )(nonInputFields, messages, request, emailPrefsForm, emailSubscriptions)
+                </li>
+            }
+        </ul></div>
     }
 }
 
@@ -59,74 +33,76 @@
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
 }
 
-@mainLegacy(page, projectName = Option("identity")){
-}{
-    <div class="identity-wrapper monocolumn-wrapper">
-        <h1 class="identity-title">Email preferences</h1>
-        <h4 class="email-subscription__meta">To change your email address please click <a href=@buildIdentityUrl("account/edit")>here.</a></h4>
-        <form class="form" novalidate action="@buildIdentityUrl("email-prefs")" role="main" method="post">
-            @views.html.helper.CSRF.formField
-            @if(emailPrefsForm.globalError.isDefined) {
-              <div class="form__error">@emailPrefsForm.globalErrors.map(_.message).mkString(", ")</div>
-            }
-            <div class="email-subscriptions">
-                @List("news", "features", "sport", "culture", "lifestyle", "comment").zipWithIndex.map { case(theme, index) =>
-                  @emailListCategoryList(theme, availableLists.subscriptions.filter(_.theme == theme), index == 0)
-                }
+<form novalidate action="@buildIdentityUrl("email-prefs")" role="main" method="post">
+    @views.html.helper.CSRF.formField
+    @if(emailPrefsForm.globalError.isDefined) {
+        <div class="form__error">@emailPrefsForm.globalErrors.map(_.message).mkString(", ")</div>
+    }
+    <div class="email-subscriptions">
+    @List("news", "features", "sport", "culture", "lifestyle", "comment").zipWithIndex.map { case(theme, index) =>
+        @emailListCategoryList(theme, availableLists.subscriptions.filter(_.theme == theme), false)
+    }
+    </div>
+
+    <div class="email-subscription__fieldset">
+
+        <fieldset class="fieldset">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">Newsletter options</h2>
             </div>
 
-            <fieldset class="fieldset">
-                <div class="fieldset__heading">
-                    <h2 class="form__heading">Edit email format</h2>
-                </div>
+            <div class="fieldset__fields email-subscription__options">
+                <ul class="u-unstyled">
+                    <li>
+                        <a type="button" href=@buildIdentityUrl("account/edit") class="manage-account__button manage-account__button--mini " data-link-name="Change email address">Update your email address</a>
+                    </li>
+                    <li>
+                        <div type="link" role="link" class="js-email-subscription__formatFieldsetToggle manage-account__button manage-account__button--mini " data-link-name="Change format">Change format</div>
+                    </li>
+                    <li>
+                        <label class="label">No longer want to receive any of these emails?</label>
+                        <button type="button" class="manage-account__button--mini manage-account__button email-unsubscribe js-unsubscribe" data-link-name="Unsubscribe from all emails"><span class="email-unsubscribe-all__label js-unsubscribe--basic">Unsubscribe from all</span><span class="email-unsubscribe-all__label js-unsubscribe--confirm hide">Are you sure?</span></button>
+                    </li>
+                </ul>
+            </div>
 
-                <div class="fieldset__fields">
-                    <ul class="u-unstyled">
+        </fieldset>
 
-                        <li class="form-field @if(emailPrefsForm("htmlPreference").errors.nonEmpty) {form-field--error}">
-                            <label class="label">In which format would you like to receive email?</label>
-                            <div class="form-field__note">
-                                HTML emails have formatted text, images and look better. Text emails are quicker to download, but don't contain images or any formatting.
-                                <br />
-                                We recommend HTML emails.
-                            </div>
-
-                            @radioField(emailPrefsForm("htmlPreference"), List("HTML" -> "HTML (images and text)", "Text" -> "Text"))(nonInputFields, messages)
-
-                        </li>
-
-                        <li>
-                            <button type="button" class="email-subscription__button save__button js-save-button" data-link-name="Save email preferences">Save</button>
-                        </li>
-                    </ul>
-                </div>
-
-            </fieldset>
-
-            <fieldset class="fieldset">
-                <div class="fieldset__heading">
-                    <h2 class="form__heading"></h2>
-                </div>
-                <div class="fieldset__fields">
-                    <ul class="u-unstyled">
-
-                        <li class="form-field">
-                            <label class="label">No longer want to receive any of these emails?</label>
-                        </li>
-
-                        <li>
-                            <button type="button" class="email-subscription__button email-unsubscribe js-unsubscribe" data-link-name="Unsubscribe from all emails"><span class="email-unsubscribe-all__label js-unsubscribe--basic">Unsubscribe from all</span><span class="email-unsubscribe-all__label js-unsubscribe--confirm hide">Are you sure?</span></button>
-                        </li>
-                    </ul>
-                </div>
-
-            </fieldset>
-
-            <ul class="nav nav--registration identity-section" data-link-name="Email prefs footer">
-                <li class="nav__item"><a class="nav__link" href="@controllers.routes.EditProfileController.displayPrivacyForm" data-link-name="Privacy and marketing settings">Privacy &amp; marketing settings</a></li>
-                <li class="nav__item"><a class="nav__link" href="@Configuration.site.host/info/tech-feedback" data-link-name="Report technical issue">Report technical issue</a></li>
-            </ul>
-
-        </form>
     </div>
-}
+</form>
+
+<div class="manage-account__modal manage-account__modal--newsletterFormat">
+    <div class="manage-account__modalContent">
+        <button class="manage-account__modalCloser js-manage-account__modalCloser">
+        @fragments.inlineSvg("cross", "icon")
+        </button>
+        <fieldset class="fieldset">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">Formatting</h2>
+            </div>
+
+            <div class="fieldset__fields">
+                <ul class="u-unstyled">
+
+                    <li class="form-field @if(emailPrefsForm("htmlPreference").errors.nonEmpty) {form-field--error}">
+                        <label class="label">In which format would you like to receive email?</label>
+                        <div class="form-field__note">
+                            HTML emails have formatted text, images and look better. Text emails are quicker to download, but don't contain images or any formatting.
+                            <br />
+                            We recommend HTML emails.
+                        </div>
+
+                        @radioField(emailPrefsForm("htmlPreference"), List("HTML" -> "HTML (images and text)", "Text" -> "Text"))(nonInputFields, messages)
+
+                    </li>
+
+                    <li>
+                        <button type="button" class="manage-account__button save__button js-save-button" data-link-name="Save email preferences">Save</button>
+                    </li>
+                </ul>
+            </div>
+
+        </fieldset>
+    </div>
+    <div class="manage-account__modalBg js-manage-account__modalCloser"></div>
+</div>

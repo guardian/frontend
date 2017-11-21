@@ -8,6 +8,41 @@
     }
 }
 
+.identity-wrapper-for-bg {
+    background: $neutral-8;
+    overflow: hidden;
+    .tabs__container {
+        margin: $gs-gutter * 2 auto 0;
+    }
+    .tabs__content {
+        margin: $gs-gutter * 3 auto;
+        border: 0;
+    }
+    .gs-container {
+        background: #ffffff;
+        overflow: hidden;
+    }
+    .monocol-wrapper {
+        max-width: gs-span(10);
+        margin: auto;
+        @include mq($until: desktop) {
+            padding: 0 $gs-gutter * 1;
+        }
+    }
+    &--header {
+        background: darken($neutral-8, 5%);
+        .monocol-wrapper {
+            padding-bottom: 0;
+            overflow: hidden;
+        }
+        .gs-container {
+            background: darken(#ffffff, 5%);
+            padding-top: $gs-gutter;
+        }
+
+    }
+}
+
 .identity-wrapper {
     margin-left: auto;
     margin-right: auto;
@@ -22,14 +57,6 @@
 
 .identity-wrapper--stretched {
     max-width: gs-span(16);
-}
-
-.identity-wrapper--with-membership {
-    @include mq($until: desktop) {
-        .tabs__tab {
-            width: auto;
-        }
-    }
 }
 
 .identity-header {
@@ -57,10 +84,7 @@
 }
 
 .identity-section {
-    border-top: 1px solid $neutral-7;
     box-sizing: border-box;
-    margin: (($gs-baseline/3)*5) 0;
-    padding-top: (($gs-baseline/3)*5) - 1;
 
     .identity-section__head {
         @extend %type-5;
@@ -72,10 +96,10 @@
 }
 
 .identity-title {
-    @include fs-header(4);
+    @include fs-headline(4);
 
     @include mq(desktop) {
-        @include fs-header(5, $size-only: true);
+        @include fs-headline(6, $size-only: true);
     }
 }
 .identity-title--public-profile {
@@ -281,24 +305,23 @@
 }
 
 .tabs--identity {
+
+    .tabs__container {
+        max-width: gs-span(12);
+        @include mq($until: desktop) {
+            margin-top: 5px;
+        }
+    }
+
     .tabs__tab--selected {
         border-top-color: $news-accent;
-    }
-    .tabs__tab {
-        max-width: gs-span(3);
-        width: 25%;
+        color: $news-accent;
     }
 
     @include mq($until: tablet) {
         a {
             padding-top: $gs-baseline/4;
             line-height: 13px !important;
-        }
-    }
-    @include mq($until: 500px) {
-        .tabs__tab {
-            width: 50%;
-            margin-top: 5px;
         }
     }
 }
@@ -324,13 +347,24 @@
     opacity: .8;
 }
 
+.email-subscription__fieldset {
+    margin-top: 3em;
+}
+
+.dropdown--email-subscription {
+    .dropdown__label {
+        @include fs-bodyHeading(3);
+    }
+    .dropdown__content {
+        padding-bottom: 2em;
+    }
+}
+
 .email-subscription__name,
 .email-subscription__heading {
-    @include fs-headline(3);
-    margin-bottom: $gs-baseline;
+    @include fs-bodyHeading(2);
 
     @include mq(desktop) {
-        @include fs-headline(3, true);
         box-sizing: border-box;
         float: left;
         padding-right: $gs-gutter;
@@ -346,6 +380,7 @@
 }
 .email-subscription__meta {
     margin-top: $gs-baseline;
+    font-weight: 400;
 }
 
 .email-subscription__frequency {
@@ -365,24 +400,12 @@
         padding-left: gs-span(4);
     }
 }
-.email-subscription__button {
-    @include fs-textSans(2);
-    background-color: $guardian-brand;
-    width: $gs-baseline * 9;
-    height: $gs-gutter * 2;
-    border-radius: 100px;
-    border: 0;
-    color: #ffffff;
-    cursor: pointer;
-    float: left;
-    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+.manage-account__button {
 
     @include mq(desktop) {
-        float: right;
-    }
-
-    .email-subscription--subscribed & {
-        background-color: $neutral-2-contrasted;
+        .dropdown--email-subscription & {
+            float: right;
+        }
     }
 
     &.is-updating-subscriptions {
@@ -395,18 +418,41 @@
         background-size: 40px;
     }
 
-    &.email-unsubscribe {
-        float: none;
-        color: $guardian-brand;
-        background-color: #ffffff;
-        border: 2px solid $guardian-brand;
-        min-width: $gs-baseline * 14;
+    .email-subscription--subscribed & {
+        @extend %manage-account__button--light;
     }
 
-    &.email-unsubscribe--confirm {
+    &.email-unsubscribe {
+        float: none;
+    }
+
+    &.email-unsubscribe--confirm,
+    &.email-unsubscribe--confirm:hover {
         color: $error;
         font-weight: bold;
         border: 2px solid $error;
+    }
+
+    .email-subscription__fieldset & {
+        float: none;;
+    }
+
+}
+
+.email-subscription__options {
+
+    > ul > li:not(:last-child) {
+        margin-bottom: $gs-gutter / 2;
+    }
+
+    .manage-account__button {
+        float: none;
+        clear: both;
+    }
+
+    label {
+        @include fs-bodyCopy(1, true);
+        margin-top: $gs-gutter;
     }
 }
 
@@ -420,8 +466,12 @@
 
 .save__button {
     float: none;
-    min-width: $gs-baseline * 14;
 }
+
+.fieldset.email-subscription__formatFieldset {
+    display: none;
+}
+
 
 /* Delete Account page
    ========================================================================== */

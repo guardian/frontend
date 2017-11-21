@@ -15,10 +15,10 @@ import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
 import model.pressed._
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports._
 import play.api.libs.json._
 import views.support._
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.util.Try
 import implicits.Booleans._
 
@@ -75,16 +75,21 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
-  lazy val isGallery = metadata.contentType.toLowerCase == "gallery"
-  lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
+  lazy val isGallery = metadata.contentType.contains(DotcomContentType.Gallery)
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
   lazy val isAmpSupportedArticleType: Boolean = (tags.isArticle && !tags.isLiveBlog) && !isImmersive && !tags.isQuiz
-  lazy val shouldAmpifyArticles: Boolean = isAmpSupportedArticleType && AmpArticleSwitch.isSwitchedOn
-  lazy val shouldAmpifyLiveblogs: Boolean = tags.isLiveBlog && AmpLiveBlogSwitch.isSwitchedOn
+
+  lazy val shouldAmplify: Boolean = {
+    val shouldAmplifyArticles = isAmpSupportedArticleType && AmpArticleSwitch.isSwitchedOn
+    val shouldAmplifyLiveBlogs = tags.isLiveBlog && AmpLiveBlogSwitch.isSwitchedOn
+    val containsFormStacks: Boolean = fields.body.contains("guardiannewsandmedia.formstack.com")
+
+    (shouldAmplifyArticles || shouldAmplifyLiveBlogs) && !containsFormStacks
+  }
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -96,7 +101,7 @@ final case class Content(
   lazy val hasTonalHeaderByline: Boolean = {
     (cardStyle == Comment || cardStyle == Editorial || (cardStyle == SpecialReport && tags.isComment)) &&
       hasSingleContributor &&
-      metadata.contentType != GuardianContentTypes.ImageContent
+      !metadata.contentType.contains(DotcomContentType.ImageContent)
   }
 
   lazy val hasBeenModified: Boolean =
@@ -192,7 +197,7 @@ final case class Content(
 
   lazy val linkCounts = LinkTo.countLinks(fields.body) + fields.standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
-  lazy val mainMediaVideo = Jsoup.parseBodyFragment(fields.main).body.getElementsByClass("element-video").headOption
+  lazy val mainMediaVideo = Jsoup.parseBodyFragment(fields.main).body.getElementsByClass("element-video").asScala.headOption
 
   lazy val mainVideoCanonicalPath: Option[String] = mainMediaVideo.flatMap(video => {
     video.attr("data-canonical-url") match {
@@ -222,7 +227,6 @@ final case class Content(
     ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else showInRelated && !legallySensitive)),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
-    ("isExplore", JsBoolean(isExplore)),
     ("isPaidContent", JsBoolean(isPaidContent)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
 
@@ -268,13 +272,16 @@ final case class Content(
       ("atoms", JsArray(atomIdentifiers))
     }
 
+    val atomTypesMeta = atoms.map { atoms =>
+      ("atomTypes", JsObject(atoms.atomTypes.map { case (k, v) => k -> JsBoolean(v) }))
+    }
+
     // There are many checks that might disable sticky top banner, listed below.
     // But if we are in the super sticky banner campaign, we must ignore them!
     val canDisableStickyTopBanner =
       metadata.shouldHideHeaderAndTopAds ||
       isPaidContent ||
-      metadata.contentType == "Interactive" ||
-      metadata.contentType == "Crossword"
+      metadata.contentType.exists(c => c == DotcomContentType.Interactive || c == DotcomContentType.Crossword)
 
     // These conditions must always disable sticky banner.
     val alwaysDisableStickyTopBanner =
@@ -292,6 +299,7 @@ final case class Content(
       articleMeta,
       trackingMeta,
       atomsMeta,
+      atomTypesMeta,
       maybeDisableSticky
     ) ++ cricketMeta ++ seriesMeta
     meta.flatten.toMap
@@ -409,7 +417,7 @@ object Article {
 
   private def copyMetaData(content: Content, commercial: Commercial, lightbox: GenericLightbox, trail: Trail, tags: Tags) = {
 
-    val contentType = if (content.tags.isLiveBlog) GuardianContentTypes.LiveBlog else GuardianContentTypes.Article
+    val contentType: DotcomContentType = if (content.tags.isLiveBlog) DotcomContentType.LiveBlog else DotcomContentType.Article
     val section = content.metadata.sectionId
     val fields = content.fields
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
@@ -445,8 +453,8 @@ object Article {
     )
 
     content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       schemaType = Some(ArticleSchemas(content.tags)),
       iosType = Some("Article"),
       javascriptConfigOverrides = javascriptConfig,
@@ -495,18 +503,17 @@ final case class Article (
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
   val isPhotoEssay: Boolean = content.isPhotoEssay
-  val isExplore: Boolean = content.isExplore
-  lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
+  lazy val hasVideoAtTop: Boolean = soupedBody.body().children().asScala.headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
   lazy val hasSupporting: Boolean = {
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-    val leftColElements = soupedBody.body().select("body > *").find(_.classNames.intersect(supportingClasses).nonEmpty)
+    val leftColElements = soupedBody.body().select("body > *").asScala.find(_.classNames.asScala.intersect(supportingClasses).nonEmpty)
     leftColElements.isDefined
   }
 
   private lazy val soupedBody = Jsoup.parseBodyFragment(fields.body)
-  lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").nonEmpty
+  lazy val hasKeyEvents: Boolean = soupedBody.body().select(".is-key-event").asScala.nonEmpty
 
   lazy val isSport: Boolean = tags.tags.exists(_.id == "sport/sport")
   lazy val blocks = content.fields.blocks
@@ -515,7 +522,7 @@ final case class Article (
 object Audio {
   def make(content: Content): Audio = {
 
-    val contentType = GuardianContentTypes.Audio
+    val contentType = DotcomContentType.Audio
     val section = content.metadata.sectionId
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
@@ -531,8 +538,8 @@ object Audio {
     )
 
     val metadata = content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       schemaType = Some("https://schema.org/AudioObject"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties
@@ -572,7 +579,7 @@ object AtomProperties {
 object Video {
   def make(content: Content): Video = {
 
-    val contentType = GuardianContentTypes.Video
+    val contentType = DotcomContentType.Video
     val elements = content.elements
     val section = content.metadata.sectionId
     val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
@@ -596,8 +603,8 @@ object Video {
     ) ++ optionalOpengraphProperties
 
     val metadata = content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       schemaType = Some("http://schema.org/VideoObject"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties
@@ -651,7 +658,7 @@ final case class Video (
 object Gallery {
   def make(content: Content): Gallery = {
 
-    val contentType = GuardianContentTypes.Gallery
+    val contentType = DotcomContentType.Gallery
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
@@ -680,8 +687,8 @@ object Gallery {
     )
 
     val metadata = content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       schemaType = Some("https://schema.org/ImageGallery"),
       openGraphImages = lightbox.openGraphImages,
       javascriptConfigOverrides = javascriptConfig,
@@ -817,7 +824,7 @@ final case class Interactive(
   lazy val fallbackEl = {
     val noscriptEls = Jsoup.parseBodyFragment(fields.body).getElementsByTag("noscript")
 
-    if (noscriptEls.nonEmpty) {
+    if (noscriptEls.asScala.nonEmpty) {
       noscriptEls.html()
     } else {
       Jsoup.parseBodyFragment(fields.body).getElementsByTag("figure").html()
@@ -830,13 +837,13 @@ final case class Interactive(
 object Interactive {
   def make(apiContent: contentapi.Content): Interactive = {
     val content = Content(apiContent).content
-    val contentType = GuardianContentTypes.Interactive
+    val contentType = DotcomContentType.Interactive
     val fields = content.fields
     val section = content.metadata.sectionId
 
     val metadata = content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       twitterPropertiesOverrides = Map( "twitter:title" -> fields.linkText ),
       contentWithSlimHeader = true
     )
@@ -851,7 +858,7 @@ object Interactive {
 
 object ImageContent {
   def make(content: Content): ImageContent = {
-    val contentType = GuardianContentTypes.ImageContent
+    val contentType = DotcomContentType.ImageContent
     val fields = content.fields
     val section = content.metadata.sectionId
     val id = content.metadata.id
@@ -867,8 +874,8 @@ object ImageContent {
       "lightboxImages" -> lightbox.javascriptConfig
     )
     val metadata = content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       javascriptConfigOverrides = javascriptConfig
     )
 
@@ -890,13 +897,13 @@ object CrosswordContent {
   def make(crossword: CrosswordData, apicontent: contentapi.Content): CrosswordContent = {
 
     val content = Content(apicontent)
-    val contentType= GuardianContentTypes.Crossword
+    val contentType= DotcomContentType.Crossword
 
     val metadata = content.metadata.copy(
       id = crossword.id,
-      section = Some(SectionSummary.fromId("crosswords")),
+      section = Some(SectionId.fromId("crosswords")),
       webTitle = crossword.name,
-      contentType = contentType,
+      contentType = Some(contentType),
       iosType = None
     )
 

@@ -102,8 +102,48 @@ trait ABTestSwitches {
     "Test adds a hold-back variant which keeps a frequency cap on outstream video format ads.",
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 11, 1),
+    sellByDate = new LocalDate(2018, 1, 4),
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-paradise",
+    "Test highlighting a different sentance in the epic",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 23),
+    exposeClientSide = true
+  )
+
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-just-one-pound",
+    "Test highlighting a different sentance in the epic",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 23),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-us-gun-campaign-2017",
+    "Show a custom Epic for articles with the US gun campaign tag",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 1, 4),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-unruly-performance-test",
+    "Removes 5% of users from Unruly to measure performance impact",
+    owners = Seq(Owner.withGithub("janua")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 2, 28),
+    exposeClientSide = true
+  )
 }

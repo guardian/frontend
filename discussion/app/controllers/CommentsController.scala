@@ -29,7 +29,7 @@ class CommentsController(
       "categoryId" -> Forms.number.verifying(ReportAbuseFormValidation.validCategoryConstraint),
       "commentId" -> Forms.number,
       "reason" -> optional(Forms.text.verifying("Reason must be 250 characters or fewer", input => Constraints.maxLength(250)(input) == Valid)),
-      "email" -> optional(Forms.text.verifying("Please enter a valid email address", input => Constraints.emailAddress == Valid))
+      "email" -> optional(Forms.text.verifying("Please enter a valid email address", input => Constraints.emailAddress()(input) == Valid))
     )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply _)
   )
 
@@ -70,7 +70,7 @@ class CommentsController(
 
   val reportAbusePage = SimplePage(MetaData.make(
     "/reportAbuse",
-    Some(SectionSummary.fromId("Discussion")),
+    Some(SectionId.fromId("Discussion")),
     "Report Abuse"
   ))
   def reportAbuseForm(commentId: Int): Action[AnyContent] = csrfAddToken {
@@ -85,7 +85,7 @@ class CommentsController(
 
   val reportAbuseThankYouPage = SimplePage(MetaData.make(
     "/reportAbuseThankYou",
-    Some(SectionSummary.fromId("Discussion")),
+    Some(SectionId.fromId("Discussion")),
     "Report Abuse Thank You"
   ))
 

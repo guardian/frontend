@@ -3,6 +3,7 @@
 @import conf.Static
 @import conf.Configuration
 @import play.api.Mode.Dev
+@import html.HtmlPageHelpers.RichLinksCSSFile
 
 <html class="svg">
     <head>
@@ -10,7 +11,7 @@
 
 
         @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
-            <link rel="stylesheet" data-reload="head.rich-links" type="text/css" href="@Static("stylesheets/head.rich-links.css")" />
+            <link rel="stylesheet" data-reload="head.rich-links" type="text/css" href="@Static(s"stylesheets/head.$RichLinksCSSFile.css")" />
         } else {
             <style>
             @Html(common.Assets.css.head(Some("rich-links")))

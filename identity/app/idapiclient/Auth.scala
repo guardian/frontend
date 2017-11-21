@@ -1,9 +1,15 @@
 package idapiclient
 
-import client.{Auth, Parameters}
-import java.net.URLEncoder
-
 import com.gu.identity.cookie.GuUCookieData
+
+
+trait Auth {
+  def parameters: Parameters = Iterable.empty
+  def headers: Parameters = Iterable.empty
+}
+
+object Anonymous extends Auth
+
 
 case class EmailPassword(email: String, password: String, ipOpt: Option[String]) extends Auth {
   override def parameters: Parameters = List(
@@ -22,7 +28,7 @@ case class ClientAuth(clientAccessToken: String) extends Auth {
 }
 
 case class ScGuU(scGuUValue: String, data: GuUCookieData) extends Auth {
-  override def headers: client.Parameters = Iterable("X-GU-ID-FOWARDED-SC-GU-U" -> scGuUValue)
+  override def headers: Parameters = Iterable("X-GU-ID-FOWARDED-SC-GU-U" -> scGuUValue)
 }
 
 case class TrackingData(returnUrl:Option[String], registrationType: Option[String], omnitureSVi: Option[String],

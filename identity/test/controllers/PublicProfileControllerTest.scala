@@ -15,7 +15,7 @@ import org.joda.time.DateTime
 
 import scala.concurrent.Future
 import scala.util.Left
-import client.Auth
+import idapiclient.Auth
 
 class PublicProfileControllerTest extends path.FreeSpec
   with Matchers

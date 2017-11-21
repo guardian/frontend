@@ -6,7 +6,7 @@ import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{ArchiveController, DevComponentController, HealthCheck}
-import dev.DevParametersHttpRequestHandler
+import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
@@ -27,6 +27,7 @@ trait AppComponents extends FrontendComponents {
   lazy val redirects = wire[RedirectService]
   lazy val devComponentController = wire[DevComponentController]
 
+  lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
   lazy val archiveController = wire[ArchiveController]
 

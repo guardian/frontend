@@ -1,10 +1,12 @@
 package layout
 
+import java.time.ZoneOffset
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.gu.facia.api.{models => fapi}
 import com.gu.facia.api.utils._
 import contentapi.FixtureTemplates.emptyApiContent
+import implicits.Dates.jodaToJavaInstant
 import model.pressed.{LatestSnap, PressedContent}
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
@@ -18,11 +20,14 @@ class FrontTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   }
 
   def dreamSnapWithUrl(theUrl: String): LatestSnap = {
+
+    val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+
     val content: ApiContent = ApiContent(
       id = theUrl,
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(DateTime.now().toCapiDateTime),
+      webPublicationDate = Some(offsetDate.toCapiDateTime),
       webTitle = "",
       webUrl = theUrl,
       apiUrl = "",

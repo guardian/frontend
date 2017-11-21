@@ -10,7 +10,7 @@ import org.w3c.dom.css.{CSSRuleList, CSSRule => W3CSSRule}
 import play.api.Logger
 import play.twirl.api.Html
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.collection.immutable.ListMap
 import scala.util.{Failure, Success}
 
@@ -74,19 +74,19 @@ object InlineStyles {
     val document = Jsoup.parse(html.body)
     val (inline, head) = styles(document)
 
-    document.getElementsByTag("head").headOption map { el =>
-      el.getElementsByTag("style").map(_.remove)
+    document.getElementsByTag("head").asScala.headOption map { el =>
+      el.getElementsByTag("style").asScala.foreach(_.remove)
       head.map(css => el.appendChild(document.createElement("style").text(css)))
     }
 
     inline.sortBy(_.specifity).foreach { rule =>
-      document.select(rule.selector) foreach(el => el.attr("style", mergeStyles(rule, el.attr("style"))))
+      document.select(rule.selector).asScala.foreach(el => el.attr("style", mergeStyles(rule, el.attr("style"))))
     }
 
     // Outlook ignores styles with !important so we need to strip that out.
     // So this doesn't change which styles take effect, we also sort styles
     // so that all important styles appear to the right of all non-important styles.
-    document.getAllElements.foreach { el =>
+    document.getAllElements.asScala.foreach { el =>
       el.attr("style", sortStyles(el.attr("style")).replace(" !important", ""))
     }
 
@@ -100,7 +100,7 @@ object InlineStyles {
     * The first item is the styles that should stay in the head, the second is everything that should be inlined.
     */
   def styles(document: Document): (Seq[CSSRule], Seq[String]) = {
-    document.getElementsByTag("style").foldLeft((Seq.empty[CSSRule], Seq.empty[String])) { case ((inline, head), element) =>
+    document.getElementsByTag("style").asScala.foldLeft((Seq.empty[CSSRule], Seq.empty[String])) { case ((inline, head), element) =>
       val source = new InputSource(new StringReader(element.html))
 
       Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>

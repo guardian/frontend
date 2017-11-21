@@ -2,7 +2,7 @@
 
 import qwery from 'qwery';
 import config from 'lib/config';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import mediator from 'lib/mediator';
 
 class MostPopular extends Component {
@@ -14,24 +14,20 @@ class MostPopular extends Component {
            have it go through the entire tooling chain so that a section has a
            property that tells us whether it shows most popular or not. */
         const sectionsWithoutPopular = ['info', 'global'];
+        const pageSection = config.get('page.section');
+        const hasSection =
+            pageSection && !sectionsWithoutPopular.includes(pageSection);
+
+        this.endpoint = `/most-read${hasSection ? `/${pageSection}` : ''}.json`;
 
         mediator.emit('register:begin', 'popular-in-section');
 
-        this.hasSection =
-            config.page &&
-            config.page.section &&
-            !sectionsWithoutPopular.includes(config.page.section);
-        this.endpoint = `/most-read${this.hasSection
-            ? `/${config.page.section}`
-            : ''}.json`;
-    }
-
-    init(): void {
         this.fetch(qwery('.js-popular-trails'), 'html');
     }
 
+    // eslint-disable-next-line class-methods-use-this
     ready() {
-        mediator.emit('modules:popular:loaded', this.elem);
+        mediator.emit('modules:popular:loaded');
         mediator.emit('register:end', 'popular-in-section');
     }
 }

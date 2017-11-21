@@ -1,3 +1,4 @@
+import akka.actor.ActorSystem
 import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendComponents}
 import business.{StocksData, StocksDataLifecycle}
@@ -21,6 +22,7 @@ import router.Routes
 import services.OphanApi
 import services.breakingnews.{BreakingNewsApi, S3BreakingNews}
 import weather.WeatherApi
+import _root_.commercial.targeting.TargetingLifecycle
 
 import scala.concurrent.ExecutionContext
 
@@ -31,6 +33,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait OnwardServices {
   def wsClient: WSClient
   def environment: Environment
+  def actorSystem: ActorSystem
   implicit def appContext: ApplicationContext
   implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
@@ -63,7 +66,8 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
     wire[StocksDataLifecycle],
     wire[MostPopularFacebookAutoRefreshLifecycle],
     wire[SwitchboardLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
+    wire[TargetingLifecycle]
   )
 
   lazy val router: Router = wire[Routes]

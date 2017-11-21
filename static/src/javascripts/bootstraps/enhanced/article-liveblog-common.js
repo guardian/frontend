@@ -5,8 +5,8 @@ import $ from 'lib/$';
 import { catchErrorsWithContext } from 'lib/robust';
 import { shouldHideFlashingElements } from 'common/modules/accessibility/helpers';
 import { init as initT, enhanceTweets } from 'common/modules/article/twitter';
-import lastModified from 'common/modules/ui/last-modified';
-import selectionSharing from 'common/modules/ui/selection-sharing';
+import { lastModified } from 'common/modules/ui/last-modified';
+import { init as selectionSharingInit } from 'common/modules/ui/selection-sharing';
 
 const initFence = (): void => {
     $('.fenced').each(fence.render);
@@ -22,7 +22,7 @@ const init = (): void => {
         ['trail-a11y', shouldHideFlashingElements],
         ['trail-fence', initFence],
         ['trail-twitter', initTwitter],
-        ['trail-sharing', selectionSharing.init],
+        ['trail-sharing', selectionSharingInit],
         ['trail-last-modified', lastModified],
     ]);
 };

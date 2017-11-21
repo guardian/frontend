@@ -14,17 +14,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // see https://github.com/guardian/frontend/pull/13446
-  val ExploreTemplateSwitch = Switch(
-    SwitchGroup.Feature,
-    "explore-main-media",
-    "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
-    owners = Seq(Owner.withGithub("NataliaLKB"), Owner.withGithub("blongden73")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 10, 24),
-    exposeClientSide = true
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     SwitchGroup.Feature,
     "fixtures-and-results-container",
@@ -166,6 +155,16 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val IdentityGdprMarketingConsentSwitch = Switch(
+    SwitchGroup.Identity,
+    "id-gdpr-marketing-consent",
+    "If switched on, users will post GDPR compliant marketing consent from 'Edit Profile' page",
+    owners = Seq(Owner.withGithub("mario-galic")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 1),
+    exposeClientSide = false
+  )
+
   val EnhanceTweetsSwitch = Switch(
     SwitchGroup.Feature,
     "enhance-tweets",
@@ -176,13 +175,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val EnhancedMediaPlayerSwitch = Switch(
+  val EnhancedVideoPlayerSwitch = Switch(
     SwitchGroup.Feature,
-    "enhanced-media-player",
+    "enhanced-video-player",
     "If this is switched on then videos are enhanced using our JavaScript player",
-    owners = Seq(Owner.withGithub("johnduffell")),
+    owners = Seq(Owner.withGithub("siadcock")),
     safeState = On,
-    sellByDate = never,
+    sellByDate = new LocalDate(2018, 4, 30),
     exposeClientSide = true
   )
 
@@ -473,5 +472,67 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  // Owner: Simple & Coherent
+  val UkSupportFrontendActive = Switch(
+    SwitchGroup.Feature,
+    "uk-supporter-traffic-to-new-support-frontend",
+    "When ON, all UK membership/contribute/support links send traffic to support.theguardian.com (aside from the banner)",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 10, 17),
+    exposeClientSide = true
+  )
+
+  val UsSupportFrontendActive = Switch(
+    SwitchGroup.Feature,
+    "us-supporter-traffic-to-new-support-frontend",
+    "When ON, all US membership/contribute/support links send traffic to support.theguardian.com (aside from the banner)",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 10, 17),
+    exposeClientSide = true
+  )
+
+  val ProfileShowContributorTab = Switch(
+    SwitchGroup.Feature,
+    "profile-show-contributor-tab",
+    "When ON, the edit profile page will include a Contributions tab",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 30),
+    exposeClientSide = true
+  )
+
+    // Owner: Journalism
+  val ReaderAnswersDeliveryMechanism = Switch(
+    SwitchGroup.Feature,
+    "reader-answers-preferred-delivery-mechanism",
+    "When ON, story questions will give readers the option to indicate their preferred answer delivery medium",
+    owners = Seq(Owner.withGithub("annebyrne")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 10, 24),
+    exposeClientSide = false
+  )
+
+  val WeAreHiring = Switch(
+    SwitchGroup.Feature,
+    "we-are-hiring",
+    "When ON, hiring messages will appear in browser console and HTML source",
+    owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val ProfileShowCancelContributor = Switch(
+    SwitchGroup.Feature,
+    "profile-show-cancel-contributor",
+    "When ON, the edit profile page will include the cancel contribution button",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 12, 15),
+    exposeClientSide = true
   )
 }

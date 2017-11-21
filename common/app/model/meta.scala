@@ -2,7 +2,7 @@ package model
 
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import implicits.Dates.CapiRichDateTime
 import commercial.campaigns.PersonalInvestmentsCampaign
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
@@ -14,7 +14,7 @@ import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Implicits._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
@@ -60,19 +60,19 @@ object Fields {
       main = apiContent.fields.flatMap(_.main).getOrElse(""),
       body = apiContent.fields.flatMap(_.body).getOrElse(""),
       blocks = apiContent.blocks.map(Blocks.make),
-      lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
+      lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJoda).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
       sensitive = apiContent.fields.flatMap(_.sensitive),
       shouldHideReaderRevenue = Some(shouldHideReaderRevenue(apiContent, shouldHideReaderRevenueCutoffDate)),
       legallySensitive = apiContent.fields.flatMap(_.legallySensitive),
-      firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJodaDateTime),
+      firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJoda),
       lang = apiContent.fields.flatMap(_.lang)
     )
   }
 
   def shouldHideReaderRevenue(apiContent: contentapi.Content, cutoffDate: DateTime): Boolean = {
-    val publishedBeforeCutoff = apiContent.webPublicationDate.exists(_.toJodaDateTime < cutoffDate)
+    val publishedBeforeCutoff = apiContent.webPublicationDate.exists(_.toJoda < cutoffDate)
     val isPaidContent = Tags.make(apiContent).isPaidContent
     val isSensitive = apiContent.fields.flatMap(_.sensitive).getOrElse(false)
     val shouldHideAdverts = apiContent.fields.flatMap(_.shouldHideAdverts).getOrElse(false)
@@ -120,7 +120,7 @@ object MetaData {
 
   def make(
     id: String,
-    section: Option[SectionSummary],
+    section: Option[SectionId],
     webTitle: String,
     url: Option[String] = None,
     canonicalUrl: Option[String] = None,
@@ -130,10 +130,10 @@ object MetaData {
     title: Option[String] = None,
     isFront: Boolean = false,
     isPressedPage: Boolean = false,
-    contentType: String = "",
+    contentType: Option[DotcomContentType] = None,
     adUnitSuffix: Option[String] = None,
     customSignPosting: Option[NavItem] = None,
-    iosType: Option[String] = Some("Article"),
+    iosType: Option[String] = Some(DotcomContentType.Article.toString),
     javascriptConfigOverrides: Map[String, JsValue] = Map(),
     opengraphPropertiesOverrides: Map[String, String] = Map(),
     isHosted: Boolean = false,
@@ -148,7 +148,7 @@ object MetaData {
       webUrl = s"${Configuration.site.host}$resolvedUrl",
       webTitle = webTitle,
       section = section,
-      adUnitSuffix = adUnitSuffix getOrElse section.map(_.id).getOrElse(""),
+      adUnitSuffix = adUnitSuffix getOrElse section.map(_.value).getOrElse(""),
       canonicalUrl = canonicalUrl,
       shouldGoogleIndex = shouldGoogleIndex,
       pagination = pagination,
@@ -170,18 +170,18 @@ object MetaData {
   def make(fields: Fields, apiContent: contentapi.Content): MetaData = {
     val id = apiContent.id
     val url = s"/$id"
-    val sectionSummary: Option[SectionSummary] = apiContent.section map SectionSummary.fromCapiSection
-    val sectionId = sectionSummary map (_.id) getOrElse ""
+    val maybeSectionId: Option[SectionId] = apiContent.section.map(SectionId.fromCapiSection)
 
     MetaData(
       id = id,
       url = url,
       webUrl = apiContent.webUrl,
-      sectionSummary,
+      maybeSectionId,
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
-      adUnitSuffix = sectionId,
+      adUnitSuffix = maybeSectionId.map(_.value).getOrElse(""),
       description = apiContent.fields.flatMap(_.trailText),
+      contentType = DotcomContentType(apiContent),
       cacheTime = {
         if (fields.isLive) CacheTime.LiveBlogActive
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
@@ -198,14 +198,14 @@ final case class MetaData (
   id: String,
   url: String,
   webUrl: String,
-  section: Option[SectionSummary],
+  section: Option[SectionId],
   webTitle: String,
   adUnitSuffix: String,
   iosType: Option[String] = Some("Article"),
   pagination: Option[Pagination] = None,
   description: Option[String] = None,
   rssPath: Option[String] = None,
-  contentType: String = "",
+  contentType: Option[DotcomContentType] = None,
   shouldHideHeaderAndTopAds: Boolean = false,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
   cacheTime: CacheTime = CacheTime.Default,
@@ -226,7 +226,7 @@ final case class MetaData (
   commercial: Option[CommercialProperties],
   isNewRecipeDesign: Boolean = false
 ){
-  val sectionId = section map (_.id) getOrElse ""
+  val sectionId = section map (_.value) getOrElse ""
 
   def hasPageSkin(edition: Edition): Boolean = if (isPressedPage){
     DfpAgent.hasPageSkin(adUnitSuffix, edition)
@@ -241,13 +241,14 @@ final case class MetaData (
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
 
+  val shouldBlockAnalytics: Boolean = id.contains("help/ng-interactive/2017/mar/17/contact-the-guardian-securely")
+
   val requiresMembershipAccess: Boolean = membershipAccess.nonEmpty
 
   val hasSlimHeader: Boolean =
     contentWithSlimHeader ||
       sectionId == "identity" ||
-      contentType.toLowerCase == "survey" ||
-      contentType.toLowerCase == "signup"
+      contentType.exists(c => c == DotcomContentType.Survey || c == DotcomContentType.Signup)
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -263,7 +264,7 @@ final case class MetaData (
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("isFront", JsBoolean(isFront)),
-    ("contentType", JsString(contentType))
+    ("contentType", JsString(contentType.map(_.name).getOrElse("")))
   )
 
   def opengraphProperties: Map[String, String] = {
@@ -305,7 +306,7 @@ final case class MetaData (
     * Content type, lowercased and with spaces removed.
     * This is used for Google Analytics, to be consistent with what the mobile apps do.
     */
-  def normalisedContentType: String = StringUtils.remove(contentType.toLowerCase, ' ')
+  def normalisedContentType: String = StringUtils.remove(contentType.map(_.name.toLowerCase).getOrElse(""), ' ')
 }
 
 object Page {
@@ -382,7 +383,7 @@ case class SimplePage(override val metadata: MetaData) extends StandalonePage
 case class CommercialExpiryPage(id: String) extends StandalonePage {
   override val metadata: MetaData = MetaData.make(
     id,
-    section = Some(SectionSummary.fromId("global")),
+    section = Some(SectionId.fromId("global")),
     webTitle = "This page has been removed",
     shouldGoogleIndex = false
   )
@@ -425,10 +426,11 @@ case class MediaAtomPage(
 case class StoryQuestionsAtomPage(
   override val atom: StoryQuestionsAtom,
   override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
+  override val withVerticalScrollbar: Boolean,
+  val inApp: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "storyquestions"
-  override val body = views.html.fragments.atoms.storyquestions(atom, isAmp = false)
+  override val body = views.html.fragments.atoms.storyquestions(atom, isAmp = false, inApp = inApp)
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Story questions"),
@@ -508,7 +510,7 @@ case class TagCombiner(
     section = leftTag.metadata.section,
     webTitle = s"${leftTag.name} + ${rightTag.name}",
     pagination = pagination,
-    description = Some(GuardianContentTypes.TagIndex),
+    description = Some(DotcomContentType.TagIndex.toString),
     commercial = Some(
       //We only use the left tag for CommercialProperties
       CommercialProperties(
@@ -697,12 +699,6 @@ final case class Tags(
   lazy val isPaidContent = tags.exists( t => t.id == "tone/advertisement-features" )
 
   lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
-
-  // Specific Series
-  private val isLabourLiverpool = tags.exists(t => t.id == "membership/series/labour-liverpool")
-  private val isViewFromMiddleTown = tags.exists(t => t.id == "membership/series/election-2016-the-view-from-middletown")
-  private val isNewRetirement = tags.exists(t => t.id == "membership/series/the-new-retirement")
-  lazy val isExploreSeries = isLabourLiverpool || isViewFromMiddleTown || isNewRetirement
 
   lazy val keywordIds = keywords.map { _.id }
 
