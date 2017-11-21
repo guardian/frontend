@@ -177,7 +177,7 @@ const init = () => {
             renderNav(match);
         } else {
             const $h = $('.js-score');
-            const scoreBoard = new ScoreBoard.ScoreBoard({
+            const scoreBoard = new ScoreBoard({
                 pageType: match.pageType,
                 parent: $h,
                 responseDataKey: 'matchSummary',
@@ -188,7 +188,7 @@ const init = () => {
                 dropdownTemplate = resp.dropdown;
 
                 // Test if template is not composed of just whitspace. A content validation check, apparently.
-                if (!/^\s+$/.test(scoreBoard.template)) {
+                if (scoreBoard.template && !/^\s+$/.test(scoreBoard.template)) {
                     scoreBoard.endpoint = endpoint;
                     scoreBoard.loadFromJson(resp.matchSummary);
                 } else {
@@ -279,9 +279,10 @@ const init = () => {
     });
 
     isLiveClockwatch(() => {
+        const isItACompetition = isCompetition();
         const ml = new MatchListLive(
             'match-day',
-            isCompetition() || 'premierleague',
+            isItACompetition === false ? false : 'premierleague',
             config.dateFromSlug()
         );
         const $img = $('.media-primary');
