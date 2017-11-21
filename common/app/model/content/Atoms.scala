@@ -13,6 +13,7 @@ import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 import views.support.{GoogleStructuredData, ImgSrc}
 import conf.switches.Switches
+import org.joda.time.format.DateTimeFormat
 
 final case class Atoms(
   quizzes: Seq[Quiz],
@@ -199,7 +200,9 @@ final case class TimelineAtom(
 final case class TimelineItem(
   title: String,
   date: DateTime,
-  body: Option[String]
+  body: Option[String],
+  dateFormat: Option[String],
+  toDate: Option[Long]
 )
 
 object Atoms extends common.Logging {
@@ -515,7 +518,37 @@ object ReviewAtom {
 }
 
 object StoryQuestionsAtom {
-  def make(atom: AtomApiAtom): StoryQuestionsAtom = StoryQuestionsAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Storyquestions].storyquestions)
+  def make(atom: AtomApiAtom): StoryQuestionsAtom = StoryQuestionsAtom(
+    atom.id,
+    atom,
+    atom.data.asInstanceOf[AtomData.Storyquestions].storyquestions
+  )
+
+  def isClosed(question: StoryQuestionsAtom): Boolean = {
+    question.data.closeDate.exists { closeDate =>
+      closeDate < DateTime.now(DateTimeZone.UTC).getMillis
+    }
+  }
+
+  def getListId(question: StoryQuestionsAtom): Option[String] = {
+    if ("test/test" == question.data.relatedStoryId) {
+      /**
+        * TODO - remove this workaround once we've migrated to using the listId in the model.
+        *
+        * This workaround enables us to run a test for demand of receiving the answers commissioned to questions by email.
+        * If the story questions atom belongs to the test/test tag and has a label 4 characters long (an email list id) then
+        * show the form allowing a user to submit their email address and receive an answer.
+        */
+      question.atom.labels.find(_.length == 4)
+    } else {
+      for {
+        notifications <- question.data.notifications
+        email <- notifications.email
+      } yield email.listId
+    }
+  }
+
+
 }
 
 object ExplainerAtom {
@@ -553,12 +586,26 @@ object TimelineAtom {
     atom.data.asInstanceOf[AtomData.Timeline].timeline,
     events = atom.data.asInstanceOf[AtomData.Timeline].timeline.events map TimelineItem.make _
   )
+
+  def renderFormattedDate(item: TimelineItem, format: String): String = {
+    item.toDate match {
+      case Some(date) => {
+        val beginRange = DateTimeFormat.forPattern(format).print(item.date)
+        val endRange = DateTimeFormat.forPattern(format).print(date)
+        s"$beginRange&ndash;$endRange"
+      }
+      case None => DateTimeFormat.forPattern(format).print(item.date)
+    }
+  }
+
 }
 
 object TimelineItem {
   def make(item: TimelineApiItem): TimelineItem = TimelineItem(
     item.title,
     new DateTime(item.date),
-    item.body
+    item.body,
+    item.dateFormat,
+    item.toDate
   )
 }
