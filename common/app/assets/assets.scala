@@ -69,8 +69,8 @@ object css {
   def inlineAtom(atomType: String)(implicit content: ApplicationContext): String = inline(s"head.atom-$atomType")
 
   def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = project(projectOverride.getOrElse(context.applicationIdentity.name))
-  def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext): String = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))
-  def headIE9(projectOverride: Option[String])(implicit context: ApplicationContext): String = cssIE9(projectOverride.getOrElse(context.applicationIdentity.name))
+  def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))
+  def headIE9(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = cssIE9(projectOverride.getOrElse(context.applicationIdentity.name))
 
 
   private def inline(module: String)(implicit context: ApplicationContext): String = {
@@ -101,25 +101,25 @@ object css {
       case "commercial" => "head.commercial"
       case "survey" => "head.survey"
       case "signup" => "head.signup"
-      case _ => "head.content"
+      case _ => s"head.$ContentCSSFile"
     }
 
-  private def cssOldIE(project: String): String =
+  private def cssOldIE(project: String)(implicit request: RequestHeader): String =
     project match {
-      case "facia" => "stylesheets/old-ie.head.facia.css"
+      case "facia" => s"stylesheets/old-ie.head.$FaciaCSSFile.css"
       case "identity" => "stylesheets/old-ie.head.identity.css"
       case "football" => "stylesheets/old-ie.head.football.css"
       case "index" => "stylesheets/old-ie.head.index.css"
-      case _ => "stylesheets/old-ie.head.content.css"
+      case _ => s"stylesheets/old-ie.head.$ContentCSSFile.css"
     }
 
-  private def cssIE9(project: String): String =
+  private def cssIE9(project: String)(implicit request: RequestHeader): String =
     project match {
-      case "facia" => "stylesheets/ie9.head.facia.css"
+      case "facia" => s"stylesheets/ie9.head.$FaciaCSSFile.css"
       case "identity" => "stylesheets/ie9.head.identity.css"
       case "football" => "stylesheets/ie9.head.football.css"
       case "index" => "stylesheets/ie9.head.index.css"
-      case _ => "stylesheets/ie9.head.content.css"
+      case _ => s"stylesheets/ie9.head.$ContentCSSFile.css"
     }
 
 }
