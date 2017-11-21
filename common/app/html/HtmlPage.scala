@@ -41,8 +41,8 @@ object HtmlPageHelpers {
     )
   }
 
-  def FaciaCSSFile(implicit request: RequestHeader): String = if (mvt.Garnet.isParticipating) "facia.pc" else "facia"
-  def ContentCSSFile(implicit request: RequestHeader): String = if (mvt.Garnet.isParticipating) "content.pc" else "content"
-  def RichLinksCSSFile(implicit request: RequestHeader): String = if (mvt.Garnet.isParticipating) "rich-links.pc" else "rich-links"
+  def FaciaCSSFile(implicit request: RequestHeader): String = if (mvt.Garnet.isParticipating) "facia.garnett" else "facia"
+  def ContentCSSFile(implicit request: RequestHeader): String = if (mvt.Garnet.isParticipating) "content.garnett" else "content"
+  def RichLinksCSSFile(implicit request: RequestHeader): String = if (mvt.Garnet.isParticipating) "rich-links.garnett" else "rich-links"
 
 }

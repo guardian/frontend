@@ -1,11 +1,11 @@
 $fc-item-gutter: $gs-gutter / 4;
 
-/* PC items
+/* Garnett items
    ==========================================================================
 */
 
 @mixin fc-item--horizontal($media-width, $media-align: right) {
-    
+
     .fc-item__image-container {
         box-sizing: border-box;
         padding-left: $gs-gutter * .25;
@@ -258,8 +258,8 @@ $fc-item-gutter: $gs-gutter / 4;
     top: 3px;
     float: left;
     margin-right: 1px;
-} 
- 
+}
+
 .fc-item__footer--horizontal {
     display: none;
 }
