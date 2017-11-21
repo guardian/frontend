@@ -33,7 +33,8 @@ final case class Atoms(
     "guide" -> !guides.isEmpty,
     "qanda" -> !qandas.isEmpty,
     "profile" -> !profiles.isEmpty,
-    "timeline" -> !timelines.isEmpty
+    "timeline" -> !timelines.isEmpty,
+    "storyquestions" -> !storyquestions.isEmpty
   )
 }
 
