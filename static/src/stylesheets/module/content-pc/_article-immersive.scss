@@ -1,0 +1,573 @@
+// Contains top ad + header + main media
+.immersive-header-container {
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+}
+
+.content--immersive-article-without-main-media {
+    background-color: rgba(0, 0, 0, .5);
+    // Overriding padding coming from the content class
+    padding-bottom: 0;
+}
+
+.immersive-main-media {
+    // The headline wrapper is position absolute within this div
+    position: relative;
+    min-height: 400px;
+
+    @include mq(desktop) {
+        min-height: 500px;
+    }
+
+    @include mq(wide) {
+        min-height: 800px;
+    }
+
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        flex: 1;
+    }
+
+    &.atom-playing {
+        .immersive-main-media__media__loading {
+            background-color: #ffffff;
+        }
+        .immersive-main-media__headline-container {
+            position: static;
+            margin-top: calc(100vh - #{$gs-baseline * 3});
+            transform: translateY(-100%);
+            animation: slideImmersiveTitleDownHeadline 360ms ease-in-out forwards;
+        }
+        .immersive-main-media__headline-container--dark {
+            background-color: rgba(51, 51, 51, 1);
+            background: linear-gradient(rgba(51, 51, 51, 1), rgba(51, 51, 51, 1));
+        }
+        @keyframes slideImmersiveTitleDownHeadline {
+            0% {
+                transform: translateY(calc(-100% + #{$gs-baseline * 3}));
+            }
+            100% {
+                transform: translateY($gs-baseline * 3);
+            }
+        }
+    }
+}
+
+.immersive-main-media__logo {
+    // Position above media
+    z-index: 1;
+}
+
+.immersive-main-media__logo__svg {
+    float: right;
+    margin-top: 6px;
+
+    path {
+        fill: #ffffff;
+    }
+}
+
+.immersive-main-media__media {
+    width: 100%;
+    // Remove inline spacing
+    display: block;
+
+    .element-atom,
+    .element-embed {
+        margin-top: 0;
+        margin-bottom: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .fenced {
+        // Override inline style coming from fence
+        height: 100% !important;
+        opacity: 0;
+        transition: .5s opacity ease-in;
+    }
+
+    .fenced-rendered {
+        opacity: 1;
+    }
+
+    @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        height: 100%;
+    }
+}
+
+.immersive-main-media__media__loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $neutral-5;
+    color: $neutral-1;
+}
+
+.immersive-main-media__loading-animation {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // Override
+    display: block;
+}
+
+.immersive-main-media__headline-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    .content__labels {
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+}
+
+.immersive-main-media__headline-container--dark {
+    transition: background 500ms ease-out 200ms, background-color 500ms ease-out 200ms;
+    background-color: rgba(0, 0, 0, .6);
+    background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
+}
+
+.content__headline--immersive {
+    @include fs-headline(7, true);
+    line-height: 1;
+    font-weight: 200;
+    color: #ffffff;
+
+    @include mq(desktop) {
+        font-size: 4rem;
+    }
+
+    &.content__headline--advertisement {
+        font-family: $f-sans-serif-headline;
+        font-weight: 200;
+    }
+}
+
+.immersive-main-media__headline-container--dark {
+    .content__headline--immersive-article {
+        color: #ffffff;
+    }
+}
+
+.content__headline--immersive--with-main-media {
+    @include mq(desktop) {
+        font-size: 3.25rem;
+    }
+}
+
+.content--immersive {
+    .content__main {
+        padding-top: 0;
+
+        @include mq(desktop) {
+            padding-top: $gs-baseline * 2;
+        }
+    }
+}
+
+.content__standfirst--immersive-article {
+    position: relative;
+    padding-top: .33em;
+    padding-bottom: .5rem;
+    margin-bottom: 0;
+    color: #ffffff;
+
+    @include mq(desktop) {
+        padding-bottom: 1rem;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            height: 2px;
+            width: gs-span(2);
+            background-color: rgba(255, 255, 255, .2);
+        }
+    }
+
+    .u-underline {
+        color: $neutral-6;
+        border-bottom: 1px solid rgba($neutral-6, .4);
+
+        &:hover {
+            border-bottom-color: rgba($neutral-6, 1);
+        }
+    }
+
+    &.content__standfirst--advertisement {
+        font-family: $f-sans-serif-text;
+    }
+}
+
+.content__wrapper--standfirst {
+    @include content-gutter();
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.content--immersive-article {
+    &.content {
+        border-top: 0;
+    }
+
+    .content__article-body {
+        clear: both;
+    }
+
+    /* Header
+    ========================================================================== */
+
+    .content__series-label__link {
+        color: #ffffff;
+    }
+
+    .content__series-label + .content__headline {
+        padding-top: 0;
+    }
+
+    .is-fixed-height {
+        .content__standfirst:before {
+            @include mq($until: desktop) {
+                display: none;
+            }
+        }
+    }
+
+    /* Section Label
+    ========================================================================== */
+    .content__section-label--advertisement {
+        @include f-textSans;
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 900;
+        margin: 0;
+        padding-top: $gs-baseline / 2;
+
+        .content__section-label__link--advertisement {
+            color: $paid-article-brand;
+        }
+    }
+
+    /* Body
+    ========================================================================== */
+    .drop-cap {
+        height: 7.25em;
+
+        .drop-cap__inner {
+            font-size: 9.5em;
+            line-height: .83; // To optically align to top of five lines of text
+        }
+    }
+
+    .section-rule {
+        display: block;
+        width: gs-span(2);
+        height: 2px;
+        margin: 0;
+        border: 0;
+        margin-top: $gs-baseline * 4;
+        margin-bottom: $gs-baseline / 4;
+        background-color: $neutral-7;
+    }
+
+    .section-image {
+        position: relative;
+
+        .caption,
+        .section-rule {
+            display: none;
+        }
+    }
+
+    .section-title,
+    .from-content-api > h2 {
+        @include fs-headline(5);
+        font-weight: 200;
+
+        @include mq(tablet) {
+            @include fs-headline(7, true);
+        }
+    }
+
+    .section-title {
+        position: absolute;
+        z-index: 20;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, .5);
+        color: #ffffff;
+        padding: .1em $gs-gutter / 2 .5em;
+
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            padding-left: gs-span(2) + $gs-gutter * 2;
+        }
+
+        @include mq(wide) {
+            padding-left: gs-span(3) + $gs-gutter * 2;
+        }
+    }
+
+    .in-body-link--immersive {
+        color: $feature-default;
+
+        &:hover {
+            border-bottom-color: rgba($feature-default, .4);
+        }
+    }
+
+    .element + .section-rule {
+        margin-top: 0;
+    }
+
+    .element-pullquote {
+        position: relative;
+        width: auto;
+        margin-left: 0;
+        margin-bottom: $gs-baseline / 2;
+        border-top: 1px solid $neutral-7;
+        border-bottom: 1px solid $neutral-7;
+        padding: 0;
+        padding-top: .2em;
+        padding-bottom: $gs-baseline * 3;
+
+        .inline-quote {
+            margin: ($gs-baseline / 4) 0;
+            height: auto;
+            width: auto;
+            line-height: 1;
+        }
+
+        .inline-quote svg {
+            fill: $neutral-3;
+            width: 2.5em;
+            height: 1.4em;
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            font-family: $f-serif-headline;
+            font-weight: 200;
+            font-size: 1.75rem;
+            line-height: 1.1;
+        }
+
+        .pullquote-paragraph {
+            color: $feature-default;
+        }
+
+        .pullquote-cite {
+            color: $neutral-1 !important; // important to override super specific tonal classes
+        }
+
+        .inline-quote.closing {
+            display: none;
+        }
+    }
+
+    .element-pullquote.element--showcase,
+    .element-pullquote.element--supporting {
+        @include mq(tablet) {
+            padding: 0;
+            border: 0;
+        }
+    }
+
+    .element-pullquote.element--showcase {
+        @include mq(tablet) {
+            margin-bottom: $gs-baseline * 3;
+        }
+
+        .inline-quote svg {
+            @include mq(tablet) {
+                width: 3em;
+                height: 1.8em;
+            }
+        }
+
+        .inline-quote {
+            @include mq(leftCol) {
+                position: absolute;
+                left: -3.5em;
+            }
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            @include mq(tablet) {
+                font-size: 2.25em;
+            }
+        }
+    }
+
+    .element-pullquote.element--supporting {
+        @include mq(tablet) {
+            width: gs-span(3);
+            border: 0;
+            margin-right: $gs-gutter;
+            margin-bottom: $gs-baseline * 2;
+        }
+
+        @include mq(leftCol) {
+            width: gs-span(2);
+            margin-left: -(gs-span(2) + $gs-gutter);
+        }
+
+        @include mq(wide) {
+            width: gs-span(3);
+            margin-left: -(gs-span(3) + $gs-gutter);
+        }
+
+        .inline-quote {
+            @include mq(tablet) {
+                position: absolute;
+            }
+        }
+
+        .inline-quote svg {
+            @include mq(tablet) {
+                width: 1.8em;
+                height: 1em;
+            }
+        }
+
+        .pullquote-paragraph {
+            @include mq(tablet) {
+                text-indent: 1.7em;
+            }
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            @include mq(tablet) {
+                font-size: 1.25em;
+                line-height: 1.2;
+            }
+        }
+    }
+
+    figure.element--immersive {
+        margin-left: -$gs-gutter / 2;
+        margin-right: -$gs-gutter / 2;
+
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+        }
+
+        @include mq(tablet) {
+            margin-right: -(gs-span(1) + $gs-gutter * 2);
+        }
+
+        @include mq(desktop) {
+            margin-right: -(gs-span(4) + $gs-gutter * 2);
+        }
+
+        @include mq(leftCol) {
+            margin-left: -(gs-span(2) + $gs-gutter * 2);
+        }
+
+        @include mq(wide) {
+            margin-left: -(gs-span(3) + $gs-gutter * 2);
+            margin-right: -(gs-span(5) + $gs-gutter *2);
+        }
+
+        .caption {
+            margin-left: $gs-gutter / 2;
+            margin-right: $gs-gutter / 2;
+
+            @include mq(mobileLandscape) {
+                margin-left: $gs-gutter;
+                margin-right: $gs-gutter;
+            }
+
+            @include mq(desktop) {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
+        .block-share {
+            @include mq(tablet) {
+                margin-right: $gs-gutter;
+            }
+        }
+
+        .section-rule {
+            display: none;
+        }
+    }
+
+    figure.element--showcase {
+        @include mq(desktop) {
+            margin-left: -($gs-gutter);
+        }
+
+        @include mq(leftCol) {
+            margin-left: -(gs-span(2) + $gs-gutter * 2);
+        }
+
+        @include mq(wide) {
+            margin-left: -(gs-span(3) + $gs-gutter * 2);
+        }
+    }
+
+    figure.element--showcase,
+    figure.element--immersive {
+        @include mq(leftCol) {
+            margin-bottom: $gs-baseline - 2px; // 2px is to compensate for x-height of type
+        }
+
+        .caption {
+            @include mq(desktop) {
+                padding-left: $gs-gutter;
+            }
+
+            @include mq(leftCol) {
+                position: absolute;
+                width: gs-span(2);
+                padding-top: $gs-baseline;
+            }
+
+            @include mq(wide) {
+                width: gs-span(3);
+            }
+        }
+
+        .block-share {
+            display: none !important; // To override hide on mobile
+        }
+    }
+
+    .element--showcase {
+        float: none;
+    }
+
+    .ad-slot--inline {
+        @include mq(desktop) {
+            margin-right: -(gs-span(4) + $gs-gutter);
+        }
+
+        @include mq(wide) {
+            margin-right: -(gs-span(5) + $gs-gutter);
+        }
+    }
+}

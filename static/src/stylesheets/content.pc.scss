@@ -35,20 +35,20 @@
 @import 'module/_dropdown';
 @import 'module/charts/_doughnuts';
 
-@import 'module/content/_content.global';
-@import 'module/content/_media.global';
+@import 'module/content-pc/_content.global';
+@import 'module/content-pc/_media.global';
 @import 'module/_loader';
 
-@import 'module/content/_live-blog';
+@import 'module/content-pc/_live-blog';
 
 @import 'module/_discussion';
 @import 'module/identity/_disc';
 @import 'module/identity/_activity-stream';
 
 @import 'module/_overlay';
-@import 'module/content/_gallery';
-@import 'module/content/_gallery-lightbox';
-@import 'module/content/_block-level-sharing';
+@import 'module/content-pc/_gallery';
+@import 'module/content-pc/_gallery-lightbox';
+@import 'module/content-pc/_block-level-sharing';
 
 @import 'module/preferences/_notifications';
 
@@ -58,7 +58,7 @@
 
 @import 'module/_save-for-later';
 
-@import 'module/content/_tweets';
+@import 'module/content-pc/_tweets';
 
 /* ==========================================================================
    External modules
@@ -96,7 +96,6 @@
 @import 'module/facia/_containers';
 @import 'module/facia-pc/_item';
 @import 'module/facia/_linkslist';
-@import 'module/facia/_tones';
 @import 'module/facia/_treats';
 
 /* ==========================================================================

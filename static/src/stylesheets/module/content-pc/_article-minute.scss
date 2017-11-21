@@ -1,0 +1,678 @@
+$minute-highlight-colour: $news-main-2;
+$minute-main-colour: $neutral-5;
+$minute-contrast-colour: #333333;
+$minute-headline-colour: #ffffff;
+
+@mixin rule($ruleColour, $ruleHeight) {
+    background-color: $ruleColour;
+    content: '';
+    height: $ruleHeight;
+    width: gs-span(4) + $gs-gutter;
+}
+
+.content--minute-article {
+    border-top: 0 none;
+}
+
+@include mq($until: mobileLandscape) {
+    .content .gs-container--minute-article {
+        padding: 0;
+    }
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+// Header background overlay
+.content--minute-article--overlay {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .4);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 20%, #000000 90%);
+    width: 100%;
+}
+
+.content__headline--minute {
+    color: #ffffff;
+    position: relative;
+    padding-bottom: $gs-baseline;
+
+    @include mq(phablet) {
+        &:after {
+            @include rule($minute-highlight-colour, $gs-baseline/3);
+            position: absolute;
+            top: -$gs-baseline/3;
+            left: 0;
+        }
+    }
+
+    @include mq(tablet) {
+        font-size: 44px;
+        width: gs-span(6);
+    }
+
+    @include mq(desktop) {
+        font-size: 64px;
+        margin-left: gs-span(1) + $gs-gutter;
+        width: gs-span(8);
+
+        &:after {
+            width: gs-span(5);
+        }
+    }
+}
+
+// Prevents transparent line being added by immersive template
+.content__standfirst--immersive-minute-article:before {
+    content: none;
+}
+
+.content--minute-article {
+    // Logo Styles
+    .badge-slot,
+    .logo--minute-article {
+        display: block;
+        float: left;
+    }
+
+    .badge-slot {
+        position: absolute;
+        top: $gs-baseline / 2;
+
+        svg {
+            height: auto;
+            max-height: 47px;
+            width: 100%;
+        }
+    }
+
+    .badge-slot__img {
+        height: 66px;
+        width: 66px;
+    }
+
+    .logo--minute-article {
+        height: gs-height(3);
+        position: absolute;
+        top: -#{gs-height(4) - $gs-baseline};
+
+        @include mq($until: mobileLandscape) {
+            display: none;
+        }
+
+        @include mq(desktop) {
+            height: gs-height(4);
+            top: -#{gs-height(5)};
+            left: -78px;
+        }
+
+        svg {
+            height: 100%;
+            width: auto;
+            max-width: 189px;
+
+            @include mq($from: desktop) {
+                max-width: 224px;
+            }
+        }
+    }
+
+    .content__standfirst {
+        @include fs-header(2);
+    }
+
+    /* ==========================================================================
+       Header Layout
+       ========================================================================== */
+    .content__dateline--minute-article,
+    .content__standfirst {
+        @include mq(tablet) {
+            max-width: gs-span(4);
+            margin-left: 0;
+        }
+
+        @include mq(desktop) {
+            max-width: gs-span(5);
+            margin-left: gs-span(1) + $gs-gutter;
+        }
+    }
+}
+
+.content__dateline--minute-article {
+    @include fs-header(2);
+    color: $minute-highlight-colour;
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Main Column
+   ========================================================================== */
+.content__main-column--minute-article {
+    margin: 0 auto;
+    max-width: none;
+    width: 100%;
+
+    .submeta {
+        margin: 0 auto;
+        padding: 0 $gs-gutter/2;
+
+        @include mq($from: mobileLandscape) {
+            padding: 0 $gs-gutter;
+        }
+
+        @include mq($from: tablet) {
+            width: gs-span(8);
+        }
+
+        @include mq($from: desktop) {
+            width: gs-span(11);
+        }
+
+        @include mq($from: leftCol) {
+            width: gs-span(12);
+        }
+    }
+}
+
+.article__container--minute-article {
+    background-color: $minute-main-colour;
+    padding-bottom: $gs-baseline;
+}
+
+/* ==========================================================================
+   Blocks - Layout
+   ========================================================================== */
+
+.block--minute-article {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    &:before {
+        @include rule(rgba(39, 193, 224, .8), $gs-baseline/3);
+        z-index: 2;
+        right: 0;
+    }
+
+    .block-elements {
+        padding: $gs-baseline/2 0 0;
+
+        .block-title {
+            font-weight: 100;
+            margin-bottom: $gs-baseline/2;
+        }
+    }
+
+    figure.element-image {
+        margin-bottom: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
+    // Mobile Layout
+    @include mq($until: mobileLandscape) {
+        // On portrait mobile we want blocks that fill up the entire screen
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        min-height: 560px;
+
+        &:before {
+            margin-top: auto;
+            width: gs-span(2);
+            margin-left: $gs-gutter / 2;
+
+            @if ($browser-supports-flexbox == false) {
+                position: absolute;
+            }
+        }
+
+        .block-elements {
+            padding-left: $gs-gutter/2;
+            padding-right: $gs-gutter/2;
+
+            .block-title {
+                @include fs-headline(4);
+            }
+        }
+
+        &.block--minute-article--embed {
+            justify-content: center;
+
+            &:before {
+                margin-top: 0;
+            }
+        }
+    }
+
+    // Tablet
+    @include mq($from: tablet) {
+        max-width: gs-span(8);
+        margin-top: $gs-baseline;
+        margin-bottom: $gs-baseline * 3;
+
+        &:before {
+            width: gs-span(7);
+            position: absolute;
+            left: 0;
+        }
+
+        .block-elements {
+            box-sizing: border-box;
+            width: gs-span(3);
+            float: left;
+            margin-right: $gs-gutter;
+
+            .block-title {
+                @include fs-headline(4);
+            }
+        }
+
+        figure.element-image {
+            margin-top: 0;
+            width: gs-span(5);
+            display: inline-block;
+        }
+    }
+
+    // Desktop
+    @include mq($from: desktop) {
+        max-width: gs-span(10);
+        margin-bottom: $gs-baseline * 6;
+        margin-left: gs-span(1) + $gs-gutter;
+
+        &:before {
+            width: gs-span(8);
+        }
+
+        .block-elements {
+            width: gs-span(4);
+        }
+
+        figure.element-image {
+            width: gs-span(6);
+        }
+    }
+
+    // LeftCol
+    @include mq($from: leftCol) {
+        max-width: gs-span(11);
+        margin-left: gs-span(1) + $gs-gutter;
+
+        &:before {
+            width: gs-span(10);
+        }
+
+        .block-elements {
+            width: gs-span(5);
+        }
+
+        figure.element-image {
+            width: gs-span(6);
+        }
+    }
+
+    // Wide
+    @include mq($from: wide) {
+        max-width: gs-span(12);
+
+        figure.element-image {
+            width: gs-span(7);
+        }
+    }
+}
+
+// Alternative Layout
+.block--minute-article--alt-layout {
+    @include mq($from: tablet) {
+        margin-left: gs-span(1) + $gs-gutter;
+
+        &:before {
+            right: 0;
+            left: auto;
+        }
+
+        .block-elements {
+            float: right;
+            margin-left: $gs-gutter;
+            margin-right: 0;
+        }
+    }
+
+    @include mq($from: desktop) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq($from: wide) {
+        margin-left: gs-span(3) + $gs-gutter;
+    }
+}
+
+//Number styling
+.block--minute-article--counter {
+    color: $minute-highlight-colour;
+
+    @include mq($until: desktop) {
+        font-weight: 700;
+    }
+
+    @include mq($from: desktop) {
+        display: block;
+        font-size: 70px;
+        line-height: 74px;
+        letter-spacing: -5px;
+        font-weight: 100;
+        margin-top: -$gs-baseline/3;
+    }
+}
+
+/* ==========================================================================
+   Block Content Overrides
+   ========================================================================== */
+
+.block--minute-article {
+    .updated-time {
+        display: none;
+    }
+
+    // Standard elements
+    a,
+    .u-fauxlink {
+        color: $minute-contrast-colour;
+    }
+
+    p a {
+        border-bottom: 1px solid rgba($minute-highlight-colour, .6);
+
+        &:hover {
+            border-bottom-color: $minute-highlight-colour;
+        }
+
+        &:active {
+            color: $minute-highlight-colour;
+            border-bottom-color: $minute-highlight-colour;
+        }
+    }
+
+    // Captions
+    .caption__minute-article {
+        box-sizing: border-box;
+        padding: $gs-baseline/4 $gs-gutter $gs-baseline/2 $gs-gutter/2;
+        width: 100%;
+
+        @include mq($from: mobileLandscape) {
+            padding-left: 0;
+        }
+    }
+
+    // Embeds
+
+    .tweet-main-image {
+        display: none;
+    }
+
+    // From content API
+
+    .from-content-api & blockquote.quoted {
+        color: $minute-contrast-colour;
+        margin-top: $gs-baseline/2;
+        margin-bottom: 0;
+
+        .inline-quote {
+            fill: $minute-highlight-colour;
+        }
+    }
+}
+
+/* ==========================================================================
+   Block Content Styles & Layout
+   ========================================================================== */
+
+// Quote Layout
+.block--minute-article.block--minute-article--quote {
+    .inline-quote {
+        position: relative;
+        display: block;
+    }
+
+    .quoted {
+        margin: 0;
+    }
+
+    .inline-quote svg {
+        width: 50px;
+        height: 34px;
+    }
+
+    .quoted__contents {
+        @include fs-headline(4);
+        font-style: normal;
+        font-weight: 100;
+        margin-left: 0;
+    }
+
+    @include mq($from: tablet) {
+        margin-left: 0;
+
+        &:before {
+            width: gs-span(4);
+        }
+
+        .block-elements {
+            width: gs-span(8);
+        }
+    }
+
+    @include mq($from: desktop) {
+        margin-left: gs-span(1) + $gs-gutter;
+
+        .quoted__contents {
+            @include fs-headline(6, true);
+        }
+
+        .block-elements {
+            width: gs-span(10);
+        }
+    }
+
+    @include mq($from: leftCol) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+}
+
+.block--minute-article--alt-layout.block--minute-article--quote {
+    @include mq($from: tablet) {
+        margin-left: gs-span(1) + $gs-gutter;
+    }
+
+    @include mq($from: desktop) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq($from: leftCol) {
+        margin-left: gs-span(4) + $gs-gutter;
+    }
+}
+
+// Video Layout
+.block--minute-article--video {
+    @include mq($until: mobileLandscape) {
+        .element-video {
+            margin-left: -$gs-gutter/2;
+            margin-right: -$gs-gutter/2;
+        }
+    }
+
+    @include mq($from: tablet) {
+        width: gs-span(7);
+
+        &:before {
+            width: gs-span(3);
+        }
+
+        .block-elements {
+            width: gs-span(7);
+        }
+
+        .caption__minute-article {
+            background-color: transparent;
+            padding-left: 0;
+            padding-bottom: $gs-baseline * 2;
+        }
+    }
+
+    @include mq($from: desktop) {
+        width: gs-span(9);
+
+        .block-elements {
+            width: gs-span(9);
+        }
+    }
+
+    @include mq($from: leftCol) {
+        width: gs-span(12);
+
+        .block-elements {
+            width: gs-span(12);
+        }
+    }
+}
+
+// Tweet Layout
+.block--minute-article--tweet {
+    @include mq($from: tablet) {
+        width: gs-span(5);
+        margin-left:  gs-span(2) + $gs-gutter;
+
+        &:before {
+            width: gs-span(3);
+        }
+
+        .block-elements {
+            width: gs-span(5);
+        }
+    }
+
+    @include mq($from: desktop) {
+        width: gs-span(6);
+        margin-left:  gs-span(5) + $gs-gutter;
+
+        .block-elements {
+            width: gs-span(6);
+        }
+    }
+
+    @include mq($from: leftCol) {
+        margin-left:  gs-span(6) + $gs-gutter;
+    }
+}
+
+.block--minute-article--alt-layout.block--minute-article--tweet {
+    @include mq($from: tablet) {
+        margin-left: gs-span(1) + $gs-gutter;
+    }
+
+    @include mq($from: desktop) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq($from: leftCol) {
+        margin-left: gs-span(4) + $gs-gutter;
+    }
+}
+
+// Resetting styles for media blocks
+.block--minute-article--tweet,
+.block--minute-article--video,
+.block--minute-article--quote {
+    &:before {
+        left: 0;
+    }
+
+    .block-elements {
+        margin-left: 0;
+        margin-right: 0;
+        float: none;
+    }
+}
+
+// Number to the left of modules
+.block--minute-article--shorty {
+    @include mq($from: desktop) {
+        position: relative;
+        overflow: visible;
+
+        .block--minute-article--counter {
+            position: absolute;
+            width: gs-span(1) + $gs-gutter;
+            top: 4px;
+            left: -(gs-span(1) + $gs-gutter);
+            border-top: $gs-baseline/3 solid $minute-highlight-colour;
+        }
+    }
+}
+
+// Background Image Layout
+@supports (object-fit: cover) {
+    .block--minute-article--background-image {
+        @include mq($until: mobileLandscape) {
+            color: #ffffff;
+
+            p {
+                font-weight: 700;
+            }
+
+            a {
+                color: #ffffff;
+            }
+
+            .block-elements {
+                margin-bottom: $gs-baseline*4;
+                position: relative;
+                z-index: 3;
+            }
+
+            .element--inline {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                z-index: 1;
+                margin-top: 0;
+
+                // Background overlay
+                &:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    background: rgba(0, 0, 0, .4);
+                    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 30%, #000000 100%);
+                    width: 100%;
+                }
+
+                .element--inline__image-wrapper {
+                    height: 100%;
+                }
+
+                .gu-image {
+                    height: 100vh;
+                    width: 100vw;
+                    object-fit: cover;
+                }
+            }
+
+            .caption__minute-article {
+                background-color: transparent;
+                color: rgba(255, 255, 255, .5);
+                min-height: $gs-baseline*2;
+                position: absolute;
+                bottom: 0;
+                z-index: 2;
+            }
+        }
+    }
+}
