@@ -63,7 +63,6 @@ const renderNav = (
 };
 
 const renderExtras = (_extras: Extras, dropdownTemplate: string): void => {
-    // clean
     const extras = [..._extras].filter(extra => extra);
     const ready =
         extras.filter(extra => extra && extra.ready === false).length === 0;
@@ -80,7 +79,7 @@ const renderExtras = (_extras: Extras, dropdownTemplate: string): void => {
                             if (dropdownTemplate) {
                                 $.create(dropdownTemplate)
                                     .each(dropdown => {
-                                        if (config.get('isLiveBlog')) {
+                                        if (config.get('page.isLiveBlog')) {
                                             $(dropdown).addClass(
                                                 'dropdown--key-events'
                                             );
@@ -201,7 +200,6 @@ const loaded = (elem: HTMLElement): void => {
 };
 
 const init = (): void => {
-    // We're doing this as to have one redraw
     const extras = [];
 
     let dropdownTemplate;
