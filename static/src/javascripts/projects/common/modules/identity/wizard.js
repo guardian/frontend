@@ -147,6 +147,7 @@ export const setPosition = (
                 });
             }
         )
+        .catch(() => setPosition(wizardEl, 0));
 
 export const enhance = (wizardEl: HTMLElement): Promise<void> =>
     setPosition(wizardEl, 0).then(() =>
