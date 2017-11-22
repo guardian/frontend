@@ -14,8 +14,8 @@
 @import 'item-layouts/fc-item--full-media-75';
 @import 'item-layouts/fc-item--full-media-100';
 @import 'item-layouts/fc-item--fluid';
-/* TODO: need a better naming convention */
-@import 'item-types/_live';
+
+@import 'item-types/_fc-item--type-liveblog';
 
 .fc-slice__item {
     width: 100%;
