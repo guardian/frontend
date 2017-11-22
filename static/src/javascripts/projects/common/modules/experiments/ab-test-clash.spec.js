@@ -1,6 +1,9 @@
 // @flow
 
-import { testABClash } from './ab-test-clash';
+import { isInVariant as isInVariant_ } from './utils';
+import { userIsInAClashingAbTest } from './ab-test-clash';
+
+const isInVariant: JestMockFn<*, *> = (isInVariant_: any);
 
 const createTest = (data: Object): ABTest =>
     Object.assign(
@@ -38,8 +41,13 @@ jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
 }));
 
 describe('Clash', () => {
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
     test('test clash should return false if test has only outbrain compliant variant', () => {
-        const f = jest.fn();
+        isInVariant.mockReturnValueOnce(undefined);
+
         const variant = createVariant({
             id: 'control',
             options: {
@@ -53,12 +61,13 @@ describe('Clash', () => {
             }),
         ];
 
-        expect(testABClash(f, clashingTests)).toBeFalsy();
-        expect(f).not.toHaveBeenCalled();
+        expect(userIsInAClashingAbTest(clashingTests)).toBeFalsy();
+        expect(isInVariant).not.toHaveBeenCalled();
     });
 
     test('test clash should return true if test has outbrain non compliant variant and f returns true', () => {
-        const f = jest.fn(() => true);
+        isInVariant.mockReturnValueOnce(true);
+
         const variant1 = createVariant({
             id: 'control',
             options: {
@@ -78,13 +87,14 @@ describe('Clash', () => {
         });
         const clashingTests = [test];
 
-        expect(testABClash(f, clashingTests)).toBeTruthy();
-        expect(f).toHaveBeenCalledTimes(1);
-        expect(f).toHaveBeenCalledWith(test, test.variants[1]);
+        expect(userIsInAClashingAbTest(clashingTests)).toBeTruthy();
+        expect(isInVariant).toHaveBeenCalledTimes(1);
+        expect(isInVariant).toHaveBeenCalledWith(test, test.variants[1]);
     });
 
     test('test clash should return false if test has outbrain non compliant variant and f returns true', () => {
-        const f = jest.fn(() => false);
+        isInVariant.mockReturnValueOnce(false);
+
         const variant1 = createVariant({
             id: 'control',
             options: {
@@ -102,8 +112,8 @@ describe('Clash', () => {
             variants: [variant1, variant2],
         });
 
-        expect(testABClash(f, [test])).toBeFalsy();
-        expect(f).toHaveBeenCalledTimes(1);
-        expect(f).toHaveBeenCalledWith(test, test.variants[1]);
+        expect(userIsInAClashingAbTest([test])).toBeFalsy();
+        expect(isInVariant).toHaveBeenCalledTimes(1);
+        expect(isInVariant).toHaveBeenCalledWith(test, test.variants[1]);
     });
 });
