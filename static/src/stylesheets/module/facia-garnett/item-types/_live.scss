@@ -5,12 +5,10 @@ $live-garnett-main-2: #ffc5c2;
     .fc-item__container,
     .u-faux-block-link--hover,
     .fc-item__kicker,
+    .fc-item__container::before,
+    .live-pulse-icon::before,
     &:hover .fc-item__kicker {
         background-color: $live-garnett-main-1;
-    }
-
-    .live-pulse-icon::before {
-        background-color: $live-garnett-main-2;
     }
 
     .fc-item__kicker {
@@ -26,6 +24,10 @@ $live-garnett-main-2: #ffc5c2;
         color: #ffffff;
     }
 
+    .fc-item__standfirst {
+        color: $live-garnett-main-2;
+    }
+
     .fc-trail__count--commentcount {
         color: $live-garnett-main-2;
 
@@ -34,8 +36,12 @@ $live-garnett-main-2: #ffc5c2;
         }
     }
 
-    .fc-sublink__title::before {
-        border-top-color: #e1e1e1;
+    .fc-sublink__title {
+        font-weight: 600;
+
+        &::before {
+            border-top-color: #e1e1e1;
+        }
     }
 
     .fc-sublink__link {
