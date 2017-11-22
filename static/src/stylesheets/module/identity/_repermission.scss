@@ -1,0 +1,10 @@
+.manage-account-wizard--repermission {
+    .manage-account-wizard__step {
+        min-height: 50vh;
+    }
+    .manage-account-wizard__controls {
+        padding: $gs-gutter 0;
+        margin-top: $gs-gutter;
+        border-top: 1px solid $neutral-8;
+    }
+}
