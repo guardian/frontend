@@ -37,20 +37,26 @@ const animateIncomingStep = (
     stepEl: HTMLElement,
     direction: string
 ): Promise<void> =>
-    fastdom.write(() => {
-        stepEl.classList.remove(
-            stepHiddenClassname,
-            ...stepTransitionClassnames
-        );
-        wizardEl.style.minHeight = `${stepEl.getBoundingClientRect().height}px`;
-        if (direction !== 'none') {
-            stepEl.classList.add(
-                direction === 'forwards'
-                    ? stepInClassname
-                    : stepInReverseClassname
+    fastdom
+        .write(() => {
+            stepEl.classList.remove(
+                stepHiddenClassname,
+                ...stepTransitionClassnames
             );
-        }
-    });
+            if (direction !== 'none') {
+                stepEl.classList.add(
+                    direction === 'forwards'
+                        ? stepInClassname
+                        : stepInReverseClassname
+                );
+            }
+        })
+        .then(() => fastdom.read(() => stepEl.getBoundingClientRect().height))
+        .then(stepHeight =>
+            fastdom.write(() => {
+                wizardEl.style.minHeight = `${stepHeight}px`;
+            })
+        );
 
 const animateOutgoingStep = (
     wizardEl: HTMLElement,
