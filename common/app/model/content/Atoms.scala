@@ -201,11 +201,11 @@ final case class TimelineItem(
   title: String,
   date: DateTime,
   body: Option[String],
-  dateFormat: Option[String],
   toDate: Option[Long]
 )
 
 object Atoms extends common.Logging {
+
   def extract[T](atoms: Option[Seq[AtomApiAtom]], extractFn: AtomApiAtom => T): Seq[T] = {
     try {
       atoms.getOrElse(Nil).map(extractFn)
@@ -587,14 +587,11 @@ object TimelineAtom {
     events = atom.data.asInstanceOf[AtomData.Timeline].timeline.events map TimelineItem.make _
   )
 
-  def renderFormattedDate(item: TimelineItem, format: String): String = {
-    item.toDate match {
-      case Some(date) => {
-        val beginRange = DateTimeFormat.forPattern(format).print(item.date)
-        val endRange = DateTimeFormat.forPattern(format).print(date)
-        s"$beginRange&ndash;$endRange"
-      }
-      case None => DateTimeFormat.forPattern(format).print(item.date)
+  def renderFormattedDate(date: Long, format: Option[String]): String = {
+    format match {
+      case Some("month-year") => DateTimeFormat.forPattern("MMMM uuuu").print(date)
+      case Some("year") =>  DateTimeFormat.forPattern("uuuu").print(date)
+      case _ =>  DateTimeFormat.forPattern("d MMMM uuuu").print(date)
     }
   }
 
@@ -605,7 +602,6 @@ object TimelineItem {
     item.title,
     new DateTime(item.date),
     item.body,
-    item.dateFormat,
     item.toDate
   )
 }

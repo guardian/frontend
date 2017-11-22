@@ -1,5 +1,8 @@
 @(timeline: model.content.TimelineAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
+@import org.joda.time.DateTime
+@import model.content.TimelineAtom
+
 @fragments.atoms.snippet(
     className = "timeline",
     label = timeline.data.typeLabel.getOrElse("Timeline"),
@@ -12,13 +15,14 @@
     }
     @for(item <- timeline.data.events) {
       <div class="explainer-snippet__item">
-        <time class="explainer-snippet__event-date" datetime="">
-            @item.dateFormat match {
-                case Some("month-year") => { TimelineAtom.renderFormattedDate(item , "MMMM yyyy") }
-                case Some("year") => { TimelineAtom.renderFormattedDate(item, "yyyy") }
-                case _ => { TimelineAtom.renderFormattedDate(item, "d MMMM yyyy") }
-            }
-        </time>
+          <time class="explainer-snippet__event-date" datetime="@{new DateTime(item.date)}">
+          @{ TimelineAtom.renderFormattedDate(item.date, item.dateFormat) }
+          </time>
+          @item.toDate.map { maybeDate =>
+              –<time class="explainer-snippet__event-date" datetime="@{new DateTime(maybeDate)}">
+                @TimelineAtom.renderFormattedDate(maybeDate, item.dateFormat)
+              </time>
+          }
         <div class="explainer-snippet__heading"><b>@item.title</b></div>
         @item.body.map { body => @Html(body) }
       </div>
