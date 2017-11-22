@@ -17,6 +17,8 @@
 @import 'item-layouts/fc-item--full-media-100';
 @import 'item-layouts/fc-item--fluid';
 
+@import 'item-types/_fc-item--type-liveblog';
+
 .fc-slice__item {
     width: 100%;
     position: relative;
