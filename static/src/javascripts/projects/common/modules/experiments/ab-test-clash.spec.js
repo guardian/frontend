@@ -85,9 +85,8 @@ describe('Clash', () => {
         const test = createTest({
             variants: [variant1, variant2],
         });
-        const clashingTests = [test];
 
-        expect(userIsInAClashingAbTest(clashingTests)).toBeTruthy();
+        expect(userIsInAClashingAbTest([test])).toBeTruthy();
         expect(isInVariant).toHaveBeenCalledTimes(1);
         expect(isInVariant).toHaveBeenCalledWith(test, test.variants[1]);
     });
