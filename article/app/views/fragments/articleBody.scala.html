@@ -24,7 +24,15 @@
             "has-feature-showcase-element" -> (article.tags.isFeature && article.elements.hasShowcaseMainElement),
             "paid-content" -> isPaidContent,
             "paid-content--white" -> (isPaidContent && CommercialPaidContentTemplateVariant.isParticipating(request))
-        ),  "content", "content--article", "tonal", s"tonal--${toneClass(article)}", s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}")"
+        ),
+            "content",
+            "content--article",
+            "content--pillar-news", // temporarily hardcoded
+            "content--type-article", // temporarily hardcoded
+            "tonal",
+            s"tonal--${toneClass(article)}",
+            s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"
+        )"
 
         itemscope itemtype="@schemaType(model)" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
