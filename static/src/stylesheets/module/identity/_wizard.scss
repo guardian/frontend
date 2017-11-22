@@ -3,10 +3,10 @@
     position: relative;
     transition: min-height .2s;
     will-change: min-height;
-    .manage-account-wizard--completed {
-        .manage-account-wizard__controls {
-            display: none;
-        }
+}
+.manage-account-wizard--completed {
+    .manage-account-wizard__controls {
+        display: none;
     }
 }
 
@@ -15,25 +15,25 @@
     left: 0;
     right: 0;
     will-change: transform;
-    .manage-account-wizard__step--hidden {
-        display: none;
-    }
-    .manage-account-wizard__step--out {
-        display: block;
-        position: absolute;
-        animation: manage-account-wizard__fadeLeft .2s both;
-    }
-    .manage-account-wizard__step--in {
-        animation: manage-account-wizard__fadeRight .2s reverse both;
-    }
-    .manage-account-wizard__step--out-reverse {
-        display: block;
-        position: absolute;
-        animation: manage-account-wizard__fadeRight .2s both;
-    }
-    .manage-account-wizard__step--in-reverse {
-        animation: manage-account-wizard__fadeLeft .2s reverse both;
-    }
+}
+.manage-account-wizard__step--hidden {
+    display: none;
+}
+.manage-account-wizard__step--out {
+    display: block;
+    position: absolute;
+    animation: manage-account-wizard__fadeLeft .2s both;
+}
+.manage-account-wizard__step--in {
+    animation: manage-account-wizard__fadeRight .2s reverse both;
+}
+.manage-account-wizard__step--out-reverse {
+    display: block;
+    position: absolute;
+    animation: manage-account-wizard__fadeRight .2s both;
+}
+.manage-account-wizard__step--in-reverse {
+    animation: manage-account-wizard__fadeLeft .2s reverse both;
 }
 
 .manage-account-wizard__controls {
