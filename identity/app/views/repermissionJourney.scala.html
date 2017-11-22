@@ -15,29 +15,7 @@
     availableLists: EmailNewsletters
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
-    <li class="tabs__tab @if(hidden){is-hidden} @if(page.metadata.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.metadata.id == url)" aria-controls="tabs-account-profile-@i">
-        <a href="@url" data-tabs-href="#tabs-account-profile-@i" data-link-name="@url edit profile tab" data-pushstate-url="@url"
-            @dataTestId.map{idValue => data-test-id="@idValue"}>@name</a>
-    </li>
-}
-
-@content(i: Int, url: String, optionalClass: String = "")(body: => Html) = {
-    <div id="tabs-account-profile-@i"
-         class="@RenderClasses(Map(
-            "u-h" -> (page.metadata.id != url)
-         ), "tabs__pane u-cf @optionalClass")"
-         role="tabpanel"
-         aria-labelledby="tabs-account-profile-@i-tab"
-         data-link-name="Public Profile"
-         data-link-context="Identity/profile">
-        @body
-    </div>
-}
-
-@mainLegacy(page, projectName = Option("identity")){
-    <link rel="stylesheet" id="stripe-sprite" type="text/css" media="all" href="@Static("stylesheets/membership-icons.css")"/>
-}{
+@mainLegacy(page, projectName = Option("identity")) { } {
 
     <div class="identity-wrapper-for-bg">
         <div class="gs-container">
@@ -45,9 +23,25 @@
 
                 <div class=" u-cf identity-section">
 
-                    <center>
-                        <img width="100%" src="https://i.imgur.com/TqI7Ub8.png" />
-                    </center>
+                    <div class="manage-account-wizard" >
+                        <div class="manage-account-wizard__step">
+                            <center>
+                                <img width="100%" src="https://i.imgur.com/TqI7Ub8.png" />
+                            </center>
+                        </div>
+                        <div class="manage-account-wizard__step">
+                            step 2
+                        </div>
+                        <div class="manage-account-wizard__step" style="display: block;">
+                            3
+                        </div>
+                        <div class="manage-account-wizard__controls">
+                            <div class="manage-account-wizard__controls-pager">3 / 3</div>
+                            <a class="manage-account__button js-manage-account-wizard__next">Next</a>
+                        </div>
+                    </div>
+
+
 
                 </div>
             </div>
