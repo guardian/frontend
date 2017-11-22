@@ -1,5 +1,4 @@
 // @flow
-/* eslint-disable no-underscore-dangle, react/sort-comp */
 
 import fastdom from 'lib/fastdom-promise';
 import { scrollTo } from 'lib/scroller';
