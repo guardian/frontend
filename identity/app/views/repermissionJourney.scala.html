@@ -29,6 +29,8 @@
                     <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
                         @views.html.helper.CSRF.formField
 
+                        <div class="js-errorHolder manage-account__errors"></div>
+
                         <div class="manage-account-wizard" >
                             <div class="manage-account-wizard__step">
                             <center>
