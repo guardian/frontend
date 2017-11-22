@@ -90,6 +90,36 @@ const getDirection = (currentPosition: number, newPosition: number): string => {
     return 'forwards';
 };
 
+const updateSteps = (
+    wizardEl: HTMLElement,
+    currentPosition: number,
+    newPosition: number,
+    stepEls: Array<HTMLElement>
+): Promise<void> =>
+    fastdom.write(() => {
+        stepEls.forEach((stepEl: HTMLElement, i: number) => {
+            switch (i) {
+                case newPosition:
+                    animateIncomingStep(
+                        wizardEl,
+                        stepEl,
+                        getDirection(currentPosition, newPosition)
+                    );
+                    break;
+                case currentPosition:
+                    animateOutgoingStep(
+                        wizardEl,
+                        stepEl,
+                        getDirection(currentPosition, newPosition)
+                    );
+                    break;
+                default:
+                    stepEl.classList.add(stepHiddenClassname);
+                    stepEl.classList.remove(...stepTransitionClassnames);
+            }
+        });
+    });
+
 export const setPosition = (
     wizardEl: HTMLElement,
     newPosition: number
@@ -108,43 +138,26 @@ export const setPosition = (
                 [
                     offsetTop: number,
                     currentPosition: number,
-                    steps: Array<HTMLElement>,
+                    stepEls: Array<HTMLElement>,
                 ]
             ) => {
-                if (newPosition < 0 || !steps[newPosition]) {
+                if (newPosition < 0 || !stepEls[newPosition]) {
                     throw new Error('Invalid position');
                 }
                 if (currentPosition > -1 && window.scrollY > offsetTop) {
                     scrollTo(offsetTop, 250, 'linear');
                 }
-                return fastdom.write(() => {
-                    steps.forEach((stepEl: HTMLElement, i: number) => {
-                        switch (i) {
-                            case newPosition:
-                                animateIncomingStep(
-                                    wizardEl,
-                                    stepEl,
-                                    getDirection(currentPosition, newPosition)
-                                );
-                                break;
-                            case currentPosition:
-                                animateOutgoingStep(
-                                    wizardEl,
-                                    stepEl,
-                                    getDirection(currentPosition, newPosition)
-                                );
-                                break;
-                            default:
-                                stepEl.classList.add(stepHiddenClassname);
-                                stepEl.classList.remove(
-                                    ...stepTransitionClassnames
-                                );
-                        }
-                    });
-                    wizardEl.dataset.length = steps.length.toString();
-                    wizardEl.dataset.position = newPosition.toString();
-                    updateCounter(wizardEl);
-                });
+                wizardEl.dataset.length = stepEls.length.toString();
+                wizardEl.dataset.position = newPosition.toString();
+                return Promise.all([
+                    updateCounter(wizardEl),
+                    updateSteps(
+                        wizardEl,
+                        currentPosition,
+                        newPosition,
+                        stepEls
+                    ),
+                ]);
             }
         )
         .catch(() => setPosition(wizardEl, 0));
