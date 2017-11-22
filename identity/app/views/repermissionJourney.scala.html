@@ -28,6 +28,7 @@
 
                     <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
                         @views.html.helper.CSRF.formField
+                        @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
                         <div class="js-errorHolder manage-account__errors"></div>
 
