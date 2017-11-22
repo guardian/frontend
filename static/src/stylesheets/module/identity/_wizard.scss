@@ -2,6 +2,7 @@
     @include clearfix();
     position: relative;
     transition: min-height .2s;
+    will-change: min-height;
     &--completed {
         .manage-account-wizard__controls {
             display: none;
@@ -13,6 +14,7 @@
     top: 0;
     left: 0;
     right: 0;
+    will-change: transform;
     &--hidden {
         display: none;
     }
