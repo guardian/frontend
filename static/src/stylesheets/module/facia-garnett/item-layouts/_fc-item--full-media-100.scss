@@ -22,11 +22,6 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
 */
 
 @mixin fc-item--full-media-100 {
-    .fc-item__image-container {
-        display: block;
-        padding-bottom: 40%;
-    }
-
     .fc-item__header {
         @include fs-headline(4, true);
         @include headline-boost(5);
@@ -37,5 +32,12 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
         }
     }
 
-    @include fc-sublinks--below;
+    &:not(.fc-item--has-cutout) {
+        .fc-item__image-container {
+            display: block;
+            padding-bottom: 40%;
+        }
+        
+        @include fc-sublinks--below;
+    }
 }

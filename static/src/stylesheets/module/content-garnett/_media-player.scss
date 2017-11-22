@@ -1,0 +1,1117 @@
+@import '../../icons/video-icons-svg';
+
+// parameterising these as they're used in a few places
+$vjs-control-colour: $media-mute;
+$vjs-control-height: $gs-baseline*4;
+$vjs-progress-hitbox-height: $gs-baseline;
+$vjs-progress-visual-height-resting: $gs-baseline/2;
+$vjs-progress-inset-bottom: 4px;
+$ima-controls-height: 70px;
+
+.player {
+    margin-bottom: $gs-row-height;
+    background: #000000;
+    text-align: center; // prevents poster from loading to left then centering
+}
+
+.gu-media-wrapper {
+    background: #000000;
+    -webkit-transform: translateZ(0); // fixes iOS hover bug
+}
+.gu-media-wrapper--audio {
+    background-color: $vjs-control-colour;
+    padding-top: $vjs-progress-visual-height-resting;
+
+    .vjs-control-bar {
+        background: transparent;
+    }
+
+    // naughty videojs removes classes, so have to select by element
+    audio {
+        width: 100%;
+        height: 40px;
+        box-sizing: border-box;
+        border-left: $gs-gutter/2 solid transparent;
+        border-right: $gs-gutter/2 solid transparent;
+    }
+}
+
+.element-video {
+    position: relative;
+    // Force this container to wrap around the floated rich link
+    &:not(.element--showcase) {
+        overflow: hidden;
+    }
+}
+
+.gu-video-embed-html {
+    overflow-y: auto;
+}
+
+/* VJS
+   ========================================================================== */
+.vjs-tech {
+    cursor: pointer;
+
+    .vjs-fullscreen & {
+        cursor: none;
+    }
+
+    .vjs-fullscreen.vjs-mousemoved & {
+        cursor: pointer;
+    }
+}
+
+.vjs {
+    &.gu-media {
+        width: auto !important;
+    }
+    &.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
+        height: auto !important;
+        cursor: pointer;
+
+        &.vjs-user-inactive {
+            cursor: none;
+        }
+    }
+    &.gu-media--audio {
+        position: relative;
+        height: 100% !important;
+    }
+}
+
+.vjs-big-play-button {
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+
+    .vjs-has-started & {
+        padding-bottom: $vjs-control-height;
+    }
+
+    &:hover .vjs-control-text {
+        transform: translate(-50%, -50%) scale(1.15);
+    }
+
+    .vjs-control-text {
+        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
+        @include video-play-button-size($vjs-small-button-size);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        user-select: none;
+
+        @include mq(mobileLandscape) {
+            @include video-play-button-size($vjs-large-button-size);
+        }
+
+        &:before {
+            @include circular;
+            @include video-play-button-size($vjs-small-button-size);
+            content: '';
+            display: block;
+            @include mq(mobileLandscape) {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+            background-color: $media-default;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
+            border-style: solid;
+            border-width: 1em 0 1em 2.4em;
+            border-color: transparent transparent transparent $neutral-1;
+
+            @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
+                border-radius: .2em;
+            }
+        }
+    }
+
+    .gu-media--audio &,
+    .vjs-has-ended &,
+    .vjs-ad-playing &,
+    .vjs-playing &,
+    .vjs-has-started.vjs-using-native-controls &,
+    .vjs-ad-loading & {
+        display: none !important;
+    }
+}
+
+.vjs-fullscreen-clickbox {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding-bottom: $vjs-control-height;
+    position: absolute;
+    z-index: 2;
+
+    .vjs-using-native-controls & {
+        display: none;
+    }
+}
+
+.vjs-loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -23px;
+    margin-top: -15px;
+    display: none;
+
+    .vjs-waiting &,
+    .vjs-seeking &,
+    .vjs-ad-loading & {
+        display: block !important;
+    }
+
+    .vjs-using-native-controls &,
+    .vjs-paused & {
+        display: none !important;
+    }
+}
+
+/* VJS: CONTROL BAR
+   ========================================================================== */
+
+.vjs-control-bar,
+#ima-controls-div {
+    @include fs-textSans(1);
+    cursor: default;
+    width: 100%;
+    z-index: 4;
+    left: 0;
+    background-color: rgba($media-background, .8);
+    color: #ffffff;
+    font-weight: bold;
+    height: $vjs-control-height;
+    transition: bottom .8s;
+    transition-delay: 1s;
+
+    &.vjs-hidden {
+        display: none;
+    }
+}
+
+.vjs-control-bar {
+    position: relative;
+
+    .gu-media--video & {
+        position: absolute;
+        bottom: $gs-baseline*-5;
+    }
+    .vjs-fullscreen & {
+        transition-delay: .5s;
+    }
+
+    .gu-media-wrapper:hover .vjs-mousemoved &,
+    .vjs-paused.vjs-has-started &,
+    &:hover {
+        bottom: 0;
+        transition: bottom 0s;
+        transition-delay: 0s;
+    }
+
+    .vjs-using-native-controls & {
+        display: none;
+    }
+
+    * {
+        outline: none; // hide focus outlines on controls
+    }
+}
+
+.vjs-control-text {
+    overflow: hidden !important; // some control texts have pseudo elements for icons, so they cannot use u-h.
+    display: inline-block;
+
+    .vjs-load-progress &,
+    .vjs-play-progress &,
+    .vjs-play-control &,
+    .vjs-time-control & {   // these control texts are free to use u-h.
+        @include u-h;
+    }
+}
+
+.vjs-poster {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: cover;
+    top: 0;
+    left: 0;
+
+    .vjs-has-started &,
+    .vjs-controls-disabled & {
+        display: none;
+    }
+}
+
+.vjs-play-control,
+#ima-play-pause-div {
+    float: left;
+    cursor: pointer;
+    margin: 7px;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+.vjs-play-control {
+    .vjs-paused & {
+        @include icon(play-32--tone-media);
+    }
+
+    .vjs-playing & {
+        @include icon(pause-32--tone-media);
+    }
+}
+#ima-play-pause-div {
+    &.ima-paused {
+        @include icon(play-32--tone-media);
+    }
+    &.ima-playing {
+        @include icon(pause-32--tone-media);
+    }
+}
+
+.vjs-current-time,
+.vjs-time-divider,
+.vjs-duration {
+    float: left;
+    line-height: $gs-baseline*4;
+}
+
+.vjs-time-divider {
+    padding: 0 $gs-gutter/4;
+}
+
+.vjs-duration {
+    color: $neutral-3;
+}
+
+.vjs-fullscreen-control {
+    cursor: pointer;
+    float: right;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    margin: $gs-baseline;
+
+    .vjs-control-text {
+        width: $gs-gutter;
+        height: 20px;
+    }
+}
+
+.vjs-fullscreen-control {
+    .vjs-control-text:before {
+        @include icon(expand-white);
+        content: '';
+        width: $gs-gutter;
+        height: 20px !important;
+
+        &:hover {
+            @include icon(expand-yellow);
+        }
+    }
+
+    .gu-media--audio & {
+        display: none;
+    }
+}
+
+/* VJS: PROGRESS BAR
+   ========================================================================== */
+
+.vjs-progress-control {
+    width: 100%;
+    position: absolute;
+    top: $vjs-progress-inset-bottom - $vjs-progress-hitbox-height;
+    .vjs-ad-playing & {
+        display: none;
+    }
+}
+
+.vjs-progress-holder {
+    height: $vjs-progress-hitbox-height;
+    cursor: pointer;
+    position: relative;
+
+    &:before {
+        content: '';
+        display: block;
+        width: 100%;
+        background-color: #000000;
+    }
+}
+
+.vjs-load-progress,
+.vjs-play-progress,
+.vjs-progress-holder:before,
+.vjs-seek-handle {
+    position: absolute;
+    bottom: $vjs-progress-inset-bottom;
+    height: $vjs-progress-visual-height-resting;
+}
+
+.vjs-load-progress {
+    background-color: #999999;
+    z-index: 1;
+}
+
+.vjs-play-progress {
+    background-color: $media-default;
+    z-index: 2;
+}
+
+
+/* VJS: VOLUME BAR
+   ========================================================================== */
+
+.vjs-volume-menu-button {
+    float: right;
+    margin: 16px 8px 0;
+    position: relative;
+    height: 100%;
+}
+
+.vjs-volume-menu-button > .vjs-menu {
+    float: left;
+    cursor: pointer;
+}
+
+.vjs-volume-bar {
+    height: $gs-baseline;
+    width: $gs-gutter*5;
+    position: relative;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        left: 0;
+        right: 0;
+        background-color: $neutral-7;
+    }
+}
+
+.vjs-volume-bar:before,
+.vjs-volume-level {
+    height: $gs-baseline/6;
+    top: $gs-baseline/2;
+    position: absolute;
+}
+
+.vjs-volume-level {
+    background-color: $media-default;
+
+    &:before {
+        position: absolute;
+        background-color: $media-default;
+        height: 11px;
+        width: 2px;
+        top: -$gs-baseline/3;
+        right: 0;
+        content: '';
+    }
+}
+
+.vjs-volume-menu-button {
+
+    > .vjs-control-text {
+        float: left;
+        margin-right: $gs-gutter/3;
+        width: $gs-gutter;
+        height: $gs-baseline*1.5;
+
+        &:before {
+            @include icon(volume-low-white);
+            content: '';
+            min-width: $gs-gutter;
+        }
+        &:before:hover {
+            @include icon(volume-low--tone-media);
+        }
+    }
+
+    &.vjs-vol-0 > .vjs-control-text:before {
+        @include icon(volume-mute-white);
+    }
+    &.vjs-vol-0 > .vjs-control-text:before:hover {
+        @include icon(volume-mute--tone-media);
+    }
+    &.vjs-vol-3 > .vjs-control-text:before {
+        @include icon(volume-high-white);
+    }
+    &.vjs-vol-3 > .vjs-control-text:before:hover {
+        @include icon(volume-high--tone-media);
+    }
+}
+#ima-mute-div {
+    &.ima-non-muted {
+        @include icon(volume-high-white);
+
+        &:hover {
+            @include icon(volume-high--tone-media);
+        }
+    }
+    &.ima-muted {
+        @include icon(volume-mute-white);
+
+        &:hover {
+            @include icon(volume-mute--tone-media);
+        }
+    }
+}
+
+/* VJS: OVERLAYS
+   ========================================================================== */
+
+
+.vjs-error-display {
+    position: absolute;
+    display: none;
+    width: 100%;
+    top: 0;
+    z-index: 3; // Ensures that it is above fullscreen clickbox.
+
+    .gu-media--video.vjs-error &,
+    .gu-media__flash-fallback &,
+    .youtube-media-atom__overlay & {
+        display: block;
+    }
+    .gu-media__flash-fallback & {
+        background-color: #000000;
+    }
+    > div {
+        @include fs-headline(2);
+        position: absolute;
+        display: table-cell;
+        width: 100%;
+        margin: auto;
+        padding: $gs-baseline*1.5 $gs-gutter*3;
+        box-sizing: border-box;
+        line-height: 1em;
+        text-align: left;
+        color: #ffffff;
+        background-color: $vjs-control-colour;
+
+        &:before {
+            @include icon(error-exclamation);
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: $gs-gutter/2;
+            margin-top: -18px; // half icon height for centering;
+        }
+    }
+
+    a {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+}
+
+.vjs-error-display__close {
+    @include icon(close-icon-white-small);
+    @include circular;
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 50%;
+    margin-top: -16px; // half icon height for centering;
+    right: $gs-gutter/2;
+    text-indent: -9999px;
+    background: transparent;
+    border: 1px solid rgba(#ffffff, .3);
+
+    &:hover {
+        border-color: #ffffff;
+    }
+}
+
+.vjs-overlay {
+    position: absolute;
+    width: 100%;
+    color: #ffffff;
+    background-color: $vjs-control-colour;
+}
+
+.vjs-overlay--big-title {
+    .vjs-overlay__title {
+        @include fs-headline(4);
+        text-align: left;
+        padding: $gs-gutter/2;
+        @include mq(tablet) {
+            @include fs-headline(5);
+        }
+        @include mq(desktop) {
+            @include fs-headline(6);
+        }
+        &:before {
+            @include icon(video-camera--tone-media);
+            content: '';
+            margin-right: $gs-gutter/2;
+        }
+    }
+
+    .vjs-overlay__duration {
+        @include fs-headline(3);
+        text-align: left;
+        color: $media-default;
+        padding: 0 $gs-gutter/2 $gs-baseline*2;
+    }
+}
+
+.vjs-overlay--small-title {
+    @include ellipsis();
+    @include fs-headline(2);
+    text-align: left;
+    position: absolute;
+    $height: get-line-height(headline, 2);
+    height: $height;
+    padding: $gs-baseline/2;
+    top: ($height + $gs-baseline) * -1;
+    left: 0;
+    transition: top .8s;
+    transition-delay: .2s;
+
+    .gu-media-wrapper:hover &,
+    .vjs-paused & {
+        top: 0;
+        transition: top 0s;
+        transition-delay: 0s;
+    }
+}
+
+.vast-blocker {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    z-index: 3;
+
+    .vjs-playing & {
+        display: block;
+    }
+}
+
+.vast-skip-button {
+    display: none;
+}
+
+/* VJS: EMBED OVERLAY
+   ========================================================================== */
+.vjs-embedoverlay {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20% $gs-gutter * 2 0;
+    background-color: $vjs-control-colour;
+    z-index: 3;
+}
+
+.vjs-embedoverlay-text {
+    @include fs-headline(2);
+    display: block;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: $gs-baseline * 2;
+}
+
+.vjs-embedoverlay-input {
+    @include fs-textSans(2);
+    box-sizing: border-box;
+    width: 100%;
+    height: gs-height(1) + $gs-baseline;
+    color: $neutral-1;
+    padding: $gs-baseline/3 $gs-gutter/2 0;
+    border: 1px solid $neutral-3;
+    outline: none;
+
+    &::selection {
+        background: #cef1fc;
+    }
+}
+
+.vjs-embed-button {
+    @include mq($until: desktop) {
+        display: none;
+    }
+    cursor: pointer;
+    float: right;
+    box-sizing: border-box;
+    height: $vjs-control-height;
+    padding-right: $gs-gutter/2;
+    position: relative;
+
+    .vjs-control-content {
+        &:before {
+            @include icon(embed--white);
+            content: ' ';
+            display: block;
+            width: $gs-gutter !important;
+            height: $gs-baseline !important;
+            position: absolute;
+            top: 0;
+            left: -1 * ($gs-gutter * 4);
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    }
+
+    .vjs-control-text {
+        padding-top: 16px;
+        display: block;
+    }
+
+    .element--supporting & {
+        display: none;
+    }
+
+    &:hover {
+        .vjs-control-content::before {
+            @include icon(embed--tone-media);
+        }
+
+        .vjs-control-text {
+            color: $media-default;
+        }
+    }
+}
+
+.vjs-title-bar {
+    @include fs-textSans(3);
+    position: absolute;
+    width: 100%;
+    height: $gs-baseline*4;
+    box-sizing: border-box;
+    background-color: rgba(25, 25, 25, .8);
+    padding: $gs-baseline/2 $gs-gutter/2;
+    font-weight: bold;
+    transition: top .8s;
+    transition-delay: 1s;
+    left: 0;
+    top: $gs-baseline*-4;
+    z-index: 4;
+
+    .gu-media-wrapper:hover .vjs-mousemoved &,
+    .vjs-paused &,
+    &:hover {
+        top: 0;
+        transition: top 0s;
+        transition-delay: 0s;
+    }
+
+    .vjs-control-content {
+        position: absolute;
+        top: $gs-baseline/3;
+        right: $gs-baseline*4;
+    }
+
+    .vjs-title {
+        @include ellipsis();
+        margin-top: $gs-baseline*2/3;
+        font-size: 14px;
+        color: #ffffff;
+        display: inline-block;
+        max-width: 90%;
+        &:hover {
+            color: $media-default;
+        }
+    }
+
+    svg {
+        top: 3px;
+        left: 7px;
+        width: 32px;
+        height: 32px;
+        fill: #ffffff;
+
+        &:hover {
+            fill: $media-default;
+        }
+    }
+}
+
+/* VJS: SKIP AD OVERLAY
+   ========================================================================== */
+.vjs-ads-skip {
+    @include fs-textSans(1);
+    position: absolute;
+    z-index: 4;
+    bottom: $ima-controls-height;
+    right: 8px;
+    // width so text goes over two lines
+    width: 140px;
+    background-color: rgba($neutral-1, .8);
+    color: #ffffff;
+    text-align: left;
+
+    @include mq(tablet) {
+        @include fs-textSans(2, true);
+    }
+}
+.vjs-ads-skip__countdown,
+.vjs-ads-skip__button {
+    display: block;
+    padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline/4;
+}
+.vjs-ads-skip__button {
+    width: 100%;
+    margin: 0;
+    background-color: transparent;
+    border: 0;
+    text-align: left;
+
+    .i-play-icon-grey {
+        display: inline-block;
+    }
+    .i-play-icon-gold {
+        display: none;
+    }
+    &:hover {
+        color: $comment-main-2;
+
+        .i-play-icon-grey {
+            display: none;
+        }
+        .i-play-icon-gold {
+            display: inline-block;
+        }
+    }
+    .skip-icon {
+        margin-right: $gs-gutter/4;
+    }
+}
+
+/* End slate
+   ========================================================================== */
+.end-slate-container {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    box-sizing: border-box;
+    background-color: rgba(25, 25, 25, .8);
+    color: $neutral-7;
+    top: $gs-baseline*4;
+    padding-top: $gs-gutter/4;
+    max-width: gs-span(7);
+    cursor: initial;
+
+    &--has-items {
+        .vjs-has-ended & {
+            display: block;
+        }
+    }
+
+    .vjs-fullscreen & {
+        margin: auto;
+        bottom: 0;
+        top: -1 * (gs-height(1) + $gs-baseline);
+        height: gs-height(6) + $gs-baseline*1;
+        max-width: gs-span(12) + $gs-gutter*2;
+        padding-bottom: $gs-baseline;
+    }
+
+    @include mq($until: tablet) {
+        .vjs-has-ended & {
+            display: none;
+        }
+    }
+
+    @include mq(wide) {
+        max-width: gs-span(8);
+    }
+
+    .gu-video-embed & {
+        top: 30%;
+        max-width: gs-span(9) + $gs-gutter*2;
+
+        .fc-item {
+            box-sizing: border-box;
+            padding: 0 $gs-gutter/2;
+            width: 25%;
+            float: left;
+            list-style: none;
+
+            &:not(:first-child) {
+                border-left: 1px solid $neutral-2;
+            }
+
+            .fc-item__action {
+                color: #ffffff;
+                &:hover {
+                    color: $media-default;
+                }
+            }
+
+            .fc-item__title {
+                @include fs-textSans(3);
+                @include font-size(14, 18);
+                overflow: hidden;
+                max-height: $gs-baseline*6;
+                height: $gs-baseline*6;
+                margin-top: $gs-baseline/2;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 4;
+            }
+        }
+
+        @include mq($until: tablet) {
+            top: $gs-baseline*4;
+            border-top: 1px solid $neutral-2;
+        }
+
+        @include mq(tablet, desktop) {
+            top: 20%;
+        }
+    }
+
+    @include mq(mobileLandscape) {
+        &--has-items {
+            .gu-video-embed .vjs-has-ended & {
+                display: block;
+            }
+        }
+    }
+}
+.end-slate-container__header {
+    height: gs-height(1);
+    padding-left: $gs-gutter/2;
+    margin-bottom: $gs-baseline;
+
+    .gu-video-embed & {
+        margin-bottom: 0;
+    }
+}
+.end-slate-container__heading {
+    @include fs-header(1);
+    padding-top: $gs-baseline/3;
+    font-weight: bold;
+    text-align: left;
+
+    .gu-video-embed & {
+        @include fs-textSans(3);
+    }
+}
+.end-slate {
+    margin-bottom: $gs-baseline*2;
+
+    &.items--media {
+        .item {
+            width: 25%;
+            margin-bottom: 0;
+
+            &:nth-child(-n+3) {
+                border-right: 1px solid $neutral-2;
+            }
+        }
+        .item__headline {
+            .vjs-fullscreen & {
+                @include mq(desktop) {
+                    @include fs-headline(2);
+                    @include text-clamp(4, get-line-height(headline, 2));
+                    height: get-line-height(headline, 2) * 4;
+                }
+            }
+        }
+    }
+}
+
+.podcast-meta {
+    text-align: left;
+    border-top: 1px solid $media-background;
+    margin-top: $gs-baseline/2;
+    padding: $gs-baseline/2 $gs-gutter/2;
+}
+.podcast-meta__item {
+    margin-right: $gs-gutter;
+
+    @include mq(phablet) {
+        display: inline-block;
+    }
+    &:last-child {
+        margin-right: 0;
+    }
+}
+.podcast-meta__item__link {
+    @include fs-textSans(1);
+    color: $neutral-7;
+}
+
+/* IMA Adverts
+   ========================================================================== */
+#ima-ad-container {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+#ima-controls-div {
+    display: none;
+    position: absolute;
+    height: $ima-controls-height !important;
+    bottom: -54px;
+
+    .vjs-mousemoved &,
+    &:hover {
+        bottom: 0;
+        transition: bottom 0s;
+        transition-delay: 0s;
+    }
+}
+#ima-seek-bar-div {
+    height: $vjs-progress-visual-height-resting;
+    width: 100% !important;
+    background-color: #000000;
+}
+#ima-progress-div {
+    height: 100%;
+    background-color: $media-default;
+}
+#ima-play-pause-div,
+#ima-mute-div,
+#ima-fullscreen-div {
+    display: block !important;
+}
+#ima-mute-div {
+    margin: $gs-baseline*1.5 $gs-gutter*5 0 8px;
+    cursor: pointer;
+    width: 17px !important;
+    float: right;
+}
+#ima-fullscreen-div {
+    @include icon(expand-white);
+    cursor: pointer;
+    float: right;
+    margin: 14px;
+    width: 20px !important;
+    height: 20px !important;
+
+    &:hover {
+        @include icon(expand-yellow);
+    }
+}
+
+.fc-item--media {
+    position: relative;
+    box-sizing: border-box;
+    margin-bottom: $gs-baseline*2;
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
+
+    &.fc-item {
+        width: 25%;
+        background-color: transparent;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 $gs-gutter/2;
+    }
+
+    + .fc-item {
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 1px;
+            height: 100%;
+            border-left: 1px solid $vjs-control-colour;
+        }
+    }
+
+    .fc-item__container {
+        margin-top: -$gs-baseline;
+    }
+
+    .fc-item__image-container {
+        display: block;
+    }
+
+    .fc-item__action {
+        display: block;
+        padding-top: $gs-baseline;
+        color: $neutral-5;
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+        &:visited,
+        &:active {
+            color: darken($neutral-5, 20%);
+        }
+    }
+
+    .fc-item__title {
+        @include fs-headline(1);
+        @include text-clamp(3, get-line-height(headline, 1));
+        font-weight: 500;
+        text-align: left; //Required for end slate items
+        height: get-line-height(headline, 1) * 3;
+        .inline-video-icon {
+            fill: $media-default;
+            svg {
+                height: .75em;
+                width: 1.1em;
+                margin-right: .3em;
+                position: relative;
+            }
+        }
+    }
+}
+
+.vjs-modal-dialog-description {
+    display: none;
+}
+
+// We have to use vjs classes here, and not BEM modifiers as videojs
+// changes the classes names via JS, and last time we messed with that,
+// we had major refactoring issues.
+.gu-media--show-controls-at-start.vjs-paused {
+    .vjs-control-bar {
+        bottom: 0;
+    }
+
+    .vjs-big-play-button .vjs-control-text {
+        &:before {
+            background-color: $media-default;
+        }
+
+        &:after {
+            border-left-color: #333333;
+        }
+    }
+}

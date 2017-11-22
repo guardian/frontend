@@ -61,4 +61,6 @@ POST        /privacy/edit-ajax                      controllers.EditProfileContr
 
 GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm
 POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferencesAjax
+
+GET         /repermission                           controllers.EditProfileController.displayRepermissioningJourneyForm
 ########################################################################################################################
