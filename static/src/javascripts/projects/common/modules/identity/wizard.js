@@ -23,24 +23,14 @@ const stepTransitionClassnames = [
     stepOutReverseClassname,
 ];
 
-const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
-    fastdom
-        .read(() => [...wizardEl.getElementsByClassName(pagerClassname)])
-        .then((pagerEls: Array<HTMLElement>) =>
-            fastdom.write(() => {
-                wizardEl.classList.toggle(
-                    completedClassname,
-                    parseInt(wizardEl.dataset.position, 10) >=
-                        parseInt(wizardEl.dataset.length, 10) - 1
-                );
-                pagerEls.forEach((pagerEl: HTMLElement) => {
-                    pagerEl.innerText = `${parseInt(
-                        wizardEl.dataset.position,
-                        10
-                    ) + 1} / ${wizardEl.dataset.length}`;
-                });
-            })
-        );
+const getDirection = (currentPosition: number, newPosition: number): string => {
+    if (currentPosition < 0) {
+        return 'none';
+    } else if (currentPosition > newPosition) {
+        return 'backwards';
+    }
+    return 'forwards';
+};
 
 const animateIncomingStep = (
     wizardEl: HTMLElement,
@@ -82,14 +72,24 @@ const animateOutgoingStep = (
         }, 200);
     });
 
-const getDirection = (currentPosition: number, newPosition: number): string => {
-    if (currentPosition < 0) {
-        return 'none';
-    } else if (currentPosition > newPosition) {
-        return 'backwards';
-    }
-    return 'forwards';
-};
+const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
+    fastdom
+        .read(() => [...wizardEl.getElementsByClassName(pagerClassname)])
+        .then((pagerEls: Array<HTMLElement>) =>
+            fastdom.write(() => {
+                wizardEl.classList.toggle(
+                    completedClassname,
+                    parseInt(wizardEl.dataset.position, 10) >=
+                        parseInt(wizardEl.dataset.length, 10) - 1
+                );
+                pagerEls.forEach((pagerEl: HTMLElement) => {
+                    pagerEl.innerText = `${parseInt(
+                        wizardEl.dataset.position,
+                        10
+                    ) + 1} / ${wizardEl.dataset.length}`;
+                });
+            })
+        );
 
 const updateSteps = (
     wizardEl: HTMLElement,
