@@ -42,6 +42,54 @@ const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
             })
         );
 
+const animateIncomingStep = (
+    wizardEl: HTMLElement,
+    stepEl: HTMLElement,
+    direction: string
+) =>
+    fastdom.write(() => {
+        stepEl.classList.remove(
+            stepHiddenClassname,
+            ...stepTransitionClassnames
+        );
+        wizardEl.style.minHeight = `${stepEl.getBoundingClientRect().height}px`;
+        if (direction !== 'none') {
+            stepEl.classList.add(
+                direction === 'forwards'
+                    ? stepInClassname
+                    : stepInReverseClassname
+            );
+        }
+    });
+
+const animateOutgoingStep = (
+    wizardEl: HTMLElement,
+    stepEl: HTMLElement,
+    direction: string
+) => {
+    stepEl.classList.remove(...stepTransitionClassnames);
+    stepEl.classList.add(
+        ...[
+            stepHiddenClassname,
+            direction === 'forwards'
+                ? stepOutClassname
+                : stepOutReverseClassname,
+        ]
+    );
+    setTimeout(() => {
+        stepEl.classList.remove(...stepTransitionClassnames);
+    }, 200);
+};
+
+const getDirection = (currentPosition: number, newPosition: number): string => {
+    if (currentPosition < 0) {
+        return 'none';
+    } else if (currentPosition > newPosition) {
+        return 'backwards';
+    }
+    return 'forwards';
+};
+
 export const setPosition = (
     wizardEl: HTMLElement,
     newPosition: number
@@ -62,48 +110,29 @@ export const setPosition = (
                     currentPosition: number,
                     steps: Array<HTMLElement>,
                 ]
-            ) =>
-                fastdom.write(() => {
-                    if (newPosition < 0 || !steps[newPosition]) {
-                        throw new Error('Invalid position');
-                    }
-                    if (currentPosition > -1 && window.scrollY > offsetTop) {
-                        scrollTo(offsetTop, 250, 'linear');
-                    }
+            ) => {
+                if (newPosition < 0 || !steps[newPosition]) {
+                    throw new Error('Invalid position');
+                }
+                if (currentPosition > -1 && window.scrollY > offsetTop) {
+                    scrollTo(offsetTop, 250, 'linear');
+                }
+                return fastdom.write(() => {
                     steps.forEach((stepEl: HTMLElement, i: number) => {
                         switch (i) {
                             case newPosition:
-                                stepEl.classList.remove(
-                                    stepHiddenClassname,
-                                    ...stepTransitionClassnames
+                                animateIncomingStep(
+                                    wizardEl,
+                                    stepEl,
+                                    getDirection(currentPosition, newPosition)
                                 );
-                                wizardEl.style.minHeight = `${stepEl.getBoundingClientRect()
-                                    .height}px`;
-                                if (currentPosition > -1) {
-                                    stepEl.classList.add(
-                                        currentPosition < newPosition
-                                            ? stepInClassname
-                                            : stepInReverseClassname
-                                    );
-                                }
                                 break;
                             case currentPosition:
-                                stepEl.classList.remove(
-                                    ...stepTransitionClassnames
+                                animateOutgoingStep(
+                                    wizardEl,
+                                    stepEl,
+                                    getDirection(currentPosition, newPosition)
                                 );
-                                stepEl.classList.add(
-                                    ...[
-                                        stepHiddenClassname,
-                                        currentPosition < newPosition
-                                            ? stepOutClassname
-                                            : stepOutReverseClassname,
-                                    ]
-                                );
-                                setTimeout(() => {
-                                    stepEl.classList.remove(
-                                        ...stepTransitionClassnames
-                                    );
-                                }, 200);
                                 break;
                             default:
                                 stepEl.classList.add(stepHiddenClassname);
@@ -115,8 +144,9 @@ export const setPosition = (
                     wizardEl.dataset.length = steps.length.toString();
                     wizardEl.dataset.position = newPosition.toString();
                     updateCounter(wizardEl);
-                })
-        );
+                });
+            }
+        )
 
 export const enhance = (wizardEl: HTMLElement): Promise<void> =>
     setPosition(wizardEl, 0).then(() =>
