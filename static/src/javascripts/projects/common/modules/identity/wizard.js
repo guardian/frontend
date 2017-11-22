@@ -6,15 +6,22 @@ import { scrollTo } from 'lib/scroller';
 
 const completedClassname = 'manage-account-wizard--completed';
 const pagerClassname = 'manage-account-wizard__controls-pager';
+const nextButtonElClassname = 'js-manage-account-wizard__next';
+const prevButtonElClassname = 'js-manage-account-wizard__prev';
+const containerClassname = 'manage-account-wizard';
+
 const stepClassname = 'manage-account-wizard__step';
 const stepHiddenClassname = 'manage-account-wizard__step--hidden';
 const stepOutClassname = 'manage-account-wizard__step--out';
 const stepInClassname = 'manage-account-wizard__step--in';
 const stepOutReverseClassname = 'manage-account-wizard__step--out-reverse';
 const stepInReverseClassname = 'manage-account-wizard__step--in-reverse';
-const nextButtonElClassname = 'js-manage-account-wizard__next';
-const prevButtonElClassname = 'js-manage-account-wizard__prev';
-const containerClassname = 'manage-account-wizard';
+const stepTransitionClassnames = [
+    stepInClassname,
+    stepInReverseClassname,
+    stepOutClassname,
+    stepOutReverseClassname,
+];
 
 const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
     fastdom
@@ -63,18 +70,12 @@ export const setPosition = (
                     if (currentPosition > -1 && window.scrollY > offsetTop) {
                         scrollTo(offsetTop, 250, 'linear');
                     }
-                    const transitionClassnames = [
-                        stepInClassname,
-                        stepInReverseClassname,
-                        stepOutClassname,
-                        stepOutReverseClassname,
-                    ];
                     steps.forEach((stepEl: HTMLElement, i: number) => {
                         switch (i) {
                             case newPosition:
                                 stepEl.classList.remove(
                                     stepHiddenClassname,
-                                    ...transitionClassnames
+                                    ...stepTransitionClassnames
                                 );
                                 wizardEl.style.minHeight = `${stepEl.getBoundingClientRect()
                                     .height}px`;
@@ -88,7 +89,7 @@ export const setPosition = (
                                 break;
                             case currentPosition:
                                 stepEl.classList.remove(
-                                    ...transitionClassnames
+                                    ...stepTransitionClassnames
                                 );
                                 stepEl.classList.add(
                                     ...[
@@ -100,14 +101,14 @@ export const setPosition = (
                                 );
                                 setTimeout(() => {
                                     stepEl.classList.remove(
-                                        ...transitionClassnames
+                                        ...stepTransitionClassnames
                                     );
                                 }, 200);
                                 break;
                             default:
                                 stepEl.classList.add(stepHiddenClassname);
                                 stepEl.classList.remove(
-                                    ...transitionClassnames
+                                    ...stepTransitionClassnames
                                 );
                         }
                     });
