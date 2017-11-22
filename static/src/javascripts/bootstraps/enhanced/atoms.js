@@ -81,7 +81,7 @@ const initAtoms = () => {
             require => {
                 require('@guardian/atom-renderer/dist/storyquestions/article/index.css');
                 const atomMaker = require('@guardian/atom-renderer/dist/storyquestions/article/index');
-                bootstrapAtom(atomMaker, 'timeline');
+                bootstrapAtom(atomMaker, 'storyquestions');
             },
             'storyquestions-atom'
         );
