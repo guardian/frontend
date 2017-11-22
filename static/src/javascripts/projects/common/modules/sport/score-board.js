@@ -13,7 +13,6 @@ type ScoreBoardContext = {
     placeholder?: HTMLElement,
     parent: bonzo,
     responseDataKey: string,
-    endpoint: string,
     updateEvery?: number,
 };
 
