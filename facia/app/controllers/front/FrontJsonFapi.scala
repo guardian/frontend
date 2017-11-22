@@ -1,25 +1,32 @@
 package controllers.front
 
+import java.nio.ByteBuffer
+
 import common.{FaciaPressMetrics, Logging, StopWatch}
+import concurrent.BlockingOperations
 import conf.Configuration
 import model.PressedPage
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
-import services.SecureS3Request
+import protocol.BinaryPressedPageProtocol
+import services.{S3, SecureS3Request}
+import boopickle.Default._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait FrontJsonFapi extends Logging {
+trait FrontJsonFapi extends Logging with BinaryPressedPageProtocol {
   lazy val stage: String = Configuration.facia.stage.toUpperCase
   val bucketLocation: String
 
   val wsClient: WSClient
   val secureS3Request = new SecureS3Request(wsClient)
 
-  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2.json"
+  def blockingOperations: BlockingOperations
+
+  private def getAddressForPath(path: String, format: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2.$format"
 
   def getRaw(path: String)(implicit executionContext: ExecutionContext): Future[Option[JsValue]] = {
-    val response = secureS3Request.urlGet(getAddressForPath(path)).get()
+    val response = secureS3Request.urlGet(getAddressForPath(path, "json")).get()
     response.map { r =>
       r.status match {
         case 200 =>
@@ -37,7 +44,14 @@ trait FrontJsonFapi extends Logging {
     }
   }
 
-  def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] =
+  def get(path: String): Future[Option[PressedPage]] = blockingOperations.executeBlocking {
+//    S3.getBytes(getAddressForPath(path, "binary")).map { bytes =>
+    S3.getBytes("CODE/frontsapi/pressed/draft/uk/fapi/pressed.v2.binary").map { bytes =>
+      Unpickle[PressedPage].fromBytes(ByteBuffer.wrap(bytes))
+    }
+  }
+
+  def get2(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] =
     getRaw(path)
       .map {
         _.flatMap { json =>
@@ -55,10 +69,10 @@ trait FrontJsonFapi extends Logging {
       }
 }
 
-class FrontJsonFapiLive(val wsClient: WSClient) extends FrontJsonFapi {
+class FrontJsonFapiLive(val wsClient: WSClient, val blockingOperations: BlockingOperations) extends FrontJsonFapi {
   override val bucketLocation: String = s"$stage/frontsapi/pressed/live"
 }
 
-class FrontJsonFapiDraft(val wsClient: WSClient) extends FrontJsonFapi {
+class FrontJsonFapiDraft(val wsClient: WSClient, val blockingOperations: BlockingOperations) extends FrontJsonFapi {
   val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }

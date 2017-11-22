@@ -9,7 +9,7 @@ import com.amazonaws.auth.AWSSessionCredentials
 import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.services.s3.model._
-import com.amazonaws.util.StringInputStream
+import com.amazonaws.util.{IOUtils, StringInputStream}
 import common.Logging
 import conf.Configuration
 import org.joda.time.{DateTime, DateTimeZone}
@@ -96,6 +96,20 @@ trait S3 extends Logging {
     putGzipped(key: String, value: String, contentType: String, Private)
   }
 
+  def getBytes(key: String): Option[Array[Byte]] = withS3Result(key) { result =>
+    IOUtils.toByteArray(result.getObjectContent)
+  }
+
+  def putBytes(key: String, value: Array[Byte]): Unit = {
+    val metadata = new ObjectMetadata()
+    metadata.setCacheControl("no-cache,no-store")
+    metadata.setContentType("application/octet-stream")
+    metadata.setContentLength(value.length)
+
+    val request = new PutObjectRequest(bucket, key, new ByteArrayInputStream(value), metadata).withCannedAcl(Private)
+    client.foreach(_.putObject(request))
+  }
+
   private def putGzipped(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
     lazy val request = {
       val metadata = new ObjectMetadata()
@@ -149,19 +163,26 @@ object S3FrontsApi extends S3 {
   lazy val stage = Configuration.facia.stage.toUpperCase
   val namespace = "frontsapi"
   lazy val location = s"$stage/$namespace"
-  private val filename = "pressed.v2.json"
+  private val jsonFilename = "pressed.v2.json"
+  private val binaryFilename = "pressed.v2.binary"
 
-  def getLiveFapiPressedKeyForPath(path: String): String =
+  def getLiveFapiPressedKeyForPath(path: String, filename: String): String =
     s"$location/pressed/live/$path/fapi/$filename"
 
-  def getDraftFapiPressedKeyForPath(path: String): String =
+  def getDraftFapiPressedKeyForPath(path: String, filename: String): String =
     s"$location/pressed/draft/$path/fapi/$filename"
 
   def putLiveFapiPressedJson(path: String, json: String): Unit =
-    putPrivateGzipped(getLiveFapiPressedKeyForPath(path), json, "application/json")
+    putPrivateGzipped(getLiveFapiPressedKeyForPath(path, jsonFilename), json, "application/json")
 
   def putDraftFapiPressedJson(path: String, json: String): Unit =
-    putPrivateGzipped(getDraftFapiPressedKeyForPath(path), json, "application/json")
+    putPrivateGzipped(getDraftFapiPressedKeyForPath(path, jsonFilename), json, "application/json")
+
+  def putLiveFapiPressedBytes(path: String, bytes: Array[Byte]): Unit =
+    putBytes(getLiveFapiPressedKeyForPath(path, binaryFilename), bytes)
+
+  def putDraftFapiPressedBytes(path: String, bytes: Array[Byte]): Unit =
+    putBytes(getDraftFapiPressedKeyForPath(path, binaryFilename), bytes)
 }
 
 class SecureS3Request(wsClient: WSClient) extends implicits.Dates with Logging {

@@ -353,15 +353,6 @@ object EnrichedContent {
   val empty = EnrichedContent(None)
 }
 
-object PressedContent {
-  def make(content: fapi.FaciaContent): PressedContent = content match {
-    case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
-    case supportingCuratedContent: fapi.SupportingCuratedContent => SupportingCuratedContent.make(supportingCuratedContent)
-    case linkSnap: fapi.LinkSnap => LinkSnap.make(linkSnap)
-    case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
-  }
-}
-
 sealed trait PressedContent {
   def properties: PressedProperties
   def header: PressedCardHeader
@@ -377,7 +368,6 @@ sealed trait PressedContent {
     } yield branding
 }
 
-sealed trait Snap extends PressedContent
 
 object CuratedContent {
   def make(content: fapi.CuratedContent): CuratedContent = {
@@ -393,6 +383,16 @@ object CuratedContent {
     )
   }
 }
+
+object PressedContent {
+  def make(content: fapi.FaciaContent): PressedContent = content match {
+    case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
+    case supportingCuratedContent: fapi.SupportingCuratedContent => SupportingCuratedContent.make(supportingCuratedContent)
+    case linkSnap: fapi.LinkSnap => LinkSnap.make(linkSnap)
+    case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
+  }
+}
+
 final case class CuratedContent(
   override val properties: PressedProperties,
   override val header: PressedCardHeader,
@@ -442,7 +442,7 @@ final case class LinkSnap(
   override val discussion: PressedDiscussionSettings,
   override val display: PressedDisplaySettings,
   enriched: Option[EnrichedContent] // This is currently an option, as we introduce the new field. It can then become a value type.
-) extends Snap
+) extends PressedContent
 
 object LatestSnap {
   def make(content: fapi.LatestSnap): LatestSnap = {
@@ -460,7 +460,7 @@ final case class LatestSnap(
   override val header: PressedCardHeader,
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings) extends Snap
+  override val display: PressedDisplaySettings) extends PressedContent
 
 object KickerProperties {
   def make(kicker: fapiutils.ItemKicker): KickerProperties = KickerProperties(fapiutils.ItemKicker.kickerText(kicker))

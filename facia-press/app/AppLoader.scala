@@ -28,10 +28,10 @@ trait AppComponents extends FrontendComponents {
 
   lazy val liveFapiFrontPress = wire[LiveFapiFrontPress]
   lazy val draftFapiFrontPress = wire[DraftFapiFrontPress]
-  lazy val toolPressQueueWorker = wire[ToolPressQueueWorker]
-  lazy val frontPressCron = wire[FrontPressCron]
+//  lazy val toolPressQueueWorker = wire[ToolPressQueueWorker]
+//  lazy val frontPressCron = wire[FrontPressCron]
 
-  lazy val healthCheck = wire[HealthCheck]
+//  lazy val healthCheck = wire[HealthCheck]
   lazy val applicationController: Application = wire[Application]
 
   override lazy val lifecycleComponents = List(
@@ -39,8 +39,8 @@ trait AppComponents extends FrontendComponents {
     wire[ConfigAgentLifecycle],
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
-    wire[FaciaPressLifecycle],
-    wire[TargetingLifecycle]
+//    wire[FaciaPressLifecycle],
+//    wire[TargetingLifecycle]
   )
 
   lazy val router: Router = wire[Routes]

@@ -1,11 +1,11 @@
 package dfp
 
-import tools.BlockingOperations
 import common.dfp.{GuAdUnit, GuLineItem, GuTargeting}
 import com.google.api.ads.dfp.axis.v201705._
 import org.joda.time.DateTime
 import org.scalatest._
 import akka.actor.ActorSystem
+import concurrent.BlockingOperations
 
 class DfpApiValidationTest extends FlatSpec with Matchers {
 

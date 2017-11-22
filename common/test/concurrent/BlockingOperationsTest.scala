@@ -1,8 +1,8 @@
-package tools
+package concurrent
 
 import akka.actor.ActorSystem
-import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.{FlatSpec, Matchers}
 
 class BlockingOperationsTest extends FlatSpec with Matchers with ScalaFutures {
   val system = ActorSystem()

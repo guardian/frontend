@@ -8,6 +8,7 @@ import com.gu.ProjectSettings._
 val common = library("common").settings(
   libraryDependencies ++= Seq(
     guBox,
+    booPickle,
     apacheCommonsMath3,
     awsCore,
     awsCloudwatch,
