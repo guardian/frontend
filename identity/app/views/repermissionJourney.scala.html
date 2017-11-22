@@ -30,59 +30,64 @@
                         @views.html.helper.CSRF.formField
 
                         <div class="manage-account-wizard" >
-                        <div class="manage-account-wizard__step">
+                            <div class="manage-account-wizard__step">
                             <center>
                                 <img width="100%" src="https://i.imgur.com/TqI7Ub8.png" />
                             </center>
                         </div>
-                        <div class="manage-account-wizard__step">
+                            <div class="manage-account-wizard__step">
 
-                            <h2 class="manage-account-header">We need you to consent again to receiving communications from The Guardian</h2>
-                            <p class="manage-account-headerNote">These are all the permissions you already consented to, please review them and check them again if you still want to receive them</p>
-                            <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
+                                <h2 class="manage-account-header">We need you to consent again to receiving communications from The Guardian</h2>
+                                <p class="manage-account-headerNote">These are all the permissions you already consented to, please review them and check them again if you still want to receive them</p>
+                                <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
+                                    <div class="manage-account__switches">
+                                        <ul>
+                                        @helper.repeat(forms.privacyForm("consents"), min=1) { consentField =>
+                                            <li>
+                                                @fragments.consentCheckbox(consentField)(messages)
+                                            </li>
+                                        }
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <p class="manage-account-headerNote">While you are here, you can also sign up for these ones:</p>
+                                <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
+                                    <div class="manage-account__switches">
+                                        <ul>
+                                        @helper.repeat(forms.privacyForm("consents"), min=1) { consentField =>
+                                            <li>
+                                                @fragments.consentCheckbox(consentField)(messages)
+                                            </li>
+                                        }
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="manage-account-wizard__step">
+                                <h2 class="manage-account-header">Email Preferences</h2>
+                                <p class="manage-account-headerNote">You were receiving these newsletters, check them again to confirm you want to keep receiving them.</p>
                                 <div class="manage-account__switches">
                                     <ul>
-                                    @helper.repeat(forms.privacyForm("consents"), min=1) { consentField =>
+                                    @availableLists.subscriptions.filter(_.theme == "news").zipWithRowInfo.map { case (newsletter, row) =>
                                         <li>
-                                            @fragments.consentCheckbox(consentField)(messages)
+                                            @fragments.form.switchNewsletter(
+                                                newsletter = newsletter
+                                            )(nonInputFields, messages, request, emailPrefsForm, emailSubscriptions)
                                         </li>
                                     }
                                     </ul>
                                 </div>
                             </div>
-
-                            <p class="manage-account-headerNote">While you are here, you can also sign up for these ones:</p>
-                            <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
-                                <div class="manage-account__switches">
-                                    <ul>
-                                    @helper.repeat(forms.privacyForm("consents"), min=1) { consentField =>
-                                        <li>
-                                            @fragments.consentCheckbox(consentField)(messages)
-                                        </li>
-                                    }
-                                    </ul>
-                                </div>
+                            <div class="manage-account-wizard__step">
+                                <img src="https://i.imgur.com/XoJmEro.png" width="100%" />
                             </div>
-
-                        </div>
-                        <div class="manage-account-wizard__step">
-                            <div class="manage-account__switches">
-                                <ul>
-                                @availableLists.subscriptions.filter(_.theme == "news").zipWithRowInfo.map { case (newsletter, row) =>
-                                    <li>
-                                        @fragments.form.switchNewsletter(
-                                            newsletter = newsletter
-                                        )(nonInputFields, messages, request, emailPrefsForm, emailSubscriptions)
-                                    </li>
-                                }
-                                </ul>
+                            <div class="manage-account-wizard__controls">
+                                <div class="manage-account-wizard__controls-pager"></div>
+                                <a class="manage-account__button js-manage-account-wizard__next">Next</a>
                             </div>
                         </div>
-                        <div class="manage-account-wizard__controls">
-                            <div class="manage-account-wizard__controls-pager">3 / 3</div>
-                            <a class="manage-account__button js-manage-account-wizard__next">Next</a>
-                        </div>
-                    </div>
 
                     </form>
 
