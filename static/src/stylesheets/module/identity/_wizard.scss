@@ -53,21 +53,21 @@
 @keyframes manage-account-wizard__fadeLeft {
     from {
         transform: translateX(0);
-        opacity:1;
+        opacity: 1;
     }
     to {
         transform: translateX(-5em);
-        opacity:0;
+        opacity: 0;
     }
 }
 
 @keyframes manage-account-wizard__fadeRight {
     from {
         transform: translateX(0);
-        opacity:1;
+        opacity: 1;
     }
     to {
         transform: translateX(5em);
-        opacity:0;
+        opacity: 0;
     }
 }
