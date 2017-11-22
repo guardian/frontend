@@ -16,6 +16,7 @@ import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{EmailPrefsData, _}
 import utils.SafeLogging
 import scala.concurrent.Future
+import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
 
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
 object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
@@ -48,6 +49,24 @@ class EditProfileController(
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
   def displayEmailPrefsForm: Action[AnyContent] = displayForm(EmailPrefsProfilePage)
+
+  def displayRepermissioningJourneyForm: Action[AnyContent] = {
+    if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
+      recentlyAuthenticated { implicit request =>
+        NotFound(views.html.errors._404())
+      }
+    }
+    else {
+      csrfAddToken {
+        recentlyAuthenticated.async { implicit request =>
+          repermissionJourneyView(
+            page = EmailPrefsProfilePage,
+            forms = ProfileForms(request.user, PublicEditProfilePage),
+            request.user)
+        }
+      }
+    }
+  }
 
   def displayPrivacyFormRedirect: Action[AnyContent] = csrfAddToken {
     recentlyAuthenticated { implicit request =>
@@ -156,6 +175,27 @@ class EditProfileController(
         ) // end fold
       } // end authActionWithUser.async
     } // end csrfCheck
+
+  private def repermissionJourneyView(
+    page: IdentityPage,
+    forms: ProfileForms,
+    user: User) (implicit request: AuthRequest[AnyContent]): Future[Result] = {
+
+    newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+
+      NoCache(Ok(views.html.repermissionJourney(
+        page,
+        user,
+        forms,
+        idRequestParser(request),
+        idUrlBuilder,
+        emailFilledForm,
+        newsletterService.getEmailSubscriptions(emailFilledForm),
+        EmailNewsletters.all
+      )))
+
+    }
+  }
 
   private def profileFormsView(
       page: IdentityPage,
