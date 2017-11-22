@@ -57,8 +57,8 @@ $live-garnett-main-2: #ffc5c2;
     }
 }
 
-/* TODO: Revisit these.... */
-
 .fc-sublink--type-liveblog {
-    // kicker text should be $live-garnett-main-1
+    .fc-sublink__kicker {
+        color: $live-garnett-main-1
+    }
 }
