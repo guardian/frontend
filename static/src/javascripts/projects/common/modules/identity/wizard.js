@@ -46,7 +46,7 @@ const animateIncomingStep = (
     wizardEl: HTMLElement,
     stepEl: HTMLElement,
     direction: string
-) =>
+): Promise<void> =>
     fastdom.write(() => {
         stepEl.classList.remove(
             stepHiddenClassname,
@@ -66,20 +66,21 @@ const animateOutgoingStep = (
     wizardEl: HTMLElement,
     stepEl: HTMLElement,
     direction: string
-) => {
-    stepEl.classList.remove(...stepTransitionClassnames);
-    stepEl.classList.add(
-        ...[
-            stepHiddenClassname,
-            direction === 'forwards'
-                ? stepOutClassname
-                : stepOutReverseClassname,
-        ]
-    );
-    setTimeout(() => {
+): Promise<void> =>
+    fastdom.write(() => {
         stepEl.classList.remove(...stepTransitionClassnames);
-    }, 200);
-};
+        stepEl.classList.add(
+            ...[
+                stepHiddenClassname,
+                direction === 'forwards'
+                    ? stepOutClassname
+                    : stepOutReverseClassname,
+            ]
+        );
+        setTimeout(() => {
+            stepEl.classList.remove(...stepTransitionClassnames);
+        }, 200);
+    });
 
 const getDirection = (currentPosition: number, newPosition: number): string => {
     if (currentPosition < 0) {
@@ -123,7 +124,7 @@ const updateSteps = (
 export const setPosition = (
     wizardEl: HTMLElement,
     newPosition: number
-): Promise<void> =>
+): Promise<Array<*>> =>
     fastdom
         .read(() => [
             wizardEl.getBoundingClientRect().top - 20,
