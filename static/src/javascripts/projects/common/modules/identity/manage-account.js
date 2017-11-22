@@ -37,39 +37,52 @@ const submitPartialFormStatus = (
     });
 };
 
+const getNewsletterHtmlPreference = (): Promise<string> =>
+    fastdom.read(() => {
+        if ($('[name="htmlPreference"]:checked').val()) {
+            return $('[name="htmlPreference"]:checked').val();
+        } else if ($('[name="htmlPreference"]').val()) {
+            return $('[name="htmlPreference"]').val();
+        }
+        return 'HTML';
+    });
+
 const submitNewsletterAction = (
     csrfToken: string,
     action: string = 'none',
     newsletters: Array<string> = []
-) => {
+): Promise<void> => {
     const formData = new FormData();
-    formData.append('csrfToken', csrfToken);
-    formData.append(
-        'htmlPreference',
-        $('[name="htmlPreference"]:checked').val()
-    );
+    return getNewsletterHtmlPreference()
+        .then((newsletterHtmlPreference: string) => {
+            formData.append('csrfToken', csrfToken);
+            formData.append('htmlPreference', newsletterHtmlPreference);
 
-    switch (action) {
-        case 'add':
-            newsletters.map(id =>
-                formData.append('addEmailSubscriptions[]', id)
-            );
-            break;
-        case 'remove':
-            newsletters.map(id =>
-                formData.append('removeEmailSubscriptions[]', id)
-            );
-            break;
-        default:
-            throw new Error(`Undefined newsletter action type (${action})`);
-    }
-
-    return reqwest({
-        url: '/email-prefs',
-        method: 'POST',
-        data: formData,
-        processData: false,
-    });
+            switch (action) {
+                case 'add':
+                    newsletters.map(id =>
+                        formData.append('addEmailSubscriptions[]', id)
+                    );
+                    break;
+                case 'remove':
+                    newsletters.map(id =>
+                        formData.append('removeEmailSubscriptions[]', id)
+                    );
+                    break;
+                default:
+                    throw new Error(
+                        `Undefined newsletter action type (${action})`
+                    );
+            }
+        })
+        .then(() =>
+            reqwest({
+                url: '/email-prefs',
+                method: 'POST',
+                data: formData,
+                processData: false,
+            })
+        );
 };
 
 const getCsrfTokenFromElement = (originalEl: HTMLElement): Promise<any> =>
