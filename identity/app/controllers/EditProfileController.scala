@@ -49,10 +49,11 @@ class EditProfileController(
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
   def displayEmailPrefsForm: Action[AnyContent] = displayForm(EmailPrefsProfilePage)
+
   def displayRepermissioningJourneyForm: Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
-        Redirect(routes.EditProfileController.displayEmailPrefsForm(), TEMPORARY_REDIRECT)
+        NotFound(views.html.errors._404())
       }
     }
     else {
@@ -66,7 +67,6 @@ class EditProfileController(
       }
     }
   }
-
 
   def displayPrivacyFormRedirect: Action[AnyContent] = csrfAddToken {
     recentlyAuthenticated { implicit request =>
