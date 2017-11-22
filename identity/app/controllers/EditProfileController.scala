@@ -24,6 +24,7 @@ object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Emails")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
+object RepermissionJourneyPage extends IdentityPage("/repermission", "Repermission")
 
 class EditProfileController(
     idUrlBuilder: IdentityUrlBuilder,
@@ -60,7 +61,7 @@ class EditProfileController(
       csrfAddToken {
         recentlyAuthenticated.async { implicit request =>
           repermissionJourneyView(
-            page = EmailPrefsProfilePage,
+            page = RepermissionJourneyPage,
             forms = ProfileForms(request.user, PublicEditProfilePage),
             request.user)
         }
