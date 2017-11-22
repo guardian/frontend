@@ -1,9 +1,10 @@
 $live-garnett-main-1: #dc0100;
 $live-garnett-main-2: #ffc5c2;
 
-.fc-item--type-liveblog {
+.fc-item--type-liveblog:not(.fc-container--story-package &) {
+    background-color: $live-garnett-main-1;
+
     .u-faux-block-link--hover,
-    .fc-item__container,
     .fc-item__kicker,
     .fc-item__container::before,
     &:hover .fc-item__kicker {
@@ -55,7 +56,6 @@ $live-garnett-main-2: #ffc5c2;
         color: $live-garnett-main-2;
     }
 }
-
 
 /* TODO: Revisit these.... */
 
