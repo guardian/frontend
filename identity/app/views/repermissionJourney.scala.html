@@ -3,6 +3,8 @@
 @import conf.switches.Switches.ProfileShowContributorTab
 @import model.{ApplicationContext, EmailNewsletters, IdentityPage}
 @import services.EmailPrefsData
+@import form.IdFormHelpers.nonInputFields
+@import views.support.`package`.Seq2zipWithRowInfo
 
 
 @(
@@ -63,8 +65,18 @@
                             </div>
 
                         </div>
-                        <div class="manage-account-wizard__step" style="display: block;">
-                            3
+                        <div class="manage-account-wizard__step">
+                            <div class="manage-account__switches">
+                                <ul>
+                                @availableLists.subscriptions.filter(_.theme == "news").zipWithRowInfo.map { case (newsletter, row) =>
+                                    <li>
+                                        @fragments.form.switchNewsletter(
+                                            newsletter = newsletter
+                                        )(nonInputFields, messages, request, emailPrefsForm, emailSubscriptions)
+                                    </li>
+                                }
+                                </ul>
+                            </div>
                         </div>
                         <div class="manage-account-wizard__controls">
                             <div class="manage-account-wizard__controls-pager">3 / 3</div>
