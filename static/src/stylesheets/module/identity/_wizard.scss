@@ -3,7 +3,7 @@
     position: relative;
     transition: min-height .2s;
     will-change: min-height;
-    &--completed {
+    .manage-account-wizard--completed {
         .manage-account-wizard__controls {
             display: none;
         }
@@ -15,23 +15,23 @@
     left: 0;
     right: 0;
     will-change: transform;
-    &--hidden {
+    .manage-account-wizard__step--hidden {
         display: none;
     }
-    &--out {
+    .manage-account-wizard__step--out {
         display: block;
         position: absolute;
         animation: manage-account-wizard__fadeLeft .2s both;
     }
-    &--in {
+    .manage-account-wizard__step--in {
         animation: manage-account-wizard__fadeRight .2s reverse both;
     }
-    &--out-reverse {
+    .manage-account-wizard__step--out-reverse {
         display: block;
         position: absolute;
         animation: manage-account-wizard__fadeRight .2s both;
     }
-    &--in-reverse {
+    .manage-account-wizard__step--in-reverse {
         animation: manage-account-wizard__fadeLeft .2s reverse both;
     }
 }
@@ -51,6 +51,10 @@
         display: none;
     }
 }
+
+/*
+80px looks somewhat good for a .2s transition
+*/
 
 @keyframes manage-account-wizard__fadeLeft {
     from {
