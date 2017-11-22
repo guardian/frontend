@@ -1,7 +1,14 @@
 // @flow
 
+import fastdom from 'lib/fastdom-promise';
+
+import { catchErrorsWithContext } from 'lib/robust';
 import { forgottenEmail, passwordToggle } from 'common/modules/identity/forms';
 import { Formstack } from 'common/modules/identity/formstack';
+import {
+    enhance as enhanceWizard,
+    containerClassname as wizardContainerClassname,
+} from 'common/modules/identity/wizard';
 import { FormstackIframe } from 'common/modules/identity/formstack-iframe';
 import { FormstackEmbedIframe } from 'common/modules/identity/formstack-iframe-embed';
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
@@ -36,18 +43,38 @@ const initFormstack = (): void => {
     });
 };
 
-const initProfile = (): void => {
-    initFormstack();
-    forgottenEmail();
-    passwordToggle();
-    initValidationEmail();
-    initUserAvatars();
-    initTabs();
+const initWizards = (): void => {
+    fastdom
+        .read(() => [
+            ...document.getElementsByClassName(wizardContainerClassname),
+        ])
+        .then(wizards => {
+            wizards.forEach(wizardEl => {
+                enhanceWizard(wizardEl);
+            });
+        });
+};
+
+const initAccountProfile = (): void => {
     // eslint-disable-next-line no-new
     new AccountProfile();
-    enhanceManageAccount();
-    setupLoadingAnimation();
-    initPublicProfile();
+};
+
+const initProfile = (): void => {
+    const modules: Array<Array<string | Function>> = [
+        ['init-form-stack', initFormstack],
+        ['forgotten-email', forgottenEmail],
+        ['password-toggle', passwordToggle],
+        ['init-validation-email', initValidationEmail],
+        ['init-user-avatars', initUserAvatars],
+        ['init-tabs', initTabs],
+        ['init-account-profile', initAccountProfile],
+        ['enhance-manage-account', enhanceManageAccount],
+        ['setup-loading-animation', setupLoadingAnimation],
+        ['init-public-profile', initPublicProfile],
+        ['init-wizards', initWizards],
+    ];
+    catchErrorsWithContext(modules);
 };
 
 export { initProfile };

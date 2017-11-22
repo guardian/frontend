@@ -124,9 +124,9 @@ object ABImageTestService extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
 }
 
-object Garnet extends TestDefinition(
-  name = "garnet",
-  description = "Users in this test will see garnet styling.",
+object Garnett extends TestDefinition(
+  name = "garnett",
+  description = "Users in this test will see garnett styling.",
   owners = Seq(Owner.withName("dotcom.platform")),
   sellByDate = new LocalDate(2018, 2, 1)
 ) {
@@ -164,7 +164,7 @@ object ActiveTests extends ServerSideABTests {
     ABNewDesktopHeaderControl,
     ABJavascriptRenderingVariant,
     ABJavascriptRenderingControl,
-    Garnet
+    Garnett
   )
 }
 

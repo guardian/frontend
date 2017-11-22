@@ -1,6 +1,18 @@
 @(timeline: model.content.TimelineAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
 @import org.joda.time.format.DateTimeFormat
+@import com.gu.contentatom.thrift.atom.timeline.TimelineItem
+
+@renderFormattedDate(item: TimelineItem, format: String) = @{
+   item.toDate match {
+       case Some(date) => {
+            val beginRange = DateTimeFormat.forPattern(format).print(item.date)
+            val endRange = DateTimeFormat.forPattern(format).print(date)
+            s"$beginRange&ndash;$endRange"
+       }
+       case None => DateTimeFormat.forPattern(format).print(item.date)
+   }
+}
 
 @fragments.atoms.snippet(
     className = "timeline",
@@ -14,7 +26,13 @@
     }
     @for(item <- timeline.data.events) {
       <div class="explainer-snippet__item">
-        <time class="explainer-snippet__event-date" datetime="">@DateTimeFormat.forPattern("d MMMM yyyy").print(item.date)</time>
+        <time class="explainer-snippet__event-date" datetime="">
+            @item.dateFormat match {
+                case Some("month-year") => { @renderFormattedDate(item , "MMMM yyyy") }
+                case Some("year") => { @renderFormattedDate(item, "yyyy") }
+                case _ => { @renderFormattedDate(item, "d MMMM yyyy") }
+            }
+        </time>
         <div class="explainer-snippet__heading"><b>@item.title</b></div>
         @item.body.map { body => @Html(body) }
       </div>

@@ -1,0 +1,61 @@
+.fc-container:not(.fc-container--story-package) .fc-item--type-liveblog {
+    background-color: $live-garnett-main-1;
+
+    .u-faux-block-link--hover,
+    .fc-item__kicker,
+    .fc-item__container::before,
+    &:hover .fc-item__kicker {
+        background-color: $live-garnett-main-1;
+    }
+
+    .live-pulse-icon::before {
+        background-color: $live-garnett-main-2;
+    }
+
+    .fc-item__kicker {
+        color: $live-garnett-main-2;
+        border: 0;
+
+        &::after {
+            background-color: $live-garnett-main-2;
+        }
+    }
+
+    .fc-item__headline {
+        color: #ffffff;
+    }
+
+    .fc-item__standfirst {
+        color: $live-garnett-main-2;
+    }
+
+    .fc-trail__count--commentcount {
+        color: $live-garnett-main-2;
+
+        .inline-icon {
+            fill: $live-garnett-main-2;
+        }
+    }
+
+    .fc-sublink__title {
+        font-weight: 600;
+
+        &::before {
+            border-top-color: #e1e1e1;
+        }
+    }
+
+    .fc-sublink__link {
+        color: #ffffff;
+    }
+
+    .fc-sublink__kicker {
+        color: $live-garnett-main-2;
+    }
+}
+
+.fc-sublink--type-liveblog {
+    .fc-sublink__kicker {
+        color: $live-garnett-main-1
+    }
+}

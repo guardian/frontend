@@ -1,0 +1,253 @@
+/* Toast (new updates button)
+   ========================================================================== */
+
+.toast__container {
+    padding-bottom: $gs-baseline;
+    text-align: center;
+    transition: transform .3s ease-in-out;
+    width: 100%;
+
+    @include mq(desktop) {
+        width: gs-span(8);
+    }
+
+    @include mq(tablet) {
+        width: gs-span(9);
+    }
+
+    @include mq(desktop) {
+        width: gs-span(8);
+    }
+
+    @include mq(leftCol) {
+        width: gs-span(10);
+    }
+
+    @include mq(wide) {
+        width: gs-span(8);
+    }
+}
+
+/* prevent toast from dropping behind first post when not fixed */
+.toast__container:not(.is-sticky) {
+    position: absolute;
+    // Make sure we're not covering the pagination buttons
+    width: 50%;
+    left: 25%;
+}
+
+.toast__container--open {
+    z-index: $zindex-content;
+}
+
+.toast__button {
+    @include fs-textSans(1);
+    background-color: $live-main-2;
+    color: #ffffff;
+    box-sizing: border-box;
+    overflow: hidden;
+    border: 0;
+    margin-right: 0;
+    max-width: 300px; // somewhat arbitrary, just need a max-width to animate from
+    position: relative;
+
+    &:hover,
+    &:focus {
+        color: #ffffff;
+        background-color: $live-main-1;
+    }
+
+    &.toast__button--closed {
+        height: 0px;
+    }
+
+    .toast__text {
+        display: inline-block;
+        font-weight: 700;
+        float: right;
+        opacity: 1;
+        padding-left: $gs-gutter * 5/4;
+        transition: opacity .3s ease-in-out;
+    }
+
+    svg {
+        height: 20px;
+        width: 20px;
+        display: inline-block;
+        position: absolute;
+        top: 8px;
+        left: 8px;
+    }
+
+    &.loading {
+        max-width: $gs-baseline*3; // same as the height, making it circular
+        transition: max-width .3s ease-in-out;
+
+        .toast__text {
+            opacity: 0;
+        }
+
+        svg {
+            animation: rotating 1.5s linear infinite;
+        }
+    }
+}
+
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.toast__space-reserver {
+    height: $gs-baseline*3; // was 0, for testing
+    margin-bottom: -$gs-baseline*3;
+    display: block;
+}
+
+/* Navigation
+   ========================================================================== */
+
+.liveblog-navigation {
+    // If we don't support flexbox
+    // then the children are floated
+    @include clearfix;
+    // If we do support flexbox
+    @include fs-textSans(3);
+    display: flex;
+}
+
+.liveblog-navigation__detail {
+    // If we don't support flexbox
+    text-align: center;
+    // If we do support flexbox
+    order: 1;
+    // Centre (vertically and horizontally) text
+    // If we do support flexbox
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.liveblog-navigation__newer {
+    // If we don't support flexbox
+    float: left;
+}
+
+.liveblog-navigation__older {
+    // If we don't support flexbox
+    float: right;
+    // If we do support flexbox
+    order: 2;
+}
+
+.liveblog-navigation__page-number,
+.liveblog-navigation__pages-length {
+    font-weight: bold;
+}
+
+.liveblog-navigation__link {
+    display: inline-block;
+    position: relative;
+    color: $neutral-1;
+    border: 1px solid $neutral-4;
+    height: $gs-baseline * 3;
+    line-height: 38px;
+    font-weight: bold;
+    vertical-align: middle;
+
+    &:hover {
+        border-color: $neutral-2;
+        text-decoration: none;
+    }
+
+    svg {
+        fill: $neutral-2;
+        position: absolute;
+    }
+
+    @include mq($until: mobileLandscape) {
+        font-size: 0;
+    }
+}
+
+.liveblog-navigation__link--primary {
+    width: $gs-baseline * 3;
+    border-radius: 100%;
+
+    svg {
+        top: 10px;
+        width: 16px;
+        height: 16px;
+    }
+
+    .inline-chevron-right svg {
+        right: 9px;
+    }
+
+    .inline-arrow-left svg {
+        left: 9px;
+    }
+}
+
+.liveblog-navigation__link--secondary {
+    border-radius: 21px;
+    padding: 0 $gs-gutter / 2;
+
+    svg {
+        width: 14px;
+        height: 14px;
+        top: 11px;
+    }
+}
+
+.liveblog-navigation__link--secondary--newer {
+    margin-right: $gs-gutter / 4;
+    padding-left: $gs-gutter * 1.5;
+
+    svg {
+        left: $gs-gutter / 2;
+    }
+    @include mq(mobileLandscape) {
+        margin-right: $gs-gutter / 2;
+    }
+}
+
+.liveblog-navigation__link--secondary--older {
+    margin-left: $gs-gutter / 4;
+    padding-right: $gs-gutter * 1.5;
+
+    svg {
+        right: $gs-gutter / 2;
+    }
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / 2;
+    }
+}
+
+@include mq($until: mobileLandscape) {
+    .liveblog-navigation__link--secondary {
+        width: $gs-baseline * 3;
+        padding: 0;
+    }
+}
+
+.liveblog-navigation__link--disabled {
+    cursor: default;
+    color: $neutral-5;
+    border-color: $neutral-6;
+
+    svg {
+        fill: $neutral-5;
+    }
+
+    &:hover,
+    &:active {
+        color: $neutral-5;
+        border-color: $neutral-6;
+    }
+}

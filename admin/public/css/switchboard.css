@@ -56,3 +56,13 @@ input[type=text] {
 #switchboard .checkbox:nth-child(odd) {
     background-color: #E9E9E9;
 }
+
+.actions {
+    position: sticky;
+    bottom: 0;
+    left:0;
+    right:0;
+    padding: 20px 0;
+    background: #fff;
+    border-top: 1px solid #eee;
+}

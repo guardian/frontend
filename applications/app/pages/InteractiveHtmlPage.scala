@@ -21,7 +21,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = stacked(
-      criticalStyleLink("content"),
+      criticalStyleLink(ContentCSSFile),
       criticalStyleLink("interactive")
     )
     override def criticalCssInline: Html = criticalStyleInline(
@@ -29,9 +29,9 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
       Html(common.Assets.css.interactive)
     )
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
-    override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.content.css")
+    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.content.css")
+    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
