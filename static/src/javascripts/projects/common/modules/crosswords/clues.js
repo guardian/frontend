@@ -90,13 +90,15 @@ const Clues = createClass({
 
     scrollIntoView(clue: Object) {
         const buffer = 100;
-        const node = findDOMNode(this.refs[clue.id]);
-        const visible =
+        const node = clue.id && findDOMNode(this.refs[clue.id]);
+        const visible = !!(
+            node &&
             node.offsetTop - buffer > this.$cluesNode.scrollTop &&
             node.offsetTop + buffer <
-                this.$cluesNode.scrollTop + this.$cluesNode.clientHeight;
+                this.$cluesNode.scrollTop + this.$cluesNode.clientHeight
+        );
 
-        if (!visible) {
+        if (visible === false) {
             const offset = node.offsetTop - this.$cluesNode.clientHeight / 2;
             scrollTo(offset, 250, 'easeOutQuad', this.$cluesNode);
         }
