@@ -69,13 +69,18 @@ const supporterEngagementCtaCopy = (location: string): string =>
         ? `Support us with a one-time contribution`
         : `Support us for ${monthlySupporterCost(location)} a month.`;
 
+const supporterEngagementCtaCopyJustOne = (location: string): string =>
+    location === 'US'
+        ? 'Support the Guardian from as little as $1.'
+        : 'Support the Guardian from as little as £1.';
+
 const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Support the Guardian',
         linkUrl: 'https://support.theguardian.com',
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         messageText: engagementBannerCopy(),
-        ctaText: supporterEngagementCtaCopy(location),
+        ctaText: supporterEngagementCtaCopyJustOne(location),
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 

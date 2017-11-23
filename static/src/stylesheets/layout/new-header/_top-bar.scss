@@ -24,7 +24,8 @@
     }
 
     &:hover,
-    &:focus {
+    &:focus,
+    &.is-active {
         color: #ffffff;
         text-decoration: none;
     }

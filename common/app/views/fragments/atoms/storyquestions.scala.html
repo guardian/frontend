@@ -1,31 +1,7 @@
 @(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean, inApp: Boolean)(implicit request: RequestHeader)
 
-@import org.joda.time.{DateTime, DateTimeZone}
 @import conf.switches.Switches.ReaderAnswersDeliveryMechanism
-
-@isClosed() = @{
-    storyquestions.data.closeDate.exists { closeDate =>
-        closeDate < DateTime.now(DateTimeZone.UTC).getMillis
-    }
-}
-
-@getListId() = @{
-    if ("test/test" == storyquestions.data.relatedStoryId) {
-        /**
-          * TODO - remove this workaround once we've migrated to using the listId in the model.
-          *
-          * This workaround enables us to run a test for demand of receiving the answers commissioned to questions by email.
-          * If the story questions atom belongs to the test/test tag and has a label 4 characters long (an email list id) then
-          * show the form allowing a user to submit their email address and receive an answer.
-          */
-        storyquestions.atom.labels.find(_.length == 4)
-    } else {
-        for {
-            notifications <- storyquestions.data.notifications
-            email <- notifications.email
-        } yield email.listId
-    }
-}
+@import model.content.StoryQuestionsAtom
 
 @notifcationValue() = @{
     if(inApp) {
@@ -35,7 +11,7 @@
     }
 }
 
-@if(!isAmp && !isClosed && ReaderAnswersDeliveryMechanism.isSwitchedOn) {
+@if(!isAmp && !StoryQuestionsAtom.isClosed(storyquestions) && ReaderAnswersDeliveryMechanism.isSwitchedOn) {
     <div id="user__question-atom-@storyquestions.id" class="js-view-tracking-component submeta user__question">
 
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
@@ -99,7 +75,7 @@
 }
 
 
-@if(!isAmp && !isClosed && !ReaderAnswersDeliveryMechanism.isSwitchedOn) {
+@if(!isAmp && !StoryQuestionsAtom.isClosed(storyquestions) && !ReaderAnswersDeliveryMechanism.isSwitchedOn) {
     <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
 
@@ -136,7 +112,7 @@
                                     Thank you, we&rsquo;ve registered your vote. Sign up and we will email you an answer.
                                 </span>
 
-                                @for(listId <- getListId) {
+                                @for(listId <- StoryQuestionsAtom.getListId(storyquestions)) {
                                     <form id="js-storyquestion-email-signup-form-@question.questionId" class="is-hidden storyquestion-email-signup-form js-storyquestion-email-signup-form form" data-question-id="@question.questionId">
                                         <div class="form-field js-storyquestion-email-signup-input-container">
                                             <input class="text-input js-storyquestion-email-signup-input" type="email" name="email" placeholder="Email address" required />
