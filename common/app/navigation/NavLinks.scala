@@ -2,14 +2,6 @@ package navigation
 
 object NavLinks {
   /* NEWS */
-
-  val headlines = NavLink("news", "/",longTitle = "headlines", iconName = "home")
-  val ukNews = NavLink("UK", "/uk-news", longTitle = "UK news")
-  val world = NavLink("world", "/world", longTitle = "world news")
-  val environment = NavLink("environment", "/environment")
-  val business = NavLink("business", "/business")
-  val economy = business.copy(title = "economy")
-  val money = NavLink("money", "/money")
   val science = NavLink("science", "/science")
   val tech = NavLink("tech", "/technology")
   val politics = NavLink("UK politics", "/politics")
@@ -55,9 +47,36 @@ object NavLinks {
   val borrowing = NavLink("borrowing", "/money/debt")
   val careers = NavLink("careers", "/money/work-and-careers")
   val obituaries = NavLink("obituaries", "/tone/obituaries")
+  val ukNews = NavLink("UK", "/uk-news", longTitle = "UK news",
+    children = List(politics, education, media, society, law, scotland, wales, northernIreland)
+  )
+  val world = NavLink("world", "/world", longTitle = "world news",
+    children = List(europe, usNews, americas, asia, australiaNews, middleEast, africa, inequality, cities, globalDevelopment)
+  )
+
+  val ukEnvironment = NavLink("environment", "/environment",
+    children = List(climateChange, wildlife, energy, pollution)
+  )
+  val auEnvironment = ukEnvironment.copy(
+    children = List(cities, globalDevelopment, sustainableBusiness)
+  )
+
+  val money = NavLink("money", "/money",
+    children = List(property, pensions, savings, borrowing, careers)
+  )
+
+  val ukBusiness = NavLink("business", "/business",
+    children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness)
+  )
+
+  val usBusiness = ukBusiness.copy(
+    children = List(economics, sustainableBusiness, diversityEquality, smallBusiness)
+  )
+  val auBusiness = ukBusiness.copy(
+    children = List( markets, money, projectSyndicate)
+  )
 
   /* OPINION */
-  val opinion = NavLink("opinion", "/commentisfree", longTitle = "opinion home", iconName = "home")
   val columnists = NavLink("columnists", "/index/contributors")
   val auColumnists = NavLink("columnists", "/au/index/contributors")
   val theGuardianView = NavLink("the guardian view", "/profile/editorial")
@@ -66,8 +85,16 @@ object NavLinks {
   val letters = NavLink("letters", "/tone/letters")
 
   /* SPORT */
-  val sport = NavLink("sport", "/sport", longTitle = "sport home", iconName = "home")
-  val football = NavLink("football", "/football")
+  val football = NavLink("football", "/football",
+    children = List(
+      NavLink("live scores", "/football/live", "football/live"),
+      NavLink("tables", "/football/tables", "football/tables"),
+      NavLink("competitions", "/football/competitions", "football/competitions"),
+      NavLink("results", "/football/results", "football/results"),
+      NavLink("fixtures", "/football/fixtures", "football/fixtures"),
+      NavLink("clubs", "/football/teams", "football/teams")
+    )
+  )
   val soccer = football.copy(title = "soccer")
   val cricket = NavLink("cricket", "/sport/cricket")
   val cycling = NavLink("cycling", "/sport/cycling")
@@ -90,7 +117,6 @@ object NavLinks {
   val NHL = NavLink("NHL", "/sport/nhl")
 
   /* ARTS */
-  val culture = NavLink("arts", "/culture", longTitle = "culture home", iconName = "home")
   val film = NavLink("film", "/film")
   val tvAndRadio = NavLink("tv & radio", "/tv-and-radio")
   val music = NavLink("music", "/music")
@@ -101,12 +127,10 @@ object NavLinks {
   val classical = NavLink("classical", "/music/classicalmusicandopera")
 
   /* LIFE */
-  val lifestyle = NavLink("lifestyle", "/lifeandstyle", longTitle = "lifestyle home", iconName = "home")
   val fashion = NavLink("fashion", "/fashion")
   val fashionAu = NavLink("fashion", "/au/lifeandstyle/fashion")
   val food = NavLink("food", "/lifeandstyle/food-and-drink")
   val foodAu = NavLink("food", "/au/lifeandstyle/food-and-drink")
-  val travel = NavLink("travel", "/travel")
   val relationshipsAu = NavLink("relationships", "/au/lifeandstyle/relationships")
   val loveAndSex = NavLink("love & sex", "/lifeandstyle/love-and-sex")
   val family = NavLink("family", "/lifeandstyle/family")
@@ -121,15 +145,52 @@ object NavLinks {
   val skiing = NavLink("skiing", "/travel/skiing")
   val travelAustralasia = NavLink("australasia", "/travel/australasia")
   val travelAsia = NavLink("asia", "/travel/asia")
+  val ukTravel = NavLink("travel", "/travel",
+    children = List(travelUk, travelEurope, travelUs)
+  )
+  val usTravel = ukTravel.copy(
+    children = List(travelUs, travelEurope, travelUk)
+  )
+  val auTravel = ukTravel.copy(
+    children = List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs)
+  )
 
-  val todaysPaper = NavLink("today's paper", "/theguardian")
-  val observer = NavLink("the observer", "/observer")
+  val todaysPaper = NavLink("today's paper", "/theguardian",
+    children = List(
+      NavLink("obituaries", "/tone/obituaries"),
+      NavLink("g2", "/theguardian/g2"),
+      NavLink("weekend", "/theguardian/weekend"),
+      NavLink("the guide", "/theguardian/theguide"),
+      NavLink("saturday review", "/theguardian/guardianreview")
+    )
+  )
+  val observer = NavLink("the observer", "/observer",
+    children = List(
+      NavLink("comment", "/theobserver/news/comment"),
+      NavLink("the new review", "/theobserver/new-review"),
+      NavLink("observer magazine", "/theobserver/magazine")
+    )
+  )
   val digitalNewspaperArchive = NavLink("digital archive", "https://theguardian.newspapers.com")
-  val crosswords = NavLink("crosswords", "/crosswords")
-  val video =  NavLink("video", "/video")
-  val podcasts =  NavLink("podcasts", "/podcasts")
-  val pictures =  NavLink("pictures", "/inpictures")
-  val newsletters =  NavLink("newsletters", "/email-newsletters")
+  val crosswords = NavLink("crosswords", "/crosswords",
+    children = List(
+      NavLink("blog", "/crosswords/crossword-blog"),
+      NavLink("editor", "/crosswords/series/crossword-editor-update"),
+      NavLink("quick", "/crosswords/series/quick"),
+      NavLink("cryptic", "/crosswords/series/cryptic"),
+      NavLink("prize", "/crosswords/series/prize"),
+      NavLink("weekend", "/crosswords/series/weekend-crossword"),
+      NavLink("quiptic", "/crosswords/series/quiptic"),
+      NavLink("genius", "/crosswords/series/genius"),
+      NavLink("speedy", "/crosswords/series/speedy"),
+      NavLink("everyman", "/crosswords/series/everyman"),
+      NavLink("azed", "/crosswords/series/azed")
+    )
+  )
+  val video = NavLink("video", "/video")
+  val podcasts = NavLink("podcasts", "/podcasts")
+  val pictures = NavLink("pictures", "/inpictures")
+  val newsletters = NavLink("newsletters", "/email-newsletters")
   val jobs = NavLink("jobs", "https://jobs.theguardian.com")
   val dating = NavLink("dating", "https://soulmates.theguardian.com")
   val apps = NavLink("the guardian app", "https://app.adjust.com/f8qm1x_8q69t7?campaign=NewHeader&adgroup=Mobile&creative=generic")
@@ -137,6 +198,256 @@ object NavLinks {
   val auEvents = NavLink("events", "/guardian-live-australia")
   var holidays = NavLink("holidays", "https://holidays.theguardian.com")
 
+  // News Pillar
+  val ukNewsPillar = NavLink("news", "/", longTitle = "headlines", iconName = "home",
+    List(
+      ukNews,
+      world,
+      ukBusiness,
+      football,
+      ukEnvironment,
+      tech,
+      politics,
+      science,
+      globalDevelopment,
+      cities,
+      obituaries
+    )
+  )
+  val auNewsPillar = ukNewsPillar.copy(
+    children = List(
+      australiaNews,
+      world,
+      auPolitics,
+      auEnvironment,
+      football,
+      indigenousAustralia,
+      auImmigration,
+      media,
+      auBusiness
+    )
+  )
+  val usNewsPillar = ukNewsPillar.copy(children = List(
+      usNews,
+      world,
+      ukEnvironment,
+      soccer,
+      usPolitics,
+      usBusiness,
+      science,
+      money,
+      tech,
+      obituaries
+    )
+  )
+  val intNewsPillar = ukNewsPillar.copy(
+    children = List(
+      world,
+      ukNews,
+      science,
+      cities,
+      globalDevelopment,
+      football,
+      tech,
+      ukBusiness,
+      ukEnvironment,
+      obituaries
+    )
+  )
+
+  // Opinion Pillar
+  val ukOpinionPillar = NavLink("opinion", "/commentisfree", longTitle = "opinion home", iconName = "home",
+    List(
+      theGuardianView,
+      columnists,
+      cartoons,
+      inMyOpinion,
+      letters
+    )
+  )
+  val auOpinionPillar = ukOpinionPillar.copy(
+    children = List(
+      auColumnists,
+      cartoons,
+      indigenousAustraliaOpinion,
+      theGuardianView.copy(title = "editorials"),
+      letters
+    )
+  )
+  val usOpinionPillar = ukOpinionPillar.copy(
+    children = List(
+      theGuardianView,
+      columnists,
+      letters,
+      inMyOpinion,
+      cartoons
+    )
+  )
+  val intOpinionPillar = ukOpinionPillar.copy(
+    children = List(
+      theGuardianView,
+      columnists,
+      cartoons,
+      inMyOpinion,
+      letters
+    )
+  )
+
+  //Sport Pillar
+  val ukSportPillar = NavLink("sport", "/sport", longTitle = "sport home", iconName = "home",
+    List(
+      football,
+      rugbyUnion,
+      cricket,
+      tennis,
+      cycling,
+      formulaOne,
+      rugbyLeague,
+      racing,
+      usSports,
+      golf
+    )
+  )
+  val auSportPillar = ukSportPillar.copy(
+    children = List(
+      football,
+      AFL,
+      NRL,
+      aLeague,
+      cricket,
+      rugbyUnion,
+      tennis
+    )
+  )
+  val usSportPillar = ukSportPillar.copy(
+    children = List(
+      soccer,
+      NFL,
+      tennis,
+      MLB,
+      MLS,
+      NBA,
+      NHL
+    )
+  )
+  val intSportPillar = ukSportPillar.copy(
+    children = List(
+      football,
+      rugbyUnion,
+      cricket,
+      tennis,
+      cycling,
+      formulaOne,
+      golf,
+      usSports
+    )
+  )
+
+  // Arts Pillar
+  val ukArtsPillar = NavLink("arts", "/culture", longTitle = "culture home", iconName = "home",
+    List(
+      tvAndRadio,
+      music,
+      film,
+      stage,
+      books,
+      games,
+      artAndDesign,
+      classical
+    )
+  )
+  val auArtsPillar = ukArtsPillar.copy(
+    children = List(
+      film, music,
+      books,
+      tvAndRadio,
+      artAndDesign,
+      stage,
+      games,
+      classical
+    )
+  )
+  val usArtsPillar = ukArtsPillar.copy(
+    children = List(
+      film,
+      books,
+      music,
+      artAndDesign,
+      tvAndRadio,
+      stage,
+      classical,
+      games
+    )
+  )
+  val intArtsPillar = ukArtsPillar.copy(
+    children = List(
+      books,
+      music,
+      tvAndRadio,
+      artAndDesign,
+      film,
+      games,
+      classical,
+      stage
+    )
+  )
+
+  // Lifestyle Pillar
+  val ukLifestylePillar = NavLink("lifestyle", "/lifeandstyle", longTitle = "lifestyle home", iconName = "home",
+    List(
+      fashion,
+      food,
+      recipes,
+      ukTravel,
+      loveAndSex,
+      family,
+      home,
+      health,
+      women,
+      money
+    )
+  )
+  val auLifestylePillar = ukLifestylePillar.copy(
+    children = List(
+      auTravel,
+      foodAu,
+      relationshipsAu,
+      fashionAu,
+      healthAu,
+      loveAndSex,
+      family,
+      home
+    )
+  )
+  val usLifestylePillar = ukLifestylePillar.copy(
+    children = List(
+      fashion,
+      food,
+      recipes,
+      loveAndSex,
+      home,
+      health,
+      family,
+      usTravel,
+      money
+    )
+  )
+  val intLifestylePillar = ukLifestylePillar.copy(
+    children = List(
+      fashion,
+      food,
+      recipes,
+      loveAndSex,
+      health,
+      home,
+      women,
+      family,
+      ukTravel,
+      money
+    )
+  )
+
+  // Tertiary Navigation
   val tagPages = List(
     "us-news/us-politics",
     "australia-news/australian-politics",
