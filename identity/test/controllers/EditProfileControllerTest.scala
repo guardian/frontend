@@ -3,7 +3,7 @@ package controllers
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.cookie.GuUCookieData
-import com.gu.identity.model.ConsentText.FirstParty
+import com.gu.identity.model.Consent.FirstParty
 import com.gu.identity.model._
 import form._
 import idapiclient.{TrackingData, _}
@@ -129,16 +129,16 @@ import scala.concurrent.Future
 
     "submitPrivacyForm method is called with valid CSRF request" should {
       "post UserUpdateDTO with consent to IDAPI" in new EditProfileFixture {
-        val consent = Consent("user", FirstParty.name, false)
+        val consent = Consent(FirstParty.id, "user", false)
 
         val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             "consents[0].actor" -> consent.actor,
-            "consents[0].consentIdentifier" -> consent.consentIdentifier,
-            "consents[0].hasConsented" -> consent.hasConsented.toString,
-            "consents[0].privacyPolicy" -> consent.privacyPolicy.toString,
+            "consents[0].id" -> consent.id,
+            "consents[0].consented" -> consent.consented.toString,
+            "consents[0].privacyPolicyVersion" -> consent.privacyPolicyVersion.toString,
             "consents[0].timestamp" -> consent.timestamp.toString(ISODateTimeFormat.dateTimeNoMillis.withZoneUTC()),
-            "consents[0].consentIdentifierVersion" -> consent.consentIdentifierVersion.toString
+            "consents[0].version" -> consent.version.toString
           )
 
         when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
@@ -153,8 +153,8 @@ import scala.concurrent.Future
         val userUpdateDTO = userUpdateDTOCapture.getValue
 
         userUpdateDTO.consents.value.head.actor should equal(consent.actor)
-        userUpdateDTO.consents.value.head.consentIdentifier should equal(consent.consentIdentifier)
-        userUpdateDTO.consents.value.head.hasConsented should equal(consent.hasConsented)
+        userUpdateDTO.consents.value.head.id should equal(consent.id)
+        userUpdateDTO.consents.value.head.consented should equal(consent.consented)
       }
     }
 
