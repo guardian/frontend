@@ -310,7 +310,14 @@
 
 /* Modals
    ========================================================================== */
+
 .manage-account__modal {
+    border: 1px solid $neutral-8;
+    padding: $gs-gutter;
+    margin: $gs-gutter;
+}
+
+.js-on .manage-account__modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -320,14 +327,17 @@
     align-items: center;
     justify-content: center;
     display: none;
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
-.manage-account__modal--active {
+.js-on .manage-account__modal--active {
     display: block;
     display: flex;
 }
 
-.manage-account__modalBg {
+.js-on .manage-account__modalBg {
     position: fixed;
     top: 0;
     left: 0;
@@ -338,7 +348,7 @@
     z-index: 9;
 }
 
-.manage-account__modalContent {
+.js-on .manage-account__modalContent {
     max-width: gs-span(10);
     background: #ffffff;
     width: 100%;
@@ -351,6 +361,10 @@
 }
 
 .manage-account__modalCloser {
+    display: none;
+}
+
+.js-on .manage-account__modalCloser {
     width: $gs-gutter * 1.75;
     height: $gs-gutter * 1.75;
     border: 1px solid $guardian-brand;
