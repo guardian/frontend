@@ -9,7 +9,7 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
-import storyQuestions from 'common/modules/atoms/story-questions';
+import { init as storyQuestions } from 'common/modules/atoms/story-questions';
 
 const affixTimeline = (): void => {
     const keywordIds = config.get('page.keywordIds', '');
@@ -47,7 +47,7 @@ const keepTimestampsCurrent = (): void => {
 
 const initStoryquestions = (): void => {
     if (document.getElementsByClassName('js-ask-question-link').length) {
-        storyQuestions.init();
+        storyQuestions();
     } else {
         mediator.once('modules:autoupdate:updates', initStoryquestions);
     }
