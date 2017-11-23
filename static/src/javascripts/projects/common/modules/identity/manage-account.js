@@ -186,7 +186,7 @@ const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
     );
 };
 
-const bindUnsubscribeFromAll = (buttonEl: Element) => {
+const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     bean.on(buttonEl, 'click', () => {
         if ($(buttonEl).hasClass('js-confirm-unsubscribe')) {
             addUpdatingState(buttonEl);
