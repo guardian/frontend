@@ -47,9 +47,9 @@ const getNewsletterHtmlPreferenceFromElement = (
 
         if (!closestFormEl) throw new Error(ERR_IDENTITY_HTML_PREF_NOT_FOUND);
 
-        const inputEls: Array<any> = [
+        const inputEls: Array<HTMLInputElement> = ([
             ...closestFormEl.querySelectorAll('[name="htmlPreference"]'),
-        ];
+        ]: Array<any>).filter(el => el instanceof HTMLInputElement);
 
         /*
         loop over radio/checkbox-like fields first
