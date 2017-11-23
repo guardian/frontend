@@ -11,10 +11,8 @@ import play.api.test.Helpers._
 import services.{ConfigAgent, LegacyPressedPageService, PressedPageService}
 import org.scalatest._
 import controllers.FaciaControllerImpl
-import controllers.front.FrontJsonFapiLive
 import helpers.FaciaTestData
 import org.scalatest.mockito.MockitoSugar
-import org.scalatest.tagobjects.Slow
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
@@ -34,7 +32,7 @@ import scala.concurrent.Await
   lazy val legacyPressedPageService = new LegacyPressedPageService(wsClient)
   lazy val actorSystem = ActorSystem()
   lazy val blockingOperations = new BlockingOperations(actorSystem)
-  lazy val fapi = new TestFrontJsonFapi(new PressedPageService(actorSystem, blockingOperations), legacyPressedPageService)
+  lazy val fapi = new TestFrontJsonFapi(new PressedPageService(blockingOperations), legacyPressedPageService)
 
   lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents())
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"

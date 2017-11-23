@@ -27,7 +27,7 @@ import scala.concurrent.Await
   lazy val legacyPressedPageService = new LegacyPressedPageService(wsClient)
   lazy val actorSystem = ActorSystem()
   lazy val blockingOperations = new BlockingOperations(actorSystem)
-  lazy val fapi = new TestFrontJsonFapi(new PressedPageService(actorSystem, blockingOperations), legacyPressedPageService)
+  lazy val fapi = new TestFrontJsonFapi(new PressedPageService(blockingOperations), legacyPressedPageService)
 
   override def beforeAll() {
     val refresh = ConfigAgent.refreshWith(
