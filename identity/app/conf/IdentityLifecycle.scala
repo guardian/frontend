@@ -2,7 +2,7 @@ package conf
 
 import app.LifecycleComponent
 import common.{JobScheduler, AkkaAsync}
-import jobs.{TorExitNodeList, BlockedEmailDomainList}
+import jobs.TorExitNodeList
 import model.PhoneNumbers
 import play.api.inject.ApplicationLifecycle
 
@@ -19,17 +19,12 @@ class IdentityLifecycle(
   }}
 
   private def scheduleJobs() {
-    jobs.schedule("BlockedEmailsRefreshJobs", "0 0/30 * * * ?") {
-       BlockedEmailDomainList.run()
-    }
-
     jobs.schedule("TorExitNodeRefeshJob","0 0/30 * * * ?" ) {
        TorExitNodeList.run()
     }
   }
 
   private def descheduleJobs() {
-    jobs.deschedule("BlockedEmailsRefreshJobs")
     jobs.deschedule("TorExitNodeRefeshJob")
   }
 
@@ -38,7 +33,6 @@ class IdentityLifecycle(
     scheduleJobs()
 
     akkaAsync.after1s {
-      BlockedEmailDomainList.run()
       TorExitNodeList.run()
       PhoneNumbers
     }
