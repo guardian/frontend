@@ -16,6 +16,8 @@ import {
 } from './modules/switch';
 import { addUpdatingState, removeUpdatingState } from './modules/button';
 
+const ERR_HTML_PREF_NOT_FOUND = `Can't find HTML preference`;
+
 const submitPartialFormStatus = (
     type: ?string = null,
     formData: FormData
@@ -43,7 +45,7 @@ const getNewsletterHtmlPreferenceFromElement = (
     fastdom.read(() => {
         const closestFormEl: ?Element = originalEl.closest('form');
 
-        if (!closestFormEl) throw Error(`Can't find HTML preference`);
+        if (!closestFormEl) throw Error(ERR_HTML_PREF_NOT_FOUND);
 
         const checkboxEl: ?HTMLElement = closestFormEl.querySelector(
             '[name="htmlPreference"]:checked'
@@ -57,16 +59,16 @@ const getNewsletterHtmlPreferenceFromElement = (
         } else if (inputEl && inputEl.value) {
             return inputEl.value;
         }
-        throw Error(`Can't find HTML preference`);
+        throw Error(ERR_HTML_PREF_NOT_FOUND);
     });
 
 const submitNewsletterHtmlPreference = (
     csrfToken: string,
-    newsletterHtmlPreference: string
+    htmlPreference: string
 ): Promise<void> => {
     const formData = new FormData();
     formData.append('csrfToken', csrfToken);
-    formData.append('htmlPreference', newsletterHtmlPreference);
+    formData.append('htmlPreference', htmlPreference);
 
     return reqwest({
         url: '/email-prefs',
@@ -78,11 +80,13 @@ const submitNewsletterHtmlPreference = (
 
 const submitNewsletterAction = (
     csrfToken: string,
+    htmlPreference: string,
     action: string = 'none',
     newsletters: Array<string> = []
 ): Promise<void> => {
     const formData = new FormData();
     formData.append('csrfToken', csrfToken);
+    formData.append('htmlPreference', htmlPreference);
 
     switch (action) {
         case 'add':
@@ -161,7 +165,7 @@ const confirmUnsubscriptionFromAll = buttonEl => {
     });
 };
 
-const bindHtmlPreferenceChange = (buttonEl: HTMLElement): void => {
+const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
     bean.on(buttonEl, 'click', () =>
         Promise.all([
             getCsrfTokenFromElement(buttonEl),
@@ -237,14 +241,26 @@ const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
             if (isNotUserInitiated) {
                 return;
             }
-            Promise.all([
-                getCsrfTokenFromElement(labelEl),
-                getCheckboxInfo(labelEl),
-                addSpinner(labelEl),
-            ])
-                .then(([token, info]) =>
+            getNewsletterHtmlPreferenceFromElement(labelEl)
+                .catch((error: Error) => {
+                    if (error.message === ERR_HTML_PREF_NOT_FOUND) {
+                        return 'HTML';
+                    }
+
+                    throw error;
+                })
+                .then((htmlPreference: string) =>
+                    Promise.all([
+                        htmlPreference,
+                        getCsrfTokenFromElement(labelEl),
+                        getCheckboxInfo(labelEl),
+                        addSpinner(labelEl),
+                    ])
+                )
+                .then(([htmlPreference, token, info]) =>
                     submitNewsletterAction(
                         token,
+                        htmlPreference,
                         info.checked ? 'add' : 'remove',
                         [info.name]
                     )
