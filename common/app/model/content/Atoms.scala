@@ -207,9 +207,13 @@ final case class TimelineItem(
 
 object Atoms extends common.Logging {
 
-  def extract[T](atoms: Option[Seq[AtomApiAtom]], extractFn: AtomApiAtom => T): Seq[T] = {
+  def extract[T](
+    atoms: Option[Seq[AtomApiAtom]], 
+    extractFn: AtomApiAtom => T, 
+    filterFn: T => Boolean = { _: T => true }
+  ): Seq[T] = {
     try {
-      atoms.getOrElse(Nil).map(extractFn)
+      atoms.getOrElse(Nil).map(extractFn).filter(filterFn)
     } catch {
       case e: Exception =>
         logException(e)
@@ -236,7 +240,7 @@ object Atoms extends common.Logging {
 
       val reviews = extract(atoms.reviews, atom => { ReviewAtom.make(atom) })
 
-      val storyquestions = extract(atoms.storyquestions, atom => { StoryQuestionsAtom.make(atom) })
+      val storyquestions = extract(atoms.storyquestions, atom => { StoryQuestionsAtom.make(atom) }, StoryQuestionsAtom.isOpen)
 
       val explainers = extract(atoms.explainers, atom => { ExplainerAtom.make(atom) })
 
@@ -525,11 +529,10 @@ object StoryQuestionsAtom {
     atom.data.asInstanceOf[AtomData.Storyquestions].storyquestions
   )
 
-  def isClosed(question: StoryQuestionsAtom): Boolean = {
-    question.data.closeDate.exists { closeDate =>
+  def isOpen(question: StoryQuestionsAtom): Boolean =
+    !question.data.closeDate.exists { closeDate =>
       closeDate < DateTime.now(DateTimeZone.UTC).getMillis
     }
-  }
 
   def getListId(question: StoryQuestionsAtom): Option[String] = {
     if ("test/test" == question.data.relatedStoryId) {
