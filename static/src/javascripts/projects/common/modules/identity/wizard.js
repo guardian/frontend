@@ -31,6 +31,7 @@ const getDirection = (currentPosition: number, newPosition: number): string => {
     return 'forwards';
 };
 
+// #? polyfill.io might struggle with multiple classnames on classList
 const animateIncomingStep = (
     wizardEl: HTMLElement,
     stepEl: HTMLElement,
