@@ -16,7 +16,7 @@ import {
 } from './modules/switch';
 import { addUpdatingState, removeUpdatingState } from './modules/button';
 
-const ERR_HTML_PREF_NOT_FOUND = `Can't find HTML preference`;
+const ERR_IDENTITY_HTML_PREF_NOT_FOUND = `Can't find HTML preference`;
 
 const submitPartialFormStatus = (
     type: ?string = null,
@@ -45,7 +45,7 @@ const getNewsletterHtmlPreferenceFromElement = (
     fastdom.read(() => {
         const closestFormEl: ?Element = originalEl.closest('form');
 
-        if (!closestFormEl) throw Error(ERR_HTML_PREF_NOT_FOUND);
+        if (!closestFormEl) throw new Error(ERR_IDENTITY_HTML_PREF_NOT_FOUND);
 
         const checkboxEl: ?HTMLElement = closestFormEl.querySelector(
             '[name="htmlPreference"]:checked'
@@ -59,7 +59,7 @@ const getNewsletterHtmlPreferenceFromElement = (
         } else if (inputEl && inputEl.value) {
             return inputEl.value;
         }
-        throw Error(ERR_HTML_PREF_NOT_FOUND);
+        throw new Error(ERR_IDENTITY_HTML_PREF_NOT_FOUND);
     });
 
 const submitNewsletterHtmlPreference = (
@@ -194,7 +194,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
 
             getNewsletterHtmlPreferenceFromElement(buttonEl)
                 .catch((error: Error) => {
-                    if (error.message === ERR_HTML_PREF_NOT_FOUND) {
+                    if (error.message === ERR_IDENTITY_HTML_PREF_NOT_FOUND) {
                         return 'HTML';
                     }
 
@@ -259,7 +259,7 @@ const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
             }
             getNewsletterHtmlPreferenceFromElement(labelEl)
                 .catch((error: Error) => {
-                    if (error.message === ERR_HTML_PREF_NOT_FOUND) {
+                    if (error.message === ERR_IDENTITY_HTML_PREF_NOT_FOUND) {
                         return 'HTML';
                     }
 
