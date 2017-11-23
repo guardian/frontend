@@ -160,7 +160,9 @@ const submitSignUpForm = (event: Event): void => {
     event.preventDefault();
 
     const answersEmailSignupForm: HTMLFormElement = (event.currentTarget: any);
-    const email: ?HTMLInputElement = (answersEmailSignupForm.elements.namedItem('email'): any);
+    const email: ?HTMLInputElement = (answersEmailSignupForm.elements.namedItem(
+        'email'
+    ): any);
     const listId: ?HTMLInputElement = (answersEmailSignupForm.elements.namedItem(
         'listId'
     ): any);
@@ -177,7 +179,7 @@ const submitSignUpForm = (event: Event): void => {
 
     if (!question) return;
 
-    fetch(`${config.page.ajaxUrl}/story-questions/answers/signup`, {
+    fetch(`${config.get('page.ajaxUrl')}/story-questions/answers/signup`, {
         mode: 'cors',
         method: 'POST',
         body: {
