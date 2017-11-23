@@ -1,0 +1,86 @@
+/*
+
+Three quarter item. Looks like a wide standard, a bit like this:
+
+************************************************************************************************
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+************************************************************************************************
+
+*/
+
+@mixin fc-item--three-quarters {
+    @include fc-item--horizontal(66%); // Works out as same width as 6 col on desktop and 4.5 col on tablet to align with other items
+
+    .fc-item__header {
+        @include mq(desktop) {
+            @include fs-headline(4, true);
+            @include headline-boost(5);
+        }
+    }
+    
+    .fc-item__standfirst {
+        @include mq(desktop) {
+            display: flex;
+        }
+    }
+
+    &.fc-item--has-cutout {
+        .fc-item__container {
+            min-height: gs-height(7);
+
+            .has-flex-wrap & {
+                flex-direction: row;
+            }
+        }
+
+        .fc-item__header {
+            @include fs-headline(5, true);
+            @include headline-boost(6);
+        }
+
+        .fc-item__content {
+            width: auto;
+            max-width: gs-span(5);
+
+            @include mq(desktop) {
+                max-width: gs-span(6);
+            }
+
+            .has-flex-wrap & {
+                flex-basis: auto;
+            }
+        }
+    }
+
+    .fc-item__avatar {
+        height: gs-height(6);
+
+        @include mq(desktop) {
+            height: gs-height(7);
+        }
+    }
+
+    .fc-item__avatar__media {
+        right: -12%;
+
+        @include mq(desktop) {
+            right: -12%;
+        }
+    }
+
+    &.fc-item--has-sublinks-3:not(.fc-item--has-cutout) {
+        @include fc-sublinks--below;
+    }
+}

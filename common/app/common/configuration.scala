@@ -19,52 +19,49 @@ import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
-object InstallVars {
+object Environment {
 
-  val installVars = new File("/etc/gu/install_vars") match {
+  private[this] val properties = {
+    def env(name: String): Option[String] = sys.env.get(name)
+
+    val props = new File("/etc/gu/install_vars") match {
       case f if f.exists => IOUtils.toString(new FileInputStream(f), Charset.defaultCharset())
       case _ => ""
     }
 
-  val properties = Properties(installVars)
-
-  def apply(key: String, default: String): String = properties.getOrElse(key, default)
-
-  object InstallationVars {
-    val stack = apply("stack", "frontend")
-    // if got config at app startup, we wouldn't need to configure it
-    val app = apply("app", "dev-build")
-    val stage = apply("STAGE", "DEV")
-    val awsRegion = apply("region", "eu-west-1")
-    val configBucket = apply("configBucket", "aws-frontend-store")
-    if (stage == "DEV" && new File(s"${System.getProperty("user.home")}/.gu/frontend.properties").exists) {
-    throw new RuntimeException(
-      "\n\nYou have a file ~/.gu/frontend.properties with secrets - please delete that file and any copies as it is not needed.\n  " +
-      "All secrets are now stored in S3 bucket aws-frontend-store, not on your laptop.\n\n  " +
-      "Should you need to override any properties in DEV, create a new file ~/.gu/frontend.conf. \n" +
-      "For an example see https://github.com/guardian/frontend/blob/master/common/app/common/configuration.scala#L48\n" +
-      "For details of the changes see https://github.com/guardian/frontend/pull/14081")
-    /*
-    ~/.gu/frontend.conf example file:
-
-    # local development (DEV stage) config overrides (not secrets)
-    devOverrides {
-      switches.key=DEV/config/switches-yournamehere.properties
-      facia.stage=CODE
-    }
-
-     */
+    for {
+      p <- Properties(props)
+    } yield p match {
+      case (key, value) => key -> env(key).getOrElse(value)
     }
   }
+
+  val stack = properties.getOrElse("stack", "frontend")
+  val app = properties.getOrElse("app", "dev-build")
+  val stage = properties.getOrElse("STAGE", "DEV")
+  val awsRegion = properties.getOrElse("region", "eu-west-1")
+  val configBucket = properties.getOrElse("configBucket", "aws-frontend-store")
 }
 
+/**
+  * Main configuration
+  *
+  * Loaded remotely, but local overrides possible in an `/etc/gu/frontend.conf`
+  * file under a `devOverrides` key. E.g:
+  *
+  *   devOverrides {
+  *     switches.key=DEV/config/switches-yournamehere.properties
+  *     facia.stage=CODE
+  *   }
+  */
 object GuardianConfiguration extends Logging {
 
   import com.gu.cm.{Configuration => CM}
   import com.typesafe.config.Config
-  import InstallVars.InstallationVars._
 
   lazy val configuration = {
+    import Environment._
+
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
     val s3ConfigVersion = 51
@@ -148,10 +145,8 @@ class GuardianConfiguration extends Logging {
   }
 
   object environment {
-    import InstallVars._
-
-    lazy val stage = InstallationVars.stage
-    lazy val app = InstallationVars.app
+    lazy val stage = Environment.stage
+    lazy val app = Environment.app
 
     lazy val isProd = stage.equalsIgnoreCase("prod")
     lazy val isCode = stage.equalsIgnoreCase("code")

@@ -1,6 +1,7 @@
 @(timeline: model.content.TimelineAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
-@import org.joda.time.format.DateTimeFormat
+@import org.joda.time.DateTime
+@import model.content.TimelineAtom
 
 @fragments.atoms.snippet(
     className = "timeline",
@@ -14,7 +15,14 @@
     }
     @for(item <- timeline.data.events) {
       <div class="explainer-snippet__item">
-        <time class="explainer-snippet__event-date" datetime="">@DateTimeFormat.forPattern("d MMMM yyyy").print(item.date)</time>
+          <time class="explainer-snippet__event-date" datetime="@{new DateTime(item.date)}">
+          @{ TimelineAtom.renderFormattedDate(item.date, item.dateFormat) }
+          </time>
+          @item.toDate.map { maybeDate =>
+              –<time class="explainer-snippet__event-date" datetime="@{new DateTime(maybeDate)}">
+                @TimelineAtom.renderFormattedDate(maybeDate, item.dateFormat)
+              </time>
+          }
         <div class="explainer-snippet__heading"><b>@item.title</b></div>
         @item.body.map { body => @Html(body) }
       </div>

@@ -164,7 +164,7 @@ data-test-id="facia-card"
                 }
             </div>
 
-            @if(mvt.Garnet.isParticipating) {
+            @if(mvt.Garnett.isParticipating) {
                 <div class="fc-item__standfirst-wrapper">
                     @item.trailText.filter(const(item.showStandfirst)).map { text =>
                         <div class="fc-item__standfirst">@Html(text)</div>
@@ -185,7 +185,7 @@ data-test-id="facia-card"
                 <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
             }
 
-            @if(!mvt.Garnet.isParticipating) {
+            @if(!mvt.Garnett.isParticipating) {
                 @meta(item)
             }
         </div>

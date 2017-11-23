@@ -56,6 +56,11 @@ describe('Config', () => {
         expect(config.get('page.x.y.z')).toEqual('z');
     });
 
+    it('`get` should return undefined for non existing indexes', () => {
+        expect(config.get('page.x.z.y')).toEqual(undefined);
+        expect(config.get('page.x.z.y', false)).toEqual(false);
+    });
+
     it('`get` should return a value using bracket notation', () => {
         expect(config.get('page[x].y[z]')).toEqual('z');
     });

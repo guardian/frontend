@@ -9,9 +9,7 @@ const potentiallyClashingTests: $ReadOnlyArray<
     ABTest
 > = contributionsTests.concat(emailTests);
 
-export { emailTests, contributionsTests };
-
-export const testABClash = (
+const testABClash = (
     f: (test: ABTest, variant: Variant) => boolean,
     tests: $ReadOnlyArray<ABTest>
 ): boolean =>
@@ -30,3 +28,5 @@ export const testABClash = (
 export const userIsInAClashingAbTest = (
     tests: $ReadOnlyArray<ABTest> = potentiallyClashingTests
 ) => testABClash(isInVariant, tests);
+
+export { emailTests, contributionsTests };

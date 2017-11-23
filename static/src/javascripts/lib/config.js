@@ -11,7 +11,7 @@ const get = (path: string = '', defaultValue: any): any => {
     const value = path
         .replace(/\[(.+?)\]/g, '.$1')
         .split('.')
-        .reduce((o, key) => o[key], config);
+        .reduce((o, key) => o && o[key], config);
 
     if (typeof value !== 'undefined') {
         return value;

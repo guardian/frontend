@@ -77,6 +77,7 @@ const ignoredSassRegEx = /^(_|ie9|old-ie)/;
 chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
     // see what top-level files need to be recompiled
     const filesToCompile = [];
+    const changedFileBasename = path.basename(changedFile);
 
     sassGraph.visitAncestors(changedFile, ancestorPath => {
         const ancestorFileName = path.basename(ancestorPath);
@@ -84,6 +85,10 @@ chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
             filesToCompile.push(ancestorFileName);
         }
     });
+
+    if (!/^_/.test(changedFileBasename)) {
+        filesToCompile.push(changedFileBasename);
+    }
 
     // now recompile all files that matter
     Promise.all(filesToCompile.map(compileSass))
