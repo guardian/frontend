@@ -10,7 +10,7 @@
 @import conf.switches.Switches.EmailInlineInFooterSwitch
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
-    @if(!mvt.ABNewDesktopHeaderVariant.isParticipating && !isAmp) {
+    @if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader) && !isAmp) {
         <div class="l-footer__primary hide-on-mobile">
             <div id="footer-nav" class="gs-container">
                 <div class="brand-bar modern-visible u-cf">
@@ -38,7 +38,7 @@
         </div>
     }
 
-    <div class="footer__primary @if(!mvt.ABNewDesktopHeaderVariant.isParticipating) {mobile-only}">
+    <div class="footer__primary @if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {mobile-only}">
 
         @if(!isAmp) {
             @fragments.nav.subNav(page, isFooter = true)

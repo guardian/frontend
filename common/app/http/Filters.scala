@@ -9,6 +9,7 @@ import model.ApplicationContext
 import play.api.http.HttpFilters
 import play.api.mvc._
 import play.filters.gzip.{GzipFilter, GzipFilterConfig}
+import experiments.LookedAtExperiments
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -71,6 +72,31 @@ class SurrogateKeyFilter(implicit val mat: Materializer, executionContext: Execu
   }
 }
 
+class ExperimentsFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
+
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    val r = LookedAtExperiments.createRequest(request)
+    nextFilter(r).map {
+      _.withHeaders(experimentsResponseHeaders(r):_*)
+    }
+  }
+
+  /* Creating experiments related response headers
+   * Ex:
+   *  Vary: "experiment-header-1, experiment-header-2"
+   *  X-GU-Depends-On-Experiments: "experiment-1-name, experiment-2-name"
+   */
+  private def experimentsResponseHeaders(request: RequestHeader) =
+    LookedAtExperiments
+      .forRequest(request)
+      .flatMap { experiment =>
+        val experimentVaryHeaders = Seq(experiment.participationGroup.headerName) ++ experiment.extraHeader.map(_.key)
+        Seq(("Vary" -> experimentVaryHeaders.mkString(",")), ("X-GU-Depends-On-Experiments" -> experiment.name))
+      }
+      .groupBy(_._1).map { case (k,v) => k -> v.map(_._2).mkString(",") }
+      .toSeq
+}
+
 object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
@@ -85,7 +111,8 @@ object Filters {
     new BackendHeaderFilter,
     new SurrogateKeyFilter,
     new AmpFilter,
-    new H2PreloadFilter
+    new H2PreloadFilter,
+    new ExperimentsFilter
   )
 }
 

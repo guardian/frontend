@@ -7,7 +7,7 @@
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
 
 <header class="@RenderClasses(Map(
-            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeaderVariant.isParticipating,
+            "new-header--mvt-desktop" -> experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader),
             "new-header--slim" -> page.metadata.hasSlimHeader
         ), "new-header")"
         role="banner">
