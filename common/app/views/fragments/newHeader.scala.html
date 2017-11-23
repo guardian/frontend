@@ -4,7 +4,7 @@
 @import views.support.RenderClasses
 @import navigation.{NewNavigation, NavigationHelpers}
 @import navigation.UrlHelpers.{getJobUrl, getContributionOrSupporterUrl, NewHeader, getSupportOrSubscriptionUrl}
-@import conf.switches.Switches.IdentityProfileNavigationSwitch
+@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
 
 <header class="@RenderClasses(Map(
             "new-header--mvt-desktop" -> mvt.ABNewDesktopHeaderVariant.isParticipating,
@@ -69,9 +69,21 @@
                             @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                                 @fragments.nav.userAccountDropdown()
                             }
+
+                            @if(SearchSwitch.isSwitchedOn) {
+                                <a class="top-bar__item hide-until-desktop js-search-toggle"
+                                    href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com"
+                                    data-is-ajax data-link-name="nav2 : search"
+                                    data-toggle="popup--search"
+                                    aria-haspopup="true">
+                                                    search
+                                </a>
+                            }
                         }
                     }
                 </div>
+
+                <div class="popup popup--default popup--search js-search-popup is-off"><div class="js-search-placeholder"></div></div>
 
                 <input type="checkbox"
                        id="main-menu-toggle"
