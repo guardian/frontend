@@ -94,7 +94,7 @@ class Component {
         }
     }
 
-    fetch(parent: HTMLElement | ?Node, key?: string): Promise<void> {
+    fetch(parent: HTMLElement | Node, key?: string): Promise<void> {
         this.checkAttached();
 
         if (key) {
@@ -336,13 +336,6 @@ class Component {
     }
 
     /**
-     * Removes the event handling, leave the DOM
-     */
-    detach(): void {
-        bean.off(this.elem);
-    }
-
-    /**
      * Removes all event listeners and removes the DOM elem
      */
     destroy(): void {
@@ -355,7 +348,8 @@ class Component {
         this.t = null;
         this.autoupdated = false;
 
-        this.detach();
+        bean.off(this.elem);
+
         this.destroyed = true;
         this.rendered = false;
     }

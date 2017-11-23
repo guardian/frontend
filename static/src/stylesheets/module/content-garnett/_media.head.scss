@@ -1,0 +1,48 @@
+.content__main-column--media {
+    @include mq(wide) {
+        width: gs-span(9);
+    }
+}
+
+.content__main-column--audio {
+    // on average, the height of the right-hand col (stops the overflow issue)
+    min-height: 185px;
+
+    .from-content-api {
+        max-width: gs-span(8);
+    }
+}
+
+.content--media {
+    .byline {
+        word-break: break-word;
+    }
+}
+
+.media-body {
+    position: relative;
+}
+
+.inline-icon--media {
+    // Sizes in ems to keep scale proportionate as the text size grows or shrinks
+    margin-right: .1em;
+
+    svg {
+        width: .86em;
+        height: .6em;
+    }
+}
+
+.content--media:not(.paid-content) {
+
+    .social-icon {
+        background-color: transparent;
+        fill: $neutral-3;
+        color: $neutral-3;
+        border: 1px solid $neutral-2;
+    }
+
+    .social-icon__svg {
+        fill: #bdbdbd;
+    }
+}

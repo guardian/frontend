@@ -18,10 +18,10 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--pillar-" + item.pillar.name.toLowerCase(), mvt.Garnet.isParticipating),
-      ("fc-item--type-" + item.contentType.name.toLowerCase(), mvt.Garnet.isParticipating),
+      ("fc-item--pillar-" + item.pillar.name.toLowerCase(), mvt.Garnett.isParticipating),
+      ("fc-item--type-" + item.contentType.name.toLowerCase(), mvt.Garnett.isParticipating),
       ("fc-item--has-cutout", item.cutOut.isDefined),
-      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !mvt.Garnet.isParticipating),
+      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !mvt.Garnett.isParticipating),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
       ("fc-item--force-image-upgrade", isFirstContainer),
@@ -41,10 +41,10 @@ object GetClasses {
 
   def forSubLink(sublink: Sublink)(implicit request: RequestHeader): String = RenderClasses(Map(
     ("fc-sublink", true),
-    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", !mvt.Garnet.isParticipating),
+    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", !mvt.Garnett.isParticipating),
     (sublinkMediaTypeClass(sublink).getOrElse(""), true),
-    ("fc-sublink--pillar-" + sublink.pillar, mvt.Garnet.isParticipating),
-    ("fc-sublink--type-" + sublink.contentType, mvt.Garnet.isParticipating)
+    ("fc-sublink--pillar-" + sublink.pillar, mvt.Garnett.isParticipating),
+    ("fc-sublink--type-" + sublink.contentType, mvt.Garnett.isParticipating)
   ))
 
   def mediaTypeClass(faciaCard: ContentCard): Option[String] = faciaCard.mediaType map {

@@ -1,0 +1,37 @@
+.media-primary {
+    margin: 0 $gs-gutter * -.5;
+    position: relative;
+
+    @include mq(mobileLandscape) {
+        margin-left: $gs-gutter / -1;
+        margin-right: $gs-gutter / -1;
+    }
+    @include mq(phablet) {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.content__main-column--article {
+    min-height: gs-height(6);
+}
+
+.article-elongator {
+    position: relative;
+
+    .i-center {
+        background-color: $guardian-brand;
+    }
+}
+
+.after-article {
+    position: relative;
+    display: block;
+    content: ' ';
+    margin-top: $gs-baseline*2;
+
+    //This is required for football components, please do not remove
+    @include mq(desktop) {
+        display: none;
+    }
+}

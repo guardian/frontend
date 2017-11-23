@@ -1,0 +1,80 @@
+.manage-account-wizard {
+    @include clearfix();
+    position: relative;
+    transition: min-height .2s;
+    will-change: min-height;
+}
+.manage-account-wizard--completed {
+    .manage-account-wizard__controls {
+        display: none;
+    }
+}
+
+.manage-account-wizard__step {
+    top: 0;
+    left: 0;
+    right: 0;
+    will-change: transform;
+}
+.manage-account-wizard__step--hidden {
+    display: none;
+}
+.manage-account-wizard__step--out {
+    display: block;
+    position: absolute;
+    animation: manage-account-wizard__fadeLeft .2s both;
+}
+.manage-account-wizard__step--in {
+    animation: manage-account-wizard__fadeRight .2s reverse both;
+}
+.manage-account-wizard__step--out-reverse {
+    display: block;
+    position: absolute;
+    animation: manage-account-wizard__fadeRight .2s both;
+}
+.manage-account-wizard__step--in-reverse {
+    animation: manage-account-wizard__fadeLeft .2s reverse both;
+}
+
+.manage-account-wizard__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include mq($until: tablet) {
+        justify-content: center;
+    }
+}
+
+.manage-account-wizard__controls-pager {
+    @include fs-textSans(1);
+    @include mq($until: tablet) {
+        display: none;
+    }
+}
+
+/*
+4 times $gs-gutter looks non-dizzying 
+for a .2s transition
+*/
+
+@keyframes manage-account-wizard__fadeLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX($gs-gutter*-4);
+        opacity: 0;
+    }
+}
+
+@keyframes manage-account-wizard__fadeRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX($gs-gutter*4);
+        opacity: 0;
+    }
+}
