@@ -1,4 +1,5 @@
 @import conf.switches.Switches.ProfileShowCancelContributor
+@import conf.switches.Switches.ProfileShowChangeContributionAmount
 
 @(user: com.gu.identity.model.User)
 <div class="is-hidden js-contribution-info">
@@ -39,9 +40,34 @@
             <div class="fieldset__fields">
                 <div class="form-field">
                     <span id="qa-contribution-next-payment-price" class="js-contribution-next-payment-price"></span>
+                    @if(ProfileShowChangeContributionAmount.isSwitchedOn) {
+                        <button id="qa-change-contribution-amount" class="manage-account__button manage-account-cta js-manage-account-change-contribution-amount" data-link-name="Change contribution" data-email="@user.primaryEmailAddress">
+                            Change amount
+                        </button>
+                    }
                 </div>
             </div>
         </li>
+        <li class="details-list__item js-contribution-next-payment-form-container is-hidden">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">
+                    <span class="js-contribution-plan-interval"></span> payment
+                </h2>
+            </div>
+
+            <div class="fieldset__fields">
+                <div class="form-field">
+                    <input type="text" id="qa-contribution-next-payment-new-price" class="js-contribution-next-payment-new-price"></input>
+                    <button id="qa-change-contribution-amount-confirm" class="manage-account__button manage-account-cta js-manage-account-change-contribution-amount-confirm" data-link-name="Change contribution amount" data-email="@user.primaryEmailAddress">
+                        Confirm
+                    </button>
+                    <button id="qa-change-contribution-amount-cancel" class="manage-account__button manage-account-cta js-manage-account-change-contribution-amount-cancel" data-link-name="Cancel change contribution amount" data-email="@user.primaryEmailAddress">
+                        Cancel change
+                    </button>
+                </div>
+            </div>
+        </li>
+
     </ul>
 
     <div class="js-contribution-card-details is-hidden" data-product="contribution">
