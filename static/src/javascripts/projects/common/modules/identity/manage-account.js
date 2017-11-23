@@ -37,15 +37,44 @@ const submitPartialFormStatus = (
     });
 };
 
-const getNewsletterHtmlPreference = (): Promise<string> =>
+const getNewsletterHtmlPreferenceFromElement = (
+    originalEl: HTMLElement
+): Promise<string> =>
     fastdom.read(() => {
-        if ($('[name="htmlPreference"]:checked').val()) {
-            return $('[name="htmlPreference"]:checked').val();
-        } else if ($('[name="htmlPreference"]').val()) {
-            return $('[name="htmlPreference"]').val();
+        const closestFormEl: ?Element = originalEl.closest('form');
+
+        if (!closestFormEl) throw Error(`Can't find HTML preference`);
+
+        const checkboxEl: ?HTMLElement = closestFormEl.querySelector(
+            '[name="htmlPreference"]:checked'
+        );
+        const inputEl: ?HTMLElement = closestFormEl.querySelector(
+            '[name="htmlPreference"]'
+        );
+
+        if (checkboxEl && checkboxEl.value) {
+            return checkboxEl.value;
+        } else if (inputEl && inputEl.value) {
+            return inputEl.value;
         }
-        return 'HTML';
+        throw Error(`Can't find HTML preference`);
     });
+
+const submitNewsletterHtmlPreference = (
+    csrfToken: string,
+    newsletterHtmlPreference: string
+): Promise<void> => {
+    const formData = new FormData();
+    formData.append('csrfToken', csrfToken);
+    formData.append('htmlPreference', newsletterHtmlPreference);
+
+    return reqwest({
+        url: '/email-prefs',
+        method: 'POST',
+        data: formData,
+        processData: false,
+    });
+};
 
 const submitNewsletterAction = (
     csrfToken: string,
@@ -53,36 +82,29 @@ const submitNewsletterAction = (
     newsletters: Array<string> = []
 ): Promise<void> => {
     const formData = new FormData();
-    return getNewsletterHtmlPreference()
-        .then((newsletterHtmlPreference: string) => {
-            formData.append('csrfToken', csrfToken);
-            formData.append('htmlPreference', newsletterHtmlPreference);
+    formData.append('csrfToken', csrfToken);
 
-            switch (action) {
-                case 'add':
-                    newsletters.map(id =>
-                        formData.append('addEmailSubscriptions[]', id)
-                    );
-                    break;
-                case 'remove':
-                    newsletters.map(id =>
-                        formData.append('removeEmailSubscriptions[]', id)
-                    );
-                    break;
-                default:
-                    throw new Error(
-                        `Undefined newsletter action type (${action})`
-                    );
-            }
-        })
-        .then(() =>
-            reqwest({
-                url: '/email-prefs',
-                method: 'POST',
-                data: formData,
-                processData: false,
-            })
-        );
+    switch (action) {
+        case 'add':
+            newsletters.map(id =>
+                formData.append('addEmailSubscriptions[]', id)
+            );
+            break;
+        case 'remove':
+            newsletters.map(id =>
+                formData.append('removeEmailSubscriptions[]', id)
+            );
+            break;
+        default:
+            throw new Error(`Undefined newsletter action type (${action})`);
+    }
+
+    return reqwest({
+        url: '/email-prefs',
+        method: 'POST',
+        data: formData,
+        processData: false,
+    });
 };
 
 const getCsrfTokenFromElement = (originalEl: HTMLElement): Promise<any> =>
@@ -137,6 +159,27 @@ const confirmUnsubscriptionFromAll = buttonEl => {
         );
         $('.email-unsubscribe-all__label').toggleClass('hide');
     });
+};
+
+const bindHtmlPreferenceChange = (buttonEl: HTMLElement): void => {
+    bean.on(buttonEl, 'click', () =>
+        Promise.all([
+            getCsrfTokenFromElement(buttonEl),
+            getNewsletterHtmlPreferenceFromElement(buttonEl),
+            addUpdatingState(buttonEl),
+        ])
+            .then(([csrfToken: string, htmlPreference: string]) =>
+                submitNewsletterHtmlPreference(csrfToken, htmlPreference)
+            )
+            .catch((err: Error) => {
+                pushError(err, 'reload').then(() => {
+                    window.scrollTo(0, 0);
+                });
+            })
+            .then(() => {
+                removeUpdatingState(buttonEl);
+            })
+    );
 };
 
 const bindUnsubscribeFromAll = buttonEl => {
@@ -260,6 +303,7 @@ const toggleFormatModal = (buttonEl: HTMLElement): void => {
 };
 
 const enhanceManageAccount = (): void => {
+    $.forEachElement('.js-save-button', bindHtmlPreferenceChange);
     $.forEachElement('.js-unsubscribe', bindUnsubscribeFromAll);
     $.forEachElement('.js-manage-account__modalCloser', bindModalCloser);
     $.forEachElement('.js-manage-account__consentCheckbox', bindConsentSwitch);
