@@ -1,19 +1,26 @@
 package test
 
+import concurrent.BlockingOperations
+import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
 import implicits.FakeRequests
 import play.api.libs.json.JsArray
 import play.api.test._
 import play.api.test.Helpers._
-
-import services.ConfigAgent
+import services.{ConfigAgent, LegacyPressedPageService, PressedPageService}
 import org.scalatest._
 import controllers.FaciaControllerImpl
+import controllers.front.FrontJsonFapiLive
+import helpers.FaciaTestData
+import org.scalatest.mockito.MockitoSugar
+import org.scalatest.tagobjects.Slow
+
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-@DoNotDiscover class FaciaControllerTest extends FlatSpec
+@DoNotDiscover class FaciaControllerTest extends FlatSpec with FaciaTestData
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
@@ -21,9 +28,15 @@ import scala.concurrent.Await
   with BeforeAndAfterEach
   with WithMaterializer
   with WithTestApplicationContext
-  with WithTestWsClient {
+  with WithTestWsClient
+  with MockitoSugar {
 
-  lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient), play.api.test.Helpers.stubControllerComponents())
+  lazy val legacyPressedPageService = new LegacyPressedPageService(wsClient)
+  lazy val actorSystem = ActorSystem()
+  lazy val blockingOperations = new BlockingOperations(actorSystem)
+  lazy val fapi = new FrontJsonFapiLive(new PressedPageService(actorSystem, blockingOperations), legacyPressedPageService)
+
+  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents())
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
   val frontJson = FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)

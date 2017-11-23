@@ -3,7 +3,8 @@ package dfp
 import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
 import com.google.api.ads.dfp.axis.v201705.{CustomFieldValue, LineItem, TextValue}
 import common.dfp.GuCustomField
-import tools.BlockingOperations
+import concurrent.BlockingOperations
+
 import scala.util.Try
 
 class CustomFieldAgent(val blockingOperations: BlockingOperations) extends DataAgent[String, GuCustomField] {
