@@ -14,27 +14,6 @@
   emailSubscriptions: List[String],
   availableLists: EmailNewsletters)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
-@consentCheckbox(consentField: Field) = {
-    @fragments.form.switch(
-        title = getConsentText(consentField).toString(),
-        subheading = None,
-        description = None,
-        behaviour = Some("consent"),
-        field = consentField("hasConsented"),
-        extraFields = Some(
-            List("actor","consentIdentifier","consentIdentifierVersion","timestamp","privacyPolicy").map(field =>
-                fragments.form.hidden(consentField(field))
-            )
-    )
-    )(nonInputFields, messages)
-}
-
-@getConsentText(consentField: Field) = {
-    @ConsentText.getText(
-        consentField("consentIdentifier").value.getOrElse("unknownConsent"), // OrElse will never execute as there is always a default
-        consentField("consentIdentifierVersion").value.getOrElse("0").toInt)
-}
-
 @marketingConsentForm = {
     <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
@@ -56,7 +35,7 @@
                 <ul>
                 @helper.repeat(privacyForm("consents"), min=1) { consentField =>
                     <li>
-                        @consentCheckbox(consentField)
+                        @fragments.consentCheckbox(consentField)(messages)
                     </li>
                 }
                 </ul>
