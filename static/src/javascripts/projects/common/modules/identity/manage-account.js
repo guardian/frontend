@@ -186,7 +186,7 @@ const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
     );
 };
 
-const bindUnsubscribeFromAll = (buttonEl: Element)=> {
+const bindUnsubscribeFromAll = (buttonEl: Element) => {
     bean.on(buttonEl, 'click', () => {
         if ($(buttonEl).hasClass('js-confirm-unsubscribe')) {
             addUpdatingState(buttonEl);
@@ -200,7 +200,7 @@ const bindUnsubscribeFromAll = (buttonEl: Element)=> {
 
                     throw error;
                 })
-                .then((htmlPreference:string)=>
+                .then((htmlPreference: string) =>
                     Promise.all([
                         htmlPreference,
                         fastdom.read(() => {
@@ -219,7 +219,12 @@ const bindUnsubscribeFromAll = (buttonEl: Element)=> {
                     ])
                 )
                 .then(([htmlPreference, newsletterIds, csrfToken]) =>
-                    submitNewsletterAction(csrfToken, htmlPreference, 'remove', newsletterIds)
+                    submitNewsletterAction(
+                        csrfToken,
+                        htmlPreference,
+                        'remove',
+                        newsletterIds
+                    )
                 )
                 .catch((err: Error) => {
                     pushError(err, 'reload').then(() => {
@@ -329,11 +334,11 @@ const toggleFormatModal = (buttonEl: HTMLElement): void => {
     });
 };
 
-const bindAjaxFormEventOverride = (formEl:HTMLFormElement):void => {
-    formEl.addEventListener('submit',(ev:Event)=>{
+const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
+    formEl.addEventListener('submit', (ev: Event) => {
         ev.preventDefault();
     });
-}
+};
 
 const enhanceManageAccount = (): void => {
     $.forEachElement('.js-save-button', bindHtmlPreferenceChange);
