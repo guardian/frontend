@@ -70,7 +70,7 @@
 
     </div>
 
-    <div class="manage-account__modal manage-account__modal--newsletterFormat">
+    <div role="dialog" class="manage-account__modal manage-account__modal--newsletterFormat" role="dialog">
         <div class="manage-account__modalContent">
             <button class="manage-account__modalCloser js-manage-account__modalCloser">
             @fragments.inlineSvg("cross", "icon")
@@ -84,7 +84,7 @@
                     <ul class="u-unstyled">
 
                         <li class="form-field @if(emailPrefsForm("htmlPreference").errors.nonEmpty) {form-field--error}">
-                            <label class="label">In which format would you like to receive email?</label>
+                            <label class="label" for="htmlPreference">In which format would you like to receive email?</label>
                             <div class="form-field__note">
                                 HTML emails have formatted text, images and look better. Text emails are quicker to download, but don't contain images or any formatting.
                                 <br />
