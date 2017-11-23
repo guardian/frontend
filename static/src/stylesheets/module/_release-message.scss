@@ -480,24 +480,34 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .membership__paypal-logo {
     display: inline-block;
     height: auto;
-    margin-right: $gs-gutter/2;
     object-fit: contain;
-    order: 2;
-    margin-top: $gs-gutter/2;
-    margin-bottom: 0;
-    width: 175px;
+    margin-top: 0;
+    margin-bottom: -2px;
+    margin-right: 7px;
+    width: 100px;
+
+    @include mq($from: 375px) {
+        margin-right: $gs-gutter/2;
+        margin-bottom: -4px;
+        width: 130px;
+    }
+
 
     @include mq(desktop) {
-        margin-top: 0;
-        order: 1;
+        width: 175px;
+        margin-bottom: 2px;
+    }
+
+    @include mq($from: 1300px) {
+        margin-top: 2px;
+        margin-bottom: 0;
     }
 }
 
 .membership__support-button {
-    order: 1;
     margin-top: $gs-gutter/2;
+    min-width: 160px;
     @include mq(desktop) {
-        order: 2;
     }
 }
 
@@ -508,16 +518,23 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .membership__paypal-container {
     text-decoration: none;
-    margin-bottom: $gs-gutter/4;
+    margin-top: 0px;
+    margin-bottom: -$gs-gutter/2;
     display: flex;
-    margin-top: auto;
-    flex-direction: column;
-
-    @include mq($from: 1140px) {
-        margin-left: 40px;
+    flex-direction: row;
+    @include mq($from: 375px) {
+        margin-top: auto;
     }
+
+    @include mq($from: desktop) {
+        min-width: 200px;
+        margin-bottom: $gs-gutter/4;
+        margin-left: $gs-gutter*2;
+        flex-direction: column;
+    }
+
     @include mq($from: wide) {
-        display: inline-block;
+        flex-direction: row;
     }
 }
 
@@ -588,9 +605,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         .membership__message-text-long {
             max-width: 630px;
 
-            line-height: 22px;
+            line-height: 20px;
             @include mq($from: tablet) {
-                line-height: 24px;
+                line-height: 22px;
             }
 
             .membership__message-text {
@@ -607,17 +624,17 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         @include mq($from: mobile) {
             font-size: 16px;
             line-height: 20px;
-            margin-right: 10px;
+            margin-right: $gs-gutter/4;
         }
         @include mq($from: tablet) {
             font-size: 24px;
             line-height: 28px;
-            margin-right: 20px;
+            margin-right: $gs-gutter;
         }
         @include mq($from: desktop) {
             font-size: 28px;
             line-height: 32px;
-            margin-right: 20px;
+            margin-right: $gs-gutter;
         }
     }
     .message-button-rounded__cta {
@@ -625,7 +642,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         @include circular;
         @include fs-textSans(2);
         border: 0;
-        display: inline-block;
+        display: flex;
         width: auto;
         text-decoration: none;
         @include mq($from: mobile) {

@@ -114,7 +114,7 @@ const showBanner = (params: EngagementBannerParams): void => {
     const test = getUserTest();
     const variant = getUserVariant(test);
     const paypalAndCreditCardImage =
-        config.get('images.acquisitions.paypal-and-credit-card') || '';
+        config.get('images.acquisitions.paypal-and-credit-card-new') || '';
     const colourClass = params.colourStrategy();
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
