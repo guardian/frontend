@@ -186,29 +186,40 @@ const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
     );
 };
 
-const bindUnsubscribeFromAll = buttonEl => {
+const bindUnsubscribeFromAll = (buttonEl: Element)=> {
     bean.on(buttonEl, 'click', () => {
         if ($(buttonEl).hasClass('js-confirm-unsubscribe')) {
             addUpdatingState(buttonEl);
             resetUnsubscribeFromAll(buttonEl);
 
-            Promise.all([
-                fastdom.read(() => {
-                    const subscribedNewsletterIds = [];
-                    $(
-                        '.js-manage-account__newsletterCheckbox input:checked'
-                    ).each(inputEl => {
-                        subscribedNewsletterIds.push(inputEl.name);
-                        inputEl.checked = false;
-                    });
-                    return subscribedNewsletterIds;
-                }),
-                getCsrfTokenFromElement(
-                    $('.js-manage-account__newsletterCheckbox').get(0)
-                ),
-            ])
-                .then(([newsletterIds, csrfToken]) =>
-                    submitNewsletterAction(csrfToken, 'remove', newsletterIds)
+            getNewsletterHtmlPreferenceFromElement(buttonEl)
+                .catch((error: Error) => {
+                    if (error.message === ERR_HTML_PREF_NOT_FOUND) {
+                        return 'HTML';
+                    }
+
+                    throw error;
+                })
+                .then((htmlPreference:string)=>
+                    Promise.all([
+                        htmlPreference,
+                        fastdom.read(() => {
+                            const subscribedNewsletterIds = [];
+                            $(
+                                '.js-manage-account__newsletterCheckbox input:checked'
+                            ).each(inputEl => {
+                                subscribedNewsletterIds.push(inputEl.name);
+                                inputEl.checked = false;
+                            });
+                            return subscribedNewsletterIds;
+                        }),
+                        getCsrfTokenFromElement(
+                            $('.js-manage-account__newsletterCheckbox').get(0)
+                        ),
+                    ])
+                )
+                .then(([htmlPreference, newsletterIds, csrfToken]) =>
+                    submitNewsletterAction(csrfToken, htmlPreference, 'remove', newsletterIds)
                 )
                 .catch((err: Error) => {
                     pushError(err, 'reload').then(() => {
