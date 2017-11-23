@@ -60,6 +60,28 @@
             background-color: darken($live-garnett-main-1, 5%);
         }
     }
+
+    // list media overrides
+    &.fc-item--list-media-mobile {
+        @include mq($from: mobile, $until: tablet) {
+            .fc-sublink__title {
+                &::before {
+                    border-top-color: $live-garnett-accent;
+                }
+            }
+        }
+    }
+
+    &.fc-item--list-media-tablet {
+        @include mq($from: tablet) {
+            .fc-sublink__title {
+                &::before {
+                    border-top-color: $live-garnett-accent;
+                }
+            }
+        }
+    }
+
 }
 
 .fc-sublink--type-liveblog {
