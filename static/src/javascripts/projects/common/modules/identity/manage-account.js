@@ -318,9 +318,16 @@ const toggleFormatModal = (buttonEl: HTMLElement): void => {
     });
 };
 
+const bindAjaxFormEventOverride = (formEl:HTMLFormElement):void => {
+    formEl.addEventListener('submit',(ev:Event)=>{
+        ev.preventDefault();
+    });
+}
+
 const enhanceManageAccount = (): void => {
     $.forEachElement('.js-save-button', bindHtmlPreferenceChange);
     $.forEachElement('.js-unsubscribe', bindUnsubscribeFromAll);
+    $.forEachElement('.js-manage-account__ajaxForm', bindAjaxFormEventOverride);
     $.forEachElement('.js-manage-account__modalCloser', bindModalCloser);
     $.forEachElement('.js-manage-account__consentCheckbox', bindConsentSwitch);
     $.forEachElement(
