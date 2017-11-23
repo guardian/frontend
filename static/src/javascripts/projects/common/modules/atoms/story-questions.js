@@ -267,10 +267,10 @@ const init = (): void => {
         'js-storyquestion-is-answer-delivery-test-ready'
     );
 
-    const isEmailSubmissionReady =
+    const isEmailSubmissionReady: boolean =
         isEmailSubmissionReadyElement &&
         isEmailSubmissionReadyElement.dataset.isEmailSubmissionReady === 'true';
-    const isDeliveryTestReady =
+    const isDeliveryTestReady: boolean =
         isDeliveryTestReadyElement &&
         isDeliveryTestReadyElement.dataset.isAnswerDeliveryTestReady === 'true';
 
@@ -330,7 +330,9 @@ const init = (): void => {
             const storyQuestionAtom = document.getElementById(
                 `user__question-atom-${atomId}`
             );
-            storyQuestionAtom.classList.add('is-hidden');
+            if (storyQuestionAtom) {
+                storyQuestionAtom.classList.add('is-hidden');
+            }
             finalCloseBtn.classList.add('is-clicked');
         });
     }
