@@ -34,7 +34,7 @@ import scala.concurrent.Await
   lazy val legacyPressedPageService = new LegacyPressedPageService(wsClient)
   lazy val actorSystem = ActorSystem()
   lazy val blockingOperations = new BlockingOperations(actorSystem)
-  lazy val fapi = new FrontJsonFapiLive(new PressedPageService(actorSystem, blockingOperations), legacyPressedPageService)
+  lazy val fapi = new TestFrontJsonFapi(new PressedPageService(actorSystem, blockingOperations), legacyPressedPageService)
 
   lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents())
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"

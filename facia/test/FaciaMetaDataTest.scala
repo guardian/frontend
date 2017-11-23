@@ -4,7 +4,6 @@ import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import concurrent.BlockingOperations
 import controllers.FaciaControllerImpl
-import controllers.front.FrontJsonFapiLive
 import org.jsoup.Jsoup
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
@@ -28,7 +27,7 @@ import scala.concurrent.Await
   lazy val legacyPressedPageService = new LegacyPressedPageService(wsClient)
   lazy val actorSystem = ActorSystem()
   lazy val blockingOperations = new BlockingOperations(actorSystem)
-  lazy val fapi = new FrontJsonFapiLive(new PressedPageService(actorSystem, blockingOperations), legacyPressedPageService)
+  lazy val fapi = new TestFrontJsonFapi(new PressedPageService(actorSystem, blockingOperations), legacyPressedPageService)
 
   override def beforeAll() {
     val refresh = ConfigAgent.refreshWith(
@@ -63,12 +62,12 @@ import scala.concurrent.Await
     val itemList: JsValue = Json.parse(script.first().html())
 
     val containers = (itemList \ "itemListElement").as[JsArray].value
-    containers.size should be(14)
+    containers.size should be(16)
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
-    topContainer.size should be (15)
+    topContainer.size should be (45)
 
-    (topContainer(0) \ "url").as[JsString].value should be ("/music/ng-interactive/2017/oct/30/how-the-north-stayed-underground-grime-makina-psychedelia")
+    (topContainer(0) \ "url").as[JsString].value should be ("/music/2017/jul/29/sza-record-company-took-my-hard-drive-beyonce-kendrick-lamar")
 
   }
 
