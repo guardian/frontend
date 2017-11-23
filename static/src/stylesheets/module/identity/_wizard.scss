@@ -53,7 +53,8 @@
 }
 
 /*
-80px looks somewhat good for a .2s transition
+4 times $gs-gutter looks non-dizzying 
+for a .2s transition
 */
 
 @keyframes manage-account-wizard__fadeLeft {
@@ -62,7 +63,7 @@
         opacity: 1;
     }
     to {
-        transform: translateX(-80px);
+        transform: translateX($gs-gutter*-4);
         opacity: 0;
     }
 }
@@ -73,7 +74,7 @@
         opacity: 1;
     }
     to {
-        transform: translateX(80px);
+        transform: translateX($gs-gutter*4);
         opacity: 0;
     }
 }
