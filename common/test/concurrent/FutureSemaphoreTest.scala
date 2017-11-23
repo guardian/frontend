@@ -12,7 +12,7 @@ class FutureSemaphoreTest extends FlatSpec with Matchers with ScalaFutures {
 
   // These tests are horrid, perhaps they should not be included
 
-  "FutureSemaphore" should "return results when executing fewer tasks than the threshold" in {
+  "FutureSemaphore" should "complete 4 out of 4 tasks when threshold is 4" in {
     val actor = FutureSemaphore.actorRef(4)
     whenReady {
       Future.traverse(1 to 4)(_ => FutureSemaphore.executeTask(actor, Future(Thread.sleep(2))))
