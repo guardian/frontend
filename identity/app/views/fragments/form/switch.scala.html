@@ -10,7 +10,7 @@
     footer: Option[Html] = None
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
-<label class="
+<label role="checkbox" class="
     manage-account__switch
     @{behaviour match {
         case Some("consent") => "js-manage-account__consentCheckbox"
