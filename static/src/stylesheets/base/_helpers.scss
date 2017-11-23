@@ -111,12 +111,6 @@
     }
 }
 
-.hide-on-desktop {
-    @include mq(desktop) {
-        display: none !important;
-    }
-}
-
 .u-cf {
     @include clearfix;
 }
