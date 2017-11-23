@@ -16,6 +16,8 @@ import {
 } from './modules/switch';
 import { addUpdatingState, removeUpdatingState } from './modules/button';
 
+const ERR_IDENTITY_HTML_PREF_NOT_FOUND = `Can't find HTML preference`;
+
 const submitPartialFormStatus = (
     type: ?string = null,
     formData: FormData
@@ -37,17 +39,61 @@ const submitPartialFormStatus = (
     });
 };
 
-const submitNewsletterAction = (
+const getNewsletterHtmlPreferenceFromElement = (
+    originalEl: HTMLElement
+): Promise<string> =>
+    fastdom.read(() => {
+        const closestFormEl: ?Element = originalEl.closest('form');
+
+        if (!closestFormEl) throw new Error(ERR_IDENTITY_HTML_PREF_NOT_FOUND);
+
+        const inputEls: Array<HTMLInputElement> = ([
+            ...closestFormEl.querySelectorAll('[name="htmlPreference"]'),
+        ]: Array<any>).filter(el => el instanceof HTMLInputElement);
+
+        /*
+        loop over radio/checkbox-like fields first
+        to avoid submitting the wrong one
+        */
+
+        const checkedInputEl: ?HTMLInputElement = inputEls.find(
+            (inputEl: HTMLInputElement) => inputEl && inputEl.checked
+        );
+
+        if (checkedInputEl && checkedInputEl.value) {
+            return checkedInputEl.value;
+        } else if (inputEls[0] && inputEls[0].value) {
+            return inputEls[0].value;
+        }
+
+        throw new Error(ERR_IDENTITY_HTML_PREF_NOT_FOUND);
+    });
+
+const submitNewsletterHtmlPreference = (
     csrfToken: string,
-    action: string = 'none',
-    newsletters: Array<string> = []
-) => {
+    htmlPreference: string
+): Promise<void> => {
     const formData = new FormData();
     formData.append('csrfToken', csrfToken);
-    formData.append(
-        'htmlPreference',
-        $('[name="htmlPreference"]:checked').val()
-    );
+    formData.append('htmlPreference', htmlPreference);
+
+    return reqwest({
+        url: '/email-prefs',
+        method: 'POST',
+        data: formData,
+        processData: false,
+    });
+};
+
+const submitNewsletterAction = (
+    csrfToken: string,
+    htmlPreference: string,
+    action: string = 'none',
+    newsletters: Array<string> = []
+): Promise<void> => {
+    const formData = new FormData();
+    formData.append('csrfToken', csrfToken);
+    formData.append('htmlPreference', htmlPreference);
 
     switch (action) {
         case 'add':
@@ -126,29 +172,66 @@ const confirmUnsubscriptionFromAll = buttonEl => {
     });
 };
 
-const bindUnsubscribeFromAll = buttonEl => {
+const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
+    bean.on(buttonEl, 'click', () =>
+        Promise.all([
+            getCsrfTokenFromElement(buttonEl),
+            getNewsletterHtmlPreferenceFromElement(buttonEl),
+            addUpdatingState(buttonEl),
+        ])
+            .then(([csrfToken: string, htmlPreference: string]) =>
+                submitNewsletterHtmlPreference(csrfToken, htmlPreference)
+            )
+            .catch((err: Error) => {
+                pushError(err, 'reload').then(() => {
+                    window.scrollTo(0, 0);
+                });
+            })
+            .then(() => {
+                removeUpdatingState(buttonEl);
+            })
+    );
+};
+
+const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     bean.on(buttonEl, 'click', () => {
         if ($(buttonEl).hasClass('js-confirm-unsubscribe')) {
             addUpdatingState(buttonEl);
             resetUnsubscribeFromAll(buttonEl);
 
-            Promise.all([
-                fastdom.read(() => {
-                    const subscribedNewsletterIds = [];
-                    $(
-                        '.js-manage-account__newsletterCheckbox input:checked'
-                    ).each(inputEl => {
-                        subscribedNewsletterIds.push(inputEl.name);
-                        inputEl.checked = false;
-                    });
-                    return subscribedNewsletterIds;
-                }),
-                getCsrfTokenFromElement(
-                    $('.js-manage-account__newsletterCheckbox').get(0)
-                ),
-            ])
-                .then(([newsletterIds, csrfToken]) =>
-                    submitNewsletterAction(csrfToken, 'remove', newsletterIds)
+            getNewsletterHtmlPreferenceFromElement(buttonEl)
+                .catch((error: Error) => {
+                    if (error.message === ERR_IDENTITY_HTML_PREF_NOT_FOUND) {
+                        return 'HTML';
+                    }
+
+                    throw error;
+                })
+                .then((htmlPreference: string) =>
+                    Promise.all([
+                        htmlPreference,
+                        fastdom.read(() => {
+                            const subscribedNewsletterIds = [];
+                            $(
+                                '.js-manage-account__newsletterCheckbox input:checked'
+                            ).each(inputEl => {
+                                subscribedNewsletterIds.push(inputEl.name);
+                                inputEl.checked = false;
+                            });
+                            return subscribedNewsletterIds;
+                        }),
+                        getCsrfTokenFromElement(
+                            $('.js-manage-account__newsletterCheckbox').get(0)
+                        ),
+                    ])
+                )
+                .then(([htmlPreference, newsletterIds, csrfToken]) =>
+                    submitNewsletterAction(
+                        csrfToken,
+                        htmlPreference,
+                        'remove',
+                        newsletterIds
+                    )
                 )
                 .catch((err: Error) => {
                     pushError(err, 'reload').then(() => {
@@ -181,14 +264,26 @@ const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
             if (isNotUserInitiated) {
                 return;
             }
-            Promise.all([
-                getCsrfTokenFromElement(labelEl),
-                getCheckboxInfo(labelEl),
-                addSpinner(labelEl),
-            ])
-                .then(([token, info]) =>
+            getNewsletterHtmlPreferenceFromElement(labelEl)
+                .catch((error: Error) => {
+                    if (error.message === ERR_IDENTITY_HTML_PREF_NOT_FOUND) {
+                        return 'HTML';
+                    }
+
+                    throw error;
+                })
+                .then((htmlPreference: string) =>
+                    Promise.all([
+                        htmlPreference,
+                        getCsrfTokenFromElement(labelEl),
+                        getCheckboxInfo(labelEl),
+                        addSpinner(labelEl),
+                    ])
+                )
+                .then(([htmlPreference, token, info]) =>
                     submitNewsletterAction(
                         token,
+                        htmlPreference,
                         info.checked ? 'add' : 'remove',
                         [info.name]
                     )
@@ -246,8 +341,16 @@ const toggleFormatModal = (buttonEl: HTMLElement): void => {
     });
 };
 
+const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
+    formEl.addEventListener('submit', (ev: Event) => {
+        ev.preventDefault();
+    });
+};
+
 const enhanceManageAccount = (): void => {
+    $.forEachElement('.js-save-button', bindHtmlPreferenceChange);
     $.forEachElement('.js-unsubscribe', bindUnsubscribeFromAll);
+    $.forEachElement('.js-manage-account__ajaxForm', bindAjaxFormEventOverride);
     $.forEachElement('.js-manage-account__modalCloser', bindModalCloser);
     $.forEachElement('.js-manage-account__consentCheckbox', bindConsentSwitch);
     $.forEachElement(
