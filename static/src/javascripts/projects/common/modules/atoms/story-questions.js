@@ -260,19 +260,21 @@ const init = (): void => {
 
     if (!atomId) return;
 
-    const isEmailSubmissionReadyElement = document.getElementById(
+    const isEmailSubmissionReadyElement: ?HTMLElement = document.getElementById(
         'js-storyquestion-is-email-submission-ready'
     );
-    const isDeliveryTestReadyElement = document.getElementById(
+    const isDeliveryTestReadyElement: ?HTMLElement = document.getElementById(
         'js-storyquestion-is-answer-delivery-test-ready'
     );
 
-    const isEmailSubmissionReady: boolean =
+    const isEmailSubmissionReady: boolean = !!(
         isEmailSubmissionReadyElement &&
-        isEmailSubmissionReadyElement.dataset.isEmailSubmissionReady === 'true';
-    const isDeliveryTestReady: boolean =
+        isEmailSubmissionReadyElement.dataset.isEmailSubmissionReady === 'true'
+    );
+    const isDeliveryTestReady: boolean = !!(
         isDeliveryTestReadyElement &&
-        isDeliveryTestReadyElement.dataset.isAnswerDeliveryTestReady === 'true';
+        isDeliveryTestReadyElement.dataset.isAnswerDeliveryTestReady === 'true'
+    );
 
     const askQuestionLinks: Element[] = [
         ...document.querySelectorAll('.js-ask-question-link'),
