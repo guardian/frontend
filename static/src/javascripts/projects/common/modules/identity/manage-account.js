@@ -47,18 +47,25 @@ const getNewsletterHtmlPreferenceFromElement = (
 
         if (!closestFormEl) throw new Error(ERR_IDENTITY_HTML_PREF_NOT_FOUND);
 
-        const checkboxEl: ?HTMLElement = closestFormEl.querySelector(
-            '[name="htmlPreference"]:checked'
-        );
-        const inputEl: ?HTMLElement = closestFormEl.querySelector(
-            '[name="htmlPreference"]'
+        const inputEls: Array<any> = [
+            ...closestFormEl.querySelectorAll('[name="htmlPreference"]'),
+        ];
+
+        /*
+        loop over radio/checkbox-like fields first
+        to avoid submitting the wrong one
+        */
+
+        const checkedInputEl: ?HTMLInputElement = inputEls.find(
+            (inputEl: HTMLInputElement) => inputEl && inputEl.checked
         );
 
-        if (checkboxEl && checkboxEl.value) {
-            return checkboxEl.value;
-        } else if (inputEl && inputEl.value) {
-            return inputEl.value;
+        if (checkedInputEl && checkedInputEl.value) {
+            return checkedInputEl.value;
+        } else if (inputEls[0] && inputEls[0].value) {
+            return inputEls[0].value;
         }
+
         throw new Error(ERR_IDENTITY_HTML_PREF_NOT_FOUND);
     });
 
