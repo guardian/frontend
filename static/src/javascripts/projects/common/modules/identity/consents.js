@@ -102,12 +102,12 @@ const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement) =>
         .read(() => [
             [
                 ...document.querySelectorAll(
-                    '.js-identity-consents__unsubscribe-all--confirm'
+                    '.js-unsubscribe--confirm'
                 ),
             ],
             [
                 ...document.querySelectorAll(
-                    '.js-identity-consents__unsubscribe-all--basic'
+                    '.js-unsubscribe--basic'
                 ),
             ],
         ])
@@ -161,7 +161,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                         fastdom
                             .read(() => [
                                 ...document.querySelectorAll(
-                                    '.js-identity-consents__emails-checkbox input:checked'
+                                    '.js-manage-account__newsletterCheckbox input:checked'
                                 ),
                             ])
                             .then(checkboxes => {
@@ -174,7 +174,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                             }),
                         getCsrfTokenFromElement(
                             document.querySelector(
-                                '.js-identity-consents__emails-checkbox'
+                                '.js-manage-account__newsletterCheckbox'
                             )
                         ),
                     ])
@@ -276,9 +276,9 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
 
 const enhanceConsents = (): void => {
     const loaders = [
-        ['.js-identity-consents__consent-checkbox', bindConsentSwitch],
-        ['.js-identity-consents__emails-checkbox', bindNewsletterSwitch],
-        ['.js-identity-consents__unsubscribe-all', bindUnsubscribeFromAll],
+        ['.js-manage-account__consentCheckbox', bindConsentSwitch],
+        ['.js-manage-account__newsletterCheckbox', bindNewsletterSwitch],
+        ['.js-unsubscribe', bindUnsubscribeFromAll],
     ];
 
     /* ugly :any that saves a lot of loader complexity */

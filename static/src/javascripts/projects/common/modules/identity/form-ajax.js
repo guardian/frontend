@@ -13,9 +13,9 @@ const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
 
 const enhanceFormAjax = (): void => {
     const loaders = [
-        ['.js-identity-form-ajax', bindAjaxFormEventOverride],
+        ['.js-manage-account__ajaxForm', bindAjaxFormEventOverride],
         [
-            '.js-identity-form-ajax__submit-nojs',
+            '.js-manage-account__ajaxForm-submit',
             (el: HTMLElement) => el.remove(),
         ],
     ];
