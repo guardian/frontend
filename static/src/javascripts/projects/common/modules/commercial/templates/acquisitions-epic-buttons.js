@@ -33,7 +33,7 @@ export const epicButtonsTemplate = (
         </div>`;
 
     const paymentLogos = `<img class="contributions__payment-logos contributions__contribute--epic-member" src="${config.get(
-        'images.acquisitions.paypal-and-credit-card-new',
+        'images.acquisitions.paypal-and-credit-card',
         ''
     )}" alt="Paypal and credit card">`;
 

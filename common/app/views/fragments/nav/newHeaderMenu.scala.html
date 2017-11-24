@@ -9,7 +9,7 @@
     <li class="menu-item js-navigation-item"
         data-section-name="@topLevelSection.name"
         role="menuitem">
-        <button class="menu-item__title hide-from-desktop js-navigation-toggle"
+        <button class="menu-item__title hide-on-desktop js-navigation-toggle"
                 data-link-name="nav2 : secondary : @topLevelSection.name"
                 aria-haspopup="true"
                 aria-expanded="true">
@@ -68,8 +68,7 @@
             </ul>
 
             @if(SearchSwitch.isSwitchedOn) {
-                @* TODO: clean up search menu desktop styling *@
-                <div class="menu-group menu-group--search hide-from-desktop">
+                <div class="menu-group menu-group--search">
                     <form class="menu-search js-menu-search"
                           action="https://www.google.co.uk/search">
                         <input type="text"
@@ -105,7 +104,7 @@
             <ul class="menu-group menu-group--membership"
                 role="menubar">
                 @NavigationHelpers.getMembershipLinks(edition).map { item =>
-                    <li class="menu-item hide-from-desktop"
+                    <li class="menu-item hide-on-desktop"
                         data-edition="@{edition.id.toLowerCase}"
                         role="menuitem">
 
@@ -120,7 +119,7 @@
                 @fragments.nav.userAccountLinks()
             </ul>
 
-            <ul class="menu-group menu-group--editions hide-from-desktop">
+            <ul class="menu-group menu-group--editions">
                 @fragments.nav.editionPicker()
             </ul>
 
@@ -129,7 +128,7 @@
                 role="menubar">
 
                 @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
-                    <li class="menu-item hide-from-desktop"
+                    <li class="menu-item hide-on-desktop"
                         role="menuitem">
                         <a class="menu-item__title"
                            href="@LinkTo { @item.url }"
@@ -141,7 +140,7 @@
 
                 @NewNavigation.OtherLinks.getEditionalisedNavLinks(edition).map { item =>
                     <li class="@RenderClasses(Map(
-                            "hide-from-desktop" -> (item.title == "the guardian app"),
+                            "hide-on-desktop" -> (item.title == "the guardian app"),
                             "menu-item--no-border" -> (item.title == "video")
                         ), "menu-item")"
                         role="menuitem">
@@ -154,7 +153,7 @@
                     </li>
                 }
 
-                <li class="menu-item hide-from-desktop"
+                <li class="menu-item hide-on-desktop"
                     role="menuitem">
                     <a class="menu-item__title"
                        href="https://www.facebook.com/theguardian"
@@ -164,7 +163,7 @@
                     </a>
                 </li>
 
-                <li class="menu-item hide-from-desktop"
+                <li class="menu-item hide-on-desktop"
                     role="menuitem">
                     <a class="menu-item__title"
                        href="https://twitter.com/guardian"
