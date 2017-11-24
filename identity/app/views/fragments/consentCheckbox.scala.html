@@ -1,7 +1,7 @@
 @import com.gu.identity.model.Consent
 @import _root_.form.IdFormHelpers.nonInputFields
 
-@(consentField: Field)(messages: play.api.i18n.Messages)
+@(consentedField: Field)(messages: play.api.i18n.Messages)
 
 @getConsentText(consentField: Field) = {
     @Consent.wording(
@@ -9,15 +9,16 @@
         consentField("version").value.getOrElse("0").toInt)
 }
 
+@consentHiddenFormFields = {
+    @List("actor","id","version","timestamp","privacyPolicyVersion").map(field =>
+        fragments.form.hidden(consentedField(field)))
+}
+
 @fragments.form.switch(
-    title = getConsentText(consentField).toString(),
+    title = getConsentText(consentedField).toString(),
     subheading = None,
     description = None,
     behaviour = Some("consent"),
-    field = consentField("consented"),
-    extraFields = Some(
-        List("actor","id","version","timestamp","privacyPolicyVersion").map(field =>
-            fragments.form.hidden(consentField(field))
-        )
-    )
+    field = consentedField("consented"),
+    extraFields = Some(consentHiddenFormFields)
 )(nonInputFields, messages)
