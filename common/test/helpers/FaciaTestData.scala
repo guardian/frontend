@@ -225,7 +225,7 @@ trait FaciaTestData extends ModelHelper {
     )
   )
 
-    val auCultureFaciaPage: PressedPage = PressedPage(
+  val auCultureFaciaPage: PressedPage = PressedPage(
     id = "au/culture",
     SeoData.fromPath("au/culture"),
     FrontProperties.empty,
