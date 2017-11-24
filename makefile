@@ -124,14 +124,6 @@ screenshots: install
 	@./tools/task-runner/runner screenshot
 
 
-
-# *********************** MISC ***********************
-
-es6: install
-	@node ./tools/es5to6.js ${file}
-
-
-
 # *********************** UI ***********************
 
 ui-compile: install
