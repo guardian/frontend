@@ -12,8 +12,8 @@ const baseParams = {
 
 const engagementBannerCopy = (): string =>
     `<strong>Unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we
-    can.</strong> The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to 
-    produce. But the revenue we get from advertising is falling, so we increasingly need our readers to fund us. If 
+    can.</strong> The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to
+    produce. But the revenue we get from advertising is falling, so we increasingly need our readers to fund us. If
     everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure.`;
 
 // Prices taken from https://membership.theguardian.com/<region>/supporter
@@ -95,9 +95,9 @@ const membershipSupporterParams = (location: string): EngagementBannerParams =>
     });
 
 export const engagementBannerCopyShorter = (): string =>
-    `<strong>Unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism
-    as open as we can.</strong> The Guardian’s independent, investigative journalism takes a lot of time, money
-    and hard work to produce. But advertising revenue is falling, so we need our readers to help make our future more secure.`;
+    `<strong>Unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep the Guardian’s independent,
+    investigative journalism as open as we can.</strong> It takes a lot of time, money and hard work to produce.
+    But advertising revenue is falling, so we need our readers to help make our future more secure.`;
 
 export const engagementBannerParams = (
     location: string
