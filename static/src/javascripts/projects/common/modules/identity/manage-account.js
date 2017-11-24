@@ -3,7 +3,6 @@
 // We want to submit subscribe/unsubscribe requests without a full page refresh
 // Hopefully this will be short-lived; if it is still alive in 2017, git blame and cry
 
-import bean from 'bean';
 import reqwest from 'reqwest';
 import fastdom from 'lib/fastdom-promise';
 import { _ as robust } from 'lib/robust';
@@ -190,7 +189,7 @@ const confirmUnsubscriptionFromAll = (buttonEl: HTMLButtonElement) =>
         );
 
 const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
-    bean.on(buttonEl, 'click', () =>
+    buttonEl.addEventListener('click', () =>
         Promise.all([
             getCsrfTokenFromElement(buttonEl),
             getNewsletterHtmlPreferenceFromElement(buttonEl),
@@ -211,7 +210,7 @@ const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
 };
 
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
-    bean.on(buttonEl, 'click', () => {
+    buttonEl.addEventListener('click', () => {
         if (buttonEl.classList.contains('js-confirm-unsubscribe')) {
             addUpdatingState(buttonEl);
             resetUnsubscribeFromAll(buttonEl);
@@ -271,7 +270,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
 };
 
 const bindModalCloser = (buttonEl: HTMLElement): void => {
-    bean.on(buttonEl, 'click', () => {
+    buttonEl.addEventListener('click', () => {
         const modalEl: ?Element = buttonEl.closest('.manage-account__modal');
         if (modalEl) {
             modalEl.classList.remove('manage-account__modal--active');
@@ -280,8 +279,7 @@ const bindModalCloser = (buttonEl: HTMLElement): void => {
 };
 
 const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
-    bean.on(
-        labelEl,
+    labelEl.addEventListener(
         'change',
         (ev: Event, isNotUserInitiated: boolean = false) => {
             if (isNotUserInitiated) {
@@ -324,8 +322,7 @@ const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
 };
 
 const bindConsentSwitch = (labelEl: HTMLElement): void => {
-    bean.on(
-        labelEl,
+    labelEl.addEventListener(
         'change',
         (ev: Event, isNotUserInitiated: boolean = false) => {
             if (isNotUserInitiated) {
@@ -355,7 +352,7 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
 };
 
 const toggleFormatModal = (buttonEl: HTMLElement): void => {
-    bean.on(buttonEl, 'click', () => {
+    buttonEl.addEventListener('click', () => {
         fastdom
             .read(() =>
                 document.querySelector(
