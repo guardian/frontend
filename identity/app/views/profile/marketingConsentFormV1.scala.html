@@ -2,8 +2,8 @@
 
 @import views.html.fragments.form.switch
 @import _root_.form.IdFormHelpers.nonInputFields
-@import com.gu.identity.model.ConsentText
-@import com.gu.identity.model.ConsentText._
+@import com.gu.identity.model.Consent
+@import com.gu.identity.model.Consent._
 
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
@@ -11,9 +11,9 @@
 
 
 @getConsentText(consentField: Field) = {
-    @ConsentText.getText(
-        consentField("consentIdentifier").value.getOrElse("unknownConsent"), // OrElse will never execute as there is always a default
-        consentField("consentIdentifierVersion").value.getOrElse("0").toInt)
+    @Consent.wording(
+        consentField("id").value.getOrElse("unknownConsent"), // OrElse will never execute as there is always a default
+        consentField("version").value.getOrElse("0").toInt)
 }
 
 @consentCheckboxes = {
@@ -21,7 +21,7 @@
         <ul>
             <li>
                 @switch(
-                    title = currentConsents(FirstParty.name),
+                    title = FirstParty.latestWording,
                     subheading = None,
                     description = None,
                     behaviour = Some("consent"),
@@ -30,7 +30,7 @@
             </li>
             <li>
                 @switch(
-                    title = currentConsents(ThirdParty.name),
+                    title = ThirdParty.latestWording,
                     subheading = None,
                     description = None,
                     behaviour = Some("consent"),
