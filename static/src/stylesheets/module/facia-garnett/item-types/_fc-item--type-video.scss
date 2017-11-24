@@ -1,0 +1,26 @@
+.fc-item--type-video {
+    background-color: $video-garnett-main-1;
+
+    .fc-item__kicker {
+        background-color: $video-garnett-main-1;
+
+        &::before {
+            background-color: $video-garnett-main-1;
+        }
+    }
+
+    .fc-item__headline {
+        color: #ffffff;
+    }
+
+    // darken on hover
+    &:hover,
+    .u-faux-block-link--hover {
+        background-color: darken($video-garnett-main-1, 5%);
+
+        .fc-item__kicker,
+        .fc-item__container::before {
+            background-color: darken($video-garnett-main-1, 5%);
+        }
+    }
+}
