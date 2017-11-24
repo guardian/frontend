@@ -126,9 +126,9 @@ const Clues = createClass({
         return createElement(
             'div',
             {
-                className: `crossword__clues--wrapper ${this.state.showGradient
-                    ? ''
-                    : 'hide-gradient'}`,
+                className: `crossword__clues--wrapper ${
+                    this.state.showGradient ? '' : 'hide-gradient'
+                }`,
             },
             createElement(
                 'div',

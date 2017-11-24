@@ -30,13 +30,12 @@ const showContainerShowMore = (): void => {
 
 const showContainerToggle = (): void => {
     const containerToggleAdd = context => {
-        $(
-            '.js-container--toggle',
-            $(context || document)[0]
-        ).each(container => {
-            const toggle = new ContainerToggle(container);
-            toggle.addToggle();
-        });
+        $('.js-container--toggle', $(context || document)[0]).each(
+            container => {
+                const toggle = new ContainerToggle(container);
+                toggle.addToggle();
+            }
+        );
     };
     mediator.addListeners({
         'page:front:ready': containerToggleAdd,

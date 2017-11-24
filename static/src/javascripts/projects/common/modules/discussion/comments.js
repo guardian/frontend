@@ -82,7 +82,9 @@ class Comments extends Component {
         const commentId = currentTarget.getAttribute('data-comment-id');
 
         if (commentId) {
-            const endpoint = `/discussion/comment/${commentId}.json?displayThreaded=true`;
+            const endpoint = `/discussion/comment/${
+                commentId
+            }.json?displayThreaded=true`;
 
             fetchJson(endpoint, {
                 mode: 'cors',
@@ -156,9 +158,11 @@ class Comments extends Component {
 
     fetchComments(options: Object = {}): Promise<mixed> {
         const { discussionId } = this.options || {};
-        const url = `/discussion/${options.comment
-            ? `comment-context/${options.comment}`
-            : discussionId}.json`;
+        const url = `/discussion/${
+            options.comment
+                ? `comment-context/${options.comment}`
+                : discussionId
+        }.json`;
         let orderBy = options.order || (this.options && this.options.order);
         let promise;
         const ajaxParams = { mode: 'cors' };
@@ -342,7 +346,9 @@ class Comments extends Component {
             timestamp: 'Just now',
             body: `<p>${comment.body.replace(/\n+/g, '</p><p>')}</p>`,
             report: {
-                href: `http://discussion.theguardian.com/components/report-abuse/${comment.id}`,
+                href: `http://discussion.theguardian.com/components/report-abuse/${
+                    comment.id
+                }`,
             },
             avatar: {
                 src: this.user && this.user.avatar,

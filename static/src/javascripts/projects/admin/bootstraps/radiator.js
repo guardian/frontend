@@ -43,8 +43,9 @@ const initRadiator = (): void => {
                         `//${window.location.host}/radiator/commit/${revision}`
                     ).then(rev => {
                         if (rev.commit) {
-                            li.innerHTML = `${rev.commit.author
-                                .name} <small>(deployed by ${deployer})</small>`;
+                            li.innerHTML = `${
+                                rev.commit.author.name
+                            } <small>(deployed by ${deployer})</small>`;
                         }
                     });
                 }
@@ -70,7 +71,9 @@ const initRadiator = (): void => {
                 const nameAbbreviation = d.projectName.substr(7, 4); // start at 7 to drop 'dotcom: '
 
                 const link = document.createElement('a');
-                link.href = `https://riffraff.gutools.co.uk/deployment/view/${d.uuid}`;
+                link.href = `https://riffraff.gutools.co.uk/deployment/view/${
+                    d.uuid
+                }`;
                 link.innerHTML = `${nameAbbreviation} ${d.build}`;
 
                 const li = document.createElement('li');

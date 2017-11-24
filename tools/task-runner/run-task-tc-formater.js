@@ -15,10 +15,14 @@ const render = tasks => {
                 }
                 if (task.hasFailed()) {
                     console.log(
-                        `##teamcity[message text='|'${task.title}|' failed' status='ERROR']`
+                        `##teamcity[message text='|'${
+                            task.title
+                        }|' failed' status='ERROR']`
                     );
                     console.log(
-                        `##teamcity[buildProblem description='|'${task.title}|' failed']`
+                        `##teamcity[buildProblem description='|'${
+                            task.title
+                        }|' failed']`
                     );
                 }
                 if (task.isSkipped()) {

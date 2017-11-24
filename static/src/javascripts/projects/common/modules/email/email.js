@@ -55,7 +55,9 @@ const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
         ? inlineSvg('tick')
         : inlineSvg('crossIcon');
     const submissionHtml = `
-        <div class="email-sub__message ${statusClass}" role="alert" aria-live="assertive">
+        <div class="email-sub__message ${
+            statusClass
+        }" role="alert" aria-live="assertive">
             ${submissionIcon}
             <h3 class="email-sub__message__headline">${submissionHeadline}</h3>
             <p class="email-sub__message__description">${submissionMessage}</p>
@@ -83,7 +85,9 @@ const removeAndRemember = (
     $(iframe).remove();
 
     trackNonClickInteraction(
-        `rtrt | email form inline | ${analytics.formType} | ${analytics.listId} | ${analytics.signedIn} | form hidden`
+        `rtrt | email form inline | ${analytics.formType} | ${
+            analytics.listId
+        } | ${analytics.signedIn} | form hidden`
     );
 };
 
@@ -225,8 +229,9 @@ const setIframeHeight = (
 ): (() => void) => () => {
     fastdom.write(() => {
         iFrameEl.height = '';
-        iFrameEl.height = `${iFrameEl.contentWindow.document.body
-            .clientHeight}px`;
+        iFrameEl.height = `${
+            iFrameEl.contentWindow.document.body.clientHeight
+        }px`;
         callback();
     });
 };
@@ -254,13 +259,15 @@ const submitForm = (
 
         if (!state.submitting && validate(emailAddress)) {
             const formData = $form.data('formData');
-            const data = `email=${encodeURIComponent(
-                emailAddress
-            )}&listId=${listId}&campaignCode=${formData.campaignCode}&referrer=${formData.referrer}`;
+            const data = `email=${encodeURIComponent(emailAddress)}&listId=${
+                listId
+            }&campaignCode=${formData.campaignCode}&referrer=${
+                formData.referrer
+            }`;
 
-            analyticsInfo =
-                `rtrt | email form inline | ${analytics.formType} | ${analytics.listId} | ${analytics.signedIn} | ` +
-                `%action%`;
+            analyticsInfo = `rtrt | email form inline | ${
+                analytics.formType
+            } | ${analytics.listId} | ${analytics.signedIn} | %action%`;
 
             state.submitting = true;
 
@@ -281,7 +288,9 @@ const submitForm = (
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(
-                                `Fetch error: ${response.status} ${response.statusText}`
+                                `Fetch error: ${response.status} ${
+                                    response.statusText
+                                }`
                             );
                         }
                     })
