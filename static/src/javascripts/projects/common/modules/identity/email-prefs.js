@@ -75,20 +75,9 @@ const toggleFormatModal = (buttonEl: HTMLElement): void => {
     });
 };
 
-const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
-    formEl.addEventListener('submit', (ev: Event) => {
-        ev.preventDefault();
-    });
-};
-
 const enhanceEmailPrefs = (): void => {
     const loaders = [
         ['.js-save-button', bindHtmlPreferenceChange],
-        ['.js-identity-form-ajax', bindAjaxFormEventOverride],
-        [
-            '.js-identity-form-ajax__submit-nojs',
-            (el: HTMLElement) => el.remove(),
-        ],
         ['.js-manage-account__modalCloser', bindModalCloser],
         ['.js-email-subscription__formatFieldsetToggle', toggleFormatModal],
     ];

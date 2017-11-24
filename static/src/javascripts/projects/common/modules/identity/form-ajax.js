@@ -1,0 +1,34 @@
+// @flow
+// This is a workaround for the email preferences page https://profile.thegulocal.com/email-prefs
+// We want to submit subscribe/unsubscribe requests without a full page refresh
+// Hopefully this will be short-lived; if it is still alive in 2017, git blame and cry
+
+import { _ as robust } from 'lib/robust';
+
+const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
+    formEl.addEventListener('submit', (ev: Event) => {
+        ev.preventDefault();
+    });
+};
+
+const enhanceFormAjax = (): void => {
+    const loaders = [
+        ['.js-identity-form-ajax', bindAjaxFormEventOverride],
+        [
+            '.js-identity-form-ajax__submit-nojs',
+            (el: HTMLElement) => el.remove(),
+        ],
+    ];
+
+    /* ugly :any that saves a lot of loader complexity */
+
+    loaders.forEach(([classname: string, action: Function]) => {
+        [...document.querySelectorAll(classname)].forEach((element: any) => {
+            robust.catchAndLogError(classname, () => {
+                action(element);
+            });
+        });
+    });
+};
+
+export { enhanceEmailPrefs };
