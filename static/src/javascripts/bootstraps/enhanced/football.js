@@ -36,7 +36,7 @@ const renderNav = (
     match: Object,
     callback?: (resp: Object, $nav: bonzo, endpoint: string) => void
 ): Promise<void> => {
-    const matchInfo = new MatchInfo(match, config.get('pageId'));
+    const matchInfo = new MatchInfo(match, config.get('page.pageId'));
 
     return matchInfo
         .fetch()
