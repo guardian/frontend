@@ -12,11 +12,11 @@ export const acquisitionsEpicThankYouTemplate = ({
                 Thank you …
             </h2>
             <p class="contributions__paragraph contributions__paragraph--epic">
-                … for supporting us, funding our independent journalism and keeping it open.
-                Your contribution and the similar pledges of hundreds of thousands of readers around the world enables the
-                Guardian’s journalists to cover important issues like this year’s elections.
-                And your knowledge and experience makes our reporting better too. Did you know we publish articles and podcasts for our supporters,
-                featuring your views and voices?
+                … for supporting us, by funding our independent journalism and helping to keep it open.
+                Your contribution and the similar pledges of more than 800,000 readers around the world
+                enables the Guardian’s journalists to find things out, reveal new information and challenge
+                the powerful. Your knowledge and experience makes our reporting better too. Did you know
+                we publish articles and podcasts for our supporters, featuring your views and voices?
             </p>
     
             <a href="${
