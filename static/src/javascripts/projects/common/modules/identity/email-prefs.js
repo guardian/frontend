@@ -86,7 +86,7 @@ const enhanceEmailPrefs = (): void => {
         ['.js-save-button', bindHtmlPreferenceChange],
         ['.js-identity-form-ajax', bindAjaxFormEventOverride],
         [
-            '.js-identity-form-ajax-submit-nojs',
+            '.js-identity-form-ajax__submit-nojs',
             (el: HTMLElement) => el.remove(),
         ],
         ['.js-manage-account__modalCloser', bindModalCloser],
