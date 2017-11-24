@@ -1,19 +1,24 @@
 package concurrent
 
 import java.util.concurrent.Semaphore
+
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Try}
 
-class FutureSemaphore(maxOperations: Int)(implicit ec: ExecutionContext) {
-  val semaphore = new Semaphore(maxOperations)
+class FutureSemaphore(maxOperations: Int) {
+  private val semaphore = new Semaphore(maxOperations)
 
-  def execute[A](task: => Future[A]): Future[A] = {
+  def execute[A](task: => Future[A])(implicit ec: ExecutionContext): Future[Try[A]] = {
     if (semaphore.tryAcquire()) {
-      val result = task
-      result.foreach(_ => semaphore.release())
-      result.failed.foreach(_ => semaphore.release())
-      result
+      val resultF = task.map(Try(_)).recover { case e => Failure(e) }
+      resultF.foreach(_ => semaphore.release())
+      resultF
     } else {
-      Future(throw new RuntimeException("Too many operations in progress, cannot execute task"))
+      Future.successful(Failure(FutureSemaphore.TooManyOperationsInProgress))
     }
   }
+}
+
+object FutureSemaphore {
+  case object TooManyOperationsInProgress extends Exception("Too many operations in progress, cannot execute task")
 }

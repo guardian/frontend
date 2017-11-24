@@ -34,9 +34,8 @@ trait FapiServices {
   implicit def executionContext: ExecutionContext
   lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
   lazy val frontJsonFapiDraft = wire[FrontJsonFapiDraft]
-  lazy val pressedPageService = wire[PressedPageService]
   lazy val blockingOperations = wire[BlockingOperations]
-  lazy val legacyPressedPageService = wire[LegacyPressedPageService]
+  lazy val legacyPressedPageService = wire[PressedPageService]
 }
 
 trait AppComponents extends FrontendComponents with FaciaControllers with FapiServices {

@@ -65,24 +65,4 @@ trait FaciaSwitches {
     exposeClientSide = false
   )
 
-  val FaciaPressBinaryPress = Switch(
-    SwitchGroup.Facia,
-    "facia-press-binary-press",
-    "If this is switched on, facia will use binary encoded presses",
-    owners = Seq(Owner.withGithub("quarpt")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val FaciaPressJsonPress = Switch(
-    SwitchGroup.Facia,
-    "facia-press-json-press",
-    "If this is switched on, facia will use json encoded presses",
-    owners = Seq(Owner.withGithub("quarpt")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
 }

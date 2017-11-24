@@ -9,7 +9,7 @@ import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
 import play.api.test.Helpers._
-import services.{ConfigAgent, LegacyPressedPageService, PressedPageService}
+import services.{ConfigAgent, PressedPageService}
 import test._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
@@ -24,10 +24,10 @@ import scala.concurrent.Await
   with WithTestWsClient
   with MockitoSugar {
 
-  lazy val legacyPressedPageService = new LegacyPressedPageService(wsClient)
   lazy val actorSystem = ActorSystem()
   lazy val blockingOperations = new BlockingOperations(actorSystem)
-  lazy val fapi = new TestFrontJsonFapi(new PressedPageService(blockingOperations), legacyPressedPageService)
+  lazy val legacyPressedPageService = new PressedPageService(wsClient)
+  lazy val fapi = new TestFrontJsonFapi(legacyPressedPageService)
 
   override def beforeAll() {
     val refresh = ConfigAgent.refreshWith(

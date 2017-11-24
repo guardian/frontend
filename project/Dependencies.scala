@@ -12,7 +12,6 @@ object Dependencies {
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.6.3"
   val guBox = "com.gu" %% "box" %  "0.1.0"
-  val booPickle = "io.suzaku" %% "boopickle" % "1.2.6"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.5.6"
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.6.1"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion

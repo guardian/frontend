@@ -1,6 +1,5 @@
 package frontpress
 
-import boopickle.Default._
 import com.gu.contentapi.client.ContentApiClientLogic
 import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
@@ -23,15 +22,12 @@ import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
-import protocol.BinaryPressedPageProtocol
-
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit ec: ExecutionContext) extends FapiFrontPress {
 
   override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putLiveFapiPressedJson(path, json)
-  override def putPressedBytes(path: String, bytes: Array[Byte]): Unit = S3FrontsApi.putLiveFapiPressedBytes(path, bytes)
   override def isLiveContent: Boolean = true
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
@@ -60,7 +56,6 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
   implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
   override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putDraftFapiPressedJson(path, json)
-  override def putPressedBytes(path: String, bytes: Array[Byte]): Unit = S3FrontsApi.putDraftFapiPressedBytes(path, bytes)
   override def isLiveContent: Boolean = false
 
   override def collectionContentWithSnaps(
@@ -79,14 +74,13 @@ object EmbedJsonHtml {
   implicit val format = Json.format[EmbedJsonHtml]
 }
 
-trait FapiFrontPress extends Logging with BinaryPressedPageProtocol {
+trait FapiFrontPress extends Logging {
 
   implicit val capiClient: ContentApiClientLogic
   implicit def fapiClient: ApiClient
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
   def putPressedJson(path: String, json: String): Unit
-  def putPressedBytes(path: String, bytes: Array[Byte]): Unit
   def isLiveContent: Boolean
 
   def collectionContentWithSnaps(
@@ -119,7 +113,6 @@ trait FapiFrontPress extends Logging with BinaryPressedPageProtocol {
 
     val pressFuture = getPressedFrontForPath(path)
       .map { pressedFront: PressedPage =>
-        persistPressedFontBytes(path, pressedFront)
         val json: String = Json.stringify(Json.toJson(pressedFront))
         FaciaPressMetrics.FrontPressContentSize.recordSample(json.getBytes.length, new DateTime())
         putPressedJson(path, json)
@@ -153,12 +146,6 @@ trait FapiFrontPress extends Logging with BinaryPressedPageProtocol {
     }
 
     pressFuture
-  }
-
-  private def persistPressedFontBytes(path: String, pressedFront: PressedPage)(implicit executionContext: ExecutionContext): Future[Unit] = {
-    errorLoggingF(s"persistPressedFontBytes $path $pressedFront") {
-      Future(putPressedBytes(path, Pickle.intoBytes(pressedFront).array()))
-    }
   }
 
   def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollection] =

@@ -30,23 +30,24 @@ trait Logging {
     log.logger.error(customFieldMarkers(customFields), message, error)
   }
 
-  def errorLoggingF[A](message: String)(task: => Future[A])(implicit ec: ExecutionContext): Future[A] = {
+  // Transparent error logging on exceptions: log context and exception on error, and pass on the exception
+  def errorLoggingF[A](context: String)(task: => Future[A])(implicit ec: ExecutionContext): Future[A] = {
     def errorLoggingFuture(f: Future[A]): Future[A] = {
       f.recover {
-        case NonFatal(e) => Logger.error(message, e) ; throw e
+        case NonFatal(e) => Logger.error(context, e) ; throw e
       }
     }
 
     Try(task) match {
       case Success(f) => errorLoggingFuture(f)
-      case Failure(NonFatal(e)) => Logger.error(message, e) ; throw e
+      case Failure(e) => Logger.error(context, e) ; throw e
     }
   }
 
   def errorLogging[A](message: String)(block: => A): A = {
     Try(block) match {
       case Success(result) => result
-      case Failure(NonFatal(e)) => Logger.error(message, e) ; throw e
+      case Failure(e) => Logger.error(message, e) ; throw e
     }
   }
 }
