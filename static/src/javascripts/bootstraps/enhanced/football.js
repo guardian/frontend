@@ -109,22 +109,22 @@ const renderExtras = (
         belowArticleVisible(
             () => {
                 $('.js-after-article').append(
-                    $.create(
-                        '<div class="football-extras"></div>'
-                    ).each(extrasContainer => {
-                        extras.filter(Boolean).forEach((extra, i) => {
-                            if (dropdownTemplate) {
-                                createDropdown(
-                                    dropdownTemplate,
-                                    extra,
-                                    extrasContainer,
-                                    i
-                                );
-                            } else if (extra.content) {
-                                extrasContainer.appendChild(extra.content);
-                            }
-                        });
-                    })
+                    $.create('<div class="football-extras"></div>').each(
+                        extrasContainer => {
+                            extras.filter(Boolean).forEach((extra, i) => {
+                                if (dropdownTemplate) {
+                                    createDropdown(
+                                        dropdownTemplate,
+                                        extra,
+                                        extrasContainer,
+                                        i
+                                    );
+                                } else if (extra.content) {
+                                    extrasContainer.appendChild(extra.content);
+                                }
+                            });
+                        }
+                    )
                 );
             },
             () => {

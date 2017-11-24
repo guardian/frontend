@@ -35,11 +35,12 @@ describe('Hosted Next Video', () => {
         hostedNextVideo
             .load()
             .then(() => {
-                expect(
-                    fetchJson
-                ).toHaveBeenCalledWith('some.url/pageId/autoplay.json', {
-                    mode: 'cors',
-                });
+                expect(fetchJson).toHaveBeenCalledWith(
+                    'some.url/pageId/autoplay.json',
+                    {
+                        mode: 'cors',
+                    }
+                );
                 expect(
                     document.querySelector('.js-autoplay-placeholder .video')
                 ).not.toBeNull();

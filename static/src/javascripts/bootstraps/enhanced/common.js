@@ -65,12 +65,11 @@ const initialiseNavigation = (): void => {
 };
 
 const showTabs = (): void => {
-    [
-        'modules:popular:loaded',
-        'modules:geomostpopular:ready',
-    ].forEach(event => {
-        mediator.on(event, initTabs);
-    });
+    ['modules:popular:loaded', 'modules:geomostpopular:ready'].forEach(
+        event => {
+            mediator.on(event, initTabs);
+        }
+    );
 };
 
 const showToggles = (): void => {
@@ -263,13 +262,13 @@ const initialiseEmail = (): void => {
     }
 
     // Initalise email forms in iframes
-    Array.from(
-        document.getElementsByClassName('js-email-sub__iframe')
-    ).forEach(el => {
-        const iframe: HTMLIFrameElement = (el: any);
+    Array.from(document.getElementsByClassName('js-email-sub__iframe')).forEach(
+        el => {
+            const iframe: HTMLIFrameElement = (el: any);
 
-        initEmail(iframe);
-    });
+            initEmail(iframe);
+        }
+    );
 
     // Listen for interactive load event and initalise forms
     bean.on(window, 'interactive-loaded', () => {

@@ -23,13 +23,13 @@ const renderExtras = (extras: Array<Extra>): void => {
         belowArticleVisible(
             () => {
                 $('.js-after-article').append(
-                    $.create(
-                        '<div class="football-extras"></div>'
-                    ).each(extrasContainer => {
-                        extras.forEach(extra => {
-                            extrasContainer.appendChild(extra.content);
-                        });
-                    })
+                    $.create('<div class="football-extras"></div>').each(
+                        extrasContainer => {
+                            extras.forEach(extra => {
+                                extrasContainer.appendChild(extra.content);
+                            });
+                        }
+                    )
                 );
             },
             () => {
@@ -47,7 +47,9 @@ const cricket = (): void => {
 
     if (matchDate && team) {
         const cricketScore = new Component();
-        cricketScore.endpoint = `/sport/cricket/match/${matchDate}/${team}.json`;
+        cricketScore.endpoint = `/sport/cricket/match/${matchDate}/${
+            team
+        }.json`;
 
         fastdom
             .read(() => document.querySelector('.js-cricket-score'))
@@ -125,7 +127,9 @@ const rugby = (): void => {
             $('.js-match-stats').remove();
 
             $.create(
-                `<div class="match-stats__container js-match-stats">${resp.matchStat}</div>`
+                `<div class="match-stats__container js-match-stats">${
+                    resp.matchStat
+                }</div>`
             ).each(container => {
                 $('.js-chart', container).each(el => {
                     new TableDoughnut().render(el);
@@ -144,7 +148,9 @@ const rugby = (): void => {
             $('.js-football-table').remove();
 
             $.create(
-                `<div class="js-football-table" data-link-name="football-table-embed">${resp.groupTable}</div>`
+                `<div class="js-football-table" data-link-name="football-table-embed">${
+                    resp.groupTable
+                }</div>`
             ).each(container => {
                 renderExtras([
                     {

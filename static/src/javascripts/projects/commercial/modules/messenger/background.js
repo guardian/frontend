@@ -102,7 +102,9 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
         background: HTMLElement
     ) => {
         backgroundParent.className = backgroundParentClass;
-        background.className = `${backgroundClass} creative__background--${specs.scrollType}`;
+        background.className = `${backgroundClass} creative__background--${
+            specs.scrollType
+        }`;
 
         Object.assign(background.style, specStyles);
 

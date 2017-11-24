@@ -266,7 +266,9 @@ class SpaceError extends Error {
     constructor(rules: SpacefinderRules) {
         super();
         this.name = 'SpaceError';
-        this.message = `There is no space left matching rules from ${rules.bodySelector}`;
+        this.message = `There is no space left matching rules from ${
+            rules.bodySelector
+        }`;
     }
 }
 

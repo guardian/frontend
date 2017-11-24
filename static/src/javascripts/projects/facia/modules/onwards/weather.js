@@ -98,7 +98,9 @@ export const Weather = {
         const weatherApiBase = config.get('page.weatherapiurl');
         const edition = config.get('page.edition');
         return this.getWeatherData(
-            `${weatherApiBase}/${location.id}.json?_edition=${edition.toLowerCase()}`
+            `${weatherApiBase}/${
+                location.id
+            }.json?_edition=${edition.toLowerCase()}`
         )
             .then(response => {
                 this.render(response, location.city);
@@ -120,11 +122,9 @@ export const Weather = {
 
     fetchForecastData(location: Location): Promise<void> {
         return this.getWeatherData(
-            `${config.get(
-                'page.forecastsapiurl'
-            )}/${location.id}.json?_edition=${config
-                .get('page.edition')
-                .toLowerCase()}`
+            `${config.get('page.forecastsapiurl')}/${
+                location.id
+            }.json?_edition=${config.get('page.edition').toLowerCase()}`
         )
             .then(response => {
                 this.renderForecast(response);

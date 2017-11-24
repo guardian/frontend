@@ -18,7 +18,9 @@ const moreInSeriesContainerInit = (
             ? '&exclude-tag=guardian-professional/guardian-professional'
             : '';
 
-    const endpoint = `/${mediaType}/section/${section}${seriesStr}.json?shortUrl=${shortUrl}${excludeProfContent}`;
+    const endpoint = `/${mediaType}/section/${section}${
+        seriesStr
+    }.json?shortUrl=${shortUrl}${excludeProfContent}`;
 
     component.endpoint = endpoint;
 

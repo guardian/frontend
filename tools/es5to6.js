@@ -32,7 +32,9 @@ if (moduleId && !fs.existsSync(path.resolve(legacyPath, moduleId))) {
 if (!moduleId) {
     const userModules = remainingModules[gitUser()];
     if (!userModules || !userModules.length) {
-        console.log(chalk.green('⭐️  You have no more modules to convert! ⭐️'));
+        console.log(
+            chalk.green('⭐️  You have no more modules to convert! ⭐️')
+        );
         process.exit();
     }
 
@@ -66,21 +68,29 @@ git
         const branchName = `es6-${es6Name}`;
 
         const steps = {
-            'Create a branch for the conversion': `git checkout -b "${branchName}" || git checkout -b "${branchName}-${unique}"`,
+            'Create a branch for the conversion': `git checkout -b "${
+                branchName
+            }" || git checkout -b "${branchName}-${unique}"`,
             'Move the legacy module to the new location': `mkdir -p ${path.dirname(
                 es6Module
             )}; mv ${es5Module} ${path.dirname(
                 es6Module
             )}; node ./tools/es5to6-remove-module.js ${moduleId}`,
-            'Commit the move': `git add .; git commit -m "move ${moduleId} from legacy to standard JS" --no-verify`,
+            'Commit the move': `git add .; git commit -m "move ${
+                moduleId
+            } from legacy to standard JS" --no-verify`,
             'Convert module to ES6': `npm run -s amdtoes6 -- -d ${path.dirname(
                 es6Module
             )} -o ${path.dirname(es6Module)} -g **/${path.basename(
                 es6Module
             )} `,
-            'Commit the module tranform': `git add .; git commit -m "transform ${moduleId} to ES6 module" --no-verify`,
+            'Commit the module tranform': `git add .; git commit -m "transform ${
+                moduleId
+            } to ES6 module" --no-verify`,
             'Convert contents to ES6': `npm run -s lebab -- ${es6Module}`,
-            'Commit the content tranform': `git add .; git commit -m "transform ${moduleId} content to ES6"`,
+            'Commit the content tranform': `git add .; git commit -m "transform ${
+                moduleId
+            } content to ES6"`,
         };
 
         Object.keys(steps)

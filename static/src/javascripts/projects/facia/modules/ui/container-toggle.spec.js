@@ -34,7 +34,9 @@ describe('Container Toggle', () => {
 
     beforeEach(() => {
         container = bonzo.create(
-            `<section class="fc-container js-container--toggle fc-container__will-have-toggle" data-id="${containerId}">` +
+            `<section class="fc-container js-container--toggle fc-container__will-have-toggle" data-id="${
+                containerId
+            }">` +
                 `<div class="fc-container__header js-container__header">` +
                 `<h2>A container</h2>` +
                 `</div>` +

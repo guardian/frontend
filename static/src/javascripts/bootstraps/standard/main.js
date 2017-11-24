@@ -72,7 +72,11 @@ const handleMembershipAccess = (): void => {
     const { membershipUrl, membershipAccess, contentId } = config.get('page');
 
     const redirect = (): void => {
-        window.location.href = `${membershipUrl}/membership-content?referringContent=${contentId}&membershipAccess=${membershipAccess}`;
+        window.location.href = `${
+            membershipUrl
+        }/membership-content?referringContent=${contentId}&membershipAccess=${
+            membershipAccess
+        }`;
     };
 
     const updateDOM = (resp: Object): void => {

@@ -411,7 +411,9 @@ const tagHtml = (
     tag: Array<string>,
     index: number
 ): string => `<li class="inline-list__item">
-        <a href="/${tag[0]}" class="button button--small button--tag button--secondary" data-link-name="${index +
+        <a href="/${
+            tag[0]
+        }" class="button button--small button--tag button--secondary" data-link-name="${index +
     1} | ${tag[1]}">${tag[1]}</a>
     </li>`;
 

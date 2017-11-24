@@ -23,7 +23,9 @@ const init = (): boolean => {
     }
 
     const link = 'https://www.theguardian.com/info/cookies';
-    const txt = `Welcome to the Guardian. This site uses cookies. Read <a href="${link}" class="cookie-message__link">our policy</a>.`;
+    const txt = `Welcome to the Guardian. This site uses cookies. Read <a href="${
+        link
+    }" class="cookie-message__link">our policy</a>.`;
     const opts = {
         important: true,
     };
