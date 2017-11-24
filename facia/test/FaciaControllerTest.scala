@@ -1,7 +1,5 @@
 package test
 
-import concurrent.BlockingOperations
-import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
 import implicits.FakeRequests
@@ -27,8 +25,6 @@ import scala.concurrent.Await
   with WithTestWsClient
   with MockitoSugar {
 
-  lazy val actorSystem = ActorSystem()
-  lazy val blockingOperations = new BlockingOperations(actorSystem)
   lazy val legacyPressedPageService = new PressedPageService(wsClient)
   lazy val fapi = new TestFrontJsonFapi(legacyPressedPageService)
 

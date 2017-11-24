@@ -4,11 +4,10 @@ import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
-import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
-import controllers.{Assets, FaciaControllers, HealthCheck}
+import controllers.{FaciaControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CommonFilters
 import model.ApplicationIdentity
@@ -22,19 +21,14 @@ import play.api.libs.ws.WSClient
 import services._
 import router.Routes
 
-import scala.concurrent.ExecutionContext
-
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait FapiServices {
   def wsClient: WSClient
-  def actorSystem: ActorSystem
-  implicit def executionContext: ExecutionContext
   lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
   lazy val frontJsonFapiDraft = wire[FrontJsonFapiDraft]
-  lazy val blockingOperations = wire[BlockingOperations]
   lazy val legacyPressedPageService = wire[PressedPageService]
 }
 
