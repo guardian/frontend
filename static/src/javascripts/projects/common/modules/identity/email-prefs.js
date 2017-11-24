@@ -81,7 +81,7 @@ const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
     });
 };
 
-const enhanceManageAccount = (): void => {
+const enhanceEmailPrefs = (): void => {
     const loaders = [
         ['.js-save-button', bindHtmlPreferenceChange],
         ['.js-manage-account__ajaxForm', bindAjaxFormEventOverride],
@@ -104,4 +104,4 @@ const enhanceManageAccount = (): void => {
     });
 };
 
-export { enhanceManageAccount };
+export { enhanceEmailPrefs };

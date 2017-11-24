@@ -14,7 +14,7 @@ import { FormstackEmbedIframe } from 'common/modules/identity/formstack-iframe-e
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
 import { AccountProfile } from 'common/modules/identity/account-profile';
 import { init as initPublicProfile } from 'common/modules/identity/public-profile';
-import { enhanceManageAccount } from 'common/modules/identity/manage-account';
+import { enhanceEmailPrefs } from 'common/modules/identity/email-prefs';
 import { enhanceConsents } from 'common/modules/identity/consents';
 import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
 import { initUserAvatars } from 'common/modules/discussion/user-avatars';
@@ -70,7 +70,7 @@ const initProfile = (): void => {
         ['init-user-avatars', initUserAvatars],
         ['init-tabs', initTabs],
         ['init-account-profile', initAccountProfile],
-        ['enhance-manage-account', enhanceManageAccount],
+        ['enhance-email-prefs', enhanceEmailPrefs],
         ['setup-loading-animation', setupLoadingAnimation],
         ['init-public-profile', initPublicProfile],
         ['init-wizards', initWizards],
