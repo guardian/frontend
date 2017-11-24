@@ -486,7 +486,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     margin-right: 7px;
     width: 100px;
 
-    @include mq($from: 375px) {
+    @include mq($from: mobileMedium) {
         margin-right: $gs-gutter/2;
         margin-bottom: -4px;
         width: 130px;
@@ -498,7 +498,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         margin-bottom: 2px;
     }
 
-    @include mq($from: 1300px) {
+    @include mq($from: wide) {
         margin-top: 2px;
         margin-bottom: 0;
     }
@@ -522,7 +522,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     margin-bottom: -$gs-gutter/2;
     display: flex;
     flex-direction: row;
-    @include mq($from: 375px) {
+    @include mq($from: mobileMedium) {
         margin-top: auto;
     }
 
