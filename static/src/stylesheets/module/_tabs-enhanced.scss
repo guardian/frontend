@@ -19,11 +19,13 @@
 
 
 /**
- * Multiple tabs
+ * Multiple tab sizing
  *
  * Used for cases where more than 2 tabs are wanted (eg not two 50% width tabs)
  */
-
+.tabs__container {
+    max-width: gs-span(6);
+}
 .tabs__container--multiple {
     margin-bottom: 10px;
     max-width: 100%;

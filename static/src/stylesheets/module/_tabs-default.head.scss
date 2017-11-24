@@ -47,7 +47,6 @@ category: Common
     overflow: hidden;
     z-index: 2;
     width: 100%;
-    max-width: gs-span(6);
     background: lighten($neutral-6, 5%);
     table-layout: fixed;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
