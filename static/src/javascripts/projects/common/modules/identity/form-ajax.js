@@ -1,7 +1,4 @@
 // @flow
-// This is a workaround for the email preferences page https://profile.thegulocal.com/email-prefs
-// We want to submit subscribe/unsubscribe requests without a full page refresh
-// Hopefully this will be short-lived; if it is still alive in 2017, git blame and cry
 
 import { _ as robust } from 'lib/robust';
 import fastdom from 'lib/fastdom-promise';
