@@ -49,10 +49,14 @@ category: Common
     width: 100%;
     background: lighten($neutral-6, 5%);
     table-layout: fixed;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
     grid-column-gap: 2px;
     display: table;
     display: grid;
+
+    @include mq(desktop) {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
 
     @include mq(tablet) {
         margin-bottom: -1px;
