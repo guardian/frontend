@@ -84,9 +84,9 @@ const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
 const enhanceEmailPrefs = (): void => {
     const loaders = [
         ['.js-save-button', bindHtmlPreferenceChange],
-        ['.js-manage-account__ajaxForm', bindAjaxFormEventOverride],
+        ['.js-identity-form-ajax', bindAjaxFormEventOverride],
         [
-            '.js-identity-consents__consent-checkboxesSubmit',
+            '.js-identity-form-ajax-submit-nojs',
             (el: HTMLElement) => el.remove(),
         ],
         ['.js-manage-account__modalCloser', bindModalCloser],
