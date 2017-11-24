@@ -1,7 +1,6 @@
 // @flow
 
-import { _ as robust } from 'lib/robust';
-import fastdom from 'lib/fastdom-promise';
+import loadEnhancers from './modules/loadEnhancers';
 
 const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
     formEl.addEventListener('submit', (ev: Event) => {
@@ -17,20 +16,7 @@ const enhanceFormAjax = (): void => {
             (el: HTMLElement) => el.remove(),
         ],
     ];
-
-    /* ugly :any that saves a lot of loader complexity */
-
-    loaders.forEach(([classname: string, action: Function]) =>
-        fastdom
-            .read(() => [...document.querySelectorAll(classname)])
-            .then(elements =>
-                elements.forEach((element: any) => {
-                    robust.catchAndLogError(classname, () => {
-                        action(element);
-                    });
-                })
-            )
-    );
+    loadEnhancers(loaders);
 };
 
 export { enhanceFormAjax };

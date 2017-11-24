@@ -2,7 +2,8 @@
 
 import reqwest from 'reqwest';
 import fastdom from 'lib/fastdom-promise';
-import { _ as robust } from 'lib/robust';
+import loadEnhancers from './modules/loadEnhancers';
+
 import { push as pushError } from './modules/show-errors';
 import {
     addSpinner,
@@ -269,16 +270,7 @@ const enhanceConsents = (): void => {
         ['.js-manage-account__newsletterCheckbox', bindNewsletterSwitch],
         ['.js-unsubscribe', bindUnsubscribeFromAll],
     ];
-
-    /* ugly :any that saves a lot of loader complexity */
-
-    loaders.forEach(([classname: string, action: Function]) => {
-        [...document.querySelectorAll(classname)].forEach((element: any) => {
-            robust.catchAndLogError(classname, () => {
-                action(element);
-            });
-        });
-    });
+    loadEnhancers(loaders);
 };
 
 export { enhanceConsents };

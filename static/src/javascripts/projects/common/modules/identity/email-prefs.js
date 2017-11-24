@@ -2,7 +2,8 @@
 
 import reqwest from 'reqwest';
 import fastdom from 'lib/fastdom-promise';
-import { _ as robust } from 'lib/robust';
+import loadEnhancers from './modules/loadEnhancers';
+
 import { push as pushError } from './modules/show-errors';
 import { addUpdatingState, removeUpdatingState } from './modules/button';
 import {
@@ -78,20 +79,7 @@ const enhanceEmailPrefs = (): void => {
         ['.js-manage-account__modalCloser', bindModalCloser],
         ['.js-email-subscription__formatFieldsetToggle', toggleFormatModal],
     ];
-
-    /* ugly :any that saves a lot of loader complexity */
-
-    loaders.forEach(([classname: string, action: Function]) =>
-        fastdom
-            .read(() => [...document.querySelectorAll(classname)])
-            .then(elements =>
-                elements.forEach((element: any) => {
-                    robust.catchAndLogError(classname, () => {
-                        action(element);
-                    });
-                })
-            )
-    );
+    loadEnhancers(loaders);
 };
 
 export { enhanceEmailPrefs };
