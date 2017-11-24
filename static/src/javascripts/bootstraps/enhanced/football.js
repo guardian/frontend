@@ -224,7 +224,7 @@ const init = (): void => {
                 dropdownTemplate = resp.dropdown;
 
                 // Test if template is not composed of just whitspace. A content validation check, apparently.
-                if (scoreBoard.template && !/^\s+$/.test(scoreBoard.template)) {
+                if (!/^\s+$/.test(scoreBoard.template || '')) {
                     scoreBoard.endpoint = endpoint;
                     scoreBoard.loadFromJson(resp.matchSummary);
                 } else {
