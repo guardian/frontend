@@ -242,7 +242,9 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                                 return subscribedNewsletterIds;
                             }),
                         getCsrfTokenFromElement(
-                            document.querySelector('.js-manage-account__newsletterCheckbox')
+                            document.querySelector(
+                                '.js-manage-account__newsletterCheckbox'
+                            )
                         ),
                     ])
                 )
@@ -354,15 +356,17 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
 
 const toggleFormatModal = (buttonEl: HTMLElement): void => {
     bean.on(buttonEl, 'click', () => {
-        fastdom.read(()=>
-            document.querySelector('.manage-account__modal--newsletterFormat')
-        ).then(modalEl=>{
-            fastdom.write(() => {
-                modalEl.classList.add(
-                    'manage-account__modal--active'
-                );
+        fastdom
+            .read(() =>
+                document.querySelector(
+                    '.manage-account__modal--newsletterFormat'
+                )
+            )
+            .then(modalEl => {
+                fastdom.write(() => {
+                    modalEl.classList.add('manage-account__modal--active');
+                });
             });
-        })
     });
 };
 
