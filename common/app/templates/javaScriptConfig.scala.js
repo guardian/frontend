@@ -26,7 +26,6 @@
             },
             "acquisitions": {
                 "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")",
-                "paypal-and-credit-card-new": "@Static("images/acquisitions/paypal-and-credit-card-new.png")"
              }
         },
         "stylesheets": {
