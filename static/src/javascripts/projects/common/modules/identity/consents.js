@@ -100,16 +100,8 @@ const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
 const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement) =>
     fastdom
         .read(() => [
-            [
-                ...document.querySelectorAll(
-                    '.js-unsubscribe--confirm'
-                ),
-            ],
-            [
-                ...document.querySelectorAll(
-                    '.js-unsubscribe--basic'
-                ),
-            ],
+            [...document.querySelectorAll('.js-unsubscribe--confirm')],
+            [...document.querySelectorAll('.js-unsubscribe--basic')],
         ])
         .then(([confirmEls, basicEls]) =>
             fastdom.write(() => {

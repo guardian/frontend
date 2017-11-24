@@ -4,6 +4,7 @@
 // Hopefully this will be short-lived; if it is still alive in 2017, git blame and cry
 
 import { _ as robust } from 'lib/robust';
+import fastdom from 'lib/fastdom-promise';
 
 const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
     formEl.addEventListener('submit', (ev: Event) => {
@@ -22,13 +23,17 @@ const enhanceFormAjax = (): void => {
 
     /* ugly :any that saves a lot of loader complexity */
 
-    loaders.forEach(([classname: string, action: Function]) => {
-        [...document.querySelectorAll(classname)].forEach((element: any) => {
-            robust.catchAndLogError(classname, () => {
-                action(element);
-            });
-        });
-    });
+    loaders.forEach(([classname: string, action: Function]) =>
+        fastdom
+            .read(() => [...document.querySelectorAll(classname)])
+            .then(elements =>
+                elements.forEach((element: any) => {
+                    robust.catchAndLogError(classname, () => {
+                        action(element);
+                    });
+                })
+            )
+    );
 };
 
 export { enhanceFormAjax };

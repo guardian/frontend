@@ -15,6 +15,7 @@ import { init as initValidationEmail } from 'common/modules/identity/validation-
 import { AccountProfile } from 'common/modules/identity/account-profile';
 import { init as initPublicProfile } from 'common/modules/identity/public-profile';
 import { enhanceEmailPrefs } from 'common/modules/identity/email-prefs';
+import { enhanceFormAjax } from 'common/modules/identity/form-ajax';
 import { enhanceConsents } from 'common/modules/identity/consents';
 import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
 import { initUserAvatars } from 'common/modules/discussion/user-avatars';
@@ -75,6 +76,7 @@ const initProfile = (): void => {
         ['init-public-profile', initPublicProfile],
         ['init-wizards', initWizards],
         ['enhance-consents', enhanceConsents],
+        ['enhance-form-ajax', enhanceFormAjax],
     ];
     catchErrorsWithContext(modules);
 };

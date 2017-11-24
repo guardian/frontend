@@ -84,13 +84,17 @@ const enhanceEmailPrefs = (): void => {
 
     /* ugly :any that saves a lot of loader complexity */
 
-    loaders.forEach(([classname: string, action: Function]) => {
-        [...document.querySelectorAll(classname)].forEach((element: any) => {
-            robust.catchAndLogError(classname, () => {
-                action(element);
-            });
-        });
-    });
+    loaders.forEach(([classname: string, action: Function]) =>
+        fastdom
+            .read(() => [...document.querySelectorAll(classname)])
+            .then(elements =>
+                elements.forEach((element: any) => {
+                    robust.catchAndLogError(classname, () => {
+                        action(element);
+                    });
+                })
+            )
+    );
 };
 
 export { enhanceEmailPrefs };
