@@ -153,24 +153,41 @@ const buildFormDataForFields = (
 const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
     fastdom.read(() => labelEl.querySelectorAll('*[name][value]'));
 
-const resetUnsubscribeFromAll = buttonEl => {
-    fastdom.write(() => {
-        $(buttonEl).removeClass(
-            'email-unsubscribe--confirm js-confirm-unsubscribe'
+const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement) =>
+    fastdom
+        .read(() => [
+            [...document.querySelectorAll('.js-unsubscribe--confirm')],
+            [...document.querySelectorAll('.js-unsubscribe--basic')],
+        ])
+        .then(([confirmEls, basicEls]) =>
+            fastdom.write(() => {
+                [
+                    'email-unsubscribe--confirm',
+                    'js-confirm-unsubscribe',
+                ].forEach(classname => buttonEl.classList.remove(classname));
+                confirmEls.forEach(confirmEl =>
+                    confirmEl.classList.add('hide')
+                );
+                basicEls.forEach(basicEl => basicEl.classList.remove('hide'));
+            })
         );
-        $('.js-unsubscribe--confirm').addClass('hide');
-        $('.js-unsubscribe--basic').removeClass('hide');
-    });
-};
 
-const confirmUnsubscriptionFromAll = buttonEl => {
-    fastdom.write(() => {
-        $(buttonEl).addClass(
-            'email-unsubscribe--confirm js-confirm-unsubscribe'
+const confirmUnsubscriptionFromAll = (buttonEl: HTMLButtonElement) =>
+    fastdom
+        .read(() => [
+            [...document.querySelectorAll('.email-unsubscribe-all__label')],
+        ])
+        .then(([unsubAllLabelEls]) =>
+            fastdom.write(() => {
+                [
+                    'email-unsubscribe--confirm',
+                    'js-confirm-unsubscribe',
+                ].forEach(classname => buttonEl.classList.add(classname));
+                unsubAllLabelEls.forEach(unsubAllLabelEl =>
+                    unsubAllLabelEl.classList.toggle('hide')
+                );
+            })
         );
-        $('.email-unsubscribe-all__label').toggleClass('hide');
-    });
-};
 
 const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
     bean.on(buttonEl, 'click', () =>
@@ -195,7 +212,7 @@ const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
 
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     bean.on(buttonEl, 'click', () => {
-        if ($(buttonEl).hasClass('js-confirm-unsubscribe')) {
+        if (buttonEl.classList.contains('js-confirm-unsubscribe')) {
             addUpdatingState(buttonEl);
             resetUnsubscribeFromAll(buttonEl);
 
@@ -210,18 +227,22 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                 .then((htmlPreference: string) =>
                     Promise.all([
                         htmlPreference,
-                        fastdom.read(() => {
-                            const subscribedNewsletterIds = [];
-                            $(
-                                '.js-manage-account__newsletterCheckbox input:checked'
-                            ).each(inputEl => {
-                                subscribedNewsletterIds.push(inputEl.name);
-                                inputEl.checked = false;
-                            });
-                            return subscribedNewsletterIds;
-                        }),
+                        fastdom
+                            .read(() => [
+                                ...document.querySelectorAll(
+                                    '.js-manage-account__newsletterCheckbox input:checked'
+                                ),
+                            ])
+                            .then(checkboxes => {
+                                const subscribedNewsletterIds = [];
+                                checkboxes.forEach(inputEl => {
+                                    subscribedNewsletterIds.push(inputEl.name);
+                                    inputEl.checked = false;
+                                });
+                                return subscribedNewsletterIds;
+                            }),
                         getCsrfTokenFromElement(
-                            $('.js-manage-account__newsletterCheckbox').get(0)
+                            document.querySelector('.js-manage-account__newsletterCheckbox')
                         ),
                     ])
                 )
@@ -333,11 +354,15 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
 
 const toggleFormatModal = (buttonEl: HTMLElement): void => {
     bean.on(buttonEl, 'click', () => {
-        fastdom.write(() => {
-            $('.manage-account__modal--newsletterFormat').addClass(
-                'manage-account__modal--active'
-            );
-        });
+        fastdom.read(()=>
+            document.querySelector('.manage-account__modal--newsletterFormat')
+        ).then(modalEl=>{
+            fastdom.write(() => {
+                modalEl.classList.add(
+                    'manage-account__modal--active'
+                );
+            });
+        })
     });
 };
 
