@@ -112,7 +112,7 @@ trait ABTestSwitches {
     "Test highlighting a different sentance in the epic",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 11, 23),
+    sellByDate = new LocalDate(2017, 11, 30),
     exposeClientSide = true
   )
 
