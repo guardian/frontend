@@ -31,4 +31,4 @@ const enhanceFormAjax = (): void => {
     });
 };
 
-export { enhanceEmailPrefs };
+export { enhanceFormAjax };
