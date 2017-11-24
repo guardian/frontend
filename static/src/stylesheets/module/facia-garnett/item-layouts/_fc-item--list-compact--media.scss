@@ -1,0 +1,37 @@
+/*
+
+Compact list item. Looks a bit like this:
+
+x x x x x x x x x x x x x x x x x x x x x x x
+
+ */
+
+@mixin fc-item--list-compact--media {
+    @include fc-item--list-compact;
+
+    // calculate image width
+    $media-ratio: 5 / 3;
+    $item-min-height: get-line-height(bodyHeading, 2) * 3;
+    $image-width: $item-min-height * $media-ratio;
+
+    min-height: $item-min-height;
+    padding-left: $image-width;
+
+    // Override u-responsive-ratio
+    // Circumvents Chrome bug with positioning, overflow: hidden and columns
+    // https://code.google.com/p/chromium/issues/detail?id=527709
+    .fc-item__image-container {
+        overflow: visible;
+    }
+
+    .fc-item__image-container {
+        display: block;
+    }
+
+    .fc-item__media-wrapper {
+        width: $image-width;
+        padding-right: $gs-gutter * .5;
+        margin-left: 0 - $image-width;
+        float: left;
+    }
+}
