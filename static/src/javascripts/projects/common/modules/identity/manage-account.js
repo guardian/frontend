@@ -6,7 +6,7 @@
 import bean from 'bean';
 import reqwest from 'reqwest';
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { _ as robust } from 'lib/robust';
 import { push as pushError } from './modules/show-errors';
 import {
     addSpinner,
@@ -348,22 +348,29 @@ const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
 };
 
 const enhanceManageAccount = (): void => {
-    $.forEachElement('.js-save-button', bindHtmlPreferenceChange);
-    $.forEachElement('.js-unsubscribe', bindUnsubscribeFromAll);
-    $.forEachElement('.js-manage-account__ajaxForm', bindAjaxFormEventOverride);
-    $.forEachElement('.js-manage-account__modalCloser', bindModalCloser);
-    $.forEachElement('.js-manage-account__consentCheckbox', bindConsentSwitch);
-    $.forEachElement(
-        '.js-email-subscription__formatFieldsetToggle',
-        toggleFormatModal
-    );
-    $.forEachElement(
-        '.js-manage-account__newsletterCheckbox',
-        bindNewsletterSwitch
-    );
-    $.forEachElement('.js-manage-account__ajaxForm-submit', (el: HTMLElement) =>
-        el.remove()
-    );
+    const loaders = [
+        ['.js-save-button', bindHtmlPreferenceChange],
+        ['.js-unsubscribe', bindUnsubscribeFromAll],
+        ['.js-manage-account__ajaxForm', bindAjaxFormEventOverride],
+        ['.js-manage-account__modalCloser', bindModalCloser],
+        ['.js-manage-account__consentCheckbox', bindConsentSwitch],
+        ['.js-email-subscription__formatFieldsetToggle', toggleFormatModal],
+        ['.js-manage-account__newsletterCheckbox', bindNewsletterSwitch],
+        [
+            '.js-manage-account__consentCheckboxesSubmit',
+            (el: HTMLElement) => el.remove(),
+        ],
+    ];
+
+    /* ugly :any that saves a lot of loader complexity */
+
+    loaders.forEach(([classname: string, action: Function]) => {
+        [...document.querySelectorAll(classname)].forEach((element: any) => {
+            robust.catchAndLogError(classname, () => {
+                action(element);
+            });
+        });
+    });
 };
 
 export { enhanceManageAccount };
