@@ -117,9 +117,10 @@ const submitNewsletterAction = (
     });
 };
 
-const getCsrfTokenFromElement = (originalEl: HTMLElement): Promise<any> =>
+const getCsrfTokenFromElement = (originalEl: ?HTMLElement): Promise<any> =>
     fastdom
         .read(() => {
+            if (!originalEl) return Promise.reject();
             const closestFormEl: ?Element = originalEl.closest('form');
             if (closestFormEl) {
                 return closestFormEl.querySelector('*[name=csrfToken]');
