@@ -7,7 +7,6 @@ import model.PressedPage
 import play.api.libs.json.Json
 import protocol.BinaryPressedPageProtocol
 import services.{LegacyPressedPageService, PressedPageService}
-
 import scala.concurrent.{ExecutionContext, Future}
 
 trait FrontJsonFapi extends Logging with BinaryPressedPageProtocol {
