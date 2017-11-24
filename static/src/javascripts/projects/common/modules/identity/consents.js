@@ -100,8 +100,8 @@ const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
 const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement) =>
     fastdom
         .read(() => [
-            [...document.querySelectorAll('.js-unsubscribe--confirm')],
-            [...document.querySelectorAll('.js-unsubscribe--basic')],
+            [...document.querySelectorAll('.js-identity-consents__unsubscribe-all--confirm')],
+            [...document.querySelectorAll('.js-identity-consents__unsubscribe-all--basic')],
         ])
         .then(([confirmEls, basicEls]) =>
             fastdom.write(() => {
@@ -153,7 +153,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                         fastdom
                             .read(() => [
                                 ...document.querySelectorAll(
-                                    '.js-manage-account__newsletterCheckbox input:checked'
+                                    '.js-identity-consents__emails-checkbox input:checked'
                                 ),
                             ])
                             .then(checkboxes => {
@@ -166,7 +166,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                             }),
                         getCsrfTokenFromElement(
                             document.querySelector(
-                                '.js-manage-account__newsletterCheckbox'
+                                '.js-identity-consents__emails-checkbox'
                             )
                         ),
                     ])
@@ -268,9 +268,9 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
 
 const enhanceConsents = (): void => {
     const loaders = [
-        ['.js-manage-account__consentCheckbox', bindConsentSwitch],
-        ['.js-manage-account__newsletterCheckbox', bindNewsletterSwitch],
-        ['.js-unsubscribe', bindUnsubscribeFromAll],
+        ['.js-identity-consents__consent-checkbox', bindConsentSwitch],
+        ['.js-identity-consents__emails-checkbox', bindNewsletterSwitch],
+        ['.js-identity-consents__unsubscribe-all', bindUnsubscribeFromAll],
     ];
 
     /* ugly :any that saves a lot of loader complexity */

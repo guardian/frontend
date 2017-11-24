@@ -86,7 +86,7 @@ const enhanceManageAccount = (): void => {
         ['.js-save-button', bindHtmlPreferenceChange],
         ['.js-manage-account__ajaxForm', bindAjaxFormEventOverride],
         [
-            '.js-manage-account__consentCheckboxesSubmit',
+            '.js-identity-consents__consent-checkboxesSubmit',
             (el: HTMLElement) => el.remove(),
         ],
         ['.js-manage-account__modalCloser', bindModalCloser],
