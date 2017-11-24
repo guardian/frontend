@@ -34,7 +34,7 @@ declare type Extra = {
 
 const renderNav = (
     match: Object,
-    callback?: (resp: Object, $nav: bonzo) => void
+    callback?: (resp: Object, $nav: bonzo, endpoint: string) => void
 ): Promise<void> => {
     const matchInfo = new MatchInfo(match, config.get('pageId'));
 
@@ -42,6 +42,7 @@ const renderNav = (
         .fetch()
         .then((resp: Object): void => {
             let $nav;
+
             if (resp.nav && resp.nav.trim().length > 0) {
                 $nav = $.create(resp.nav)
                     .first()
@@ -53,7 +54,7 @@ const renderNav = (
             }
 
             if (callback) {
-                callback(resp, $nav);
+                callback(resp, $nav, matchInfo.endpoint);
             }
         })
         .catch(() => {
@@ -219,11 +220,12 @@ const init = (): void => {
                 autoupdated: match.isLive,
             });
 
-            renderNav(match, (resp, $nav): void => {
+            renderNav(match, (resp, $nav, endpoint): void => {
                 dropdownTemplate = resp.dropdown;
 
                 // Test if template is not composed of just whitspace. A content validation check, apparently.
                 if (scoreBoard.template && !/^\s+$/.test(scoreBoard.template)) {
+                    scoreBoard.endpoint = endpoint;
                     scoreBoard.loadFromJson(resp.matchSummary);
                 } else {
                     $h.removeClass('u-h');
