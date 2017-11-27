@@ -2,7 +2,7 @@
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.form.Switch._
 
-@(consentedField: Field)(messages: play.api.i18n.Messages)
+@(consentField: Field)(messages: play.api.i18n.Messages)
 
 @getConsentText(consentField: Field) = {
     @Consent.wording(
@@ -12,15 +12,15 @@
 
 @consentHiddenFormFields = @{
     List("actor","id","version","timestamp","privacyPolicyVersion").map { field =>
-        fragments.form.hidden(consentedField(field))
+        fragments.form.hidden(consentField(field))
     }
 }
 
 @fragments.form.switch(
-    title = getConsentText(consentedField).toString(),
+    title = getConsentText(consentField).toString(),
     subheading = None,
     description = None,
     behaviour = ConsentSwitch,
-    field = consentedField("consented"),
+    field = consentField("consented"),
     extraFields = consentHiddenFormFields
 )(nonInputFields, messages)
