@@ -183,74 +183,88 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     });
 };
 
+const updateNewsletterSwitch = (labelEl: HTMLElement): Promise<void> =>
+    getNewsletterHtmlPreferenceFromElement(labelEl)
+        .catch((error: Error) => {
+            if (error.message === ERR_IDENTITY_HTML_PREF_NOT_FOUND) {
+                return 'HTML';
+            }
+
+            throw error;
+        })
+        .then((htmlPreference: string) =>
+            Promise.all([
+                htmlPreference,
+                getCsrfTokenFromElement(labelEl),
+                getCheckboxInfo(labelEl),
+                addSpinner(labelEl),
+            ])
+        )
+        .then(([htmlPreference, token, info]) =>
+            submitNewsletterAction(
+                token,
+                htmlPreference,
+                info.checked ? 'add' : 'remove',
+                [info.name]
+            )
+        )
+        .catch((err: Error) => {
+            pushError(err, 'reload').then(() => {
+                window.scrollTo(0, 0);
+            });
+            return flipCheckbox(labelEl);
+        })
+        .then(() => removeSpinner(labelEl));
+
 const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
+    getCheckboxInfo(labelEl).then(info => {
+        if (info.shouldUpdate) {
+            updateNewsletterSwitch(labelEl);
+        }
+    });
+
     labelEl.addEventListener(
         'change',
         (ev: Event, isNotUserInitiated: boolean = false) => {
             if (isNotUserInitiated) {
                 return;
             }
-            getNewsletterHtmlPreferenceFromElement(labelEl)
-                .catch((error: Error) => {
-                    if (error.message === ERR_IDENTITY_HTML_PREF_NOT_FOUND) {
-                        return 'HTML';
-                    }
-
-                    throw error;
-                })
-                .then((htmlPreference: string) =>
-                    Promise.all([
-                        htmlPreference,
-                        getCsrfTokenFromElement(labelEl),
-                        getCheckboxInfo(labelEl),
-                        addSpinner(labelEl),
-                    ])
-                )
-                .then(([htmlPreference, token, info]) =>
-                    submitNewsletterAction(
-                        token,
-                        htmlPreference,
-                        info.checked ? 'add' : 'remove',
-                        [info.name]
-                    )
-                )
-                .catch((err: Error) => {
-                    pushError(err, 'reload').then(() => {
-                        window.scrollTo(0, 0);
-                    });
-                    return flipCheckbox(labelEl);
-                })
-                .then(() => removeSpinner(labelEl));
+            updateNewsletterSwitch(labelEl);
         },
         false
     );
 };
 
+const updateConsentSwitch = (labelEl: HTMLElement): Promise<void> =>
+    Promise.all([
+        getCsrfTokenFromElement(labelEl),
+        getInputFields(labelEl),
+        addSpinner(labelEl),
+    ])
+        .then(([token, fields]) => buildFormDataForFields(token, fields))
+        .then((formData: FormData) => submitPartialConsentForm(formData))
+        .catch((err: Error) => {
+            pushError(err, 'reload').then(() => {
+                window.scrollTo(0, 0);
+            });
+            return flipCheckbox(labelEl);
+        })
+        .then(() => removeSpinner(labelEl));
+
 const bindConsentSwitch = (labelEl: HTMLElement): void => {
+    getCheckboxInfo(labelEl).then(info => {
+        if (info.shouldUpdate) {
+            updateConsentSwitch(labelEl);
+        }
+    });
+
     labelEl.addEventListener(
         'change',
         (ev: Event, isNotUserInitiated: boolean = false) => {
             if (isNotUserInitiated) {
                 return;
             }
-            Promise.all([
-                getCsrfTokenFromElement(labelEl),
-                getInputFields(labelEl),
-                addSpinner(labelEl),
-            ])
-                .then(([token, fields]) =>
-                    buildFormDataForFields(token, fields)
-                )
-                .then((formData: FormData) =>
-                    submitPartialConsentForm(formData)
-                )
-                .catch((err: Error) => {
-                    pushError(err, 'reload').then(() => {
-                        window.scrollTo(0, 0);
-                    });
-                    return flipCheckbox(labelEl);
-                })
-                .then(() => removeSpinner(labelEl));
+            updateConsentSwitch(labelEl);
         },
         false
     );
