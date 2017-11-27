@@ -61,9 +61,9 @@ const modalFormatToggle = (buttonEl: HTMLElement): void => {
     buttonEl.addEventListener('click', () => {
         fastdom
             .read(() =>
-                document.querySelector(
+                document.getElementsByClassName(
                     '.manage-account__modal--newsletterFormat'
-                )
+                )[0]
             )
             .then(modalEl => {
                 fastdom.write(() => {

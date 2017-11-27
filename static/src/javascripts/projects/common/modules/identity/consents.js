@@ -98,8 +98,8 @@ const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
 const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> =>
     fastdom
         .read(() => [
-            [...document.querySelectorAll('.js-unsubscribe--confirm')],
-            [...document.querySelectorAll('.js-unsubscribe--basic')],
+            [...document.getElementsByClassName('js-unsubscribe--confirm')],
+            [...document.getElementsByClassName('js-unsubscribe--basic')],
         ])
         .then(([confirmEls, basicEls]) =>
             fastdom.write(() => {
@@ -120,7 +120,7 @@ const confirmUnsubscriptionFromAll = (
 ): Promise<void> =>
     fastdom
         .read(() => [
-            [...document.querySelectorAll('.email-unsubscribe-all__label')],
+            [...document.getElementsByClassName('email-unsubscribe-all__label')],
         ])
         .then(([unsubAllLabelEls]) =>
             fastdom.write(() => {
@@ -166,9 +166,9 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                         return checkboxes.map(inputEl => inputEl.name);
                     }),
                 getCsrfTokenFromElement(
-                    document.querySelector(
-                        '.js-manage-account__newsletterCheckbox'
-                    )
+                    document.getElementsByClassName(
+                        'js-manage-account__newsletterCheckbox'
+                    )[0]
                 ),
             ])
                 .then(([htmlPreference, newsletterIds, csrfToken]) =>
