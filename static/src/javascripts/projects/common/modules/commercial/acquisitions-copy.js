@@ -36,21 +36,21 @@ const ctaLinkSentence = (
     currencySymbol: string
 ): string => {
     if (supportFrontendLiveInUs) {
-        return `For as little as ${
+        return `<span class="contributions__highlight"> For as little as ${
             currencySymbol
-        }1, you can support the Guardian – and it only takes a minute. <a href="${
+        }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
             membershipUrl
         }" target="_blank" class="u-underline">Make a contribution</a>`;
     } else if (supportFrontendLiveInUk) {
-        return `For as little as ${
+        return `<span class="contributions__highlight">For as little as ${
             currencySymbol
-        }1, you can support the Guardian – and it only takes a minute. <a href="${
+        }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
             membershipUrl
         }" target="_blank" class="u-underline">Make a contribution or get a subscription</a>`;
     }
-    return `For as little as ${
+    return `<span class="contributions__highlight"> For as little as ${
         currencySymbol
-    }1, you can support the Guardian – and it only takes a minute. <a href="${
+    }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
         membershipUrl
     }" target="_blank" class="u-underline">Become a monthly supporter</a> or <a href="${
         contributionUrl
