@@ -24,7 +24,7 @@ object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Emails")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
-object RepermissionJourneyPage extends IdentityPage("/repermission", "Repermission")
+object ConsentJourneyPage extends IdentityPage("/consent", "Consent")
 
 class EditProfileController(
     idUrlBuilder: IdentityUrlBuilder,
@@ -51,7 +51,7 @@ class EditProfileController(
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
   def displayEmailPrefsForm(consentsUpdated: Boolean): Action[AnyContent] = displayForm(EmailPrefsProfilePage, consentsUpdated)
 
-  def displayRepermissioningJourneyForm: Action[AnyContent] = {
+  def displayConsentJourneyForm: Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
@@ -60,8 +60,8 @@ class EditProfileController(
     else {
       csrfAddToken {
         recentlyAuthenticated.async { implicit request =>
-          repermissionJourneyView(
-            page = RepermissionJourneyPage,
+          consentJourneyView(
+            page = ConsentJourneyPage,
             forms = ProfileForms(request.user, PublicEditProfilePage),
             request.user)
         }
@@ -179,14 +179,14 @@ class EditProfileController(
       } // end authActionWithUser.async
     } // end csrfCheck
 
-  private def repermissionJourneyView(
+  private def consentJourneyView(
     page: IdentityPage,
     forms: ProfileForms,
     user: User) (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
-      NoCache(Ok(views.html.repermissionJourney(
+      NoCache(Ok(views.html.consentJourney(
         page,
         user,
         forms,
