@@ -1,4 +1,4 @@
-package views.support.fragment.form
+package views.support.fragment
 
 // Helper for fragments.form.switch.scala.html
 

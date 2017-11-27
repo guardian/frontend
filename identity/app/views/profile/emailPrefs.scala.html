@@ -20,7 +20,7 @@
             @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
 
                 <li>
-                    @fragments.form.switchNewsletter(
+                    @fragments.switchNewsletter(
                         emailPrefsForm,
                         emailSubscriptions,
                         newsletter = newsletter
