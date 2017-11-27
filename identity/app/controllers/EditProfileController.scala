@@ -188,7 +188,7 @@ class EditProfileController(
     forms: ProfileForms,
     user: User) (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).orElse("http://theguardian.co.uk").get;
+    val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).orElse(Some("http://theguardian.co.uk")).get;
 
     newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
