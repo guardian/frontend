@@ -120,7 +120,11 @@ const confirmUnsubscriptionFromAll = (
 ): Promise<void> =>
     fastdom
         .read(() => [
-            [...document.getElementsByClassName('email-unsubscribe-all__label')],
+            [
+                ...document.getElementsByClassName(
+                    'email-unsubscribe-all__label'
+                ),
+            ],
         ])
         .then(([unsubAllLabelEls]) =>
             fastdom.write(() => {

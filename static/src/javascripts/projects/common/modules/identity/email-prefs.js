@@ -60,10 +60,11 @@ const modalCloserBind = (buttonEl: HTMLElement): void => {
 const modalFormatToggle = (buttonEl: HTMLElement): void => {
     buttonEl.addEventListener('click', () => {
         fastdom
-            .read(() =>
-                document.getElementsByClassName(
-                    '.manage-account__modal--newsletterFormat'
-                )[0]
+            .read(
+                () =>
+                    document.getElementsByClassName(
+                        '.manage-account__modal--newsletterFormat'
+                    )[0]
             )
             .then(modalEl => {
                 fastdom.write(() => {
