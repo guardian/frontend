@@ -10,8 +10,7 @@ class FutureSemaphore(maxOperations: Int) {
   def execute[A](task: => Future[A])(implicit ec: ExecutionContext): Future[A] = {
     if (semaphore.tryAcquire()) {
       val resultF = task
-      resultF.foreach(_ => semaphore.release())
-      resultF.failed.foreach(_ => semaphore.release())
+      resultF.onComplete(_ => semaphore.release())
       resultF
     } else {
       Future.failed(new FutureSemaphore.TooManyOperationsInProgress())
