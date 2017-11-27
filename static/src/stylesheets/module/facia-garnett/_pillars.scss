@@ -1,77 +1,135 @@
 $pillars: (
-    news: $news-support-2,
-    opinion: $comment-support-3,
-    sport: $news-support-5,
-    arts: $comment-support-1,
-    lifestyle: $features-main-2
+    news: (
+        cardBackground: $neutral-7,
+        lines: $news-garnett-main-1,
+        kicker: $news-garnett-main-2,
+        headline: $garnett-neutral-1,
+        featureHeadline: $news-garnett-main-2,
+        byline: $news-garnett-main-2,
+        commentCount: $garnett-neutral-2,
+        headlineIcon: $news-garnett-main-1,
+        metaText: $garnett-neutral-3,
+        cutoutBackground: $news-garnett-main-1
+    ),
+    opinion: (
+        cardBackground: $neutral-7,
+        lines: $opinion-garnett-main-1,
+        kicker: $opinion-garnett-main-1,
+        headline: $garnett-neutral-1,
+        featureHeadline: $opinion-garnett-feature,
+        byline: $opinion-garnett-main-1,
+        commentCount: $opinion-garnett-neutral-1,
+        headlineIcon: $opinion-garnett-main-1,
+        metaText: $opinion-garnett-neutral-1,
+        cutoutBackground: $opinion-garnett-main-1
+    ),
+    sport: (
+        cardBackground: $neutral-7,
+        lines: $sport-garnett-main-1,
+        kicker: $sport-garnett-main-1,
+        headline: $garnett-neutral-1,
+        featureHeadline: $sport-garnett-main-2,
+        byline: $sport-garnett-main-1,
+        commentCount: $garnett-neutral-2,
+        headlineIcon: $sport-garnett-main-1,
+        metaText: $garnett-neutral-3,
+        cutoutBackground: $sport-garnett-main-2
+    ),
+    arts: (
+        cardBackground: $neutral-7,
+        lines: $arts-garnett-main-1,
+        kicker: $arts-garnett-main-2,
+        headline: $garnett-neutral-1,
+        featureHeadline: $arts-garnett-feature,
+        byline: $arts-garnett-main-2,
+        commentCount: $garnett-neutral-2,
+        headlineIcon: $arts-garnett-main-2,
+        metaText: $garnett-neutral-3,
+        cutoutBackground: $arts-garnett-main-1
+    ),
+    lifestyle: (
+        cardBackground: $neutral-7,
+        lines: $lifestyle-garnett-main-1,
+        kicker: $lifestyle-garnett-main-1,
+        headline: $garnett-neutral-1,
+        featureHeadline: $lifestyle-garnett-main-2,
+        byline: $lifestyle-garnett-main-1,
+        commentCount: $garnett-neutral-2,
+        headlineIcon: $lifestyle-garnett-main-1,
+        metaText: $garnett-neutral-3,
+        cutoutBackground: $lifestyle-garnett-feature
+    )
 );
 
-@mixin colours($accent, $foreground, $background) {
-    $midground: mix($foreground, $background, 75%);
+@mixin colours($palette) {
+    $cardBackground: map-get($palette, cardBackground);
+    $darkerCardBackground: darken($cardBackground, 3%);
+    $headline: map-get($palette, headline);
+    $lines: map-get($palette, lines);
 
-    border-top-color: fade-out($accent, .25);
-    background-color: $background;
+    background-color: $cardBackground;
 
     &:hover {
-        background-color: darken($background, 3%);
+        background-color: $darkerCardBackground;
 
         .fc-item__kicker {
-            background-color: darken($background, 3%);
+            &:before {
+                background-color: $darkerCardBackground;
+            }
         }
     }
 
     .fc-item__headline {
-        color: $foreground;
+        color: $headline;
     }
 
     .fc-item__byline {
-        color: $accent;
+        color: map-get($palette, byline);
     }
 
     .fc-item__kicker {
-        color: $accent;
-        background-color: $background;
+        color: map-get($palette, kicker);;
 
         &:before {
-            background-color: $background;
+            background-color: $cardBackground;
         }
 
         &:after {
-            background-color: $accent;
+            background-color: $lines;
         }
     }
 
     .fc-item__standfirst {
-        color: $midground;
+        color: $headline;
     }
 
     .fc-item__sublinks {
-        color: $foreground;
+        color: $headline;
     }
 
     .inline-icon {
-        fill: $midground;
+        color: map-get($palette, headlineIcon);
     }
 
     .fc-item__meta {
-        color: $midground;
+        color: map-get($palette, metaText);
     }
 
     .fc-item__container {
         &:before {
-            background-color: $accent;
+            background-color: $lines;
+        }
+    }
+
+    & .fc-item--type-feature {
+        .fc-item__headline {
+            color: map-get($palette, featureHeadline);
         }
     }
 }
 
-@each $pillar, $colour in $pillars {
+@each $pillar, $palette in $pillars {    
     .fc-item--pillar-#{$pillar} {
-        @include colours($accent: $colour, $foreground: $neutral-1, $background: $neutral-7);
-    }
-
-    .fc-sublink--pillar-#{$pillar} {
-        .fc-sublink__kicker {
-            color: fade-out($colour, .25);
-        }
+        @include colours($palette);
     }
 }
