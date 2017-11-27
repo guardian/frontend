@@ -18,26 +18,13 @@ import {
     ERR_IDENTITY_HTML_PREF_NOT_FOUND,
 } from './modules/fetchFormFields';
 
-const submitPartialFormStatus = (
-    type: ?string = null,
-    formData: FormData
-): Promise<void> => {
-    const url = (() => {
-        switch (type) {
-            case 'consent':
-                return '/privacy/edit-ajax';
-            default:
-                throw new Error('Undefined form type');
-        }
-    })();
-
-    return reqwest({
-        url,
+const submitPartialConsentForm = (formData: FormData): Promise<void> =>
+    reqwest({
+        url: '/privacy/edit-ajax',
         method: 'POST',
         data: formData,
         processData: false,
     });
-};
 
 const submitNewsletterAction = (
     csrfToken: string,
@@ -255,7 +242,7 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
                     buildFormDataForFields(token, fields)
                 )
                 .then((formData: FormData) =>
-                    submitPartialFormStatus('consent', formData)
+                    submitPartialConsentForm(formData)
                 )
                 .catch((err: Error) => {
                     pushError(err, 'reload').then(() => {
