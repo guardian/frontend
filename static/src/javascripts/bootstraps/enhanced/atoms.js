@@ -74,6 +74,18 @@ const initAtoms = () => {
             'timeline-atom'
         );
     }
+
+    if (config.get('page.atomTypes.storyquestions')) {
+        require.ensure(
+            [],
+            require => {
+                require('@guardian/atom-renderer/dist/storyquestions/article/index.css');
+                const atomMaker = require('@guardian/atom-renderer/dist/storyquestions/article/index');
+                bootstrapAtom(atomMaker, 'storyquestions');
+            },
+            'storyquestions-atom'
+        );
+    }
 };
 
 export { initAtoms };

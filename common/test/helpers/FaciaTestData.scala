@@ -1,18 +1,16 @@
-package test
+package helpers
 
 import java.time.ZoneOffset
 
-import com.gu.Box
-import common.editions.{Au, Uk, Us}
+import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import common.Edition
-import controllers.front.Front
+import common.editions.{Au, Uk, Us}
+import implicits.Dates.jodaToJavaInstant
+import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, PressedContent}
 import model.{PressedPage, _}
-import model.facia.PressedCollection
 import org.joda.time.DateTime
-import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
-import implicits.Dates.jodaToJavaInstant
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import services.FaciaContentConvert
 
 object TestContent {
@@ -265,6 +263,4 @@ trait FaciaTestData extends ModelHelper {
   )
 }
 
-class TestFront extends Front with FaciaTestData {
-  val pageFrontAgent = Box[Map[String, TestPageFront]](defaultAgentContents)
-}
+

@@ -3,10 +3,11 @@ package metadata
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import controllers.FaciaControllerImpl
 import org.jsoup.Jsoup
+import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
 import play.api.test.Helpers._
-import services.ConfigAgent
+import services.{ConfigAgent, PressedPageService}
 import test._
 import scala.concurrent.duration._
 import scala.concurrent.Await
@@ -17,7 +18,11 @@ import scala.concurrent.Await
   with BeforeAndAfterAll
   with WithTestApplicationContext
   with WithMaterializer
-  with WithTestWsClient {
+  with WithTestWsClient
+  with MockitoSugar {
+
+  lazy val legacyPressedPageService = new PressedPageService(wsClient)
+  lazy val fapi = new TestFrontJsonFapi(legacyPressedPageService)
 
   override def beforeAll() {
     val refresh = ConfigAgent.refreshWith(
@@ -28,7 +33,7 @@ import scala.concurrent.Await
     Await.result(refresh, 3.seconds)
   }
 
-  lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient), play.api.test.Helpers.stubControllerComponents())
+  lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents())
   val frontPath = "music"
 
   it should "Include organisation metadata" in {

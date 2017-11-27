@@ -4,7 +4,7 @@ import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
 import com.google.api.ads.dfp.axis.v201705.{CustomTargetingKey, CustomTargetingValue}
 import common.Logging
 import common.dfp.{GuCustomTargeting, GuCustomTargetingValue}
-import tools.BlockingOperations
+import concurrent.BlockingOperations
 
 import scala.util.Try
 
