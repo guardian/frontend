@@ -7,7 +7,7 @@ import { Component } from 'common/modules/component';
 class MatchListLive extends Component {
     constructor(
         type: string,
-        competition: string | false,
+        competition: string | boolean,
         date: ?string
     ): void {
         super();
