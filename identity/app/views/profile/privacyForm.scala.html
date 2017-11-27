@@ -12,7 +12,9 @@
   privacyForm: Form[_root_.form.PrivacyFormData],
   emailPrefsForm: Form[EmailPrefsData],
   emailSubscriptions: List[String],
-  availableLists: EmailNewsletters)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+  availableLists: EmailNewsletters,
+  consentsUpdated: Boolean = false
+)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @marketingConsentForm = {
     <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
@@ -23,6 +25,12 @@
             <div class="form__error">
                 Error processing the form. Your changes have not been saved:
                 <p>@privacyForm.errors.map(formError => (formError.key, formError.message)).mkString(", ")</p>
+            </div>
+        }
+        @if(consentsUpdated) {
+            <div>
+                <h2 class="manage-account-header">Thank you</h2>
+                <p class="manage-account-headerNote">Your Email preferences have been updated.</p>
             </div>
         }
 

@@ -472,7 +472,7 @@ import scala.concurrent.Future
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
           .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
 
-        val result = controller.displayEmailPrefsForm().apply(FakeCSRFRequest(csrfAddToken))
+        val result = controller.displayEmailPrefsForm(false).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should include (EmailNewsletters.guardianTodayUk.name)
         contentAsString(result) should include ("Unsubscribe")
