@@ -95,7 +95,7 @@ const buildFormDataForFields = (
 const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
     fastdom.read(() => labelEl.querySelectorAll('*[name][value]'));
 
-const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement) =>
+const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> =>
     fastdom
         .read(() => [
             [...document.querySelectorAll('.js-unsubscribe--confirm')],
@@ -103,6 +103,7 @@ const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement) =>
         ])
         .then(([confirmEls, basicEls]) =>
             fastdom.write(() => {
+                /* TODO:simplify this once classList.remove() is fixed */
                 [
                     'email-unsubscribe--confirm',
                     'js-confirm-unsubscribe',
@@ -114,13 +115,16 @@ const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement) =>
             })
         );
 
-const confirmUnsubscriptionFromAll = (buttonEl: HTMLButtonElement) =>
+const confirmUnsubscriptionFromAll = (
+    buttonEl: HTMLButtonElement
+): Promise<void> =>
     fastdom
         .read(() => [
             [...document.querySelectorAll('.email-unsubscribe-all__label')],
         ])
         .then(([unsubAllLabelEls]) =>
             fastdom.write(() => {
+                /* TODO:simplify this once classList.remove() is fixed */
                 [
                     'email-unsubscribe--confirm',
                     'js-confirm-unsubscribe',
@@ -137,38 +141,36 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
             addUpdatingState(buttonEl);
             resetUnsubscribeFromAll(buttonEl);
 
-            getNewsletterHtmlPreferenceFromElement(buttonEl)
-                .catch((error: Error) => {
-                    if (error.message === ERR_IDENTITY_HTML_PREF_NOT_FOUND) {
-                        return 'HTML';
-                    }
+            return Promise.all([
+                getNewsletterHtmlPreferenceFromElement(buttonEl).catch(
+                    (error: Error) => {
+                        if (
+                            error.message === ERR_IDENTITY_HTML_PREF_NOT_FOUND
+                        ) {
+                            return 'HTML';
+                        }
 
-                    throw error;
-                })
-                .then((htmlPreference: string) =>
-                    Promise.all([
-                        htmlPreference,
-                        fastdom
-                            .read(() => [
-                                ...document.querySelectorAll(
-                                    '.js-manage-account__newsletterCheckbox input:checked'
-                                ),
-                            ])
-                            .then(checkboxes => {
-                                const subscribedNewsletterIds = [];
-                                checkboxes.forEach(inputEl => {
-                                    subscribedNewsletterIds.push(inputEl.name);
-                                    inputEl.checked = false;
-                                });
-                                return subscribedNewsletterIds;
-                            }),
-                        getCsrfTokenFromElement(
-                            document.querySelector(
-                                '.js-manage-account__newsletterCheckbox'
-                            )
+                        throw error;
+                    }
+                ),
+                fastdom
+                    .read(() => [
+                        ...document.querySelectorAll(
+                            '.js-manage-account__newsletterCheckbox input:checked'
                         ),
                     ])
-                )
+                    .then(checkboxes => {
+                        checkboxes.forEach(inputEl => {
+                            inputEl.checked = false;
+                        });
+                        return checkboxes.map(inputEl => inputEl.name);
+                    }),
+                getCsrfTokenFromElement(
+                    document.querySelector(
+                        '.js-manage-account__newsletterCheckbox'
+                    )
+                ),
+            ])
                 .then(([htmlPreference, newsletterIds, csrfToken]) =>
                     submitNewsletterAction(
                         csrfToken,
@@ -185,9 +187,8 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                 .then(() => {
                     removeUpdatingState(buttonEl);
                 });
-        } else {
-            confirmUnsubscriptionFromAll(buttonEl);
         }
+        confirmUnsubscriptionFromAll(buttonEl);
     });
 };
 

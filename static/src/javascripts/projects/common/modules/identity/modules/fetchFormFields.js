@@ -5,13 +5,13 @@ export const ERR_IDENTITY_HTML_PREF_NOT_FOUND = `Can't find HTML preference`;
 
 export const getCsrfTokenFromElement = (
     originalEl: ?HTMLElement
-): Promise<any> =>
+): Promise<string> =>
     fastdom
         .read(() => {
             if (!originalEl) return Promise.reject();
             const closestFormEl: ?Element = originalEl.closest('form');
             if (closestFormEl) {
-                return closestFormEl.querySelector('*[name=csrfToken]');
+                return closestFormEl.querySelector('[name=csrfToken]');
             }
 
             return Promise.reject();
