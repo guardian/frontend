@@ -16,6 +16,11 @@
     right: 0;
     will-change: transform;
 }
+.js-off .manage-account-wizard__step {
+    border: 1px solid $neutral-8;
+    margin-bottom: $gs-gutter*4;
+    padding-bottom: $gs-gutter*4;
+}
 .manage-account-wizard__step--hidden {
     display: none;
 }
