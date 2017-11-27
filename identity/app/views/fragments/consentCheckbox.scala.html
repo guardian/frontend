@@ -10,9 +10,10 @@
         consentField("version").value.getOrElse("0").toInt)
 }
 
-@consentHiddenFormFields = {
-    @List("actor","id","version","timestamp","privacyPolicyVersion").map(field =>
-        fragments.form.hidden(consentedField(field)))
+@consentHiddenFormFields = @{
+    List("actor","id","version","timestamp","privacyPolicyVersion").map { field =>
+        fragments.form.hidden(consentedField(field))
+    }
 }
 
 @fragments.form.switch(
@@ -21,5 +22,5 @@
     description = None,
     behaviour = ConsentSwitch,
     field = consentedField("consented"),
-    extraFields = Some(consentHiddenFormFields)
+    extraFields = consentHiddenFormFields
 )(nonInputFields, messages)

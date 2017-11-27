@@ -7,7 +7,7 @@
     description: Option[String],
     behaviour: SwitchBehaviour,
     field: Field,
-    extraFields: Option[Html] = None,
+    extraFields: List[Html] = Nil,
     footer: Option[Html] = None
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 

@@ -33,6 +33,6 @@
             errors = Seq(),
             value = Some(newsletter.subscribedTo(emailSubscriptions).toString())
         ),
-        extraFields = None,
+        extraFields = Nil,
         footer = Some(buildFooter(newsletter))
     )(nonInputFields, messages)
