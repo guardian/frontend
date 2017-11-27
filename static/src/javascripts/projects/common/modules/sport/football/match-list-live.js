@@ -5,11 +5,7 @@ import bonzo from 'bonzo';
 import { Component } from 'common/modules/component';
 
 class MatchListLive extends Component {
-    constructor(
-        type: string,
-        competition: string | false,
-        date: ?string
-    ): void {
+    constructor(type: string, competition: string | true, date: ?string): void {
         super();
 
         const slug = ['football', type, competition, date]
