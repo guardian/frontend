@@ -30,10 +30,8 @@
 
                     <div class="manage-account-wizard manage-account-wizard--repermission" >
                         <div class="manage-account-wizard__step">
-                        <center>
-                            <img width="100%" src="https://i.imgur.com/TqI7Ub8.png" />
-                        </center>
-                    </div>
+                            <h1>Welcome to repermissioning</h1>
+                        </div>
                         <div class="manage-account-wizard__step">
 
                             <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
@@ -90,7 +88,10 @@
                             </form>
                         </div>
                         <div class="manage-account-wizard__step">
-                            <img class="js-manage-account-wizard__next" src="https://i.imgur.com/XoJmEro.png" width="100%" />
+                            <div class="js-manage-account-wizard__next">
+                                <h1>Thanks for repermissioning!</h1>
+                                <button>Continue</button>
+                            </div>
                         </div>
                         <div class="manage-account-wizard__controls">
                             <div class="manage-account-wizard__controls-pager"></div>
