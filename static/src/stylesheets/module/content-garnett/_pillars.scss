@@ -1,3 +1,18 @@
 .content--pillar-news {
-   
+    .content__section-label__link,
+    .drop-cap,
+    .element-pullquote p,
+    a {
+        color: $news-garnett-main-1;
+    }
+    .inline-quote svg {
+        fill: $neutral-4;
+    }
+
+    .u-underline {
+        border-bottom: none;
+        &:hover {
+            border-bottom: solid 1px $news-garnett-main-1;
+        }
+    }
 }

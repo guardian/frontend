@@ -50,4 +50,78 @@
     .submeta__section-labels .submeta__link {
         @include f-bodyHeading;
     }
+
+    .content__main-column {
+        border-left: solid 1px $neutral-6;
+        padding-left: $gs-gutter/2;
+    }
+
+    .element-pullquote {
+        background-color: #fff;
+        border: solid 1px $neutral-6;
+        box-sizing: border-box;
+        margin-bottom: 0;
+        padding: 0;
+        position: relative;
+        width: 100%;
+        @include mq(mobile) {
+            margin-left: -$gs-gutter/2 - 1px;
+            margin-right: 0;
+            padding: $gs-baseline/2 $gs-gutter/2;
+        }
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter/2 - $gs-gutter/2;
+        }
+        @include mq(tablet) {
+            clear: left; // Prevent previous embeds from interfering
+            float: left;
+            margin-bottom: $gs-baseline/2;
+            margin-right: $gs-gutter/2;
+            margin-top: 5px;
+            width: gs-span(3);
+        }
+        @include mq(leftCol) {
+            $width: gs-span(3);
+            width: $width;
+            margin-left: -$width/2-$gs-gutter/2;
+        }
+
+        .inline-quote,
+        blockquote {
+            display: inline;
+        }
+
+        .inline-quote svg {
+            height: 18px;
+        }
+
+        .pullquote-paragraph {
+            display: inline;
+            font-size: 22px;
+            line-height: 26px;
+            font-weight: lighter;
+        }
+
+        &:after {
+            @include mq(mobile) {
+                content: '';
+                width: 25px;
+                height: 25px;
+                border-radius: 0 0 25px 0;
+                position: absolute;
+                bottom: -27px;
+                left: 8px;
+                background-color: #fff;
+                border: solid 1px $neutral-6;
+                border-top: solid 1px #fff;
+            }
+            @include mq(leftCol) {
+                content: '';
+                border-radius: 0 0 0 25px;
+                position: absolute;
+                bottom: -27px;
+                left: gs-span(3)/2 - 28px;
+            }
+        }
+    }
 }
