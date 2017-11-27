@@ -1,15 +1,8 @@
 // @flow
 import { containerClassname, enhance, setPosition } from './wizard';
 
-// $FlowFixMe we should not mutate native JS API prototypes
-Element.prototype.getBoundingClientRect = jest.fn(() => ({
-    top: 500,
-    height: 500,
-}));
-// $FlowFixMe we should not mutate native JS API prototypes
-Element.prototype.dataset = {};
-// $FlowFixMe we should not mutate native JS API prototypes
-window.scrollY = -9999;
+// Not yet implemented in out codebase, see https://github.com/tmpvar/jsdom/issues/961
+HTMLElement.prototype.dataset = {};
 
 const steps = ['1', '2', '3', '4'];
 
