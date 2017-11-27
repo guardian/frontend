@@ -170,7 +170,7 @@ export const setPosition = (
         .catch(() => setPosition(wizardEl, 0));
 
 export const enhance = (wizardEl: HTMLElement): Promise<void> =>
-    setPosition(wizardEl, 0).then(() =>
+    setPosition(wizardEl, 0).then(() => {
         wizardEl.addEventListener('click', (ev: Event) => {
             if (
                 ev.target instanceof HTMLElement &&
@@ -190,7 +190,7 @@ export const enhance = (wizardEl: HTMLElement): Promise<void> =>
                     parseInt(wizardEl.dataset.position, 10) - 1
                 );
             }
-        })
-    );
+        });
+    });
 
 export { containerClassname };
