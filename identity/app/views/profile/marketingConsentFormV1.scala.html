@@ -2,7 +2,6 @@
 
 @import views.html.fragments.form.switch
 @import _root_.form.IdFormHelpers.nonInputFields
-@import com.gu.identity.model.Consent
 @import com.gu.identity.model.Consent._
 @import views.support.fragment.form.Switch._
 
@@ -10,12 +9,6 @@
   idRequest: services.IdentityRequest,
   privacyForm: Form[_root_.form.PrivacyFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
-
-@getConsentText(consentField: Field) = {
-    @Consent.wording(
-        consentField("id").value.getOrElse("unknownConsent"), // OrElse will never execute as there is always a default
-        consentField("version").value.getOrElse("0").toInt)
-}
 
 @consentCheckboxes = {
     <div class="manage-account__switches manage-account__switches--narrow">

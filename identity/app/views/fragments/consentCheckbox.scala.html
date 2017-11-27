@@ -4,8 +4,8 @@
 
 @(consentField: Field)(messages: play.api.i18n.Messages)
 
-@getConsentText(consentField: Field) = {
-    @Consent.wording(
+@getConsentText(consentField: Field) = @{
+    Consent.wording(
         consentField("id").value.getOrElse("unknownConsent"), // OrElse will never execute as there is always a default
         consentField("version").value.getOrElse("0").toInt)
 }
@@ -17,7 +17,7 @@
 }
 
 @fragments.form.switch(
-    title = getConsentText(consentField).toString(),
+    title = getConsentText(consentField).getOrElse(""),
     subheading = None,
     description = None,
     behaviour = ConsentSwitch,
