@@ -35,7 +35,7 @@
                 <ul>
                 @helper.repeat(privacyForm("consents"), min=1) { consentField =>
                     <li>
-                        @fragments.consentCheckbox(consentField)(messages)
+                        @fragments.consentSwitch(consentField)(messages)
                     </li>
                 }
                 </ul>
