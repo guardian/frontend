@@ -27,9 +27,9 @@
     new Field(
         form = emailPrefsForm,
         name = newsletter.listId.toString,
-        constraints = Seq(),
+        constraints = Nil,
         format = None,
-        errors = Seq(),
+        errors = Nil,
         value = Some(newsletter.subscribedTo(emailSubscriptions).toString)
     )
 }
