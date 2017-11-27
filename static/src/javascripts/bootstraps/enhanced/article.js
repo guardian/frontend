@@ -17,7 +17,6 @@ import { init as initStoryQuestions } from 'journalism/temporary/story-questions
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import ophan from 'ophan/ng';
-import { SnippetFeedback } from 'journalism/temporary/snippet-feedback';
 import { initAtoms } from './atoms';
 
 const modules = {
@@ -66,7 +65,6 @@ const init = () => {
     mediator.emit('page:article:ready');
     handleQuizCompletion();
     initStoryQuestions();
-    SnippetFeedback();
     initAtoms();
 };
 
