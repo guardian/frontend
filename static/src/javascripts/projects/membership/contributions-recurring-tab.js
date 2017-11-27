@@ -5,6 +5,7 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import { formatDate, formatAmount } from 'membership/formatters';
 import { display } from 'membership/stripe';
+import fastdom from 'fastdom';
 
 const CARD_DETAILS = '.js-contribution-card-details';
 const PAYPAL = '.js-contribution-paypal';
@@ -99,8 +100,11 @@ const cancelContribution = (): void => {
 };
 
 const displayChangeContributionForm = (currentPrice: string): void => {
-    $(PACKAGE_NEXT_PAYMENT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
-    $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+    fastdom.write(() => {
+        $(PACKAGE_NEXT_PAYMENT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
+        $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+        $(CONTRIBUTION_NEW_AMOUNT_FIELD).val(currentPrice);
+    });
 };
 
 const hideChangeContributionForm = (): void => {
@@ -179,7 +183,6 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     const changeAmountConfirmButton = document.querySelector(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT);
     if (changeAmountConfirmButton) {
         changeAmountConfirmButton.addEventListener('click', () => {
-            const newValue = document.querySelector(CONTRIBUTION_NEW_AMOUNT_FIELD);
             changeContributionAmountSubmit();
         });
     }
