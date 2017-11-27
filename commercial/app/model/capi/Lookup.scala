@@ -41,6 +41,11 @@ class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.
       .orderBy("newest")
     ) map {
       _.results.getOrElse(Nil) map (Content(_))
+    } recover {
+      case e: Exception => {
+        log.info(s"CAPI search for item '${keywordId.stringDecoded}' failed: ${e.getMessage}")
+        Nil
+      }
     }
   }
 
