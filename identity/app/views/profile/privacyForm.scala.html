@@ -12,7 +12,9 @@
   privacyForm: Form[_root_.form.PrivacyFormData],
   emailPrefsForm: Form[EmailPrefsData],
   emailSubscriptions: List[String],
-  availableLists: EmailNewsletters)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+  availableLists: EmailNewsletters,
+  consentsUpdated: Boolean = false
+)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @marketingConsentForm = {
     <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
@@ -54,6 +56,13 @@
 
         </fieldset>
     </form>
+}
+
+@if(consentsUpdated) {
+    <div class="form__success">
+        <h2>Thank you</h2>
+        <p>Your Email preferences have been updated.</p>
+    </div>
 }
 
 @* MARKETING CONSENT *@

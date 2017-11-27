@@ -49,7 +49,7 @@ class EditProfileController(
   def displayMembershipForm: Action[AnyContent] = displayForm(MembershipEditProfilePage)
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
-  def displayEmailPrefsForm: Action[AnyContent] = displayForm(EmailPrefsProfilePage)
+  def displayEmailPrefsForm(consentsUpdated: Boolean): Action[AnyContent] = displayForm(EmailPrefsProfilePage, consentsUpdated)
 
   def displayRepermissioningJourneyForm: Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
@@ -132,12 +132,14 @@ class EditProfileController(
 
   def saveConsentPreferences: Action[AnyContent] = submitForm(EmailPrefsProfilePage)
 
-  private def displayForm(page: IdentityPage) = csrfAddToken {
+  private def displayForm(page: IdentityPage, consentsUpdated: Boolean = false) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
         profileFormsView(
           page = page,
           forms = ProfileForms(request.user, PublicEditProfilePage),
-          request.user)
+          request.user,
+          consentsUpdated
+        )
     }
   }
 
@@ -201,7 +203,8 @@ class EditProfileController(
   private def profileFormsView(
       page: IdentityPage,
       forms: ProfileForms,
-      user: User)
+      user: User,
+      consentsUpdated: Boolean = false)
       (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
@@ -214,8 +217,8 @@ class EditProfileController(
         idUrlBuilder,
         emailFilledForm,
         newsletterService.getEmailSubscriptions(emailFilledForm),
-        EmailNewsletters.all
-
+        EmailNewsletters.all,
+        consentsUpdated
       )))
 
     }
