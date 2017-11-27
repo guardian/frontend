@@ -1,5 +1,6 @@
 @import com.gu.identity.model.Consent
 @import _root_.form.IdFormHelpers.nonInputFields
+@import views.support.fragment.form.Switch._
 
 @(consentedField: Field)(messages: play.api.i18n.Messages)
 
@@ -18,7 +19,7 @@
     title = getConsentText(consentedField).toString(),
     subheading = None,
     description = None,
-    behaviour = Some("consent"),
+    behaviour = ConsentSwitch,
     field = consentedField("consented"),
     extraFields = Some(consentHiddenFormFields)
 )(nonInputFields, messages)

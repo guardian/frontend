@@ -4,6 +4,7 @@
 @import _root_.form.IdFormHelpers.nonInputFields
 @import com.gu.identity.model.Consent
 @import com.gu.identity.model.Consent._
+@import views.support.fragment.form.Switch._
 
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
@@ -24,7 +25,7 @@
                     title = FirstParty.latestWording,
                     subheading = None,
                     description = None,
-                    behaviour = Some("consent"),
+                    behaviour = ConsentSwitch,
                     field = privacyForm("receiveGnmMarketing")
                 )(nonInputFields, messages)
             </li>
@@ -33,7 +34,7 @@
                     title = ThirdParty.latestWording,
                     subheading = None,
                     description = None,
-                    behaviour = Some("consent"),
+                    behaviour = ConsentSwitch,
                     field = privacyForm("receive3rdPartyMarketing")
                 )(nonInputFields, messages)
             </li>
@@ -91,7 +92,7 @@
                                 title = "Allow matching with third party data",
                                 subheading = None,
                                 description = None,
-                                behaviour = Some("consent"),
+                                behaviour = ConsentSwitch,
                                 field = privacyForm("allowThirdPartyProfiling")
                             )(nonInputFields, messages)
                             </li>

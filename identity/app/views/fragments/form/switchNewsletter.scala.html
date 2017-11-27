@@ -1,6 +1,7 @@
 @import model.{EmailNewsletter, EmailNewsletters}
 @import common.LinkTo
 @import _root_.form.IdFormHelpers.nonInputFields
+@import views.support.fragment.form.Switch._
 
 
 @(
@@ -23,7 +24,7 @@
         title = newsletter.name,
         subheading = newsletter.subheading,
         description = Some(newsletter.description),
-        behaviour = Some("newsletter"),
+        behaviour = NewsletterSwitch,
         field = new Field(
             form = form,
             name = newsletter.listId.toString(),
