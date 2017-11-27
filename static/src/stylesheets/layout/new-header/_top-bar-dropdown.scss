@@ -33,7 +33,7 @@
 
     & ~ .top-bar__item--dropdown {
         color: #ffffff;
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, .3);
 
         &:after {
             transform: translateY(0) rotate(45deg);
