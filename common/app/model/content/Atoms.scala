@@ -209,11 +209,10 @@ object Atoms extends common.Logging {
 
   def extract[T](
     atoms: Option[Seq[AtomApiAtom]], 
-    extractFn: AtomApiAtom => T, 
-    filterFn: T => Boolean = { _: T => true }
+    extractFn: AtomApiAtom => T
   ): Seq[T] = {
     try {
-      atoms.getOrElse(Nil).map(extractFn).filter(filterFn)
+      atoms.getOrElse(Nil).map(extractFn)
     } catch {
       case e: Exception =>
         logException(e)
@@ -240,7 +239,7 @@ object Atoms extends common.Logging {
 
       val reviews = extract(atoms.reviews, atom => { ReviewAtom.make(atom) })
 
-      val storyquestions = extract(atoms.storyquestions, atom => { StoryQuestionsAtom.make(atom) }, StoryQuestionsAtom.isOpen)
+      val storyquestions = extract(atoms.storyquestions, atom => { StoryQuestionsAtom.make(atom) }).filter(StoryQuestionsAtom.isOpen)
 
       val explainers = extract(atoms.explainers, atom => { ExplainerAtom.make(atom) })
 
