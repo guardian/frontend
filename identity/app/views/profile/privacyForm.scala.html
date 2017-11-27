@@ -27,12 +27,6 @@
                 <p>@privacyForm.errors.map(formError => (formError.key, formError.message)).mkString(", ")</p>
             </div>
         }
-        @if(consentsUpdated) {
-            <div>
-                <h2 class="manage-account-header">Thank you</h2>
-                <p class="manage-account-headerNote">Your Email preferences have been updated.</p>
-            </div>
-        }
 
         <div class="js-errorHolder manage-account__errors"></div>
 
@@ -62,6 +56,13 @@
 
         </fieldset>
     </form>
+}
+
+@if(consentsUpdated) {
+    <div class="form__success">
+        <h2>Thank you</h2>
+        <p>Your Email preferences have been updated.</p>
+    </div>
 }
 
 @* MARKETING CONSENT *@
