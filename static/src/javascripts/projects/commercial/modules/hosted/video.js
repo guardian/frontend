@@ -22,39 +22,39 @@ const upgradeVideoPlayerAccessibility = (player: Object): void => {
             el.setAttribute('aria-hidden', 'true');
         });
         // Hide superfluous controls, and label useful buttons.
-        Array.from(
-            playerEl.querySelectorAll('.vjs-big-play-button')
-        ).forEach(el => {
-            el.setAttribute('aria-hidden', 'true');
-        });
-        Array.from(
-            playerEl.querySelectorAll('.vjs-current-time')
-        ).forEach(el => {
-            el.setAttribute('aria-hidden', 'true');
-        });
-        Array.from(
-            playerEl.querySelectorAll('.vjs-time-divider')
-        ).forEach(el => {
-            el.setAttribute('aria-hidden', 'true');
-        });
+        Array.from(playerEl.querySelectorAll('.vjs-big-play-button')).forEach(
+            el => {
+                el.setAttribute('aria-hidden', 'true');
+            }
+        );
+        Array.from(playerEl.querySelectorAll('.vjs-current-time')).forEach(
+            el => {
+                el.setAttribute('aria-hidden', 'true');
+            }
+        );
+        Array.from(playerEl.querySelectorAll('.vjs-time-divider')).forEach(
+            el => {
+                el.setAttribute('aria-hidden', 'true');
+            }
+        );
         Array.from(playerEl.querySelectorAll('.vjs-duration')).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        Array.from(
-            playerEl.querySelectorAll('.vjs-embed-button')
-        ).forEach(el => {
-            el.setAttribute('aria-hidden', 'true');
-        });
-        Array.from(
-            playerEl.querySelectorAll('.vjs-play-control')
-        ).forEach(el => {
-            el.setAttribute('aria-label', 'video play');
-        });
-        Array.from(
-            playerEl.querySelectorAll('.vjs-mute-control')
-        ).forEach(el => {
-            el.setAttribute('aria-label', 'video mute');
-        });
+        Array.from(playerEl.querySelectorAll('.vjs-embed-button')).forEach(
+            el => {
+                el.setAttribute('aria-hidden', 'true');
+            }
+        );
+        Array.from(playerEl.querySelectorAll('.vjs-play-control')).forEach(
+            el => {
+                el.setAttribute('aria-label', 'video play');
+            }
+        );
+        Array.from(playerEl.querySelectorAll('.vjs-mute-control')).forEach(
+            el => {
+                el.setAttribute('aria-label', 'video mute');
+            }
+        );
         Array.from(
             playerEl.querySelectorAll('.vjs-fullscreen-control')
         ).forEach(el => {

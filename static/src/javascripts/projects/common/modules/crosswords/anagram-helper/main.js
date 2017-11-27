@@ -150,9 +150,9 @@ const AnagramHelper = React.createClass({
             React.createElement(
                 'button',
                 {
-                    className: `button button--large ${!this.state.clueInput
-                        ? 'button--tertiary'
-                        : ''}`,
+                    className: `button button--large ${
+                        !this.state.clueInput ? 'button--tertiary' : ''
+                    }`,
                     onClick: this.reset,
                     'data-link-name': 'Start Again',
                 },
@@ -161,9 +161,9 @@ const AnagramHelper = React.createClass({
             React.createElement(
                 'button',
                 {
-                    className: `button button--large ${this.canShuffle()
-                        ? ''
-                        : 'button--tertiary'}`,
+                    className: `button button--large ${
+                        this.canShuffle() ? '' : 'button--tertiary'
+                    }`,
                     onClick: this.shuffle,
                     'data-link-name': 'Shuffle',
                 },

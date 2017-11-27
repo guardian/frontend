@@ -1,12 +1,12 @@
 package common
 
 import scala.concurrent.duration._
-import play.api.{Environment, Mode}
+import play.api.{Environment => PlayEnv, Mode}
 
 import scala.concurrent.ExecutionContext
 import akka.actor.ActorSystem
 
-class AkkaAsync(env: Environment, actorSystem: ActorSystem) {
+class AkkaAsync(env: PlayEnv, actorSystem: ActorSystem) {
   implicit val ec: ExecutionContext = actorSystem.dispatcher
 
   // "apply" isn't expressive and doesn't explain what it does.

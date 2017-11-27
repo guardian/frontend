@@ -593,9 +593,9 @@ object TimelineAtom {
 
   def renderFormattedDate(date: Long, format: Option[String]): String = {
     format match {
-      case Some("month-year") => DateTimeFormat.forPattern("MMMM uuuu").print(date)
-      case Some("year") =>  DateTimeFormat.forPattern("uuuu").print(date)
-      case _ =>  DateTimeFormat.forPattern("d MMMM uuuu").print(date)
+      case Some("month-year") => DateTimeFormat.forPattern("MMMM yyyy").print(date)
+      case Some("year") =>  DateTimeFormat.forPattern("yyyy").print(date)
+      case _ =>  DateTimeFormat.forPattern("d MMMM yyyy").print(date)
     }
   }
 

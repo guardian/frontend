@@ -282,8 +282,9 @@ class Component {
 
         if (this.componentClass) {
             $elem.addClass(
-                `${this.componentClass +
-                    (elemName ? `__${elemName}` : '')}--${state}`
+                `${this.componentClass + (elemName ? `__${elemName}` : '')}--${
+                    state
+                }`
             );
         }
     }
@@ -294,8 +295,9 @@ class Component {
 
         if (this.componentClass) {
             $elem.removeClass(
-                `${this.componentClass +
-                    (elemName ? `__${elemName}` : '')}--${state}`
+                `${this.componentClass + (elemName ? `__${elemName}` : '')}--${
+                    state
+                }`
             );
         }
     }
@@ -306,8 +308,9 @@ class Component {
 
         if (this.componentClass) {
             $elem.toggleClass(
-                `${this.componentClass +
-                    (elemName ? `__${elemName}` : '')}--${state}`
+                `${this.componentClass + (elemName ? `__${elemName}` : '')}--${
+                    state
+                }`
             );
         }
     }
@@ -318,8 +321,9 @@ class Component {
 
         if (this.componentClass) {
             return $elem.hasClass(
-                `${this.componentClass +
-                    (elemName ? `__${elemName}` : '')}--${state}`
+                `${this.componentClass + (elemName ? `__${elemName}` : '')}--${
+                    state
+                }`
             );
         }
 

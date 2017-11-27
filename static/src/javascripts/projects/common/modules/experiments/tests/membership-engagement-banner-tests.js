@@ -1,6 +1,6 @@
 // @flow
-import { AcquisitionsBannerJustOnePound } from 'common/modules/experiments/tests/acquisitions-banner-just-one-pound';
+import { AcquisitionsBannerShorterCopy } from 'common/modules/experiments/tests/acquisitions-banner-shorter-copy';
 
 export const membershipEngagementBannerTests: $ReadOnlyArray<
     AcquisitionsABTest
-> = [AcquisitionsBannerJustOnePound];
+> = [AcquisitionsBannerShorterCopy];

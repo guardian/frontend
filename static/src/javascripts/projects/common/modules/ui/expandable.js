@@ -39,10 +39,9 @@ class Expandable {
     }
 
     updateCallToAction(): void {
-        const text = `Show ${this.showCount ? `${this.getCount()} ` : ''}${this
-            .expanded
-            ? 'fewer'
-            : 'more'}`;
+        const text = `Show ${this.showCount ? `${this.getCount()} ` : ''}${
+            this.expanded ? 'fewer' : 'more'
+        }`;
         this.cta.innerHTML = text;
         this.cta.setAttribute(
             'data-link-name',

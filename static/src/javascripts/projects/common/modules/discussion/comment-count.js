@@ -17,19 +17,31 @@ const getTemplate = (
     const { url, icon, count } = vals;
 
     if (type === 'content') {
-        return `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour">
-                    <h3 class="commentcount2__heading">${icon} <span class ="commentcount2__text u-h">Comments</span></h3>
-                    <span class="commentcount2__value tone-colour js_commentcount_actualvalue">${count}</span>
+        return `<a href="${
+            url
+        }" data-link-name="Comment count" class="commentcount2 tone-colour">
+                    <h3 class="commentcount2__heading">${
+                        icon
+                    } <span class ="commentcount2__text u-h">Comments</span></h3>
+                    <span class="commentcount2__value tone-colour js_commentcount_actualvalue">${
+                        count
+                    }</span>
                 </a>`;
     }
 
     if (type === 'contentImmersive') {
-        return `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour">
-                    ${icon}<span class="commentcount__value">${count}</span> Comments
+        return `<a href="${
+            url
+        }" data-link-name="Comment count" class="commentcount2 tone-colour">
+                    ${icon}<span class="commentcount__value">${
+            count
+        }</span> Comments
                 </a>`;
     }
 
-    return `<a class="fc-trail__count fc-trail__count--commentcount" href="${url}" data-link-name="Comment count">${icon} ${count}</a>`;
+    return `<a class="fc-trail__count fc-trail__count--commentcount" href="${
+        url
+    }" data-link-name="Comment count">${icon} ${count}</a>`;
 };
 
 const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
@@ -40,19 +52,20 @@ const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
                 return;
             }
 
-            return [
-                ...elements,
-            ].reduce((groupedVals: Object, el: HTMLElement): Object => {
-                const attrVal = el.getAttribute(ATTRIBUTE_NAME);
+            return [...elements].reduce(
+                (groupedVals: Object, el: HTMLElement): Object => {
+                    const attrVal = el.getAttribute(ATTRIBUTE_NAME);
 
-                if (!groupedVals[attrVal]) {
-                    groupedVals[attrVal] = [];
-                }
+                    if (!groupedVals[attrVal]) {
+                        groupedVals[attrVal] = [];
+                    }
 
-                groupedVals[attrVal].push(el);
+                    groupedVals[attrVal].push(el);
 
-                return groupedVals;
-            }, {});
+                    return groupedVals;
+                },
+                {}
+            );
         });
 
 const getContentIds = (indexedElements: IndexedElements): string =>

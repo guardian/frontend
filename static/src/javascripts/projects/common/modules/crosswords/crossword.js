@@ -713,8 +713,9 @@ class Crossword extends React.Component {
         return React.createElement(
             'div',
             {
-                className: `crossword__container crossword__container--${this
-                    .props.data.crosswordType} crossword__container--react`,
+                className: `crossword__container crossword__container--${
+                    this.props.data.crosswordType
+                } crossword__container--react`,
                 'data-link-name': 'Crosswords',
             },
             React.createElement(

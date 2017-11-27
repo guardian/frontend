@@ -34,7 +34,6 @@ module.system.node.resolve_dirname=ui/node_modules
 
 ####### STATIC APP #######
 module.system.node.resolve_dirname=static/src/javascripts
-module.system.node.resolve_dirname=static/src/javascripts-legacy
 
 # paths that are aliased in webapck
 module.name_mapper='^admin' -> 'projects/admin'

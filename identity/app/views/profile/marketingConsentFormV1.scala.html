@@ -2,38 +2,32 @@
 
 @import views.html.fragments.form.switch
 @import _root_.form.IdFormHelpers.nonInputFields
-@import com.gu.identity.model.ConsentText
-@import com.gu.identity.model.ConsentText._
+@import com.gu.identity.model.Consent._
+@import views.support.fragment.Switch._
 
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
   privacyForm: Form[_root_.form.PrivacyFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 
-@getConsentText(consentField: Field) = {
-    @ConsentText.getText(
-        consentField("consentIdentifier").value.getOrElse("unknownConsent"), // OrElse will never execute as there is always a default
-        consentField("consentIdentifierVersion").value.getOrElse("0").toInt)
-}
-
 @consentCheckboxes = {
     <div class="manage-account__switches manage-account__switches--narrow">
         <ul>
             <li>
                 @switch(
-                    title = currentConsents(FirstParty.name),
+                    title = FirstParty.latestWording,
                     subheading = None,
                     description = None,
-                    behaviour = Some("consent"),
+                    behaviour = ConsentSwitch,
                     field = privacyForm("receiveGnmMarketing")
                 )(nonInputFields, messages)
             </li>
             <li>
                 @switch(
-                    title = currentConsents(ThirdParty.name),
+                    title = ThirdParty.latestWording,
                     subheading = None,
                     description = None,
-                    behaviour = Some("consent"),
+                    behaviour = ConsentSwitch,
                     field = privacyForm("receive3rdPartyMarketing")
                 )(nonInputFields, messages)
             </li>
@@ -56,21 +50,16 @@
     <div class="js-errorHolder manage-account__errors"></div>
 
     @* Marketing Consent *@
-    <div class="manage-account-headerWrapper">
-        <h2 class="manage-account-header">Marketing preferences</h2>
-    </div>
-    <fieldset class="fieldset">
+    <fieldset class="fieldset fieldset--manage-account-noborder">
 
         <div class="fieldset__heading">
-            <h2 class="form__heading">Marketing</h2>
+            <h2 class="form__heading">What can we tell you about?</h2>
         </div>
 
         <div class="fieldset__fields">
             <ul class="u-unstyled">
                 <li class="form-field">
-                    <label class="label">Would you like to receive information from the Guardian and their partners?</label>
-                    <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
-
+                    <label class="label">The Guardian and their partners would like to occasionally send you information about their products, services and events.</label>
                     <div class="form-fields-group">
                         @consentCheckboxes
                     </div>
@@ -96,7 +85,7 @@
                                 title = "Allow matching with third party data",
                                 subheading = None,
                                 description = None,
-                                behaviour = Some("consent"),
+                                behaviour = ConsentSwitch,
                                 field = privacyForm("allowThirdPartyProfiling")
                             )(nonInputFields, messages)
                             </li>
@@ -109,7 +98,7 @@
     </fieldset>
 
     @* Submit button *@
-    <fieldset class="fieldset js-manage-account__consentCheckboxesSubmit">
+    <fieldset class="fieldset js-manage-account__ajaxForm-submit">
         <div class="fieldset__heading"></div>
         <div class="fieldset__fields">
             <ul class="u-unstyled">

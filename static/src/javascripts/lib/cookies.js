@@ -21,7 +21,9 @@ const removeCookie = (
     document.cookie = `${name}=;${path}${expires}`;
     if (!currentDomainOnly) {
         // also remove from the short domain
-        document.cookie = `${name}=;${path}${expires} domain=${getShortDomain()};`;
+        document.cookie = `${name}=;${path}${
+            expires
+        } domain=${getShortDomain()};`;
     }
 };
 
@@ -35,7 +37,9 @@ const addCookie = (name: string, value: string, daysToLive: ?number): void => {
         expires.setDate(1);
     }
 
-    document.cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
+    document.cookie = `${name}=${
+        value
+    }; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
 };
 
 const cleanUp = (names: string[]): void => {
@@ -52,7 +56,9 @@ const addForMinutes = (
     const expires = new Date();
 
     expires.setMinutes(expires.getMinutes() + minutesToLive);
-    document.cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
+    document.cookie = `${name}=${
+        value
+    }; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
 };
 
 const addSessionCookie = (name: string, value: string): void => {
