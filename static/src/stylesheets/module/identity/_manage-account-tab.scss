@@ -488,3 +488,31 @@
 .manage-account-flexrow_item--static {
     flex: 0 0 auto;
 }
+
+.manage-account-ty {
+    display:grid;
+    grid-column-gap: $gs-gutter * 4;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    margin: 0 $gs-gutter * 2;
+    align-items: center;
+}
+
+.manage-account-ty__title {
+    @include fs-headline(8);
+    text-align: right;
+    font-size: 10em;
+    line-height: .9em;
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    color: $maps-main-1;
+}
+
+.manage-account-ty__content {
+    grid-column: 3;
+    grid-row: 2;
+
+    p {
+        @include fs-textSans(2);
+    }
+}
