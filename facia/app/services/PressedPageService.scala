@@ -14,7 +14,7 @@ class PressedPageService(wsClient: WSClient) extends Logging {
   val futureSemaphore = new FutureSemaphore(parallelJsonPresses)
 
   def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"PressedPageService.get $path") {
-    futureSemaphore.execute(getPressedPage(path)).map(_.get)
+    futureSemaphore.execute(getPressedPage(path))
   }
 
   def getPressedPage(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] =
