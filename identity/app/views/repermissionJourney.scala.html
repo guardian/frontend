@@ -44,7 +44,7 @@
                                         <ul>
                                         @helper.repeat(forms.privacyForm("consents"), min=1) { consentField =>
                                             <li>
-                                                @fragments.consentCheckbox(consentField)(messages)
+                                                @fragments.consentSwitch(consentField)(messages)
                                             </li>
                                         }
                                         </ul>
@@ -78,9 +78,11 @@
                                     <ul>
                                     @availableLists.subscriptions.filter(_.theme == "news").zipWithRowInfo.map { case (newsletter, row) =>
                                         <li>
-                                            @fragments.form.switchNewsletter(
+                                            @fragments.newsletterSwitch(
+                                                emailPrefsForm,
+                                                emailSubscriptions,
                                                 newsletter = newsletter
-                                            )(nonInputFields, messages, request, emailPrefsForm, emailSubscriptions)
+                                            )(nonInputFields, messages, request)
                                         </li>
                                     }
                                     </ul>
