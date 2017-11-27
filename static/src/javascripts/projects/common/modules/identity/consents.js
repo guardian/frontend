@@ -93,7 +93,7 @@ const buildFormDataForFields = (
 };
 
 const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
-    fastdom.read(() => labelEl.querySelectorAll('*[name][value]'));
+    fastdom.read(() => labelEl.querySelectorAll('[name][value]'));
 
 const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> =>
     fastdom
