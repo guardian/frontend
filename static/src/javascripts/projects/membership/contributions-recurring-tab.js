@@ -14,8 +14,10 @@ const PAYPAL_SHOW_EMAIL_BUTTON = '.js-show-paypal-button';
 const CONTRIBUTION_PERIOD_START_CONTAINER =
     '.js-contribution-period-start-container';
 const CONTRIBUTION_PERIOD_START = '.js-contribution-period-start';
-const PACKAGE_NEXT_PAYMENT_CONTAINER = '.js-contribution-next-payment-container';
-const PACKAGE_NEXT_PAYMENT_FORM_CONTAINER = '.js-contribution-next-payment-form-container';
+const PACKAGE_NEXT_PAYMENT_CONTAINER =
+    '.js-contribution-next-payment-container';
+const PACKAGE_NEXT_PAYMENT_FORM_CONTAINER =
+    '.js-contribution-next-payment-form-container';
 const PACKAGE_NEXT_PAYMENT_DATE = '.js-contribution-next-payment-date';
 const PACKAGE_NEXT_PAYMENT_PRICE = '.js-contribution-next-payment-price';
 const PACKAGE_INTERVAL = '.js-contribution-plan-interval';
@@ -30,9 +32,12 @@ const CANCEL_CONTRIBUTION = '.js-contribution-cancel';
 const CANCEL_CONTRIBUTION_BUTTON = '.js-manage-account-cancel-contribution';
 const CHANGE_CONTRIBUTION_AMOUNT = '.js-contribution-change-amount';
 const CONTRIBUTION_NEW_AMOUNT_FIELD = '.js-contribution-next-payment-new-price';
-const CHANGE_CONTRIBUTION_AMOUNT_BUTTON = '.js-manage-account-change-contribution-amount';
-const CHANGE_CONTRIBUTION_AMOUNT_CANCEL = '.js-manage-account-change-contribution-amount-cancel';
-const CHANGE_CONTRIBUTION_AMOUNT_SUBMIT = '.js-manage-account-change-contribution-amount-confirm';
+const CHANGE_CONTRIBUTION_AMOUNT_BUTTON =
+    '.js-manage-account-change-contribution-amount';
+const CHANGE_CONTRIBUTION_AMOUNT_CANCEL =
+    '.js-manage-account-change-contribution-amount-cancel';
+const CHANGE_CONTRIBUTION_AMOUNT_SUBMIT =
+    '.js-manage-account-change-contribution-amount-confirm';
 
 const displayLoader = (): void => {
     $(LOADER).removeClass(IS_HIDDEN_CLASSNAME);
@@ -66,9 +71,9 @@ const displayChangeContributionAmount = (): void => {
     $(CHANGE_CONTRIBUTION_AMOUNT).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-const hideChangeContributionAmount = (): void => {
-    $(CHANGE_CONTRIBUTION_AMOUNT).addClass(IS_HIDDEN_CLASSNAME);
-};
+// const hideChangeContributionAmount = (): void => {
+//     $(CHANGE_CONTRIBUTION_AMOUNT).addClass(IS_HIDDEN_CLASSNAME);
+// };
 
 const hideContributionInfo = (): void => {
     $(CONTRIBUTION_INFO).addClass(IS_HIDDEN_CLASSNAME);
@@ -166,21 +171,32 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     );
 
     displayChangeContributionAmount();
-    const changeAmountButton = document.querySelector(CHANGE_CONTRIBUTION_AMOUNT_BUTTON);
+    const changeAmountButton = document.querySelector(
+        CHANGE_CONTRIBUTION_AMOUNT_BUTTON
+    );
     if (changeAmountButton) {
         changeAmountButton.addEventListener('click', () => {
-            displayChangeContributionForm(formatAmount(contributorDetails.subscription.plan.amount, '').toString());
+            displayChangeContributionForm(
+                formatAmount(
+                    contributorDetails.subscription.plan.amount,
+                    ''
+                ).toString()
+            );
         });
     }
 
-    const changeAmountCancelButton = document.querySelector(CHANGE_CONTRIBUTION_AMOUNT_CANCEL);
+    const changeAmountCancelButton = document.querySelector(
+        CHANGE_CONTRIBUTION_AMOUNT_CANCEL
+    );
     if (changeAmountCancelButton) {
         changeAmountCancelButton.addEventListener('click', () => {
             hideChangeContributionForm();
         });
     }
 
-    const changeAmountConfirmButton = document.querySelector(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT);
+    const changeAmountConfirmButton = document.querySelector(
+        CHANGE_CONTRIBUTION_AMOUNT_SUBMIT
+    );
     if (changeAmountConfirmButton) {
         changeAmountConfirmButton.addEventListener('click', () => {
             changeContributionAmountSubmit();
