@@ -473,3 +473,18 @@
         }
     }
 }
+
+.manage-account-flexrow {
+    @include mq(tablet) {
+        display: flex;
+    }
+}
+.manage-account-flexrow_item {
+    flex: 1 1 auto;
+    &:not(:last-child) {
+        margin-right: $gs-gutter;
+    }
+}
+.manage-account-flexrow_item--static {
+    flex: 0 0 auto;
+}

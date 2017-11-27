@@ -14,6 +14,7 @@ import play.api.libs.json.{Json, Writes}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{EmailPrefsData, _}
+import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
 import utils.SafeLogging
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
@@ -33,6 +34,7 @@ class EditProfileController(
     idRequestParser: IdRequestParser,
     csrfCheck: CSRFCheck,
     csrfAddToken: CSRFAddToken,
+    returnUrlVerifier: ReturnUrlVerifier,
     implicit val profileFormsMapping: ProfileFormsMapping,
     val controllerComponents: ControllerComponents,
     newsletterService: NewsletterService)
@@ -51,7 +53,7 @@ class EditProfileController(
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
   def displayEmailPrefsForm(consentsUpdated: Boolean): Action[AnyContent] = displayForm(EmailPrefsProfilePage, consentsUpdated)
 
-  def displayConsentJourneyForm: Action[AnyContent] = {
+  def displayConsentJourneyForm(journey: String): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
@@ -62,6 +64,7 @@ class EditProfileController(
         recentlyAuthenticated.async { implicit request =>
           consentJourneyView(
             page = ConsentJourneyPage,
+            journey = journey,
             forms = ProfileForms(request.user, PublicEditProfilePage),
             request.user)
         }
@@ -181,8 +184,11 @@ class EditProfileController(
 
   private def consentJourneyView(
     page: IdentityPage,
+    journey: String,
     forms: ProfileForms,
     user: User) (implicit request: AuthRequest[AnyContent]): Future[Result] = {
+
+    val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).orElse("http://theguardian.co.uk").get;
 
     newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
@@ -190,6 +196,8 @@ class EditProfileController(
         page,
         user,
         forms,
+        journey,
+        verifiedReturnUrl,
         idRequestParser(request),
         idUrlBuilder,
         emailFilledForm,
