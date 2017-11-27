@@ -19,11 +19,13 @@
         <div class="manage-account__switches"><ul>
             @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
 
-            <li>
-                @fragments.form.switchNewsletter(
-                    newsletter = newsletter
-                )(nonInputFields, messages, request, emailPrefsForm, emailSubscriptions)
-            </li>
+                <li>
+                    @fragments.form.switchNewsletter(
+                        emailPrefsForm,
+                        emailSubscriptions,
+                        newsletter = newsletter
+                    )(nonInputFields, messages, request)
+                </li>
             }
         </ul></div>
     }

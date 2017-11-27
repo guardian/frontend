@@ -1,12 +1,15 @@
-@import model.{EmailNewsletter, EmailNewsletters}
+@import model.EmailNewsletter
 @import common.LinkTo
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.form.Switch._
 
+@* Editorial Newsletter switch/checkbox *@
 
 @(
+    emailPrefsForm: Form[_],
+    emailSubscriptions: List[String],
     newsletter: EmailNewsletter
-)(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages, request: RequestHeader, form: Form[_], emailSubscriptions: List[String])
+)(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages, request: RequestHeader)
 
 @buildFooter(newsletter: EmailNewsletter) = {
     <div class="manage-account__switch-footer-tidbit">
@@ -20,19 +23,23 @@
     }
 }
 
-    @fragments.form.switch(
-        title = newsletter.name,
-        subheading = newsletter.subheading,
-        description = Some(newsletter.description),
-        behaviour = NewsletterSwitch,
-        field = new Field(
-            form = form,
-            name = newsletter.listId.toString(),
-            constraints = Seq(),
-            format = None,
-            errors = Seq(),
-            value = Some(newsletter.subscribedTo(emailSubscriptions).toString())
-        ),
-        extraFields = Nil,
-        footer = Some(buildFooter(newsletter))
-    )(nonInputFields, messages)
+@newsletterField = @{
+    new Field(
+        form = emailPrefsForm,
+        name = newsletter.listId.toString,
+        constraints = Seq(),
+        format = None,
+        errors = Seq(),
+        value = Some(newsletter.subscribedTo(emailSubscriptions).toString)
+    )
+}
+
+@fragments.form.switch(
+    title = newsletter.name,
+    subheading = newsletter.subheading,
+    description = Some(newsletter.description),
+    behaviour = NewsletterSwitch,
+    field = newsletterField,
+    extraFields = Nil,
+    footer = Some(buildFooter(newsletter))
+)(nonInputFields, messages)
