@@ -133,7 +133,9 @@ const datesToTest = {
 };
 
 Object.keys(datesToTest).forEach(category => {
-    describe(`Show relative dates for timestamps formatted as YYYY-MM-DD HH:MM:SS [${category}]`, () => {
+    describe(`Show relative dates for timestamps formatted as YYYY-MM-DD HH:MM:SS [${
+        category
+    }]`, () => {
         const d = datesToTest[category];
         const epoch = Date.parse(d.date);
 

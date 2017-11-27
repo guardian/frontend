@@ -121,8 +121,9 @@ class Search {
                         <gcse:searchbox></gcse:searchbox>
                         </div>
                         <div class="search-results" data-link-name="search">
-                        <gcse:searchresults webSearchResultSetSize="'}${this
-                            .resultSetSize}" linkTarget="_self"></gcse:searchresults>
+                        <gcse:searchresults webSearchResultSetSize="'}${
+                            this.resultSetSize
+                        }" linkTarget="_self"></gcse:searchresults>
                         </div>`;
                 }
             });

@@ -361,9 +361,8 @@ const enhanceManageAccount = (): void => {
         '.js-manage-account__newsletterCheckbox',
         bindNewsletterSwitch
     );
-    $.forEachElement(
-        '.js-manage-account__consentCheckboxesSubmit',
-        (el: HTMLElement) => el.remove()
+    $.forEachElement('.js-manage-account__ajaxForm-submit', (el: HTMLElement) =>
+        el.remove()
     );
 };
 

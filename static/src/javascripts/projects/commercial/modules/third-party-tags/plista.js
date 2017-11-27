@@ -75,13 +75,13 @@ module.init = function(): Promise<false> {
             if (inUse) {
                 module.load();
             } else {
-                return trackAdRender(
-                    'dfp-ad--merchandising-high'
-                ).then(isLoaded => {
-                    if (!isLoaded) {
-                        module.load();
+                return trackAdRender('dfp-ad--merchandising-high').then(
+                    isLoaded => {
+                        if (!isLoaded) {
+                            module.load();
+                        }
                     }
-                });
+                );
             }
         });
     }

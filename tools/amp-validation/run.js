@@ -71,8 +71,9 @@ const checkEndpoints = (endpoints, options) => validatorFilePath =>
             const exitValue = results[1].length ? 1 : 0; // every promise returns true <=> exit value is zero
 
             console.log(
-                `Validator finished, there were ${results[0]
-                    .length} passes and ${results[1].length} failures.`
+                `Validator finished, there were ${
+                    results[0].length
+                } passes and ${results[1].length} failures.`
             );
             validatorJs.cleanUp();
             process.exit(exitValue);

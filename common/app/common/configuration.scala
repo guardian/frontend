@@ -19,28 +19,29 @@ import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
-object Environment {
+object Environment extends Logging {
 
-  private[this] val properties = {
-    def env(name: String): Option[String] = sys.env.get(name)
-
-    val props = new File("/etc/gu/install_vars") match {
+  private[this] val installVars = {
+    val source = new File("/etc/gu/install_vars") match {
       case f if f.exists => IOUtils.toString(new FileInputStream(f), Charset.defaultCharset())
       case _ => ""
     }
 
-    for {
-      p <- Properties(props)
-    } yield p match {
-      case (key, value) => key -> env(key).getOrElse(value)
-    }
+    Properties(source)
   }
 
-  val stack = properties.getOrElse("stack", "frontend")
-  val app = properties.getOrElse("app", "dev-build")
-  val stage = properties.getOrElse("STAGE", "DEV")
-  val awsRegion = properties.getOrElse("region", "eu-west-1")
-  val configBucket = properties.getOrElse("configBucket", "aws-frontend-store")
+  // Prefer env vars over install vars over default
+  private[this] def get(name: String, default: String): String = {
+    sys.env.get(name.toUpperCase).orElse(installVars.get(name)).getOrElse(default)
+  }
+
+  val stack = get("stack", "frontend")
+  val app = get("app", "dev-build")
+  val stage = get("STAGE", "DEV")
+  val awsRegion = get("region", "eu-west-1")
+  val configBucket = get("configBucket", "aws-frontend-store")
+
+  log.info(s"Environment loaded as: stack=$stack, app=$app, stage=$stage, awsRegion=$awsRegion, configBucket=$configBucket")
 }
 
 /**

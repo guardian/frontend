@@ -427,7 +427,8 @@
     }
 
     &.email-unsubscribe--confirm,
-    &.email-unsubscribe--confirm:hover {
+    &.email-unsubscribe--confirm:hover,
+    &.email-unsubscribe--confirm:focus {
         color: $error;
         font-weight: bold;
         border: 2px solid $error;
@@ -450,7 +451,7 @@
         clear: both;
     }
 
-    label {
+    .label-like {
         @include fs-bodyCopy(1, true);
         margin-top: $gs-gutter;
     }

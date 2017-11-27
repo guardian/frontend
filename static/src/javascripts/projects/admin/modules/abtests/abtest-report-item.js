@@ -73,10 +73,12 @@ class ABTestReportItem extends Component {
         const daysTillExpiry =
             (Date.parse(this.config.test.expiry) - new Date()) /
             (1000 * 60 * 60 * 24);
-        const tableauUrl = `https://tableau-datascience.gutools.co.uk/views/AutomatedMVTDashboard-MkII/MainMVTDashboard?:embed=y&id=${this
-            .config.test.id}`;
-        const ophanUrl = `https://dashboard.ophan.co.uk/graph/breakdown?ab=${this
-            .config.test.id}`;
+        const tableauUrl = `https://tableau-datascience.gutools.co.uk/views/AutomatedMVTDashboard-MkII/MainMVTDashboard?:embed=y&id=${
+            this.config.test.id
+        }`;
+        const ophanUrl = `https://dashboard.ophan.co.uk/graph/breakdown?ab=${
+            this.config.test.id
+        }`;
 
         if (elements.description) {
             elements.description.textContent = this.config.test.description;

@@ -54,14 +54,14 @@
             <div class="fieldset__fields email-subscription__options">
                 <ul class="u-unstyled">
                     <li>
-                        <a type="button" href=@buildIdentityUrl("account/edit") class="manage-account__button manage-account__button--mini " data-link-name="Change email address">Update your email address</a>
+                        <a href="@buildIdentityUrl("account/edit")" class="manage-account__button manage-account__button--mini" data-link-name="Change email address">Update your email address</a>
                     </li>
                     <li>
-                        <div type="link" role="link" class="js-email-subscription__formatFieldsetToggle manage-account__button manage-account__button--mini " data-link-name="Change format">Change format</div>
+                        <a href="#manage-account__modal--newsletterFormat" role="button" class="js-email-subscription__formatFieldsetToggle manage-account__button manage-account__button--mini" data-link-name="Change format">Change format</a>
                     </li>
                     <li>
-                        <label class="label">No longer want to receive any of these emails?</label>
-                        <button type="button" class="manage-account__button--mini manage-account__button email-unsubscribe js-unsubscribe" data-link-name="Unsubscribe from all emails"><span class="email-unsubscribe-all__label js-unsubscribe--basic">Unsubscribe from all</span><span class="email-unsubscribe-all__label js-unsubscribe--confirm hide">Are you sure?</span></button>
+                        <p class="label-like">No longer want to receive any of these emails?</p>
+                        <button type="button" class="manage-account__button--mini manage-account__button email-unsubscribe js-unsubscribe" data-link-name="Unsubscribe from all emails"><span class="email-unsubscribe-all__label js-unsubscribe--basic">Unsubscribe from all emails</span><span class="email-unsubscribe-all__label js-unsubscribe--confirm hide" aria-hidden>Are you sure?</span></button>
                     </li>
                 </ul>
             </div>
@@ -70,10 +70,22 @@
 
     </div>
 
-    <div class="manage-account__modal manage-account__modal--newsletterFormat">
+    <fieldset class="fieldset fieldset--manage-account-rightsubmit js-manage-account__ajaxForm-submit">
+        <div class="fieldset__heading"></div>
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
+                <li>
+                    <button type="submit" class="manage-account__button" data-link-name="Save email preferences">Save changes</button>
+                </li>
+            </ul>
+        </div>
+    </fieldset>
+
+    <div id="manage-account__modal--newsletterFormat" class="manage-account__modal manage-account__modal--newsletterFormat" role="dialog">
         <div class="manage-account__modalContent">
             <button class="manage-account__modalCloser js-manage-account__modalCloser">
-            @fragments.inlineSvg("cross", "icon")
+                <span class="u-h">Close this window</span>
+                @fragments.inlineSvg("cross", "icon")
             </button>
             <fieldset class="fieldset">
                 <div class="fieldset__heading">
@@ -84,7 +96,7 @@
                     <ul class="u-unstyled">
 
                         <li class="form-field @if(emailPrefsForm("htmlPreference").errors.nonEmpty) {form-field--error}">
-                            <label class="label">In which format would you like to receive email?</label>
+                            <label class="label" for="htmlPreference">In which format would you like to receive email?</label>
                             <div class="form-field__note">
                                 HTML emails have formatted text, images and look better. Text emails are quicker to download, but don't contain images or any formatting.
                                 <br />
@@ -96,7 +108,7 @@
                         </li>
 
                         <li>
-                            <button type="button" class="manage-account__button save__button js-save-button" data-link-name="Save email preferences">Save</button>
+                            <button type="submit" class="manage-account__button save__button js-save-button" data-link-name="Save email preferences">Save</button>
                         </li>
                     </ul>
                 </div>

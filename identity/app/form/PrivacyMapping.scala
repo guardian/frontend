@@ -1,7 +1,7 @@
 package form
 
-import com.gu.identity.model.{Consent, ConsentText, User}
-import com.gu.identity.model.ConsentText._
+import com.gu.identity.model.{Consent,User}
+import com.gu.identity.model.Consent._
 import idapiclient.UserUpdateDTO
 import play.api.data.Forms._
 import play.api.data.JodaForms.jodaDate
@@ -20,11 +20,11 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
       "consents" -> list(
         mapping(
           "actor" -> text,
-          "consentIdentifier" -> text,
-          "consentIdentifierVersion" -> number,
-          "hasConsented" -> boolean,
+          "id" -> text,
+          "version" -> number,
+          "consented" -> boolean,
           "timestamp" -> jodaDate(dateTimeFormatISO8601),
-          "privacyPolicy" -> number
+          "privacyPolicyVersion" -> number
         )(Consent.apply)(Consent.unapply) // NOTE: Consent here is DO from identity-model
       )
     )(PrivacyFormData.apply)(PrivacyFormData.unapply)
@@ -92,7 +92,7 @@ case class PrivacyFormData(
       oldConsent <- oldUserDO.consents
       newConsent <- consents
     } yield {
-      if (oldConsent.consentIdentifier == newConsent.consentIdentifier)
+      if (oldConsent.id == newConsent.id)
         newConsent
       else
         oldConsent
@@ -121,10 +121,4 @@ object PrivacyFormData {
       receive3rdPartyMarketing = userDO.statusFields.receive3rdPartyMarketing,
       allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling,
       consents = if (userDO.consents.isEmpty) defaultConsents else userDO.consents)
-
-  private val defaultConsents =
-    List(
-      Consent("user", FirstParty.name, false),
-      Consent("user", ThirdParty.name, false),
-      Consent("user", ThirdPartyProfiling.name, false))
 }
