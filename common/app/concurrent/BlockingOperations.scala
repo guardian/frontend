@@ -1,4 +1,4 @@
-package tools
+package concurrent
 
 import akka.actor.ActorSystem
 import akka.dispatch.MessageDispatcher

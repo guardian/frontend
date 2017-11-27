@@ -22,7 +22,6 @@ import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
-
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
@@ -113,19 +112,16 @@ trait FapiFrontPress extends Logging {
     val stopWatch: StopWatch = new StopWatch
 
     val pressFuture = getPressedFrontForPath(path)
-      .map { pressedFront =>
+      .map { pressedFront: PressedPage =>
         val json: String = Json.stringify(Json.toJson(pressedFront))
         FaciaPressMetrics.FrontPressContentSize.recordSample(json.getBytes.length, new DateTime())
         putPressedJson(path, json)
-      }
-      .asFuture
-      .map(
-        _.fold(
-          e => {
-            StatusNotification.notifyFailedJob(path, isLive = isLiveContent, e)
-            throw new RuntimeException(s"${e.cause} ${e.message}")
-          },
-          _ => StatusNotification.notifyCompleteJob(path, isLive = isLiveContent))
+      }.fold(
+        e => {
+          StatusNotification.notifyFailedJob(path, isLive = isLiveContent, e)
+          throw new RuntimeException(s"${e.cause} ${e.message}")
+        },
+        _ => StatusNotification.notifyCompleteJob(path, isLive = isLiveContent)
       )
 
 
