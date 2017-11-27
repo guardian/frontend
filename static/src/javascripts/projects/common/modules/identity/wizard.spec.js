@@ -1,7 +1,7 @@
 // @flow
 import { containerClassname, enhance, setPosition } from './wizard';
 
-// Not yet implemented in out codebase, see https://github.com/tmpvar/jsdom/issues/961
+// Not yet implemented in our codebase, see https://github.com/tmpvar/jsdom/issues/961
 HTMLElement.prototype.dataset = {};
 
 const steps = ['1', '2', '3', '4'];
