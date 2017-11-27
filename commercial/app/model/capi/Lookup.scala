@@ -8,7 +8,7 @@ import model.{Content, ContentType, ImageElement}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class Lookup(contentApiClient: ContentApiClient) extends Logging {
+class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.Strings {
 
   def content(contentId: String)(implicit executionContext: ExecutionContext): Future[Option[ContentType]] = {
     val response = try {
@@ -35,8 +35,12 @@ class Lookup(contentApiClient: ContentApiClient) extends Logging {
   }
 
   def latestContentByKeyword(keywordId: String, maxItemCount: Int)(implicit executionContext: ExecutionContext): Future[Seq[ContentType]] = {
-    contentApiClient.getResponse(contentApiClient.search(defaultEdition).tag(keywordId).pageSize(maxItemCount).orderBy("newest")) map {
-      _.results map (Content(_))
+    contentApiClient.getResponse(contentApiClient.item(keywordId.stringDecoded, defaultEdition)
+      .pageSize(maxItemCount)
+      .showTags("false")
+      .orderBy("newest")
+    ) map {
+      _.results.getOrElse(Nil) map (Content(_))
     }
   }
 
