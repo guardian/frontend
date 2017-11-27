@@ -23,17 +23,33 @@
     display: block;
     position: absolute;
     animation: manage-account-wizard__fadeLeft .2s both;
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+        display: none;
+    }
 }
 .manage-account-wizard__step--in {
     animation: manage-account-wizard__fadeRight .2s reverse both;
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+        display: block;
+    }
 }
 .manage-account-wizard__step--out-reverse {
     display: block;
     position: absolute;
     animation: manage-account-wizard__fadeRight .2s both;
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+        display: none;
+    }
 }
 .manage-account-wizard__step--in-reverse {
     animation: manage-account-wizard__fadeLeft .2s reverse both;
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+        display: block;
+    }
 }
 
 .manage-account-wizard__controls {
@@ -53,7 +69,7 @@
 }
 
 /*
-4 times $gs-gutter looks non-dizzying 
+4 times $gs-gutter looks non-dizzying
 for a .2s transition
 */
 
