@@ -9,8 +9,9 @@ import play.api.libs.ws.WSClient
 import scala.concurrent.{ExecutionContext, Future}
 
 class PressedPageService(wsClient: WSClient) extends Logging {
+  val parallelJsonPresses = 8
   val secureS3Request = new SecureS3Request(wsClient)
-  val futureSemaphore = new FutureSemaphore(6)
+  val futureSemaphore = new FutureSemaphore(parallelJsonPresses)
 
   def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"PressedPageService.get $path") {
     futureSemaphore.execute(getPressedPage(path)).map(_.get)
