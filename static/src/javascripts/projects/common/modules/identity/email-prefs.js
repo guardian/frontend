@@ -63,7 +63,7 @@ const modalFormatToggle = (buttonEl: HTMLElement): void => {
             .read(
                 () =>
                     document.getElementsByClassName(
-                        '.manage-account__modal--newsletterFormat'
+                        'manage-account__modal--newsletterFormat'
                     )[0]
             )
             .then(modalEl => {
