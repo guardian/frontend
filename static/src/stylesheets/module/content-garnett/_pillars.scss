@@ -5,12 +5,18 @@
     a {
         color: $news-garnett-main-1;
     }
+
     .inline-quote svg {
         fill: $neutral-4;
     }
 
+    .pullquote-cite {
+        color: $neutral-3;
+    }
+
     .u-underline {
         border-bottom: none;
+
         &:hover {
             border-bottom: solid 1px $news-garnett-main-1;
         }
