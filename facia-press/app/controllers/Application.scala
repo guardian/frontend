@@ -23,6 +23,7 @@ class Application(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: D
 
   def generateLivePressedFor(path: String): Action[AnyContent] = Action.async { request =>
     liveFapiFrontPress.getPressedFrontForPath(path)
+      .map(_.full)
       .map(Json.toJson(_))
       .map(Json.prettyPrint)
       .map(Ok.apply(_))

@@ -1,7 +1,8 @@
 package layout.slices
 
-import model.pressed.CollectionConfig
+import model.pressed.{CollectionConfig, PressedContent}
 import common.Logging
+import layout.Front
 import model.facia.PressedCollection
 
 import scala.collection.immutable.Iterable
@@ -30,6 +31,16 @@ object Container extends Logging {
 
   def fromConfig(collectionConfig: CollectionConfig): Container =
     resolve(collectionConfig.collectionType)
+
+  def maxStories(collectionConfig: CollectionConfig, items: Seq[PressedContent]): Option[Int] = {
+    resolve(collectionConfig.collectionType) match {
+      case Dynamic(dynamicPackage) => dynamicPackage
+        .slicesFor(items.map(Story.fromFaciaContent))
+        .map(Front.itemsVisible)
+      case Fixed(fixedContainer) => Some(Front.itemsVisible(fixedContainer.slices))
+      case _ => None
+    }
+  }
 
   def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean, adFree: Boolean): Container = {
     val container = resolve(pressedCollection.collectionType)
