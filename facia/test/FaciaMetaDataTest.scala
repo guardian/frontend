@@ -1,6 +1,8 @@
 package metadata
 
+import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
+import concurrent.BlockingOperations
 import controllers.FaciaControllerImpl
 import org.jsoup.Jsoup
 import org.scalatest.mockito.MockitoSugar
@@ -9,6 +11,7 @@ import play.api.libs.json._
 import play.api.test.Helpers._
 import services.{ConfigAgent, PressedPageService}
 import test._
+
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
@@ -21,7 +24,9 @@ import scala.concurrent.Await
   with WithTestWsClient
   with MockitoSugar {
 
-  lazy val legacyPressedPageService = new PressedPageService(wsClient)
+  lazy val actorSystem = ActorSystem()
+  lazy val blockingOperations = new BlockingOperations(actorSystem)
+  lazy val legacyPressedPageService = new PressedPageService(blockingOperations)
   lazy val fapi = new TestFrontJsonFapi(legacyPressedPageService)
 
   override def beforeAll() {
