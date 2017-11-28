@@ -1,3 +1,5 @@
+$quote-tail: 25px;
+
 .content--type-article {
     .submeta {
         position: relative;
@@ -52,75 +54,161 @@
     }
 
     .content__main-column {
-        border-left: solid 1px $neutral-6;
-        padding-left: $gs-gutter/2;
+        @include mq(tablet) {
+            border-left: solid 1px $neutral-6;
+            padding-left: $gs-gutter/2;
+        }
     }
-
+    // Quote base styles
     .element-pullquote {
-        background-color: #fff;
+        background-color: $neutral-garett-1;
         border: solid 1px $neutral-6;
-        box-sizing: border-box;
-        margin-bottom: 0;
-        padding: 0;
+        margin: $gs-gutter/4 0 0;
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline*2;
         position: relative;
         width: 100%;
         @include mq(mobile) {
+            margin-bottom: $gs-baseline*2;
             margin-left: -$gs-gutter/2 - 1px;
-            margin-right: 0;
-            padding: $gs-baseline/2 $gs-gutter/2;
+        }
+        @include mq(mobileMedium) {
+            clear: left;
+            float: left;
+            margin-right: $gs-gutter/2;
+            width: gs-span(3);
         }
         @include mq(mobileLandscape) {
             margin-left: -$gs-gutter/2 - $gs-gutter/2;
         }
-        @include mq(tablet) {
-            clear: left; // Prevent previous embeds from interfering
-            float: left;
-            margin-bottom: $gs-baseline/2;
-            margin-right: $gs-gutter/2;
-            margin-top: 5px;
-            width: gs-span(3);
-        }
         @include mq(leftCol) {
             $width: gs-span(3);
             width: $width;
+            margin-bottom: $gs-baseline/2;
             margin-left: -$width/2-$gs-gutter/2;
+        }
+        // Quote tail
+        &:after {
+            @include mq(mobile) {
+                content: '';
+                width: $quote-tail;
+                height: $quote-tail;
+                border-radius: 0 0 $quote-tail 0;
+                position: absolute;
+                bottom: -$quote-tail - 2px;
+                left: $gs-gutter/2;
+                background-color: $neutral-garett-1;
+                border: solid 1px $neutral-6;
+                border-top: solid 1px $neutral-garett-1;
+            }
+            @include mq(mobileLandscape) {
+                left: $gs-gutter;
+            }
+            @include mq(tablet) {
+                left: 8px;
+            }
+        }
+        .pullquote-paragraph {
+            display: inline;
+            font-weight: 100!important;
         }
 
         .inline-quote,
         blockquote {
             display: inline;
         }
-
-        .inline-quote svg {
-            height: 18px;
+        // Hack hide for second svg
+        .closing {
+          display: none;
         }
+        // Quote supporting
+        &.element--supporting {
+            .pullquote-paragraph {
+                @include fs-headline(3);
+            }
 
-        .pullquote-paragraph {
-            display: inline;
-            font-size: 22px;
-            line-height: 26px;
-            font-weight: lighter;
+            &:after {
+                @include mq(leftCol) {
+                    border-radius: 0 0 0 $quote-tail;
+                    left: gs-span(3)/2 - 28px;
+                }
+            }
         }
-
-        &:after {
-            @include mq(mobile) {
-                content: '';
-                width: 25px;
-                height: 25px;
-                border-radius: 0 0 25px 0;
-                position: absolute;
-                bottom: -27px;
-                left: 8px;
-                background-color: #fff;
-                border: solid 1px $neutral-6;
-                border-top: solid 1px #fff;
+        // Quote halfWidth
+        &.element--halfWidth {
+            width: gs-span(4);
+            @include mq(leftCol) {
+                margin-left: -$gs-gutter/2 - $gs-gutter/2;
+            }
+            .pullquote-paragraph {
+                @include fs-headline(3);
+                @include mq(tablet) {
+                    @include fs-headline(4);
+                }
+            }
+        }
+        // Quote inline
+        &.element--inline {
+            clear: none;
+            float: none;
+            margin-bottom: $gs-baseline*2;
+            width: 100%;
+            @include mq(tablet) {
+                width: gs-span(6);
             }
             @include mq(leftCol) {
-                content: '';
-                border-radius: 0 0 0 25px;
-                position: absolute;
-                bottom: -27px;
-                left: gs-span(3)/2 - 28px;
+                margin-left: -$gs-gutter/2 - $gs-gutter/2;
+            }
+            .pullquote-paragraph {
+                @include fs-headline(4);
+                @include mq(tablet) {
+                    @include fs-headline(5);
+                }
+            }
+        }
+        // Quote showcase
+        &.element--showcase {
+            clear: none;
+            float: none;
+            margin-bottom: $gs-baseline*2;
+            width: 100%;
+            @include mq(mobileLandscape) {
+                margin-left: -$gs-gutter/2 - $gs-gutter/2;
+            }
+            @include mq(tablet) {
+                width: gs-span(6);
+            }
+            @include mq(leftCol) {
+                width: gs-span(8);
+                margin-left: - gs-span(2);
+            }
+
+            &:after {
+                border-radius: 0 0 $quote-tail 0;
+                @include mq(leftCol) {
+                    left: gs-span(2)-$gs-baseline;
+                }
+            }
+
+            .pullquote-paragraph {
+                @include fs-headline(4);
+                @include mq(tablet) {
+                    @include fs-headline(5);
+                }
+                @include mq(leftCol) {
+                    @include fs-headline(6);
+                }
+            }
+
+            .inline-quote svg {
+                @include mq(desktop) {
+                    display: inline;
+                }
+                @include mq(leftCol) {
+                    display: block;
+                    width: 50px;
+                    position: absolute;
+                    top: - 40px;
+                }
             }
         }
     }
