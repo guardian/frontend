@@ -96,13 +96,8 @@ trait S3 extends Logging {
     putGzipped(key, value, contentType, Private)
   }
 
-  def getGzipped(key: String)(implicit codec: Codec): Option[String] = {
-    val request = new GetObjectRequest(bucket, key)
-    client.map { client =>
-      val result = client.getObject(request)
-      val gzippedStream = new GZIPInputStream(result.getObjectContent)
-      Source.fromInputStream(gzippedStream).mkString
-    }
+  def getGzipped(key: String)(implicit codec: Codec): Option[String] = withS3Result(key) { result =>
+    Source.fromInputStream(new GZIPInputStream(result.getObjectContent)).mkString
   }
 
   private def putGzipped(key: String, value: String, contentType: String, accessControlList: CannedAccessControlList) {
