@@ -170,8 +170,9 @@ class FabricExpandingV1 {
         const viewModel = {
             width: videoWidth,
             height: videoHeight,
-            src: `${this.params
-                .videoURL}?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0`,
+            src: `${
+                this.params.videoURL
+            }?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0`,
             className: [
                 'expandable_video',
                 `expandable_video--horiz-pos-${this.params.videoPositionH}`,
@@ -213,26 +214,31 @@ class FabricExpandingV1 {
             showArrow:
                 this.params.showMoreType === 'arrow-only' ||
                 this.params.showMoreType === 'plus-and-arrow'
-                    ? `<button class="ad-exp__open-chevron ad-exp__open">${arrowDown.markup}</button>`
+                    ? `<button class="ad-exp__open-chevron ad-exp__open">${
+                          arrowDown.markup
+                      }</button>`
                     : '',
         };
         const showmorePlus = {
             showPlus:
                 this.params.showMoreType === 'plus-only' ||
                 this.params.showMoreType === 'plus-and-arrow'
-                    ? `<button class="ad-exp__close-button ad-exp__open">${closeCentral.markup}</button>`
+                    ? `<button class="ad-exp__close-button ad-exp__open">${
+                          closeCentral.markup
+                      }</button>`
                     : '',
         };
         const scrollbgDefaultY = '0%'; // used if no parallax / fixed background scroll support
         const scrollingbg = {
             scrollbg:
                 this.params.backgroundImagePType !== 'none'
-                    ? `<div class="ad-exp--expand-scrolling-bg" style="background-image: url(${this
-                          .params
-                          .backgroundImageP}); background-position: ${this
-                          .params
-                          .backgroundImagePPosition} ${scrollbgDefaultY}; background-repeat: ${this
-                          .params.backgroundImagePRepeat};"></div>`
+                    ? `<div class="ad-exp--expand-scrolling-bg" style="background-image: url(${
+                          this.params.backgroundImageP
+                      }); background-position: ${
+                          this.params.backgroundImagePPosition
+                      } ${scrollbgDefaultY}; background-repeat: ${
+                          this.params.backgroundImagePRepeat
+                      };"></div>`
                     : '',
         };
         this.params.id = `fabric-expanding-${Math.floor(

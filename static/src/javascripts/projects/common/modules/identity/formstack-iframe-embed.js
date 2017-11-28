@@ -202,8 +202,12 @@ class FormstackEmbedIframe {
 
         const emailName = email.getAttribute('name') || '';
 
-        const html = `<input type="hidden" name="${userName}" value="${user.id}">
-                        <input type="hidden" name="${emailName}" value="${user.primaryEmailAddress}">`;
+        const html = `<input type="hidden" name="${userName}" value="${
+            user.id
+        }">
+                        <input type="hidden" name="${emailName}" value="${
+            user.primaryEmailAddress
+        }">`;
 
         this.form.insertAdjacentHTML('beforeend', html);
 

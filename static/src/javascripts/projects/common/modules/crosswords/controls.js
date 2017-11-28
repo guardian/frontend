@@ -59,7 +59,9 @@ class Controls extends Component {
                 createElement(
                     'button',
                     {
-                        className: `${buttonClassName} ${buttonCurrentClassName}`,
+                        className: `${buttonClassName} ${
+                            buttonCurrentClassName
+                        }`,
                         onClick: this.props.crossword.onClearSingle.bind(
                             this.props.crossword
                         ),
@@ -75,7 +77,9 @@ class Controls extends Component {
                 createElement(
                     'button',
                     {
-                        className: `${buttonClassName} ${buttonCurrentClassName}`,
+                        className: `${buttonClassName} ${
+                            buttonCurrentClassName
+                        }`,
                         onClick: this.props.crossword.onToggleAnagramHelper.bind(
                             this.props.crossword
                         ),
@@ -91,7 +95,9 @@ class Controls extends Component {
                     createElement(
                         'button',
                         {
-                            className: `${buttonClassName} ${buttonCurrentClassName}`,
+                            className: `${buttonClassName} ${
+                                buttonCurrentClassName
+                            }`,
                             onClick: this.props.crossword.onCheat.bind(
                                 this.props.crossword
                             ),
@@ -105,7 +111,9 @@ class Controls extends Component {
                     createElement(
                         'button',
                         {
-                            className: `${buttonClassName} ${buttonCurrentClassName}`,
+                            className: `${buttonClassName} ${
+                                buttonCurrentClassName
+                            }`,
                             onClick: this.props.crossword.onCheck.bind(
                                 this.props.crossword
                             ),

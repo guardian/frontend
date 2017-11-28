@@ -19,7 +19,11 @@ const paradiseDifferentHighlightP1 =
 const controlP2FirstSentence =
     ' If everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure.';
 const controlP2 = (currencySymbol: string) =>
-    `${controlP2FirstSentence} <strong><span class="contributions__highlight">For as little as ${currencySymbol}1, you can support the Guardian &ndash; and it only takes a minute. Thank you.</span></strong>`;
+    `${
+        controlP2FirstSentence
+    } <strong><span class="contributions__highlight">For as little as ${
+        currencySymbol
+    }1, you can support the Guardian &ndash; and it only takes a minute. Thank you.</span></strong>`;
 
 // control regulars
 const controlHeadingRegulars = 'Hello again &hellip;';
@@ -32,11 +36,25 @@ const ctaLinkSentence = (
     currencySymbol: string
 ): string => {
     if (supportFrontendLiveInUs) {
-        return `For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute. <a href="${membershipUrl}" target="_blank" class="u-underline">Make a contribution</a>`;
+        return `<span class="contributions__highlight"> For as little as ${
+            currencySymbol
+        }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
+            membershipUrl
+        }" target="_blank" class="u-underline">Make a contribution</a>`;
     } else if (supportFrontendLiveInUk) {
-        return `For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute. <a href="${membershipUrl}" target="_blank" class="u-underline">Make a contribution or get a subscription</a>`;
+        return `<span class="contributions__highlight">For as little as ${
+            currencySymbol
+        }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
+            membershipUrl
+        }" target="_blank" class="u-underline">Make a contribution or get a subscription</a>`;
     }
-    return `For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute. <a href="${membershipUrl}" target="_blank" class="u-underline">Become a monthly supporter</a> or <a href="${contributionUrl}" target="_blank" class="u-underline">make a one-off contribution</a>`;
+    return `<span class="contributions__highlight"> For as little as ${
+        currencySymbol
+    }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
+        membershipUrl
+    }" target="_blank" class="u-underline">Become a monthly supporter</a> or <a href="${
+        contributionUrl
+    }" target="_blank" class="u-underline">make a one-off contribution</a>`;
 };
 
 /*

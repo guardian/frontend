@@ -33,17 +33,21 @@ class FabricVideo {
         ).toString(16)}`;
 
         if (isSmallScreen) {
-            this.params.posterMobile = `<div class="creative__poster" style="background-image:url(${this
-                .params.Videobackupimage})"></div>`;
+            this.params.posterMobile = `<div class="creative__poster" style="background-image:url(${
+                this.params.Videobackupimage
+            })"></div>`;
         } else {
             if (this.hasVideo) {
-                this.params.video = `<video muted class="creative__video creative__video--${this
-                    .params.Videoalignment}"><source src="${this.params
-                    .VideoURL}" type="video/mp4"></video>`;
+                this.params.video = `<video muted class="creative__video creative__video--${
+                    this.params.Videoalignment
+                }"><source src="${
+                    this.params.VideoURL
+                }" type="video/mp4"></video>`;
             }
 
-            this.params.posterTablet = `<div class="creative__poster" style="background-image:url(${this
-                .params.BackgroundImagemobile})"></div>`;
+            this.params.posterTablet = `<div class="creative__poster" style="background-image:url(${
+                this.params.BackgroundImagemobile
+            })"></div>`;
         }
     }
 

@@ -147,12 +147,23 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
                 fr parameter to `fra` (given that, here, it relates to fraud).
             */
             const targeting = JSON.parse(targetingJSON);
+
+            // brand safety is on a page level
             Object.keys(targeting.brandSafety).forEach(key =>
                 slot.setTargeting(key, targeting.brandSafety[key])
             );
             if (targeting.fr) {
                 slot.setTargeting('fra', targeting.fr);
             }
+
+            // viewability targeting is on a slot level
+            const ignoredKeys = ['id', 'pub'];
+            Object.keys(targeting.slots[id])
+                .filter(x => !ignoredKeys.includes(x))
+                .forEach(key =>
+                    slot.setTargeting(key, targeting.slots[id][key])
+                );
+
             loadedResolve();
         };
 

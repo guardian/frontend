@@ -38,7 +38,9 @@ const scrollableMpuTpl = (params: Object) => `
     target="_new">
     <div class="creative--scrollable-mpu-inner">
         ${params.backgroundImage}
-        <div class="creative--scrollable-mpu-static-image" style="background-image: url('${params.layer1Image}');"></div>
+        <div class="creative--scrollable-mpu-static-image" style="background-image: url('${
+            params.layer1Image
+        }');"></div>
     </div>
 </a>
 `;
@@ -105,8 +107,9 @@ class ScrollableMpu {
                 : this.params.mobileImage,
             backgroundImage:
                 hasScrollEnabled && this.params.backgroundImage
-                    ? `<div class="creative--scrollable-mpu-image" style="background-image: url(${this
-                          .params.backgroundImage});"></div>`
+                    ? `<div class="creative--scrollable-mpu-image" style="background-image: url(${
+                          this.params.backgroundImage
+                      });"></div>`
                     : '',
         };
 

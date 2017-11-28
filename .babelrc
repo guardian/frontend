@@ -43,6 +43,12 @@
                     "useBuiltIns": true
                 }]
             ],
+            "plugins": [
+                ["babel-plugin-transform-runtime", {
+                    "polyfill": false
+                }],
+                "babel-plugin-transform-class-properties",
+            ],
         },
         "internal": {
             "presets": [

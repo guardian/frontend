@@ -106,41 +106,41 @@ const testStorage = (storageName, fn) => {
     });
 
     test(`${storageName} - get() with expired item`, () => {
-        IO.filter(
-            item => item.options && item.options.expires
-        ).forEach(expired => {
-            const { key } = expired;
-            const OriginalDate = global.Date;
+        IO.filter(item => item.options && item.options.expires).forEach(
+            expired => {
+                const { key } = expired;
+                const OriginalDate = global.Date;
 
-            global.Date = jest.fn(
-                dateString => new OriginalDate(dateString || '2100-01-02')
-            );
+                global.Date = jest.fn(
+                    dateString => new OriginalDate(dateString || '2100-01-02')
+                );
 
-            expect(engine.get(key)).toEqual(null);
-            expect(engine.storage.removeItem).toHaveBeenCalledWith(key);
-            engine.storage.removeItem.mockClear();
+                expect(engine.get(key)).toEqual(null);
+                expect(engine.storage.removeItem).toHaveBeenCalledWith(key);
+                engine.storage.removeItem.mockClear();
 
-            global.Date = OriginalDate;
-        });
+                global.Date = OriginalDate;
+            }
+        );
     });
 
     test(`${storageName} - get() with non-expired item`, () => {
-        IO.filter(
-            item => item.options && item.options.expires
-        ).forEach(expired => {
-            const { key, data } = expired;
-            const OriginalDate = global.Date;
+        IO.filter(item => item.options && item.options.expires).forEach(
+            expired => {
+                const { key, data } = expired;
+                const OriginalDate = global.Date;
 
-            global.Date = jest.fn(
-                dateString => new OriginalDate(dateString || '2099-01-01')
-            );
+                global.Date = jest.fn(
+                    dateString => new OriginalDate(dateString || '2099-01-01')
+                );
 
-            expect(engine.get(key)).toEqual(data);
-            expect(engine.storage.removeItem).not.toHaveBeenCalled();
-            engine.storage.removeItem.mockClear();
+                expect(engine.get(key)).toEqual(data);
+                expect(engine.storage.removeItem).not.toHaveBeenCalled();
+                engine.storage.removeItem.mockClear();
 
-            global.Date = OriginalDate;
-        });
+                global.Date = OriginalDate;
+            }
+        );
     });
 
     test(`${storageName} - getRaw()`, () => {

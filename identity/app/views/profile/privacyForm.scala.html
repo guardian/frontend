@@ -1,7 +1,7 @@
 @import views.html.fragments.registrationFooter
 @import _root_.form.IdFormHelpers.nonInputFields
-@import com.gu.identity.model.ConsentText
-@import com.gu.identity.model.ConsentText._
+@import com.gu.identity.model.Consent
+@import com.gu.identity.model.Consent._
 @import conf.switches.Switches.IdentityGdprMarketingConsentSwitch
 @import model.{EmailNewsletters, IdentityPage}
 @import services.EmailPrefsData
@@ -12,7 +12,9 @@
   privacyForm: Form[_root_.form.PrivacyFormData],
   emailPrefsForm: Form[EmailPrefsData],
   emailSubscriptions: List[String],
-  availableLists: EmailNewsletters)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+  availableLists: EmailNewsletters,
+  consentsUpdated: Boolean = false
+)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @marketingConsentForm = {
     <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
@@ -35,14 +37,14 @@
                 <ul>
                 @helper.repeat(privacyForm("consents"), min=1) { consentField =>
                     <li>
-                        @fragments.consentCheckbox(consentField)(messages)
+                        @fragments.consentSwitch(consentField)(messages)
                     </li>
                 }
                 </ul>
             </div>
         </div>
 
-        <fieldset class="fieldset fieldset--manage-account-rightsubmit js-manage-account__consentCheckboxesSubmit">
+        <fieldset class="fieldset fieldset--manage-account-rightsubmit js-manage-account__ajaxForm-submit">
             <div class="fieldset__heading"></div>
             <div class="fieldset__fields">
                 <ul class="u-unstyled">
@@ -54,6 +56,13 @@
 
         </fieldset>
     </form>
+}
+
+@if(consentsUpdated) {
+    <div class="form__success">
+        <h2>Thank you</h2>
+        <p>Your Email preferences have been updated.</p>
+    </div>
 }
 
 @* MARKETING CONSENT *@

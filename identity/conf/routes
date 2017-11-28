@@ -59,7 +59,7 @@ GET         /privacy/edit                           controllers.EditProfileContr
 POST        /privacy/edit                           controllers.EditProfileController.saveConsentPreferences
 POST        /privacy/edit-ajax                      controllers.EditProfileController.saveConsentPreferencesAjax
 
-GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm
+GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false)
 POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferencesAjax
 
 GET         /repermission                           controllers.EditProfileController.displayRepermissioningJourneyForm

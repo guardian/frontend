@@ -43,7 +43,6 @@ module.exports = {
     resolve: {
         modules: [
             path.join(__dirname, 'static', 'src', 'javascripts'),
-            path.join(__dirname, 'static', 'src', 'javascripts-legacy'),
             path.join(__dirname, 'static', 'vendor', 'javascripts'),
             'node_modules', // default location, but we're overiding above, so it needs to be explicit
         ],
@@ -78,7 +77,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules|vendor|javascripts-legacy)/,
+                exclude: /(node_modules|vendor)/,
                 loader: 'babel-loader',
             },
             {

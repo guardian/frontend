@@ -317,8 +317,9 @@ class CommentBox extends Component {
             if (comment.body.length > this.options.maxLength) {
                 this.error(
                     'COMMENT_TOO_LONG',
-                    `<b>Comments must be shorter than ${this.options
-                        .maxLength} characters.</b>` +
+                    `<b>Comments must be shorter than ${
+                        this.options.maxLength
+                    } characters.</b>` +
                         `Yours is currently ${comment.body.length -
                             this.options.maxLength} character(s) too long.`
                 );
@@ -532,7 +533,9 @@ class CommentBox extends Component {
             }
 
             if (parentCommentAuthor && author && timestamp) {
-                parentCommentAuthor.innerHTML = `${author} @ ${timestamp} said:`;
+                parentCommentAuthor.innerHTML = `${author} @ ${
+                    timestamp
+                } said:`;
             }
 
             if (parentCommentBody && body) {

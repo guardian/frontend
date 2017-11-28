@@ -127,7 +127,6 @@ Twitter: @mchv
 
 Developer: Nicolas Long
 Twitter: @room271
-Website: http://room271.net
 From: London, UK
 
 Agile Project Manager: Huma Islam
@@ -135,9 +134,6 @@ From: London, UK
 
 Senior Developer: Adam Fisher
 Twitter: @adamnfish
-
-Developer: Gustav Pursche
-From: Berlin, GER
 
 Developer: Pascal Honore
 Twitter: @0x104
@@ -309,3 +305,6 @@ From: London, UK, Earth, the Universe
 Software Architect/Hacker: Phil Wills
 Twitter: @philwills
 
+Developer: Gustav Pursche
+Twitter: @jibcollective
+Website: jib-collective.net

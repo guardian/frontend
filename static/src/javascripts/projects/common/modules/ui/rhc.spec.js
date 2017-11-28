@@ -55,7 +55,9 @@ describe('rhc', () => {
 
         setFixture(`
             <div class="js-components-container">
-                <div class="${componentClass}" data-importance="${inferiorImportance}">
+                <div class="${componentClass}" data-importance="${
+            inferiorImportance
+        }">
                     <div id="${inferiorId}"></div>
                 </div>
             </div>

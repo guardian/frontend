@@ -26,8 +26,6 @@ coverage
 !/static/src
 /static/src/*
 !/static/src/javascripts*
-/static/src/javascripts-legacy/lib/atob.js
-/static/src/javascripts-legacy/lib/picturefill.js
 
 # legacy tests #karma-jest
 !/static/test
