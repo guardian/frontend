@@ -103,13 +103,13 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   def renderFrontJsonLite(path: String): Action[AnyContent] = Action.async { implicit request =>
-    frontJsonFapi.get(path).map {
+    frontJsonFapi.getLite(path).map {
         case Some(pressedPage) => Cached(CacheTime.Facia)(JsonComponent(FapiFrontJsonLite.get(pressedPage)))
         case None => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))}
   }
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureResult = frontJsonFapi.get(path).flatMap {
+    val futureResult = frontJsonFapi.getLite(path).flatMap {
       case Some(faciaPage) =>
         successful(
           if (request.isRss) {
@@ -218,13 +218,13 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   private def getPressedCollection(collectionId: String): Future[Option[PressedCollection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
-      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+      frontJsonFapi.getLite(path).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(successful(None))
 
   private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[Option[List[PressedCollection]]] =
-      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+      frontJsonFapi.getLite(path).map(_.flatMap{ faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
         Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular" || collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)).slice(offset, offset + num))
       })

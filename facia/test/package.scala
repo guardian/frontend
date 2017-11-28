@@ -31,6 +31,13 @@ object `package` {
       }
     }
 
+
+    override def getLite(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = {
+      recorder.load(path, Map()) {
+        super.getLite(path)
+      }
+    }
+
     val recorder = new HttpRecorder[Option[PressedPage]] {
       override lazy val baseDir = new File(System.getProperty("user.dir"), "data/pressedPage")
 

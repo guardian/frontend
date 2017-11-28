@@ -16,10 +16,14 @@ trait FrontJsonFapi extends Logging {
 
   def blockingOperations: BlockingOperations
 
-  private def getAddressForPath(path: String, format: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2.$format"
+  private def getAddressForPath(path: String, prefix: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2$prefix.json"
 
   def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.get $path") {
-    pressedPageFromS3(getAddressForPath(path, "json"))
+    pressedPageFromS3(getAddressForPath(path, ""))
+  }
+
+  def getLite(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.getLite $path") {
+    pressedPageFromS3(getAddressForPath(path, ".lite"))
   }
 
   private def pressedPageFromS3(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.pressedPageFromS3 $path") {
