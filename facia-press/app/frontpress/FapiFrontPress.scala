@@ -28,7 +28,7 @@ import scala.util.{Failure, Success}
 
 class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit ec: ExecutionContext) extends FapiFrontPress {
 
-  override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putLiveFapiPressedJson(path, json)
+  override def putPressedJson(path: String, json: String, suffix: String): Unit = S3FrontsApi.putLiveFapiPressedJson(path, json, suffix)
   override def isLiveContent: Boolean = true
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
@@ -56,7 +56,7 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
 
   implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
-  override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putDraftFapiPressedJson(path, json)
+  override def putPressedJson(path: String, json: String, suffix: String): Unit = S3FrontsApi.putDraftFapiPressedJson(path, json, suffix)
   override def isLiveContent: Boolean = false
 
   override def collectionContentWithSnaps(
@@ -81,7 +81,7 @@ trait FapiFrontPress extends Logging {
   implicit def fapiClient: ApiClient
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
-  def putPressedJson(path: String, json: String): Unit
+  def putPressedJson(path: String, json: String, suffix: String): Unit
   def isLiveContent: Boolean
 
   def collectionContentWithSnaps(
@@ -114,8 +114,8 @@ trait FapiFrontPress extends Logging {
 
     val pressFuture = getPressedFrontForPath(path)
       .map { pressedFronts: PressedPageVersions =>
-        putPressedPage(path, pressedFronts.full)
-        putPressedPage(s"$path.lite", pressedFronts.lite)
+        putPressedPage(path, pressedFronts.full, "")
+        putPressedPage(path, pressedFronts.lite, ".lite")
       }.fold(
         e => {
           StatusNotification.notifyFailedJob(path, isLive = isLiveContent, e)
@@ -148,10 +148,10 @@ trait FapiFrontPress extends Logging {
     pressFuture
   }
 
-  private def putPressedPage(path: String, pressedFront: PressedPage) = {
+  private def putPressedPage(path: String, pressedFront: PressedPage, suffix: String) = {
     val json: String = Json.stringify(Json.toJson(pressedFront))
     FaciaPressMetrics.FrontPressContentSize.recordSample(json.getBytes.length, new DateTime())
-    putPressedJson(path, json)
+    putPressedJson(path, json, suffix)
   }
 
   def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollectionVersions] = {
@@ -283,10 +283,10 @@ trait FapiFrontPress extends Logging {
   def getPressedFrontForPath(path: String)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
     for {
       collectionIds <- getCollectionIdsForPath(path)
-      pressedCollectionVersions <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
+      pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(path))
     } yield seoWithProperties match {
-      case (seoData, frontProperties) => PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, pressedCollectionVersions)
+      case (seoData, frontProperties) => PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, pressedCollections)
     }
   }
 

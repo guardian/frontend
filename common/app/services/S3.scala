@@ -158,19 +158,12 @@ object S3FrontsApi extends S3 {
   lazy val stage = Configuration.facia.stage.toUpperCase
   val namespace = "frontsapi"
   lazy val location = s"$stage/$namespace"
-  private val filename = "pressed.v2.json"
 
-  def getLiveFapiPressedKeyForPath(path: String): String =
-    s"$location/pressed/live/$path/fapi/$filename"
+  private def putFapiPressedJson(live: String, path: String, json: String, suffix: String): Unit =
+    putPrivateGzipped(s"$location/pressed/$live/$path/fapi/pressed.v2$suffix.json", json, "application/json")
 
-  def getDraftFapiPressedKeyForPath(path: String): String =
-    s"$location/pressed/draft/$path/fapi/$filename"
-
-  def putLiveFapiPressedJson(path: String, json: String): Unit =
-    putPrivateGzipped(getLiveFapiPressedKeyForPath(path), json, "application/json")
-
-  def putDraftFapiPressedJson(path: String, json: String): Unit =
-    putPrivateGzipped(getDraftFapiPressedKeyForPath(path), json, "application/json")
+  def putLiveFapiPressedJson(path: String, json: String, suffix: String): Unit = putFapiPressedJson("live", path, json, suffix)
+  def putDraftFapiPressedJson(path: String, json: String, suffix: String): Unit = putFapiPressedJson("draft", path, json, suffix)
 }
 
 object S3Archive extends S3 {
