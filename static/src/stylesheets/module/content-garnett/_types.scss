@@ -107,6 +107,7 @@ $quote-tail: 25px;
                 left: 8px;
             }
         }
+
         .pullquote-paragraph {
             display: inline;
             font-weight: 100!important;
@@ -118,7 +119,7 @@ $quote-tail: 25px;
         }
         // Hack hide for second svg
         .closing {
-          display: none;
+            display: none;
         }
         // Quote supporting
         &.element--supporting {
@@ -135,10 +136,18 @@ $quote-tail: 25px;
         }
         // Quote halfWidth
         &.element--halfWidth {
-            width: gs-span(4);
+          clear: none;
+          float: none;
+            width: 100%;
+            @include mq(phablet) {
+                width: gs-span(4);
+                clear: left;
+                float: left;
+            }
             @include mq(leftCol) {
                 margin-left: -$gs-gutter/2 - $gs-gutter/2;
             }
+
             .pullquote-paragraph {
                 @include fs-headline(3);
                 @include mq(tablet) {
@@ -158,6 +167,7 @@ $quote-tail: 25px;
             @include mq(leftCol) {
                 margin-left: -$gs-gutter/2 - $gs-gutter/2;
             }
+
             .pullquote-paragraph {
                 @include fs-headline(4);
                 @include mq(tablet) {

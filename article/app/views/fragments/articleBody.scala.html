@@ -101,23 +101,6 @@
                             }
                         </div>
 
-
-                        <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
-                            data-test-id="article-review-body" @langAttributes(article.content)>
-                            @BodyCleaner(article, article.fields.body, amp = amp)
-
-                            @* A value for the image field is required for AMP article
-                            WORKAROUND: if the article doesn't contain any image we insert the metadata of the fallback logo,
-                            so the amp page passes validation but no image is visible by the user *@
-                            @if(amp && article.content.elements.images.isEmpty) {
-                                <div itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-                                    <meta itemprop="url" content="https://assets.guim.co.uk/images/2170b16eb045a34f8c79761b203627b4/fallback-logo.png">
-                                    <meta itemprop="width" content="1200">
-                                    <meta itemprop="height" content="630">
-                                </div>
-                            }
-                        </div>
-
                         @fragments.witnessCallToAction(article.content)
 
                         @fragments.submeta(article, amp)

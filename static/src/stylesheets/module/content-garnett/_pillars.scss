@@ -14,11 +14,7 @@
         color: $neutral-3;
     }
 
-    .u-underline {
-        border-bottom: none;
-
-        &:hover {
-            border-bottom: solid 1px $news-garnett-main-1;
-        }
+    .u-underline:hover {
+        border-bottom: solid 1px $news-garnett-main-1;
     }
 }
