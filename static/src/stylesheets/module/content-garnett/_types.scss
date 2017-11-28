@@ -1,3 +1,49 @@
 .content--type-article {
+  .submeta{
+    position: relative;
+    border-top: none;
+    margin-top: $gs-row-height;
+  }
+
+  .submeta:before {
+    content: " ";
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-bottom: 1px solid $neutral-5;
+    border-top: 1px solid $neutral-5;
+  }
+
+  .submeta:after {
+    content: " ";
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-bottom: 1px solid $neutral-5;
+    border-top: 1px solid $neutral-5;
+  }
+
+  .submeta__link{
+    font-weight: 200;
+  }
+  .submeta__section-labels .submeta__link {
+    @include f-bodyHeading;
+  }
+
+  .submeta__link-item {
+    @include fs-textSans(3);
+  }
+
+  .submeta__label {
+    margin-bottom: 0;
+  }
+
+  .submeta__keywords {
+    padding-bottom: $gs-baseline/2;
+  }
 
 }
