@@ -88,42 +88,6 @@ object ABNewDesktopHeaderControl extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
 }
 
-object ABJavascriptRenderingVariant extends TestDefinition(
-  name = "ab-javascript-rendering-variant",
-  description = "Users in this test will see pages rendered by the javascript renderer.",
-  owners = Seq(Owner.withName("dotcom.platform")),
-  sellByDate = new LocalDate(2017, 11, 29)
-) {
-
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-javascript-rendering")
-
-  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
-}
-
-object ABJavascriptRenderingControl extends TestDefinition(
-  name = "ab-javascript-rendering-control",
-  description = "Users in this test will see pages rendered via twirl.",
-  owners = Seq(Owner.withName("dotcom.platform")),
-  sellByDate = new LocalDate(2017, 11, 29)
-) {
-
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-javascript-rendering")
-
-  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
-}
-
-object ABImageTestService extends TestDefinition(
-  name = "ab-image-test-service",
-  description = "Audience in this test will access the test image service (with imgx fallback)",
-  owners = Seq(Owner.withName("tbonnin")),
-  sellByDate = new LocalDate(2017, 12, 7)
-) {
-
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-imgix-fallback-test")
-
-  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
-}
-
 object Garnett extends TestDefinition(
   name = "garnett",
   description = "Users in this test will see garnett styling.",
@@ -162,8 +126,6 @@ object ActiveTests extends ServerSideABTests {
     CommercialPaidContentTemplateControl,
     ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl,
-    ABJavascriptRenderingVariant,
-    ABJavascriptRenderingControl,
     Garnett
   )
 }
