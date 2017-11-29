@@ -156,6 +156,26 @@
     }
 }
 
+.menu-item--brand-extension {
+    float: left;
+    margin-right: $gs-gutter / 2 + $gs-gutter / 4;
+    padding-bottom: $gs-baseline;
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            float: none;
+            margin-right: 0;
+            margin-top: -$gs-baseline / 2;
+            padding-bottom: 0;
+        }
+    }
+}
+
+.menu-item__title--brand-extension {
+    font-size: 22px;
+    line-height: 1.18;
+}
+
 .menu-item__icon,
 .menu-item__toggle {
     color: $news-support-2;
