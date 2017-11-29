@@ -188,8 +188,6 @@ class EditProfileController(
     forms: ProfileForms,
     user: User) (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).orElse(Some("http://theguardian.co.uk")).get;
-
     newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
       NoCache(Ok(views.html.consentJourney(
@@ -197,7 +195,7 @@ class EditProfileController(
         user,
         forms,
         journey,
-        verifiedReturnUrl,
+        returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl),
         idRequestParser(request),
         idUrlBuilder,
         emailFilledForm,
