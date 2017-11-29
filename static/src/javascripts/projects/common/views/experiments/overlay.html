@@ -1,28 +1,28 @@
-<div class="devtools devtools--hidden">
-    <div class="devtools__controls">
+<div class="experiments experiments--hidden">
+    <div class="experiments__controls">
         <h1>AB Tests</h1>
-        <button type="button" class="js-devtools-clear-ab">Clear all</button>
-        <button type="button" class="js-devtools-reload">Reload</button>
-        <button type="button" class="js-devtools-toggle devtools__controls__toggle">&gt;</button>
+        <button type="button" class="js-experiments-clear-ab">Clear all</button>
+        <button type="button" class="js-experiments-reload">Reload</button>
+        <button type="button" class="js-experiments-toggle experiments__controls__toggle">&gt;</button>
     </div>
-    <ul class="devtools__tests">
+    <ul class="experiments__tests">
         <% tests.forEach(function(test) { %>
             <li>
-                <div class="devtools__test">
+                <div class="experiments__test">
                     <%= test.id %>
                 </div>
                 <% test.variants.forEach(function(variant) { %>
-                    <div class="devtools__variant">
+                    <div class="experiments__variant">
                         <input
                             type="radio"
                             id="<%=test.id%>-<%=variant.id%>"
                             name="<%= test.id %>"
-                            class="js-devtools-radio devtools__variant__button"
+                            class="js-experiments-radio experiments__variant__button"
                         >
                         <label
                             data-ab-test="<%= test.id %>"
                             data-ab-variant="<%= variant.id %>"
-                            class="js-devtools-force-ab devtools__variant__label"
+                            class="js-experiments-force-ab experiments__variant__label"
                             for="<%=test.id%>-<%=variant.id%>"
                         >
                             <%= variant.id %>
