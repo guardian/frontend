@@ -9,7 +9,7 @@ import play.api.libs.ws.WSClient
 import scala.concurrent.{ExecutionContext, Future}
 
 class PressedPageService(wsClient: WSClient) extends Logging {
-  val parallelJsonPresses = 8
+  val parallelJsonPresses = 24
   val secureS3Request = new SecureS3Request(wsClient)
   val futureSemaphore = new FutureSemaphore(parallelJsonPresses)
 
