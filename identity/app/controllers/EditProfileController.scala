@@ -53,7 +53,7 @@ class EditProfileController(
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
   def displayEmailPrefsForm(consentsUpdated: Boolean): Action[AnyContent] = displayForm(EmailPrefsProfilePage, consentsUpdated)
 
-  def displayConsentJourneyForm(journey: String): Action[AnyContent] = {
+  def displayConsentJourneyForm(journey: String = "repermission"): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
