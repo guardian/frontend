@@ -60,6 +60,18 @@ object PressedPage {
   }
 }
 
+sealed trait PressedPageType {
+  def suffix: String
+}
+
+case object FullType extends PressedPageType {
+  override def suffix = ""
+}
+
+case object LiteType extends PressedPageType {
+  override def suffix = ".lite"
+}
+
 case class PressedPageVersions(lite: PressedPage, full: PressedPage)
 
 object PressedPageVersions {
