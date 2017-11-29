@@ -71,7 +71,11 @@ const applyCss = () => {
 };
 
 const appendOverlay = () => {
-    const extractData = ({ id, variants }) => ({ id, variants });
+    const extractData = ({ id, variants, description }) => ({
+        id,
+        variants,
+        description,
+    });
     const data = {
         tests: TESTS.map(extractData),
         acquisitionsTests: abTestClashData.map(extractData),

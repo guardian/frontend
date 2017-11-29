@@ -12,6 +12,9 @@
             <div class="experiments__test">
                 <%= test.id %>
             </div>
+            <div class="experiments__description">
+                <%= test.description %>
+            </div>
             <% test.variants.forEach(function(variant) { %>
             <div class="experiments__variant">
                 <input
@@ -39,6 +42,9 @@
             <li>
                 <div class="experiments__test">
                     <%= test.id %>
+                </div>
+                <div class="experiments__description">
+                    <%= test.description %>
                 </div>
                 <% test.variants.forEach(function(variant) { %>
                     <div class="experiments__variant">
