@@ -15,24 +15,30 @@
             <div class="experiments__description">
                 <%= test.description %>
             </div>
-            <% test.variants.forEach(function(variant) { %>
-            <div class="experiments__variant">
-                <input
-                    type="radio"
-                    id="<%=test.id%>-<%=variant.id%>"
-                    name="<%= test.id %>"
-                    class="js-experiments-radio experiments__variant__button"
-                >
-                <label
-                    data-ab-test="<%= test.id %>"
-                    data-ab-variant="<%= variant.id %>"
-                    class="js-experiments-force-ab experiments__variant__label"
-                    for="<%=test.id%>-<%=variant.id%>"
-                >
-                    <%= variant.id %>
-                </label>
-            </div>
-            <% }); %>
+            <%
+            if (test.isSwitchedOn) {
+                test.variants.forEach(function(variant) {
+            %>
+                <div class="experiments__variant">
+                    <input
+                        type="radio"
+                        id="<%=test.id%>-<%=variant.id%>"
+                        name="<%= test.id %>"
+                        class="js-experiments-radio experiments__variant__button"
+                    >
+                    <label
+                        data-ab-test="<%= test.id %>"
+                        data-ab-variant="<%= variant.id %>"
+                        class="js-experiments-force-ab experiments__variant__label"
+                        for="<%=test.id%>-<%=variant.id%>"
+                    >
+                        <%= variant.id %>
+                    </label>
+                </div>
+            <%
+                });
+            }
+            %>
         </li>
         <% }); %>
     </ul>
@@ -46,7 +52,10 @@
                 <div class="experiments__description">
                     <%= test.description %>
                 </div>
-                <% test.variants.forEach(function(variant) { %>
+                <%
+                if (test.isSwitchedOn) {
+                    test.variants.forEach(function(variant) {
+                %>
                     <div class="experiments__variant">
                         <input
                             type="radio"
@@ -63,7 +72,10 @@
                             <%= variant.id %>
                         </label>
                     </div>
-                <% }); %>
+                <%
+                    });
+                }
+                %>
             </li>
         <% }); %>
     </ul>

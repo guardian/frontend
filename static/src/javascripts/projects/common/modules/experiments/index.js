@@ -3,6 +3,7 @@ import template from 'lodash/utilities/template';
 import { local as storage } from 'lib/storage';
 import $ from 'lib/$';
 import bean from 'bean';
+import config from 'lib/config';
 import overlay from 'raw-loader!common/views/experiments/overlay.html';
 import styles from 'raw-loader!common/views/experiments/styles.css';
 import { TESTS } from 'common/modules/experiments/ab-tests';
@@ -71,11 +72,16 @@ const applyCss = () => {
 };
 
 const appendOverlay = () => {
-    const extractData = ({ id, variants, description }) => ({
-        id,
-        variants,
-        description,
-    });
+    const extractData = ({ id, variants, description }) => {
+        const isSwitchedOn = config.get(`switches.ab${id}`);
+
+        return {
+            id,
+            variants,
+            description,
+            isSwitchedOn,
+        };
+    };
     const data = {
         tests: TESTS.map(extractData),
         acquisitionsTests: abTestClashData.map(extractData),
