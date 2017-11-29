@@ -26,21 +26,25 @@
             border-top: 1px solid $neutral-5;
         }
 
-        &__link {
-            font-weight: 200;
-
-            &-item {
-                @include fs-textSans(3);
-            }
-        }
-
-        &__label {
-            margin-bottom: 0;
-        }
-
         &__keywords {
             padding-bottom: $gs-baseline/2;
         }
+    }
+
+    .submeta__link {
+        font-weight: 200;
+
+        &-item {
+            @include fs-textSans(3);
+        }
+    }
+
+    .submeta__label {
+        margin-bottom: 0;
+    }
+
+    .submeta__keywords {
+        padding-bottom: $gs-baseline/2;
     }
 
     .submeta__section-labels .submeta__link {
