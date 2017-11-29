@@ -489,7 +489,7 @@
     flex: 0 0 auto;
 }
 
-.manage-account-ty {
+.manage-account-consent-thanks {
     display:grid;
     grid-column-gap: $gs-gutter * 4;
     grid-template-columns: repeat(3, 1fr);
@@ -498,7 +498,7 @@
     align-items: center;
 }
 
-.manage-account-ty__title {
+.manage-account-consent-thanks__title {
     @include fs-headline(8);
     text-align: right;
     font-size: 10em;
@@ -508,7 +508,7 @@
     color: $maps-main-1;
 }
 
-.manage-account-ty__content {
+.manage-account-consent-thanks__content {
     grid-column: 3;
     grid-row: 2;
 
