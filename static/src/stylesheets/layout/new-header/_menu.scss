@@ -45,6 +45,10 @@
         right: 50%;
         top: 100%;
         width: 100vw;
+
+        .new-header--slim & {
+            padding-top: $gs-baseline;
+        }
     }
 
     .new-header--open & {
@@ -82,11 +86,8 @@
     }
 
     @include mq(desktop) {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-top: -$gs-baseline;
+        padding: 0 $gs-gutter;
     }
 }
 

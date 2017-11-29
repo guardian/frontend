@@ -25,6 +25,10 @@ from scrolling */
     }
 
     @include mq(desktop) {
+        &.new-header--open {
+            background-color: $guardian-brand-dark;
+        }
+
         // Switch: ABNewDesktopHeader
         &.new-header--mvt-desktop {
             display: block;
@@ -49,8 +53,12 @@ from scrolling */
     // Needs to sit above the menu, and the veggie burger
     z-index: $zindex-main-menu + 2;
 
-    @include mq(tablet) {
-        right: 310px;
+    .new-header--open & {
+        display: none;
+    }
+
+    @include mq(desktop) {
+        right: gs-span(4) + $gs-gutter + $gs-gutter / 2;
     }
 }
 
@@ -65,17 +73,15 @@ from scrolling */
     left: 0;
     position: absolute;
     top: 0;
+
+    .new-header--open & {
+        display: none;
+    }
 }
 
 .new-header__logo {
     display: block;
     float: right;
-
-    .new-header--slim.new-header--open & {
-        @include mq($from: desktop, $until: leftCol) {
-            display: none;
-        }
-    }
 }
 
 .new-header__menu-toggle {
@@ -101,6 +107,19 @@ from scrolling */
 
     @include mq($from: tablet, $until: desktop) {
         right: $gutter-large;
+    }
+
+    @include mq(desktop) {
+        .new-header--open & {
+            position: absolute;
+            left: $gs-gutter - $gs-gutter / 4;
+            right: auto;
+            top: $gs-baseline;
+        }
+
+        .new-header--slim.new-header--open & {
+            top: $gs-baseline / 2;
+        }
     }
 
     &:focus {
@@ -133,10 +152,15 @@ from scrolling */
     }
 
     @include mq(desktop) {
-        height: calc(3 / 16 * 385px);
-        margin-top: $gs-baseline + $gs-baseline / 4;
-        margin-bottom: -$gs-gutter;
-        width: 385px;
+        height: calc(3 / 16 * 411px);
+        margin-bottom: 6px;
+        width: 411px;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            margin-bottom: -$gs-baseline;
+        }
     }
 
     .new-header--slim & {
@@ -156,6 +180,13 @@ from scrolling */
 
 .new-header--slim {
     height: $veggie-burger-large - $gs-baseline;
+
+    &.new-header--open {
+        @include mq(desktop) {
+            overflow: visible;
+            height: auto;
+        }
+    }
 }
 
 // Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/

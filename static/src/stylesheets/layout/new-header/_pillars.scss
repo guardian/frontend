@@ -22,14 +22,28 @@
         }
     }
 
-    .new-header--open & {
-        color: $news-support-1;
+    .new-header--slim.new-header--open & {
+        @include mq(desktop) {
+            padding-top: $veggie-burger-large;
+        }
     }
 }
 
 .pillars__item {
     display: block;
     float: left;
+
+    @include mq(desktop) {
+        width: 117px;
+
+        .new-header--open & {
+            width: 160px;
+
+            &:first-child {
+                width: 153px;
+            }
+        }
+    }
 
     &:hover .pillar-link {
         color: #ffffff;
