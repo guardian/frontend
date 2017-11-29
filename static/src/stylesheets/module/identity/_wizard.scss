@@ -28,14 +28,14 @@
     display: block;
     position: absolute;
     animation: manage-account-wizard__fadeLeft .2s both;
-    @media (prefers-reduced-motion: reduce) {
+    .disable-flashing-elements .manage-account-wizard__step--out {
         animation: none;
         display: none;
     }
 }
 .manage-account-wizard__step--in {
     animation: manage-account-wizard__fadeRight .2s reverse both;
-    @media (prefers-reduced-motion: reduce) {
+    .disable-flashing-elements .manage-account-wizard__step--in {
         animation: none;
         display: block;
     }
@@ -44,18 +44,19 @@
     display: block;
     position: absolute;
     animation: manage-account-wizard__fadeRight .2s both;
-    @media (prefers-reduced-motion: reduce) {
+    .disable-flashing-elements .manage-account-wizard__step--out-reverse {
         animation: none;
         display: none;
     }
 }
 .manage-account-wizard__step--in-reverse {
     animation: manage-account-wizard__fadeLeft .2s reverse both;
-    @media (prefers-reduced-motion: reduce) {
+    .disable-flashing-elements .manage-account-wizard__step--in-reverse {
         animation: none;
         display: block;
     }
 }
+
 
 .manage-account-wizard__controls {
     display: flex;
