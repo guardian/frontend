@@ -6,6 +6,7 @@ import bean from 'bean';
 import overlay from 'raw-loader!common/views/devtools/overlay.html';
 import styles from 'raw-loader!common/views/devtools/styles.css';
 import { TESTS } from 'common/modules/experiments/ab-tests';
+import { abTestClashData } from 'common/modules/experiments/acquisition-test-selector';
 
 const getSelectedAbTests = () =>
     JSON.parse(storage.get('gu.devtools.ab')) || [];
@@ -70,8 +71,9 @@ const applyCss = () => {
 };
 
 const appendOverlay = () => {
+    const allTests = TESTS.concat(abTestClashData);
     const data = {
-        tests: TESTS.map(test => ({
+        tests: allTests.map(test => ({
             id: test.id,
             variants: test.variants,
         })),
