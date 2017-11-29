@@ -17,4 +17,13 @@
     .u-underline:hover {
         border-bottom: solid 1px $news-garnett-main-1;
     }
+
+    .social-icon {
+        background-color: inherit;
+        border: 1px solid #neutral-1;
+
+        svg {
+            fill: #DD0812;
+        }
+    }
 }
