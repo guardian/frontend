@@ -153,7 +153,7 @@ from scrolling */
 
     @include mq(desktop) {
         height: calc(3 / 16 * 411px);
-        margin-bottom: 6px;
+        margin-bottom: $gs-baseline / 2;
         width: 411px;
     }
 
@@ -183,7 +183,6 @@ from scrolling */
 
     &.new-header--open {
         @include mq(desktop) {
-            overflow: visible;
             height: auto;
         }
     }
