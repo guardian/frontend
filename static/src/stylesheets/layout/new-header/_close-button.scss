@@ -1,15 +1,14 @@
 .menu-close {
     background-color: $guardian-brand;
-    color: $news-support-1;
+    color: #ffffff;
     cursor: pointer;
     display: none;
     height: $veggie-burger-medium;
     width: $veggie-burger-medium;
-    position: relative;
     border-radius: 50%;
 
     &:hover {
-        color: #ffffff;
+        background-color: $news-support-2;
     }
 
     .new-header--open & {
@@ -17,28 +16,8 @@
     }
 }
 
-.menu-close__icon {
-    top: 50%;
-    display: block;
-    position: relative;
-
-    &:before,
-    &:after {
-        background-color: currentColor;
-        content: '';
-        height: $gs-baseline / 6;
-        left: 50%;
-        margin-left: -$gs-gutter / 2;
-        margin-top: -1px;
-        position: absolute;
-        width: $gs-gutter;
-    }
-
-    &:before {
-        transform: rotate(-45deg);
-    }
-
-    &:after {
-        transform: rotate(45deg);
-    }
+.menu-close__icon__svg {
+    fill: currentColor;
+    height: 22px;
+    width: 22px;
 }
