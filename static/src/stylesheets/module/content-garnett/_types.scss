@@ -33,10 +33,10 @@
 
     .submeta__link {
         font-weight: 200;
+    }
 
-        &-item {
-            @include fs-textSans(3);
-        }
+    .submeta__link-item {
+        @include fs-textSans(3);
     }
 
     .submeta__label {
