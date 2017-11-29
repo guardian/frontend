@@ -71,12 +71,10 @@ const applyCss = () => {
 };
 
 const appendOverlay = () => {
-    const allTests = TESTS.concat(abTestClashData);
+    const extractData = ({ id, variants }) => ({ id, variants });
     const data = {
-        tests: allTests.map(test => ({
-            id: test.id,
-            variants: test.variants,
-        })),
+        tests: TESTS.map(extractData),
+        acquisitionsTests: abTestClashData.map(extractData),
     };
 
     $('body').prepend(template(overlay, data));
