@@ -3,9 +3,10 @@ package controllers.front
 import common.Logging
 import concurrent.{BlockingOperations, FutureSemaphore}
 import conf.Configuration
-import model.PressedPage
+import model.{FullType, LiteType, PressedPage}
 import play.api.libs.json.Json
 import services.S3
+
 import scala.concurrent.{ExecutionContext, Future}
 
 trait FrontJsonFapi extends Logging {
@@ -19,11 +20,11 @@ trait FrontJsonFapi extends Logging {
   private def getAddressForPath(path: String, prefix: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2$prefix.json"
 
   def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.get $path") {
-    pressedPageFromS3(getAddressForPath(path, ""))
+    pressedPageFromS3(getAddressForPath(path, FullType.suffix))
   }
 
   def getLite(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.getLite $path") {
-    pressedPageFromS3(getAddressForPath(path, ".lite"))
+    pressedPageFromS3(getAddressForPath(path, LiteType.suffix))
   }
 
   private def pressedPageFromS3(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.pressedPageFromS3 $path") {
