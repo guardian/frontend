@@ -43,7 +43,7 @@
         z-index: 1;
 
         @include mq(tablet) {
-            top: $gs-baseline / 2 + 5;
+            top: $gs-baseline / 2 + 4;
         }
     }
 
