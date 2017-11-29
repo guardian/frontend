@@ -26,4 +26,81 @@
             fill: #DD0812;
         }
     }
+
+    .social-icon,
+    .social-icon.social-icon--more {
+        background-color: transparent;
+        border: 1px solid $neutral-5;
+
+        svg {
+            fill: #DD0812;
+        }
+        &:hover {
+            background-color: #DD0812;
+            border: 1px solid #DD0812;
+
+            svg {
+                fill: #FFFFFF;
+            }
+        }
+    }
+
+    .meta__social,
+    .meta__numbers,
+    .byline,
+    .content__dateline {
+        border-top: 1px solid $neutral-5;
+    }
+
+    .byline {
+        font-weight: 200;
+        color: #333333;
+        font-style: italic;
+
+        a {
+            color: #DD0812;
+        }
+
+        span[itemprop="author"]  {
+            display: block;
+            font-style: normal;
+            font-weight: 900;
+        }
+    }
+
+    .meta__twitter {
+
+        a {
+            background-color: transparent;
+            border: 1px solid $neutral-5;
+        }
+
+        .inline-tone-fill {
+            fill: #DD0812;
+        }
+
+        .button--secondary {
+            color: #DD0812;
+        }
+
+        &:hover {
+            a {
+                background-color: #DD0812;
+                border: 1px solid #DD0812;
+            }
+            .inline-tone-fill {
+                fill: #FFFFFF;
+            }
+            .button--secondary {
+                color: #FFFFFF;
+            }
+        }
+    }
+
+    .tone-colour {
+        color: #DD0812;
+    }
+    .inline-tone-fill {
+        fill: #dd0812;
+    }
 }
