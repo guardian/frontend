@@ -1,5 +1,5 @@
 $quote-tail: 25px;
-
+// ********** Article Type **********
 .content--type-article {
     .submeta {
         position: relative;
@@ -55,12 +55,12 @@ $quote-tail: 25px;
 
     .content__main-column {
         @include mq(tablet) {
-            border-left: solid 1px $neutral-6;
+            border-left: solid 1px $neutral-5;
             padding-left: $gs-gutter/2;
             margin-left: 0;
         }
         @include mq(leftCol) {
-            margin-left: -15px;
+            margin-left: -$gs-gutter/2;
         }
     }
 
@@ -76,7 +76,7 @@ $quote-tail: 25px;
     // Quote base styles
     .element-pullquote {
         background-color: $neutral-garett-1;
-        border: solid 1px $neutral-6;
+        border: solid 1px $neutral-5;
         margin: $gs-gutter/4 0 $gs-baseline*2;
         padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
         position: relative;
@@ -104,7 +104,7 @@ $quote-tail: 25px;
                 bottom: -$quote-tail - 2px;
                 left: $gs-gutter/2;
                 background-color: $neutral-garett-1;
-                border: solid 1px $neutral-6;
+                border: solid 1px $neutral-5;
                 border-top: solid 1px $neutral-garett-1;
             }
             @include mq(mobileLandscape) {
