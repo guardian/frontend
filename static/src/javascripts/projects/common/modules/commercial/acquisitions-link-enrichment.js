@@ -75,14 +75,12 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
         }
 
         if (data.type === 'referrer-acquisition-data-request') {
-            const eventSrc = event.source.location.href;
-
             [...document.getElementsByTagName('iframe')].forEach(el => {
                 const iframeSrc = el.getAttribute('src');
                 if (
                     iframeSrc &&
                     iframeSrc.startsWith('https://interactive.guim.co.uk') &&
-                    iframeSrc === eventSrc
+                    iframeSrc === event.source.location.href
                 ) {
                     el.contentWindow.postMessage(
                         JSON.stringify({
