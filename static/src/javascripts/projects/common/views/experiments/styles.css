@@ -73,6 +73,12 @@
     background-color: #cccccc;
 }
 
+.experiments__alert {
+    font-size: 14px;
+    margin-top: 6px;
+    color: #dd0000;
+}
+
 .experiments__controls button {
     font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     font-size: 14px;

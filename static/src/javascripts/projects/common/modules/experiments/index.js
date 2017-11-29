@@ -8,6 +8,7 @@ import overlay from 'raw-loader!common/views/experiments/overlay.html';
 import styles from 'raw-loader!common/views/experiments/styles.css';
 import { TESTS } from 'common/modules/experiments/ab-tests';
 import { abTestClashData } from 'common/modules/experiments/acquisition-test-selector';
+import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 
 const getSelectedAbTests = () =>
     JSON.parse(storage.get('gu.experiments.ab')) || [];
@@ -72,16 +73,13 @@ const applyCss = () => {
 };
 
 const appendOverlay = () => {
-    const extractData = ({ id, variants, description }) => {
-        const isSwitchedOn = config.get(`switches.ab${id}`);
-
-        return {
-            id,
-            variants,
-            description,
-            isSwitchedOn,
-        };
-    };
+    const extractData = ({ id, variants, description, expiry }) => ({
+        id,
+        variants,
+        description,
+        isSwitchedOn: config.get(`switches.ab${id}`),
+        isExpired: isExpired(expiry),
+    });
     const data = {
         tests: TESTS.map(extractData),
         acquisitionsTests: abTestClashData.map(extractData),

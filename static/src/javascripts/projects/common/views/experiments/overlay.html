@@ -1,6 +1,6 @@
 <div class="experiments experiments--hidden">
     <div class="experiments__controls">
-        <h1>AB Tests</h1>
+        <h1>Experiments</h1>
         <button type="button" class="js-experiments-clear-ab">Clear all</button>
         <button type="button" class="js-experiments-reload">Reload</button>
         <button type="button" class="js-experiments-toggle experiments__controls__toggle">&gt;</button>
@@ -16,7 +16,7 @@
                 <%= test.description %>
             </div>
             <%
-            if (test.isSwitchedOn) {
+            if (test.isSwitchedOn && !test.isExpired) {
                 test.variants.forEach(function(variant) {
             %>
                 <div class="experiments__variant">
@@ -38,6 +38,19 @@
             <%
                 });
             }
+            if (!test.isSwitchedOn) {
+            %>
+                <div class="experiments__alert">
+                    You can turn this switch on using the Frontend Switchboard
+                </div>
+            <%
+            } if (test.isExpired) {
+            %>
+                <div class="experiments__alert">
+                    This test has expired
+                </div>
+            <%
+            }
             %>
         </li>
         <% }); %>
@@ -53,7 +66,7 @@
                     <%= test.description %>
                 </div>
                 <%
-                if (test.isSwitchedOn) {
+                if (test.isSwitchedOn && !test.isExpired) {
                     test.variants.forEach(function(variant) {
                 %>
                     <div class="experiments__variant">
@@ -74,6 +87,19 @@
                     </div>
                 <%
                     });
+                }
+                if (!test.isSwitchedOn) {
+                %>
+                <div class="experiments__alert">
+                    You can turn this switch on using the Frontend Switchboard
+                </div>
+                <%
+                } if (test.isExpired) {
+                %>
+                <div class="experiments__alert">
+                    This test has expired
+                </div>
+                <%
                 }
                 %>
             </li>
