@@ -12,6 +12,7 @@ import com.amazonaws.services.s3.model._
 import com.amazonaws.util.StringInputStream
 import common.Logging
 import conf.Configuration
+import model.PressedPageType
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.ws.{WSClient, WSRequest}
 import sun.misc.BASE64Encoder
@@ -157,8 +158,8 @@ object S3FrontsApi extends S3 {
   private def putFapiPressedJson(live: String, path: String, json: String, suffix: String): Unit =
     putPrivateGzipped(s"$location/pressed/$live/$path/fapi/pressed.v2$suffix.json", json, "application/json")
 
-  def putLiveFapiPressedJson(path: String, json: String, suffix: String): Unit = putFapiPressedJson("live", path, json, suffix)
-  def putDraftFapiPressedJson(path: String, json: String, suffix: String): Unit = putFapiPressedJson("draft", path, json, suffix)
+  def putLiveFapiPressedJson(path: String, json: String, pressedType: PressedPageType): Unit = putFapiPressedJson("live", path, json, pressedType.suffix)
+  def putDraftFapiPressedJson(path: String, json: String, pressedType: PressedPageType): Unit = putFapiPressedJson("draft", path, json, pressedType.suffix)
 }
 
 object S3Archive extends S3 {
