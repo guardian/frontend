@@ -3,7 +3,7 @@
 # ~~~~
 
 # FONT LOADER
-GET            /fontloader
+GET            /fontLoader                                                                                                       controllers.FontLoaderController.renderFontLoader()  
 
 GET            /commercial/test-page                                                                                             commercial.controllers.CreativeTestPage.allComponents(k: List[String])
 
