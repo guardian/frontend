@@ -12,7 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 trait FrontJsonFapi extends Logging {
   lazy val stage: String = Configuration.facia.stage.toUpperCase
   val bucketLocation: String
-  val parallelJsonPresses = 16
+  val parallelJsonPresses = 24
   val futureSemaphore = new FutureSemaphore(parallelJsonPresses)
 
   def blockingOperations: BlockingOperations
