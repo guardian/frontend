@@ -55,7 +55,7 @@ class EditProfileController(
   def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
     displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
 
-  def displayConsentJourneyForm(journey: String = "repermission"): Action[AnyContent] = {
+  def displayConsentJourneyForm(journey: String, consentHint: Option[String]): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
@@ -67,8 +67,10 @@ class EditProfileController(
           consentJourneyView(
             page = ConsentJourneyPage,
             journey = journey,
-            forms = ProfileForms(request.user, PublicEditProfilePage),
-            request.user)
+            forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
+            request.user,
+            consentHint
+          )
         }
       }
     }
@@ -193,10 +195,11 @@ class EditProfileController(
     } // end csrfCheck
 
   private def consentJourneyView(
-    page: IdentityPage,
-    journey: String,
-    forms: ProfileForms,
-    user: User) (implicit request: AuthRequest[AnyContent]): Future[Result] = {
+      page: IdentityPage,
+      journey: String,
+      forms: ProfileForms,
+      user: User,
+      consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
@@ -210,7 +213,8 @@ class EditProfileController(
         idUrlBuilder,
         emailFilledForm,
         newsletterService.getEmailSubscriptions(emailFilledForm),
-        EmailNewsletters.all
+        EmailNewsletters.all,
+        consentHint
       )))
 
     }
