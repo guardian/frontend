@@ -6,6 +6,11 @@
     .manage-account-wizard__controls {
         padding: $gs-gutter 0;
         margin-top: $gs-gutter;
-        border-top: 1px solid $neutral-8;
+        background: #fff;
+        border-top: 1px solid transparentize($guardian-brand, 0.5);
+        position: sticky;
+        bottom: 0;
+        left: 0;
+        right: 0;
     }
 }
