@@ -31,15 +31,15 @@
     display: inline;
     font-weight: 800;
     @supports(display: flex) {
-        height: calc(($gs-gutter * 2) - 2px);
-        width: calc(($gs-gutter * 2) - 2px);
+        height: $gs-gutter * 2;
+        width: $gs-gutter * 2;
         vertical-align: middle;
-        border: 1px solid;
         display: inline-flex;
         text-align: center;
         align-items: center;
         justify-content: center;
         border-radius: 100%;
+        box-shadow: inset 0 0 0 1px $guardian-brand;
 
     }
 }
