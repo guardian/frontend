@@ -4,7 +4,7 @@
         padding: $gs-gutter 0;
     }
     .manage-account-wizard__controls {
-        padding: $gs-gutter 0;
+        padding: $gs-gutter;
         margin-top: $gs-gutter;
         background: #fff;
         border-top: 1px solid transparentize($guardian-brand, 0.5);
@@ -12,5 +12,8 @@
         bottom: 0;
         left: 0;
         right: 0;
+        margin-left: $gs-gutter * -1;
+        margin-right: $gs-gutter * -1;
+        justify-content: space-between;
     }
 }

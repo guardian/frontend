@@ -407,7 +407,7 @@
     color: #ffffff;
     cursor: pointer;
     float: left;
-    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+    padding: 0 $gs-gutter;
     min-width: $gs-baseline * 14;
     white-space: nowrap;
     text-overflow: clip;
@@ -435,20 +435,34 @@
         border: 0;
     }
 
-    &--light {
-        @extend %manage-account__button--light;
-    }
-
-    &--mini {
-        @extend %manage-account__button--light;
-        @include fs-textSans(1);
-        min-width: $gs-baseline * 10;
-        display: inline-flex;
-        height: $gs-gutter * 1.5;
-        line-height: .8;
+    .inline-icon {
+        display: flex;
+        margin: 0 ($gs-gutter * -.5);
     }
 
 }
+
+.manage-account__button--round {
+    min-width: $gs-gutter * 2;
+}
+
+.manage-account__button--icon {
+    justify-content: space-between;
+}
+
+.manage-account__button--light {
+    @extend %manage-account__button--light;
+}
+
+.manage-account__button--mini {
+    @extend %manage-account__button--light;
+    @include fs-textSans(1);
+    min-width: $gs-baseline * 10;
+    display: inline-flex;
+    height: $gs-gutter * 1.5;
+    line-height: .8;
+}
+
 %manage-account__button--light {
     color: $guardian-brand;
     background-color: transparent;
