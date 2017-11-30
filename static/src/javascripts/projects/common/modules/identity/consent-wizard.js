@@ -8,7 +8,7 @@ import { wizardPageChangedEv } from './wizard';
 
 const getClickedCheckboxes = (
     checkboxesEl: Array<HTMLLabelElement>
-): Promise<void> =>
+): Promise<number> =>
     fastdom.read(
         () =>
             checkboxesEl.filter(
