@@ -1,6 +1,5 @@
 @import conf.Static
 @import views.support.RenderClasses
-@import conf.switches.Switches.ProfileShowContributorTab
 @import model.{ApplicationContext, EmailNewsletters, IdentityPage}
 @import services.EmailPrefsData
 
@@ -54,13 +53,9 @@
 
                     @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
 
-                    @if(ProfileShowContributorTab.isSwitchedOn) {
-                        @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab")
+                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab")
 
-                        @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab")
-                    } else {
-                        @tab(5, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab")
-                    }
+                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab")
                 </ol>
             </div>
         </div>
@@ -80,13 +75,9 @@
 
                         @content(4, "/digitalpack/edit")(profile.digitalPackDetailsForm(idUrlBuilder, idRequest, user))
 
-                        @if(ProfileShowContributorTab.isSwitchedOn) {
-                            @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
+                        @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
-                            @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated))
-                        } else {
-                            @content(5, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated)))
-                        }
+                        @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated))
                     </div>
                 </div>
             </div>

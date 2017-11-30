@@ -13,7 +13,7 @@ import play.api.i18n.{I18nSupport, MessagesProvider}
 import play.api.libs.json.{Json, Writes}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.{EmailPrefsData, _}
+import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 import utils.SafeLogging
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
@@ -24,7 +24,7 @@ object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Emails")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
-object RepermissionJourneyPage extends IdentityPage("/repermission", "Repermission")
+object ConsentJourneyPage extends IdentityPage("/consent", "Consent")
 
 class EditProfileController(
     idUrlBuilder: IdentityUrlBuilder,
@@ -33,6 +33,7 @@ class EditProfileController(
     idRequestParser: IdRequestParser,
     csrfCheck: CSRFCheck,
     csrfAddToken: CSRFAddToken,
+    returnUrlVerifier: ReturnUrlVerifier,
     implicit val profileFormsMapping: ProfileFormsMapping,
     val controllerComponents: ControllerComponents,
     newsletterService: NewsletterService)
@@ -51,7 +52,7 @@ class EditProfileController(
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
   def displayEmailPrefsForm(consentsUpdated: Boolean): Action[AnyContent] = displayForm(EmailPrefsProfilePage, consentsUpdated)
 
-  def displayRepermissioningJourneyForm: Action[AnyContent] = {
+  def displayConsentJourneyForm(journey: String = "repermission"): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
@@ -60,8 +61,9 @@ class EditProfileController(
     else {
       csrfAddToken {
         recentlyAuthenticated.async { implicit request =>
-          repermissionJourneyView(
-            page = RepermissionJourneyPage,
+          consentJourneyView(
+            page = ConsentJourneyPage,
+            journey = journey,
             forms = ProfileForms(request.user, PublicEditProfilePage),
             request.user)
         }
@@ -179,17 +181,20 @@ class EditProfileController(
       } // end authActionWithUser.async
     } // end csrfCheck
 
-  private def repermissionJourneyView(
+  private def consentJourneyView(
     page: IdentityPage,
+    journey: String,
     forms: ProfileForms,
     user: User) (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
-      NoCache(Ok(views.html.repermissionJourney(
+      NoCache(Ok(views.html.consentJourney(
         page,
         user,
         forms,
+        journey,
+        returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl),
         idRequestParser(request),
         idUrlBuilder,
         emailFilledForm,
