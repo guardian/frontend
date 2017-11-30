@@ -30,8 +30,6 @@ const viewsInPreviousDays = (days: number, testId: ?string): number => {
     ).length;
 };
 
-const overallNumberOfViews = () => {
-    return viewLog.length;
-};
+const overallNumberOfViews = () => viewLog.length;
 
 export { logView, viewsInPreviousDays, overallNumberOfViews };

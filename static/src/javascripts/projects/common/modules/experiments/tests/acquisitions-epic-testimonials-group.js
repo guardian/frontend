@@ -1,22 +1,14 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import { testimonialCycleGroup } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters'
+import { testimonialCycleGroup } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { overallNumberOfViews } from 'common/modules/commercial/acquisitions-view-log';
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 
-const getNumberOfViews = () => {
-
-
-}
-
-const  getTestimonialText = () => {
+const getTestimonialText = () => {
     const mvtId = getMvtValue();
     const numberOfViews = overallNumberOfViews();
-    console.log('mvt id = ' + mvtId);
-    console.log('numberOfViews = ' + numberOfViews);
-    return testimonialCycleGroup[mvtId % 8 + numberOfViews % 8]
-
+    return testimonialCycleGroup[mvtId % 8 + numberOfViews % 8];
 };
 
 export const acquisitionsEpicTestimonialsGroup = makeABTest({
@@ -43,14 +35,10 @@ export const acquisitionsEpicTestimonialsGroup = makeABTest({
         {
             id: 'cycle',
             options: {
-                testimonialBlock: acquisitionsTestimonialBlockTemplate(getTestimonialText()),
+                testimonialBlock: acquisitionsTestimonialBlockTemplate(
+                    getTestimonialText()
+                ),
             },
-            maxViews: {
-                days: 100000, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
-                count: 1000000,
-                minDaysBetweenViews: 0,
-            },
-            
         },
     ],
 });
