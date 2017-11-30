@@ -9,9 +9,9 @@ export type AcquisitionsEpicTestimonialTemplateParameters = {
     testimonialName: string,
 };
 
-export type AcquisitionsEpicTestimonialTemplateParametersGroup = [
-    AcquisitionsEpicTestimonialTemplateParameters,
-];
+export type AcquisitionsEpicTestimonialTemplateParametersGroup = Array<
+    AcquisitionsEpicTestimonialTemplateParameters
+>;
 
 // control
 const controlQuoteSvg = quoteSvg.markup;
