@@ -25,7 +25,7 @@ class NewsletterService(
 
   import EmailPrefsData._
 
-  def preferences(userId: String, trackingData: TrackingData): Future[Form[EmailPrefsData]] =
+  def subscriptions(userId: String, trackingData: TrackingData): Future[Form[EmailPrefsData]] =
     api.userEmails(userId, trackingData).map {
       case Right(subscriber) =>
         emailPrefsForm.fill(EmailPrefsData(subscriber.htmlPreference, subscriber.subscriptions.map(_.listId)))
