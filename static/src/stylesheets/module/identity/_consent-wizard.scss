@@ -1,0 +1,51 @@
+.manage-account-wizard--consent {
+    .manage-account-wizard__step {
+        min-height: 50vh;
+        padding: $gs-gutter 0;
+    }
+    .manage-account-wizard__controls {
+        padding: $gs-gutter;
+        margin-top: $gs-gutter;
+        background: #fff;
+        border-top: 1px solid transparentize($guardian-brand, 0.5);
+        position: sticky;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-left: $gs-gutter * -1;
+        margin-right: $gs-gutter * -1;
+        justify-content: space-between;
+    }
+    .manage-account-consent-wizard-counter {
+        flex: 1 1 auto;
+        margin: 0 $gs-gutter / 2;
+    }
+}
+
+.manage-account-consent-wizard-counter {
+    @include fs-textSans(2);
+    color: $guardian-brand;
+}
+
+.manage-account-consent-wizard-counter__indicator {
+    display: inline;
+    font-weight: 800;
+    @supports(display: flex) {
+        height: calc(($gs-gutter * 2) - 2px);
+        width: calc(($gs-gutter * 2) - 2px);
+        vertical-align: middle;
+        border: 1px solid;
+        display: inline-flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100%;
+
+    }
+}
+
+.manage-account-consent-wizard-counter__text {
+    display: inline;
+    vertical-align: middle;
+    margin-left: $gs-gutter/4;
+}
