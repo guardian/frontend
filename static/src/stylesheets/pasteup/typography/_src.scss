@@ -95,7 +95,7 @@ $font-scale: (
 
 @mixin f-headlineGarnett {
     font-family: $f-serif-headline;
-    font-weight: normal;
+    font-weight: lighter;
 }
 
 @mixin fs-headlineGarnett($level, $size-only: false) {

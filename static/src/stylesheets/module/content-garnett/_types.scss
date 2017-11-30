@@ -75,7 +75,7 @@ $quote-tail: 25px;
     }
     // Quote base styles
     .element-pullquote {
-        background-color: $neutral-garett-1;
+        background-color: $neutral-garnett-1;
         border: solid 1px $neutral-5;
         margin: $gs-gutter/4 0 $gs-baseline*2;
         padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
@@ -103,9 +103,9 @@ $quote-tail: 25px;
                 position: absolute;
                 bottom: -$quote-tail - 2px;
                 left: $gs-gutter/2;
-                background-color: $neutral-garett-1;
+                background-color: $neutral-garnett-1;
                 border: solid 1px $neutral-5;
-                border-top: solid 1px $neutral-garett-1;
+                border-top: solid 1px $neutral-garnett-1;
             }
             @include mq(mobileLandscape) {
                 left: $gs-gutter;
@@ -121,7 +121,6 @@ $quote-tail: 25px;
         .pullquote-cite,
         .pullquote-paragraph {
             display: inline;
-            font-weight: 100!important;
         }
 
         .inline-quote,
