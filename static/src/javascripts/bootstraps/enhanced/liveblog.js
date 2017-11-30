@@ -9,7 +9,7 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
-import { init as storyQuestions } from 'common/modules/atoms/story-questions';
+import { init as storyQuestions } from 'journalism/temporary/story-questions';
 
 const affixTimeline = (): void => {
     const keywordIds = config.get('page.keywordIds', '');
