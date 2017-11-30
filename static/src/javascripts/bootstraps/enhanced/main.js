@@ -334,7 +334,7 @@ const bootEnhanced = (): void => {
         }
     });
 
-    if (window.location.hash.indexOf('experiments') !== -1) {
+    if (window.location.hash.includes('experiments')) {
         require.ensure(
             [],
             require => {
