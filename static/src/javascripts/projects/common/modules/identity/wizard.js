@@ -22,6 +22,8 @@ const stepTransitionClassnames = [
     stepOutReverseClassname,
 ];
 
+const wizardPageChangedEv = 'wizardPageChanged';
+
 const ERR_WIZARD_INVALID_POSITION = 'Invalid position';
 
 const getIdentifier = (wizardEl: HTMLElement): Promise<string> =>
@@ -80,6 +82,9 @@ const animateIncomingStep = (
                         : stepInReverseClassname
                 );
             }
+            setTimeout(() => {
+                stepEl.classList.remove(...stepTransitionClassnames);
+            }, 300);
         })
         .then(() => fastdom.read(() => stepEl.getBoundingClientRect().height))
         .then(stepHeight =>
@@ -105,7 +110,7 @@ const animateOutgoingStep = (
         );
         setTimeout(() => {
             stepEl.classList.remove(...stepTransitionClassnames);
-        }, 200);
+        }, 300);
     });
 
 const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
@@ -201,6 +206,15 @@ export const setPosition = (
                         newPosition,
                         stepEls
                     ),
+                    wizardEl.dispatchEvent(
+                        new CustomEvent(wizardPageChangedEv, {
+                            bubbles: true,
+                            detail: {
+                                currentPosition,
+                                newPosition,
+                            },
+                        })
+                    ),
                 ]);
             }
         )
@@ -249,4 +263,4 @@ export const enhance = (wizardEl: HTMLElement): Promise<void> =>
         });
     });
 
-export { containerClassname };
+export { containerClassname, wizardPageChangedEv };

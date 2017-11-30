@@ -1,16 +1,18 @@
 package metadata
 
+import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
+import concurrent.BlockingOperations
 import controllers.FaciaControllerImpl
 import org.jsoup.Jsoup
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
 import play.api.test.Helpers._
-import services.{ConfigAgent, PressedPageService}
-import test._
+import services.ConfigAgent
 import scala.concurrent.duration._
 import scala.concurrent.Await
+import test._
 
 @DoNotDiscover class FaciaMetaDataTest extends FlatSpec
   with Matchers
@@ -21,8 +23,9 @@ import scala.concurrent.Await
   with WithTestWsClient
   with MockitoSugar {
 
-  lazy val legacyPressedPageService = new PressedPageService(wsClient)
-  lazy val fapi = new TestFrontJsonFapi(legacyPressedPageService)
+  lazy val actorSystem = ActorSystem()
+  lazy val blockingOperations = new BlockingOperations(actorSystem)
+  lazy val fapi = new TestFrontJsonFapi(blockingOperations)
 
   override def beforeAll() {
     val refresh = ConfigAgent.refreshWith(
