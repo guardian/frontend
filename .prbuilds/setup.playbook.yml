@@ -35,12 +35,12 @@
         chdir: ~/workspace/
     
     - name: sbt compile
-      command: ~/workspace/sbt "project article" "compile"
+      command: ~/workspace/sbt "project dev-build" "compile"
       args:
         chdir: ~/workspace
     
     - name: run the article project
-      command: screen -S trousers-build -d -m ~/workspace/sbt "project article" "run"
+      command: screen -S trousers-build -d -m ~/workspace/sbt "project dev-build" "run"
       args:
         chdir: ~/workspace
     
