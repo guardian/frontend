@@ -25,7 +25,7 @@ const stepTransitionClassnames = [
 const ERR_WIZARD_INVALID_POSITION = 'Invalid position';
 
 const getIdentifier = (wizardEl: HTMLElement): Promise<string> =>
-    fastdom.read(() => (wizardEl.id ? wizardEl.id : containerClassname));
+    fastdom.read(() => wizardEl.id || containerClassname);
 
 const getStateObject = (
     wizardEl: HTMLElement,
