@@ -24,21 +24,30 @@ const stepTransitionClassnames = [
 
 const ERR_WIZARD_INVALID_POSITION = 'Invalid position';
 
-const getIdentifier = (wizardEl: HTMLElement) =>
+const getIdentifier = (wizardEl: HTMLElement): Promise<string> =>
     fastdom.read(() => (wizardEl.id ? wizardEl.id : containerClassname));
 
-const getStateObject = (wizardEl: HTMLElement, position: number) =>
+const getStateObject = (
+    wizardEl: HTMLElement,
+    position: number
+): Promise<{ dispatcher: string, position: number }> =>
     getIdentifier(wizardEl).then(wizardElIdentifier => ({
         dispatcher: wizardElIdentifier,
         position,
     }));
 
-const pushBrowserState = (wizardEl: HTMLElement, position: number) =>
+const pushBrowserState = (
+    wizardEl: HTMLElement,
+    position: number
+): Promise<void> =>
     getStateObject(wizardEl, position).then(stateObject =>
         window.history.pushState(stateObject, '')
     );
 
-const updateBrowserState = (wizardEl: HTMLElement, position: number) =>
+const updateBrowserState = (
+    wizardEl: HTMLElement,
+    position: number
+): Promise<void> =>
     getStateObject(wizardEl, position).then(stateObject =>
         window.history.replaceState(stateObject, '')
     );
