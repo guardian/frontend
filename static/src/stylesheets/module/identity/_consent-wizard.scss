@@ -22,6 +22,17 @@
     }
 }
 
+.manage-account-consent-wizard__revealable {
+    will-change: transform, opacity;
+    transform: translateX($gs-gutter/4);
+    opacity: 0;
+    transition: .2s linear;
+}
+.manage-account-consent-wizard__revealable--visible {
+    transform: translateX(0);
+    opacity: 1;
+}
+
 .manage-account-consent-wizard-counter {
     @include fs-textSans(2);
     color: $guardian-brand;
