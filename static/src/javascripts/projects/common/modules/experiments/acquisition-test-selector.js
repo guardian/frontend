@@ -12,7 +12,6 @@ import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acqui
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
-import { acquisitionsEpicParadise } from 'common/modules/experiments/tests/acquisitions-epic-paradise';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicEndOfYearCountdown } from 'common/modules/experiments/tests/acquisitions-epic-end-of-year-countdown';
 
@@ -22,7 +21,6 @@ import { acquisitionsEpicEndOfYearCountdown } from 'common/modules/experiments/t
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
     acquisitionsEpicEndOfYearCountdown,
-    acquisitionsEpicParadise,
     acquisitionsEpicUSGunCampaign,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,

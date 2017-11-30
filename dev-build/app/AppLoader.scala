@@ -30,6 +30,8 @@ import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services._
 import _root_.commercial.targeting.TargetingLifecycle
+import akka.actor.ActorSystem
+import concurrent.BlockingOperations
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -72,7 +74,9 @@ trait AppComponents
   override lazy val ophanApi = wire[OphanApi]
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
+  override lazy val blockingOperations = wire[BlockingOperations]
 
+  def actorSystem: ActorSystem
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")
 

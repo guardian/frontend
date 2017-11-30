@@ -31,6 +31,8 @@ const sentryOptions = {
         /InvalidStateError/gi,
         /Fetch error:/gi,
         'Network request failed',
+        'This video is no longer available.',
+        'UnknownError',
 
         // weatherapi/city.json frequently 404s and lib/fetch-json throws an error
         'Fetch error while requesting https://api.nextgen.guardianapps.co.uk/weatherapi/city.json:',

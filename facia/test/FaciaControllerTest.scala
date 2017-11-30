@@ -1,16 +1,19 @@
 package test
 
+import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import common.editions.{Uk, Us}
 import implicits.FakeRequests
+import concurrent.BlockingOperations
 import play.api.libs.json.JsArray
 import play.api.test._
 import play.api.test.Helpers._
-import services.{ConfigAgent, PressedPageService}
+import services.ConfigAgent
 import org.scalatest._
 import controllers.FaciaControllerImpl
 import helpers.FaciaTestData
 import org.scalatest.mockito.MockitoSugar
+
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
@@ -25,8 +28,9 @@ import scala.concurrent.Await
   with WithTestWsClient
   with MockitoSugar {
 
-  lazy val legacyPressedPageService = new PressedPageService(wsClient)
-  lazy val fapi = new TestFrontJsonFapi(legacyPressedPageService)
+  lazy val actorSystem = ActorSystem()
+  lazy val blockingOperations = new BlockingOperations(actorSystem)
+  lazy val fapi = new TestFrontJsonFapi(blockingOperations)
 
   lazy val faciaController = new FaciaControllerImpl(fapi, play.api.test.Helpers.stubControllerComponents())
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
