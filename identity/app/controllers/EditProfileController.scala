@@ -137,14 +137,6 @@ class EditProfileController(
 
   def saveConsentPreferences: Action[AnyContent] = submitForm(EmailPrefsProfilePage)
 
-  // https://stackoverflow.com/questions/24870729/moving-an-element-to-the-front-of-a-list-in-scala
-  def moveToFront(hint: String, consents: List[Consent]): List[Consent] = {
-    consents.span(consent => consent.id != hint) match {
-      case (as, h::bs) => h :: as ++ bs
-      case _           => consents
-    }
-  }
-
   private def displayForm(
       page: IdentityPage,
       consentsUpdated: Boolean = false,
@@ -152,34 +144,17 @@ class EditProfileController(
 
     csrfAddToken {
       recentlyAuthenticated.async { implicit request =>
-
-        consentHint match {
-          case None =>
-            profileFormsView(
-              page = page,
-              forms = ProfileForms(request.user, PublicEditProfilePage),
-              request.user,
-              consentsUpdated,
-              None
-            )
-
-          case Some(hint) =>
-            val hintedConsents = moveToFront(hint, request.user.consents)
-            val userWithHintendConsents = request.user.user.copy(consents = hintedConsents)
-
-            profileFormsView(
-              page = page,
-              forms = ProfileForms(userWithHintendConsents, PublicEditProfilePage),
-              request.user,
-              consentsUpdated,
-              Some(hint)
-            )
-        }
+        profileFormsView(
+          page = page,
+          forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
+          request.user,
+          consentsUpdated,
+          consentHint
+        )
       }
     }
 
   }
-
 
   private def submitForm(page: IdentityPage): Action[AnyContent] =
     csrfCheck {
@@ -264,6 +239,27 @@ class EditProfileController(
         consentHint
       )))
 
+    }
+  }
+
+  /** If consentHint is provided it moves that consent to the head of consents list */
+  private def userWithHintedConsent(
+    consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): User = {
+
+    // https://stackoverflow.com/questions/24870729/moving-an-element-to-the-front-of-a-list-in-scala
+    def moveToFront(hint: String, consents: List[Consent]): List[Consent] = {
+      consents.span(consent => consent.id != hint) match {
+        case (as, h :: bs) => h :: as ++ bs
+        case _ => consents
+      }
+    }
+
+    consentHint match {
+      case None => request.user
+
+      case Some(hint) =>
+        val hintedConsents = moveToFront(hint, request.user.consents)
+        request.user.user.copy(consents = hintedConsents)
     }
   }
 }
