@@ -2,13 +2,13 @@ package test
 
 import java.io.File
 
+import concurrent.BlockingOperations
 import controllers.front.FrontJsonFapiLive
 import model.PressedPage
 import org.fluentlenium.core.domain.FluentWebElement
 import org.scalatest.Suites
 import play.api.libs.json.Json
 import recorder.HttpRecorder
-import services.PressedPageService
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec.UTF8
@@ -22,8 +22,8 @@ object `package` {
   }
 
   // need a front api that stores S3 locally so it can run without deps in the unit tests
-  class TestFrontJsonFapi(override val pressedPageService: PressedPageService)
-    extends FrontJsonFapiLive(pressedPageService) {
+  class TestFrontJsonFapi(override val blockingOperations: BlockingOperations)
+    extends FrontJsonFapiLive(blockingOperations) {
 
     override def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = {
       recorder.load(path, Map()) {
