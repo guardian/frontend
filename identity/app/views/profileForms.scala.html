@@ -12,7 +12,8 @@
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
-    consentsUpdated: Boolean
+    consentsUpdated: Boolean,
+    consentHint: Option[String]
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
@@ -77,7 +78,7 @@
 
                         @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
-                        @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated))
+                        @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint))
                     </div>
                 </div>
             </div>
