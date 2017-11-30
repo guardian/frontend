@@ -304,14 +304,4 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2018, 1, 3),
     exposeClientSide = false
   )
-
-  val guTodayEmailAds = Switch(
-    SwitchGroup.Commercial,
-    "guardian-today-email-ads",
-    "When ON, the Guardian Today US Email will contain Live Intent advertisements",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 11, 30),
-    exposeClientSide = false
-  )
 }
