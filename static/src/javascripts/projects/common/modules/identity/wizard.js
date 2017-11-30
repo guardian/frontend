@@ -22,6 +22,8 @@ const stepTransitionClassnames = [
     stepOutReverseClassname,
 ];
 
+const wizardPageChangedEv = 'wizardPageChanged';
+
 const ERR_WIZARD_INVALID_POSITION = 'Invalid position';
 
 const getIdentifier = (wizardEl: HTMLElement): Promise<string> =>
@@ -203,6 +205,15 @@ export const setPosition = (
                         currentPosition,
                         newPosition,
                         stepEls
+                    ),
+                    wizardEl.dispatchEvent(
+                        new CustomEvent(wizardPageChangedEv, {
+                            bubbles: true,
+                            detail: {
+                                currentPosition,
+                                newPosition,
+                            },
+                        })
                     ),
                 ]);
             }
