@@ -1,6 +1,5 @@
 @import conf.Static
 @import views.support.RenderClasses
-@import conf.switches.Switches.ProfileShowContributorTab
 @import model.{ApplicationContext, EmailNewsletters, IdentityPage}
 @import services.EmailPrefsData
 @import form.IdFormHelpers.nonInputFields
@@ -17,7 +16,8 @@
     idUrlBuilder: services.IdentityUrlBuilder,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
-    availableLists: EmailNewsletters
+    availableLists: EmailNewsletters,
+    consentHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @mainLegacy(page, projectName = Option("identity")) { } {
@@ -50,9 +50,13 @@
                                 <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
                                     <div class="manage-account__switches">
                                         <ul>
-                                        @helper.repeat(forms.privacyForm("consents"), min=1) { consentField =>
+                                        @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
                                             <li>
-                                                @fragments.consentSwitch(consentField)(messages)
+                                                @if(index == 0) {
+                                                    @fragments.consentSwitch(consentField, consentHint)(messages)
+                                                } else {
+                                                    @fragments.consentSwitch(consentField)(messages)
+                                                }
                                             </li>
                                         }
                                         </ul>

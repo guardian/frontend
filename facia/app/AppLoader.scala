@@ -4,6 +4,7 @@ import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
+import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
@@ -27,9 +28,10 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait FapiServices {
   def wsClient: WSClient
+  def actorSystem: ActorSystem
   lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
   lazy val frontJsonFapiDraft = wire[FrontJsonFapiDraft]
-  lazy val legacyPressedPageService = wire[PressedPageService]
+  lazy val blockingOperations = wire[BlockingOperations]
 }
 
 trait AppComponents extends FrontendComponents with FaciaControllers with FapiServices {
