@@ -24,6 +24,34 @@ const stepTransitionClassnames = [
 
 const ERR_WIZARD_INVALID_POSITION = 'Invalid position';
 
+const getIdentifier = (wizardEl: HTMLElement): Promise<string> =>
+    fastdom.read(() => wizardEl.id || containerClassname);
+
+const getStateObject = (
+    wizardEl: HTMLElement,
+    position: number
+): Promise<{ dispatcher: string, position: number }> =>
+    getIdentifier(wizardEl).then(wizardElIdentifier => ({
+        dispatcher: wizardElIdentifier,
+        position,
+    }));
+
+const pushBrowserState = (
+    wizardEl: HTMLElement,
+    position: number
+): Promise<void> =>
+    getStateObject(wizardEl, position).then(stateObject =>
+        window.history.pushState(stateObject, '')
+    );
+
+const updateBrowserState = (
+    wizardEl: HTMLElement,
+    position: number
+): Promise<void> =>
+    getStateObject(wizardEl, position).then(stateObject =>
+        window.history.replaceState(stateObject, '')
+    );
+
 const getDirection = (currentPosition: number, newPosition: number): string => {
     if (currentPosition < 0) {
         return 'none';
@@ -134,7 +162,8 @@ const updateSteps = (
 
 export const setPosition = (
     wizardEl: HTMLElement,
-    newPosition: number
+    newPosition: number,
+    userInitiated: boolean = true
 ): Promise<Array<*>> =>
     fastdom
         .read(() => [
@@ -162,6 +191,9 @@ export const setPosition = (
                 wizardEl.dataset.length = stepEls.length.toString();
                 wizardEl.dataset.position = newPosition.toString();
                 return Promise.all([
+                    userInitiated
+                        ? pushBrowserState(wizardEl, newPosition)
+                        : updateBrowserState(wizardEl, newPosition),
                     updateCounter(wizardEl),
                     updateSteps(
                         wizardEl,
@@ -180,7 +212,21 @@ export const setPosition = (
         });
 
 export const enhance = (wizardEl: HTMLElement): Promise<void> =>
-    setPosition(wizardEl, 0).then(() => {
+    Promise.all([
+        getIdentifier(wizardEl),
+        setPosition(wizardEl, 0, false),
+    ]).then(([wizardElIdentifier]) => {
+        window.addEventListener('popstate', ev => {
+            if (
+                ev.state &&
+                ev.state.dispatcher &&
+                ev.state.dispatcher === wizardElIdentifier
+            ) {
+                ev.preventDefault();
+                setPosition(wizardEl, parseInt(ev.state.position, 10), false);
+            }
+        });
+
         wizardEl.addEventListener('click', (ev: Event) => {
             if (
                 ev.target instanceof HTMLElement &&
