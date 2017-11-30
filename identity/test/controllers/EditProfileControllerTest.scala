@@ -43,6 +43,7 @@ import scala.concurrent.Future
     val authService = mock[AuthenticationService]
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
+    val returnUrlVerifier = mock[ReturnUrlVerifier]
     val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
     val userId: String = "123"
@@ -77,6 +78,7 @@ import scala.concurrent.Future
       idRequestParser,
       csrfCheck,
       csrfAddToken,
+      returnUrlVerifier,
       profileFormsMapping,
       controllerComponent,
       newsletterService
