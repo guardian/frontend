@@ -263,4 +263,4 @@ export const enhance = (wizardEl: HTMLElement): Promise<void> =>
         });
     });
 
-export { containerClassname };
+export { containerClassname, wizardPageChangedEv };
