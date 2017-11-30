@@ -20,9 +20,11 @@
             @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
 
                 <li>
-                    @fragments.form.switchNewsletter(
+                    @fragments.newsletterSwitch(
+                        emailPrefsForm,
+                        emailSubscriptions,
                         newsletter = newsletter
-                    )(nonInputFields, messages, request, emailPrefsForm, emailSubscriptions)
+                    )(nonInputFields, messages, request)
                 </li>
             }
         </ul></div>

@@ -1,3 +1,4 @@
+import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
@@ -6,7 +7,7 @@ import common.dfp.FaciaDfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
-import controllers.{Assets, FaciaControllers, HealthCheck}
+import controllers.{FaciaControllers, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CommonFilters
 import model.ApplicationIdentity
@@ -17,7 +18,7 @@ import play.api.http.HttpRequestHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api.libs.ws.WSClient
-import services.{ConfigAgentLifecycle, IndexListingsLifecycle, OphanApi}
+import services._
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -28,6 +29,7 @@ trait FapiServices {
   def wsClient: WSClient
   lazy val frontJsonFapiLive = wire[FrontJsonFapiLive]
   lazy val frontJsonFapiDraft = wire[FrontJsonFapiDraft]
+  lazy val legacyPressedPageService = wire[PressedPageService]
 }
 
 trait AppComponents extends FrontendComponents with FaciaControllers with FapiServices {

@@ -319,10 +319,9 @@ const init = (): void => {
     });
 
     isLiveClockwatch(() => {
-        const isItACompetition = isCompetition();
         const ml = new MatchListLive(
             'match-day',
-            isItACompetition === false ? false : 'premierleague',
+            isCompetition() || 'premierleague',
             config.dateFromSlug()
         );
         const $img = $('.media-primary');

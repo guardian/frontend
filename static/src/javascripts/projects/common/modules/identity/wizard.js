@@ -22,6 +22,8 @@ const stepTransitionClassnames = [
     stepOutReverseClassname,
 ];
 
+const ERR_WIZARD_INVALID_POSITION = 'Invalid position';
+
 const getDirection = (currentPosition: number, newPosition: number): string => {
     if (currentPosition < 0) {
         return 'none';
@@ -107,6 +109,7 @@ const updateSteps = (
         stepEls.forEach((stepEl: HTMLElement, i: number) => {
             switch (i) {
                 case newPosition:
+                    stepEl.setAttribute('aria-hidden', 'false');
                     animateIncomingStep(
                         wizardEl,
                         stepEl,
@@ -114,6 +117,7 @@ const updateSteps = (
                     );
                     break;
                 case currentPosition:
+                    stepEl.setAttribute('aria-hidden', 'true');
                     animateOutgoingStep(
                         wizardEl,
                         stepEl,
@@ -121,6 +125,7 @@ const updateSteps = (
                     );
                     break;
                 default:
+                    stepEl.setAttribute('aria-hidden', 'true');
                     stepEl.classList.add(stepHiddenClassname);
                     stepEl.classList.remove(...stepTransitionClassnames);
             }
@@ -149,7 +154,7 @@ export const setPosition = (
                 ]
             ) => {
                 if (newPosition < 0 || !stepEls[newPosition]) {
-                    throw new Error('Invalid position');
+                    throw new Error(ERR_WIZARD_INVALID_POSITION);
                 }
                 if (currentPosition > -1 && window.scrollY > offsetTop) {
                     scrollTo(offsetTop, 250, 'linear');
@@ -167,10 +172,15 @@ export const setPosition = (
                 ]);
             }
         )
-        .catch(() => setPosition(wizardEl, 0));
+        .catch((error: Error) => {
+            if (error.message === ERR_WIZARD_INVALID_POSITION) {
+                return setPosition(wizardEl, 0);
+            }
+            throw error;
+        });
 
 export const enhance = (wizardEl: HTMLElement): Promise<void> =>
-    setPosition(wizardEl, 0).then(() =>
+    setPosition(wizardEl, 0).then(() => {
         wizardEl.addEventListener('click', (ev: Event) => {
             if (
                 ev.target instanceof HTMLElement &&
@@ -190,7 +200,7 @@ export const enhance = (wizardEl: HTMLElement): Promise<void> =>
                     parseInt(wizardEl.dataset.position, 10) - 1
                 );
             }
-        })
-    );
+        });
+    });
 
 export { containerClassname };
