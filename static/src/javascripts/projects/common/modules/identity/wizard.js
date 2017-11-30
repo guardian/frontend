@@ -80,6 +80,9 @@ const animateIncomingStep = (
                         : stepInReverseClassname
                 );
             }
+            setTimeout(() => {
+                stepEl.classList.remove(...stepTransitionClassnames);
+            }, 300);
         })
         .then(() => fastdom.read(() => stepEl.getBoundingClientRect().height))
         .then(stepHeight =>
@@ -105,7 +108,7 @@ const animateOutgoingStep = (
         );
         setTimeout(() => {
             stepEl.classList.remove(...stepTransitionClassnames);
-        }, 200);
+        }, 300);
     });
 
 const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
