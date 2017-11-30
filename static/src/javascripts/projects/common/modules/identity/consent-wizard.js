@@ -6,17 +6,14 @@ import loadEnhancers from './modules/loadEnhancers';
 import { newsletterCheckboxClassName } from './consents';
 import { wizardPageChangedEv } from './wizard';
 
-const getClickedCheckboxes = (
+const getClickedCheckboxCount = (
     checkboxesEl: Array<HTMLLabelElement>
-): Promise<number> =>
-    fastdom.read(
-        () =>
-            checkboxesEl.filter(
-                (checkboxEl: HTMLLabelElement) =>
-                    checkboxEl.control instanceof HTMLInputElement &&
-                    checkboxEl.control.checked
-            ).length
-    );
+): number =>
+    checkboxesEl.filter(
+        (checkboxEl: HTMLLabelElement) =>
+            checkboxEl.control instanceof HTMLInputElement &&
+            checkboxEl.control.checked
+    ).length;
 
 const getEmailCheckboxes = (): Promise<Array<HTMLLabelElement>> =>
     fastdom.read(() => [
@@ -27,11 +24,9 @@ const updateCounterIndicator = (
     indicatorEl: HTMLElement,
     checkboxesEl: Array<HTMLLabelElement>
 ): Promise<void> =>
-    getClickedCheckboxes(checkboxesEl).then(count =>
-        fastdom.write(() => {
-            indicatorEl.innerText = count;
-        })
-    );
+    fastdom.write(() => {
+        indicatorEl.innerText = getClickedCheckboxCount(checkboxesEl);
+    });
 
 const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
     window.addEventListener(wizardPageChangedEv, ev => {
