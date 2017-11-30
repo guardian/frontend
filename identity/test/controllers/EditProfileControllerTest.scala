@@ -43,6 +43,7 @@ import scala.concurrent.Future
     val authService = mock[AuthenticationService]
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
+    val returnUrlVerifier = mock[ReturnUrlVerifier]
     val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
     val userId: String = "123"
@@ -77,6 +78,7 @@ import scala.concurrent.Future
       idRequestParser,
       csrfCheck,
       csrfAddToken,
+      returnUrlVerifier,
       profileFormsMapping,
       controllerComponent,
       newsletterService
@@ -472,7 +474,7 @@ import scala.concurrent.Future
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
           .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
 
-        val result = controller.displayEmailPrefsForm(false).apply(FakeCSRFRequest(csrfAddToken))
+        val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should include (EmailNewsletters.guardianTodayUk.name)
         contentAsString(result) should include ("Unsubscribe")
