@@ -13,7 +13,8 @@
   emailPrefsForm: Form[EmailPrefsData],
   emailSubscriptions: List[String],
   availableLists: EmailNewsletters,
-  consentsUpdated: Boolean = false
+  consentsUpdated: Boolean = false,
+  consentHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @marketingConsentForm = {
@@ -35,9 +36,13 @@
         <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
             <div class="manage-account__switches">
                 <ul>
-                @helper.repeat(privacyForm("consents"), min=1) { consentField =>
+                @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
                     <li>
-                        @fragments.consentSwitch(consentField)(messages)
+                        @if(index == 0) {
+                            @fragments.consentSwitch(consentField, consentHint)(messages)
+                        } else {
+                            @fragments.consentSwitch(consentField)(messages)
+                        }
                     </li>
                 }
                 </ul>

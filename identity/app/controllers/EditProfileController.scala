@@ -2,7 +2,7 @@ package controllers
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.User
+import com.gu.identity.model.{Consent, User}
 import common.ImplicitControllerExecutionContext
 import form._
 import idapiclient.responses.Error
@@ -15,6 +15,7 @@ import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 import utils.SafeLogging
+
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
 
@@ -134,13 +135,26 @@ class EditProfileController(
 
   def saveConsentPreferences: Action[AnyContent] = submitForm(EmailPrefsProfilePage)
 
+  // https://stackoverflow.com/questions/24870729/moving-an-element-to-the-front-of-a-list-in-scala
+  def moveToFront(hint: String, consents: List[Consent]): List[Consent] = {
+    consents.span(consent => consent.id != hint) match {
+      case (as, h::bs) => h :: as ++ bs
+      case _           => consents
+    }
+  }
+
   private def displayForm(page: IdentityPage, consentsUpdated: Boolean = false) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
+      val hintedConsents = moveToFront("DUMMYthirdPartyProfiling", request.user.consents)
+//      val userWithHintendConsents = request.user.asInstanceOf[User].copy(consents = hintedConsents)
+      val userWithHintendConsents = request.user.user.copy(consents = hintedConsents)
+
         profileFormsView(
           page = page,
-          forms = ProfileForms(request.user, PublicEditProfilePage),
+          forms = ProfileForms(userWithHintendConsents, PublicEditProfilePage),
           request.user,
-          consentsUpdated
+          consentsUpdated,
+          Some("DUMMYthirdPartyProfiling")
         )
     }
   }
@@ -209,7 +223,8 @@ class EditProfileController(
       page: IdentityPage,
       forms: ProfileForms,
       user: User,
-      consentsUpdated: Boolean = false)
+      consentsUpdated: Boolean = false,
+      consentHint: Option[String] = None)
       (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
@@ -223,7 +238,8 @@ class EditProfileController(
         emailFilledForm,
         newsletterService.getEmailSubscriptions(emailFilledForm),
         EmailNewsletters.all,
-        consentsUpdated
+        consentsUpdated,
+        consentHint
       )))
 
     }
