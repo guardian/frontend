@@ -32,7 +32,7 @@ object Container extends Logging {
   def fromConfig(collectionConfig: CollectionConfig): Container =
     resolve(collectionConfig.collectionType)
 
-  def maxStories(collectionConfig: CollectionConfig, items: Seq[PressedContent]): Option[Int] = {
+  def storiesCount(collectionConfig: CollectionConfig, items: Seq[PressedContent]): Option[Int] = {
     resolve(collectionConfig.collectionType) match {
       case Dynamic(dynamicPackage) => dynamicPackage
         .slicesFor(items.map(Story.fromFaciaContent))
