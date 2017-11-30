@@ -47,7 +47,7 @@
         width: 100vw;
 
         .new-header--slim & {
-            padding-top: $gs-baseline;
+            top: $slim-nav-height;
         }
     }
 
@@ -67,6 +67,11 @@
 
         @include mq(mobileLandscape) {
             margin-right: $gs-gutter + ($veggie-burger-large / 2);
+        }
+
+        @include mq(desktop) {
+            padding-top: $veggie-burger-large;
+            margin-right: 0;
         }
     }
 

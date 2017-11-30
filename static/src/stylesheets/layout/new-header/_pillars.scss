@@ -24,7 +24,9 @@
 
     .new-header--slim.new-header--open & {
         @include mq(desktop) {
-            padding-top: $veggie-burger-large;
+            z-index: $zindex-sticky-top-banner;
+            position: absolute;
+            top: $gs-baseline * 4;
         }
     }
 }

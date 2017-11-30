@@ -6,6 +6,8 @@
     height: $veggie-burger-medium;
     width: $veggie-burger-medium;
     border-radius: 50%;
+    position: relative;
+    z-index: $zindex-sticky-top-banner;
 
     &:hover {
         background-color: $news-support-2;

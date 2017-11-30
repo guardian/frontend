@@ -73,8 +73,8 @@
 
     .new-header--slim & {
         font-size: 20px;
-        height: $veggie-burger-large - $gs-baseline;
-        line-height: $veggie-burger-large - $gs-baseline;
+        height: $slim-nav-height;
+        line-height: $slim-nav-height;
         padding-top: 0;
 
         &:before {

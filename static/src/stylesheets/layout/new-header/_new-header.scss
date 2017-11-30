@@ -179,13 +179,7 @@ from scrolling */
 }
 
 .new-header--slim {
-    height: $veggie-burger-large - $gs-baseline;
-
-    &.new-header--open {
-        @include mq(desktop) {
-            height: auto;
-        }
-    }
+    height: $slim-nav-height;
 }
 
 // Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
