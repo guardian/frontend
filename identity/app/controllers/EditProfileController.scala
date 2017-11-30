@@ -51,7 +51,9 @@ class EditProfileController(
   def displayMembershipForm: Action[AnyContent] = displayForm(MembershipEditProfilePage)
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
-  def displayEmailPrefsForm(consentsUpdated: Boolean): Action[AnyContent] = displayForm(EmailPrefsProfilePage, consentsUpdated)
+
+  def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
+    displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
 
   def displayConsentJourneyForm(journey: String = "repermission"): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
@@ -72,9 +74,9 @@ class EditProfileController(
     }
   }
 
-  def displayPrivacyFormRedirect: Action[AnyContent] = csrfAddToken {
+  def displayPrivacyFormRedirect(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] = csrfAddToken {
     recentlyAuthenticated { implicit request =>
-      Redirect(routes.EditProfileController.displayEmailPrefsForm(), MOVED_PERMANENTLY)
+      Redirect(routes.EditProfileController.displayEmailPrefsForm(consentsUpdated, consentHint), MOVED_PERMANENTLY)
     }
   }
 
@@ -143,21 +145,41 @@ class EditProfileController(
     }
   }
 
-  private def displayForm(page: IdentityPage, consentsUpdated: Boolean = false) = csrfAddToken {
-    recentlyAuthenticated.async { implicit request =>
-      val hintedConsents = moveToFront("DUMMYthirdPartyProfiling", request.user.consents)
-//      val userWithHintendConsents = request.user.asInstanceOf[User].copy(consents = hintedConsents)
-      val userWithHintendConsents = request.user.user.copy(consents = hintedConsents)
+  private def displayForm(
+      page: IdentityPage,
+      consentsUpdated: Boolean = false,
+      consentHint: Option[String] = None) = {
 
-        profileFormsView(
-          page = page,
-          forms = ProfileForms(userWithHintendConsents, PublicEditProfilePage),
-          request.user,
-          consentsUpdated,
-          Some("DUMMYthirdPartyProfiling")
-        )
+    csrfAddToken {
+      recentlyAuthenticated.async { implicit request =>
+
+        consentHint match {
+          case None =>
+            profileFormsView(
+              page = page,
+              forms = ProfileForms(request.user, PublicEditProfilePage),
+              request.user,
+              consentsUpdated,
+              None
+            )
+
+          case Some(hint) =>
+            val hintedConsents = moveToFront(hint, request.user.consents)
+            val userWithHintendConsents = request.user.user.copy(consents = hintedConsents)
+
+            profileFormsView(
+              page = page,
+              forms = ProfileForms(userWithHintendConsents, PublicEditProfilePage),
+              request.user,
+              consentsUpdated,
+              Some(hint)
+            )
+        }
+      }
     }
+
   }
+
 
   private def submitForm(page: IdentityPage): Action[AnyContent] =
     csrfCheck {
