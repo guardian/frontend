@@ -7,6 +7,7 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.atoms.youtube
 @import views.html.fragments.media.video
+@import views.html.fragments.inlineSvg
 @import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
 
 @import Function.const
@@ -169,6 +170,9 @@ data-test-id="facia-card"
                     @item.trailText.filter(const(item.showStandfirst)).map { text =>
                         <div class="fc-item__standfirst">@Html(text)</div>
                     }
+                    @if(item.contentType.name.toLowerCase() == "video") {
+                        @inlineSvg("video-icon", "icon")
+                    }
                     @meta(item)
                 </div>
             } else {
@@ -188,6 +192,7 @@ data-test-id="facia-card"
             @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                 @meta(item)
             }
+
         </div>
 
         @if(item.cardTypes.showCutOut) {

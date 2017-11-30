@@ -23,4 +23,9 @@
             background-color: darken($video-garnett-main-1, 5%);
         }
     }
+
+    .inline-video-icon svg {
+        width: 1.2em;
+        height: .75em;
+    }
 }
