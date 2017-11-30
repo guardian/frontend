@@ -1,0 +1,25 @@
+@()(implicit vars: Map[String, String])
+
+@import helpers.css.mq;
+@import helpers.css.headline;
+@import helpers.css.text;
+@import helpers.css.textSans;
+
+.atom__button {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  margin: 0;
+}
+
+.atom__button--large {
+  height: 2.25em;
+}
+
+.atom__button--round {
+  border-radius: 100%;
+}
+
+.atom__button--rounded {
+  border-radius: 100em;
+}

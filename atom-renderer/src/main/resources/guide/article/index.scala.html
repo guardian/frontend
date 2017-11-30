@@ -1,0 +1,23 @@
+@(atom: com.gu.contentatom.thrift.Atom
+, data: com.gu.contentatom.thrift.atom.guide.GuideAtom
+)
+
+@fragments.atoms.html.snippet(
+  atom.id,
+  className = "guide",
+  label = data.typeLabel.getOrElse("Quick Guide"),
+  headline = atom.title.getOrElse("")
+){
+  @for(img <- data.guideImage ) {
+    @fragments.atoms.html.snippetImage(img)
+  }
+
+  @for(item <- data.items) {
+    <div class="atom--snippet__item">
+      @item.title.map { t =>
+        <div class="atom--snippet__heading"><b>@t</b></div>
+      }
+      @Html(item.body)
+    </div>
+  }
+}

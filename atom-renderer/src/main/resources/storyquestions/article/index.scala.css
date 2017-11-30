@@ -1,0 +1,178 @@
+@()(implicit vars: Map[String, String])
+
+@import helpers.css.mq;
+@import helpers.css.headline;
+@import helpers.css.textSans;
+
+.user__question {
+  padding-bottom: @vars.get("baseline").getOrElse("");
+  overflow: auto;
+}
+
+.user__question .submeta {
+  border: 0;
+}
+
+.user__question-title {
+  @headline(3)
+
+  font-weight: 900;
+  color: @vars.get("news-main-1").getOrElse("");
+  border-top: 1px solid @vars.get("news-main-2").getOrElse("");
+  padding-top: calc(@vars.get("baseline").getOrElse("") / 2);
+}
+
+@mq("tablet") {
+  .user__question-title {
+    @headline(4)
+    font-weight: 900;
+  }
+}
+
+.user__question-title--secondary {
+  color: @vars.get("neutral-1").getOrElse("");
+  display: block;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.user__questions-text--wrapper {
+  position: relative;
+  overflow: hidden;
+  background-color: @vars.get("neutral-8").getOrElse("");
+  margin-bottom: 0;
+  padding-top: calc(@vars.get("baseline").getOrElse("") / 2);
+  padding-bottom: @vars.get("baseline").getOrElse("");
+  padding-left: 8px;
+}
+
+.user__questions-text--wrapper.is-clicked {
+  background-color: @vars.get("news-support-5").getOrElse("");
+  padding-bottom: 0;
+}
+
+.user__questions-text--wrapper.is-clicked + .storyquestion-submission-container {
+  background-color: @vars.get("news-support-5").getOrElse("");
+}
+
+.user__questions-text--wrapper:hover {
+  background-color: @vars.get("news-support-5").getOrElse("");
+  cursor: pointer;
+}
+
+.user__questions-text--wrapper:hover .user__question-upvote {
+    background-color: @vars.get("news-main-1").getOrElse("");
+    color: #ffffff;
+}
+
+.user__question-section {
+  border-top: 1px dotted @vars.get("neutral-6").getOrElse("");
+  margin-top: calc(@vars.get("baseline").getOrElse("") * 2);
+}
+
+.user__question-section h3 {
+  @textSans(2);
+  color: @vars.get("neutral-2").getOrElse("");
+  font-weight: 200;
+}
+
+.user__question-text {
+  @headline(2);
+  font-weight: 900;
+  display: block;
+  //used to avoid fixed width across multiple break points.
+  max-width: 77%;
+  color: @vars.get("news-main-1").getOrElse("");
+  position: relative;
+  margin-bottom: @vars.get("baseline").getOrElse("");
+}
+
+@mq("tablet") {
+  .user__question-text {
+    @headline(3);
+    line-height: calc(@vars.get("baseline").getOrElse("") * 2);
+    max-width: 80%;
+    font-weight: 900;
+  }
+}
+
+.user__question-container {
+  margin-bottom: 12px;
+}
+
+.user__question-response {
+  @textSans(3);
+  clear: both;
+  margin-top: @vars.get("baseline").getOrElse("");
+  margin-bottom: @vars.get("baseline").getOrElse("");
+  font-size: 14px;
+  line-height: 18px;
+  width: 90%;
+  display: block;
+  color: @vars.get("neutral-1").getOrElse("");
+}
+
+@mq("tablet") {
+  .user__question-response {
+    clear: none;
+    margin-top: 0;
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+.user__question-upvote {
+  @textSans(3);
+  right: calc(@vars.get("gutter").getOrElse("") - 2px);
+  bottom: @vars.get("gutter").getOrElse("");
+  position: absolute;
+  color: @vars.get("news-main-1").getOrElse("");
+  font-weight: 900;
+  border: 1px solid @vars.get("news-main-1").getOrElse("");
+  padding-top: calc(@vars.get("baseline").getOrElse("") / 3);
+  float: right;
+  outline: 0;
+  padding-left: @vars.get("baseline").getOrElse("");
+  padding-right: @vars.get("baseline").getOrElse("");
+  border-radius: calc(@vars.get("gutter").getOrElse("") * 2);
+  background-color: transparent;
+}
+
+.user__question-upvote:hover {
+  text-decoration: none;
+}
+
+.storyquestion-submission-container {
+  overflow: hidden;
+  padding-left: 8px;
+}
+
+.storyquestion-email-signup-form {
+  margin: 0;
+  margin-bottom: @vars.get("baseline").getOrElse("");
+}
+
+.storyquestion-email-signup-form .form-field {
+  float: left;
+  width: 50%;
+  margin-bottom: 0;
+}
+
+.storyquestion-email-signup-form .text-input {
+  border-bottom-left-radius: calc(@vars.get("baseline").getOrElse("") * 2 + 4px);
+  border-top-left-radius: calc(@vars.get("baseline").getOrElse("") * 2 + 4px);
+  font-size: 14px;
+}
+
+.storyquestion-email-signup-form .button--primary {
+  height: calc(@vars.get("baseline").getOrElse("") * 3);
+}
+
+.storyquestion-email-signup-form .button--with-input {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.storyquestion-email-signup-form .storyquestion-email-signup-button-envelope {
+  display: inline;
+}

@@ -1,0 +1,25 @@
+@(id: String, className: String, label: String, headline: String)(body: Html)
+
+<details data-snippet-id="@id" data-snippet-type="@className" class="atom atom--snippet atom--snippet--@className">
+  <summary class="atom--snippet__header">
+    <span class="atom--snippet__label">@label</span>
+    <h4 class="atom--snippet__headline">@headline</h4>
+    <button class="atom__button atom__button--large atom__button--rounded atom--snippet__handle" aria-hidden="true">
+      <span class="is-on">@fragments.icons.html.plus() Show</span>
+      <span class="is-off">@fragments.icons.html.minus() Hide</span>
+    </button>
+  </summary>
+  <div class="atom--snippet__body">
+    @body
+  </div>
+  <footer class="atom--snippet__footer">
+    <div class="atom--snippet__feedback">
+      <div>Was this helpful?</div>
+      <button class="atom__button atom__button--round" value="like" aria-label="Yes">@fragments.icons.html.thumb()</button>
+      <button class="atom__button atom__button--round" value="dislike" aria-label="No">@fragments.icons.html.thumb()</button>
+    </div>
+    <div class="atom--snippet__ack" hidden aria-role="alert" aria-live="polite">
+      Thank you for your feedback.
+    </div>
+  </footer>
+</details>

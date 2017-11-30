@@ -1,0 +1,8 @@
+@(atom: com.gu.contentatom.thrift.Atom
+, data: com.gu.contentatom.thrift.atom.profile.ProfileAtom
+)
+
+@data.items.map { item =>
+  @item.title.map { title => <p><strong>@title</strong></p> }
+  <p>@item.body</p>
+}

@@ -1,0 +1,178 @@
+@()(implicit vars: Map[String, String])
+
+@import helpers.css.mq;
+@import helpers.css.headline;
+@import helpers.css.text;
+@import helpers.css.textSans;
+
+.atom--snippet > summary {
+    outline: none;
+}
+
+.atom--snippet > summary::-webkit-details-marker {
+    display: none;
+}
+
+.atom--snippet {
+    background: #f1f1f1;
+    color: @vars.get("neutral-1");
+    position: relative;
+    padding: calc(@vars.get("baseline") / 3) calc(@vars.get("gutter") / 4) calc(@vars.get("baseline") / 2);
+    margin: calc(@vars.get("baseline") * 4 / 3) 0 calc(@vars.get("baseline") * 3);
+    font-family: var(--f-sans-serif-text);
+}
+
+.atom--snippet a {
+    color: @vars.get("news-main-1");
+    border-bottom-color: @vars.get("neutral-3");
+}
+
+.atom--snippet[open] .atom--snippet__handle > :nth-child(1),
+.atom--snippet:not([open]) .atom--snippet__handle > :nth-child(2) {
+    display: none;
+}
+
+.atom--snippet__header {
+    margin: 0 0 calc(@vars.get("baseline") * 4 / 3);
+    font-weight: bold;
+}
+
+.atom--snippet__label {
+    @text(1)
+    color: @vars.get("news-support-2");
+    display: block;
+}
+
+.atom--snippet__headline {
+    @headline(3)
+}
+
+.atom--snippet__handle {
+    font-size: 13px;
+    position: absolute;
+    bottom: 0;
+    transform: translate(0, 50%);
+    padding: 0 15px 0 7px;
+
+    background: @vars.get("news-support-2");
+    color: #ffffff;
+}
+
+.atom--snippet__handle:hover,
+.atom--snippet__handle:focus {
+    background-color: @vars.get("news-support-2");
+}
+
+.atom--snippet__handle span {
+    display: inline-flex;
+    align-items: center;
+}
+
+.atom--snippet__handle .icon {
+    fill: white;
+    width: 20px;
+    height: 20px;
+    margin-right: calc(@vars.get("gutter") / 2);
+}
+
+.atom--snippet__body {
+    overflow: hidden;
+}
+
+.atom--snippet__body > p::before {
+    background-color: @vars.get("news-support-2");
+}
+
+.atom--snippet__footer {
+    @textSans(2)
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.atom--snippet__feedback:not([hidden]) {
+    display: flex;
+    align-items: center;
+}
+
+.atom--snippet__feedback .atom__button {
+    margin: 0 0 0 calc(@vars.get("gutter") / 4);
+    padding: 0;
+    width: 28px;
+    height: 28px;
+
+    background: @vars.get("news-main-1");
+    color: #ffffff;
+}
+
+.atom--snippet__feedback .atom__button:hover,
+.atom--snippet__feedback .atom__button:focus {
+    background: @vars.get("news-main-1");
+}
+
+.atom--snippet__feedback .atom__button[value='dislike'] {
+    transform: rotate(180deg);
+}
+
+.atom--snippet__feedback .atom__button,
+.atom--snippet__feedback .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.atom--snippet__feedback .icon {
+    width: 16px;
+    height: 16px;
+}
+
+.atom--snippet__feedback path {
+    fill: currentColor;
+}
+
+/** THEMING */
+
+.atom--snippet__image {
+    float: left;
+    margin-right: calc(@vars.get("gutter") / 2);
+    margin-bottom: calc(@vars.get("baseline") / 2);
+
+    display: inline-block;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.atom--snippet__image img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+}
+
+.atom--snippet__item::before {
+    content: '';
+    display: flex;
+    width: 100px;
+    height: 0;
+    border-top: 1px dotted @vars.get("neutral-2");
+}
+
+@mq("mobile", Some("mobileLandscape")) {
+    .atom--snippet__item::before {
+        width: 100px;
+    }
+}
+
+.atom--snippet__item+.atom--snippet__item {
+    padding-top: @vars.get("baseline");
+}
+
+.atom--snippet__heading {
+    font-size: 18px;
+}
+

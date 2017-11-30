@@ -1,0 +1,22 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "inlineSourceMap": true,
+    "sourceRoot": "/src/main/resources",
+    "alwaysStrict": true,
+    "target": "es2015",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": true,
+    "strict": true,
+    "lib": ["dom", "es7"]
+  },
+  "include": [
+      "src/main/resources/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "project/target",
+    "target"
+  ]
+}

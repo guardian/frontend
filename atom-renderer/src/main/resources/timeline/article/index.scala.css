@@ -1,0 +1,37 @@
+@()(implicit vars: Map[String, String])
+
+@fragments.atoms.css.buttons()
+@fragments.atoms.css.snippet()
+
+.atom--snippet--timeline .atom--snippet__body {
+    margin-left: 8px;
+    overflow: visible;
+}
+
+.atom--snippet--timeline .atom--snippet__item {
+    padding-left: 17px;
+}
+
+.atom--snippet--timeline .atom--snippet__item + .atom--snippet__item {
+    padding-top: 0;
+}
+
+.atom--snippet--timeline .atom--snippet__item:not(:last-child) {
+    border-left: 0.0625rem solid rgba(189,189,189,0.5);
+    padding-bottom: 1rem;
+}
+
+.atom--snippet--timeline .atom--snippet__event-date::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    float: left;
+    margin-left: -26px;
+    background-color: @vars.get("news-main-2");
+}
+
+.atom--snippet--timeline .atom--snippet__event-date {
+    font-size: 18px;
+}
+

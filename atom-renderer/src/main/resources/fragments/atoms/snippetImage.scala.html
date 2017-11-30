@@ -1,0 +1,13 @@
+@import com.gu.contentatom.thrift.ImageAsset
+@(img: com.gu.contentatom.thrift.Image)
+
+<div class="atom--snippet__image">
+  @defining(img.assets.sortBy(_.dimensions.map(_.width).getOrElse(0))){ assets =>
+    <img alt
+      src="@assets.headOption.map(_.file).getOrElse("")"
+      srcset="@assets.filter(_.dimensions.isDefined).map{ asset => 
+        @asset.file @asset.dimensions.map{ dims => @{dims.width}w }
+      }.mkString(",")"
+      sizes="100px">
+  }
+</div>

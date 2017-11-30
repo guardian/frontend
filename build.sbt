@@ -4,6 +4,7 @@ import play.sbt.routes.RoutesKeys
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.gu.Dependencies._
 import com.gu.ProjectSettings._
+import ReleaseTransformations._
 
 val common = library("common").settings(
   javaOptions in Test += "-Dconfig.file=common/conf/test.conf",
@@ -130,6 +131,47 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
 val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
 
 val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+
+val circeVersion = "0.8.0"
+val atomRenderer = (project in file("atom-renderer")).enablePlugins(SbtTwirl).settings(
+  name := "atom-renderer",
+  organization := "com.gu",
+  libraryDependencies ++= Seq(
+    "com.gu"   %% "content-atom-model" % "2.4.51",
+    "com.gu"   %% "fezziwig"           % "0.4",
+    "io.circe" %% "circe-core"         % circeVersion,
+    "io.circe" %% "circe-generic"      % circeVersion,
+    "io.circe" %% "circe-parser"       % circeVersion
+  ),
+  /**
+   * WARNING - upgrading the following will break clients
+   */
+  dependencyOverrides += "org.apache.thrift" % "libthrift" % "0.9.1",
+  TwirlKeys.templateFormats += ("css" -> "com.gu.contentatom.renderer.twirl.CssFormat"),
+  sourceDirectories in (Compile, TwirlKeys.compileTemplates) += (resourceDirectory in Compile).value,
+  excludeFilter in unmanagedResourceDirectories := HiddenFileFilter || "*.ts",
+  mappings in (Compile, packageBin) ~= { _.filterNot(_._1.getName.endsWith(".ts")) },
+  publishTo := Some(
+    if (isSnapshot.value)
+      Opts.resolver.sonatypeSnapshots
+    else
+      Opts.resolver.sonatypeStaging
+  ),
+  releaseProcess := Seq[ReleaseStep](
+    checkSnapshotDependencies,
+    inquireVersions,
+    runClean,
+    runTest,
+    setReleaseVersion,
+    commitReleaseVersion,
+    tagRelease,
+    releaseStepCommand("publishSigned"),
+    setNextVersion,
+    commitNextVersion,
+    releaseStepCommand("sonatypeReleaseAll"),
+    pushChanges
+  )
+)
 
 val dev = application("dev-build")
   .dependsOn(

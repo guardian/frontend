@@ -1,0 +1,22 @@
+@(from: String, until: Option[String] = None)(css: com.gu.contentatom.renderer.twirl.Css)
+
+@defining(Map(
+  "mobile"          -> "320px",
+  "mobileMedium"    -> "360px",
+  "mobileLandscape" -> "480px",
+  "phablet"         -> "660px",
+  "tablet"          -> "740px",
+  "desktop"         -> "980px",
+  "leftCol"         -> "1140px",
+  "wide"            -> "1300px"
+)) { breakpoints =>
+
+  @defining(
+    until.map(until => s"and (max-width: ${breakpoints.get(until)})"),
+    s"{ $css }"
+  ) { case (maxWidth, content) =>
+
+    @@media(min-width: @breakpoints.get(from)) @maxWidth @content
+
+  }
+}

@@ -1,0 +1,23 @@
+@import com.gu.contentatom.renderer.utils.GuardianDateFormatter
+@(atom: com.gu.contentatom.thrift.Atom
+, data: com.gu.contentatom.thrift.atom.timeline.TimelineAtom
+)
+
+@fragments.atoms.html.snippet(
+  atom.id,
+  className = "timeline",
+  label = data.typeLabel.getOrElse("Timeline"),
+  headline = atom.title.getOrElse("")
+){
+  @for(item <- data.events) {
+    <div class="atom--snippet__item">
+      <time class="atom--snippet__event-date" 
+        datetime="@GuardianDateFormatter.toMachineValue(item.date)"
+        >
+        @GuardianDateFormatter(item.date)
+      </time>
+      <div class="atom--snippet__heading"><b>@item.title</b></div>
+      @item.body.map { body => @Html(body) }
+    </div>
+  }
+}
