@@ -24,19 +24,25 @@
         }
     }
 
-    .inline-video-icon svg {
-        width: 1.2em;
-        height: .75em;
-    }
-
-    .fc-item__media-icon:after {
+    .fc-item__media-icon::after {
         display: inline-block;
         content: '';
-        border: 1px solid #ffffff;
-        height: 1rem;
+        height: .8rem;
+        margin: 0 6px;
     }
 
-    .fc-item__media-label {
-        color: #ffffff;
+    .inline-icon {
+        position: relative;
+        top: 3px;
+
+        svg {
+            width: 1em;
+        }
+    }
+
+    .fc-item__media-label,
+    .fc-item__meta {
+        @include fs-textSans(1);
+        font-weight: 600;
     }
 }

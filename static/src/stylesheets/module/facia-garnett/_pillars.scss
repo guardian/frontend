@@ -127,9 +127,23 @@ $pillars: (
     &.fc-item--type-feature .fc-item__headline {
         color: map-get($palette, featureHeadline);
     }
+
+    .fc-item__media-icon {
+        svg {
+            fill: map-get($palette, kicker);
+        }
+
+        &::after {
+            border: 1px solid map-get($palette, kicker);
+        }
+    }
+
+    .fc-item__media-label {
+        color: map-get($palette, kicker);
+    }
 }
 
-@each $pillar, $palette in $pillars {    
+@each $pillar, $palette in $pillars {
     .fc-item--pillar-#{$pillar} {
         @include colours($palette);
     }
