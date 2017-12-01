@@ -269,6 +269,21 @@
             }
         }
     }
+
+    /* Cancellation Contribution section
+    ===================================================================== */
+    .contribution-cancellation__menu {
+        border-top: solid 1px black;
+
+        h3 {
+            margin-top: 28px;
+            margin-bottom: 26px;
+        }
+
+        contribution-cancellation__menu__actions {
+            margin-top: 56px;
+        }
+    }
 }
 .manage-account__errors:not(:empty) {
     margin-bottom: $gs-gutter;

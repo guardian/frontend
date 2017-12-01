@@ -1,17 +1,33 @@
 @(user: com.gu.identity.model.User)
-<ul class="details-list details-list--lower u-unstyled">
+<ul class="details-list details-list--lower u-unstyled ">
     <li class="details-list__item">
-        <div class="fieldset__heading">
-            <h2 class="form__heading">
-                Cancel contribution
-            </h2>
-        </div>
-
-        <div class="fieldset__fields u-cf">
-            <div class="form-field">
-                <button id="qa-cancel-contribution" class="manage-account__button manage-account-cta js-manage-account-cancel-contribution" data-link-name="Cancel contribution" data-email="@user.primaryEmailAddress">
-                    Cancel</button>
-            </div>
-        </div>
+        <span><a>Cancel contribution</a></span>
     </li>
+    <div class="contribution-cancellation__section">
+        <h3 class="manage-account-header">Cancel contribution</h3>
+        <p>Your contribution funds and supports the Guardian independent journalism. Remember you can contribute again at any time by making a <a href="@(conf.Configuration.id.supportUrl)">one-off</a> or <a href="@(conf.Configuration.id.supportUrl)">monthly contribution</a>.</p>
+        <p>We would really value your feedback please take a moment to tell us why you are cancelling</p>
+
+        <select class="js-cancel-contribution-selector">
+            <option disabled selected value> -- select an option -- </option>
+            <option value="mma_article">As a result of a specific Guardian article I read</option>
+            <option value="mma_editorial">I disagree with some editorial decisions</option>
+            <option value="mma_values">I don't feel that the Guardian values my support</option>
+            <option value="mma_support_another_way">I support in another way e.g. through a subscription</option>
+            <option value="mma_one_off">I only want to make a one-off contribution</option>
+            <option value="mma_cant_afford">I can no longer afford it</option>
+            <option value="mma_not_value">I wasn't getting value for money</option>
+            <option value="mma_payment_issue">A payment issue</option>
+            <option value="mma_direct_debit">Want to change to Direct Debit</option>
+            <option value="mma_health">Ill-health</option>
+            <option value="mma_other">Other</option>
+        </select>
+        <div class="contribution-cancellation__menu__actions">
+            <button type="submit" class="manage-account__button js-cancel-contribution-submit">Confirm</button>
+            <a href="#" class="js-cancel-contribution-keep-contributing">Keep contributing</a>
+        </div>
+    </div>
+    <div class="form__success contribution-cancellation__success js-cancel-contribution-msg-success">
+        Your contribution has been canceled
+    </div>
 </ul>

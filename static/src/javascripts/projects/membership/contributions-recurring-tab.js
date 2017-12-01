@@ -24,7 +24,11 @@ const LOADER = '.js-contribution-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
 const ERROR = '.js-contribution-error';
 const CANCEL_CONTRIBUTION = '.js-contribution-cancel';
-const CANCEL_CONTRIBUTION_BUTTON = '.js-manage-account-cancel-contribution';
+const CANCEL_CONTRIBUTION_SECTION = '.js-contribution-cancellation__section';
+const CANCEL_CONTRIBUTION_SUBMIT = '.js-cancel-contribution-submit';
+const CANCEL_CONTRIBUTION_KEEP_CONTRIBUTING='.js-cancel-contribution-keep-contributing';
+const CANCEL_CONTRIBUTION_SELECTOR = '.js-cancel-contribution-selector';
+const CANCEL_CONTRIBUTION_MSG_SUCCESS = 'js-cancel-contribution-msg-success';
 
 const hideLoader = (): void => {
     $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
@@ -52,6 +56,22 @@ const hideCancelContribution = (): void => {
 
 const hideContributionInfo = (): void => {
     $(CONTRIBUTION_INFO).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displayContributionSuccessMsg = (): void => {
+    $(CANCEL_CONTRIBUTION_SECTION).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideContributionSuccessMsg = (): void => {
+    $(CANCEL_CONTRIBUTION_SECTION).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displayContributionSuccessMsg = (): void => {
+    $(CANCEL_CONTRIBUTION_MSG_SUCCESS).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideContributionSuccessMsg = (): void => {
+    $(CANCEL_CONTRIBUTION_MSG_SUCCESS).addClass(IS_HIDDEN_CLASSNAME);
 };
 
 const cancelContribution = (): void => {
@@ -132,7 +152,10 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
 
     if (!contributorDetails.subscription.cancelledAt) {
         displayCancelContribution();
+
         const cancelButton = document.querySelector(CANCEL_CONTRIBUTION_BUTTON);
+        const cancelSelector = document.querySelector(CANCEL_CONTRIBUTION_SELECTOR);
+
         if (cancelButton) {
             cancelButton.addEventListener('click', () => {
                 cancelContribution();
