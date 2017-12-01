@@ -74,7 +74,7 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
             });
         }
 
-        if (data.type === 'referrer-acquisition-data-request') {
+        if (data.type === 'acquisition-data-request') {
             [...document.getElementsByTagName('iframe')].forEach(el => {
                 const iframeSrc = el.getAttribute('src');
                 if (
@@ -84,8 +84,11 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
                 ) {
                     el.contentWindow.postMessage(
                         JSON.stringify({
-                            type: 'referrer-acquisition-data-response',
-                            referrerData: addReferrerData({}),
+                            type: 'acquisition-data-response',
+                            acquisitionData: {
+                                ...addReferrerData({}),
+                                source: 'GUARDIAN_WEB',
+                            },
                         }),
                         '*'
                     );
