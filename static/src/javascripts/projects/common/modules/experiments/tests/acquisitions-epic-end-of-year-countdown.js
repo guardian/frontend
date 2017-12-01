@@ -19,13 +19,13 @@ export const acquisitionsEpicEndOfYearCountdown = makeABTest({
     campaignId: 'epic_end_of_year_countdown',
 
     start: '2017-11-30',
-    expiry: '2018-01-10',
+    expiry: '2017-12-31',
 
     author: 'Joseph Smith',
     description:
-        'This will guarantee that the epic is always displayed on election stories',
-    successMeasure: 'Conversion rate',
-    idealOutcome: 'We can always show the epic on election articles',
+        'Test some US-specific prompts to contribute before the end of the year',
+    successMeasure: 'Annualised value per impression',
+    idealOutcome: 'A variant outperforms the control',
     audienceCriteria: 'All',
     audience: 1,
     locations: ['US'],
