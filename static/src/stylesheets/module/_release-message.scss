@@ -21,7 +21,6 @@
 }
 
 .site-message__inner {
-    display: table;
     padding: 0 $gs-gutter/2;
     width: 100%;
 
@@ -51,7 +50,6 @@
     padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline/2;
     position: relative;
-    display: table-cell;
     vertical-align: middle;
 
     @include mq(tablet) {
@@ -545,27 +543,36 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--membership-prominent {
     .site-message__message {
+        max-height: 80%;
+        padding-right: 45px;
         @include mq($until: tablet) {
             padding-left: 5px;
         }
         @include mq($from: tablet) {
             padding-left: 10px;
         }
+        @include mq($from: desktop) {
+            padding-left: 55px;
+            padding-right: 40px;
+        }
     }
     .site-message__media {
         vertical-align: top;
+        position: absolute;
         @include mq($from: mobile) {
             padding-top: 4px;
         }
         @include mq($from: tablet) {
-            display: table-cell;
             padding-top: 1px;
         }
     }
     .site-message__close {
         vertical-align: top;
         width: 36px;
-        height: 36px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
         @include mq($from: mobile) {
             padding-right: 10px;
         }
