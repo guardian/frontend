@@ -187,6 +187,7 @@ $fc-item-gutter: $gs-gutter / 4;
     padding-right: $gs-gutter / 6;
     margin-right: $gs-gutter / 4;
 
+    // hides kicker if it exceeds 1 line in height
     &:before {
         content: '';
         position: absolute;
