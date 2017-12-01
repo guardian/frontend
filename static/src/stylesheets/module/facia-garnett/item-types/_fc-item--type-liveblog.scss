@@ -1,8 +1,7 @@
 .fc-container:not(.fc-container--story-package) .fc-item--type-liveblog {
     background-color: $live-garnett-main-1;
 
-    .fc-item__kicker,
-    &:hover .fc-item__kicker {
+    .fc-item__kicker {
         background-color: $live-garnett-main-1;
     }
 
