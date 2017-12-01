@@ -13,6 +13,35 @@
         color: #ffffff;
     }
 
+    .fc-item__standfirst-wrapper {
+        justify-content: space-between;
+    }
+
+    .fc-item__media-meta,
+    .fc-item__meta {
+        flex: 0 0 auto;
+    }
+
+    .inline-video-icon {
+        > svg {
+            height: 12px;
+        }
+
+        &::after {
+            display: inline-block;
+            content: '';
+            height: 11px;
+            margin-right: 6px;
+            border: 1px solid;
+        }
+    }
+
+    .fc-item__media-meta,
+    .fc-item__meta {
+        @include fs-textSans(1);
+        font-weight: 600;
+    }
+    
     // darken on hover
     &:hover,
     .u-faux-block-link--hover {
@@ -22,27 +51,5 @@
         .fc-item__container::before {
             background-color: darken($video-garnett-main-1, 5%);
         }
-    }
-
-    .fc-item__media-icon::after {
-        display: inline-block;
-        content: '';
-        height: .8rem;
-        margin: 0 6px;
-    }
-
-    .inline-icon {
-        position: relative;
-        top: 3px;
-
-        svg {
-            width: 1em;
-        }
-    }
-
-    .fc-item__media-label,
-    .fc-item__meta {
-        @include fs-textSans(1);
-        font-weight: 600;
     }
 }

@@ -128,17 +128,17 @@ $pillars: (
         color: map-get($palette, featureHeadline);
     }
 
-    .fc-item__media-icon {
+    &.fc-item--type-video .inline-video-icon {
         svg {
             fill: map-get($palette, kicker);
         }
 
         &::after {
-            border: 1px solid map-get($palette, kicker);
+            border-color: map-get($palette, kicker);
         }
     }
 
-    .fc-item__media-label {
+    .fc-item__media-meta {
         color: map-get($palette, kicker);
     }
 }
