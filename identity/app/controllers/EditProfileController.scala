@@ -201,7 +201,7 @@ class EditProfileController(
       user: User,
       consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+    newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
       NoCache(Ok(views.html.consentJourney(
         page,
@@ -228,7 +228,7 @@ class EditProfileController(
       consentHint: Option[String] = None)
       (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+    newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
       NoCache(Ok(views.html.profileForms(
         page,

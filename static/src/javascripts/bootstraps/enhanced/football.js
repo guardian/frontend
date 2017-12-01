@@ -373,9 +373,9 @@ const init = (): void => {
         (e: Event): void => {
             e.preventDefault();
 
-            const el = ((e.currentTarget: any): HTMLLinkElement);
+            const el = e.currentTarget;
 
-            if (el && el.tagName === 'A') {
+            if (el && el instanceof HTMLAnchorElement) {
                 const href = el.getAttribute('href');
                 const putsMore = el.getAttribute('data-puts-more-into');
                 const newData = el.getAttribute('data-new-url');
