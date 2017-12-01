@@ -15,16 +15,19 @@ const getClickedCheckboxCount = (
             checkboxEl.control.checked
     ).length;
 
-const getEmailCheckboxes = (): Array<HTMLLabelElement> => [
-    ...document.getElementsByClassName(newsletterCheckboxClassName),
-];
+const getEmailCheckboxes = (): Array<HTMLLabelElement> =>
+    ([...document.getElementsByClassName(newsletterCheckboxClassName)]: Array<
+        any
+    >).filter(el => el instanceof HTMLLabelElement);
 
 const updateCounterIndicator = (
     indicatorEl: HTMLElement,
     checkboxesEl: Array<HTMLLabelElement>
 ): Promise<void> =>
     fastdom.write(() => {
-        indicatorEl.innerText = getClickedCheckboxCount(checkboxesEl);
+        indicatorEl.innerText = getClickedCheckboxCount(checkboxesEl).toString(
+            10
+        );
     });
 
 const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
