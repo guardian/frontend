@@ -15,10 +15,9 @@ const getClickedCheckboxCount = (
             checkboxEl.control.checked
     ).length;
 
-const getEmailCheckboxes = (): Promise<Array<HTMLLabelElement>> =>
-    fastdom.read(() => [
-        ...document.getElementsByClassName(newsletterCheckboxClassName),
-    ]);
+const getEmailCheckboxes = (): Array<HTMLLabelElement> => [
+    ...document.getElementsByClassName(newsletterCheckboxClassName),
+];
 
 const updateCounterIndicator = (
     indicatorEl: HTMLElement,
@@ -63,27 +62,24 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
 const createEmailConsentCounter = (counterEl: HTMLElement): void => {
     const indicatorEl = document.createElement('div');
     const textEl = document.createElement('div');
+    const checkboxesEl = getEmailCheckboxes();
 
     indicatorEl.classList.add(
         'manage-account-consent-wizard-counter__indicator'
     );
     textEl.classList.add('manage-account-consent-wizard-counter__text');
 
-    getEmailCheckboxes().then(checkboxesEl => {
-        updateCounterIndicator(indicatorEl, checkboxesEl);
-        checkboxesEl.forEach(checkboxEl => {
-            checkboxEl.addEventListener('change', () => {
-                updateCounterIndicator(indicatorEl, checkboxesEl);
-            });
-        });
-        fastdom.write(() => {
-            textEl.innerHTML = `of <strong>${
-                checkboxesEl.length
-            }</strong> selected`;
+    updateCounterIndicator(indicatorEl, checkboxesEl);
+
+    checkboxesEl.forEach(checkboxEl => {
+        checkboxEl.addEventListener('change', () => {
+            updateCounterIndicator(indicatorEl, checkboxesEl);
         });
     });
-
     fastdom.write(() => {
+        textEl.innerHTML = `of <strong>${
+            checkboxesEl.length
+        }</strong> selected`;
         counterEl.append(indicatorEl);
         counterEl.append(textEl);
     });
