@@ -180,7 +180,8 @@ val main = root().aggregate(
   onward,
   archive,
   preview,
-  rss
+  rss,
+  dev
 ).settings(
   riffRaffBuildIdentifier := System.getenv().getOrDefault("BUILD_NUMBER", "0").replaceAll("\"",""),
   riffRaffUploadArtifactBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
