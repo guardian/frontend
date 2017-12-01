@@ -31,11 +31,11 @@ export const acquisitionsEpicTestimonialsGroup = makeABTest({
     variants: [
         {
             id: 'control',
-            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            products: [],
         },
         {
             id: 'cycle',
-            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            products: [],
             options: {
                 testimonialBlock: acquisitionsTestimonialBlockTemplate(
                     getTestimonialText()
