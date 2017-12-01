@@ -22,6 +22,38 @@ const stepTransitionClassnames = [
     stepOutReverseClassname,
 ];
 
+const wizardPageChangedEv = 'wizardPageChanged';
+
+const ERR_WIZARD_INVALID_POSITION = 'Invalid position';
+
+const getIdentifier = (wizardEl: HTMLElement): Promise<string> =>
+    fastdom.read(() => wizardEl.id || containerClassname);
+
+const getStateObject = (
+    wizardEl: HTMLElement,
+    position: number
+): Promise<{ dispatcher: string, position: number }> =>
+    getIdentifier(wizardEl).then(wizardElIdentifier => ({
+        dispatcher: wizardElIdentifier,
+        position,
+    }));
+
+const pushBrowserState = (
+    wizardEl: HTMLElement,
+    position: number
+): Promise<void> =>
+    getStateObject(wizardEl, position).then(stateObject =>
+        window.history.pushState(stateObject, '')
+    );
+
+const updateBrowserState = (
+    wizardEl: HTMLElement,
+    position: number
+): Promise<void> =>
+    getStateObject(wizardEl, position).then(stateObject =>
+        window.history.replaceState(stateObject, '')
+    );
+
 const getDirection = (currentPosition: number, newPosition: number): string => {
     if (currentPosition < 0) {
         return 'none';
@@ -50,6 +82,9 @@ const animateIncomingStep = (
                         : stepInReverseClassname
                 );
             }
+            setTimeout(() => {
+                stepEl.classList.remove(...stepTransitionClassnames);
+            }, 300);
         })
         .then(() => fastdom.read(() => stepEl.getBoundingClientRect().height))
         .then(stepHeight =>
@@ -75,7 +110,7 @@ const animateOutgoingStep = (
         );
         setTimeout(() => {
             stepEl.classList.remove(...stepTransitionClassnames);
-        }, 200);
+        }, 300);
     });
 
 const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
@@ -107,6 +142,7 @@ const updateSteps = (
         stepEls.forEach((stepEl: HTMLElement, i: number) => {
             switch (i) {
                 case newPosition:
+                    stepEl.setAttribute('aria-hidden', 'false');
                     animateIncomingStep(
                         wizardEl,
                         stepEl,
@@ -114,6 +150,7 @@ const updateSteps = (
                     );
                     break;
                 case currentPosition:
+                    stepEl.setAttribute('aria-hidden', 'true');
                     animateOutgoingStep(
                         wizardEl,
                         stepEl,
@@ -121,6 +158,7 @@ const updateSteps = (
                     );
                     break;
                 default:
+                    stepEl.setAttribute('aria-hidden', 'true');
                     stepEl.classList.add(stepHiddenClassname);
                     stepEl.classList.remove(...stepTransitionClassnames);
             }
@@ -129,7 +167,8 @@ const updateSteps = (
 
 export const setPosition = (
     wizardEl: HTMLElement,
-    newPosition: number
+    newPosition: number,
+    userInitiated: boolean = true
 ): Promise<Array<*>> =>
     fastdom
         .read(() => [
@@ -149,7 +188,7 @@ export const setPosition = (
                 ]
             ) => {
                 if (newPosition < 0 || !stepEls[newPosition]) {
-                    throw new Error('Invalid position');
+                    throw new Error(ERR_WIZARD_INVALID_POSITION);
                 }
                 if (currentPosition > -1 && window.scrollY > offsetTop) {
                     scrollTo(offsetTop, 250, 'linear');
@@ -157,6 +196,9 @@ export const setPosition = (
                 wizardEl.dataset.length = stepEls.length.toString();
                 wizardEl.dataset.position = newPosition.toString();
                 return Promise.all([
+                    userInitiated
+                        ? pushBrowserState(wizardEl, newPosition)
+                        : updateBrowserState(wizardEl, newPosition),
                     updateCounter(wizardEl),
                     updateSteps(
                         wizardEl,
@@ -164,13 +206,41 @@ export const setPosition = (
                         newPosition,
                         stepEls
                     ),
+                    wizardEl.dispatchEvent(
+                        new CustomEvent(wizardPageChangedEv, {
+                            bubbles: true,
+                            detail: {
+                                currentPosition,
+                                newPosition,
+                            },
+                        })
+                    ),
                 ]);
             }
         )
-        .catch(() => setPosition(wizardEl, 0));
+        .catch((error: Error) => {
+            if (error.message === ERR_WIZARD_INVALID_POSITION) {
+                return setPosition(wizardEl, 0);
+            }
+            throw error;
+        });
 
 export const enhance = (wizardEl: HTMLElement): Promise<void> =>
-    setPosition(wizardEl, 0).then(() =>
+    Promise.all([
+        getIdentifier(wizardEl),
+        setPosition(wizardEl, 0, false),
+    ]).then(([wizardElIdentifier]) => {
+        window.addEventListener('popstate', ev => {
+            if (
+                ev.state &&
+                ev.state.dispatcher &&
+                ev.state.dispatcher === wizardElIdentifier
+            ) {
+                ev.preventDefault();
+                setPosition(wizardEl, parseInt(ev.state.position, 10), false);
+            }
+        });
+
         wizardEl.addEventListener('click', (ev: Event) => {
             if (
                 ev.target instanceof HTMLElement &&
@@ -190,7 +260,7 @@ export const enhance = (wizardEl: HTMLElement): Promise<void> =>
                     parseInt(wizardEl.dataset.position, 10) - 1
                 );
             }
-        })
-    );
+        });
+    });
 
-export { containerClassname };
+export { containerClassname, wizardPageChangedEv };

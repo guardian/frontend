@@ -1,8 +1,8 @@
-.devtools, .devtools * {
+.experiments, .experiments * {
     box-sizing: border-box;
 }
 
-.devtools {
+.experiments {
     background-color: #f6f6f6;
     position: fixed;
     top: 0;
@@ -15,54 +15,71 @@
     transition: 250ms left;
 }
 
-.devtools--hidden {
+.experiments--hidden {
     left: -90vw;
 }
 
 @media (min-width: 768px) {
-    .devtools {
+    .experiments {
         width: 500px;
     }
 
-    .devtools--hidden {
+    .experiments--hidden {
         left: -440px;
     }
 }
 
-.devtools__test {
-    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif
-    font-weight: 700;
+.experiments__test {
+    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    font-size: 20px;
     margin-top: 18px;
-    border-bottom: 1px solid #005689;
 }
 
-.devtools__tests {
+.experiments__description {
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+.experiments__tests {
     list-style: none;
     margin: 0;
 }
 
-.devtools__variant__button {
+.experiments__variant {
+    display: inline-block;
+    margin: 6px 3px;
+}
+
+.experiments__variant__button {
     display: none;
 }
 
-.devtools__variant__label {
+.experiments__variant__label {
     display: block;
     width: 100%;
+    border: 1px solid #cccccc;
     border-radius: 6px;
     padding: 6px;
+    font-size: 14px;
 }
 
-.devtools__variant__label:hover,
-.devtools__variant__label:active {
+.experiments__variant__label:hover,
+.experiments__variant__label:active {
     background-color: #dfdfdf;
     cursor: pointer;
 }
 
-.devtools__variant__button:checked + .devtools__variant__label {
+.experiments__variant__button:checked + .experiments__variant__label {
     background-color: #cccccc;
 }
 
-.devtools__controls button {
+.experiments__alert {
+    font-size: 14px;
+    margin-top: 6px;
+    color: #dd0000;
+}
+
+.experiments__controls button {
     font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     font-size: 14px;
     color: #ffffff;
@@ -73,16 +90,16 @@
     margin: 0 6px;
 }
 
-.devtools__controls button:first-of-type {
+.experiments__controls button:first-of-type {
     margin-left: 36px;
 }
 
-.devtools__controls button:hover,
-.devtools__controls button:active {
+.experiments__controls button:hover,
+.experiments__controls button:active {
     background-color: #005689;
 }
 
-.devtools__controls .devtools__controls__toggle {
+.experiments__controls .experiments__controls__toggle {
     float: right;
     width: 35px;
     border-radius: 35px;
@@ -90,12 +107,12 @@
     margin: 0;
 }
 
-.devtools__controls h1 {
+.experiments__controls h1 {
     display: inline;
 }
 
-.devtools__controls h1,
-.devtools__controls button {
+.experiments__controls h1,
+.experiments__controls button {
     vertical-align: middle;
 }
 

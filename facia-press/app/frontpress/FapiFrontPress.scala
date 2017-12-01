@@ -175,7 +175,7 @@ trait FapiFrontPress extends Logging {
         .toOption(curated.length + backfill.length)
         .getOrElse(Configuration.facia.collectionCap)
 
-      val storyCountLite = Container.maxStories(CollectionConfig.make(collection.collectionConfig), curated ++ backfill).getOrElse(maxStories)
+      val storyCountLite = Container.storiesCount(CollectionConfig.make(collection.collectionConfig), curated ++ backfill).getOrElse(maxStories)
 
       PressedCollectionVersions(
         pressCollection(collection, curated, backfill, treats, storyCountLite),
