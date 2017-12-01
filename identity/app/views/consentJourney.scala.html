@@ -17,8 +17,23 @@
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
-    consentHint: Option[String] = None
+    consentHint: Option[String] = None,
+    newsletterHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+
+@onlySubscribedToNewsletters = @{
+    EmailNewsletters.all.subscriptions.filter { newsletter =>
+        emailSubscriptions.contains(newsletter.listId.toString)
+    }
+}
+
+@hintendNewsletters = @{
+   if (newsletterHint.isDefined) {
+       onlySubscribedToNewsletters
+   } else {
+       EmailNewsletters.all.subscriptions
+   }
+}
 
 @mainLegacy(page, projectName = Option("identity")) { } {
 
@@ -30,7 +45,7 @@
 
                     <div class="js-errorHolder manage-account__errors"></div>
 
-                    <div class="manage-account-wizard manage-account-wizard--repermission" >
+                    <div class="manage-account-wizard manage-account-wizard--consent" >
                         <div class="manage-account-wizard__step">
 
                             <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
@@ -88,7 +103,7 @@
                                 <p class="manage-account-headerNote">You were receiving these newsletters, check them again to confirm you want to keep receiving them.</p>
                                 <div class="manage-account__switches">
                                     <ul>
-                                    @availableLists.subscriptions.filter(_.theme == "news").zipWithRowInfo.map { case (newsletter, row) =>
+                                    @hintendNewsletters.filter(_.theme == "news").zipWithRowInfo.map { case (newsletter, row) =>
                                         <li>
                                             @fragments.newsletterSwitch(
                                                 emailPrefsForm,
@@ -113,8 +128,16 @@
                             </div>
                         </div>
                         <div class="manage-account-wizard__controls">
-                            <div class="manage-account-wizard__controls-pager"></div>
-                            <a class="manage-account__button js-manage-account-wizard__next">Next</a>
+                            <a class="manage-account-consent-wizard-button-back manage-account-consent-wizard__revealable manage-account__button--round manage-account__button js-manage-account-wizard__prev">
+                                <span class="u-h">Previous</span>
+                                @fragments.inlineSvg("arrow-left", "icon")
+                            </a>
+                            <div class="manage-account-consent-wizard__revealable manage-account-consent-wizard-counter">
+                            </div>
+                            <a class="manage-account__button--icon manage-account__button js-manage-account-wizard__next">
+                                <span>Next</span>
+                                @fragments.inlineSvg("arrow-right", "icon")
+                            </a>
                         </div>
                     </div>
 

@@ -8,6 +8,7 @@ import views.html.stacked
 import views.html.fragments._
 import views.html.fragments.page.body._
 import views.support.Commercial
+import experiments._
 
 trait HtmlPage[P <: model.Page] {
   def html(page: P)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html
@@ -41,8 +42,8 @@ object HtmlPageHelpers {
     )
   }
 
-  def FaciaCSSFile(implicit request: RequestHeader): String = if (mvt.Garnett.isParticipating) "facia.garnett" else "facia"
-  def ContentCSSFile(implicit request: RequestHeader): String = if (mvt.Garnett.isParticipating) "content.garnett" else "content"
-  def RichLinksCSSFile(implicit request: RequestHeader): String = if (mvt.Garnett.isParticipating) "rich-links.garnett" else "rich-links"
+  def FaciaCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "facia.garnett" else "facia"
+  def ContentCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "content.garnett" else "content"
+  def RichLinksCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "rich-links.garnett" else "rich-links"
 
 }
