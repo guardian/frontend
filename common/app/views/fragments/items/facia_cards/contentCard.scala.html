@@ -170,8 +170,26 @@ data-test-id="facia-card"
                     @item.trailText.filter(const(item.showStandfirst)).map { text =>
                         <div class="fc-item__standfirst">@Html(text)</div>
                     }
-                    @if(item.contentType.name.toLowerCase() == "video") {
-                        @inlineSvg("video-icon", "icon")
+                    @item.displayElement match {
+                        case Some(InlineVideo(videoElement, _, _, _)) => {
+                            <div class="fc-item__media-icon">
+                                @inlineSvg("video-icon", "icon")
+                            </div>
+                            <div class="fc-item__media-label">
+                                @videoElement.videos.formattedDuration
+                            </div>
+                        }
+
+                        case Some(media@InlineYouTubeMediaAtom(youTubeAtom,_)) => {
+                            <div class="fc-item__media-icon">
+                                @inlineSvg("video-icon", "icon")
+                            </div>
+                            <div class="fc-item__media-label">
+                                @youTubeAtom.formattedDuration
+                            </div>
+                        }
+
+                        case _ => { }
                     }
                     @meta(item)
                 </div>

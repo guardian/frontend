@@ -28,4 +28,15 @@
         width: 1.2em;
         height: .75em;
     }
+
+    .fc-item__media-icon:after {
+        display: inline-block;
+        content: '';
+        border: 1px solid #ffffff;
+        height: 1rem;
+    }
+
+    .fc-item__media-label {
+        color: #ffffff;
+    }
 }
