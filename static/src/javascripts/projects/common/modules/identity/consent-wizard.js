@@ -4,16 +4,32 @@ import fastdom from 'lib/fastdom-promise';
 
 import loadEnhancers from './modules/loadEnhancers';
 import { newsletterCheckboxClassName } from './consents';
-import { wizardPageChangedEv } from './wizard';
+import { wizardPageChangedEv, setPosition } from './wizard';
 
-const getClickedCheckboxCount = (
+const position_consent = 0;
+const position_email = 1;
+
+const getRejectedCheckboxes = (
     checkboxesEl: Array<HTMLLabelElement>
-): number =>
+): Array<HTMLLabelElement> =>
+    checkboxesEl.filter(
+        (checkboxEl: HTMLLabelElement) =>
+            checkboxEl.control instanceof HTMLInputElement &&
+            !checkboxEl.control.checked
+    );
+
+const getAcceptedCheckboxes = (
+    checkboxesEl: Array<HTMLLabelElement>
+): Array<HTMLLabelElement> =>
     checkboxesEl.filter(
         (checkboxEl: HTMLLabelElement) =>
             checkboxEl.control instanceof HTMLInputElement &&
             checkboxEl.control.checked
-    ).length;
+    );
+
+const getAcceptedCheckboxCount = (
+    checkboxesEl: Array<HTMLLabelElement>
+): number => getAcceptedCheckboxes(checkboxesEl).length;
 
 const getEmailCheckboxes = (): Array<HTMLLabelElement> =>
     ([...document.getElementsByClassName(newsletterCheckboxClassName)]: Array<
@@ -25,7 +41,7 @@ const updateCounterIndicator = (
     checkboxesEl: Array<HTMLLabelElement>
 ): Promise<void> =>
     fastdom.write(() => {
-        indicatorEl.innerText = getClickedCheckboxCount(checkboxesEl).toString(
+        indicatorEl.innerText = getAcceptedCheckboxCount(checkboxesEl).toString(
             10
         );
     });
@@ -62,6 +78,32 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
     });
 };
 
+const bindNextButton = (buttonEl: HTMLElement):void => {
+    const wizardEl = [
+        ...document.getElementsByClassName(
+            'manage-account-wizard--consent'
+        ),
+    ][0];
+    const checkboxesEl = getEmailCheckboxes();
+    buttonEl.addEventListener('click',(ev:Event)=>{
+        ev.preventDefault();
+        const position = parseInt(wizardEl.dataset.position);
+        if(position === position_email) {
+            const rejectedEmailNames = getRejectedCheckboxes(checkboxesEl).map(checkboxEl => checkboxEl.getElementsByClassName('manage-account__switch-title')[0].innerText);
+            if(rejectedEmailNames.length > 2 ){
+                window.confirm(`You will stop receiving the following newsletters. Are you sure? : ${rejectedEmailNames.join()}`) ?
+                    setPosition(wizardEl, position+1) : true;
+            }
+            else {
+                setPosition(wizardEl, position+1);
+            }
+        }
+        else {
+            setPosition(wizardEl, position+1)
+        }
+    })
+}
+
 const createEmailConsentCounter = (counterEl: HTMLElement): void => {
     const indicatorEl = document.createElement('div');
     const textEl = document.createElement('div');
@@ -92,6 +134,7 @@ const enhanceConsentWizard = (): void => {
     const loaders = [
         ['.manage-account-consent-wizard-counter', createEmailConsentCounter],
         ['.manage-account-wizard--consent', bindEmailConsentCounterToWizard],
+        ['.js-manage-account-consent-wizard__next', bindNextButton],
     ];
     loadEnhancers(loaders);
 };
