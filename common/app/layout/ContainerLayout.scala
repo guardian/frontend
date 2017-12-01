@@ -123,5 +123,6 @@ case class ContainerLayout(
   def hasDesktopShowMore: Boolean =
     remainingCards.nonEmpty
 
-  def hasShowMore: Boolean = hasDesktopShowMore || hasMobileShowMore
+  // TODO look into this
+  def hasShowMore: Boolean = true //hasDesktopShowMore || hasMobileShowMore
 }
