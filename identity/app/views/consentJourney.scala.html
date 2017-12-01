@@ -17,8 +17,23 @@
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
-    consentHint: Option[String] = None
+    consentHint: Option[String] = None,
+    newsletterHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+
+@onlySubscribedToNewsletters = @{
+    EmailNewsletters.all.subscriptions.filter { newsletter =>
+        emailSubscriptions.contains(newsletter.listId.toString)
+    }
+}
+
+@hintendNewsletters = @{
+   if (newsletterHint.isDefined) {
+       onlySubscribedToNewsletters
+   } else {
+       EmailNewsletters.all.subscriptions
+   }
+}
 
 @mainLegacy(page, projectName = Option("identity")) { } {
 
@@ -88,7 +103,7 @@
                                 <p class="manage-account-headerNote">You were receiving these newsletters, check them again to confirm you want to keep receiving them.</p>
                                 <div class="manage-account__switches">
                                     <ul>
-                                    @availableLists.subscriptions.filter(_.theme == "news").zipWithRowInfo.map { case (newsletter, row) =>
+                                    @hintendNewsletters.filter(_.theme == "news").zipWithRowInfo.map { case (newsletter, row) =>
                                         <li>
                                             @fragments.newsletterSwitch(
                                                 emailPrefsForm,
