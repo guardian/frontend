@@ -273,8 +273,9 @@ const enhance = (wizardEl: HTMLElement): Promise<void> =>
 
         wizardEl.addEventListener('click', (ev: Event) => {
             if (
-                ev.target instanceof HTMLElement &&
-                ev.target.closest(`.${nextButtonElClassname}`)
+                ev.target.closest &&
+                ev.target.closest instanceof Function &&
+                ev.target.closest(`.${nextButtonElClassname}`) !== null
             ) {
                 setPosition(
                     wizardEl,
@@ -282,8 +283,9 @@ const enhance = (wizardEl: HTMLElement): Promise<void> =>
                 );
             }
             if (
-                ev.target instanceof HTMLElement &&
-                ev.target.closest(`.${prevButtonElClassname}`)
+                ev.target.closest &&
+                ev.target.closest instanceof Function &&
+                ev.target.closest(`.${prevButtonElClassname}`) !== null
             ) {
                 setPosition(
                     wizardEl,
