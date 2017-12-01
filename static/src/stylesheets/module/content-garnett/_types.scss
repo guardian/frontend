@@ -1,5 +1,5 @@
-$quote-tail: 25px;
-// ********** Article Type **********
+$quote-tail: 25px; // ********** Article Type **********
+
 .content--type-article {
     .submeta {
         position: relative;
@@ -95,18 +95,16 @@ $quote-tail: 25px;
         }
         // Quote tail
         &:after {
-            @include mq(mobile) {
-                content: '';
-                width: $quote-tail;
-                height: $quote-tail;
-                border-radius: 0 0 $quote-tail;
-                position: absolute;
-                bottom: -$quote-tail - 2px;
-                left: $gs-gutter/2;
-                background-color: $neutral-garnett-1;
-                border: solid 1px $neutral-5;
-                border-top: solid 1px $neutral-garnett-1;
-            }
+            content: '';
+            width: $quote-tail;
+            height: $quote-tail;
+            border-radius: 0 0 $quote-tail;
+            position: absolute;
+            bottom: -$quote-tail - 2px;
+            left: $gs-gutter/2;
+            background-color: $neutral-garnett-1;
+            border: solid 1px $neutral-5;
+            border-top: solid 1px $neutral-garnett-1;
             @include mq(mobileLandscape) {
                 left: $gs-gutter;
             }
@@ -147,7 +145,8 @@ $quote-tail: 25px;
         &:after {
             @include mq(leftCol) {
                 border-radius: 0 0 0 $quote-tail;
-                left: gs-span(3)/2 - 28px;
+                left: gs-span(3)/2 - $quote-tail -3px;
+                // 3px is added for left alignment correction
             }
         }
 
