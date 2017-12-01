@@ -36,8 +36,6 @@
     float: left;
 
     @include mq(desktop) {
-        width: 117px;
-
         .new-header--open & {
             width: 160px;
 
