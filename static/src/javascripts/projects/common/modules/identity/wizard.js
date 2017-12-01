@@ -165,9 +165,27 @@ const updateSteps = (
         });
     });
 
-export const setPosition = (
+const getPositionFromNamedStep = (
     wizardEl: HTMLElement,
-    newPosition: number,
+    position: string
+): number => {
+    const pageEl = wizardEl.querySelector(
+        `[data-wizard-step-name=${position}]`
+    );
+    if (pageEl && pageEl.parentElement && pageEl.parentElement.children) {
+        return [...pageEl.parentElement.children].indexOf(pageEl);
+    }
+
+    throw new Error(ERR_WIZARD_INVALID_POSITION);
+};
+
+const getStepName = (wizardEl: HTMLElement, step: number): string =>
+    [...wizardEl.getElementsByClassName(stepClassname)][step].dataset
+        .wizardStepName || `step-${step}`;
+
+const setPosition = (
+    wizardEl: HTMLElement,
+    unresolvedNewPosition: number | string,
     userInitiated: boolean = true
 ): Promise<Array<*>> =>
     fastdom
@@ -187,6 +205,13 @@ export const setPosition = (
                     stepEls: Array<HTMLElement>,
                 ]
             ) => {
+                const newPosition: number =
+                    typeof unresolvedNewPosition === 'string'
+                        ? getPositionFromNamedStep(
+                              wizardEl,
+                              unresolvedNewPosition
+                          )
+                        : unresolvedNewPosition;
                 if (newPosition < 0 || !stepEls[newPosition]) {
                     throw new Error(ERR_WIZARD_INVALID_POSITION);
                 }
@@ -195,6 +220,10 @@ export const setPosition = (
                 }
                 wizardEl.dataset.length = stepEls.length.toString();
                 wizardEl.dataset.position = newPosition.toString();
+                wizardEl.dataset.positionName = getStepName(
+                    wizardEl,
+                    newPosition
+                );
                 return Promise.all([
                     userInitiated
                         ? pushBrowserState(wizardEl, newPosition)
@@ -212,6 +241,7 @@ export const setPosition = (
                             detail: {
                                 currentPosition,
                                 newPosition,
+                                stepName: getStepName(wizardEl, newPosition),
                             },
                         })
                     ),
@@ -225,7 +255,7 @@ export const setPosition = (
             throw error;
         });
 
-export const enhance = (wizardEl: HTMLElement): Promise<void> =>
+const enhance = (wizardEl: HTMLElement): Promise<void> =>
     Promise.all([
         getIdentifier(wizardEl),
         setPosition(wizardEl, 0, false),
@@ -263,4 +293,4 @@ export const enhance = (wizardEl: HTMLElement): Promise<void> =>
         });
     });
 
-export { containerClassname, wizardPageChangedEv };
+export { containerClassname, wizardPageChangedEv, enhance, setPosition };
