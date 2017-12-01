@@ -26,23 +26,42 @@ const wizardPageChangedEv = 'wizardPageChanged';
 
 const ERR_WIZARD_INVALID_POSITION = 'Invalid position';
 
+const getPositionFromName = (
+    wizardEl: HTMLElement,
+    position: string
+): number => {
+    const pageEl = wizardEl.querySelector(
+        `[data-wizard-step-name=${position}]`
+    );
+    if (pageEl && pageEl.parentElement && pageEl.parentElement.children) {
+        return [...pageEl.parentElement.children].indexOf(pageEl);
+    }
+
+    throw new Error(ERR_WIZARD_INVALID_POSITION);
+};
+
+const getPositionName = (wizardEl: HTMLElement, step: number): string =>
+    [...wizardEl.getElementsByClassName(stepClassname)][step].dataset
+        .wizardStepName || `step-${step}`;
+
 const getIdentifier = (wizardEl: HTMLElement): Promise<string> =>
     fastdom.read(() => wizardEl.id || containerClassname);
 
-const getStateObject = (
+const getInfoObject = (
     wizardEl: HTMLElement,
     position: number
-): Promise<{ dispatcher: string, position: number }> =>
+): Promise<{ dispatcher: string, position: number, positionName: string }> =>
     getIdentifier(wizardEl).then(wizardElIdentifier => ({
         dispatcher: wizardElIdentifier,
         position,
+        positionName: getPositionName(wizardEl, position),
     }));
 
 const pushBrowserState = (
     wizardEl: HTMLElement,
     position: number
 ): Promise<void> =>
-    getStateObject(wizardEl, position).then(stateObject =>
+    getInfoObject(wizardEl, position).then(stateObject =>
         window.history.pushState(stateObject, '')
     );
 
@@ -50,7 +69,7 @@ const updateBrowserState = (
     wizardEl: HTMLElement,
     position: number
 ): Promise<void> =>
-    getStateObject(wizardEl, position).then(stateObject =>
+    getInfoObject(wizardEl, position).then(stateObject =>
         window.history.replaceState(stateObject, '')
     );
 
@@ -165,29 +184,11 @@ const updateSteps = (
         });
     });
 
-const getPositionFromNamedStep = (
-    wizardEl: HTMLElement,
-    position: string
-): number => {
-    const pageEl = wizardEl.querySelector(
-        `[data-wizard-step-name=${position}]`
-    );
-    if (pageEl && pageEl.parentElement && pageEl.parentElement.children) {
-        return [...pageEl.parentElement.children].indexOf(pageEl);
-    }
-
-    throw new Error(ERR_WIZARD_INVALID_POSITION);
-};
-
-const getStepName = (wizardEl: HTMLElement, step: number): string =>
-    [...wizardEl.getElementsByClassName(stepClassname)][step].dataset
-        .wizardStepName || `step-${step}`;
-
 const setPosition = (
     wizardEl: HTMLElement,
     unresolvedNewPosition: number | string,
     userInitiated: boolean = true
-): Promise<Array<*>> =>
+): Promise<void> =>
     fastdom
         .read(() => [
             wizardEl.getBoundingClientRect().top - 20,
@@ -207,10 +208,7 @@ const setPosition = (
             ) => {
                 const newPosition: number =
                     typeof unresolvedNewPosition === 'string'
-                        ? getPositionFromNamedStep(
-                              wizardEl,
-                              unresolvedNewPosition
-                          )
+                        ? getPositionFromName(wizardEl, unresolvedNewPosition)
                         : unresolvedNewPosition;
                 if (newPosition < 0 || !stepEls[newPosition]) {
                     throw new Error(ERR_WIZARD_INVALID_POSITION);
@@ -220,34 +218,42 @@ const setPosition = (
                 }
                 wizardEl.dataset.length = stepEls.length.toString();
                 wizardEl.dataset.position = newPosition.toString();
-                wizardEl.dataset.positionName = getStepName(
+                wizardEl.dataset.positionName = getPositionName(
                     wizardEl,
                     newPosition
                 );
-                return Promise.all([
-                    userInitiated
-                        ? pushBrowserState(wizardEl, newPosition)
-                        : updateBrowserState(wizardEl, newPosition),
-                    updateCounter(wizardEl),
-                    updateSteps(
-                        wizardEl,
-                        currentPosition,
-                        newPosition,
-                        stepEls
-                    ),
-                    wizardEl.dispatchEvent(
-                        new CustomEvent(wizardPageChangedEv, {
-                            bubbles: true,
-                            detail: {
-                                currentPosition,
-                                newPosition,
-                                stepName: getStepName(wizardEl, newPosition),
-                            },
-                        })
-                    ),
-                ]);
+
+                return [currentPosition, newPosition, stepEls];
             }
         )
+        .then(([currentPosition, newPosition, stepEls]) =>
+            Promise.all([
+                currentPosition,
+                newPosition,
+                userInitiated
+                    ? pushBrowserState(wizardEl, newPosition)
+                    : updateBrowserState(wizardEl, newPosition),
+                updateCounter(wizardEl),
+                updateSteps(wizardEl, currentPosition, newPosition, stepEls),
+            ])
+        )
+        .then(([currentPosition, newPosition]) =>
+            Promise.all([
+                getInfoObject(wizardEl, currentPosition),
+                getInfoObject(wizardEl, newPosition),
+            ])
+        )
+        .then(([currentInfo, newInfo]) => {
+            wizardEl.dispatchEvent(
+                new CustomEvent(wizardPageChangedEv, {
+                    bubbles: true,
+                    detail: {
+                        ...newInfo,
+                        previous: currentInfo,
+                    },
+                })
+            );
+        })
         .catch((error: Error) => {
             if (error.message === ERR_WIZARD_INVALID_POSITION) {
                 return setPosition(wizardEl, 0);
