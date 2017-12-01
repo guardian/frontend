@@ -55,7 +55,7 @@ class EditProfileController(
   def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
     displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
 
-  def displayConsentJourneyForm(journey: String, consentHint: Option[String], newsletterHint: Option[String]): Action[AnyContent] = {
+  def displayConsentJourneyForm(journey: Option[String], consentHint: Option[String], newsletterHint: Option[String]): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
@@ -66,7 +66,7 @@ class EditProfileController(
         recentlyAuthenticated.async { implicit request =>
           consentJourneyView(
             page = ConsentJourneyPage,
-            journey = journey,
+            journey = journey.getOrElse("repermission"),
             forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
             request.user,
             consentHint,
