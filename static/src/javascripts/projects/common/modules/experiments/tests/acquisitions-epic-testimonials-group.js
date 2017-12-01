@@ -8,7 +8,7 @@ import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/
 const getTestimonialText = () => {
     const mvtId = getMvtValue();
     const numberOfViews = overallNumberOfViews();
-    return testimonialCycleGroup[mvtId % 8 + numberOfViews % 8];
+    return testimonialCycleGroup[(mvtId + numberOfViews) % 8];
 };
 
 export const acquisitionsEpicTestimonialsGroup = makeABTest({
