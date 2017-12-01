@@ -23,6 +23,9 @@
     }
 
     .inline-video-icon {
+        position: relative;
+        top: 2px;
+        
         > svg {
             height: 12px;
         }
@@ -30,7 +33,7 @@
         &::after {
             display: inline-block;
             content: '';
-            height: 11px;
+            height: 10px;
             margin-right: 6px;
             border: 1px solid;
         }
@@ -41,7 +44,15 @@
         @include fs-textSans(1);
         font-weight: 600;
     }
-    
+
+    .fc-trail__count--commentcount {
+        color: #ffffff;
+
+        svg {
+            fill: #ffffff;
+        }
+    }
+
     // darken on hover
     &:hover,
     .u-faux-block-link--hover {
