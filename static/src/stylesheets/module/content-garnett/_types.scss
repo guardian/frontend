@@ -53,8 +53,8 @@ $quote-tail: 25px;
         @include f-bodyHeading;
     }
 
-    .content__main-column {
-        @include mq(tablet) {
+    .content__article-body {
+        @include mq(desktop) {
             border-left: solid 1px $neutral-5;
             padding-left: $gs-gutter/2;
             margin-left: 0;
