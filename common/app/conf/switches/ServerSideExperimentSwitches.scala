@@ -1,14 +1,14 @@
 package conf.switches
 
 import conf.switches.Expiry.never
+import experiments.ActiveExperiments
 
-trait ServerSideABTestSwitches {
-  // Server-side A/B Tests
-  val ServerSideTests = {
+trait ServerSideExperimentSwitches {
+  val ServerSideExperiments = {
     // It's for the side effect. Blame agents.
-    val tests = mvt.ActiveTests.tests
+    val experiments = ActiveExperiments.allExperiments
     Switch(
-      SwitchGroup.ServerSideABTests,
+      SwitchGroup.ServerSideExperiments,
       "server-side-tests",
       "Enables the server side testing system",
       owners = Seq(Owner.withGithub("johnduffell")),
