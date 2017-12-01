@@ -1,0 +1,25 @@
+.contributions__epic--circles .contributions__contribute--epic {
+  background-color: transparent;
+
+  &::after {
+    display: none;
+  }
+
+  &::before {
+    content: ' ';
+    background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="$neutral-1" stroke="$neutral-1" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 600px;
+    background-repeat: no-repeat;
+    background-color: $multimedia-main-2;
+  }
+}
+
+.contributions__epic-heading {
+  font-size: 60px;
+  line-height: 60px;
+  font-weight: bold;
+  font-family: $f-serif-headline;
+}
