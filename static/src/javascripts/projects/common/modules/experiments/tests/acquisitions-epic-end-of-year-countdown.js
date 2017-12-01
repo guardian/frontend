@@ -27,7 +27,7 @@ export const acquisitionsEpicEndOfYearCountdown = makeABTest({
     successMeasure: 'Annualised value per impression',
     idealOutcome: 'A variant outperforms the control',
     audienceCriteria: 'All',
-    audience: 1,
+    audience: 0.2,
     locations: ['US'],
     audienceOffset: 0,
 
