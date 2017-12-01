@@ -40,9 +40,18 @@ const getPositionFromName = (
     throw new Error(ERR_WIZARD_INVALID_POSITION);
 };
 
-const getPositionName = (wizardEl: HTMLElement, step: number): string =>
-    [...wizardEl.getElementsByClassName(stepClassname)][step].dataset
-        .wizardStepName || `step-${step}`;
+const getPositionName = (wizardEl: HTMLElement, step: number): string => {
+    if (
+        [...wizardEl.getElementsByClassName(stepClassname)][step] &&
+        [...wizardEl.getElementsByClassName(stepClassname)][step].dataset
+            .wizardStepName
+    ) {
+        return [...wizardEl.getElementsByClassName(stepClassname)][step].dataset
+            .wizardStepName;
+    }
+
+    return `step-${step}`;
+};
 
 const getIdentifier = (wizardEl: HTMLElement): Promise<string> =>
     fastdom.read(() => wizardEl.id || containerClassname);
