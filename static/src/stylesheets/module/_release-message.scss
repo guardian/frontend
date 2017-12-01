@@ -543,6 +543,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--membership-prominent {
     .site-message__message {
+        max-height: 80%;
         padding-right: 45px;
         @include mq($until: tablet) {
             padding-left: 5px;
@@ -551,7 +552,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             padding-left: 10px;
         }
         @include mq($from: desktop) {
-            padding-left: 55qqpx;
+            padding-left: 55px;
+            padding-right: 40px;
         }
     }
     .site-message__media {
