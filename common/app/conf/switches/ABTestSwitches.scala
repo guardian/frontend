@@ -135,4 +135,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 12, 13),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-simple-and-coherent-circles",
+    "Show a custom Epic with the Circles design",
+    owners = Seq(Owner.withGithub("ap0c")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 10),
+    exposeClientSide = true
+  )
 }
