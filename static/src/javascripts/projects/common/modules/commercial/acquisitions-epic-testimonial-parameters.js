@@ -58,14 +58,14 @@ const cycle5: AcquisitionsEpicTestimonialTemplateParameters = {
 const cycle6: AcquisitionsEpicTestimonialTemplateParameters = {
     quoteSvg: controlQuoteSvg,
     testimonialMessage:
-        'I benefit from the Guardian’s high-quality website every day and would like its investigative and trustworth journalism to remain available to everyone freely.',
+        'I benefit from the Guardian’s high-quality website every day and would like its investigative and trustworthy journalism to remain available to everyone freely.',
     testimonialName: 'Alice S-L, Netherlands',
 };
 
 const cycle7: AcquisitionsEpicTestimonialTemplateParameters = {
     quoteSvg: controlQuoteSvg,
     testimonialMessage:
-        'Unrivaled, in-depth journalism that has become essential to me. Incredible coverage of my homeland news with an eye I hardly find in the local media. Time has come for me to support.',
+        'Unrivalled, in-depth journalism that has become essential to me. Incredible coverage of my homeland news with an eye I hardly find in the local media. Time has come for me to support.',
     testimonialName: 'Roland P, France',
 };
 
