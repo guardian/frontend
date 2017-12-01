@@ -182,6 +182,15 @@ from scrolling */
     height: $slim-nav-height;
 }
 
+
+.new-header .popup--search {
+    background-color: #ffffff;
+    border-radius: $gs-baseline / 4;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
+    padding: $gs-baseline 0;
+    top: $gs-baseline * 2 + $gs-baseline / 2;
+}
+
 // Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
 x:-o-prefocus, .new-header__cta-container  {
     display: none;

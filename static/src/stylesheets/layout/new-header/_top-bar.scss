@@ -24,8 +24,7 @@
     }
 
     &:hover,
-    &:focus,
-    &.is-active {
+    &:focus {
         color: #ffffff;
         text-decoration: none;
     }
@@ -50,6 +49,16 @@
         margin-left: 2px;
         vertical-align: middle;
         transition: transform 250ms ease-out;
+    }
+
+    .dropdown-menu--open ~ &,
+    &.is-active {
+        color: #ffffff;
+        background-color: rgba(0, 0, 0, .3);
+
+        &:after {
+            transform: translateY(0) rotate(45deg);
+        }
     }
 
     &:hover:after {
