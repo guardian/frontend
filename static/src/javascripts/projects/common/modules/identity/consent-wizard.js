@@ -16,15 +16,6 @@ const positions = {
     endcard: 'endcard',
 };
 
-const getRejectedCheckboxes = (
-    checkboxesEl: Array<HTMLLabelElement>
-): Array<HTMLLabelElement> =>
-    checkboxesEl.filter(
-        (checkboxEl: HTMLLabelElement) =>
-            checkboxEl.control instanceof HTMLInputElement &&
-            !checkboxEl.control.checked
-    );
-
 const getAcceptedCheckboxes = (
     checkboxesEl: Array<HTMLLabelElement>
 ): Array<HTMLLabelElement> =>
@@ -89,34 +80,11 @@ const bindNextButton = (buttonEl: HTMLElement): void => {
     const wizardEl = [
         ...document.getElementsByClassName('manage-account-wizard--consent'),
     ][0];
-    const checkboxesEl = getEmailCheckboxes();
     buttonEl.addEventListener('click', (ev: Event) => {
         ev.preventDefault();
-        getWizardInfoObject(wizardEl).then(wizardInfo => {
-            if (wizardInfo.positionName === positions.email) {
-                const rejectedEmailNames = getRejectedCheckboxes(
-                    checkboxesEl
-                ).map(
-                    checkboxEl =>
-                        checkboxEl.getElementsByClassName(
-                            'manage-account__switch-title'
-                        )[0].innerText
-                );
-                if (rejectedEmailNames.length > 2) {
-                    if (
-                        window.confirm(
-                            `You will stop receiving the following newsletters. Are you sure? : ${rejectedEmailNames.join()}`
-                        )
-                    ) {
-                        return setPosition(wizardEl, wizardInfo.position + 1);
-                    }
-
-                    return;
-                }
-            }
-
-            return setPosition(wizardEl, wizardInfo.position + 1);
-        });
+        getWizardInfoObject(wizardEl).then(wizardInfo =>
+            setPosition(wizardEl, wizardInfo.position + 1)
+        );
     });
 };
 
