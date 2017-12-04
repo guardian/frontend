@@ -41,13 +41,10 @@ const getPositionFromName = (
 };
 
 const getPositionName = (wizardEl: HTMLElement, step: number): string => {
-    if (
-        [...wizardEl.getElementsByClassName(stepClassname)][step] &&
-        [...wizardEl.getElementsByClassName(stepClassname)][step].dataset
-            .wizardStepName
-    ) {
-        return [...wizardEl.getElementsByClassName(stepClassname)][step].dataset
-            .wizardStepName;
+    const stepEl = [...wizardEl.getElementsByClassName(stepClassname)][step];
+
+    if (stepEl && stepEl.dataset && stepEl.dataset.wizardStepName) {
+        return stepEl.dataset.wizardStepName;
     }
 
     return `step-${step}`;
