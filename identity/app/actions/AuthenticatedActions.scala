@@ -8,7 +8,7 @@ import idapiclient.IdApiClient
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
 import play.api.mvc._
 import services.{AuthenticatedUser, AuthenticationService, IdentityUrlBuilder}
-import conf.switches.Switches.IdentityRedirectUsersWithLingeringV1ConsentsSwitch
+import conf.switches.Switches.{IdentityRedirectUsersWithLingeringV1ConsentsSwitch, IdentityAllowAccessToGdprJourneyPageSwitch}
 
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -99,7 +99,7 @@ class AuthenticatedActions(
     override val executionContext = ec
     //TODO: verify if the user reperm'd instead of validate. also verify v1 email subs
     def refine[A](request: AuthRequest[A]) = Future.successful {
-      if(IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn) {
+      if(IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn) {
         request.user.statusFields.userEmailValidated match {
           case Some(true) => Left(sendUserToConsentJourney(request));
           case _ => Right(request);
