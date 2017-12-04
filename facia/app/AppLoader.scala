@@ -21,8 +21,10 @@ import play.api.routing.Router
 import play.api.libs.ws.WSClient
 import services._
 import router.Routes
+import com.typesafe.config.ConfigFactory
 
 class AppLoader extends FrontendApplicationLoader {
+  ConfigFactory.load()
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 

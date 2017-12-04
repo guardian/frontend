@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "3.97"
-  val awsVersion = "1.11.181"
+  val awsVersion = "1.11.240"
   val faciaVersion = "2.5.0"
   val capiVersion = "11.43"
   val dispatchVersion = "0.13.1"
@@ -23,6 +23,7 @@ object Dependencies {
   val awsSns = "com.amazonaws" % "aws-java-sdk-sns" % awsVersion
   val awsSts = "com.amazonaws" % "aws-java-sdk-sts" % awsVersion
   val awsSqs = "com.amazonaws" % "aws-java-sdk-sqs" % awsVersion
+  val awsSsm = "com.amazonaws" % "aws-java-sdk-ssm" % awsVersion
   val awsElasticloadbalancing = "com.amazonaws" % "aws-java-sdk-elasticloadbalancing" % awsVersion
   val closureCompiler = "com.google.javascript" % "closure-compiler" % "v20150901"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
@@ -33,7 +34,6 @@ object Dependencies {
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "3.7.0"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.26"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
-  val configMagic = "com.gu" %% "configuration-magic-core" %  "1.4.0"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityRequest = "com.gu.identity" %% "identity-request" % identityLibVersion

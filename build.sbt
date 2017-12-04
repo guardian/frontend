@@ -17,11 +17,11 @@ val common = library("common").settings(
     awsSns,
     awsSts,
     awsSqs,
+    awsSsm,
     contentApiClient,
     enumeratumPlayJson,
     filters,
     commonsLang,
-    configMagic,
     jodaConvert,
     jodaTime,
     jSoup,
@@ -63,6 +63,7 @@ val commonWithTests = withTests(common)
 val sanityTest = application("sanity-tests")
 
 val facia = application("facia").dependsOn(commonWithTests).aggregate(common).settings(
+  javaOptions in Runtime += "-Dconfig.file=facia/conf/dev.conf",
   libraryDependencies += scalaCheck
 )
 
