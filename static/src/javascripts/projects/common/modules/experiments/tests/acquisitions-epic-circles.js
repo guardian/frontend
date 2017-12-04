@@ -2,12 +2,9 @@
 
 // ----- Imports ----- //
 
-import {
-    makeABTest,
-    defaultButtonTemplate,
-} from 'common/modules/commercial/contributions-utilities';
-import { acquisitionsEpicCirclesTemplate } from 'common/modules/commercial/templates/acquisitions-epic-circles';
-import { circles as circlesCopy } from 'common/modules/commercial/acquisitions-copy';
+import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
+import { control as circlesCopy } from 'common/modules/commercial/acquisitions-copy';
 
 // ----- Setup ----- //
 
@@ -47,14 +44,16 @@ export const acquisitionsEpicCircles = makeABTest({
             products,
             options: {
                 template(variant) {
-                    return acquisitionsEpicCirclesTemplate({
+                    return acquisitionsEpicControlTemplate({
                         copy: circlesCopy,
                         componentName: variant.options.componentName,
-                        buttonTemplate: defaultButtonTemplate({
+                        buttonTemplate: variant.options.buttonTemplate({
                             membershipUrl: variant.options.membershipURL,
                             contributeUrl: variant.options.contributeURL,
                             supportUrl: variant.options.supportURL,
                         }),
+                        testimonialBlock: variant.options.testimonialBlock,
+                        epicClass: 'contributions__epic--circles',
                     });
                 },
             },

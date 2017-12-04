@@ -50,11 +50,6 @@ const ctaLinkSentence = (
     }" target="_blank" class="u-underline">make a one-off contribution</a>`;
 };
 
-// ----- Circles Copy ----- //
-
-const circlesP1 =
-    '&hellip; we have a small favour to ask. More people are reading the Guardian than ever but advertising revenues across the media are falling fast.';
-
 /*
  Exported instances of AcquisitionsEpicTemplateCopy
  */
@@ -81,9 +76,3 @@ export const liveblog = (
         getLocalCurrencySymbol()
     )}. - Guardian HQ`,
 });
-
-export const circles: AcquisitionsEpicTemplateCopy = {
-    heading: controlHeading,
-    p1: circlesP1,
-    p2: controlP2(getLocalCurrencySymbol()),
-};
