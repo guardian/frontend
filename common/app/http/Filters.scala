@@ -76,8 +76,13 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     val r = LookedAtExperiments.createRequest(request)
-    nextFilter(r).map {
-      _.withHeaders(experimentsResponseHeaders(r):_*)
+    nextFilter(r).map { rh =>
+      val experimentHeaders = experimentsResponseHeaders(r)
+      val varyHeaderValues = rh.header.headers.get("Vary").toSeq ++ experimentHeaders.get("Vary").toSeq
+      val responseHeaders = (experimentHeaders + ("Vary" -> varyHeaderValues.mkString(",")))
+        .filterNot { case (_, v) => v.isEmpty }
+        .toSeq
+      rh.withHeaders(responseHeaders:_*)
     }
   }
 
@@ -86,7 +91,7 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
    *  Vary: "experiment-header-1, experiment-header-2"
    *  X-GU-Depends-On-Experiments: "experiment-1-name, experiment-2-name"
    */
-  private def experimentsResponseHeaders(request: RequestHeader) =
+  private def experimentsResponseHeaders(request: RequestHeader): Map[String, String] =
     LookedAtExperiments
       .forRequest(request)
       .flatMap { experiment =>
@@ -94,11 +99,11 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
         Seq(("Vary" -> experimentVaryHeaders.mkString(",")), ("X-GU-Depends-On-Experiments" -> experiment.name))
       }
       .groupBy(_._1).map { case (k,v) => k -> v.map(_._2).mkString(",") }
-      .toSeq
 }
 
+
 object Filters {
-  // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
+  // NOTE - order is important here, Gzipper AFTER JsonVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
   def common(
     implicit materializer: Materializer,
@@ -107,12 +112,12 @@ object Filters {
   ): List[EssentialFilter] = List(
     new RequestLoggingFilter,
     new JsonVaryHeadersFilter,
+    new ExperimentsFilter,
     new Gzipper,
     new BackendHeaderFilter,
     new SurrogateKeyFilter,
     new AmpFilter,
-    new H2PreloadFilter,
-    new ExperimentsFilter
+    new H2PreloadFilter
   )
 }
 
