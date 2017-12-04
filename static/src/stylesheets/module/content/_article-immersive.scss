@@ -557,8 +557,10 @@
         }
     }
 
-    .element--supporting {
-        float: left;
+    .element--showcase,
+    .element--inline,
+    .element--halfWidth {
+        float: none;
     }
 
     .ad-slot--inline {
