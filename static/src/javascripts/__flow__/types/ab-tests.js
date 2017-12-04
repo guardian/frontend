@@ -30,6 +30,7 @@ declare type ABTest = {
 declare type AcquisitionsABTest = ABTest & {
     campaignId: string,
     componentType: OphanComponentType,
+    campaignCode?: string,
 };
 
 declare type EpicABTest = AcquisitionsABTest & {
@@ -70,6 +71,7 @@ declare type InitEpicABTest = {
     locations?: string[],
     locationCheck?: () => boolean,
     dataLinkNames?: string,
+    campaignCode?: string,
     campaignPrefix?: string,
     campaignSuffix?: string,
     useLocalViewLog?: boolean,

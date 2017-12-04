@@ -144,7 +144,7 @@ const getCopy = (useTailor: boolean): Promise<AcquisitionsEpicTemplateCopy> => {
     return Promise.resolve(acquisitionsCopyControl);
 };
 
-const getCampaignCode = (
+const getComponentId = (
     campaignCodePrefix,
     campaignID,
     id,
@@ -181,7 +181,7 @@ const makeABTestVariant = (
     parentTest: EpicABTest
 ): Variant => {
     const trackingCampaignId = `epic_${parentTest.campaignId}`;
-    const campaignCode = getCampaignCode(
+    const componentId = getComponentId(
         parentTest.campaignPrefix,
         parentTest.campaignId,
         id,
@@ -196,8 +196,8 @@ const makeABTestVariant = (
         contributeURL = addTrackingCodesToUrl({
             base: contributionsBaseURL,
             componentType: parentTest.componentType,
-            componentId: campaignCode,
-            campaignCode,
+            componentId,
+            campaignCode: parentTest.campaignCode,
             abTest: {
                 name: parentTest.id,
                 variant: id,
@@ -206,8 +206,8 @@ const makeABTestVariant = (
         membershipURL = addTrackingCodesToUrl({
             base: membershipBaseURL,
             componentType: parentTest.componentType,
-            componentId: campaignCode,
-            campaignCode,
+            componentId,
+            campaignCode: parentTest.campaignCode,
             abTest: {
                 name: parentTest.id,
                 variant: id,
@@ -217,8 +217,8 @@ const makeABTestVariant = (
         supportURL = addTrackingCodesToUrl({
             base: supportCustomURL || selectBaseUrl(),
             componentType: parentTest.componentType,
-            componentId: campaignCode,
-            campaignCode,
+            componentId,
+            campaignCode: parentTest.campaignCode,
             abTest: {
                 name: parentTest.id,
                 variant: id,
@@ -246,8 +246,8 @@ const makeABTestVariant = (
                     component: {
                         componentType: parentTest.componentType,
                         products,
-                        campaignCode,
-                        id: campaignCode,
+                        campaignCode: parentTest.campaignCode,
+                        id: componentId,
                     },
                     abTest: {
                         name: parentTest.id,
@@ -263,8 +263,8 @@ const makeABTestVariant = (
                     component: {
                         componentType: parentTest.componentType,
                         products,
-                        campaignCode,
-                        id: campaignCode,
+                        campaignCode: parentTest.campaignCode,
+                        id: componentId,
                     },
                     abTest: {
                         name: parentTest.id,
@@ -284,12 +284,12 @@ const makeABTestVariant = (
 
         options: {
             componentName: `mem_acquisition_${trackingCampaignId}_${id}`,
-            campaignCodes: [campaignCode],
+            campaignCodes: [parentTest.campaignCode],
 
             maxViews,
             isUnlimited,
             products,
-            campaignCode,
+            campaignCode: parentTest.campaignCode,
             contributeURL,
             membershipURL,
             supportURL,
@@ -346,7 +346,7 @@ const makeABTestVariant = (
                                 mediator.emit(parentTest.insertEvent, {
                                     componentType: parentTest.componentType,
                                     products,
-                                    campaignCode,
+                                    campaignCode: parentTest.campaignCode,
                                 });
                                 onInsert(component);
 
@@ -366,7 +366,8 @@ const makeABTestVariant = (
                                             componentType:
                                                 parentTest.componentType,
                                             products,
-                                            campaignCode,
+                                            campaignCode:
+                                                parentTest.campaignCode,
                                         });
                                         mediator.emit(
                                             'register:end',
@@ -395,8 +396,8 @@ const makeABTestVariant = (
             return addTrackingCodesToUrl({
                 base: contributionsBaseURL,
                 componentType: parentTest.componentType,
-                componentId: codeModifier(campaignCode),
-                campaignCode: codeModifier(campaignCode),
+                componentId: codeModifier(componentId),
+                campaignCode: codeModifier(parentTest.campaignCode),
                 abTest: {
                     name: parentTest.id,
                     variant: id,
@@ -408,8 +409,8 @@ const makeABTestVariant = (
             return addTrackingCodesToUrl({
                 base: membershipBaseURL,
                 componentType: parentTest.componentType,
-                componentId: codeModifier(campaignCode),
-                campaignCode: codeModifier(campaignCode),
+                componentId: codeModifier(componentId),
+                campaignCode: codeModifier(parentTest.campaignCode),
                 abTest: {
                     name: parentTest.id,
                     variant: id,
@@ -438,6 +439,7 @@ const makeABTest = ({
     locations = [],
     locationCheck = () => true,
     dataLinkNames = '',
+    campaignCode,
     campaignPrefix = 'gdnwb_copts_memco',
     campaignSuffix = '',
     useLocalViewLog = false,
@@ -479,6 +481,7 @@ const makeABTest = ({
         idealOutcome,
         dataLinkNames,
         campaignId,
+        campaignCode,
         campaignPrefix,
         campaignSuffix,
         useLocalViewLog,
