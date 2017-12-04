@@ -26,6 +26,10 @@ const wizardPageChangedEv = 'wizardPageChanged';
 
 const ERR_WIZARD_INVALID_POSITION = 'Invalid position';
 
+declare class PopStateEvent extends Event {
+    state: Object;
+}
+
 const getPositionFromName = (
     wizardEl: HTMLElement,
     position: string
@@ -278,9 +282,8 @@ const enhance = (wizardEl: HTMLElement): Promise<void> =>
         getIdentifier(wizardEl),
         setPosition(wizardEl, 0, false),
     ]).then(([wizardElIdentifier]) => {
-        window.addEventListener('popstate', ev => {
+        window.addEventListener('popstate', (ev: PopStateEvent) => {
             if (
-                ev.state &&
                 ev.state.dispatcher &&
                 ev.state.dispatcher === wizardElIdentifier
             ) {
@@ -289,6 +292,11 @@ const enhance = (wizardEl: HTMLElement): Promise<void> =>
             }
         });
 
+        /*
+        The following code checks for the
+        existence of .closest() to catch any HTMLElement
+        derived types such as canvases or svgs
+        */
         wizardEl.addEventListener('click', (ev: Event) => {
             if (
                 ev.target.closest &&
