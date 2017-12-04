@@ -101,8 +101,8 @@ class AuthenticatedActions(
     def refine[A](request: AuthRequest[A]) = Future.successful {
       if(IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn) {
         request.user.statusFields.userEmailValidated match {
-          case Some(true) => Left(sendUserToConsentJourney(request));
-          case _ => Right(request);
+          case Some(true) => Right(request);
+          case _ => Left(sendUserToConsentJourney(request));
         }
       }
       else {
