@@ -56,11 +56,17 @@ const getPositionName = (wizardEl: HTMLElement, step: number): string => {
 const getIdentifier = (wizardEl: HTMLElement): Promise<string> =>
     fastdom.read(() => wizardEl.id || containerClassname);
 
+const getPosition = (wizardEl: HTMLElement): Promise<number> =>
+    Promise.resolve(parseInt(wizardEl.dataset.position, 10));
+
 const getInfoObject = (
     wizardEl: HTMLElement,
-    position: number
+    optionalPosition: ?number
 ): Promise<{ dispatcher: string, position: number, positionName: string }> =>
-    getIdentifier(wizardEl).then(wizardElIdentifier => ({
+    Promise.all([
+        getIdentifier(wizardEl),
+        optionalPosition || getPosition(wizardEl),
+    ]).then(([wizardElIdentifier, position]) => ({
         dispatcher: wizardElIdentifier,
         position,
         positionName: getPositionName(wizardEl, position),
@@ -310,4 +316,10 @@ const enhance = (wizardEl: HTMLElement): Promise<void> =>
         });
     });
 
-export { containerClassname, wizardPageChangedEv, enhance, setPosition };
+export {
+    containerClassname,
+    wizardPageChangedEv,
+    enhance,
+    setPosition,
+    getInfoObject,
+};
