@@ -1,3 +1,11 @@
+.contributions__epic--circles {
+  background-image: svg-url('<svg width="620" height="113" xmlns="http://www.w3.org/2000/svg"><g fill="#FB0" fill-rule="evenodd"><g transform="translate(-30)"><circle fill-opacity=".45" cx="230" cy="86" r="26"/><circle fill-opacity=".45" cx="128" cy="86" r="26"/><circle fill-opacity=".45" cx="282" cy="116" r="26"/><circle fill-opacity=".45" cx="180" cy="116" r="26"/><circle fill-opacity=".25" cx="384" cy="56" r="26"/><circle fill-opacity=".25" cx="332" cy="26" r="26"/><circle fill-opacity=".25" cx="230" cy="26" r="26"/><circle fill-opacity=".25" cx="128" cy="26" r="26"/><circle fill-opacity=".25" cx="26" cy="26" r="26"/><circle fill-opacity=".25" cx="282" cy="56" r="26"/><circle fill-opacity=".25" cx="180" cy="56" r="26"/><circle fill-opacity=".25" cx="78" cy="56" r="26"/><circle fill-opacity=".45" cx="384" cy="116" r="26"/><circle fill-opacity=".45" cx="332" cy="86" r="26"/><circle fill-opacity=".45" cx="26" cy="86" r="26"/><circle fill-opacity=".45" cx="78" cy="116" r="26"/></g><g transform="translate(380)"><circle fill-opacity=".45" cx="230" cy="86" r="26"/><circle fill-opacity=".45" cx="128" cy="86" r="26"/><circle fill-opacity=".45" cx="180" cy="116" r="26"/><circle fill-opacity=".25" cx="230" cy="26" r="26"/><circle fill-opacity=".25" cx="128" cy="26" r="26"/><circle fill-opacity=".25" cx="26" cy="26" r="26"/><circle fill-opacity=".25" cx="180" cy="56" r="26"/><circle fill-opacity=".25" cx="78" cy="56" r="26"/><circle fill-opacity=".45" cx="26" cy="86" r="26"/><circle fill-opacity=".45" cx="78" cy="116" r="26"/></g></g></svg>');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  padding-bottom: 23%;
+  background-position: bottom;
+}
+
 .contributions__epic--circles .contributions__contribute--epic {
   background-color: transparent;
   position: relative;
@@ -6,6 +14,7 @@
   font-size: 18px;
   font-weight: bold;
   font-family: $f-sans-serif-headline;
+  margin-top: $gs-baseline * 2;
 
   &::after {
     display: none;
