@@ -337,7 +337,6 @@ figure.element--thumbnail + h2 {
 
     @include mq(tablet) {
         width: gs-span(3);
-        float: left;
         // Prevent previous embeds from interfering
         clear: left;
         padding-right: $gs-gutter;
