@@ -64,6 +64,66 @@ $quote-tail: 25px; // ********** Article Type **********
         }
     }
 
+    // meta__styling
+    .social-icon,
+    .social-icon.social-icon--more,
+    .inline-close {
+        background-color: transparent;
+        border: 1px solid $neutral-4;
+
+        &:hover, &:focus {
+            svg {
+                fill: #FFFFFF;
+            }
+        }
+    }
+
+    .meta__social,
+    .meta__numbers,
+    .byline,
+    .content__dateline {
+        border-top: 1px solid $neutral-3;
+    }
+
+    .byline {
+        font-weight: 200;
+        color: #333333;
+        font-style: italic;
+
+        span[itemprop="author"]  {
+            @include f-header;
+            display: block;
+            font-style: normal;
+            font-weight: 900;
+        }
+    }
+
+    .meta__twitter {
+
+        a {
+            background-color: transparent;
+            border: 1px solid $neutral-4;
+        }
+
+        &:hover, &:focus  {
+            a {
+                background-color: $news-garnett-main-1;
+                border: 1px solid $news-garnett-main-1;
+            }
+            .inline-tone-fill {
+                fill: #FFFFFF;
+            }
+            .button--secondary {
+                color: #FFFFFF;
+            }
+        }
+    }
+
+    .tone-colour {
+        color: $news-garnett-main-1;
+    }
+
+
     .badge,
     .content__meta-container {
         @include mq(leftCol) {
