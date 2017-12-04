@@ -40,7 +40,10 @@ class AuthenticatedActions(
   }
 
   def sendUserToConsentJourney(request: RequestHeader): Result =
-    redirectWithReturn(request, "/consent")
+    redirectWithReturn(request, "/consent?journey=repermission")
+
+  def sendUserToNarrowConsentJourney(request: RequestHeader): Result =
+    redirectWithReturn(request, "/consent?journey=repermission-narrow")
 
   def sendUserToSignin(request: RequestHeader): Result =
     redirectWithReturn(request, "/signin")
