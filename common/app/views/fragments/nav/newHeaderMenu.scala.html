@@ -178,6 +178,15 @@
                 @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
                     @brandExtensions(item)
                 }
+
+                <li class="hide-until-desktop feedback-form">
+                    @fragments.inlineSvg("information-circle", "icon", List("feedback-form__icon"))
+                    This navigation is new. We'd appreciate your feedback.
+                    <a class="feedback-form__link"
+                    data-link-name="nav2 : feedback-form"
+                    href="">
+                    Share your thoughts here.</a>
+                </li>
             </ul>
         </div>
     </div>
