@@ -63,7 +63,7 @@ const getPosition = (wizardEl: HTMLElement): Promise<number> =>
 const getInfoObject = (
     wizardEl: HTMLElement,
     optionalPosition: ?number
-): Promise<{ dispatcher: string, position: number, positionName: string }> =>
+): Promise<{| dispatcher: string, position: number, positionName: string |}> =>
     Promise.all([
         getIdentifier(wizardEl),
         optionalPosition || getPosition(wizardEl),
