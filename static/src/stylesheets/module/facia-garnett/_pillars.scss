@@ -141,6 +141,10 @@ $pillars: (
     .fc-item__media-meta {
         color: map-get($palette, kicker);
     }
+
+    .vjs-big-play-button .vjs-control-text:before {
+        background-color: map-get($palette, kicker);
+    }
 }
 
 @each $pillar, $palette in $pillars {
