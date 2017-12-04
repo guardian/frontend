@@ -49,37 +49,60 @@
     flex: 0 !important;
 }
 
+@mixin standard-cutout-sublinks {
+    .fc-item__footer--vertical {
+        display: none;
+    }
+
+    .fc-item__footer--horizontal {
+        display: block;
+        padding-left: $fc-item-gutter;
+        padding-right: $fc-item-gutter;
+
+        .fc-sublink:first-child .fc-sublink__title {
+            &:before {
+                width: auto;
+                left: 0 - $fc-item-gutter;
+                right: 0 - $fc-item-gutter;
+            }
+        }
+    }
+}
+
 .fc-item--standard-mobile {
     @include mq($until: tablet) {
         &.fc-item--has-cutout {
-            .fc-item__header,
-            .fc-sublinks {
+            .fc-item__header {
                 padding-right: 25%;
             }
-        }
 
-        &[class*='fc-item--has-sublinks'] {
-            &.fc-item--has-cutout {
-                .fc-item__header {
-                    padding-right: 0;
-                }
+            .fc-item__standfirst {
+                display: none;
+            }
 
-                .fc-sublinks {
-                    min-height: gs-height(3) + $gs-baseline;
-                }
+            .fc-item__avatar {
+                position: absolute;
+                overflow: hidden;
+                height: gs-height(2) + $gs-baseline  * 2;
+                width: 100%;
+                right: 0;
+                top: 0;
+            }
 
-                .fc-item__footer--vertical {
-                    max-width: gs-span(5);
-                }
+            .fc-item__avatar__media {
+                position: absolute;
+                height: 100%;
+                bottom: 0;
+                right: - $gs-gutter;
             }
         }
 
-        .fc-item__avatar {
-            height: gs-height(2) + $gs-baseline  * 2;
-        }
+        &[class*='fc-item--has-sublinks'].fc-item--has-cutout {
+            @include standard-cutout-sublinks;
 
-        .fc-item__avatar__media {
-            right: - $gs-gutter;
+            .fc-item__footer--horizontal {
+                margin-top: $fc-item-gutter * 3;
+            }
         }
     }
 }
@@ -102,27 +125,30 @@
         }
 
         &.fc-item--has-cutout {
-            .fc-item__container {
-                padding-bottom: gs-height(3) + $gs-baseline * 3;
+            .fc-item__standfirst {
+                display: none;
+            }
+
+            .fc-item__avatar {
+                flex: 1 1 gs-height(4);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .fc-item__avatar__media {
+                position: absolute;
+                height: gs-height(4);
+                bottom: 0;
+                right: -20%;
             }
         }
 
-        .fc-item__avatar {
-            height: gs-height(4);
-        }
+        &[class*='fc-item--has-sublinks'].fc-item--has-cutout {
+            @include standard-cutout-sublinks;
 
-        .fc-item__avatar__media {
-            right: -40%;
-        }
-    }
-
-    @include mq(desktop) {
-        &.fc-item--has-cutout .fc-item__container {
-            padding-bottom: gs-height(3) + $gs-baseline  * 2;
-        }
-
-        .fc-item__avatar__media {
-            right: -20%;
+            .fc-item__footer--horizontal {
+                margin-top: 0 - $gs-baseline * .75;
+            }
         }
     }
 }
@@ -204,42 +230,42 @@
 .fc-item--full-media-75-tablet,
 .fc-item--full-media-100-tablet {
     @include mq(tablet) {
-        &.fc-item--has-cutout {
-            .fc-item__container {
-                min-height: gs-height(5) + $gs-baseline * 3;
-                flex-direction: row;
-            }
+        // &.fc-item--has-cutout {
+        //     .fc-item__container {
+        //         min-height: gs-height(5) + $gs-baseline * 3;
+        //         flex-direction: row;
+        //     }
 
-            .fc-item__content {
-                width: auto;
-                max-width: gs-span(6);
+        //     .fc-item__content {
+        //         width: auto;
+        //         max-width: gs-span(6);
 
-                @include mq(desktop) {
-                    max-width: gs-span(8);
-                }
-            }
+        //         @include mq(desktop) {
+        //             max-width: gs-span(8);
+        //         }
+        //     }
 
-            .fc-item__standfirst {
-                @include fs-headline(2);
-                padding-right: gs-span(2);
-                display: block;
-            }
-        }
+        //     .fc-item__standfirst {
+        //         @include fs-headline(2);
+        //         padding-right: gs-span(2);
+        //         display: block;
+        //     }
+        // }
 
-        .fc-item__avatar {
-            height: gs-height(6);
-        }
+        // .fc-item__avatar {
+        //     height: gs-height(6);
+        // }
 
-        .fc-item__avatar__media {
-            right: -5%;
-        }
+        // .fc-item__avatar__media {
+        //     right: -5%;
+        // }
     }
 }
 
 .fc-item--full-media-50-tablet,
 .fc-item--full-media-75-tablet {
     @include mq(tablet) {
-        &:not(.fc-item--has-cutout) {
+        // &:not(.fc-item--has-cutout) {
             .fc-item__header {
                 @include fs-headline(3, true);
 
@@ -266,19 +292,19 @@
             .fc-sublink:nth-child(n+5) {
                 display: none;
             }
-        }
+        // }
 
-        &.fc-item--has-cutout {
-            .fc-item__header {
-                @include fs-headline(4, true);
-                @include headline-boost(5);
+        // &.fc-item--has-cutout {
+        //     .fc-item__header {
+        //         @include fs-headline(4, true);
+        //         @include headline-boost(5);
 
-                @include mq(desktop) {
-                    @include fs-headline(6, true);
-                    @include headline-boost(7);
-                }
-            }
-        }
+        //         @include mq(desktop) {
+        //             @include fs-headline(6, true);
+        //             @include headline-boost(7);
+        //         }
+        //     }
+        // }
     }
 }
 

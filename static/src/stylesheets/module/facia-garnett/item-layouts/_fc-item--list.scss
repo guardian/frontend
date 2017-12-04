@@ -18,11 +18,11 @@ x x x x x x x x x x x x x x x x x x x x x x x x
         @include headline-boost(3);
     }
 
-    &.fc-item--has-cutout {
-        .fc-item__avatar__media {
-            display: none;
-        }
-    }
+    // &.fc-item--has-cutout {
+    //     .fc-item__avatar__media {
+    //         display: none;
+    //     }
+    // }
 
     .fc-item__media-wrapper {
         display: none;

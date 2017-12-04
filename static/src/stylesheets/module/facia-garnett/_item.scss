@@ -280,45 +280,45 @@ $fc-item-gutter: $gs-gutter / 4;
     display: none !important;
 }
 
-.fc-item--has-cutout .fc-item__content {
-    z-index: 1;
-}
+// .fc-item--has-cutout .fc-item__content {
+//     z-index: 1;
+// }
 
-.fc-item__avatar {
-    position: absolute;
-    overflow: hidden;
-    width: 100%;
-    bottom: 0;
-    right: 0;
-}
+// .fc-item__avatar {
+//     position: absolute;
+//     overflow: hidden;
+//     width: 100%;
+//     bottom: 0;
+//     right: 0;
+// }
 
-.fc-item__avatar__media {
-    position: absolute;
-    height: 100%;
-    bottom: 0;
-    right: 0;
+// .fc-item__avatar__media {
+//     position: absolute;
+//     height: 100%;
+//     bottom: 0;
+//     right: 0;
 
-    .responsive-img {
-        position: absolute;
-        height: 100%;
-        bottom: 0;
-        right: 0;
-    }
+//     .responsive-img {
+//         position: absolute;
+//         height: 100%;
+//         bottom: 0;
+//         right: 0;
+//     }
 
-    &.image--portrait {
-        top: 0;
-        height: auto;
-        width: 80%;
+//     &.image--portrait {
+//         top: 0;
+//         height: auto;
+//         width: 80%;
 
-        .responsive-img {
-            position: absolute;
-            height: auto;
-            width: 100%;
-            bottom: auto;
-        }
-    }
-}
+//         .responsive-img {
+//             position: absolute;
+//             height: auto;
+//             width: 100%;
+//             bottom: auto;
+//         }
+//     }
+// }
 
-.fc-item__kicker--dreamsnap {
-    display: none;
-}
+// .fc-item__kicker--dreamsnap {
+//     display: none;
+// }

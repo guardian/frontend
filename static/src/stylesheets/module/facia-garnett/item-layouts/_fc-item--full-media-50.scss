@@ -18,7 +18,7 @@ Full item with 50% width media.
 */
 
 @mixin fc-item--full-media-50 {
-    &:not(.fc-item--has-cutout) {
+    // &:not(.fc-item--has-cutout) {
         @include fc-item--horizontal(50%);
-    }
+    // }
 }

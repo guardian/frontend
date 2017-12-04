@@ -85,7 +85,8 @@ Media list item. Looks a bit like this:
         }
     }
 
-    &[class*='fc-item--has-sublinks']:not(.fc-item--has-cutout) {
+    // &[class*='fc-item--has-sublinks']:not(.fc-item--has-cutout) {
+    &[class*='fc-item--has-sublinks'] {
         .fc-item__footer--vertical {
             display: none;
         }
@@ -112,41 +113,41 @@ Media list item. Looks a bit like this:
         }
     }
 
-    &.fc-item--has-cutout {
-        .fc-item__container {
-            padding-left: 0;
-        }
+    // &.fc-item--has-cutout {
+    //     .fc-item__container {
+    //         padding-left: 0;
+    //     }
 
-        .fc-item__meta {
-            margin-left: 0;
-        }
+    //     .fc-item__meta {
+    //         margin-left: 0;
+    //     }
 
-        .fc-item__footer--vertical {
-            margin-left: 0;
-        }
-    }
+    //     .fc-item__footer--vertical {
+    //         margin-left: 0;
+    //     }
+    // }
 
-    &.fc-item--has-cutout {
-        .fc-item__media-wrapper {
-            display: none;
-        }
+    // &.fc-item--has-cutout {
+    //     .fc-item__media-wrapper {
+    //         display: none;
+    //     }
 
-        .fc-item__kicker--dreamsnap-list {
-            margin-left: 0;
-        }
+    //     .fc-item__kicker--dreamsnap-list {
+    //         margin-left: 0;
+    //     }
 
-        .fc-item__content {
-            min-height: gs-height(2) + $gs-baseline;
-            padding-right: gs-span(1);
-        }
+    //     .fc-item__content {
+    //         min-height: gs-height(2) + $gs-baseline;
+    //         padding-right: gs-span(1);
+    //     }
 
-        .fc-item__avatar {
-            height: gs-span(1) + $gs-baseline * 3;
+    //     .fc-item__avatar {
+    //         height: gs-span(1) + $gs-baseline * 3;
 
-            .fc-item__avatar__media {
-                display: block;
-                right: - $gs-gutter;
-            }
-        }
-    }
+    //         .fc-item__avatar__media {
+    //             display: block;
+    //             right: - $gs-gutter;
+    //         }
+    //     }
+    // }
 }

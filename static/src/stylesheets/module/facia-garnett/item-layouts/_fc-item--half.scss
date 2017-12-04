@@ -45,48 +45,44 @@ x x x x x x x x x x x x x x x x x x
             display: none;
         }
 
-        &:not(.fc-item--has-cutout),
+        // &:not(.fc-item--has-cutout),
         &:not(.fc-item--has-sublinks-1) {
             @include fc-sublinks--below;
         }
     }
 
-    &.fc-item--has-cutout {
-        .fc-item__header {
-            padding-bottom: gs-height(2) + $gs-baseline * 2;
+    // &.fc-item--has-cutout {
+    //     .fc-item__header {
+    //         padding-bottom: gs-height(2) + $gs-baseline * 2;
 
-            @include mq(desktop) {
-                padding-bottom: gs-height(4.5);
-            }
-        }
+    //         @include mq(desktop) {
+    //             padding-bottom: gs-height(4.5);
+    //         }
+    //     }
 
-        // to show on slices where we're hiding standfirst for half cards but still need them on has-cutout
-        .fc-item__standfirst {
-            display: block;
-        }
+    //     // to show on slices where we're hiding standfirst for half cards but still need them on has-cutout
+    //     .fc-item__standfirst {
+    //         display: block;
+    //     }
 
-        .fc-item__standfirst-wrapper {
-            padding-right: gs-span(2) + $gs-gutter * 2;
+    //     .fc-item__standfirst-wrapper {
+    //         padding-right: gs-span(2) + $gs-gutter * 2;
 
-            @include mq(desktop) {
-                padding-right: gs-span(3.5);
-            }
-        }
-    }
+    //         @include mq(desktop) {
+    //             padding-right: gs-span(3.5);
+    //         }
+    //     }
+    // }
 
-    .fc-item__avatar {
-        height: gs-height(7);
-    }
+    // .fc-item__avatar {
+    //     height: gs-height(5);
 
-    .fc-item__avatar {
-        height: gs-height(5);
+    //     @include mq(desktop) {
+    //         height: gs-height(6);
+    //     }
+    // }
 
-        @include mq(desktop) {
-            height: gs-height(6);
-        }
-    }
-
-    .fc-item__avatar__media {
-        right: -15%;
-    }
+    // .fc-item__avatar__media {
+    //     right: -15%;
+    // }
 }

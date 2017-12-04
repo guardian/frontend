@@ -19,7 +19,7 @@ Full item with 75% width media.
 */
 
 @mixin fc-item--full-media-75 {
-    &:not(.fc-item--has-cutout) {
+    // &:not(.fc-item--has-cutout) {
         @include fc-item--horizontal(74.6%); // Works out as same width as 9 col on desktop and 6.333 col on tablet to align with other items
-    }
+    // }
 }

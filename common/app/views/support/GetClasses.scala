@@ -20,12 +20,14 @@ object GetClasses {
       ("js-fc-item", true),
       ("fc-item--pillar-" + item.pillar.map(_.name).getOrElse("News").toLowerCase(), experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--type-" + item.contentType.name.toLowerCase(), experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-      ("fc-item--has-cutout", item.cutOut.isDefined),
+      ("fc-item--has-cutout", true), // delete me
+      // ("fc-item--has-cutout", item.cutOut.isDefined),
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
       ("fc-item--force-image-upgrade", isFirstContainer),
-      (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
+      ("fc-item--has-sublinks-2", true), // delete me
+      //(s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
       ("fc-item--has-metadata",
