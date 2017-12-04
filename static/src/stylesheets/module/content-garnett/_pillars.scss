@@ -1,3 +1,51 @@
+@mixin colorPalatte($pillarColor, $kickerColor) {
+   .content__section-label__link,
+   .drop-cap,
+   .element-pullquote p,
+   a,
+   .byline,
+   .button--secondary {
+       color: $pillarColor;
+
+       }
+
+    .inline-tone-fill,
+    .social-icon svg,
+    .social-icon.social-icon--more svg,
+    .inline-close {
+        fill: $pillarColor;
+    }
+
+   .inline-quote svg {
+       fill: $kickerColor;
+   }
+
+   .pullquote-cite {
+       color: $kickerColor;
+   }
+
+   .u-underline:hover {
+       border-bottom: solid 1px $pillarColor;
+   }
+
+   .social-icon,
+   .social-icon.social-icon--more {
+       &:hover, &:focus {
+           background-color: $pillarColor;
+           border: 1px solid $pillarColor;
+       }
+   }
+
+}
+
+.content--pillar-news {
+   @include colorPalatte($news-garnett-main-1, $neutral-3);
+}
+
+.content--pillar-opinion {
+   @include colorPalatte($opinion-garnett-main-1, $neutral-3);
+}
+
 .content--pillar-news {
     .content__section-label__link,
     .drop-cap,
@@ -23,84 +71,7 @@
         border: 1px solid #neutral-1;
 
         svg {
-            fill: #DD0812;
+            fill: $news-garnett-main-1;
         }
-    }
-
-    .social-icon,
-    .social-icon.social-icon--more {
-        background-color: transparent;
-        border: 1px solid $neutral-5;
-
-        svg {
-            fill: #DD0812;
-        }
-        &:hover {
-            background-color: #DD0812;
-            border: 1px solid #DD0812;
-
-            svg {
-                fill: #FFFFFF;
-            }
-        }
-    }
-
-    .meta__social,
-    .meta__numbers,
-    .byline,
-    .content__dateline {
-        border-top: 1px solid $neutral-5;
-    }
-
-    .byline {
-        font-weight: 200;
-        color: #333333;
-        font-style: italic;
-
-        a {
-            color: #DD0812;
-        }
-
-        span[itemprop="author"]  {
-            display: block;
-            font-style: normal;
-            font-weight: 900;
-        }
-    }
-
-    .meta__twitter {
-
-        a {
-            background-color: transparent;
-            border: 1px solid $neutral-5;
-        }
-
-        .inline-tone-fill {
-            fill: #DD0812;
-        }
-
-        .button--secondary {
-            color: #DD0812;
-        }
-
-        &:hover {
-            a {
-                background-color: #DD0812;
-                border: 1px solid #DD0812;
-            }
-            .inline-tone-fill {
-                fill: #FFFFFF;
-            }
-            .button--secondary {
-                color: #FFFFFF;
-            }
-        }
-    }
-
-    .tone-colour {
-        color: #DD0812;
-    }
-    .inline-tone-fill {
-        fill: #dd0812;
     }
 }
