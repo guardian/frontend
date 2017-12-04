@@ -8,6 +8,8 @@ import idapiclient.IdApiClient
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
 import play.api.mvc._
 import services.{AuthenticatedUser, AuthenticationService, IdentityUrlBuilder}
+import conf.switches.Switches.IdentityRedirectUsersWithLingeringV1ConsentsSwitch
+
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -36,6 +38,9 @@ class AuthenticatedActions(
 
     SeeOther(identityUrlBuilder.buildUrl(signinUrl))
   }
+
+  def sendUserToConsentJourney(request: RequestHeader): Result =
+    redirectWithReturn(request, "/consent")
 
   def sendUserToSignin(request: RequestHeader): Result =
     redirectWithReturn(request, "/signin")
@@ -87,6 +92,22 @@ class AuthenticatedActions(
       }
   }
 
+  def apiUserShouldRepermissionRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
+    override val executionContext = ec
+    //TODO: verify if the user reperm'd instead of validate. also verify v1 email subs
+    def refine[A](request: AuthRequest[A]) = Future.successful {
+      if(IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn) {
+        request.user.statusFields.userEmailValidated match {
+          case Some(true) => Left(sendUserToConsentJourney(request));
+          case _ => Right(request);
+        }
+      }
+      else {
+        Right(request);
+      }
+    }
+  }
+
   def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
 
@@ -105,5 +126,8 @@ class AuthenticatedActions(
 
   def recentlyAuthenticated: ActionBuilder[AuthRequest, AnyContent] =
     authAction andThen recentlyAuthenticatedRefiner andThen apiVerifiedUserRefiner
+
+  def authWithConsentRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
+    recentlyAuthenticated andThen apiUserShouldRepermissionRefiner
 
 }
