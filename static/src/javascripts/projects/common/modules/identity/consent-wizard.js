@@ -10,6 +10,8 @@ import {
     getInfoObject as getWizardInfoObject,
 } from './wizard';
 
+const ERR_IDENTITY_CONSENT_WIZARD_MISSING = 'Missing wizard element';
+
 const positions = {
     consent: 'consent',
     email: 'email',
@@ -77,15 +79,19 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
 };
 
 const bindNextButton = (buttonEl: HTMLElement): void => {
-    const wizardEl = [
-        ...document.getElementsByClassName('manage-account-wizard--consent'),
-    ][0];
-    buttonEl.addEventListener('click', (ev: Event) => {
-        ev.preventDefault();
-        getWizardInfoObject(wizardEl).then(wizardInfo =>
-            setPosition(wizardEl, wizardInfo.position + 1)
-        );
-    });
+    const wizardEl: ?Element = buttonEl.closest(
+        '.manage-account-wizard--consent'
+    );
+    if (wizardEl && wizardEl instanceof HTMLElement) {
+        buttonEl.addEventListener('click', (ev: Event) => {
+            ev.preventDefault();
+            getWizardInfoObject(wizardEl).then(wizardInfo =>
+                setPosition(wizardEl, wizardInfo.position + 1)
+            );
+        });
+    } else {
+        throw new Error(ERR_IDENTITY_CONSENT_WIZARD_MISSING);
+    }
 };
 
 const createEmailConsentCounter = (counterEl: HTMLElement): void => {
