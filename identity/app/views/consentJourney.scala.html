@@ -46,7 +46,7 @@
                     <div class="js-errorHolder manage-account__errors"></div>
 
                     <div class="manage-account-wizard manage-account-wizard--consent" >
-                        <div class="manage-account-wizard__step">
+                        <div class="manage-account-wizard__step" data-wizard-step-name="consent">
 
                             <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
                                 @views.html.helper.CSRF.formField
@@ -93,7 +93,7 @@
                             </form>
 
                         </div>
-                        <div class="manage-account-wizard__step">
+                        <div class="manage-account-wizard__step" data-wizard-step-name="email">
 
                             <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
                                 @views.html.helper.CSRF.formField
@@ -116,7 +116,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="manage-account-wizard__step">
+                        <div class="manage-account-wizard__step" data-wizard-step-name="endcard">
                             <div class="js-manage-account-wizard__next">
                                 <div class="manage-account-consent-thanks">
                                     <h2 class="manage-account-consent-thanks__title">Thank you</h2>
