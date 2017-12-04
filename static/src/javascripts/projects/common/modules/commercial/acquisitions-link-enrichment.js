@@ -60,6 +60,8 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
             return;
         }
 
+        // TODO: remove this when only https://github.com/guardian/acquisition-iframe-tracking
+        // TODO: is being used for acquisition iframe tracking
         // Expects enrich requests to be made via iframe-messenger:
         // https://github.com/guardian/iframe-messenger
         if (data.type === 'enrich-acquisition-links' && data.id) {
@@ -69,6 +71,28 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
                     JSON.stringify(data),
                     'https://interactive.guim.co.uk'
                 );
+            });
+        }
+
+        if (data.type === 'acquisition-data-request') {
+            [...document.getElementsByTagName('iframe')].forEach(el => {
+                const iframeSrc = el.getAttribute('src');
+                if (
+                    iframeSrc &&
+                    iframeSrc.startsWith('https://interactive.guim.co.uk') &&
+                    iframeSrc === event.source.location.href
+                ) {
+                    el.contentWindow.postMessage(
+                        JSON.stringify({
+                            type: 'acquisition-data-response',
+                            acquisitionData: {
+                                ...addReferrerData({}),
+                                source: 'GUARDIAN_WEB',
+                            },
+                        }),
+                        '*'
+                    );
+                }
             });
         }
     });
