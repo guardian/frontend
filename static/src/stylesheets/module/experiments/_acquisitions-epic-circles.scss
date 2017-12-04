@@ -1,5 +1,11 @@
 .contributions__epic--circles .contributions__contribute--epic {
   background-color: transparent;
+  position: relative;
+  padding-left: 60px;
+  padding-top: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: $f-sans-serif-headline;
 
   &::after {
     display: none;
@@ -13,7 +19,12 @@
     height: 50px;
     border-radius: 600px;
     background-repeat: no-repeat;
+    background-size: 110%;
     background-color: $multimedia-main-2;
+    background-position: 5px 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 }
 
