@@ -45,33 +45,3 @@
 .content--pillar-opinion {
    @include colorPalatte($opinion-garnett-main-1, $neutral-3);
 }
-
-.content--pillar-news {
-    .content__section-label__link,
-    .drop-cap,
-    .element-pullquote p,
-    a {
-        color: $news-garnett-main-1;
-    }
-
-    .inline-quote svg {
-        fill: $neutral-4;
-    }
-
-    .pullquote-cite {
-        color: $neutral-3;
-    }
-
-    .u-underline:hover {
-        border-bottom: solid 1px $news-garnett-main-1;
-    }
-
-    .social-icon {
-        background-color: inherit;
-        border: 1px solid #neutral-1;
-
-        svg {
-            fill: $news-garnett-main-1;
-        }
-    }
-}
