@@ -84,8 +84,14 @@ object css {
 
   private def project(project: String)(implicit request: RequestHeader): String = {
     project match {
-      case "facia" => "stylesheets/facia.css"
-      case _ => s"stylesheets/$ContentCSSFile.css"
+      case "facia" => {
+        println("here's the stylesheet: " + s"stylesheets/$FaciaCSSFile.css")
+        s"stylesheets/$FaciaCSSFile.css"
+      }
+      case _ => {
+        println("were not in facia: " + s"stylesheets/$ContentCSSFile.css")
+        s"stylesheets/$ContentCSSFile.css"
+      }
     }
   }
 

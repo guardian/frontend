@@ -23,10 +23,10 @@ object IndexHtml {
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
-    override def linkCss: Html = stylesheetLink("stylesheets/facia.css")
-    override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.facia.css")
+    override def linkCss: Html = stylesheetLink(s"stylesheets/$FaciaCSSFile.css")
+    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.facia.css")
+    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$FaciaCSSFile.css")
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
