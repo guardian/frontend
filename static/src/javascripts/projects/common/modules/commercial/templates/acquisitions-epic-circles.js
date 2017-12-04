@@ -20,8 +20,6 @@ export const acquisitionsEpicCirclesTemplate = ({
         <p class="contributions__paragraph contributions__paragraph--epic">
             ${p1}
         </p>
-        <h3 class="contributions__epic-heading">we haven't put up</h3>
-        <h3 class="contributions__epic-heading">a paywall</h3>
         ${testimonialBlock}
         <p class="contributions__paragraph contributions__paragraph--epic">
             ${p2}
