@@ -106,6 +106,7 @@ object FaciaContainer {
     container: Container,
     config: CollectionConfigWithId,
     collectionEssentials: CollectionEssentials,
+    hasMore: Boolean,
     componentId: Option[String] = None
   ): FaciaContainer = {
     apply(
@@ -113,7 +114,8 @@ object FaciaContainer {
       container,
       ContainerDisplayConfig.withDefaults(config),
       collectionEssentials,
-      componentId
+      componentId,
+      hasMore
     )
   }
 
@@ -122,7 +124,8 @@ object FaciaContainer {
     container: Container,
     config: ContainerDisplayConfig,
     collectionEssentials: CollectionEssentials,
-    componentId: Option[String]
+    componentId: Option[String],
+    hasMore: Boolean
   ): FaciaContainer = fromConfig(
     index,
     container,
@@ -132,7 +135,8 @@ object FaciaContainer {
       container,
       ContainerLayoutContext.empty,
       config,
-      collectionEssentials.items
+      collectionEssentials.items,
+      hasMore
     ).map(_._1),
     componentId
   )
@@ -179,6 +183,7 @@ object FaciaContainer {
       container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
       config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.empty)),
       collectionEssentials = CollectionEssentials(items take 8, Nil, Some(title), href, None, None),
+      hasMore = false,
       componentId = None
     ).withTimeStamps
   }
@@ -377,7 +382,7 @@ object Front extends implicits.Collections {
         case Nil => accumulation
         case ((config, collection), container) :: remainingConfigs =>
           val (newSeen, newItems, _) = deduplicate(seenTrails, container, collection.items)
-          val layoutMaybe = ContainerLayout.fromContainer(container, context, config, newItems)
+          val layoutMaybe = ContainerLayout.fromContainer(container, context, config, newItems, hasMore = false)
           val newContext = layoutMaybe.map(_._2).getOrElse(context)
           val faciaContainer = FaciaContainer.fromConfig(
             index,
@@ -394,13 +399,6 @@ object Front extends implicits.Collections {
     Front(
       faciaContainers(configs, initialContext).filterNot(_.items.isEmpty)
     )
-  }
-
-  def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]): Front = {
-    fromConfigsAndContainers(configs.map {
-      case (config, collectionEssentials) =>
-        ((ContainerDisplayConfig.withDefaults(config), collectionEssentials), Container.fromConfig(config.config))
-    })
   }
 
   case class ContainersWithDeduped(containers: Vector[FaciaContainer], deduped: DedupedFrontResult)
@@ -431,7 +429,7 @@ object Front extends implicits.Collections {
           val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
           val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
 
-          val containerLayoutMaybe: Option[(ContainerLayout, ContainerLayoutContext)] = ContainerLayout.fromContainer(container, context, containerDisplayConfig, newItems)
+          val containerLayoutMaybe: Option[(ContainerLayout, ContainerLayoutContext)] = ContainerLayout.fromContainer(container, context, containerDisplayConfig, newItems, pressedCollection.hasMore)
           val newContext: ContainerLayoutContext = containerLayoutMaybe.map(_._2).getOrElse(context)
           val faciaContainer = FaciaContainer.fromConfig(
             index,

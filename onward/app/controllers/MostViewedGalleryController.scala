@@ -52,7 +52,8 @@ class MostViewedGalleryController(
         1,
         Fixed(FixedContainers.fixedMediumSlowVI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(galleries.map(_.faciaContent), Nil, Some("more galleries"), None, None, None)
+        CollectionEssentials(galleries.map(_.faciaContent), Nil, Some("more galleries"), None, None, None),
+        hasMore = false
       ).withTimeStamps,
       FrontProperties.empty
     )

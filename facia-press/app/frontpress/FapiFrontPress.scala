@@ -177,22 +177,32 @@ trait FapiFrontPress extends Logging {
 
       val storyCountLite = Container.storiesCount(CollectionConfig.make(collection.collectionConfig), curated ++ backfill).getOrElse(maxStories)
 
+      val hasMore = true
+
       PressedCollectionVersions(
-        pressCollection(collection, curated, backfill, treats, storyCountLite),
-        pressCollection(collection, curated, backfill, treats, maxStories)
+        pressCollection(collection, curated, backfill, treats, storyCountLite, hasMore),
+        pressCollection(collection, curated, backfill, treats, maxStories, hasMore)
       )
     }
   }
 
 
-  private def pressCollection(collection: Collection, curated: List[PressedContent], backfill: List[PressedContent], treats: List[PressedContent], storyCount: Int) = {
+  private def pressCollection(
+    collection: Collection,
+    curated: List[PressedContent],
+    backfill: List[PressedContent],
+    treats: List[PressedContent],
+    storyCount: Int,
+    hasMore: Boolean
+  ) = {
     val trimmedCurated = curated.take(storyCount)
     val trimmedBackfill = backfill.take(storyCount - trimmedCurated.length)
     PressedCollection.fromCollectionWithCuratedAndBackfill(
       collection,
       trimmedCurated,
       trimmedBackfill,
-      treats
+      treats,
+      hasMore
     )
   }
 

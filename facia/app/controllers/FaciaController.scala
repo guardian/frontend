@@ -177,7 +177,8 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             1,
             containerLayout,
             CollectionConfigWithId(collectionId, config),
-            CollectionEssentials.fromPressedCollection(collection)
+            CollectionEssentials.fromPressedCollection(collection),
+            hasMore = false
           )
 
           val html = container(containerDefinition, FrontProperties.empty)
