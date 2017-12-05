@@ -297,7 +297,10 @@ object Front extends implicits.Collections {
   type TrailUrl = String
 
   def itemsVisible(containerDefinition: ContainerDefinition): Int =
-    containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
+    itemsVisible(containerDefinition.slices)
+
+  def itemsVisible(slices: Seq[Slice]): Int =
+    slices.flatMap(_.layout.columns.map(_.numItems)).sum
 
   // Never de-duplicate snaps.
   def participatesInDeduplication(faciaContent: PressedContent): Boolean = faciaContent.properties.embedType.isEmpty
