@@ -79,8 +79,9 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
                 const iframeSrc = el.getAttribute('src');
                 if (
                     iframeSrc &&
-                    iframeSrc.startsWith('https://interactive.guim.co.uk') &&
-                    iframeSrc === event.source.location.href
+                    iframeSrc.startsWith(
+                        'https://interactive.guim.co.uk/embed/2017/12/the-mother-load/'
+                    )
                 ) {
                     el.contentWindow.postMessage(
                         JSON.stringify({
