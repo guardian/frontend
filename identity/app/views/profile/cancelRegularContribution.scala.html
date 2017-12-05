@@ -1,9 +1,9 @@
 @(user: com.gu.identity.model.User)
 <ul class="details-list details-list--lower u-unstyled ">
     <li class="details-list__item">
-        <span><a>Cancel contribution</a></span>
+        <span><a class="js-cancel-contribution-link">Cancel contribution</a></span>
     </li>
-    <div class="contribution-cancellation__section">
+    <div class="contribution-cancellation__section js-cancellation-form">
         <h3 class="manage-account-header">Cancel contribution</h3>
         <p>Your contribution funds and supports the Guardian independent journalism. Remember you can contribute again at any time by making a <a href="@(conf.Configuration.id.supportUrl)">one-off</a> or <a href="@(conf.Configuration.id.supportUrl)">monthly contribution</a>.</p>
         <p>We would really value your feedback please take a moment to tell us why you are cancelling</p>

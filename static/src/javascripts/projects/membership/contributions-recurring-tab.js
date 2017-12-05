@@ -22,13 +22,16 @@ const UP_SELL = '.js-contribution-up-sell';
 const CONTRIBUTION_INFO = '.js-contribution-info';
 const LOADER = '.js-contribution-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
+const IS_DISABLE_CLASSNAME = 'is-disable';
 const ERROR = '.js-contribution-error';
+
 const CANCEL_CONTRIBUTION = '.js-contribution-cancel';
-const CANCEL_CONTRIBUTION_SECTION = '.js-contribution-cancellation__section';
-const CANCEL_CONTRIBUTION_SUBMIT = '.js-cancel-contribution-submit';
-const CANCEL_CONTRIBUTION_KEEP_CONTRIBUTING='.js-cancel-contribution-keep-contributing';
+const CANCEL_CONTRIBUTION_FORM = '.js-cancellation-form';
+const CANCEL_CONTRIBUTION_MSG_SUCCESS = '.js-cancel-contribution-msg-success';
+const CANCEL_CONTRIBUTION_LINK = '.js-cancel-contribution-link';
+const KEEP_CONTRIBUTION_LINK = '.js-cancel-contribution-keep-contributing';
 const CANCEL_CONTRIBUTION_SELECTOR = '.js-cancel-contribution-selector';
-const CANCEL_CONTRIBUTION_MSG_SUCCESS = 'js-cancel-contribution-msg-success';
+const CANCEL_CONTRIBUTION_SUBMIT = '.js-cancel-contribution-submit';
 
 const hideLoader = (): void => {
     $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
@@ -46,6 +49,12 @@ const displayErrorMessage = (): void => {
     $(ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
+const hideContributionInfo = (): void => {
+    $(CONTRIBUTION_INFO).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+// Cancel contribution aux functions
+
 const displayCancelContribution = (): void => {
     $(CANCEL_CONTRIBUTION).removeClass(IS_HIDDEN_CLASSNAME);
 };
@@ -54,27 +63,41 @@ const hideCancelContribution = (): void => {
     $(CANCEL_CONTRIBUTION).addClass(IS_HIDDEN_CLASSNAME);
 };
 
-const hideContributionInfo = (): void => {
-    $(CONTRIBUTION_INFO).addClass(IS_HIDDEN_CLASSNAME);
+const displayCancelContributionForm = (): void => {
+    $(CANCEL_CONTRIBUTION_FORM).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-const displayContributionSuccessMsg = (): void => {
-    $(CANCEL_CONTRIBUTION_SECTION).removeClass(IS_HIDDEN_CLASSNAME);
+const hideCancelContributionForm = (): void => {
+    $(CANCEL_CONTRIBUTION_FORM).addClass(IS_HIDDEN_CLASSNAME);
 };
 
-const hideContributionSuccessMsg = (): void => {
-    $(CANCEL_CONTRIBUTION_SECTION).addClass(IS_HIDDEN_CLASSNAME);
-};
-
-const displayContributionSuccessMsg = (): void => {
-    $(CANCEL_CONTRIBUTION_MSG_SUCCESS).removeClass(IS_HIDDEN_CLASSNAME);
-};
-
-const hideContributionSuccessMsg = (): void => {
+const hideCancelContributionSuccessMessage = () => {
     $(CANCEL_CONTRIBUTION_MSG_SUCCESS).addClass(IS_HIDDEN_CLASSNAME);
 };
 
-const cancelContribution = (): void => {
+const displayCancelContributionLink = () => {
+    $(CANCEL_CONTRIBUTION_LINK).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideCancelContributionLink = () => {
+    $(CANCEL_CONTRIBUTION_LINK).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const disableCancellationSubmit = () => {
+    $(CANCEL_CONTRIBUTION_SUBMIT).addClass(IS_DISABLE_CLASSNAME);
+    $(CANCEL_CONTRIBUTION_SUBMIT).attr('disabled', 'disabled');
+};
+
+const enableCancellationSubmit = () => {
+    $(CANCEL_CONTRIBUTION_SUBMIT).removeClass(IS_DISABLE_CLASSNAME);
+    $(CANCEL_CONTRIBUTION_SUBMIT).removeAttr('disabled');
+};
+
+const handleCancelContributionSubmit = (): void => {
+    const cancellationReasonSelector = document.querySelector(
+        CANCEL_CONTRIBUTION_SELECTOR
+    );
+
     fetch(
         `${config.get(
             'page.userAttributesApiUrl'
@@ -87,7 +110,7 @@ const cancelContribution = (): void => {
                 'Csrf-Token': 'nocheck',
             },
             body: {
-                reason: 'Customer',
+                reason: cancellationReasonSelector.value,
             },
         }
     ).catch(err => {
@@ -97,6 +120,72 @@ const cancelContribution = (): void => {
             feature: 'mma-monthlycontribution',
         });
     });
+};
+
+const handleCancellationReasonChange = () => {
+    const cancelContributionSubmit = document.querySelector(
+        CANCEL_CONTRIBUTION_SUBMIT
+    );
+    const cancellationReasonSelector = document.querySelector(
+        CANCEL_CONTRIBUTION_SELECTOR
+    );
+
+    enableCancellationSubmit();
+
+    if (cancellationReasonSelector) {
+        cancellationReasonSelector.removeEventListener('change');
+    }
+
+    if (cancelContributionSubmit) {
+        cancelContributionSubmit.addEventListener(
+            'click',
+            handleCancelContributionSubmit
+        );
+    }
+};
+
+const handleKeepContributingLink = () => {
+    displayCancelContributionLink();
+    hideCancelContributionForm();
+    hideCancelContributionSuccessMessage();
+};
+
+const handleCancelLink = () => {
+    hideCancelContributionLink();
+    disableCancellationSubmit();
+    displayCancelContributionForm();
+
+    const keepContributingLink = document.querySelector(KEEP_CONTRIBUTION_LINK);
+    const cancellationReasonSelector = document.querySelector(
+        CANCEL_CONTRIBUTION_SELECTOR
+    );
+
+    if (keepContributingLink) {
+        keepContributingLink.addEventListener(
+            'click',
+            handleKeepContributingLink
+        );
+    }
+
+    if (cancellationReasonSelector) {
+        cancellationReasonSelector.addEventListener(
+            'change',
+            handleCancellationReasonChange
+        );
+    }
+};
+
+const setupCancelContribution = () => {
+    hideCancelContributionForm();
+    hideCancelContributionSuccessMessage();
+    displayCancelContributionLink();
+    displayCancelContribution();
+
+    const cancelLink = document.querySelector(CANCEL_CONTRIBUTION_LINK);
+
+    if (cancelLink) {
+        cancelLink.addEventListener('click', handleCancelLink);
+    }
 };
 
 const populateUserDetails = (contributorDetails: ContributorDetails): void => {
@@ -151,16 +240,7 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     }
 
     if (!contributorDetails.subscription.cancelledAt) {
-        displayCancelContribution();
-
-        const cancelButton = document.querySelector(CANCEL_CONTRIBUTION_BUTTON);
-        const cancelSelector = document.querySelector(CANCEL_CONTRIBUTION_SELECTOR);
-
-        if (cancelButton) {
-            cancelButton.addEventListener('click', () => {
-                cancelContribution();
-            });
-        }
+        setupCancelContribution();
     } else {
         hideCancelContribution();
         displaySupportUpSell();
