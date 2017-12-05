@@ -93,16 +93,35 @@
             }
             <div class="manage-account__switches">
                 <ul>
-                @hintendNewsletters.filter(_.theme == "news").zipWithRowInfo.map { case (newsletter, row) =>
-                <li>
-                    @fragments.newsletterSwitch(
-                        emailPrefsForm,
-                        emailSubscriptions,
-                        newsletter = newsletter
-                    )(nonInputFields, messages, request)
-                </li>
-                }
+                    @onlySubscribedToNewsletters.zipWithRowInfo.map { case (newsletter, row) =>
+                        <li>
+                            @fragments.newsletterSwitch(
+                                emailPrefsForm,
+                                emailSubscriptions,
+                                newsletter = newsletter
+                            )(nonInputFields, messages, request)
+                        </li>
+                    }
                 </ul>
+            </div>
+        </form>
+    </div>
+}
+
+@emailSignupStep() = {
+    <div class="manage-account-wizard__step" data-wizard-step-name="email-signup">
+
+        <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+            @views.html.helper.CSRF.formField
+            @fragments.form.hidden(emailPrefsForm("htmlPreference"))
+
+            <h2 class="identity-title">Love email? Gosh, so do we!</h2>
+            <p class="manage-account-headerNote">
+                Sign up to whatever newsletters tickle your fancy and we'll make sure you get them on time.
+            </p>
+
+            <div class="manage-account__switches">
+                @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions,true)(request, messages)
             </div>
         </form>
     </div>
@@ -145,7 +164,7 @@
                             }
                             case "signup" => {
                                 @consentStep(journey = "signup")
-                                @emailStep()
+                                @emailSignupStep()
                             }
                         }
 
