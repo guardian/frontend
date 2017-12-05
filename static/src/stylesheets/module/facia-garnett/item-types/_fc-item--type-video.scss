@@ -1,6 +1,15 @@
 .fc-item--type-video {
     background-color: $video-garnett-main-1;
 
+    .fc-item__content {
+        justify-content: space-between;
+    }
+
+    .fc-item__header,
+    .fc-item__standfirst {
+        flex: 0 1 auto;
+    }
+
     .fc-item__kicker {
         background-color: $video-garnett-main-1;
 
@@ -13,8 +22,12 @@
         color: #ffffff;
     }
 
-    .fc-item__standfirst-wrapper {
+    .fc-item__meta-wrapper {
+        flex: 0 1 auto;
+        display: flex;
+        flex-direction: row;
         justify-content: space-between;
+        padding-bottom: $gs-baseline / 2;
     }
 
     .fc-item__media-meta,
@@ -24,19 +37,23 @@
 
     .inline-video-icon {
         position: relative;
-        top: 2px;
+        top: 7px;
 
         > svg {
-            height: 12px;
+            width: 18px;
         }
 
         &::after {
             display: inline-block;
             content: '';
             height: 10px;
-            margin-right: 6px;
+            margin: 6px;
             border: 1px solid;
         }
+    }
+
+    .fc-item__standfirst {
+        color: #ffffff;
     }
 
     .fc-item__media-meta,
