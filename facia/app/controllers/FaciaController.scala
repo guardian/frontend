@@ -60,7 +60,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     getSomeCollections(collectionsPath, count, offset, "none").map { collections =>
       Cached(CacheTime.Facia) {
         JsonComponent(
-          "items" -> JsArray(collections.getOrElse(List()).map(getCollection))
+          "items" -> JsArray(collections.map(getCollection))
         )
       }
     }
@@ -224,11 +224,20 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
       })
     }.getOrElse(successful(None))
 
-  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[Option[List[PressedCollection]]] =
-      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[List[PressedCollection]] =
+    frontJsonFapi.get(path).map { maybePage =>
+      maybePage.map { faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
-        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular" || collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)).slice(offset, offset + num))
-      })
+        faciaPage
+          .collections
+          .filterNot { collection =>
+            (collection.curated ++ collection.backfill).length < 2 ||
+              collection.displayName == "most popular" ||
+              collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)
+          }
+          .slice(offset, offset + num)
+      }.getOrElse(Nil)
+    }
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String): Action[AnyContent] = Action.async { implicit request =>
