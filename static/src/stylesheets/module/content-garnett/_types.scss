@@ -78,6 +78,9 @@ $quote-tail: 25px; // ********** Article Type **********
         }
     }
 
+
+
+
     .meta__social,
     .meta__numbers,
     .byline,
@@ -106,10 +109,6 @@ $quote-tail: 25px; // ********** Article Type **********
         }
 
         &:hover, &:focus  {
-            a {
-                background-color: $news-garnett-main-1;
-                border: 1px solid $news-garnett-main-1;
-            }
             .inline-tone-fill {
                 fill: #FFFFFF;
             }
@@ -117,10 +116,6 @@ $quote-tail: 25px; // ********** Article Type **********
                 color: #FFFFFF;
             }
         }
-    }
-
-    .tone-colour {
-        color: $news-garnett-main-1;
     }
 
 
