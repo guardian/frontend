@@ -76,8 +76,8 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                         fastdom.write(() => {
                             if (stepCount <= 2) {
                                 buttonBackEl.remove();
-                            } else {
-                                buttonBackEl && buttonBackEl.classList.toggle(
+                            } else if (buttonBackEl) {
+                                buttonBackEl.classList.toggle(
                                     'manage-account-consent-wizard__revealable--visible',
                                     ev.detail.position > 0
                                 );
