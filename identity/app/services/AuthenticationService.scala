@@ -1,9 +1,8 @@
 package services
 
-import idapiclient.Auth
+import idapiclient.{Auth, ScGuRp, ScGuU}
 import com.gu.identity.model.User
 import conf.FrontendIdentityCookieDecoder
-import idapiclient.ScGuU
 import play.api.mvc.{RequestHeader, Results}
 
 import scala.language.implicitConversions
@@ -32,6 +31,11 @@ class AuthenticationService(cookieDecoder: FrontendIdentityCookieDecoder,
     authedUser <- authenticatedUserFor(request)
     scGuLa <- request.cookies.get("SC_GU_LA")
   } yield cookieDecoder.userHasRecentScGuLaCookie(authedUser, scGuLa.value, Minutes.minutes(20).toStandardDuration)).getOrElse(false)
+
+  def authenticateUserForPermissions(request: RequestHeader): Option[AuthenticatedUser] = for {
+    scGuRp <- request.cookies.get("SC_GU_RP")
+    fullUser <- cookieDecoder.getUserDataForGuRp(scGuRp.value)
+  } yield AuthenticatedUser(fullUser, ScGuRp(scGuRp.value))
 
   def requestPresentsAuthenticationCredentials(request: RequestHeader): Boolean = authenticatedUserFor(request).isDefined
 

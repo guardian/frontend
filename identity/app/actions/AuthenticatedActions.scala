@@ -75,6 +75,19 @@ class AuthenticatedActions(
       }
   }
 
+  def permissionRefiner: ActionRefiner[Request, AuthRequest] = new ActionRefiner[Request, AuthRequest] {
+    override val executionContext = ec
+
+    def refine[A](request: Request[A]) =
+      authService.authenticateUserForPermissions(request) match {
+        case Some(permUser) => Future.successful(Right( new AuthenticatedRequest( permUser, request)))
+        case None => authService.authenticatedUserFor(request) match {
+          case Some(authenticatedUser) => Future.successful(Right(new AuthenticatedRequest(authenticatedUser, request)))
+          case None => checkIdApiForUserAndRedirect(request)
+        }
+      }
+  }
+
   def agreeAction(unAuthorizedCallback: (RequestHeader) => Result): AuthenticatedBuilder[AuthenticatedUser] =
     new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
 
@@ -140,5 +153,8 @@ class AuthenticatedActions(
 
   def authWithConsentRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
     recentlyAuthenticated andThen apiUserShouldRepermissionRefiner
+
+  def permissionAuthentication: ActionBuilder[AuthRequest, AnyContent] =
+    noOpActionBuilder andThen permissionRefiner
 
 }
