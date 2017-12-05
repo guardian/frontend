@@ -15,6 +15,7 @@ import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 import utils.SafeLogging
+import com.gu.identity.model.EmailNewsletters
 
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
