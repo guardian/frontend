@@ -97,16 +97,16 @@ class AuthenticatedActions(
 
   def apiUserShouldRepermissionRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
-    //TODO: verify if the user reperm'd instead of validate. also verify v1 email subs
+    //TODO: verify v1 email subs
     def refine[A](request: AuthRequest[A]) = Future.successful {
       if(IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn) {
-        request.user.statusFields.userEmailValidated match {
-          case Some(true) => Right(request);
-          case _ => Left(sendUserToConsentJourney(request));
+        request.user.statusFields.hasRepermissioned match {
+          case Some(true) => Right(request)
+          case _ => Left(sendUserToConsentJourney(request))
         }
       }
       else {
-        Right(request);
+        Right(request)
       }
     }
   }
