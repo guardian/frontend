@@ -77,7 +77,7 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                             if (stepCount <= 2) {
                                 buttonBackEl.remove();
                             } else {
-                                buttonBackEl.classList.toggle(
+                                buttonBackEl && buttonBackEl.classList.toggle(
                                     'manage-account-consent-wizard__revealable--visible',
                                     ev.detail.position > 0
                                 );
