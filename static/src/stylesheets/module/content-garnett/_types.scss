@@ -73,7 +73,7 @@ $quote-tail: 25px; // ********** Article Type **********
         &:focus,
         &:hover {
             svg {
-                fill: #FFFFFF;
+                fill: $neutral-garnett-1;
             }
         }
     }
@@ -106,11 +106,11 @@ $quote-tail: 25px; // ********** Article Type **********
             &:focus,
             &:hover {
                 .inline-tone-fill {
-                    fill: #FFFFFF;
+                    fill: $neutral-garnett-1;
                 }
 
                 .contact {
-                    color: #FFFFFF;
+                    color: $neutral-garnett-1;
                 }
             }
         }
