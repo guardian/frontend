@@ -1,74 +1,46 @@
 @mixin colorPalatte($pillarColor, $kickerColor) {
-   .content__section-label__link,
-   .drop-cap,
-   .element-pullquote p,
-   a,
-   .byline,
-   .button--secondary {
-       color: $pillarColor;
-
-       }
-
-    .inline-tone-fill,
-    .social-icon svg,
-    .social-icon.social-icon--more svg,
-    .inline-close {
-        fill: $pillarColor;
-    }
-
-   .inline-quote svg {
-       fill: $kickerColor;
-   }
-
-   .pullquote-cite {
-       color: $kickerColor;
-   }
-
-   .u-underline:hover {
-       border-bottom: solid 1px $pillarColor;
-   }
-
-   .social-icon,
-   .social-icon.social-icon--more {
-       &:hover, &:focus {
-           background-color: $pillarColor;
-           border: 1px solid $pillarColor;
-       }
-   }
-
-}
-
-.content--pillar-news {
-   @include colorPalatte($news-garnett-main-1, $neutral-3);
-}
-
-.content--pillar-opinion {
-   @include colorPalatte($opinion-garnett-main-1, $neutral-3);
-}
-
-.content--pillar-news {
+    .button--secondary,
+    .byline,
     .content__section-label__link,
     .drop-cap,
     .element-pullquote p,
     a {
-        color: $news-garnett-main-1;
+        color: $pillarColor;
+    }
+
+    .inline-close,
+    .inline-tone-fill,
+    .social-icon svg,
+    .social-icon.social-icon--more svg {
+        fill: $pillarColor;
     }
 
     .inline-quote svg {
-        fill: $neutral-4;
+        fill: $kickerColor;
     }
 
     .pullquote-cite {
-        color: $neutral-3;
+        color: $kickerColor;
     }
 
     .u-underline:hover {
-        border-bottom: solid 1px $news-garnett-main-1;
+        border-bottom: solid 1px $pillarColor;
     }
 
-        svg {
-            fill: #DD0812;
+    .social-icon,
+    .social-icon.social-icon--more {
+        &:focus,
+        &:hover {
+            background-color: $pillarColor;
+            border: 1px solid $pillarColor;
         }
     }
+}
 
+.content--pillar-news {
+    @include colorPalatte($news-garnett-main-1, $neutral-3);
+}
+
+.content--pillar-opinion {
+    @include colorPalatte($opinion-garnett-main-1, $neutral-3);
 }
