@@ -106,17 +106,18 @@ $quote-tail: 25px; // ********** Article Type **********
         a {
             background-color: transparent;
             border: 1px solid $neutral-4;
+
+            &:hover, &:focus  {
+                .inline-tone-fill {
+                    fill: #FFFFFF;
+                }
+                .contact {
+                    color: #FFFFFF;
+                }
         }
 
-        &:hover, &:focus  {
-            .inline-tone-fill {
-                fill: #FFFFFF;
-            }
-            .button--secondary {
-                color: #FFFFFF;
-            }
-        }
     }
+}
 
 
     .badge,
