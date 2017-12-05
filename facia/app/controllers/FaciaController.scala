@@ -219,13 +219,13 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   private def getPressedCollection(collectionId: String): Future[Option[PressedCollection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
-      frontJsonFapi.getLite(path).map(_.flatMap{ faciaPage =>
+      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(successful(None))
 
   private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[Option[List[PressedCollection]]] =
-      frontJsonFapi.getLite(path).map(_.flatMap{ faciaPage =>
+      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
         Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular" || collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)).slice(offset, offset + num))
       })
