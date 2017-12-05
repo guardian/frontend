@@ -28,14 +28,6 @@
     }
 }
 
-@hintendNewsletters = @{
-   if (newsletterHint.isDefined) {
-       onlySubscribedToNewsletters
-   } else {
-       EmailNewsletters.all.subscriptions
-   }
-}
-
 @consentStep(journey:String) = {
     <div class="manage-account-wizard__step" data-wizard-step-name="consent">
 
