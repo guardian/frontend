@@ -6,7 +6,8 @@
 @(
     emailPrefsForm: Form[EmailPrefsData],
     availableLists: EmailNewsletters,
-    emailSubscriptions: List[String]
+    emailSubscriptions: List[String],
+    startsOpen: Boolean = false
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @emailListCategoryList(theme: String, newsletters: List[EmailNewsletter], isActive: Boolean) = {
@@ -29,6 +30,6 @@
 
 <div class="email-subscriptions">
     @List("news", "features", "sport", "culture", "lifestyle", "comment").zipWithIndex.map { case(theme, index) =>
-        @emailListCategoryList(theme, availableLists.subscriptions.filter(_.theme == theme), false)
+        @emailListCategoryList(theme, availableLists.subscriptions.filter(_.theme == theme), (startsOpen == true && index == 0))
     }
 </div>
