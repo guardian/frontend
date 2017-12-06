@@ -5,11 +5,10 @@
 @(navMenu: NavMenu, isFooter: Boolean = false)(implicit request: RequestHeader)
 
 
-@subNavItem(link: NavLink, url: String, isSecondaryParent: Boolean = false, isTertiary: Boolean = false) = {
+@subNavItem(link: NavLink, url: String, isParent: Boolean = false) = {
     <li class="@RenderClasses(Map(
             "subnav__item--current-section" -> (url == link.url),
-            "subnav__item--secondary-parent" -> isSecondaryParent,
-            "subnav__item--tertiary" -> isTertiary,
+            "subnav__item--parent" -> isParent
         ), "subnav__item")">
         <a class="@RenderClasses(Map(
                 "subnav-link--current-section" -> (url == link.url)
@@ -32,11 +31,11 @@
 
                     @subnav.parent.map(link => {
                         if(!navMenu.pillars.contains(link)) {
-                            subNavItem(link, navMenu.currentUrl, isSecondaryParent = subnav.hasSecondaryParent)
+                            subNavItem(link, navMenu.currentUrl, isParent = subnav.hasParent)
                         }
                     })
 
-                    @subnav.children.map(link => subNavItem(link, navMenu.currentUrl, isTertiary = subnav.hasTertiary))
+                    @subnav.children.map(link => subNavItem(link, navMenu.currentUrl))
                 </ul>
 
                 @* Hiding the 'more' link on the homepage and footer *@

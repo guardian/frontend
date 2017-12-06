@@ -6,7 +6,7 @@ import NavLinks._
 
 import scala.annotation.tailrec
 
-case class Subnav(parent: Option[NavLink], children: Seq[NavLink], showSubnav: Boolean, hasSecondaryParent: Boolean = false, hasTertiary: Boolean = false)
+case class Subnav(parent: Option[NavLink], children: Seq[NavLink], showSubnav: Boolean, hasParent: Boolean = false)
 
 sealed trait NavNode {
   def children: Seq[NavLink]
@@ -85,7 +85,7 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
     val childrenToShow = if (currentNavHasChildren) currentNavLink else currentParent
     val children = childrenToShow.map( navLink => navLink.children ).getOrElse(Nil)
 
-    Subnav(parent, children, parent.isDefined || children.nonEmpty, parent.isDefined, parent.isDefined && children.nonEmpty)
+    Subnav(parent, children, parent.isDefined || children.nonEmpty, parent.isDefined)
   }
 }
 

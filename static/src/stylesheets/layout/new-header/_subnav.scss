@@ -49,8 +49,8 @@
     float: left;
 }
 
-.subnav__item--secondary-parent:after {
-    content: "";
+.subnav__item--parent:after {
+    content: '';
     display: inline-block;
     width: 0;
     height: 0;
