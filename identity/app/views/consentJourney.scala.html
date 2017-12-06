@@ -73,14 +73,14 @@
             @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
             @if(isNarrow) {
-                <h2 class="identity-title">Email Preferences</h2>
-                <p class="manage-account-headerNote">
-                    You were receiving these newsletters, check them again to confirm you want to keep receiving them.
-                </p>
-            } else {
                 <h2 class="identity-title">Sorry for the interruption</h2>
                 <p class="manage-account-headerNote">
                     Do you still want to receive the following newsletters? Please check them again if you do.
+                </p>
+            } else {
+                <h2 class="identity-title">Email Preferences</h2>
+                <p class="manage-account-headerNote">
+                    You were receiving these newsletters, check them again to confirm you want to keep receiving them.
                 </p>
             }
             <div class="manage-account__switches">
@@ -148,11 +148,11 @@
 
                         @journey match {
                             case "repermission-narrow" => {
-                                @emailStep()
+                                @emailStep(isNarrow = true)
                             }
                             case "repermission" => {
                                 @consentStep(journey = "repermission")
-                                @emailStep(isNarrow = true)
+                                @emailStep()
                             }
                             case "signup" => {
                                 @consentStep(journey = "signup")
