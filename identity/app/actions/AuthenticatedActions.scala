@@ -34,7 +34,7 @@ class AuthenticatedActions(
     val redirectUrlWithParams =identityUrlBuilder.appendQueryParams(path,List(
       "INTCMP" -> "email",
       "returnUrl" -> returnUrl
-    ));
+    ))
 
     SeeOther(identityUrlBuilder.buildUrl(redirectUrlWithParams))
   }
