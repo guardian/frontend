@@ -29,38 +29,34 @@ x x x x x x x x
 @mixin fc-item--third {
     @include fc-item--standard;
 
-    // &.fc-item--has-cutout {
-    //     .fc-item__header {
-    //         padding-bottom: gs-height(3);
-    //     }
-
-    //     &[class*='fc-item--has-sublinks'] {
-    //         .fc-item__container {
-    //             @include mq(desktop) {
-    //                 padding-bottom: 0;
-    //             }
-    //         }
-    //     }
-
-    //     .fc-sublinks {
-    //         @include mq(tablet) {
-    //             padding-right: gs-span(1.5);
-    //         }
-    //         @include mq(desktop) {
-    //             padding-right: gs-span(2);
-    //         }
-    //     }
-    // }
-
-    .fc-item__avatar {
-        height: gs-height(3) + $gs-baseline * 2;
-
-        @include mq(desktop) {
-            height: gs-height(4);
-        }
+    .fc-item__standfirst {
+        display: block;
     }
 
-    .fc-item__avatar__media {
-        right: -20%;
+    &.fc-item--has-cutout {
+       .fc-item__content {
+            position: relative;
+        }
+
+        .fc-item__header,
+        .fc-item__standfirst-wrapper {
+            z-index: 1;
+        }
+
+        .fc-item__avatar {
+            background: yellow;
+            position: absolute;
+            overflow: hidden;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .fc-item__avatar__media {
+            position: absolute;
+            bottom: 0;
+            right: -20%;
+        }
     }
 }

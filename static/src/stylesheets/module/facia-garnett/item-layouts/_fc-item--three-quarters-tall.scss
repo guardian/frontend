@@ -44,11 +44,11 @@ x x x x x x x x x x x x x x x x x x
         padding-right: 33%;
     }
 
-    // &.fc-item--has-cutout {
-    //     @include fc-item--three-quarters;
-    // }
+    &.fc-item--has-cutout {
+        @include fc-item--three-quarters;
+    }
 
-    // &:not(.fc-item--has-cutout) {
+    &:not(.fc-item--has-cutout) {
         @include fc-sublinks--below;
-    // }
+    }
 }
