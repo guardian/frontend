@@ -19,9 +19,9 @@
 }
 
 @fragments.form.switch(
-    title = getConsentText(consentField).getOrElse(""),
+    title = getConsentText(consentField).wording,
     subheading = None,
-    description = None,
+    description = getConsentText(consentField).description,
     behaviour = ConsentSwitch,
     field = consentField("consented"),
     extraFields = consentHiddenFormFields,
