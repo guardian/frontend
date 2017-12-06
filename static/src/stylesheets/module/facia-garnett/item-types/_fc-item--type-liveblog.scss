@@ -14,8 +14,13 @@
     }
 
     .fc-item__kicker {
+        background-color: $live-garnett-main-1;
         color: $live-garnett-main-2;
         border: 0;
+
+        &::before {
+            background-color: $live-garnett-main-2;
+        }
 
         &::after {
             background-color: $live-garnett-main-2;
