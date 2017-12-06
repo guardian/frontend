@@ -128,6 +128,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-prebid-integration",
+    "Test prebid as a header-bidding implementation",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-banner-shorter-copy",
     "Test highlighting a different sentance in the epic",
     owners = Seq(Owner.withGithub("jranks123")),
