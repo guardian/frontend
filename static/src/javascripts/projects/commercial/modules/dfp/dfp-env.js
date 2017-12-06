@@ -29,7 +29,7 @@ export const dfpEnv: DfpEnv = {
 
     /* externalDemand: string. Set to 'sonobi' for direct sonobi connection, 'none', or 'prebid' for header-bidding connections.*/
     externalDemand: getTestVariantId(prebidIntegration.id) === 'prebid-variant' ?
-        config.switches.abPrebid ? 'prebid' : 'none'
+        config.switches.abPrebidIntegration ? 'prebid' : 'none'
         :
         config.switches.sonobiHeaderBidding ? 'sonobi' : 'none',
 
