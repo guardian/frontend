@@ -67,6 +67,10 @@
         .fc-item__container::before {
             background-color: darken($live-garnett-main-1, 5%);
         }
+
+        .fc-item__kicker::before {
+            background-color: darken($live-garnett-main-1, 5%);
+        }
     }
 
     // list media overrides
