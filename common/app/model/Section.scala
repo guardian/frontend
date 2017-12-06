@@ -25,6 +25,7 @@ object Section {
       webUrl = section.webUrl,
       url = SupportedUrl(section),
       section = Some(SectionId.fromCapiSection(section)),
+      pillar = None,
       pagination = pagination,
       webTitle = webTitle,
       adUnitSuffix = adUnitSuffix,

@@ -8,7 +8,7 @@ import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata}
 import common.{Edition, HTML}
 import common.commercial.EditionBranding
 import model.content.{Atoms, MediaAtom}
-import model.{CardStylePicker, Commercial, DotcomContentType, Elements, Fields, ImageMedia, MetaData, Pillar, Pillars, SectionId, SupportedUrl, Tags, Trail, VideoElement}
+import model.{CardStylePicker, Commercial, DotcomContentType, Elements, Fields, ImageMedia, MetaData, Pillar, SectionId, SupportedUrl, Tags, Trail, VideoElement}
 import org.joda.time.DateTime
 
 object DisplayHints {
@@ -167,7 +167,7 @@ object PressedStory {
         metadata.webTitle,
         metadata.webUrl,
         metadata.contentType,
-        sectionId.flatMap(Pillars.pillarForSection),
+        Pillar(apiContent),
         sectionId
       ),
       PressedFields(
