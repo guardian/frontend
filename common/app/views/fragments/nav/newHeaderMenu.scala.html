@@ -1,6 +1,6 @@
 @import common.{ LinkTo, Edition }
 @import conf.switches.Switches.{SearchSwitch, HeaderFeedback}
-@import navigation.{ NewNavigation, NavMenu, NavigationHelpers, NavLink }
+@import navigation.{ NavMenu, NavigationHelpers, NavLink }
 @import views.support.RenderClasses
 
 @(navMenu: NavMenu)(implicit request: RequestHeader)
@@ -130,7 +130,7 @@
                 data-edition="@{edition.id.toLowerCase}"
                 role="menubar">
 
-                @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
+                @navMenu.brandExtensions.map { item =>
                     <li class="menu-item hide-from-desktop"
                         role="menuitem">
                         <a class="menu-item__title"
@@ -177,7 +177,7 @@
                 </li>
             </ul>
             <ul class="menu-group menu-group--brand-extensions hide-until-desktop">
-                @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
+                @navMenu.brandExtensions.map { item =>
                     @brandExtensions(item)
                 }
 

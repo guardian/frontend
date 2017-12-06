@@ -489,6 +489,25 @@ object NavLinks {
     crosswords
   )
 
+  val ukBrandExtensions = List(
+    jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
+    dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
+    holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
+    ukMasterClasses
+  )
+  val auBrandExtensions = List(
+    jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
+    auEvents
+  )
+  val usBrandExtensions= List(
+    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader")
+  )
+  val intBrandExtensions = List(
+    jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
+    dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
+    holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader")
+  )
+
   // Tertiary Navigation
   val tagPages = List(
     "us-news/us-politics",

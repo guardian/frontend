@@ -22,7 +22,7 @@ case class NavLink(
 ) extends NavNode
 
 
-case class NavRoot private(val children: Seq[NavLink], val otherLinks: Seq[NavLink]) extends NavNode {
+case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], brandExtensions: Seq[NavLink]) extends NavNode {
 
   def getOtherPillarsFromEdition(edition: Edition): Seq[NavLink] = {
     Edition.others(edition).flatMap( edition => {
@@ -93,10 +93,10 @@ case class NavRoot private(val children: Seq[NavLink], val otherLinks: Seq[NavLi
 object NavRoot {
   def apply(edition: Edition): NavRoot = {
     edition match {
-      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukSportPillar, ukOpinionPillar, ukArtsPillar, ukLifestylePillar), ukOtherLinks)
-      case editions.Us => NavRoot(Seq(usNewsPillar, usSportPillar, usOpinionPillar, usArtsPillar, usLifestylePillar), usOtherLinks)
-      case editions.Au => NavRoot(Seq(auNewsPillar, auSportPillar, auOpinionPillar, auArtsPillar, auLifestylePillar), auOtherLinks)
-      case editions.International => NavRoot(Seq(auNewsPillar, auSportPillar, auOpinionPillar, auArtsPillar, auLifestylePillar), intOtherLinks)
+      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukSportPillar, ukOpinionPillar, ukArtsPillar, ukLifestylePillar), ukOtherLinks, ukBrandExtensions)
+      case editions.Us => NavRoot(Seq(usNewsPillar, usSportPillar, usOpinionPillar, usArtsPillar, usLifestylePillar), usOtherLinks, usBrandExtensions)
+      case editions.Au => NavRoot(Seq(auNewsPillar, auSportPillar, auOpinionPillar, auArtsPillar, auLifestylePillar), auOtherLinks, auBrandExtensions)
+      case editions.International => NavRoot(Seq(auNewsPillar, auSportPillar, auOpinionPillar, auArtsPillar, auLifestylePillar), intOtherLinks, intBrandExtensions)
     }
   }
 }
@@ -104,6 +104,7 @@ object NavRoot {
 case class SimpleMenu private (root: NavRoot) {
   def pillars: Seq[NavLink] = root.children
   def otherLinks: Seq[NavLink] = root.otherLinks
+  def brandExtensions: Seq[NavLink] = root.brandExtensions
 }
 
 case class NavMenu private (page: Page, root: NavRoot, edition: Edition) {
@@ -111,6 +112,7 @@ case class NavMenu private (page: Page, root: NavRoot, edition: Edition) {
   def currentUrl: String = NavMenu.getSectionOrPageUrl(page, edition)
   def pillars: Seq[NavLink] = root.children
   def otherLinks: Seq[NavLink] = root.otherLinks
+  def brandExtensions: Seq[NavLink] = root.brandExtensions
   def currentNavLink: Option[NavLink] = root.findDescendantByUrl(currentUrl, edition)
   def currentParent: Option[NavLink] = currentNavLink.flatMap( link => root.findParentByCurrentNavLink(link, edition) )
   def currentPillar: Option[NavLink] = root.getPillar(pillars, currentParent, edition)

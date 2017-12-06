@@ -1,7 +1,7 @@
 package controllers
 
 import common.{Edition, JsonComponent, LinkTo, NavItem, SectionLink}
-import navigation.{NavLink, NavigationHelpers, NewNavigation, NavMenu}
+import navigation.{NavLink, NavigationHelpers, NavMenu}
 import model.Cached
 import model.Cached.RevalidatableResult
 import play.api.libs.json.{Json, Writes}
@@ -43,7 +43,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
     val edition = Edition(request)
     val menu = NavMenu(edition)
     val navSecondarySections = List.concat(
-      NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map(section => navSectionLink(section)),
+      menu.brandExtensions.map(section => navSectionLink(section)),
       menu.otherLinks.map(section => navSectionLink(section))
     )
 
