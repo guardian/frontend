@@ -1,9 +1,20 @@
 @mixin colorPalatte($pillarColor, $kickerColor) {
+    .button--secondary,
+    .byline,
     .content__section-label__link,
     .drop-cap,
     .element-pullquote p,
-    a {
+    a,
+    .tone-colour {
         color: $pillarColor;
+    }
+
+    .inline-close,
+    .inline-tone-fill,
+    .social-icon svg,
+    .social-icon.social-icon--more svg,
+    .inline-close svg {
+        fill: $pillarColor;
     }
 
     .inline-quote svg {
@@ -16,6 +27,24 @@
 
     .u-underline:hover {
         border-bottom: solid 1px $pillarColor;
+    }
+
+    .social-icon,
+    .social-icon.social-icon--more,
+    .meta__twitter a {
+        &:focus,
+        &:hover {
+            background-color: $pillarColor;
+            border: 1px solid $pillarColor;
+        }
+    }
+
+    .social-tray__button {
+        &:hover {
+            .inline-close {
+                background-color: $pillarColor;
+            }
+        }
     }
 }
 

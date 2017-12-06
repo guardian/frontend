@@ -2,7 +2,8 @@
     padding-top: 0;
     padding-bottom: $gs-baseline*3;
 
-    &:after { // clearfix
+    &:after {
+        // clearfix
         content: '';
         display: block;
         clear: both;
@@ -146,9 +147,10 @@
     }
 
     @include mq(leftCol) {
+        position: absolute;
+        top: 0;
         border-bottom: 0;
         width: $left-column;
-        float: left;
         margin-left: -($left-column + $gs-gutter);
         margin-bottom: $gs-baseline;
     }
@@ -400,6 +402,10 @@
             }
         }
     }
+}
+
+.tonal__standfirst {
+    position: relative;
 }
 
 .content__dateline {
