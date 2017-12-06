@@ -46,33 +46,32 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
     find(children ++ otherLinks).orElse(find(getOtherPillarsFromEdition(edition)))
   }
 
-  def findParentByCurrentNavLink(currentNavLink: NavLink, edition: Edition): Option[NavLink] = {
+  def findParent(currentNavLink: NavLink, edition: Edition): Option[NavLink] = {
     // Football is currently in the News Pillar and the Sport pillar, however we don't want the parent to be News.
-    def footballDoesNotBelongInNews(parentTitle: String): Boolean = {
+    def isFootballInNews(parentTitle: String): Boolean = {
       currentNavLink.title == "football" && parentTitle == "news"
     }
 
     @tailrec
     def find(children: Seq[NavLink]): Option[NavLink] = {
       children match {
-        case Nil => find(getOtherPillarsFromEdition(edition))
-        case head :: tail if (head == currentNavLink) => Some(head) // If primary link, use that
-        case head :: tail if (footballDoesNotBelongInNews(head.title)) => find(tail ++ head.children)
-        case head :: tail if head.children.contains(currentNavLink) => Some(head)
+        case Nil => None
+        case head :: tail if (head == currentNavLink || head.children.contains(currentNavLink) && !isFootballInNews(head.title)) => Some(head)
         case head :: tail => find(tail ++ head.children)
       }
     }
+
     // If the parent isn't found within the current edition, check other editions
     find(children ++ otherLinks).orElse(find(getOtherPillarsFromEdition(edition)))
   }
 
-  def getPillar(pillars: Seq[NavLink], currentParent: Option[NavLink], edition: Edition): Option[NavLink] = {
+  def getPillar(currentParent: Option[NavLink], edition: Edition): Option[NavLink] = {
     if(otherLinks.contains(currentParent.getOrElse(None))) {
       None
-    } else if(pillars.contains(currentParent.getOrElse(None))) {
+    } else if(children.contains(currentParent.getOrElse(None))) {
       currentParent
     } else {
-      currentParent.map( link => findParentByCurrentNavLink(link, edition)).getOrElse(Some(ukNewsPillar))
+      currentParent.map( link => findParent(link, edition)).getOrElse(Some(ukNewsPillar))
     }
   }
 
@@ -114,8 +113,8 @@ case class NavMenu private (page: Page, root: NavRoot, edition: Edition) {
   def otherLinks: Seq[NavLink] = root.otherLinks
   def brandExtensions: Seq[NavLink] = root.brandExtensions
   def currentNavLink: Option[NavLink] = root.findDescendantByUrl(currentUrl, edition)
-  def currentParent: Option[NavLink] = currentNavLink.flatMap( link => root.findParentByCurrentNavLink(link, edition) )
-  def currentPillar: Option[NavLink] = root.getPillar(pillars, currentParent, edition)
+  def currentParent: Option[NavLink] = currentNavLink.flatMap( link => root.findParent(link, edition) )
+  def currentPillar: Option[NavLink] = root.getPillar(currentParent, edition)
   def subNavSections: Subnav = root.getSubnav(currentNavLink, currentParent, currentPillar)
 }
 
