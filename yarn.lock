@@ -7191,6 +7191,10 @@ object-component@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/object-component/-/object-component-0.0.3.tgz#f0c69aa50efc95b866c186f400a33769cb2f1291"
 
+object-fit-videos@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/object-fit-videos/-/object-fit-videos-1.0.3.tgz#4ff9c83a381b26e80ff1ad2679d5eae85824ed53"
+
 object-keys@^1.0.10, object-keys@^1.0.8:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
