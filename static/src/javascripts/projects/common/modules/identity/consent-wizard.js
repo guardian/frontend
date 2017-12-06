@@ -4,16 +4,32 @@ import fastdom from 'lib/fastdom-promise';
 
 import loadEnhancers from './modules/loadEnhancers';
 import { newsletterCheckboxClassName } from './consents';
-import { wizardPageChangedEv } from './wizard';
+import {
+    wizardPageChangedEv,
+    setPosition,
+    getInfoObject as getWizardInfoObject,
+} from './wizard';
 
-const getClickedCheckboxCount = (
+const ERR_IDENTITY_CONSENT_WIZARD_MISSING = 'Missing wizard element';
+
+const positions = {
+    consent: 'consent',
+    email: 'email',
+    endcard: 'endcard',
+};
+
+const getAcceptedCheckboxes = (
     checkboxesEl: Array<HTMLLabelElement>
-): number =>
+): Array<HTMLLabelElement> =>
     checkboxesEl.filter(
         (checkboxEl: HTMLLabelElement) =>
             checkboxEl.control instanceof HTMLInputElement &&
             checkboxEl.control.checked
-    ).length;
+    );
+
+const getAcceptedCheckboxCount = (
+    checkboxesEl: Array<HTMLLabelElement>
+): number => getAcceptedCheckboxes(checkboxesEl).length;
 
 const getEmailCheckboxes = (): Array<HTMLLabelElement> =>
     ([...document.getElementsByClassName(newsletterCheckboxClassName)]: Array<
@@ -25,7 +41,7 @@ const updateCounterIndicator = (
     checkboxesEl: Array<HTMLLabelElement>
 ): Promise<void> =>
     fastdom.write(() => {
-        indicatorEl.innerText = getClickedCheckboxCount(checkboxesEl).toString(
+        indicatorEl.innerText = getAcceptedCheckboxCount(checkboxesEl).toString(
             10
         );
     });
@@ -35,6 +51,9 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
         if (ev.target === wizardEl) {
             fastdom
                 .read(() => [
+                    wizardEl.getElementsByClassName(
+                        'manage-account-wizard__step'
+                    ).length,
                     [
                         ...document.getElementsByClassName(
                             'manage-account-consent-wizard-counter'
@@ -46,20 +65,47 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                         ),
                     ][0],
                 ])
-                .then(([counterEl: HTMLElement, buttonBackEl: HTMLElement]) => {
-                    fastdom.write(() => {
-                        counterEl.classList.toggle(
-                            'manage-account-consent-wizard__revealable--visible',
-                            ev.detail.newPosition === 1
-                        );
-                        buttonBackEl.classList.toggle(
-                            'manage-account-consent-wizard__revealable--visible',
-                            ev.detail.newPosition > 0
-                        );
-                    });
-                });
+                .then(
+                    (
+                        [
+                            stepCount: number,
+                            counterEl: HTMLElement,
+                            buttonBackEl: HTMLElement,
+                        ]
+                    ) =>
+                        fastdom.write(() => {
+                            if (stepCount <= 2) {
+                                buttonBackEl.remove();
+                            } else if (buttonBackEl) {
+                                buttonBackEl.classList.toggle(
+                                    'manage-account-consent-wizard__revealable--visible',
+                                    ev.detail.position > 0
+                                );
+                            }
+                            counterEl.classList.toggle(
+                                'manage-account-consent-wizard__revealable--visible',
+                                ev.detail.positionName === positions.email
+                            );
+                        })
+                );
         }
     });
+};
+
+const bindNextButton = (buttonEl: HTMLElement): void => {
+    const wizardEl: ?Element = buttonEl.closest(
+        '.manage-account-wizard--consent'
+    );
+    if (wizardEl && wizardEl instanceof HTMLElement) {
+        buttonEl.addEventListener('click', (ev: Event) => {
+            ev.preventDefault();
+            getWizardInfoObject(wizardEl).then(wizardInfo =>
+                setPosition(wizardEl, wizardInfo.position + 1)
+            );
+        });
+    } else {
+        throw new Error(ERR_IDENTITY_CONSENT_WIZARD_MISSING);
+    }
 };
 
 const createEmailConsentCounter = (counterEl: HTMLElement): void => {
@@ -92,6 +138,7 @@ const enhanceConsentWizard = (): void => {
     const loaders = [
         ['.manage-account-consent-wizard-counter', createEmailConsentCounter],
         ['.manage-account-wizard--consent', bindEmailConsentCounterToWizard],
+        ['.js-manage-account-consent-wizard__next', bindNextButton],
     ];
     loadEnhancers(loaders);
 };

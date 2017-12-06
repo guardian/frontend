@@ -110,6 +110,7 @@ $fc-item-gutter: $gs-gutter / 4;
     display: flex;
     flex-direction: column;
     position: relative;
+    width: 100%;
 
     &:before {
         content: '';

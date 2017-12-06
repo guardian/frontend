@@ -109,6 +109,7 @@ class SeriesController(
           Fixed(visuallyPleasingContainerForStories(math.min(series.trails.faciaItems.length, 4))),
           CollectionConfigWithId(dataId, config),
           CollectionEssentials(series.trails.faciaItems take 4, Nil, displayName, None, None, None),
+          hasMore = false,
           componentId
         )
           .withTimeStamps

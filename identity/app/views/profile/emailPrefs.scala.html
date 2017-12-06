@@ -1,5 +1,5 @@
 @import form.IdFormHelpers.nonInputFields
-@import model.{EmailNewsletter, EmailNewsletters}
+@import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
 @import views.html.fragments.form.radioField
 @import views.support.`package`.Seq2zipWithRowInfo
 
@@ -13,24 +13,6 @@
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
-@emailListCategoryList(theme: String, newsletters: List[EmailNewsletter], isActive: Boolean) = {
-    @fragments.dropdown(theme, modifier = Some("email-subscription"), isActive = isActive, isAnimated = true) {
-
-        <div class="manage-account__switches"><ul>
-            @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
-
-                <li>
-                    @fragments.newsletterSwitch(
-                        emailPrefsForm,
-                        emailSubscriptions,
-                        newsletter = newsletter
-                    )(nonInputFields, messages, request)
-                </li>
-            }
-        </ul></div>
-    }
-}
-
 @buildIdentityUrl(endpoint: String) = {
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
 }
@@ -40,11 +22,8 @@
     @if(emailPrefsForm.globalError.isDefined) {
         <div class="form__error">@emailPrefsForm.globalErrors.map(_.message).mkString(", ")</div>
     }
-    <div class="email-subscriptions">
-    @List("news", "features", "sport", "culture", "lifestyle", "comment").zipWithIndex.map { case(theme, index) =>
-        @emailListCategoryList(theme, availableLists.subscriptions.filter(_.theme == theme), false)
-    }
-    </div>
+
+    @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions)(request, messages)
 
     <div class="email-subscription__fieldset">
 
