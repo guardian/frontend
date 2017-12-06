@@ -1,6 +1,7 @@
-$quote-tail: 25px; // ********** Article Type **********
+$quote-tail: 25px;
 
-.content--type-article {
+.content--type-article,
+.content--type-opinion {
     .submeta {
         position: relative;
         border-top: 0;
@@ -53,7 +54,8 @@ $quote-tail: 25px; // ********** Article Type **********
         @include f-bodyHeading;
     }
 
-    .content__article-body {
+    .content__article-body,
+    .immersive-main-media__headline-container .content__main-column {
         @include mq(desktop) {
             border-left: solid 1px $neutral-5;
             padding-left: $gs-gutter/2;
@@ -72,6 +74,9 @@ $quote-tail: 25px; // ********** Article Type **********
         @include mq(wide) {
             width: gs-span(3) -$gs-gutter/2;
         }
+    }
+    .drop-cap__inner {
+        line-height: 3.7rem;
     }
     // Quote base styles
     .element-pullquote {
@@ -240,5 +245,28 @@ $quote-tail: 25px; // ********** Article Type **********
                 top: - 40px;
             }
         }
+    }
+}
+
+.content--type-opinion {
+    .content__main-column {
+        &:after {
+            content: '';
+            width: 100%;
+            height: 5px;
+            border-top: solid 1px $neutral-6;
+        }
+    }
+
+    .content__headline {
+        font-weight: 100;
+    }
+
+    .content__headline--byline {
+        font-style: italic;
+    }
+
+    .byline-img {
+        right: gs-span(3);
     }
 }
