@@ -103,7 +103,7 @@ class AuthenticatedActions(
         request.user.statusFields.hasRepermissioned match {
           case Some(true) =>
             newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
-              val subs = newsletterService.getEmailSubscriptions(emailFilledForm)
+              val subs = newsletterService.getV1EmailSubscriptions(emailFilledForm)
               if(subs.length <= 0) {
                 Right(request)
               }
