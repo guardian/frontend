@@ -7,9 +7,9 @@ import utils.Logging
 import idapiclient.IdApiClient
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
 import play.api.mvc._
-import services.{AuthenticatedUser, AuthenticationService, IdentityUrlBuilder}
-import conf.switches.Switches.{IdentityRedirectUsersWithLingeringV1ConsentsSwitch, IdentityAllowAccessToGdprJourneyPageSwitch}
-
+import services.{AuthenticatedUser, AuthenticationService, IdentityUrlBuilder, NewsletterService, IdRequestParser}
+import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityRedirectUsersWithLingeringV1ConsentsSwitch}
+import com.gu.identity.model.EmailNewsletters
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -21,7 +21,9 @@ class AuthenticatedActions(
     authService: AuthenticationService,
     identityApiClient: IdApiClient,
     identityUrlBuilder: IdentityUrlBuilder,
-    controllerComponents: ControllerComponents) extends Logging with Results {
+    controllerComponents: ControllerComponents,
+    newsletterService: NewsletterService,
+    idRequestParser: IdRequestParser) extends Logging with Results {
 
   private val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
   private implicit val ec: ExecutionContext = controllerComponents.executionContext
@@ -95,16 +97,25 @@ class AuthenticatedActions(
 
   def apiUserShouldRepermissionRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
-    //TODO: verify v1 email subs
-    def refine[A](request: AuthRequest[A]) = Future.successful {
+
+    def refine[A](request: AuthRequest[A]) = {
       if(IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn) {
         request.user.statusFields.hasRepermissioned match {
-          case Some(true) => Right(request)
-          case _ => Left(sendUserToConsentJourney(request))
+          case Some(true) =>
+            newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+              val subs = newsletterService.getEmailSubscriptions(emailFilledForm)
+              if(subs.length <= 0) {
+                Right(request)
+              }
+              else {
+                Left(sendUserToNarrowConsentJourney(request))
+              }
+            }
+          case _ => Future.successful { Left(sendUserToConsentJourney(request)) }
         }
       }
       else {
-        Right(request)
+        Future.successful { Right(request) }
       }
     }
   }
