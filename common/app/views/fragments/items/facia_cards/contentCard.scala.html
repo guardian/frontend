@@ -231,6 +231,18 @@ data-test-id="facia-card"
 
         </div>
 
+        @if(item.cardTypes.showCutOut) {
+            @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
+            <div class="fc-item__avatar">
+                @image(
+                    classes = Seq("fc-item__avatar__media", cutOut.cssClass),
+                    widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
+                    maybePath = Some(imageUrl)
+                )
+            </div>
+            }
+        }
+
         @if(item.sublinks.nonEmpty) {
             <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
         }
