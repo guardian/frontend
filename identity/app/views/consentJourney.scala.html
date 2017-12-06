@@ -148,11 +148,11 @@
 
                         @journey match {
                             case "repermission-narrow" => {
-                                @emailStep()
+                                @emailStep(isNarrow = true)
                             }
                             case "repermission" => {
                                 @consentStep(journey = "repermission")
-                                @emailStep(isNarrow = true)
+                                @emailStep()
                             }
                             case "signup" => {
                                 @consentStep(journey = "signup")
