@@ -19,7 +19,6 @@ class FabricVideo {
     inView: boolean;
 
     constructor(adSlot: HTMLElement, params: Object) {
-
         const isSmallScreen = isBreakpoint({
             max: 'phablet',
         });
