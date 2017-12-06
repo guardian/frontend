@@ -23,6 +23,7 @@
 .site-message__inner {
     padding: 0 $gs-gutter/2;
     width: 100%;
+    display: table;
 
     @include mq(tablet) {
         padding: 0;
@@ -51,6 +52,7 @@
     padding-bottom: $gs-baseline/2;
     position: relative;
     vertical-align: middle;
+    display: table-cell;
 
     @include mq(tablet) {
         padding-top: 0;
@@ -164,8 +166,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .site-message__close {
-    display: table-cell;
-    vertical-align: top;
     padding-bottom: $gs-gutter/4;
     padding-top: $gs-gutter/4;
     padding-right: $gs-gutter;
@@ -581,10 +581,15 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         }
     }
     .site-message__inner {
+        display: block;
         padding-top: 5px;
         padding-left: 5px;
         padding-right: 5px;
         padding-bottom: 10px;
+    }
+
+    .site-message__copy {
+        display: block;
     }
 
     .big-test-container {

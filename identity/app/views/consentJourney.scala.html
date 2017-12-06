@@ -1,6 +1,7 @@
 @import conf.Static
 @import views.support.RenderClasses
-@import model.{ApplicationContext, EmailNewsletters, IdentityPage}
+@import model.{ApplicationContext, IdentityPage}
+@import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
 @import form.IdFormHelpers.nonInputFields
 @import views.support.`package`.Seq2zipWithRowInfo
@@ -46,7 +47,7 @@
                     <div class="js-errorHolder manage-account__errors"></div>
 
                     <div class="manage-account-wizard manage-account-wizard--consent" >
-                        <div class="manage-account-wizard__step">
+                        <div class="manage-account-wizard__step" data-wizard-step-name="consent">
 
                             <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
                                 @views.html.helper.CSRF.formField
@@ -58,7 +59,7 @@
                                     <p class="manage-account-headerNote">Tick the boxes you are interested in. We have featured some you might be interested in.</p>
                                 } else {
                                     <h1 class="identity-title">
-                                        Would you like to receive communicatons from us?
+                                        Would you like to receive communications from us?
                                     </h1>
                                     <p class="manage-account-headerNote">Tick the boxes you are interested in</p>
                                 }
@@ -93,7 +94,7 @@
                             </form>
 
                         </div>
-                        <div class="manage-account-wizard__step">
+                        <div class="manage-account-wizard__step" data-wizard-step-name="email">
 
                             <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
                                 @views.html.helper.CSRF.formField
@@ -116,7 +117,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="manage-account-wizard__step">
+                        <div class="manage-account-wizard__step" data-wizard-step-name="endcard">
                             <div class="js-manage-account-wizard__next">
                                 <div class="manage-account-consent-thanks">
                                     <h2 class="manage-account-consent-thanks__title">Thank you</h2>
@@ -134,7 +135,7 @@
                             </a>
                             <div class="manage-account-consent-wizard__revealable manage-account-consent-wizard-counter">
                             </div>
-                            <a class="manage-account__button--icon manage-account__button js-manage-account-wizard__next">
+                            <a class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next">
                                 <span>Next</span>
                                 @fragments.inlineSvg("arrow-right", "icon")
                             </a>
