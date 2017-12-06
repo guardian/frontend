@@ -65,7 +65,7 @@ import test._
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
     topContainer.size should be (7)
 
-    (topContainer(0) \ "url").as[JsString].value should be ("/music/2017/dec/05/jake-shears-scissor-sisters-cher-dolly-parton")
+    (topContainer(0) \ "url").as[JsString].value should be ("/music/2017/dec/06/from-bush-doof-to-clowncore-your-favourite-underground-music-scenes")
 
   }
 
