@@ -85,6 +85,11 @@
         &:focus {
             text-decoration: none;
         }
+
+        &-half--left &-half--right {
+            width: $gs-baseline*5;
+        }
+
     }
 
     .manage-account-cta--disabled {
@@ -446,6 +451,22 @@
         display: inline-flex;
         height: $gs-gutter * 1.5;
         line-height: .8;
+    }
+
+    &-half--left {
+        width: $gs-baseline*5;
+        border-top-left-radius: 50px;
+        border-bottom-left-radius: 50px;
+        min-width: $gs-baseline * 7;
+        float: left;
+    }
+
+    &-half--right {
+        width: $gs-baseline*5;
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+        min-width: $gs-baseline * 7;
+        float: right;
     }
 
 }
