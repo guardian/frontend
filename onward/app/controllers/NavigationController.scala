@@ -41,9 +41,10 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
   //  This is to editionalise the menu on AMP
   def renderAmpNav: Action[AnyContent] = Action { implicit request =>
     val edition = Edition(request)
+    val menu = NavMenu(edition)
     val navSecondarySections = List.concat(
       NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map(section => navSectionLink(section)),
-      NewNavigation.OtherLinks.getEditionalisedNavLinks(edition).map(section => navSectionLink(section))
+      menu.otherLinks.map(section => navSectionLink(section))
     )
 
     Cached(900) {
@@ -66,7 +67,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
       JsonComponent(
         "items" -> Json.arr(
           Json.obj(
-            "topLevelSections" -> NavMenu(Edition(request)).pillars.map( section => topLevelNavItems(section) ),
+            "topLevelSections" -> menu.pillars.map( section => topLevelNavItems(section) ),
             "membershipLinks" -> NavigationHelpers.getMembershipLinks(edition).map( section => navSectionLink(section)),
             "secondarySections" -> navSecondarySections
           )

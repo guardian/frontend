@@ -101,7 +101,7 @@
                     <li class="pillars__item">
                         <a class="@RenderClasses(Map(
                             "pillar-link" -> true,
-                            "pillar-link--current-section" -> ((link.title == navMenu.currentPillar.title) && !page.metadata.hasSlimHeader)))"
+                            "pillar-link--current-section" -> ((link.title == navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)))"
                         href="@LinkTo(link.url)"
                         data-link-name="nav2 : primary : @link.title">
 

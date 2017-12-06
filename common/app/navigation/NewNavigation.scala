@@ -4,9 +4,6 @@ import NavLinks._
 import common.Edition
 import common.editions
 
-case class SectionsLink(pageId: String, navLink: NavLink, parentSection: NewNavigation.EditionalisedNavigationSection)
-case class SubSectionLink(pageId: String, parentSection: List[NavLink])
-
 object NewNavigation {
 
   trait EditionalisedNavigationSection {
@@ -48,55 +45,6 @@ object NewNavigation {
       jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
       dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
       holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader")
-    )
-  }
-
-  case object OtherLinks extends EditionalisedNavigationSection {
-    val name = ""
-
-    val uk = List(
-      apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
-      video,
-      podcasts,
-      pictures,
-      newsletters,
-      todaysPaper,
-      observer,
-      digitalNewspaperArchive,
-      NavLink("professional networks", "/guardian-professional"),
-      crosswords
-    )
-
-    val au = List(
-      apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
-      video,
-      podcasts,
-      pictures,
-      newsletters,
-      digitalNewspaperArchive,
-      crosswords
-    )
-
-    val us = List(
-      apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
-      video,
-      podcasts,
-      pictures,
-      newsletters,
-      digitalNewspaperArchive,
-      crosswords
-    )
-
-    val int = List(
-      apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
-      video,
-      podcasts,
-      pictures,
-      newsletters,
-      todaysPaper,
-      observer,
-      digitalNewspaperArchive,
-      crosswords
     )
   }
 }

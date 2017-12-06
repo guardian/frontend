@@ -23,32 +23,33 @@
 }
 
 @defining(navMenu.subNavSections) { subnav =>
-    <div class="subnav js-expand-subnav">
-        <div class="gs-container">
-            <ul class="subnav__list js-get-last-child-subnav"
-                data-pillar-title="@navMenu.currentPillar.title">
 
-                @subnav.parent.map(link => {
-                    if(!navMenu.pillars.contains(link)) {
-                        subNavItem(link, navMenu.currentUrl, isSecondaryParent = subnav.hasSecondaryParent)
-                    }
-                })
+    @if(subnav.showSubnav) {
+        <div class="subnav js-expand-subnav">
+            <div class="gs-container">
+                <ul class="subnav__list js-get-last-child-subnav"
+                data-pillar-title="@navMenu.currentPillar.map(_.title).getOrElse("")">
 
-                @subnav.children.map( navLinks => {
-                    navLinks.map( link => subNavItem(link, navMenu.currentUrl, isTertiary = subnav.hasTertiary) )
-                })
-            </ul>
+                    @subnav.parent.map(link => {
+                        if(!navMenu.pillars.contains(link)) {
+                            subNavItem(link, navMenu.currentUrl, isSecondaryParent = subnav.hasSecondaryParent)
+                        }
+                    })
 
-            @* Hiding the 'more' link on the homepage and footer *@
-            @if(!isFooter) {
-                <div class="subnav__item subnav__item--toggle-more hide-from-desktop js-show-more-button js-visible">
-                    <button class="subnav-link subnav-link--toggle-more js-toggle-more-sections"
+                    @subnav.children.map(link => subNavItem(link, navMenu.currentUrl, isTertiary = subnav.hasTertiary))
+                </ul>
+
+                @* Hiding the 'more' link on the homepage and footer *@
+                @if(!isFooter) {
+                    <div class="subnav__item subnav__item--toggle-more hide-from-desktop js-show-more-button js-visible">
+                        <button class="subnav-link subnav-link--toggle-more js-toggle-more-sections"
                         data-link-name="nav2 : subnav-toggle">
 
-                        more
-                    </button>
-                </div>
-            }
+                            more
+                        </button>
+                    </div>
+                }
+            </div>
         </div>
-    </div>
+    }
 }

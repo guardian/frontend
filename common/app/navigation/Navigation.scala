@@ -6,7 +6,7 @@ import NavLinks._
 
 import scala.annotation.tailrec
 
-case class Subnav(parent: Option[NavLink], children: Option[Seq[NavLink]], hasSecondaryParent: Boolean = false, hasTertiary: Boolean = false)
+case class Subnav(parent: Option[NavLink], children: Seq[NavLink], showSubnav: Boolean, hasSecondaryParent: Boolean = false, hasTertiary: Boolean = false)
 
 sealed trait NavNode {
   def children: Seq[NavLink]
@@ -22,11 +22,13 @@ case class NavLink(
 ) extends NavNode
 
 
-case class NavRoot private(val children: Seq[NavLink]) extends NavNode {
+case class NavRoot private(val children: Seq[NavLink], val otherLinks: Seq[NavLink]) extends NavNode {
 
   def getOtherPillarsFromEdition(edition: Edition): Seq[NavLink] = {
     Edition.others(edition).flatMap( edition => {
-      NavRoot(edition).children
+      val root = NavRoot(edition)
+
+      root.children ++ root.otherLinks
     })
   }
 
@@ -41,7 +43,7 @@ case class NavRoot private(val children: Seq[NavLink]) extends NavNode {
       }
     }
     // If the link isn't found within the current edition, check other editions
-    find(children).orElse(find(getOtherPillarsFromEdition(edition)))
+    find(children ++ otherLinks).orElse(find(getOtherPillarsFromEdition(edition)))
   }
 
   def findParentByCurrentNavLink(currentNavLink: NavLink, edition: Edition): Option[NavLink] = {
@@ -61,63 +63,63 @@ case class NavRoot private(val children: Seq[NavLink]) extends NavNode {
       }
     }
     // If the parent isn't found within the current edition, check other editions
-    find(children).orElse(find(getOtherPillarsFromEdition(edition)))
+    find(children ++ otherLinks).orElse(find(getOtherPillarsFromEdition(edition)))
   }
 
-  def getPillar(pillars: Seq[NavLink], currentParent: NavLink, edition: Edition): NavLink = {
-    if(pillars.contains(currentParent)) {
+  def getPillar(pillars: Seq[NavLink], currentParent: Option[NavLink], edition: Edition): Option[NavLink] = {
+    if(otherLinks.contains(currentParent.getOrElse(None))) {
+      None
+    } else if(pillars.contains(currentParent.getOrElse(None))) {
       currentParent
     } else {
-      // TODO: should we have default pillar that is not UK (like a blank one)?
-      findParentByCurrentNavLink(currentParent, edition).getOrElse(ukNewsPillar)
+      currentParent.map( link => findParentByCurrentNavLink(link, edition)).getOrElse(Some(ukNewsPillar))
     }
   }
 
-  def getSubnav(currentNavLink: Option[NavLink], currentParent: NavLink, currentPillar: NavLink): Subnav = {
-    val currentNavHasChildren = currentNavLink.map(navLink => navLink.children.nonEmpty).getOrElse(false)
-    val parentIsPillar =  currentNavLink.contains(currentPillar)
+  def getSubnav(currentNavLink: Option[NavLink], currentParent: Option[NavLink], currentPillar: Option[NavLink]): Subnav = {
+    val currentNavHasChildren = currentNavLink.exists(_.children.nonEmpty)
+    val parentIsPillar =  currentParent.equals(currentPillar)
+    def currentNavIsPillar = currentNavLink.equals(currentPillar)
 
-    val showParent = if (parentIsPillar) false else true
-    val parent = if (!showParent) None else if(currentNavHasChildren) currentNavLink else Some(currentParent)
+    val parent = if(currentNavHasChildren & !currentNavIsPillar) currentNavLink else if (parentIsPillar) None else currentParent
 
-    val childrenToShow = if (currentNavHasChildren) currentNavLink else Some(currentParent)
-    val children = childrenToShow.map( navLink => Some(navLink.children) ).getOrElse(None)
+    val childrenToShow = if (currentNavHasChildren) currentNavLink else currentParent
+    val children = childrenToShow.map( navLink => navLink.children ).getOrElse(Nil)
 
-    Subnav(parent, children, parent.isDefined, parent.isDefined && children.isDefined)
+    Subnav(parent, children, parent.isDefined || children.nonEmpty, parent.isDefined, parent.isDefined && children.nonEmpty)
   }
 }
 
 object NavRoot {
   def apply(edition: Edition): NavRoot = {
     edition match {
-      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukSportPillar, ukOpinionPillar, ukArtsPillar, ukLifestylePillar))
-      case editions.Us => NavRoot(Seq(usNewsPillar, usSportPillar, usOpinionPillar, usArtsPillar, usLifestylePillar))
-      case editions.Au => NavRoot(Seq(auNewsPillar, auSportPillar, auOpinionPillar, auArtsPillar, auLifestylePillar))
-      case editions.International => NavRoot(Seq(auNewsPillar, auSportPillar, auOpinionPillar, auArtsPillar, auLifestylePillar))
+      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukSportPillar, ukOpinionPillar, ukArtsPillar, ukLifestylePillar), ukOtherLinks)
+      case editions.Us => NavRoot(Seq(usNewsPillar, usSportPillar, usOpinionPillar, usArtsPillar, usLifestylePillar), usOtherLinks)
+      case editions.Au => NavRoot(Seq(auNewsPillar, auSportPillar, auOpinionPillar, auArtsPillar, auLifestylePillar), auOtherLinks)
+      case editions.International => NavRoot(Seq(auNewsPillar, auSportPillar, auOpinionPillar, auArtsPillar, auLifestylePillar), intOtherLinks)
     }
   }
 }
 
 case class SimpleMenu private (root: NavRoot) {
   def pillars: Seq[NavLink] = root.children
+  def otherLinks: Seq[NavLink] = root.otherLinks
 }
 
 case class NavMenu private (page: Page, root: NavRoot, edition: Edition) {
 
   def currentUrl: String = NavMenu.getSectionOrPageUrl(page, edition)
   def pillars: Seq[NavLink] = root.children
-
+  def otherLinks: Seq[NavLink] = root.otherLinks
   def currentNavLink: Option[NavLink] = root.findDescendantByUrl(currentUrl, edition)
-  def currentParent: NavLink = currentNavLink.flatMap( link => root.findParentByCurrentNavLink(link, edition) ).getOrElse(ukNewsPillar)
-  def currentPillar: NavLink = root.getPillar(pillars, currentParent, edition)
-
+  def currentParent: Option[NavLink] = currentNavLink.flatMap( link => root.findParentByCurrentNavLink(link, edition) )
+  def currentPillar: Option[NavLink] = root.getPillar(pillars, currentParent, edition)
   def subNavSections: Subnav = root.getSubnav(currentNavLink, currentParent, currentPillar)
 }
 
 object NavMenu {
 
   def apply(page: Page, edition: Edition): NavMenu = NavMenu(page, NavRoot(edition), edition)
-
   def apply(edition: Edition): SimpleMenu = SimpleMenu(NavRoot(edition))
 
   def getSectionOrPageUrl(page: Page, edition: Edition): String = {

@@ -447,6 +447,48 @@ object NavLinks {
     )
   )
 
+  val ukOtherLinks = List(
+    apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
+    video,
+    podcasts,
+    pictures,
+    newsletters,
+    todaysPaper,
+    observer,
+    digitalNewspaperArchive,
+    NavLink("professional networks", "/guardian-professional"),
+    crosswords
+  )
+  val auOtherLinks = List(
+    apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
+    video,
+    podcasts,
+    pictures,
+    newsletters,
+    digitalNewspaperArchive,
+    crosswords
+  )
+  val usOtherLinks = List(
+    apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
+    video,
+    podcasts,
+    pictures,
+    newsletters,
+    digitalNewspaperArchive,
+    crosswords
+  )
+  val intOtherLinks = List(
+    apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
+    video,
+    podcasts,
+    pictures,
+    newsletters,
+    todaysPaper,
+    observer,
+    digitalNewspaperArchive,
+    crosswords
+  )
+
   // Tertiary Navigation
   val tagPages = List(
     "us-news/us-politics",
@@ -528,6 +570,17 @@ object NavLinks {
     "football/competitions",
     "football/results",
     "football/fixtures",
-    "education"
+    "education",
+    "crosswords/crossword-blog",
+    "crosswords/series/crossword-editor-update",
+    "crosswords/series/quick",
+    "crosswords/series/cryptic",
+    "crosswords/series/prize",
+    "crosswords/series/weekend-crossword",
+    "crosswords/series/quiptic",
+    "crosswords/series/genius",
+    "crosswords/series/speedy",
+    "crosswords/series/everyman",
+    "crosswords/series/azed"
   )
 }

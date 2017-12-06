@@ -141,7 +141,7 @@
                     </li>
                 }
 
-                @NewNavigation.OtherLinks.getEditionalisedNavLinks(edition).map { item =>
+                @navMenu.otherLinks.map { item =>
                     <li class="@RenderClasses(Map(
                             "hide-from-desktop" -> (item.title == "the guardian app"),
                             "menu-item--no-border" -> (item.title == "video")
