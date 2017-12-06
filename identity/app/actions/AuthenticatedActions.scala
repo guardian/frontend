@@ -29,14 +29,12 @@ class AuthenticatedActions(
   def redirectWithReturn(request: RequestHeader, path: String): Result = {
     val returnUrl = URLEncoder.encode(identityUrlBuilder.buildUrl(request.uri), "UTF-8")
 
-    val paramsToPass =
-      List("INTCMP", "email")
-        .flatMap(name => request.getQueryString(name).map(value => s"&$name=$value"))
-        .mkString
+    val redirectUrlWithParams =identityUrlBuilder.appendQueryParams(path,List(
+      "INTCMP" -> "email",
+      "returnUrl" -> returnUrl
+    ));
 
-    val signinUrl = s"$path?returnUrl=$returnUrl$paramsToPass"
-
-    SeeOther(identityUrlBuilder.buildUrl(signinUrl))
+    SeeOther(identityUrlBuilder.buildUrl(redirectUrlWithParams))
   }
 
   def sendUserToConsentJourney(request: RequestHeader): Result =
