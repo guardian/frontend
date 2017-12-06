@@ -1,0 +1,35 @@
+@import _root_.form.IdFormHelpers.nonInputFields
+@import _root_.com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
+@import services.EmailPrefsData
+@import views.support.`package`.Seq2zipWithRowInfo
+
+@(
+    emailPrefsForm: Form[EmailPrefsData],
+    availableLists: EmailNewsletters,
+    emailSubscriptions: List[String],
+    startsOpen: Boolean = false
+)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+
+@emailListCategoryList(theme: String, newsletters: List[EmailNewsletter], isActive: Boolean) = {
+    @fragments.dropdown(theme, modifier = Some("email-subscription"), isActive = isActive, isAnimated = true) {
+        <div class="manage-account__switches">
+            <ul>
+                @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
+                    <li>
+                        @fragments.newsletterSwitch(
+                            emailPrefsForm,
+                            emailSubscriptions,
+                            newsletter = newsletter
+                        )(nonInputFields, messages, request)
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+}
+
+<div class="email-subscriptions">
+    @List("news", "features", "sport", "culture", "lifestyle", "comment").zipWithIndex.map { case(theme, index) =>
+        @emailListCategoryList(theme, availableLists.subscriptions.filter(_.theme == theme), (startsOpen == true && index == 0))
+    }
+</div>
