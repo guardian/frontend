@@ -7,6 +7,7 @@ import template from 'lodash/utilities/template';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
 import fabricVideoStr from 'raw-loader!commercial/views/creatives/fabric-video.html';
+import objectFitVideos from 'object-fit-videos';
 
 class FabricVideo {
     isUpdating: boolean;
@@ -18,6 +19,7 @@ class FabricVideo {
     inView: boolean;
 
     constructor(adSlot: HTMLElement, params: Object) {
+
         const isSmallScreen = isBreakpoint({
             max: 'phablet',
         });
@@ -155,6 +157,8 @@ class FabricVideo {
                         'top-banner-ad-container--fabric'
                     );
                 }
+
+                objectFitVideos(this.adSlot.querySelector('video'));
             })
             .then(() => {
                 this.layer2 = qwery('.creative__layer2', this.adSlot);
