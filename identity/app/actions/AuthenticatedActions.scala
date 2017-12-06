@@ -98,26 +98,28 @@ class AuthenticatedActions(
   def apiUserShouldRepermissionRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
 
-    def refine[A](request: AuthRequest[A]) = {
+    def refine[A](request: AuthRequest[A]) =
       if(IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn) {
-        request.user.statusFields.hasRepermissioned match {
-          case Some(true) =>
-            newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
-              val subs = newsletterService.getV1EmailSubscriptions(emailFilledForm)
-              if(subs.length <= 0) {
-                Right(request)
-              }
-              else {
-                Left(sendUserToNarrowConsentJourney(request))
-              }
-            }
-          case _ => Future.successful { Left(sendUserToConsentJourney(request)) }
+
+        for {
+          userHasRepermissioned <- userHasRepermissionedF(request)
+          userHasV1EmailSubscriptions <- userHasV1EmailSubscriptionsF(request)
+        } yield {
+          if (userHasRepermissioned && userHasV1EmailSubscriptions)
+            Left(sendUserToNarrowConsentJourney(request))
+          else
+            Right(request)
         }
+
+      } else Future.successful(Right(request))
+
+    private def userHasV1EmailSubscriptionsF[A](request: AuthRequest[A]): Future[Boolean] =
+      newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map {
+        newsletterService.getV1EmailSubscriptions(_).nonEmpty
       }
-      else {
-        Future.successful { Right(request) }
-      }
-    }
+
+    private def userHasRepermissionedF[A](request: AuthRequest[A]): Future[Boolean] =
+      Future.successful(request.user.statusFields.hasRepermissioned.contains(true))
   }
 
   def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
