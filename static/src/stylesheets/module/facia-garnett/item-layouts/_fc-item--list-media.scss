@@ -85,7 +85,6 @@ Media list item. Looks a bit like this:
         }
     }
 
-    // &[class*='fc-item--has-sublinks']:not(.fc-item--has-cutout) {
     &[class*='fc-item--has-sublinks'] {
         .fc-item__footer--vertical {
             display: none;
@@ -122,31 +121,6 @@ Media list item. Looks a bit like this:
             display: none;
         }
 
-        .fc-item__content {
-            position: relative;
-        }
-
-        .fc-item__header,
-        .fc-item__standfirst-wrapper {
-            z-index: 1;
-        }
-
-        .fc-item__avatar {
-            background: yellow;
-            position: absolute;
-            overflow: hidden;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-        }
-
-        .fc-item__avatar__media {
-            position: absolute;
-            bottom: 0;
-            right: - $gs-gutter;
-        }
-
         .fc-item__container {
             padding-left: 0;
         }
@@ -154,6 +128,7 @@ Media list item. Looks a bit like this:
         .fc-item__footer--horizontal {
             margin-left: 0;
         }
+        
         .fc-item__content {
             min-height: gs-height(2) + $gs-baseline;
         }
@@ -163,43 +138,12 @@ Media list item. Looks a bit like this:
             right: - $gs-gutter;
             height: gs-span(1) + $gs-baseline * 3;
         }
+
+        &[class*='fc-item--has-sublinks'] {        
+            .fc-item__footer--horizontal {
+                padding-left: $fc-item-gutter;
+                padding-right: $fc-item-gutter;
+            }
+        }
     }
-
-    // &.fc-item--has-cutout {
-    //     .fc-item__container {
-    //         padding-left: 0;
-    //     }
-
-    //     .fc-item__meta {
-    //         margin-left: 0;
-    //     }
-
-    //     .fc-item__footer--vertical {
-    //         margin-left: 0;
-    //     }
-    // }
-
-    // &.fc-item--has-cutout {
-    //     .fc-item__media-wrapper {
-    //         display: none;
-    //     }
-
-    //     .fc-item__kicker--dreamsnap-list {
-    //         margin-left: 0;
-    //     }
-
-    //     .fc-item__content {
-    //         min-height: gs-height(2) + $gs-baseline;
-    //         padding-right: gs-span(1);
-    //     }
-
-    //     .fc-item__avatar {
-    //         height: gs-span(1) + $gs-baseline * 3;
-
-    //         .fc-item__avatar__media {
-    //             display: block;
-    //             right: - $gs-gutter;
-    //         }
-    //     }
-    // }
 }

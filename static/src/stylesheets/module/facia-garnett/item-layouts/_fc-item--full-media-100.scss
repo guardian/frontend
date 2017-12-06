@@ -32,12 +32,12 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
         }
     }
 
-    // &:not(.fc-item--has-cutout) {
+    &:not(.fc-item--has-cutout) {
         .fc-item__image-container {
             display: block;
             padding-bottom: 40%;
         }
         
         @include fc-sublinks--below;
-    // }
+    }
 }

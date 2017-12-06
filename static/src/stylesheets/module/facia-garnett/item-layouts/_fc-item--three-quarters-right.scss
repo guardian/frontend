@@ -26,12 +26,4 @@ Three quarter item. Looks like a wide standard, a bit like this:
     .fc-item__container {
         flex-direction: row;
     }
-
-    // &.fc-item--has-cutout {
-    //     .fc-sublinks {
-    //         @include mq(tablet) {
-    //             padding-right: gs-span(1);
-    //         }
-    //     }
-    // }
 }
