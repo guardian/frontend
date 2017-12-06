@@ -81,13 +81,10 @@ class AuthenticatedActions(
     def refine[A](request: Request[A]) =
       authService.authenticateUserForPermissions(request) match {
         case Some(permUser) => Future.successful(Right(new AuthenticatedRequest(permUser, request)))
-        case None => if(authService.recentlyAuthenticated(request)) {
+        case _ =>
           authService.authenticatedUserFor(request) match {
-            case Some(authenticatedUser) => Future.successful(Right(new AuthenticatedRequest(authenticatedUser, request)))
-            case None => checkIdApiForUserAndRedirect(request)
-          }
-        } else {
-            Future.successful(Left(sendUserToReauthenticate(request)))
+            case Some(user) if user.hasRecentlyAuthenticated => Future.successful(Right(new AuthenticatedRequest(user, request)))
+            case _ => Future.successful(Left(sendUserToReauthenticate(request)))
           }
         }
   }

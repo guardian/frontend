@@ -13,7 +13,7 @@ object AuthenticatedUser {
   implicit def authUserToUser(authUser: AuthenticatedUser): User = authUser.user
 }
 
-case class AuthenticatedUser(user: User, auth: Auth)
+case class AuthenticatedUser(user: User, auth: Auth, hasRecentlyAuthenticated: Boolean = false)
 
 class AuthenticationService(cookieDecoder: FrontendIdentityCookieDecoder,
                                       idRequestParser: IdRequestParser,
@@ -25,7 +25,9 @@ class AuthenticationService(cookieDecoder: FrontendIdentityCookieDecoder,
     minimalSecureUser <- cookieDecoder.getUserDataForScGuU(scGuU.value)
     guUCookieData <- cookieDecoder.getUserDataForGuU(guU.value)
     fullUser = guUCookieData.getUser if (fullUser.getId == minimalSecureUser.getId)
-  } yield AuthenticatedUser(fullUser, ScGuU(scGuU.value, guUCookieData))
+    scGuLa <- request.cookies.get("SC_GU_LA")
+    hasRecentlyAuthenticated = cookieDecoder.userHasRecentScGuLaCookie(fullUser, scGuLa.value, Minutes.minutes(20).toStandardDuration)
+  } yield AuthenticatedUser(fullUser, ScGuU(scGuU.value, guUCookieData), hasRecentlyAuthenticated)
 
   def recentlyAuthenticated(request: RequestHeader): Boolean = (for {
     authedUser <- authenticatedUserFor(request)
