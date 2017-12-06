@@ -157,6 +157,8 @@ class FabricVideo {
                     );
                 }
 
+                // The objectFitVideos should be removed after the DAP campaign is finished (09/12/2017).
+                // At this point, IE support for Fabric Video will only be available through DFP Native Styles.
                 objectFitVideos(this.adSlot.querySelector('video'));
             })
             .then(() => {
