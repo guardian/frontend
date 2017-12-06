@@ -36,6 +36,7 @@ object Tag {
       url = tag.url,
       section = Some(SectionId.fromId(tag.sectionId)),
       pillar = None,
+      designType = None,
       adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(tag.id, tag.sectionId),
       description = tag.description,
       pagination = pagination,
