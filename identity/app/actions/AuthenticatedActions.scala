@@ -80,12 +80,16 @@ class AuthenticatedActions(
 
     def refine[A](request: Request[A]) =
       authService.authenticateUserForPermissions(request) match {
-        case Some(permUser) => Future.successful(Right( new AuthenticatedRequest( permUser, request)))
-        case None => authService.authenticatedUserFor(request) match {
-          case Some(authenticatedUser) => Future.successful(Right(new AuthenticatedRequest(authenticatedUser, request)))
-          case None => checkIdApiForUserAndRedirect(request)
+        case Some(permUser) => Future.successful(Right(new AuthenticatedRequest(permUser, request)))
+        case None => if(authService.recentlyAuthenticated(request)) {
+          authService.authenticatedUserFor(request) match {
+            case Some(authenticatedUser) => Future.successful(Right(new AuthenticatedRequest(authenticatedUser, request)))
+            case None => checkIdApiForUserAndRedirect(request)
+          }
+        } else {
+            Future.successful(Left(sendUserToReauthenticate(request)))
+          }
         }
-      }
   }
 
   def agreeAction(unAuthorizedCallback: (RequestHeader) => Result): AuthenticatedBuilder[AuthenticatedUser] =
