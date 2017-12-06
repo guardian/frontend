@@ -15,12 +15,14 @@ import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acqui
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicTestimonialsGroup } from 'common/modules/experiments/tests/acquisitions-epic-testimonials-group';
 import { acquisitionsEpicEndOfYearCountdown } from 'common/modules/experiments/tests/acquisitions-epic-end-of-year-countdown';
+import { acquisitionsEpicSplitCtaReferrer } from 'common/modules/experiments/tests/acquisitions-epic-split-cta-referrer';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
+    acquisitionsEpicSplitCtaReferrer,
     acquisitionsEpicEndOfYearCountdown,
     acquisitionsEpicTestimonialsGroup,
     acquisitionsEpicUSGunCampaign,
