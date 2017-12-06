@@ -7,6 +7,7 @@ import java.util.Map.Entry
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
+import com.gu.cm.ClassPathConfigurationSource
 import com.typesafe.config.{ConfigException, ConfigFactory}
 import common.Environment.{app, awsRegion, stage}
 import conf.switches.Switches
@@ -76,15 +77,19 @@ object GuardianConfiguration extends Logging {
   lazy val parameterStore = new ParameterStore(awsRegion)
 
   lazy val configuration: Config = {
-    val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf")
-    val runtimeOnly =  configFromFile("/etc/gu/frontend.conf")
-    val localConfig = userPrivate.withFallback(runtimeOnly)
+    if (stage == "DEVINFRA")
+      ConfigFactory.parseResourcesAnySyntax("env/DEVINFRA.properties")
+    else {
+      val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf")
+      val runtimeOnly =  configFromFile("/etc/gu/frontend.conf")
+      val localConfig = userPrivate.withFallback(runtimeOnly)
 
-    val frontendConfig = configFromParameterStore("/frontend")
-    val frontendStageConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}")
-    val frontendAppConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}/${app.toLowerCase}")
+      val frontendConfig = configFromParameterStore("/frontend")
+      val frontendStageConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}")
+      val frontendAppConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}/${app.toLowerCase}")
 
-    localConfig.withFallback(frontendAppConfig.withFallback(frontendStageConfig.withFallback(frontendConfig)))
+      localConfig.withFallback(frontendAppConfig.withFallback(frontendStageConfig.withFallback(frontendConfig)))
+    }
   }
 
   implicit class ScalaConvertProperties(conf: Config) {
