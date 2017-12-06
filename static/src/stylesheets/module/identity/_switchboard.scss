@@ -23,11 +23,15 @@ $checkbox-size: $gs-gutter / 1.25;
         grid-column-gap: $local-gutter;
     }
 
-    &--narrow ul {
+    &.manage-account__switches--narrow ul {
         grid-template-columns: repeat(1, 1fr);
         @include mq(tablet) {
             grid-template-columns: repeat(2, 1fr);
         }
+    }
+
+    &.manage-account__switches--wide ul {
+        grid-template-columns: repeat(1, 1fr);
     }
 
     li {
