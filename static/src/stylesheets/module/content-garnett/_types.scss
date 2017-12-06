@@ -90,7 +90,7 @@ $quote-tail: 25px; // ********** Article Type **********
         color: #333333;
         font-style: italic;
 
-        span[itemprop="author"] {
+        span[itemprop='author'] {
             @include f-header;
             display: block;
             font-style: normal;
@@ -244,10 +244,10 @@ $quote-tail: 25px; // ********** Article Type **********
         .pullquote-cite,
         .pullquote-paragraph {
             @include mq(mobile) {
-                 @include fs-headlineGarnett(2);
+                @include fs-headlineGarnett(2);
             }
             @include mq(desktop) {
-                 @include fs-headlineGarnett(3);
+                @include fs-headlineGarnett(3);
             }
         }
     }
@@ -271,13 +271,13 @@ $quote-tail: 25px; // ********** Article Type **********
         .pullquote-cite,
         .pullquote-paragraph {
             @include mq(mobile) {
-                 @include fs-headlineGarnett(3);
+                @include fs-headlineGarnett(3);
             }
             @include mq(phablet) {
-                 @include fs-headlineGarnett(4);
+                @include fs-headlineGarnett(4);
             }
             @include mq(desktop) {
-                 @include fs-headlineGarnett(5);
+                @include fs-headlineGarnett(5);
             }
         }
 
