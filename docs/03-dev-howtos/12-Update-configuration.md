@@ -1,6 +1,17 @@
 # Update configuration in Systems Manager Parameter Store
 
-We store all our configuration in Systems Manager Parameter Store
+We store all our configuration in Systems Manager Parameter Store.
+
+An app will attempt to load properties from the following levels in Systems
+Manger Parameter Store: 
+
+```
+/frontend/{stage}/{app}/config.property.name
+/frontend/{stage}/config.property.name
+/frontend/config.property.name
+```
+
+Configuration can be shared at the root and stage levels.
 
 The easiest way to add or modify configuration properties is via the AWS console.
 
