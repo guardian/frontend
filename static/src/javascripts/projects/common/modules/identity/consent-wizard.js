@@ -51,6 +51,9 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
         if (ev.target === wizardEl) {
             fastdom
                 .read(() => [
+                    wizardEl.getElementsByClassName(
+                        'manage-account-wizard__step'
+                    ).length,
                     [
                         ...document.getElementsByClassName(
                             'manage-account-consent-wizard-counter'
@@ -62,18 +65,29 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                         ),
                     ][0],
                 ])
-                .then(([counterEl: HTMLElement, buttonBackEl: HTMLElement]) => {
-                    fastdom.write(() => {
-                        counterEl.classList.toggle(
-                            'manage-account-consent-wizard__revealable--visible',
-                            ev.detail.positionName === positions.email
-                        );
-                        buttonBackEl.classList.toggle(
-                            'manage-account-consent-wizard__revealable--visible',
-                            ev.detail.position > 0
-                        );
-                    });
-                });
+                .then(
+                    (
+                        [
+                            stepCount: number,
+                            counterEl: HTMLElement,
+                            buttonBackEl: HTMLElement,
+                        ]
+                    ) =>
+                        fastdom.write(() => {
+                            if (stepCount <= 2) {
+                                buttonBackEl.remove();
+                            } else if (buttonBackEl) {
+                                buttonBackEl.classList.toggle(
+                                    'manage-account-consent-wizard__revealable--visible',
+                                    ev.detail.position > 0
+                                );
+                            }
+                            counterEl.classList.toggle(
+                                'manage-account-consent-wizard__revealable--visible',
+                                ev.detail.positionName === positions.email
+                            );
+                        })
+                );
         }
     });
 };
