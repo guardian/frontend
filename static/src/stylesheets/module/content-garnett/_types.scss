@@ -63,6 +63,58 @@ $quote-tail: 25px; // ********** Article Type **********
             margin-left: -$gs-gutter/2;
         }
     }
+    // meta__styling
+    .inline-close,
+    .social-icon,
+    .social-icon.social-icon--more {
+        background-color: transparent;
+        border: 1px solid $neutral-4;
+
+        &:focus,
+        &:hover {
+            svg {
+                fill: $neutral-garnett-1;
+            }
+        }
+    }
+
+    .byline,
+    .content__dateline,
+    .meta__numbers,
+    .meta__social {
+        border-top: 1px solid $neutral-3;
+    }
+
+    .byline {
+        font-weight: 200;
+        color: #333333;
+        font-style: italic;
+
+        span[itemprop='author'] {
+            @include f-header;
+            display: block;
+            font-style: normal;
+            font-weight: 900;
+        }
+    }
+
+    .meta__twitter {
+        a {
+            background-color: transparent;
+            border: 1px solid $neutral-4;
+
+            &:focus,
+            &:hover {
+                .inline-tone-fill {
+                    fill: $neutral-garnett-1;
+                }
+
+                .contact {
+                    color: $neutral-garnett-1;
+                }
+            }
+        }
+    }
 
     .badge,
     .content__meta-container {
