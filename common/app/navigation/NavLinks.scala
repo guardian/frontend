@@ -47,34 +47,14 @@ object NavLinks {
   val borrowing = NavLink("borrowing", "/money/debt")
   val careers = NavLink("careers", "/money/work-and-careers")
   val obituaries = NavLink("obituaries", "/tone/obituaries")
-  val ukNews = NavLink("UK", "/uk-news", longTitle = "UK news",
-    children = List(politics, education, media, society, law, scotland, wales, northernIreland)
-  )
-  val world = NavLink("world", "/world", longTitle = "world news",
-    children = List(europe, usNews, americas, asia, australiaNews, middleEast, africa, inequality, cities, globalDevelopment)
-  )
-
-  val ukEnvironment = NavLink("environment", "/environment",
-    children = List(climateChange, wildlife, energy, pollution)
-  )
-  val auEnvironment = ukEnvironment.copy(
-    children = List(cities, globalDevelopment, sustainableBusiness)
-  )
-
-  val money = NavLink("money", "/money",
-    children = List(property, pensions, savings, borrowing, careers)
-  )
-
-  val ukBusiness = NavLink("business", "/business",
-    children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness)
-  )
-
-  val usBusiness = ukBusiness.copy(
-    children = List(economics, sustainableBusiness, diversityEquality, smallBusiness)
-  )
-  val auBusiness = ukBusiness.copy(
-    children = List( markets, money, projectSyndicate)
-  )
+  val ukNews = NavLink("UK", "/uk-news", longTitle = "UK news", children = List(politics, education, media, society, law, scotland, wales, northernIreland))
+  val world = NavLink("world", "/world", longTitle = "world news", children = List(europe, usNews, americas, asia, australiaNews, middleEast, africa, inequality, cities, globalDevelopment))
+  val ukEnvironment = NavLink("environment", "/environment", children = List(climateChange, wildlife, energy, pollution))
+  val auEnvironment = ukEnvironment.copy(children = List(cities, globalDevelopment, sustainableBusiness))
+  val money = NavLink("money", "/money", children = List(property, pensions, savings, borrowing, careers))
+  val ukBusiness = NavLink("business", "/business", children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness))
+  val usBusiness = ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness))
+  val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate))
 
   /* OPINION */
   val columnists = NavLink("columnists", "/index/contributors")
@@ -145,15 +125,9 @@ object NavLinks {
   val skiing = NavLink("skiing", "/travel/skiing")
   val travelAustralasia = NavLink("australasia", "/travel/australasia")
   val travelAsia = NavLink("asia", "/travel/asia")
-  val ukTravel = NavLink("travel", "/travel",
-    children = List(travelUk, travelEurope, travelUs)
-  )
-  val usTravel = ukTravel.copy(
-    children = List(travelUs, travelEurope, travelUk)
-  )
-  val auTravel = ukTravel.copy(
-    children = List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs)
-  )
+  val ukTravel = NavLink("travel", "/travel", children = List(travelUk, travelEurope, travelUs))
+  val usTravel = ukTravel.copy(children = List(travelUs, travelEurope, travelUk))
+  val auTravel = ukTravel.copy(children = List(travelAustralasia, travelAsia, travelUk, travelEurope, travelUs))
 
   val todaysPaper = NavLink("today's paper", "/theguardian",
     children = List(
