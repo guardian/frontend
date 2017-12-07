@@ -87,7 +87,10 @@ object GuardianConfiguration extends Logging {
       val frontendStageConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}")
       val frontendAppConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}/${app.toLowerCase}")
 
-      localConfig.withFallback(frontendAppConfig.withFallback(frontendStageConfig.withFallback(frontendConfig)))
+      localConfig
+        .withFallback(frontendAppConfig)
+        .withFallback(frontendStageConfig)
+        .withFallback(frontendConfig)
     }
   }
 
