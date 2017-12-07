@@ -1,33 +1,35 @@
-$quote-tail: 25px;
+$quote-tail: 25px; //hack hide for margins (aka curtains)
+@mixin fourRules {
+    &:before {
+        position: absolute;
+        top: -13px;
+        height: 13px;
+        width: 100%;
+        background: transparent url("https://uploads.guim.co.uk/2017/12/07/rule4.svg") repeat 0 0;
+    }
+}
+
+.l-side-margins {
+    &:after,
+    &:before {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        background: #fff;
+        top: 0;
+        height: 100%;
+        width: 0;
+    }
+}
 
 .content--type-article,
 .content--type-opinion {
+    // *************** Meta and Sharing ***************
     .submeta {
         position: relative;
         border-top: 0;
         margin-top: $gs-row-height;
 
-        &:before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            border-bottom: 1px solid $neutral-5;
-            border-top: 1px solid $neutral-5;
-        }
-
-        &:after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            border-bottom: 1px solid $neutral-5;
-            border-top: 1px solid $neutral-5;
-        }
 
         &__keywords {
             padding-bottom: $gs-baseline/2;
@@ -40,9 +42,14 @@ $quote-tail: 25px;
 
     .submeta__link-item {
         @include fs-textSans(3);
+
+        &:before {
+            content: '';
+        }
     }
 
     .submeta__label {
+        @include fourRules;
         margin-bottom: 0;
     }
 
@@ -53,19 +60,11 @@ $quote-tail: 25px;
     .submeta__section-labels .submeta__link {
         @include f-bodyHeading;
     }
-
-    .content__article-body,
-    .immersive-main-media__headline-container .content__main-column {
-        @include mq(desktop) {
-            border-left: solid 1px $neutral-5;
-            padding-left: $gs-gutter/2;
-            margin-left: 0;
-        }
-        @include mq(leftCol) {
-            margin-left: -$gs-gutter/2;
-        }
-    }
     // meta__styling
+    .content__meta-container {
+        @include fourRules;
+    }
+
     .inline-close,
     .social-icon,
     .social-icon.social-icon--more {
@@ -80,14 +79,14 @@ $quote-tail: 25px;
         }
     }
 
-    .byline,
     .content__dateline,
     .meta__numbers,
     .meta__social {
-        border-top: 1px solid $neutral-3;
+        border-top: 1px solid $neutral-5;
     }
 
     .byline {
+        border-top: none;
         font-weight: 200;
         color: #333333;
         font-style: italic;
@@ -117,6 +116,47 @@ $quote-tail: 25px;
             }
         }
     }
+    // *************** Header and Body Styles ***************
+    .content__article-body,
+    .immersive-main-media__headline-container .content__main-column {
+        @include mq(desktop) {
+            border-left: solid 1px $neutral-5;
+            padding-left: $gs-gutter/2;
+            margin-left: 0;
+            padding-top: $gs-gutter/2;
+        }
+        @include mq(leftCol) {
+            margin-left: -$gs-gutter/2;
+        }
+    }
+
+    .content__secondary-column {
+        padding-top: $gs-gutter/2;
+    }
+    //hack hide for first image caption - testing only
+    .caption--main {
+        display: none;
+    }
+
+    .article__fullscreen:hover,
+    .article__img-container:hover .article__fullscreen,
+    .article__img-container:hover .gallery__fullscreen,
+    .gallery__fullscreen:hover {
+        background-color: $neutral-4;
+    }
+
+    .content__headline {
+        @include fs-headlineGarnett(6);
+        font-weight: 400;
+    }
+
+    .content__standfirst {
+        @include fs-headline(2);
+        border-top: 1px solid $neutral-3;
+        color: $neutral-1;
+        font-weight: 700;
+        padding-top: 2px;
+    }
 
     .badge,
     .content__meta-container {
@@ -127,6 +167,7 @@ $quote-tail: 25px;
             width: gs-span(3) -$gs-gutter/2;
         }
     }
+
     .drop-cap__inner {
         line-height: 3.7rem;
     }
@@ -319,6 +360,6 @@ $quote-tail: 25px;
     }
 
     .byline-img {
-        right: gs-span(3);
+        // right: gs-span(3);
     }
 }
