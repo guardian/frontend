@@ -2,11 +2,11 @@ package controllers
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{Consent, User}
+import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
 import common.ImplicitControllerExecutionContext
 import form._
 import idapiclient.responses.Error
-import idapiclient.IdApiClient
+import idapiclient.{IdApiClient, UserUpdateDTO}
 import model._
 import play.api.data.{Form, FormError}
 import play.api.i18n.{I18nSupport, MessagesProvider}
@@ -15,7 +15,6 @@ import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 import utils.SafeLogging
-import com.gu.identity.model.EmailNewsletters
 
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
@@ -140,6 +139,25 @@ class EditProfileController(
     } // end csrfCheck
 
   def saveConsentPreferences: Action[AnyContent] = submitForm(EmailPrefsProfilePage)
+
+  def submitRepermissionedFlag(returnUrl: String): Action[AnyContent] =
+    csrfCheck {
+      authActionWithUser.async { implicit request =>
+        identityApiClient.saveUser(
+          request.user.id,
+          UserUpdateDTO(statusFields = Some(StatusFields(hasRepermissioned = Some(true)))),
+          request.user.auth
+        ).map {
+          case Left(idapiErrors) =>
+            logger.error(s"Failed to set hasRepermissioned flag for user ${request.user.id}: $idapiErrors")
+            InternalServerError(Json.toJson(idapiErrors))
+
+          case Right(updatedUser) =>
+            logger.info(s"Successfully set hasRepermissioined flag for user ${request.user.id}")
+            SeeOther(returnUrl)
+        }
+      }
+    }
 
   private def displayForm(
       page: IdentityPage,
