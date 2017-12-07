@@ -58,14 +58,14 @@
             <div class="fieldset__fields">
                 <div class="form-field">
                     <input type="text" id="qa-contribution-next-payment-new-price" class="js-contribution-next-payment-new-price"></input>
-                    <span id="qa-contribution-user-update-amount">
-                        <button id="qa-change-contribution-amount-confirm" class="manage-account__button manage-account__button-half--left manage-account-cta-half--left js-manage-account-change-contribution-amount-confirm" data-link-name="Change contribution amount" data-email="@user.primaryEmailAddress">
+                    <div id="qa-contribution-user-update-amount" class="manage-account__button-container">
+                        <button id="qa-change-contribution-amount-confirm" class="manage-account__button disabled manage-account__button-half--left manage-account-cta-half--left js-manage-account-change-contribution-amount-confirm" data-link-name="Change contribution amount" data-email="@user.primaryEmailAddress">
                             Confirm
                         </button>
                         <button id="qa-change-contribution-amount-cancel" class="manage-account__button manage-account__button-half--right manage-account-cta-half--right js-manage-account-change-contribution-amount-cancel" data-link-name="Cancel change contribution amount" data-email="@user.primaryEmailAddress">
                             Back
                         </button>
-                    </span>
+                    </div>
                     <div class="is-updating js-updating show-updating is-hidden"></div>
                 </div>
             </div>

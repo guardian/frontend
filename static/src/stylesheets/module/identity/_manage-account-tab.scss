@@ -403,6 +403,12 @@
 
 /* Button styles
 ========================================================================== */
+.manage-account__button-container {
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+}
+
 .manage-account__button {
     @include fs-textSans(2);
     background-color: $guardian-brand;
@@ -447,20 +453,23 @@
 
     &-half--left {
         width: $gs-baseline*5;
-        border-top-left-radius: 50px;
-        border-bottom-left-radius: 50px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
         min-width: $gs-baseline * 7;
         float: left;
     }
 
     &-half--right {
         width: $gs-baseline*5;
-        border-top-right-radius: 50px;
-        border-bottom-right-radius: 50px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
         min-width: $gs-baseline * 7;
         float: right;
     }
 
+    .disabled {
+        background-color: $neutral-4;
+    }
 }
 
 .manage-account__button--round {
