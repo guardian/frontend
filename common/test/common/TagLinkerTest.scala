@@ -5,6 +5,7 @@ import java.time.ZoneOffset
 import com.gu.contentapi.client.model.v1.{ContentFields, TagType, Content => ApiContent, Tag => ApiTag}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import common.editions.Uk
+import conf.Configuration
 import implicits.Dates.jodaToJavaInstant
 import model.{Article, Content}
 import org.joda.time.DateTime
@@ -28,27 +29,27 @@ class TagLinkerTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "TagLinker" should "link tag at the start of the paragraph" in {
     val cleaned = TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<p>Cycling is an awesome sport.</p>"""))
-    cleaned.firstPara should be ("""<a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a> is an awesome sport.""")
+    cleaned.firstPara should be (s"""<a href="${Configuration.site.host}/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a> is an awesome sport.""")
   }
 
   it should "link tag in the middle of the paragraph" in {
     val cleaned = TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<p>After the change in law, Cycling is an awesome sport.</p>"""))
-    cleaned.firstPara should be ("""After the change in law, <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a> is an awesome sport.""")
+    cleaned.firstPara should be (s"""After the change in law, <a href="${Configuration.site.host}/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a> is an awesome sport.""")
   }
 
   it should "link tag at the end of the paragraph" in {
     val cleaned = TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<p>After all that Cycling.</p>"""))
-    cleaned.firstPara should be ("""After all that <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a>.""")
+    cleaned.firstPara should be (s"""After all that <a href="${Configuration.site.host}/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a>.""")
   }
 
   it should "link if followed by a comma" in {
     val cleaned = TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<p>Show up to Cycling, it won't hurt.</p>"""))
-    cleaned.firstPara should be ("""Show up to <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a>, it won't hurt.""")
+    cleaned.firstPara should be (s"""Show up to <a href="${Configuration.site.host}/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a>, it won't hurt.""")
   }
 
   it should "link if followed by a question mark" in {
     val cleaned = TagLinker(article(tag("sport/cycling", "Cycling"))).clean(souped("""<p>Who knows about Cycling?</p>"""))
-    cleaned.firstPara should be ("""Who knows about <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a>?""")
+    cleaned.firstPara should be (s"""Who knows about <a href="${Configuration.site.host}/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling</a>?""")
   }
 
   it should "not link as part of another word" in {
@@ -69,7 +70,7 @@ class TagLinkerTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   it should "escape the tag name" in {
     val cleaned = TagLinker(article(tag("sport/cycling", "Cycling?."))).clean(souped(
       """<p>Help with the Cycling?.</p>"""))
-    cleaned.firstPara should be ("""Help with the <a href="/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling?.</a>""")
+    cleaned.firstPara should be (s"""Help with the <a href="${Configuration.site.host}/sport/cycling" data-link-name="auto-linked-tag" data-component="auto-linked-tag" class="u-underline">Cycling?.</a>""")
   }
 
   it should "not link tags in an article pullquote" in {
