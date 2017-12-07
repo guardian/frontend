@@ -90,7 +90,7 @@ const disableCancellationSubmit = (): void => {
 
 const enableCancellationSubmit = (): void => {
     $(CANCEL_CONTRIBUTION_SUBMIT).removeClass(IS_DISABLED_CLASSNAME);
-    $(CANCEL_CONTRIBUTION_SUBMIT).removeAttr('disabled');
+    $(CANCEL_CONTRIBUTION_SUBMIT)[0].disabled = false;
 };
 
 const handleCancelContributionSubmit = (): void => {
