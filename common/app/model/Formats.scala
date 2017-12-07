@@ -1,5 +1,6 @@
 package model
 
+import com.gu.contentapi.client.utils.DesignType
 import common.Pagination
 import model.content._
 import model.facia.PressedCollection
@@ -146,8 +147,31 @@ object PressedContentFormat {
     }
   }
 
-  implicit val sectionIdFormat = Json.format[SectionId]
-  implicit val pillarFormat = Pillar.format
+  implicit val designTypeFormat: Format[DesignType] = new Format[DesignType] {
+    override def reads(json: JsValue): JsResult[DesignType] = json match {
+      case JsString("Article") => JsSuccess(com.gu.contentapi.client.utils.Article)
+      case JsString("Immersive") => JsSuccess(com.gu.contentapi.client.utils.Immersive)
+      case JsString("Media") => JsSuccess(com.gu.contentapi.client.utils.Media)
+      case JsString("Review") => JsSuccess(com.gu.contentapi.client.utils.Review)
+      case JsString("Analysis") => JsSuccess(com.gu.contentapi.client.utils.Analysis)
+      case JsString("Comment") => JsSuccess(com.gu.contentapi.client.utils.Comment)
+      case JsString("Feature") => JsSuccess(com.gu.contentapi.client.utils.Feature)
+      case JsString("Live") => JsSuccess(com.gu.contentapi.client.utils.Live)
+      case _ => JsError(s"Unknown design type: '$json'")
+    }
+    override def writes(dt: DesignType): JsValue = dt match {
+      case com.gu.contentapi.client.utils.Article => JsString("Article")
+      case com.gu.contentapi.client.utils.Immersive => JsString("Immersive")
+      case com.gu.contentapi.client.utils.Media => JsString("Media")
+      case com.gu.contentapi.client.utils.Review => JsString("Review")
+      case com.gu.contentapi.client.utils.Analysis => JsString("Analysis")
+      case com.gu.contentapi.client.utils.Comment => JsString("Comment")
+      case com.gu.contentapi.client.utils.Feature => JsString("Feature")
+      case com.gu.contentapi.client.utils.Live => JsString("Live")
+    }
+  }
+
+  implicit val pillarFormat = Json.format[Pillar]
   implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val paginationFormat = Json.format[Pagination]
   implicit val podcastFormat = Json.format[Podcast]

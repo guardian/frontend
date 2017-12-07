@@ -30,7 +30,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink(FaciaCSSFile)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
-    override def linkCss: Html = stylesheetLink("stylesheets/facia.css")
+    override def linkCss: Html = stylesheetLink(s"stylesheets/$FaciaCSSFile.css")
 
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")

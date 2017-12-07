@@ -111,11 +111,15 @@
             left: gs-span(12) + $gs-gutter * 2;
             top: 0;
             bottom: 0;
-            width: gs-span(3);
+            width: gs-span(2);
 
             &:before {
                 content: '';
             }
+        }
+
+        @include mq(wide) {
+            width: gs-span(3);
         }
     }
 }

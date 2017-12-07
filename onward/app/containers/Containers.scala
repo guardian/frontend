@@ -25,7 +25,8 @@ trait Containers {
       1,
       Fixed(containerDefinition),
       CollectionConfigWithId(dataId, CollectionConfig.make(fapi.CollectionConfig.fromCollectionJson(config))),
-      CollectionEssentials(trails, Nil, displayName, None, None, None)
+      CollectionEssentials(trails, Nil, displayName, None, None, None),
+      hasMore = false
     ).withTimeStamps
   }
 }

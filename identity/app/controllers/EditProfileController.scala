@@ -15,6 +15,7 @@ import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 import utils.SafeLogging
+import com.gu.identity.model.EmailNewsletters
 
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
@@ -146,7 +147,7 @@ class EditProfileController(
       consentHint: Option[String] = None) = {
 
     csrfAddToken {
-      recentlyAuthenticated.async { implicit request =>
+      authWithConsentRedirectAction.async { implicit request =>
         profileFormsView(
           page = page,
           forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),

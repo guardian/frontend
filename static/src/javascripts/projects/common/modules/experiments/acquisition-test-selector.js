@@ -22,10 +22,10 @@ import { acquisitionsEpicSplitCtaReferrer } from 'common/modules/experiments/tes
  */
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
+    acquisitionsEpicUSGunCampaign,
     acquisitionsEpicSplitCtaReferrer,
     acquisitionsEpicEndOfYearCountdown,
     acquisitionsEpicTestimonialsGroup,
-    acquisitionsEpicUSGunCampaign,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

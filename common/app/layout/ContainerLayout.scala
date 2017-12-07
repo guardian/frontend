@@ -8,11 +8,12 @@ case class IndexedTrail(faciaContent: PressedContent, index: Int)
 
 object ContainerLayout extends implicits.Collections {
   def apply(
-      sliceDefinitions: Seq[Slice],
-      items: Seq[PressedContent],
-      initialContext: ContainerLayoutContext,
-      config: ContainerDisplayConfig,
-      mobileShowMore: MobileShowMore
+    sliceDefinitions: Seq[Slice],
+    items: Seq[PressedContent],
+    initialContext: ContainerLayoutContext,
+    config: ContainerDisplayConfig,
+    mobileShowMore: MobileShowMore,
+    hasMore: Boolean
   ): (ContainerLayout, ContainerLayoutContext) = {
     val indexedTrails = items.zipWithIndex.map((IndexedTrail.apply _).tupled)
 
@@ -32,7 +33,7 @@ object ContainerLayout extends implicits.Collections {
         (slicesSoFar :+ slice, remainingTrails, newContext)
     }
 
-    (ContainerLayout(slices, showMore map { case IndexedTrail(trail, index) =>
+    val remainingCards = showMore.map { case IndexedTrail(trail, index) =>
       FaciaCardAndIndex(
         index,
         FaciaCard.fromTrail(
@@ -43,7 +44,9 @@ object ContainerLayout extends implicits.Collections {
         ),
         hideUpTo = Some(Desktop)
       )
-    }), finalContext)
+    }
+
+    (ContainerLayout(slices, remainingCards, hasMore), finalContext)
   }
 
   def singletonFromContainerDefinition(
@@ -58,27 +61,30 @@ object ContainerLayout extends implicits.Collections {
   )._1
 
   def fromContainerDefinition(
-      containerDefinition: ContainerDefinition,
-      containerLayoutContext: ContainerLayoutContext,
-      config: ContainerDisplayConfig,
-      items: Seq[PressedContent]
+    containerDefinition: ContainerDefinition,
+    containerLayoutContext: ContainerLayoutContext,
+    config: ContainerDisplayConfig,
+    items: Seq[PressedContent],
+    hasMore: Boolean = false
   ): (ContainerLayout, ContainerLayoutContext) = apply(
       containerDefinition.slices,
       items,
       containerLayoutContext,
       config,
-      containerDefinition.mobileShowMore
+      containerDefinition.mobileShowMore,
+      hasMore
     )
 
   def fromContainer(
-      container: Container,
-      containerLayoutContext: ContainerLayoutContext,
-      config: ContainerDisplayConfig,
-      items: Seq[PressedContent]
+    container: Container,
+    containerLayoutContext: ContainerLayoutContext,
+    config: ContainerDisplayConfig,
+    items: Seq[PressedContent],
+    hasMore: Boolean
   ): Option[(ContainerLayout, ContainerLayoutContext)] =
     ContainerDefinition.fromContainer(container, items) map {
       definition: ContainerDefinition =>
-        fromContainerDefinition(definition, containerLayoutContext, config, items)
+        fromContainerDefinition(definition, containerLayoutContext, config, items, hasMore)
     }
 
   def forHtmlBlobs(sliceDefinitions: Seq[Slice], blobs: Seq[HtmlAndClasses]): ContainerLayout = {
@@ -110,7 +116,8 @@ object ContainerLayout extends implicits.Collections {
 
 case class ContainerLayout(
   slices: Seq[SliceWithCards],
-  remainingCards: Seq[FaciaCardAndIndex]
+  remainingCards: Seq[FaciaCardAndIndex],
+  hasMore: Boolean = false
 ) {
   def transformCards(f: ContentCard => ContentCard): ContainerLayout = copy(
     slices = slices.map(_.transformCards(f)),
@@ -120,8 +127,7 @@ case class ContainerLayout(
   def hasMobileShowMore: Boolean =
     slices.flatMap(_.columns.flatMap(_.cards)).exists(_.hideUpTo.contains(Mobile))
 
-  def hasDesktopShowMore: Boolean =
-    remainingCards.nonEmpty
+  def hasDesktopShowMore: Boolean = remainingCards.nonEmpty || hasMore
 
   def hasShowMore: Boolean = hasDesktopShowMore || hasMobileShowMore
 }
