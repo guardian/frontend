@@ -3,7 +3,7 @@
    ========================================================================== */
 
 $local-gutter: $gs-gutter / 3;
-$row-gutter: $gs-gutter;
+$row-gutter: $gs-gutter / 2;
 $switch-width: $gs-gutter / .5;
 $switch-height: $gs-gutter / 1;
 
@@ -58,6 +58,8 @@ $switch-off-color: $neutral-3;
     display: flex;
     width: 100%;
     border-top: 1px solid $neutral-6;
+    background: $neutral-8;
+    padding: $local-gutter;
 
     &.manage-account__switch--hinted {
         background-color: $features-support-3;
@@ -78,7 +80,7 @@ $switch-off-color: $neutral-3;
             & + .manage-account__switch-checkbox {
                 display: block;
                 position: absolute;
-                top: $local-gutter;
+                top: 0;
                 left: 0;
             }
             &:checked + .manage-account__switch-checkbox {
@@ -177,16 +179,14 @@ $switch-off-color: $neutral-3;
 
 .manage-account__switch-content {
     width: auto;
-    padding: $local-gutter 0;
-    padding-left: $local-gutter*1.5 + $switch-width;
     position: relative;
     display: flex;
     flex-direction: column;
+    padding-left: $local-gutter + $switch-width;
 }
 
 .manage-account__switch-title {
     @include fs-headline(2);
-    color: $guardian-brand;
     margin-bottom: $local-gutter * .5;
     cursor: pointer;
     display: block;
@@ -220,8 +220,6 @@ $switch-off-color: $neutral-3;
     @include mq(desktop) {
         .manage-account__switch {
             @include fs-textSans(4, true);
-            background: none;
-            padding: 0;
         }
         .manage-account__switch-content {
             flex-direction: row;
@@ -231,10 +229,10 @@ $switch-off-color: $neutral-3;
             @include fs-headline(3, true);
             flex: 0 0 30%;
             padding: 0 $local-gutter * 2;
-            border-left: 1px solid $neutral-8;
+            border-left: 1px solid $neutral-5;
         }
         .manage-account__switch-copy {
-            border-left: 1px solid $neutral-8;
+            border-left: 1px solid $neutral-5;
             padding: 0 $local-gutter * 2;
         }
     }
