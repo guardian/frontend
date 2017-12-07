@@ -35,7 +35,12 @@ class ParameterStore(region: String) {
       // Only possible to get a maximum of 10 results when this was written
       val maxResults = 10
 
-      val parameterRequest = new GetParametersByPathRequest().withWithDecryption(true).withPath(path).withRecursive(false).withMaxResults(maxResults)
+      val parameterRequest = new GetParametersByPathRequest()
+        .withWithDecryption(true)
+        .withPath(path)
+        .withRecursive(false)
+        .withMaxResults(maxResults)
+
       val parameterRequestWithNextToken = nextToken.map(parameterRequest.withNextToken).getOrElse(parameterRequest)
 
       val result = client.getParametersByPath(parameterRequestWithNextToken)
