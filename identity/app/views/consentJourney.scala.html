@@ -122,13 +122,15 @@
 @endcardStep() = {
     <div class="manage-account-wizard__step" data-wizard-step-name="endcard">
         <div class="js-manage-account-wizard__next">
-            <div class="manage-account-consent-thanks">
+            <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consent", idRequest)">
+                <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
+                @views.html.helper.CSRF.formField
                 <h2 class="manage-account-consent-thanks__title">Thank you</h2>
                 <aside class="manage-account-consent-thanks__content">
                     <p>Your support helps us deliver the quality independent journalism the world needs</p>
-                    <a class="manage-account__button" href="@verifiedReturnUrl">Continue</a>
+                    <button type="submit" class="manage-account__button">Continue</button>
                 </aside>
-            </div>
+            </form>
         </div>
     </div>
 }
