@@ -45,9 +45,6 @@ Three quarter item. Looks like a wide standard, a bit like this:
         .fc-item__header {
             @include fs-headline(5, true);
             @include headline-boost(6);
-        }
-
-        .fc-item__header {
             padding-bottom: gs-height(3.5);
 
             @include mq(desktop) {
@@ -57,30 +54,40 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
         .fc-item__content {
             max-width: 100%;
-         }
- 
-        .fc-item__avatar__media {
-            right: -12%;
-            height: gs-height(6);
-
-            @include mq(desktop) {
-                height: gs-height(7);
-            }
-         }
+        }
 
         .fc-item__header,
         .fc-item__footer--vertical,
         .fc-item__standfirst-wrapper {
             width: auto;
-            max-width: gs-span(4);
+            padding-right: gs-height(4.5);
 
             @include mq(desktop) {
-                max-width: gs-span(6);
+                padding-right: gs-height(5);
             }
         }
 
         .fc-item__standfirst {
             display: flex;
+        }
+
+        .fc-item__avatar {
+            width: gs-height(4.5);
+            height: gs-height(4.5);
+
+            @include mq(desktop) {
+                width: gs-height(5);
+                height: gs-height(5);
+            }
+        }
+
+        .fc-item__avatar__media {
+            right: -35%;
+            height: gs-height(6);
+
+            @include mq(desktop) {
+                height: gs-height(6.5);
+            }
         }
     }
 

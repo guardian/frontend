@@ -34,8 +34,13 @@ x x x x x x x x
     }
 
     &.fc-item--has-cutout {
+        .fc-item__avatar {
+            width: gs-height(3);
+            height: gs-height(3);
+        }
+
         .fc-item__avatar__media {
-            right: -20%;
+            right: -35%;
         }
 
         .fc-item__header {

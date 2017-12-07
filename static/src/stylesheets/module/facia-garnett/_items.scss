@@ -77,7 +77,7 @@
     @include mq($until: tablet) {
         &.fc-item--has-cutout {
             .fc-item__header {
-                padding-right: 25%;
+                padding-right: gs-span(1.5);
             }
 
             .fc-item__standfirst {
@@ -87,9 +87,13 @@
             .fc-item__content {
                 min-height: gs-height(2) + $gs-baseline;
             }
+
+            .fc-item__avatar {
+                width: gs-span(1.5);
+                height: gs-span(1.5);
+            }
     
             .fc-item__avatar__media {
-                display: block;
                 right: - $gs-gutter;
                 height: gs-span(1) + $gs-baseline * 3;
             }
@@ -122,11 +126,6 @@
             .fc-item__standfirst {
                 display: none;
             }
-    
-            .fc-item__avatar__media {
-                height: gs-height(4);
-                right: -20%;
-            }
 
             .fc-item__header {
                 padding-bottom: gs-height(4);
@@ -134,6 +133,16 @@
                 @include mq(desktop) {
                     padding-bottom: gs-height(4.5);
                 }
+            }
+
+            .fc-item__avatar {
+                width: gs-height(3);
+                height: gs-height(3);
+            }
+    
+            .fc-item__avatar__media {
+                height: gs-height(4);
+                right: -35%;
             }
         }
 
@@ -225,6 +234,16 @@
 .fc-item--full-media-100-tablet {
     @include mq(tablet) {
         &.fc-item--has-cutout {
+            .fc-item__avatar {
+                width: gs-height(4.5);
+                height: gs-height(4.5);
+            }
+
+            .fc-item__avatar__media {
+                right: -35%;
+                height: gs-height(6);
+            }
+
             .fc-item__container {
                 min-height: gs-height(5) + $gs-baseline * 3;
             }
@@ -234,12 +253,11 @@
             }
 
             .fc-item__header {
-                max-width: gs-span(6);
+                padding-right: gs-height(4.5);
                 @include fs-headline(4, true);
                 @include headline-boost(5);
 
                 @include mq(desktop) {
-                    max-width: gs-span(8);
                     @include fs-headline(6, true);
                     @include headline-boost(7);
                 }
@@ -247,10 +265,10 @@
 
             .fc-item__footer--vertical,
             .fc-item__standfirst-wrapper {
-                max-width: gs-span(5);
-    
+                padding-right: gs-span(5);
+
                 @include mq(desktop) {
-                    max-width: gs-span(6);
+                    padding-right: gs-span(7);
                 }
             }
 
@@ -275,11 +293,6 @@
                         }
                     }
                 }
-            }
-
-            .fc-item__avatar__media {
-                height: 100%;
-                right: -5%;
             }
         }
     }

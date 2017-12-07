@@ -41,12 +41,19 @@ x x x x x x x x x x x x x x x x x x
     }
 
     &.fc-item--has-cutout {
-        .fc-item__avatar__media {
-            right: -15%;
+        .fc-item__avatar {
+            width: gs-height(4);
+            height: gs-height(4);
+
+            @include mq(desktop) {
+                width: gs-height(4.5);
+                height: gs-height(4.5);
+            }
         }
 
         .fc-item__avatar__media {
-            height: gs-height(5);
+            right: -35%;
+            height: gs-height(5.5);
 
             @include mq(desktop) {
                 height: gs-height(6);
@@ -54,7 +61,7 @@ x x x x x x x x x x x x x x x x x x
         }
 
         .fc-item__header {
-            padding-bottom: gs-height(2) + $gs-baseline * 2;
+            padding-bottom: gs-height(4);
 
             @include mq(desktop) {
                 padding-bottom: gs-height(4.5);
@@ -62,10 +69,10 @@ x x x x x x x x x x x x x x x x x x
         }
 
         .fc-item__standfirst-wrapper {
-            padding-right: gs-span(2) + $gs-gutter * 2;
+            padding-right: gs-height(4);
 
             @include mq(desktop) {
-                padding-right: gs-span(3);
+                padding-right: gs-height(4.5);
             }
         }
 

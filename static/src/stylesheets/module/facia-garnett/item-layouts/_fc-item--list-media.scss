@@ -114,7 +114,7 @@ Media list item. Looks a bit like this:
 
     &.fc-item--has-cutout {
         .fc-item__header {
-            padding-right: 25%;
+            padding-right: gs-span(1.5);
         }
 
         .fc-item__standfirst {
@@ -133,8 +133,13 @@ Media list item. Looks a bit like this:
             min-height: gs-height(2) + $gs-baseline;
         }
 
-        .fc-item__avatar__media {
+        .fc-item__avatar {
             display: block;
+            width: gs-span(1.5);
+            height: gs-span(1.5);
+        }
+
+        .fc-item__avatar__media {
             right: - $gs-gutter;
             height: gs-span(1) + $gs-baseline * 3;
         }
