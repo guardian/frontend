@@ -146,6 +146,10 @@ $pillars: (
     .vjs-big-play-button .vjs-control-text:before {
         background-color: map-get($palette, kicker);
     }
+    
+    &.fc-item--type-comment .fc-item__avatar {
+        background-color: map-get($palette, cutoutBackground);
+    }
 }
 
 @each $pillar, $palette in $pillars {
