@@ -2,32 +2,23 @@
 import type { CtaUrls } from 'common/modules/commercial/contributions-utilities';
 import config from 'lib/config';
 
-export const epicButtonsTemplate = (
-    { membershipUrl = '', contributeUrl = '' }: CtaUrls,
-    useSupportDomain: boolean = false
-) => {
+export const epicButtonsSplitCtaTemplate = ({
+    membershipUrl = '',
+}: CtaUrls): string => {
     const contribButton = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
-             href="${contributeUrl}"
+             href="${membershipUrl}&bundle=contribute"
              target="_blank">
              Make a contribution
             </a>
         </div>`;
-    const supportButtonBecome = `
+    const subscribeButton = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
-              href="${membershipUrl}"
+              href="${membershipUrl}&bundle=subscribe"
               target="_blank">
-              Become a supporter
-            </a>
-        </div>`;
-    const supportButtonSupport = `
-        <div>
-            <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-single-button"
-              href="${membershipUrl}"
-              target="_blank">
-              Support the Guardian
+              Get a subscription
             </a>
         </div>`;
 
@@ -38,8 +29,8 @@ export const epicButtonsTemplate = (
 
     return `
         <div class="contributions__amount-field">
-            ${!useSupportDomain ? supportButtonBecome : supportButtonSupport}
-            ${!useSupportDomain ? contribButton : ''}
+            ${contribButton}
+            ${subscribeButton}
             ${paymentLogos}
         </div>`;
 };
