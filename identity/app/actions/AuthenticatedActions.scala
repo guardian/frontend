@@ -29,7 +29,7 @@ class AuthenticatedActions(
   private implicit val ec: ExecutionContext = controllerComponents.executionContext
 
   def redirectWithReturn(request: RequestHeader, path: String): Result = {
-    val returnUrl = URLEncoder.encode(identityUrlBuilder.buildUrl(request.uri), "UTF-8")
+    val returnUrl = identityUrlBuilder.buildUrl(request.uri)
 
     val redirectUrlWithParams = identityUrlBuilder.appendQueryParams(path, List(
       "INTCMP" -> "email",
