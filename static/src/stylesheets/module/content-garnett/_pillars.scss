@@ -9,6 +9,10 @@
         color: $pillarColor;
     }
 
+    .tonal__head--tone-feature .content__headline{
+        color: $pillarColor;
+    }
+
     .inline-close,
     .inline-tone-fill,
     .social-icon svg,
@@ -49,9 +53,13 @@
 }
 
 .content--pillar-news {
-    @include colorPalatte($news-garnett-main-1, $neutral-3);
+    @include colorPalatte($news-gt-headline, $neutral-3);
 }
 
 .content--pillar-opinion {
-    @include colorPalatte($opinion-garnett-main-1, $neutral-3);
+    @include colorPalatte($opinion-gt-headline, $opinion-gt-kicker);
+}
+
+.content--pillar-arts {
+    @include colorPalatte($arts-gt-headline, $arts-gt-kicker);
 }
