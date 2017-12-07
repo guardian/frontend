@@ -71,11 +71,18 @@ class NewsletterService(
   }
 
   def getEmailSubscriptions(
+     form: Form[EmailPrefsData],
+     add: List[String] = List(),
+     remove: List[String] = List()): List[String] = {
+    (form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add).toList
+  }
+
+  def getV1EmailSubscriptions(
       form: Form[EmailPrefsData],
       add: List[String] = List(),
       remove: List[String] = List()): List[String] = {
-
-    (form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add).toList
+    //TODO: only return V1 subscriptions when V2 subscriptions are in place
+    getEmailSubscriptions(form,add,remove)
   }
 }
 

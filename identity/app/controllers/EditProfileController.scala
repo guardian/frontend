@@ -147,7 +147,7 @@ class EditProfileController(
       consentHint: Option[String] = None) = {
 
     csrfAddToken {
-      recentlyAuthenticated.async { implicit request =>
+      authWithConsentRedirectAction.async { implicit request =>
         profileFormsView(
           page = page,
           forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
