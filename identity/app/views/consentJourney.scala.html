@@ -121,24 +121,22 @@
 
 @endcardStep() = {
     <div class="manage-account-wizard__step" data-wizard-step-name="endcard">
-        <div class="js-manage-account-wizard__next">
-            <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consent", idRequest)">
-                <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
-                @views.html.helper.CSRF.formField
-                <h2 class="manage-account-consent-thanks__title">Thank you</h2>
-                <aside class="manage-account-consent-thanks__content">
-                    <p>Your support helps us deliver the quality independent journalism the world needs</p>
-                    <button type="submit" class="manage-account__button">Continue</button>
-                </aside>
-            </form>
-        </div>
+        <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consent", idRequest)">
+            <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
+            @views.html.helper.CSRF.formField
+            <h2 class="manage-account-consent-thanks__title">Thank you</h2>
+            <aside class="manage-account-consent-thanks__content">
+                <p>Your support helps us deliver the quality independent journalism the world needs</p>
+                <button type="submit" class="manage-account__button">Continue</button>
+            </aside>
+        </form>
     </div>
 }
 
 
 @mainLegacy(page, projectName = Option("identity")) { } {
 
-    <div class="identity-wrapper-for-bg">
+    <div class="identity-wrapper-for-bg identity-wrapper-for-bg--overflows">
         <div class="gs-container">
             <div class="monocol-wrapper">
 
