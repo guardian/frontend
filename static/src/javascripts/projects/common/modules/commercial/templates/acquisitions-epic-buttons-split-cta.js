@@ -4,7 +4,7 @@ import config from 'lib/config';
 
 export const epicButtonsSplitCtaTemplate = ({
     membershipUrl = '',
-}: CtaUrls) => {
+}: CtaUrls): string => {
     const contribButton = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"

@@ -5,13 +5,14 @@ import { epicButtonsSplitCtaTemplate } from 'common/modules/commercial/templates
 import { epicButtonsReferrerJustContributeTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons-referrer-just-contribute';
 import { epicButtonsReferrerContributeAndDigipackTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons-referrer-contribute-and-digipack';
 
-const referrerContributeAndDigipackTemplate = (urls: CtaUrls) =>
+const referrerContributeAndDigipackTemplate = (urls: CtaUrls): string =>
     epicButtonsReferrerContributeAndDigipackTemplate(urls);
 
-const referrerJustContributeTemplate = (urls: CtaUrls) =>
+const referrerJustContributeTemplate = (urls: CtaUrls): string =>
     epicButtonsReferrerJustContributeTemplate(urls);
 
-const splitCtaTemplate = (urls: CtaUrls) => epicButtonsSplitCtaTemplate(urls);
+const splitCtaTemplate = (urls: CtaUrls): string =>
+    epicButtonsSplitCtaTemplate(urls);
 
 export const acquisitionsEpicSplitCtaReferrer: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicSplitCtaReferrer',
