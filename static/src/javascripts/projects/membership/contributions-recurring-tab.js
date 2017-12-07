@@ -122,7 +122,7 @@ const handleCancelContributionSubmit = (): void => {
     });
 };
 
-const handleCancellationReasonChange = () => {
+const handleCancellationReasonChange = (): void => {
     const cancelContributionSubmit = document.querySelector(
         CANCEL_CONTRIBUTION_SUBMIT
     );
