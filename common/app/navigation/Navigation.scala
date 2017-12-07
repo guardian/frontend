@@ -25,11 +25,9 @@ case class NavLink(
 case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], brandExtensions: Seq[NavLink]) extends NavNode {
 
   def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
-    Edition.others(edition).flatMap( edition => {
-      val root = NavRoot(edition)
-
-      root.children ++ root.otherLinks
-    })
+    Edition.others(edition).flatMap( edition =>
+      NavRoot(edition).children ++ NavRoot(edition).otherLinks
+    )
   }
 
   def findDescendantByUrl(url: String, edition: Edition): Option[NavLink] = {
@@ -69,13 +67,13 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
   }
 
   def getPillar(currentParent: Option[NavLink], edition: Edition): Option[NavLink] = {
-    currentParent.flatMap( parent => {
+    currentParent.flatMap( parent =>
       if(otherLinks.contains(parent)) {
         None
       } else if (children.contains(parent)) {
         currentParent
       } else findParent(parent, edition).orElse(Some(ukNewsPillar))
-    })
+    )
   }
 }
 
@@ -113,7 +111,7 @@ object NavMenu {
   def apply(page: Page, edition: Edition): NavMenu = NavMenu(page, NavRoot(edition), edition)
   def apply(edition: Edition): SimpleMenu = SimpleMenu(NavRoot(edition))
 
-  def getSectionOrPageUrl(page: Page, edition: Edition): String = {
+  private[navigation] def getSectionOrPageUrl(page: Page, edition: Edition): String = {
     val frontLikePages = List(
       "theguardian",
       "observer",
@@ -148,7 +146,7 @@ object NavMenu {
     s"/$id"
   }
 
-  def getSubnav(currentNavLink: Option[NavLink], currentParent: Option[NavLink], currentPillar: Option[NavLink]): Subnav = {
+  private[navigation] def getSubnav(currentNavLink: Option[NavLink], currentParent: Option[NavLink], currentPillar: Option[NavLink]): Subnav = {
     val currentNavHasChildren = currentNavLink.exists(_.children.nonEmpty)
     val parentIsPillar =  currentParent.equals(currentPillar)
     def currentNavIsPillar = currentNavLink.equals(currentPillar)
