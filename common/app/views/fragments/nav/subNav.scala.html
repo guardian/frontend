@@ -31,7 +31,7 @@
 
                     @subnav.parent.map(link => {
                         if(!navMenu.pillars.contains(link)) {
-                            subNavItem(link, navMenu.currentUrl, isParent = true)
+                            subNavItem(link, navMenu.currentUrl, isParent = subnav.children.nonEmpty)
                         }
                     })
 
