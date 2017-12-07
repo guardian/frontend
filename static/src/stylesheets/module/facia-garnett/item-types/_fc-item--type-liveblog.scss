@@ -1,9 +1,12 @@
 .fc-container:not(.fc-container--story-package) .fc-item--type-liveblog {
     background-color: $live-garnett-main-1;
 
-    .fc-item__kicker,
-    .fc-item__container::before {
+    .fc-item__kicker {
         background-color: $live-garnett-main-1;
+    }
+
+    .fc-item__container::before {
+        background-color: $live-garnett-main-2;
     }
 
     .live-pulse-icon::before {
@@ -11,8 +14,13 @@
     }
 
     .fc-item__kicker {
+        background-color: $live-garnett-main-1;
         color: $live-garnett-main-2;
         border: 0;
+
+        &::before {
+            background-color: $live-garnett-main-1;
+        }
 
         &::after {
             background-color: $live-garnett-main-2;
@@ -24,7 +32,7 @@
     }
 
     .fc-item__standfirst {
-        color: $live-garnett-main-2;
+        color: #ffffff;
     }
 
     .fc-trail__count--commentcount {
@@ -57,6 +65,10 @@
 
         .fc-item__kicker,
         .fc-item__container::before {
+            background-color: darken($live-garnett-main-1, 5%);
+        }
+
+        .fc-item__kicker::before {
             background-color: darken($live-garnett-main-1, 5%);
         }
     }

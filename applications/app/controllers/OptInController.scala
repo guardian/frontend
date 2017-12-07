@@ -1,43 +1,49 @@
 package controllers
 
+import experiments.ParticipationGroups
 import model.Cached
 import model.Cached.WithoutRevalidationResult
 import play.api.mvc._
 
 import scala.concurrent.duration._
 
-trait OptFeature extends BaseController {
-  val cookieName: String
-  val lifetime: Int = 90.days.toSeconds.toInt
-  def opt(choice: String): Result = choice match {
-    case "in" => optIn()
-    case "out" => optOut()
-    case _ => optDelete()
-  }
-  def optIn(): Result = SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime)))
-  def optOut(): Result = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
-  def optDelete(): Result = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
-}
-
-case class HttpsOptFeature(cookieName: String, val controllerComponents: ControllerComponents) extends OptFeature {
-  override def optOut(): Result = SeeOther("/").withCookies(Cookie(cookieName, "false", maxAge = Some(lifetime)))
-}
-
-case class OptInFeature(cookieName: String, val controllerComponents: ControllerComponents) extends OptFeature
+/*
+ * Opting in a flag: /opt/in/name-of-the-flag
+ * Opting out a flag: /opt/out/name-of-the-flag
+ * Deleting the cookie for a given flag: /opt/delete/name-of-the-flag
+ * Delete all cookies: /opt/reset
+ */
 
 class OptInController(val controllerComponents: ControllerComponents) extends BaseController {
 
-  def handle(feature: String, choice: String): Action[AnyContent] = Action { implicit request =>
-    Cached(60)(WithoutRevalidationResult(feature match {
-      case "desktopheader" => newDesktopHeader.opt(choice)
-      case "imgxfallbacktest" => imgxFallbackTest.opt(choice)
-      case "garnett" => garnett.opt(choice)
-      case _ => NotFound
-    }))
+  private val lifetime: Int = 90.days.toSeconds.toInt
+
+  private def opt(feature: String, choice: String): Result = choice match {
+    case "in" => optIn(feature)
+    case "out" => optOut(feature)
+    case "delete" => optDelete(feature)
+  }
+  def optIn(cookieName: String): Result = SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime)))
+  def optOut(cookieName: String): Result = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
+  def optDelete(cookieName: String): Result = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
+
+  def reset(): Action[AnyContent] = Action { implicit request =>
+    val discardingCookies = ParticipationGroups.values.map(group => DiscardingCookie(group.headerName))
+    Cached(60)(
+      WithoutRevalidationResult(
+        SeeOther("/").discardingCookies(discardingCookies:_*)
+      )
+    )
   }
 
-  //cookies should correspond with those checked by fastly-edge-cache
-  val newDesktopHeader = OptInFeature("new_desktop_header", controllerComponents)
-  val imgxFallbackTest = OptInFeature("imgix-fallback-test", controllerComponents)
-  val garnett = OptInFeature("garnett", controllerComponents)
+  def handle(feature: String, choice: String): Action[AnyContent] = Action { implicit request =>
+    Cached(60)(
+      WithoutRevalidationResult(
+        experiments.ActiveExperiments.allExperiments
+          .find(_.name == feature)
+          .map(test => opt(test.participationGroup.headerName, choice))
+          .getOrElse(NotFound)
+      )
+    )
+  }
 }

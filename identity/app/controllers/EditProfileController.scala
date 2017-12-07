@@ -15,6 +15,7 @@ import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 import utils.SafeLogging
+import com.gu.identity.model.EmailNewsletters
 
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
@@ -55,7 +56,7 @@ class EditProfileController(
   def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
     displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
 
-  def displayConsentJourneyForm(journey: String, consentHint: Option[String]): Action[AnyContent] = {
+  def displayConsentJourneyForm(journey: Option[String], consentHint: Option[String], newsletterHint: Option[String]): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
@@ -66,10 +67,11 @@ class EditProfileController(
         recentlyAuthenticated.async { implicit request =>
           consentJourneyView(
             page = ConsentJourneyPage,
-            journey = journey,
+            journey = journey.getOrElse("repermission"),
             forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
             request.user,
-            consentHint
+            consentHint,
+            newsletterHint
           )
         }
       }
@@ -199,7 +201,8 @@ class EditProfileController(
       journey: String,
       forms: ProfileForms,
       user: User,
-      consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
+      consentHint: Option[String],
+      newsletterHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
@@ -214,7 +217,8 @@ class EditProfileController(
         emailFilledForm,
         newsletterService.getEmailSubscriptions(emailFilledForm),
         EmailNewsletters.all,
-        consentHint
+        consentHint,
+        newsletterHint
       )))
 
     }

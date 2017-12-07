@@ -1,5 +1,6 @@
 package navigation
 
+import experiments._
 import conf.switches.Switches.{UkSupportFrontendActive, UsSupportFrontendActive}
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
@@ -20,7 +21,7 @@ object UrlHelpers {
   case object Footer extends Position
 
   def getCampaignCode(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): Option[String] = {
-    val isInHeaderTestControlGroup = mvt.ABNewDesktopHeaderControl.isParticipating
+    val isInHeaderTestControlGroup = ActiveExperiments.isControl(ABNewDesktopHeader)
     val editionId = Edition(request).id.toUpperCase()
 
     (destination, position, isInHeaderTestControlGroup) match {
@@ -54,9 +55,9 @@ object UrlHelpers {
   case class ABTest(name: String, variant: String)
 
   def getHeaderABTestInfo(implicit request: RequestHeader): Option[ABTest] =
-    if (mvt.ABNewDesktopHeaderControl.isParticipating) {
+    if (ActiveExperiments.isControl(ABNewDesktopHeader)) {
       Some(ABTest("NewDesktopHeader", "control"))
-    } else if (mvt.ABNewDesktopHeaderVariant.isParticipating) {
+    } else if (experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {
       Some(ABTest("NewDesktopHeader", "variant"))
     } else {
       None
@@ -138,28 +139,28 @@ object UrlHelpers {
 
   object oldNav {
     def jobsUrl(edition: String)(implicit request: RequestHeader): String =
-      if(mvt.ABNewDesktopHeaderControl.isParticipating) {
+      if(ActiveExperiments.isControl(ABNewDesktopHeader)) {
         s"https://jobs.theguardian.com/?INTCMP=jobs_${edition}_web_newheader_control"
       } else {
         s"https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_${edition.toUpperCase}_GU_JOBS"
       }
 
     def soulmatesUrl(edition: String)(implicit request: RequestHeader): String =
-      if(mvt.ABNewDesktopHeaderControl.isParticipating) {
+      if(ActiveExperiments.isControl(ABNewDesktopHeader)) {
         s"https://soulmates.theguardian.com/?INTCMP=soulmates_${edition}_web_newheader_control"
       } else {
         s"https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_${edition.toUpperCase}_GU_SOULMATES"
       }
 
     def holidaysUrl(implicit request: RequestHeader): String =
-      if(mvt.ABNewDesktopHeaderControl.isParticipating) {
+      if(ActiveExperiments.isControl(ABNewDesktopHeader)) {
         "https://holidays.theguardian.com/?INTCMP=holidays_uk_web_newheader_control"
       } else {
         "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"
       }
 
     def masterclassesUrl(implicit request: RequestHeader): String =
-      if(mvt.ABNewDesktopHeaderControl.isParticipating) {
+      if(ActiveExperiments.isControl(ABNewDesktopHeader)) {
         "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader_control"
       } else {
         "https://membership.theguardian.com/masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"

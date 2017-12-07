@@ -6,7 +6,7 @@
 @import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
-@import mvt.CommercialPaidContentTemplateVariant
+@import experiments._
 
 @schemaType(page: ArticlePage) = @{page.article.metadata.schemaType}
 
@@ -23,12 +23,10 @@
         class="@RenderClasses(Map(
             "has-feature-showcase-element" -> (article.tags.isFeature && article.elements.hasShowcaseMainElement),
             "paid-content" -> isPaidContent,
-            "paid-content--white" -> (isPaidContent && CommercialPaidContentTemplateVariant.isParticipating(request))
+            "paid-content--white" -> (isPaidContent && ActiveExperiments.isParticipating(CommercialPaidContentTemplate))
         ),
             "content",
             "content--article",
-            "content--pillar-news", // temporarily hardcoded
-            "content--type-article", // temporarily hardcoded
             "tonal",
             s"tonal--${toneClass(article)}",
             s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"

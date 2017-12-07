@@ -1,3 +1,57 @@
+@mixin colorPalatte($pillarColor, $kickerColor) {
+    .button--secondary,
+    .byline,
+    .content__section-label__link,
+    .drop-cap,
+    .element-pullquote p,
+    a,
+    .tone-colour {
+        color: $pillarColor;
+    }
+
+    .inline-close,
+    .inline-tone-fill,
+    .social-icon svg,
+    .social-icon.social-icon--more svg,
+    .inline-close svg {
+        fill: $pillarColor;
+    }
+
+    .inline-quote svg {
+        fill: $kickerColor;
+    }
+
+    .pullquote-cite {
+        color: $kickerColor;
+    }
+
+    .u-underline:hover {
+        border-bottom: solid 1px $pillarColor;
+    }
+
+    .social-icon,
+    .social-icon.social-icon--more,
+    .meta__twitter a {
+        &:focus,
+        &:hover {
+            background-color: $pillarColor;
+            border: 1px solid $pillarColor;
+        }
+    }
+
+    .social-tray__button {
+        &:hover {
+            .inline-close {
+                background-color: $pillarColor;
+            }
+        }
+    }
+}
+
 .content--pillar-news {
-   
+    @include colorPalatte($news-garnett-main-1, $neutral-3);
+}
+
+.content--pillar-opinion {
+    @include colorPalatte($opinion-garnett-main-1, $neutral-3);
 }

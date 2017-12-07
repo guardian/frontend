@@ -52,6 +52,7 @@ GET        /preferences                                                         
 
 # opt-in/out routes
 GET        /opt/$choice<in|out|delete>/:feature                                 controllers.OptInController.handle(feature, choice)
+GET        /opt/reset                                                           controllers.OptInController.reset()
 
 # Web App paths
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()

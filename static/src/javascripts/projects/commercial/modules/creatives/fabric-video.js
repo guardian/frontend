@@ -7,6 +7,7 @@ import template from 'lodash/utilities/template';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
 import fabricVideoStr from 'raw-loader!commercial/views/creatives/fabric-video.html';
+import objectFitVideos from 'object-fit-videos';
 
 class FabricVideo {
     isUpdating: boolean;
@@ -155,6 +156,10 @@ class FabricVideo {
                         'top-banner-ad-container--fabric'
                     );
                 }
+
+                // The objectFitVideos should be removed after the DAP campaign is finished (09/12/2017).
+                // At this point, IE support for Fabric Video will only be available through DFP Native Styles.
+                objectFitVideos(this.adSlot.querySelector('video'));
             })
             .then(() => {
                 this.layer2 = qwery('.creative__layer2', this.adSlot);

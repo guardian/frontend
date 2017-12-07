@@ -19,6 +19,9 @@
 
     .creative__video {
         object-fit: cover;
+
+        // this font-family style is for use with the 'object-fit-videos' polyfill.
+        font-family: 'object-fit: cover;';
     }
 
     .creative__video--left {

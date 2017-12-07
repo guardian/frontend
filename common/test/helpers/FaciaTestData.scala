@@ -109,9 +109,11 @@ trait FaciaTestData extends ModelHelper {
         hideKickers = false,
         showDateHeader = false,
         showLatestUpdate = false,
-        config = CollectionConfig.empty)
+        config = CollectionConfig.empty,
+        hasMore = false
       )
     )
+  )
 
   val usFaciaPage: PressedPage = PressedPage(
     id = "us",
@@ -137,7 +139,9 @@ trait FaciaTestData extends ModelHelper {
         hideKickers = false,
         showDateHeader = false,
         showLatestUpdate = false,
-        config = CollectionConfig.empty)
+        config = CollectionConfig.empty,
+        hasMore = false
+      )
     )
   )
 
@@ -165,7 +169,9 @@ trait FaciaTestData extends ModelHelper {
         hideKickers = false,
         showDateHeader = false,
         showLatestUpdate = false,
-        config = CollectionConfig.empty)
+        config = CollectionConfig.empty,
+        hasMore = false
+      )
     )
   )
 
@@ -193,7 +199,9 @@ trait FaciaTestData extends ModelHelper {
         hideKickers = false,
         showDateHeader = false,
         showLatestUpdate = false,
-        config = CollectionConfig.empty)
+        config = CollectionConfig.empty,
+        hasMore = false
+      )
     )
   )
 
@@ -221,7 +229,9 @@ trait FaciaTestData extends ModelHelper {
         hideKickers = false,
         showDateHeader = false,
         showLatestUpdate = false,
-        config = CollectionConfig.empty)
+        config = CollectionConfig.empty,
+        hasMore = false
+      )
     )
   )
 
@@ -249,7 +259,9 @@ trait FaciaTestData extends ModelHelper {
         hideKickers = false,
         showDateHeader = false,
         showLatestUpdate = false,
-        config = CollectionConfig.empty)
+        config = CollectionConfig.empty,
+        hasMore = false
+      )
     )
   )
 

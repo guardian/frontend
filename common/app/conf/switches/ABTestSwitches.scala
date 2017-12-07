@@ -135,4 +135,24 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 12, 13),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-testimonials-group",
+    "Test changing the epic testimonial each view",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 11),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-end-of-year-countdown",
+    "Test a countdown until the end of year",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 10),
+    exposeClientSide = true
+  )
 }

@@ -24,7 +24,7 @@
 
     .new-header--slim.new-header--open & {
         @include mq(desktop) {
-            z-index: $zindex-sticky-top-banner;
+            z-index: $zindex-main-menu + 1;
             position: absolute;
             top: $gs-baseline * 4;
         }
@@ -36,8 +36,6 @@
     float: left;
 
     @include mq(desktop) {
-        width: 117px;
-
         .new-header--open & {
             width: 160px;
 

@@ -9,7 +9,8 @@ import form._
 import idapiclient.{TrackingData, _}
 import idapiclient.Auth
 import idapiclient.responses.Error
-import model.{Countries, EmailNewsletters, PhoneNumbers}
+import model.{Countries, PhoneNumbers}
+import com.gu.identity.model.EmailNewsletters
 import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}

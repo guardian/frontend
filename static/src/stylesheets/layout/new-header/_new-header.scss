@@ -182,7 +182,41 @@ from scrolling */
     height: $slim-nav-height;
 }
 
+
+.new-header .popup--search {
+    background-color: #ffffff;
+    border-radius: $gs-baseline / 4;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
+    padding: $gs-baseline 0;
+    top: $gs-baseline * 2 + $gs-baseline / 2;
+}
+
 // Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
 x:-o-prefocus, .new-header__cta-container  {
     display: none;
+}
+
+.feedback-form {
+    background-color: $multimedia-main-2;
+    box-sizing: border-box;
+    bottom: 0;
+    color: $neutral-1;
+    font-size: 14px;
+    line-height: 18px;
+    padding: ($gs-baseline / 2) ($gs-gutter / 4) ($gs-baseline + $gs-baseline / 2);
+    float: right;
+    margin-top: 6px;
+    max-width: gs-span(4);
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            float: none;
+            position: absolute;
+        }
+    }
+}
+
+.feedback-form__icon__svg {
+    margin-bottom: -2px;
+    fill: $neutral-1;
 }
