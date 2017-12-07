@@ -12,6 +12,7 @@ class CommercialFeatures {
     stickyTopBannerAd: any;
     articleBodyAdverts: any;
     articleAsideAdverts: any;
+    carrotTrafficDriver: any;
     videoPreRolls: any;
     highMerch: any;
     thirdPartyTags: any;
@@ -73,6 +74,15 @@ class CommercialFeatures {
             !isLiveBlog &&
             !isHosted &&
             !newRecipeDesign;
+
+        this.carrotTrafficDriver =
+            this.articleBodyAdverts &&
+            config.get('switches.carrotTrafficDriver', false) &&
+            config.hasTone('Features') &&
+            !config.page.isPaidContent &&
+            ['sport', 'lifeandstyle', 'fashion', 'football', 'travel'].includes(
+                config.get('page.section')
+            );
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 

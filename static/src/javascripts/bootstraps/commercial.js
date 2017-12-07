@@ -11,6 +11,7 @@ import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import hostedAbout from 'commercial/modules/hosted/about';
 import { initHostedVideo } from 'commercial/modules/hosted/video';
+import { carrotTrafficDriverInit } from 'commercial/modules/carrot-traffic-driver';
 import hostedGallery from 'commercial/modules/hosted/gallery';
 import { initHostedCarousel } from 'commercial/modules/hosted/onward-journey-carousel';
 import { loadOnwardComponent } from 'commercial/modules/hosted/onward';
@@ -36,6 +37,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', initPaidForBand],
+    ['cm-carrot', carrotTrafficDriverInit],
 ];
 
 if (!commercialFeatures.adFree) {
