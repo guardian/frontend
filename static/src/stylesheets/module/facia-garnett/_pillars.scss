@@ -127,9 +127,27 @@ $pillars: (
     &.fc-item--type-feature .fc-item__headline {
         color: map-get($palette, featureHeadline);
     }
+
+    &.fc-item--type-video .inline-video-icon {
+        svg {
+            fill: map-get($palette, kicker);
+        }
+
+        &::after {
+            border-color: map-get($palette, kicker);
+        }
+    }
+
+    .fc-item__media-meta {
+        color: map-get($palette, kicker);
+    }
+
+    .vjs-big-play-button .vjs-control-text:before {
+        background-color: map-get($palette, kicker);
+    }
 }
 
-@each $pillar, $palette in $pillars {    
+@each $pillar, $palette in $pillars {
     .fc-item--pillar-#{$pillar} {
         @include colours($palette);
     }

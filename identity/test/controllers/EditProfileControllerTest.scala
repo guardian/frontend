@@ -18,6 +18,7 @@ import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
 import play.api.data.Form
+import play.api.http.HttpConfiguration
 import play.api.mvc._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -46,14 +47,15 @@ import scala.concurrent.Future
     val trackingData = mock[TrackingData]
     val returnUrlVerifier = mock[ReturnUrlVerifier]
     val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
+    val httpConfiguration = HttpConfiguration.createWithDefaults()
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
     val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
-    val authenticatedUser = AuthenticatedUser(user, testAuth)
+    val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
-    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent)
+    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
 
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
@@ -62,7 +64,6 @@ import scala.concurrent.Future
     )
 
     when(authService.authenticatedUserFor(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
-    when(authService.recentlyAuthenticated(MockitoMatchers.any[RequestHeader])) thenReturn true
     when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
     when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
@@ -82,7 +83,8 @@ import scala.concurrent.Future
       returnUrlVerifier,
       profileFormsMapping,
       controllerComponent,
-      newsletterService
+      newsletterService,
+      httpConfiguration
     )
   }
 

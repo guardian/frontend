@@ -44,5 +44,12 @@ trait Forms extends I18nSupport {
     def toFlashWithDataDiscarded: Flash = {
       Flash(Map())
     }
- }
+  }
+
+  implicit val formErrorWrites = new Writes[FormError] {
+    def writes(formError: FormError) = Json.obj(
+      "key" -> formError.key,
+      "message" -> formError.message
+    )
+  }
 }
