@@ -24,7 +24,7 @@ case class NavLink(
 
 case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], brandExtensions: Seq[NavLink]) extends NavNode {
 
-  def getOtherPillarsFromEdition(edition: Edition): Seq[NavLink] = {
+  def getChildrenFromOtherEditions(edition: Edition): Seq[NavLink] = {
     Edition.others(edition).flatMap( edition => {
       val root = NavRoot(edition)
 
@@ -42,8 +42,12 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
         case head :: tail => find(tail ++ head.children)
       }
     }
-    // If the link isn't found within the current edition, check other editions
-    find(children ++ otherLinks).orElse(find(getOtherPillarsFromEdition(edition)))
+    /*
+    * If the link isn't found within the current edition, check other editions
+    * For example, if you are in the US edition, but go to `/cricket`.
+    * We still want the Sports Pillar to be highlighted, even though cricket isn't in the UsSportsPillar
+    */
+    find(children ++ otherLinks).orElse(find(getChildrenFromOtherEditions(edition)))
   }
 
   def findParent(currentNavLink: NavLink, edition: Edition): Option[NavLink] = {
