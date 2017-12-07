@@ -102,7 +102,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/uk-news", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = root.getSubnav(maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(maybeNavLink, parent, pillar)
 
     subnav.parent.map( p => p should be(ukNews) )
     subnav.children should be(ukNews.children)
@@ -114,7 +114,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/money/work-and-careers", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = root.getSubnav(maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(maybeNavLink, parent, pillar)
 
     subnav.parent.map( p => p should be(money) )
     subnav.children should be(money.children)
@@ -126,7 +126,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/culture", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = root.getSubnav(maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(maybeNavLink, parent, pillar)
 
     subnav.parent.isDefined should be(false)
     subnav.children should be(auArtsPillar.children)
@@ -169,7 +169,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/crosswords", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = root.getSubnav(maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(maybeNavLink, parent, pillar)
 
     pillar should be(None)
     subnav.parent.map(_ should be(crosswords))
@@ -182,7 +182,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/crosswords/series/cryptic", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = root.getSubnav(maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(maybeNavLink, parent, pillar)
 
     pillar should be(None)
     subnav.parent.map(_ should be(crosswords))

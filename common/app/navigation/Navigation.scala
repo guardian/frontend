@@ -6,7 +6,7 @@ import NavLinks._
 
 import scala.annotation.tailrec
 
-case class Subnav(parent: Option[NavLink], children: Seq[NavLink], showSubnav: Boolean, hasParent: Boolean = false)
+case class Subnav(parent: Option[NavLink], children: Seq[NavLink])
 
 sealed trait NavNode {
   def children: Seq[NavLink]
@@ -64,32 +64,18 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
         case head :: tail => find(tail ++ head.children)
       }
     }
-
     // If the parent isn't found within the current edition, check other editions
-    find(children ++ otherLinks).orElse(find(getOtherPillarsFromEdition(edition)))
+    find(children ++ otherLinks).orElse(find(getChildrenFromOtherEditions(edition)))
   }
 
   def getPillar(currentParent: Option[NavLink], edition: Edition): Option[NavLink] = {
-    if(otherLinks.contains(currentParent.getOrElse(None))) {
-      None
-    } else if(children.contains(currentParent.getOrElse(None))) {
-      currentParent
-    } else {
-      currentParent.map( link => findParent(link, edition)).getOrElse(Some(ukNewsPillar))
-    }
-  }
-
-  def getSubnav(currentNavLink: Option[NavLink], currentParent: Option[NavLink], currentPillar: Option[NavLink]): Subnav = {
-    val currentNavHasChildren = currentNavLink.exists(_.children.nonEmpty)
-    val parentIsPillar =  currentParent.equals(currentPillar)
-    def currentNavIsPillar = currentNavLink.equals(currentPillar)
-
-    val parent = if(currentNavHasChildren & !currentNavIsPillar) currentNavLink else if (parentIsPillar) None else currentParent
-
-    val childrenToShow = if (currentNavHasChildren) currentNavLink else currentParent
-    val children = childrenToShow.map( navLink => navLink.children ).getOrElse(Nil)
-
-    Subnav(parent, children, parent.isDefined || children.nonEmpty, parent.isDefined)
+    currentParent.flatMap( parent => {
+      if(otherLinks.contains(parent)) {
+        None
+      } else if (children.contains(parent)) {
+        currentParent
+      } else findParent(parent, edition).orElse(Some(ukNewsPillar))
+    })
   }
 }
 
@@ -119,7 +105,7 @@ case class NavMenu private (page: Page, root: NavRoot, edition: Edition) {
   def currentNavLink: Option[NavLink] = root.findDescendantByUrl(currentUrl, edition)
   def currentParent: Option[NavLink] = currentNavLink.flatMap( link => root.findParent(link, edition) )
   def currentPillar: Option[NavLink] = root.getPillar(currentParent, edition)
-  def subNavSections: Subnav = root.getSubnav(currentNavLink, currentParent, currentPillar)
+  def subNavSections: Subnav = NavMenu.getSubnav(currentNavLink, currentParent, currentPillar)
 }
 
 object NavMenu {
@@ -160,5 +146,18 @@ object NavMenu {
     }
 
     s"/$id"
+  }
+
+  def getSubnav(currentNavLink: Option[NavLink], currentParent: Option[NavLink], currentPillar: Option[NavLink]): Subnav = {
+    val currentNavHasChildren = currentNavLink.exists(_.children.nonEmpty)
+    val parentIsPillar =  currentParent.equals(currentPillar)
+    def currentNavIsPillar = currentNavLink.equals(currentPillar)
+
+    val parent = if(currentNavHasChildren & !currentNavIsPillar) currentNavLink else if (parentIsPillar) None else currentParent
+
+    val childrenToShow = if (currentNavHasChildren) currentNavLink else currentParent
+    val children = childrenToShow.map( navLink => navLink.children ).getOrElse(Nil)
+
+    Subnav(parent, children)
   }
 }

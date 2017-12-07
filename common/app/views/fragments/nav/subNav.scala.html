@@ -23,7 +23,7 @@
 
 @defining(navMenu.subNavSections) { subnav =>
 
-    @if(subnav.showSubnav) {
+    @if(subnav.parent.isDefined || subnav.children.nonEmpty) {
         <div class="subnav js-expand-subnav">
             <div class="gs-container">
                 <ul class="subnav__list js-get-last-child-subnav"
@@ -31,7 +31,7 @@
 
                     @subnav.parent.map(link => {
                         if(!navMenu.pillars.contains(link)) {
-                            subNavItem(link, navMenu.currentUrl, isParent = subnav.hasParent)
+                            subNavItem(link, navMenu.currentUrl, isParent = true)
                         }
                     })
 
