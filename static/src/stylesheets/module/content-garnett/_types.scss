@@ -7,7 +7,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
         margin-top: $top;
         margin-bottom: $bottom;
         width: 100%;
-        background: transparent url("https://uploads.guim.co.uk/2017/12/07/rule4.svg") repeat 0 0;
+        background: transparent url('https://uploads.guim.co.uk/2017/12/07/rule4.svg') repeat 0 0;
     }
 }
 // hack to hide left/right page margins (aka curtains)
@@ -18,7 +18,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
         content: '';
         position: absolute;
         z-index: 1;
-        background: #fff;
+        background: #ffffff;
         top: 0;
         height: 100%;
         width: 0;
@@ -34,7 +34,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
     // *************** Meta and Social ***************
     .submeta {
         @include generateRules(13px, -13px, 5px);
-        border-top: none;
+        border-top: 0;
         margin-top: $gs-baseline;
         padding-top: $gs-baseline / 2;
     }
@@ -99,7 +99,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
     }
 
     .submeta__section-labels .submeta__link {
-        font-family: "Guardian Egyptian Web","Guardian Text Egyptian Web",Georgia,serif!important;
+        font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif!important;
     }
 
     .submeta__badge {
@@ -171,17 +171,17 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
     }
 
     .meta__extras {
-        border: none;
+        border: 0;
     }
 
     .meta__numbers,
     .meta__social {
-        border-top: none;
         @include generateRules(1px, 0, 5px);
+        border-top: 0;
     }
 
     .content__dateline {
-        border-top: none;
+        border-top: 0;
         @include mq(phablet) {
             @include generateRules(1px, 0, 5px);
         }
@@ -192,7 +192,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
         padding-bottom: $gs-baseline;
         @include mq($until: phablet) {
             display: inline-block;
-            border-top: none;
+            border-top: 0;
             width: 45%;
             padding-top: $gs-baseline/2;
             vertical-align: top;
@@ -200,7 +200,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
     }
 
     .byline {
-        border-top: none;
+        border-top: 0;
         font-weight: 200;
         color: #333333;
         font-style: italic;
@@ -268,10 +268,10 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(22,22,22,0.8);
+        background: rgba(22, 22, 22, .8);
         color: #ffffff;
         display: none;
-        padding: 0.375rem 2.5rem 0.75rem 0.625rem;
+        padding: .375rem 2.5rem .75rem .625rem;
         max-width: 100%;
     }
 
@@ -297,7 +297,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
 
     .content__standfirst {
         @include fs-headline(2);
-        border-top: none;
+        border-top: 0;
         color: $neutral-1;
         font-weight: 700;
         padding-top: 2px;
@@ -321,7 +321,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
     }
 
     .badge--alt {
-        border-top: none;
+        border-top: 0;
     }
 
     .drop-cap__inner {
@@ -501,10 +501,10 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
 .content--type-opinion {
     .content__main-column {
         &:after {
+            @include generateRules(1px, 0, 5px);
             content: '';
             width: 100%;
             height: 5px;
-            @include generateRules(1px, 0, 5px);
         }
     }
 
