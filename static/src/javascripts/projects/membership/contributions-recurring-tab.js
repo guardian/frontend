@@ -98,6 +98,15 @@ const handleCancelContributionSubmit = (): void => {
         CANCEL_CONTRIBUTION_SELECTOR
     );
 
+    if (
+        !cancellationReasonSelector ||
+        !(cancellationReasonSelector instanceof HTMLSelectElement)
+    ) {
+        return;
+    }
+
+    const cancellationReason = cancellationReasonSelector.value;
+
     fetch(
         `${config.get(
             'page.userAttributesApiUrl'
@@ -110,7 +119,7 @@ const handleCancelContributionSubmit = (): void => {
                 'Csrf-Token': 'nocheck',
             },
             body: {
-                reason: cancellationReasonSelector.value,
+                reason: cancellationReason,
             },
         }
     ).catch(err => {
@@ -132,8 +141,14 @@ const handleCancellationReasonChange = (): void => {
 
     enableCancellationSubmit();
 
-    if (cancellationReasonSelector) {
-        cancellationReasonSelector.removeEventListener('change');
+    if (
+        cancellationReasonSelector &&
+        cancellationReasonSelector instanceof HTMLSelectElement
+    ) {
+        cancellationReasonSelector.removeEventListener(
+            'change',
+            handleCancellationReasonChange
+        );
     }
 
     if (cancelContributionSubmit) {
@@ -149,7 +164,12 @@ const resetSelector = (): void => {
         CANCEL_CONTRIBUTION_SELECTOR
     );
 
-    cancellationReasonSelector.value = null;
+    if (
+        cancellationReasonSelector &&
+        cancellationReasonSelector instanceof HTMLSelectElement
+    ) {
+        cancellationReasonSelector.value = '';
+    }
 };
 
 const handleKeepContributingLink = (): void => {
@@ -157,10 +177,9 @@ const handleKeepContributingLink = (): void => {
     hideCancelContributionForm();
     hideCancelContributionSuccessMessage();
     resetSelector();
-    return false;
 };
 
-const handleCancelLink = (): void  => {
+const handleCancelLink = (): void => {
     hideCancelContributionLink();
     disableCancellationSubmit();
     displayCancelContributionForm();
@@ -185,7 +204,7 @@ const handleCancelLink = (): void  => {
     }
 };
 
-const setupCancelContribution = (): void  => {
+const setupCancelContribution = (): void => {
     hideCancelContributionForm();
     hideCancelContributionSuccessMessage();
     displayCancelContributionLink();
