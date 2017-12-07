@@ -7,7 +7,8 @@ $row-gutter: $gs-gutter / 1.5;
 $switch-width: $gs-gutter / .5;
 $switch-height: $gs-gutter / 1;
 
-
+$switch-on-color: $news-main-2;
+$switch-off-color: $neutral-3;
 
 
 .manage-account__switches ul,
@@ -68,7 +69,7 @@ $switch-height: $gs-gutter / 1;
         }
     }
 
-    @supports (background-size: cover) {
+    @supports (transform: scale(1)) {
         input[type=checkbox] {
             visibility: hidden;
             position: absolute;
@@ -81,7 +82,7 @@ $switch-height: $gs-gutter / 1;
                 left: 0;
             }
             &:checked + .manage-account__switch-checkbox {
-                background: $news-main-2;
+                background: $switch-on-color;
                 &:before {
                     transform: translateX($switch-width - $switch-height) scale(.85);
                 }
@@ -135,7 +136,10 @@ $switch-height: $gs-gutter / 1;
     }
 
     &:hover .manage-account__switch-checkbox {
-        background-color: $guardian-brand-dark;
+        background: darken($switch-off-color, 10%);
+    }
+    &:hover input:checked + .manage-account__switch-checkbox {
+        background: darken($switch-on-color, 10%);
     }
 
 }
@@ -144,7 +148,7 @@ $switch-height: $gs-gutter / 1;
     display: block;
     width: $switch-width;
     height: $switch-height;
-    background: $neutral-3;
+    background: $switch-off-color;
     border-radius: 9999em;
     cursor: pointer;
     will-change: background, opacity;
