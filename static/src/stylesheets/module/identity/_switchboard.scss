@@ -225,7 +225,7 @@ $switch-off-color: $neutral-3;
             width: 100%;
         }
         .manage-account__switch-title {
-            @include fs-headline(4, true);
+            @include fs-headline(3, true);
             flex: 0 0 30%;
             padding: 0 $local-gutter * 2;
             border-left: 1px solid $neutral-8;
