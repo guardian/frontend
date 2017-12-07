@@ -18,7 +18,7 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--pillar-" + item.pillar.map(_.name).getOrElse("unknown").toLowerCase(), experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
+      ("fc-item--pillar-" + item.pillar.map(_.name).getOrElse("News").toLowerCase(), experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--type-" + item.contentType.name.toLowerCase(), experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--has-cutout", item.cutOut.isDefined),
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
