@@ -285,12 +285,12 @@
         }
     }
 
-    .manage-account__button.is-disable {
+    .manage-account__button.is-disabled {
         cursor: not-allowed;
         background-color: $neutral-3;
     }
 
-    .manage-account__button.is-disable:hover {
+    .manage-account__button.is-disabled:hover {
         background-color: $neutral-3;
     }
 }

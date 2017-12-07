@@ -22,7 +22,7 @@ const UP_SELL = '.js-contribution-up-sell';
 const CONTRIBUTION_INFO = '.js-contribution-info';
 const LOADER = '.js-contribution-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
-const IS_DISABLE_CLASSNAME = 'is-disable';
+const IS_DISABLED_CLASSNAME = 'is-disabled';
 const ERROR = '.js-contribution-error';
 
 const CANCEL_CONTRIBUTION = '.js-contribution-cancel';
@@ -84,12 +84,12 @@ const hideCancelContributionLink = (): void => {
 };
 
 const disableCancellationSubmit = (): void => {
-    $(CANCEL_CONTRIBUTION_SUBMIT).addClass(IS_DISABLE_CLASSNAME);
+    $(CANCEL_CONTRIBUTION_SUBMIT).addClass(IS_DISABLED_CLASSNAME);
     $(CANCEL_CONTRIBUTION_SUBMIT)[0].disabled = true;
 };
 
 const enableCancellationSubmit = (): void => {
-    $(CANCEL_CONTRIBUTION_SUBMIT).removeClass(IS_DISABLE_CLASSNAME);
+    $(CANCEL_CONTRIBUTION_SUBMIT).removeClass(IS_DISABLED_CLASSNAME);
     $(CANCEL_CONTRIBUTION_SUBMIT).removeAttr('disabled');
 };
 
