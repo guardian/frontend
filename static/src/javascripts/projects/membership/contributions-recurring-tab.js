@@ -85,7 +85,7 @@ const hideCancelContributionLink = (): void => {
 
 const disableCancellationSubmit = (): void => {
     $(CANCEL_CONTRIBUTION_SUBMIT).addClass(IS_DISABLE_CLASSNAME);
-    $(CANCEL_CONTRIBUTION_SUBMIT).attr('disabled', 'disabled');
+    $(CANCEL_CONTRIBUTION_SUBMIT)[0].disabled = true;
 };
 
 const enableCancellationSubmit = (): void => {
