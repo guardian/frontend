@@ -114,6 +114,10 @@ $checkbox-size: $gs-gutter / 1.25;
         }
     }
 
+    /*
+    show normal checkboxes on
+    older browsers
+    */
     @supports (transform: scale(1)) {
 
         input[type=checkbox] {
