@@ -32,6 +32,12 @@
         color: $guardian-brand;
         text-decoration: none;
     }
+
+    .subnav__item--parent & {
+        display: inline-block;
+        color: $guardian-brand;
+        font-weight: 700;
+    }
 }
 
 .subnav-link--toggle-more {
