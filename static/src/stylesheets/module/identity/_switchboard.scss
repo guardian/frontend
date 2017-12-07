@@ -61,6 +61,9 @@ $switch-off-color: $neutral-3;
     border-top: 1px solid $neutral-4;
     background: $neutral-8;
     padding: $local-gutter;
+    &:hover {
+        background-color: darken($neutral-8, 1%);
+    }
 
     &.manage-account__switch--hinted {
         background-color: $features-support-3;
@@ -68,7 +71,6 @@ $switch-off-color: $neutral-3;
         border-color: $features-main-1;
         &:hover {
             background-color: darken($features-support-3, 1%);
-
         }
     }
 
@@ -105,7 +107,7 @@ $switch-off-color: $neutral-3;
 
         input[type=checkbox],
         .manage-account__switch-checkbox {
-            opacity: .75!important;
+            opacity: .25!important;
         }
     }
 
@@ -134,6 +136,10 @@ $switch-off-color: $neutral-3;
 
         input:checked + .manage-account__switch-checkbox {
             background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20fill%3D%22%23005689%22%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')
+        }
+
+        &:hover .manage-account__switch-checkbox {
+            border-color: $neutral-3;
         }
 
         &.manage-account__switch--with-switch:hover .manage-account__switch-checkbox {
