@@ -53,7 +53,7 @@ import scala.concurrent.Future
     val authenticatedUser = AuthenticatedUser(user, testAuth)
     val phoneNumbers = PhoneNumbers
 
-    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent)
+    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
 
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,

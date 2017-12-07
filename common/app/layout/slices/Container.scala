@@ -24,16 +24,13 @@ object Container extends Logging {
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
 
-  def resolve(id: String): Container = all.getOrElse(id, {
-    log.error(s"Could not resolve container id $id, using default container")
-    default
-  })
+  def resolve(id: String): Container = all.getOrElse(id, default)
 
   def fromConfig(collectionConfig: CollectionConfig): Container =
     resolve(collectionConfig.collectionType)
 
-  def storiesCount(collectionConfig: CollectionConfig, items: Seq[PressedContent]): Option[Int] = {
-    resolve(collectionConfig.collectionType) match {
+  def storiesCount(collectionType: String, items: Seq[PressedContent]): Option[Int] = {
+    resolve(collectionType) match {
       case Dynamic(dynamicPackage) => dynamicPackage
         .slicesFor(items.map(Story.fromFaciaContent))
         .map(Front.itemsVisible)

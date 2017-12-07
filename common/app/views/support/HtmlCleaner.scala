@@ -676,21 +676,24 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         bodyElement <- atomContainer.getElementsByTag("gu-atom").asScala
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomType <- Some(bodyElement.attr("data-atom-type"))
-        atomData <- findAtom(atomId)
       } {
-        if(mediaWrapper.contains(MediaWrapper.MainMedia)){
-          atomContainer.addClass("element-atom--main-media")
-        }
-        if(atomData.isInstanceOf[MediaAtom]){
-          atomContainer.addClass("element-atom--media")
-        }
+        findAtom(atomId).fold { 
+          atomContainer.remove() 
+        } { atomData => 
+          if(mediaWrapper.contains(MediaWrapper.MainMedia)){
+            atomContainer.addClass("element-atom--main-media")
+          }
+          if(atomData.isInstanceOf[MediaAtom]){
+            atomContainer.addClass("element-atom--media")
+          }
 
-        atomContainer.attr("data-atom-id", atomId)
-        atomContainer.attr("data-atom-type", atomType)
+          atomContainer.attr("data-atom-id", atomId)
+          atomContainer.attr("data-atom-type", atomType)
 
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
-        bodyElement.remove()
-        atomContainer.append(html)
+          val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
+          bodyElement.remove()
+          atomContainer.append(html)
+        }
       }
     }
     document

@@ -7,6 +7,7 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.atoms.youtube
 @import views.html.fragments.media.video
+@import views.html.fragments.inlineSvg
 @import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
 
 @import Function.const
@@ -165,9 +166,26 @@ data-test-id="facia-card"
             </div>
 
             @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                <div class="fc-item__standfirst-wrapper">
-                    @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                        <div class="fc-item__standfirst">@Html(text)</div>
+                @item.trailText.filter(const(item.showStandfirst)).map { text =>
+                    <div class="fc-item__standfirst">@Html(text)</div>
+                }
+                <div class="fc-item__meta-wrapper">
+                    @item.displayElement match {
+                        case Some(InlineVideo(videoElement, _, _, _)) => {
+                            <div class="fc-item__media-meta">
+                                @inlineSvg("video-icon", "icon")
+                                @videoElement.videos.formattedDuration
+                            </div>
+                        }
+
+                        case Some(media@InlineYouTubeMediaAtom(youTubeAtom,_)) => {
+                            <div class="fc-item__media-meta">
+                                @inlineSvg("video-icon", "icon")
+                                @youTubeAtom.formattedDuration
+                            </div>
+                        }
+
+                        case _ => { }
                     }
                     @meta(item)
                 </div>
@@ -188,6 +206,7 @@ data-test-id="facia-card"
             @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                 @meta(item)
             }
+
         </div>
 
         @if(item.cardTypes.showCutOut) {
