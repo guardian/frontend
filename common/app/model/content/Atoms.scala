@@ -34,7 +34,8 @@ final case class Atoms(
     "guide" -> !guides.isEmpty,
     "qanda" -> !qandas.isEmpty,
     "profile" -> !profiles.isEmpty,
-    "timeline" -> !timelines.isEmpty
+    "timeline" -> !timelines.isEmpty,
+    "storyquestions" -> !storyquestions.isEmpty
   )
 }
 
@@ -206,7 +207,10 @@ final case class TimelineItem(
 
 object Atoms extends common.Logging {
 
-  def extract[T](atoms: Option[Seq[AtomApiAtom]], extractFn: AtomApiAtom => T): Seq[T] = {
+  def extract[T](
+    atoms: Option[Seq[AtomApiAtom]], 
+    extractFn: AtomApiAtom => T
+  ): Seq[T] = {
     try {
       atoms.getOrElse(Nil).map(extractFn)
     } catch {
@@ -235,7 +239,7 @@ object Atoms extends common.Logging {
 
       val reviews = extract(atoms.reviews, atom => { ReviewAtom.make(atom) })
 
-      val storyquestions = extract(atoms.storyquestions, atom => { StoryQuestionsAtom.make(atom) })
+      val storyquestions = extract(atoms.storyquestions, atom => { StoryQuestionsAtom.make(atom) }).filter(StoryQuestionsAtom.isOpen)
 
       val explainers = extract(atoms.explainers, atom => { ExplainerAtom.make(atom) })
 
@@ -524,11 +528,10 @@ object StoryQuestionsAtom {
     atom.data.asInstanceOf[AtomData.Storyquestions].storyquestions
   )
 
-  def isClosed(question: StoryQuestionsAtom): Boolean = {
-    question.data.closeDate.exists { closeDate =>
+  def isOpen(question: StoryQuestionsAtom): Boolean =
+    !question.data.closeDate.exists { closeDate =>
       closeDate < DateTime.now(DateTimeZone.UTC).getMillis
     }
-  }
 
   def getListId(question: StoryQuestionsAtom): Option[String] = {
     if ("test/test" == question.data.relatedStoryId) {

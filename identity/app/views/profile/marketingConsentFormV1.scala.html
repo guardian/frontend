@@ -2,38 +2,32 @@
 
 @import views.html.fragments.form.switch
 @import _root_.form.IdFormHelpers.nonInputFields
-@import com.gu.identity.model.Consent
 @import com.gu.identity.model.Consent._
+@import views.support.fragment.Switch._
 
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
   privacyForm: Form[_root_.form.PrivacyFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 
-@getConsentText(consentField: Field) = {
-    @Consent.wording(
-        consentField("id").value.getOrElse("unknownConsent"), // OrElse will never execute as there is always a default
-        consentField("version").value.getOrElse("0").toInt)
-}
-
 @consentCheckboxes = {
     <div class="manage-account__switches manage-account__switches--narrow">
         <ul>
             <li>
                 @switch(
-                    title = FirstParty.latestWording,
+                    title = FirstParty.latestWording.wording,
                     subheading = None,
                     description = None,
-                    behaviour = Some("consent"),
+                    behaviour = ConsentSwitch,
                     field = privacyForm("receiveGnmMarketing")
                 )(nonInputFields, messages)
             </li>
             <li>
                 @switch(
-                    title = ThirdParty.latestWording,
+                    title = ThirdParty.latestWording.wording,
                     subheading = None,
                     description = None,
-                    behaviour = Some("consent"),
+                    behaviour = ConsentSwitch,
                     field = privacyForm("receive3rdPartyMarketing")
                 )(nonInputFields, messages)
             </li>
@@ -91,7 +85,7 @@
                                 title = "Allow matching with third party data",
                                 subheading = None,
                                 description = None,
-                                behaviour = Some("consent"),
+                                behaviour = ConsentSwitch,
                                 field = privacyForm("allowThirdPartyProfiling")
                             )(nonInputFields, messages)
                             </li>

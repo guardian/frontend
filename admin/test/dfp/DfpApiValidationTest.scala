@@ -1,6 +1,6 @@
 package dfp
 
-import tools.BlockingOperations
+import concurrent.BlockingOperations
 import common.dfp.{GuAdUnit, GuLineItem, GuTargeting}
 import com.google.api.ads.dfp.axis.v201705._
 import org.joda.time.DateTime

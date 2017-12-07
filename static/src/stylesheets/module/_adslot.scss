@@ -12,8 +12,8 @@
  * Margins on children don't affect the position of elements we make sticky.
  */
 .ad-slot-container > :last-child {
-    margin-bottom: 0;
-    padding-bottom: $gs-baseline * 2;
+    padding-bottom: 0;
+    margin-bottom: $gs-baseline * 2;
 }
 .ad-slot--dark {
     background-color: lighten($media-background, 2.5%);

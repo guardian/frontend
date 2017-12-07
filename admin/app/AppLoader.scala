@@ -9,6 +9,7 @@ import conf.CachedHealthCheckLifeCycle
 import controllers.{AdminControllers, HealthCheck}
 import _root_.dfp.DfpDataCacheLifecycle
 import akka.actor.ActorSystem
+import concurrent.BlockingOperations
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import http.{AdminFilters, AdminHttpErrorHandler, CommonGzipFilter}
 import dev.DevAssetsController
@@ -24,7 +25,6 @@ import play.api.i18n.{I18nComponents, Lang, Messages}
 import play.api.libs.ws.WSClient
 import services._
 import router.Routes
-import tools.BlockingOperations
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {

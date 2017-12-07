@@ -37,7 +37,7 @@ class Toggles {
     }
 
     reset(omitEl: ?HTMLElement): void {
-        const doNotReset = ['popup--search'];
+        const doNotReset = ['js-search-old', 'js-search-new'];
 
         this.controls
             .filter(

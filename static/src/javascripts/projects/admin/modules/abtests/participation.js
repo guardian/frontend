@@ -29,7 +29,7 @@ class Participation extends Component {
             ? 'http://www.theguardian.com'
             : document.location.origin;
         const examplePath = `${test.examplePath || '/uk'}#ab-${test.id}`;
-        const optOutEl = ((this.getElem('opt-out'): any): HTMLLinkElement);
+        const optOutEl = ((this.getElem('opt-out'): any): HTMLAnchorElement);
 
         optOutEl.href = `${origin}${examplePath}=notintest`;
 

@@ -52,10 +52,10 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
     retrieveContent().map {
       case Nil => Cached(componentNilMaxAge){ jsonFormat.nilResult }
-      case content if isMulti => Cached(60.seconds) {
+      case content if isMulti => Cached(1.hour) {
         JsonComponent(CapiMultiple.fromContent(content, Edition(request)))
       }
-      case first :: _ => Cached(60.seconds) {
+      case first :: _ => Cached(1.hour) {
         JsonComponent(CapiSingle.fromContent(first, Edition(request)))
       }
     }

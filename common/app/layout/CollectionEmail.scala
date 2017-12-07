@@ -63,14 +63,12 @@ object CollectionEmail {
 
 case class CollectionEmail(id: String, contentCollections: List[EmailContentContainer]) {
   def collections: List[EmailContainer] = {
-    if (Switches.guTodayEmailAds.isSwitchedOn) {
-      val (start, end) = contentCollections.splitAt(3)
-      List(
-        start,
-        mpu.get(id).toList,
-        end,
-        safeRtb.get(id).toList
-      ).flatten
-    } else contentCollections
+    val (start, end) = contentCollections.splitAt(3)
+    List(
+      start,
+      mpu.get(id).toList,
+      end,
+      safeRtb.get(id).toList
+    ).flatten
   }
 }

@@ -31,7 +31,7 @@ object SwitchGroup {
   val Identity = SwitchGroup("Identity")
   val Monitoring = SwitchGroup("Monitoring")
   val Performance = SwitchGroup("Performance")
-  val ServerSideABTests = SwitchGroup("Server-side A/B Tests")
+  val ServerSideExperiments = SwitchGroup("Server-side Experiments")
   val Membership = SwitchGroup("Membership")
   val Journalism = SwitchGroup("Journalism")
 }
@@ -152,7 +152,7 @@ object Expiry {
 
 // Switch names can be letters numbers and hyphens only
 object Switches extends FeatureSwitches
-with ServerSideABTestSwitches
+with ServerSideExperimentSwitches
 with FaciaSwitches
 with ABTestSwitches
 with CommercialSwitches

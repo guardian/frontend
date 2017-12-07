@@ -1,12 +1,29 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 
+const checkboxShouldUpdate = (
+    checkedValue: boolean,
+    originallyCheckedValue: string
+): boolean => {
+    if (
+        (originallyCheckedValue === 'false' && checkedValue === true) ||
+        (originallyCheckedValue === 'true' && checkedValue === false)
+    ) {
+        return true;
+    }
+    return false;
+};
+
 export const getInfo = (labelEl: HTMLElement): Promise<any> =>
     fastdom
         .read((): ?HTMLElement => labelEl.querySelector('input'))
         .then((checkboxEl: HTMLInputElement) => ({
             checked: checkboxEl.checked,
             name: checkboxEl.name,
+            shouldUpdate: checkboxShouldUpdate(
+                checkboxEl.checked,
+                labelEl.dataset.originallyChecked
+            ),
         }));
 
 export const flip = (labelEl: HTMLElement): Promise<any> =>

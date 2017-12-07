@@ -72,7 +72,7 @@ class CommercialClientSideLoggingLifecycle(
 
   private def writeReportsFromRedis(akkaAsync: AkkaAsync): Future[Unit] = Future {
     akkaAsync.after1s {
-      if (mvt.CommercialClientLoggingVariant.switch.isSwitchedOn) {
+      if (experiments.CommercialClientLogging.switch.isSwitchedOn) {
         // Start searching logs from two periods behind the current time. This allows fresh data to settle.
         val timeStart = DateTime.now.minus(loggingJobFrequency.multipliedBy(2L))
         log.logger.info(s"Fetching commercial performance logs from Redis for time period ${timeStart.toString("yyyy-MMM-dd HH:mm")}")
@@ -90,7 +90,7 @@ class CommercialClientSideLoggingLifecycle(
 
   private def uploadReports(akkaAgent: AkkaAsync): Future[Unit] = Future {
     akkaAsync.after1s {
-      if (mvt.CommercialClientLoggingVariant.switch.isSwitchedOn && loggingDirectory.exists) {
+      if (experiments.CommercialClientLogging.switch.isSwitchedOn && loggingDirectory.exists) {
         val date = DateTime.now
         val formattedDate = dateFormatter.print(date)
         log.logger.info(s"Uploading commercial performance logs to S3 for period $formattedDate")

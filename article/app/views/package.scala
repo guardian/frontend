@@ -71,7 +71,6 @@ object BodyCleaner {
       TimestampCleaner(article),
       MinuteCleaner(article)
     ) ++
-      ListIf(!amp)(ExplainerCleaner(article.atoms.map(_.explainers).getOrElse(Nil))) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++
       ListIf(amp)(AttributeCleaner("style")) ++ // The inline 'style' attribute is not allowed in AMP documents

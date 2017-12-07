@@ -8,27 +8,9 @@
         @include mq(desktop) {
             float: left;
             margin-right: $gs-gutter;
+            overflow: visible;
             width: gs-span(2);
-
-            @supports(display: flex) {
-                float: none;
-            }
-        }
-    }
-
-    .menu-group--secondary > &,
-    .menu-group--footer > & {
-        @include mq(desktop) {
-            border-top: 1px solid $guardian-brand;
-            width: gs-span(2) - 5;
-        }
-    }
-
-    .menu-group--secondary > &:nth-child(2),
-    &.menu-item--no-border {
-        @include mq(desktop) {
-            border: transparent;
-            margin-top: $gs-baseline / 4;
+            padding-bottom: $gs-baseline;
         }
     }
 }
@@ -39,29 +21,13 @@
     }
 }
 
-.menu-item--user-detail {
-    @include mq($from: desktop, $until: leftCol) {
-        width: gs-span(4) + $gs-gutter / 2;
-    }
-
-    @include mq(leftCol) {
-        width: 100%;
-    }
-
-    .has-page-skin & {
-        @include mq(wide) {
-            width: gs-span(4) + $gs-gutter / 2;
-        }
-    }
-}
-
 .menu-item__title {
     background-color: transparent;
     border: 0;
     box-sizing: border-box;
     color: currentColor;
     cursor: pointer;
-    display: block;
+    display: inline-block;
     font-size: 20px;
     outline: none;
     padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
@@ -76,12 +42,11 @@
 
     @include mq(desktop) {
         font-size: 16px;
+        line-height: 1.2;
         letter-spacing: .3px;
-        line-height: 18px;
-        padding-bottom: 9px;
-        padding-left: 0;
-        padding-right: 0;
-        padding-top: $gs-baseline / 4;
+        padding: ($gs-baseline / 2) 0;
+        transition: color 80ms ease-out;
+        width: auto;
     }
 
     &:hover,
@@ -89,7 +54,7 @@
         text-decoration: none;
 
         @include mq(desktop) {
-            color: $highlight-blue;
+            color: #ffffff;
         }
     }
 
@@ -156,6 +121,26 @@
     }
 }
 
+.menu-item--brand-extension {
+    float: left;
+    margin-right: $gs-gutter / 2 + $gs-gutter / 4;
+    padding-bottom: $gs-baseline;
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            float: none;
+            margin-right: 0;
+            margin-top: -$gs-baseline / 2;
+            padding-bottom: 0;
+        }
+    }
+}
+
+.menu-item__title--brand-extension {
+    font-size: 22px;
+    line-height: 1.18;
+}
+
 .menu-item__icon,
 .menu-item__toggle {
     color: $news-support-2;
@@ -211,11 +196,4 @@
         margin-left: -6px;
         margin-top: -5px;
     }
-}
-
-.menu-item__editions-label {
-    color: #ffffff;
-    font-size: 16px;
-    line-height: $search-and-edition-height-desktop;
-    margin-right: $gs-gutter / 2;
 }

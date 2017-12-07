@@ -31,7 +31,7 @@ class ParticipationItem extends Component {
             : document.location.origin;
         const href = `${this.config.examplePath}=${this.config.variant}`;
 
-        if (this.elem instanceof HTMLLinkElement) {
+        if (this.elem instanceof HTMLAnchorElement) {
             this.elem.textContent = this.config.variant;
             this.elem.href = origin + href;
         }

@@ -3,7 +3,7 @@
 import domready from 'domready';
 import { comready } from 'lib/comready';
 import config from 'lib/config';
-import { init } from 'common/modules/atoms/story-questions';
+import { init } from 'journalism/temporary/story-questions';
 import fastdom from 'lib/fastdom-promise';
 import { send } from 'commercial/modules/messenger/send';
 

@@ -1,6 +1,7 @@
-@()(implicit context: model.ApplicationContext)
+@()(implicit context: model.ApplicationContext, request: RequestHeader)
 
 @import play.api.Mode.Dev
+@import experiments._
 
 /*
 bypass normal browser font-loading to avoid the FOIT. works like this:
@@ -149,12 +150,30 @@ do you have fonts in localStorage?
                     const fontInfo = fontURL.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/);
                     const fontName = fontInfo[2];
                     const fontHash = fontInfo[1];
-                    const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
+                    @if(ActiveExperiments.isParticipating(Garnett)) {
+                        let garnettHash, garnettURL;
+                        if (fontName === 'GuardianEgyptianWeb') {
+                            garnettHash = 'garnett-20171127';
+                            garnettURL = `https://s3-eu-west-1.amazonaws.com/garnett/20171127/GuardianEgyptianWeb${fontHinting === 'Off' ? '' : fontHinting}.${fontFormat}.json`;
+                        } else {
+                            garnettHash = fontHash;
+                            garnettURL = fontURL;
+                        }
+                        const fontData = localStorage.getItem(fontStorageKey(fontName, garnettHash));
 
-                    if (fontData) {
-                        useFont(font, JSON.parse(fontData).value);
+                        if (fontData) {
+                            useFont(font, JSON.parse(fontData).value);
+                        } else {
+                            fetchFont(garnettURL, font, fontName, garnettHash);
+                        }
                     } else {
-                        fetchFont(fontURL, font, fontName, fontHash);
+                        const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
+
+                        if (fontData) {
+                            useFont(font, JSON.parse(fontData).value);
+                        } else {
+                            fetchFont(fontURL, font, fontName, fontHash);
+                        }
                     }
                 }
                 return true;

@@ -334,16 +334,16 @@ const bootEnhanced = (): void => {
         }
     });
 
-    if (window.location.hash.indexOf('devtools') !== -1) {
+    if (window.location.hash.includes('experiments')) {
         require.ensure(
             [],
             require => {
                 bootstrapContext(
-                    'devtools',
-                    require('common/modules/devtools').showDevTools
+                    'experiments',
+                    require('common/modules/experiments').showExperiments
                 );
             },
-            'devtools'
+            'experiments'
         );
     }
 

@@ -9,8 +9,8 @@
 }
 
 .identity-wrapper-for-bg {
+    @include clearfix();
     background: $neutral-8;
-    overflow: hidden;
     .tabs__container {
         margin: $gs-gutter * 2 auto 0;
     }
@@ -19,8 +19,8 @@
         border: 0;
     }
     .gs-container {
+        @include clearfix();
         background: #ffffff;
-        overflow: hidden;
     }
     .monocol-wrapper {
         max-width: gs-span(10);

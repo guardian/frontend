@@ -55,12 +55,12 @@ GET         /membership/edit                        controllers.EditProfileContr
 GET         /contribution/recurring/edit            controllers.EditProfileController.displayRecurringContributionForm
 GET         /digitalpack/edit                       controllers.EditProfileController.displayDigitalPackForm
 
-GET         /privacy/edit                           controllers.EditProfileController.displayPrivacyFormRedirect
+GET         /privacy/edit                           controllers.EditProfileController.displayPrivacyFormRedirect(consentsUpdated: Boolean ?= false, consentHint: Option[String])
 POST        /privacy/edit                           controllers.EditProfileController.saveConsentPreferences
 POST        /privacy/edit-ajax                      controllers.EditProfileController.saveConsentPreferencesAjax
 
-GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm
+GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
 POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferencesAjax
 
-GET         /repermission                           controllers.EditProfileController.displayRepermissioningJourneyForm
+GET         /consent                                controllers.EditProfileController.displayConsentJourneyForm(journey: Option[String], consentHint: Option[String], newsletterHint: Option[String])
 ########################################################################################################################

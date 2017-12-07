@@ -1,0 +1,118 @@
+.experiments, .experiments * {
+    box-sizing: border-box;
+}
+
+.experiments {
+    background-color: #f6f6f6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    padding: 6px;
+    overflow: auto;
+    max-height: 100vh;
+    max-width: 100vw;
+    transition: 250ms left;
+}
+
+.experiments--hidden {
+    left: -90vw;
+}
+
+@media (min-width: 768px) {
+    .experiments {
+        width: 500px;
+    }
+
+    .experiments--hidden {
+        left: -440px;
+    }
+}
+
+.experiments__test {
+    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    font-size: 20px;
+    margin-top: 18px;
+}
+
+.experiments__description {
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+.experiments__tests {
+    list-style: none;
+    margin: 0;
+}
+
+.experiments__variant {
+    display: inline-block;
+    margin: 6px 3px;
+}
+
+.experiments__variant__button {
+    display: none;
+}
+
+.experiments__variant__label {
+    display: block;
+    width: 100%;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 14px;
+}
+
+.experiments__variant__label:hover,
+.experiments__variant__label:active {
+    background-color: #dfdfdf;
+    cursor: pointer;
+}
+
+.experiments__variant__button:checked + .experiments__variant__label {
+    background-color: #cccccc;
+}
+
+.experiments__alert {
+    font-size: 14px;
+    margin-top: 6px;
+    color: #dd0000;
+}
+
+.experiments__controls button {
+    font-family: "Guardian Text Sans Web","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: rgba(0, 86, 137, .5);
+    border: 0;
+    border-radius: 6px;
+    height: 35px;
+    margin: 0 6px;
+}
+
+.experiments__controls button:first-of-type {
+    margin-left: 36px;
+}
+
+.experiments__controls button:hover,
+.experiments__controls button:active {
+    background-color: #005689;
+}
+
+.experiments__controls .experiments__controls__toggle {
+    float: right;
+    width: 35px;
+    border-radius: 35px;
+    background-color: #005689;
+    margin: 0;
+}
+
+.experiments__controls h1 {
+    display: inline;
+}
+
+.experiments__controls h1,
+.experiments__controls button {
+    vertical-align: middle;
+}
+

@@ -16,6 +16,11 @@
     right: 0;
     will-change: transform;
 }
+.js-off .manage-account-wizard__step {
+    border: 1px solid $neutral-8;
+    margin-bottom: $gs-gutter*4;
+    padding-bottom: $gs-gutter*4;
+}
 .manage-account-wizard__step--hidden {
     display: none;
 }
@@ -23,18 +28,35 @@
     display: block;
     position: absolute;
     animation: manage-account-wizard__fadeLeft .2s both;
+    .disable-flashing-elements .manage-account-wizard__step--out {
+        animation: none;
+        display: none;
+    }
 }
 .manage-account-wizard__step--in {
     animation: manage-account-wizard__fadeRight .2s reverse both;
+    .disable-flashing-elements .manage-account-wizard__step--in {
+        animation: none;
+        display: block;
+    }
 }
 .manage-account-wizard__step--out-reverse {
     display: block;
     position: absolute;
     animation: manage-account-wizard__fadeRight .2s both;
+    .disable-flashing-elements .manage-account-wizard__step--out-reverse {
+        animation: none;
+        display: none;
+    }
 }
 .manage-account-wizard__step--in-reverse {
     animation: manage-account-wizard__fadeLeft .2s reverse both;
+    .disable-flashing-elements .manage-account-wizard__step--in-reverse {
+        animation: none;
+        display: block;
+    }
 }
+
 
 .manage-account-wizard__controls {
     display: flex;
@@ -53,7 +75,7 @@
 }
 
 /*
-4 times $gs-gutter looks non-dizzying 
+4 times $gs-gutter looks non-dizzying
 for a .2s transition
 */
 

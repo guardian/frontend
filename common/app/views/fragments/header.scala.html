@@ -11,7 +11,7 @@
 
 @hasSlimHeader = @{page.metadata.hasSlimHeader}
 
-@if(!mvt.ABNewDesktopHeaderVariant.isParticipating) {
+@if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {
     <header id="header"
             class="@RenderClasses(Map(
                 "l-header--is-slim l-header--no-navigation" -> hasSlimHeader
@@ -102,7 +102,7 @@
                                 <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com"
                                    data-is-ajax data-link-name="Search icon"
                                    class="brand-bar__item--action popup__toggle js-search-toggle"
-                                   data-toggle="popup--search"
+                                   data-toggle="js-search-old"
                                    aria-haspopup="true">
                                     @fragments.inlineSvg("search-36", "icon", List("rounded-icon", "control__icon-wrapper"))
                                     <span class="control__info">search</span>
@@ -113,7 +113,7 @@
                     </div>
                 </div>
 
-                <div class="popup popup--default popup--search js-search-popup is-off"><div class="js-search-placeholder"></div></div>
+                <div class="popup popup--default popup--search js-search-old js-search-popup is-off"><div class="js-search-placeholder"></div></div>
 
                 <div class="l-header-main">
                     @if((page.metadata.sectionId == "observer" && page.metadata.isFront) || page.metadata.id == "theobserver") {

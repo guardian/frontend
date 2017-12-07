@@ -4,10 +4,10 @@
 @import views.support.RenderClasses
 @import navigation.{NewNavigation, NavigationHelpers}
 @import navigation.UrlHelpers.{getJobUrl, getContributionOrSupporterUrl, NewHeader, getSupportOrSubscriptionUrl}
-@import conf.switches.Switches.IdentityProfileNavigationSwitch
+@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
 
 <header class="@RenderClasses(Map(
-            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeaderVariant.isParticipating,
+            "new-header--mvt-desktop" -> experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader),
             "new-header--slim" -> page.metadata.hasSlimHeader
         ), "new-header")"
         role="banner">
@@ -69,9 +69,22 @@
                             @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                                 @fragments.nav.userAccountDropdown()
                             }
+
+                            @if(SearchSwitch.isSwitchedOn) {
+                                <a class="top-bar__item hide-until-desktop top-bar__item--dropdown js-search-toggle"
+                                    href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com"
+                                    data-is-ajax
+                                    data-link-name="nav2 : search"
+                                    data-toggle="js-search-new"
+                                    aria-haspopup="true">
+                                                    search
+                                </a>
+                            }
                         }
                     }
                 </div>
+
+                <div class="popup popup--default popup--search js-search-popup js-search-new is-off"><div class="js-search-placeholder"></div></div>
 
                 <input type="checkbox"
                        id="main-menu-toggle"
@@ -103,9 +116,13 @@
 
                     <span class="pillar-link pillar-link--dropdown pillar-link--sections hide-until-desktop">
                         <span class="u-h">All</span>
-
                         sections
                         <span class="pillar-link--dropdown__icon"></span>
+                    </span>
+
+                    <span class="menu-close hide-until-desktop">
+                        <span class="u-h">Close</span>
+                        @fragments.inlineSvg("close", "icon", List("menu-close__icon", "centered-icon"))
                     </span>
                 </label>
 

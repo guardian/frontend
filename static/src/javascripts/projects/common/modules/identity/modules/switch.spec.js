@@ -1,13 +1,46 @@
 // @flow
 import $ from 'lib/$';
-import { addSpinner, removeSpinner } from './switch';
+import { addSpinner, removeSpinner, getInfo } from './switch';
 
 beforeEach(() => {
     if (document.body) {
         document.body.innerHTML = `
-            <div class="originalClassName"></div>
+            <div class="originalClassName" data-originally-checked="false"><input type="checkbox" checked name="test-name" /></div>
         `;
     }
+});
+
+test('gets info', () => {
+    const el = $('.originalClassName');
+    getInfo(el).then(info => {
+        expect(info.checked).toEqual(true);
+        expect(info.name).toEqual('test-name');
+        expect(info.shouldUpdate).toEqual(true);
+    });
+});
+
+test('doesnt force update with an empty data-originally-checked', () => {
+    if (document.body) {
+        document.body.innerHTML = `
+            <div class="originalClassName"><input type="checkbox" checked name="test-name" /></div>
+        `;
+    }
+    const el = $('.originalClassName');
+    getInfo(el).then(info => {
+        expect(info.shouldUpdate).toEqual(false);
+    });
+});
+
+test('doesnt force update with an invalid data-originally-checked', () => {
+    if (document.body) {
+        document.body.innerHTML = `
+            <div class="originalClassName" data-originally-checked="🔔"><input type="checkbox" checked name="test-name" /></div>
+        `;
+    }
+    const el = $('.originalClassName');
+    getInfo(el).then(info => {
+        expect(info.shouldUpdate).toEqual(false);
+    });
 });
 
 test('adds a spinner', () => {

@@ -11,7 +11,7 @@
     }
 }
 
-@if(!isAmp && !StoryQuestionsAtom.isClosed(storyquestions) && ReaderAnswersDeliveryMechanism.isSwitchedOn) {
+@if(!isAmp && ReaderAnswersDeliveryMechanism.isSwitchedOn) {
     <div id="user__question-atom-@storyquestions.id" class="js-view-tracking-component submeta user__question">
 
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
@@ -75,7 +75,7 @@
 }
 
 
-@if(!isAmp && !StoryQuestionsAtom.isClosed(storyquestions) && !ReaderAnswersDeliveryMechanism.isSwitchedOn) {
+@if(!isAmp && !ReaderAnswersDeliveryMechanism.isSwitchedOn) {
     <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
 

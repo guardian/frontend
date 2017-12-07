@@ -1,0 +1,45 @@
+@import com.gu.identity.model.{EmailNewsletters, EmailNewsletter}
+@import common.LinkTo
+@import _root_.form.IdFormHelpers.nonInputFields
+@import views.support.fragment.Switch._
+
+@* Editorial Newsletter switch/checkbox *@
+
+@(
+    emailPrefsForm: Form[_],
+    emailSubscriptions: List[String],
+    newsletter: EmailNewsletter
+)(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages, request: RequestHeader)
+
+@buildFooter(newsletter: EmailNewsletter) = {
+    <div class="manage-account__switch-footer-tidbit">
+        @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
+        @newsletter.frequency
+    </div>
+    @if(newsletter.exampleUrl.isDefined){
+        <a class="manage-account__switch-footer-email-preview" target="preview-email-@newsletter.listId" href="@LinkTo({ newsletter.exampleUrl.getOrElse("") })">
+            See the latest email
+        </a>
+    }
+}
+
+@newsletterField = @{
+    new Field(
+        form = emailPrefsForm,
+        name = newsletter.listId.toString,
+        constraints = Nil,
+        format = None,
+        errors = Nil,
+        value = Some(newsletter.subscribedTo(emailSubscriptions).toString)
+    )
+}
+
+@fragments.form.switch(
+    title = newsletter.name,
+    subheading = newsletter.subheading,
+    description = Some(newsletter.description),
+    behaviour = NewsletterSwitch,
+    field = newsletterField,
+    extraFields = Nil,
+    footer = Some(buildFooter(newsletter))
+)(nonInputFields, messages)

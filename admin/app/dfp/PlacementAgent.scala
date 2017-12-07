@@ -2,7 +2,7 @@ package dfp
 
 import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
 import common.dfp.GuAdUnit
-import tools.BlockingOperations
+import concurrent.BlockingOperations
 
 import scala.util.Try
 

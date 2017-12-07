@@ -3,7 +3,8 @@
 @import 'module/_search';
 @import 'module/_search-tool';
 @import 'module/_weather';
-@import 'module/_tabs';
+@import 'module/tabs.head';
+@import 'module/tabs';
 @import 'module/_headline-list';
 @import 'module/onward/rich-links-enhanced';
 @import 'module/_tooltip';
@@ -19,7 +20,7 @@
 @import 'module/content/_media-player';
 @import 'module/atoms/_youtube';
 @import 'module/atoms/_media';
-@import 'module/atoms/_storyquestions';
+@import 'module/atoms/temporary/_storyquestions';
 @import 'module/atoms/temporary/_explainers';
 @import 'module/atoms/temporary/_snippets';
 @import 'module/commercial/_commercial';

@@ -6,6 +6,7 @@ import com.gu.Dependencies._
 import com.gu.ProjectSettings._
 
 val common = library("common").settings(
+  javaOptions in Test += "-Dconfig.file=common/conf/test.conf",
   libraryDependencies ++= Seq(
     guBox,
     apacheCommonsMath3,
@@ -50,7 +51,8 @@ val common = library("common").settings(
     playJsonJoda,
     jodaForms,
     jacksonDataFormat,
-    atomRenderer
+    atomRenderer,
+    identityModel
   )
 ).settings(
     mappings in TestAssets ~= filterAssets

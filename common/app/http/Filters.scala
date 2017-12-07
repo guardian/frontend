@@ -9,6 +9,7 @@ import model.ApplicationContext
 import play.api.http.HttpFilters
 import play.api.mvc._
 import play.filters.gzip.{GzipFilter, GzipFilterConfig}
+import experiments.LookedAtExperiments
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -71,8 +72,38 @@ class SurrogateKeyFilter(implicit val mat: Materializer, executionContext: Execu
   }
 }
 
+class ExperimentsFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
+
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    val r = LookedAtExperiments.createRequest(request)
+    nextFilter(r).map { rh =>
+      val experimentHeaders = experimentsResponseHeaders(r)
+      val varyHeaderValues = rh.header.headers.get("Vary").toSeq ++ experimentHeaders.get("Vary").toSeq
+      val responseHeaders = (experimentHeaders + ("Vary" -> varyHeaderValues.mkString(",")))
+        .filterNot { case (_, v) => v.isEmpty }
+        .toSeq
+      rh.withHeaders(responseHeaders:_*)
+    }
+  }
+
+  /* Creating experiments related response headers
+   * Ex:
+   *  Vary: "experiment-header-1, experiment-header-2"
+   *  X-GU-Depends-On-Experiments: "experiment-1-name, experiment-2-name"
+   */
+  private def experimentsResponseHeaders(request: RequestHeader): Map[String, String] =
+    LookedAtExperiments
+      .forRequest(request)
+      .flatMap { experiment =>
+        val experimentVaryHeaders = Seq(experiment.participationGroup.headerName) ++ experiment.extraHeader.map(_.key)
+        Seq(("Vary" -> experimentVaryHeaders.mkString(",")), ("X-GU-Depends-On-Experiments" -> experiment.name))
+      }
+      .groupBy(_._1).map { case (k,v) => k -> v.map(_._2).mkString(",") }
+}
+
+
 object Filters {
-  // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
+  // NOTE - order is important here, Gzipper AFTER JsonVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
   def common(
     implicit materializer: Materializer,
@@ -81,6 +112,7 @@ object Filters {
   ): List[EssentialFilter] = List(
     new RequestLoggingFilter,
     new JsonVaryHeadersFilter,
+    new ExperimentsFilter,
     new Gzipper,
     new BackendHeaderFilter,
     new SurrogateKeyFilter,

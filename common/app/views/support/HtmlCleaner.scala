@@ -8,7 +8,7 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms, ExplainerAtom, MediaAtom, MediaWrapper}
+import model.content.{Atom, Atoms, MediaAtom, MediaWrapper}
 import navigation.ReaderRevenueSite
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
@@ -676,21 +676,24 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         bodyElement <- atomContainer.getElementsByTag("gu-atom").asScala
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomType <- Some(bodyElement.attr("data-atom-type"))
-        atomData <- findAtom(atomId)
       } {
-        if(mediaWrapper.contains(MediaWrapper.MainMedia)){
-          atomContainer.addClass("element-atom--main-media")
-        }
-        if(atomData.isInstanceOf[MediaAtom]){
-          atomContainer.addClass("element-atom--media")
-        }
+        findAtom(atomId).fold { 
+          atomContainer.remove() 
+        } { atomData => 
+          if(mediaWrapper.contains(MediaWrapper.MainMedia)){
+            atomContainer.addClass("element-atom--main-media")
+          }
+          if(atomData.isInstanceOf[MediaAtom]){
+            atomContainer.addClass("element-atom--media")
+          }
 
-        atomContainer.attr("data-atom-id", atomId)
-        atomContainer.attr("data-atom-type", atomType)
+          atomContainer.attr("data-atom-id", atomId)
+          atomContainer.attr("data-atom-type", atomType)
 
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
-        bodyElement.remove()
-        atomContainer.append(html)
+          val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
+          bodyElement.remove()
+          atomContainer.append(html)
+        }
       }
     }
     document
@@ -778,32 +781,4 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
     document
   }
 
-}
-
-case class ExplainerCleaner(explainers: Seq[ExplainerAtom]) extends HtmlCleaner {
-  val prefixLength = "https://interactive.guim.co.uk/2016/08/explainer-interactive/embed/embed.html?id=".length
-  val eids = explainers.filter(_.labels.contains("test/test"))
-
-  override def clean(document: Document): Document = {
-    document
-      .getElementsByClass("element-interactive").asScala
-      .foreach { i =>
-        val eid = i.attr("data-canonical-url").drop(prefixLength)
-        val eidInTest = eids.find(_.id == eid)
-        eidInTest.foreach { explainer =>
-          val hook = document.createElement("div")
-            .addClass("js-explainer-snippet")
-            .attr("data-explainer-id", explainer.id)
-          val title = document.createElement("meta")
-            .attr("name", "explainer-title")
-            .attr("content", explainer.title)
-          val body = document.createElement("meta")
-            .attr("name", "explainer-body")
-            .attr("content", HtmlFormat.escape(explainer.body).toString)
-          hook.appendChild(title).appendChild(body)
-          i.after(hook)
-        }
-      }
-    document
-  }
 }

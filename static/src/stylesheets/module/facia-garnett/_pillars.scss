@@ -1,77 +1,154 @@
 $pillars: (
-    news: $news-support-2,
-    opinion: $comment-support-3,
-    sport: $news-support-5,
-    arts: $comment-support-1,
-    lifestyle: $features-main-2
+    news: (
+        cardBackground: $garnett-neutral-3,
+        lines: $news-garnett-main-1,
+        kicker: $news-garnett-main-1,
+        headline: $garnett-neutral-1,
+        featureHeadline: $news-garnett-feature,
+        byline: $news-garnett-main-1,
+        commentCount: $garnett-neutral-2,
+        headlineIcon: $news-garnett-main-1,
+        metaText: $garnett-neutral-2,
+        cutoutBackground: $news-garnett-main-1
+    ),
+    opinion: (
+        cardBackground: $garnett-neutral-3,
+        lines: $opinion-garnett-main-1,
+        kicker: $opinion-garnett-main-1,
+        headline: $garnett-neutral-1,
+        featureHeadline: $opinion-garnett-feature,
+        byline: $opinion-garnett-main-1,
+        commentCount: $garnett-neutral-2,
+        headlineIcon: $opinion-garnett-main-1,
+        metaText: $garnett-neutral-2,
+        cutoutBackground: $opinion-garnett-main-1
+    ),
+    sport: (
+        cardBackground: $garnett-neutral-3,
+        lines: $sport-garnett-main-1,
+        kicker: $sport-garnett-main-1,
+        headline: $garnett-neutral-1,
+        featureHeadline: $sport-garnett-feature,
+        byline: $sport-garnett-main-1,
+        commentCount: $garnett-neutral-2,
+        headlineIcon: $sport-garnett-main-1,
+        metaText: $garnett-neutral-2,
+        cutoutBackground: $sport-garnett-feature
+    ),
+    arts: (
+        cardBackground: $garnett-neutral-3,
+        lines: $arts-garnett-main-1,
+        kicker: $arts-garnett-main-1,
+        headline: $garnett-neutral-1,
+        featureHeadline: $arts-garnett-feature,
+        byline: $arts-garnett-main-1,
+        commentCount: $garnett-neutral-2,
+        headlineIcon: $arts-garnett-main-1,
+        metaText: $garnett-neutral-2,
+        cutoutBackground: $arts-garnett-main-1
+    ),
+    lifestyle: (
+        cardBackground: $garnett-neutral-3,
+        lines: $lifestyle-garnett-main-1,
+        kicker: $lifestyle-garnett-main-1,
+        headline: $garnett-neutral-1,
+        featureHeadline: $lifestyle-garnett-feature,
+        byline: $lifestyle-garnett-main-1,
+        commentCount: $garnett-neutral-2,
+        headlineIcon: $lifestyle-garnett-main-1,
+        metaText: $garnett-neutral-2,
+        cutoutBackground: $lifestyle-garnett-feature
+    )
 );
 
-@mixin colours($accent, $foreground, $background) {
-    $midground: mix($foreground, $background, 75%);
+@mixin colours($palette) {
+    $cardBackground: map-get($palette, cardBackground);
+    $darkerCardBackground: darken($cardBackground, 3%);
+    $headline: map-get($palette, headline);
+    $lines: map-get($palette, lines);
 
-    border-top-color: fade-out($accent, .25);
-    background-color: $background;
+    background-color: $cardBackground;
 
     &:hover {
-        background-color: darken($background, 3%);
+        background-color: $darkerCardBackground;
 
         .fc-item__kicker {
-            background-color: darken($background, 3%);
+            background-color: $darkerCardBackground;
+
+            &:before {
+                background-color: $darkerCardBackground;
+            }
         }
     }
 
     .fc-item__headline {
-        color: $foreground;
+        color: $headline;
     }
 
     .fc-item__byline {
-        color: $accent;
+        color: map-get($palette, byline);
     }
 
     .fc-item__kicker {
-        color: $accent;
-        background-color: $background;
+        background-color: $cardBackground;
+        color: map-get($palette, kicker);
 
         &:before {
-            background-color: $background;
+            background-color: $cardBackground;
         }
 
         &:after {
-            background-color: $accent;
+            background-color: $lines;
         }
     }
 
     .fc-item__standfirst {
-        color: $midground;
+        color: $headline;
     }
 
     .fc-item__sublinks {
-        color: $foreground;
+        color: $headline;
     }
 
     .inline-icon {
-        fill: $midground;
+        color: map-get($palette, headlineIcon);
     }
 
     .fc-item__meta {
-        color: $midground;
+        color: map-get($palette, metaText);
     }
 
     .fc-item__container {
         &:before {
-            background-color: $accent;
+            background-color: $lines;
         }
+    }
+
+    &.fc-item--type-feature .fc-item__headline {
+        color: map-get($palette, featureHeadline);
+    }
+
+    &.fc-item--type-video .inline-video-icon {
+        svg {
+            fill: map-get($palette, kicker);
+        }
+
+        &::after {
+            border-color: map-get($palette, kicker);
+        }
+    }
+
+    .fc-item__media-meta {
+        color: map-get($palette, kicker);
+    }
+
+    .vjs-big-play-button .vjs-control-text:before {
+        background-color: map-get($palette, kicker);
     }
 }
 
-@each $pillar, $colour in $pillars {
+@each $pillar, $palette in $pillars {
     .fc-item--pillar-#{$pillar} {
-        @include colours($accent: $colour, $foreground: $neutral-1, $background: $neutral-7);
-    }
-
-    .fc-sublink--pillar-#{$pillar} {
-        .fc-sublink__kicker {
-            color: fade-out($colour, .25);
-        }
+        @include colours($palette);
     }
 }

@@ -2,14 +2,14 @@
 
 @import common.{ LinkTo, Edition }
 @import navigation.{ NewNavigation, NavigationHelpers, NavLink }
-@import conf.switches.Switches.SearchSwitch
+@import conf.switches.Switches.{SearchSwitch, HeaderFeedback}
 @import views.support.RenderClasses
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection, edition: Edition) = {
     <li class="menu-item js-navigation-item"
         data-section-name="@topLevelSection.name"
         role="menuitem">
-        <button class="menu-item__title hide-on-desktop js-navigation-toggle"
+        <button class="menu-item__title hide-from-desktop js-navigation-toggle"
                 data-link-name="nav2 : secondary : @topLevelSection.name"
                 aria-haspopup="true"
                 aria-expanded="true">
@@ -41,9 +41,9 @@
 }
 
 @brandExtensions(item: NavLink) = {
-    <li class="menu-brand-extensions__list-item">
+    <li class="menu-item--brand-extension">
         <a href="@LinkTo { @item.url }"
-           class="menu-brand-extensions-item"
+           class="menu-item__title menu-item__title--brand-extension"
            data-link-name="nav2 : brand extension : @item.title">
             @{item.title}
         </a>
@@ -68,7 +68,8 @@
             </ul>
 
             @if(SearchSwitch.isSwitchedOn) {
-                <div class="menu-group menu-group--search">
+                @* TODO: clean up search menu desktop styling *@
+                <div class="menu-group menu-group--search hide-from-desktop">
                     <form class="menu-search js-menu-search"
                           action="https://www.google.co.uk/search">
                         <input type="text"
@@ -104,7 +105,7 @@
             <ul class="menu-group menu-group--membership"
                 role="menubar">
                 @NavigationHelpers.getMembershipLinks(edition).map { item =>
-                    <li class="menu-item hide-on-desktop"
+                    <li class="menu-item hide-from-desktop"
                         data-edition="@{edition.id.toLowerCase}"
                         role="menuitem">
 
@@ -119,7 +120,7 @@
                 @fragments.nav.userAccountLinks()
             </ul>
 
-            <ul class="menu-group menu-group--editions">
+            <ul class="menu-group menu-group--editions hide-from-desktop">
                 @fragments.nav.editionPicker()
             </ul>
 
@@ -128,7 +129,7 @@
                 role="menubar">
 
                 @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
-                    <li class="menu-item hide-on-desktop"
+                    <li class="menu-item hide-from-desktop"
                         role="menuitem">
                         <a class="menu-item__title"
                            href="@LinkTo { @item.url }"
@@ -140,7 +141,7 @@
 
                 @NewNavigation.OtherLinks.getEditionalisedNavLinks(edition).map { item =>
                     <li class="@RenderClasses(Map(
-                            "hide-on-desktop" -> (item.title == "the guardian app"),
+                            "hide-from-desktop" -> (item.title == "the guardian app"),
                             "menu-item--no-border" -> (item.title == "video")
                         ), "menu-item")"
                         role="menuitem">
@@ -153,7 +154,7 @@
                     </li>
                 }
 
-                <li class="menu-item hide-on-desktop"
+                <li class="menu-item hide-from-desktop"
                     role="menuitem">
                     <a class="menu-item__title"
                        href="https://www.facebook.com/theguardian"
@@ -163,7 +164,7 @@
                     </a>
                 </li>
 
-                <li class="menu-item hide-on-desktop"
+                <li class="menu-item hide-from-desktop"
                     role="menuitem">
                     <a class="menu-item__title"
                        href="https://twitter.com/guardian"
@@ -173,17 +174,22 @@
                     </a>
                 </li>
             </ul>
-        </div>
+            <ul class="menu-group menu-group--brand-extensions hide-until-desktop">
+                @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
+                    @brandExtensions(item)
+                }
 
-        <div class="menu-brand-extensions hide-until-desktop">
-            <div class="menu-brand-extensions__inner gs-container">
-                @fragments.inlineSvg("guardian-logo-160", "logo", List("menu-brand-extensions__logo"))
-                <ul class="menu-brand-extensions__list">
-                    @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
-                        @brandExtensions(item)
-                    }
-                </ul>
-            </div>
+                @if(HeaderFeedback.isSwitchedOn) {
+                    <li class="hide-until-desktop feedback-form">
+                        @fragments.inlineSvg("information-circle", "icon", List("feedback-form__icon"))
+                        We&rsquo;d appreciate your feedback on our new navigation.
+                        <a class="feedback-form__link"
+                        data-link-name="nav2 : feedback-form"
+                        href="https://goo.gl/forms/j5pMsPSWINu7X2R62">
+                        Share your thoughts here.</a>
+                    </li>
+                }
+            </ul>
         </div>
     </div>
 }

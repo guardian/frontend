@@ -1,10 +1,11 @@
 package controllers
 
+import com.gu.facia.api.Response
 import common.ImplicitControllerExecutionContext
 import conf.Configuration
 import conf.switches.Switches.FaciaPressOnDemand
 import frontpress.{DraftFapiFrontPress, LiveFapiFrontPress}
-import model.NoCache
+import model.{NoCache, PressedPage}
 import play.api.libs.json.Json
 import play.api.mvc._
 import services.ConfigAgent
@@ -21,16 +22,26 @@ class Application(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: D
     NoCache(Ok(ConfigAgent.contentsAsJsonString).withHeaders("Content-Type" -> "application/json"))
   }
 
-  def generateLivePressedFor(path: String): Action[AnyContent] = Action.async { request =>
-    liveFapiFrontPress.getPressedFrontForPath(path)
-      .map(Json.toJson(_))
+  def generateLivePressedFor(path: String): Action[AnyContent] = Action.async { _ =>
+    val front = liveFapiFrontPress.getPressedFrontForPath(path).map(_.full)
+    frontToResult(front)
+  }
+
+  def generateLiteLivePressedFor(path: String): Action[AnyContent] = Action.async { _ =>
+    val front = liveFapiFrontPress.getPressedFrontForPath(path).map(_.lite)
+    frontToResult(front)
+  }
+
+  private def frontToResult(front: Response[PressedPage]): Future[Result] = {
+    front.map(Json.toJson(_))
       .map(Json.prettyPrint)
       .map(Ok.apply(_))
       .map(NoCache.apply)
       .fold(
         apiError => InternalServerError(apiError.message),
         successJson => successJson.withHeaders("Content-Type" -> "application/json")
-      )}
+      )
+  }
 
   private def handlePressRequest(path: String, liveOrDraft: String)(f: (String) => Future[_]): Future[Result] =
     if (FaciaPressOnDemand.isSwitchedOn) {

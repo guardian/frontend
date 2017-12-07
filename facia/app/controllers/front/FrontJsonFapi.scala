@@ -1,64 +1,50 @@
 package controllers.front
 
 import common.{FaciaPressMetrics, Logging, StopWatch}
+import concurrent.{BlockingOperations, FutureSemaphore}
 import conf.Configuration
-import model.PressedPage
-import play.api.libs.json._
-import play.api.libs.ws.WSClient
-import services.SecureS3Request
-
+import model.{FullType, LiteType, PressedPage}
+import play.api.libs.json.Json
+import services.S3
 import scala.concurrent.{ExecutionContext, Future}
 
 trait FrontJsonFapi extends Logging {
   lazy val stage: String = Configuration.facia.stage.toUpperCase
   val bucketLocation: String
+  val parallelJsonPresses = 24
+  val futureSemaphore = new FutureSemaphore(parallelJsonPresses)
 
-  val wsClient: WSClient
-  val secureS3Request = new SecureS3Request(wsClient)
+  def blockingOperations: BlockingOperations
 
-  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2.json"
+  private def getAddressForPath(path: String, prefix: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2$prefix.json"
 
-  def getRaw(path: String)(implicit executionContext: ExecutionContext): Future[Option[JsValue]] = {
-    val response = secureS3Request.urlGet(getAddressForPath(path)).get()
-    response.map { r =>
-      r.status match {
-        case 200 =>
-          Some(r.json)
-        case 403 =>
-          log.warn(s"Got 403 trying to load path: $path")
-          None
-        case 404 =>
-          log.warn(s"Got 404 trying to load path: $path")
-          None
-        case responseCode =>
-          log.warn(s"Got $responseCode trying to load path: $path")
-          None
-      }
-    }
+  def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.get $path") {
+    pressedPageFromS3(getAddressForPath(path, FullType.suffix))
   }
 
-  def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] =
-    getRaw(path)
-      .map {
-        _.flatMap { json =>
+  def getLite(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.getLite $path") {
+    pressedPageFromS3(getAddressForPath(path, LiteType.suffix))
+  }
+
+  private def pressedPageFromS3(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.pressedPageFromS3 $path") {
+    futureSemaphore.execute {
+      blockingOperations.executeBlocking {
+        S3.getGzipped(path).map { jsonString =>
           val stopWatch: StopWatch = new StopWatch
-          val pressedPage = Json.fromJson[PressedPage](json) match {
-            case JsSuccess(page, _) =>
-              Option(page)
-            case JsError(errors) =>
-              log.warn("Could not parse JSON in FrontJson")
-              None
-          }
+          val pressedPage = Json.parse(jsonString).as[PressedPage]
           FaciaPressMetrics.FrontDecodingLatency.recordDuration(stopWatch.elapsed)
           pressedPage
         }
       }
+    }
+  }
+
 }
 
-class FrontJsonFapiLive(val wsClient: WSClient) extends FrontJsonFapi {
+class FrontJsonFapiLive(val blockingOperations: BlockingOperations) extends FrontJsonFapi {
   override val bucketLocation: String = s"$stage/frontsapi/pressed/live"
 }
 
-class FrontJsonFapiDraft(val wsClient: WSClient) extends FrontJsonFapi {
-  val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
+class FrontJsonFapiDraft(val blockingOperations: BlockingOperations) extends FrontJsonFapi {
+  override val bucketLocation: String = s"$stage/frontsapi/pressed/draft"
 }

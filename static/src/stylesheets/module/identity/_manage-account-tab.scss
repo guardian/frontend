@@ -407,7 +407,7 @@
     color: #ffffff;
     cursor: pointer;
     float: left;
-    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+    padding: 0 $gs-gutter;
     min-width: $gs-baseline * 14;
     white-space: nowrap;
     text-overflow: clip;
@@ -435,20 +435,34 @@
         border: 0;
     }
 
-    &--light {
-        @extend %manage-account__button--light;
-    }
-
-    &--mini {
-        @extend %manage-account__button--light;
-        @include fs-textSans(1);
-        min-width: $gs-baseline * 10;
-        display: inline-flex;
-        height: $gs-gutter * 1.5;
-        line-height: .8;
+    .inline-icon {
+        display: flex;
+        margin: 0 ($gs-gutter * -.5);
     }
 
 }
+
+.manage-account__button--round {
+    min-width: $gs-gutter * 2;
+}
+
+.manage-account__button--icon {
+    justify-content: space-between;
+}
+
+.manage-account__button--light {
+    @extend %manage-account__button--light;
+}
+
+.manage-account__button--mini {
+    @extend %manage-account__button--light;
+    @include fs-textSans(1);
+    min-width: $gs-baseline * 10;
+    display: inline-flex;
+    height: $gs-gutter * 1.5;
+    line-height: .8;
+}
+
 %manage-account__button--light {
     color: $guardian-brand;
     background-color: transparent;
@@ -471,5 +485,57 @@
         *[type=submit] {
             float: right;
         }
+    }
+}
+
+.manage-account-flexrow {
+    @include mq(tablet) {
+        display: flex;
+    }
+}
+.manage-account-flexrow_item {
+    flex: 1 1 auto;
+    &:not(:last-child) {
+        margin-right: $gs-gutter;
+    }
+}
+.manage-account-flexrow_item--static {
+    flex: 0 0 auto;
+}
+
+.manage-account-consent-thanks {
+    @include mq(desktop) {
+        display: grid;
+        grid-column-gap: $gs-gutter * 4;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        margin: 0 $gs-gutter * 2;
+        align-items: center;
+    }
+}
+
+.manage-account-consent-thanks__title {
+    @include fs-headline(8);
+    color: $maps-main-1;
+    @include mq(desktop) {
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+        @supports (display: grid) {
+            font-size: 10em;
+            text-align: right;
+            line-height: .9em;
+        }
+    }
+}
+
+.manage-account-consent-thanks__content {
+
+    @include mq(desktop) {
+        grid-column: 3;
+        grid-row: 2;
+    }
+
+    p {
+        @include fs-textSans(2);
     }
 }

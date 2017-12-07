@@ -1,0 +1,29 @@
+@import com.gu.identity.model.Consent
+@import _root_.form.IdFormHelpers.nonInputFields
+@import views.support.fragment.Switch._
+
+@* Product consent switch/checkbox *@
+
+@(consentField: Field, highlighted: Boolean = false)(messages: play.api.i18n.Messages)
+
+@getConsentText(consentField: Field) = @{
+    Consent.wording(
+        consentField("id").value.getOrElse("unknownConsent"), // OrElse will never execute as there is always a default
+        consentField("version").value.getOrElse("0").toInt)
+}
+
+@consentHiddenFormFields = @{
+    List("actor","id","version","timestamp","privacyPolicyVersion").map { field =>
+        fragments.form.hidden(consentField(field))
+    }
+}
+
+@fragments.form.switch(
+    title = getConsentText(consentField).wording,
+    subheading = None,
+    description = getConsentText(consentField).description,
+    behaviour = ConsentSwitch,
+    field = consentField("consented"),
+    extraFields = consentHiddenFormFields,
+    highlighted = highlighted
+)(nonInputFields, messages)

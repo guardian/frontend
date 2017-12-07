@@ -1,23 +1,26 @@
-@import _root_.form.IdFormHelpers.{Checkbox}
+@import _root_.form.IdFormHelpers.Checkbox
+@import views.support.fragment.Switch._
 
 @(
     title: String,
     subheading: Option[String],
     description: Option[String],
-    behaviour: Option[String],
+    behaviour: SwitchBehaviour,
     field: Field,
-    extraFields: Option[List[play.twirl.api.HtmlFormat.Appendable]] = None,
-    footer: Option[Html] = None
+    extraFields: List[Html] = Nil,
+    footer: Option[Html] = None,
+    highlighted: Boolean = false
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
-<label class="
-    manage-account__switch
-    @{behaviour match {
-        case Some("consent") => "js-manage-account__consentCheckbox"
-        case Some("newsletter") => "js-manage-account__newsletterCheckbox"
-        case _ =>
-    }}
-">
+
+@highlight = @{
+    if(highlighted)
+        "manage-account__switch--hinted"
+    else
+        ""
+}
+
+<label class="manage-account__switch @switchJsBehaviour(behaviour) @highlight" data-originally-checked="@field.value">
     <div class="manage-account__switch-content">
         @fragments.form.checkbox(field, Checkbox(field).args:_*)
         <div class="manage-account__switch-checkbox"></div>
@@ -32,9 +35,9 @@
                 @description
             </p>
         }
-        @if(extraFields.isDefined){
-            @extraFields
-        }
+
+        @extraFields
+
         @if(footer.isDefined) {
             <div class="manage-account__switch-footer">
                 @footer

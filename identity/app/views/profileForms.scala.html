@@ -1,7 +1,7 @@
 @import conf.Static
 @import views.support.RenderClasses
-@import conf.switches.Switches.ProfileShowContributorTab
-@import model.{ApplicationContext, EmailNewsletters, IdentityPage}
+@import model.{ApplicationContext, IdentityPage}
+@import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
 
 @(
@@ -12,7 +12,9 @@
     idUrlBuilder: services.IdentityUrlBuilder,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
-    availableLists: EmailNewsletters
+    availableLists: EmailNewsletters,
+    consentsUpdated: Boolean,
+    consentHint: Option[String]
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
@@ -53,13 +55,9 @@
 
                     @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
 
-                    @if(ProfileShowContributorTab.isSwitchedOn) {
-                        @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab")
+                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab")
 
-                        @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab")
-                    } else {
-                        @tab(5, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab")
-                    }
+                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab")
                 </ol>
             </div>
         </div>
@@ -79,13 +77,9 @@
 
                         @content(4, "/digitalpack/edit")(profile.digitalPackDetailsForm(idUrlBuilder, idRequest, user))
 
-                        @if(ProfileShowContributorTab.isSwitchedOn) {
-                            @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
+                        @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
-                            @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists))
-                        } else {
-                            @content(5, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists)))
-                        }
+                        @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint))
                     </div>
                 </div>
             </div>

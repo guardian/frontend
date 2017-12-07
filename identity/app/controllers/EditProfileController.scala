@@ -2,7 +2,7 @@ package controllers
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.User
+import com.gu.identity.model.{Consent, User}
 import common.ImplicitControllerExecutionContext
 import form._
 import idapiclient.responses.Error
@@ -13,8 +13,10 @@ import play.api.i18n.{I18nSupport, MessagesProvider}
 import play.api.libs.json.{Json, Writes}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.{EmailPrefsData, _}
+import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 import utils.SafeLogging
+import com.gu.identity.model.EmailNewsletters
+
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
 
@@ -24,6 +26,7 @@ object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Emails")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
+object ConsentJourneyPage extends IdentityPage("/consent", "Consent")
 
 class EditProfileController(
     idUrlBuilder: IdentityUrlBuilder,
@@ -32,6 +35,7 @@ class EditProfileController(
     idRequestParser: IdRequestParser,
     csrfCheck: CSRFCheck,
     csrfAddToken: CSRFAddToken,
+    returnUrlVerifier: ReturnUrlVerifier,
     implicit val profileFormsMapping: ProfileFormsMapping,
     val controllerComponents: ControllerComponents,
     newsletterService: NewsletterService)
@@ -48,9 +52,11 @@ class EditProfileController(
   def displayMembershipForm: Action[AnyContent] = displayForm(MembershipEditProfilePage)
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
-  def displayEmailPrefsForm: Action[AnyContent] = displayForm(EmailPrefsProfilePage)
 
-  def displayRepermissioningJourneyForm: Action[AnyContent] = {
+  def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
+    displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
+
+  def displayConsentJourneyForm(journey: Option[String], consentHint: Option[String], newsletterHint: Option[String]): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
@@ -59,18 +65,22 @@ class EditProfileController(
     else {
       csrfAddToken {
         recentlyAuthenticated.async { implicit request =>
-          repermissionJourneyView(
-            page = EmailPrefsProfilePage,
-            forms = ProfileForms(request.user, PublicEditProfilePage),
-            request.user)
+          consentJourneyView(
+            page = ConsentJourneyPage,
+            journey = journey.getOrElse("repermission"),
+            forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
+            request.user,
+            consentHint,
+            newsletterHint
+          )
         }
       }
     }
   }
 
-  def displayPrivacyFormRedirect: Action[AnyContent] = csrfAddToken {
+  def displayPrivacyFormRedirect(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] = csrfAddToken {
     recentlyAuthenticated { implicit request =>
-      Redirect(routes.EditProfileController.displayEmailPrefsForm(), MOVED_PERMANENTLY)
+      Redirect(routes.EditProfileController.displayEmailPrefsForm(consentsUpdated, consentHint), MOVED_PERMANENTLY)
     }
   }
 
@@ -131,13 +141,23 @@ class EditProfileController(
 
   def saveConsentPreferences: Action[AnyContent] = submitForm(EmailPrefsProfilePage)
 
-  private def displayForm(page: IdentityPage) = csrfAddToken {
-    recentlyAuthenticated.async { implicit request =>
+  private def displayForm(
+      page: IdentityPage,
+      consentsUpdated: Boolean = false,
+      consentHint: Option[String] = None) = {
+
+    csrfAddToken {
+      authWithConsentRedirectAction.async { implicit request =>
         profileFormsView(
           page = page,
-          forms = ProfileForms(request.user, PublicEditProfilePage),
-          request.user)
+          forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
+          request.user,
+          consentsUpdated,
+          consentHint
+        )
+      }
     }
+
   }
 
   private def submitForm(page: IdentityPage): Action[AnyContent] =
@@ -176,22 +196,29 @@ class EditProfileController(
       } // end authActionWithUser.async
     } // end csrfCheck
 
-  private def repermissionJourneyView(
-    page: IdentityPage,
-    forms: ProfileForms,
-    user: User) (implicit request: AuthRequest[AnyContent]): Future[Result] = {
+  private def consentJourneyView(
+      page: IdentityPage,
+      journey: String,
+      forms: ProfileForms,
+      user: User,
+      consentHint: Option[String],
+      newsletterHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+    newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
-      NoCache(Ok(views.html.repermissionJourney(
+      NoCache(Ok(views.html.consentJourney(
         page,
         user,
         forms,
+        journey,
+        returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl),
         idRequestParser(request),
         idUrlBuilder,
         emailFilledForm,
         newsletterService.getEmailSubscriptions(emailFilledForm),
-        EmailNewsletters.all
+        EmailNewsletters.all,
+        consentHint,
+        newsletterHint
       )))
 
     }
@@ -200,10 +227,12 @@ class EditProfileController(
   private def profileFormsView(
       page: IdentityPage,
       forms: ProfileForms,
-      user: User)
+      user: User,
+      consentsUpdated: Boolean = false,
+      consentHint: Option[String] = None)
       (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+    newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
       NoCache(Ok(views.html.profileForms(
         page,
@@ -213,10 +242,32 @@ class EditProfileController(
         idUrlBuilder,
         emailFilledForm,
         newsletterService.getEmailSubscriptions(emailFilledForm),
-        EmailNewsletters.all
-
+        EmailNewsletters.all,
+        consentsUpdated,
+        consentHint
       )))
 
+    }
+  }
+
+  /** If consentHint is provided it moves that consent to the head of consents list */
+  private def userWithHintedConsent(
+    consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): User = {
+
+    // https://stackoverflow.com/questions/24870729/moving-an-element-to-the-front-of-a-list-in-scala
+    def moveToFront(hint: String, consents: List[Consent]): List[Consent] = {
+      consents.span(consent => consent.id != hint) match {
+        case (as, h :: bs) => h :: as ++ bs
+        case _ => consents
+      }
+    }
+
+    consentHint match {
+      case None => request.user
+
+      case Some(hint) =>
+        val hintedConsents = moveToFront(hint, request.user.consents)
+        request.user.user.copy(consents = hintedConsents)
     }
   }
 }

@@ -2,7 +2,7 @@ package dfp
 
 import com.gu.Box
 import common.dfp.GuAdvertiser
-import tools.BlockingOperations
+import concurrent.BlockingOperations
 
 import scala.concurrent.{ExecutionContext, Future}
 

@@ -45,6 +45,10 @@
         right: 50%;
         top: 100%;
         width: 100vw;
+
+        .new-header--slim & {
+            top: $slim-nav-height;
+        }
     }
 
     .new-header--open & {
@@ -64,6 +68,11 @@
         @include mq(mobileLandscape) {
             margin-right: $gs-gutter + ($veggie-burger-large / 2);
         }
+
+        @include mq(desktop) {
+            padding-top: $veggie-burger-large;
+            margin-right: 0;
+        }
     }
 
     // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
@@ -82,11 +91,8 @@
     }
 
     @include mq(desktop) {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        margin-top: -$gs-baseline;
+        padding: 0 $gs-gutter;
     }
 }
 

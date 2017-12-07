@@ -25,31 +25,15 @@ class NewsletterService(
 
   import EmailPrefsData._
 
-  def preferences(userId: String, trackingData: TrackingData): Future[Form[EmailPrefsData]] = {
-      val subscriberFuture = api.userEmails(userId, trackingData)
+  def subscriptions(userId: String, trackingData: TrackingData): Future[Form[EmailPrefsData]] =
+    api.userEmails(userId, trackingData).map {
+      case Right(subscriber) =>
+        emailPrefsForm.fill(EmailPrefsData(subscriber.htmlPreference, subscriber.subscriptions.map(_.listId)))
 
-      for {
-        subscriber <- subscriberFuture
-      } yield {
-        subscriber match {
-          case Right(s) => {
-            val form = emailPrefsForm.fill(EmailPrefsData(
-              s.htmlPreference,
-              s.subscriptions.map(_.listId)
-            ))
-            form
-          }
-
-          case s => {
-            val errors = s.left.getOrElse(Nil)
-            val formWithErrors = errors.foldLeft(emailPrefsForm) {
-              case (formWithErrors, Error(message, description, _, context)) =>
-                formWithErrors.withGlobalError(description)
-            }
-            formWithErrors
-          }
+      case Left(idapiErrors) =>
+        idapiErrors.foldLeft(emailPrefsForm) {
+          (formWithErrors, idapiError) => formWithErrors.withGlobalError(idapiError.description)
         }
-      }
     }
 
   def savePreferences()(implicit request: AuthRequest[AnyContent]): Future[Form[EmailPrefsData]] = {
@@ -87,11 +71,18 @@ class NewsletterService(
   }
 
   def getEmailSubscriptions(
+     form: Form[EmailPrefsData],
+     add: List[String] = List(),
+     remove: List[String] = List()): List[String] = {
+    (form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add).toList
+  }
+
+  def getV1EmailSubscriptions(
       form: Form[EmailPrefsData],
       add: List[String] = List(),
       remove: List[String] = List()): List[String] = {
-
-    (form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add).toList
+    //TODO: only return V1 subscriptions when V2 subscriptions are in place
+    getEmailSubscriptions(form,add,remove)
   }
 }
 

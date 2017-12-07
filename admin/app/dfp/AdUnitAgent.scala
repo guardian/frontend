@@ -4,7 +4,7 @@ import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
 import common.dfp.GuAdUnit
 import conf.Configuration
 import ApiHelper.toSeq
-import tools.BlockingOperations
+import concurrent.BlockingOperations
 
 import scala.util.Try
 

@@ -9,7 +9,8 @@ import form._
 import idapiclient.{TrackingData, _}
 import idapiclient.Auth
 import idapiclient.responses.Error
-import model.{Countries, EmailNewsletters, PhoneNumbers}
+import model.{Countries, PhoneNumbers}
+import com.gu.identity.model.EmailNewsletters
 import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
@@ -43,6 +44,7 @@ import scala.concurrent.Future
     val authService = mock[AuthenticationService]
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
+    val returnUrlVerifier = mock[ReturnUrlVerifier]
     val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
     val userId: String = "123"
@@ -51,7 +53,7 @@ import scala.concurrent.Future
     val authenticatedUser = AuthenticatedUser(user, testAuth)
     val phoneNumbers = PhoneNumbers
 
-    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent)
+    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
 
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
@@ -77,6 +79,7 @@ import scala.concurrent.Future
       idRequestParser,
       csrfCheck,
       csrfAddToken,
+      returnUrlVerifier,
       profileFormsMapping,
       controllerComponent,
       newsletterService
@@ -472,7 +475,7 @@ import scala.concurrent.Future
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
           .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
 
-        val result = controller.displayEmailPrefsForm().apply(FakeCSRFRequest(csrfAddToken))
+        val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should include (EmailNewsletters.guardianTodayUk.name)
         contentAsString(result) should include ("Unsubscribe")

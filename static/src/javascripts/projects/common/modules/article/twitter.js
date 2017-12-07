@@ -21,13 +21,15 @@ const renderTweets = (): void => {
     if (nativeTweetElements.length) {
         if (!widgetScript) {
             const scriptElement = document.createElement('script');
+            const target = document.scripts[0];
+
             scriptElement.id = 'twitter-widget';
             scriptElement.async = true;
             scriptElement.src = '//platform.twitter.com/widgets.js';
-            document.scripts[0].insertAdjacentElement(
-                'beforebegin',
-                scriptElement
-            );
+
+            if (target && target.parentNode) {
+                target.parentNode.insertBefore(scriptElement, target);
+            }
         }
 
         if (
@@ -42,8 +44,8 @@ const renderTweets = (): void => {
 
 const enhanceTweets = (): void => {
     if (
-        (getBreakpoint() === 'mobile' && !config.page.isMinuteArticle) ||
-        !config.switches.enhanceTweets
+        (getBreakpoint() === 'mobile' && !config.get('page.isMinuteArticle')) ||
+        !config.get('switches.enhanceTweets')
     ) {
         return;
     }

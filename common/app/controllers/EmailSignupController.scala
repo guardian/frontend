@@ -5,6 +5,7 @@ import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
+import com.gu.identity.model.EmailNewsletters
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats.stringFormat

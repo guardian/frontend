@@ -18,7 +18,7 @@ class Component {
     componentClass: ?string;
     endpoint: ?string | ?() => string;
     classes: ?Object;
-    elem: ?(HTMLElement | HTMLLinkElement | HTMLInputElement);
+    elem: ?(HTMLElement | HTMLAnchorElement | HTMLInputElement);
     template: ?string;
     rendered: boolean;
     destroyed: boolean;
@@ -143,7 +143,7 @@ class Component {
         });
     }
 
-    _ready(elem?: ?(HTMLElement | HTMLLinkElement | HTMLInputElement)): void {
+    _ready(elem?: ?(HTMLElement | HTMLAnchorElement | HTMLInputElement)): void {
         if (!this.destroyed) {
             this.rendered = true;
             this._autoupdate();
@@ -199,7 +199,7 @@ class Component {
      * This function is made to be overridden
      */
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    ready(elem: ?(HTMLElement | HTMLLinkElement | HTMLInputElement)): void {}
+    ready(elem: ?(HTMLElement | HTMLAnchorElement | HTMLInputElement)): void {}
 
     /**
      * Once the render / decorate methods have been called

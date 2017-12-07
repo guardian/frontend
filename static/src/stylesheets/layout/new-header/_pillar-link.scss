@@ -19,11 +19,12 @@
         height: $gs-baseline * 3 + $gs-baseline / 2;
         letter-spacing: -.04rem;
         line-height: 1;
-        padding: ($gs-baseline / 4) ($gs-gutter) 0 ($gs-gutter / 4);
+        padding: ($gs-baseline / 4) $gs-gutter 0 ($gs-gutter / 4 + 2);
     }
 
-    @include mq(leftCol) {
-        padding: ($gs-baseline / 4) ($gs-gutter * 2) 0 ($gs-gutter / 3);
+    @include mq(desktop) {
+        font-size: 26px;
+        padding: ($gs-baseline / 4) ($gs-gutter + $gs-gutter / 4) 0 ($gs-gutter / 4 + 2);
     }
 
     &:before,
@@ -42,7 +43,7 @@
         z-index: 1;
 
         @include mq(tablet) {
-            top: $gs-baseline / 2 + 3;
+            top: $gs-baseline / 2 + 4;
         }
     }
 
@@ -63,10 +64,17 @@
         }
     }
 
+    .new-header--open & {
+        &:before,
+        &:after {
+            content: none;
+        }
+    }
+
     .new-header--slim & {
         font-size: 20px;
-        height: $veggie-burger-large - $gs-baseline;
-        line-height: $veggie-burger-large - $gs-baseline;
+        height: $slim-nav-height;
+        line-height: $slim-nav-height;
         padding-top: 0;
 
         &:before {
@@ -103,9 +111,7 @@
     vertical-align: middle;
     width: 6px;
 
-    .pillar-link--dropdown:hover &,
-    .new-header--open &,
-    .new-header__menu-toggle:focus & {
+    .pillar-link--dropdown:hover & {
         transform: translateY(0) rotate(45deg);
     }
 }
@@ -115,12 +121,7 @@
     float: left;
 
     .new-header--open & {
-        color: #ffffff;
-        background-color: $guardian-brand-dark;
-
-        &:before {
-            content: none;
-        }
+        display: none;
     }
 
     .new-header__menu-toggle:focus & {

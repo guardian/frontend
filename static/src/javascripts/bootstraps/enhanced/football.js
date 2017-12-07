@@ -319,10 +319,9 @@ const init = (): void => {
     });
 
     isLiveClockwatch(() => {
-        const isItACompetition = isCompetition();
         const ml = new MatchListLive(
             'match-day',
-            isItACompetition === false ? false : 'premierleague',
+            isCompetition() || 'premierleague',
             config.dateFromSlug()
         );
         const $img = $('.media-primary');
@@ -374,10 +373,9 @@ const init = (): void => {
         (e: Event): void => {
             e.preventDefault();
 
-            const el =
-                e.currentTarget instanceof HTMLLinkElement && e.currentTarget;
+            const el = e.currentTarget;
 
-            if (el) {
+            if (el && el instanceof HTMLAnchorElement) {
                 const href = el.getAttribute('href');
                 const putsMore = el.getAttribute('data-puts-more-into');
                 const newData = el.getAttribute('data-new-url');

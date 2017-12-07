@@ -57,7 +57,8 @@ class ContainerModelTest extends FlatSpec with Matchers with OptionValues {
       hideKickers = false,
       showDateHeader = false,
       showLatestUpdate = false,
-      config
+      config,
+      hasMore = false
     )
   }
 

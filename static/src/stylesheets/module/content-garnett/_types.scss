@@ -1,3 +1,296 @@
-.content--type-article {
+$quote-tail: 25px; // ********** Article Type **********
 
+.content--type-article {
+    .submeta {
+        position: relative;
+        border-top: 0;
+        margin-top: $gs-row-height;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-bottom: 1px solid $neutral-5;
+            border-top: 1px solid $neutral-5;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-bottom: 1px solid $neutral-5;
+            border-top: 1px solid $neutral-5;
+        }
+
+        &__keywords {
+            padding-bottom: $gs-baseline/2;
+        }
+    }
+
+    .submeta__link {
+        font-weight: 200;
+    }
+
+    .submeta__link-item {
+        @include fs-textSans(3);
+    }
+
+    .submeta__label {
+        margin-bottom: 0;
+    }
+
+    .submeta__keywords {
+        padding-bottom: $gs-baseline/2;
+    }
+
+    .submeta__section-labels .submeta__link {
+        @include f-bodyHeading;
+    }
+
+    .content__article-body {
+        @include mq(desktop) {
+            border-left: solid 1px $neutral-5;
+            padding-left: $gs-gutter/2;
+            margin-left: 0;
+        }
+        @include mq(leftCol) {
+            margin-left: -$gs-gutter/2;
+        }
+    }
+    // meta__styling
+    .inline-close,
+    .social-icon,
+    .social-icon.social-icon--more {
+        background-color: transparent;
+        border: 1px solid $neutral-4;
+
+        &:focus,
+        &:hover {
+            svg {
+                fill: $neutral-garnett-1;
+            }
+        }
+    }
+
+    .byline,
+    .content__dateline,
+    .meta__numbers,
+    .meta__social {
+        border-top: 1px solid $neutral-3;
+    }
+
+    .byline {
+        font-weight: 200;
+        color: #333333;
+        font-style: italic;
+
+        span[itemprop='author'] {
+            @include f-header;
+            display: block;
+            font-style: normal;
+            font-weight: 900;
+        }
+    }
+
+    .meta__twitter {
+        a {
+            background-color: transparent;
+            border: 1px solid $neutral-4;
+
+            &:focus,
+            &:hover {
+                .inline-tone-fill {
+                    fill: $neutral-garnett-1;
+                }
+
+                .contact {
+                    color: $neutral-garnett-1;
+                }
+            }
+        }
+    }
+
+    .badge,
+    .content__meta-container {
+        @include mq(leftCol) {
+            width: gs-span(2) -$gs-gutter/2;
+        }
+        @include mq(wide) {
+            width: gs-span(3) -$gs-gutter/2;
+        }
+    }
+    // Quote base styles
+    .element-pullquote {
+        background-color: $neutral-garnett-1;
+        border: solid 1px $neutral-5;
+        margin: $gs-gutter/4 0 $gs-baseline*2;
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
+        position: relative;
+        clear: none;
+        float: none;
+        width: inherit;
+        @include mq(mobile) {
+            margin-left: -$gs-gutter/2 - 1px;
+        }
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter/2;
+            margin-left: -$gs-gutter;
+        }
+        @include mq(leftCol) {
+            margin-left: -$gs-baseline*2;
+        }
+        // Quote tail
+        &:after {
+            content: '';
+            width: $quote-tail;
+            height: $quote-tail;
+            border-radius: 0 0 $quote-tail;
+            position: absolute;
+            bottom: -$quote-tail - 2px;
+            left: $gs-gutter/2;
+            background-color: $neutral-garnett-1;
+            border: solid 1px $neutral-5;
+            border-top: solid 1px $neutral-garnett-1;
+            @include mq(mobileLandscape) {
+                left: $gs-gutter;
+            }
+            @include mq(desktop) {
+                left: $gs-gutter - $gs-baseline;
+            }
+            @include mq(leftCol) {
+                left: $gs-baseline;
+            }
+        }
+
+        .pullquote-cite,
+        .pullquote-paragraph {
+            display: inline;
+        }
+
+        .inline-quote,
+        blockquote {
+            display: inline;
+        }
+        // Hack hide for svg
+        .closing {
+            display: none;
+        }
+    }
+    // Quote supporting
+    .element-pullquote.element--supporting {
+        @include mq(mobileMedium) {
+            clear: left;
+            float: left;
+            margin-right: $gs-gutter/2;
+            width: gs-span(3);
+        }
+        @include mq(leftCol) {
+            margin-left: - gs-span(3)/2 - $gs-gutter/2;
+        }
+
+        &:after {
+            @include mq(leftCol) {
+                border-radius: 0 0 0 $quote-tail;
+                left: gs-span(3)/2 - $quote-tail -3px;
+                // 3px is added for left alignment correction
+            }
+        }
+
+        .pullquote-cite,
+        .pullquote-paragraph {
+            @include fs-headlineGarnett(1);
+        }
+    }
+    // Quote halfWidth
+    .element-pullquote.element--halfWidth {
+        @include mq(mobileMedium) {
+            clear: left;
+            float: left;
+            margin-right: $gs-gutter/2;
+            width: gs-span(3);
+        }
+        @include mq(mobileLandscape) {
+            width: gs-span(4);
+        }
+
+        .pullquote-cite,
+        .pullquote-paragraph {
+            @include mq(mobile) {
+                @include fs-headlineGarnett(2);
+            }
+            @include mq(desktop) {
+                @include fs-headlineGarnett(3);
+            }
+        }
+    }
+    // Quote inline
+    .element-pullquote.element--inline {
+        @include mq(mobile) {
+            width: gs-span(4);
+        }
+        @include mq(mobileLandscape) {
+            width: gs-span(5);
+        }
+        @include mq(tablet) {
+            width: gs-span(6);
+        }
+
+        .pullquote-cite,
+        .pullquote-paragraph {
+            @include mq(mobile) {
+                @include fs-headlineGarnett(2);
+            }
+            @include mq(desktop) {
+                @include fs-headlineGarnett(3);
+            }
+        }
+    }
+    // Quote showcase
+    .element-pullquote.element--showcase {
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter;
+        }
+        @include mq(leftCol) {
+            width: gs-span(8);
+            margin-left: - gs-span(2);
+        }
+
+        &:after {
+            border-radius: 0 0 $quote-tail;
+            @include mq(leftCol) {
+                left: gs-span(2)-$gs-baseline;
+            }
+        }
+
+        .pullquote-cite,
+        .pullquote-paragraph {
+            @include mq(mobile) {
+                @include fs-headlineGarnett(3);
+            }
+            @include mq(phablet) {
+                @include fs-headlineGarnett(4);
+            }
+            @include mq(desktop) {
+                @include fs-headlineGarnett(5);
+            }
+        }
+
+        .inline-quote svg {
+            @include mq(desktop) {
+                display: inline;
+            }
+            @include mq(leftCol) {
+                display: block;
+                width: 50px;
+                position: absolute;
+                top: - 40px;
+            }
+        }
+    }
 }

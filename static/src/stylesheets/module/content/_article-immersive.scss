@@ -557,7 +557,9 @@
         }
     }
 
-    .element--showcase {
+    .element--showcase,
+    .element--inline,
+    .element--halfWidth {
         float: none;
     }
 

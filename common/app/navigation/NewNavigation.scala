@@ -102,11 +102,7 @@ object NewNavigation {
       columnists,
       cartoons,
       inMyOpinion,
-      letters,
-      NavLink("Polly Toynbee", "/profile/pollytoynbee"),
-      NavLink("Owen Jones", "/profile/owen-jones"),
-      NavLink("Jonathan Freedland", "/profile/jonathanfreedland"),
-      NavLink("Marina Hyde", "/profile/marinahyde")
+      letters
     )
 
     val au = List(
@@ -115,9 +111,7 @@ object NewNavigation {
       cartoons,
       indigenousAustraliaOpinion,
       theGuardianView.copy(title="editorials"),
-      letters,
-      NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
-      NavLink("Katharine Murphy", "/profile/katharine-murphy")
+      letters
     )
 
     val us = List(
@@ -125,10 +119,6 @@ object NewNavigation {
       theGuardianView,
       columnists,
       letters,
-      NavLink("Jill Abramson", "/profile/jill-abramson"),
-      NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"),
-      NavLink("Steven W Thrasher", "/profile/steven-w-thrasher"),
-      NavLink("Richard Wolffe", "/profile/richard-wolffe"),
       inMyOpinion,
       cartoons
     )

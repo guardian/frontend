@@ -88,6 +88,7 @@ class MediaInSectionController(
         Fixed(FixedContainers.fixedMediumFastXI),
         CollectionConfigWithId(dataId, config),
         CollectionEssentials(trails.take(7).map(_.faciaContent), Nil, displayName, None, None, None),
+        hasMore = false,
         componentId
       ).withTimeStamps,
       FrontProperties.empty

@@ -2,13 +2,15 @@ package model.pressed
 
 import com.gu.commercial.branding.Branding
 import com.gu.contentapi.client.model.v1.{Content, ElementType}
+import com.gu.contentapi.client.utils.DesignType
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata}
 import common.{Edition, HTML}
 import common.commercial.EditionBranding
 import model.content.{Atoms, MediaAtom}
-import model.{CardStylePicker, Commercial, DotcomContentType, Elements, Fields, ImageMedia, MetaData, Pillar, Pillars, SectionId, SupportedUrl, Tags, Trail, VideoElement}
+import model.{CardStylePicker, Commercial, DotcomContentType, Elements, Fields, ImageMedia, MetaData, Pillar, SectionId, SupportedUrl, Tags, Trail, VideoElement}
 import org.joda.time.DateTime
 
 object DisplayHints {
@@ -129,7 +131,8 @@ final case class PressedMetadata(
   webUrl: String,
   `type`: Option[DotcomContentType],
   pillar: Option[Pillar],
-  sectionId: Option[SectionId]
+  sectionId: Option[SectionId],
+  designType: DesignType
 )
 final case class PressedElements(
   mainVideo: Option[VideoElement],
@@ -167,8 +170,9 @@ object PressedStory {
         metadata.webTitle,
         metadata.webUrl,
         metadata.contentType,
-        sectionId.flatMap(Pillars.pillarForSection),
-        sectionId
+        Pillar(apiContent),
+        sectionId,
+        apiContent.designType
       ),
       PressedFields(
         fields.main,
@@ -353,15 +357,6 @@ object EnrichedContent {
   val empty = EnrichedContent(None)
 }
 
-object PressedContent {
-  def make(content: fapi.FaciaContent): PressedContent = content match {
-    case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
-    case supportingCuratedContent: fapi.SupportingCuratedContent => SupportingCuratedContent.make(supportingCuratedContent)
-    case linkSnap: fapi.LinkSnap => LinkSnap.make(linkSnap)
-    case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
-  }
-}
-
 sealed trait PressedContent {
   def properties: PressedProperties
   def header: PressedCardHeader
@@ -377,8 +372,6 @@ sealed trait PressedContent {
     } yield branding
 }
 
-sealed trait Snap extends PressedContent
-
 object CuratedContent {
   def make(content: fapi.CuratedContent): CuratedContent = {
     CuratedContent(
@@ -393,6 +386,16 @@ object CuratedContent {
     )
   }
 }
+
+object PressedContent {
+  def make(content: fapi.FaciaContent): PressedContent = content match {
+    case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
+    case supportingCuratedContent: fapi.SupportingCuratedContent => SupportingCuratedContent.make(supportingCuratedContent)
+    case linkSnap: fapi.LinkSnap => LinkSnap.make(linkSnap)
+    case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
+  }
+}
+
 final case class CuratedContent(
   override val properties: PressedProperties,
   override val header: PressedCardHeader,
@@ -442,7 +445,7 @@ final case class LinkSnap(
   override val discussion: PressedDiscussionSettings,
   override val display: PressedDisplaySettings,
   enriched: Option[EnrichedContent] // This is currently an option, as we introduce the new field. It can then become a value type.
-) extends Snap
+) extends PressedContent
 
 object LatestSnap {
   def make(content: fapi.LatestSnap): LatestSnap = {
@@ -460,7 +463,7 @@ final case class LatestSnap(
   override val header: PressedCardHeader,
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings) extends Snap
+  override val display: PressedDisplaySettings) extends PressedContent
 
 object KickerProperties {
   def make(kicker: fapiutils.ItemKicker): KickerProperties = KickerProperties(fapiutils.ItemKicker.kickerText(kicker))

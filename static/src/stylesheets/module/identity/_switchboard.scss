@@ -54,6 +54,16 @@ $checkbox-size: $gs-gutter / 1.25;
         background-color: darken($neutral-8, 1%);
     }
 
+    &.manage-account__switch--hinted {
+        background-color: $features-support-3;
+        color: $features-main-1;
+        border-color: $features-main-1;
+        &:hover {
+            background-color: darken($features-support-3, 1%);
+
+        }
+    }
+
     @supports (background-size: cover) {
         input[type=checkbox] {
             visibility: hidden;
