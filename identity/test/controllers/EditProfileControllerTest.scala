@@ -18,6 +18,7 @@ import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
 import play.api.data.Form
+import play.api.http.HttpConfiguration
 import play.api.mvc._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -46,6 +47,7 @@ import scala.concurrent.Future
     val trackingData = mock[TrackingData]
     val returnUrlVerifier = mock[ReturnUrlVerifier]
     val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
+    val httpConfiguration = HttpConfiguration.createWithDefaults()
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
@@ -82,7 +84,8 @@ import scala.concurrent.Future
       returnUrlVerifier,
       profileFormsMapping,
       controllerComponent,
-      newsletterService
+      newsletterService,
+      httpConfiguration
     )
   }
 
