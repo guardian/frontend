@@ -4,8 +4,10 @@
 
 $local-gutter: $gs-gutter / 3;
 $row-gutter: $gs-gutter / 1.5;
-$checkbox-width: $gs-gutter / .5;
-$checkbox-height: $gs-gutter / 1;
+$switch-width: $gs-gutter / .5;
+$switch-height: $gs-gutter / 1;
+
+
 
 
 .manage-account__switches ul,
@@ -81,7 +83,7 @@ $checkbox-height: $gs-gutter / 1;
             &:checked + .manage-account__switch-checkbox {
                 background: $news-main-2;
                 &:before {
-                    transform: translateX($checkbox-width - $checkbox-height) scale(.85);
+                    transform: translateX($switch-width - $switch-height) scale(.85);
                 }
             }
         }
@@ -140,8 +142,8 @@ $checkbox-height: $gs-gutter / 1;
 
 .manage-account__switch-checkbox {
     display: block;
-    width: $checkbox-width;
-    height: $checkbox-height;
+    width: $switch-width;
+    height: $switch-height;
     background: $neutral-3;
     border-radius: 9999em;
     cursor: pointer;
@@ -150,8 +152,8 @@ $checkbox-height: $gs-gutter / 1;
     transition: .2s;
     &:before {
         content: '';
-        width: $checkbox-height;
-        height: $checkbox-height;
+        width: $switch-height;
+        height: $switch-height;
         transform: scale(.85);
         margin: auto;
         display: block;
@@ -169,7 +171,7 @@ $checkbox-height: $gs-gutter / 1;
 .manage-account__switch-content {
     width: auto;
     padding: $local-gutter 0;
-    padding-left: $local-gutter*1.5 + $checkbox-width;
+    padding-left: $local-gutter*1.5 + $switch-width;
     position: relative;
     display: flex;
     flex-direction: column;
