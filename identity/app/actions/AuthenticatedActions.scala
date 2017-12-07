@@ -31,7 +31,7 @@ class AuthenticatedActions(
   def redirectWithReturn(request: RequestHeader, path: String): Result = {
     val returnUrl = URLEncoder.encode(identityUrlBuilder.buildUrl(request.uri), "UTF-8")
 
-    val redirectUrlWithParams =identityUrlBuilder.appendQueryParams(path,List(
+    val redirectUrlWithParams = identityUrlBuilder.appendQueryParams(path, List(
       "INTCMP" -> "email",
       "returnUrl" -> returnUrl
     ))
@@ -51,19 +51,19 @@ class AuthenticatedActions(
   def sendUserToReauthenticate(request: RequestHeader): Result =
     redirectWithReturn(request, "/reauthenticate")
 
-  def sendUserToRegister(request: RequestHeader) : Result =
+  def sendUserToRegister(request: RequestHeader): Result =
     redirectWithReturn(request, "/register")
 
- private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
-  request.getQueryString("email") match {
-    case None => Future.successful(Left(sendUserToSignin(request)))
-    case Some(email) =>
-      identityApiClient.userFromQueryParam(email, "emailAddress").map {
-        case Right(_) => Left(sendUserToSignin(request)) // user exists
-        case Left(_) => Left(sendUserToRegister(request))
-      }
+  private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
+    request.getQueryString("email") match {
+      case None => Future.successful(Left(sendUserToSignin(request)))
+      case Some(email) =>
+        identityApiClient.userFromQueryParam(email, "emailAddress").map {
+          case Right(_) => Left(sendUserToSignin(request)) // user exists
+          case Left(_) => Left(sendUserToRegister(request))
+        }
+    }
   }
-}
 
   def authRefiner: ActionRefiner[Request, AuthRequest] = new ActionRefiner[Request, AuthRequest] {
     override val executionContext = ec
@@ -82,7 +82,8 @@ class AuthenticatedActions(
     override val executionContext = ec
 
     def refine[A](request: AuthRequest[A]) =
-      identityApiClient.me(request.user.auth).map { _.fold(
+      identityApiClient.me(request.user.auth).map {
+        _.fold(
           errors => {
             logger.warn(s"Failed to look up logged-in user: $errors")
             Left(sendUserToSignin(request))
@@ -99,28 +100,24 @@ class AuthenticatedActions(
     override val executionContext = ec
 
     def refine[A](request: AuthRequest[A]) =
-      if(IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn) {
+      if (IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
+        decideConsentJourney(request)
+      else
+        Future.successful(Right(request))
 
-        for {
-          userHasRepermissioned <- userHasRepermissionedF(request)
-          userHasV1EmailSubscriptions <- userHasV1EmailSubscriptionsF(request)
-        } yield {
-          if (userHasRepermissioned && userHasV1EmailSubscriptions)
-            Left(sendUserToNarrowConsentJourney(request))
-          else
+    private def decideConsentJourney[A](request: AuthRequest[A]) =
+      if (userHasRepermissioned(request))
+        newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+          if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
             Right(request)
+          else
+            Left(sendUserToNarrowConsentJourney(request))
         }
+      else Future.successful(Left(sendUserToConsentJourney(request)))
 
-      } else Future.successful(Right(request))
-
-    private def userHasV1EmailSubscriptionsF[A](request: AuthRequest[A]): Future[Boolean] =
-      newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map {
-        newsletterService.getV1EmailSubscriptions(_).nonEmpty
-      }
-
-    private def userHasRepermissionedF[A](request: AuthRequest[A]): Future[Boolean] =
-      Future.successful(request.user.statusFields.hasRepermissioned.contains(true))
-  }
+    private def userHasRepermissioned[A](request: AuthRequest[A]): Boolean =
+      request.user.statusFields.hasRepermissioned.contains(true)
+}
 
   def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
