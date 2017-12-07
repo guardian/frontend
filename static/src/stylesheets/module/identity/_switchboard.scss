@@ -3,7 +3,7 @@
    ========================================================================== */
 
 $local-gutter: $gs-gutter / 3;
-$row-gutter: $gs-gutter / 1.5;
+$row-gutter: $gs-gutter;
 $switch-width: $gs-gutter / .5;
 $switch-height: $gs-gutter / 1;
 
@@ -26,7 +26,7 @@ $switch-off-color: $neutral-3;
         display: grid;
         padding-top: $local-gutter;
         grid-row-gap: $row-gutter;
-        grid-column-gap: $row-gutter * 2;
+        grid-column-gap: $row-gutter;
     }
 
     &.manage-account__switches--narrow ul {
@@ -137,6 +137,9 @@ $switch-off-color: $neutral-3;
 
     &:hover .manage-account__switch-checkbox {
         background: darken($switch-off-color, 10%);
+        &:before {
+            transform: translateX(1px) scaleY(.85) scaleX(.95);
+        }
     }
     &:hover input:checked + .manage-account__switch-checkbox {
         background: darken($switch-on-color, 10%);
@@ -153,7 +156,7 @@ $switch-off-color: $neutral-3;
     cursor: pointer;
     will-change: background, opacity;
     contain: strict;
-    transition: .2s;
+    transition: .25s;
     &:before {
         content: '';
         width: $switch-height;
@@ -168,7 +171,7 @@ $switch-off-color: $neutral-3;
         background: #ffffff;
         border-radius: 100%;
         will-change: transform;
-        transition: .2s;
+        transition: .25s;
     }
 }
 
