@@ -63,5 +63,5 @@ GET         /email-prefs                            controllers.EditProfileContr
 POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferencesAjax
 
 GET         /consent                                controllers.EditProfileController.displayConsentJourneyForm(journey: Option[String], consentHint: Option[String], newsletterHint: Option[String])
-POST        /repermissioned                         controllers.EditProfileController.submitRepermissionedFlag
+POST        /complete-consent                         controllers.EditProfileController.submitRepermissionedFlag
 ########################################################################################################################
