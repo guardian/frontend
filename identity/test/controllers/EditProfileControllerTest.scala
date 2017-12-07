@@ -50,7 +50,7 @@ import scala.concurrent.Future
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
     val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
-    val authenticatedUser = AuthenticatedUser(user, testAuth)
+    val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
     val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
@@ -62,7 +62,6 @@ import scala.concurrent.Future
     )
 
     when(authService.authenticatedUserFor(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
-    when(authService.recentlyAuthenticated(MockitoMatchers.any[RequestHeader])) thenReturn true
     when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
     when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest

@@ -25,14 +25,10 @@ class AuthenticationService(cookieDecoder: FrontendIdentityCookieDecoder,
     minimalSecureUser <- cookieDecoder.getUserDataForScGuU(scGuU.value)
     guUCookieData <- cookieDecoder.getUserDataForGuU(guU.value)
     fullUser = guUCookieData.getUser if (fullUser.getId == minimalSecureUser.getId)
-    scGuLa <- request.cookies.get("SC_GU_LA")
-    hasRecentlyAuthenticated = cookieDecoder.userHasRecentScGuLaCookie(fullUser, scGuLa.value, Minutes.minutes(20).toStandardDuration)
-  } yield AuthenticatedUser(fullUser, ScGuU(scGuU.value, guUCookieData), hasRecentlyAuthenticated)
-
-  def recentlyAuthenticated(request: RequestHeader): Boolean = (for {
-    authedUser <- authenticatedUserFor(request)
-    scGuLa <- request.cookies.get("SC_GU_LA")
-  } yield cookieDecoder.userHasRecentScGuLaCookie(authedUser, scGuLa.value, Minutes.minutes(20).toStandardDuration)).getOrElse(false)
+  } yield {
+    val hasRecentlyAuthenticated = request.cookies.get("SC_GU_LA").map(scgula => cookieDecoder.userHasRecentScGuLaCookie(fullUser,scgula.value, Minutes.minutes(20).toStandardDuration))
+    AuthenticatedUser(fullUser, ScGuU(scGuU.value, guUCookieData), hasRecentlyAuthenticated.getOrElse(false))
+  }
 
   def authenticateUserForPermissions(request: RequestHeader): Option[AuthenticatedUser] = for {
     scGuRp <- request.cookies.get("SC_GU_RP")

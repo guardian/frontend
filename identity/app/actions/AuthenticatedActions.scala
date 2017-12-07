@@ -137,7 +137,7 @@ class AuthenticatedActions(
     override val executionContext = ec
 
     def refine[A](request: AuthRequest[A]) = Future.successful {
-      if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToReauthenticate(request))
+      if (request.user.hasRecentlyAuthenticated) Right(request) else Left(sendUserToReauthenticate(request))
     }
   }
   // Play will not let you set up an ActionBuilder with a Refiner hence this empty actionBuilder to set up Auth
