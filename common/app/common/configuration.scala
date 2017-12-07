@@ -60,9 +60,9 @@ object GuardianConfiguration extends Logging {
 
   import com.typesafe.config.Config
 
-  private def configFromFile(path: String): Config = {
+  private def configFromFile(path: String, configPath: String): Config = {
     val fileConfig = ConfigFactory.parseFileAnySyntax(new File(path))
-    Try(fileConfig.getConfig(s"${app.toLowerCase}.${stage.toLowerCase}")).getOrElse(ConfigFactory.empty)
+    Try(fileConfig.getConfig(configPath)).getOrElse(ConfigFactory.empty)
   }
 
   private def configFromParameterStore(path: String): Config = {
@@ -79,8 +79,8 @@ object GuardianConfiguration extends Logging {
     if (stage == "DEVINFRA")
       ConfigFactory.parseResourcesAnySyntax("env/DEVINFRA.properties")
     else {
-      val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf")
-      val runtimeOnly =  configFromFile("/etc/gu/frontend.conf")
+      val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf", "devOverrides")
+      val runtimeOnly =  configFromFile("/etc/gu/frontend.conf", "parameters")
       val localConfig = userPrivate.withFallback(runtimeOnly)
 
       val frontendConfig = configFromParameterStore("/frontend")
