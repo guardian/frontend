@@ -181,7 +181,6 @@ $checkbox-height: $gs-gutter / 1;
     margin-bottom: $local-gutter * .5;
     cursor: pointer;
     display: block;
-    margin-top: 1px;
 }
 
 .manage-account__switch-copy {
@@ -223,7 +222,7 @@ $checkbox-height: $gs-gutter / 1;
             @include fs-headline(4, true);
             flex: 0 0 30%;
             padding: 0 $local-gutter * 2;
-            margin-top: -1px;
+            border-left: 1px solid $neutral-8;
         }
         .manage-account__switch-copy {
             border-left: 1px solid $neutral-8;
