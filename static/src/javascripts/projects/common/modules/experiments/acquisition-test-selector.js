@@ -21,9 +21,9 @@ import { acquisitionsEpicEndOfYearCountdown } from 'common/modules/experiments/t
  */
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
+    acquisitionsEpicUSGunCampaign,
     acquisitionsEpicEndOfYearCountdown,
     acquisitionsEpicTestimonialsGroup,
-    acquisitionsEpicUSGunCampaign,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

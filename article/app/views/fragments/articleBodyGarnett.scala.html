@@ -27,8 +27,8 @@
         ),
             "content",
             "content--article",
-            "content--type-article", // temporarily hardcoded
-            "content--pillar-news", // temporarily hardcoded
+            s"content--pillar-${article.metadata.pillar.map(_.name).getOrElse("News").toLowerCase}",
+            s"content--type-${article.metadata.contentType.map(_.name).getOrElse("Article").toLowerCase}",
             "tonal",
             s"tonal--${toneClass(article)}",
             s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"
