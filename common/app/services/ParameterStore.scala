@@ -3,11 +3,13 @@ package services
 import com.amazonaws.services.simplesystemsmanagement.model.{GetParameterRequest, GetParametersByPathRequest}
 import com.amazonaws.services.simplesystemsmanagement.{AWSSimpleSystemsManagement, AWSSimpleSystemsManagementClientBuilder}
 import conf.Configuration
+
+import scala.annotation.tailrec
 import scala.collection.JavaConverters._
 
 class ParameterStore(region: String) {
 
-  lazy val client: AWSSimpleSystemsManagement = Configuration.aws.credentials.map { credentials =>
+  private lazy val client: AWSSimpleSystemsManagement = Configuration.aws.credentials.map { credentials =>
     AWSSimpleSystemsManagementClientBuilder
       .standard()
       .withCredentials(credentials)
@@ -30,6 +32,7 @@ class ParameterStore(region: String) {
       }
     }
 
+    @tailrec
     def pagination(accum: Map[String, String], nextToken: Option[String]): Map[String, String] = {
 
       // Only possible to get a maximum of 10 results when this was written
@@ -49,10 +52,9 @@ class ParameterStore(region: String) {
         param.getName -> unwrapQuotedString(param.getValue)
       }.toMap
 
-      if (resultMap.size == maxResults) {
-        pagination(accum ++ resultMap, Some(result.getNextToken))
-      } else {
-        accum ++ resultMap
+      Option(result.getNextToken) match {
+        case Some(next) => pagination(accum ++ resultMap, Some(next))
+        case None => accum ++ resultMap
       }
     }
 

@@ -73,7 +73,7 @@ object GuardianConfiguration extends Logging {
     ConfigFactory.parseMap(configMap.asJava)
   }
 
-  lazy val parameterStore = new ParameterStore(awsRegion)
+  private lazy val parameterStore = new ParameterStore(awsRegion)
 
   lazy val configuration: Config = {
     if (stage == "DEVINFRA")
