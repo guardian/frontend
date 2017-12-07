@@ -144,10 +144,20 @@ const handleCancellationReasonChange = () => {
     }
 };
 
+const resetSelector = () => {
+    const cancellationReasonSelector = document.querySelector(
+        CANCEL_CONTRIBUTION_SELECTOR
+    );
+
+    cancellationReasonSelector.value = null;
+}
+
 const handleKeepContributingLink = () => {
     displayCancelContributionLink();
     hideCancelContributionForm();
     hideCancelContributionSuccessMessage();
+    resetSelector();
+    return false;
 };
 
 const handleCancelLink = () => {
