@@ -45,6 +45,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
             val takenDown = None
             val revision = 0L
             val scheduledLaunch = None
+            val embargo = None
           }
           val flags = None
         }

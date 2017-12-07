@@ -18,7 +18,7 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--pillar-" + item.pillar.name.toLowerCase(), experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
+      ("fc-item--pillar-" + item.pillar.map(_.name).getOrElse("unknown").toLowerCase(), experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--type-" + item.contentType.name.toLowerCase(), experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--has-cutout", item.cutOut.isDefined),
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
@@ -43,7 +43,7 @@ object GetClasses {
     ("fc-sublink", true),
     (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
     (sublinkMediaTypeClass(sublink).getOrElse(""), true),
-    ("fc-sublink--pillar-" + sublink.pillar, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
+    ("fc-sublink--pillar-" + sublink.pillarName, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
     ("fc-sublink--type-" + sublink.contentType, experiments.ActiveExperiments.isParticipating(experiments.Garnett))
   ))
 
