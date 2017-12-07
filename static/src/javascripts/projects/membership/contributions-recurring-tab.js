@@ -71,24 +71,24 @@ const hideCancelContributionForm = (): void => {
     $(CANCEL_CONTRIBUTION_FORM).addClass(IS_HIDDEN_CLASSNAME);
 };
 
-const hideCancelContributionSuccessMessage = () => {
+const hideCancelContributionSuccessMessage = (): void => {
     $(CANCEL_CONTRIBUTION_MSG_SUCCESS).addClass(IS_HIDDEN_CLASSNAME);
 };
 
-const displayCancelContributionLink = () => {
+const displayCancelContributionLink = (): void => {
     $(CANCEL_CONTRIBUTION_LINK).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-const hideCancelContributionLink = () => {
+const hideCancelContributionLink = (): void => {
     $(CANCEL_CONTRIBUTION_LINK).addClass(IS_HIDDEN_CLASSNAME);
 };
 
-const disableCancellationSubmit = () => {
+const disableCancellationSubmit = (): void => {
     $(CANCEL_CONTRIBUTION_SUBMIT).addClass(IS_DISABLE_CLASSNAME);
     $(CANCEL_CONTRIBUTION_SUBMIT).attr('disabled', 'disabled');
 };
 
-const enableCancellationSubmit = () => {
+const enableCancellationSubmit = (): void => {
     $(CANCEL_CONTRIBUTION_SUBMIT).removeClass(IS_DISABLE_CLASSNAME);
     $(CANCEL_CONTRIBUTION_SUBMIT).removeAttr('disabled');
 };
@@ -144,15 +144,15 @@ const handleCancellationReasonChange = () => {
     }
 };
 
-const resetSelector = () => {
+const resetSelector = (): void => {
     const cancellationReasonSelector = document.querySelector(
         CANCEL_CONTRIBUTION_SELECTOR
     );
 
     cancellationReasonSelector.value = null;
-}
+};
 
-const handleKeepContributingLink = () => {
+const handleKeepContributingLink = (): void => {
     displayCancelContributionLink();
     hideCancelContributionForm();
     hideCancelContributionSuccessMessage();
@@ -160,7 +160,7 @@ const handleKeepContributingLink = () => {
     return false;
 };
 
-const handleCancelLink = () => {
+const handleCancelLink = (): void  => {
     hideCancelContributionLink();
     disableCancellationSubmit();
     displayCancelContributionForm();
@@ -185,7 +185,7 @@ const handleCancelLink = () => {
     }
 };
 
-const setupCancelContribution = () => {
+const setupCancelContribution = (): void  => {
     hideCancelContributionForm();
     hideCancelContributionSuccessMessage();
     displayCancelContributionLink();
