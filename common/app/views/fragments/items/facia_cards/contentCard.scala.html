@@ -200,7 +200,13 @@ data-test-id="facia-card"
                 } else {
                     <div class="fc-item__standfirst-wrapper">
                         @standfirst(item)
-                        @meta(item)
+                        @if(item.contentType.name.toLowerCase == "audio") {
+                        <div class="fc-item__media-meta">
+                            @inlineSvg("volume-high", "icon")
+                            Podcast
+                        </div>
+                    }
+                    @meta(item)
                     </div>
                 }
             } else {
