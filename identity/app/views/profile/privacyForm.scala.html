@@ -35,7 +35,7 @@
         <h2 class="manage-account-header">Would you like to receive information from the Guardian and their partners?</h2>
         <p class="manage-account-headerNote">The Guardian and their partners would like to occasionally send you information about their products, services and events</p>
         <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
-            <div class="manage-account__switches manage-account__switches--wide">
+            <div class="manage-account__switches">
                 <ul>
                 @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
                     <li>
