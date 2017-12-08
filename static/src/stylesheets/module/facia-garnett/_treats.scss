@@ -39,10 +39,12 @@
     box-sizing: border-box;
     display: inline-block;
     vertical-align: top;
-    width: auto;
     font-weight: 700;
     border-width: 1px;
-    border-style: solid none none solid;
+    border-style: solid;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-top-style: solid;
     text-decoration: none;
     max-width: gs-span(4);
     line-height: $gs-baseline * 2 - 2px;
