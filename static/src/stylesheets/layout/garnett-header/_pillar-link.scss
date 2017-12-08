@@ -1,0 +1,127 @@
+.pillar-link {
+    font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
+    font-weight: 700;
+    color: currentColor;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    height: $veggie-burger-medium - $gs-baseline;
+    line-height: $veggie-burger-medium - $gs-baseline;
+    padding: 0 ($gs-gutter / 4);
+    position: relative;
+    transition: color 150ms ease-out;
+
+    @include mq(mobileMedium) {
+        font-size: 18px;
+    }
+
+    @include mq(tablet) {
+        font-size: 24px;
+        height: $gs-baseline * 3 + $gs-baseline / 2;
+        line-height: 1;
+        padding: ($gs-baseline / 4) $gs-gutter 0 ($gs-gutter / 4 + 2);
+    }
+
+    @include mq(desktop) {
+        font-size: 24px;
+        padding: ($gs-baseline / 4) ($gs-gutter + $gs-gutter / 4) 0 ($gs-gutter / 4 + 2);
+    }
+
+    &:before,
+    &:after {
+        bottom: 0;
+        content: '';
+        display: block;
+        left: 0;
+        position: absolute;
+    }
+
+    &:before {
+        // Dividing lines
+        border-left: 1px solid $rule;
+        top: $gs-baseline + 1;
+        z-index: 1;
+
+        @include mq(tablet) {
+            top: $gs-baseline / 2 + 4;
+        }
+    }
+
+    &:after {
+        // Underlines
+        border-bottom-width: 0;
+        border-bottom-style: solid;
+        right: 0;
+        transition: border 150ms ease-out;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        &:not(.pillar-link--dropdown):after {
+            border-bottom-width: 4px;
+        }
+    }
+
+    .new-header--open & {
+        &:before,
+        &:after {
+            content: none;
+        }
+    }
+
+    .new-header--slim & {
+        font-size: 20px;
+        height: $slim-nav-height;
+        line-height: $slim-nav-height;
+        padding-top: 0;
+
+        &:before {
+            top: 17px;
+        }
+    }
+}
+
+.pillar-link--current-section {
+
+    &:after {
+        border-bottom-width: 4px;
+    }
+
+    .new-header--open & {
+        &:after {
+            border-bottom-width: 0;
+        }
+    }
+}
+
+.pillar-link--dropdown__icon {
+    border: 2px solid currentColor;
+    border-left: transparent;
+    border-top: transparent;
+    display: inline-block;
+    height: 6px;
+    margin-left: 2px;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 250ms ease-out;
+    vertical-align: middle;
+    width: 6px;
+
+    .pillar-link--dropdown:hover & {
+        transform: translateY(0) rotate(45deg);
+    }
+}
+
+.pillar-link--sections {
+    color: $neutral-2;
+    float: left;
+
+    .new-header--open & {
+        display: none;
+    }
+
+    .new-header__menu-toggle:focus & {
+        color: $neutral-1;
+    }
+}

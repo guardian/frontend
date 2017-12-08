@@ -1,0 +1,68 @@
+.subnav {
+    background-color: #ffffff;
+    border-top: 1px solid $rule;
+    padding-bottom: 12px;
+    color: $neutral-1;
+    height: $veggie-burger-medium - $gs-baseline;
+    overflow: hidden;
+    position: relative;
+
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        height: 2px;
+        bottom: 0;
+        width: 100%;
+        border-top: 4px double $rule;
+        border-bottom: 4px double $rule;
+    }
+
+    @include mq(tablet) {
+        height: 42px;
+    }
+
+    .l-footer & {
+
+        &:after {
+            bottom: auto;
+            top: 0;
+        }
+    }
+
+}
+
+.subnav--expanded {
+    height: auto;
+
+    .subnav-link--toggle-more {
+        float: left;
+    }
+}
+
+// TODO: reset list-style mixin
+.subnav__list {
+    box-sizing: border-box;
+    line-height: 1;
+    list-style: none;
+    margin: 0;
+    // Width of the container minus the rough width of the more toggle
+    max-width: calc(100% - 60px);
+    padding: 0 ($gs-gutter / 4);
+
+    @include mq(mobileLandscape) {
+        max-width: calc(100% - 70px);
+        padding: 0 ($gs-gutter / 2 + $gs-gutter / 4);
+    }
+
+    .subnav--expanded & {
+        padding-bottom: $gs-baseline;
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+.subnav__item:not(.subnav__item--toggle-more) {
+    display: block;
+    float: left;
+}

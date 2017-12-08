@@ -1,0 +1,58 @@
+.subnav-link {
+    font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
+    color: #000000;
+    display: block;
+    font-size: 15px;
+    height: $veggie-burger-medium - $gs-baseline;
+    line-height: $veggie-burger-medium - $gs-baseline;
+    padding: 0 ($gs-gutter / 4);
+    position: relative;
+    transition: color 150ms ease-out;
+
+    @include mq(mobileMedium) {
+        font-size: 17px;
+    }
+
+    @include mq(tablet) {
+        height: 42px;
+        line-height: 42px;
+    }
+
+    &:after {
+        @include mq($until: tablet) {
+            border-bottom: 1px solid $neutral-5;
+            bottom: -1px;
+            content: '';
+            left: $gs-gutter / 4;
+            position: absolute;
+            right: -9999px;
+        }
+    }
+
+    &:hover,
+    &:focus {
+        color: $guardian-brand;
+        text-decoration: none;
+    }
+}
+
+.subnav-link--toggle-more {
+    background: transparent;
+    border: 0;
+    color: $neutral-2;
+
+    &:hover,
+    &:focus {
+        color: $neutral-2;
+        outline: 0;
+    }
+}
+
+.subnav-link--current-section {
+    &,
+    &:hover,
+    &:focus {
+        font-weight: 700;
+        color: $guardian-brand;
+    }
+}

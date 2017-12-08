@@ -1,0 +1,25 @@
+.menu-close {
+    background-color: $neutral-5;
+    color: $neutral-2;
+    cursor: pointer;
+    display: none;
+    height: $veggie-burger-medium;
+    width: $veggie-burger-medium;
+    border-radius: 50%;
+    position: relative;
+    z-index: $zindex-main-menu + 1;
+
+    &:hover {
+        color: #000000;
+    }
+
+    .new-header--open & {
+        display: block;
+    }
+}
+
+.menu-close__icon__svg {
+    fill: currentColor;
+    height: 22px;
+    width: 22px;
+}
