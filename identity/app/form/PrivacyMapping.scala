@@ -111,44 +111,40 @@ case class PrivacyFormData(
 }
 
 object PrivacyFormData extends SafeLogging {
-
-  /**
-    * Checks if a consent exists on the identity library and logs if not
-    *
-    * @param consent Consent
-    * @return Boolean (false if consent does not exist)
-    */
-  def checkIfConsentExistsInModel(consent:Consent): Boolean = {
-    Try(Consent.wording(consent.id, consent.version)) match {
-      case Success(wording:ConsentWording) => true
-      case Failure(f) => {
-        LogMissingConsent(consent)
-        false
-      }
-    }
-  }
-
-  /**
-    * Logs a missing consent
-    *
-    * @param consent Consent
-    * @return Unit
-    */
-  def LogMissingConsent(consent:Consent): Unit = {
-    logger.error(s"Failed to find consent in model: $consent.id")
-  }
-
   /**
     * Converts User DO from IDAPI to form processing DTO PrivacyFromData
     *
     * @param userDO Identity User domain model from IDAPI defiend in identity-model library
     * @return form processing DTO PrivacyFromData
     */
-  def apply(userDO: User): PrivacyFormData =
+  def apply(userDO: User): PrivacyFormData = {
     PrivacyFormData(
       receiveGnmMarketing = userDO.statusFields.receiveGnmMarketing,
       receive3rdPartyMarketing = userDO.statusFields.receive3rdPartyMarketing,
       allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling,
-      consents = if (userDO.consents.isEmpty) defaultConsents else userDO.consents.filter(checkIfConsentExistsInModel)
+      consents = if (userDO.consents.isEmpty) defaultConsents else onlyValidConsents(userDO)
     )
+  }
+
+  /**
+    * FIXME: Once GDPR goes live, clean Mongo DB of old consents, and remove this method.
+    *
+    * Filter out any invalid consents that are still lingering in Mongo DB.
+    *
+    * For example, if consent id is renamed, then some users might still have the old consent.
+    *
+    * @param userDO Identity User domain model from IDAPI defiend that might contain some old invalid consents
+    * @return list of valid consents
+    */
+  private def onlyValidConsents(userDO: User): List[Consent] = {
+    def consentExistsInModel(consent:Consent): Boolean =
+      Try(Consent.wording(consent.id, consent.version)).isSuccess
+
+    val (validConsents, invalidConsents) = userDO.consents.partition(consentExistsInModel)
+
+    invalidConsents.foreach(consent =>
+      logger.error(s"User ${userDO.id} has invalid consent! Remove consent from Mongo DB: $consent"))
+
+    validConsents
+  }
 }
