@@ -38,23 +38,33 @@ data-test-id="facia-card"
 
 @mediaMeta(item: layout.ContentCard) = {
     <div class="fc-item__meta-wrapper">
-        @item.displayElement match {
-            case Some(InlineVideo(videoElement, _, _, _)) => {
-                <div class="fc-item__media-meta">
-                    @inlineSvg("video-icon", "icon")
-                    @videoElement.videos.formattedDuration
-                </div>
-            }
+        @if(item.contentType.name.toLowerCase == "video") {
+            @item.displayElement match {
+                case Some(InlineVideo(videoElement, _, _, _)) => {
+                    <div class="fc-item__media-meta">
+                        @inlineSvg("video-icon", "icon")
+                        @videoElement.videos.formattedDuration
+                    </div>
+                }
 
-            case Some(media@InlineYouTubeMediaAtom(youTubeAtom,_)) => {
-                <div class="fc-item__media-meta">
-                    @inlineSvg("video-icon", "icon")
-                    @youTubeAtom.formattedDuration
-                </div>
-            }
+                case Some(media@InlineYouTubeMediaAtom(youTubeAtom, _)) => {
+                    <div class="fc-item__media-meta">
+                        @inlineSvg("video-icon", "icon")
+                        @youTubeAtom.formattedDuration
+                    </div>
+                }
 
-            case _ => { }
+                case _ => {}
+            }
         }
+
+        @if(item.contentType.name.toLowerCase == "audio") {
+            <div class="fc-item__media-meta">
+                @inlineSvg("volume-high", "icon")
+                Podcast
+            </div>
+        }
+
         @meta(item)
     </div>
 }
