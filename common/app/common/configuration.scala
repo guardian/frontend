@@ -191,12 +191,7 @@ class GuardianConfiguration extends Logging {
   object contentApi {
     val contentApiHost: String = configuration.getMandatoryStringProperty("content.api.host")
 
-    def contentApiDraftHost: String =
-        configuration.getStringProperty("content.api.draft.host")
-          .filter(_ => Switches.FaciaToolDraftContent.isSwitchedOn)
-          .getOrElse(contentApiHost)
-
-    val previewHost: String = configuration.getStringProperty("content.api.preview.host").getOrElse(contentApiHost)
+    val previewHost: Option[String] = configuration.getStringProperty("content.api.preview.iam.host")
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: FiniteDuration = Duration.create(configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000), MILLISECONDS)
@@ -205,10 +200,17 @@ class GuardianConfiguration extends Logging {
     lazy val circuitBreakerResetTimeout: FiniteDuration =
       FiniteDuration(configuration.getIntegerProperty("content.api.circuit_breaker.reset_timeout").getOrElse(2000), MILLISECONDS)
 
-    lazy val previewAuth: Option[Auth] = for {
-      user <- configuration.getStringProperty("content.api.preview.user")
-      password <- configuration.getStringProperty("content.api.preview.password")
-    } yield Auth(user, password)
+    //Cross account credentials for capi preview
+    lazy val capiPreviewRoleToAssume: Option[String] = configuration.getStringProperty("content.api.preview.roleToAssume")
+
+    lazy val capiPreviewCredentials: AWSCredentialsProvider = {
+      new AWSCredentialsProviderChain(
+        List(
+          Some(new ProfileCredentialsProvider("capi")),
+          capiPreviewRoleToAssume.map(new STSAssumeRoleSessionCredentialsProvider.Builder(_, "capi").build())
+        ).flatten: _*
+      )
+    }
   }
 
   object ophanApi {
