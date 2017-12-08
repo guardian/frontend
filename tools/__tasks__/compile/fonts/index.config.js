@@ -69,21 +69,33 @@ module.exports = [
                     'hinting-off/kerning-on/noalts/GuardianHeadline/Light.woff2',
             },
             {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/LightItalic.woff2',
+            },
+            {
                 'font-weight': '400',
                 src:
                     'hinting-off/kerning-on/noalts/GuardianHeadline/Regular.woff2',
             },
             {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/RegularItalic.woff2',
+            },
+            {
                 'font-weight': '500',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/Medium.woff2',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/Semibold.woff2',
             },
             // This weight contains only a certain set of chars
             // since it is used only in one place (section names)
             {
                 'font-weight': '900',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianHeadline/Semibold.woff2',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/Bold.woff2',
             },
         ],
     },
@@ -94,24 +106,35 @@ module.exports = [
             {
                 'font-weight': '200',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianHeadline/Light.woff',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/Light.woff',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/LightItalic.woff',
             },
             {
                 'font-weight': '400',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianHeadline/Regular.woff',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/Regular.woff',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/RegularItalic.woff',
             },
             {
                 'font-weight': '500',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianHeadline/Medium.woff',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/Semibold.woff',
             },
             // This weight contains only a certain set of chars
             // since it is used only in one place (section names)
             {
                 'font-weight': '900',
-                src:
-                    'hinting-off/kerning-on/latin1/GuardianHeadline/Semibold.woff',
+                src: 'hinting-off/kerning-on/noalts/GuardianHeadline/Bold.woff',
             },
         ],
     },
@@ -121,25 +144,35 @@ module.exports = [
         fonts: [
             {
                 'font-weight': '200',
+                src: 'hinting-off/kerning-on/noalts/GuardianHeadline/Light.ttf',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/LightItalic.ttf',
             },
             {
                 'font-weight': '400',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/Regular.ttf',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/RegularItalic.ttf',
             },
             {
                 'font-weight': '500',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.ttf',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/Semibold.ttf',
             },
             // This weight contains only a certain set of chars
             // since it is used only in one place (section names)
             {
                 'font-weight': '900',
-                src:
-                    'hinting-off/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf',
+                src: 'hinting-off/kerning-on/noalts/GuardianHeadline/Bold.ttf',
             },
         ],
     },
