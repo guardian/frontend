@@ -12,7 +12,11 @@ case class PressedCollectionVisibility(pressedCollection: PressedCollection, vis
 
   lazy val deduplicateAgainst: Seq[String] = {
     if (affectsDuplicates)
-      pressedCollection.curatedPlusBackfillDeduplicated.take(visible).map(_.header.url)
+      pressedCollection
+        .curatedPlusBackfillDeduplicated
+        .take(visible)
+        .filter(_.participatesInDeduplication)
+        .map(_.header.url)
     else
       Nil
   }
