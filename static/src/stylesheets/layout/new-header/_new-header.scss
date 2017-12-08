@@ -129,14 +129,14 @@ from scrolling */
 
 .new-header__logo__svg {
     display: block;
-    height: calc(3 / 16 * 180px);
+    height: 34px;
     margin-bottom: $gs-baseline / 2;
     margin-right: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;
     width: 180px;
 
     @include mq(mobileMedium) {
-        height: calc(3 / 16 * 225px);
+        height: 42px;
         width: 225px;
     }
 
@@ -146,15 +146,15 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        height: calc(3 / 16 * 345px);
-        margin-top: $gs-baseline + $gs-baseline / 4;
+        height: 65px;
         width: 345px;
+        margin-top: $gs-baseline + $gs-baseline / 4;
     }
 
     @include mq(desktop) {
-        height: calc(3 / 16 * 411px);
-        margin-bottom: $gs-baseline / 2;
+        height: 77px;
         width: 411px;
+        margin-bottom: $gs-baseline / 2;
     }
 
     body:not(.has-page-skin) & {
@@ -164,9 +164,9 @@ from scrolling */
     }
 
     .new-header--slim & {
-        height: calc(3 / 16 * 180px);
-        margin: 5px ($veggie-burger-large + $gs-gutter) 0 0;
+        height: 34px;
         width: 180px;
+        margin: 5px ($veggie-burger-large + $gs-gutter) 0 0;
 
         @include mq(mobileLandscape) {
             margin-right: $veggie-burger-large + $gs-gutter + ($gs-gutter / 2);
