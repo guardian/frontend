@@ -269,6 +269,26 @@
             }
         }
     }
+
+    /* Cancellation Contribution section
+    ===================================================================== */
+    .contribution-cancellation__menu {
+        border-top: solid 1px #000000;
+
+        h3 {
+            margin: $gs-baseline 0;
+        }
+
+        contribution-cancellation__menu__actions {
+            margin-top: $gs-baseline * 4;
+        }
+    }
+
+    .manage-account__button.is-disabled {
+        cursor: not-allowed;
+        background-color: $neutral-3;
+    }
+
 }
 .manage-account__errors:not(:empty) {
     margin-bottom: $gs-gutter;
@@ -422,7 +442,7 @@
     align-items: center;
     justify-content: center;
 
-    &:not(.is-updating):hover {
+    &:not(.is-updating, .is-disabled):hover {
         background-color: $guardian-brand-dark;
     }
 
