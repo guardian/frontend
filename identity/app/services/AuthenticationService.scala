@@ -1,10 +1,9 @@
 package services
 
-import idapiclient.Auth
+import idapiclient.{Auth, ScGuRp, ScGuU}
 import com.gu.identity.model.User
 import conf.FrontendIdentityCookieDecoder
-import idapiclient.ScGuU
-import play.api.mvc.{RequestHeader, Results}
+import play.api.mvc.{Cookie, RequestHeader, Results}
 
 import scala.language.implicitConversions
 import org.joda.time.Minutes
@@ -14,24 +13,31 @@ object AuthenticatedUser {
   implicit def authUserToUser(authUser: AuthenticatedUser): User = authUser.user
 }
 
-case class AuthenticatedUser(user: User, auth: Auth)
+case class AuthenticatedUser(user: User, auth: Auth, hasRecentlyAuthenticated: Boolean = false)
 
 class AuthenticationService(cookieDecoder: FrontendIdentityCookieDecoder,
-                                      idRequestParser: IdRequestParser,
-                                      identityUrlBuilder: IdentityUrlBuilder) extends Logging with Results {
+                            idRequestParser: IdRequestParser,
+                            identityUrlBuilder: IdentityUrlBuilder) extends Logging with Results {
 
   def authenticatedUserFor[A](request: RequestHeader): Option[AuthenticatedUser] = for {
     scGuU <- request.cookies.get("SC_GU_U")
     guU <- request.cookies.get("GU_U")
+    scGuLaOpt = request.cookies.get("SC_GU_LA")
     minimalSecureUser <- cookieDecoder.getUserDataForScGuU(scGuU.value)
     guUCookieData <- cookieDecoder.getUserDataForGuU(guU.value)
-    fullUser = guUCookieData.getUser if (fullUser.getId == minimalSecureUser.getId)
-  } yield AuthenticatedUser(fullUser, ScGuU(scGuU.value, guUCookieData))
+    fullUser = guUCookieData.getUser if fullUser.getId == minimalSecureUser.getId
+  } yield {
+    AuthenticatedUser(fullUser, ScGuU(scGuU.value, guUCookieData), hasRecentlyAuthenticated(fullUser, scGuLaOpt))
+  }
 
-  def recentlyAuthenticated(request: RequestHeader): Boolean = (for {
-    authedUser <- authenticatedUserFor(request)
-    scGuLa <- request.cookies.get("SC_GU_LA")
-  } yield cookieDecoder.userHasRecentScGuLaCookie(authedUser, scGuLa.value, Minutes.minutes(20).toStandardDuration)).getOrElse(false)
+  def hasRecentlyAuthenticated(user: User, cookie: Option[Cookie]): Boolean = {
+    cookie.exists(scGuLa => cookieDecoder.userHasRecentScGuLaCookie(user, scGuLa.value, Minutes.minutes(20).toStandardDuration))
+  }
+
+  def authenticateUserForPermissions(request: RequestHeader): Option[AuthenticatedUser] = for {
+    scGuRp <- request.cookies.get("SC_GU_RP")
+    fullUser <- cookieDecoder.getUserDataForGuRp(scGuRp.value)
+  } yield AuthenticatedUser(fullUser, ScGuRp(scGuRp.value))
 
   def requestPresentsAuthenticationCredentials(request: RequestHeader): Boolean = authenticatedUserFor(request).isDefined
 

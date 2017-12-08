@@ -46,7 +46,7 @@
                 <p class="manage-account-headerNote">Tick the boxes you are interested in</p>
             }
             <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
-                <div class="manage-account__switches">
+                <div class="manage-account__switches manage-account__switches--wide">
                     <ul>
                     @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
                         <li>
@@ -121,22 +121,22 @@
 
 @endcardStep() = {
     <div class="manage-account-wizard__step" data-wizard-step-name="endcard">
-        <div class="js-manage-account-wizard__next">
-            <div class="manage-account-consent-thanks">
-                <h2 class="manage-account-consent-thanks__title">Thank you</h2>
-                <aside class="manage-account-consent-thanks__content">
-                    <p>Your support helps us deliver the quality independent journalism the world needs</p>
-                    <a class="manage-account__button" href="@verifiedReturnUrl">Continue</a>
-                </aside>
-            </div>
-        </div>
+        <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consent", idRequest)">
+            <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
+            @views.html.helper.CSRF.formField
+            <h2 class="manage-account-consent-thanks__title">Thank you</h2>
+            <aside class="manage-account-consent-thanks__content">
+                <p>Your support helps us deliver the quality independent journalism the world needs</p>
+                <button type="submit" class="manage-account__button">Continue</button>
+            </aside>
+        </form>
     </div>
 }
 
 
 @mainLegacy(page, projectName = Option("identity")) { } {
 
-    <div class="identity-wrapper-for-bg">
+    <div class="identity-wrapper-for-bg identity-wrapper-for-bg--overflows">
         <div class="gs-container">
             <div class="monocol-wrapper">
 
@@ -165,7 +165,7 @@
                         <div class="manage-account-wizard__controls">
                             <a class="manage-account-consent-wizard-button-back manage-account-consent-wizard__revealable manage-account__button--round manage-account__button js-manage-account-wizard__prev">
                                 <span class="u-h">Previous</span>
-                                @fragments.inlineSvg("arrow-left", "icon")
+                                @fragments.inlineSvg("arrow-left-stem", "icon")
                             </a>
                             <div class="manage-account-consent-wizard__revealable manage-account-consent-wizard-counter">
                             </div>
