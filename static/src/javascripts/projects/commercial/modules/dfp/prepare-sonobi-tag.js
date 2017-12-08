@@ -43,7 +43,8 @@ const setupSonobi = once(() => {
             catchPolyfillErrors
         );
     } else if ( dfpEnv.externalDemand === 'prebid') {
-        return prebid.loadDependencies();
+        buildPageTargeting();
+        return prebid.initialise();
     }
 
     return Promise.resolve();
