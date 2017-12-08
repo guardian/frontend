@@ -24,8 +24,7 @@
 
     // Container Chrome
     .fc-container__header__title {
-        border-top-color: $story-package;
-        color: $news-support-2;
+        color: $garnett-neutral-1;
         float: none;
 
         & a:hover {
@@ -45,6 +44,10 @@
         &:hover {
             background-color: inherit;
         }
+    }
+
+    .fc-today {
+        color: $garnett-neutral-1;
     }
 
     .button--primary {

@@ -14,8 +14,15 @@
 
     @include mq(leftCol) {
         .fc-container__header__title {
-            border-top: 1px solid $news-accent;
             padding-top: $gs-baseline / 4;
+
+            &:after {
+                display: none;
+            }
+        }
+
+        .fc-container__inner {
+            padding-top: 0;
         }
 
         .fc-container__body {

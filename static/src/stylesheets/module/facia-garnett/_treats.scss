@@ -26,13 +26,11 @@
 
 .treats__treat {
     @include fs-textSans(1);
-    @include button-height($base-size * 4);
-    @include circular;
     @include ellipsis();
     @include button-colour(
         #ffffff,
-        $news-default,
-        $news-accent
+        $garnett-neutral-1,
+        $garnett-neutral-4
     );
     @include button-hover-colour(
         #ffffff,
@@ -44,10 +42,12 @@
     width: auto;
     font-weight: 700;
     border-width: 1px;
-    border-style: solid;
+    border-style: solid none none solid;
     text-decoration: none;
     max-width: gs-span(4);
     line-height: $gs-baseline * 2 - 2px;
+    padding-left: $gs-baseline / 2;
+    width: 190px;
 
     @include mq(leftCol) {
         max-width: $left-column;
