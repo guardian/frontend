@@ -1,12 +1,14 @@
 package form
 
-import com.gu.identity.model.{Consent,User}
+import com.gu.identity.model.{Consent,User,ConsentWording}
 import com.gu.identity.model.Consent._
 import idapiclient.UserUpdateDTO
 import play.api.data.Forms._
 import play.api.data.JodaForms.jodaDate
 import play.api.data.Mapping
 import play.api.i18n.MessagesProvider
+import utils.SafeLogging
+import scala.util.{Try, Success, Failure}
 
 class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
@@ -108,7 +110,34 @@ case class PrivacyFormData(
   }
 }
 
-object PrivacyFormData {
+object PrivacyFormData extends SafeLogging {
+
+  /**
+    * Checks if a consents is on the library and logs if not
+    *
+    * @param consent Consent object
+    * @return true or false
+    */
+  def checkIfConsentExistsInModel(consent:Consent): Boolean = {
+    Try(Consent.wording(consent.id, consent.version)) match {
+      case Success(wording:ConsentWording) => true
+      case Failure(f) => {
+        LogMissingConsent(consent)
+        false
+      }
+    }
+  }
+
+  /**
+    * Logs a missing consent
+    *
+    * @param consent Consent object
+    * @return true or false
+    */
+  def LogMissingConsent(consent:Consent): Unit = {
+    logger.error(s"Failed to find consent in model: $consent.id")
+  }
+
   /**
     * Converts User DO from IDAPI to form processing DTO PrivacyFromData
     *
@@ -120,5 +149,6 @@ object PrivacyFormData {
       receiveGnmMarketing = userDO.statusFields.receiveGnmMarketing,
       receive3rdPartyMarketing = userDO.statusFields.receive3rdPartyMarketing,
       allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling,
-      consents = if (userDO.consents.isEmpty) defaultConsents else userDO.consents)
+      consents = if (userDO.consents.isEmpty) defaultConsents else userDO.consents.filter(checkIfConsentExistsInModel)
+    )
 }
