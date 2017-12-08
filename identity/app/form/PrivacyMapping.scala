@@ -113,7 +113,7 @@ case class PrivacyFormData(
 object PrivacyFormData extends SafeLogging {
 
   /**
-    * Checks if a consents is on the library and logs if not
+    * Checks if a consent exists on the identity library and logs if not
     *
     * @param consent Consent
     * @return Boolean (false if consent does not exist)
