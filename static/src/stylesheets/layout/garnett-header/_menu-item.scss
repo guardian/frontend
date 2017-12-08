@@ -1,0 +1,193 @@
+.menu-item {
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    .menu-group--primary > & {
+        @include mq(desktop) {
+            float: left;
+            margin-right: $gs-gutter;
+            overflow: visible;
+            width: gs-span(2);
+            padding-bottom: $gs-baseline;
+        }
+    }
+}
+
+.menu-item--home {
+    @include mq(desktop) {
+        display: none;
+    }
+}
+
+.menu-item__title {
+    background-color: transparent;
+    border: 0;
+    box-sizing: border-box;
+    color: currentColor;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    outline: none;
+    padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
+    position: relative;
+    text-align: left;
+    width: 100%;
+
+    @include mq(tablet) {
+        padding-left: $menu-spacing-left-medium;
+    }
+
+    @include mq(desktop) {
+        font-size: 16px;
+        line-height: 1.2;
+        padding: ($gs-baseline / 2) 0;
+        transition: color 80ms ease-out;
+        width: auto;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
+    &:focus {
+        @include mq(desktop) {
+            text-decoration: underline;
+        }
+    }
+
+    > * {
+        pointer-events: none;
+    }
+
+    .menu-group--primary > *:not(:last-child) > &,
+    &[data-link-name='nav2 : the guardian app'],
+    &[data-link-name='nav2 : facebook'] {
+        @include mq($until: desktop) {
+            &:not([aria-expanded='true']):after {
+                background-color: darken($guardian-brand-dark, 4%);
+                bottom: 0;
+                content: '';
+                display: block;
+                height: 1px;
+                left: $menu-spacing-left-small;
+                position: absolute;
+                width: 100%;
+
+                @include mq(tablet) {
+                    left: $menu-spacing-left-medium;
+                }
+            }
+        }
+    }
+
+    &[data-link-name='nav2 : the guardian app'],
+    &[data-link-name='nav2 : facebook'] {
+        @include mq($until: desktop) {
+            margin-top: $gs-baseline * 2;
+
+            &:after {
+                bottom: auto;
+                top: 0;
+            }
+        }
+    }
+
+    // only match the ones, which are not in --secondary
+    .menu-group--primary > .menu-item > & {
+        font-size: 24px;
+        padding-bottom: 16px;
+        padding-top: $gs-baseline / 2;
+
+        @include mq(desktop) {
+            font-size: 32px;
+        }
+    }
+
+    .menu-group--editions &[aria-haspopup='true'] {
+        margin-bottom: $gs-baseline;
+
+        &[aria-expanded='true'] {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.menu-item--brand-extension {
+    float: left;
+    margin-right: $gs-gutter / 2 + $gs-gutter / 4;
+    padding-bottom: $gs-baseline;
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            float: none;
+            margin-right: 0;
+            margin-top: -$gs-baseline / 2;
+            padding-bottom: 0;
+        }
+    }
+}
+
+.menu-item__title--brand-extension {
+    font-size: 22px;
+    line-height: 1.18;
+}
+
+.menu-item__icon,
+.menu-item__toggle {
+    color: $neutral-2;
+    left: 25px;
+    position: absolute;
+
+    @include mq(tablet) {
+        left: 35px;
+    }
+
+    @include mq(desktop) {
+        display: none;
+    }
+}
+
+.menu-item__toggle {
+    margin-top: -4px;
+
+    [aria-expanded='true'] > & {
+        margin-top: 2px;
+    }
+
+    &:before {
+        border: 2px solid currentColor;
+        border-top: 0;
+        border-left: 0;
+        content: '';
+        display: inline-block;
+        height: 8px;
+        transform: rotate(45deg);
+        width: 8px;
+
+        [aria-expanded='true'] > & {
+            transform: rotate(-135deg);
+        }
+    }
+}
+
+.menu-item__icon {
+    margin-left: -3px;
+
+    .inline-icon__svg {
+        fill: currentColor;
+    }
+
+    .inline-home__svg {
+        height: 16px;
+        width: 16px;
+    }
+
+    .inline-share-facebook__svg,
+    .inline-share-twitter__svg {
+        margin-left: -6px;
+        margin-top: -5px;
+    }
+}

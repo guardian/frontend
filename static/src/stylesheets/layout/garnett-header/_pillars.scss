@@ -1,0 +1,97 @@
+.pillars {
+    clear: right;
+    color: #000000;
+    margin: 0;
+    padding: 0 $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        .new-header--open & {
+            z-index: $zindex-main-menu;
+        }
+    }
+
+    .new-header--slim & {
+        clear: none;
+
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
+
+    .new-header--slim.new-header--open & {
+        @include mq(desktop) {
+            z-index: $zindex-main-menu + 1;
+            position: absolute;
+            top: $gs-baseline * 4;
+        }
+    }
+}
+
+.pillars__item {
+    display: block;
+    float: left;
+
+    @include mq(desktop) {
+        width: 120px;
+
+        .new-header--open & {
+            width: 160px;
+
+            &:first-child {
+                width: 153px;
+            }
+        }
+    }
+
+    &:first-child .pillar-link {
+        padding-left: 0;
+
+        &:before {
+            content: none;
+        }
+    }
+
+    &:nth-child(1) {
+        color: #cc0a11;
+
+        &:after {
+            border-color: #FF1A21;
+        }
+    }
+
+    &:nth-child(2) {
+        color: #F7691C;
+
+        &:after {
+            border-bottom-color: red;
+        }
+    }
+
+    &:nth-child(3) {
+        color: #056DA1;
+
+        &:after {
+            border-bottom-color: red;
+        }
+    }
+
+    &:nth-child(4) {
+        color: #9b8361;
+
+        &:after {
+            border-bottom-color: #bb3b80;
+        }
+    }
+
+    &:nth-child(5) {
+        color: #df2770;
+
+        &:after {
+            border-color: red;
+        }
+    }
+}
