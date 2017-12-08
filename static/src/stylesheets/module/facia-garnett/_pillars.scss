@@ -129,7 +129,8 @@ $pillars: (
     }
 
     &.fc-item--type-video .inline-video-icon,
-    &.fc-item--type-audio .inline-volume-high {
+    &.fc-item--type-audio .inline-volume-high,
+    &.fc-item--type-gallery .inline-camera {
         svg {
             fill: map-get($palette, kicker);
         }
