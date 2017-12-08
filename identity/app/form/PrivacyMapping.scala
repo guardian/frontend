@@ -115,8 +115,8 @@ object PrivacyFormData extends SafeLogging {
   /**
     * Checks if a consents is on the library and logs if not
     *
-    * @param consent Consent object
-    * @return true or false
+    * @param consent Consent
+    * @return Boolean (false if consent does not exist)
     */
   def checkIfConsentExistsInModel(consent:Consent): Boolean = {
     Try(Consent.wording(consent.id, consent.version)) match {
@@ -131,8 +131,8 @@ object PrivacyFormData extends SafeLogging {
   /**
     * Logs a missing consent
     *
-    * @param consent Consent object
-    * @return true or false
+    * @param consent Consent
+    * @return Unit
     */
   def LogMissingConsent(consent:Consent): Unit = {
     logger.error(s"Failed to find consent in model: $consent.id")
