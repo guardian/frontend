@@ -216,8 +216,6 @@ GET            /metrics/assets                                                  
 GET            /metrics/afg                                                                                                      controllers.admin.MetricsController.renderAfg()
 GET            /metrics/webpack-bundle-visualization                                                                             controllers.admin.MetricsController.renderBundleVisualization()
 GET            /metrics/webpack-bundle-analyzer                                                                                  controllers.admin.MetricsController.renderBundleAnalyzer()
-GET            /deduped                                                                                                          controllers.admin.WhatIsDeduped.index()
-GET            /deduped/*path                                                                                                    controllers.admin.WhatIsDeduped.dedupedFor(path)
 GET            /radiator                                                                                                         controllers.admin.RadiatorController.renderRadiator()
 GET            /radiator/commit/*hash                                                                                            controllers.admin.RadiatorController.commitDetail(hash)
 GET            /deploys                                                                                                          controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
