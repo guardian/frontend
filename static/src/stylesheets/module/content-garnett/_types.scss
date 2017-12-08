@@ -1,12 +1,5 @@
 $quote-tail: 25px;
-@mixin multiline($number) {
-    content: '';
-    display: block;
-    width: 100%;
-    margin-bottom: $gs-baseline/4;
-    background-image: repeating-linear-gradient(#dcdcdc, #dcdcdc 1px, #ffffff 1px, #ffffff 4px);
-    height: $number * 4px;
-}
+
 // hack to hide left/right page margins, temp
 .l-side-margins {
     &:after,
@@ -97,8 +90,8 @@ $quote-tail: 25px;
     }
 
     .submeta__section-labels .submeta__link {
-        font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif!important;
-        // I can't seem to override this behaviour without the important statment
+        @include fs-headline(2);
+        font-weight: 500;
     }
 
     .submeta__badge {
@@ -279,7 +272,7 @@ $quote-tail: 25px;
         background: rgba(22, 22, 22, .8);
         color: #ffffff;
         display: none;
-        padding: .375rem 2.5rem .75rem .625rem;
+        padding: 6px 40px 12px 10px;
         max-width: 100%;
     }
 
@@ -300,7 +293,7 @@ $quote-tail: 25px;
     }
 
     .tonal__head--tone-feature .content__headline {
-        font-weight: bolder;
+        font-weight: 700;
     }
 
     .content__standfirst {
