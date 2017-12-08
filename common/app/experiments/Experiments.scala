@@ -50,7 +50,7 @@ object ABNewDesktopHeader extends Experiment(
   description = "Users in this experiment will see the new desktop design.",
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
   sellByDate = new LocalDate(2018, 1, 10),
-  participationGroup = Perc0A
+  participationGroup = Perc1B
 )
 
 object Garnett extends Experiment(
