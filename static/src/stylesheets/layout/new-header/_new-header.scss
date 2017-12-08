@@ -123,6 +123,7 @@ from scrolling */
     }
 
     &:focus {
+        // Prevents distracting focus state on click
         outline: 0;
     }
 }
