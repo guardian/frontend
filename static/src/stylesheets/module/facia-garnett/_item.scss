@@ -323,6 +323,10 @@ $fc-item-gutter: $gs-gutter / 4;
     display: none;
 }
 
+.fc-item__timestamp {
+    white-space: nowrap;
+}
+
 // Common media card styles
 .fc-item--type-video,
 .fc-item--type-audio,
