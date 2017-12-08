@@ -2,7 +2,9 @@
 /* Switchboard
    ========================================================================== */
 
-$local-gutter: $gs-gutter / 1.75;
+$local-gutter: $gs-gutter / 2;
+$row-gutter: $gs-gutter / 2;
+
 $checkbox-size: $gs-gutter / 1.25;
 
 .manage-account__switches ul,
@@ -19,15 +21,19 @@ $checkbox-size: $gs-gutter / 1.25;
         grid-auto-rows: 1fr;
         display: grid;
         padding-top: $local-gutter;
-        grid-row-gap: $local-gutter;
-        grid-column-gap: $local-gutter;
+        grid-row-gap: $row-gutter;
+        grid-column-gap: $row-gutter;
     }
 
-    &--narrow ul {
+    &.manage-account__switches--narrow ul {
         grid-template-columns: repeat(1, 1fr);
         @include mq(tablet) {
             grid-template-columns: repeat(2, 1fr);
         }
+    }
+
+    &.manage-account__switches--wide ul {
+        grid-template-columns: repeat(1, 1fr);
     }
 
     li {
@@ -41,14 +47,14 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch {
-
-    @include fs-textSans(1);
+    @include fs-textSans(2);
     background-color: $neutral-8;
     border-top: 1px solid $neutral-4;
     overflow: hidden;
     position: relative;
     display: flex;
     width: 100%;
+    padding: $local-gutter;
 
     &:hover {
         background-color: darken($neutral-8, 1%);
@@ -60,31 +66,6 @@ $checkbox-size: $gs-gutter / 1.25;
         border-color: $features-main-1;
         &:hover {
             background-color: darken($features-support-3, 1%);
-
-        }
-    }
-
-    @supports (background-size: cover) {
-        input[type=checkbox] {
-            visibility: hidden;
-            position: absolute;
-            top: 0;
-            right: 0;
-            & + .manage-account__switch-checkbox {
-                display: block;
-                width: $checkbox-size;
-                height: $checkbox-size;
-                border: 1px solid $neutral-3;
-                border-radius: 1.5px;
-                background-size: $checkbox-size / 1.5;
-                background: #ffffff no-repeat center center;
-                position: absolute;
-                top: $local-gutter;
-                left: $local-gutter;
-                cursor: pointer;
-            }
-            &:checked + .manage-account__switch-checkbox {
-                background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20fill%3D%22%23005689%22%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')  }
         }
     }
 
@@ -106,7 +87,7 @@ $checkbox-size: $gs-gutter / 1.25;
         cursor: wait;
         pointer-events: none;
         background-image: none;
-        width: auto;
+        width: 100%;
         height: auto;
         margin-top: 0;
 
@@ -121,7 +102,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
         input[type=checkbox],
         .manage-account__switch-checkbox {
-            display: none!important;
+            opacity: .25!important;
         }
     }
 
@@ -133,40 +114,55 @@ $checkbox-size: $gs-gutter / 1.25;
         }
     }
 
+    /*
+    show normal checkboxes on
+    older browsers
+    */
+    @supports (transform: scale(1)) {
+
+        input[type=checkbox] {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            right: 0;
+            & + .manage-account__switch-checkbox {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+
+        input:checked + .manage-account__switch-checkbox {
+            background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20fill%3D%22%23005689%22%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')
+        }
+
+    }
 }
 
-.manage-account__switch-header {
-    @include f-header;
-    @include fs-headline(2, true);
-    background-size: 100% auto;
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    padding: $local-gutter ($local-gutter * 1.5);
-    text-transform: lowercase;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    svg {
-        height: 2em;
-        width: 2em;
-        fill: #ffffff;
-        margin-top: $local-gutter;
-    }
+
+.manage-account__switch-checkbox {
+    display: none;
+    contain: strict;
+    height: $checkbox-size;
+    width: $checkbox-size;
+    border: 1px solid $neutral-3;
+    border-radius: 2px;
+    background-size: $checkbox-size / 1.5;
+    background: #ffffff no-repeat center center;
+    cursor: pointer;
 }
 
 .manage-account__switch-content {
     width: auto;
-    padding: $local-gutter * 1.5;
-    padding-left: $local-gutter * 2 + $checkbox-size;
-    padding-top: $local-gutter * .9;
     position: relative;
     display: flex;
     flex-direction: column;
+    padding-left: $local-gutter * 1.5 + $checkbox-size;
 }
 
 .manage-account__switch-title {
     @include fs-bodyCopy(1);
-    font-weight: 400;
     margin-bottom: $local-gutter * .5;
     cursor: pointer;
     display: block;
@@ -195,6 +191,28 @@ $checkbox-size: $gs-gutter / 1.25;
 
     > :last-child {
         text-align: right;
+    }
+}
+
+.manage-account__switches--wide {
+    @include mq(desktop) {
+        .manage-account__switch {
+            @include fs-textSans(4, true);
+        }
+        .manage-account__switch-content {
+            flex-direction: row;
+            width: 100%;
+        }
+        .manage-account__switch-title {
+            @include fs-headline(3, true);
+            flex: 0 0 30%;
+            padding: 0 $local-gutter * 2;
+            border-left: 1px solid $neutral-5;
+        }
+        .manage-account__switch-copy {
+            border-left: 1px solid $neutral-5;
+            padding: 0 $local-gutter * 2;
+        }
     }
 }
 
