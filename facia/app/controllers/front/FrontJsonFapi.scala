@@ -3,10 +3,9 @@ package controllers.front
 import common.{FaciaPressMetrics, Logging, StopWatch}
 import concurrent.{BlockingOperations, FutureSemaphore}
 import conf.Configuration
-import model.PressedPage
+import model.{FullType, LiteType, PressedPage}
 import play.api.libs.json.Json
 import services.S3
-
 import scala.concurrent.{ExecutionContext, Future}
 
 trait FrontJsonFapi extends Logging {
@@ -17,25 +16,32 @@ trait FrontJsonFapi extends Logging {
 
   def blockingOperations: BlockingOperations
 
-  private def getAddressForPath(path: String, format: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2.$format"
+  private def getAddressForPath(path: String, prefix: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2$prefix.json"
 
-  def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = {
-    val s3Path = getAddressForPath(path, "json")
+  def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.get $path") {
+    pressedPageFromS3(getAddressForPath(path, FullType.suffix))
+  }
 
-    errorLoggingF(s"FrontJsonFapi.get $path $s3Path") {
-      futureSemaphore.execute {
-        blockingOperations.executeBlocking {
-          S3.getGzipped(s3Path).map { jsonString =>
-            val stopWatch: StopWatch = new StopWatch
-            val pressedPage = Json.parse(jsonString).as[PressedPage]
-            FaciaPressMetrics.FrontDecodingLatency.recordDuration(stopWatch.elapsed)
-            pressedPage
-          }
+  def getLite(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.getLite $path") {
+//    pressedPageFromS3(getAddressForPath(path, LiteType.suffix))
+    // TODO temporary fix until solution is implemented for container layout issues.
+    // Containers are missing stories after filtering is applied. This is because the lite versions of fronts do not have extra stories to replace the filtered ones.
+    get(path)
+  }
+
+  private def pressedPageFromS3(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.pressedPageFromS3 $path") {
+    futureSemaphore.execute {
+      blockingOperations.executeBlocking {
+        S3.getGzipped(path).map { jsonString =>
+          val stopWatch: StopWatch = new StopWatch
+          val pressedPage = Json.parse(jsonString).as[PressedPage]
+          FaciaPressMetrics.FrontDecodingLatency.recordDuration(stopWatch.elapsed)
+          pressedPage
         }
       }
     }
-
   }
+
 }
 
 class FrontJsonFapiLive(val blockingOperations: BlockingOperations) extends FrontJsonFapi {

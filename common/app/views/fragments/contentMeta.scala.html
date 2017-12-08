@@ -19,30 +19,10 @@
 }
 
 @metaBody() = {
-    @if(showExtras) {
-        <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
-            <div class="meta__social" data-component="share">
-                @fragments.social(item.sharelinks.pageShares, "top", iconModifier = iconModifier, amp = amp)
-            </div>
-            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
-                @fragments.contentAgeNotice(ageNotice)
-            }
-            @if(!amp) {
-                <div class="meta__numbers">
-                    <div class="u-h meta__number js-sharecount">
-                    </div>
-                    <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
-                        !item.trail.isCommentable
-                    }">
-                    </div>
-                </div>
-            }
-        </div>
-    }
 
     @if(item.content.showCircularBylinePicAtSide && !item.content.isImmersive) {
         <div class="media__img meta__image">
-            @fragments.meta.bylineImage(item.tags)
+        @fragments.meta.bylineImage(item.tags)
         </div>
     }
 
@@ -63,6 +43,27 @@
 
     @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
         @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
+    }
+
+    @if(showExtras) {
+        <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
+            <div class="meta__social" data-component="share">
+                @fragments.social(item.sharelinks.pageShares, "top", iconModifier = iconModifier, amp = amp)
+            </div>
+            @if(item.content.tags.tags.exists(_.id == "tone/news")) {
+                @fragments.contentAgeNotice(ageNotice)
+            }
+            @if(!amp) {
+                <div class="meta__numbers">
+                    <div class="u-h meta__number js-sharecount">
+                    </div>
+                    <div class="u-h meta__number" data-discussion-id="@item.content.discussionId" data-commentcount-format="content" data-discussion-closed="@{
+                        !item.trail.isCommentable
+                    }">
+                    </div>
+                </div>
+            }
+        </div>
     }
 }
 

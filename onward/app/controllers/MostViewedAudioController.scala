@@ -49,7 +49,8 @@ class MostViewedAudioController(
         1,
         Fixed(FixedContainers.fixedSmallSlowIV),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(audios.take(4).map(_.faciaContent), Nil, displayName, None, None, None)
+        CollectionEssentials(audios.take(4).map(_.faciaContent), Nil, displayName, None, None, None),
+        hasMore = false
       ).withTimeStamps,
       FrontProperties.empty
     )

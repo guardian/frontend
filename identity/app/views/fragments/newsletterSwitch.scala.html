@@ -17,7 +17,7 @@
         @newsletter.frequency
     </div>
     @if(newsletter.exampleUrl.isDefined){
-        <a target="preview-email-@newsletter.listId" href="@LinkTo({ newsletter.exampleUrl.getOrElse("") })">
+        <a class="manage-account__switch-footer-email-preview" target="preview-email-@newsletter.listId" href="@LinkTo({ newsletter.exampleUrl.getOrElse("") })">
             See the latest email
         </a>
     }

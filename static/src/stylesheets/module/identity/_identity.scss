@@ -21,6 +21,7 @@
     .gs-container {
         @include clearfix();
         background: #ffffff;
+        overflow: hidden;
     }
     .monocol-wrapper {
         max-width: gs-span(10);
@@ -29,7 +30,12 @@
             padding: 0 $gs-gutter * 1;
         }
     }
-    &--header {
+    &.identity-wrapper-for-bg--overflows {
+        .gs-container {
+            overflow: visible;
+        }
+    }
+    &.identity-wrapper-for-bg--header {
         background: darken($neutral-8, 5%);
         .monocol-wrapper {
             padding-bottom: 0;

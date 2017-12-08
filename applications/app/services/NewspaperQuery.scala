@@ -128,7 +128,8 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logg
       index,
       Fixed(containerDefinition),
       CollectionConfigWithId(dataId.getOrElse(""), CollectionConfig.empty.copy(displayName = containerName, description = containerDescription)),
-      CollectionEssentials(trails, linkSnaps, containerName, dataId, None, None)
+      CollectionEssentials(trails, linkSnaps, containerName, dataId, None, None),
+      hasMore = false
     ).copy(hasShowMoreEnabled = false)
   }
 
