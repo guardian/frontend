@@ -488,7 +488,7 @@
     color: $guardian-brand;
     background-color: transparent;
     border: 1px solid $news-main-2;
-    &:not(.is-updating):hover {
+    &:not(.is-updating, .is-disabled):hover {
         color: $guardian-brand-dark;
         background-color: transparent;
         border-color: currentColor;
