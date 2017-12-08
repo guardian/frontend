@@ -49,8 +49,8 @@ object Sublink {
       EditionalisedLink.fromFaciaContent(faciaContent),
       faciaContent.card.cardStyle,
       faciaContent.card.mediaType,
-      pillarName.map(_.name).getOrElse("news").toLowerCase,
-      designType.map(_.toString).getOrElse("article").toLowerCase
+      pillarName.map(_.name).getOrElse("News").toLowerCase,
+      designType.map(_.toString).getOrElse("Article").toLowerCase
     )
   }
 }
