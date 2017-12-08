@@ -16,8 +16,6 @@ const CONTRIBUTION_PERIOD_START_CONTAINER =
 const CONTRIBUTION_PERIOD_START = '.js-contribution-period-start';
 const PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER =
     '.js-contribution-next-payment-amount-container';
-const PACKAGE_NEXT_PAYMENT_DATE_CONTAINER =
-    '.js-contribution-next-payment-date-container';
 const PACKAGE_NEXT_PAYMENT_FORM_CONTAINER =
     '.js-contribution-next-payment-form-container';
 const PACKAGE_NEXT_PAYMENT_DATE = '.js-contribution-next-payment-date';
@@ -257,11 +255,13 @@ const handlePriceChange = (): void => {
     const currentPrice = $(CURRENT_CONTRIBUTION_AMOUNT).text();
     const submitButton = $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT);
     const fieldVal = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
-    if (fieldVal &&
+    if (
+        fieldVal &&
         Number(fieldVal) &&
         Number(fieldVal) >= 5 &&
         Number(fieldVal) <= 2000 &&
-        Number(fieldVal) !== Number(currentPrice)) {
+        Number(fieldVal) !== Number(currentPrice)
+    ) {
         $(CONTRIBUTION_TOO_LOW_WARNING).addClass(IS_HIDDEN_CLASSNAME);
         $(CONTRIBUTION_TOO_HIGH_WARNING).addClass(IS_HIDDEN_CLASSNAME);
         submitButton.removeClass(IS_DISABLED_CLASSNAME);
@@ -274,7 +274,7 @@ const handlePriceChangeOnBlur = (): void => {
     const currentAmount = $(CURRENT_CONTRIBUTION_AMOUNT).text();
     const submitButton = $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT);
     const fieldVal = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
-    if (fieldVal && Number(fieldVal)){
+    if (fieldVal && Number(fieldVal)) {
         const newVal = Number(fieldVal);
         $(CONTRIBUTION_TOO_LOW_WARNING).addClass(IS_HIDDEN_CLASSNAME);
         $(CONTRIBUTION_TOO_HIGH_WARNING).addClass(IS_HIDDEN_CLASSNAME);
@@ -300,7 +300,9 @@ const displayChangeContributionForm = (currentPrice: string): void => {
     $(CONTRIBUTION_GLYPH).removeClass(IS_HIDDEN_CLASSNAME);
     $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).addClass(IS_DISABLED_CLASSNAME);
 
-    const priceEntryField = document.querySelector(CONTRIBUTION_NEW_AMOUNT_FIELD);
+    const priceEntryField = document.querySelector(
+        CONTRIBUTION_NEW_AMOUNT_FIELD
+    );
     if (priceEntryField) {
         priceEntryField.addEventListener('keyup', handlePriceChange);
         priceEntryField.addEventListener('blur', handlePriceChangeOnBlur);
@@ -373,16 +375,17 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         contributorDetails.subscription.plan.amount / 100
     );
 
-    $(CONTRIBUTION_GLYPH).text(
-        glyph
-    );
+    $(CONTRIBUTION_GLYPH).text(glyph);
 
     $(CONTRIBUTION_TOO_LOW_WARNING).text(
-        "Please enter an amount of " + formatAmount(500, glyph) + " or more"
+        `Please enter an amount of ${formatAmount(500, glyph)} or more`
     );
 
     $(CONTRIBUTION_TOO_HIGH_WARNING).text(
-        "Thank you but we cannot accept contributions over " + formatAmount(200000, glyph)
+        `Thank you but we cannot accept contributions over ${formatAmount(
+            200000,
+            glyph
+        )}`
     );
 
     displayChangeContributionAmount();
