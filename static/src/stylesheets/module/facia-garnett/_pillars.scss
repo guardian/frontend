@@ -128,7 +128,8 @@ $pillars: (
         color: map-get($palette, featureHeadline);
     }
 
-    &.fc-item--type-video .inline-video-icon {
+    &.fc-item--type-video .inline-video-icon,
+    &.fc-item--type-audio .inline-volume-high {
         svg {
             fill: map-get($palette, kicker);
         }
