@@ -266,9 +266,7 @@ const handlePriceChange = (): void => {
         $(CONTRIBUTION_TOO_HIGH_WARNING).addClass(IS_HIDDEN_CLASSNAME);
         submitButton.removeClass(IS_DISABLED_CLASSNAME);
     } else {
-        if (!submitButton.hasClass(IS_DISABLED_CLASSNAME)) {
-            submitButton.addClass(IS_DISABLED_CLASSNAME);
-        }
+        submitButton.addClass(IS_DISABLED_CLASSNAME);
     }
 };
 
