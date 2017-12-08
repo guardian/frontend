@@ -1,19 +1,5 @@
 $quote-tail: 25px;
 
-// hack to hide left/right page margins, temp
-.l-side-margins {
-    &:after,
-    &:before {
-        content: '';
-        position: absolute;
-        z-index: 1;
-        background: #ffffff;
-        top: 0;
-        height: 100%;
-        width: 0;
-    }
-}
-
 .content {
     padding-bottom: 0;
 }
