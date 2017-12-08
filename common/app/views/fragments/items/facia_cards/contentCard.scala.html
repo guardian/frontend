@@ -194,14 +194,14 @@ data-test-id="facia-card"
             </div>
 
             @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                @if(!item.isMediaLink) {
+                @if(item.isMediaLink) {
+                    @standfirst(item)
+                    @mediaMeta(item)
+                } else {
                     <div class="fc-item__standfirst-wrapper">
                         @standfirst(item)
                         @meta(item)
                     </div>
-                } else {
-                    @standfirst(item)
-                    @mediaMeta(item)
                 }
             } else {
                 @standfirst(item)
