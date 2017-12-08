@@ -83,8 +83,9 @@ const hideCancelContribution = (): void => {
 
 const displayCancelContributionForm = (): void => {
     $(CANCEL_CONTRIBUTION_FORM).removeClass(IS_HIDDEN_CLASSNAME);
+};
 
-    const displayChangeContributionAmount = (): void => {
+const displayChangeContributionAmount = (): void => {
     $(CHANGE_CONTRIBUTION_AMOUNT).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
