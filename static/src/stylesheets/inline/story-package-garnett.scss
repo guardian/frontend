@@ -2,12 +2,19 @@
 @import '../_mixins';
 
 @mixin kicker-override($tone, $colour) {
-    .tone-#{$tone}--item {
+    .fc-item--pillar-#{$tone} {
         .fc-item__kicker,
         .rich-link__kicker,
         .fc-item__byline {
             color: $colour;
         }
+
+        .fc-item__kicker {
+            &:after {
+                background-color: $colour;
+            }
+        }
+
     }
 
     .tone-#{$tone}--sublink {
@@ -24,12 +31,11 @@
 
     // Container Chrome
     .fc-container__header__title {
-        border-top-color: $story-package;
-        color: $news-support-2;
+        color: $news-garnett-main-1;
         float: none;
 
         & a:hover {
-            color: $story-package;
+            color: $news-garnett-feature;
         }
     }
 
@@ -45,6 +51,10 @@
         &:hover {
             background-color: inherit;
         }
+    }
+
+    .fc-today {
+        color: $garnett-neutral-1;
     }
 
     .button--primary {
@@ -66,9 +76,13 @@
         // This shouldn't need to be important but too specific selectors on some tones force it to be
         background-color: $story-package !important;
 
-        .u-faux-block-link--hover {
+        &:hover {
             color: inherit;
-            background-color: mix($story-package, $neutral-1, 50%);
+            background-color: $story-package-garnett !important;
+
+            .fc-item__kicker {
+                background-color: $story-package-garnett;
+            }
         }
     }
 
@@ -83,6 +97,14 @@
 
     .fc-item__standfirst {
         color: $neutral-4;
+    }
+
+    .fc-item__headline {
+        color: #fff;
+    }
+
+    .fc-item__kicker {
+        background-color: $story-package;
     }
 
     .fc-item__kicker,
@@ -127,18 +149,13 @@
         box-shadow: -5px 0 5px -2px lighten($story-package, 5%);
     }
 
-    // These need to exist for all kickers because of tone on tone action
-    @include kicker-override(analysis, $analysis-accent);
-    @include kicker-override(comment, $comment-accent);
-    @include kicker-override(dead, $live-support-1);
-    @include kicker-override(editorial, $news-accent);
-    @include kicker-override(external, $maps-support-1);
-    @include kicker-override(feature, $feature-mute);
-    @include kicker-override(letters, $comment-accent);
-    @include kicker-override(live, $live-support-1);
-    @include kicker-override(media, $media-default);
-    @include kicker-override(news, $news-accent);
-    @include kicker-override(review, $review-accent);
+    //These need to exist for all kickers because of tone on tone action
+    @include kicker-override(life, $lifestyle-garnett-main-media-1);
+    @include kicker-override(arts, $arts-garnett-media-main-1);
+    @include kicker-override(sports, $sport-garnett-media-main-1);
+    @include kicker-override(opinion, $opinion-garnett-media-main-1);
+    @include kicker-override(news, $news-garnett-media-main-1);
+
 
     // Item Level
     .fc-item--three-quarters-tall-tablet {
