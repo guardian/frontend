@@ -36,6 +36,34 @@ data-test-id="facia-card"
 
 </div>
 
+@mediaMeta(item: layout.ContentCard) = {
+    <div class="fc-item__meta-wrapper">
+        @item.displayElement match {
+            case Some(InlineVideo(videoElement, _, _, _)) => {
+                <div class="fc-item__media-meta">
+                    @inlineSvg("video-icon", "icon")
+                    @videoElement.videos.formattedDuration
+                </div>
+            }
+
+            case Some(media@InlineYouTubeMediaAtom(youTubeAtom,_)) => {
+                <div class="fc-item__media-meta">
+                    @inlineSvg("video-icon", "icon")
+                    @youTubeAtom.formattedDuration
+                </div>
+            }
+
+            case _ => { }
+        }
+        @meta(item)
+    </div>
+}
+
+@standfirst(item: layout.ContentCard) = {
+    @item.trailText.filter(const(item.showStandfirst)).map { text =>
+        <div class="fc-item__standfirst">@Html(text)</div>
+    }
+}
 
 @container(item: layout.ContentCard) = {
     <div class="fc-item__container">
@@ -166,33 +194,17 @@ data-test-id="facia-card"
             </div>
 
             @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                    <div class="fc-item__standfirst">@Html(text)</div>
+                @if(item.isMediaLink) {
+                    @standfirst(item)
+                    @mediaMeta(item)
+                } else {
+                    <div class="fc-item__standfirst-wrapper">
+                        @standfirst(item)
+                        @meta(item)
+                    </div>
                 }
-                <div class="fc-item__meta-wrapper">
-                    @item.displayElement match {
-                        case Some(InlineVideo(videoElement, _, _, _)) => {
-                            <div class="fc-item__media-meta">
-                                @inlineSvg("video-icon", "icon")
-                                @videoElement.videos.formattedDuration
-                            </div>
-                        }
-
-                        case Some(media@InlineYouTubeMediaAtom(youTubeAtom,_)) => {
-                            <div class="fc-item__media-meta">
-                                @inlineSvg("video-icon", "icon")
-                                @youTubeAtom.formattedDuration
-                            </div>
-                        }
-
-                        case _ => { }
-                    }
-                    @meta(item)
-                </div>
             } else {
-                @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                    <div class="fc-item__standfirst">@Html(text)</div>
-                }
+                @standfirst(item)
             }
 
             @if(item.isLive && item.displaySettings.showLivePlayable && !isList) {
