@@ -81,23 +81,25 @@ x x x x x x x x x x x x x x x x x x
             display: block;
         }
 
-        &[class*='fc-item--has-sublinks']:not(.fc-item--has-sublinks-1) {
-            .fc-item__header {
-                padding-bottom: gs-height(2) + $gs-baseline * 2;
-    
-                @include mq(desktop) {
-                    padding-bottom: gs-height(4.6);
+        &:not(.fc-item--type-comment) {
+            &[class*='fc-item--has-sublinks']:not(.fc-item--has-sublinks-1) {
+                .fc-item__header {
+                    padding-bottom: gs-height(2) + $gs-baseline * 2;
+        
+                    @include mq(desktop) {
+                        padding-bottom: gs-height(4.6);
+                    }
                 }
-            }
-
-            .fc-sublink {
-                margin-top: 0;
     
-                .fc-sublink__title {                
-                    &:before {
-                        width: auto;
-                        left: 0 - $fc-item-gutter;
-                        right: 0 - $fc-item-gutter;
+                .fc-sublink {
+                    margin-top: 0;
+        
+                    .fc-sublink__title {                
+                        &:before {
+                            width: auto;
+                            left: 0 - $fc-item-gutter;
+                            right: 0 - $fc-item-gutter;
+                        }
                     }
                 }
             }

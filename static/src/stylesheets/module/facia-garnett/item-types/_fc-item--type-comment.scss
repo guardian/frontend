@@ -34,10 +34,25 @@
 
     &.fc-item--standard-tablet {
         @include mq(tablet) {
+            .fc-item__avatar {
+                height: gs-height(2.3);
+                width: gs-height(2.3);
+
+                @include mq(desktop) {
+                    height: gs-height(3);
+                    width: gs-height(3);
+                }
+            }
+
             .fc-item__avatar__media {
                 @include avatar-media;
-                height: gs-height(3);
-                left: 0 - $gs-gutter * .75;
+                height: gs-height(2.3);
+                left: 0 - $gs-gutter * .5;
+
+                @include mq(desktop) {
+                    height: gs-height(3);
+                    left: 0 - $gs-gutter * .75;
+                }
             }
         }
     }
@@ -56,6 +71,18 @@
                 @include avatar-media;
                 height: gs-span(1.5);
                 left: 0 - $gs-gutter * .5;
+            }
+        }
+    }
+
+    &.fc-item--list-media-tablet {
+        @include mq(tablet) {
+            .fc-item__header {
+                padding-right: gs-span(1.5) + $gs-gutter * .5;
+            } 
+
+            .fc-item__content {
+                min-height: gs-height(2.5) + $gs-baseline;
             }
         }
     }

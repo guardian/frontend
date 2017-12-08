@@ -98,10 +98,12 @@
                 right: - $gs-gutter;
                 height: gs-span(1) + $gs-baseline * 3;
             }
-        }
 
-        &[class*='fc-item--has-sublinks'].fc-item--has-cutout {
-            @include cutout-sublinks;
+            &:not(.fc-item--type-comment) {
+                &[class*='fc-item--has-sublinks'] {
+                    @include cutout-sublinks;
+                }
+            }
         }
     }
 }
@@ -145,10 +147,12 @@
                 height: gs-height(4);
                 right: -35%;
             }
-        }
 
-        &[class*='fc-item--has-sublinks'].fc-item--has-cutout {
-            @include cutout-sublinks;
+            &:not(.fc-item--type-comment) {
+                &[class*='fc-item--has-sublinks'] {
+                    @include cutout-sublinks;
+                }
+            }
         }
     }
 }
@@ -157,8 +161,12 @@
     @include mq(tablet) {
         @include fc-item--third;
 
-        &[class*='fc-item--has-sublinks'].fc-item--has-cutout {
-            @include cutout-sublinks;
+        &.fc-item--has-cutout {
+            &:not(.fc-item--type-comment) {
+                &[class*='fc-item--has-sublinks'] {
+                    @include cutout-sublinks;
+                }
+            }
         }
     }
 }
@@ -278,18 +286,20 @@
                 display: block;
             }
 
-            &.fc-item--has-sublinks-4 {
-                @include fc-sublinks--below;
+            &:not(.fc-item--type-comment) {
+                &.fc-item--has-sublinks-4 {
+                    @include fc-sublinks--below;
 
-                .fc-item__footer--horizontal {        
-                    .fc-sublink {
-                        margin-top: 0;
-            
-                        .fc-sublink__title {                
-                            &:before {
-                                width: auto;
-                                left: 0 - $fc-item-gutter;
-                                right: 0 - $fc-item-gutter;
+                    .fc-item__footer--horizontal {        
+                        .fc-sublink {
+                            margin-top: 0;
+                
+                            .fc-sublink__title {                
+                                &:before {
+                                    width: auto;
+                                    left: 0 - $fc-item-gutter;
+                                    right: 0 - $fc-item-gutter;
+                                }
                             }
                         }
                     }
