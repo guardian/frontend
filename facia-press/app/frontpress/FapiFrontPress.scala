@@ -77,6 +77,55 @@ object EmbedJsonHtml {
   implicit val format = Json.format[EmbedJsonHtml]
 }
 
+case class PressedCollectionVisibility(pressedCollection: PressedCollection, visible: Int) extends implicits.Collections {
+  lazy val affectsDuplicates: Boolean = Container.affectsDuplicates(pressedCollection.collectionType, pressedCollection.curatedPlusBackfillDeduplicated)
+  lazy val affectedByDuplicates: Boolean = Container.affectedByDuplicates(pressedCollection.collectionType, pressedCollection.curatedPlusBackfillDeduplicated)
+
+  lazy val deduplicateAgainst: Seq[String] = {
+    if (affectsDuplicates)
+      pressedCollection.curatedPlusBackfillDeduplicated.take(visible).map(_.header.url)
+    else
+      Nil
+  }
+
+  lazy val pressedCollectionVersions: PressedCollectionVersions = {
+    val liteCurated = pressedCollection.curated.take(visible)
+    val liteBackfill = pressedCollection.backfill.take(visible - liteCurated.length)
+    val hasMore = liteCurated.length + liteBackfill.length > visible
+    val liteCollection = pressedCollection.copy(curated = liteCurated, backfill = liteBackfill, hasMore = hasMore)
+    val fullCollection = pressedCollection.copy(hasMore = hasMore)
+    PressedCollectionVersions(liteCollection, fullCollection)
+  }
+
+  def deduplicate(against: Seq[String]): PressedCollectionVisibility = {
+    if (affectedByDuplicates) {
+      val notDuplicated: Seq[PressedContent] = extractNotDuplicated(against)
+      val newCurated = pressedCollection.curated.intersect(notDuplicated)
+      val newBackfill = pressedCollection.backfill.intersect(notDuplicated)
+      copy(pressedCollection = pressedCollection.copy(curated = newCurated, backfill = newBackfill))
+    } else this
+  }
+
+  private def extractNotDuplicated(against: Seq[String]): Seq[PressedContent] = {
+    pressedCollection
+      .curatedPlusBackfillDeduplicated
+      .filterNot { content: PressedContent =>
+        val againstContainsContent = against.contains(content.header.url)
+        againstContainsContent && content.participatesInDeduplication
+      }
+  }
+
+}
+
+object PressedCollectionVisibility {
+  def deduplication(pressedCollections: Seq[PressedCollectionVisibility]): Seq[PressedCollectionVisibility] = {
+    pressedCollections.foldLeft[Seq[PressedCollectionVisibility]](Nil) { (accum, collection) =>
+      val deduplicateAgainst: Seq[String] = accum.flatMap(_.deduplicateAgainst)
+      accum :+ collection.deduplicate(deduplicateAgainst)
+    }
+  }
+}
+
 trait FapiFrontPress extends Logging {
 
   implicit val capiClient: ContentApiClientLogic
@@ -162,7 +211,7 @@ trait FapiFrontPress extends Logging {
     putPressedJson(path, json, pressedType)
   }
 
-  def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollectionVersions] = {
+  def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollectionVisibility] = {
     for {
       collection <- FAPI.getCollection(collectionId)
       curated <- getCurated(collection)
@@ -178,13 +227,10 @@ trait FapiFrontPress extends Logging {
       val storyCountVisible = Container.storiesCount(collection.collectionConfig.collectionType, curated ++ backfill).getOrElse(storyCountMax)
       val hasMore = storyCountVisible < storyCountMax
 
-      PressedCollectionVersions(
-        pressCollection(collection, curated, backfill, treats, storyCountVisible, hasMore),
-        pressCollection(collection, curated, backfill, treats, storyCountMax, hasMore)
-      )
+      val pressedCollection = pressCollection(collection, curated, backfill, treats, storyCountMax, hasMore)
+      PressedCollectionVisibility(pressedCollection, storyCountVisible)
     }
   }
-
 
   private def pressCollection(
     collection: Collection,
@@ -303,7 +349,11 @@ trait FapiFrontPress extends Logging {
       pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(path))
     } yield seoWithProperties match {
-      case (seoData, frontProperties) => PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, pressedCollections)
+      case (seoData, frontProperties) =>
+        val dedupliatedCollections = PressedCollectionVisibility.deduplication(pressedCollections)
+          .map(_.pressedCollectionVersions)
+          .toList
+        PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, dedupliatedCollections)
     }
   }
 

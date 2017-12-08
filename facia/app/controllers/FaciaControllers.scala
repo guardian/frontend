@@ -9,6 +9,5 @@ trait FaciaControllers {
   def frontJsonFapiLive: FrontJsonFapiLive
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
-  lazy val dedupedController = wire[DedupedController]
   lazy val faciaController = wire[FaciaControllerImpl]
 }

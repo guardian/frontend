@@ -400,7 +400,6 @@ GET            /rss                                                             
 GET            /$path<(uk|au|us|international)(/(culture|sport|commentisfree|business|money|travel|rss))?>                       controllers.FaciaController.renderFrontPress(path)
 GET            /$path<email/.*>                                                                                                  controllers.FaciaController.renderFrontPress(path)
 GET            /*path/lite.json                                                                                                  controllers.FaciaController.renderFrontJsonLite(path)
-GET            /*path/deduped.json                                                                                               controllers.DedupedController.getDedupedForPath(path)
 GET            /container/use-layout/*id.json                                                                                    controllers.FaciaController.renderContainerJsonWithFrontsLayout(id)
 GET            /container/*id.json                                                                                               controllers.FaciaController.renderContainerJson(id)
 GET            /most-relevant-container/*path.json                                                                               controllers.FaciaController.renderMostRelevantContainerJson(path)

@@ -39,6 +39,21 @@ object Container extends Logging {
     }
   }
 
+  def affectsDuplicates(collectionType: String, items: Seq[PressedContent]): Boolean = {
+    resolve(collectionType) match {
+      case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
+      case Dynamic(_) => true
+      case _ => false
+    }
+  }
+
+  def affectedByDuplicates(collectionType: String, items: Seq[PressedContent]): Boolean = {
+    resolve(collectionType) match {
+      case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
+      case _ => false
+    }
+  }
+
   def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean, adFree: Boolean): Container = {
     val container = resolve(pressedCollection.collectionType)
     container match {
