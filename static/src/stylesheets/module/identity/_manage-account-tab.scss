@@ -477,6 +477,7 @@
         border-bottom-right-radius: 0;
         min-width: $gs-baseline * 7;
         float: left;
+        background-color: $news-main-2;
     }
 
     &-half--right {
@@ -589,4 +590,8 @@
     p {
         @include fs-textSans(2);
     }
+}
+
+.js-contribution-next-payment-new-price {
+    max-width: 80px;
 }

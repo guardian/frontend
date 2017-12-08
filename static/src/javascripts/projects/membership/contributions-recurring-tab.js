@@ -14,8 +14,10 @@ const PAYPAL_SHOW_EMAIL_BUTTON = '.js-show-paypal-button';
 const CONTRIBUTION_PERIOD_START_CONTAINER =
     '.js-contribution-period-start-container';
 const CONTRIBUTION_PERIOD_START = '.js-contribution-period-start';
-const PACKAGE_NEXT_PAYMENT_CONTAINER =
-    '.js-contribution-next-payment-container';
+const PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER =
+    '.js-contribution-next-payment-amount-container';
+const PACKAGE_NEXT_PAYMENT_DATE_CONTAINER =
+    '.js-contribution-next-payment-date-container';
 const PACKAGE_NEXT_PAYMENT_FORM_CONTAINER =
     '.js-contribution-next-payment-form-container';
 const PACKAGE_NEXT_PAYMENT_DATE = '.js-contribution-next-payment-date';
@@ -38,6 +40,8 @@ const KEEP_CONTRIBUTION_LINK = '.js-cancel-contribution-keep-contributing';
 const CANCEL_CONTRIBUTION_SELECTOR = '.js-cancel-contribution-selector';
 const CANCEL_CONTRIBUTION_SUBMIT = '.js-cancel-contribution-submit';
 
+const CURRENT_CONTRIBUTION_AMOUNT = '.js-current-contribution-amount';
+const CONTRIBUTION_GLYPH = '.js-contribution-glyph';
 const CHANGE_CONTRIBUTION_AMOUNT = '.js-contribution-change-amount';
 const CONTRIBUTION_NEW_AMOUNT_FIELD = '.js-contribution-next-payment-new-price';
 const CHANGE_CONTRIBUTION_AMOUNT_BUTTON =
@@ -46,6 +50,12 @@ const CHANGE_CONTRIBUTION_AMOUNT_CANCEL =
     '.js-manage-account-change-contribution-amount-cancel';
 const CHANGE_CONTRIBUTION_AMOUNT_SUBMIT =
     '.js-manage-account-change-contribution-amount-confirm';
+const CONTRIBUTION_TOO_LOW_WARNING =
+    '.js-manage-account-change-contribution-amount-too-low';
+const CONTRIBUTION_TOO_HIGH_WARNING =
+    '.js-manage-account-change-contribution-amount-too-high';
+const CONTRIBUTION_NO_CHANGE_WARNING =
+    '.js-manage-account-change-contribution-amount-unchanged';
 
 const displayLoader = (): void => {
     $(LOADER).removeClass(IS_HIDDEN_CLASSNAME);
@@ -243,17 +253,69 @@ const setupCancelContribution = (): void => {
     }
 };
 
+const handlePriceChange = (): void => {
+    const currentPrice = $(CURRENT_CONTRIBUTION_AMOUNT).text();
+    const submitButton = $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT);
+    const fieldVal = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
+    if (fieldVal &&
+        Number(fieldVal) &&
+        Number(fieldVal) >= 5 &&
+        Number(fieldVal) <= 2000 &&
+        Number(fieldVal) !== Number(currentPrice)) {
+        $(CONTRIBUTION_TOO_LOW_WARNING).addClass(IS_HIDDEN_CLASSNAME);
+        $(CONTRIBUTION_TOO_HIGH_WARNING).addClass(IS_HIDDEN_CLASSNAME);
+        submitButton.removeClass(IS_DISABLED_CLASSNAME);
+    } else {
+        if (!submitButton.hasClass(IS_DISABLED_CLASSNAME)) {
+            submitButton.addClass(IS_DISABLED_CLASSNAME);
+        }
+    }
+};
+
+const handlePriceChangeOnBlur = (): void => {
+    const currentAmount = $(CURRENT_CONTRIBUTION_AMOUNT).text();
+    const submitButton = $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT);
+    const fieldVal = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
+    if (fieldVal && Number(fieldVal)){
+        const newVal = Number(fieldVal);
+        $(CONTRIBUTION_TOO_LOW_WARNING).addClass(IS_HIDDEN_CLASSNAME);
+        $(CONTRIBUTION_TOO_HIGH_WARNING).addClass(IS_HIDDEN_CLASSNAME);
+        $(CONTRIBUTION_NO_CHANGE_WARNING).addClass(IS_HIDDEN_CLASSNAME);
+        if (newVal < 5) {
+            submitButton.addClass(IS_DISABLED_CLASSNAME);
+            $(CONTRIBUTION_TOO_LOW_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+        }
+        if (newVal > 2000) {
+            submitButton.addClass(IS_DISABLED_CLASSNAME);
+            $(CONTRIBUTION_TOO_HIGH_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+        }
+        if (newVal === Number(currentAmount)) {
+            submitButton.addClass(IS_DISABLED_CLASSNAME);
+            $(CONTRIBUTION_NO_CHANGE_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+        }
+    }
+};
+
 const displayChangeContributionForm = (currentPrice: string): void => {
-    fastdom.write(() => {
-        $(PACKAGE_NEXT_PAYMENT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
-        $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
-        $(CONTRIBUTION_NEW_AMOUNT_FIELD).val(currentPrice);
-    });
+    $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
+    $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+    $(CONTRIBUTION_GLYPH).removeClass(IS_HIDDEN_CLASSNAME);
+    $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).addClass(IS_DISABLED_CLASSNAME);
+
+    const priceEntryField = document.querySelector(CONTRIBUTION_NEW_AMOUNT_FIELD);
+    if (priceEntryField) {
+        priceEntryField.addEventListener('keyup', handlePriceChange);
+        priceEntryField.addEventListener('blur', handlePriceChangeOnBlur);
+        fastdom.write(() => {
+            $(CONTRIBUTION_NEW_AMOUNT_FIELD).val(currentPrice);
+        });
+    }
 };
 
 const hideChangeContributionForm = (): void => {
+    $(CONTRIBUTION_GLYPH).addClass(IS_HIDDEN_CLASSNAME);
     $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
-    $(PACKAGE_NEXT_PAYMENT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+    $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
 const changeContributionAmountSubmit = (): void => {
@@ -307,6 +369,22 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
 
     $(PACKAGE_NEXT_PAYMENT_PRICE).text(
         formatAmount(contributorDetails.subscription.plan.amount, glyph)
+    );
+
+    $(CURRENT_CONTRIBUTION_AMOUNT).text(
+        contributorDetails.subscription.plan.amount / 100
+    );
+
+    $(CONTRIBUTION_GLYPH).text(
+        glyph
+    );
+
+    $(CONTRIBUTION_TOO_LOW_WARNING).text(
+        "Please enter an amount of " + formatAmount(500, glyph) + " or more"
+    );
+
+    $(CONTRIBUTION_TOO_HIGH_WARNING).text(
+        "Thank you but we cannot accept contributions over " + formatAmount(200000, glyph)
     );
 
     displayChangeContributionAmount();
