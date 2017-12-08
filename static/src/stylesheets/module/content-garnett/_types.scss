@@ -111,6 +111,7 @@ $quote-tail: 25px;
         }
     }
 
+    .content__header,
     .content__headline,
     .content__meta-container,
     .content__standfirst {
@@ -124,6 +125,7 @@ $quote-tail: 25px;
     .byline,
     .content__dateline,
     .content__headline,
+    .content__labels,
     .content__standfirst,
     .social {
         padding-left: $gs-gutter/2;
@@ -272,9 +274,16 @@ $quote-tail: 25px;
     .content__headline {
         @include fs-headlineGarnett(4);
         font-weight: 500;
+        @include mq(phablet) {
+            padding-bottom: 0;
+        }
         @include mq(tablet) {
             @include fs-headlineGarnett(6);
             font-weight: 500;
+            padding-bottom: 1.5rem;
+        }
+        @include mq(leftCol) {
+            padding-bottom: 2.5rem;
         }
     }
 
@@ -286,7 +295,7 @@ $quote-tail: 25px;
         @include fs-headline(2);
         border-top: 0;
         color: $neutral-1;
-        font-weight: 700;
+        font-weight: 500;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
         @include mq(tablet) {
@@ -314,7 +323,10 @@ $quote-tail: 25px;
     }
 
     .drop-cap__inner {
-        line-height: 3.7rem;
+        line-height: 2.3rem;
+        @include mq(tablet) {
+            line-height: 3.7rem;
+        }
     }
     // *************** Quote Styles ***************
     .element-pullquote {
@@ -497,5 +509,85 @@ $quote-tail: 25px;
                 top: - 40px;
             }
         }
+    }
+}
+// *************** Opinion Styles ***************
+
+.content--pillar-opinion {
+    .content__head {
+        overflow: hidden;
+        @include mq(phablet) {
+            overflow: visible;
+        }
+    }
+
+    .content__meta-container {
+        margin-top: -8px;
+
+        &:before {
+            content: none;
+        }
+    }
+
+    .content__header {
+        position: relative;
+
+        &:after {
+            @include multiline(8);
+        }
+    }
+
+    .content__headline {
+        width: 70%;
+        font-weight: 100;
+        padding-top: 0;
+        @include mq(phablet) {
+            float: left;
+        }
+    }
+
+    .content__headline--byline {
+        font-style: italic;
+        padding-bottom: $gs-gutter*3;
+    }
+
+    .content__headline--byline span a {
+        text-decoration: none;
+        border-bottom: none;
+    }
+
+    .content__headline--byline span:hover {
+        color: $neutral-3;
+    }
+
+    .byline-img {
+        position: absolute;
+        bottom: 3px;
+        right: 0;
+        @include mq(mobileLandscape) {
+            right: 12.5rem;
+        }
+    }
+
+    .content__standfirst {
+        padding-bottom: $gs-baseline;
+
+        &:before {
+            content: none;
+        }
+    }
+
+    .content__labels {
+        padding-top: 0;
+    }
+
+    .content__section-label,
+    .content__series-label__link {
+        padding-top: $gs-baseline/3;
+        display: block!important;
+    }
+
+    .media-primary {
+        margin-bottom: $gs-baseline;
     }
 }
