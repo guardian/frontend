@@ -1,7 +1,7 @@
 package controllers
 
 import common.{Edition, JsonComponent, LinkTo, NavItem, SectionLink}
-import navigation.{NavLink, NavigationHelpers, NewNavigation}
+import navigation.{NavLink, NavigationHelpers, NavMenu}
 import model.Cached
 import model.Cached.RevalidatableResult
 import play.api.libs.json.{Json, Writes}
@@ -12,7 +12,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
   private case class SectionLinkAndEdition(link: SectionLink, edition: Edition)
   private case class NavItemAndEdition(link: NavItem, edition: Edition)
 
-  private case class topLevelNavItems(editionalisedSection: NewNavigation.EditionalisedNavigationSection)
+  private case class topLevelNavItems(navLink: NavLink)
   private case class navSectionLink(navLink: NavLink)
 
   def nav(): Action[AnyContent] = Action { implicit request =>
@@ -41,9 +41,10 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
   //  This is to editionalise the menu on AMP
   def renderAmpNav: Action[AnyContent] = Action { implicit request =>
     val edition = Edition(request)
+    val menu = NavMenu(edition)
     val navSecondarySections = List.concat(
-      NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map(section => navSectionLink(section)),
-      NewNavigation.OtherLinks.getEditionalisedNavLinks(edition).map(section => navSectionLink(section))
+      menu.brandExtensions.map(section => navSectionLink(section)),
+      menu.otherLinks.map(section => navSectionLink(section))
     )
 
     Cached(900) {
@@ -55,17 +56,18 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
         )
       }
 
+      // TODO:
       implicit val topLevelSectionWrites = new Writes[topLevelNavItems] {
         def writes(item: topLevelNavItems) = Json.obj(
-          "title" -> item.editionalisedSection.name,
-          "subSections" -> item.editionalisedSection.getEditionalisedNavLinks(edition).map(subsection => navSectionLink(subsection))
+          "title" -> item.navLink.title,
+          "subSections" -> item.navLink.children.map(subsection => navSectionLink(subsection))
         )
       }
 
       JsonComponent(
         "items" -> Json.arr(
           Json.obj(
-            "topLevelSections" -> NewNavigation.topLevelSections.map( section => topLevelNavItems(section) ),
+            "topLevelSections" -> menu.pillars.map( section => topLevelNavItems(section) ),
             "membershipLinks" -> NavigationHelpers.getMembershipLinks(edition).map( section => navSectionLink(section)),
             "secondarySections" -> navSecondarySections
           )

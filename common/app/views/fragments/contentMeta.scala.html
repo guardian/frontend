@@ -19,6 +19,13 @@
 }
 
 @metaBody() = {
+
+    @if(item.content.showCircularBylinePicAtSide && !item.content.isImmersive) {
+        <div class="media__img meta__image">
+        @fragments.meta.bylineImage(item.tags)
+        </div>
+    }
+
     @if(!(item.content.isGallery || item.content.isImmersive)) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
@@ -37,6 +44,7 @@
     @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
         @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
     }
+
     @if(showExtras) {
         <div class="meta__extras @if(!ageNotice.isEmpty){ meta__extras--notice }">
             <div class="meta__social" data-component="share">
@@ -55,12 +63,6 @@
                     </div>
                 </div>
             }
-        </div>
-    }
-
-    @if(item.content.showCircularBylinePicAtSide && !item.content.isImmersive) {
-        <div class="media__img meta__image">
-            @fragments.meta.bylineImage(item.tags)
         </div>
     }
 }

@@ -3,6 +3,7 @@
 @import org.joda.time.DateTime
 @import common.Edition
 @import common.LinkTo
+@import navigation.NavMenu
 @import navigation.ReaderRevenueSite.{Contribute, Membership, Subscribe}
 @import navigation.UrlHelpers.{getReaderRevenueUrl, Footer, getSupportOrMembershipUrl, getSupportOrSubscriptionUrl, getSupportOrContributeUrl}
 @import common.editions.{Au, Uk, Us, International}
@@ -41,7 +42,9 @@
     <div class="footer__primary @if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {mobile-only}">
 
         @if(!isAmp) {
-            @fragments.nav.subNav(page, isFooter = true)
+            @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
+                @fragments.nav.subNav(navMenu, isFooter = true)
+            }
         }
 
         <a data-link-name="back to top" href="#top">

@@ -1,16 +1,17 @@
-@(page: model.Page, isFooter: Boolean = false)(implicit request: RequestHeader)
-
 @import common.{ Edition, LinkTo }
-@import navigation.{ NavigationHelpers, NavLink }
+@import navigation.{ NavigationHelpers, NavLink, NavMenu }
 @import views.support.RenderClasses
 
+@(navMenu: NavMenu, isFooter: Boolean = false)(implicit request: RequestHeader)
 
-@subNavItem(link: NavLink, id: String) = {
+
+@subNavItem(link: NavLink, url: String, isParent: Boolean = false) = {
     <li class="@RenderClasses(Map(
-            "subnav__item--current-section" -> (id == link.uniqueSection)
+            "subnav__item--current-section" -> (url == link.url),
+            "subnav__item--parent" -> isParent
         ), "subnav__item")">
         <a class="@RenderClasses(Map(
-                "subnav-link--current-section" -> (id == link.uniqueSection)
+                "subnav-link--current-section" -> (url == link.url)
             ), "subnav-link")"
             href="@LinkTo(link.url)"
             data-link-name="nav2 : subnav : @{if(link.longTitle.isEmpty) link.title else link.longTitle}">
@@ -20,32 +21,34 @@
     </li>
 }
 
+@defining(navMenu.subNavSections) { subnav =>
 
-<div class="subnav js-expand-subnav">
-    <div class="gs-container">
-        @defining(NavigationHelpers.getActivePillar(page)) { case (id, activePillarName) =>
-            <ul class="subnav__list js-get-last-child-subnav"
-                data-pillar-title="@activePillarName">
+    @if(subnav.parent.isDefined || subnav.children.nonEmpty) {
+        <div class="subnav js-expand-subnav">
+            <div class="gs-container">
+                <ul class="subnav__list js-get-last-child-subnav"
+                data-pillar-title="@navMenu.currentPillar.map(_.title).getOrElse("")">
 
-                @defining(
-                    NavigationHelpers.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront)
-                ) { case subNav =>
-                    @subNav.map { link => @subNavItem(link, id)}
-                }
-    	    </ul>
+                    @subnav.parent.map(link => {
+                        if(!navMenu.pillars.contains(link)) {
+                            subNavItem(link, navMenu.currentUrl, isParent = subnav.children.nonEmpty)
+                        }
+                    })
 
-            @* Hiding the 'more' link on the homepage and footer *@
-            @if(!isFooter) {
-                <div class="subnav__item subnav__item--toggle-more hide-from-desktop js-show-more-button js-visible">
-                    <button class="
-                        subnav-link
-                        subnav-link--toggle-more
-                        js-toggle-more-sections"
+                    @subnav.children.map(link => subNavItem(link, navMenu.currentUrl))
+                </ul>
+
+                @* Hiding the 'more' link on the homepage and footer *@
+                @if(!isFooter) {
+                    <div class="subnav__item subnav__item--toggle-more hide-from-desktop js-show-more-button js-visible">
+                        <button class="subnav-link subnav-link--toggle-more js-toggle-more-sections"
                         data-link-name="nav2 : subnav-toggle">
-                        more
-                    </button>
-                </div>
-            }
-        }
-    </div>
-</div>
+
+                            more
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
