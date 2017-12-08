@@ -42,7 +42,7 @@ const setupSonobi = once(() => {
         return loadScript(config.libs.sonobi, { async: false }).then(
             catchPolyfillErrors
         );
-    } else if ( dfpEnv.externalDemand === 'prebid') {
+    } else if (dfpEnv.externalDemand === 'prebid') {
         buildPageTargeting();
         return prebid.initialise();
     }
