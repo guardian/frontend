@@ -53,7 +53,7 @@
 }
 
 .content--pillar-news {
-    @include colorPalatte($news-gt-headline, $neutral-3);
+    @include colorPalatte($news-gt-headline, $news-gt-kicker);
 }
 
 .content--pillar-opinion {

@@ -1,17 +1,13 @@
-$quote-tail: 25px; // mixin for generating rules, height dictates number of rules
-@mixin generateRules($height, $top, $bottom) {
-    &:before {
-        content: '';
-        display: block;
-        height: $height;
-        margin-top: $top;
-        margin-bottom: $bottom;
-        width: 100%;
-        background: transparent url('https://uploads.guim.co.uk/2017/12/07/rule4.svg') repeat 0 0;
-    }
+$quote-tail: 25px;
+@mixin multiline($number) {
+    content: '';
+    display: block;
+    width: 100%;
+    margin-bottom: $gs-baseline/4;
+    background-image: repeating-linear-gradient(#dcdcdc, #dcdcdc 1px, #ffffff 1px, #ffffff 4px);
+    height: $number * 4px;
 }
-// hack to hide left/right page margins (aka curtains)
-
+// hack to hide left/right page margins, temp
 .l-side-margins {
     &:after,
     &:before {
@@ -33,10 +29,13 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
 .content--type-opinion {
     // *************** Meta and Social ***************
     .submeta {
-        @include generateRules(13px, -13px, 5px);
         border-top: 0;
         margin-top: $gs-baseline;
         padding-top: $gs-baseline / 2;
+
+        &:before {
+            @include multiline(4);
+        }
     }
 
     .submeta--borderless-bottom .submeta__keywords {
@@ -56,8 +55,6 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
         padding-bottom: $gs-baseline / 2;
         border-bottom: solid 1px $neutral-5;
         margin-bottom: $gs-baseline / 2;
-
-        &:after {}
     }
 
     .submeta__links {
@@ -74,6 +71,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
     .syndication__item {
         &:before {
             content: none!important;
+            // I can't seem to override this behaviour without the important statment
         }
     }
 
@@ -100,6 +98,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
 
     .submeta__section-labels .submeta__link {
         font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif!important;
+        // I can't seem to override this behaviour without the important statment
     }
 
     .submeta__badge {
@@ -113,8 +112,12 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
     }
 
     .content__meta-container {
-        @include generateRules(13px, -13px, 0);
+        margin-top: -$gs-baseline;
         margin-bottom: 0;
+
+        &:before {
+            @include multiline(4);
+        }
     }
 
     .content__labels--not-immersive {
@@ -176,14 +179,19 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
 
     .meta__numbers,
     .meta__social {
-        @include generateRules(1px, 0, 5px);
         border-top: 0;
+
+        &:before {
+            @include multiline(1);
+        }
     }
 
     .content__dateline {
         border-top: 0;
         @include mq(phablet) {
-            @include generateRules(1px, 0, 5px);
+            &:before {
+                @include multiline(1);
+            }
         }
     }
 
@@ -303,7 +311,9 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
         @include mq(tablet) {
-            @include generateRules(1px, 0, 5px);
+            &:before {
+                @include multiline(1);
+            }
         }
         @include mq(leftCol) {
             margin-bottom: 0;
@@ -332,7 +342,7 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
         background-color: $neutral-gt-1;
         border: solid 1px $neutral-5;
         margin: $gs-gutter/4 0 $gs-baseline*2;
-        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
+        padding: 0 $gs-gutter/2 $gs-baseline;
         position: relative;
         clear: none;
         float: none;
@@ -383,6 +393,13 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
         .closing {
             display: none;
         }
+        // temp fix for old quote svg, will be replaced
+        .inline-quote svg {
+            width: 34px;
+            position: relative;
+            top: $gs-baseline/2;
+            margin-right: 2px;
+        }
     }
     // Quote supporting
     .element-pullquote.element--supporting {
@@ -407,6 +424,13 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
         .pullquote-cite,
         .pullquote-paragraph {
             @include fs-headlineGarnett(1);
+        }
+        // temp fix for old quote svg, will be replaced
+        .inline-quote svg {
+            width: 30px;
+            position: relative;
+            top: 8px;
+            margin-right: 0;
         }
     }
     // Quote halfWidth
@@ -494,29 +518,5 @@ $quote-tail: 25px; // mixin for generating rules, height dictates number of rule
                 top: - 40px;
             }
         }
-    }
-}
-// *************** Opinion Styles ***************
-
-.content--type-opinion {
-    .content__main-column {
-        &:after {
-            @include generateRules(1px, 0, 5px);
-            content: '';
-            width: 100%;
-            height: 5px;
-        }
-    }
-
-    .content__headline {
-        font-weight: 100;
-    }
-
-    .content__headline--byline {
-        font-style: italic;
-    }
-
-    .byline-img {
-        // right: gs-span(3);
     }
 }
