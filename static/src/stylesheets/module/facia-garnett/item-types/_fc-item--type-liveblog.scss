@@ -93,8 +93,45 @@
             }
         }
     }
-
 }
+
+//pillar colour overrides
+@mixin overide-live-blog-colours($pillar, $color1, $color2) {
+    .fc-container:not(.fc-container--story-package) .fc-item--type-liveblog.fc-item--pillar-#{$pillar} {
+        background-color: $color1;
+        .fc-item__kicker {
+            background-color: $color1;
+            color: $color2;
+            border: 0;
+            &::before {
+                background-color: $color2;
+            }
+            &::after {
+                background-color: $color2;
+            }
+        }
+        .fc-item__container::before {
+            background-color: $color2;
+        }
+        .live-pulse-icon::before {
+            background-color: $color2;
+        }
+        .u-faux-block-link--hover {
+            background-color: darken($color1, 5%);
+            .fc-item__kicker,
+            .fc-item__container::before {
+                background-color: darken($color1, 5%);
+            }
+            .fc-item__kicker::before {
+                background-color: darken($color1, 5%);
+            }
+        }
+    }
+}
+
+@include overide-live-blog-colours(sport, $live-garnett-sport1, $live-garnett-sport2);
+@include overide-live-blog-colours(arts, $live-garnett-arts1, $live-garnett-arts2);
+@include overide-live-blog-colours(lifestyle, $live-garnett-lifestyle1, $live-garnett-lifestyle2);
 
 .fc-sublink--type-liveblog {
     .fc-sublink__kicker {
