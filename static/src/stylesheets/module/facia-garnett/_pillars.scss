@@ -128,13 +128,23 @@ $pillars: (
         color: map-get($palette, featureHeadline);
     }
 
-    &.fc-item--type-video .inline-video-icon {
+    &.fc-item--type-video .inline-video-icon,
+    &.fc-item--type-audio .inline-volume-high,
+    &.fc-item--type-gallery .inline-camera {
         svg {
             fill: map-get($palette, kicker);
         }
 
         &::after {
             border-color: map-get($palette, kicker);
+        }
+    }
+
+    &.fc-item--type-video,
+    &.fc-item--type-audio,
+    &.fc-item--type-gallery {
+        .fc-sublink__kicker {
+            color: map-get($palette, kicker);
         }
     }
 

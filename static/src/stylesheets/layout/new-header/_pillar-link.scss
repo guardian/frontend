@@ -59,12 +59,17 @@
         color: #ffffff;
         text-decoration: none;
 
-        &:not(.pillar-link--dropdown):after {
+        &:after {
             border-bottom-width: 4px;
         }
     }
 
     .new-header--open & {
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+
         &:before,
         &:after {
             content: none;
@@ -111,7 +116,8 @@
     vertical-align: middle;
     width: 6px;
 
-    .pillar-link--dropdown:hover & {
+    .pillar-link--dropdown:hover &,
+    .new-header__menu-toggle:focus & {
         transform: translateY(0) rotate(45deg);
     }
 }
@@ -126,5 +132,9 @@
 
     .new-header__menu-toggle:focus & {
         color: #ffffff;
+
+        &:after {
+            border-bottom-width: 4px;
+        }
     }
 }

@@ -1,69 +1,143 @@
-$quote-tail: 25px; // ********** Article Type **********
+$quote-tail: 25px;
 
-.content--type-article {
+.content {
+    padding-bottom: 0;
+}
+
+.content--type-article,
+.content--type-opinion {
+    // *************** Meta and Social ***************
     .submeta {
-        position: relative;
         border-top: 0;
-        margin-top: $gs-row-height;
+        margin-top: $gs-baseline;
+        padding-top: $gs-baseline / 2;
 
         &:before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            border-bottom: 1px solid $neutral-5;
-            border-top: 1px solid $neutral-5;
+            @include multiline(4);
         }
+    }
 
-        &:after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            border-bottom: 1px solid $neutral-5;
-            border-top: 1px solid $neutral-5;
-        }
+    .submeta--borderless-bottom .submeta__keywords {
+        border-bottom: 0;
+    }
 
-        &__keywords {
-            padding-bottom: $gs-baseline/2;
+    .submeta__label {
+        font-size: 12px;
+        line-height: 16px;
+        color: $neutral-2;
+        display: block;
+        margin-bottom: -($gs-baseline / 4);
+    }
+
+    .submeta__keywords {
+        padding-top: $gs-baseline / 2;
+        padding-bottom: $gs-baseline / 2;
+        border-bottom: solid 1px $neutral-5;
+        margin-bottom: $gs-baseline / 2;
+    }
+
+    .submeta__links {
+        font-size: 0;
+        line-height: 0;
+        list-style: none;
+        overflow: hidden;
+        margin-bottom: 0;
+        margin-left: -$gs-gutter / 4;
+        margin-top: 0;
+    }
+
+    .submeta__link-item,
+    .syndication__item {
+        &:before {
+            content: none!important;
+            // I can't seem to override this behaviour without the important statment
         }
     }
 
     .submeta__link {
-        font-weight: 200;
-    }
+        @include trailing-slash-link;
+        font-weight: 500;
+        line-height: 22px;
 
-    .submeta__link-item {
-        @include fs-textSans(3);
-    }
+        &:after {
+            @include trailing-slash;
+            color: $neutral-5;
+        }
 
-    .submeta__label {
-        margin-bottom: 0;
-    }
+        .submeta__keywords & {
+            font-size: 15px;
+            color: $neutral-2;
+        }
 
-    .submeta__keywords {
-        padding-bottom: $gs-baseline/2;
+        .submeta__section-labels & {
+            font-size: 16px;
+            line-height: 22px;
+        }
     }
 
     .submeta__section-labels .submeta__link {
-        @include f-bodyHeading;
+        @include fs-headline(2);
+        font-weight: 500;
     }
 
-    .content__article-body {
-        @include mq(desktop) {
-            border-left: solid 1px $neutral-5;
-            padding-left: $gs-gutter/2;
-            margin-left: 0;
-        }
-        @include mq(leftCol) {
-            margin-left: -$gs-gutter/2;
+    .submeta__badge {
+        float: right;
+        margin-top: -$gs-baseline;
+        margin-left: $gs-gutter / 2;
+    }
+
+    .social {
+        overflow-y: visible;
+    }
+
+    .content__meta-container {
+        margin-top: -$gs-baseline;
+        margin-bottom: 0;
+
+        &:before {
+            @include multiline(4);
         }
     }
-    // meta__styling
+
+    .content__labels--not-immersive {
+        @include mq(tablet, leftCol) {
+            border-bottom: solid 1px $neutral-5;
+        }
+    }
+
+    .content__series-label {
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
+
+    .content__headline,
+    .content__meta-container,
+    .content__standfirst {
+        @include mq(phablet, tablet) {
+            max-width: 38.75rem;
+            margin: auto;
+            position: relative;
+        }
+    }
+
+    .byline,
+    .content__dateline,
+    .content__headline,
+    .content__standfirst,
+    .social {
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+        @include mq(phablet) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
     .inline-close,
     .social-icon,
     .social-icon.social-icon--more {
@@ -73,19 +147,47 @@ $quote-tail: 25px; // ********** Article Type **********
         &:focus,
         &:hover {
             svg {
-                fill: $neutral-garnett-1;
+                fill: $neutral-gt-1;
+            }
+        }
+    }
+
+    .meta__extras {
+        border: 0;
+    }
+
+    .meta__numbers,
+    .meta__social {
+        border-top: 0;
+
+        &:before {
+            @include multiline(1);
+        }
+    }
+
+    .content__dateline {
+        border-top: 0;
+        @include mq(phablet) {
+            &:before {
+                @include multiline(1);
             }
         }
     }
 
     .byline,
-    .content__dateline,
-    .meta__numbers,
-    .meta__social {
-        border-top: 1px solid $neutral-3;
+    .content__dateline {
+        padding-bottom: $gs-baseline;
+        @include mq($until: phablet) {
+            display: inline-block;
+            border-top: 0;
+            width: 45%;
+            padding-top: $gs-baseline/2;
+            vertical-align: top;
+        }
     }
 
     .byline {
+        border-top: 0;
         font-weight: 200;
         color: #333333;
         font-style: italic;
@@ -98,6 +200,10 @@ $quote-tail: 25px; // ********** Article Type **********
         }
     }
 
+    .social {
+        margin-bottom: $gs-baseline/2;
+    }
+
     .meta__twitter {
         a {
             background-color: transparent;
@@ -106,13 +212,90 @@ $quote-tail: 25px; // ********** Article Type **********
             &:focus,
             &:hover {
                 .inline-tone-fill {
-                    fill: $neutral-garnett-1;
+                    fill: $neutral-gt-1;
                 }
 
                 .contact {
-                    color: $neutral-garnett-1;
+                    color: $neutral-gt-1;
                 }
             }
+        }
+    }
+    // *************** Header and Body Styles ***************
+    .gs-container {
+        @include mq(tablet, desktop) {
+            padding-top: $gs-baseline;
+        }
+    }
+
+    .content__article-body,
+    .immersive-main-media__headline-container .content__main-column {
+        @include mq(desktop) {
+            border-left: solid 1px $neutral-5;
+            padding-left: $gs-gutter/2;
+            margin-left: 0;
+            padding-top: $gs-gutter/2;
+            padding-bottom: 100px;
+        }
+        @include mq(leftCol) {
+            margin-left: -$gs-gutter/2;
+        }
+    }
+
+    .content__secondary-column {
+        padding-top: $gs-gutter/2;
+    }
+
+    .mobile-only {
+        display: block!important;
+    }
+
+    .caption--main.caption--img {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(22, 22, 22, .8);
+        color: #ffffff;
+        display: none;
+        padding: 6px 40px 12px 10px;
+        max-width: 100%;
+    }
+
+    .article__fullscreen:hover,
+    .article__img-container:hover .article__fullscreen,
+    .article__img-container:hover .gallery__fullscreen,
+    .gallery__fullscreen:hover {
+        background-color: $neutral-4;
+    }
+
+    .content__headline {
+        @include fs-headlineGarnett(4);
+        font-weight: 500;
+        @include mq(tablet) {
+            @include fs-headlineGarnett(6);
+            font-weight: 500;
+        }
+    }
+
+    .tonal__head--tone-feature .content__headline {
+        font-weight: 700;
+    }
+
+    .content__standfirst {
+        @include fs-headline(2);
+        border-top: 0;
+        color: $neutral-1;
+        font-weight: 700;
+        padding-top: 2px;
+        margin-bottom: $gs-baseline*2;
+        @include mq(tablet) {
+            &:before {
+                @include multiline(1);
+            }
+        }
+        @include mq(leftCol) {
+            margin-bottom: 0;
         }
     }
 
@@ -125,12 +308,20 @@ $quote-tail: 25px; // ********** Article Type **********
             width: gs-span(3) -$gs-gutter/2;
         }
     }
-    // Quote base styles
+
+    .badge--alt {
+        border-top: 0;
+    }
+
+    .drop-cap__inner {
+        line-height: 3.7rem;
+    }
+    // *************** Quote Styles ***************
     .element-pullquote {
-        background-color: $neutral-garnett-1;
+        background-color: $neutral-gt-1;
         border: solid 1px $neutral-5;
         margin: $gs-gutter/4 0 $gs-baseline*2;
-        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
+        padding: 0 $gs-gutter/2 $gs-baseline;
         position: relative;
         clear: none;
         float: none;
@@ -154,9 +345,9 @@ $quote-tail: 25px; // ********** Article Type **********
             position: absolute;
             bottom: -$quote-tail - 2px;
             left: $gs-gutter/2;
-            background-color: $neutral-garnett-1;
+            background-color: $neutral-gt-1;
             border: solid 1px $neutral-5;
-            border-top: solid 1px $neutral-garnett-1;
+            border-top: solid 1px $neutral-gt-1;
             @include mq(mobileLandscape) {
                 left: $gs-gutter;
             }
@@ -180,6 +371,13 @@ $quote-tail: 25px; // ********** Article Type **********
         // Hack hide for svg
         .closing {
             display: none;
+        }
+        // temp fix for old quote svg, will be replaced
+        .inline-quote svg {
+            width: 34px;
+            position: relative;
+            top: $gs-baseline/2;
+            margin-right: 2px;
         }
     }
     // Quote supporting
@@ -205,6 +403,13 @@ $quote-tail: 25px; // ********** Article Type **********
         .pullquote-cite,
         .pullquote-paragraph {
             @include fs-headlineGarnett(1);
+        }
+        // temp fix for old quote svg, will be replaced
+        .inline-quote svg {
+            width: 30px;
+            position: relative;
+            top: 8px;
+            margin-right: 0;
         }
     }
     // Quote halfWidth

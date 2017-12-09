@@ -46,7 +46,7 @@
                 <p class="manage-account-headerNote">Tick the boxes you are interested in</p>
             }
             <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
-                <div class="manage-account__switches">
+                <div class="manage-account__switches manage-account__switches--wide">
                     <ul>
                     @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
                         <li>
@@ -127,7 +127,11 @@
             <h2 class="manage-account-consent-thanks__title">Thank you</h2>
             <aside class="manage-account-consent-thanks__content">
                 <p>Your support helps us deliver the quality independent journalism the world needs</p>
-                <button type="submit" class="manage-account__button">Continue</button>
+                <button
+                    type="submit"
+                    class="manage-account__button"
+                    data-link-name="consent : @journey : submit"
+                >Continue</button>
             </aside>
         </form>
     </div>
@@ -163,16 +167,22 @@
                         @endcardStep()
 
                         <div class="manage-account-wizard__controls">
-                            <a class="manage-account-consent-wizard-button-back manage-account-consent-wizard__revealable manage-account__button--round manage-account__button js-manage-account-wizard__prev">
+                            <button
+                                data-link-name="consent : @journey : navigation : prev"
+                                class="manage-account-consent-wizard-button-back manage-account-consent-wizard__revealable manage-account__button--round manage-account__button js-manage-account-wizard__prev"
+                            >
                                 <span class="u-h">Previous</span>
                                 @fragments.inlineSvg("arrow-left-stem", "icon")
-                            </a>
+                            </button>
                             <div class="manage-account-consent-wizard__revealable manage-account-consent-wizard-counter">
                             </div>
-                            <a class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next">
+                            <button
+                                data-link-name="consent : @journey : navigation : next"
+                                class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next"
+                            >
                                 <span>Next</span>
                                 @fragments.inlineSvg("arrow-right", "icon")
-                            </a>
+                            </button>
                         </div>
                     </div>
 
