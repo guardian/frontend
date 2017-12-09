@@ -126,6 +126,9 @@
                 background-color: darken($color1, 5%);
             }
         }
+        .fc-sublink__kicker {
+            color: $color2;
+        }
     }
 }
 
