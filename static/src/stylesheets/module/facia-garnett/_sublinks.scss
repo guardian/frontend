@@ -60,3 +60,17 @@
 
     @include fc-sublinks--horizontal;
 }
+
+@mixin pillar-colour-sublink($pillar, $colour) {
+    .fc-sublink.fc-sublink--pillar-#{$pillar} {
+        .fc-sublink__kicker {
+            color: $colour;
+        }
+    }
+}
+
+@include pillar-colour-sublink(news, $news-garnett-main-1);
+@include pillar-colour-sublink(opinion, $opinion-garnett-main-1);
+@include pillar-colour-sublink(sport, $sport-garnett-main-1);
+@include pillar-colour-sublink(arts, $arts-garnett-main-1);
+@include pillar-colour-sublink(lifestyle, $lifestyle-garnett-main-1);
