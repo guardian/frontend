@@ -57,20 +57,24 @@
 
             <div class="fieldset__fields">
                 <div class="form-field">
-                    <span class="js-contribution-glyph is-hidden"></span>
-                    <input type="text" id="qa-contribution-next-payment-new-price" class="js-contribution-next-payment-new-price"></input>
-                    <div id="qa-contribution-user-update-amount" class="manage-account__button-container">
-                        <button id="qa-change-contribution-amount-confirm" class="manage-account__button disabled manage-account__button-half--left manage-account-cta-half--left js-manage-account-change-contribution-amount-confirm" data-link-name="Change contribution amount" data-email="@user.primaryEmailAddress">
-                            Confirm
-                        </button>
-                        <button id="qa-change-contribution-amount-cancel" class="manage-account__button manage-account__button-half--right manage-account-cta-half--right js-manage-account-change-contribution-amount-cancel" data-link-name="Cancel change contribution amount" data-email="@user.primaryEmailAddress">
-                            Back
-                        </button>
+                    <div class="manage-account-loader js-mem-loader js-contribution-update-in-progress is-hidden">
+                        <span class="is-updating show-updating"></span>
                     </div>
-                    <div class="js-manage-account-change-contribution-amount-too-high is-hidden">Thank you, but we cannot accept contributions over 2000.00</div>
-                    <div class="js-manage-account-change-contribution-amount-too-low is-hidden">Please enter an amount of 5.00 or more</div>
-                    <div class="js-manage-account-change-contribution-amount-unchanged is-hidden">Please enter an amount that is not the same as your current contribution</div>
-                    <div class="is-updating js-updating show-updating is-hidden"></div>
+                    <div class="js-contribution-update-form">
+                        <span class="js-contribution-glyph is-hidden"></span>
+                        <input type="text" id="qa-contribution-next-payment-new-price" class="js-contribution-next-payment-new-price"></input>
+                        <div id="qa-contribution-user-update-amount" class="manage-account__button-container">
+                            <button id="qa-change-contribution-amount-confirm" class="manage-account__button disabled manage-account__button-half--left manage-account-cta-half--left js-manage-account-change-contribution-amount-confirm" data-link-name="Change contribution amount" data-email="@user.primaryEmailAddress">
+                                Confirm
+                            </button>
+                            <button id="qa-change-contribution-amount-cancel" class="manage-account__button manage-account__button-half--right manage-account-cta-half--right js-manage-account-change-contribution-amount-cancel" data-link-name="Cancel change contribution amount" data-email="@user.primaryEmailAddress">
+                                Back
+                            </button>
+                        </div>
+                        <div class="js-manage-account-change-contribution-amount-too-high is-hidden">Thank you, but we cannot accept contributions over 2000.00</div>
+                        <div class="js-manage-account-change-contribution-amount-too-low is-hidden">Please enter an amount of 5.00 or more</div>
+                        <div class="js-manage-account-change-contribution-amount-unchanged is-hidden">Please enter an amount that is not the same as your current contribution</div>
+                    </div>
                 </div>
             </div>
         </li>

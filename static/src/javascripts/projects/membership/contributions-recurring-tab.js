@@ -25,7 +25,7 @@ const NOTIFICATION_CANCEL = '.js-contribution-cancel';
 const NOTIFICATION_CHANGE = '.js-contribution-change';
 const UP_SELL = '.js-contribution-up-sell';
 const CONTRIBUTION_INFO = '.js-contribution-info';
-const LOADER = '.js-contribution-loader';
+const LOADER = '.js-recurring-contribution-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
 const IS_DISABLED_CLASSNAME = 'is-disabled';
 const ERROR = '.js-contribution-error';
@@ -38,6 +38,7 @@ const KEEP_CONTRIBUTION_LINK = '.js-cancel-contribution-keep-contributing';
 const CANCEL_CONTRIBUTION_SELECTOR = '.js-cancel-contribution-selector';
 const CANCEL_CONTRIBUTION_SUBMIT = '.js-cancel-contribution-submit';
 
+const CONTRIBUTION_UPDATE_FORM = '.js-contribution-update-form';
 const CURRENT_CONTRIBUTION_AMOUNT = '.js-current-contribution-amount';
 const CONTRIBUTION_GLYPH = '.js-contribution-glyph';
 const CHANGE_CONTRIBUTION_AMOUNT = '.js-contribution-change-amount';
@@ -96,10 +97,6 @@ const displayCancelContributionForm = (): void => {
 const displayChangeContributionAmount = (): void => {
     $(CHANGE_CONTRIBUTION_AMOUNT).removeClass(IS_HIDDEN_CLASSNAME);
 };
-
-// const hideChangeContributionAmount = (): void => {
-//     $(CHANGE_CONTRIBUTION_AMOUNT).addClass(IS_HIDDEN_CLASSNAME);
-// };
 
 const hideCancelContributionForm = (): void => {
     $(CANCEL_CONTRIBUTION_FORM).addClass(IS_HIDDEN_CLASSNAME);
@@ -294,32 +291,38 @@ const handlePriceChangeOnBlur = (): void => {
     }
 };
 
-const displayChangeContributionForm = (currentPrice: string): void => {
-    $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
-    $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
-    $(CONTRIBUTION_GLYPH).removeClass(IS_HIDDEN_CLASSNAME);
-    $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).addClass(IS_DISABLED_CLASSNAME);
+const toggleAmountChangeInputMode = (active: boolean, currentPrice: string): void => {
+  if (active) {
+      $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
+      $(CHANGE_CONTRIBUTION_AMOUNT).addClass(IS_HIDDEN_CLASSNAME);
+      $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+      $(CONTRIBUTION_GLYPH).removeClass(IS_HIDDEN_CLASSNAME);
+      $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).addClass(IS_DISABLED_CLASSNAME);
+      $(CONTRIBUTION_UPDATE_FORM).removeClass(IS_HIDDEN_CLASSNAME);
 
-    const priceEntryField = document.querySelector(
-        CONTRIBUTION_NEW_AMOUNT_FIELD
-    );
-    if (priceEntryField) {
-        priceEntryField.addEventListener('keyup', handlePriceChange);
-        priceEntryField.addEventListener('blur', handlePriceChangeOnBlur);
-        fastdom.write(() => {
-            $(CONTRIBUTION_NEW_AMOUNT_FIELD).val(currentPrice);
-        });
-    }
-};
-
-const hideChangeContributionForm = (): void => {
-    $(CONTRIBUTION_GLYPH).addClass(IS_HIDDEN_CLASSNAME);
-    $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
-    $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+      const priceEntryField = document.querySelector(
+          CONTRIBUTION_NEW_AMOUNT_FIELD
+      );
+      if (priceEntryField) {
+          priceEntryField.addEventListener('keyup', handlePriceChange);
+          priceEntryField.addEventListener('blur', handlePriceChangeOnBlur);
+          fastdom.write(() => {
+              $(CONTRIBUTION_NEW_AMOUNT_FIELD).val(currentPrice);
+          });
+      }
+  } else {
+      $(CONTRIBUTION_UPDATE_FORM).addClass(IS_HIDDEN_CLASSNAME);
+      $(CONTRIBUTION_GLYPH).addClass(IS_HIDDEN_CLASSNAME);
+      $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
+      $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+      $(CHANGE_CONTRIBUTION_AMOUNT).removeClass(IS_HIDDEN_CLASSNAME);
+  }
 };
 
 const changeContributionAmountSubmit = (): void => {
     const newAmount = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
+    toggleAmountChangeInputMode(false);
+    hideContributionInfo();
     displayLoader();
     fetch(
         `${config.get(
@@ -336,6 +339,8 @@ const changeContributionAmountSubmit = (): void => {
                 newPaymentAmount: `${newAmount}`,
             },
         }
+    ).then(
+        recurringContributionTab()
     ).catch(err => {
         hideLoader();
         displayErrorMessage();
@@ -343,7 +348,6 @@ const changeContributionAmountSubmit = (): void => {
             feature: 'mma-monthlycontribution',
         });
     });
-    hideLoader();
 };
 
 const populateUserDetails = (contributorDetails: ContributorDetails): void => {
@@ -368,11 +372,11 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     }
 
     $(PACKAGE_NEXT_PAYMENT_PRICE).text(
-        formatAmount(contributorDetails.subscription.plan.amount, glyph)
+        formatAmount(contributorDetails.subscription.nextPaymentPrice, glyph)
     );
 
     $(CURRENT_CONTRIBUTION_AMOUNT).text(
-        contributorDetails.subscription.plan.amount / 100
+        contributorDetails.subscription.nextPaymentPrice / 100
     );
 
     $(CONTRIBUTION_GLYPH).text(glyph);
@@ -394,9 +398,10 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     );
     if (changeAmountButton) {
         changeAmountButton.addEventListener('click', () => {
-            displayChangeContributionForm(
+            toggleAmountChangeInputMode(
+                true,
                 formatAmount(
-                    contributorDetails.subscription.plan.amount,
+                    contributorDetails.subscription.nextPaymentPrice,
                     ''
                 ).toString()
             );
@@ -408,7 +413,7 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     );
     if (changeAmountCancelButton) {
         changeAmountCancelButton.addEventListener('click', () => {
-            hideChangeContributionForm();
+            toggleAmountChangeInputMode(false);
         });
     }
 
