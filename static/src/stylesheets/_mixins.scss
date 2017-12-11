@@ -280,6 +280,6 @@
     display: block;
     width: 100%;
     margin-bottom: $gs-baseline/4;
-    background-image: repeating-linear-gradient(#dcdcdc, #dcdcdc 1px, #ffffff 1px, #ffffff 4px);
+    background-image: repeating-linear-gradient($neutral-5, $neutral-5 1px, #ffffff 1px, #ffffff 4px);
     height: $number * 4px;
 }

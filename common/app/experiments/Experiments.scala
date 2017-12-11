@@ -60,4 +60,3 @@ object Garnett extends Experiment(
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup= Perc0C
 )
-
