@@ -66,11 +66,6 @@ GET         /analytics/abtests                                                  
 GET         /analytics/confidence                                                                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /analytics/content/video                                                                controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 
-
-# Facia
-GET         /deduped                                                                                controllers.admin.WhatIsDeduped.index()
-GET         /deduped/*path                                                                          controllers.admin.WhatIsDeduped.dedupedFor(path)
-
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()
 GET         /commercial/specialadunits                                                              controllers.admin.CommercialController.renderSpecialAdUnits()
