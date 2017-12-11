@@ -104,3 +104,14 @@
         @include fs-textSans(2);
     }
 }
+
+.manage-account-consent-slim-footer {
+    @include fs-textSans(1);
+    background: $neutral-1;
+    color: $neutral-3;
+    padding: $gs-gutter 0;
+
+    @include mq($until: desktop) {
+        padding: $gs-gutter * 1;
+    }
+}
