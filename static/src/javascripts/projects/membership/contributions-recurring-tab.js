@@ -59,6 +59,10 @@ const hideContributionDetails = (): void => {
     $(CONTRIBUTION_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
 };
 
+const hideCardDetails = (): void => {
+    $(CARD_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
+};
+
 
 // Cancel contribution aux functions
 
@@ -143,12 +147,18 @@ const handleCancelContributionSubmit = (): void => {
         }
     )
         .then(resp => {
+            hideContributionDetails();
+            hideCardDetails();
+            hideCancelContributionForm();
+            displaySupportUpSell();
+
             if (resp.status === 200) {
                 displayCancelContributionSuccessMessage();
-                hideContributionDetails();
-                displaySupportUpSell();
             } else {
                 displayCancelContributionErrorMessage();
+                reportError(err, {
+                    feature: 'mma-monthlycontribution-cancel-contribution',
+                });
             }
         })
         .catch(err => {
