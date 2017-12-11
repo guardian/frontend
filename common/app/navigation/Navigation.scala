@@ -83,7 +83,7 @@ object NavRoot {
       case editions.Uk => NavRoot(Seq(ukNewsPillar, ukSportPillar, ukOpinionPillar, ukArtsPillar, ukLifestylePillar), ukOtherLinks, ukBrandExtensions)
       case editions.Us => NavRoot(Seq(usNewsPillar, usSportPillar, usOpinionPillar, usArtsPillar, usLifestylePillar), usOtherLinks, usBrandExtensions)
       case editions.Au => NavRoot(Seq(auNewsPillar, auSportPillar, auOpinionPillar, auArtsPillar, auLifestylePillar), auOtherLinks, auBrandExtensions)
-      case editions.International => NavRoot(Seq(auNewsPillar, auSportPillar, auOpinionPillar, auArtsPillar, auLifestylePillar), intOtherLinks, intBrandExtensions)
+      case editions.International => NavRoot(Seq(intNewsPillar, intSportPillar, intOpinionPillar, intArtsPillar, intLifestylePillar), intOtherLinks, intBrandExtensions)
     }
   }
 }
