@@ -71,18 +71,6 @@ $fc-item-gutter: $gs-gutter / 4;
         color: inherit;
     }
 
-    .u-faux-block-link & a,
-    .u-faux-block-link & abbr[title],
-    .u-faux-block-link__promote {
-        &.fc-item__link {
-            z-index: 0;
-        }
-
-        @include mq($until: desktop) {
-            z-index: initial;
-        }
-    }
-
     &:hover,
     .fc-item__image-container {
         background-color: $neutral-6;
@@ -99,10 +87,6 @@ $fc-item-gutter: $gs-gutter / 4;
         .fc-item__image-container {
             background-color: #000000;
             opacity: .9;
-        }
-
-        .u-faux-block-link__cta {
-            text-decoration: none;
         }
     }
 }
