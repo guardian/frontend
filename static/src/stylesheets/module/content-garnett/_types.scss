@@ -321,9 +321,6 @@ $quote-tail: 25px;
             font-weight: 500;
             padding-bottom: 1.5rem;
         }
-        @include mq(leftCol) {
-            // padding-bottom: 2.5rem;
-        }
     }
 
     .tonal__head--tone-feature .content__headline {
