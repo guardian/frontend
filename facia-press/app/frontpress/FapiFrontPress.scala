@@ -176,9 +176,8 @@ trait FapiFrontPress extends Logging {
         .toOption(storyCountTotal)
         .getOrElse(Math.min(Configuration.facia.collectionCap, storyCountTotal))
       val storyCountVisible = Container.storiesCount(collection.collectionConfig.collectionType, curated ++ backfill).getOrElse(storyCountMax)
-      val hasMore = storyCountVisible < storyCountMax
 
-      val pressedCollection = pressCollection(collection, curated, backfill, treats, storyCountMax, hasMore)
+      val pressedCollection = pressCollection(collection, curated, backfill, treats, storyCountMax)
       PressedCollectionVisibility(pressedCollection, storyCountVisible)
     }
   }
@@ -188,8 +187,7 @@ trait FapiFrontPress extends Logging {
     curated: List[PressedContent],
     backfill: List[PressedContent],
     treats: List[PressedContent],
-    storyCount: Int,
-    hasMore: Boolean
+    storyCount: Int
   ) = {
     val trimmedCurated = curated.take(storyCount)
     val trimmedBackfill = backfill.take(storyCount - trimmedCurated.length)
@@ -197,8 +195,7 @@ trait FapiFrontPress extends Logging {
       collection,
       trimmedCurated,
       trimmedBackfill,
-      treats,
-      hasMore
+      treats
     )
   }
 

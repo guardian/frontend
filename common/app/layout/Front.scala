@@ -332,7 +332,7 @@ object Front extends implicits.Collections {
         case pressedCollection :: remainingPressedCollections =>
           val omitMPU: Boolean = pressedPage.metadata.omitMPUsFromContainers(edition)
           val container: Container = Container.fromPressedCollection(pressedCollection, omitMPU, adFree)
-          val newItems = pressedCollection.curatedPlusBackfillDeduplicated.distinctBy(_.header.url)
+          val newItems = pressedCollection.distinct
 
           val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
           val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)

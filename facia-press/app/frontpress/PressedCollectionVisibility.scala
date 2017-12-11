@@ -7,8 +7,8 @@ import model.pressed.PressedContent
 
 
 case class PressedCollectionVisibility(pressedCollection: PressedCollection, visible: Int) extends implicits.Collections {
-  lazy val affectsDuplicates: Boolean = Container.affectsDuplicates(pressedCollection.collectionType, pressedCollection.curatedPlusBackfillDeduplicated)
-  lazy val affectedByDuplicates: Boolean = Container.affectedByDuplicates(pressedCollection.collectionType, pressedCollection.curatedPlusBackfillDeduplicated)
+  lazy val affectsDuplicates: Boolean = Container.affectsDuplicates(pressedCollection.collectionType)
+  lazy val affectedByDuplicates: Boolean = Container.affectedByDuplicates(pressedCollection.collectionType)
 
   lazy val deduplicateAgainst: Seq[String] = {
     if (affectsDuplicates)

@@ -39,7 +39,7 @@ object Container extends Logging {
     }
   }
 
-  def affectsDuplicates(collectionType: String, items: Seq[PressedContent]): Boolean = {
+  def affectsDuplicates(collectionType: String): Boolean = {
     resolve(collectionType) match {
       case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
       case Dynamic(_) => true
@@ -47,7 +47,7 @@ object Container extends Logging {
     }
   }
 
-  def affectedByDuplicates(collectionType: String, items: Seq[PressedContent]): Boolean = {
+  def affectedByDuplicates(collectionType: String): Boolean = {
     resolve(collectionType) match {
       case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
       case _ => false
