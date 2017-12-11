@@ -39,10 +39,6 @@ const hideLoader = (): void => {
     $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
 };
 
-const displayLoader = (): void => {
-    $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
-};
-
 const displayContributionInfo = (): void => {
     $(CONTRIBUTION_INFO).removeClass(IS_HIDDEN_CLASSNAME);
 };
@@ -116,6 +112,8 @@ const enableCancellationSubmit = (): void => {
 };
 
 const handleCancelContributionSubmit = (): void => {
+    disableCancellationSubmit();
+
     const cancellationReasonSelector = document.querySelector(
         CANCEL_CONTRIBUTION_SELECTOR
     );
