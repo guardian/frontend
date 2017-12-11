@@ -77,13 +77,16 @@ $neutral-2-contrasted:   darken($neutral-2, 3%);
 // Garnett
 // =============================================================================
 
-$garnett-neutral-1: #333333;
+$garnett-neutral-1: #121212;
 $garnett-neutral-2: #999999;
 $garnett-neutral-3: #f6f6f6;
+$garnett-neutral-4: #d9d9d9;
 
-$news-garnett-main-1: #dd0812;
-$news-garnett-feature: #f7691c;
+
+$news-garnett-main-1: #cc0a11;
+$news-garnett-feature: #ff1921;
 $news-garnett-media-main-1: #ff4e36;
+$news-garnett-highlight: #ffe500;
 
 $opinion-garnett-main-1: #f7691c;
 $opinion-garnett-feature: #f7691c;
@@ -149,6 +152,7 @@ $crosswordAccent1:       $news-main-1;
 $crosswordAccent2:       $news-main-2;
 
 $story-package:          $news-support-7;
+$story-package-garnett:  #3e4143;
 
 $paidfor-background:     $news-support-3;
 //temporary change from #fce800 whilst secret special report is running
