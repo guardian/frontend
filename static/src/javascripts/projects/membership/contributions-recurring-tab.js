@@ -291,7 +291,7 @@ const handlePriceChangeOnBlur = (): void => {
     }
 };
 
-const toggleAmountChangeInputMode = (active: boolean, currentPrice: string): void => {
+const toggleAmountChangeInputMode = (active: boolean): void => {
   if (active) {
       $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
       $(CHANGE_CONTRIBUTION_AMOUNT).addClass(IS_HIDDEN_CLASSNAME);
@@ -299,17 +299,6 @@ const toggleAmountChangeInputMode = (active: boolean, currentPrice: string): voi
       $(CONTRIBUTION_GLYPH).removeClass(IS_HIDDEN_CLASSNAME);
       $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).addClass(IS_DISABLED_CLASSNAME);
       $(CONTRIBUTION_UPDATE_FORM).removeClass(IS_HIDDEN_CLASSNAME);
-
-      const priceEntryField = document.querySelector(
-          CONTRIBUTION_NEW_AMOUNT_FIELD
-      );
-      if (priceEntryField) {
-          priceEntryField.addEventListener('keyup', handlePriceChange);
-          priceEntryField.addEventListener('blur', handlePriceChangeOnBlur);
-          fastdom.write(() => {
-              $(CONTRIBUTION_NEW_AMOUNT_FIELD).val(currentPrice);
-          });
-      }
   } else {
       $(CONTRIBUTION_UPDATE_FORM).addClass(IS_HIDDEN_CLASSNAME);
       $(CONTRIBUTION_GLYPH).addClass(IS_HIDDEN_CLASSNAME);
@@ -317,6 +306,19 @@ const toggleAmountChangeInputMode = (active: boolean, currentPrice: string): voi
       $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
       $(CHANGE_CONTRIBUTION_AMOUNT).removeClass(IS_HIDDEN_CLASSNAME);
   }
+};
+
+const setupEditableNewAmountField = (currentPrice: string): void => {
+    const priceEntryField = document.querySelector(
+        CONTRIBUTION_NEW_AMOUNT_FIELD
+    );
+    if (priceEntryField) {
+        priceEntryField.addEventListener('keyup', handlePriceChange);
+        priceEntryField.addEventListener('blur', handlePriceChangeOnBlur);
+        fastdom.write(() => {
+            $(CONTRIBUTION_NEW_AMOUNT_FIELD).val(currentPrice);
+        });
+    }
 };
 
 const changeContributionAmountSubmit = (): void => {
@@ -398,8 +400,8 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     );
     if (changeAmountButton) {
         changeAmountButton.addEventListener('click', () => {
-            toggleAmountChangeInputMode(
-                true,
+            toggleAmountChangeInputMode(true);
+            setupEditableNewAmountField(
                 formatAmount(
                     contributorDetails.subscription.nextPaymentPrice,
                     ''
