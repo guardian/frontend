@@ -51,16 +51,8 @@
 
     &:hover,
     &:focus {
-        text-decoration: none;
-
         @include mq(desktop) {
             color: #ffffff;
-        }
-    }
-
-    &:focus {
-        @include mq(desktop) {
-            text-decoration: underline;
         }
     }
 

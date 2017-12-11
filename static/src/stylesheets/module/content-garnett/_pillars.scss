@@ -4,16 +4,20 @@
     .content__section-label__link,
     .drop-cap,
     .element-pullquote p,
-    a,
-    .tone-colour {
+    .tone-colour,
+    a {
+        color: $pillarColor;
+    }
+
+    .tonal__head--tone-feature .content__headline {
         color: $pillarColor;
     }
 
     .inline-close,
+    .inline-close svg,
     .inline-tone-fill,
     .social-icon svg,
-    .social-icon.social-icon--more svg,
-    .inline-close svg {
+    .social-icon.social-icon--more svg {
         fill: $pillarColor;
     }
 
@@ -29,9 +33,9 @@
         border-bottom: solid 1px $pillarColor;
     }
 
+    .meta__twitter a,
     .social-icon,
-    .social-icon.social-icon--more,
-    .meta__twitter a {
+    .social-icon.social-icon--more {
         &:focus,
         &:hover {
             background-color: $pillarColor;
@@ -49,9 +53,13 @@
 }
 
 .content--pillar-news {
-    @include colorPalatte($news-garnett-main-1, $neutral-3);
+    @include colorPalatte($news-gt-headline, $news-gt-kicker);
 }
 
 .content--pillar-opinion {
-    @include colorPalatte($opinion-garnett-main-1, $neutral-3);
+    @include colorPalatte($opinion-gt-headline, $opinion-gt-kicker);
+}
+
+.content--pillar-arts {
+    @include colorPalatte($arts-gt-headline, $arts-gt-kicker);
 }

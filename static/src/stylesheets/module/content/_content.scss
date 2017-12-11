@@ -513,12 +513,6 @@
             bottom: -14px;
         }
     }
-
-    .meta__image {
-        @include mq(leftCol) {
-            border-top: 1px dotted $neutral-5;
-        }
-    }
 }
 
 .content__meta-container--float {
@@ -568,7 +562,9 @@
     top: 0;
 
     @include mq(leftCol) {
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted;
+        border-bottom: 1px dotted;
+        border-color: $neutral-5;
         height: 36px;
         padding-bottom: $gs-baseline / 4;
         padding-top: $gs-baseline / 4;

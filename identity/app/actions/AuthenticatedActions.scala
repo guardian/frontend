@@ -3,13 +3,12 @@ package actions
 import java.net.URLEncoder
 
 import actions.AuthenticatedActions.AuthRequest
-import utils.Logging
+import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityRedirectUsersWithLingeringV1ConsentsSwitch}
 import idapiclient.IdApiClient
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
 import play.api.mvc._
-import services.{AuthenticatedUser, AuthenticationService, IdentityUrlBuilder, NewsletterService, IdRequestParser}
-import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityRedirectUsersWithLingeringV1ConsentsSwitch}
-import com.gu.identity.model.EmailNewsletters
+import services._
+import utils.Logging
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -29,7 +28,7 @@ class AuthenticatedActions(
   private implicit val ec: ExecutionContext = controllerComponents.executionContext
 
   def redirectWithReturn(request: RequestHeader, path: String): Result = {
-    val returnUrl = URLEncoder.encode(identityUrlBuilder.buildUrl(request.uri), "UTF-8")
+    val returnUrl = identityUrlBuilder.buildUrl(request.uri)
 
     val redirectUrlWithParams = identityUrlBuilder.appendQueryParams(path, List(
       "INTCMP" -> "email",
@@ -65,6 +64,13 @@ class AuthenticatedActions(
     }
   }
 
+  def checkRecentAuthenticationAndRedirect[A](request: Request[A]): Future[Either[Result, AuthRequest[A]]] = Future.successful {
+    authService.authenticatedUserFor(request) match {
+      case Some(user) if user.hasRecentlyAuthenticated => Right(new AuthenticatedRequest(user, request))
+      case _ => Left(sendUserToReauthenticate(request))
+    }
+  }
+
   def authRefiner: ActionRefiner[Request, AuthRequest] = new ActionRefiner[Request, AuthRequest] {
     override val executionContext = ec
 
@@ -72,6 +78,16 @@ class AuthenticatedActions(
       authService.authenticatedUserFor(request) match {
         case Some(authenticatedUser) => Future.successful(Right(new AuthenticatedRequest(authenticatedUser, request)))
         case None => checkIdApiForUserAndRedirect(request)
+      }
+  }
+
+  def permissionRefiner: ActionRefiner[Request, AuthRequest] = new ActionRefiner[Request, AuthRequest] {
+    override val executionContext = ec
+
+    def refine[A](request: Request[A]) =
+      authService.authenticateUserForPermissions(request) match {
+        case Some(permUser) => Future.successful(Right(new AuthenticatedRequest(permUser, request)))
+        case _ => checkRecentAuthenticationAndRedirect(request)
       }
   }
 
@@ -122,9 +138,7 @@ class AuthenticatedActions(
   def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
 
-    def refine[A](request: AuthRequest[A]) = Future.successful {
-      if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToReauthenticate(request))
-    }
+    def refine[A](request: AuthRequest[A]) = checkRecentAuthenticationAndRedirect(request)
   }
   // Play will not let you set up an ActionBuilder with a Refiner hence this empty actionBuilder to set up Auth
   def noOpActionBuilder: DefaultActionBuilder = DefaultActionBuilder(anyContentParser)
@@ -140,5 +154,8 @@ class AuthenticatedActions(
 
   def authWithConsentRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
     recentlyAuthenticated andThen apiUserShouldRepermissionRefiner
+
+  def permissionAuthentication: ActionBuilder[AuthRequest, AnyContent] =
+    noOpActionBuilder andThen permissionRefiner andThen apiVerifiedUserRefiner
 
 }
