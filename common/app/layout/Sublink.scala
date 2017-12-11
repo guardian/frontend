@@ -288,7 +288,8 @@ case class ContentCard(
   useShortByline: Boolean,
   group: String,
   branding: Option[Branding],
-  properties: Option[PressedProperties]
+  properties: Option[PressedProperties],
+  fromShowMore: Boolean = false
 ) extends FaciaCard {
 
   private lazy val storyContent: Option[PressedStory] = properties.flatMap(_.maybeContent)
@@ -323,6 +324,12 @@ case class ContentCard(
     case Some(InlineSlideshow(_)) => true
     case Some(CrosswordSvg(_)) => true
     case _ => false
+  }
+
+  def dataLinkName(index: Int): String = {
+    val name = s"$analyticsPrefix | card-@${index + 1}"
+    val withFromShowMore = if (fromShowMore) s"showmore | $name" else name
+    withFromShowMore
   }
 
   def withTimeStamp: ContentCard = copy(timeStampDisplay = Some(DateOrTimeAgo))

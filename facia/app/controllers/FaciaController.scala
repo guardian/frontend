@@ -2,7 +2,7 @@ package controllers
 
 import common._
 import controllers.front._
-import layout.{CollectionEssentials, FaciaContainer, Front}
+import layout.{CollectionEssentials, FaciaCard, FaciaContainer, Front, ContentCard, FaciaCardAndIndex}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.facia.PressedCollection
@@ -190,6 +190,11 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     }
   }
 
+  private def withFromShowMore(faciaCardAndIndex: FaciaCardAndIndex): FaciaCardAndIndex = faciaCardAndIndex.item match {
+    case contentCard: ContentCard => faciaCardAndIndex.copy(item = contentCard.copy(fromShowMore = true))
+    case _ => faciaCardAndIndex
+  }
+
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] = Action.async { implicit request =>
     frontJsonFapi.get(path).flatMap {
       case Some(pressedPage) =>
@@ -197,10 +202,13 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
         val maybeResponse =
           for {
             (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
-            containerLayout <- container.containerLayout}
-          yield
-            successful{Cached(CacheTime.Facia) {
-            JsonComponent(views.html.fragments.containers.facia_cards.showMore(containerLayout.remainingCards, index))}}
+            containerLayout <- container.containerLayout
+          } yield {
+            val withFrom = containerLayout.remainingCards.map(withFromShowMore)
+            successful(Cached(CacheTime.Facia) {
+              JsonComponent(views.html.fragments.containers.facia_cards.showMore(withFrom, index))
+            })
+          }
 
         maybeResponse getOrElse successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}}
