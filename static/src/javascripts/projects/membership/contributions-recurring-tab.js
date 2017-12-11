@@ -147,21 +147,14 @@ const handleCancelContributionSubmit = (): void => {
             hideContributionDetails();
             hideCardDetails();
             hideCancelContributionForm();
-            displaySupportUpSell();
-
             if (resp.status === 200) {
                 displayCancelContributionSuccessMessage();
             } else {
-                displayCancelContributionErrorMessage();
-                reportError(
-                    new Error(
-                        'Members Data API returned HTTP diferent from 200 for cancel contribution'
-                    ),
-                    {
-                        feature: 'mma-monthlycontribution-cancel-contribution',
-                    }
+                throw new Error(
+                    'Members Data API returned HTTP different from 200 for cancel contribution'
                 );
             }
+            displaySupportUpSell();
         })
         .catch(err => {
             displayCancelContributionErrorMessage();
