@@ -10,4 +10,10 @@ case class Pillar(name: String) extends AnyVal {
 object Pillar {
   def apply(contentApi: ApiContent): Option[Pillar] = contentApi.pillarName.map(Pillar(_))
   def apply(storyContent: Option[PressedStory]): Option[Pillar] = storyContent.flatMap(_.metadata.pillar)
+
+  final implicit class RichPillar(maybePillar: Option[Pillar]) {
+    lazy val orDefault: Pillar = maybePillar.getOrElse(Pillar("News"))
+    lazy val nameOrDefault: String = orDefault.name.toLowerCase
+  }
 }
+

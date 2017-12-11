@@ -40,6 +40,7 @@ case class EditionalisedLink(
 object Sublink {
   def fromFaciaContent(faciaContent: PressedContent): Sublink = {
     val storyContent: Option[PressedStory] = faciaContent.properties.maybeContent
+    val contentType: DotcomContentType = DotcomContentType(storyContent)
 
     Sublink(
       faciaContent.header.kicker,
@@ -48,7 +49,8 @@ object Sublink {
       faciaContent.card.cardStyle,
       faciaContent.card.mediaType,
       Pillar(storyContent),
-      storyContent.map(_.metadata.designType)
+      contentType.name.toLowerCase(),
+      storyContent.map(_.metadata.designType),
     )
   }
 }
@@ -60,7 +62,8 @@ case class Sublink(
   cardStyle: CardStyle,
   mediaType: Option[MediaType],
   pillar: Option[Pillar],
-  designType: Option[DesignType]
+  contentType: String,
+  designType: Option[DesignType],
 )
 
 object DiscussionSettings {
@@ -347,6 +350,7 @@ case class ContentCard(
 
   val designType: Option[DesignType] = storyContent.map(_.metadata.designType)
   val pillar: Option[Pillar] = Pillar(storyContent)
+  val contentType: DotcomContentType = DotcomContentType(storyContent)
 }
 object ContentCard {
 

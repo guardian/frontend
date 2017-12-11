@@ -81,4 +81,8 @@ object DotcomContentType {
       case _ => None
     }
   }
+
+  def apply(storyContent: Option[PressedStory]): DotcomContentType = {
+    storyContent.flatMap(_.metadata.`type`).getOrElse(DotcomContentType.Article)
+  }
 }

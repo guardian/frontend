@@ -38,7 +38,7 @@ data-test-id="facia-card"
 
 @mediaMeta(item: layout.ContentCard) = {
     <div class="fc-item__meta-wrapper">
-        @if(item.designType.map(_.toString).getOrElse("Article").toLowerCase == "video") {
+        @if(item.contentType.name.toLowerCase == "video") {
             @item.displayElement match {
                 case Some(InlineVideo(videoElement, _, _, _)) => {
                     <div class="fc-item__media-meta">
@@ -58,14 +58,14 @@ data-test-id="facia-card"
             }
         }
 
-        @if(item.designType.map(_.toString).getOrElse("Article").toLowerCase == "audio") {
+        @if(item.contentType.name.toLowerCase == "audio") {
             <div class="fc-item__media-meta">
                 @inlineSvg("volume-high", "icon")
                 Podcast
             </div>
         }
 
-        @if(item.designType.map(_.toString).getOrElse("Article").toLowerCase == "gallery") {
+        @if(item.contentType.name.toLowerCase == "gallery") {
             <div class="fc-item__media-meta">
                 @inlineSvg("camera", "icon")
                 Gallery
