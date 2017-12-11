@@ -81,16 +81,16 @@ x x x x x x x x x x x x x x x x x x
             display: block;
         }
 
-        &:not(.fc-item--type-comment) {
-            &[class*='fc-item--has-sublinks']:not(.fc-item--has-sublinks-1) {
-                .fc-item__header {
-                    padding-bottom: gs-height(2) + $gs-baseline * 2;
-        
-                    @include mq(desktop) {
-                        padding-bottom: gs-height(4.6);
-                    }
-                }
+        &[class*='fc-item--has-sublinks']:not(.fc-item--has-sublinks-1) {
+            .fc-item__header {
+                padding-bottom: gs-height(2) + $gs-baseline * 2;
     
+                @include mq(desktop) {
+                    padding-bottom: gs-height(4.6);
+                }
+            }
+
+            &:not(.fc-item--type-comment) {
                 .fc-sublink {
                     margin-top: 0;
         

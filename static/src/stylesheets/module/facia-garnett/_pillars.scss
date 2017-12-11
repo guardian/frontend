@@ -79,6 +79,16 @@ $pillars: (
                 background-color: $darkerCardBackground;
             }
         }
+
+        &.fc-item--type-comment {
+            .fc-item__avatar {
+                background-color: darken(map-get($palette, cutoutBackground), 3%);
+            }
+    
+            .fc-trail__count--commentcount {
+                background-color: $darkerCardBackground;
+            }
+        }
     }
 
     .fc-item__headline {
