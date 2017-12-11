@@ -100,6 +100,7 @@ $quote-tail: 25px;
     }
 
     .content__labels--not-immersive {
+        padding-top: $gs-gutter/2;
         @include mq(tablet, leftCol) {
             border-bottom: solid 1px $neutral-5;
         }
@@ -151,6 +152,29 @@ $quote-tail: 25px;
             svg {
                 fill: $neutral-gt-1;
             }
+        }
+    }
+
+    .social-icon {
+        @include mq(leftCol) {
+            max-width: 29px;
+            min-width: 29px;
+            height: 29px;
+        }
+        @include mq(wide) {
+            min-width: 32px;
+            max-width: 100%;
+            width: auto;
+            height: 32px;
+        }
+    }
+
+    .social__item {
+        @include mq(leftCol) {
+            padding: 0;
+        }
+        @include mq(wide) {
+            padding: 0 3px 6px 0;
         }
     }
 
@@ -248,8 +272,14 @@ $quote-tail: 25px;
         padding-top: $gs-gutter/2;
     }
 
-    .mobile-only {
+    .reveal-caption {
         display: block!important;
+        right: $gs-gutter/2;
+        bottom: $gs-gutter/2;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     .caption--main.caption--img {
@@ -259,9 +289,17 @@ $quote-tail: 25px;
         bottom: 0;
         background: rgba(22, 22, 22, .8);
         color: #ffffff;
-        display: none;
         padding: 6px 40px 12px 10px;
         max-width: 100%;
+        display: none;
+    }
+
+    .reveal-caption__checkbox:checked ~ .caption--main {
+        display: block;
+    }
+
+    .media-primary .inline-expand-image {
+        display: none;
     }
 
     .article__fullscreen:hover,
@@ -274,6 +312,7 @@ $quote-tail: 25px;
     .content__headline {
         @include fs-headlineGarnett(4);
         font-weight: 500;
+        padding-top: 0;
         @include mq(phablet) {
             padding-bottom: 0;
         }
@@ -283,7 +322,7 @@ $quote-tail: 25px;
             padding-bottom: 1.5rem;
         }
         @include mq(leftCol) {
-            padding-bottom: 2.5rem;
+            // padding-bottom: 2.5rem;
         }
     }
 
@@ -292,19 +331,18 @@ $quote-tail: 25px;
     }
 
     .content__standfirst {
-        @include fs-headline(2);
+        @include fs-headlineGarnett(1);
         border-top: 0;
         color: $neutral-1;
-        font-weight: 500;
+        font-weight: 200;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
         @include mq(tablet) {
+            @include fs-headlineGarnett(2);
+
             &:before {
                 @include multiline(1);
             }
-        }
-        @include mq(leftCol) {
-            margin-bottom: 0;
         }
     }
 
@@ -316,6 +354,10 @@ $quote-tail: 25px;
         @include mq(wide) {
             width: gs-span(3) -$gs-gutter/2;
         }
+    }
+
+    .media-primary {
+        margin-bottom: $gs-baseline;
     }
 
     .badge--alt {
@@ -522,8 +564,6 @@ $quote-tail: 25px;
     }
 
     .content__meta-container {
-        margin-top: -8px;
-
         &:before {
             content: none;
         }
@@ -548,7 +588,17 @@ $quote-tail: 25px;
 
     .content__headline--byline {
         font-style: italic;
-        padding-bottom: $gs-gutter*3;
+        margin-left: 0;
+        padding: 0 $gs-baseline/2 $gs-gutter*3;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+        }
+        @include mq(phablet) {
+            padding-left: 0;
+        }
+        @include mq(leftCol) {
+            padding-top: $gs-baseline;
+        }
     }
 
     .content__headline--byline span a {
@@ -563,31 +613,52 @@ $quote-tail: 25px;
     .byline-img {
         position: absolute;
         bottom: 3px;
+        // counters the 3px bottom margin on multi-rule mixin
         right: 0;
         @include mq(mobileLandscape) {
-            right: 12.5rem;
+            right: gs-span(3) - $gs-gutter;
         }
     }
 
     .content__standfirst {
-        padding-bottom: $gs-baseline;
-
         &:before {
             content: none;
         }
     }
 
-    .content__labels {
-        padding-top: 0;
+    .content__labels,
+    .content__labels--not-immersive {
+        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline/3;
+        @include mq(tablet) {
+            padding-top: $gs-gutter/2;
+            margin-top: -$gs-gutter/2;
+        }
     }
 
     .content__section-label,
-    .content__series-label__link {
-        padding-top: $gs-baseline/3;
+    .content__section-label__link {
         display: block!important;
+        // only way to override defaults
+    }
+    // overrides for opinion colours
+    .element-pullquote p {
+        color: $opinion-gt-headline;
     }
 
-    .media-primary {
-        margin-bottom: $gs-baseline;
+    .inline-quote svg {
+        fill: $opinion-gt-kicker;
+    }
+
+    .bullet::before {
+        background-color: $opinion-gt-headline;
+    }
+
+    .inline-close,
+    .inline-close svg,
+    .inline-tone-fill,
+    .social-icon svg,
+    .social-icon.social-icon--more svg {
+        fill: $opinion-gt-headline;
     }
 }
