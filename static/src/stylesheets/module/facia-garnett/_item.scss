@@ -83,7 +83,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .u-faux-block-link--hover,
+    &:hover,
     .fc-item__image-container {
         background-color: $neutral-6;
 
@@ -92,7 +92,9 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .u-faux-block-link--hover {
+    &:hover {
+        text-decoration: none;
+
         .youtube-media-atom,
         .fc-item__image-container {
             background-color: #000000;
@@ -388,8 +390,7 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     // darken on hover
-    &:hover,
-    .u-faux-block-link--hover {
+    &:hover {
         background-color: darken($media-garnett-main-1, 5%);
 
         .fc-item__kicker,

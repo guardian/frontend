@@ -4,7 +4,7 @@
         background-color: $neutral-7;
     }
 
-    .u-faux-block-link--hover,
+    &:hover,
     .fc-item__image-container {
         background-color: darken($neutral-6, 2%);
     }

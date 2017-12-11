@@ -87,6 +87,10 @@ $fc-item-gutter: $gs-gutter / 4;
             @include clearfix;
         }
     }
+
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 .fc-item__container {
@@ -670,13 +674,6 @@ $block-height: 71px;
     }
 }
 
-.fc-item__link {
-    &:hover,
-    &:focus {
-        text-decoration: none;
-
-        .fc-item__headline {
-            text-decoration: underline;
-        }
-    }
+.fc-item__link:hover {
+    text-decoration: none;
 }

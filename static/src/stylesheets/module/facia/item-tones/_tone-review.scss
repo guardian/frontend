@@ -8,7 +8,7 @@
         color: $c-headline;
     }
 
-    .u-faux-block-link--hover,
+    &:hover,
     .fc-item__image-container {
         background-color: darken($review-background, 6%);
     }
