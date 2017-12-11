@@ -30,7 +30,6 @@ GET        /*path/show-more/*id.json                                            
 GET        /rss                                                                     controllers.FaciaController.renderRootFrontRss()
 GET        /*path/rss                                                               controllers.FaciaController.renderFrontRss(path)
 GET        /*path/lite.json                                                         controllers.FaciaController.renderFrontJsonLite(path)
-GET        /*path/deduped.json                                                      controllers.DedupedController.getDedupedForPath(path)
 GET        /*path.json                                                              controllers.FaciaController.renderFrontJson(path)
 GET        /                                                                        controllers.FaciaController.rootEditionRedirect()
 GET        /*path                                                                   controllers.FaciaController.renderFront(path)
