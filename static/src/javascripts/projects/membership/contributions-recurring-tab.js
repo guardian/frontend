@@ -39,6 +39,10 @@ const hideLoader = (): void => {
     $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
 };
 
+const displayLoader = (): void => {
+    $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
+};
+
 const displayContributionInfo = (): void => {
     $(CONTRIBUTION_INFO).removeClass(IS_HIDDEN_CLASSNAME);
 };
@@ -51,10 +55,6 @@ const displayErrorMessage = (): void => {
     $(ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-const hideContributionInfo = (): void => {
-    $(CONTRIBUTION_INFO).addClass(IS_HIDDEN_CLASSNAME);
-};
-
 const hideContributionDetails = (): void => {
     $(CONTRIBUTION_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
 };
@@ -62,7 +62,6 @@ const hideContributionDetails = (): void => {
 const hideCardDetails = (): void => {
     $(CARD_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
 };
-
 
 // Cancel contribution aux functions
 
@@ -156,9 +155,14 @@ const handleCancelContributionSubmit = (): void => {
                 displayCancelContributionSuccessMessage();
             } else {
                 displayCancelContributionErrorMessage();
-                reportError(err, {
-                    feature: 'mma-monthlycontribution-cancel-contribution',
-                });
+                reportError(
+                    new Error(
+                        'Members Data API returned HTTP diferent from 200 for cancel contribution'
+                    ),
+                    {
+                        feature: 'mma-monthlycontribution-cancel-contribution',
+                    }
+                );
             }
         })
         .catch(err => {
@@ -311,8 +315,8 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         setupCancelContribution();
     } else {
         hideCancelContribution();
+        hideContributionDetails();
         displaySupportUpSell();
-        hideContributionInfo();
     }
 };
 
