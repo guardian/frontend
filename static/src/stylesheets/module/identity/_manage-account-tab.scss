@@ -272,21 +272,32 @@
 
     /* Cancellation Contribution section
     ===================================================================== */
-    .contribution-cancellation__menu {
+    .contribution-cancellation__main-link {
+        margin: $gs-baseline 0;
+    }
+
+    .contribution-cancellation__section {
         border-top: solid 1px #000000;
+    }
 
-        h3 {
-            margin: $gs-baseline 0;
-        }
+    .contribution-cancellation__title {
+        margin: $gs-baseline 0;
+    }
 
-        contribution-cancellation__menu__actions {
-            margin-top: $gs-baseline * 4;
-        }
+    .contribution-cancellation__menu__actions,
+    .contribution-cancellation__selector {
+        margin-top: $gs-baseline * 3;
     }
 
     .manage-account__button.is-disabled {
         cursor: not-allowed;
         background-color: $neutral-3;
+    }
+
+    .contribution-cancellation__keep-contributing {
+        margin-left: $gs-gutter;
+        margin-top: 10px;
+        display: inline-block;
     }
 
 }
