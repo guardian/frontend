@@ -7,10 +7,12 @@ import model.pressed.PressedContent
 
 
 case class PressedCollectionVisibility(pressedCollection: PressedCollection, visible: Int) extends implicits.Collections {
+  import PressedCollectionVisibility._
+
   lazy val affectsDuplicates: Boolean = Container.affectsDuplicates(pressedCollection.collectionType)
   lazy val affectedByDuplicates: Boolean = Container.affectedByDuplicates(pressedCollection.collectionType)
 
-  lazy val deduplicateAgainst: Seq[String] = {
+  lazy val deduplicateAgainst: Seq[HeaderUrl] = {
     if (affectsDuplicates)
       pressedCollection
         .curatedPlusBackfillDeduplicated
@@ -30,7 +32,7 @@ case class PressedCollectionVisibility(pressedCollection: PressedCollection, vis
     PressedCollectionVersions(liteCollection, fullCollection)
   }
 
-  def deduplicate(against: Seq[String]): PressedCollectionVisibility = {
+  def deduplicate(against: Seq[HeaderUrl]): PressedCollectionVisibility = {
     if (affectedByDuplicates) {
       val notDuplicated: Seq[PressedContent] = extractNotDuplicated(against)
       val newCurated = pressedCollection.curated.intersect(notDuplicated)
@@ -39,7 +41,7 @@ case class PressedCollectionVisibility(pressedCollection: PressedCollection, vis
     } else this
   }
 
-  private def extractNotDuplicated(against: Seq[String]): Seq[PressedContent] = {
+  private def extractNotDuplicated(against: Seq[HeaderUrl]): Seq[PressedContent] = {
     pressedCollection
       .curatedPlusBackfillDeduplicated
       .filterNot { content: PressedContent =>
@@ -51,9 +53,11 @@ case class PressedCollectionVisibility(pressedCollection: PressedCollection, vis
 }
 
 object PressedCollectionVisibility {
+  type HeaderUrl = String
+
   def deduplication(pressedCollections: Seq[PressedCollectionVisibility]): Seq[PressedCollectionVisibility] = {
     pressedCollections.foldLeft[Seq[PressedCollectionVisibility]](Nil) { (accum, collection) =>
-      val deduplicateAgainst: Seq[String] = accum.flatMap(_.deduplicateAgainst)
+      val deduplicateAgainst: Seq[HeaderUrl] = accum.flatMap(_.deduplicateAgainst)
       accum :+ collection.deduplicate(deduplicateAgainst)
     }
   }
