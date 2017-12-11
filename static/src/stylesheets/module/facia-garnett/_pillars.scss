@@ -147,9 +147,17 @@ $pillars: (
         background-color: map-get($palette, kicker);
     }
     
-    &.fc-item--type-comment .fc-item__avatar {
-        background-color: map-get($palette, cutoutBackground);
+    &.fc-item--type-comment {
+        .fc-item__avatar {
+            background-color: map-get($palette, cutoutBackground);
+        }
+
+        .fc-trail__count--commentcount {
+            background-color: map-get($palette, cardBackground);
+        }
     }
+
+
 }
 
 @each $pillar, $palette in $pillars {

@@ -14,6 +14,33 @@
             right: 0;
     }
 
+    &.fc-item--is-commentable {
+        .fc-item__meta {
+            margin-top: $gs-gutter * .5;
+            display: block;
+            width: 100%;
+
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                height: 2px;
+                bottom: 0;
+                width: 100%;
+                border-top: 4px double #bdbdbd;
+                border-bottom: 4px double #bdbdbd;
+            }
+
+            .fc-trail__count {
+                position: absolute;
+                padding-right: $gs-gutter * .25;
+                padding-left: $gs-gutter * .25;
+                right: 0;
+                bottom: 0;
+            }
+        }
+    }
+
     &.fc-item--standard-mobile {
         @include mq($until: tablet) {
             .fc-item__content {

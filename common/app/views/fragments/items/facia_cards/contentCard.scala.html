@@ -213,19 +213,17 @@ data-test-id="facia-card"
                         @meta(item)
                     </div>
 
-                    <div class="fc-item__avatar">
-                        <picture>
-                            <!--[if IE 9]><video style="display: none;"><![endif]-->
-                            <source media="(min-width: 980px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 980px) and (min-resolution: 120dpi)" sizes="216px" srcset="https://i.guim.co.uk/img/uploads/2017/10/06/Deborah-Orr,-L.png?w=216&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=1.3&amp;s=f4ec84cd178c82ae6c228d77a9519832 432w">
-                            <source media="(min-width: 980px)" sizes="216px" srcset="https://i.guim.co.uk/img/uploads/2017/10/06/Deborah-Orr,-L.png?w=216&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=00bf4e4eba290fd7c61a35650dbb60ef 216w">
-                            <source media="(min-width: 740px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 740px) and (min-resolution: 120dpi)" sizes="216px" srcset="https://i.guim.co.uk/img/uploads/2017/10/06/Deborah-Orr,-L.png?w=216&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=1.3&amp;s=f4ec84cd178c82ae6c228d77a9519832 432w">
-                            <source media="(min-width: 740px)" sizes="216px" srcset="https://i.guim.co.uk/img/uploads/2017/10/06/Deborah-Orr,-L.png?w=216&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=00bf4e4eba290fd7c61a35650dbb60ef 216w">
-                            <source media="(min-width: 0px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 0px) and (min-resolution: 120dpi)" sizes="115px" srcset="https://i.guim.co.uk/img/uploads/2017/10/06/Deborah-Orr,-L.png?w=115&amp;q=20&amp;auto=format&amp;usm=12&amp;fit=max&amp;dpr=1.3&amp;s=dcaaf532172cf5d760b060873bac546e 230w">
-                            <source media="(min-width: 0px)" sizes="115px" srcset="https://i.guim.co.uk/img/uploads/2017/10/06/Deborah-Orr,-L.png?w=115&amp;q=55&amp;auto=format&amp;usm=12&amp;fit=max&amp;s=db687b14a7815dae369bcce4061cd2d4 115w">
-                            <!--[if IE 9]></video><![endif]-->
-                            <img class="fc-item__avatar__media image--landscape" alt="">
-                        </picture>
-                    </div>
+                    @if(item.cardTypes.showCutOut) {
+                        @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
+                        <div class="fc-item__avatar">
+                            @image(
+                                classes = Seq("fc-item__avatar__media", cutOut.cssClass),
+                                widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
+                                maybePath = Some(imageUrl)
+                            )
+                        </div>
+                        }
+                    }
                 }
             } else {
                 @standfirst(item)
