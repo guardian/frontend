@@ -60,9 +60,9 @@
             color: $color2;
         }
 
-    // darken on hover
-    &:hover {
-        background-color: darken($color1, 5%);
+        // darken on hover
+        &:hover {
+            background-color: darken($color1, 5%);
 
             .fc-item__kicker,
             .fc-item__container::before {
