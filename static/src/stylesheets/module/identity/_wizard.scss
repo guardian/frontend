@@ -6,7 +6,8 @@
 }
 .manage-account-wizard--completed {
     .manage-account-wizard__controls {
-        display: none;
+        visibility: hidden;
+        pointer-events: none;
     }
 }
 
