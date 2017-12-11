@@ -54,5 +54,3 @@ abstract case class Experiment(
 }
 
 case class ExperimentHeader(key: String, value: String)
-
-
