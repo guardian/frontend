@@ -603,7 +603,7 @@ $quote-tail: 25px;
 
     .content__headline--byline span a {
         text-decoration: none;
-        border-bottom: none;
+        border-bottom: 0;
     }
 
     .content__headline--byline span:hover {
