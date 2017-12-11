@@ -18,8 +18,8 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--pillar-" + item.pillarName, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-      ("fc-item--type-" + item.designType, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
+      ("fc-item--pillar-" + item.pillar.map(_.name).getOrElse("News").toLowerCase, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
+      ("fc-item--type-" + item.designType.map(_.toString).getOrElse("Article").toLowerCase, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--has-cutout", item.cutOut.isDefined),
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--has-no-image", !item.hasImage),
@@ -43,8 +43,8 @@ object GetClasses {
     ("fc-sublink", true),
     (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
     (sublinkMediaTypeClass(sublink).getOrElse(""), true),
-    ("fc-sublink--pillar-" + sublink.pillarName, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-    ("fc-sublink--type-" + sublink.designType, experiments.ActiveExperiments.isParticipating(experiments.Garnett))
+    ("fc-sublink--pillar-" + sublink.pillar.map(_.name).getOrElse("News").toLowerCase, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
+    ("fc-sublink--type-" + sublink.designType.map(_.toString).getOrElse("Article").toLowerCase, experiments.ActiveExperiments.isParticipating(experiments.Garnett))
   ))
 
   def mediaTypeClass(faciaCard: ContentCard): Option[String] = faciaCard.mediaType map {
