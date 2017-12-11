@@ -39,6 +39,8 @@ case class PressedCollection(
     c.properties.maybeContentId.getOrElse(c.card.id)
   }
 
+  lazy val distinct = curatedPlusBackfillDeduplicated.distinctBy(_.header.url)
+
   def branding(edition: Edition): Option[ContainerBranding] = {
     ContainerBrandingFinder.findBranding(
       isConfiguredForBranding = config.metadata.exists(_.contains(Branded)),
@@ -53,8 +55,7 @@ object PressedCollection {
       collection: com.gu.facia.api.models.Collection,
       curated: List[PressedContent],
       backfill: List[PressedContent],
-      treats: List[PressedContent],
-      hasMore: Boolean
+      treats: List[PressedContent]
   ): PressedCollection =
     PressedCollection(
       collection.id,
@@ -76,6 +77,6 @@ object PressedCollection {
       collection.collectionConfig.showDateHeader,
       collection.collectionConfig.showLatestUpdate,
       CollectionConfig.make(collection.collectionConfig),
-      hasMore
+      hasMore = false
     )
 }

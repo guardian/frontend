@@ -55,7 +55,6 @@ trait AdminControllers {
   lazy val analyticsConfidenceController = wire[AnalyticsConfidenceController]
   lazy val contentPerformanceController = wire[ContentPerformanceController]
   lazy val metricsController = wire[MetricsController]
-  lazy val whatIsDeduped = wire[WhatIsDeduped]
   lazy val commercialController = wire[CommercialController]
   lazy val dfpDataController = wire[DfpDataController]
   lazy val slotController = wire[SlotController]

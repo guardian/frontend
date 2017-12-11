@@ -364,6 +364,8 @@ sealed trait PressedContent {
   def discussion: PressedDiscussionSettings
   def display: PressedDisplaySettings
 
+  lazy val participatesInDeduplication: Boolean = properties.embedType.isEmpty
+
   def branding(edition: Edition): Option[Branding] =
     for {
       brandings <- properties.editionBrandings

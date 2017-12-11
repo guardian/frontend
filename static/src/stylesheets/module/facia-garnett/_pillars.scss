@@ -161,4 +161,9 @@ $pillars: (
     .fc-item--pillar-#{$pillar} {
         @include colours($palette);
     }
+    .fc-sublink--pillar-#{$pillar} {
+        .fc-sublink__kicker {
+            color: map-get($palette, kicker);
+        }
+    }
 }
