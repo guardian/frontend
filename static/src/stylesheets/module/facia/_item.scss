@@ -191,7 +191,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .u-faux-block-link--hover,
+    &:hover,
     .fc-item__image-container {
         background-color: $neutral-6;
 
@@ -200,7 +200,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .u-faux-block-link--hover {
+    &:hover {
         .youtube-media-atom,
         .fc-item__image-container {
             background-color: #000000;
