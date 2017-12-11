@@ -106,7 +106,7 @@ data-test-id="facia-card"
                     embedPath = if (item.isMediaLink) item.id else None,
                     path = if (item.isMediaLink) item.id else None
                 )) { player =>
-                    <div class="fc-item__media-wrapper fc-item__video u-faux-block-link__promote media__container--hidden js-video-player">
+                    <div class="fc-item__media-wrapper fc-item__video media__container--hidden js-video-player">
                         <div class="fc-item__video-container">
                             @video(player, false, item.cardTypes.showVideoEndSlate, showPoster = false)
                         </div>
@@ -253,7 +253,5 @@ data-test-id="facia-card"
         @if(item.sublinks.nonEmpty) {
             <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
         }
-
-        <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.header.headline)</a>
     </div>
 }
