@@ -17,7 +17,9 @@
     <span class="@labelCssClasses fc-item__headline">@icon <span class="js-headline-text">@RemoveOuterParaHtml(header.headline)</span></span>
 }
 
-@articleLink(html: Html) = {<a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>}
+@articleLink(html: Html) = {
+    <object><a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a></object>
+}
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @header.kicker match {

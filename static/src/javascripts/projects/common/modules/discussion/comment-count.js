@@ -39,9 +39,11 @@ const getTemplate = (
                 </a>`;
     }
 
-    return `<a class="fc-trail__count fc-trail__count--commentcount" href="${
-        url
-    }" data-link-name="Comment count">${icon} ${count}</a>`;
+    return `<object>
+            <a class="fc-trail__count fc-trail__count--commentcount" href="${
+                url
+            }" data-link-name="Comment count">${icon} ${count}</a>
+        </object>`;
 };
 
 const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
