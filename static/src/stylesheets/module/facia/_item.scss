@@ -72,6 +72,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item {
     @include mq($until: tablet) {
         width: 100%;
+        display: block;
     }
 
     @include mq(tablet) {
@@ -94,8 +95,9 @@ $fc-item-gutter: $gs-gutter / 4;
 
     .has-no-flex-wrap &,
     .js-off & {
-        display: block !important;
+        display: block;
     }
+
 }
 
 .simon-and-the-magic-torch {
