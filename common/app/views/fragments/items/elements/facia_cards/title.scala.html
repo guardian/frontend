@@ -18,7 +18,8 @@
 }
 
 @articleLink(html: Html) = {
-    <object><a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a></object>
+    @* Support nested links by wrapping inner links in <object> element *@
+    <object type="nested/links"><a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a></object>
 }
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
