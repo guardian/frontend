@@ -156,6 +156,10 @@ class EditProfileController(
 
               case Right(updatedUser) =>
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
+
+                // Without GU_CONSENTED cookie when users complete re-permissioning journey then they might be again
+                // re-directed to repermissining journey because unsubscribing from V1 newsletters might not have yet
+                // completed as it happens in a fire-and-forget Future in IDAPI
                 SeeOther(returnUrl).withCookies(Cookie("GU_CONSENTED", "true", Some(60)))
             }
         )

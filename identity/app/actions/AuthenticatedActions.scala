@@ -117,7 +117,7 @@ class AuthenticatedActions(
 
     def refine[A](request: AuthRequest[A]) =
       if (IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
-        if (!request.cookies.get("GU_CONSENTED").isDefined)
+        if (!request.cookies.get("GU_CONSENTED").isDefined) // see comment in EditProfileController regarding GU_CONSENTED
           decideConsentJourney(request)
         else
           Future.successful(Right(request))
