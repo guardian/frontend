@@ -27,8 +27,8 @@
         ),
             "content",
             "content--article",
-            s"content--pillar-${article.metadata.pillar.map(_.name).getOrElse("News").toLowerCase}",
-            s"content--type-${article.metadata.designType.map(_.toString).getOrElse("Article").toLowerCase}",
+            s"content--pillar-${article.metadata.pillar.nameOrDefault}",
+            s"content--type-${article.metadata.designType.nameOrDefault}",
             "tonal",
             s"tonal--${toneClass(article)}",
             s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"

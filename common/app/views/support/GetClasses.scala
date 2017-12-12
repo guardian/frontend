@@ -5,7 +5,7 @@ import model.pressed.{Audio, Gallery, Video}
 import slices.{Dynamic, DynamicSlowMPU}
 import play.api.mvc.RequestHeader
 import model.Pillar.RichPillar
-import model.GarnettDesignType.RichGarnettDesignType
+import model.ContentDesignType.RichContentDesignType
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob): String = {

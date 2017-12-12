@@ -49,7 +49,7 @@ object Sublink {
       faciaContent.card.cardStyle,
       faciaContent.card.mediaType,
       Pillar(storyContent),
-      contentType.name.toLowerCase(),
+      contentType,
       storyContent.map(_.metadata.designType),
     )
   }
@@ -62,7 +62,7 @@ case class Sublink(
   cardStyle: CardStyle,
   mediaType: Option[MediaType],
   pillar: Option[Pillar],
-  contentType: String,
+  contentType: DotcomContentType,
   designType: Option[DesignType],
 )
 
