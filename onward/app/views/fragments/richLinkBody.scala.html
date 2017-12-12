@@ -20,8 +20,7 @@
     }
 }
 
-<a href="@content.metadata.webUrl"
-    class="rich-link @toneClass(content)--item @RenderClasses(Map(
+<div class="rich-link @toneClass(content)--item @RenderClasses(Map(
     "rich-link--video" -> content.tags.isVideo,
     "rich-link--gallery" -> content.tags.isGallery,
     "rich-link--audio" -> content.tags.isAudio,
@@ -48,7 +47,7 @@
                 ) {
                     @fragments.inlineSvg("quote", "icon")
                 }
-                <span class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)</span>
+                <a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)</a>
             </h1>
             @if(!content.tags.isMedia && (
                 content.content.cardStyle == Comment ||
@@ -96,5 +95,6 @@
                 }
             </div>
         </div>
+        <a class="rich-link__link u-faux-block-link__overlay" href="@content.metadata.webUrl"></a>
     </div>
-</a>
+</div>

@@ -30,6 +30,7 @@ import { initTechFeedback } from 'common/modules/onward/tech-feedback';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';
 import { Clickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
+import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
 import cookiesBanner from 'common/modules/ui/cookiesBanner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initCustomSmartAppBanner } from 'common/modules/ui/smartAppBanner';
@@ -292,6 +293,7 @@ const init = (): void => {
         ['c-test-cookie', testCookie],
         ['c-event-listeners', windowEventListeners],
         ['c-breaking-news', loadBreakingNews],
+        ['c-block-link', fauxBlockLink],
         ['c-iframe', checkIframe],
         ['c-tabs', showTabs],
         ['c-top-nav', initialiseTopNavItems],

@@ -21,7 +21,7 @@ export const acquisitionsBannerControlTemplate = (
     }</a></span>
             </span>
         </div>
-        <a class="js-engagement-message-link" target="_blank" href="${
+        <a class="u-faux-block-link__overlay js-engagement-message-link" target="_blank" href="${
             params.linkUrl
         }" data-link-name="Read more link"></a>
     </div>`;

@@ -6,28 +6,14 @@
 
 @headline() = {@RemoveOuterParaHtml(sublink.headline)}
 
-@* Support nested links by wrapping inner links in <object> element *@
-@articleLink(html: Html) = {
-    <object type="nested/links">
-        <a href="@sublink.url.get(request)" class="fc-sublink__link" data-link-name="article">@html</a>
-    </object>
-}
+@articleLink(html: Html) = {<a href="@sublink.url.get(request)" class="fc-sublink__link" data-link-name="article">@html</a>}
 
 <h3 class="fc-sublink__title">
     @(sublink.kicker, sublink.kicker.flatMap(_.link)) match {
-        case (Some(kicker), Some(link)) => {
-            <object type="nested/links">
-                <a href="@LinkTo(link)" data-link-name="kicker" class="@kicker.sublinkClasses.mkString(" ")">@Html(kicker.kickerHtml)</a>
-            </object>
-            @articleLink{@headline()}
-        }
+        case (Some(kicker), Some(link)) => {<a href="@LinkTo(link)" data-link-name="kicker" class="@kicker.sublinkClasses.mkString(" ")">@Html(kicker.kickerHtml)</a> @articleLink{@headline()}}
 
-        case (Some(kicker), None) => {
-            @articleLink{<span class="@kicker.sublinkClasses.mkString(" ")"><object type="nested/links">@Html(kicker.sublinkKickerHtml)</object></span> @RemoveOuterParaHtml(sublink.headline)}
-        }
+        case (Some(kicker), None) => {@articleLink{<span class="@kicker.sublinkClasses.mkString(" ")">@Html(kicker.sublinkKickerHtml)</span> @RemoveOuterParaHtml(sublink.headline)}}
 
-        case _ => {
-            @articleLink{@headline()}
-        }
+        case _ => {@articleLink{@headline()}}
     }
 </h3>

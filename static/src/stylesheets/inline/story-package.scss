@@ -66,9 +66,9 @@
         // This shouldn't need to be important but too specific selectors on some tones force it to be
         background-color: $story-package !important;
 
-        &:hover {
+        .u-faux-block-link--hover {
             color: inherit;
-            background-color: mix($story-package, $neutral-1, 50%) !important;
+            background-color: mix($story-package, $neutral-1, 50%);
         }
     }
 

@@ -2,7 +2,6 @@
 //----------------------------------
 
 .rich-link {
-    display: block;
     background-color: $neutral-6;
     margin: 0;
     position: relative;
@@ -11,11 +10,10 @@
     a {
         color: inherit;
     }
+}
 
-    &:hover {
-        background-color: $neutral-6;
-        text-decoration: none;
-    }
+.rich-link .u-faux-block-link--hover {
+    background-color: $neutral-6;
 }
 
 .rich-link__title {
@@ -48,6 +46,10 @@
     padding-left: 2px;
     vertical-align: top;
     font-weight: 500;
+}
+
+.rich-link__link .u-faux-block-link__overlay {
+    z-index: 2;
 }
 
 .rich-link__container {

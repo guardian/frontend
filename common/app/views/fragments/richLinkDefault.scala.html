@@ -2,19 +2,22 @@
 
 @import views.html.fragments.inlineSvg
 
-<a href="@href" class="rich-link">
-    <div class="rich-link__container">
-        <div class="rich-link__header">
-            <h1 class="rich-link__title">@title</h1>
-        </div>
+<div class="rich-link">
 
-        <div class="rich-link__read-more">
-            <div class="rich-link__arrow">
-                @inlineSvg("arrow-in-circle", "icon")
-            </div>
-            <div class="rich-link__read-more-text">
-                Read more
-            </div>
+    <div class="rich-link__container">
+
+    <div class="rich-link__header">
+        <h1 class="rich-link__title">@title</h1>
+    </div>
+
+    <div class="rich-link__read-more">
+        <div class="rich-link__arrow">
+            @inlineSvg("arrow-in-circle", "icon")
+        </div>
+        <div class="rich-link__read-more-text">
+            Read more
         </div>
     </div>
-</a>
+    <a class="rich-link__link u-faux-block-link__overlay" href="@href"></a>
+    </div>
+</div>
