@@ -20,6 +20,8 @@ import scala.util.control.NonFatal
 import akka.pattern.after
 
 class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: ActorSystem)(implicit ec: ExecutionContext) extends ResourcesHelper with Logging {
+
+  // NOTE: If you change the API Key, you must also update the weatherapi fastly configuration, as it is enforced there
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )
