@@ -1,11 +1,17 @@
 $quote-tail: 25px;
+$quote-mark: 35px;
 
 .content {
     padding-bottom: 0;
 }
 
+.content--type-analysis,
 .content--type-article,
-.content--type-opinion {
+.content--type-comment,
+.content--type-feature,
+.content--type-live,
+.content--type-media,
+.content--type-review {
     // *************** Meta and Social ***************
     .submeta {
         border-top: 0;
@@ -93,6 +99,9 @@ $quote-tail: 25px;
     .content__meta-container {
         margin-top: -$gs-baseline;
         margin-bottom: 0;
+        @include mq(leftCol) {
+            position: absolute;
+        }
 
         &:before {
             @include multiline(4);
@@ -178,6 +187,11 @@ $quote-tail: 25px;
         }
     }
 
+    .social--top {
+        padding-top:0!important;
+    }
+
+
     .meta__extras {
         border: 0;
     }
@@ -189,6 +203,19 @@ $quote-tail: 25px;
         &:before {
             @include multiline(1);
         }
+    }
+
+    .meta__numbers {
+        @include mq($until: leftCol) {
+            margin-right: $gs-gutter/2;
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    .meta__image {
+        border-top: 0;
     }
 
     .content__dateline {
@@ -256,8 +283,19 @@ $quote-tail: 25px;
 
     .content__article-body,
     .immersive-main-media__headline-container .content__main-column {
+        &:before {
+            @include mq(desktop) {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                height: 100%;
+                width: 1px;
+                background: $garnett-neutral-4;
+            }
+        }
         @include mq(desktop) {
-            border-left: solid 1px $garnett-neutral-4;
             padding-left: $gs-gutter/2;
             margin-left: 0;
             padding-top: $gs-gutter/2;
@@ -311,28 +349,23 @@ $quote-tail: 25px;
 
     .content__headline {
         @include fs-headlineGarnett(4);
-        font-weight: 500;
+        font-weight: 400;
         padding-top: 0;
         padding-bottom: $gs-baseline/2;
         @include mq(tablet) {
             @include fs-headlineGarnett(6);
-            font-weight: 500;
+            font-weight: 400;
             padding-bottom: $gs-baseline*2;
         }
     }
 
-    .tonal__head--tone-feature .content__headline {
-        font-weight: 700;
-    }
-
     .content__standfirst {
-        @include fs-headlineGarnett(3);
+        @include fs-headline(2);
+        font-weight: 500;
         border-top: 0;
         color: $neutral-1;
-        font-weight: 200;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
-        max-width: gs-span(3);
         @include mq(mobileMedium) {
             max-width: gs-span(4);
         }
@@ -340,13 +373,8 @@ $quote-tail: 25px;
             margin-left: 20px;
         }
         @include mq(tablet) {
-            @include fs-headlineGarnett(2);
             max-width: gs-span(6);
             margin-left: 0;
-
-            &:before {
-                @include multiline(1);
-            }
         }
     }
 
@@ -376,23 +404,22 @@ $quote-tail: 25px;
     }
     // *************** Quote Styles ***************
     .element-pullquote {
-        background-color: $garnett-neutral-5;
-        border: solid 1px $garnett-neutral-4;
+        background-color: $garnett-neutral-3;
         margin: $gs-gutter/4 0 $gs-baseline*2;
         padding: 0 $gs-gutter/2 $gs-baseline;
         position: relative;
         clear: none;
         float: none;
         width: inherit;
-        @include mq(mobile) {
-            margin-left: -$gs-gutter/2 - 1px;
-        }
+        margin-left: -$gs-gutter/2;
         @include mq(mobileLandscape) {
-            margin-right: $gs-gutter/2;
             margin-left: -$gs-gutter;
         }
+        @include mq(phablet) {
+            margin-left: -$gs-gutter/2;
+        }
         @include mq(leftCol) {
-            margin-left: -$gs-baseline*2;
+            margin-left: -($quote-mark + $gs-gutter);
         }
         // Quote tail
         &:after {
@@ -401,41 +428,50 @@ $quote-tail: 25px;
             height: $quote-tail;
             border-radius: 0 0 $quote-tail;
             position: absolute;
-            bottom: -$quote-tail - 2px;
+            bottom: -$quote-tail;
             left: $gs-gutter/2;
-            background-color: $garnett-neutral-5;
-            border: solid 1px $garnett-neutral-4;
-            border-top: solid 1px $garnett-neutral-5;
+            background-color: $garnett-neutral-3;
             @include mq(mobileLandscape) {
                 left: $gs-gutter;
             }
+            @include mq(phablet) {
+                left: $gs-gutter/2;
+            }
             @include mq(desktop) {
-                left: $gs-gutter - $gs-baseline;
+                left: 0;
             }
             @include mq(leftCol) {
-                left: $gs-baseline;
+                left: ($quote-mark + $gs-gutter/2);
             }
         }
 
         .pullquote-cite,
         .pullquote-paragraph {
             display: inline;
+            font-weight: 400!important;
         }
 
         .inline-quote,
         blockquote {
             display: inline;
         }
+
+        .inline-quote {
+            width: 28px;
+            margin-right: 3px;
+            @include mq(desktop) {
+                width: $quote-mark;
+            }
+
+            svg {
+                width: inherit;
+                position: relative;
+                top: $gs-baseline/2;
+            }
+        }
         // Hack hide for svg
         .closing {
             display: none;
-        }
-        // temp fix for old quote svg, will be replaced
-        .inline-quote svg {
-            width: 34px;
-            position: relative;
-            top: $gs-baseline/2;
-            margin-right: 2px;
         }
     }
     // Quote supporting
@@ -453,8 +489,7 @@ $quote-tail: 25px;
         &:after {
             @include mq(leftCol) {
                 border-radius: 0 0 0 $quote-tail;
-                left: gs-span(3)/2 - $quote-tail -3px;
-                // 3px is added for left alignment correction
+                left: gs-span(3)/2 - $quote-tail +1px;
             }
         }
 
@@ -519,6 +554,9 @@ $quote-tail: 25px;
         @include mq(mobileLandscape) {
             margin-left: -$gs-gutter;
         }
+        @include mq(phablet) {
+            margin-left: -$gs-gutter/2;
+        }
         @include mq(leftCol) {
             width: gs-span(8);
             margin-left: - gs-span(2);
@@ -545,21 +583,36 @@ $quote-tail: 25px;
         }
 
         .inline-quote svg {
-            @include mq(desktop) {
-                display: inline;
-            }
+            width: $quote-mark;
             @include mq(leftCol) {
-                display: block;
-                width: 50px;
-                position: absolute;
-                top: - 40px;
+                width: 40px;
             }
         }
     }
 }
+// *************** Opinion and Feature standfirst overrides ***************
+
+.content--type-comment,
+.content--type-feature,
+.content--type-review {
+    .content__standfirst {
+        @include fs-headlineGarnett(1);
+        font-weight: 200;
+        @include mq(tablet) {
+            @include fs-headlineGarnett(2);
+        }
+    }
+}
+
+.content--type-feature,
+.content--type-review {
+    .content__headline {
+        font-weight: 700;
+    }
+}
 // *************** Opinion Styles ***************
 
-.content--pillar-opinion {
+.content--type-comment {
     .content__head {
         overflow: hidden;
         @include mq(phablet) {
@@ -624,37 +677,6 @@ $quote-tail: 25px;
         }
     }
 
-    .content__standfirst {
-        &:before {
-            content: none;
-        }
-    }
-
-    .content__standfirst {
-        @include fs-headlineGarnett(1);
-        border-top: 0;
-        color: $neutral-1;
-        font-weight: 200;
-        padding-top: 2px;
-        margin-bottom: $gs-baseline*2;
-        max-width: gs-span(3);
-        @include mq(mobileMedium) {
-            max-width: gs-span(4);
-        }
-        @include mq(phablet) {
-            margin-left: 20px;
-        }
-        @include mq(tablet) {
-            @include fs-headlineGarnett(2);
-            max-width: gs-span(6);
-            margin-left: 0;
-
-            &:before {
-                @include multiline(1);
-            }
-        }
-    }
-
     .content__labels,
     .content__labels--not-immersive {
         padding-top: $gs-baseline/2;
@@ -669,21 +691,5 @@ $quote-tail: 25px;
     .content__section-label__link {
         display: block!important;
         // only way to override defaults
-    }
-    // overrides for opinion colours
-    .element-pullquote p {
-        color: $opinion-garnett-main-1;
-    }
-
-    .inline-quote svg {
-        fill: $opinion-garnett-feature;
-    }
-
-    .inline-close,
-    .inline-close svg,
-    .inline-tone-fill,
-    .social-icon svg,
-    .social-icon.social-icon--more svg {
-        fill: $opinion-garnett-main-1;
     }
 }
