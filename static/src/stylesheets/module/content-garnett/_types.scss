@@ -62,7 +62,7 @@ $quote-mark: 35px;
 
     .submeta__link {
         @include trailing-slash-link;
-        font-weight: 500;
+        font-weight: 400;
         line-height: 22px;
 
         &:after {
@@ -83,7 +83,7 @@ $quote-mark: 35px;
 
     .submeta__section-labels .submeta__link {
         @include fs-headline(2);
-        font-weight: 500;
+        font-weight: 400;
     }
 
     .submeta__badge {
@@ -362,7 +362,7 @@ $quote-mark: 35px;
 
     .content__standfirst {
         @include fs-headline(2);
-        font-weight: 500;
+        font-weight: 400;
         border-top: 0;
         color: $neutral-1;
         padding-top: 2px;
@@ -457,6 +457,7 @@ $quote-mark: 35px;
             display: inline;
         }
 
+        // these are all temp until we get new quote mark in
         .inline-quote {
             width: 28px;
             margin-right: 3px;
@@ -497,6 +498,7 @@ $quote-mark: 35px;
         .pullquote-cite,
         .pullquote-paragraph {
             @include fs-headlineGarnett(1);
+            font-weight: 400!important;
         }
         // temp fix for old quote svg, will be replaced
         .inline-quote svg {
