@@ -500,7 +500,7 @@
     background-color: transparent;
     border: 1px solid lighten($identity-main, 50%);
     &:not(.is-updating, .is-disabled):hover {
-        color: #fff;
+        color: #ffffff;
         border-color: $identity-main;
     }
 }
