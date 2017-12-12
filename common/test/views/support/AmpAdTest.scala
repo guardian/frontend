@@ -20,32 +20,23 @@ class AmpAdTest extends FlatSpec with Matchers {
     result should be(s"/59666047/theguardian.com/$sectionId/article/amp")
   }
 
-  "AmpAd" should "return a JSON object containing passed URI" in {
-    val uri = "http://www.guardian.co.uk/foo/2012/jan/07/bar"
+  "AmpAd" should "return a JSON object containing passed path" in {
+    val path = "/foo/2012/jan/07/bar"
+    val uri = s"http://www.guardian.co.uk$path"
     val edition = "uk"
-    val result = AmpAd(article(""), uri, edition).toJson()
+    val result = AmpAd(article(""), uri, edition).toJson
     val targetingUrl = (result \ "targeting" \ "url").as[JsString].value
 
-    targetingUrl should be(uri)
+    targetingUrl should be(path)
   }
 
   "AmpAd" should "return a JSON object containing passed edition" in {
     val uri = "http://www.guardian.co.uk/foo/2012/jan/07/bar"
     val edition = "uk"
-    val result = AmpAd(article(""), uri, edition).toJson()
+    val result = AmpAd(article(""), uri, edition).toJson
     val targetingEdition = (result \ "targeting" \ "edition").as[JsString].value
 
     targetingEdition should be(edition)
-  }
-
-  "AmpAd" should "return a JSON object containing passed article's section ID" in {
-    val uri = "http://www.guardian.co.uk/foo/2012/jan/07/bar"
-    val edition = "uk"
-    val sectionId = "sectionId"
-    val result = AmpAd(article(sectionId), uri, edition).toJson()
-    val targetingSection = (result \ "targeting" \ "section").as[JsString].value
-
-    targetingSection should be(sectionId)
   }
 
   "AmpAd" should "return a JSON object containing passed article's content type" in {
@@ -53,10 +44,10 @@ class AmpAdTest extends FlatSpec with Matchers {
     val edition = "uk"
     val contentType = "Article"
     val sectionId = "sectionId"
-    val result = AmpAd(article(sectionId), uri, edition).toJson()
+    val result = AmpAd(article(sectionId), uri, edition).toJson
     val targetingContentType = (result \ "targeting" \ "ct").as[JsString].value
 
-    targetingContentType should be(contentType)
+    targetingContentType should be(contentType.toLowerCase)
   }
 
   "AmpAd" should "return a JSON object containing passed article's series tag" in {
@@ -64,22 +55,10 @@ class AmpAdTest extends FlatSpec with Matchers {
     val edition = "uk"
     val sectionId = "sectionId"
     val seriesTag = tag("series/foo", "Foo", TagType.Series)
-    val result = AmpAd(article(sectionId, seriesTag), uri, edition).toJson()
+    val result = AmpAd(article(sectionId, seriesTag), uri, edition).toJson
     val targetingSeries = (result \ "targeting" \ "se").as[JsString].value
 
     targetingSeries should be("foo")
-  }
-
-  "AmpAd" should "return a JSON object containing passed article's keyword IDs" in {
-    val uri = "http://www.guardian.co.uk/foo/2012/jan/07/bar"
-    val edition = "uk"
-    val sectionId = "sectionId"
-    val keywordTag1 = tag("keyword1", "Keyword1", TagType.Keyword)
-    val keywordTag2 = tag("keyword2", "Keyword2", TagType.Keyword)
-    val result = AmpAd(article(sectionId, keywordTag1, keywordTag2), uri, edition).toJson()
-    val targetingKeywordIds = (result \ "targeting" \ "keywordIds").as[JsString].value
-
-    targetingKeywordIds should be("keyword1,keyword2")
   }
 
   "AmpAd" should "return a JSON object containing passed article's keywords" in {
@@ -88,7 +67,7 @@ class AmpAdTest extends FlatSpec with Matchers {
     val sectionId = "sectionId"
     val keywordTag1 = tag("keyword1", "Keyword1", TagType.Keyword)
     val keywordTag2 = tag("keyword2", "Keyword2", TagType.Keyword)
-    val result = AmpAd(article(sectionId, keywordTag1, keywordTag2), uri, edition).toJson()
+    val result = AmpAd(article(sectionId, keywordTag1, keywordTag2), uri, edition).toJson
     val targetingKeywords = (result \ "targeting" \ "k").as[JsString].value
 
     targetingKeywords should be("keyword1,keyword2")
@@ -100,22 +79,10 @@ class AmpAdTest extends FlatSpec with Matchers {
     val sectionId = "sectionId"
     val contributorTag1 = tag("contributor1", "Contributor1", TagType.Contributor)
     val contributorTag2 = tag("contributor2", "Contributor2", TagType.Contributor)
-    val result = AmpAd(article(sectionId, contributorTag1, contributorTag2), uri, edition).toJson()
+    val result = AmpAd(article(sectionId, contributorTag1, contributorTag2), uri, edition).toJson
     val targetingContributors = (result \ "targeting" \ "co").as[JsString].value
 
     targetingContributors should be("contributor1,contributor2")
-  }
-
-  "AmpAd" should "return a JSON object containing passed article's author IDs" in {
-    val uri = "http://www.guardian.co.uk/foo/2012/jan/07/bar"
-    val edition = "uk"
-    val sectionId = "sectionId"
-    val contributorTag1 = tag("contributor1", "Contributor1", TagType.Contributor)
-    val contributorTag2 = tag("contributor2", "Contributor2", TagType.Contributor)
-    val result = AmpAd(article(sectionId, contributorTag1, contributorTag2), uri, edition).toJson()
-    val targetingAuthorIds = (result \ "targeting" \ "authorIds").as[JsString].value
-
-    targetingAuthorIds should be("contributor1,contributor2")
   }
 
   "AmpAd" should "return a JSON object containing passed article's blog tags" in {
@@ -123,7 +90,7 @@ class AmpAdTest extends FlatSpec with Matchers {
     val edition = "uk"
     val sectionId = "sectionId"
     val blogTag = tag("blog", "Blog", TagType.Blog)
-    val result = AmpAd(article(sectionId, blogTag), uri, edition).toJson()
+    val result = AmpAd(article(sectionId, blogTag), uri, edition).toJson
     val targetingBlogs = (result \ "targeting" \ "bl").as[JsString].value
 
     targetingBlogs should be("blog")

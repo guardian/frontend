@@ -63,8 +63,8 @@ $fc-item-gutter: $gs-gutter / 4;
     @include mq(tablet) {
         flex: 1 1 auto;
         display: flex;
-        margin-left: $fc-item-gutter;
-        margin-right: $fc-item-gutter;
+        margin-left: $fc-item-gutter * 2;
+        margin-right: $fc-item-gutter * 2;
     }
 
     a {

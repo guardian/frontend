@@ -160,7 +160,7 @@ $header-image-size-desktop: 100px;
         height: $gs-gutter * 1.5;
         width: 1px;
         background-color: $garnett-neutral-4;
-        right: 0;
+        right: -$gs-gutter / 2;
         top: -$gs-baseline / 2;
 
         @include mq($from: leftCol) {
