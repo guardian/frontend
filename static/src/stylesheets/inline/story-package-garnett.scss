@@ -70,15 +70,9 @@
     }
 
     //These need to exist for all kickers because of tone on tone action
-<<<<<<< HEAD
     @include kicker-override(lifestyle, $lifestyle-garnett-main-media-1);
     @include kicker-override(arts, $arts-garnett-media-main-1);
     @include kicker-override(sport, $sport-garnett-media-main-1);
-=======
-    @include kicker-override(life, $lifestyle-garnett-main-media-1);
-    @include kicker-override(arts, $arts-garnett-media-main-1);
-    @include kicker-override(sports, $sport-garnett-media-main-1);
->>>>>>> 27d6ac77a6c0a8293ee38834d97c29356dbcddea
     @include kicker-override(opinion, $opinion-garnett-media-main-1);
     @include kicker-override(news, $news-garnett-media-main-1);
 }
