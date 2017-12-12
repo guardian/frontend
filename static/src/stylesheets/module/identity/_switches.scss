@@ -73,7 +73,7 @@ $checkbox-size: $gs-gutter / 1.25;
         top: 0;
         left: 0;
         right: 0;
-        background-color: $guardian-brand;
+        background-color: $identity-main;
         height: 2px;
         transform-origin: center;
         opacity: 0;
@@ -106,7 +106,7 @@ $checkbox-size: $gs-gutter / 1.25;
     &.is-just-updated {
         &:before {
             animation: manage-account__switch-anim-loaded .5s 1 both;
-            background-color: $news-main-2;
+            background-color: $identity-support;
             opacity: 1;
         }
     }
@@ -131,7 +131,9 @@ $checkbox-size: $gs-gutter / 1.25;
         }
 
         input:checked + .manage-account__switch-checkbox {
-            background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20fill%3D%22%23005689%22%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')
+            background-color: $identity-main;
+            border-color: lighten($identity-main,10%);
+            background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M3%206.58l7.23-6.58.55.53-7.78%208.07h-.27l-2.73-3.8.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')
         }
 
     }
@@ -148,6 +150,7 @@ $checkbox-size: $gs-gutter / 1.25;
     background-size: $checkbox-size / 1.5;
     background: #ffffff no-repeat center center;
     cursor: pointer;
+    transition: background-color .125s;
 }
 
 .manage-account__switch-content {

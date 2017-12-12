@@ -309,7 +309,7 @@
 ========================================================================== */
 .manage-account-header {
     @include fs-header(3);
-    color: $guardian-brand-dark;
+    color: $identity-main;
 }
 .manage-account-headerNote {
     @include fs-bodyCopy(2);
@@ -331,7 +331,7 @@
 .manage-account-divider {
     display: block;
     width: 100%;
-    border-top: 1px solid $news-main-2;
+    border-top: 1px solid #d9d9d9;
     margin-bottom: gs-span(.5);
     transform: scaleX(3);
     @include mq(desktop) {
@@ -431,7 +431,7 @@
 ========================================================================== */
 .manage-account__button {
     @include fs-textSans(2);
-    background-color: $guardian-brand;
+    background-color: $identity-main;
     height: $gs-gutter * 2;
     border-radius: 100px;
     border: 0;
@@ -454,7 +454,7 @@
     justify-content: center;
 
     &:not(.is-updating, .is-disabled):hover {
-        background-color: $guardian-brand-dark;
+        background-color: darken($identity-main, 10%);
     }
 
     &:hover, &:active, &:focus {
@@ -496,13 +496,12 @@
 }
 
 %manage-account__button--light {
-    color: $guardian-brand;
+    color: $identity-main;
     background-color: transparent;
-    border: 1px solid $news-main-2;
+    border: 1px solid lighten($identity-main, 50%);
     &:not(.is-updating, .is-disabled):hover {
-        color: $guardian-brand-dark;
-        background-color: transparent;
-        border-color: currentColor;
+        color: #fff;
+        border-color: $identity-main;
     }
 }
 
