@@ -94,11 +94,6 @@ const membershipSupporterParams = (location: string): EngagementBannerParams =>
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
-export const engagementBannerCopyShorter = (): string =>
-    `<strong>Unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep the Guardian’s independent,
-    investigative journalism as open as we can.</strong> It takes a lot of time, money and hard work to produce.
-    But advertising revenue is falling, so we need our readers to help make our future more secure.`;
-
 export const engagementBannerParams = (
     location: string
 ): EngagementBannerParams => {
