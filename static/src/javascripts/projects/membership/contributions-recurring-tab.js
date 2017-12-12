@@ -29,6 +29,7 @@ const LOADER = '.js-recurring-contribution-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
 const IS_DISABLED_CLASSNAME = 'is-disabled';
 const ERROR = '.js-contribution-error';
+const CONTRIBUTION_UPDATE_ERROR = '.js-contribution-update-error-msg';
 
 const CANCEL_CONTRIBUTION = '.js-contribution-cancel';
 const CANCEL_CONTRIBUTION_FORM = '.js-cancellation-form';
@@ -74,6 +75,10 @@ const displaySupportUpSell = (): void => {
 
 const displayErrorMessage = (): void => {
     $(ERROR).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displayContributionUpdateErrorMessage = (): void => {
+    $(CONTRIBUTION_UPDATE_ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
 const hideContributionInfo = (): void => {
@@ -348,7 +353,7 @@ const changeContributionAmountSubmit = (): void => {
         .then(recurringContributionTab())
         .catch(err => {
             hideLoader();
-            displayErrorMessage();
+            displayContributionUpdateErrorMessage();
             reportError(err, {
                 feature: 'mma-monthlycontribution',
             });

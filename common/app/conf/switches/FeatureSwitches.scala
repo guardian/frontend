@@ -552,7 +552,7 @@ trait FeatureSwitches {
     "When ON, the edit profile page will include the change (amount) button for recurring contributors",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 12, 15),
+    sellByDate = new LocalDate(2018, 1, 11),
     exposeClientSide = true
   )
 
