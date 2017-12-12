@@ -476,29 +476,27 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 
 .membership__paypal-logo {
+    --proportional-height: 0.14;
     display: inline-block;
-    height: auto;
-    object-fit: contain;
-    margin-top: 0;
-    margin-bottom: -2px;
-    margin-right: 7px;
+    height: 100px * var(--proportional-height);
+    padding-right: 7px;
+    padding-top: 16px;
     width: 100px;
 
     @include mq($from: mobileMedium) {
-        margin-right: $gs-gutter/2;
-        margin-bottom: -4px;
+        padding-top: 15px;
         width: 130px;
+        height: 130px * var(--proportional-height);
     }
 
 
     @include mq(desktop) {
         width: 175px;
-        margin-bottom: 2px;
+        height: 175px * var(--proportional-height);
     }
 
     @include mq($from: wide) {
-        margin-top: 2px;
-        margin-bottom: 0;
+        padding-top: 21px;
     }
 }
 
