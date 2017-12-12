@@ -1,6 +1,19 @@
-// @import '../_vars';
-// @import '../_mixins';
-//
+@import '../_vars';
+@import '../_mixins';
+
+.fc-container--story-package {
+    .fc-container__header__title {
+        & > span,
+        span.fc-container__title__text {
+            background-color: yellow;
+            display: inline;
+            box-shadow: 0px 0px 0px 4px yellow;
+            line-height: 30px;
+        }
+    }
+}
+
+
 // @mixin kicker-override($tone, $colour) {
 //     .fc-item--pillar-#{$tone} {
 //         .fc-item__kicker,
@@ -8,7 +21,7 @@
 //         .fc-item__byline {
 //             color: $colour;
 //         }
-// 
+//
 //         .fc-item__kicker {
 //             &:after {
 //                 background-color: $colour;
