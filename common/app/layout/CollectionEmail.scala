@@ -36,6 +36,7 @@ object EmailContentContainer {
     .curatedPlusBackfillDeduplicated
     .flatMap(contentCard(_, collection.config))
     .filterNot(content => alreadySeen.contains(content.header.url))
+    .take(storiesCount(collection.config))
 
   private def fromCollectionAndCards(collection: PressedCollection, cards: List[ContentCard]) =
     EmailContentContainer(

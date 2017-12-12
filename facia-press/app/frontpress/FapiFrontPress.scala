@@ -169,9 +169,6 @@ trait FapiFrontPress extends Logging {
       backfill <- getBackfill(collection)
       treats <- getTreats(collection)
     } yield {
-
-      collection.collectionConfig.displayHints.map(_.maxItemsToDisplay)
-
       val doNotTrimContainerOfTypes = Seq("nav/list")
       val storyCountTotal = curated.length + backfill.length
       val storyCountMax: Int = doNotTrimContainerOfTypes

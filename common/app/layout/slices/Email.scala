@@ -7,13 +7,14 @@ case class EmailFaciaCard(
   trailText: Boolean = false,
   largeHeadline: Boolean = false
 ) extends EmailCardStyle
+case object EmailFreeText extends EmailCardStyle
+case object EmailHidden extends EmailCardStyle
+
 case class EmailLayout(
   name: String,
   firstCard: EmailCardStyle,
   otherCards: EmailCardStyle
 )
-case object EmailFreeText extends EmailCardStyle
-case object EmailHidden extends EmailCardStyle
 
 object EmailLayouts {
   private val slow = EmailLayout(
