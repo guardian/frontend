@@ -54,21 +54,21 @@
 }
 
 .content--pillar-news {
-    @include colorPalatte($news-gt-headline, $news-gt-kicker);
+    @include colorPalatte($news-garnett-feature, $news-garnett-main-1);
 }
 
 .content--pillar-opinion {
-    @include colorPalatte($opinion-gt-headline, $opinion-gt-kicker);
+    @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-feature);
 }
 
 .content--pillar-arts {
-    @include colorPalatte($arts-gt-headline, $arts-gt-kicker);
+    @include colorPalatte($arts-garnett-feature, $arts-garnett-main-1);
 }
 
 .content--pillar-sport {
-    @include colorPalatte($sport-gt-headline, $sport-gt-kicker);
+    @include colorPalatte($sport-garnett-feature, $sport-garnett-main-1);
 }
 
 .content--pillar-lifestyle {
-    @include colorPalatte($lifestyle-gt-headline, $lifestyle-gt-kicker);
+    @include colorPalatte($lifestyle-garnett-feature, $lifestyle-garnett-main-1);
 }

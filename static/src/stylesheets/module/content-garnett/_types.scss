@@ -32,7 +32,7 @@ $quote-tail: 25px;
     .submeta__keywords {
         padding-top: $gs-baseline / 2;
         padding-bottom: $gs-baseline / 2;
-        border-bottom: solid 1px $neutral-5;
+        border-bottom: solid 1px $garnett-neutral-4;
         margin-bottom: $gs-baseline / 2;
     }
 
@@ -61,7 +61,7 @@ $quote-tail: 25px;
 
         &:after {
             @include trailing-slash;
-            color: $neutral-5;
+            color: $garnett-neutral-4;
         }
 
         .submeta__keywords & {
@@ -102,7 +102,7 @@ $quote-tail: 25px;
     .content__labels--not-immersive {
         padding-top: $gs-gutter/2;
         @include mq(tablet, leftCol) {
-            border-bottom: solid 1px $neutral-5;
+            border-bottom: solid 1px $garnett-neutral-4;
         }
     }
 
@@ -150,7 +150,7 @@ $quote-tail: 25px;
         &:focus,
         &:hover {
             svg {
-                fill: $neutral-gt-1;
+                fill: $garnett-neutral-5;
             }
         }
     }
@@ -238,11 +238,11 @@ $quote-tail: 25px;
             &:focus,
             &:hover {
                 .inline-tone-fill {
-                    fill: $neutral-gt-1;
+                    fill: $garnett-neutral-5;
                 }
 
                 .contact {
-                    color: $neutral-gt-1;
+                    color: $garnett-neutral-5;
                 }
             }
         }
@@ -257,7 +257,7 @@ $quote-tail: 25px;
     .content__article-body,
     .immersive-main-media__headline-container .content__main-column {
         @include mq(desktop) {
-            border-left: solid 1px $neutral-5;
+            border-left: solid 1px $garnett-neutral-4;
             padding-left: $gs-gutter/2;
             margin-left: 0;
             padding-top: $gs-gutter/2;
@@ -313,13 +313,11 @@ $quote-tail: 25px;
         @include fs-headlineGarnett(4);
         font-weight: 500;
         padding-top: 0;
-        @include mq(phablet) {
-            padding-bottom: 0;
-        }
+        padding-bottom: $gs-baseline/2;
         @include mq(tablet) {
             @include fs-headlineGarnett(6);
             font-weight: 500;
-            padding-bottom: 1.5rem;
+            padding-bottom: $gs-baseline*2;
         }
     }
 
@@ -328,14 +326,23 @@ $quote-tail: 25px;
     }
 
     .content__standfirst {
-        @include fs-headlineGarnett(1);
+        @include fs-headlineGarnett(3);
         border-top: 0;
         color: $neutral-1;
         font-weight: 200;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
+        max-width: gs-span(3);
+        @include mq(mobileMedium) {
+            max-width: gs-span(4);
+        }
+        @include mq(phablet) {
+            margin-left: 20px;
+        }
         @include mq(tablet) {
             @include fs-headlineGarnett(2);
+            max-width: gs-span(6);
+            margin-left: 0;
 
             &:before {
                 @include multiline(1);
@@ -369,8 +376,8 @@ $quote-tail: 25px;
     }
     // *************** Quote Styles ***************
     .element-pullquote {
-        background-color: $neutral-gt-1;
-        border: solid 1px $neutral-5;
+        background-color: $garnett-neutral-5;
+        border: solid 1px $garnett-neutral-4;
         margin: $gs-gutter/4 0 $gs-baseline*2;
         padding: 0 $gs-gutter/2 $gs-baseline;
         position: relative;
@@ -396,9 +403,9 @@ $quote-tail: 25px;
             position: absolute;
             bottom: -$quote-tail - 2px;
             left: $gs-gutter/2;
-            background-color: $neutral-gt-1;
-            border: solid 1px $neutral-5;
-            border-top: solid 1px $neutral-gt-1;
+            background-color: $garnett-neutral-5;
+            border: solid 1px $garnett-neutral-4;
+            border-top: solid 1px $garnett-neutral-5;
             @include mq(mobileLandscape) {
                 left: $gs-gutter;
             }
@@ -623,6 +630,31 @@ $quote-tail: 25px;
         }
     }
 
+    .content__standfirst {
+        @include fs-headlineGarnett(1);
+        border-top: 0;
+        color: $neutral-1;
+        font-weight: 200;
+        padding-top: 2px;
+        margin-bottom: $gs-baseline*2;
+        max-width: gs-span(3);
+        @include mq(mobileMedium) {
+            max-width: gs-span(4);
+        }
+        @include mq(phablet) {
+            margin-left: 20px;
+        }
+        @include mq(tablet) {
+            @include fs-headlineGarnett(2);
+            max-width: gs-span(6);
+            margin-left: 0;
+
+            &:before {
+                @include multiline(1);
+            }
+        }
+    }
+
     .content__labels,
     .content__labels--not-immersive {
         padding-top: $gs-baseline/2;
@@ -640,15 +672,11 @@ $quote-tail: 25px;
     }
     // overrides for opinion colours
     .element-pullquote p {
-        color: $opinion-gt-headline;
+        color: $opinion-garnett-main-1;
     }
 
     .inline-quote svg {
-        fill: $opinion-gt-kicker;
-    }
-
-    .bullet::before {
-        background-color: $opinion-gt-headline;
+        fill: $opinion-garnett-feature;
     }
 
     .inline-close,
@@ -656,6 +684,6 @@ $quote-tail: 25px;
     .inline-tone-fill,
     .social-icon svg,
     .social-icon.social-icon--more svg {
-        fill: $opinion-gt-headline;
+        fill: $opinion-garnett-main-1;
     }
 }
