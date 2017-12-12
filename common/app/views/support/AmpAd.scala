@@ -1,48 +1,33 @@
 package views.support
 
-import model.Tag
+import com.gu.commercial.display.AdTargetParam.toMap
+import com.gu.commercial.display.{AdTargetParamValue, MultipleValues, SingleValue}
+import common.Edition
+import common.commercial.AdUnitMaker
+import common.commercial.EditionAdTargeting._
 import model.Article
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json._
 
 case class AmpAd(article: Article, uri: String, edition: String) {
-  private def buildAdFlagsFromTags(items: Seq[Tag]) = {
-    items.map { item =>
-      if (item.id == "uk/uk") {
-        item.id
-      } else {
-        val keyword = item.id.split("/").last
-        keyword.replaceAll("""/[+s]+/g""", "-").toLowerCase()
-      }
-    }
+
+  val toJson: JsValue = {
+    def setAmpPlatform(targeting: Map[String, AdTargetParamValue]) = targeting + ("p" -> SingleValue("amp"))
+
+    val editionToTarget = Edition.byId(edition) getOrElse Edition.defaultEdition
+    val targeting       = article.metadata.commercial.map(_.adTargeting(editionToTarget)).getOrElse(Set.empty)
+    val csvTargeting = Json.toJson(setAmpPlatform(toMap(targeting)) mapValues {
+      case SingleValue(v)     => v
+      case MultipleValues(vs) => vs.mkString(",")
+    })
+    Json.obj("targeting" -> csvTargeting)
   }
 
-  def toJson(): JsObject = {
-    Json.obj(
-      "targeting" -> Json.obj(
-        "url" -> uri,
-        "edition" -> edition,
-        "se" -> buildAdFlagsFromTags(article.trail.tags.series).mkString(","),
-        "ct" -> article.metadata.contentType,
-        "p" -> "amp",
-        "keywordIds" -> article.trail.tags.keywords.map(_.id).mkString(","),
-        "k" -> buildAdFlagsFromTags(article.trail.tags.keywords).mkString(","),
-        "co" -> buildAdFlagsFromTags(article.trail.tags.contributors).mkString(","),
-        "bl" -> buildAdFlagsFromTags(article.trail.tags.blogs).mkString(","),
-        "authorIds" -> article.trail.tags.contributors.map(_.id).mkString(","),
-        "section" -> article.metadata.sectionId
-      )
-    )
-  }
-
-  override def toString(): String = {
-    toJson().toString()
-  }
+  override def toString: String = toJson.toString()
 }
-case class AmpAdDataSlot(article: Article) {
-  override def toString(): String = {
-    val section = article.metadata.sectionId
-    val contentType = article.metadata.contentType.map(_.name.toLowerCase).getOrElse("unknown")
 
-    s"/59666047/theguardian.com/$section/$contentType/amp"
+case class AmpAdDataSlot(article: Article) {
+  override def toString: String = {
+    def setAmpPlatform(adUnit: String) = adUnit.stripSuffix("/ng") + "/amp"
+    setAmpPlatform(AdUnitMaker.make(article.metadata.id, article.metadata.adUnitSuffix))
   }
 }

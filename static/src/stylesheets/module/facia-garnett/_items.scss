@@ -44,6 +44,13 @@
         margin-bottom: 0;
         padding-bottom: $gs-baseline;
     }
+
+    + .fc-slice__item {
+        @include vertical-item-separator;
+    }
+    + .fc-slice__item--no-mpu:before {
+        border-left: 0 !important;
+    }
 }
 
 .fc-slice__item--no-mpu {

@@ -9,6 +9,7 @@
     padding: 0 ($gs-gutter / 4);
     position: relative;
     transition: color 150ms ease-out;
+    overflow: hidden;
 
     @include mq(mobileMedium) {
         font-size: 18px;
@@ -49,9 +50,10 @@
 
     &:after {
         // Underlines
-        border-bottom: 0 solid $news-main-2;
+        border-bottom: 4px solid $news-main-2;
         right: 0;
-        transition: border 150ms ease-out;
+        bottom: -4px;
+        transition: transform 150ms ease-out;
     }
 
     &:hover,
@@ -60,7 +62,7 @@
         text-decoration: none;
 
         &:after {
-            border-bottom-width: 4px;
+            transform: translateY(-4px)
         }
     }
 
