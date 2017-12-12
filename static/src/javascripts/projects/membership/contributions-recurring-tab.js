@@ -292,20 +292,22 @@ const handlePriceChangeOnBlur = (): void => {
 };
 
 const toggleAmountChangeInputMode = (active: boolean): void => {
-  if (active) {
-      $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
-      $(CHANGE_CONTRIBUTION_AMOUNT).addClass(IS_HIDDEN_CLASSNAME);
-      $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
-      $(CONTRIBUTION_GLYPH).removeClass(IS_HIDDEN_CLASSNAME);
-      $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).addClass(IS_DISABLED_CLASSNAME);
-      $(CONTRIBUTION_UPDATE_FORM).removeClass(IS_HIDDEN_CLASSNAME);
-  } else {
-      $(CONTRIBUTION_UPDATE_FORM).addClass(IS_HIDDEN_CLASSNAME);
-      $(CONTRIBUTION_GLYPH).addClass(IS_HIDDEN_CLASSNAME);
-      $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
-      $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
-      $(CHANGE_CONTRIBUTION_AMOUNT).removeClass(IS_HIDDEN_CLASSNAME);
-  }
+    if (active) {
+        $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
+        $(CHANGE_CONTRIBUTION_AMOUNT).addClass(IS_HIDDEN_CLASSNAME);
+        $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
+        $(CONTRIBUTION_GLYPH).removeClass(IS_HIDDEN_CLASSNAME);
+        $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).addClass(IS_DISABLED_CLASSNAME);
+        $(CONTRIBUTION_UPDATE_FORM).removeClass(IS_HIDDEN_CLASSNAME);
+    } else {
+        $(CONTRIBUTION_UPDATE_FORM).addClass(IS_HIDDEN_CLASSNAME);
+        $(CONTRIBUTION_GLYPH).addClass(IS_HIDDEN_CLASSNAME);
+        $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
+        $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).removeClass(
+            IS_HIDDEN_CLASSNAME
+        );
+        $(CHANGE_CONTRIBUTION_AMOUNT).removeClass(IS_HIDDEN_CLASSNAME);
+    }
 };
 
 const setupEditableNewAmountField = (currentPrice: string): void => {
@@ -341,15 +343,15 @@ const changeContributionAmountSubmit = (): void => {
                 newPaymentAmount: `${newAmount}`,
             },
         }
-    ).then(
-        recurringContributionTab()
-    ).catch(err => {
-        hideLoader();
-        displayErrorMessage();
-        reportError(err, {
-            feature: 'mma-monthlycontribution',
+    )
+        .then(recurringContributionTab())
+        .catch(err => {
+            hideLoader();
+            displayErrorMessage();
+            reportError(err, {
+                feature: 'mma-monthlycontribution',
+            });
         });
-    });
 };
 
 const populateUserDetails = (contributorDetails: ContributorDetails): void => {
