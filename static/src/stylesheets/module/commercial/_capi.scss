@@ -37,7 +37,7 @@
     .item__title,
     .linkslist__action,
     .fc-sublink__title {
-        @include f-headlineSans;
+        @include f-textSans;
     }
 }
 
@@ -86,7 +86,7 @@
     }
 
     .fc-container__header__title {
-        @include f-headlineSans;
+        @include f-textSans;
         font-weight: 400;
     }
 

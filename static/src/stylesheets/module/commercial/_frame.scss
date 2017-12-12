@@ -94,7 +94,7 @@ $mobile-max-container-width: gs-span(8);
 }
 
 .frame__content {
-    @include f-headlineSans;
+    @include f-textSans;
 }
 
 @include mq(gs-span(5) + $gs-gutter, phablet) {

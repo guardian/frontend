@@ -24,7 +24,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
   }
 
   "Simple menu" should "just return the 5 primary links" in {
-    NavMenu(Uk).pillars should be(Seq(ukNewsPillar, ukSportPillar, ukOpinionPillar, ukArtsPillar, ukLifestylePillar))
+    NavMenu(Uk).pillars should be(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukArtsPillar, ukLifestylePillar))
   }
 
   "the route `/cities`" should "return the NavLink for cities" in {

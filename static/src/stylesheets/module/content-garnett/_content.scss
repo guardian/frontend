@@ -715,14 +715,14 @@
     }
     .content__headline,
     .content__standfirst {
-        @include f-headlineSans;
+        @include f-textSans;
     }
     .from-content-api {
         @include f-textSans;
     }
     .element.element-pullquote {
         .pullquote-paragraph {
-            font-family: $f-sans-serif-headline;
+            font-family: $f-sans-serif-text;
             color: $paid-article-brand;
         }
     }
@@ -793,7 +793,7 @@
 
     .rich-link__header,
     .rich-link__read-more-text {
-        @include f-headlineSans;
+        @include f-textSans;
         font-size: get-font-size(header, 2);
     }
 
@@ -809,7 +809,7 @@
     }
 
     .content__section-label {
-        @include f-headlineSans;
+        @include f-textSans;
         font-weight: 400;
 
         .content__section-label__link {
