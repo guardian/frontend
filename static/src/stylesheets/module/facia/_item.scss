@@ -92,7 +92,8 @@ $fc-item-gutter: $gs-gutter / 4;
         text-decoration: none;
     }
 
-    .has-no-flex-wrap & {
+    .has-no-flex-wrap &,
+    .js-off & {
         display: block !important;
     }
 }
