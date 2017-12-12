@@ -30,14 +30,12 @@ object EmailContentContainer {
     reversedContainers.reverse.filter(_.cards.nonEmpty)
   }
 
-  private def collectionCardsDeduplicated(collection: PressedCollection, alreadySeen: List[EditionalisedLink]): List[ContentCard] = {
-    val maxItemsToDisplay = collection.config.displayHints.flatMap(_.maxItemsToDisplay).getOrElse(6)
-    collection
-      .curatedPlusBackfillDeduplicated
-      .flatMap(contentCard(_, collection.config))
-      .filterNot(content => alreadySeen.contains(content.header.url))
-      .take(maxItemsToDisplay)
-  }
+  def storiesCount(collectionConfig: CollectionConfig): Int = collectionConfig.displayHints.flatMap(_.maxItemsToDisplay).getOrElse(6)
+
+  private def collectionCardsDeduplicated(collection: PressedCollection, alreadySeen: List[EditionalisedLink]): List[ContentCard] = collection
+    .curatedPlusBackfillDeduplicated
+    .flatMap(contentCard(_, collection.config))
+    .filterNot(content => alreadySeen.contains(content.header.url))
 
   private def fromCollectionAndCards(collection: PressedCollection, cards: List[ContentCard]) =
     EmailContentContainer(
