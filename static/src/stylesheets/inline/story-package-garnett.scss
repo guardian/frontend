@@ -1,41 +1,76 @@
 @import '../_vars';
 @import '../_mixins';
 
+@mixin kicker-override($tone, $colour) {
+    .fc-item--pillar-#{$tone} {
+        .fc-item__kicker,
+        .rich-link__kicker,
+        .fc-item__byline {
+            color: $colour;
+        }
+
+        .fc-item__kicker {
+            &:after {
+                background-color: $colour;
+            }
+        }
+
+    }
+
+    .fc-sublink--pillar-#{$tone} {
+        .fc-sublink__kicker {
+            color: $colour;
+        }
+    }
+}
+
 .fc-container--story-package {
     .fc-container__header__title {
         & > span,
         span.fc-container__title__text {
             background-color: yellow;
             display: inline;
-            box-shadow: 0px 0px 0px 4px yellow;
-            line-height: 30px;
+            box-shadow: 0px 1px 0 4px yellow;
+            line-height: 32px;
         }
     }
+
+    .fc-item {
+        background-color: $story-package-garnett;
+
+        &:hover {
+            background-color: darken($story-package-garnett, 10%);
+
+            .fc-item__kicker {
+                background-color: darken($story-package-garnett, 10%);
+            }
+        }
+    }
+
+    .fc-item__kicker {
+        background-color: $story-package-garnett;
+    }
+
+    .fc-item__headline {
+        color: #ffffff;
+    }
+
+    .fc-item__standfirst {
+        color: #ffffff;
+    }
+
+    .fc-sublink__title {
+        color: #ffffff;
+    }
+
+    //These need to exist for all kickers because of tone on tone action
+    @include kicker-override(life, $lifestyle-garnett-main-media-1);
+    @include kicker-override(arts, $arts-garnett-media-main-1);
+    @include kicker-override(sports, $sport-garnett-media-main-1);
+    @include kicker-override(opinion, $opinion-garnett-media-main-1);
+    @include kicker-override(news, $news-garnett-media-main-1);
 }
 
-
-// @mixin kicker-override($tone, $colour) {
-//     .fc-item--pillar-#{$tone} {
-//         .fc-item__kicker,
-//         .rich-link__kicker,
-//         .fc-item__byline {
-//             color: $colour;
-//         }
-//
-//         .fc-item__kicker {
-//             &:after {
-//                 background-color: $colour;
-//             }
-//         }
-//
-//     }
-//
-//     .tone-#{$tone}--sublink {
-//         .fc-sublink__kicker {
-//             color: $colour;
-//         }
-//     }
-// }
 //
 // .fc-container--story-package  {
 //     background-color: $neutral-4;
@@ -162,12 +197,7 @@
 //         box-shadow: -5px 0 5px -2px lighten($story-package, 5%);
 //     }
 //
-//     //These need to exist for all kickers because of tone on tone action
-//     @include kicker-override(life, $lifestyle-garnett-main-media-1);
-//     @include kicker-override(arts, $arts-garnett-media-main-1);
-//     @include kicker-override(sports, $sport-garnett-media-main-1);
-//     @include kicker-override(opinion, $opinion-garnett-media-main-1);
-//     @include kicker-override(news, $news-garnett-media-main-1);
+
 //
 //
 //     // Item Level
