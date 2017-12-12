@@ -65,6 +65,13 @@ data-test-id="facia-card"
             </div>
         }
 
+        @if(item.contentType.name.toLowerCase == "gallery") {
+            <div class="fc-item__media-meta">
+                @inlineSvg("camera", "icon")
+                Gallery
+            </div>
+        }
+
         @meta(item)
     </div>
 }

@@ -23,10 +23,7 @@ trait FrontJsonFapi extends Logging {
   }
 
   def getLite(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.getLite $path") {
-//    pressedPageFromS3(getAddressForPath(path, LiteType.suffix))
-    // TODO temporary fix until solution is implemented for container layout issues.
-    // Containers are missing stories after filtering is applied. This is because the lite versions of fronts do not have extra stories to replace the filtered ones.
-    get(path)
+    pressedPageFromS3(getAddressForPath(path, LiteType.suffix))
   }
 
   private def pressedPageFromS3(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.pressedPageFromS3 $path") {

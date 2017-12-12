@@ -87,4 +87,8 @@
             }
         }
     }
+
+    &:focus ~ .new-header__menu-toggle .pillar-link--sections {
+        color: #ffffff;
+    }
 }

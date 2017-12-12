@@ -1,12 +1,14 @@
 package form
 
-import com.gu.identity.model.{Consent,User}
+import com.gu.identity.model.{Consent,User,ConsentWording}
 import com.gu.identity.model.Consent._
 import idapiclient.UserUpdateDTO
 import play.api.data.Forms._
 import play.api.data.JodaForms.jodaDate
 import play.api.data.Mapping
 import play.api.i18n.MessagesProvider
+import utils.SafeLogging
+import scala.util.{Try, Success, Failure}
 
 class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
@@ -108,17 +110,41 @@ case class PrivacyFormData(
   }
 }
 
-object PrivacyFormData {
+object PrivacyFormData extends SafeLogging {
   /**
     * Converts User DO from IDAPI to form processing DTO PrivacyFromData
     *
     * @param userDO Identity User domain model from IDAPI defiend in identity-model library
     * @return form processing DTO PrivacyFromData
     */
-  def apply(userDO: User): PrivacyFormData =
+  def apply(userDO: User): PrivacyFormData = {
     PrivacyFormData(
       receiveGnmMarketing = userDO.statusFields.receiveGnmMarketing,
       receive3rdPartyMarketing = userDO.statusFields.receive3rdPartyMarketing,
       allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling,
-      consents = if (userDO.consents.isEmpty) defaultConsents else userDO.consents)
+      consents = if (userDO.consents.isEmpty) defaultConsents else onlyValidConsents(userDO)
+    )
+  }
+
+  /**
+    * FIXME: Once GDPR goes live, clean Mongo DB of old consents, and remove this method.
+    *
+    * Filter out any invalid consents that are still lingering in Mongo DB.
+    *
+    * For example, if consent id is renamed, then some users might still have the old consent.
+    *
+    * @param userDO Identity User domain model from IDAPI defiend that might contain some old invalid consents
+    * @return list of valid consents
+    */
+  private def onlyValidConsents(userDO: User): List[Consent] = {
+    def consentExistsInModel(consent:Consent): Boolean =
+      Try(Consent.wording(consent.id, consent.version)).isSuccess
+
+    val (validConsents, invalidConsents) = userDO.consents.partition(consentExistsInModel)
+
+    invalidConsents.foreach(consent =>
+      logger.error(s"User ${userDO.id} has invalid consent! Remove consent from Mongo DB: $consent"))
+
+    validConsents
+  }
 }

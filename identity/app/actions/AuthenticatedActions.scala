@@ -156,6 +156,6 @@ class AuthenticatedActions(
     recentlyAuthenticated andThen apiUserShouldRepermissionRefiner
 
   def permissionAuthentication: ActionBuilder[AuthRequest, AnyContent] =
-    noOpActionBuilder andThen permissionRefiner
+    noOpActionBuilder andThen permissionRefiner andThen apiVerifiedUserRefiner
 
 }

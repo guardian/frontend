@@ -48,6 +48,7 @@
 @import 'item-types/_fc-item--type-liveblog';
 @import 'item-types/_fc-item--type-video';
 @import 'item-types/_fc-item--type-audio';
+@import 'item-types/_fc-item--type-gallery';
 @import 'item-types/_fc-item--type-comment';
 
 .fc-slice__item {
@@ -69,6 +70,13 @@
     &.l-list__item {
         margin-bottom: 0;
         padding-bottom: $gs-baseline;
+    }
+
+    + .fc-slice__item {
+        @include vertical-item-separator;
+    }
+    + .fc-slice__item--no-mpu:before {
+        border-left: 0 !important;
     }
 }
 

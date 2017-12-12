@@ -43,9 +43,14 @@
                  data-component="@componentName"
                  aria-expanded="true">
 
-                @if(containerDefinition.isStoryPackage){
+                @if(containerDefinition.isStoryPackage && !experiments.ActiveExperiments.isParticipating(experiments.Garnett)){
                     <style>
                     @Html(common.Assets.css.inlineStoryPackage)
+                    </style>
+                }
+                @if(containerDefinition.isStoryPackage && experiments.ActiveExperiments.isParticipating(experiments.Garnett)){
+                    <style>
+                    @Html(common.Assets.css.inlineStoryPackageGarnett)
                     </style>
                 }
 
