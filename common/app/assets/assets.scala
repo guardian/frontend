@@ -59,6 +59,7 @@ object css {
 
   def head(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
   def inlineStoryPackage(implicit context: ApplicationContext): String = inline("story-package")
+  def inlineStoryPackageGarnett(implicit context: ApplicationContext): String = inline("story-package-garnett")
   def inlinePhotoEssay(implicit context: ApplicationContext): String = inline("article-photo-essay")
   def amp(implicit context: ApplicationContext): String = inline("head.amp")
   def hostedAmp(implicit context: ApplicationContext): String = inline("head.hosted-amp")
@@ -84,7 +85,7 @@ object css {
 
   private def project(project: String)(implicit request: RequestHeader): String = {
     project match {
-      case "facia" => "stylesheets/facia.css"
+      case "facia" => s"stylesheets/$FaciaCSSFile.css"
       case _ => s"stylesheets/$ContentCSSFile.css"
     }
   }

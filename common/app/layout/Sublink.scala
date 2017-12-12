@@ -3,6 +3,7 @@ package layout
 import cards.{MediaList, Standard}
 import com.gu.commercial.branding.Branding
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentapi.client.utils.DesignType
 import common.Edition.defaultEdition
 import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
@@ -39,7 +40,6 @@ case class EditionalisedLink(
 object Sublink {
   def fromFaciaContent(faciaContent: PressedContent): Sublink = {
     val storyContent: Option[PressedStory] = faciaContent.properties.maybeContent
-    val pillar: Pillar = Pillar(storyContent)
     val contentType: DotcomContentType = DotcomContentType(storyContent)
 
     Sublink(
@@ -48,8 +48,9 @@ object Sublink {
       EditionalisedLink.fromFaciaContent(faciaContent),
       faciaContent.card.cardStyle,
       faciaContent.card.mediaType,
-      pillar.name.toLowerCase(),
-      contentType.name.toLowerCase()
+      Pillar(storyContent),
+      contentType,
+      storyContent.map(_.metadata.designType),
     )
   }
 }
@@ -60,8 +61,9 @@ case class Sublink(
   url: EditionalisedLink,
   cardStyle: CardStyle,
   mediaType: Option[MediaType],
-  pillar: String,
-  contentType: String
+  pillar: Option[Pillar],
+  contentType: DotcomContentType,
+  designType: Option[DesignType],
 )
 
 object DiscussionSettings {
@@ -346,7 +348,8 @@ case class ContentCard(
     case _ => false
   }
 
-  val pillar: Pillar = Pillar(storyContent)
+  val designType: Option[DesignType] = storyContent.map(_.metadata.designType)
+  val pillar: Option[Pillar] = Pillar(storyContent)
   val contentType: DotcomContentType = DotcomContentType(storyContent)
 }
 object ContentCard {

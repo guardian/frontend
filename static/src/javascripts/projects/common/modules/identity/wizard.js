@@ -26,23 +26,58 @@ const wizardPageChangedEv = 'wizardPageChanged';
 
 const ERR_WIZARD_INVALID_POSITION = 'Invalid position';
 
+declare class PopStateEvent extends Event {
+    state: Object;
+}
+
+const getPositionFromName = (
+    wizardEl: HTMLElement,
+    position: string
+): number => {
+    const pageEl = wizardEl.querySelector(
+        `[data-wizard-step-name=${position}]`
+    );
+    if (pageEl && pageEl.parentElement && pageEl.parentElement.children) {
+        return [...pageEl.parentElement.children].indexOf(pageEl);
+    }
+
+    throw new Error(ERR_WIZARD_INVALID_POSITION);
+};
+
+const getPositionName = (wizardEl: HTMLElement, step: number): string => {
+    const stepEl = [...wizardEl.getElementsByClassName(stepClassname)][step];
+
+    if (stepEl && stepEl.dataset && stepEl.dataset.wizardStepName) {
+        return stepEl.dataset.wizardStepName;
+    }
+
+    return `step-${step}`;
+};
+
 const getIdentifier = (wizardEl: HTMLElement): Promise<string> =>
     fastdom.read(() => wizardEl.id || containerClassname);
 
-const getStateObject = (
+const getPosition = (wizardEl: HTMLElement): Promise<number> =>
+    Promise.resolve(parseInt(wizardEl.dataset.position, 10));
+
+const getInfoObject = (
     wizardEl: HTMLElement,
-    position: number
-): Promise<{ dispatcher: string, position: number }> =>
-    getIdentifier(wizardEl).then(wizardElIdentifier => ({
+    optionalPosition: ?number
+): Promise<{| dispatcher: string, position: number, positionName: string |}> =>
+    Promise.all([
+        getIdentifier(wizardEl),
+        optionalPosition || getPosition(wizardEl),
+    ]).then(([wizardElIdentifier, position]) => ({
         dispatcher: wizardElIdentifier,
         position,
+        positionName: getPositionName(wizardEl, position),
     }));
 
 const pushBrowserState = (
     wizardEl: HTMLElement,
     position: number
 ): Promise<void> =>
-    getStateObject(wizardEl, position).then(stateObject =>
+    getInfoObject(wizardEl, position).then(stateObject =>
         window.history.pushState(stateObject, '')
     );
 
@@ -50,7 +85,7 @@ const updateBrowserState = (
     wizardEl: HTMLElement,
     position: number
 ): Promise<void> =>
-    getStateObject(wizardEl, position).then(stateObject =>
+    getInfoObject(wizardEl, position).then(stateObject =>
         window.history.replaceState(stateObject, '')
     );
 
@@ -165,11 +200,11 @@ const updateSteps = (
         });
     });
 
-export const setPosition = (
+const setPosition = (
     wizardEl: HTMLElement,
-    newPosition: number,
+    unresolvedNewPosition: number | string,
     userInitiated: boolean = true
-): Promise<Array<*>> =>
+): Promise<void> =>
     fastdom
         .read(() => [
             wizardEl.getBoundingClientRect().top - 20,
@@ -187,6 +222,10 @@ export const setPosition = (
                     stepEls: Array<HTMLElement>,
                 ]
             ) => {
+                const newPosition: number =
+                    typeof unresolvedNewPosition === 'string'
+                        ? getPositionFromName(wizardEl, unresolvedNewPosition)
+                        : unresolvedNewPosition;
                 if (newPosition < 0 || !stepEls[newPosition]) {
                     throw new Error(ERR_WIZARD_INVALID_POSITION);
                 }
@@ -195,29 +234,42 @@ export const setPosition = (
                 }
                 wizardEl.dataset.length = stepEls.length.toString();
                 wizardEl.dataset.position = newPosition.toString();
-                return Promise.all([
-                    userInitiated
-                        ? pushBrowserState(wizardEl, newPosition)
-                        : updateBrowserState(wizardEl, newPosition),
-                    updateCounter(wizardEl),
-                    updateSteps(
-                        wizardEl,
-                        currentPosition,
-                        newPosition,
-                        stepEls
-                    ),
-                    wizardEl.dispatchEvent(
-                        new CustomEvent(wizardPageChangedEv, {
-                            bubbles: true,
-                            detail: {
-                                currentPosition,
-                                newPosition,
-                            },
-                        })
-                    ),
-                ]);
+                wizardEl.dataset.positionName = getPositionName(
+                    wizardEl,
+                    newPosition
+                );
+
+                return [currentPosition, newPosition, stepEls];
             }
         )
+        .then(([currentPosition, newPosition, stepEls]) =>
+            Promise.all([
+                currentPosition,
+                newPosition,
+                userInitiated
+                    ? pushBrowserState(wizardEl, newPosition)
+                    : updateBrowserState(wizardEl, newPosition),
+                updateCounter(wizardEl),
+                updateSteps(wizardEl, currentPosition, newPosition, stepEls),
+            ])
+        )
+        .then(([currentPosition, newPosition]) =>
+            Promise.all([
+                getInfoObject(wizardEl, currentPosition),
+                getInfoObject(wizardEl, newPosition),
+            ])
+        )
+        .then(([currentInfo, newInfo]) => {
+            wizardEl.dispatchEvent(
+                new CustomEvent(wizardPageChangedEv, {
+                    bubbles: true,
+                    detail: {
+                        ...newInfo,
+                        previous: currentInfo,
+                    },
+                })
+            );
+        })
         .catch((error: Error) => {
             if (error.message === ERR_WIZARD_INVALID_POSITION) {
                 return setPosition(wizardEl, 0);
@@ -225,14 +277,13 @@ export const setPosition = (
             throw error;
         });
 
-export const enhance = (wizardEl: HTMLElement): Promise<void> =>
+const enhance = (wizardEl: HTMLElement): Promise<void> =>
     Promise.all([
         getIdentifier(wizardEl),
         setPosition(wizardEl, 0, false),
     ]).then(([wizardElIdentifier]) => {
-        window.addEventListener('popstate', ev => {
+        window.addEventListener('popstate', (ev: PopStateEvent) => {
             if (
-                ev.state &&
                 ev.state.dispatcher &&
                 ev.state.dispatcher === wizardElIdentifier
             ) {
@@ -241,10 +292,16 @@ export const enhance = (wizardEl: HTMLElement): Promise<void> =>
             }
         });
 
+        /*
+        The following code checks for the
+        existence of .closest() to catch any HTMLElement
+        derived types such as canvases or svgs
+        */
         wizardEl.addEventListener('click', (ev: Event) => {
             if (
-                ev.target instanceof HTMLElement &&
-                ev.target.closest(`.${nextButtonElClassname}`)
+                ev.target.closest &&
+                ev.target.closest instanceof Function &&
+                ev.target.closest(`.${nextButtonElClassname}`) !== null
             ) {
                 setPosition(
                     wizardEl,
@@ -252,8 +309,9 @@ export const enhance = (wizardEl: HTMLElement): Promise<void> =>
                 );
             }
             if (
-                ev.target instanceof HTMLElement &&
-                ev.target.closest(`.${prevButtonElClassname}`)
+                ev.target.closest &&
+                ev.target.closest instanceof Function &&
+                ev.target.closest(`.${prevButtonElClassname}`) !== null
             ) {
                 setPosition(
                     wizardEl,
@@ -263,4 +321,10 @@ export const enhance = (wizardEl: HTMLElement): Promise<void> =>
         });
     });
 
-export { containerClassname, wizardPageChangedEv };
+export {
+    containerClassname,
+    wizardPageChangedEv,
+    enhance,
+    setPosition,
+    getInfoObject,
+};

@@ -123,20 +123,21 @@ from scrolling */
     }
 
     &:focus {
+        // Prevents distracting focus state on click
         outline: 0;
     }
 }
 
 .new-header__logo__svg {
     display: block;
-    height: calc(3 / 16 * 180px);
+    height: 34px;
     margin-bottom: $gs-baseline / 2;
     margin-right: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;
     width: 180px;
 
     @include mq(mobileMedium) {
-        height: calc(3 / 16 * 225px);
+        height: 42px;
         width: 225px;
     }
 
@@ -146,15 +147,15 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        height: calc(3 / 16 * 345px);
-        margin-top: $gs-baseline + $gs-baseline / 4;
+        height: 65px;
         width: 345px;
+        margin-top: $gs-baseline + $gs-baseline / 4;
     }
 
     @include mq(desktop) {
-        height: calc(3 / 16 * 411px);
-        margin-bottom: $gs-baseline / 2;
+        height: 77px;
         width: 411px;
+        margin-bottom: $gs-baseline / 2;
     }
 
     body:not(.has-page-skin) & {
@@ -164,9 +165,9 @@ from scrolling */
     }
 
     .new-header--slim & {
-        height: calc(3 / 16 * 180px);
-        margin: 5px ($veggie-burger-large + $gs-gutter) 0 0;
+        height: 34px;
         width: 180px;
+        margin: 5px ($veggie-burger-large + $gs-gutter) 0 0;
 
         @include mq(mobileLandscape) {
             margin-right: $veggie-burger-large + $gs-gutter + ($gs-gutter / 2);
@@ -182,7 +183,51 @@ from scrolling */
     height: $slim-nav-height;
 }
 
+
+.new-header .popup--search {
+    background-color: #ffffff;
+    border-radius: $gs-baseline / 4;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
+    padding: $gs-baseline 0;
+    top: $gs-baseline * 2 + $gs-baseline / 2;
+}
+
 // Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
 x:-o-prefocus, .new-header__cta-container  {
     display: none;
+}
+
+.feedback-form {
+    background-color: $multimedia-main-2;
+    box-sizing: border-box;
+    bottom: 0;
+    color: $neutral-1;
+    font-size: 14px;
+    line-height: 18px;
+    padding: ($gs-baseline / 2) ($gs-gutter / 4) ($gs-baseline + $gs-baseline / 2);
+    float: right;
+    margin-top: 6px;
+    max-width: gs-span(4);
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            float: none;
+            position: absolute;
+        }
+    }
+}
+
+.feedback-form__link {
+    color: $guardian-brand;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.feedback-form__icon__svg {
+    margin-bottom: -2px;
+    fill: $neutral-1;
 }

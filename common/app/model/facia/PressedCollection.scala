@@ -29,7 +29,8 @@ case class PressedCollection(
   hideKickers: Boolean,
   showDateHeader: Boolean,
   showLatestUpdate: Boolean,
-  config: CollectionConfig
+  config: CollectionConfig,
+  hasMore: Boolean
 ) {
 
   lazy val collectionConfigWithId = CollectionConfigWithId(id, config)
@@ -37,6 +38,8 @@ case class PressedCollection(
   lazy val curatedPlusBackfillDeduplicated = (curated ++ backfill).distinctBy { c =>
     c.properties.maybeContentId.getOrElse(c.card.id)
   }
+
+  lazy val distinct = curatedPlusBackfillDeduplicated.distinctBy(_.header.url)
 
   def branding(edition: Edition): Option[ContainerBranding] = {
     ContainerBrandingFinder.findBranding(
@@ -52,7 +55,8 @@ object PressedCollection {
       collection: com.gu.facia.api.models.Collection,
       curated: List[PressedContent],
       backfill: List[PressedContent],
-      treats: List[PressedContent]): PressedCollection =
+      treats: List[PressedContent]
+  ): PressedCollection =
     PressedCollection(
       collection.id,
       collection.displayName,
@@ -72,5 +76,7 @@ object PressedCollection {
       collection.collectionConfig.hideKickers,
       collection.collectionConfig.showDateHeader,
       collection.collectionConfig.showLatestUpdate,
-      CollectionConfig.make(collection.collectionConfig))
+      CollectionConfig.make(collection.collectionConfig),
+      hasMore = false
+    )
 }

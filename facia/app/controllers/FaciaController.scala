@@ -60,7 +60,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     getSomeCollections(collectionsPath, count, offset, "none").map { collections =>
       Cached(CacheTime.Facia) {
         JsonComponent(
-          "items" -> JsArray(collections.getOrElse(List()).map(getCollection))
+          "items" -> JsArray(collections.map(getCollection))
         )
       }
     }
@@ -103,13 +103,21 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   def renderFrontJsonLite(path: String): Action[AnyContent] = Action.async { implicit request =>
-    frontJsonFapi.get(path).map {
+    frontJsonFapi.getLite(path).map {
         case Some(pressedPage) => Cached(CacheTime.Facia)(JsonComponent(FapiFrontJsonLite.get(pressedPage)))
         case None => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))}
   }
 
+  private def findPressedPage(path: String): Future[Option[PressedPage]] = {
+    if (path.startsWith("email/")) {
+      frontJsonFapi.get(path)
+    } else {
+      frontJsonFapi.getLite(path)
+    }
+  }
+
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureResult = frontJsonFapi.get(path).flatMap {
+    val futureResult = findPressedPage(path).flatMap {
       case Some(faciaPage) =>
         successful(
           if (request.isRss) {
@@ -177,7 +185,8 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             1,
             containerLayout,
             CollectionConfigWithId(collectionId, config),
-            CollectionEssentials.fromPressedCollection(collection)
+            CollectionEssentials.fromPressedCollection(collection),
+            hasMore = false
           )
 
           val html = container(containerDefinition, FrontProperties.empty)
@@ -223,11 +232,20 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
       })
     }.getOrElse(successful(None))
 
-  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[Option[List[PressedCollection]]] =
-      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[List[PressedCollection]] =
+    frontJsonFapi.get(path).map { maybePage =>
+      maybePage.map { faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
-        Some(faciaPage.collections.filterNot(collection => (collection.curated ++ collection.backfill).length < 2 || collection.displayName == "most popular" || collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)).slice(offset, offset + num))
-      })
+        faciaPage
+          .collections
+          .filterNot { collection =>
+            (collection.curated ++ collection.backfill).length < 2 ||
+              collection.displayName == "most popular" ||
+              collection.displayName.toLowerCase.contains(containerNameToFilter.toLowerCase)
+          }
+          .slice(offset, offset + num)
+      }.getOrElse(Nil)
+    }
 
   /* Google news hits this endpoint */
   def renderCollectionRss(id: String): Action[AnyContent] = Action.async { implicit request =>

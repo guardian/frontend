@@ -1,4 +1,4 @@
-@import model.EmailNewsletter
+@import com.gu.identity.model.{EmailNewsletters, EmailNewsletter}
 @import common.LinkTo
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.Switch._
@@ -8,7 +8,8 @@
 @(
     emailPrefsForm: Form[_],
     emailSubscriptions: List[String],
-    newsletter: EmailNewsletter
+    newsletter: EmailNewsletter,
+    transferV1SubscriptionsPrompt: Boolean = false
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages, request: RequestHeader)
 
 @buildFooter(newsletter: EmailNewsletter) = {
@@ -17,10 +18,17 @@
         @newsletter.frequency
     </div>
     @if(newsletter.exampleUrl.isDefined){
-        <a target="preview-email-@newsletter.listId" href="@LinkTo({ newsletter.exampleUrl.getOrElse("") })">
+        <a class="manage-account__switch-footer-email-preview" target="preview-email-@newsletter.listId" href="@LinkTo({ newsletter.exampleUrl.getOrElse("") })">
             See the latest email
         </a>
     }
+}
+
+@isPreTicked = @{
+    if (transferV1SubscriptionsPrompt)
+        None
+    else
+        Some(newsletter.subscribedTo(emailSubscriptions).toString)
 }
 
 @newsletterField = @{
@@ -30,7 +38,7 @@
         constraints = Nil,
         format = None,
         errors = Nil,
-        value = Some(newsletter.subscribedTo(emailSubscriptions).toString)
+        value = isPreTicked
     )
 }
 

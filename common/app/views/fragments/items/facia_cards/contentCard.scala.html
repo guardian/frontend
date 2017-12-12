@@ -7,6 +7,7 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.atoms.youtube
 @import views.html.fragments.media.video
+@import views.html.fragments.inlineSvg
 @import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
 
 @import Function.const
@@ -35,6 +36,51 @@ data-test-id="facia-card"
 
 </div>
 
+@mediaMeta(item: layout.ContentCard) = {
+    <div class="fc-item__meta-wrapper">
+        @if(item.contentType.name.toLowerCase == "video") {
+            @item.displayElement match {
+                case Some(InlineVideo(videoElement, _, _, _)) => {
+                    <div class="fc-item__media-meta">
+                        @inlineSvg("video-icon", "icon")
+                        @videoElement.videos.formattedDuration
+                    </div>
+                }
+
+                case Some(media@InlineYouTubeMediaAtom(youTubeAtom, _)) => {
+                    <div class="fc-item__media-meta">
+                        @inlineSvg("video-icon", "icon")
+                        @youTubeAtom.formattedDuration
+                    </div>
+                }
+
+                case _ => {}
+            }
+        }
+
+        @if(item.contentType.name.toLowerCase == "audio") {
+            <div class="fc-item__media-meta">
+                @inlineSvg("volume-high", "icon")
+                Podcast
+            </div>
+        }
+
+        @if(item.contentType.name.toLowerCase == "gallery") {
+            <div class="fc-item__media-meta">
+                @inlineSvg("camera", "icon")
+                Gallery
+            </div>
+        }
+
+        @meta(item)
+    </div>
+}
+
+@standfirst(item: layout.ContentCard) = {
+    @item.trailText.filter(const(item.showStandfirst)).map { text =>
+        <div class="fc-item__standfirst">@Html(text)</div>
+    }
+}
 
 @container(item: layout.ContentCard) = {
     <div class="fc-item__container">
@@ -164,17 +210,18 @@ data-test-id="facia-card"
                 }
             </div>
 
-            @if(mvt.Garnett.isParticipating) {
-                <div class="fc-item__standfirst-wrapper">
-                    @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                        <div class="fc-item__standfirst">@Html(text)</div>
-                    }
-                    @meta(item)
-                </div>
-            } else {
-                @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                    <div class="fc-item__standfirst">@Html(text)</div>
+            @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+                @if(item.isMediaLink) {
+                    @standfirst(item)
+                    @mediaMeta(item)
+                } else {
+                    <div class="fc-item__standfirst-wrapper">
+                        @standfirst(item)
+                        @meta(item)
+                    </div>
                 }
+            } else {
+                @standfirst(item)
             }
 
             @if(item.isLive && item.displaySettings.showLivePlayable && !isList) {
@@ -185,9 +232,10 @@ data-test-id="facia-card"
                 <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
             }
 
-            @if(!mvt.Garnett.isParticipating) {
+            @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                 @meta(item)
             }
+
         </div>
 
         @if(item.cardTypes.showCutOut) {

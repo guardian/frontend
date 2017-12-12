@@ -1,0 +1,46 @@
+@()
+@import conf.switches.Switch
+@import experiments.Experiment
+@import experiments.ActiveExperiments.allExperiments
+
+<div class="abtests-server-based">
+    <h3 class="abtest-item__titlebar">Server-based tests</h3>
+
+    <div class="row">
+        <div class="col-md-7">
+            <table class="table table-bordered ">
+                <thead>
+                    <th colspan="4">Name</th>
+                </thead>
+                <tbody>
+                    @allExperiments.map { experiment =>
+                        <tr>
+                            <td colspan="4">@experiment.name @status(experiment)</td>
+                        </tr>
+                    }
+                    @if(allExperiments.isEmpty) {
+                        <tr><td colspan="7">There are currently no server side tests</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@status(experiment: Experiment) = {
+    @if(Switch.expiry(experiment.switch).hasExpired) {
+        <span class="abtest-server-label label label-danger">expired</span>
+    } else {
+        @if(Switch.expiry(experiment.switch).expiresSoon) {
+            <span class="abtest-server-label label label-success">active</span>
+        } else {
+            <span class="abtest-server-label label label-warning">expires soon</span>
+        }
+
+        @if(experiment.switch.isSwitchedOn) {
+            <span class="abtest-server-label label label-success">on</span>
+        } else {
+            <span class="abtest-server-label label label-danger">off</span>
+        }
+    }
+}

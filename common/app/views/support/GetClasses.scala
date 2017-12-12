@@ -4,6 +4,8 @@ import layout._
 import model.pressed.{Audio, Gallery, Video}
 import slices.{Dynamic, DynamicSlowMPU}
 import play.api.mvc.RequestHeader
+import model.Pillar.RichPillar
+import model.ContentDesignType.RichContentDesignType
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob): String = {
@@ -18,10 +20,10 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--pillar-" + item.pillar.name.toLowerCase(), mvt.Garnett.isParticipating),
-      ("fc-item--type-" + item.contentType.name.toLowerCase(), mvt.Garnett.isParticipating),
+      ("fc-item--pillar-" + item.pillar.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
+      ("fc-item--type-" + item.designType.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--has-cutout", item.cutOut.isDefined),
-      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !mvt.Garnett.isParticipating),
+      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
       ("fc-item--force-image-upgrade", isFirstContainer),
@@ -41,10 +43,10 @@ object GetClasses {
 
   def forSubLink(sublink: Sublink)(implicit request: RequestHeader): String = RenderClasses(Map(
     ("fc-sublink", true),
-    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", !mvt.Garnett.isParticipating),
+    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
     (sublinkMediaTypeClass(sublink).getOrElse(""), true),
-    ("fc-sublink--pillar-" + sublink.pillar, mvt.Garnett.isParticipating),
-    ("fc-sublink--type-" + sublink.contentType, mvt.Garnett.isParticipating)
+    ("fc-sublink--pillar-" + sublink.pillar.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
+    ("fc-sublink--type-" + sublink.designType.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett))
   ))
 
   def mediaTypeClass(faciaCard: ContentCard): Option[String] = faciaCard.mediaType map {

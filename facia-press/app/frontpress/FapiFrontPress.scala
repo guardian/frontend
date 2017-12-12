@@ -1,5 +1,6 @@
 package frontpress
 
+import metrics.SamplerMetric
 import com.gu.contentapi.client.ContentApiClientLogic
 import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
@@ -14,7 +15,7 @@ import conf.Configuration
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CapiHttpClient, CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
 import services.fronts.FrontsApi
-import model._
+import model.{PressedPage, _}
 import model.facia.PressedCollection
 import model.pressed._
 import org.joda.time.DateTime
@@ -22,12 +23,14 @@ import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
+import layout.slices.Container
+
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit ec: ExecutionContext) extends FapiFrontPress {
 
-  override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putLiveFapiPressedJson(path, json)
+  override def putPressedJson(path: String, json: String, pressedType: PressedPageType): Unit = S3FrontsApi.putLiveFapiPressedJson(path, json, pressedType)
   override def isLiveContent: Boolean = true
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
@@ -55,7 +58,7 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
 
   implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
-  override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putDraftFapiPressedJson(path, json)
+  override def putPressedJson(path: String, json: String, pressedType: PressedPageType): Unit = S3FrontsApi.putDraftFapiPressedJson(path, json, pressedType)
   override def isLiveContent: Boolean = false
 
   override def collectionContentWithSnaps(
@@ -80,7 +83,7 @@ trait FapiFrontPress extends Logging {
   implicit def fapiClient: ApiClient
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
-  def putPressedJson(path: String, json: String): Unit
+  def putPressedJson(path: String, json: String, pressedType: PressedPageType): Unit
   def isLiveContent: Boolean
 
   def collectionContentWithSnaps(
@@ -112,10 +115,9 @@ trait FapiFrontPress extends Logging {
     val stopWatch: StopWatch = new StopWatch
 
     val pressFuture = getPressedFrontForPath(path)
-      .map { pressedFront: PressedPage =>
-        val json: String = Json.stringify(Json.toJson(pressedFront))
-        FaciaPressMetrics.FrontPressContentSize.recordSample(json.getBytes.length, new DateTime())
-        putPressedJson(path, json)
+      .map { pressedFronts: PressedPageVersions =>
+        putPressedPage(path, pressedFronts.full, FullType)
+        putPressedPage(path, pressedFronts.lite, LiteType)
       }.fold(
         e => {
           StatusNotification.notifyFailedJob(path, isLive = isLiveContent, e)
@@ -148,7 +150,19 @@ trait FapiFrontPress extends Logging {
     pressFuture
   }
 
-  def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollection] =
+  private def putPressedPage(path: String, pressedFront: PressedPage, pressedType: PressedPageType): Unit = {
+    val json: String = Json.stringify(Json.toJson(pressedFront))
+
+    val metric: SamplerMetric = pressedType match {
+      case FullType => FaciaPressMetrics.FrontPressContentSize
+      case LiteType => FaciaPressMetrics.FrontPressContentSizeLite
+    }
+
+    metric.recordSample(json.getBytes.length, new DateTime())
+    putPressedJson(path, json, pressedType)
+  }
+
+  def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollectionVisibility] = {
     for {
       collection <- FAPI.getCollection(collectionId)
       curated <- getCurated(collection)
@@ -156,20 +170,34 @@ trait FapiFrontPress extends Logging {
       treats <- getTreats(collection)
     } yield {
       val doNotTrimContainerOfTypes = Seq("nav/list")
-      val maxStories: Int = doNotTrimContainerOfTypes
+      val storyCountTotal = curated.length + backfill.length
+      val storyCountMax: Int = doNotTrimContainerOfTypes
         .contains(collection.collectionConfig.collectionType)
-        .toOption(curated.length + backfill.length)
-        .getOrElse(Configuration.facia.collectionCap)
-      val trimmedCurated = curated.take(maxStories)
-      val trimmedBackfill = backfill.take(maxStories - trimmedCurated.length)
-      PressedCollection.fromCollectionWithCuratedAndBackfill(
-        collection,
-        trimmedCurated,
-        trimmedBackfill,
-        treats
-      )
-    }
+        .toOption(storyCountTotal)
+        .getOrElse(Math.min(Configuration.facia.collectionCap, storyCountTotal))
+      val storyCountVisible = Container.storiesCount(collection.collectionConfig.collectionType, curated ++ backfill).getOrElse(storyCountMax)
 
+      val pressedCollection = pressCollection(collection, curated, backfill, treats, storyCountMax)
+      PressedCollectionVisibility(pressedCollection, storyCountVisible)
+    }
+  }
+
+  private def pressCollection(
+    collection: Collection,
+    curated: List[PressedContent],
+    backfill: List[PressedContent],
+    treats: List[PressedContent],
+    storyCount: Int
+  ) = {
+    val trimmedCurated = curated.take(storyCount)
+    val trimmedBackfill = backfill.take(storyCount - trimmedCurated.length)
+    PressedCollection.fromCollectionWithCuratedAndBackfill(
+      collection,
+      trimmedCurated,
+      trimmedBackfill,
+      treats
+    )
+  }
 
   private def getCurated(collection: Collection)(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
@@ -263,14 +291,18 @@ trait FapiFrontPress extends Logging {
       }
     }
 
-  def getPressedFrontForPath(path: String)(implicit executionContext: ExecutionContext): Response[PressedPage] = {
-    val collectionIds = getCollectionIdsForPath(path)
-    collectionIds
-      .flatMap(c => Response.traverse(c.map(generateCollectionJsonFromFapiClient)))
-      .flatMap(result =>
-        Response.Async.Right(getFrontSeoAndProperties(path).map{
-          case (seoData, frontProperties) => PressedPage(path, seoData, frontProperties, result)
-        }))
+  def getPressedFrontForPath(path: String)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    for {
+      collectionIds <- getCollectionIdsForPath(path)
+      pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
+      seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(path))
+    } yield seoWithProperties match {
+      case (seoData, frontProperties) =>
+        val dedupliatedCollections = PressedCollectionVisibility.deduplication(pressedCollections)
+          .map(_.pressedCollectionVersions)
+          .toList
+        PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, dedupliatedCollections)
+    }
   }
 
   private def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)] =

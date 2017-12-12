@@ -138,11 +138,31 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-banner-shorter-copy",
-    "Test highlighting a different sentance in the epic",
+    "ab-acquisitions-epic-testimonials-group",
+    "Test changing the epic testimonial each view",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 12, 13),
+    sellByDate = new LocalDate(2018, 1, 11),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-end-of-year-countdown",
+    "Test a countdown until the end of year",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-split-cta-referrer",
+    "Test a split cta, and changing the product set for people who click on the epic",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 10),
     exposeClientSide = true
   )
 }

@@ -9,8 +9,8 @@
 }
 
 .identity-wrapper-for-bg {
+    @include clearfix();
     background: $neutral-8;
-    overflow: hidden;
     .tabs__container {
         margin: $gs-gutter * 2 auto 0;
     }
@@ -19,6 +19,7 @@
         border: 0;
     }
     .gs-container {
+        @include clearfix();
         background: #ffffff;
         overflow: hidden;
     }
@@ -29,7 +30,12 @@
             padding: 0 $gs-gutter * 1;
         }
     }
-    &--header {
+    &.identity-wrapper-for-bg--overflows {
+        .gs-container {
+            overflow: visible;
+        }
+    }
+    &.identity-wrapper-for-bg--header {
         background: darken($neutral-8, 5%);
         .monocol-wrapper {
             padding-bottom: 0;
@@ -49,6 +55,10 @@
     max-width: gs-span(6);
     padding-bottom: $gs-baseline*4;
     padding-top: $gs-baseline*4;
+
+    &.identity-wrapper--with-wizard {
+        padding-bottom: 0;
+    }
 
     @include mq(desktop) {
         max-width: gs-span(10);

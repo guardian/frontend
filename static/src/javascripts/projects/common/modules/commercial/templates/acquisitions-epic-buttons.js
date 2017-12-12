@@ -4,15 +4,14 @@ import config from 'lib/config';
 
 export const epicButtonsTemplate = (
     { membershipUrl = '', contributeUrl = '' }: CtaUrls,
-    useSupportDomain: boolean = false,
-    suffix: string = ''
+    useSupportDomain: boolean = false
 ) => {
     const contribButton = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
              href="${contributeUrl}"
              target="_blank">
-             Make a contribution ${suffix}
+             Make a contribution
             </a>
         </div>`;
     const supportButtonBecome = `
@@ -20,7 +19,7 @@ export const epicButtonsTemplate = (
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
               href="${membershipUrl}"
               target="_blank">
-              Become a supporter ${suffix}
+              Become a supporter
             </a>
         </div>`;
     const supportButtonSupport = `
@@ -28,7 +27,7 @@ export const epicButtonsTemplate = (
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-single-button"
               href="${membershipUrl}"
               target="_blank">
-              Support the Guardian ${suffix}
+              Support the Guardian
             </a>
         </div>`;
 

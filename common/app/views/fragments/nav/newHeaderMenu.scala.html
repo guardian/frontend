@@ -1,27 +1,29 @@
-@()(implicit request: RequestHeader)
-
 @import common.{ LinkTo, Edition }
-@import navigation.{ NewNavigation, NavigationHelpers, NavLink }
-@import conf.switches.Switches.SearchSwitch
+@import conf.switches.Switches.{SearchSwitch, HeaderFeedback}
+@import navigation.{ NavMenu, NavigationHelpers, NavLink }
 @import views.support.RenderClasses
 
-@sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection, edition: Edition) = {
+@(navMenu: NavMenu)(implicit request: RequestHeader)
+
+@sectionList(pillar: NavLink, edition: Edition) = {
     <li class="menu-item js-navigation-item"
-        data-section-name="@topLevelSection.name"
+        data-section-name="@pillar.title"
         role="menuitem">
+
         <button class="menu-item__title hide-from-desktop js-navigation-toggle"
-                data-link-name="nav2 : secondary : @topLevelSection.name"
+                data-link-name="nav2 : secondary : @pillar.title"
                 aria-haspopup="true"
                 aria-expanded="true">
+
             <i class="menu-item__toggle"></i>
-            @topLevelSection.name
+            @pillar.title
         </button>
 
         <ul class="menu-group menu-group--secondary"
             data-edition="@{edition.id.toLowerCase}"
-            aria-label="Submenu @{topLevelSection.name}"
+            aria-label="Submenu @{pillar.title}"
             role="menu">
-            @topLevelSection.getEditionalisedNavLinks(edition).map { sectionItem =>
+            @pillar.children.map { sectionItem =>
                 <li class="@RenderClasses(Map(
                             "menu-item--home" -> (sectionItem.iconName == "home")
                         ), "menu-item")"
@@ -62,8 +64,8 @@
         <div class="menu__inner gs-container">
             <ul class="menu-group menu-group--primary"
                 role="menubar">
-                @NewNavigation.topLevelSections.map { section =>
-                    @sectionList(section, edition)
+                @navMenu.pillars.map { pillar =>
+                    @sectionList(pillar, edition)
                 }
             </ul>
 
@@ -128,7 +130,7 @@
                 data-edition="@{edition.id.toLowerCase}"
                 role="menubar">
 
-                @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
+                @navMenu.brandExtensions.map { item =>
                     <li class="menu-item hide-from-desktop"
                         role="menuitem">
                         <a class="menu-item__title"
@@ -139,7 +141,7 @@
                     </li>
                 }
 
-                @NewNavigation.OtherLinks.getEditionalisedNavLinks(edition).map { item =>
+                @navMenu.otherLinks.map { item =>
                     <li class="@RenderClasses(Map(
                             "hide-from-desktop" -> (item.title == "the guardian app"),
                             "menu-item--no-border" -> (item.title == "video")
@@ -175,8 +177,21 @@
                 </li>
             </ul>
             <ul class="menu-group menu-group--brand-extensions hide-until-desktop">
-                @NewNavigation.BrandExtensions.getEditionalisedNavLinks(edition).map { item =>
+                @navMenu.brandExtensions.map { item =>
                     @brandExtensions(item)
+                }
+
+                @if(HeaderFeedback.isSwitchedOn) {
+                    <a data-link-name="nav2 : feedback-form"
+                        href="https://goo.gl/forms/j5pMsPSWINu7X2R62">
+
+                        <li class="hide-until-desktop feedback-form">
+                            @fragments.inlineSvg("information-circle", "icon", List("feedback-form__icon"))
+                            We&rsquo;d appreciate your feedback on our new navigation.
+                            <span class="feedback-form__link">
+                            Share your thoughts here.</span>
+                        </li>
+                    </a>
                 }
             </ul>
         </div>

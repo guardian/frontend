@@ -21,9 +21,9 @@
 }
 
 .site-message__inner {
-    display: table;
     padding: 0 $gs-gutter/2;
     width: 100%;
+    display: table;
 
     @include mq(tablet) {
         padding: 0;
@@ -51,8 +51,8 @@
     padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline/2;
     position: relative;
-    display: table-cell;
     vertical-align: middle;
+    display: table-cell;
 
     @include mq(tablet) {
         padding-top: 0;
@@ -166,8 +166,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .site-message__close {
-    display: table-cell;
-    vertical-align: top;
     padding-bottom: $gs-gutter/4;
     padding-top: $gs-gutter/4;
     padding-right: $gs-gutter;
@@ -475,32 +473,29 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
  * Prominent membership message as a feature
  */
 
-
+@mixin scale-paypal-logo($width) {
+    width: $width;
+    height: $width * .14;
+}
 
 .membership__paypal-logo {
+    @include scale-paypal-logo(100px);
     display: inline-block;
-    height: auto;
-    object-fit: contain;
-    margin-top: 0;
-    margin-bottom: -2px;
-    margin-right: 7px;
-    width: 100px;
+    padding-right: 7px;
+    padding-top: 16px;
 
     @include mq($from: mobileMedium) {
-        margin-right: $gs-gutter/2;
-        margin-bottom: -4px;
-        width: 130px;
+        @include scale-paypal-logo(130px);
+        padding-top: 15px;
     }
 
 
     @include mq(desktop) {
-        width: 175px;
-        margin-bottom: 2px;
+        @include scale-paypal-logo(175px);
     }
 
     @include mq($from: wide) {
-        margin-top: 2px;
-        margin-bottom: 0;
+        padding-top: 21px;
     }
 }
 
@@ -545,27 +540,36 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--membership-prominent {
     .site-message__message {
+        max-height: 80%;
+        padding-right: 45px;
         @include mq($until: tablet) {
             padding-left: 5px;
         }
         @include mq($from: tablet) {
             padding-left: 10px;
         }
+        @include mq($from: desktop) {
+            padding-left: 55px;
+            padding-right: 40px;
+        }
     }
     .site-message__media {
         vertical-align: top;
+        position: absolute;
         @include mq($from: mobile) {
             padding-top: 4px;
         }
         @include mq($from: tablet) {
-            display: table-cell;
             padding-top: 1px;
         }
     }
     .site-message__close {
         vertical-align: top;
         width: 36px;
-        height: 36px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
         @include mq($from: mobile) {
             padding-right: 10px;
         }
@@ -574,10 +578,15 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         }
     }
     .site-message__inner {
+        display: block;
         padding-top: 5px;
         padding-left: 5px;
         padding-right: 5px;
         padding-bottom: 10px;
+    }
+
+    .site-message__copy {
+        display: block;
     }
 
     .big-test-container {

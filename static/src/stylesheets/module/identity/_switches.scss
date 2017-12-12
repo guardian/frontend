@@ -1,0 +1,232 @@
+
+/* Switchboard
+   ========================================================================== */
+
+$local-gutter: $gs-gutter / 2;
+$row-gutter: $gs-gutter / 2;
+
+$checkbox-size: $gs-gutter / 1.25;
+
+.manage-account__switches ul,
+.manage-account__switches li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.manage-account__switches {
+
+    ul {
+        display: grid;
+        padding-top: $local-gutter;
+        grid-row-gap: $row-gutter;
+        grid-column-gap: $row-gutter;
+        grid-template-columns: repeat(1, 1fr);
+        grid-auto-rows: min-content;
+        @include mq(tablet) {
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: 1fr;
+        }
+    }
+
+    &.manage-account__switches--wide ul {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    li {
+        display: flex;
+        margin-bottom: $local-gutter;
+        @supports(display: grid) {
+            margin: 0;
+        }
+    }
+
+}
+
+.manage-account__switch {
+    @include fs-textSans(2);
+    background-color: $neutral-8;
+    border-top: 1px solid $neutral-4;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    width: 100%;
+    padding: $local-gutter;
+
+    &:hover {
+        background-color: darken($neutral-8, 1%);
+    }
+
+    &.manage-account__switch--hinted {
+        background-color: $features-support-3;
+        color: $features-main-1;
+        border-color: $features-main-1;
+        &:hover {
+            background-color: darken($features-support-3, 1%);
+        }
+    }
+
+    &:before {
+        content: '\0020';
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: $guardian-brand;
+        height: 2px;
+        transform-origin: center;
+        opacity: 0;
+        transition: .2s;
+    }
+
+    &.is-updating {
+        cursor: wait;
+        pointer-events: none;
+        background-image: none;
+        width: 100%;
+        height: auto;
+        margin-top: 0;
+
+        &:before {
+            animation: manage-account__switch-anim-loading 1s infinite both;
+            opacity: 1;
+        }
+
+        > * {
+            opacity: .5;
+        }
+
+        input[type=checkbox],
+        .manage-account__switch-checkbox {
+            opacity: .25!important;
+        }
+    }
+
+    &.is-just-updated {
+        &:before {
+            animation: manage-account__switch-anim-loaded .5s 1 both;
+            background-color: $news-main-2;
+            opacity: 1;
+        }
+    }
+
+    /*
+    show normal checkboxes on
+    older browsers
+    */
+    @supports (transform: scale(1)) {
+
+        input[type=checkbox] {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            right: 0;
+            & + .manage-account__switch-checkbox {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+
+        input:checked + .manage-account__switch-checkbox {
+            background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20fill%3D%22%23005689%22%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')
+        }
+
+    }
+}
+
+
+.manage-account__switch-checkbox {
+    display: none;
+    contain: strict;
+    height: $checkbox-size;
+    width: $checkbox-size;
+    border: 1px solid $neutral-3;
+    border-radius: 2px;
+    background-size: $checkbox-size / 1.5;
+    background: #ffffff no-repeat center center;
+    cursor: pointer;
+}
+
+.manage-account__switch-content {
+    width: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-left: $local-gutter * 1.5 + $checkbox-size;
+}
+
+.manage-account__switch-title {
+    @include fs-bodyCopy(1);
+    margin-bottom: $local-gutter * .5;
+    cursor: pointer;
+    display: block;
+}
+
+.manage-account__switch-copy {
+    cursor: pointer;
+    opacity: .9;
+    flex: 1 1 auto;
+}
+
+.manage-account__switch-footer-tidbit {
+    @include fs-textSans(1);
+    opacity: .75;
+    svg {
+        vertical-align: -10%;
+        margin-right: .25em;
+    }
+}
+
+.manage-account__switch-footer {
+    margin-top: $local-gutter * 2;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    > :last-child {
+        text-align: right;
+    }
+}
+
+.manage-account__switches--wide {
+    @include mq(desktop) {
+        .manage-account__switch {
+            @include fs-textSans(4, true);
+        }
+        .manage-account__switch-content {
+            flex-direction: row;
+            width: 100%;
+        }
+        .manage-account__switch-title {
+            @include fs-headline(3, true);
+            flex: 0 0 30%;
+            padding: 0 $local-gutter * 2;
+            border-left: 1px solid $neutral-5;
+        }
+        .manage-account__switch-copy {
+            border-left: 1px solid $neutral-5;
+            padding: 0 $local-gutter * 2;
+        }
+    }
+}
+
+@keyframes manage-account__switch-anim-loading {
+    from {
+        transform: translateX(-50%) scaleX(.75);
+    }
+    to {
+        transform: translateX(100%) scaleX(1) ;
+    }
+}
+
+@keyframes manage-account__switch-anim-loaded {
+    from {
+        transform: translateX(-50%) scaleX(.1);
+    }
+    to {
+        transform: translateX(0) scaleX(1);
+    }
+}

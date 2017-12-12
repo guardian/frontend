@@ -21,7 +21,7 @@
         ),
         "content", "tonal", s"tonal--${toneClass(page.item)}")
     ">
-        @if(!mvt.ABNewDesktopHeaderVariant.isParticipating) {
+        @if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {
             <div class="gs-container immersive-main-media__logo">
                 <a href="@LinkTo {/}">
                     <span class="u-h">The Guardian</span>

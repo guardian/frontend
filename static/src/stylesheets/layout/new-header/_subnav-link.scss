@@ -7,7 +7,6 @@
     line-height: $veggie-burger-medium - $gs-baseline;
     padding: 0 ($gs-gutter / 4);
     position: relative;
-    transition: color 150ms ease-out;
 
     @include mq(mobileMedium) {
         font-size: 17px;
@@ -19,18 +18,20 @@
     }
 
     &:after {
-        border-bottom: 1px solid $neutral-5;
-        bottom: -1px;
-        content: '';
-        left: $gs-gutter / 4;
-        position: absolute;
-        right: -9999px;
+        @include mq($until: tablet) {
+            border-bottom: 1px solid $neutral-5;
+            bottom: -1px;
+            content: '';
+            left: $gs-gutter / 4;
+            position: absolute;
+            right: -9999px;
+        }
     }
 
-    &:hover,
-    &:focus {
+    .subnav__item--parent & {
+        display: inline-block;
         color: $guardian-brand;
-        text-decoration: none;
+        font-weight: 700;
     }
 }
 

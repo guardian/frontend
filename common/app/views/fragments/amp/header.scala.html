@@ -1,8 +1,7 @@
 @()(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@import conf.Configuration
-@import common.LinkTo
-@import navigation.NewNavigation
+@import common.{ LinkTo, Edition }
+@import navigation.NavMenu
 @import navigation.ReaderRevenueSite.Membership
 @import navigation.UrlHelpers.{getReaderRevenueUrl, AmpHeader}
 
@@ -31,7 +30,7 @@
         </a>
 
         <ul class="pillars">
-            @NewNavigation.PrimaryLinks.map { link =>
+            @NavMenu(Edition.defaultEdition).pillars.map { link =>
                 <li class="pillars__item">
                     <a class="pillar-link"
                         href="@LinkTo(link.url)"

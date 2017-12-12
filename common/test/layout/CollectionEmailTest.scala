@@ -89,7 +89,8 @@ class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
       hideKickers = false,
       showDateHeader = false,
       showLatestUpdate = false,
-      config = CollectionConfig.empty.copy(displayHints = maxItemsToDisplay.map(m => DisplayHints(Some(m))))
+      config = CollectionConfig.empty.copy(displayHints = maxItemsToDisplay.map(m => DisplayHints(Some(m)))),
+      hasMore = false
     )
   }
 

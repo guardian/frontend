@@ -1,91 +1,103 @@
-.fc-container:not(.fc-container--story-package) .fc-item--type-liveblog {
-    background-color: $live-garnett-main-1;
+@mixin overide-live-blog-colours($pillar, $color1, $color2) {
+    .fc-item--type-liveblog.fc-item--pillar-#{$pillar} {
+        background-color: $color1;
 
-    .fc-item__kicker,
-    .fc-item__container::before {
-        background-color: $live-garnett-main-1;
-    }
-
-    .live-pulse-icon::before {
-        background-color: $live-garnett-main-2;
-    }
-
-    .fc-item__kicker {
-        color: $live-garnett-main-2;
-        border: 0;
-
-        &::after {
-            background-color: $live-garnett-main-2;
+        .fc-item__kicker {
+            background-color: $color1;
         }
-    }
 
-    .fc-item__headline {
-        color: #ffffff;
-    }
-
-    .fc-item__standfirst {
-        color: $live-garnett-main-2;
-    }
-
-    .fc-trail__count--commentcount {
-        color: $live-garnett-main-2;
-
-        .inline-icon {
-            fill: $live-garnett-main-2;
-        }
-    }
-
-    .fc-sublink__title {
-        font-weight: 600;
-
-        &::before {
-            border-top-color: #e1e1e1;
-        }
-    }
-
-    .fc-sublink__link {
-        color: #ffffff;
-    }
-
-    .fc-sublink__kicker {
-        color: $live-garnett-main-2;
-    }
-
-    // darken on hover
-    .u-faux-block-link--hover {
-        background-color: darken($live-garnett-main-1, 5%);
-
-        .fc-item__kicker,
         .fc-item__container::before {
-            background-color: darken($live-garnett-main-1, 5%);
+            background-color: $color2;
         }
-    }
 
-    // list media overrides
-    &.fc-item--list-media-mobile {
-        @include mq($from: mobile, $until: tablet) {
-            .fc-sublink__title {
-                &::before {
-                    border-top-color: $live-garnett-accent;
+        .live-pulse-icon::before {
+            background-color: $color2;
+        }
+
+        .fc-item__kicker {
+            background-color: $color1;
+            color: $color2;
+            border: 0;
+
+            &::before {
+                background-color: $color1;
+            }
+
+            &::after {
+                background-color: $color2;
+            }
+        }
+
+        .fc-item__headline {
+            color: #ffffff;
+        }
+
+        .fc-item__standfirst {
+            color: #ffffff;
+        }
+
+        .fc-trail__count--commentcount {
+            color: $color2;
+
+            .inline-icon {
+                fill: $color2;
+            }
+        }
+
+        .fc-sublink__title {
+            font-weight: 600;
+
+            &::before {
+                border-top-color: #e1e1e1;
+            }
+        }
+
+        .fc-sublink__link {
+            color: #ffffff;
+        }
+
+        .fc-sublink__kicker {
+            color: $color2;
+        }
+
+        // darken on hover
+        .u-faux-block-link--hover {
+            background-color: darken($color1, 5%);
+
+            .fc-item__kicker,
+            .fc-item__container::before {
+                background-color: darken($color1, 5%);
+            }
+
+            .fc-item__kicker::before {
+                background-color: darken($color1, 5%);
+            }
+        }
+
+        // list media overrides
+        &.fc-item--list-media-mobile {
+            @include mq($from: mobile, $until: tablet) {
+                .fc-sublink__title {
+                    &::before {
+                        border-top-color: $live-garnett-accent;
+                    }
+                }
+            }
+        }
+
+        &.fc-item--list-media-tablet {
+            @include mq($from: tablet) {
+                .fc-sublink__title {
+                    &::before {
+                        border-top-color: $live-garnett-accent;
+                    }
                 }
             }
         }
     }
-
-    &.fc-item--list-media-tablet {
-        @include mq($from: tablet) {
-            .fc-sublink__title {
-                &::before {
-                    border-top-color: $live-garnett-accent;
-                }
-            }
-        }
-    }
-
 }
 
-.fc-sublink--type-liveblog {
-    .fc-sublink__kicker {
-        color: $live-garnett-main-1
-    }
-}
+@include overide-live-blog-colours(news, $live-garnett-main-1, $live-garnett-main-2);
+@include overide-live-blog-colours(sport, $live-garnett-sport1, $live-garnett-sport2);
+@include overide-live-blog-colours(arts, $live-garnett-arts1, $live-garnett-arts2);
+@include overide-live-blog-colours(lifestyle, $live-garnett-lifestyle1, $live-garnett-lifestyle2);

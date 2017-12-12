@@ -12,6 +12,7 @@ import com.amazonaws.services.s3.model._
 import com.amazonaws.util.StringInputStream
 import common.Logging
 import conf.Configuration
+import model.PressedPageType
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.ws.{WSClient, WSRequest}
 import sun.misc.BASE64Encoder
@@ -153,19 +154,12 @@ object S3FrontsApi extends S3 {
   lazy val stage = Configuration.facia.stage.toUpperCase
   val namespace = "frontsapi"
   lazy val location = s"$stage/$namespace"
-  private val filename = "pressed.v2.json"
 
-  def getLiveFapiPressedKeyForPath(path: String): String =
-    s"$location/pressed/live/$path/fapi/$filename"
+  private def putFapiPressedJson(live: String, path: String, json: String, suffix: String): Unit =
+    putPrivateGzipped(s"$location/pressed/$live/$path/fapi/pressed.v2$suffix.json", json, "application/json")
 
-  def getDraftFapiPressedKeyForPath(path: String): String =
-    s"$location/pressed/draft/$path/fapi/$filename"
-
-  def putLiveFapiPressedJson(path: String, json: String): Unit =
-    putPrivateGzipped(getLiveFapiPressedKeyForPath(path), json, "application/json")
-
-  def putDraftFapiPressedJson(path: String, json: String): Unit =
-    putPrivateGzipped(getDraftFapiPressedKeyForPath(path), json, "application/json")
+  def putLiveFapiPressedJson(path: String, json: String, pressedType: PressedPageType): Unit = putFapiPressedJson("live", path, json, pressedType.suffix)
+  def putDraftFapiPressedJson(path: String, json: String, pressedType: PressedPageType): Unit = putFapiPressedJson("draft", path, json, pressedType.suffix)
 }
 
 object S3Archive extends S3 {

@@ -18,6 +18,9 @@ import {
     ERR_IDENTITY_HTML_PREF_NOT_FOUND,
 } from './modules/fetchFormFields';
 
+const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
+const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
+
 const submitPartialConsentForm = (formData: FormData): Promise<void> =>
     reqwest({
         url: '/privacy/edit-ajax',
@@ -147,7 +150,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                 fastdom
                     .read(() => [
                         ...document.querySelectorAll(
-                            '.js-manage-account__newsletterCheckbox input:checked'
+                            `.${newsletterCheckboxClassName} input:checked`
                         ),
                     ])
                     .then(checkboxes => {
@@ -158,7 +161,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                     }),
                 getCsrfTokenFromElement(
                     document.getElementsByClassName(
-                        'js-manage-account__newsletterCheckbox'
+                        newsletterCheckboxClassName
                     )[0]
                 ),
             ])
@@ -272,11 +275,15 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
 
 const enhanceConsents = (): void => {
     const loaders = [
-        ['.js-manage-account__consentCheckbox', bindConsentSwitch],
-        ['.js-manage-account__newsletterCheckbox', bindNewsletterSwitch],
+        [`.${consentCheckboxClassName}`, bindConsentSwitch],
+        [`.${newsletterCheckboxClassName}`, bindNewsletterSwitch],
         ['.js-unsubscribe', bindUnsubscribeFromAll],
     ];
     loadEnhancers(loaders);
 };
 
-export { enhanceConsents };
+export {
+    enhanceConsents,
+    consentCheckboxClassName,
+    newsletterCheckboxClassName,
+};

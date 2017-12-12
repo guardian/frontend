@@ -2,7 +2,7 @@ package services
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{EmailList, Subscriber}
+import com.gu.identity.model.{EmailList, EmailNewsletters, Subscriber}
 import idapiclient.{IdApiClient, TrackingData}
 import idapiclient.responses.Error
 import play.api.data._
@@ -71,11 +71,17 @@ class NewsletterService(
   }
 
   def getEmailSubscriptions(
+     form: Form[EmailPrefsData],
+     add: List[String] = List(),
+     remove: List[String] = List()): List[String] = {
+    (form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add).toList
+  }
+
+  def getV1EmailSubscriptions(
       form: Form[EmailPrefsData],
       add: List[String] = List(),
       remove: List[String] = List()): List[String] = {
-
-    (form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add).toList
+    getEmailSubscriptions(form, add, remove).filter(EmailNewsletters.v1ListIds.contains)
   }
 }
 

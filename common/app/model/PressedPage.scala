@@ -60,6 +60,34 @@ object PressedPage {
   }
 }
 
+sealed trait PressedPageType {
+  def suffix: String
+}
+
+case object FullType extends PressedPageType {
+  override def suffix = ""
+}
+
+case object LiteType extends PressedPageType {
+  override def suffix = ".lite"
+}
+
+case class PressedPageVersions(lite: PressedPage, full: PressedPage)
+
+object PressedPageVersions {
+  def fromPressedCollections(id: String,
+                             seoData: SeoData,
+                             frontProperties: FrontProperties,
+                             pressedCollections: List[PressedCollectionVersions]): PressedPageVersions = {
+    PressedPageVersions(
+      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.lite)),
+      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.full))
+    )
+  }
+}
+
+case class PressedCollectionVersions(lite: PressedCollection, full: PressedCollection)
+
 case class PressedPage (
   id: String,
   seoData: SeoData,

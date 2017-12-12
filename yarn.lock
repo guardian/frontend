@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@guardian/atom-renderer@0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.9.0.tgz#5874e77700fade87a29844e7bb2a7f7633577dea"
+"@guardian/atom-renderer@0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.9.1.tgz#28b615a5c22e1bdaaa892043995455e5a9cb1ad1"
   dependencies:
     autoprefixer "^7.1.6"
     css-loader "^0.28.7"
@@ -7190,6 +7190,10 @@ object-assign@^4.1.1:
 object-component@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/object-component/-/object-component-0.0.3.tgz#f0c69aa50efc95b866c186f400a33769cb2f1291"
+
+object-fit-videos@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/object-fit-videos/-/object-fit-videos-1.0.3.tgz#4ff9c83a381b26e80ff1ad2679d5eae85824ed53"
 
 object-keys@^1.0.10, object-keys@^1.0.8:
   version "1.0.11"

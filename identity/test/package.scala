@@ -33,12 +33,6 @@ trait FakeApp {
 
 object Fake extends FakeApp
 
-object I18NTestComponents extends I18nComponents {
-  override val environment: Environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
-  override val configuration: Configuration = Configuration.load(environment)
-  override val httpConfiguration: HttpConfiguration = HttpConfiguration.createWithDefaults()
-}
-
 class IdentityTestSuite extends Suites(
   new EditProfileControllerTest,
   new StrictTransportSecurityHeaderFilterTest

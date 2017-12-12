@@ -1,7 +1,8 @@
 package layout.slices
 
-import model.pressed.CollectionConfig
+import model.pressed.{CollectionConfig, PressedContent}
 import common.Logging
+import layout.Front
 import model.facia.PressedCollection
 
 import scala.collection.immutable.Iterable
@@ -23,13 +24,35 @@ object Container extends Logging {
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
 
-  def resolve(id: String): Container = all.getOrElse(id, {
-    log.error(s"Could not resolve container id $id, using default container")
-    default
-  })
+  def resolve(id: String): Container = all.getOrElse(id, default)
 
   def fromConfig(collectionConfig: CollectionConfig): Container =
     resolve(collectionConfig.collectionType)
+
+  def storiesCount(collectionType: String, items: Seq[PressedContent]): Option[Int] = {
+    resolve(collectionType) match {
+      case Dynamic(dynamicPackage) => dynamicPackage
+        .slicesFor(items.map(Story.fromFaciaContent))
+        .map(Front.itemsVisible)
+      case Fixed(fixedContainer) => Some(Front.itemsVisible(fixedContainer.slices))
+      case _ => None
+    }
+  }
+
+  def affectsDuplicates(collectionType: String): Boolean = {
+    resolve(collectionType) match {
+      case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
+      case Dynamic(_) => true
+      case _ => false
+    }
+  }
+
+  def affectedByDuplicates(collectionType: String): Boolean = {
+    resolve(collectionType) match {
+      case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
+      case _ => false
+    }
+  }
 
   def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean, adFree: Boolean): Container = {
     val container = resolve(pressedCollection.collectionType)

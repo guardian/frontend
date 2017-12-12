@@ -62,5 +62,6 @@ POST        /privacy/edit-ajax                      controllers.EditProfileContr
 GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
 POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferencesAjax
 
-GET         /consent                                controllers.EditProfileController.displayConsentJourneyForm(journey: String ?= "repermission", consentHint: Option[String])
+GET         /consent                                controllers.EditProfileController.displayConsentJourneyForm(journey: Option[String], consentHint: Option[String], newsletterHint: Option[String])
+POST        /complete-consent                         controllers.EditProfileController.submitRepermissionedFlag
 ########################################################################################################################

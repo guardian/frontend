@@ -28,7 +28,7 @@ sealed trait DotcomContentType {
 }
 object DotcomContentType {
 
-  object Unknown extends DotcomContentType { override val name = "Unknown" }
+  object Unknown extends DotcomContentType { override val name = "Article" }
   object Article extends DotcomContentType { override val name = "Article" }
   object NetworkFront extends DotcomContentType { override val name = "Network Front" }
   object Section extends DotcomContentType { override val name = "Section" }

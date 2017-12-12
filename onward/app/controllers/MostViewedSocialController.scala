@@ -60,6 +60,7 @@ class MostViewedSocialController(
                 None,
                 None
               ),
+              false,
               componentId
             ).withTimeStamps,
             properties

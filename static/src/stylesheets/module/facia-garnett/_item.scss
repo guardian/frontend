@@ -63,8 +63,8 @@ $fc-item-gutter: $gs-gutter / 4;
     @include mq(tablet) {
         flex: 1 1 auto;
         display: flex;
-        margin-left: $fc-item-gutter;
-        margin-right: $fc-item-gutter;
+        margin-left: $fc-item-gutter * 2;
+        margin-right: $fc-item-gutter * 2;
     }
 
     a {
@@ -110,6 +110,7 @@ $fc-item-gutter: $gs-gutter / 4;
     display: flex;
     flex-direction: column;
     position: relative;
+    width: 100%;
 
     &:before {
         content: '';
@@ -184,16 +185,17 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__kicker {
     position: relative;
-    padding-right: $gs-gutter / 5;
-    margin-right: $gs-gutter / 5;
+    padding-right: $gs-gutter / 6;
+    margin-right: $gs-gutter / 4;
 
+    // hides kicker if it exceeds 1 line in height
     &:before {
         content: '';
         position: absolute;
+        width: 1px;
         top: 0;
-        bottom: 1.1em;
         right: 0 - $gs-gutter / 6;
-        left: 0;
+        bottom: 1.3em;
         z-index: -1;
     }
 
@@ -202,8 +204,8 @@ $fc-item-gutter: $gs-gutter / 4;
         position: absolute;
         width: 1px;
         height: 2em;
-        bottom: $gs-gutter / 10;
         right: 0 - $gs-gutter / 6;
+        bottom: $gs-gutter / 10;
         z-index: -2;
     }
 }
@@ -319,4 +321,85 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__kicker--dreamsnap {
     display: none;
+}
+
+.fc-item__timestamp {
+    white-space: nowrap;
+}
+
+// Common media card styles
+.fc-item--type-video,
+.fc-item--type-audio,
+.fc-item--type-gallery {
+    background-color: $media-garnett-main-1;
+
+    .fc-item__content {
+        justify-content: space-between;
+    }
+
+    .fc-item__header,
+    .fc-item__standfirst {
+        flex: 0 1 auto;
+    }
+
+    .fc-item__kicker {
+        background-color: $media-garnett-main-1;
+
+        &::before {
+            background-color: $media-garnett-main-1;
+        }
+    }
+
+    .fc-item__headline {
+        color: #ffffff;
+    }
+
+    .fc-item__meta-wrapper {
+        flex: 0 1 auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-top: $gs-baseline / 2;
+        padding-bottom: $gs-baseline / 2;
+
+    }
+
+    .fc-item__media-meta,
+    .fc-item__meta {
+        flex: 0 0 auto;
+    }
+
+    .fc-item__standfirst {
+        color: #ffffff;
+    }
+
+    .fc-item__media-meta,
+    .fc-item__meta {
+        @include fs-textSans(1);
+        font-weight: 600;
+    }
+
+    .fc-trail__count--commentcount {
+        color: #ffffff;
+
+        svg {
+            fill: #ffffff;
+        }
+    }
+
+    // darken on hover
+    &:hover,
+    .u-faux-block-link--hover {
+        background-color: darken($media-garnett-main-1, 5%);
+
+        .fc-item__kicker,
+        .fc-item__container::before {
+            background-color: darken($media-garnett-main-1, 5%);
+        }
+    }
+
+    .fc-sublink__link {
+        color: #ffffff;
+    }
+
 }

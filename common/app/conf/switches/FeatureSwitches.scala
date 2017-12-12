@@ -175,6 +175,16 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val IdentityRedirectUsersWithLingeringV1ConsentsSwitch = Switch(
+    SwitchGroup.Identity,
+    "id-redirect-users-with-lingering-v1-consents",
+    "If switched on, users trying to reach /email-prefs will go to /consent to repermission",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 15),
+    exposeClientSide = false
+  )
+
   val EnhanceTweetsSwitch = Switch(
     SwitchGroup.Feature,
     "enhance-tweets",
@@ -532,7 +542,17 @@ trait FeatureSwitches {
     "When ON, the edit profile page will include the cancel contribution button",
     owners = Seq(Owner.withGithub("svillafe")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 12, 15),
+    sellByDate = new LocalDate(2018, 1, 15),
     exposeClientSide = true
+  )
+
+  val HeaderFeedback = Switch(
+    SwitchGroup.Feature,
+    "header-feedback",
+    "When ON a feedback prompt will be visible within the header test",
+    owners = Seq(Owner.withGithub("zeftilldeath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 12, 4),
+    exposeClientSide = false
   )
 }
