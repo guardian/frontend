@@ -43,13 +43,14 @@ Three quarter item. Looks like a wide standard, a bit like this:
     &.fc-item--has-cutout {
         .fc-item__container {
             min-height: gs-height(7);
-            flex-direction: row;
+            flex-direction: column;
         }
 
         .fc-item__header {
             @include fs-headline(5, true);
             @include headline-boost(6);
             padding-bottom: gs-height(3);
+            margin-bottom: $gs-gutter * .25;
 
             @include mq(desktop) {
                 padding-bottom: gs-height(4);
@@ -94,16 +95,22 @@ Three quarter item. Looks like a wide standard, a bit like this:
             }
         }
 
-        &:not(.fc-item--type-comment).fc-item--has-sublinks-3 {
+        &.fc-item--has-sublinks-3 {
             .fc-item__footer--horizontal {
-                .fc-sublink {
-                    margin-top: 0;
-        
-                    .fc-sublink__title {                
-                        &:before {
-                            width: auto;
-                            left: 0 - $fc-item-gutter;
-                            right: 0 - $fc-item-gutter;
+                flex-basis: auto;
+            }
+
+            &:not(.fc-item--type-comment) {
+                .fc-item__footer--horizontal {
+                    .fc-sublink {
+                        margin-top: 0;
+            
+                        .fc-sublink__title {                
+                            &:before {
+                                width: auto;
+                                left: 0 - $fc-item-gutter;
+                                right: 0 - $fc-item-gutter;
+                            }
                         }
                     }
                 }

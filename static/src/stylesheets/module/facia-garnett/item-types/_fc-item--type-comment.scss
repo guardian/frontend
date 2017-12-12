@@ -14,30 +14,29 @@
             right: 0;
     }
 
-    &.fc-item--is-commentable {
-        .fc-item__meta {
-            margin-top: $gs-gutter * .5;
+    .fc-item__meta {
+        margin-top: $gs-gutter * .5;
+        display: block;
+        width: 100%;
+
+        &:after {
+            content: '';
             display: block;
+            position: absolute;
+            height: 2px;
+            bottom: 0;
             width: 100%;
+            border-top: 4px double #bdbdbd;
+            border-bottom: 4px double #bdbdbd;
+        }
 
-            &:after {
-                content: '';
-                display: block;
-                position: absolute;
-                height: 2px;
-                bottom: 0;
-                width: 100%;
-                border-top: 4px double #bdbdbd;
-                border-bottom: 4px double #bdbdbd;
-            }
-
-            .fc-trail__count {
-                position: absolute;
-                padding-right: $gs-gutter * .25;
-                padding-left: $gs-gutter * .25;
-                right: 0;
-                bottom: 0;
-            }
+        .fc-trail__count {
+            position: absolute;
+            padding-bottom: $gs-gutter * .1;
+            padding-right: $gs-gutter * .25;
+            padding-left: $gs-gutter * .25;
+            right: 0;
+            bottom: 0;
         }
     }
 
@@ -99,6 +98,19 @@
                 height: gs-span(1.5);
                 left: 0 - $gs-gutter * .5;
             }
+
+            .fc-item__meta {
+                display: flex;
+            }
+
+            .fc-item__footer--horizontal {
+                .fc-sublink:first-child {
+                    .fc-sublink__title:before {
+                        left: 0;
+                        width: 40%;
+                    }
+                }
+            }
         }
     }
 
@@ -111,15 +123,39 @@
             .fc-item__content {
                 min-height: gs-height(2.5) + $gs-baseline;
             }
+
+            .fc-item__footer--horizontal {
+                .fc-sublink:first-child {
+                    .fc-sublink__title:before {
+                        left: 0;
+                        width: 40%;
+                    }
+                }
+            }
         }
     }
 
     &.fc-item--third-tablet {
         @include mq(tablet) {
+            .fc-item__avatar {
+                height: gs-height(2.3);
+                width: gs-height(2.3);
+
+                @include mq(desktop) {
+                    height: gs-height(3);
+                    width: gs-height(3);
+                }
+            }
+
             .fc-item__avatar__media {
                 @include avatar-media;
-                height: gs-height(3);
+                height: gs-height(2.3);
                 left: 0 - $gs-gutter * .5;
+
+                @include mq(desktop) {
+                    height: gs-height(3);
+                    left: 0 - $gs-gutter * .75;
+                }
             }
         }
     }
