@@ -12,8 +12,7 @@
 
 @import Function.const
 
-<a @Html(item.header.url.hrefWithRel)
-    class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}"
+<div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}"
     @if(item.discussionSettings.isCommentable) {
         @item.discussionSettings.discussionId.map { id =>
         data-discussion-id="@id"
@@ -26,8 +25,7 @@ data-item-visibility="@visibilityDataAttribute"
 data-test-id="facia-card"
     @item.id.map { id => data-id="@id" }
     @item.snapStuff.map(_.dataAttributes)
-    @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }
-tabindex="-1">
+    @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
 
     @if(!item.hasInlineSnapHtml) {
         @container(item)
@@ -35,7 +33,8 @@ tabindex="-1">
     @if(item.hasInlineSnapHtml) {
         @item.snapStuff.map { snap => @snap.embedHtml.map(Html(_)) }
     }
-</a>
+
+</div>
 
 @mediaMeta(item: layout.ContentCard) = {
     <div class="fc-item__meta-wrapper">
@@ -107,7 +106,7 @@ tabindex="-1">
                     embedPath = if (item.isMediaLink) item.id else None,
                     path = if (item.isMediaLink) item.id else None
                 )) { player =>
-                    <div class="fc-item__media-wrapper fc-item__video media__container--hidden js-video-player">
+                    <div class="fc-item__media-wrapper fc-item__video u-faux-block-link__promote media__container--hidden js-video-player">
                         <div class="fc-item__video-container">
                             @video(player, false, item.cardTypes.showVideoEndSlate, showPoster = false)
                         </div>
@@ -254,5 +253,7 @@ tabindex="-1">
         @if(item.sublinks.nonEmpty) {
             <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
         }
+
+        <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.header.headline)</a>
     </div>
 }

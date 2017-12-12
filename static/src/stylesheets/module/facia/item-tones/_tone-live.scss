@@ -8,7 +8,7 @@
         color: $c-headline;
     }
 
-    &:hover,
+    .u-faux-block-link--hover,
     .fc-item__image-container {
         background-color: darken($live-default, 4%);
     }

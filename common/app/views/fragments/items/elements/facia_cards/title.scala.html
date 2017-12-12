@@ -1,4 +1,4 @@
-@(header: layout.FaciaCardHeader, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "", snapType: Option[layout.SnapType] = None)(implicit request: RequestHeader)
+@(header: layout.FaciaCardHeader, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta", snapType: Option[layout.SnapType] = None)(implicit request: RequestHeader)
 
 @import views.html.fragments.items.elements.facia_cards.itemHeader
 @import views.support._
@@ -17,10 +17,7 @@
     <span class="@labelCssClasses fc-item__headline">@icon <span class="js-headline-text">@RemoveOuterParaHtml(header.headline)</span></span>
 }
 
-@articleLink(html: Html) = {
-    @* Support nested links by wrapping inner links in <object> element *@
-    <object type="nested/links"><a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a></object>
-}
+@articleLink(html: Html) = {<a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a>}
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @header.kicker match {

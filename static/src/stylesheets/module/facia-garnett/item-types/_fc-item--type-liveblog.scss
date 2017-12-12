@@ -61,7 +61,7 @@
         }
 
         // darken on hover
-        &:hover {
+        .u-faux-block-link--hover {
             background-color: darken($color1, 5%);
 
             .fc-item__kicker,

@@ -71,7 +71,19 @@ $fc-item-gutter: $gs-gutter / 4;
         color: inherit;
     }
 
-    &:hover,
+    .u-faux-block-link & a,
+    .u-faux-block-link & abbr[title],
+    .u-faux-block-link__promote {
+        &.fc-item__link {
+            z-index: 0;
+        }
+
+        @include mq($until: desktop) {
+            z-index: initial;
+        }
+    }
+
+    .u-faux-block-link--hover,
     .fc-item__image-container {
         background-color: $neutral-6;
 
@@ -80,13 +92,15 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    &:hover {
-        text-decoration: none;
-
+    .u-faux-block-link--hover {
         .youtube-media-atom,
         .fc-item__image-container {
             background-color: #000000;
             opacity: .9;
+        }
+
+        .u-faux-block-link__cta {
+            text-decoration: none;
         }
     }
 }
@@ -173,7 +187,6 @@ $fc-item-gutter: $gs-gutter / 4;
     position: relative;
     padding-right: $gs-gutter / 6;
     margin-right: $gs-gutter / 4;
-    z-index: 0;
 
     // hides kicker if it exceeds 1 line in height
     &:before {
@@ -375,7 +388,8 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     // darken on hover
-    &:hover {
+    &:hover,
+    .u-faux-block-link--hover {
         background-color: darken($media-garnett-main-1, 5%);
 
         .fc-item__kicker,

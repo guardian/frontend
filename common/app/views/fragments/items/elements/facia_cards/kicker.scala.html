@@ -7,8 +7,7 @@
    elsewhere). Given that, how much of the below do we need? *@
 
 @makeLink(uri: String, inner: String) = {
-    @* Support nested links by wrapping inner links in <object> element *@
-    <object type="nested/links"><a href="@LinkTo(uri)" data-link-name="kicker" class="fc-item__kicker @classes.mkString(" ")">@Html(inner)</a></object>
+    <a href="@LinkTo(uri)" data-link-name="kicker" class="fc-item__kicker @classes.mkString(" ")">@Html(inner)</a>
 }
 
 @makeSpan(inner: String) = {
