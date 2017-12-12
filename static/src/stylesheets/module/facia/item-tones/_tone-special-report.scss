@@ -4,7 +4,7 @@
         background-color: $news-support-6;
     }
 
-    &:hover,
+    .u-faux-block-link--hover,
     .fc-item__image-container {
         background-color: darken($news-support-6, 5%);
     }

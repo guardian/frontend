@@ -1,0 +1,67 @@
+/*doc
+---
+title: Faux block link utility
+name: u-faux-block-link
+category: Utilities
+---
+
+A Faux block-level link. Used for when you need a block-level link with
+clickable areas within it as directly nesting a tags breaks things.
+
+```html_example
+<div class="u-faux-block-link">
+    <img src="" alt="This image is magically clickable" />
+
+    <h3><a href="#">This headline is clickable as a normal link</a></h3>
+
+    Lorem ipsum dolor sit amet.
+
+    <a href="#">another link</a>
+
+    <abbr title="Hoverable!">An hoverable abbreviation</abbr>
+
+    <video class="u-faux-block-link__promote">I can interact with that video</video>
+
+    <a href="#" class="u-faux-block-link__overlay" tabindex="-1">headline</a>
+</div>
+```
+*/
+// Thanks to @BPScott http://codepen.io/BPScott/pen/Erwan
+// for this great technique
+.u-faux-block-link {
+    position: relative;
+}
+.u-faux-block-link a,
+.u-faux-block-link abbr[title],
+.u-faux-block-link__promote {
+    position: relative;
+    z-index: 1;
+}
+.u-faux-block-link__overlay {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    text-indent: 200%;
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 0); // IE9 fix
+}
+// Increased specificity so it trumps ".block-link a"
+a.u-faux-block-link__overlay {
+    position: absolute;
+    z-index: 0;
+    // this line is needed as all elements have a solid black
+    // background in high contrast mode
+    opacity: 0;
+
+    // Override the default user agent stylesheet so we don't incur a "Layout"
+    // each time the user taps a link.
+    &:focus {
+        outline: none;
+    }
+}
+// Underline cta when block is hovered
+.u-faux-block-link--hover .u-faux-block-link__cta {
+    text-decoration: underline;
+}

@@ -361,7 +361,8 @@
 .adverts--within-unbranded {
     .fc-item__container {
         background-color: $paid-article-card-bg;
-        &:hover {
+        &:hover,
+        &.u-faux-block-link--hover {
             background-color: $neutral-6;
         }
     }

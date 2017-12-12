@@ -114,7 +114,10 @@ const showBlocks = (
     targets.forEach(element => {
         let hasNewBlock = false;
 
-        const wrapperClasses = ['fc-item__liveblog-blocks__inner'];
+        const wrapperClasses = [
+            'fc-item__liveblog-blocks__inner',
+            'u-faux-block-link__promote',
+        ];
 
         const blocksHtml = blocks
             .slice(0, 2)

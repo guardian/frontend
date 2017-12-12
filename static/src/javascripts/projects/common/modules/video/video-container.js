@@ -86,6 +86,15 @@ const reducers = {
                 youTubeIframes.forEach(el => {
                     el.remove();
                 });
+                const overlayLinks = [
+                    ...state.container.querySelectorAll(
+                        '.video-container-overlay-link'
+                    ),
+                ];
+                overlayLinks.forEach(el => {
+                    el.classList.add('u-faux-block-link__overlay');
+                });
+
                 const atomWrapper = [
                     ...state.container.querySelectorAll('.youtube-media-atom'),
                 ];

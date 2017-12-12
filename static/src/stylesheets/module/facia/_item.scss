@@ -72,7 +72,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item {
     @include mq($until: tablet) {
         width: 100%;
-        display: block;
     }
 
     @include mq(tablet) {
@@ -88,20 +87,6 @@ $fc-item-gutter: $gs-gutter / 4;
             @include clearfix;
         }
     }
-
-    &:hover {
-        text-decoration: none;
-    }
-
-    .has-no-flex-wrap &,
-    .js-off & {
-        display: block;
-    }
-
-}
-
-.simon-and-the-magic-torch {
-    display: block;
 }
 
 .fc-item__container {
@@ -176,7 +161,33 @@ $fc-item-gutter: $gs-gutter / 4;
         color: inherit;
     }
 
-    &:hover,
+    .u-faux-block-link & a,
+    .u-faux-block-link & abbr[title],
+    .u-faux-block-link__promote {
+        &.fc-item__link {
+            z-index: 0;
+        }
+
+        @include mq($until: desktop) {
+            z-index: initial;
+        }
+    }
+
+    /**
+     * The z-index: initial trick above is not working on the webkit browsers.
+     * The only way how to make it work is to play with the z-index.
+     */
+    &.fc-item--video {
+        .u-faux-block-link__overlay {
+            z-index: 0;
+        }
+
+        .u-faux-block-link__promote {
+            z-index: 1;
+        }
+    }
+
+    .u-faux-block-link--hover,
     .fc-item__image-container {
         background-color: $neutral-6;
 
@@ -185,11 +196,15 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    &:hover {
+    .u-faux-block-link--hover {
         .youtube-media-atom,
         .fc-item__image-container {
             background-color: #000000;
             opacity: .9;
+        }
+
+        .u-faux-block-link__cta {
+            text-decoration: none;
         }
     }
 
@@ -655,6 +670,13 @@ $block-height: 71px;
     }
 }
 
-.fc-item__link:hover {
-    text-decoration: none;
+.fc-item__link {
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        .fc-item__headline {
+            text-decoration: underline;
+        }
+    }
 }
