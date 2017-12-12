@@ -31,14 +31,14 @@ object JavascriptProps {
   implicit val javascriptProps: Writes[JavascriptProps] = Json.writes[JavascriptProps]
 
   def getFontDefinitions(): List[TypeFace] = {
-    val typeFaces = List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianSansWeb", "GuardianTextSansWeb")
+    val typeFaces = List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianTextSansWeb")
     val fileTypes = List("woff2", "woff", "ttf")
     val hintTypes = List("cleartype", "auto")
 
     typeFaces.map(typeFace => {
       TypeFace(typeFace, fileTypes.map { fileType =>
         val fileTypeEndpoint = conf.Static(s"fonts/${typeFace}.${fileType}.json")
-        
+
         FileType(fileType, fileTypeEndpoint, hintTypes.map { hintType => {
           val hintTypeEndpoint = conf.Static(s"fonts/${typeFace}${hintType.capitalize}Hinted.${fileType}.json")
           HintType(hintType, hintTypeEndpoint)
