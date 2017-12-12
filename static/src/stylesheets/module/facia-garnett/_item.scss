@@ -173,6 +173,7 @@ $fc-item-gutter: $gs-gutter / 4;
     position: relative;
     padding-right: $gs-gutter / 6;
     margin-right: $gs-gutter / 4;
+    z-index: 0;
 
     // hides kicker if it exceeds 1 line in height
     &:before {
