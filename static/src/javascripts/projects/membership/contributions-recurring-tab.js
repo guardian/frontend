@@ -344,6 +344,7 @@ const changeContributionAmountSubmit = (): void => {
             },
         }
     )
+        // eslint-disable-next-line no-use-before-define
         .then(recurringContributionTab())
         .catch(err => {
             hideLoader();
@@ -465,7 +466,8 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     }
 };
 
-export const recurringContributionTab = (): void => {
+// eslint-disable-next-line func-style
+export function recurringContributionTab(): void {
     fetch(
         `${config.get('page.userAttributesApiUrl')}/me/mma-monthlycontribution`,
         {
@@ -491,4 +493,4 @@ export const recurringContributionTab = (): void => {
                 feature: 'mma-monthlycontribution',
             });
         });
-};
+}
