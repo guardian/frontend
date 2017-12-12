@@ -101,13 +101,10 @@
         background-color: $paid-article-subheader !important;
     }
 
-    .tone-media--item {
-        .u-faux-block-link--hover {
+    .tone-media--item:hover {
+        &:hover {
             background-color: $neutral-6;
-
-            .u-faux-block-link__overlay {
-                color: $neutral-1;
-            }
+            color: $neutral-1;
         }
 
         .fc-item__standfirst,
@@ -118,7 +115,7 @@
     }
 
     // Override story-package hover colours
-    .fc-container--story-package .fc-item .u-faux-block-link--hover {
+    .fc-container--story-package .fc-item:hover {
         background-color: $neutral-6;
     }
 
