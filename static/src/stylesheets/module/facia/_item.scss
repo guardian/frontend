@@ -91,6 +91,14 @@ $fc-item-gutter: $gs-gutter / 4;
     &:hover {
         text-decoration: none;
     }
+
+    .has-no-flex-wrap & {
+        display: block !important;
+    }
+}
+
+.simon-and-the-magic-torch {
+    display: block;
 }
 
 .fc-item__container {
