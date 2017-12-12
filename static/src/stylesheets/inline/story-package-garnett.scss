@@ -26,6 +26,12 @@
 
 .fc-container--story-package {
     .fc-container__header__title {
+        padding-left: calc((#{$gs-baseline} / 2) - 2px);
+
+        @include mq($from: desktop) {
+            padding-left: 0px;
+        }
+
         & > span,
         span.fc-container__title__text {
             background-color: yellow;
@@ -64,9 +70,9 @@
     }
 
     //These need to exist for all kickers because of tone on tone action
-    @include kicker-override(life, $lifestyle-garnett-main-media-1);
+    @include kicker-override(lifestyle, $lifestyle-garnett-main-media-1);
     @include kicker-override(arts, $arts-garnett-media-main-1);
-    @include kicker-override(sports, $sport-garnett-media-main-1);
+    @include kicker-override(sport, $sport-garnett-media-main-1);
     @include kicker-override(opinion, $opinion-garnett-media-main-1);
     @include kicker-override(news, $news-garnett-media-main-1);
 }
