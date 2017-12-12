@@ -156,7 +156,7 @@ class EditProfileController(
 
               case Right(updatedUser) =>
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
-                SeeOther(returnUrl)
+                SeeOther(returnUrl).withCookies(Cookie("GU_CONSENTED", "true", Some(60)))
             }
         )
       }

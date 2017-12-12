@@ -22,9 +22,15 @@
     newsletterHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@onlySubscribedToNewsletters = @{
-    EmailNewsletters.all.subscriptions.filter { newsletter =>
-        emailSubscriptions.contains(newsletter.listId.toString)
+@onlySubscribedToNewsletters(onlyV1Newsletters: Boolean) = @{
+    if (onlyV1Newsletters) {
+        EmailNewsletters.all.subscriptions.filter { newsletter =>
+            emailSubscriptions.intersect(newsletter.aliasedIds.map(_.toString)).nonEmpty
+        }
+    } else {
+        EmailNewsletters.all.subscriptions.filter { newsletter =>
+            emailSubscriptions.intersect(newsletter.allIds.map(_.toString)).nonEmpty
+        }
     }
 }
 
@@ -85,12 +91,13 @@
             }
             <div class="manage-account__switches">
                 <ul>
-                    @onlySubscribedToNewsletters.zipWithRowInfo.map { case (newsletter, row) =>
+                    @onlySubscribedToNewsletters(isNarrow).zipWithRowInfo.map { case (newsletter, row) =>
                         <li>
                             @fragments.newsletterSwitch(
                                 emailPrefsForm,
                                 emailSubscriptions,
-                                newsletter = newsletter
+                                newsletter = newsletter,
+                                isNarrow
                             )(nonInputFields, messages, request)
                         </li>
                     }
