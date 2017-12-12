@@ -161,13 +161,13 @@ module.exports = [
             {
                 'font-weight': '400',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Regular.woff2',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.woff2',
             },
             {
                 'font-weight': '400',
                 'font-style': 'italic',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-RegularItalic.woff2',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.woff2',
             },
             {
                 'font-weight': '500',
@@ -201,13 +201,13 @@ module.exports = [
             {
                 'font-weight': '400',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Regular.woff',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.woff',
             },
             {
                 'font-weight': '400',
                 'font-style': 'italic',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-RegularItalic.woff',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.woff',
             },
             {
                 'font-weight': '500',
@@ -241,13 +241,13 @@ module.exports = [
             {
                 'font-weight': '400',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Regular.ttf',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
             },
             {
                 'font-weight': '400',
                 'font-style': 'italic',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-RegularItalic.ttf',
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
             },
             {
                 'font-weight': '500',
