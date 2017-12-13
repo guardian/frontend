@@ -78,8 +78,6 @@ $pillars: (
         background-color: $darkerCardBackground;
 
         .fc-item__kicker {
-            background-color: $darkerCardBackground;
-
             &:before {
                 background-color: $darkerCardBackground;
             }
@@ -95,7 +93,6 @@ $pillars: (
     }
 
     .fc-item__kicker {
-        background-color: $cardBackground;
         color: map-get($palette, kicker);
 
         &:before {
