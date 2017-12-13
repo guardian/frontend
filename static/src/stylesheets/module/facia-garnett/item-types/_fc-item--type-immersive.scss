@@ -1,0 +1,23 @@
+.fc-item--type-immersive {
+
+    .fc-item__container {
+        justify-content: flex-end;
+    }
+
+    .fc-item__media-wrapper {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        flex: 0 1 auto;
+    }
+
+    .fc-item__content {
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.65);
+        flex: 0 1 auto;
+    }
+
+    .fc-item__headline {
+        color: #ffffff;
+    }
+}
