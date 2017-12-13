@@ -139,7 +139,9 @@ class EditProfileController(
                 InternalServerError(Json.toJson(idapiErrors))
 
               case Right(updatedUser) =>
-                Ok(s"Successfully updated marketing consent for user ${userDO.getId}")
+                val successMsg = s"Successfully updated marketing consent for user ${userDO.getId}"
+                logger.info(successMsg)
+                Ok(successMsg)
             }
           }
         ) // end bindFromRequest.fold(
