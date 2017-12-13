@@ -398,9 +398,7 @@ $block-height: 71px;
 }
 
 // Common media card styles
-.fc-item--type-video,
-.fc-item--type-audio,
-.fc-item--type-gallery {
+.fc-item--type-media {
     background-color: $media-garnett-main-1;
 
     .fc-item__content {
