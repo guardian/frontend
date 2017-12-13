@@ -69,7 +69,7 @@
     max-width: gs-span(16);
 }
 
-.identity-header {
+.identity-layout__header {
     @include mq(tablet) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
