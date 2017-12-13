@@ -62,7 +62,7 @@
     @include colorPalatte($news-garnett-feature, $news-garnett-main-1, $news-garnett-media-main-1);
 }
 
-.content--pillar-opinion {
+.content--pillar-opinion, .content--type-comment {
     @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
 }
 
@@ -70,7 +70,7 @@
     @include colorPalatte($arts-garnett-feature, $arts-garnett-main-1, $arts-garnett-media-main-1);
 }
 
-.content--pillar-sport {
+.content--pillar-sport, .content--pillar-sport.content--type-comment {
     @include colorPalatte($sport-garnett-feature, $sport-garnett-main-1, $sport-garnett-media-main-1);
 }
 
