@@ -157,14 +157,6 @@ const toggleMenu = (): void => {
             });
 
             // On desktop clicking outside menu should close it
-
-            console.log(
-                '***',
-                isBreakpoint({
-                    min: 'desktop',
-                })
-            );
-
             if (
                 isBreakpoint({
                     min: 'desktop',
