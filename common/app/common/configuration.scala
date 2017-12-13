@@ -7,7 +7,7 @@ import java.util.Map.Entry
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.typesafe.config.{ConfigException, ConfigFactory}
+import com.typesafe.config.{ConfigException, ConfigFactory, ConfigRenderOptions}
 import common.Environment.{app, awsRegion, stage}
 import conf.switches.Switches
 import conf.Static
@@ -60,20 +60,38 @@ object GuardianConfiguration extends Logging {
 
   import com.typesafe.config.Config
 
+  private lazy val parameterStore = new ParameterStore(awsRegion)
+
   private def configFromFile(path: String, configPath: String): Config = {
     val fileConfig = ConfigFactory.parseFileAnySyntax(new File(path))
     Try(fileConfig.getConfig(configPath)).getOrElse(ConfigFactory.empty)
   }
 
-  private def configFromParameterStore(path: String): Config = {
-    val params = parameterStore.getPath(path)
-    val configMap = params.map {
-      case (key, value) => key.replaceFirst(s"$path/", "") -> value
-    }
-    ConfigFactory.parseMap(configMap.asJava)
+  private def configToMap(config: Config): Map[String, String] = {
+    config.entrySet().asScala.map { entry =>
+      entry.getKey -> unwrapQuotedString(entry.getValue.render)
+    }.toMap
   }
 
-  private lazy val parameterStore = new ParameterStore(awsRegion)
+  lazy val appConfig: Config = {
+    val paramStorePrefix = "param-store@(.*)".r
+
+    val conf = ConfigFactory.load(s"${stage.toLowerCase}.conf")
+    val configMap = configToMap(conf)
+
+    val valuesFromParamStore: Seq[String] = configMap.collect {
+      case (_, paramStorePrefix(paramStoreKey)) => paramStoreKey
+    }.toSeq
+
+    val parameterStoreValues = parameterStore.getAll(valuesFromParamStore)
+
+    val configPopulatedWithParamStore = configMap.map {
+      case (key, paramStorePrefix(paramStoreKey)) => key -> parameterStoreValues(paramStoreKey)
+      case keyValue => keyValue
+    }
+
+    ConfigFactory.parseMap(configPopulatedWithParamStore.asJava)
+  }
 
   lazy val configuration: Config = {
     if (stage == "DEVINFRA")
@@ -81,16 +99,18 @@ object GuardianConfiguration extends Logging {
     else {
       val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf", "devOverrides")
       val runtimeOnly =  configFromFile("/etc/gu/frontend.conf", "parameters")
-      val localConfig = userPrivate.withFallback(runtimeOnly)
 
-      val frontendConfig = configFromParameterStore("/frontend")
-      val frontendStageConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}")
-      val frontendAppConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}/${app.toLowerCase}")
+      userPrivate
+        .withFallback(runtimeOnly)
+        .withFallback(appConfig)
+    }
+  }
 
-      localConfig
-        .withFallback(frontendAppConfig)
-        .withFallback(frontendStageConfig)
-        .withFallback(frontendConfig)
+  def unwrapQuotedString(input: String): String = {
+    val quotedString = "\"(.*)\"".r
+    input match {
+      case quotedString(content) => content
+      case content => content
     }
   }
 

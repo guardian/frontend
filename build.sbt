@@ -55,7 +55,8 @@ val common = library("common").settings(
     identityModel
   )
 ).settings(
-    mappings in TestAssets ~= filterAssets
+  mappings in TestAssets ~= filterAssets,
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared/global"
 )
 
 val commonWithTests = withTests(common)
@@ -63,30 +64,44 @@ val commonWithTests = withTests(common)
 val sanityTest = application("sanity-tests")
 
 val facia = application("facia").dependsOn(commonWithTests).aggregate(common).settings(
-  libraryDependencies += scalaCheck
+  libraryDependencies += scalaCheck,
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared/global"
 )
 
-val article = application("article").dependsOn(commonWithTests).aggregate(common)
+val article = application("article").dependsOn(commonWithTests).aggregate(common).settings(
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared/global"
+)
 
 val applications = application("applications")
   .dependsOn(commonWithTests).aggregate(common)
+  .settings(
+    unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared",
+    unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/overrides/applications"
+  )
 
 val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared/global"
 )
 
 val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
   libraryDependencies ++= Seq(
     paClient,
     akkaContrib
-  )
+  ),
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared",
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/overrides/sport"
 )
 
-val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
+val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared/global"
+)
 
 val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
   libraryDependencies ++= Seq(
     redisClient
-  )
+  ),
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared",
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/overrides/diagnostics"
 )
 
 val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
@@ -106,13 +121,17 @@ val admin = application("admin").dependsOn(commonWithTests).aggregate(common).se
     playIteratees
   ),
   RoutesKeys.routesImport += "bindables._",
-  RoutesKeys.routesImport += "org.joda.time.LocalDate"
+  RoutesKeys.routesImport += "org.joda.time.LocalDate",
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared",
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/overrides/admin"
 )
 
 val faciaPress = application("facia-press").dependsOn(commonWithTests).settings(
   libraryDependencies ++= Seq(
     awsKinesis
-  )
+  ),
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared",
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/overrides/facia-press"
 )
 
 val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
@@ -125,12 +144,18 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
     slf4jExt,
     exactTargetClient,
     libPhoneNumber
-  )
+  ),
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared",
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/overrides/identity"
 )
 
-val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common).settings(
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared/global"
+)
 
-val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+val onward = application("onward").dependsOn(commonWithTests).aggregate(common).settings(
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared/global"
+)
 
 val dev = application("dev-build")
   .dependsOn(
@@ -160,11 +185,16 @@ val preview = application("preview").dependsOn(
   commercial,
   onward
 ).settings(
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared",
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/overrides/preview"
 )
 
 val rss = application("rss")
   .dependsOn(commonWithTests)
   .aggregate(common)
+  .settings(
+    unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared/global"
+  )
 
 val main = root().aggregate(
   common,
