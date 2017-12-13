@@ -81,7 +81,7 @@ class EditProfileController(
           consentJourneyView(
             page = page,
             journey = page.journey,
-            forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
+            forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
             request.user,
             consentHint
           )
@@ -180,7 +180,7 @@ class EditProfileController(
       authWithConsentRedirectAction.async { implicit request =>
         profileFormsView(
           page = page,
-          forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
+          forms = ProfileForms(userWithOrderedConsents(request.user, consentHint),PublicEditProfilePage),
           request.user,
           consentsUpdated,
           consentHint
@@ -280,8 +280,7 @@ class EditProfileController(
   }
 
   /** If consentHint is provided it moves that consent to the head of consents list */
-  private def userWithHintedConsent(
-    consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): User = {
+  private def hintedConsents(consents: List[Consent], consentHint: Option[String]): List[Consent] = {
 
     // https://stackoverflow.com/questions/24870729/moving-an-element-to-the-front-of-a-list-in-scala
     def moveToFront(hint: String, consents: List[Consent]): List[Consent] = {
@@ -291,14 +290,16 @@ class EditProfileController(
       }
     }
 
-    consentHint match {
-      case None => request.user
-
-      case Some(hint) =>
-        val hintedConsents = moveToFront(hint, request.user.consents)
-        request.user.user.copy(consents = hintedConsents)
-    }
+    consentHint.map(hint => moveToFront(hint, consents)).getOrElse(consents)
   }
+
+  private def orderedConsents(consents: List[Consent]): List[Consent] = {
+    val orderedConsentIds: List[String] = List("jobs", "supporter", "holidays", "events", "offers")
+    orderedConsentIds.map(id => consents.find(_.id == id)).flatten
+  }
+
+  private def userWithOrderedConsents(user: User, consentHint: Option[String]): User =
+    user.copy(consents = hintedConsents(orderedConsents(user.consents), consentHint))
 }
 
 /**
