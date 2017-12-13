@@ -44,3 +44,8 @@ GET         /facebook-ia/remote.html                                        cont
 
 # ADS.TXT Standard
 GET         /ads.txt                                                        commercial.controllers.AdsDotTextViewController.renderTextFile()
+
+# Diagnostics routes
+POST       /commercial-report               controllers.DiagnosticsController.commercialReport
+OPTIONS    /commercial-report               controllers.DiagnosticsController.commercialOptions
+GET        /commercial-reports/:dateTime    controllers.DiagnosticsController.commercialReports(dateTime)
