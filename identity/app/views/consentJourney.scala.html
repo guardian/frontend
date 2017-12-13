@@ -5,6 +5,8 @@
 @import services.EmailPrefsData
 @import form.IdFormHelpers.nonInputFields
 @import views.support.`package`.Seq2zipWithRowInfo
+@import views.support.fragment.Switch._
+@import views.support.fragment.ConsentChannel._
 
 
 @(
@@ -25,6 +27,41 @@
     EmailNewsletters.all.subscriptions.filter { newsletter =>
         emailSubscriptions.contains(newsletter.listId.toString)
     }
+}
+
+@communicationChannels(user: com.gu.identity.model.User) = @{
+    val telephoneDefined = user.privateFields.telephoneNumber.isDefined
+    val postcodeDefined = user.privateFields.postcode.isDefined
+
+    val channels = List(
+        (TextConsentChannel -> telephoneDefined),
+        (PhoneConsentChannel -> telephoneDefined),
+        (PostConsentChannel -> postcodeDefined)
+    )
+
+    channels.filter(_._2).map(_._1)
+}
+
+@channelStep() = {
+    <div class="manage-account-wizard__step" data-wizard-step-name="consent">
+
+        <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+            @views.html.helper.CSRF.formField
+
+            <h1 class="identity-title">
+                How can we get in touch with you?
+            </h1>
+            <p class="manage-account-headerNote">Besides email, are there any other ways you would like us to get in touch with you?</p>
+
+            <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
+                <div class="manage-account__switches manage-account__switches--wide">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+        </form>
+
+    </div>
 }
 
 @consentStep(journey:String) = {
