@@ -1,5 +1,4 @@
-.fc-item--type-immersive {
-
+@mixin immersive() {
     .fc-item__container {
         justify-content: flex-end;
     }
@@ -19,5 +18,24 @@
 
     .fc-item__headline {
         color: #ffffff;
+    }
+}
+
+.fc-item--type-immersive {
+    &.fc-item--standard-mobile {
+        @include mq($from: mobile, $until: tablet) {
+            @include immersive();
+        }
+    }
+
+    &.fc-item--standard-tablet,
+    &.fc-item--third-tablet,
+    &.fc-item--half-tablet,
+    &.fc-item--three-quarters-tablet,
+    &.fc-item--three-quarters-right-tablet,
+    &.fc-item--three-quarters-tall-tablet {
+        @include mq($from: tablet) {
+            @include immersive();
+        }
     }
 }
