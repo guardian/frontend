@@ -1,57 +1,79 @@
-@mixin colorPalatte($pillarColor, $kickerColor) {
+@mixin colorPalatte($pillarColor, $kickerColor, $mediaColor) {
     .button--secondary,
-    .byline,
     .content__section-label__link,
     .drop-cap,
-    .element-pullquote p,
-    a,
-    .tone-colour {
+    .pullquote-cite {
         color: $pillarColor;
     }
 
-    .inline-close,
-    .inline-tone-fill,
-    .social-icon svg,
-    .social-icon.social-icon--more svg,
-    .inline-close svg {
-        fill: $pillarColor;
-    }
-
-    .inline-quote svg {
-        fill: $kickerColor;
-    }
-
-    .pullquote-cite {
+    .byline,
+    .element-pullquote p,
+    .tonal__head--tone-feature .content__headline,
+    .tonal__head--tone-review .content__headline,
+    .tone-colour,
+    a {
         color: $kickerColor;
     }
 
-    .u-underline:hover {
-        border-bottom: solid 1px $pillarColor;
+    .byline-img {
+        background: $mediaColor;
     }
 
+    .inline-close,
+    .inline-close svg,
+    .inline-tone-fill,
+    .social-icon svg,
+    .social-icon.social-icon--more svg {
+        fill: $kickerColor;
+    }
+
+    .inline-quote svg {
+        fill: $pillarColor;
+    }
+
+    .u-underline:hover {
+        border-bottom: solid 1px $kickerColor;
+    }
+
+    .bullet::before {
+        background-color: $kickerColor;
+    }
+
+    .meta__twitter a,
     .social-icon,
-    .social-icon.social-icon--more,
-    .meta__twitter a {
+    .social-icon.social-icon--more {
         &:focus,
         &:hover {
-            background-color: $pillarColor;
-            border: 1px solid $pillarColor;
+            background-color: $kickerColor;
+            border: 1px solid $kickerColor;
         }
     }
 
     .social-tray__button {
         &:hover {
             .inline-close {
-                background-color: $pillarColor;
+                background-color: $kickerColor;
             }
         }
     }
 }
 
 .content--pillar-news {
-    @include colorPalatte($news-garnett-main-1, $neutral-3);
+    @include colorPalatte($news-garnett-feature, $news-garnett-main-1, $news-garnett-media-main-1);
 }
 
-.content--pillar-opinion {
-    @include colorPalatte($opinion-garnett-main-1, $neutral-3);
+.content--pillar-opinion, .content--type-comment {
+    @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
+}
+
+.content--pillar-arts {
+    @include colorPalatte($arts-garnett-feature, $arts-garnett-main-1, $arts-garnett-media-main-1);
+}
+
+.content--pillar-sport, .content--pillar-sport.content--type-comment {
+    @include colorPalatte($sport-garnett-feature, $sport-garnett-main-1, $sport-garnett-media-main-1);
+}
+
+.content--pillar-lifestyle {
+    @include colorPalatte($lifestyle-garnett-feature, $lifestyle-garnett-main-1, $lifestyle-garnett-media-main-1);
 }

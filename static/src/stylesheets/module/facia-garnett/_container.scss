@@ -36,7 +36,7 @@ $header-image-size-desktop: 100px;
     }
 
     .fc-container & {
-        border-top: 1px solid $news-accent;
+        border-top: 1px solid $garnett-neutral-4;
     }
 }
 
@@ -130,14 +130,16 @@ $header-image-size-desktop: 100px;
 .fc-container__header__title--sticky,
 .container__title {
     @include fs-header(4);
+    font-size: 24px;
     position: relative;
     padding-bottom: $gs-baseline/3;
     line-height: get-line-height(header, 2);
-    color: $guardian-brand-dark;
+    color: $garnett-neutral-1;
 
     @include mq(tablet, leftCol) {
         float: left;
         width: gs-span(4);
+        margin-bottom: $gs-baseline;
     }
 
     @include mq(leftCol, wide) {
@@ -148,6 +150,21 @@ $header-image-size-desktop: 100px;
         @include mq(wide) {
             float: left;
             width: gs-span(4);
+        }
+    }
+
+    &:after {
+        content: '';
+        display: none;
+        position: absolute;
+        height: $gs-gutter * 1.5;
+        width: 1px;
+        background-color: $garnett-neutral-4;
+        right: -$gs-gutter / 2;
+        top: -$gs-baseline / 2;
+
+        @include mq($from: leftCol) {
+            display: block;
         }
     }
 
@@ -306,7 +323,10 @@ $header-image-size-desktop: 100px;
 
 .fc-today {
     @include fs-headline(2);
+    line-height: 16px;
+    font-weight: 700;
     display: none;
+    margin-top: $gs-baseline;
 
     @include mq(tablet) {
         display: block;

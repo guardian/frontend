@@ -7,6 +7,7 @@
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
 @import experiments._
+@import _root_.model.ContentDesignType.RichContentDesignType
 
 @schemaType(page: ArticlePage) = @{page.article.metadata.schemaType}
 
@@ -27,8 +28,8 @@
         ),
             "content",
             "content--article",
-            s"content--pillar-${article.metadata.pillar.map(_.name).getOrElse("News").toLowerCase}",
-            s"content--type-${article.metadata.contentType.map(_.name).getOrElse("Article").toLowerCase}",
+            s"content--pillar-${article.metadata.pillar.nameOrDefault}",
+            s"content--type-${article.metadata.designType.nameOrDefault}",
             "tonal",
             s"tonal--${toneClass(article)}",
             s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"
@@ -57,11 +58,12 @@
                             <div class="js-score"></div>
                             <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
+
+                            @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp)
+
                             @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
                                 @fragments.mainMedia(article, amp)
                             }
-
-                            @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp)
 
                             @fragments.witnessCallToAction(article.content)
                             @BodyCleaner(article, article.fields.body, amp = amp)

@@ -25,6 +25,7 @@ const NOTIFICATION_CANCEL = '.js-contribution-cancel';
 const NOTIFICATION_CHANGE = '.js-contribution-change';
 const UP_SELL = '.js-contribution-up-sell';
 const CONTRIBUTION_INFO = '.js-contribution-info';
+const CONTRIBUTION_DETAILS = '.js-contribution-details';
 const LOADER = '.js-recurring-contribution-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
 const IS_DISABLED_CLASSNAME = 'is-disabled';
@@ -34,6 +35,7 @@ const CONTRIBUTION_UPDATE_ERROR = '.js-contribution-update-error-msg';
 const CANCEL_CONTRIBUTION = '.js-contribution-cancel';
 const CANCEL_CONTRIBUTION_FORM = '.js-cancellation-form';
 const CANCEL_CONTRIBUTION_MSG_SUCCESS = '.js-cancel-contribution-msg-success';
+const CANCEL_CONTRIBUTION_MSG_ERROR = '.js-cancel-contribution-msg-error';
 const CANCEL_CONTRIBUTION_LINK = '.js-cancel-contribution-link';
 const KEEP_CONTRIBUTION_LINK = '.js-cancel-contribution-keep-contributing';
 const CANCEL_CONTRIBUTION_SELECTOR = '.js-cancel-contribution-selector';
@@ -77,13 +79,17 @@ const displayErrorMessage = (): void => {
     $(ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-const displayContributionUpdateErrorMessage = (): void => {
+const hideContributionDetails = (): void => {
+    $(CONTRIBUTION_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideCardDetails = (): void => {
+    $(CARD_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
+
+    const displayContributionUpdateErrorMessage = (): void => {
     $(CONTRIBUTION_UPDATE_ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-const hideContributionInfo = (): void => {
-    $(CONTRIBUTION_INFO).addClass(IS_HIDDEN_CLASSNAME);
-};
 
 // Cancel contribution aux functions
 
@@ -107,8 +113,20 @@ const hideCancelContributionForm = (): void => {
     $(CANCEL_CONTRIBUTION_FORM).addClass(IS_HIDDEN_CLASSNAME);
 };
 
+const displayCancelContributionSuccessMessage = (): void => {
+    $(CANCEL_CONTRIBUTION_MSG_SUCCESS).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
 const hideCancelContributionSuccessMessage = (): void => {
     $(CANCEL_CONTRIBUTION_MSG_SUCCESS).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displayCancelContributionErrorMessage = (): void => {
+    $(CANCEL_CONTRIBUTION_MSG_ERROR).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideCancelContributionErrorMessage = (): void => {
+    $(CANCEL_CONTRIBUTION_MSG_ERROR).addClass(IS_HIDDEN_CLASSNAME);
 };
 
 const displayCancelContributionLink = (): void => {
@@ -130,6 +148,8 @@ const enableCancellationSubmit = (): void => {
 };
 
 const handleCancelContributionSubmit = (): void => {
+    disableCancellationSubmit();
+
     const cancellationReasonSelector = document.querySelector(
         CANCEL_CONTRIBUTION_SELECTOR
     );
@@ -158,13 +178,26 @@ const handleCancelContributionSubmit = (): void => {
                 reason: cancellationReason,
             },
         }
-    ).catch(err => {
-        hideLoader();
-        displayErrorMessage();
-        reportError(err, {
-            feature: 'mma-monthlycontribution',
+    )
+        .then(resp => {
+            hideContributionDetails();
+            hideCardDetails();
+            hideCancelContributionForm();
+            if (resp.status === 200) {
+                displayCancelContributionSuccessMessage();
+            } else {
+                throw new Error(
+                    'Members Data API returned HTTP different from 200 for cancel contribution'
+                );
+            }
+            displaySupportUpSell();
+        })
+        .catch(err => {
+            displayCancelContributionErrorMessage();
+            reportError(err, {
+                feature: 'mma-monthlycontribution-cancel-contribution',
+            });
         });
-    });
 };
 
 const handleCancellationReasonChange = (): void => {
@@ -243,6 +276,7 @@ const handleCancelLink = (): void => {
 const setupCancelContribution = (): void => {
     hideCancelContributionForm();
     hideCancelContributionSuccessMessage();
+    hideCancelContributionErrorMessage();
     displayCancelContributionLink();
     displayCancelContribution();
 
@@ -466,8 +500,8 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         setupCancelContribution();
     } else {
         hideCancelContribution();
+        hideContributionDetails();
         displaySupportUpSell();
-        hideContributionInfo();
     }
 };
 

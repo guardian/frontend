@@ -1,69 +1,155 @@
-$quote-tail: 25px; // ********** Article Type **********
+$quote-tail: 25px;
+$quote-mark: 35px;
 
-.content--type-article {
+.content {
+    padding-bottom: 0;
+}
+
+.content--type-analysis,
+.content--type-article,
+.content--type-comment,
+.content--type-feature,
+.content--type-live,
+.content--type-media,
+.content--type-review {
+    // *************** Meta and Social ***************
     .submeta {
-        position: relative;
         border-top: 0;
-        margin-top: $gs-row-height;
+        margin-top: $gs-baseline;
+        padding-top: $gs-baseline / 2;
 
         &:before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            border-bottom: 1px solid $neutral-5;
-            border-top: 1px solid $neutral-5;
+            @include multiline(4);
         }
+    }
 
-        &:after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            border-bottom: 1px solid $neutral-5;
-            border-top: 1px solid $neutral-5;
-        }
+    .submeta--borderless-bottom .submeta__keywords {
+        border-bottom: 0;
+    }
 
-        &__keywords {
-            padding-bottom: $gs-baseline/2;
+    .submeta__label {
+        font-size: 12px;
+        line-height: 16px;
+        color: $neutral-2;
+        display: block;
+        margin-bottom: -($gs-baseline / 4);
+    }
+
+    .submeta__keywords {
+        padding-top: $gs-baseline / 2;
+        padding-bottom: $gs-baseline / 2;
+        border-bottom: solid 1px $garnett-neutral-4;
+        margin-bottom: $gs-baseline / 2;
+    }
+
+    .submeta__links {
+        font-size: 0;
+        line-height: 0;
+        list-style: none;
+        overflow: hidden;
+        margin-bottom: 0;
+        margin-left: -$gs-gutter / 4;
+        margin-top: 0;
+    }
+
+    .submeta__link-item,
+    .syndication__item {
+        &:before {
+            content: none!important;
+            // I can't seem to override this behaviour without the important statment
         }
     }
 
     .submeta__link {
-        font-weight: 200;
-    }
+        @include trailing-slash-link;
+        font-weight: 400;
+        line-height: 22px;
 
-    .submeta__link-item {
-        @include fs-textSans(3);
-    }
+        &:after {
+            @include trailing-slash;
+            color: $garnett-neutral-4;
+        }
 
-    .submeta__label {
-        margin-bottom: 0;
-    }
+        .submeta__keywords & {
+            font-size: 15px;
+            color: $neutral-2;
+        }
 
-    .submeta__keywords {
-        padding-bottom: $gs-baseline/2;
+        .submeta__section-labels & {
+            font-size: 16px;
+            line-height: 22px;
+        }
     }
 
     .submeta__section-labels .submeta__link {
-        @include f-bodyHeading;
+        @include fs-headline(2);
+        font-weight: 400;
     }
 
-    .content__article-body {
-        @include mq(desktop) {
-            border-left: solid 1px $neutral-5;
-            padding-left: $gs-gutter/2;
-            margin-left: 0;
-        }
+    .submeta__badge {
+        float: right;
+        margin-top: -$gs-baseline;
+        margin-left: $gs-gutter / 2;
+    }
+
+    .social {
+        overflow-y: visible;
+    }
+
+    .content__meta-container {
+        margin-top: -$gs-baseline;
+        margin-bottom: 0;
         @include mq(leftCol) {
-            margin-left: -$gs-gutter/2;
+            position: absolute;
+        }
+
+        &:before {
+            @include multiline(4);
         }
     }
-    // meta__styling
+
+    .content__labels--not-immersive {
+        padding-top: $gs-gutter/2;
+        @include mq(tablet, leftCol) {
+            border-bottom: solid 1px $garnett-neutral-4;
+        }
+    }
+
+    .content__series-label {
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
+
+    .content__header,
+    .content__headline,
+    .content__meta-container,
+    .content__standfirst {
+        @include mq(phablet, tablet) {
+            max-width: 38.75rem;
+            margin: auto;
+            position: relative;
+        }
+    }
+
+    .byline,
+    .content__dateline,
+    .content__headline,
+    .content__labels,
+    .content__standfirst,
+    .social {
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+        @include mq(phablet) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
     .inline-close,
     .social-icon,
     .social-icon.social-icon--more {
@@ -73,19 +159,89 @@ $quote-tail: 25px; // ********** Article Type **********
         &:focus,
         &:hover {
             svg {
-                fill: $neutral-garnett-1;
+                fill: $garnett-neutral-5;
+            }
+        }
+    }
+
+    .social-icon {
+        @include mq(leftCol) {
+            max-width: 29px;
+            min-width: 29px;
+            height: 29px;
+        }
+        @include mq(wide) {
+            min-width: 32px;
+            max-width: 100%;
+            width: auto;
+            height: 32px;
+        }
+    }
+
+    .social__item {
+        @include mq(leftCol) {
+            padding: 0;
+        }
+        @include mq(wide) {
+            padding: 0 3px 6px 0;
+        }
+    }
+
+    .social--top {
+        padding-top: 0!important;
+        //only way to override behaviour
+    }
+
+
+    .meta__extras {
+        border: 0;
+    }
+
+    .meta__numbers,
+    .meta__social {
+        border-top: 0;
+
+        &:before {
+            @include multiline(1);
+        }
+    }
+
+    .meta__numbers {
+        @include mq($until: leftCol) {
+            margin-right: $gs-gutter/2;
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    .meta__image {
+        border-top: 0;
+    }
+
+    .content__dateline {
+        border-top: 0;
+        @include mq(phablet) {
+            &:before {
+                @include multiline(1);
             }
         }
     }
 
     .byline,
-    .content__dateline,
-    .meta__numbers,
-    .meta__social {
-        border-top: 1px solid $neutral-3;
+    .content__dateline {
+        padding-bottom: $gs-baseline;
+        @include mq($until: phablet) {
+            display: inline-block;
+            border-top: 0;
+            width: 45%;
+            padding-top: $gs-baseline/2;
+            vertical-align: top;
+        }
     }
 
     .byline {
+        border-top: 0;
         font-weight: 200;
         color: #333333;
         font-style: italic;
@@ -98,6 +254,10 @@ $quote-tail: 25px; // ********** Article Type **********
         }
     }
 
+    .social {
+        margin-bottom: $gs-baseline/2;
+    }
+
     .meta__twitter {
         a {
             background-color: transparent;
@@ -106,13 +266,116 @@ $quote-tail: 25px; // ********** Article Type **********
             &:focus,
             &:hover {
                 .inline-tone-fill {
-                    fill: $neutral-garnett-1;
+                    fill: $garnett-neutral-5;
                 }
 
                 .contact {
-                    color: $neutral-garnett-1;
+                    color: $garnett-neutral-5;
                 }
             }
+        }
+    }
+    // *************** Header and Body Styles ***************
+    .gs-container {
+        @include mq(tablet, desktop) {
+            padding-top: $gs-baseline;
+        }
+    }
+
+    .content__article-body,
+    .immersive-main-media__headline-container .content__main-column {
+        &:before {
+            @include mq(desktop) {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                height: 100%;
+                width: 1px;
+                background: $garnett-neutral-4;
+            }
+        }
+        @include mq(desktop) {
+            padding-left: $gs-gutter/2;
+            margin-left: 0;
+            padding-top: $gs-gutter/2;
+            padding-bottom: 100px;
+        }
+        @include mq(leftCol) {
+            margin-left: -$gs-gutter/2;
+        }
+    }
+
+    .content__secondary-column {
+        padding-top: $gs-gutter/2;
+    }
+
+    .reveal-caption {
+        display: block!important;
+        right: $gs-gutter/2;
+        bottom: $gs-gutter/2;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .caption--main.caption--img {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(22, 22, 22, .8);
+        color: #ffffff;
+        padding: 6px 40px 12px 10px;
+        max-width: 100%;
+        display: none;
+    }
+
+    .reveal-caption__checkbox:checked ~ .caption--main {
+        display: block;
+    }
+
+    .media-primary .inline-expand-image {
+        display: none;
+    }
+
+    .article__fullscreen:hover,
+    .article__img-container:hover .article__fullscreen,
+    .article__img-container:hover .gallery__fullscreen,
+    .gallery__fullscreen:hover {
+        background-color: $neutral-4;
+    }
+
+    .content__headline {
+        @include fs-headlineGarnett(4);
+        font-weight: 400;
+        padding-top: 0;
+        padding-bottom: $gs-baseline/2;
+        @include mq(tablet) {
+            @include fs-headlineGarnett(6);
+            font-weight: 400;
+            padding-bottom: $gs-baseline*2;
+        }
+    }
+
+    .content__standfirst {
+        @include fs-headline(2);
+        font-weight: 400;
+        border-top: 0;
+        color: $neutral-1;
+        padding-top: 2px;
+        margin-bottom: $gs-baseline*2;
+        @include mq(mobileMedium) {
+            max-width: gs-span(4);
+        }
+        @include mq(phablet) {
+            margin-left: 20px;
+        }
+        @include mq(tablet) {
+            max-width: gs-span(6);
+            margin-left: 0;
         }
     }
 
@@ -125,25 +388,39 @@ $quote-tail: 25px; // ********** Article Type **********
             width: gs-span(3) -$gs-gutter/2;
         }
     }
-    // Quote base styles
+
+    .media-primary {
+        margin-bottom: $gs-baseline;
+    }
+
+    .badge--alt {
+        border-top: 0;
+    }
+
+    .drop-cap__inner {
+        line-height: 2.3rem;
+        @include mq(tablet) {
+            line-height: 3.7rem;
+        }
+    }
+    // *************** Quote Styles ***************
     .element-pullquote {
-        background-color: $neutral-garnett-1;
-        border: solid 1px $neutral-5;
+        background-color: $garnett-neutral-3;
         margin: $gs-gutter/4 0 $gs-baseline*2;
-        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
+        padding: 0 $gs-gutter/2 $gs-baseline;
         position: relative;
         clear: none;
         float: none;
         width: inherit;
-        @include mq(mobile) {
-            margin-left: -$gs-gutter/2 - 1px;
-        }
+        margin-left: -$gs-gutter/2;
         @include mq(mobileLandscape) {
-            margin-right: $gs-gutter/2;
             margin-left: -$gs-gutter;
         }
+        @include mq(phablet) {
+            margin-left: -$gs-gutter/2;
+        }
         @include mq(leftCol) {
-            margin-left: -$gs-baseline*2;
+            margin-left: -($quote-mark + $gs-gutter);
         }
         // Quote tail
         &:after {
@@ -152,30 +429,47 @@ $quote-tail: 25px; // ********** Article Type **********
             height: $quote-tail;
             border-radius: 0 0 $quote-tail;
             position: absolute;
-            bottom: -$quote-tail - 2px;
+            bottom: -$quote-tail;
             left: $gs-gutter/2;
-            background-color: $neutral-garnett-1;
-            border: solid 1px $neutral-5;
-            border-top: solid 1px $neutral-garnett-1;
+            background-color: $garnett-neutral-3;
             @include mq(mobileLandscape) {
                 left: $gs-gutter;
             }
+            @include mq(phablet) {
+                left: $gs-gutter/2;
+            }
             @include mq(desktop) {
-                left: $gs-gutter - $gs-baseline;
+                left: 0;
             }
             @include mq(leftCol) {
-                left: $gs-baseline;
+                left: ($quote-mark + $gs-gutter/2);
             }
         }
 
         .pullquote-cite,
         .pullquote-paragraph {
             display: inline;
+            font-weight: 400!important;
         }
 
         .inline-quote,
         blockquote {
             display: inline;
+        }
+
+        // these are all temp until we get new quote mark in
+        .inline-quote {
+            width: 28px;
+            margin-right: 3px;
+            @include mq(desktop) {
+                width: $quote-mark;
+            }
+
+            svg {
+                width: inherit;
+                position: relative;
+                top: $gs-baseline/2;
+            }
         }
         // Hack hide for svg
         .closing {
@@ -197,14 +491,21 @@ $quote-tail: 25px; // ********** Article Type **********
         &:after {
             @include mq(leftCol) {
                 border-radius: 0 0 0 $quote-tail;
-                left: gs-span(3)/2 - $quote-tail -3px;
-                // 3px is added for left alignment correction
+                left: gs-span(3)/2 - $quote-tail +1px;
             }
         }
 
         .pullquote-cite,
         .pullquote-paragraph {
             @include fs-headlineGarnett(1);
+            font-weight: 400!important;
+        }
+        // temp fix for old quote svg, will be replaced
+        .inline-quote svg {
+            width: 30px;
+            position: relative;
+            top: 8px;
+            margin-right: 0;
         }
     }
     // Quote halfWidth
@@ -256,6 +557,9 @@ $quote-tail: 25px; // ********** Article Type **********
         @include mq(mobileLandscape) {
             margin-left: -$gs-gutter;
         }
+        @include mq(phablet) {
+            margin-left: -$gs-gutter/2;
+        }
         @include mq(leftCol) {
             width: gs-span(8);
             margin-left: - gs-span(2);
@@ -282,15 +586,113 @@ $quote-tail: 25px; // ********** Article Type **********
         }
 
         .inline-quote svg {
-            @include mq(desktop) {
-                display: inline;
-            }
+            width: $quote-mark;
             @include mq(leftCol) {
-                display: block;
-                width: 50px;
-                position: absolute;
-                top: - 40px;
+                width: 40px;
             }
         }
+    }
+}
+// *************** Opinion and Feature standfirst overrides ***************
+
+.content--type-comment,
+.content--type-feature,
+.content--type-review {
+    .content__standfirst {
+        @include fs-headlineGarnett(1);
+        font-weight: 200;
+        @include mq(tablet) {
+            @include fs-headlineGarnett(2);
+        }
+    }
+}
+
+.content--type-feature,
+.content--type-review {
+    .content__headline {
+        font-weight: 700;
+    }
+}
+// *************** Opinion Styles ***************
+
+.content--type-comment {
+    .content__head {
+        overflow: hidden;
+        @include mq(phablet) {
+            overflow: visible;
+        }
+    }
+
+    .content__meta-container {
+        &:before {
+            content: none;
+        }
+    }
+
+    .content__header {
+        position: relative;
+
+        &:after {
+            @include multiline(8);
+        }
+    }
+
+    .content__headline {
+        width: 70%;
+        font-weight: 100;
+        padding-top: 0;
+        @include mq(phablet) {
+            float: left;
+        }
+    }
+
+    .content__headline--byline {
+        font-style: italic;
+        margin-left: 0;
+        padding: 0 $gs-baseline/2 $gs-gutter*3;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+        }
+        @include mq(phablet) {
+            padding-left: 0;
+        }
+        @include mq(leftCol) {
+            padding-top: $gs-baseline;
+        }
+    }
+
+    .content__headline--byline a {
+        text-decoration: none;
+        border-bottom: 0;
+    }
+
+    .content__headline--byline span:hover {
+        color: $neutral-3;
+    }
+
+    .byline-img {
+        position: absolute;
+        bottom: 3px;
+        // counters the 3px bottom margin on multi-rule mixin
+        right: 0;
+        @include mq(mobileLandscape) {
+            right: gs-span(3) - $gs-gutter;
+        }
+    }
+
+    .content__labels,
+    .content__labels--not-immersive {
+        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline/3;
+        @include mq(tablet) {
+            padding-top: $gs-gutter/2;
+            margin-top: -$gs-gutter/2;
+        }
+    }
+
+    .content__section-label,
+    .content__section-label__link {
+        display: block!important;
+        // only way to override defaults
     }
 }

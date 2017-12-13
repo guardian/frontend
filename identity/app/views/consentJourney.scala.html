@@ -22,9 +22,15 @@
     newsletterHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@onlySubscribedToNewsletters = @{
-    EmailNewsletters.all.subscriptions.filter { newsletter =>
-        emailSubscriptions.contains(newsletter.listId.toString)
+@onlySubscribedToNewsletters(onlyV1Newsletters: Boolean) = @{
+    if (onlyV1Newsletters) {
+        EmailNewsletters.all.subscriptions.filter { newsletter =>
+            emailSubscriptions.intersect(newsletter.aliasedIds.map(_.toString)).nonEmpty
+        }
+    } else {
+        EmailNewsletters.all.subscriptions.filter { newsletter =>
+            emailSubscriptions.intersect(newsletter.allIds.map(_.toString)).nonEmpty
+        }
     }
 }
 
@@ -41,9 +47,9 @@
                 <p class="manage-account-headerNote">Tick the boxes you are interested in. We have featured some you might be interested in.</p>
             } else {
                 <h1 class="identity-title">
-                    Would you like to receive communications from us?
+                    What would you like to hear about?
                 </h1>
-                <p class="manage-account-headerNote">Tick the boxes you are interested in</p>
+                <p class="manage-account-headerNote">Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.</p>
             }
             <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
                 <div class="manage-account__switches manage-account__switches--wide">
@@ -75,22 +81,23 @@
             @if(isNarrow) {
                 <h2 class="identity-title">Sorry for the interruption</h2>
                 <p class="manage-account-headerNote">
-                    Do you still want to receive the following newsletters? Please check them again if you do.
+                    You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
                 </p>
             } else {
-                <h2 class="identity-title">Email Preferences</h2>
+                <h2 class="identity-title">Your existing newsletters</h2>
                 <p class="manage-account-headerNote">
-                    You were receiving these newsletters, check them again to confirm you want to keep receiving them.
+                    You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
                 </p>
             }
             <div class="manage-account__switches">
                 <ul>
-                    @onlySubscribedToNewsletters.zipWithRowInfo.map { case (newsletter, row) =>
+                    @onlySubscribedToNewsletters(isNarrow).zipWithRowInfo.map { case (newsletter, row) =>
                         <li>
                             @fragments.newsletterSwitch(
                                 emailPrefsForm,
                                 emailSubscriptions,
-                                newsletter = newsletter
+                                newsletter = newsletter,
+                                isNarrow
                             )(nonInputFields, messages, request)
                         </li>
                     }
@@ -107,9 +114,9 @@
             @views.html.helper.CSRF.formField
             @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
-            <h2 class="identity-title">Love email? Gosh, so do we!</h2>
+            <h2 class="identity-title">Your newsletters</h2>
             <p class="manage-account-headerNote">
-                Sign up to whatever newsletters tickle your fancy and we'll make sure you get them on time.
+                Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below. Just so you know, your newsletter might include messages about how you can support the Guardian, as well as our events, jobs, masterclasses and holidays.
             </p>
 
             <div class="manage-account__switches">
@@ -127,57 +134,63 @@
             <h2 class="manage-account-consent-thanks__title">Thank you</h2>
             <aside class="manage-account-consent-thanks__content">
                 <p>Your support helps us deliver the quality independent journalism the world needs</p>
-                <button type="submit" class="manage-account__button">Continue</button>
+                <button
+                    type="submit"
+                    class="manage-account__button"
+                    data-link-name="consent : @journey : submit"
+                >Continue</button>
             </aside>
         </form>
     </div>
 }
 
+<div class="identity-wrapper-for-bg identity-wrapper-for-bg--overflows">
+    <div class="gs-container">
+        <div class="monocol-wrapper">
 
-@mainLegacy(page, projectName = Option("identity")) { } {
+            <div class="u-cf identity-section identity-wrapper identity-wrapper--with-wizard">
 
-    <div class="identity-wrapper-for-bg identity-wrapper-for-bg--overflows">
-        <div class="gs-container">
-            <div class="monocol-wrapper">
+                <div class="js-errorHolder manage-account__errors"></div>
 
-                <div class="u-cf identity-section identity-wrapper">
+                <div class="manage-account-wizard manage-account-wizard--consent" data-journey="@journey">
 
-                    <div class="js-errorHolder manage-account__errors"></div>
-
-                    <div class="manage-account-wizard manage-account-wizard--consent" data-journey="@journey">
-
-                        @journey match {
-                            case "repermission-narrow" => {
-                                @emailStep(isNarrow = true)
-                            }
-                            case "repermission" => {
-                                @consentStep(journey = "repermission")
-                                @emailStep()
-                            }
-                            case "signup" => {
-                                @consentStep(journey = "signup")
-                                @emailSignupStep()
-                            }
+                    @journey match {
+                        case "repermission-narrow" => {
+                            @emailStep(isNarrow = true)
                         }
+                        case "repermission" => {
+                            @consentStep(journey = "repermission")
+                            @emailStep()
+                        }
+                        case "signup" => {
+                            @consentStep(journey = "signup")
+                            @emailSignupStep()
+                        }
+                    }
 
-                        @endcardStep()
+                    @endcardStep()
 
-                        <div class="manage-account-wizard__controls">
-                            <a class="manage-account-consent-wizard-button-back manage-account-consent-wizard__revealable manage-account__button--round manage-account__button js-manage-account-wizard__prev">
-                                <span class="u-h">Previous</span>
-                                @fragments.inlineSvg("arrow-left-stem", "icon")
-                            </a>
-                            <div class="manage-account-consent-wizard__revealable manage-account-consent-wizard-counter">
-                            </div>
-                            <a class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next">
-                                <span>Next</span>
-                                @fragments.inlineSvg("arrow-right", "icon")
-                            </a>
+                    <div class="manage-account-wizard__controls">
+                        <button
+                            data-link-name="consent : @journey : navigation : prev"
+                            class="manage-account-consent-wizard-button-back manage-account-consent-wizard__revealable manage-account__button--round manage-account__button js-manage-account-wizard__prev"
+                        >
+                            <span class="u-h">Previous</span>
+                            @fragments.inlineSvg("arrow-left-stem", "icon")
+                        </button>
+                        <div class="manage-account-consent-wizard__revealable manage-account-consent-wizard-counter">
                         </div>
+                        <button
+                            data-link-name="consent : @journey : navigation : next"
+                            class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next"
+                        >
+                            <span>Next</span>
+                            @fragments.inlineSvg("arrow-right", "icon")
+                        </button>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>
-}
+</div>

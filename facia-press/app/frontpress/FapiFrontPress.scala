@@ -162,7 +162,7 @@ trait FapiFrontPress extends Logging {
     putPressedJson(path, json, pressedType)
   }
 
-  def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollectionVersions] = {
+  def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollectionVisibility] = {
     for {
       collection <- FAPI.getCollection(collectionId)
       curated <- getCurated(collection)
@@ -176,23 +176,18 @@ trait FapiFrontPress extends Logging {
         .toOption(storyCountTotal)
         .getOrElse(Math.min(Configuration.facia.collectionCap, storyCountTotal))
       val storyCountVisible = Container.storiesCount(collection.collectionConfig.collectionType, curated ++ backfill).getOrElse(storyCountMax)
-      val hasMore = storyCountVisible < storyCountMax
 
-      PressedCollectionVersions(
-        pressCollection(collection, curated, backfill, treats, storyCountVisible, hasMore),
-        pressCollection(collection, curated, backfill, treats, storyCountMax, hasMore)
-      )
+      val pressedCollection = pressCollection(collection, curated, backfill, treats, storyCountMax)
+      PressedCollectionVisibility(pressedCollection, storyCountVisible)
     }
   }
-
 
   private def pressCollection(
     collection: Collection,
     curated: List[PressedContent],
     backfill: List[PressedContent],
     treats: List[PressedContent],
-    storyCount: Int,
-    hasMore: Boolean
+    storyCount: Int
   ) = {
     val trimmedCurated = curated.take(storyCount)
     val trimmedBackfill = backfill.take(storyCount - trimmedCurated.length)
@@ -200,8 +195,7 @@ trait FapiFrontPress extends Logging {
       collection,
       trimmedCurated,
       trimmedBackfill,
-      treats,
-      hasMore
+      treats
     )
   }
 
@@ -303,7 +297,11 @@ trait FapiFrontPress extends Logging {
       pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(path))
     } yield seoWithProperties match {
-      case (seoData, frontProperties) => PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, pressedCollections)
+      case (seoData, frontProperties) =>
+        val dedupliatedCollections = PressedCollectionVisibility.deduplication(pressedCollections)
+          .map(_.pressedCollectionVersions)
+          .toList
+        PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, dedupliatedCollections)
     }
   }
 

@@ -48,8 +48,9 @@ object Sublink {
       EditionalisedLink.fromFaciaContent(faciaContent),
       faciaContent.card.cardStyle,
       faciaContent.card.mediaType,
-      Pillar(storyContent).map(_.name).getOrElse("").toLowerCase,
-      contentType.name.toLowerCase()
+      Pillar(storyContent),
+      contentType,
+      storyContent.map(_.metadata.designType),
     )
   }
 }
@@ -60,8 +61,9 @@ case class Sublink(
   url: EditionalisedLink,
   cardStyle: CardStyle,
   mediaType: Option[MediaType],
-  pillarName: String,
-  contentType: String
+  pillar: Option[Pillar],
+  contentType: DotcomContentType,
+  designType: Option[DesignType],
 )
 
 object DiscussionSettings {

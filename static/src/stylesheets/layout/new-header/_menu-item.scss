@@ -46,21 +46,12 @@
         letter-spacing: .3px;
         padding: ($gs-baseline / 2) 0;
         transition: color 80ms ease-out;
-        width: auto;
     }
 
     &:hover,
     &:focus {
-        text-decoration: none;
-
         @include mq(desktop) {
             color: #ffffff;
-        }
-    }
-
-    &:focus {
-        @include mq(desktop) {
-            text-decoration: underline;
         }
     }
 
