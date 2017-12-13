@@ -2,7 +2,7 @@ package controllers
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
+import com.gu.identity.model.{EmailNewsletters, StatusFields, User}
 import common.ImplicitControllerExecutionContext
 import form._
 import idapiclient.responses.Error
@@ -16,6 +16,7 @@ import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 import utils.SafeLogging
+import utils.ConsentOrder._
 
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
@@ -279,27 +280,6 @@ class EditProfileController(
     }
   }
 
-  /** If consentHint is provided it moves that consent to the head of consents list */
-  private def hintedConsents(consents: List[Consent], consentHint: Option[String]): List[Consent] = {
-
-    // https://stackoverflow.com/questions/24870729/moving-an-element-to-the-front-of-a-list-in-scala
-    def moveToFront(hint: String, consents: List[Consent]): List[Consent] = {
-      consents.span(consent => consent.id != hint) match {
-        case (as, h :: bs) => h :: as ++ bs
-        case _ => consents
-      }
-    }
-
-    consentHint.map(hint => moveToFront(hint, consents)).getOrElse(consents)
-  }
-
-  private def orderedConsents(consents: List[Consent]): List[Consent] = {
-    val orderedConsentIds: List[String] = List("jobs", "supporter", "holidays", "events", "offers")
-    orderedConsentIds.map(id => consents.find(_.id == id)).flatten
-  }
-
-  private def userWithOrderedConsents(user: User, consentHint: Option[String]): User =
-    user.copy(consents = hintedConsents(orderedConsents(user.consents), consentHint))
 }
 
 /**
