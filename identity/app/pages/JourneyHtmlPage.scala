@@ -1,11 +1,12 @@
 package pages
 
+import experiments.{ActiveExperiments, Garnett}
 import html.HtmlPageHelpers._
 import html.Styles
 import model.{ApplicationContext, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import views.html.fragments.{_}
+import views.html.fragments._
 import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
@@ -43,7 +44,7 @@ object JourneyHtmlPage {
       ),
       bodyTag(classes = bodyClasses)(
         skipToMainContent(),
-        views.html.layout.identityHeader(),
+        if(ActiveExperiments.isParticipating(Garnett)) views.html.layout.identityHeader() else guardianHeaderHtml(),
         mainContent(),
         content,
         inlineJSNonBlocking(),
