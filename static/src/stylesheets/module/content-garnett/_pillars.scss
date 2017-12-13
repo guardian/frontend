@@ -11,6 +11,7 @@
     .tonal__head--tone-feature .content__headline,
     .tonal__head--tone-review .content__headline,
     .tone-colour,
+    .content--media .content__headline,
     a {
         color: $kickerColor;
     }
@@ -23,7 +24,8 @@
     .inline-close svg,
     .inline-tone-fill,
     .social-icon svg,
-    .social-icon.social-icon--more svg {
+    .social-icon.social-icon--more svg,
+    .social-icon__svg {
         fill: $kickerColor;
     }
 
