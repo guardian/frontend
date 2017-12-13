@@ -20,6 +20,8 @@ import scala.util.control.NonFatal
 import akka.pattern.after
 
 class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: ActorSystem)(implicit ec: ExecutionContext) extends ResourcesHelper with Logging {
+
+  // NOTE: If you change the API Key, you must also update the weatherapi fastly configuration, as it is enforced there
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )
@@ -28,17 +30,19 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
   val requestRetryMax: Int = 3
   val requestRetryDelay: FiniteDuration = 100.milliseconds
 
+  val accuWeatherApiUri = "https://weather.guardianapis.com"
+
   private def autocompleteUrl(query: String): String =
-    s"http://api.accuweather.com/locations/v1/cities/autocomplete?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
+    s"$accuWeatherApiUri/locations/v1/cities/autocomplete?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
 
   private def cityLookUp(cityId: CityId): String =
-    s"http://api.accuweather.com/currentconditions/v1/${cityId.id}.json?apikey=$weatherApiKey"
+    s"$accuWeatherApiUri/currentconditions/v1/${cityId.id}.json?apikey=$weatherApiKey"
 
   private def forecastLookUp(cityId: CityId): String =
-    s"http://api.accuweather.com/forecasts/v1/hourly/24hour/${cityId.id}.json?details=true&apikey=$weatherApiKey"
+    s"$accuWeatherApiUri/forecasts/v1/hourly/24hour/${cityId.id}.json?details=true&apikey=$weatherApiKey"
 
   private def latitudeLongitudeUrl(latitudeLongitude: LatitudeLongitude): String = {
-    s"http://api.accuweather.com/locations/v1/cities/geoposition/search.json?q=$latitudeLongitude&apikey=$weatherApiKey"
+    s"$accuWeatherApiUri/locations/v1/cities/geoposition/search.json?q=$latitudeLongitude&apikey=$weatherApiKey"
   }
 
   private def getJson(url: String): Future[JsValue] = {

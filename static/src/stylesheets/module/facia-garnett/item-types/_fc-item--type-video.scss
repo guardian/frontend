@@ -1,4 +1,4 @@
-.fc-item--type-video {
+.fc-item--type-media.fc-item--video {
     .inline-video-icon {
         position: relative;
         top: 7px;
@@ -10,9 +10,9 @@
         &::after {
             display: inline-block;
             content: '';
-            height: 10px;
+            height: $gs-baseline + 1px;
             margin: 6px;
-            border: 1px solid;
+            width: 2px;
         }
     }
 

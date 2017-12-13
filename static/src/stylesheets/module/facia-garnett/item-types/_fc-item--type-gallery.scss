@@ -1,4 +1,4 @@
-.fc-item--type-gallery {
+.fc-item--type-media.fc-item--gallery {
     .inline-camera {
         position: relative;
         top: 2px;
@@ -10,9 +10,9 @@
         &::after {
             display: inline-block;
             content: '';
-            height: 10px;
+            height: $gs-baseline + 1px;
             margin: 0 6px;
-            border: 1px solid;
+            width: 2px;
         }
     }
 }
