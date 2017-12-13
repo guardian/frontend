@@ -177,10 +177,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__header {
     flex: 1 1 auto;
-
-    .inline-icon {
-        display: none;
-    }
 }
 
 .fc-item__kicker {
@@ -260,15 +256,20 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-trail__count {
     display: flex;
-}
+    line-height: 10px;            
 
-.fc-trail__count .inline-icon {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 3px;
-    float: left;
-    margin-right: 1px;
+    .inline-icon {
+        padding-right: 2px;
+        height: 14px;
+        width: 14px;
+        bottom: 0;
+        top: 0;
+
+        svg {
+            height: 14px;
+            width: 14px;
+        }
+    }
 }
 
 .fc-item__footer--horizontal {

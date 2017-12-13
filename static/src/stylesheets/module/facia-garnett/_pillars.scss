@@ -19,7 +19,7 @@ $pillars: (
         headline: $garnett-neutral-1,
         featureHeadline: $opinion-garnett-feature,
         byline: $opinion-garnett-main-1,
-        commentCount: $garnett-neutral-2,
+        commentCount: $garnett-neutral-5,
         headlineIcon: $opinion-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $opinion-garnett-main-1,
@@ -138,7 +138,7 @@ $pillars: (
     }
 
     .inline-icon {
-        color: map-get($palette, headlineIcon);
+        fill: map-get($palette, headlineIcon);
     }
 
     .fc-item__meta {
@@ -189,7 +189,12 @@ $pillars: (
         }
 
         .fc-trail__count--commentcount {
+            color: map-get($palette, commentCount);
             background-color: map-get($palette, cardBackground);
+
+            .inline-icon {
+                fill: map-get($palette, commentCount);
+            }
         }
     }
 

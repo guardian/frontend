@@ -11,15 +11,27 @@
         display: flex;
         width: 100%;
 
+        height: 13px;
+        box-sizing: border-box;
+
+        border-top: 1px solid #bdbdbd;
+        border-bottom: 1px solid #bdbdbd;
+
+        &:before,
         &:after {
             content: '';
-            display: block;
             position: absolute;
-            height: 2px;
-            bottom: 0;
+            height: 1px;
             width: 100%;
-            border-top: 4px double #bdbdbd;
-            border-bottom: 4px double #bdbdbd;
+            background-color: #bdbdbd;
+        }
+
+        &:before {
+            top: 3px;
+        }
+
+        &:after {
+            bottom: 3px;
         }
 
         .fc-trail__count {
@@ -28,7 +40,8 @@
             padding-right: $gs-gutter * .25;
             padding-left: $gs-gutter * .25;
             right: 0;
-            bottom: 0;
+            bottom: -1px;
+            top: -1px;
         }
     }
 
@@ -143,10 +156,6 @@
                 .fc-item__container {
                     display: flex;
                     flex-direction: column;
-                }
-
-                .fc-item__meta {
-                    flex: 1;
                 }
 
                 .fc-item__header {
