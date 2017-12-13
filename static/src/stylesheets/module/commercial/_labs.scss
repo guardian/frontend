@@ -75,7 +75,7 @@
 
 .dumathoin__title {
     @include fs-headline(4, true);
-    @include f-headlineSans;
+    @include f-textSans;
     color: #ffffff;
     font-size: get-font-size(headline, 3);
 }

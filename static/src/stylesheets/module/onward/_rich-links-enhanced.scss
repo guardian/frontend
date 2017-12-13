@@ -214,7 +214,7 @@
             }
             .rich-link__header,
             .rich-link__read-more-text {
-                @include f-headlineSans;
+                @include f-textSans;
                 color: $neutral-1;
             }
             .rich-link__arrow-icon {

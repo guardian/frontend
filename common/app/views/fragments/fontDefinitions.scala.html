@@ -1,6 +1,6 @@
 @import conf.Static
 
-@List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianSansWeb", "GuardianTextSansWeb").map { typeface =>
+@List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianTextSansWeb").map { typeface =>
     <style class="webfont" data-cache-name="@typeface"
         @List("woff2", "woff", "ttf").map { font =>
             data-cache-file-@font="@Static(s"fonts/${typeface}.${font}.json")"
