@@ -529,7 +529,7 @@ $hosted-video-height: 551px;
 
 // Headings
 .hosted__heading {
-    @include f-headlineSans;
+    @include f-textSans;
     letter-spacing: -.5px;
 
     margin: 0;

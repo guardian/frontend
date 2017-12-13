@@ -29,11 +29,15 @@ Three quarter item. Looks like a wide standard, a bit like this:
             @include headline-boost(5);
         }
     }
-    
+
     .fc-item__standfirst {
         @include mq(desktop) {
             display: flex;
         }
+    }
+    
+    .fc-item__liveblog-blocks {
+        padding-right: 0;
     }
 
     &.fc-item--has-sublinks-3 {

@@ -153,8 +153,8 @@ do you have fonts in localStorage?
                     @if(ActiveExperiments.isParticipating(Garnett)) {
                         let garnettHash, garnettURL;
                         if (fontName === 'GuardianEgyptianWeb') {
-                            garnettHash = 'garnett-08122017';
-                            garnettURL = `https://s3-eu-west-1.amazonaws.com/garnett/08122017/GuardianEgyptianWeb${fontHinting === 'Off' ? '' : fontHinting}.${fontFormat}.json`;
+                            garnettHash = 'garnett-12122017';
+                            garnettURL = `https://s3-eu-west-1.amazonaws.com/garnett/12122017/GuardianEgyptianWeb${fontHinting === 'Off' ? '' : fontHinting}.${fontFormat}.json`;
                         } else {
                             garnettHash = fontHash;
                             garnettURL = fontURL;

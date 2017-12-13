@@ -56,6 +56,10 @@
     padding-bottom: $gs-baseline*4;
     padding-top: $gs-baseline*4;
 
+    &.identity-wrapper--with-wizard {
+        padding-bottom: 0;
+    }
+
     @include mq(desktop) {
         max-width: gs-span(10);
     }

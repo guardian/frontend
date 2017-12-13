@@ -96,7 +96,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
 }
 
 .hosted-gallery__cta-title {
-    @include f-headlineSans;
+    @include f-textSans;
     color: #ffffff;
     margin-bottom: 15px;
     margin-right: 90px;
@@ -136,7 +136,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
 }
 
 .hosted-gallery__oj-sub-header {
-    @include f-headlineSans;
+    @include f-textSans;
     font-size: 14px;
 }
 
@@ -180,7 +180,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
 }
 
 .hosted-gallery__oj-close {
-    @include f-headlineSans;
+    @include f-textSans;
     font-size: 14px;
     border-radius: 3px 3px 0 0;
     position: absolute;
@@ -242,7 +242,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
 
 .hosted-gallery__cta-link {
     @include circular;
-    @include f-headlineSans;
+    @include f-textSans;
     position: relative;
     display: inline-block;
     padding: 8px 12px;
@@ -325,7 +325,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
 }
 
 .hosted-gallery__heading {
-    @include f-headlineSans;
+    @include f-textSans;
     margin-bottom: 5px;
     font-size: 26px;
     line-height: 28px;
@@ -340,7 +340,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
 }
 
 .hosted-gallery__sub-heading {
-    @include f-headlineSans;
+    @include f-textSans;
     font-size: 16px;
     line-height: 18px;
     @include mq(tablet) {
@@ -434,7 +434,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
 }
 
 .hosted-gallery__caption {
-    @include f-headlineSans;
+    @include f-textSans;
     font-size: 13px;
     height: 40px;
     color: $neutral-7;
@@ -570,7 +570,7 @@ $progressColor: #ffffff;
     }
 
     .hosted-gallery__image-count {
-        @include f-headlineSans;
+        @include f-textSans;
         position: absolute;
         top: 13px;
         left: -18px;

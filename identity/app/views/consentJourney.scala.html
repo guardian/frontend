@@ -22,9 +22,15 @@
     newsletterHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@onlySubscribedToNewsletters = @{
-    EmailNewsletters.all.subscriptions.filter { newsletter =>
-        emailSubscriptions.contains(newsletter.listId.toString)
+@onlySubscribedToNewsletters(onlyV1Newsletters: Boolean) = @{
+    if (onlyV1Newsletters) {
+        EmailNewsletters.all.subscriptions.filter { newsletter =>
+            emailSubscriptions.intersect(newsletter.aliasedIds.map(_.toString)).nonEmpty
+        }
+    } else {
+        EmailNewsletters.all.subscriptions.filter { newsletter =>
+            emailSubscriptions.intersect(newsletter.allIds.map(_.toString)).nonEmpty
+        }
     }
 }
 
@@ -85,12 +91,13 @@
             }
             <div class="manage-account__switches">
                 <ul>
-                    @onlySubscribedToNewsletters.zipWithRowInfo.map { case (newsletter, row) =>
+                    @onlySubscribedToNewsletters(isNarrow).zipWithRowInfo.map { case (newsletter, row) =>
                         <li>
                             @fragments.newsletterSwitch(
                                 emailPrefsForm,
                                 emailSubscriptions,
-                                newsletter = newsletter
+                                newsletter = newsletter,
+                                isNarrow
                             )(nonInputFields, messages, request)
                         </li>
                     }
@@ -137,57 +144,53 @@
     </div>
 }
 
+<div class="identity-wrapper-for-bg identity-wrapper-for-bg--overflows">
+    <div class="gs-container">
+        <div class="monocol-wrapper">
 
-@mainLegacy(page, projectName = Option("identity")) { } {
+            <div class="u-cf identity-section identity-wrapper identity-wrapper--with-wizard">
 
-    <div class="identity-wrapper-for-bg identity-wrapper-for-bg--overflows">
-        <div class="gs-container">
-            <div class="monocol-wrapper">
+                <div class="js-errorHolder manage-account__errors"></div>
 
-                <div class="u-cf identity-section identity-wrapper">
+                <div class="manage-account-wizard manage-account-wizard--consent" data-journey="@journey">
 
-                    <div class="js-errorHolder manage-account__errors"></div>
-
-                    <div class="manage-account-wizard manage-account-wizard--consent" data-journey="@journey">
-
-                        @journey match {
-                            case "repermission-narrow" => {
-                                @emailStep(isNarrow = true)
-                            }
-                            case "repermission" => {
-                                @consentStep(journey = "repermission")
-                                @emailStep()
-                            }
-                            case "signup" => {
-                                @consentStep(journey = "signup")
-                                @emailSignupStep()
-                            }
+                    @journey match {
+                        case "repermission-narrow" => {
+                            @emailStep(isNarrow = true)
                         }
+                        case "repermission" => {
+                            @consentStep(journey = "repermission")
+                            @emailStep()
+                        }
+                        case "signup" => {
+                            @consentStep(journey = "signup")
+                            @emailSignupStep()
+                        }
+                    }
 
-                        @endcardStep()
+                    @endcardStep()
 
-                        <div class="manage-account-wizard__controls">
-                            <button
-                                data-link-name="consent : @journey : navigation : prev"
-                                class="manage-account-consent-wizard-button-back manage-account-consent-wizard__revealable manage-account__button--round manage-account__button js-manage-account-wizard__prev"
-                            >
-                                <span class="u-h">Previous</span>
-                                @fragments.inlineSvg("arrow-left-stem", "icon")
-                            </button>
-                            <div class="manage-account-consent-wizard__revealable manage-account-consent-wizard-counter">
-                            </div>
-                            <button
-                                data-link-name="consent : @journey : navigation : next"
-                                class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next"
-                            >
-                                <span>Next</span>
-                                @fragments.inlineSvg("arrow-right", "icon")
-                            </button>
+                    <div class="manage-account-wizard__controls">
+                        <button
+                            data-link-name="consent : @journey : navigation : prev"
+                            class="manage-account-consent-wizard-button-back manage-account-consent-wizard__revealable manage-account__button--round manage-account__button js-manage-account-wizard__prev"
+                        >
+                            <span class="u-h">Previous</span>
+                            @fragments.inlineSvg("arrow-left-stem", "icon")
+                        </button>
+                        <div class="manage-account-consent-wizard__revealable manage-account-consent-wizard-counter">
                         </div>
+                        <button
+                            data-link-name="consent : @journey : navigation : next"
+                            class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next"
+                        >
+                            <span>Next</span>
+                            @fragments.inlineSvg("arrow-right", "icon")
+                        </button>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>
-}
+</div>

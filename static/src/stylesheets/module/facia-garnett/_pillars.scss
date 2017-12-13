@@ -19,7 +19,7 @@ $pillars: (
         headline: $garnett-neutral-1,
         featureHeadline: $opinion-garnett-feature,
         byline: $opinion-garnett-main-1,
-        commentCount: $garnett-neutral-5,
+        commentCount: $garnett-neutral-6,
         headlineIcon: $opinion-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $opinion-garnett-main-1,
@@ -62,7 +62,7 @@ $pillars: (
         headlineIcon: $lifestyle-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $lifestyle-garnett-feature,
-        invertedKicker: $lifestyle-garnett-main-media-1
+        invertedKicker: $lifestyle-garnett-media-main-1
     )
 );
 
@@ -155,21 +155,22 @@ $pillars: (
         color: map-get($palette, featureHeadline);
     }
 
-    &.fc-item--type-video .inline-video-icon,
-    &.fc-item--type-audio .inline-volume-high,
-    &.fc-item--type-gallery .inline-camera {
-        svg {
-            fill: map-get($palette, invertedKicker);
-        }
 
-        &::after {
-            border-color: map-get($palette, invertedKicker);
+    &.fc-item--type-media {
+        .inline-video-icon,
+        .inline-volume-high,
+        .inline-camera {
+            svg {
+                fill: map-get($palette, invertedKicker);
+            }
+
+            &::after {
+                background-color: map-get($palette, invertedKicker);
+            }
         }
     }
 
-    &.fc-item--type-video,
-    &.fc-item--type-audio,
-    &.fc-item--type-gallery {
+    &.fc-item--type-media {
         .fc-sublink__kicker {
             color: map-get($palette, kicker);
         }
