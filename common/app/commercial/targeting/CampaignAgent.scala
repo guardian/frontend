@@ -35,7 +35,7 @@ object CampaignAgent extends Logging {
 
   def getCampaignsForTags(tags: Seq[String]): List[Campaign] = {
     if (Targeting.isSwitchedOn) {
-      agent().getCampaignsForTags(tags)
+      agent().getCampaignsForTags(tags, stripRules=true)
     } else {
       Nil
     }
