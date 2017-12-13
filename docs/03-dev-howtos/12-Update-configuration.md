@@ -1,23 +1,49 @@
-# Update configuration in Systems Manager Parameter Store
+# Updating configuration
 
-We store all our configuration in Systems Manager Parameter Store.
+Application config is stored in `app-config`.
 
-An app will attempt to load properties from the following levels in Systems
-Manger Parameter Store: 
+Global configuration shared by difference stages is stored in `app-config/shared/global`
+
+App configuration overrides are stored in `app-config/overrides/{app-name}.`
+
+Configuration files can point to versions of config properties stored in parameter store in the format
+`param-store@{parameter store key}`
+
+Parameter store keys are of the following format
 
 ```
-/frontend/{stage}/{app}/config.property.name
-/frontend/{stage}/config.property.name
-/frontend/config.property.name
+/frontend/{stage}/{app}/{property name}.v{version}
+/frontend/{stage}/{property name}.v{version}
+/frontend/{property name}.v{version}
 ```
 
-Configuration can be shared at the root and stage levels.
+Configuration is shared at the global and stage levels.
 
-The easiest way to add or modify configuration properties is via the AWS console.
+#### Editing / Adding configuration means:
 
-To add or update a configuration item you need to:
+Adding the configuration to the necessary conf files.
+
+If the property is sensitive information, the conf value should point to a Parameter Store property.
+
+Do not edit Parameter Store properties. Instead create a new property and increment the version on the property name.
+
+The easiest way to add configuration properties is via the AWS console.
+
+To add a configuration item you need to:
 
 - Login to Frontend AWS console via [Janus](https://janus.gutools.co.uk)
 
 Nativgate to [Systems Manager Parameter Store](https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=eu-west-1#Parameters:sort=Name)
-and use the console UI to edit the config.
+and use the console UI to add a config property.
+
+
+#### Why do configuration this way?
+
+- GDPR requirements. Apps only load the configuration they require dependent on the stage.
+- We want configuration properties to be immutable and dependent on the git commits / releases.
+This allows us to rollback configuration properties via deployments.
+- Parameter store performance. It takes 10-15ms on average to load a single property (even with batching).
+Therefore we only want to download the specific version of a property that an app requires.
+- Local overrides. We don't want to apply versioning within property names since this will 
+interfere with local overrides.
+- Potential for storing non-sensitive, stage-specific configuration locally within the frontend repo.
