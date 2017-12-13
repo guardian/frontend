@@ -4,6 +4,7 @@ import play.sbt.routes.RoutesKeys
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.gu.Dependencies._
 import com.gu.ProjectSettings._
+import sbt.Keys.unmanagedResourceDirectories
 
 val common = library("common").settings(
   javaOptions in Test += "-Dconfig.file=common/conf/test.conf",
@@ -146,8 +147,7 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
     exactTargetClient,
     libPhoneNumber
   ),
-  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared",
-  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/overrides/identity"
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared/global"
 )
 
 val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common).settings(
@@ -155,7 +155,8 @@ val commercial = application("commercial").dependsOn(commonWithTests).aggregate(
 )
 
 val onward = application("onward").dependsOn(commonWithTests).aggregate(common).settings(
-  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared/global"
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared",
+  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/overrides/onward"
 )
 
 val dev = application("dev-build")
