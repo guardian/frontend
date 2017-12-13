@@ -25,7 +25,6 @@ object ProjectSettings {
     publishArtifact in (Compile, packageDoc) := false,
     sources in (Compile,doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
-    incOptions := incOptions.value.withNameHashing(true),
     scalaVersion := "2.12.4",
     initialize := {
       val _ = initialize.value
@@ -123,10 +122,9 @@ object ProjectSettings {
       .settings(frontendDependencyManagementSettings)
       .settings(frontendCompilationSettings)
       .settings(frontendTestSettings)
-      .settings(VersionInfo.settings)
+      .settings(VersionInfo.projectSettings)
       .settings(libraryDependencies ++= Seq(macwire, commonsIo))
       .settings(packageName in Universal := applicationName)
-      .settingSets(settingSetsOrder)
       .settings(
         mappings in Universal ++= (file("ui/dist") ** "*").get.map { f => f.getAbsoluteFile -> f.toString }
       )
@@ -139,25 +137,8 @@ object ProjectSettings {
       .settings(frontendDependencyManagementSettings)
       .settings(frontendCompilationSettings)
       .settings(frontendTestSettings)
-      .settings(VersionInfo.settings)
+      .settings(VersionInfo.projectSettings)
       .settings(libraryDependencies ++= Seq(commonsIo))
-      .settingSets(settingSetsOrder)
-  }
-
-  /**
-   * Overrides the default order in which settings are applied.
-   * Modified this so that settings from "nonAutoPlugins" (plugins using the older sbt plugin API)
-   * are applied before settings defined in build.scala
-   *
-   * Required for resetting the `testResultLogger` in `frontendTestSettings` above
-   *
-   * Default:
-   *   AddSettings.allDefaults: AddSettings = seq(autoPlugins, buildScalaFiles, userSettings, nonAutoPlugins, defaultSbtFiles)
-   */
-  lazy val settingSetsOrder = {
-    import AddSettings._
-
-    seq(autoPlugins, nonAutoPlugins, buildScalaFiles, userSettings, defaultSbtFiles)
   }
 
   def filterAssets(testAssets: Seq[(File, String)]): Seq[(File, String)] =
