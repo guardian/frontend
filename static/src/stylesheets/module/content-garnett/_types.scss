@@ -407,7 +407,7 @@ $quote-mark: 35px;
     .element-pullquote {
         background-color: $garnett-neutral-3;
         margin: $gs-gutter/4 0 $gs-baseline*2;
-        padding: 0 $gs-gutter/2 $gs-baseline;
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
         position: relative;
         clear: none;
         float: none;
@@ -467,8 +467,9 @@ $quote-mark: 35px;
 
             svg {
                 width: inherit;
+                height: auto;
                 position: relative;
-                top: $gs-baseline/2;
+                top: 0;
             }
         }
         // Hack hide for svg
@@ -502,10 +503,9 @@ $quote-mark: 35px;
         }
         // temp fix for old quote svg, will be replaced
         .inline-quote svg {
-            width: 30px;
+            width: 25px;
             position: relative;
-            top: 8px;
-            margin-right: 0;
+            margin-right: -2px;
         }
     }
     // Quote halfWidth
