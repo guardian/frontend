@@ -43,11 +43,11 @@ object JourneyHtmlPage {
       ),
       bodyTag(classes = bodyClasses)(
         skipToMainContent(),
-        views.html.identityLayout.header(),
+        views.html.layout.identityHeader(),
         mainContent(),
         content,
         inlineJSNonBlocking(),
-        views.html.identityLayout.footer(),
+        views.html.layout.identityFooter(),
         analytics.base()
       ),
       devTakeShot()
