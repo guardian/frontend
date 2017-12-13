@@ -12,6 +12,7 @@ class DiagnosticsController(val controllerComponents: ControllerComponents) exte
   val r = scala.util.Random
 
   def analytics(prefix: String): Action[AnyContent] = Action { implicit request =>
+    log.info(s"Updating diagnostic analytics with prefix $prefix")
     Analytics.report(prefix)
     TinyResponse.gif
   }
