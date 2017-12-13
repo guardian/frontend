@@ -3,25 +3,26 @@
 import config from 'lib/config';
 import { isBreakpoint, breakpoints, type Breakpoint } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
-import { bidderConfig } from 'commercial/modules/prebid/bidder-config';
+import { bidderConfig, sonobiBidder, indexExchangeBidder } from 'commercial/modules/prebid/bidder-config';
+import type { PrebidBidder, PrebidIndexExchangeParams, PrebidSonobiParams } from 'commercial/modules/prebid/bidder-config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import 'prebid.js/build/dist/prebid';
+
+
 
 class PrebidTestService {
 
-    static bidders = ['sonobi'];
+    static bidders = [sonobiBidder, indexExchangeBidder];
 
     initialise(): Promise<any> {
-        const loadPrebid = loadScript('//acdn.adnxs.com/prebid/not-for-prod/prebid.js', { async: false });
-
-        return loadPrebid.then(() => {
-            window.pbjs.bidderSettings = {
-                standard: {
-                    alwaysUseBid: false
-                }
+        window.pbjs.bidderSettings = {
+            standard: {
+                alwaysUseBid: false
             }
-        });
+        };
+        return Promise.resolve();
     };
 
     slotIsInTest(advert: Advert): boolean {
@@ -67,14 +68,8 @@ class PrebidAdUnit {
 
 type PrebidBid = {
     bidder: string,
-    params: PrebidSonobiParams
+    params: PrebidSonobiParams | PrebidIndexExchangeParams
 };
-
-type PrebidSonobiParams = {
-    ad_unit: string,
-    dom_id: ?string,
-    floor: ?number
-}
 
 type PrebidSize = [number, number];
 
@@ -92,15 +87,11 @@ function hasMatchingConfig(bidder: string, slotSizes: PrebidSize[]) {
 
 function getBids(slotSizes: PrebidSize[], slotId: string): PrebidBid[] {
     let bids: PrebidBid[] = [];
-    PrebidTestService.bidders.forEach( bidder => {
-        if (hasMatchingConfig(bidder, slotSizes)) {
+    PrebidTestService.bidders.forEach( (bidder: PrebidBidder) => {
+        if (hasMatchingConfig(bidder.name, slotSizes)) {
             bids.push({
-                bidder,
-                params : {
-                    ad_unit: config.page.adUnit,
-                    dom_id: slotId,
-                    floor: 0.5
-                }
+                bidder: bidder.name,
+                params: bidder.bidParams(slotId) 
             });
         }
     });
