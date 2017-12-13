@@ -3,10 +3,12 @@ package common
 import java.io.{File, FileInputStream}
 import java.nio.charset.Charset
 import java.util.Map.Entry
-
+import conf.{Configuration, Static}
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
+import com.gu.cm.S3ConfigurationSource
+import com.gu.cm._
 import com.typesafe.config.{ConfigException, ConfigFactory, ConfigRenderOptions}
 import common.Environment.{app, awsRegion, stage}
 import conf.switches.Switches
@@ -73,10 +75,17 @@ object GuardianConfiguration extends Logging {
     }.toMap
   }
 
+  private lazy val s3Config: Config = {
+    val s3ConfigVersion = 51
+    val identity = AwsApplication(Environment.stack, app, stage, awsRegion)
+    val config = S3ConfigurationSource(identity, Environment.configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion)).load.resolve()
+    config.getConfig(identity.app + "." + identity.stage)
+  }
+
   lazy val appConfig: Config = {
     val paramStorePrefix = "param-store@(.*)".r
 
-    val conf = ConfigFactory.load(s"${stage.toLowerCase}.conf")
+    val conf = ConfigFactory.parseResourcesAnySyntax(s"${stage.toLowerCase}.conf").resolve()
     val configMap = configToMap(conf)
 
     val valuesFromParamStore: Seq[String] = configMap.collect {
@@ -100,10 +109,28 @@ object GuardianConfiguration extends Logging {
       val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf", "devOverrides")
       val runtimeOnly =  configFromFile("/etc/gu/frontend.conf", "parameters")
 
+      diffLegacyConfig()
+
       userPrivate
         .withFallback(runtimeOnly)
         .withFallback(appConfig)
     }
+  }
+
+  private def diffLegacyConfig(): Unit = {
+    val s3ConfigMap = configToMap(s3Config)
+    val appConfigMap = configToMap(appConfig)
+    val confDiff = mapDiff(s3ConfigMap, appConfigMap)
+    if (confDiff.nonEmpty || s3ConfigMap != appConfigMap) {
+      throw new RuntimeException(s"Legacy S3 configuration does not match parameter store configuration, $confDiff")
+    } else {
+      log.info("Parameter config is identical to legacy S3 Config, which is good!")
+    }
+  }
+
+  private def mapDiff(map1: Map[String, String], map2: Map[String, String]): Seq[String] = {
+    val missingKeys = map1.toSeq.diff(map2.toSeq) ++ map2.toSeq.diff(map1.toSeq)
+    missingKeys.map(_._1).sorted.distinct
   }
 
   def unwrapQuotedString(input: String): String = {

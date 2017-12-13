@@ -20,6 +20,7 @@ val common = library("common").settings(
     awsSsm,
     contentApiClient,
     enumeratumPlayJson,
+    configMagic,
     filters,
     commonsLang,
     jodaConvert,
