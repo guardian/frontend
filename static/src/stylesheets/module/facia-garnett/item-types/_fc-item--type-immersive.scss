@@ -1,19 +1,47 @@
-@mixin immersive() {
+@mixin immersiveBottom() {
     .fc-item__container {
-        justify-content: flex-end;
+        //justify-content: flex-end;
+    }
+
+    .fc-item__media-wrapper {
+        //position: absolute;
+        //height: 100%;
+        //width: 100%;
+        //flex: 0 1 auto;
+
+        picture {
+            //object-fit: cover;
+        }
+    }
+
+    .fc-item__content {
+        //position: relative;
+        background-color: rgba(0, 0, 0, 0.65);
+        //flex: 0 1 auto;
+    }
+
+    .fc-item__headline {
+        color: #ffffff;
+    }
+}
+
+@mixin immersiveLeft() {
+    .fc-item__container {
+        overflow: hidden;
     }
 
     .fc-item__media-wrapper {
         position: absolute;
-        height: 100%;
         width: 100%;
-        flex: 0 1 auto;
+        flex: none;
     }
 
     .fc-item__content {
-        position: relative;
+        flex: none;
+        position: absolute;
+        left: 0;
+        height: 100%;
         background-color: rgba(0, 0, 0, 0.65);
-        flex: 0 1 auto;
     }
 
     .fc-item__headline {
@@ -24,18 +52,23 @@
 .fc-item--type-immersive {
     &.fc-item--standard-mobile {
         @include mq($from: mobile, $until: tablet) {
-            @include immersive();
+            @include immersiveBottom();
         }
     }
 
     &.fc-item--standard-tablet,
     &.fc-item--third-tablet,
-    &.fc-item--half-tablet,
+    &.fc-item--half-tablet {
+        @include mq($from: tablet) {
+            @include immersiveBottom();
+        }
+    }
+
     &.fc-item--three-quarters-tablet,
     &.fc-item--three-quarters-right-tablet,
     &.fc-item--three-quarters-tall-tablet {
         @include mq($from: tablet) {
-            @include immersive();
+            @include immersiveLeft();
         }
     }
 }
