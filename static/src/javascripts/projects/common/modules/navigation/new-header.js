@@ -158,18 +158,23 @@ const toggleMenu = (): void => {
 
             // On desktop clicking outside menu should close it
 
-            console.log('***', isBreakpoint({
-                min: 'desktop'
-            }));
+            console.log(
+                '***',
+                isBreakpoint({
+                    min: 'desktop',
+                })
+            );
 
-            if (isBreakpoint({
-                min: 'desktop'
-            })) {
+            if (
+                isBreakpoint({
+                    min: 'desktop',
+                })
+            ) {
                 mediator.on('module:clickstream:click', function triggerToggle(
                     clickSpec
                 ) {
                     const elem = clickSpec ? clickSpec.target : null;
-    
+
                     // if anywhere else but the links are clicked, the dropdown will close
                     if (elem !== menu) {
                         toggleMenu();
