@@ -156,18 +156,28 @@ const toggleMenu = (): void => {
                 });
             });
 
-            mediator.on('module:clickstream:click', function triggerToggle(
-                clickSpec
-            ) {
-                const elem = clickSpec ? clickSpec.target : null;
+            // On desktop clicking outside menu should close it
 
-                // if anywhere else but the links are clicked, the dropdown will close
-                if (elem !== menu) {
-                    toggleMenu();
-                    // remove event when the dropdown closes
-                    mediator.off('module:clickstream:click', triggerToggle);
-                }
-            });
+            console.log('***', isBreakpoint({
+                min: 'desktop'
+            }));
+
+            if (isBreakpoint({
+                min: 'desktop'
+            })) {
+                mediator.on('module:clickstream:click', function triggerToggle(
+                    clickSpec
+                ) {
+                    const elem = clickSpec ? clickSpec.target : null;
+    
+                    // if anywhere else but the links are clicked, the dropdown will close
+                    if (elem !== menu) {
+                        toggleMenu();
+                        // remove event when the dropdown closes
+                        mediator.off('module:clickstream:click', triggerToggle);
+                    }
+                });
+            }
         } else {
             removeEnhancedMenuMargin().then(() => {
                 window.removeEventListener('resize', debouncedMenuEnhancement);
