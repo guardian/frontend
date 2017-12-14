@@ -5,7 +5,7 @@
         background-color: $comment-background;
     }
 
-    .u-faux-block-link--hover,
+    &:hover,
     .fc-item__image-container {
         background-color: darken($comment-background, 5%);
     }

@@ -5,7 +5,7 @@
         color: $analysis-default;
     }
 
-    .u-faux-block-link--hover,
+    &:hover,
     .fc-item__image-container {
         background-color: darken($analysis-background, 5%);
     }

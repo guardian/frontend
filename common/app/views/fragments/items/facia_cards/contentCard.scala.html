@@ -13,7 +13,8 @@
 
 @import Function.const
 
-<div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}"
+<a @Html(item.header.url.hrefWithRel)
+    class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}"
     @if(item.discussionSettings.isCommentable) {
         @item.discussionSettings.discussionId.map { id =>
         data-discussion-id="@id"
@@ -26,7 +27,8 @@ data-item-visibility="@visibilityDataAttribute"
 data-test-id="facia-card"
     @item.id.map { id => data-id="@id" }
     @item.snapStuff.map(_.dataAttributes)
-    @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
+    @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }
+tabindex="-1">
 
     @if(!item.hasInlineSnapHtml) {
         @container(item)
@@ -34,8 +36,7 @@ data-test-id="facia-card"
     @if(item.hasInlineSnapHtml) {
         @item.snapStuff.map { snap => @snap.embedHtml.map(Html(_)) }
     }
-
-</div>
+</a>
 
 @mediaMeta(item: layout.ContentCard) = {
     <div class="fc-item__meta-wrapper">
@@ -102,7 +103,7 @@ data-test-id="facia-card"
                     embedPath = if (item.isMediaLink) item.id else None,
                     path = if (item.isMediaLink) item.id else None
                 )) { player =>
-                    <div class="fc-item__media-wrapper fc-item__video u-faux-block-link__promote media__container--hidden js-video-player">
+                    <div class="fc-item__media-wrapper fc-item__video media__container--hidden js-video-player">
                         <div class="fc-item__video-container">
                             @video(player, false, item.cardTypes.showVideoEndSlate, showPoster = false)
                         </div>
@@ -254,7 +255,5 @@ data-test-id="facia-card"
         @if(item.designType.nameOrDefault == "comment") {
             @meta(item)
         }
-
-        <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.header.headline)</a>
     </div>
 }
