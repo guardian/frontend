@@ -19,7 +19,7 @@ import {
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 
 // change messageCode to force redisplay of the message to users who already closed it.
-const messageCode = 'engagement-banner-2017-11-24';
+const messageCode = 'engagement-banner-2017-12-14';
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
