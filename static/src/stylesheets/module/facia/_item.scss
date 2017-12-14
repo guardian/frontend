@@ -70,7 +70,10 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item {
-    color: $neutral-1;
+    &,
+    &:active {
+        color: $neutral-1;
+    }
 
     @include mq($until: tablet) {
         width: 100%;
