@@ -32,7 +32,10 @@ const catchPolyfillErrors = () => {
 };
 
 const setupSonobi = once(() => {
-    if (dfpEnv.externalDemand === 'none' || !commercialFeatures.dfpAdvertising) {
+    if (
+        dfpEnv.externalDemand === 'none' ||
+        !commercialFeatures.dfpAdvertising
+    ) {
         return Promise.resolve();
     }
     if (dfpEnv.externalDemand === 'sonobi') {

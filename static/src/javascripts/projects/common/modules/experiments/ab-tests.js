@@ -14,7 +14,7 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     acquisitionsEpicElectionInteractiveEnd,
     outstreamFrequencyCapHoldback,
     unrulyPerformanceTest,
-    prebidIntegration
+    prebidIntegration,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>

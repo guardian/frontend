@@ -7,7 +7,7 @@ export const prebidIntegration: ABTest = {
     author: 'Richard Nguyen',
     description:
         'A test to verify that Prebid can support external demand for display ads',
-    audience: 0.00000,
+    audience: 0.0,
     audienceOffset: 0,
     successMeasure: 'Higher OMP (Open Market Place) yield',
     audienceCriteria: 'All web traffic, inline slots',

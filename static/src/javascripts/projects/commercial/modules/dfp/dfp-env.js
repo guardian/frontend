@@ -27,11 +27,11 @@ export const dfpEnv: DfpEnv = {
     /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
     adSlotSelector: '.js-ad-slot',
 
-    /* externalDemand: string. Set to 'sonobi' for direct sonobi connection, 'none', or 'prebid' for header-bidding connections.*/
-    externalDemand: getTestVariantId(prebidIntegration.id) === 'prebid-variant' ?
-        config.switches.abPrebidIntegration ? 'prebid' : 'none'
-        :
-        config.switches.sonobiHeaderBidding ? 'sonobi' : 'none',
+    /* externalDemand: string. Set to 'sonobi' for direct sonobi connection, 'none', or 'prebid' for header-bidding connections. */
+    externalDemand:
+        getTestVariantId(prebidIntegration.id) === 'prebid-variant'
+            ? config.switches.abPrebidIntegration ? 'prebid' : 'none'
+            : config.switches.sonobiHeaderBidding ? 'sonobi' : 'none',
 
     /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
     lazyLoadEnabled: false,
