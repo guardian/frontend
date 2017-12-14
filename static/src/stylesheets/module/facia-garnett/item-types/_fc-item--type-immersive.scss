@@ -1,10 +1,26 @@
 @mixin immersiveBottom() {
+    .fc-item__container {
+        overflow: hidden;
+    }
+
     .fc-item__content {
         background-color: $immersive-garnett-main-1;
+        z-index: 1;
     }
 
     .fc-item__headline {
         color: #ffffff;
+    }
+
+    .fc-item__media-wrapper {
+        img {
+            object-fit: cover;
+        }
+    }
+
+    // ensures image is positioned relative to fc-item__container
+    .u-responsive-ratio {
+        position: static;
     }
 }
 
@@ -40,7 +56,7 @@
 
     &.fc-item--standard-mobile {
         @include mq($from: mobile, $until: tablet) {
-            @include immersiveBottom();
+            // @include immersiveBottom();
         }
     }
 
