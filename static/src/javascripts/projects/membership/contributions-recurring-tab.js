@@ -366,7 +366,7 @@ const setupEditableNewAmountField = (currentPrice: string): void => {
 const changeContributionAmountSubmit = (): void => {
     const newAmount = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
     toggleAmountChangeInputMode(false);
-    hideContributionInfo();
+    hideContributionDetails();
     displayLoader();
     fetch(
         `${config.get(
