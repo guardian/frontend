@@ -471,3 +471,33 @@ $block-height: 71px;
     }
 
 }
+
+.fc-item--type-review {
+    .fc-item__header {
+        .stars {
+            background-color: $news-garnett-highlight;
+            display: inline-block;
+            line-height: 0px;
+            padding: calc((#{$gs-baseline} / 2) - 2px);
+            margin-top: $gs-baseline / 2;
+        }
+
+        .inline-star {
+            display: inline;
+
+            svg {
+                stroke: $garnett-neutral-1;
+                fill: transparent;
+                height: 0.8em;
+                width: 0.8em;
+            }
+        }
+
+        .inline-star.star__item--golden {
+            svg {
+                fill: $garnett-neutral-1;
+                stroke: none;
+            }
+        }
+    }
+}
