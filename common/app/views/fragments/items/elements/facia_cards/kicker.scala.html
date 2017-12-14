@@ -8,7 +8,7 @@
 
 @makeLink(uri: String, inner: String) = {
     @* Support nested links by wrapping inner links in <object> element *@
-    <object type="nested/links"><a href="@LinkTo(uri)" data-link-name="kicker" class="fc-item__kicker @classes.mkString(" ")">@Html(inner)</a></object>
+    <object type="nested/link" class="u-nested-link"><a href="@LinkTo(uri)" data-link-name="kicker" class="fc-item__kicker @classes.mkString(" ")">@Html(inner)</a></object>
 }
 
 @makeSpan(inner: String) = {

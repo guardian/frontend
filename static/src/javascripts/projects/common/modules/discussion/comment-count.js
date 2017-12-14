@@ -39,7 +39,7 @@ const getTemplate = (
                 </a>`;
     }
 
-    return `<object>
+    return `<object type="nested/link" class="u-nested-link--icon">
             <a class="fc-trail__count fc-trail__count--commentcount" href="${
                 url
             }" data-link-name="Comment count">${icon} ${count}</a>
