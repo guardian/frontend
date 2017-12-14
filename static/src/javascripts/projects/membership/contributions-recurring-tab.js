@@ -85,8 +85,9 @@ const hideContributionDetails = (): void => {
 
 const hideCardDetails = (): void => {
     $(CARD_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
+};
 
-    const displayContributionUpdateErrorMessage = (): void => {
+const displayContributionUpdateErrorMessage = (): void => {
     $(CONTRIBUTION_UPDATE_ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
