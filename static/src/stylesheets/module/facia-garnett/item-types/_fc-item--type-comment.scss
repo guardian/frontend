@@ -1,21 +1,22 @@
 .fc-item--type-comment {
-
     .fc-item__standfirst-wrapper {
         .fc-item__meta {
             display: none;
         }
     }
 
-    .fc-item__container > .fc-item__meta {
-        margin-top: $gs-gutter * .5;
-        display: flex;
-        width: 100%;
+    .fc-item__container {
+        padding-bottom: 13px;
+    }
 
+    .fc-item__container > .fc-item__meta {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
         height: 13px;
         box-sizing: border-box;
-
-        border-top: 1px solid #bdbdbd;
-        border-bottom: 1px solid #bdbdbd;
+        border-top: 1px solid $garnett-neutral-4;
+        border-bottom: 1px solid $garnett-neutral-4;
 
         &:before,
         &:after {
@@ -23,7 +24,7 @@
             position: absolute;
             height: 1px;
             width: 100%;
-            background-color: #bdbdbd;
+            background-color: $garnett-neutral-4;
         }
 
         &:before {
@@ -52,8 +53,10 @@
         &.fc-item--full-media-75-tablet,
         &.fc-item--full-media-100-tablet {
             @include mq(tablet) {
-                .fc-item__container > .fc-item__meta .fc-trail__count--commentcount {
-                    display: none;
+                .fc-item__container > .fc-item__meta {
+                    .fc-trail__count--commentcount {
+                        display: none;
+                    }
                 }
 
                 .fc-item__standfirst-wrapper {

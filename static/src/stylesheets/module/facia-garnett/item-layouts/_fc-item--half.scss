@@ -28,10 +28,12 @@ x x x x x x x x x x x x x x x x x x
 @mixin fc-item--half {
     .fc-item__header {
         @include fs-headline(4, true);
+        @include fs-headline-quote(4);
         @include headline-boost(5);
 
         @include mq(tablet, desktop) {
             @include fs-headline(3, true);
+            @include fs-headline-quote(3);
             @include headline-boost(4);
         }
     }

@@ -1,6 +1,7 @@
 @mixin headline-boost($size) {
     .fc-item--has-boosted-title & {
         @include fs-headline($size, true);
+        @include fs-headline-quote($size);
     }
 }
 
@@ -127,6 +128,7 @@
         .fc-item__header {
             @include mq($until: desktop) {
                 @include fs-headline(2, true);
+                @include fs-headline-quote(2);
                 @include headline-boost(3);
             }
         }
@@ -280,10 +282,12 @@
             .fc-item__header {
                 padding-right: gs-height(4.5);
                 @include fs-headline(4, true);
+                @include fs-headline-quote(4);
                 @include headline-boost(5);
 
                 @include mq(desktop) {
                     @include fs-headline(6, true);
+                    @include fs-headline-quote(6);
                     @include headline-boost(7);
                 }
             }
@@ -331,9 +335,11 @@
         &:not(.fc-item--has-cutout) {
             .fc-item__header {
                 @include fs-headline(3, true);
+                @include fs-headline-quote(3);
 
                 @include mq(desktop) {
                     @include fs-headline(5, true);
+                    @include fs-headline-quote(5);
                     @include headline-boost(6);
                 }
             }
@@ -371,6 +377,7 @@
 
         .fc-item__header {
             @include fs-headline(5, true);
+            @include fs-headline-quote(5);
         }
     }
 }
@@ -386,6 +393,7 @@
 
         .fc-item__header {
             @include fs-headline(3, true);
+            @include fs-headline-quote(3);
         }
 
         &[class*='fc-item--has-sublinks'] {
@@ -398,6 +406,7 @@
     @include mq(desktop) {
         .fc-item__header {
             @include fs-headline(6, true);
+            @include fs-headline-quote(6);
         }
 
         .fc-item__header,

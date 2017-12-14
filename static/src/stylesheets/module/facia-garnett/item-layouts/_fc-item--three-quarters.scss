@@ -26,6 +26,7 @@ Three quarter item. Looks like a wide standard, a bit like this:
     .fc-item__header {
         @include mq(desktop) {
             @include fs-headline(4, true);
+            @include fs-headline-quote(4);
             @include headline-boost(5);
         }
     }
@@ -52,6 +53,7 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
         .fc-item__header {
             @include fs-headline(5, true);
+            @include fs-headline-quote(5);
             @include headline-boost(6);
             padding-bottom: gs-height(3);
             margin-bottom: $gs-gutter * .25;

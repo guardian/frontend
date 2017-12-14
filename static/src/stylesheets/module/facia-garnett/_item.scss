@@ -4,6 +4,14 @@ $fc-item-gutter: $gs-gutter / 4;
    ==========================================================================
 */
 
+@mixin fs-headline-quote($level) {
+    .inline-garnett-quote__svg {
+        height: get-font-size(headline, $level);
+        width: get-font-size(headline, $level) * .5;
+        margin-right: get-font-size(headline, $level) * .5;
+    }
+}
+
 @mixin fc-item--horizontal($media-width, $media-align: right) {
 
     .fc-item__image-container {
@@ -142,11 +150,14 @@ $fc-item-gutter: $gs-gutter / 4;
 .item__title,
 .rich-link__header {
     @include fs-headline(3);
+    @include fs-headline-quote(3);
+    
     font-weight: 500;
     padding-bottom: .5em;
 
     .fc-item--has-boosted-title & {
         @include fs-headline(4, true);
+        @include fs-headline-quote(4);
     }
 }
 
