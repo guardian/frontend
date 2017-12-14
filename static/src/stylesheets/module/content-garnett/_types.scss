@@ -341,9 +341,8 @@ $quote-mark: 35px;
         display: none;
     }
 
-    .media-primary--showcase {
-        margin-left: 0!important;
-        //only way to override
+    .media-primary.media-primary--showcase {
+        margin-left: 0;
         margin-right: 0;
     }
 
@@ -691,10 +690,12 @@ $quote-mark: 35px;
     }
 }
 // *************** Feature showcase overrides ***************
-.content--type-feature {
-    .media-primary--showcase {
-        margin: 0 auto!important !important;
-        //only way to override
+
+.has-feature-showcase-element {
+    .media-primary.media-primary--showcase {
+        @include mq(wide) {
+            margin: 0 auto;
+        }
     }
 }
 // *************** Opinion and Feature standfirst overrides ***************
