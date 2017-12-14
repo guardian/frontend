@@ -844,7 +844,7 @@ $quote-mark: 35px;
             transform: translate(-40%, -50%);
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent $neutral-1;
+            border-color: transparent transparent transparent $garnett-neutral-5;
             @include mq(tablet) {
                 // 0 border radius on mobile because stock android has a render bug with it here
                 border-radius: 0.2em;
