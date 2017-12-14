@@ -91,7 +91,6 @@ const displayContributionUpdateErrorMessage = (): void => {
     $(CONTRIBUTION_UPDATE_ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-
 // Cancel contribution aux functions
 
 const displayCancelContribution = (): void => {
