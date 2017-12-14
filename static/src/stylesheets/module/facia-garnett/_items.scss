@@ -20,9 +20,7 @@
 @import 'item-layouts/fc-item--fluid';
 
 @import 'item-types/_fc-item--type-liveblog';
-@import 'item-types/_fc-item--type-video';
-@import 'item-types/_fc-item--type-audio';
-@import 'item-types/_fc-item--type-gallery';
+@import 'item-types/_fc-item--type-media';
 
 .fc-slice__item {
     width: 100%;
