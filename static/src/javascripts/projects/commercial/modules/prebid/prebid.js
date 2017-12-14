@@ -99,7 +99,6 @@ function getMatchingBids(availableSizes: PrebidSize[], matchedSizes: PrebidSize[
             for (const matchedEntry: PrebidAdSlotCriteria of matchingConfigEntries) {
                 if ( matchedSizes.findIndex(size => isEqualAdSize(size, matchedEntry.size)) === -1 ){
                     matchedSizes.push(matchedEntry.size);
-                    break;
                 }
             }
             
