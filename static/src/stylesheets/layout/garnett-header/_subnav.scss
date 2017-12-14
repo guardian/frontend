@@ -1,7 +1,7 @@
 .subnav {
     background-color: #ffffff;
     border-top: 1px solid $rule;
-    padding-bottom: 12px;
+    padding-bottom: $gs-baseline;
     color: $neutral-1;
     height: $veggie-burger-medium - $gs-baseline;
     overflow: hidden;
@@ -65,4 +65,14 @@
 .subnav__item:not(.subnav__item--toggle-more) {
     display: block;
     float: left;
+}
+
+.subnav__item--parent:after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 8px solid #000000;
 }

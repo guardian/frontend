@@ -1,6 +1,6 @@
 .pillar-link {
     font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
-    font-weight: 700;
+    font-weight: 500;
     color: currentColor;
     cursor: pointer;
     display: block;
@@ -49,22 +49,27 @@
 
     &:after {
         // Underlines
-        border-bottom-width: 0;
-        border-bottom-style: solid;
+        border-bottom: 4px solid currentColor;
         right: 0;
-        transition: border 150ms ease-out;
+        bottom: -4px;
+        transition: transform 150ms ease-out;
     }
 
     &:hover,
     &:focus {
         text-decoration: none;
 
-        &:not(.pillar-link--dropdown):after {
-            border-bottom-width: 4px;
+        &:after {
+            transform: translateY(-4px)
         }
     }
 
     .new-header--open & {
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+
         &:before,
         &:after {
             content: none;
@@ -84,14 +89,13 @@
 }
 
 .pillar-link--current-section {
-
     &:after {
-        border-bottom-width: 4px;
+        transform: translateY(-4px)
     }
 
     .new-header--open & {
         &:after {
-            border-bottom-width: 0;
+            content: none;
         }
     }
 }
@@ -123,5 +127,45 @@
 
     .new-header__menu-toggle:focus & {
         color: $neutral-1;
+    }
+}
+
+.pillar-link--news {
+    color: $news-garnett-main-1;
+
+    &:after {
+        border-color: $news-garnett-feature;
+    }
+}
+
+.pillar-link--opinion {
+    color: $opinion-garnett-main-1;
+
+    &:after {
+        border-color: $opinion-garnett-feature;
+    }
+}
+
+.pillar-link--sport {
+    color: $sport-garnett-main-1;
+
+    &:after {
+        border-color: $sport-garnett-feature;
+    }
+}
+
+.pillar-link--arts {
+    color: $arts-garnett-main-1;
+
+    &:after {
+        border-color: $arts-garnett-feature;
+    }
+}
+
+.pillar-link--lifestyle {
+    color: $lifestyle-garnett-main-1;
+
+    &:after {
+        border-color: $lifestyle-garnett-feature;
     }
 }

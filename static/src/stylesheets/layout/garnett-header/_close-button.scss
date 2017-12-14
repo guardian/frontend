@@ -1,6 +1,6 @@
 .menu-close {
-    background-color: $neutral-5;
-    color: $neutral-2;
+    background-color: $neutral-6;
+    color: $neutral-1;
     cursor: pointer;
     display: none;
     height: $veggie-burger-medium;
@@ -10,7 +10,7 @@
     z-index: $zindex-main-menu + 1;
 
     &:hover {
-        color: #000000;
+        background-color: $neutral-4;
     }
 
     .new-header--open & {

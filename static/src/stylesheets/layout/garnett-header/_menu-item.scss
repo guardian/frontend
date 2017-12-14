@@ -29,6 +29,8 @@
     cursor: pointer;
     display: inline-block;
     font-size: 20px;
+    font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
+    font-weight: 500;
     outline: none;
     padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
     position: relative;
@@ -44,7 +46,6 @@
         line-height: 1.2;
         padding: ($gs-baseline / 2) 0;
         transition: color 80ms ease-out;
-        width: auto;
     }
 
     &:hover,

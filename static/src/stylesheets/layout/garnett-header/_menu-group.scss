@@ -99,6 +99,7 @@
 
     &:before {
         content: none;
+        top: 0;
     }
 
     body:not(.has-page-skin) & {

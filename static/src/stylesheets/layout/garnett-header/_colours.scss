@@ -1,0 +1,40 @@
+@mixin navPillarColours ($colour) {
+    .subnav__item--parent:after {
+        border-left-color: $colour;
+    }
+
+    .dropdown-menu__title--active:after {
+        border-color: $colour;
+    }
+}
+
+.new-header--news {
+    @include navPillarColours($news-garnett-main-1);
+}
+
+.new-header--opinion {
+    @include navPillarColours($opinion-garnett-main-1);
+}
+
+.new-header--sport {
+    @include navPillarColours($sport-garnett-main-1);
+}
+
+.new-header--arts {
+    @include navPillarColours($arts-garnett-main-1);
+}
+
+.new-header--life {
+    @include navPillarColours($lifestyle-garnett-main-1);
+}
+
+
+.menu-group {
+    .menu-item:first-child > .menu-group .menu-item__title:hover {
+        color: $news-garnett-main-1;
+    }
+
+    .menu-item:nth-child(2) > .menu-group .menu-item__title:hover {
+        color: $opinion-garnett-main-1;
+    }
+}

@@ -54,44 +54,4 @@
             content: none;
         }
     }
-
-    &:nth-child(1) {
-        color: #cc0a11;
-
-        &:after {
-            border-color: #FF1A21;
-        }
-    }
-
-    &:nth-child(2) {
-        color: #F7691C;
-
-        &:after {
-            border-bottom-color: red;
-        }
-    }
-
-    &:nth-child(3) {
-        color: #056DA1;
-
-        &:after {
-            border-bottom-color: red;
-        }
-    }
-
-    &:nth-child(4) {
-        color: #9b8361;
-
-        &:after {
-            border-bottom-color: #bb3b80;
-        }
-    }
-
-    &:nth-child(5) {
-        color: #df2770;
-
-        &:after {
-            border-color: red;
-        }
-    }
 }
