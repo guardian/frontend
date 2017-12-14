@@ -1,37 +1,28 @@
 // @flow
 
 import config from 'lib/config';
+import type {
+    PrebidBidderCriteria,
+    PrebidAdSlotCriteria,
+    PrebidBidder,
+    PrebidIndexExchangeParams,
+    PrebidSonobiParams
+} from 'commercial/modules/prebid/types';
 
-export const bidderConfig = {
+export const bidderConfig: PrebidBidderCriteria = {
     sonobi: [
-        {edition: 'UK', breakpoint: {min: 'mobile'}, width: 300, height: 250},
-        {edition: 'US', breakpoint: {min: 'mobile'}, width: 300, height: 250},
-        {edition: 'AUS', breakpoint: {min: 'mobile'}, width: 300, height: 250},
-        {edition: 'INT', breakpoint: {min: 'mobile'}, width: 300, height: 250}
+        {edition: 'UK', breakpoint: {min: 'mobile'}, size: [ 300, 250 ] },
+        {edition: 'US', breakpoint: {min: 'mobile'}, size: [ 300, 250 ] },
+        {edition: 'AUS', breakpoint: {min: 'mobile'}, size: [ 300, 250 ] },
+        {edition: 'INT', breakpoint: {min: 'mobile'}, size: [ 300, 250 ] }
     ],
     indexExchange: [
-        {edition: 'UK', breakpoint: {min: 'mobile'}, width: 300, height: 250},
-        {edition: 'US', breakpoint: {min: 'mobile'}, width: 300, height: 250},
-        {edition: 'AUS', breakpoint: {min: 'mobile'}, width: 300, height: 250},
-        {edition: 'INT', breakpoint: {min: 'mobile'}, width: 300, height: 250}
+        {edition: 'UK', breakpoint: {min: 'mobile'}, size: [ 300, 250 ] },
+        {edition: 'US', breakpoint: {min: 'mobile'}, size: [ 300, 250 ] },
+        {edition: 'AUS', breakpoint: {min: 'mobile'}, size: [ 300, 250 ] },
+        {edition: 'INT', breakpoint: {min: 'mobile'}, size: [ 300, 250 ] }
     ]
 };
-
-export type PrebidBidder = {
-    name: string,
-    bidParams: (slotId: string) => PrebidSonobiParams | PrebidIndexExchangeParams
-};
-
-export type PrebidIndexExchangeParams = {
-    id: string,
-    siteID: string
-}
-
-export type PrebidSonobiParams = {
-    ad_unit: string,
-    dom_id: ?string,
-    floor: ?number
-}
 
 export const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
