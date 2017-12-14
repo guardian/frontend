@@ -1,4 +1,4 @@
-package layout
+package layout.slices
 
 sealed trait EmailCardStyle
 
@@ -7,9 +7,7 @@ case class EmailFaciaCard(
   trailText: Boolean = false,
   largeHeadline: Boolean = false
 ) extends EmailCardStyle
-
 case object EmailFreeText extends EmailCardStyle
-
 case object EmailHidden extends EmailCardStyle
 
 case class EmailLayout(
@@ -49,7 +47,7 @@ object EmailLayouts {
     otherCards = EmailHidden
   )
 
-  private val layouts = Map(
+  val all = Map(
     slow.name -> slow,
     medium.name -> medium,
     fast.name -> fast,
@@ -58,5 +56,5 @@ object EmailLayouts {
   )
 
   def layoutByName(name: String): EmailLayout =
-    layouts.getOrElse(name, slow)
+    all.getOrElse(name, slow)
 }

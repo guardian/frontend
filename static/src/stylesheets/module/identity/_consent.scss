@@ -7,7 +7,7 @@
         padding: $gs-gutter;
         margin-top: $gs-gutter;
         background: #ffffff;
-        border-top: 1px solid transparentize($guardian-brand, .5);
+        border-top: 1px solid transparentize($identity-main, .5);
         position: sticky;
         bottom: 0;
         left: 0;
@@ -40,7 +40,7 @@
 
 .manage-account-consent-wizard-counter {
     @include fs-textSans(2);
-    color: $guardian-brand;
+    color: $identity-main;
 }
 
 .manage-account-consent-wizard-counter__indicator {
@@ -55,7 +55,7 @@
         align-items: center;
         justify-content: center;
         border-radius: 100%;
-        box-shadow: inset 0 0 0 1px $guardian-brand;
+        box-shadow: inset 0 0 0 1px $identity-main;
 
     }
 }
