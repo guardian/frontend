@@ -187,8 +187,10 @@ val preview = application("preview").dependsOn(
   commercial,
   onward
 ).settings(
-  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/shared",
-  unmanagedResourceDirectories in Compile += baseDirectory.value / "../app-config/overrides/preview"
+  unmanagedResourceDirectories in Compile := Seq(
+    baseDirectory.value / "../app-config/shared",
+    baseDirectory.value / "../app-config/overrides/preview"
+  )
 )
 
 val rss = application("rss")
