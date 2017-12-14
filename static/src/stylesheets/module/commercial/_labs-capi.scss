@@ -233,7 +233,7 @@
     }
 
     .advert__title {
-        @include f-headlineSans;
+        @include f-textSans;
         font-weight: 400;
         margin-bottom: .5em;
 

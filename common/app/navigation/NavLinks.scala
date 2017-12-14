@@ -537,7 +537,6 @@ object NavLinks {
     "sport/afl",
     "football/a-league",
     "sport/nrl",
-    "sport/australia-sport",
     "music/classicalmusicandopera",
     "lifeandstyle/food-and-drink",
     "tone/recipes",
