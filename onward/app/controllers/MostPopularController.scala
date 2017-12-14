@@ -68,7 +68,11 @@ class MostPopularController(contentApiClient: ContentApiClient,
     Cached(900) {
       JsonComponent(
         "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
-        "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode),
+        "rightHtml" -> (if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+          views.html.fragments.rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode)
+        } else {
+          views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode)
+        }),
         "country" -> countryCode
       )
     }
