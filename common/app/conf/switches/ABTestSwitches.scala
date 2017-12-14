@@ -132,7 +132,7 @@ trait ABTestSwitches {
     "Test prebid as a header-bidding implementation",
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 31),
+    sellByDate = new LocalDate(2018, 4, 2),
     exposeClientSide = true
   )
 
