@@ -335,6 +335,10 @@ $block-height: 71px;
     }
 }
 
+.fc-item__container > .fc-item__meta {
+    display: none;
+}
+
 .fc-trail__count {
     display: flex;
     line-height: 10px;            
