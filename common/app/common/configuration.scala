@@ -118,13 +118,16 @@ object GuardianConfiguration extends Logging {
   }
 
   private def diffLegacyConfig(): Unit = {
-    val s3ConfigMap = configToMap(s3Config)
-    val appConfigMap = configToMap(appConfig)
-    val confDiff = mapDiff(s3ConfigMap, appConfigMap)
-    if (confDiff.nonEmpty || s3ConfigMap != appConfigMap) {
-      throw new RuntimeException(s"Legacy S3 configuration does not match parameter store configuration, $confDiff")
-    } else {
-      log.info("Parameter config is identical to legacy S3 Config, which is good!")
+    // Ignore for preview
+    if (app.toLowerCase != "preview") {
+      val s3ConfigMap = configToMap(s3Config)
+      val appConfigMap = configToMap(appConfig)
+      val confDiff = mapDiff(s3ConfigMap, appConfigMap)
+      if (confDiff.nonEmpty || s3ConfigMap != appConfigMap) {
+        throw new RuntimeException(s"Legacy S3 configuration does not match parameter store configuration, $confDiff")
+      } else {
+        log.info("Parameter config is identical to legacy S3 Config, which is good!")
+      }
     }
   }
 
