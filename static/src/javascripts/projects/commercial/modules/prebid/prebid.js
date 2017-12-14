@@ -2,7 +2,6 @@
 
 import config from 'lib/config';
 import { isBreakpoint, breakpoints, type Breakpoint } from 'lib/detect';
-import { loadScript } from 'lib/load-script';
 import {
     bidderConfig,
     sonobiBidder,
@@ -11,8 +10,6 @@ import {
 import type {
     PrebidBidder,
     PrebidAdSlotCriteria,
-    PrebidIndexExchangeParams,
-    PrebidSonobiParams,
     PrebidSize,
     PrebidBid,
 } from 'commercial/modules/prebid/types';
@@ -21,45 +18,83 @@ import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-nam
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import 'prebid.js/build/dist/prebid';
 
-class PrebidTestService {
-    static bidders = [sonobiBidder, indexExchangeBidder];
+const bidders = [sonobiBidder, indexExchangeBidder];
 
-    initialise(): Promise<any> {
-        window.pbjs.bidderSettings = {
-            standard: {
-                alwaysUseBid: false,
-            },
-        };
-        return Promise.resolve();
-    }
+const isEqualAdSize = (a: PrebidSize, b: PrebidSize): boolean =>
+    a[0] === b[0] && a[1] === b[1];
 
-    slotIsInTest(advert: Advert): boolean {
-        return ['dfp-ad--inline1', 'dfp-ad--inline2'].indexOf(advert.id) !== -1;
-    }
+const filterConfigEntries = (
+    bidder: string,
+    slotSizes: PrebidSize[]
+): PrebidAdSlotCriteria[] => {
+    let bidConfigEntries: PrebidAdSlotCriteria[] = bidderConfig[bidder] || [];
 
-    requestBids(advert: Advert): Promise<void> {
-        if (!this.slotIsInTest(advert) || dfpEnv.externalDemand !== 'prebid') {
-            return Promise.resolve();
-        }
-        const adUnit = new PrebidAdUnit(advert);
+    bidConfigEntries = bidConfigEntries.filter(
+        bid => bid.edition === config.page.edition
+    );
+    bidConfigEntries = bidConfigEntries.filter(bid =>
+        isBreakpoint(bid.breakpoint)
+    );
+    bidConfigEntries = bidConfigEntries.filter(bid =>
+        slotSizes.find(size => isEqualAdSize(size, bid.size))
+    );
 
-        if (adUnit.bids.length === 0) {
-            return Promise.resolve();
-        }
+    return bidConfigEntries;
+};
 
-        return new Promise(resolve => {
-            window.pbjs.que.push(() => {
-                window.pbjs.addAdUnits([adUnit]);
-                window.pbjs.requestBids({
-                    bidsBackHandler(bidResponses) {
-                        window.pbjs.setTargetingForGPTAsync();
-                        resolve();
-                    },
-                });
+const getMatchingBids = (
+    availableSizes: PrebidSize[],
+    matchedSizes: PrebidSize[],
+    slotId: string
+): PrebidBid[] => {
+    const bids: PrebidBid[] = [];
+    bidders.forEach((bidder: PrebidBidder) => {
+        const matchingConfigEntries: PrebidAdSlotCriteria[] = filterConfigEntries(
+            bidder.name,
+            availableSizes
+        );
+        if (matchingConfigEntries.length > 0) {
+            // A config entry will specify a size, which should be added to the prebid ad unit if's not already included.
+            matchingConfigEntries.forEach(
+                (matchedEntry: PrebidAdSlotCriteria) => {
+                    if (
+                        matchedSizes.findIndex(size =>
+                            isEqualAdSize(size, matchedEntry.size)
+                        ) === -1
+                    ) {
+                        matchedSizes.push(matchedEntry.size);
+                    }
+                }
+            );
+
+            bids.push({
+                bidder: bidder.name,
+                params: bidder.bidParams(slotId),
             });
-        });
-    }
-}
+        }
+    });
+    return bids;
+};
+
+// Returns array of dimensions, eg. [[300, 250], [300, 600]]
+const getAdSizesFromAdvert = (advert: Advert): PrebidSize[] => {
+    const validBreakpoints: Breakpoint[] = breakpoints.filter(breakpoint =>
+        isBreakpoint({ min: breakpoint.name })
+    );
+    const validBreakpointKeys: string[] = validBreakpoints
+        .map(breakpoint => breakpointNameToAttribute(breakpoint.name))
+        .reverse();
+    const bestMatch: string =
+        validBreakpointKeys.find(
+            breakpointName => breakpointName in advert.sizes
+        ) || '';
+
+    const sizes: any[] = advert.sizes[bestMatch] || [];
+    const validSizes = sizes.filter(
+        ([width, height]) => Number.isInteger(width) && Number.isInteger(height)
+    );
+    return (validSizes: PrebidSize[]);
+};
 
 class PrebidAdUnit {
     code: string;
@@ -77,79 +112,45 @@ class PrebidAdUnit {
     }
 }
 
-function filterConfigEntries(
-    bidder: string,
-    slotSizes: PrebidSize[]
-): PrebidAdSlotCriteria[] {
-    let bidConfigEntries: PrebidAdSlotCriteria[] = bidderConfig[bidder] || [];
+class PrebidTestService {
+    static initialise(): Promise<any> {
+        window.pbjs.bidderSettings = {
+            standard: {
+                alwaysUseBid: false,
+            },
+        };
+        return Promise.resolve();
+    }
 
-    bidConfigEntries = bidConfigEntries.filter(
-        bid => bid.edition === config.page.edition
-    );
-    bidConfigEntries = bidConfigEntries.filter(bid =>
-        isBreakpoint(bid.breakpoint)
-    );
-    bidConfigEntries = bidConfigEntries.filter(bid =>
-        slotSizes.find(size => isEqualAdSize(size, bid.size))
-    );
+    static slotIsInTest(advert: Advert): boolean {
+        return ['dfp-ad--inline1', 'dfp-ad--inline2'].indexOf(advert.id) !== -1;
+    }
 
-    return bidConfigEntries;
-}
-
-function isEqualAdSize(a: PrebidSize, b: PrebidSize): boolean {
-    return a[0] === b[0] && a[1] === b[1];
-}
-
-function getMatchingBids(
-    availableSizes: PrebidSize[],
-    matchedSizes: PrebidSize[],
-    slotId: string
-): PrebidBid[] {
-    const bids: PrebidBid[] = [];
-    PrebidTestService.bidders.forEach((bidder: PrebidBidder) => {
-        const matchingConfigEntries: PrebidAdSlotCriteria[] = filterConfigEntries(
-            bidder.name,
-            availableSizes
-        );
-        if (matchingConfigEntries.length > 0) {
-            // A config entry will specify a size, which should be added to the prebid ad unit if's not already included.
-            for (const matchedEntry: PrebidAdSlotCriteria of matchingConfigEntries) {
-                if (
-                    matchedSizes.findIndex(size =>
-                        isEqualAdSize(size, matchedEntry.size)
-                    ) === -1
-                ) {
-                    matchedSizes.push(matchedEntry.size);
-                }
-            }
-
-            bids.push({
-                bidder: bidder.name,
-                params: bidder.bidParams(slotId),
-            });
+    static requestBids(advert: Advert): Promise<void> {
+        if (
+            !PrebidTestService.slotIsInTest(advert) ||
+            dfpEnv.externalDemand !== 'prebid'
+        ) {
+            return Promise.resolve();
         }
-    });
-    return bids;
+        const adUnit = new PrebidAdUnit(advert);
+
+        if (adUnit.bids.length === 0) {
+            return Promise.resolve();
+        }
+
+        return new Promise(resolve => {
+            window.pbjs.que.push(() => {
+                window.pbjs.addAdUnits([adUnit]);
+                window.pbjs.requestBids({
+                    bidsBackHandler() {
+                        window.pbjs.setTargetingForGPTAsync();
+                        resolve();
+                    },
+                });
+            });
+        });
+    }
 }
 
-// Returns array of dimensions, eg. [[300, 250], [300, 600]]
-function getAdSizesFromAdvert(advert: Advert): PrebidSize[] {
-    const validBreakpoints: Breakpoint[] = breakpoints.filter(breakpoint =>
-        isBreakpoint({ min: breakpoint.name })
-    );
-    const validBreakpointKeys: string[] = validBreakpoints
-        .map(breakpoint => breakpointNameToAttribute(breakpoint.name))
-        .reverse();
-    const bestMatch: string =
-        validBreakpointKeys.find(
-            breakpointName => breakpointName in advert.sizes
-        ) || '';
-
-    const sizes: any[] = advert.sizes[bestMatch] || [];
-    const validSizes = sizes.filter(
-        ([width, height]) => Number.isInteger(width) && Number.isInteger(height)
-    );
-    return (validSizes: PrebidSize[]);
-}
-
-export const prebid = new PrebidTestService();
+export const prebid = PrebidTestService;

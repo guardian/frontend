@@ -1,5 +1,8 @@
 // @flow
 
+import { getTestVariantId } from 'common/modules/experiments/utils';
+import config from 'lib/config';
+
 export const prebidIntegration: ABTest = {
     id: 'PrebidIntegration',
     start: '2017-11-30',
@@ -24,4 +27,11 @@ export const prebidIntegration: ABTest = {
             test: () => {},
         },
     ],
+};
+
+export const determineExternalDemand = (): string => {
+    if (getTestVariantId(prebidIntegration.id) === 'prebid-variant') {
+        return config.switches.abPrebidIntegration ? 'prebid' : 'none';
+    }
+    return config.switches.sonobiHeaderBidding ? 'sonobi' : 'none';
 };

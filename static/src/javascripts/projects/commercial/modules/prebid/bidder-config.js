@@ -3,7 +3,6 @@
 import config from 'lib/config';
 import type {
     PrebidBidderCriteria,
-    PrebidAdSlotCriteria,
     PrebidBidder,
     PrebidIndexExchangeParams,
     PrebidSonobiParams,
@@ -35,7 +34,7 @@ export const sonobiBidder: PrebidBidder = {
 
 export const indexExchangeBidder: PrebidBidder = {
     name: 'indexExchange',
-    bidParams: (slotId: string): PrebidIndexExchangeParams => ({
+    bidParams: (): PrebidIndexExchangeParams => ({
         id: config.page.adUnit,
         siteID: '208206',
     }),
