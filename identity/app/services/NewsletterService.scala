@@ -2,7 +2,7 @@ package services
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{EmailList, Subscriber}
+import com.gu.identity.model.{EmailList, EmailNewsletters, Subscriber}
 import idapiclient.{IdApiClient, TrackingData}
 import idapiclient.responses.Error
 import play.api.data._
@@ -81,8 +81,7 @@ class NewsletterService(
       form: Form[EmailPrefsData],
       add: List[String] = List(),
       remove: List[String] = List()): List[String] = {
-    //TODO: only return V1 subscriptions when V2 subscriptions are in place
-    getEmailSubscriptions(form,add,remove)
+    getEmailSubscriptions(form, add, remove).filter(EmailNewsletters.v1ListIds.contains)
   }
 }
 

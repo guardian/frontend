@@ -2,7 +2,7 @@ package layout.slices
 
 import model.pressed.{CollectionConfig, PressedContent}
 import common.Logging
-import layout.Front
+import layout.{EmailContentContainer, Front}
 import model.facia.PressedCollection
 
 import scala.collection.immutable.Iterable
@@ -18,8 +18,8 @@ object Container extends Logging {
     ("nav/list", NavList),
     ("nav/media-list", NavMediaList),
     ("news/most-popular", MostPopular)
-  ) ++
-    FixedContainers.all.mapValues(Fixed.apply)
+  ) ++ FixedContainers.all.mapValues(Fixed.apply) ++ EmailLayouts.all.mapValues(Email.apply)
+
 
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
@@ -29,12 +29,13 @@ object Container extends Logging {
   def fromConfig(collectionConfig: CollectionConfig): Container =
     resolve(collectionConfig.collectionType)
 
-  def storiesCount(collectionType: String, items: Seq[PressedContent]): Option[Int] = {
-    resolve(collectionType) match {
+  def storiesCount(collectionConfig: CollectionConfig, items: Seq[PressedContent]): Option[Int] = {
+    resolve(collectionConfig.collectionType) match {
       case Dynamic(dynamicPackage) => dynamicPackage
         .slicesFor(items.map(Story.fromFaciaContent))
         .map(Front.itemsVisible)
       case Fixed(fixedContainer) => Some(Front.itemsVisible(fixedContainer.slices))
+      case Email(_) => Some(EmailContentContainer.storiesCount(collectionConfig))
       case _ => None
     }
   }
@@ -81,6 +82,7 @@ sealed trait Container
 
 case class Dynamic(get: DynamicContainer) extends Container
 case class Fixed(get: ContainerDefinition) extends Container
+case class Email(get: EmailLayout) extends Container
 case object NavList extends Container
 case object NavMediaList extends Container
 case object MostPopular extends Container

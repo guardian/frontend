@@ -108,16 +108,8 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
         case None => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))}
   }
 
-  private def findPressedPage(path: String): Future[Option[PressedPage]] = {
-    if (path.startsWith("email/")) {
-      frontJsonFapi.get(path)
-    } else {
-      frontJsonFapi.getLite(path)
-    }
-  }
-
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureResult = findPressedPage(path).flatMap {
+    val futureResult = frontJsonFapi.getLite(path).flatMap {
       case Some(faciaPage) =>
         successful(
           if (request.isRss) {

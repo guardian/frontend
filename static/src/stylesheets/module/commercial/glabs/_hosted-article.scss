@@ -205,7 +205,7 @@
             margin: 1px 8px;
         }
         h2 {
-            @include f-headlineSans;
+            @include f-textSans;
         }
 
         $iconHeight: 30px;
@@ -222,7 +222,7 @@
             }
 
             p {
-                @include f-headlineSans;
+                @include f-textSans;
                 font-weight: 100;
                 font-style: normal;
                 font-size: 30px;
