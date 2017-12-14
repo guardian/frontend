@@ -7,11 +7,11 @@
     }
 
     .byline,
+    .content--media .content__headline,
     .element-pullquote p,
     .tonal__head--tone-feature .content__headline,
     .tonal__head--tone-review .content__headline,
     .tone-colour,
-    .content--media .content__headline,
     a {
         color: $kickerColor;
     }
@@ -20,11 +20,9 @@
         background: $mediaColor;
     }
 
-    .inline-close,
     .inline-close svg,
     .inline-tone-fill,
     .social-icon svg,
-    .social-icon.social-icon--more svg,
     .social-icon__svg {
         fill: $kickerColor;
     }
@@ -59,6 +57,21 @@
         }
     }
 }
+@mixin mediaPalatte($mediaColor) {
+    .content__section-label__link,
+    .youtube-media-atom__bottom-bar__duration {
+        color: $mediaColor;
+    }
+
+    .vjs-control-text:before,
+    .youtube-media-atom__bottom-bar__duration:before {
+        background: $mediaColor;
+    }
+
+    .inline-video-icon__svg {
+        fill: $mediaColor;
+    }
+}
 
 .content--pillar-news {
     @include colorPalatte($news-garnett-main-1, $news-garnett-feature, $news-garnett-media-main-1);
@@ -70,7 +83,7 @@
 }
 
 .content--pillar-arts {
-    @include colorPalatte($arts-garnett-main-1, $arts-garnett-feature,  $arts-garnett-media-main-1);
+    @include colorPalatte($arts-garnett-main-1, $arts-garnett-feature, $arts-garnett-media-main-1);
 }
 
 .content--pillar-sport,
@@ -80,4 +93,24 @@
 
 .content--pillar-lifestyle {
     @include colorPalatte($lifestyle-garnett-feature, $lifestyle-garnett-main-1, $lifestyle-garnett-media-main-1);
+}
+
+.content--media:not(.paid-content).content--pillar-news {
+    @include mediaPalatte($news-garnett-media-main-1);
+}
+
+.content--media:not(.paid-content).content--pillar-opinion {
+    @include mediaPalatte($opinion-garnett-media-main-1);
+}
+
+.content--media:not(.paid-content).content--pillar-arts {
+    @include mediaPalatte($arts-garnett-media-main-1);
+}
+
+.content--media:not(.paid-content).content--pillar-lifestyle {
+    @include mediaPalatte($lifestyle-garnett-media-main-1);
+}
+
+.content--media:not(.paid-content).content--pillar-sport {
+    @include mediaPalatte($sport-garnett-media-main-1);
 }
