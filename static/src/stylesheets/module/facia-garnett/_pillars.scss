@@ -9,7 +9,7 @@ $pillars: (
         commentCount: $garnett-neutral-2,
         headlineIcon: $news-garnett-main-1,
         metaText: $garnett-neutral-2,
-        cutoutBackground: $opinion-garnett-main-1,
+        cutoutBackground: $news-garnett-main-1,
         invertedKicker: $news-garnett-media-main-1
     ),
     opinion: (
@@ -155,7 +155,6 @@ $pillars: (
         color: map-get($palette, featureHeadline);
     }
 
-
     &.fc-item--type-media {
         .inline-video-icon,
         .inline-volume-high,
@@ -198,8 +197,6 @@ $pillars: (
             }
         }
     }
-
-
 }
 
 @each $pillar, $palette in $pillars {
