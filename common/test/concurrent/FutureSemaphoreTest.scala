@@ -11,7 +11,7 @@ class FutureSemaphoreTest extends FlatSpec with Matchers with ScalaFutures {
   def executeSomeTasks[T](futureSemaphore: FutureSemaphore, numberToExecute: Int)(task: => Future[T]): Future[Seq[Try[T]]] = {
     Future.traverse(1 to numberToExecute)(_ =>
       futureSemaphore.execute[Try[T]](
-        Future(Thread.sleep(2)).flatMap(_ => task).map(Success(_))
+        Future(Thread.sleep(10)).flatMap(_ => task).map(Success(_))
       ).recover { case e => Failure(e) }
     )
   }

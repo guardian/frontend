@@ -3,15 +3,18 @@ package common
 import java.io.{File, FileInputStream}
 import java.nio.charset.Charset
 import java.util.Map.Entry
-
+import conf.{Configuration, Static}
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
+import com.gu.cm.S3ConfigurationSource
 import com.gu.cm._
-import com.typesafe.config.ConfigException
+import com.typesafe.config.{ConfigException, ConfigFactory, ConfigRenderOptions}
+import common.Environment.{app, awsRegion, stage}
 import conf.switches.Switches
-import conf.{Configuration, Static}
+import conf.Static
 import org.apache.commons.io.IOUtils
+import services.ParameterStore
 
 import scala.collection.JavaConverters._
 import scala.concurrent.duration._
@@ -57,37 +60,88 @@ object Environment extends Logging {
   */
 object GuardianConfiguration extends Logging {
 
-  import com.gu.cm.{Configuration => CM}
   import com.typesafe.config.Config
 
-  lazy val configuration = {
-    import Environment._
+  private lazy val parameterStore = new ParameterStore(awsRegion)
 
-    // This is version number of the config file we read from s3,
-    // increment this if you publish a new version of config
+  private def configFromFile(path: String, configPath: String): Config = {
+    val fileConfig = ConfigFactory.parseFileAnySyntax(new File(path))
+    Try(fileConfig.getConfig(configPath)).getOrElse(ConfigFactory.empty)
+  }
+
+  private def configToMap(config: Config): Map[String, String] = {
+    config.entrySet().asScala.map { entry =>
+      entry.getKey -> unwrapQuotedString(entry.getValue.render)
+    }.toMap
+  }
+
+  private lazy val s3Config: Config = {
     val s3ConfigVersion = 51
+    val identity = AwsApplication(Environment.stack, app, stage, awsRegion)
+    val config = S3ConfigurationSource(identity, Environment.configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion)).load.resolve()
+    config.getConfig(identity.app + "." + identity.stage)
+  }
 
-    lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
-    lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
-    lazy val identity = AwsApplication(stack, app, stage, awsRegion)
-    lazy val commonS3Config = S3ConfigurationSource(identity, configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion))
-    lazy val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), SysOutLogger).load.resolve
+  lazy val appConfig: Config = {
+    val paramStorePrefix = "param-store@(.*)".r
 
-    // test mode is self contained and won't need to use anything secret
-    lazy val test = ClassPathConfigurationSource("env/DEVINFRA.properties")
-    lazy val testConfig = new CM(List(test), SysOutLogger).load.resolve
+    val conf = ConfigFactory.parseResourcesAnySyntax(s"${stage.toLowerCase}.conf").resolve()
+    val configMap = configToMap(conf)
 
-    val appConfig =
-      if (stage == "DEVINFRA") testConfig
-      else {
-        try {
-          config.getConfig(identity.app + "." + identity.stage)
-        } catch {
-          case e: ConfigException if stage == "DEV" =>
-            throw new RuntimeException(s"${e.getMessage}.  You probably need to refresh your credentials.", e)
-        }
+    val valuesFromParamStore: Seq[String] = configMap.collect {
+      case (_, paramStorePrefix(paramStoreKey)) => paramStoreKey
+    }.toSeq
+
+    val parameterStoreValues = parameterStore.getAll(valuesFromParamStore)
+
+    val configPopulatedWithParamStore = configMap.map {
+      case (key, paramStorePrefix(paramStoreKey)) => key -> parameterStoreValues(paramStoreKey)
+      case keyValue => keyValue
+    }
+
+    ConfigFactory.parseMap(configPopulatedWithParamStore.asJava)
+  }
+
+  lazy val configuration: Config = {
+    if (stage == "DEVINFRA")
+      ConfigFactory.parseResourcesAnySyntax("env/DEVINFRA.properties")
+    else {
+      val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf", "devOverrides")
+      val runtimeOnly =  configFromFile("/etc/gu/frontend.conf", "parameters")
+
+      diffLegacyConfig()
+
+      userPrivate
+        .withFallback(runtimeOnly)
+        .withFallback(appConfig)
+    }
+  }
+
+  private def diffLegacyConfig(): Unit = {
+    // Ignore for preview
+    if (app.toLowerCase != "preview") {
+      val s3ConfigMap = configToMap(s3Config)
+      val appConfigMap = configToMap(appConfig)
+      val confDiff = mapDiff(s3ConfigMap, appConfigMap)
+      if (confDiff.nonEmpty || s3ConfigMap != appConfigMap) {
+        throw new RuntimeException(s"Legacy S3 configuration does not match parameter store configuration, $confDiff")
+      } else {
+        log.info("Parameter config is identical to legacy S3 Config, which is good!")
       }
-    appConfig
+    }
+  }
+
+  private def mapDiff(map1: Map[String, String], map2: Map[String, String]): Seq[String] = {
+    val missingKeys = map1.toSeq.diff(map2.toSeq) ++ map2.toSeq.diff(map1.toSeq)
+    missingKeys.map(_._1).sorted.distinct
+  }
+
+  def unwrapQuotedString(input: String): String = {
+    val quotedString = "\"(.*)\"".r
+    input match {
+      case quotedString(content) => content
+      case content => content
+    }
   }
 
   implicit class ScalaConvertProperties(conf: Config) {
@@ -161,13 +215,6 @@ class GuardianConfiguration extends Logging {
   }
 
   object healthcheck {
-    lazy val properties = configuration.getPropertyNames filter {
-      _ matches """healthcheck\..*\.url"""
-    }
-
-    lazy val urls = properties map { property =>
-      configuration.getStringProperty(property).get
-    }
     lazy val updateIntervalInSecs: Int = configuration.getIntegerProperty("healthcheck.updateIntervalInSecs").getOrElse(5)
   }
 
