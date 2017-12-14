@@ -19,6 +19,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import 'prebid.js/build/dist/prebid';
 
 const bidders = [sonobiBidder, indexExchangeBidder];
+const bidderTimeout = 1500;
 
 const isEqualAdSize = (a: PrebidSize, b: PrebidSize): boolean =>
     a[0] === b[0] && a[1] === b[1];
@@ -143,6 +144,7 @@ class PrebidTestService {
             window.pbjs.que.push(() => {
                 window.pbjs.addAdUnits([adUnit]);
                 window.pbjs.requestBids({
+                    timeout: bidderTimeout,
                     bidsBackHandler() {
                         window.pbjs.setTargetingForGPTAsync();
                         resolve();
