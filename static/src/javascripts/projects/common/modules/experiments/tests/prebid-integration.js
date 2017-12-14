@@ -6,7 +6,7 @@ import config from 'lib/config';
 export const prebidIntegration: ABTest = {
     id: 'PrebidIntegration',
     start: '2017-11-30',
-    expiry: '2018-03-31',
+    expiry: '2018-04-02',
     author: 'Richard Nguyen',
     description:
         'A test to verify that Prebid can support external demand for display ads',
