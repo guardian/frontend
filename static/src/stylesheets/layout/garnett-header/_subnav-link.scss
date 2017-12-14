@@ -5,7 +5,8 @@
     font-size: 15px;
     height: $veggie-burger-medium - $gs-baseline;
     line-height: $veggie-burger-medium - $gs-baseline;
-    padding: 0 ($gs-gutter / 4);
+    padding: 0 0;
+    margin: 0 5px;
     position: relative;
     transition: color 150ms ease-out;
 
@@ -29,9 +30,15 @@
         }
     }
 
+    .subnav__item--parent & {
+        display: inline-block;
+        font-weight: 700;
+    }
+
     &:hover,
     &:focus {
-        color: $guardian-brand;
+        color: #000000;
+        box-shadow: inset 0 -11px 0 #ffffff, inset 0 -12px 0 #000000;
         text-decoration: none;
     }
 }
@@ -53,6 +60,5 @@
     &:hover,
     &:focus {
         font-weight: 700;
-        color: $guardian-brand;
     }
 }

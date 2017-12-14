@@ -7,14 +7,14 @@
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
 @import experiments.{ ABNewDesktopHeader, GarnettHeader, ActiveExperiments}
 
+@defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
 <header class="@RenderClasses(Map(
             "new-header--mvt-desktop" -> ActiveExperiments.isParticipating(ABNewDesktopHeader),
             "new-header--slim" -> page.metadata.hasSlimHeader,
             "new-header--garnett" -> ActiveExperiments.isParticipating(GarnettHeader)
-        ), "new-header")"
+        ), s"new-header--${navMenu.currentPillar.map(_.title).getOrElse("")}", "new-header")"
         role="banner">
 
-    @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
         <nav class="new-header__inner gs-container"
             data-component="nav2"
             aria-label="Guardian sections">
@@ -102,8 +102,8 @@
                 @navMenu.pillars.map { link =>
                     <li class="pillars__item">
                         <a class="@RenderClasses(Map(
-                            "pillar-link" -> true,
-                            "pillar-link--current-section" -> ((link.title == navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)))"
+                            "pillar-link--current-section" -> ((link.title == navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)
+                            ), "pillar-link", s"pillar-link--${link.title}")"
                         href="@LinkTo(link.url)"
                         data-link-name="nav2 : primary : @link.title">
 
@@ -140,5 +140,5 @@
         @if(!page.metadata.hasSlimHeader) {
             @fragments.nav.subNav(navMenu)
         }
-    }
-</header>
+    </header>
+}

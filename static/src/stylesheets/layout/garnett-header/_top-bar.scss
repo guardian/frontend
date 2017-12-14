@@ -1,17 +1,13 @@
 .top-bar__item {
     color: #000000;
     float: left;
-    font-weight: normal;
+    @include fs-textSans(2);
     letter-spacing: .01rem;
     line-height: 1;
     position: relative;
-    // Prevents a strange 1px shift on hover
-    backface-visibility: hidden;
     transition: color 80ms ease-out;
-    // border-radius: 99999px;
     padding: ($gs-baseline / 2) ($gs-gutter / 2);
-    margin: 0 0 0 -1px;
-    // border: 1px solid $rule;
+    margin: 3px 0 0;
 
     &:nth-child(2) {
         padding-left: $gs-gutter / 2 + $gs-gutter / 4;
@@ -25,9 +21,11 @@
 
     &:hover,
     &:focus {
-        // background-color: #000000;
-        // color: $neutral-7;
-        text-decoration: none;
+        color: #000000;
+
+        &:before {
+            opacity: 1;
+        }
     }
 
     @include mq(tablet) {
@@ -36,6 +34,7 @@
 }
 
 .top-bar__item--dropdown {
+    border-radius: 99999px;
     cursor: pointer;
 
     &:after {
@@ -55,6 +54,10 @@
     .dropdown-menu--open ~ &,
     &.is-active {
         background-color: rgba(0, 0, 0, .1);
+
+        &:before {
+            content: none;
+        }
 
         &:after {
             transform: translateY(0) rotate(45deg);
@@ -84,12 +87,10 @@
 
     &:hover,
     &:focus {
+        color: $neutral-6;
+
         & .top-bar__item--cta--circle {
             transform: scale(1.05);
-
-            &:before {
-                background: #000000;
-            }
         }
     }
 }
@@ -105,7 +106,7 @@
     transform-origin: top center;
 
     &:before {
-        background: $neutral-1;
+        background: #000000;
         border-radius: 50%;
         bottom: 0;
         content: '';
