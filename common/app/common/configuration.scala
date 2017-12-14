@@ -7,10 +7,11 @@ import java.util.Map.Entry
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
+import com.gu.cm.{AwsApplication, S3ConfigurationSource}
 import com.typesafe.config.{ConfigException, ConfigFactory}
 import common.Environment.{app, awsRegion, stage}
 import conf.switches.Switches
-import conf.Static
+import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 import services.ParameterStore
 
@@ -60,6 +61,36 @@ object GuardianConfiguration extends Logging {
 
   import com.typesafe.config.Config
 
+  private def configToMap(config: Config): Map[String, String] = {
+    config.entrySet().asScala.map { entry =>
+     entry.getKey -> unwrapQuotedString(entry.getValue.render)
+    }.toMap
+  }
+
+  def unwrapQuotedString(input: String): String = {
+    val quotedString = "\"(.*)\"".r
+    input match {
+      case quotedString(content) => content
+      case content => content
+    }
+  }
+
+  private def mapDiff(map1: Map[String, String], map2: Map[String, String]): Seq[String] = {
+    val missingKeys = map1.toSeq.diff(map2.toSeq) ++ map2.toSeq.diff(map1.toSeq)
+    missingKeys.map(_._1).sorted.distinct
+  }
+
+  private def diffLegacyConfig(s3Config: Config, parameterStoreConfig: Config): Unit = {
+    val s3ConfigMap = configToMap(s3Config)
+    val parameterStoreConfigMap = configToMap(parameterStoreConfig)
+    val confDiff = mapDiff(s3ConfigMap, parameterStoreConfigMap)
+    if (confDiff.nonEmpty || s3ConfigMap != parameterStoreConfigMap) {
+      throw new RuntimeException(s"Legacy S3 configuration does not match parameter store configuration, $confDiff")
+    } else {
+      log.info("Parameter config is identical to legacy S3 Config, which is good!")
+    }
+  }
+
   private def configFromFile(path: String, configPath: String): Config = {
     val fileConfig = ConfigFactory.parseFileAnySyntax(new File(path))
     Try(fileConfig.getConfig(configPath)).getOrElse(ConfigFactory.empty)
@@ -75,22 +106,32 @@ object GuardianConfiguration extends Logging {
 
   private lazy val parameterStore = new ParameterStore(awsRegion)
 
+  private lazy val s3Config: Config = {
+    val s3ConfigVersion = 51
+    val identity = AwsApplication(Environment.stack, app, stage, awsRegion)
+    val config = S3ConfigurationSource(identity, Environment.configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion)).load.resolve()
+    config.getConfig(identity.app + "." + identity.stage)
+  }
+
   lazy val configuration: Config = {
     if (stage == "DEVINFRA")
       ConfigFactory.parseResourcesAnySyntax("env/DEVINFRA.properties")
     else {
       val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf", "devOverrides")
       val runtimeOnly =  configFromFile("/etc/gu/frontend.conf", "parameters")
-      val localConfig = userPrivate.withFallback(runtimeOnly)
-
       val frontendConfig = configFromParameterStore("/frontend")
       val frontendStageConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}")
       val frontendAppConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}/${app.toLowerCase}")
 
-      localConfig
-        .withFallback(frontendAppConfig)
+      val parameterStoreConfig = frontendAppConfig
         .withFallback(frontendStageConfig)
         .withFallback(frontendConfig)
+
+      diffLegacyConfig(s3Config, parameterStoreConfig)
+
+      userPrivate
+        .withFallback(runtimeOnly)
+        .withFallback(parameterStoreConfig)
     }
   }
 
