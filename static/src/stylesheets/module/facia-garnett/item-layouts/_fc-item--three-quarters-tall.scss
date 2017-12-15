@@ -31,10 +31,12 @@ x x x x x x x x x x x x x x x x x x
 @mixin fc-item--three-quarters-tall {
     .fc-item__header {
         @include fs-headline(3, true);
+        @include fs-headline-quote(3);
         @include headline-boost(4);
 
         @include mq(desktop) {
             @include fs-headline(5, true);
+            @include fs-headline-quote(5);
             @include headline-boost(6);
         }
     }
