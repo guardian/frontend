@@ -79,10 +79,7 @@ class CommercialFeatures {
             this.articleBodyAdverts &&
             config.get('switches.carrotTrafficDriver', false) &&
             config.hasTone('Features') &&
-            !config.page.isPaidContent &&
-            ['sport', 'lifeandstyle', 'fashion', 'football', 'travel'].includes(
-                config.get('page.section')
-            );
+            !config.page.isPaidContent;
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
