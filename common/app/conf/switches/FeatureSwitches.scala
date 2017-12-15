@@ -175,6 +175,17 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val IdentityPointToConsentJourneyPage = Switch(
+    SwitchGroup.Identity,
+    "id-point-to-consent-journey-page",
+    "If switched on, public facing links will redirect to journey page",
+    owners = Seq(Owner.withGithub("calum-campbell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 15),
+    exposeClientSide = false
+
+  )
+
   val IdentityRedirectUsersWithLingeringV1ConsentsSwitch = Switch(
     SwitchGroup.Identity,
     "id-redirect-users-with-lingering-v1-consents",

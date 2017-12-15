@@ -1,12 +1,16 @@
 package controllers
 
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import java.net.URLEncoder
+
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, Result}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
+import conf.switches.Switches.IdentityPointToConsentJourneyPage
+
 
 class EmailVerificationController(api: IdApiClient,
   authenticatedActions: AuthenticatedActions,
@@ -23,7 +27,7 @@ class EmailVerificationController(api: IdApiClient,
 
   val page = IdentityPage("/verify-email", "Verify Email")
 
-  def verify(token: String): Action[AnyContent] = Action.async {
+  def verify(token: String, isSignUp: Option[String]): Action[AnyContent] = Action.async {
     implicit request =>
       val idRequest = idRequestParser(request)
 
@@ -42,8 +46,14 @@ class EmailVerificationController(api: IdApiClient,
           val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
           val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
           val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
+          val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
+          val journey = if(isSignUp.forall(_.toBoolean)) "signup" else "repermission"
 
-          Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))
+          if(validationState.isExpired || IdentityPointToConsentJourneyPage.isSwitchedOff) {
+            Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))
+          } else {
+            SeeOther(idUrlBuilder.buildUrl(s"/consent?journey=${journey}&returnUrl=${encodedReturnUrl}"))
+          }
       }
   }
 
