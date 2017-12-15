@@ -759,14 +759,14 @@ $quote-mark: 35px;
 
     .content__meta-container {
         &:before {
-            @include multiline(4, $garnett-neutral-6);
+            @include multiline(4, $garnett-neutral-7);
         }
     }
 
     .meta__numbers,
     .meta__social {
         &:before {
-            @include multiline(1, $garnett-neutral-6);
+            @include multiline(1, $garnett-neutral-7);
         }
     }
 

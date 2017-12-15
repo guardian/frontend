@@ -4,6 +4,14 @@ $fc-item-gutter: $gs-gutter / 4;
    ==========================================================================
 */
 
+@mixin fs-headline-quote($level) {
+    .inline-garnett-quote__svg {
+        height: get-font-size(headline, $level);
+        width: get-font-size(headline, $level) * .5;
+        margin-right: get-font-size(headline, $level) * .5;
+    }
+}
+
 @mixin fc-item--horizontal($media-width, $media-align: right) {
 
     .fc-item__image-container {
@@ -142,11 +150,14 @@ $fc-item-gutter: $gs-gutter / 4;
 .item__title,
 .rich-link__header {
     @include fs-headline(3);
+    @include fs-headline-quote(3);
+    
     font-weight: 500;
     padding-bottom: .5em;
 
     .fc-item--has-boosted-title & {
         @include fs-headline(4, true);
+        @include fs-headline-quote(4);
     }
 }
 
@@ -177,10 +188,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__header {
     flex: 1 1 auto;
-
-    .inline-icon {
-        display: none;
-    }
 }
 
 .fc-item__kicker {
@@ -328,64 +335,52 @@ $block-height: 71px;
     }
 }
 
-.fc-trail__count {
-    display: flex;
+.fc-item__container > .fc-item__meta {
+    display: none;
 }
 
-.fc-trail__count .inline-icon {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 3px;
-    float: left;
-    margin-right: 1px;
+.fc-trail__count {
+    display: flex;
+    line-height: 10px;            
+
+    .inline-icon {
+        padding-right: 2px;
+        height: 14px;
+        width: 14px;
+        bottom: 0;
+        top: 0;
+
+        svg {
+            height: 14px;
+            width: 14px;
+        }
+    }
 }
 
 .fc-item__footer--horizontal {
     display: none;
 }
 
-.fc-item--has-cutout .fc-item__media-wrapper {
-    // We never want to show the media and the cutout at the same time, hence the important
-    display: none !important;
-}
-
-.fc-item--has-cutout .fc-item__content {
-    z-index: 1;
-}
-
-.fc-item__avatar {
-    position: absolute;
-    overflow: hidden;
-    width: 100%;
-    bottom: 0;
-    right: 0;
-}
-
-.fc-item__avatar__media {
-    position: absolute;
-    height: 100%;
-    bottom: 0;
-    right: 0;
-
-    .responsive-img {
-        position: absolute;
-        height: 100%;
-        bottom: 0;
-        right: 0;
+.fc-item--has-cutout {
+    .fc-item__media-wrapper {
+        // We never want to show the media and the cutout at the same time, hence the important
+        display: none !important;
     }
 
-    &.image--portrait {
-        top: 0;
-        height: auto;
-        width: 80%;
+    .fc-item__content {
+        position: relative;
+        overflow: hidden;
+    }
 
-        .responsive-img {
-            position: absolute;
-            height: auto;
-            width: 100%;
-            bottom: auto;
-        }
+    .fc-item__avatar {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    .fc-item__avatar__media {
+        position: absolute;
+        bottom: 0;
     }
 }
 
