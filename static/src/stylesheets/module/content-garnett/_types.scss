@@ -716,7 +716,7 @@ $quote-mark: 35px;
     .content__headline,
     .content__standfirst,
     .social {
-        @include mq($until:tablet) {
+        @include mq($until: tablet) {
             padding-left: 0;
             padding-right: 0;
         }
@@ -772,7 +772,7 @@ $quote-mark: 35px;
 
     .meta__numbers {
         &:before {
-            @include mq($until:leftCol) {
+            @include mq($until: leftCol) {
                 content: none;
             }
         }
@@ -803,7 +803,7 @@ $quote-mark: 35px;
     }
 
     .submeta__keywords {
-        border-bottom: none;
+        border-bottom: 0;
     }
 
     .vjs-control-text {
@@ -841,7 +841,7 @@ $quote-mark: 35px;
             border-color: transparent transparent transparent $garnett-neutral-5;
             @include mq(tablet) {
                 // 0 border radius on mobile because stock android has a render bug with it here
-                border-radius: 0.2em;
+                border-radius: .2em;
             }
         }
     }
