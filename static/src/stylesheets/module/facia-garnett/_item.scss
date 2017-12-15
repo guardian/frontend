@@ -178,6 +178,13 @@ $fc-item-gutter: $gs-gutter / 4;
     overflow: hidden;
 }
 
+.fc-item__title--quoted {
+    .inline-garnett-quote {
+        @include fs-headline-quote(2);
+        fill: $neutral-2;
+    }
+}
+
 .fc-item__kicker,
 .fc-sublink__kicker,
 .rich-link__kicker {
