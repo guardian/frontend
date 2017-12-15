@@ -25,7 +25,7 @@ const go = () => {
         // 1. boot standard, always
         markTime('standard boot');
         bootStandard();
-
+        s;
         // 2. once standard is done, next is commercial
         if (config.page.isDev) {
             window.guardian.adBlockers.onDetect.push(isInUse => {
