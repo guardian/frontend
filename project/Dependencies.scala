@@ -34,7 +34,6 @@ object Dependencies {
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "3.7.0"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.26"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
-  val configMagic = "com.gu" %% "configuration-magic-core" %  "1.4.0"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityRequest = "com.gu.identity" %% "identity-request" % identityLibVersion
