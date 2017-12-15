@@ -217,6 +217,16 @@ x:-o-prefocus, .new-header__cta-container  {
     }
 }
 
+.feedback-form__link {
+    color: $guardian-brand;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 .feedback-form__icon__svg {
     margin-bottom: -2px;
     fill: $neutral-1;

@@ -26,61 +26,101 @@ Three quarter item. Looks like a wide standard, a bit like this:
     .fc-item__header {
         @include mq(desktop) {
             @include fs-headline(4, true);
+            @include fs-headline-quote(4);
             @include headline-boost(5);
         }
     }
-    
+
     .fc-item__standfirst {
         @include mq(desktop) {
             display: flex;
         }
     }
+    
+    .fc-item__liveblog-blocks {
+        padding-right: 0;
+    }
+
+    &.fc-item--has-sublinks-3 {
+        @include fc-sublinks--below;
+    }
 
     &.fc-item--has-cutout {
         .fc-item__container {
             min-height: gs-height(7);
-
-            .has-flex-wrap & {
-                flex-direction: row;
-            }
+            flex-direction: column;
         }
 
         .fc-item__header {
             @include fs-headline(5, true);
+            @include fs-headline-quote(5);
             @include headline-boost(6);
+            padding-bottom: gs-height(3);
+            margin-bottom: $gs-gutter * .25;
+
+            @include mq(desktop) {
+                padding-bottom: gs-height(4);
+            }
         }
 
         .fc-item__content {
+            max-width: 100%;
+        }
+
+        .fc-item__header,
+        .fc-item__footer--vertical,
+        .fc-item__standfirst-wrapper {
             width: auto;
-            max-width: gs-span(5);
+            padding-right: gs-height(5);
 
             @include mq(desktop) {
-                max-width: gs-span(6);
+                padding-right: gs-height(5.5);
             }
+        }
 
-            .has-flex-wrap & {
+        .fc-item__standfirst {
+            display: flex;
+        }
+
+        .fc-item__avatar {
+            width: gs-height(4.5);
+            height: gs-height(4.5);
+
+            @include mq(desktop) {
+                width: gs-height(5);
+                height: gs-height(5);
+            }
+        }
+
+        .fc-item__avatar__media {
+            right: -35%;
+            height: gs-height(6);
+
+            @include mq(desktop) {
+                height: gs-height(6.5);
+            }
+        }
+
+        &.fc-item--has-sublinks-3 {
+            .fc-item__footer--horizontal {
                 flex-basis: auto;
             }
+
+            &:not(.fc-item--type-comment) {
+                .fc-item__footer--horizontal {
+                    .fc-sublink {
+                        margin-top: 0;
+            
+                        .fc-sublink__title {                
+                            &:before {
+                                width: auto;
+                                left: 0 - $fc-item-gutter;
+                                right: 0 - $fc-item-gutter;
+                            }
+                        }
+                    }
+                }
+            }
         }
-    }
-
-    .fc-item__avatar {
-        height: gs-height(6);
-
-        @include mq(desktop) {
-            height: gs-height(7);
-        }
-    }
-
-    .fc-item__avatar__media {
-        right: -12%;
-
-        @include mq(desktop) {
-            right: -12%;
-        }
-    }
-
-    &.fc-item--has-sublinks-3:not(.fc-item--has-cutout) {
-        @include fc-sublinks--below;
     }
 }

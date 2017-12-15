@@ -9,6 +9,7 @@
 @import views.html.fragments.media.video
 @import views.html.fragments.inlineSvg
 @import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
+@import model.ContentDesignType.RichContentDesignType
 
 @import Function.const
 
@@ -219,6 +220,17 @@ data-test-id="facia-card"
                         @standfirst(item)
                         @meta(item)
                     </div>
+                    @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.cardTypes.showCutOut) {
+                        @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
+                        <div class="fc-item__avatar">
+                            @image(
+                                classes = Seq("fc-item__avatar__media", cutOut.cssClass),
+                                widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
+                                maybePath = Some(imageUrl)
+                            )
+                        </div>
+                        }
+                    }
                 }
             } else {
                 @standfirst(item)
@@ -235,10 +247,9 @@ data-test-id="facia-card"
             @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                 @meta(item)
             }
-
         </div>
 
-        @if(item.cardTypes.showCutOut) {
+        @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.cardTypes.showCutOut) {
             @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
             <div class="fc-item__avatar">
                 @image(
@@ -249,9 +260,14 @@ data-test-id="facia-card"
             </div>
             }
         }
+        
 
         @if(item.sublinks.nonEmpty) {
             <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
+        }
+
+        @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.designType.nameOrDefault == "comment") {
+            @meta(item)
         }
 
         <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(item.header.headline)</a>

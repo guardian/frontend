@@ -78,6 +78,12 @@ Hence why a greater depth of selector specificity is needed.
             .fc-item__header {
                 @include fs-headline(3, true);
             }
+
+            .inline-garnett-quote__svg {
+                height: 20px;
+                width: 10px;
+                margin-right: 10px;
+            }
         }
     }
 }
@@ -101,6 +107,12 @@ Hence why a greater depth of selector specificity is needed.
                 @include mq(tablet) {
                     @include fs-headline(2, true);
                 }
+            }
+
+            .inline-garnett-quote__svg {
+                height: 16px;
+                width: 8px;
+                margin-right: 8px;
             }
         }
     }

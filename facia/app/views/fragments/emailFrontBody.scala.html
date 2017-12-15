@@ -1,8 +1,8 @@
-@import layout.{EmailCardStyle, EmailHidden, EmailFreeText, EmailFaciaCard}
-@import layout.EmailLayouts
-@import layout.{EmailContentContainer, LiveIntentMarquee, LiveIntentMPU, LiveIntentSafeRTB}
 @()(implicit page: model.PressedPage, request: RequestHeader)
 
+@import layout.slices.EmailLayouts
+@import layout.slices.{EmailCardStyle, EmailFaciaCard, EmailFreeText, EmailHidden}
+@import layout.{EmailContentContainer, LiveIntentMPU, LiveIntentMarquee, LiveIntentSafeRTB}
 @import com.gu.commercial.branding.Branding
 @import implicits.ItemKickerImplicits._
 @import layout.ContentCard

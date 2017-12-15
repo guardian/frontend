@@ -182,14 +182,16 @@
                 }
 
                 @if(HeaderFeedback.isSwitchedOn) {
-                    <li class="hide-until-desktop feedback-form">
-                        @fragments.inlineSvg("information-circle", "icon", List("feedback-form__icon"))
-                        We&rsquo;d appreciate your feedback on our new navigation.
-                        <a class="feedback-form__link"
-                        data-link-name="nav2 : feedback-form"
+                    <a data-link-name="nav2 : feedback-form"
                         href="https://goo.gl/forms/j5pMsPSWINu7X2R62">
-                        Share your thoughts here.</a>
-                    </li>
+
+                        <li class="hide-until-desktop feedback-form">
+                            @fragments.inlineSvg("information-circle", "icon", List("feedback-form__icon"))
+                            We&rsquo;d appreciate your feedback on our new navigation.
+                            <span class="feedback-form__link">
+                            Share your thoughts here.</span>
+                        </li>
+                    </a>
                 }
             </ul>
         </div>

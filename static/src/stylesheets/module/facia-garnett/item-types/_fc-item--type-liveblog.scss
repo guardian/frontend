@@ -1,5 +1,5 @@
 @mixin overide-live-blog-colours($pillar, $color1, $color2) {
-    .fc-item--type-liveblog.fc-item--pillar-#{$pillar} {
+    .fc-item--type-live.fc-item--pillar-#{$pillar} {
         background-color: $color1;
 
         .fc-item__kicker {

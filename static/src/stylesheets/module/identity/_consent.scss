@@ -1,13 +1,13 @@
 .manage-account-wizard--consent {
     .manage-account-wizard__step {
-        min-height: 50vh;
+        min-height: 72vh;
         padding: $gs-gutter 0;
     }
     .manage-account-wizard__controls {
         padding: $gs-gutter;
         margin-top: $gs-gutter;
         background: #ffffff;
-        border-top: 1px solid transparentize($guardian-brand, .5);
+        border-top: 1px solid transparentize($identity-main, .5);
         position: sticky;
         bottom: 0;
         left: 0;
@@ -40,7 +40,7 @@
 
 .manage-account-consent-wizard-counter {
     @include fs-textSans(2);
-    color: $guardian-brand;
+    color: $identity-main;
 }
 
 .manage-account-consent-wizard-counter__indicator {
@@ -55,7 +55,7 @@
         align-items: center;
         justify-content: center;
         border-radius: 100%;
-        box-shadow: inset 0 0 0 1px $guardian-brand;
+        box-shadow: inset 0 0 0 1px $identity-main;
 
     }
 }
@@ -102,5 +102,16 @@
 
     p {
         @include fs-textSans(2);
+    }
+}
+
+.manage-account-consent-slim-footer {
+    @include fs-textSans(1);
+    background: $neutral-1;
+    color: $neutral-3;
+    padding: $gs-gutter 0;
+
+    @include mq($until: desktop) {
+        padding: $gs-gutter * 1;
     }
 }
