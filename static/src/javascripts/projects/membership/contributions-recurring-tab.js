@@ -57,6 +57,10 @@ const CONTRIBUTION_TOO_HIGH_WARNING =
     '.js-manage-account-change-contribution-amount-too-high';
 const CONTRIBUTION_NO_CHANGE_WARNING =
     '.js-manage-account-change-contribution-amount-unchanged';
+const CONTRIBUTION_INVALID_NUMBER_WARNING =
+    '.js-manage-account-change-contribution-amount-invalid';
+const CONTRIBUTION_HIGH_AMOUNT_WARNING =
+    '.js-manage-account-change-contribution-amount-verify';
 const CONTRIBUTION_CHANGE_SUCCESS = '.js-contribution-change-success-msg';
 const displayLoader = (): void => {
     $(LOADER).removeClass(IS_HIDDEN_CLASSNAME);
@@ -100,6 +104,64 @@ const displayContributionUpdateSuccessMessage = (): void => {
 
 const hideContributionUpdateSuccessMessage = (): void => {
     $(CONTRIBUTION_CHANGE_SUCCESS).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displayPayPal = (): void => {
+    $(PAYPAL).removeClass(IS_HIDDEN_CLASSNAME);
+    $(PAYPAL_SHOW_EMAIL_BUTTON).addClass(IS_HIDDEN_CLASSNAME); // always hide
+};
+
+const hidePayPal = (): void => {
+    $(PAYPAL).addClass(IS_HIDDEN_CLASSNAME);
+    $(PAYPAL_SHOW_EMAIL_BUTTON).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displayInvalidNumberWarning = (): void => {
+    $(CONTRIBUTION_INVALID_NUMBER_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideInvalidNumberWarning = (): void => {
+    $(CONTRIBUTION_INVALID_NUMBER_WARNING).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displayHighContributionWarningMessage = (): void => {
+    $(CONTRIBUTION_HIGH_AMOUNT_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideHighContributionWarningMessage = (): void => {
+    $(CONTRIBUTION_HIGH_AMOUNT_WARNING).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const disablePriceChangeConfirmButton = (): void => {
+    $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).addClass(IS_DISABLED_CLASSNAME);
+};
+
+const enablePriceChangeConfirmButton = (): void => {
+    $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).removeClass(IS_DISABLED_CLASSNAME);
+};
+
+const displayContributionTooHighWarning = (): void => {
+    $(CONTRIBUTION_TOO_HIGH_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideContributionTooHighWarning = (): void => {
+    $(CONTRIBUTION_TOO_HIGH_WARNING).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displayContributionTooLowWarning = (): void => {
+    $(CONTRIBUTION_TOO_LOW_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideContributionTooLowWarning = (): void => {
+    $(CONTRIBUTION_TOO_LOW_WARNING).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displayContributionNoChangeWarning = (): void => {
+    $(CONTRIBUTION_NO_CHANGE_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideContributionNoChangeWarning = (): void => {
+    $(CONTRIBUTION_NO_CHANGE_WARNING).addClass(IS_HIDDEN_CLASSNAME);
 };
 
 // Cancel contribution aux functions
@@ -198,6 +260,8 @@ const handleCancelContributionSubmit = (): void => {
             hideContributionDetails();
             hideCardDetails();
             hideCancelContributionForm();
+            hideContributionUpdateSuccessMessage(); // in case user changed their contribution amount prior to cancel
+            hidePayPal();
             if (resp.status === 200) {
                 displayCancelContributionSuccessMessage();
             } else {
@@ -302,46 +366,37 @@ const setupCancelContribution = (): void => {
     }
 };
 
-const handlePriceChange = (): void => {
-    const currentPrice = $(CURRENT_CONTRIBUTION_AMOUNT).text();
-    const submitButton = $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT);
-    const fieldVal = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
-    if (
-        fieldVal &&
-        Number(fieldVal) &&
-        Number(fieldVal) >= 5 &&
-        Number(fieldVal) <= 2000 &&
-        Number(fieldVal) !== Number(currentPrice)
-    ) {
-        $(CONTRIBUTION_TOO_LOW_WARNING).addClass(IS_HIDDEN_CLASSNAME);
-        $(CONTRIBUTION_TOO_HIGH_WARNING).addClass(IS_HIDDEN_CLASSNAME);
-        submitButton.removeClass(IS_DISABLED_CLASSNAME);
-    } else {
-        submitButton.addClass(IS_DISABLED_CLASSNAME);
-    }
-};
-
-const handlePriceChangeOnBlur = (): void => {
+const validatePriceChangeInput = (): void => {
     const currentAmount = $(CURRENT_CONTRIBUTION_AMOUNT).text();
-    const submitButton = $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT);
     const fieldVal = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
+
+    hideContributionTooLowWarning();
+    hideContributionTooHighWarning();
+    hideContributionNoChangeWarning();
+    hideHighContributionWarningMessage();
+    hideInvalidNumberWarning();
+
     if (fieldVal && Number(fieldVal)) {
+        const currentVal = Number(currentAmount);
         const newVal = Number(fieldVal);
-        $(CONTRIBUTION_TOO_LOW_WARNING).addClass(IS_HIDDEN_CLASSNAME);
-        $(CONTRIBUTION_TOO_HIGH_WARNING).addClass(IS_HIDDEN_CLASSNAME);
-        $(CONTRIBUTION_NO_CHANGE_WARNING).addClass(IS_HIDDEN_CLASSNAME);
-        if (newVal < 5) {
-            submitButton.addClass(IS_DISABLED_CLASSNAME);
-            $(CONTRIBUTION_TOO_LOW_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+        if (newVal >= 5 && newVal <= 2000 && newVal !== currentVal) {
+            enablePriceChangeConfirmButton();
+        } else {
+            disablePriceChangeConfirmButton();
         }
         if (newVal > 2000) {
-            submitButton.addClass(IS_DISABLED_CLASSNAME);
-            $(CONTRIBUTION_TOO_HIGH_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+            hideHighContributionWarningMessage();
+            displayContributionTooHighWarning();
+        } else if (newVal >= 50) {
+            displayHighContributionWarningMessage();
+        } else if (newVal === currentVal) {
+            displayContributionNoChangeWarning();
+        } else if (newVal < 5) {
+            displayContributionTooLowWarning();
         }
-        if (newVal === Number(currentAmount)) {
-            submitButton.addClass(IS_DISABLED_CLASSNAME);
-            $(CONTRIBUTION_NO_CHANGE_WARNING).removeClass(IS_HIDDEN_CLASSNAME);
-        }
+    } else {
+        disablePriceChangeConfirmButton();
+        displayInvalidNumberWarning();
     }
 };
 
@@ -369,8 +424,8 @@ const setupEditableNewAmountField = (currentPrice: string): void => {
         CONTRIBUTION_NEW_AMOUNT_FIELD
     );
     if (priceEntryField) {
-        priceEntryField.addEventListener('keyup', handlePriceChange);
-        priceEntryField.addEventListener('blur', handlePriceChangeOnBlur);
+        priceEntryField.addEventListener('keyup', validatePriceChangeInput);
+        priceEntryField.addEventListener('blur', validatePriceChangeInput);
         fastdom.write(() => {
             $(CONTRIBUTION_NEW_AMOUNT_FIELD).val(currentPrice);
         });
@@ -378,6 +433,9 @@ const setupEditableNewAmountField = (currentPrice: string): void => {
 };
 
 const changeContributionAmountSubmit = (): void => {
+    if ($(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).hasClass(IS_DISABLED_CLASSNAME)) {
+        return;
+    }
     const newAmount = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
     toggleAmountChangeInputMode(false);
     hideContributionInfo();
@@ -514,10 +572,12 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
             contributorDetails.subscription.card,
             contributorDetails.subscription.card.stripePublicKeyForUpdate
         );
-    } else if (contributorDetails.subscription.payPalEmail) {
-        // if the user hasn't changed their subscription and has PayPal as a payment method
-        $(PAYPAL_SHOW_EMAIL_BUTTON).addClass(IS_HIDDEN_CLASSNAME);
-        $(PAYPAL).removeClass(IS_HIDDEN_CLASSNAME);
+    } else if (isPayPal) {
+        if (contributorDetails.subscription.cancelledAt) {
+            hidePayPal();
+        } else {
+            displayPayPal();
+        }
     }
 
     if (!contributorDetails.subscription.cancelledAt) {
@@ -545,6 +605,8 @@ export function recurringContributionTab(wasUpdated: boolean = false): void {
                 hideLoader();
                 if (wasUpdated) {
                     displayContributionUpdateSuccessMessage();
+                } else {
+                    hideContributionUpdateSuccessMessage();
                 }
                 displayContributionInfo();
             } else {
