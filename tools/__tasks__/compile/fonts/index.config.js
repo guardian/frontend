@@ -468,6 +468,126 @@ module.exports = [
         ],
     },
     {
+        dest: 'GuardianHeadlineCleartypeHinted.woff2.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.woff2',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.woff2',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.woff2',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.woff2',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.woff2',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.woff2',
+            },
+        ],
+    },
+    {
+        dest: 'GuardianHeadlineCleartypeHinted.woff.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.woff',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.woff',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.woff',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.woff',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.woff',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.woff',
+            },
+        ],
+    },
+    {
+        dest: 'GuardianHeadlineCleartypeHinted.ttf.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.ttf',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.ttf',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.ttf',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.ttf',
+            },
+        ],
+    },
+    {
         dest: 'GuardianTextSansWebCleartypeHinted.woff2.json',
         'font-family': '"Guardian Text Sans Web"',
         fonts: [
