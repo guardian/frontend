@@ -342,6 +342,11 @@ $quote-mark: 35px;
         display: none;
     }
 
+    .media-primary.media-primary--showcase {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
     .article__fullscreen:hover,
     .article__img-container:hover .article__fullscreen,
     .article__img-container:hover .gallery__fullscreen,
@@ -593,19 +598,6 @@ $quote-mark: 35px;
         }
     }
 }
-// *************** Opinion and Feature standfirst overrides ***************
-
-.content--type-comment,
-.content--type-feature,
-.content--type-review {
-    .content__standfirst {
-        @include fs-headlineGarnett(1);
-        font-weight: 200;
-        @include mq(tablet) {
-            @include fs-headlineGarnett(2);
-        }
-    }
-}
 
 .content--type-feature,
 .content--type-review {
@@ -649,11 +641,12 @@ $quote-mark: 35px;
     .content__headline--byline {
         font-style: italic;
         margin-left: 0;
-        padding: 0 $gs-baseline/2 $gs-gutter*3;
+        padding: $gs-gutter $gs-baseline/2 $gs-gutter*2;
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
         }
         @include mq(phablet) {
+            padding-top: 0;
             padding-left: 0;
         }
         @include mq(leftCol) {
@@ -675,6 +668,7 @@ $quote-mark: 35px;
         bottom: 3px;
         // counters the 3px bottom margin on multi-rule mixin
         right: 0;
+        background: none;
         @include mq(mobileLandscape) {
             right: gs-span(3) - $gs-gutter;
         }
@@ -696,6 +690,7 @@ $quote-mark: 35px;
         // only way to override defaults
     }
 }
+
 // *************** Media Styles ***************
 
 .content--media:not(.paid-content) {
@@ -849,6 +844,26 @@ $quote-mark: 35px;
                 // 0 border radius on mobile because stock android has a render bug with it here
                 border-radius: 0.2em;
             }
+
+// *************** Feature showcase overrides ***************
+
+.has-feature-showcase-element {
+    .media-primary.media-primary--showcase {
+        @include mq(wide) {
+            margin: 0 auto;
+        }
+    }
+}
+// *************** Opinion and Feature standfirst overrides ***************
+
+.content--type-comment,
+.content--type-feature,
+.content--type-review {
+    .content__standfirst {
+        @include fs-headlineGarnett(1);
+        font-weight: 200;
+        @include mq(tablet) {
+            @include fs-headlineGarnett(2);
         }
     }
 }

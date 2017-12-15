@@ -17,11 +17,11 @@ val common = library("common").settings(
     awsSns,
     awsSts,
     awsSqs,
+    awsSsm,
     contentApiClient,
     enumeratumPlayJson,
     filters,
     commonsLang,
-    configMagic,
     jodaConvert,
     jodaTime,
     jSoup,
@@ -52,7 +52,8 @@ val common = library("common").settings(
     jodaForms,
     jacksonDataFormat,
     atomRenderer,
-    identityModel
+    identityModel,
+    configMagic
   )
 ).settings(
     mappings in TestAssets ~= filterAssets
