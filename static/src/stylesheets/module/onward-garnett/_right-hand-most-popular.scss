@@ -6,7 +6,7 @@
     border-top: 0;
 
     &:before {
-        @include multiline(4);
+        @include multiline(4, $garnett-neutral-6);
     }
 }
 

@@ -5,6 +5,7 @@ $quote-mark: 35px;
     padding-bottom: 0;
 }
 
+.content--media,
 .content--type-analysis,
 .content--type-article,
 .content--type-comment,
@@ -19,7 +20,7 @@ $quote-mark: 35px;
         padding-top: $gs-baseline / 2;
 
         &:before {
-            @include multiline(4);
+            @include multiline(4, $garnett-neutral-4);
         }
     }
 
@@ -104,7 +105,7 @@ $quote-mark: 35px;
         }
 
         &:before {
-            @include multiline(4);
+            @include multiline(4, $garnett-neutral-4);
         }
     }
 
@@ -201,7 +202,7 @@ $quote-mark: 35px;
         border-top: 0;
 
         &:before {
-            @include multiline(1);
+            @include multiline(1, $garnett-neutral-4);
         }
     }
 
@@ -223,7 +224,7 @@ $quote-mark: 35px;
         border-top: 0;
         @include mq(phablet) {
             &:before {
-                @include multiline(1);
+                @include multiline(1, $garnett-neutral-4);
             }
         }
     }
@@ -624,7 +625,7 @@ $quote-mark: 35px;
         position: relative;
 
         &:after {
-            @include multiline(8);
+            @include multiline(8, $garnett-neutral-4);
         }
     }
 
@@ -689,8 +690,163 @@ $quote-mark: 35px;
         // only way to override defaults
     }
 }
-// *************** Feature showcase overrides ***************
+// *************** Media Styles ***************
 
+.content--media:not(.paid-content) {
+    &.tonal--tone-media {
+        background-color: $garnett-neutral-1;
+    }
+
+    .content__main {
+        padding-bottom: $gs-baseline*3;
+    }
+
+    .content__header {
+        @include mq(tablet) {
+            max-width: 100%;
+        }
+    }
+
+    .content__headline {
+        color: $garnett-neutral-5;
+        padding-bottom: $gs-baseline*3;
+    }
+
+    .byline,
+    .content__headline,
+    .content__standfirst,
+    .social {
+        @include mq($until: tablet) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        @include mq(phablet) {
+            margin-left: 0;
+        }
+    }
+
+    .byline,
+    .byline a,
+    .content__dateline,
+    .content__standfirst,
+    .meta__numbers .sharecount__value,
+    a {
+        color: $garnett-neutral-4;
+    }
+
+    .byline,
+    .byline span {
+        @include fs-headline(2);
+        font-style: normal;
+    }
+
+    .content__labels {
+        padding-top: $gs-baseline/2;
+        @include mq(phablet) {
+            border-color: $garnett-neutral-6;
+        }
+    }
+
+    .content__standfirst {
+        @include mq(mobileMedium) {
+            max-width: 100%;
+        }
+    }
+
+    .u-underline {
+        border-bottom: solid 1px $garnett-neutral-6;
+    }
+
+    .content__meta-container {
+        &:before {
+            @include multiline(4, $garnett-neutral-7);
+        }
+    }
+
+    .meta__numbers,
+    .meta__social {
+        &:before {
+            @include multiline(1, $garnett-neutral-7);
+        }
+    }
+
+    .meta__numbers {
+        &:before {
+            @include mq($until: leftCol) {
+                content: none;
+            }
+        }
+    }
+
+    .inline-tone-fill,
+    .meta__numbers .inline-share svg,
+    .social-icon__svg {
+        fill: $garnett-neutral-4;
+    }
+
+    .content__dateline {
+        @include mq(phablet) {
+            &:before {
+                @include multiline(1, $garnett-neutral-6);
+            }
+        }
+    }
+
+    .byline span {
+        display: inline;
+    }
+
+    .submeta {
+        &:before {
+            @include multiline(4, $garnett-neutral-6);
+        }
+    }
+
+    .submeta__keywords {
+        border-bottom: 0;
+    }
+
+    .vjs-control-text {
+        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
+        @include video-play-button-size($vjs-small-button-size);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        user-select: none;
+        @include mq(mobileLandscape) {
+            @include video-play-button-size($vjs-large-button-size);
+        }
+
+        &:before {
+            @include circular;
+            @include video-play-button-size($vjs-small-button-size);
+            content: '';
+            display: block;
+            @include mq(mobileLandscape) {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+            background-color: $media-default;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
+            border-style: solid;
+            border-width: 1em 0 1em 2.4em;
+            border-color: transparent transparent transparent $garnett-neutral-5;
+            @include mq(tablet) {
+                // 0 border radius on mobile because stock android has a render bug with it here
+                border-radius: .2em;
+            }
+        }
+    }
+}
+// *************** Feature showcase overrides ***************
 .has-feature-showcase-element {
     .media-primary.media-primary--showcase {
         @include mq(wide) {
@@ -699,7 +855,6 @@ $quote-mark: 35px;
     }
 }
 // *************** Opinion and Feature standfirst overrides ***************
-
 .content--type-comment,
 .content--type-feature,
 .content--type-review {
