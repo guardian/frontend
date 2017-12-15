@@ -16,7 +16,6 @@ import type {
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import 'prebid.js/build/dist/prebid';
 
 const bidders = [sonobiBidder, indexExchangeBidder];
 const bidderTimeout = 1500;
@@ -115,12 +114,22 @@ class PrebidAdUnit {
 
 class PrebidTestService {
     static initialise(): Promise<any> {
-        window.pbjs.bidderSettings = {
-            standard: {
-                alwaysUseBid: false,
-            },
-        };
-        return Promise.resolve();
+        return new Promise( (resolve, reject) => {
+            require.ensure(
+                [],
+                (require) => {
+                    require('prebid.js/build/dist/prebid');
+                    window.pbjs.bidderSettings = {
+                        standard: {
+                            alwaysUseBid: false,
+                        },
+                    };
+                    resolve();
+                },
+                reject,
+                'commercial-prebid'
+            );
+        });
     }
 
     static slotIsInTest(advert: Advert): boolean {
