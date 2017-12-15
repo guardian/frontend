@@ -23,8 +23,9 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api.i18n.{I18nComponents, Lang, Messages}
 import play.api.libs.ws.WSClient
-import services._
+import services.{ParameterStoreService, _}
 import router.Routes
+
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
@@ -69,6 +70,7 @@ trait AdminServices extends I18nComponents  {
   lazy val dfpAdUnitCacheJob: DfpAdUnitCacheJob = wire[DfpAdUnitCacheJob]
   lazy val dfpMobileAppUnitCacheJob: DfpMobileAppAdUnitCacheJob = wire[DfpMobileAppAdUnitCacheJob]
   lazy val dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob = wire[DfpTemplateCreativeCacheJob]
+  lazy val parameterStoreService: ParameterStoreService = wire[ParameterStoreService]
 }
 
 trait AppComponents extends FrontendComponents with AdminControllers with AdminServices {

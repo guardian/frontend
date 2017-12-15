@@ -63,3 +63,19 @@
     padding: 10px 0;
     margin-top: 10px;
 }
+
+dl.key-value dt, dd {
+    font-family:sans-serif;
+}
+
+dl.key-value dt {
+    float:left;
+    clear:left;
+    text-align:right;
+    width:5%;
+}
+
+dl.key-value dd {
+    float:left;
+    margin-left:30em;
+}
