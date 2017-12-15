@@ -7,7 +7,6 @@ import java.util.Map.Entry
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.gu.cm.{AwsApplication, S3ConfigurationSource}
 import com.typesafe.config.{ConfigException, ConfigFactory}
 import common.Environment.{app, awsRegion, stage}
 import conf.switches.Switches
