@@ -44,7 +44,6 @@ const CANCEL_CONTRIBUTION_SUBMIT = '.js-cancel-contribution-submit';
 const CONTRIBUTION_UPDATE_FORM = '.js-contribution-update-form';
 const CURRENT_CONTRIBUTION_AMOUNT = '.js-current-contribution-amount';
 const CONTRIBUTION_GLYPH = '.js-contribution-glyph';
-const CHANGE_CONTRIBUTION_AMOUNT = '.js-contribution-change-amount';
 const CONTRIBUTION_NEW_AMOUNT_FIELD = '.js-contribution-next-payment-new-price';
 const CHANGE_CONTRIBUTION_AMOUNT_BUTTON =
     '.js-manage-account-change-contribution-amount';
@@ -58,7 +57,8 @@ const CONTRIBUTION_TOO_HIGH_WARNING =
     '.js-manage-account-change-contribution-amount-too-high';
 const CONTRIBUTION_NO_CHANGE_WARNING =
     '.js-manage-account-change-contribution-amount-unchanged';
-
+const CONTRIBUTION_CHANGE_SUCCESS =
+    '.js-contribution-change-success-msg';
 const displayLoader = (): void => {
     $(LOADER).removeClass(IS_HIDDEN_CLASSNAME);
 };
@@ -69,6 +69,10 @@ const hideLoader = (): void => {
 
 const displayContributionInfo = (): void => {
     $(CONTRIBUTION_INFO).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideContributionInfo = (): void => {
+    $(CONTRIBUTION_INFO).addClass(IS_HIDDEN_CLASSNAME);
 };
 
 const displaySupportUpSell = (): void => {
@@ -91,6 +95,14 @@ const displayContributionUpdateErrorMessage = (): void => {
     $(CONTRIBUTION_UPDATE_ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
+const displayContributionUpdateSuccessMessage = (): void => {
+    $(CONTRIBUTION_CHANGE_SUCCESS).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideContributionUpdateSuccessMessage = (): void => {
+    $(CONTRIBUTION_CHANGE_SUCCESS).addClass(IS_HIDDEN_CLASSNAME);
+};
+
 // Cancel contribution aux functions
 
 const displayCancelContribution = (): void => {
@@ -105,8 +117,12 @@ const displayCancelContributionForm = (): void => {
     $(CANCEL_CONTRIBUTION_FORM).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-const displayChangeContributionAmount = (): void => {
-    $(CHANGE_CONTRIBUTION_AMOUNT).removeClass(IS_HIDDEN_CLASSNAME);
+const displayChangeContributionAmountButton = (): void => {
+    $(CHANGE_CONTRIBUTION_AMOUNT_BUTTON).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideChangeContributionAmountButton = (): void => {
+    $(CHANGE_CONTRIBUTION_AMOUNT_BUTTON).addClass(IS_HIDDEN_CLASSNAME);
 };
 
 const hideCancelContributionForm = (): void => {
@@ -333,7 +349,7 @@ const handlePriceChangeOnBlur = (): void => {
 const toggleAmountChangeInputMode = (active: boolean): void => {
     if (active) {
         $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).addClass(IS_HIDDEN_CLASSNAME);
-        $(CHANGE_CONTRIBUTION_AMOUNT).addClass(IS_HIDDEN_CLASSNAME);
+        $(CHANGE_CONTRIBUTION_AMOUNT_BUTTON).addClass(IS_HIDDEN_CLASSNAME);
         $(PACKAGE_NEXT_PAYMENT_FORM_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
         $(CONTRIBUTION_GLYPH).removeClass(IS_HIDDEN_CLASSNAME);
         $(CHANGE_CONTRIBUTION_AMOUNT_SUBMIT).addClass(IS_DISABLED_CLASSNAME);
@@ -345,7 +361,7 @@ const toggleAmountChangeInputMode = (active: boolean): void => {
         $(PACKAGE_NEXT_PAYMENT_AMOUNT_CONTAINER).removeClass(
             IS_HIDDEN_CLASSNAME
         );
-        $(CHANGE_CONTRIBUTION_AMOUNT).removeClass(IS_HIDDEN_CLASSNAME);
+        $(CHANGE_CONTRIBUTION_AMOUNT_BUTTON).removeClass(IS_HIDDEN_CLASSNAME);
     }
 };
 
@@ -365,7 +381,7 @@ const setupEditableNewAmountField = (currentPrice: string): void => {
 const changeContributionAmountSubmit = (): void => {
     const newAmount = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
     toggleAmountChangeInputMode(false);
-    hideContributionDetails();
+    hideContributionInfo();
     displayLoader();
     fetch(
         `${config.get(
@@ -384,9 +400,10 @@ const changeContributionAmountSubmit = (): void => {
         }
     )
         // eslint-disable-next-line no-use-before-define
-        .then(recurringContributionTab())
+        .then(recurringContributionTab(true))
         .catch(err => {
             hideLoader();
+            hideContributionUpdateSuccessMessage();
             displayContributionUpdateErrorMessage();
             reportError(err, {
                 feature: 'mma-monthlycontribution',
@@ -398,6 +415,7 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     const isMonthly = contributorDetails.subscription.plan.interval === 'month';
     const intervalText = isMonthly ? 'Monthly' : 'Annual';
     const glyph = contributorDetails.subscription.plan.currency;
+    const isPayPal = contributorDetails.subscription.paymentMethod.toLowerCase() === 'paypal';
     let notificationTypeSelector;
 
     $(PACKAGE_INTERVAL).text(intervalText);
@@ -436,38 +454,43 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         )}`
     );
 
-    displayChangeContributionAmount();
-    const changeAmountButton = document.querySelector(
-        CHANGE_CONTRIBUTION_AMOUNT_BUTTON
-    );
-    if (changeAmountButton) {
-        changeAmountButton.addEventListener('click', () => {
-            toggleAmountChangeInputMode(true);
-            setupEditableNewAmountField(
-                formatAmount(
-                    contributorDetails.subscription.nextPaymentPrice,
-                    ''
-                ).toString()
-            );
-        });
-    }
+    if (isPayPal) {
+        /* PayPal users manage their contribution on the PayPal site */
+        hideChangeContributionAmountButton();
+    } else {
+        displayChangeContributionAmountButton();
 
-    const changeAmountCancelButton = document.querySelector(
-        CHANGE_CONTRIBUTION_AMOUNT_CANCEL
-    );
-    if (changeAmountCancelButton) {
-        changeAmountCancelButton.addEventListener('click', () => {
-            toggleAmountChangeInputMode(false);
-        });
-    }
+        const changeAmountButton = document.querySelector(
+            CHANGE_CONTRIBUTION_AMOUNT_BUTTON
+        );
+        if (changeAmountButton) {
+            changeAmountButton.addEventListener('click', () => {
+                toggleAmountChangeInputMode(true);
+                setupEditableNewAmountField(
+                    formatAmount(
+                        contributorDetails.subscription.nextPaymentPrice,
+                        ''
+                    ).toString()
+                );
+            });
+        }
+        const changeAmountCancelButton = document.querySelector(
+            CHANGE_CONTRIBUTION_AMOUNT_CANCEL
+        );
+        if (changeAmountCancelButton) {
+            changeAmountCancelButton.addEventListener('click', () => {
+                toggleAmountChangeInputMode(false);
+            });
+        }
 
-    const changeAmountConfirmButton = document.querySelector(
-        CHANGE_CONTRIBUTION_AMOUNT_SUBMIT
-    );
-    if (changeAmountConfirmButton) {
-        changeAmountConfirmButton.addEventListener('click', () => {
-            changeContributionAmountSubmit();
-        });
+        const changeAmountConfirmButton = document.querySelector(
+            CHANGE_CONTRIBUTION_AMOUNT_SUBMIT
+        );
+        if (changeAmountConfirmButton) {
+            changeAmountConfirmButton.addEventListener('click', () => {
+                changeContributionAmountSubmit();
+            });
+        }
     }
 
     if (contributorDetails.subscription.start) {
@@ -506,7 +529,7 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
 };
 
 // eslint-disable-next-line func-style
-export function recurringContributionTab(): void {
+export function recurringContributionTab(wasUpdated: boolean = false): void {
     fetch(
         `${config.get('page.userAttributesApiUrl')}/me/mma-monthlycontribution`,
         {
@@ -519,6 +542,9 @@ export function recurringContributionTab(): void {
             if (json && json.subscription) {
                 populateUserDetails(json);
                 hideLoader();
+                if (wasUpdated) {
+                    displayContributionUpdateSuccessMessage();
+                }
                 displayContributionInfo();
             } else {
                 hideLoader();
