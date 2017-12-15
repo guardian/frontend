@@ -27,7 +27,7 @@ class EmailVerificationController(api: IdApiClient,
 
   val page = IdentityPage("/verify-email", "Verify Email")
 
-  def verify(token: String, isSignUp: Option[String]): Action[AnyContent] = Action.async {
+  def verify(token: String, journeyParam: String): Action[AnyContent] = Action.async {
     implicit request =>
       val idRequest = idRequestParser(request)
 
@@ -47,7 +47,10 @@ class EmailVerificationController(api: IdApiClient,
           val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
           val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
           val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
-          val journey = if(isSignUp.forall(_.toBoolean)) "signup" else "repermission"
+          val journey = journeyParam match {
+            case "Registration" => "signup"
+            case _ => journeyParam
+          }
 
           if(validationState.isExpired || IdentityPointToConsentJourneyPage.isSwitchedOff) {
             Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))
