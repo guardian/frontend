@@ -690,7 +690,6 @@ $quote-mark: 35px;
         // only way to override defaults
     }
 }
-
 // *************** Media Styles ***************
 
 .content--media:not(.paid-content) {
@@ -844,9 +843,10 @@ $quote-mark: 35px;
                 // 0 border radius on mobile because stock android has a render bug with it here
                 border-radius: 0.2em;
             }
-
+        }
+    }
+}
 // *************** Feature showcase overrides ***************
-
 .has-feature-showcase-element {
     .media-primary.media-primary--showcase {
         @include mq(wide) {
@@ -855,7 +855,6 @@ $quote-mark: 35px;
     }
 }
 // *************** Opinion and Feature standfirst overrides ***************
-
 .content--type-comment,
 .content--type-feature,
 .content--type-review {
