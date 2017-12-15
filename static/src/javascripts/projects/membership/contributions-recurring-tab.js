@@ -57,8 +57,7 @@ const CONTRIBUTION_TOO_HIGH_WARNING =
     '.js-manage-account-change-contribution-amount-too-high';
 const CONTRIBUTION_NO_CHANGE_WARNING =
     '.js-manage-account-change-contribution-amount-unchanged';
-const CONTRIBUTION_CHANGE_SUCCESS =
-    '.js-contribution-change-success-msg';
+const CONTRIBUTION_CHANGE_SUCCESS = '.js-contribution-change-success-msg';
 const displayLoader = (): void => {
     $(LOADER).removeClass(IS_HIDDEN_CLASSNAME);
 };
@@ -415,7 +414,9 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     const isMonthly = contributorDetails.subscription.plan.interval === 'month';
     const intervalText = isMonthly ? 'Monthly' : 'Annual';
     const glyph = contributorDetails.subscription.plan.currency;
-    const isPayPal = contributorDetails.subscription.paymentMethod.toLowerCase() === 'paypal';
+    const isPayPal =
+        contributorDetails.subscription.paymentMethod.toLowerCase() ===
+        'paypal';
     let notificationTypeSelector;
 
     $(PACKAGE_INTERVAL).text(intervalText);
