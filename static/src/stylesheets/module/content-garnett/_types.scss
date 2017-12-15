@@ -283,8 +283,7 @@ $quote-mark: 35px;
         }
     }
 
-    .content__article-body,
-    .immersive-main-media__headline-container .content__main-column {
+    .content__article-body {
         &:before {
             @include mq(desktop) {
                 content: '';
@@ -753,8 +752,19 @@ $quote-mark: 35px;
         }
     }
 
+    .content__standfirst--gallery {
+        @include mq(desktop) {
+            margin-left: gs-span(3) + $gs-gutter;
+            max-width: gs-span(8);
+        }
+    }
+
     .u-underline {
         border-bottom: solid 1px $garnett-neutral-6;
+    }
+
+    .bullet:before {
+        background-color: $garnett-neutral-4;
     }
 
     .content__meta-container {
@@ -787,7 +797,7 @@ $quote-mark: 35px;
     .content__dateline {
         @include mq(phablet) {
             &:before {
-                @include multiline(1, $garnett-neutral-6);
+                @include multiline(1, $garnett-neutral-7);
             }
         }
     }
@@ -798,7 +808,7 @@ $quote-mark: 35px;
 
     .submeta {
         &:before {
-            @include multiline(4, $garnett-neutral-6);
+            @include multiline(4, $garnett-neutral-7);
         }
     }
 
@@ -841,12 +851,58 @@ $quote-mark: 35px;
             border-color: transparent transparent transparent $garnett-neutral-5;
             @include mq(tablet) {
                 // 0 border radius on mobile because stock android has a render bug with it here
-                border-radius: .2em;
+                border-radius: 0.2em;
             }
         }
     }
+    // *************** Gallery overrides ***************
+    &.content--gallery {
+        .content__dateline:before {
+            content: none;
+        }
+
+        .meta__extras {
+            border: 0;
+        }
+
+        .gallery__meta-container,
+        .meta__numbers,
+        .meta__social {
+            &:before {
+                content: none;
+            }
+        }
+
+        .gallery:before,
+        .gallery__divider {
+            border-color: $garnett-neutral-7;
+        }
+    }
+}
+
+.immersive-main-media__headline-container {
+    .content__series-label__link {
+        color: $garnett-neutral-3;
+    }
+}
+
+.gallery__main-content {
+    .content__series-label__link {
+        color: $garnett-neutral-5;
+    }
+
+    .gallery__most-popular {
+        background-color: $garnett-neutral-1;
+    }
+
+    .container__title:after,
+    .fc-container__header__title--sticky:after,
+    .fc-container__header__title:after {
+        background-color: $garnett-neutral-7;
+    }
 }
 // *************** Feature showcase overrides ***************
+
 .has-feature-showcase-element {
     .media-primary.media-primary--showcase {
         @include mq(wide) {
@@ -855,6 +911,7 @@ $quote-mark: 35px;
     }
 }
 // *************** Opinion and Feature standfirst overrides ***************
+
 .content--type-comment,
 .content--type-feature,
 .content--type-review {

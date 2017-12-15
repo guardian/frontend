@@ -22,7 +22,7 @@
         )
     }
 
-    <div class="immersive-main-media__headline-container--dark immersive-main-media__headline-container">
+    <div class="@RenderClasses("immersive-main-media__headline-container--dark", "immersive-main-media__headline-container", "content--pillar-news", s"content--pillar-${page.metadata.pillar.nameOrDefault}")">
         <div class="gs-container">
             @fragments.meta.metaInline(page.item)
 
