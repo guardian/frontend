@@ -63,15 +63,6 @@ Media list item. Looks a bit like this:
             display: block;
             margin-right: $gs-gutter *.25;
             margin-left: $gs-gutter *.25;
-
-            .fc-sublink:first-child {
-                .fc-sublink__title:before {
-                    position: absolute;
-                    left: 0 - $gs-gutter *.25;
-                    right: 0 - $gs-gutter *.25;
-                    width: initial;
-                }
-            }
         }
     }
 
