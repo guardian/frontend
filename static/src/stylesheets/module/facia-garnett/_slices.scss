@@ -24,7 +24,7 @@ Hence why a greater depth of selector specificity is needed.
 
         .fc-item--half-tablet {
             @include vertical-item-separator;
-            
+
             .fc-item__standfirst {
                 @include mq(desktop) {
                     display: none;
