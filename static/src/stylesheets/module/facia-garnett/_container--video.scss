@@ -400,6 +400,8 @@ $video-width-desktop: 700px;
 
     .inline-icon svg {
         position: relative;
+        height: .7em;
+        width: auto;
     }
 
     .fc-item__title--quoted .inline-quote {
