@@ -420,6 +420,11 @@ $video-width-desktop: 700px;
     .fc-item__kicker {
         color: $media-default;
     }
+
+    .fc-item__kicker {
+        padding: 0;
+        margin: 0;
+    }
 }
 
 .video-overlay__duration {
