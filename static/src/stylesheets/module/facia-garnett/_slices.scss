@@ -136,6 +136,14 @@ Hence why a greater depth of selector specificity is needed.
             }
         }
     }
+    //this fixes an odd spacing issue on mobile
+    .fc-slice__item {
+        margin-bottom: 0;
+
+        @include mq($from: tablet){
+            margin-bottom: $gs-baseline;
+        }
+    }
 }
 
 /**
