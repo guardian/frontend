@@ -335,6 +335,7 @@ $header-image-size-desktop: 100px;
     }
 
     .fc-today__sub {
+        color: $news-garnett-main-1;
         @include mq(wide) {
             .has-page-skin & {
                 border-top: 0;
