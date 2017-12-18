@@ -52,8 +52,7 @@ val common = library("common").settings(
     jodaForms,
     jacksonDataFormat,
     atomRenderer,
-    identityModel,
-    configMagic
+    identityModel
   )
 ).settings(
     mappings in TestAssets ~= filterAssets
