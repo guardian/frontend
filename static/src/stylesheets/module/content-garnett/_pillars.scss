@@ -63,14 +63,17 @@
         color: $mediaColor;
     }
 
-    .vjs-control-text:before,
-    .youtube-media-atom__bottom-bar__duration:before {
+    .vjs-play-progress,
+    .vjs-volume-level,
+    .vjs-volume-level:before,
+    .youtube-media-atom__bottom-bar__duration:before,
+    .youtube-media-atom__play-button:before {
         background: $mediaColor;
     }
 
-
+    .inline-camera,
     .inline-video-icon__svg,
-    .inline-camera {
+    .inline-volume-high {
         fill: $mediaColor;
     }
 }

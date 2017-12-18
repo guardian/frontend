@@ -364,7 +364,6 @@ $quote-mark: 35px;
             padding-bottom: $gs-baseline*2;
         }
     }
-
     //Review stars
     .stars {
         background-color: $news-garnett-highlight;
@@ -375,15 +374,12 @@ $quote-mark: 35px;
         margin-left: $gs-gutter / 2;
         margin-bottom: $gs-baseline;
         transform: translatey(-$gs-baseline / 2);
-
         @include mq($from: mobileLandscape) {
             margin-left: $gs-gutter;
         }
-
         @include mq($from: phablet) {
             margin-left: 0;
         }
-
         @include mq($from: tablet) {
             margin-bottom: 0;
             transform: translatey(-$gs-gutter);
@@ -771,9 +767,23 @@ $quote-mark: 35px;
     .byline a,
     .content__dateline,
     .content__standfirst,
+    .from-content-api,
     .meta__numbers .sharecount__value,
+    .tone-colour,
     a {
         color: $garnett-neutral-4;
+    }
+
+    .byline a,
+    .from-content-api a {
+        text-decoration: none;
+        border-bottom: .1px solid $garnett-neutral-6;
+        -webkit-transition: border-color .15s ease-out;
+        transition: border-color .15s ease-out;
+
+        &:hover {
+            border-color: $garnett-neutral-4;
+        }
     }
 
     .byline,
@@ -858,43 +868,44 @@ $quote-mark: 35px;
     .submeta__keywords {
         border-bottom: 0;
     }
-
-    .vjs-control-text {
-        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
-        @include video-play-button-size($vjs-small-button-size);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-        user-select: none;
-        @include mq(mobileLandscape) {
-            @include video-play-button-size($vjs-large-button-size);
-        }
-
-        &:before {
-            @include circular;
+    // *************** Video overrides ***************
+    &.content--media--video {
+        .vjs-control-text {
+            // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
             @include video-play-button-size($vjs-small-button-size);
-            content: '';
-            display: block;
-            @include mq(mobileLandscape) {
-                @include video-play-button-size($vjs-large-button-size);
-            }
-            background-color: $media-default;
-        }
-
-        &:after {
-            content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-40%, -50%);
-            border-style: solid;
-            border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent $garnett-neutral-5;
-            @include mq(tablet) {
-                // 0 border radius on mobile because stock android has a render bug with it here
-                border-radius: .2em;
+            transform: translate(-50%, -50%);
+            transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+            user-select: none;
+            @include mq(mobileLandscape) {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+
+            &:before {
+                @include circular;
+                @include video-play-button-size($vjs-small-button-size);
+                content: '';
+                display: block;
+                @include mq(mobileLandscape) {
+                    @include video-play-button-size($vjs-large-button-size);
+                }
+            }
+
+            &:after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-40%, -50%);
+                border-style: solid;
+                border-width: 1em 0 1em 2.4em;
+                border-color: transparent transparent transparent $garnett-neutral-5;
+                @include mq(tablet) {
+                    // 0 border radius on mobile because stock android has a render bug with it here
+                    border-radius: .2em;
+                }
             }
         }
     }
