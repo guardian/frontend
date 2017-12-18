@@ -1,6 +1,5 @@
 package pages
 
-import experiments.{ActiveExperiments, Garnett}
 import html.HtmlPageHelpers._
 import html.Styles
 import model.{ApplicationContext, Page}
