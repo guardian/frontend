@@ -6,18 +6,15 @@ const getChangedFiles = require('../lib/get-changed-files');
 const getCpuCount = () => os.cpus().length;
 
 module.exports = {
-    description: 'Validate committed JS',
+    description: 'Validate committed Sass',
     task: [
         {
-            description: 'Lint committed JS',
+            description: 'Lint committed Sass',
             task: () =>
                 getChangedFiles().then(files => {
                     const errors = [];
-                    const jsFiles = files.filter(
-                        file =>
-                            file.endsWith('.js') ||
-                            file.endsWith('.jsx') ||
-                            file.startsWith('git-hooks')
+                    const sassFiles = files.filter(file =>
+                        file.endsWith('.scss')
                     );
                     const lint = (proc, batchedFiles) =>
                         proc.then(() =>
@@ -27,9 +24,9 @@ module.exports = {
                                         .shell(
                                             `git show HEAD:${
                                                 filePath
-                                            } | eslint --stdin --stdin-filename ${
+                                            } | sass-lint --no-exit --verbose --max-warnings 0 '${
                                                 filePath
-                                            }`
+                                            }'`
                                         )
                                         .catch(e => {
                                             errors.push(e);
@@ -52,7 +49,7 @@ module.exports = {
                         return arr.reduce(batchFold, []);
                     };
 
-                    return batch(jsFiles, getCpuCount())
+                    return batch(sassFiles, getCpuCount())
                         .reduce(lint, Promise.resolve())
                         .then(() => {
                             if (errors.length) {
@@ -66,11 +63,7 @@ module.exports = {
                                 );
 
                                 error.stdout += `\n${chalk.red(
-                                    `✋  Your changes have not been pushed.\n${chalk.reset(
-                                        `You may be able to fix things by running ${chalk.dim(
-                                            'make fix-commits'
-                                        )}.`
-                                    )}`
+                                    `✋  Your changes have not been pushed.`
                                 )}`;
 
                                 return Promise.reject(error);
@@ -78,25 +71,6 @@ module.exports = {
 
                             return Promise.resolve();
                         });
-                }),
-        },
-        {
-            description: 'Run Flowtype checks',
-            task: () =>
-                getChangedFiles().then(files => {
-                    const jsFiles = files.filter(
-                        file =>
-                            (file.endsWith('.js') &&
-                                file.startsWith('static')) ||
-                            ((file.endsWith('.js') || file.endsWith('.jsx')) &&
-                                file.startsWith('ui'))
-                    );
-
-                    if (jsFiles.length) {
-                        return execa('yarn', ['flow']);
-                    }
-
-                    return Promise.resolve();
                 }),
         },
     ],
