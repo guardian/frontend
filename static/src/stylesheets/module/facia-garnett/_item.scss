@@ -172,8 +172,8 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__title {
-    padding-top: $gs-gutter/4;
-    padding-bottom: 0;
+    padding-top: $gs-baseline/4;
+    padding-bottom: $gs-baseline/6;
     word-wrap: break-word;
     overflow: hidden;
 }
@@ -193,7 +193,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__header {
     flex: 1 1 auto;
-    //this should eventually get added to the __src.scss
     font-weight: 400;
 }
 
