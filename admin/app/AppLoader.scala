@@ -71,6 +71,7 @@ trait AdminServices extends I18nComponents  {
   lazy val dfpMobileAppUnitCacheJob: DfpMobileAppAdUnitCacheJob = wire[DfpMobileAppAdUnitCacheJob]
   lazy val dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob = wire[DfpTemplateCreativeCacheJob]
   lazy val parameterStoreService: ParameterStoreService = wire[ParameterStoreService]
+  lazy val parameterStoreProvider: ParameterStoreProvider = wire[ParameterStoreProvider]
 }
 
 trait AppComponents extends FrontendComponents with AdminControllers with AdminServices {
