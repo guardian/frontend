@@ -13,7 +13,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import html.HtmlPageHelpers.ContentCSSFile
 
-object JourneyHtmlPage {
+object IdentityHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("identity")
