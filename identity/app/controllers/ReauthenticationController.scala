@@ -14,6 +14,8 @@ import play.api.mvc._
 import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
 import utils.SafeLogging
 
+import pages.IdentityHtmlPage
+
 import scala.concurrent.Future
 
 
@@ -51,7 +53,11 @@ class ReauthenticationController(
     val idRequest = idRequestParser(request)
     val googleId = request.user.socialLinks.find(_.getNetwork == "google").map(_.getSocialId)
 
-    NoCache(Ok(views.html.reauthenticate(page, idRequest, idUrlBuilder, filledForm, googleId)))
+    NoCache(Ok(
+      IdentityHtmlPage.html(content =
+        views.html.reauthenticate(page, idRequest, idUrlBuilder, filledForm, googleId)
+      )(page, request, context)
+    ))
   }
 
   def processForm: Action[AnyContent] = authenticatedActions.authActionWithUser.async { implicit request =>
