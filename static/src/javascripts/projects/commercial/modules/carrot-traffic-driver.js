@@ -8,33 +8,34 @@ import { spaceFiller } from 'common/modules/article/space-filler';
 const rules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
-    minAbove: 400,
-    minBelow: 300,
+    minAbove: 500,
+    minBelow: 400,
     clearContentMeta: 0,
     selectors: {
         ' .element-rich-link': {
-            minAbove: 200,
-            minBelow: 200,
+            minAbove: 100,
+            minBelow: 400,
         },
         ' .element-image': {
+            minAbove: 440,
+            minBelow: 440,
+        },
+
+        ' .player': {
             minAbove: 50,
             minBelow: 50,
         },
-        ' .player': {
-            minAbove: 0,
-            minBelow: 0,
-        },
         ' > h1': {
-            minAbove: 0,
-            minBelow: 0,
+            minAbove: 50,
+            minBelow: 50,
         },
         ' > h2': {
-            minAbove: 0,
-            minBelow: 0,
+            minAbove: 50,
+            minBelow: 50,
         },
         ' > *:not(p):not(h2):not(blockquote)': {
-            minAbove: 0,
-            minBelow: 0,
+            minAbove: 50,
+            minBelow: 50,
         },
         ' .ad-slot': {
             minAbove: 100,
@@ -47,7 +48,7 @@ const rules = {
 const insertSlot = (paras: Element[]): Promise<void> => {
     const slot = createSlot('carrot');
     return fastdom
-        .write(() => paras[0].insertAdjacentElement('afterend', slot))
+        .write(() => paras[0].insertAdjacentElement('beforebegin', slot))
         .then(() => addSlot(slot, true));
 };
 
@@ -55,7 +56,8 @@ const carrotTrafficDriverInit = (): Promise<void> => {
     if (commercialFeatures.carrotTrafficDriver) {
         return spaceFiller.fillSpace(rules, insertSlot, {
             waitForImages: false,
-            waitForLinks: false,
+            waitForLinks: true,
+            waitForAds: false,
             waitForInteractives: false,
         });
     }
