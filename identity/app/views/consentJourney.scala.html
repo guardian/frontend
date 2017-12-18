@@ -30,7 +30,7 @@
 }
 
 @channelStep() = {
-    @if(@communicationChannelsForUser(user).notEmpty)
+    @if(@communicationChannelsForUser(user).nonEmpty)
     {
         <div class="manage-account-wizard__step" data-wizard-step-name="consent">
 
