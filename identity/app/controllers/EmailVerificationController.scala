@@ -27,7 +27,7 @@ class EmailVerificationController(api: IdApiClient,
 
   val page = IdentityPage("/verify-email", "Verify Email")
 
-  def verify(token: String, journey: String): Action[AnyContent] = Action.async {
+  def verify(token: String): Action[AnyContent] = Action.async {
     implicit request =>
       val idRequest = idRequestParser(request)
 
@@ -51,8 +51,7 @@ class EmailVerificationController(api: IdApiClient,
           if(validationState.isExpired || IdentityPointToConsentJourneyPage.isSwitchedOff) {
             Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))
           } else {
-            // journey param passed by link sent in email validation email (Registration/AccountUpdate/EmailValidation)
-            SeeOther(idUrlBuilder.buildUrl(s"/consent?journey=${journey}&returnUrl=${encodedReturnUrl}"))
+            SeeOther(idUrlBuilder.buildUrl(s"/consents/?returnUrl=${encodedReturnUrl}"))
           }
       }
   }

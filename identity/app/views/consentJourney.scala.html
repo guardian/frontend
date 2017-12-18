@@ -61,7 +61,7 @@
         <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
             @views.html.helper.CSRF.formField
 
-            @if(journey == "repermission") {
+            @if(journey == "all") {
                 <h1 class="identity-title">
                     We need you to consent again to receiving communications from The Guardian
                 </h1>
@@ -175,18 +175,18 @@
                 <div class="manage-account-wizard manage-account-wizard--consent" data-journey="@journey">
 
                     @journey match {
-                        case "repermission-narrow" => {
+                        case "newsletters" => {
                             @emailStep(isNarrow = true)
                             @channelStep()
                         }
-                        case "repermission" => {
-                            @consentStep(journey = "repermission")
+                        case "all" => {
+                            @consentStep(journey = "all")
                             @emailStep()
                             @channelStep()
                         }
-                        case "signup" => {
-                            @consentStep(journey = "signup")
-                            @emailSignupStep()
+                        case _ => {
+                            @consentStep("consent")
+                            @emailStep()
                             @channelStep()
                         }
                     }

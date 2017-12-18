@@ -21,7 +21,7 @@ GET         /user/id/:id                            controllers.PublicProfileCon
 GET         /user/id/:id/:activityType              controllers.PublicProfileController.renderProfileFromId(id: String, activityType: String)
 GET         /user/:vanityUrl                        controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType = "discussions")
 GET         /user/:vanityUrl/:activityType          controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType: String)
-GET         /verify-email/:token                    controllers.EmailVerificationController.verify(token: String, journey: String)
+GET         /verify-email/:token                    controllers.EmailVerificationController.verify(token: String)
 GET         /verify-email                           controllers.EmailVerificationController.resendEmailValidationEmail()
 
 GET         /form/complete                          controllers.FormstackController.complete
@@ -62,6 +62,7 @@ POST        /privacy/edit-ajax                      controllers.EditProfileContr
 GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
 POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferencesAjax
 
-GET         /consent                                controllers.EditProfileController.displayConsentJourneyForm(journey: Option[String], consentHint: Option[String], newsletterHint: Option[String])
-POST        /complete-consent                         controllers.EditProfileController.submitRepermissionedFlag
+GET         /consents                               controllers.EditProfileController.displayConsentJourneyForm(journey = "consent", consentHint: Option[String], newsletterHint: Option[String])
+GET         /consents/:journey                      controllers.EditProfileController.displayConsentJourneyForm(journey: String, consentHint: Option[String], newsletterHint: Option[String])
+POST        /complete-consent                       controllers.EditProfileController.submitRepermissionedFlag
 ########################################################################################################################
