@@ -24,9 +24,8 @@ object IdentityHtmlPage {
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
-  def html(
-            content: Html
-          )(implicit page: IdentityPage, request: RequestHeader, applicationContext: ApplicationContext): Html = {
+  def html(content: Html)
+          (implicit page: IdentityPage, request: RequestHeader, applicationContext: ApplicationContext): Html = {
 
     htmlTag(
       headTag(
