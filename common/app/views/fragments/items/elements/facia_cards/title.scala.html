@@ -16,7 +16,12 @@
 
 @articleLink(html: Html) = {
     @* Support nested links by wrapping inner links in <object> element *@
-    <object type="nested/link" class="u-nested-link"><a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a></object>
+    <!--[if IE 8]>
+    <span class="fc-item__link">@html</span>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <object type="nested/link"><a href="@header.url.get(request)" class="fc-item__link" data-link-name="article">@html</a></object>
+    <!--<![endif]-->
 }
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
