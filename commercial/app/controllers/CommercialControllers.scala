@@ -7,6 +7,7 @@ import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import contentapi.ContentApiClient
+import controllers.DiagnosticsController
 import model.ApplicationContext
 import play.api.mvc.ControllerComponents
 
@@ -33,4 +34,5 @@ trait CommercialControllers {
   lazy val trafficDriverController = wire[TrafficDriverController]
   lazy val piggybackPixelController = wire[PiggybackPixelController]
   lazy val adsDotTextFileController = wire[AdsDotTextViewController]
+  lazy val diagnosticsController = wire[DiagnosticsController]
 }
