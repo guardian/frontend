@@ -13,7 +13,7 @@ module.exports = {
             task: () =>
                 getChangedFiles().then(files => {
                     const errors = [];
-                    const jsFiles = files.filter(file =>
+                    const sassFiles = files.filter(file =>
                         file.endsWith('.scss')
                     );
                     const lint = (proc, batchedFiles) =>
@@ -49,7 +49,7 @@ module.exports = {
                         return arr.reduce(batchFold, []);
                     };
 
-                    return batch(jsFiles, getCpuCount())
+                    return batch(sassFiles, getCpuCount())
                         .reduce(lint, Promise.resolve())
                         .then(() => {
                             if (errors.length) {
