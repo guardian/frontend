@@ -1,9 +1,12 @@
-@import org.joda.time.LocalDate
+@import common.{LinkTo}
 
-@()
+@()(implicit page: model.Page, request: RequestHeader)
 
 <header class="identity-header">
     <div class="gs-container identity-header__container">
-        @fragments.inlineSvg("guardian-logo-160", "logo")
+        <a href="@LinkTo {/}" data-link-name="site logo" id="logo" class="identity-header__logo" data-component="logo">
+            <span class="u-h">The Guardian - Back to home</span>
+            @fragments.inlineSvg("guardian-logo-160", "logo")
+        </a>
     </div>
 </header>

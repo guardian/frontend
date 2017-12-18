@@ -44,7 +44,7 @@ object IdentityHtmlPage {
       ),
       bodyTag(classes = bodyClasses)(
         skipToMainContent(),
-        if(ActiveExperiments.isParticipating(Garnett)) views.html.layout.identityHeader() else guardianHeaderHtml(),
+        views.html.layout.identityHeader(),
         mainContent(),
         content,
         inlineJSNonBlocking(),
