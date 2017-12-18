@@ -153,7 +153,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .rich-link__header {
     @include fs-headline(3);
     @include fs-headline-quote(3);
-    
+
     font-weight: 500;
     padding-bottom: .5em;
 
@@ -174,8 +174,8 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__title {
-    padding-top: $gs-gutter/4;
-    padding-bottom: 0;
+    padding-top: $gs-baseline/4;
+    padding-bottom: $gs-baseline/6;
     word-wrap: break-word;
     overflow: hidden;
 }
@@ -190,6 +190,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__header {
     flex: 1 1 auto;
+    font-weight: 400;
 }
 
 .fc-item__kicker {
@@ -221,16 +222,23 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__byline {
     margin-bottom: 0;
+    font-style: italic;
 }
 
 .fc-item__standfirst-wrapper {
     display: flex;
     flex-direction: row;
-    padding-bottom: $gs-gutter * .25;
+    padding-bottom: 0;
+
+    @include mq($from: tablet) {
+        padding-bottom: $gs-gutter * .25;
+    }
 }
 
 .fc-item__standfirst {
-    @include fs-headline(1);
+    @include fs-bodyCopy(1);
+    font-size: 13px;
+    line-height: 16px;
     color: $neutral-2;
     display: none;
     flex: 1 1 auto;
@@ -325,6 +333,7 @@ $block-height: 71px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    margin-left: auto;
 
     .inline-icon {
         fill: $neutral-3;
@@ -343,7 +352,7 @@ $block-height: 71px;
 
 .fc-trail__count {
     display: flex;
-    line-height: 10px;            
+    line-height: 10px;
 
     .inline-icon {
         padding-right: 2px;
