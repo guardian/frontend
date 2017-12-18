@@ -172,7 +172,9 @@ $header-image-size-desktop: 100px;
         color: inherit;
 
         &:hover {
-            color: $news-accent;
+            color: $news-garnett-main-1;
+            text-decoration: none;
+            border-bottom: 1px solid $news-garnett-main-1;
 
             & .inline-icon {
                 fill: $news-accent;
@@ -324,7 +326,7 @@ $header-image-size-desktop: 100px;
 .fc-today {
     @include fs-headline(2);
     line-height: 16px;
-    font-weight: 700;
+    font-weight: 500;
     display: none;
     margin-top: $gs-baseline;
 
@@ -333,6 +335,7 @@ $header-image-size-desktop: 100px;
     }
 
     .fc-today__sub {
+        color: $news-garnett-main-1;
         @include mq(wide) {
             .has-page-skin & {
                 border-top: 0;
