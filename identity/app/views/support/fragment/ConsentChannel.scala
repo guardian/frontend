@@ -16,5 +16,18 @@ object ConsentChannel {
         }
     }
 
+    def communicationChannelsForUser(user: com.gu.identity.model.User): List = {
+        val telephoneDefined = user.privateFields.telephoneNumber.isDefined
+        val postcodeDefined = user.privateFields.postcode.isDefined
+
+        val channels = List(
+            (TextConsentChannel -> telephoneDefined),
+            (PhoneConsentChannel -> telephoneDefined),
+            (PostConsentChannel -> postcodeDefined)
+        )
+
+        channels.filter(_._2).map(_._1)
+    }
+
 }
 
