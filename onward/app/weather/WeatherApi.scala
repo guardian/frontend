@@ -52,7 +52,7 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
     } else {
       getJsonRequest(url).recover {
         case NonFatal(error) =>
-          log.error(s"Error fetching $url", error)(MarkerContext(append("path", url)))
+          log.error(s"Error fetching $url", error)(MarkerContext(append("weatherRequestPath", url)))
           throw error
       }
     }
