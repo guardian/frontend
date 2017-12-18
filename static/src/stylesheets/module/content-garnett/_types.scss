@@ -851,7 +851,7 @@ $quote-mark: 35px;
             border-color: transparent transparent transparent $garnett-neutral-5;
             @include mq(tablet) {
                 // 0 border radius on mobile because stock android has a render bug with it here
-                border-radius: 0.2em;
+                border-radius: .2em;
             }
         }
     }
