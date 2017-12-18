@@ -138,7 +138,8 @@ const renderAlert = (alert: Alert): bonzo => {
     const closeButton = $('.js-breaking-news__item__close', $alert)[0];
 
     if (closeButton) {
-        bean.on(closeButton, 'click', () => {
+        bean.on(closeButton, 'click', e => {
+            e.preventDefault();
             fastdom.write(() => {
                 $('[data-breaking-article-id]').hide();
             });
