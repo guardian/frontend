@@ -877,6 +877,12 @@ $quote-mark: 35px;
         .gallery__divider {
             border-color: $garnett-neutral-7;
         }
+
+        .submeta {
+            @include mq(desktop) {
+                max-width: gs-span(8);
+            }
+        }
     }
 }
 
