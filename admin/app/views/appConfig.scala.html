@@ -59,15 +59,15 @@
                 term = $form.find('input[name="property"]').val(),
                 url = "/config/parameter/" + term;
 
-            var getParametersEvent = $.get(url);
+            var eventGetParams = $.get(url);
 
-            getParametersEvent.done(function(data) {
+            eventGetParams.done(function(data) {
                 $("#status").text("Ready");
                 Object.keys(data).forEach(function(key) {
                     $("#key-values").append("<p>"+key+" <b>:</b> "+data[key]+"</p>");
                 });
             });
-            getParametersEvent.fail(function() {
+            eventGetParams.fail(function() {
                 $("#status").text("Failed to find config");
             });
         });
