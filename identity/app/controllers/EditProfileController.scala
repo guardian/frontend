@@ -231,7 +231,6 @@ class EditProfileController(
 
       NoCache(Ok(
           IdentityHtmlPage.html(content = views.html.consentJourney(
-          page,
           user,
           forms,
           journey,

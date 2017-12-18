@@ -1,8 +1,8 @@
 package pages
 
 import html.HtmlPageHelpers._
-import html.Styles
-import model.{ApplicationContext, Page}
+import html.{HtmlPage, Styles}
+import model.{ApplicationContext, IdentityPage}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._
@@ -25,23 +25,18 @@ object IdentityHtmlPage {
   }
 
   def html(
-            content: Html,
-            maybeHeadContent: Option[Html] = None
-          )(implicit page: Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
-
-    val head: Html = maybeHeadContent.getOrElse(Html(""))
-    val bodyClasses: Map[String, Boolean] = defaultBodyClasses()
+            content: Html
+          )(implicit page: IdentityPage, request: RequestHeader, applicationContext: ApplicationContext): Html = {
 
     htmlTag(
       headTag(
         titleTag(),
         metaData(),
-        head,
         styles(allStyles),
         fixIEReferenceErrors(),
         inlineJSBlocking()
       ),
-      bodyTag(classes = bodyClasses)(
+      bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
         views.html.layout.identityHeader(),
         mainContent(),

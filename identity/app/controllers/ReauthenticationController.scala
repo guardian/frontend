@@ -55,7 +55,7 @@ class ReauthenticationController(
 
     NoCache(Ok(
       IdentityHtmlPage.html(content =
-        views.html.reauthenticate(page, idRequest, idUrlBuilder, filledForm, googleId)
+        views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
       )(page, request, context)
     ))
   }
