@@ -51,6 +51,7 @@ class EmailVerificationController(api: IdApiClient,
           if(validationState.isExpired || IdentityPointToConsentJourneyPage.isSwitchedOff) {
             Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))
           } else {
+            // journey param passed by link sent in email validation email (Registration/AccountUpdate/EmailValidation)
             SeeOther(idUrlBuilder.buildUrl(s"/consent?journey=${journey}&returnUrl=${encodedReturnUrl}"))
           }
       }
