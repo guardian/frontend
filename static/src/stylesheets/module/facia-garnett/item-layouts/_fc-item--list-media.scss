@@ -54,17 +54,6 @@ Media list item. Looks a bit like this:
         }
     }
 
-    .fc-item__video {
-        @include mq($until: tablet) {
-            position: absolute;
-            width: $image-width;
-            
-            .fc-item__video-play {
-                padding-bottom: 60%;
-            }
-        }
-    }
-
     &[class*='fc-item--has-sublinks'] {
         .fc-item__footer--vertical {
             display: none;
@@ -106,6 +95,18 @@ Media list item. Looks a bit like this:
         .fc-item__avatar__media {
             right: - $gs-gutter;
             height: gs-span(1) + $gs-baseline * 3;
+        }
+    }
+
+    &.fc-item--list-media-mobile {
+        @include mq($until: tablet) {
+            .fc-item__video {
+                width: $image-width;
+                
+                .fc-item__video-play {
+                    padding-bottom: 60%;
+                }
+            }
         }
     }
 }
