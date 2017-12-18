@@ -159,7 +159,7 @@ import collection.JavaConverters._
         import browser._
 
         Then("I should see the publication date of the article")
-        $(".content__dateline-wpd").text should be("Monday 6 August 2012 20.30 BST")
+        $(".content__dateline-wpd").text should be("Mon 6 Aug 12‘ 20.30 BST")
         $("time").attribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
