@@ -140,7 +140,7 @@ Hence why a greater depth of selector specificity is needed.
     .fc-slice__item {
         margin-bottom: 0;
 
-        @include mq($from: tablet){
+        @include mq($from: tablet) {
             margin-bottom: $gs-baseline;
         }
     }
