@@ -258,22 +258,18 @@ class EditProfileController(
 
     newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
-      NoCache(Ok(
-        IdentityHtmlPage.html(
-          content = views.html.profileForms(
-            page.metadata.id,
-            user,
-            forms,
-            idRequestParser(request),
-            idUrlBuilder,
-            emailFilledForm,
-            newsletterService.getEmailSubscriptions(emailFilledForm),
-            EmailNewsletters.all,
-            consentsUpdated,
-            consentHint
-          )
-        )(page, request, context)
-      ))
+      NoCache(Ok(views.html.profileForms(
+        page,
+        user,
+        forms,
+        idRequestParser(request),
+        idUrlBuilder,
+        emailFilledForm,
+        newsletterService.getEmailSubscriptions(emailFilledForm),
+        EmailNewsletters.all,
+        consentsUpdated,
+        consentHint
+      )))
 
     }
   }
