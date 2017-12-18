@@ -63,7 +63,7 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
           s"Request to weather api ($url) timed out (this is expected, especially at 0 and 30 mins past the hour due to" +
           s" a problem with accuweather).", error)(weatherLogsMarkerContext)
         throw error
-      case NonFatal(error) =>
+      case NonFatal(error: Throwable) =>
         log.error("Weather API request failed", error)(weatherLogsMarkerContext)
         throw error
     }
