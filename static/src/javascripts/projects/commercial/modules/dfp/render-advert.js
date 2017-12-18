@@ -12,7 +12,6 @@ import renderAdvertLabel from 'commercial/modules/dfp/render-advert-label';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { Toggles } from 'common/modules/ui/toggles';
 import { recordUserAdFeedback } from 'commercial/modules/user-ad-feedback';
-import config from 'lib/config';
 /**
  * ADVERT RENDERING
  * ----------------
@@ -82,13 +81,11 @@ sizeCallbacks[adSizes.halfPage] = () => {
     mediator.emit('page:commercial:sticky-mpu');
 };
 
-if (!config.switches.keepVideoAdSlotsOpen) {
-    sizeCallbacks[adSizes.video] = (_, advert) => {
-        fastdom.write(() => {
-            advert.node.classList.add('u-h');
-        });
-    };
-}
+sizeCallbacks[adSizes.video] = (_, advert) => {
+    fastdom.write(() => {
+        advert.node.classList.add('u-h');
+    });
+};
 
 sizeCallbacks[adSizes.video2] = (_, advert) => {
     fastdom.write(() => {
