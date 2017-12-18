@@ -25,7 +25,7 @@ class ParameterStoreServiceTest extends FlatSpec with ScalaFutures with Matchers
 
     val parameterStoreService = new ParameterStoreService(parameterStoreProvider, blockingOperations)
     whenReady(parameterStoreService.findParameterBySubstring("test")) {
-      _ shouldBe Map("some_test_key" -> "test_value", "test" -> "last_value")
+      _ shouldBe Seq("some_test_key", "test")
     }
   }
 

@@ -63,8 +63,8 @@
 
             eventGetParams.done(function(data) {
                 $("#status").text("Ready");
-                Object.keys(data).forEach(function(key) {
-                    $("#key-values").append("<p>"+key+" <b>:</b> "+data[key]+"</p>");
+                data.forEach(function(key) {
+                    $("#key-values").append("<p>"+key+" <b>:</b> ***</p>");
                 });
             });
             eventGetParams.fail(function() {
