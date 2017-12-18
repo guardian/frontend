@@ -174,7 +174,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__title {
-    padding-top: $gs-baseline/4;
+    padding-top: $gs-baseline/12;
     padding-bottom: $gs-baseline/6;
     word-wrap: break-word;
     overflow: hidden;
@@ -223,6 +223,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__byline {
     margin-bottom: 0;
     font-style: italic;
+    line-height: 15px;
 }
 
 .fc-item__standfirst-wrapper {
@@ -257,7 +258,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 // Liveblog blocks
-$block-height: 71px;
+$block-height: 58px;
 
 .fc-item__liveblog-blocks {
     display: none;
@@ -269,7 +270,6 @@ $block-height: 71px;
         box-sizing: content-box !important;
         height: $block-height;
         overflow: hidden;
-        border-bottom: $gs-gutter/4 solid transparent;
     }
 }
 
