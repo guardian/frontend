@@ -76,6 +76,10 @@
     }
 }
 
+.identity-layout-vertical-wrapper {
+    min-height: calc(100vh - #{$gs-gutter*4});
+}
+
 @include mq(desktop) {
     .identity-page-header {
         .identity-page-header__title {
