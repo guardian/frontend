@@ -778,7 +778,6 @@ $quote-mark: 35px;
     .from-content-api a {
         text-decoration: none;
         border-bottom: .1px solid $garnett-neutral-6;
-        -webkit-transition: border-color .15s ease-out;
         transition: border-color .15s ease-out;
 
         &:hover {
