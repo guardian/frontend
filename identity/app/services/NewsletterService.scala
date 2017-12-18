@@ -81,7 +81,8 @@ class NewsletterService(
       form: Form[EmailPrefsData],
       add: List[String] = List(),
       remove: List[String] = List()): List[String] = {
-    getEmailSubscriptions(form, add, remove).filter(EmailNewsletters.v1ListIds.contains)
+    //TODO: only return V1 subscriptions when V2 subscriptions are in place
+    getEmailSubscriptions(form,add,remove)
   }
 }
 

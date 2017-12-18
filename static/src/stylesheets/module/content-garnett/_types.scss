@@ -366,6 +366,49 @@ $quote-mark: 35px;
         }
     }
 
+    //Review stars
+    .stars {
+        background-color: $news-garnett-highlight;
+        display: inline-block;
+        line-height: 0;
+        padding: calc((#{$gs-baseline} / 2) - 2px);
+        margin-top: $gs-baseline / 2;
+        margin-left: $gs-gutter / 2;
+        margin-bottom: $gs-baseline;
+        transform: translatey(-$gs-baseline / 2);
+
+        @include mq($from: mobileLandscape) {
+            margin-left: $gs-gutter;
+        }
+
+        @include mq($from: phablet) {
+            margin-left: 0;
+        }
+
+        @include mq($from: tablet) {
+            margin-bottom: 0;
+            transform: translatey(-$gs-gutter);
+        }
+    }
+
+    .inline-star {
+        display: inline;
+
+        svg {
+            stroke: $garnett-neutral-1;
+            fill: transparent;
+            height: 1.2em;
+            width: 1.2em;
+        }
+    }
+
+    .inline-star.star__item--golden {
+        svg {
+            fill: $garnett-neutral-1;
+            stroke: none;
+        }
+    }
+
     .content__standfirst {
         @include fs-headline(2);
         font-weight: 400;
