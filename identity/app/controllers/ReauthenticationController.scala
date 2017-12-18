@@ -54,8 +54,8 @@ class ReauthenticationController(
     val googleId = request.user.socialLinks.find(_.getNetwork == "google").map(_.getSocialId)
 
     NoCache(Ok(
-      IdentityHtmlPage.html(content =
-        views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
+      IdentityHtmlPage.html(
+        content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
       )(page, request, context)
     ))
   }
