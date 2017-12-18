@@ -43,25 +43,28 @@
 }
 
 @channelStep() = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="consent">
+    @if(@communicationChannels(user).notEmpty)
+    {
+        <div class="manage-account-wizard__step" data-wizard-step-name="consent">
 
-        <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
-            @views.html.helper.CSRF.formField
+            <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+                @views.html.helper.CSRF.formField
 
             <h1 class="identity-title">
-                How can we get in touch with you?
+                    How can we get in touch with you?
             </h1>
             <p class="manage-account-headerNote">Besides email, are there any other ways you would like us to get in touch with you?</p>
 
             <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
                 <div class="manage-account__switches manage-account__switches--wide">
                     <ul>
-                    </ul>
+                        </ul>
                 </div>
             </div>
-        </form>
+            </form>
 
-    </div>
+        </div>
+    }
 }
 
 @consentStep(journey:String) = {
@@ -186,14 +189,17 @@
                     @journey match {
                         case "repermission-narrow" => {
                             @emailStep(isNarrow = true)
+                            @channelStep()
                         }
                         case "repermission" => {
                             @consentStep(journey = "repermission")
                             @emailStep()
+                            @channelStep()
                         }
                         case "signup" => {
                             @consentStep(journey = "signup")
                             @emailSignupStep()
+                            @channelStep()
                         }
                     }
 
