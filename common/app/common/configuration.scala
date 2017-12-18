@@ -119,19 +119,19 @@ object GuardianConfiguration extends Logging {
     else {
       val userPrivate = configFromFile(s"${System.getProperty("user.home")}/.gu/frontend.conf", "devOverrides")
       val runtimeOnly =  configFromFile("/etc/gu/frontend.conf", "parameters")
-//      val frontendConfig = configFromParameterStore("/frontend")
-//      val frontendStageConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}")
-//      val frontendAppConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}/${app.toLowerCase}")
+      val frontendConfig = configFromParameterStore("/frontend")
+      val frontendStageConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}")
+      val frontendAppConfig = configFromParameterStore(s"/frontend/${stage.toLowerCase}/${app.toLowerCase}")
 
-//      val parameterStoreConfig = frontendAppConfig
-//        .withFallback(frontendStageConfig)
-//        .withFallback(frontendConfig)
+      val parameterStoreConfig = frontendAppConfig
+        .withFallback(frontendStageConfig)
+        .withFallback(frontendConfig)
 
-//      diffLegacyConfig(s3Config, parameterStoreConfig)
+      diffLegacyConfig(s3Config, parameterStoreConfig)
 
       userPrivate
         .withFallback(runtimeOnly)
-        .withFallback(s3Config)
+        .withFallback(parameterStoreConfig)
     }
   }
 
