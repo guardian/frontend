@@ -62,7 +62,15 @@
                 padding-bottom: 80%;
             }
         }
-    }    
+    }  
+
+    &.fc-item--standard-mobile {
+        @include mq($from: mobile, $until: tablet) {
+            .u-responsive-ratio {
+                padding-bottom: 100%;
+            }
+        }
+    }
 }
 
 @mixin immersiveLeft() {
@@ -113,7 +121,7 @@
 
     &.fc-item--standard-mobile {
         @include mq($from: mobile, $until: tablet) {
-            // @include immersiveBottom();
+            @include immersiveBottom();
         }
     }
 
