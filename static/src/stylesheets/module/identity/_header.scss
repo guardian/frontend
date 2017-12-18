@@ -1,12 +1,8 @@
 .identity-header {
     @include clearfix;
     background-color: $guardian-brand;
-    padding: 5px 0;
+    padding: 5px $gs-gutter;
     color: #ffffff;
-    @include mq($until: desktop) {
-        padding-left: $gs-gutter!important;
-        padding-right: $gs-gutter!important;
-    }
     span {
         display: block;
         float: right;
