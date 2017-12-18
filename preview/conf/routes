@@ -148,15 +148,15 @@ GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\
 # Atoms
 POST       /atom/quiz/:id/*path                                                                controllers.QuizController.submit(id, path)
 
-GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                     controllers.AllIndexController.on(path)
-GET        /$path<.+>/latest                                                                   controllers.LatestIndexController.latest(path)
-GET        /$path<.+>/latest/email                                                             controllers.LatestIndexController.latest(path)
-GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                            controllers.AllIndexController.allOn(path, day, month, year)
-GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                        controllers.AllIndexController.altDate(path, day, month, year)
-GET        /$path<.+>/all                                                                      controllers.AllIndexController.all(path)
+GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                     controllers.AllTagController.on(path)
+GET        /$path<.+>/latest                                                                   controllers.LatestTagController.latest(path)
+GET        /$path<.+>/latest/email                                                             controllers.LatestTagController.latest(path)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                            controllers.AllTagController.allOn(path, day, month, year)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/altdate                        controllers.AllTagController.altDate(path, day, month, year)
+GET        /$path<.+>/all                                                                      controllers.AllTagController.all(path)
 
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                controllers.IndexController.renderTrailsJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                     controllers.IndexController.renderTrails(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                                controllers.TagController.renderTrailsJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                                     controllers.TagController.renderTrails(path)
 
 # the (applications/)? bit here is for X-Accel-Redirects on the preview server
 

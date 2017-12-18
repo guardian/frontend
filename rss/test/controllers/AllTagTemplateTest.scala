@@ -1,8 +1,9 @@
-package test
+package controllers
 
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import test.ConfiguredTestSuite
 
-@DoNotDiscover class AllIndexTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class AllTagTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   it should "render the /all page and navigate backwards and forwards" in goTo("/world/2014/oct/02/all") { browser =>
     import browser._

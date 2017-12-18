@@ -9,21 +9,21 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
-import pages.AllIndexHtmlPage
+import pages.AllTagHtmlPage
 import play.api.mvc._
-import services.{ConfigAgent, IndexPage, IndexPageItem}
+import services.{ConfigAgent, TagPage, TagPageItem}
 import views.support.PreviousAndNext
 
 import scala.concurrent.Future
 
-class AllIndexController(
+class AllTagController(
   contentApiClient: ContentApiClient,
   sectionsLookUp: SectionsLookUp,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with ItemResponses with Dates with Logging {
 
-  private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents)
+  private val tagController = new TagController(contentApiClient, sectionsLookUp, controllerComponents)
 
   // no need to set the zone here, it gets it from the date.
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
@@ -60,7 +60,7 @@ class AllIndexController(
     val edition = Edition(request)
 
     if (ConfigAgent.shouldServeFront(path) || defaultEdition.isEditionalised(path)) {
-      indexController.render(path)(request)
+      tagController.render(path)(request)
     } else {
       /** No front exists, so 'all' is the same as the tag page - redirect there */
       Future.successful(Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path"))))
@@ -71,15 +71,15 @@ class AllIndexController(
     val reqDate = requestedDate(s"$year/$month/$day")
     lazy val notFound: Result = Cached(300)(WithoutRevalidationResult(NotFound))
     loadLatest(path, reqDate)
-      .map { maybeIndexPage =>
-        maybeIndexPage
-          .map { index =>
+      .map { maybeTagPage =>
+        maybeTagPage
+          .map { tagPage =>
 
-            val contentOnRequestedDate = index.contents.filter(_.item.trail.webPublicationDate.sameDay(reqDate))
+            val contentOnRequestedDate = tagPage.contents.filter(_.item.trail.webPublicationDate.sameDay(reqDate))
 
-            val olderDate = index.trails.find(!_.trail.webPublicationDate.sameDay(reqDate)).map(_.trail.webPublicationDate.toDateTime)
+            val olderDate = tagPage.trails.find(!_.trail.webPublicationDate.sameDay(reqDate)).map(_.trail.webPublicationDate.toDateTime)
 
-            if (index.trails.isEmpty) {
+            if (tagPage.trails.isEmpty) {
               Cached(300)(WithoutRevalidationResult(redirectToFirstAllPage(path)))
             } else if (contentOnRequestedDate.isEmpty) {
               Cached(300)(WithoutRevalidationResult(redirectToOlderAllPage(olderDate, path)))
@@ -92,11 +92,11 @@ class AllIndexController(
               }
               val today = DateTime.now
               val nextPage = if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altdate")
-              val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
+              val model = tagPage.copy(contents = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
 
               Cached(300)(
                 RevalidatableResult.Ok(
-                  AllIndexHtmlPage.html(
+                  AllTagHtmlPage.html(
                     model.copy(previousAndNext = Some(PreviousAndNext(prevPage, nextPage)))
                   )
                 )
@@ -120,14 +120,14 @@ class AllIndexController(
   private def redirectToFirstAllPage(path: String): Result = Found(s"/$path/all")
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
-  private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
+  private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[TagPage]] = {
     val result = contentApiClient.getResponse(
       contentApiClient.item(s"/$path", Edition(request)).pageSize(50).toDate(jodaToJavaInstant(date)).orderBy("newest")
     ).map { item =>
       item.section.map( section =>
-        IndexPage(
+        TagPage(
           page = Section.make(section),
-          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(TagPageItem(_)),
           Tags(Nil),
           date,
           tzOverride = None
@@ -135,9 +135,9 @@ class AllIndexController(
       ).orElse {
         item.tag.map { apitag =>
           val tag = Tag.make(apitag)
-          IndexPage(
+          TagPage(
             page = tag,
-            contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+            contents = item.results.getOrElse(Nil).map(TagPageItem(_)),
             Tags(List(tag)),
             date,
             tzOverride = None

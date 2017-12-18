@@ -7,33 +7,33 @@ import conf.switches.Switches
 import contentapi.Paths
 import layout.DateHeadline.cardTimestampDisplay
 import layout._
+import layout.slices.{Container, ContainerDefinition, Fixed, FixedContainers}
 import model._
 import model.meta.{ItemList, ListItem}
 import model.pressed._
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.RequestHeader
-import slices.{Container, ContainerDefinition, Fixed, FixedContainers}
 import views.support.PreviousAndNext
 
 import scala.Function.const
 import scala.annotation.tailrec
 
-object IndexPagePagination {
+object TagPagePagination {
   def pageSize: Int = 20
 }
 
 case class MpuState(injected: Boolean)
 
-object IndexPage {
+object TagPage {
 
   def apply(
     page: Page,
-    contents: Seq[IndexPageItem],
+    contents: Seq[TagPageItem],
     tags: Tags,
     date: DateTime,
     tzOverride: Option[DateTimeZone]
-  ): IndexPage = {
-    IndexPage(page, contents, tags, date, tzOverride, commercial = Commercial.empty)
+  ): TagPage = {
+    TagPage(page, contents, tags, date, tzOverride, commercial = Commercial.empty)
   }
 
   def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
@@ -52,14 +52,14 @@ object IndexPage {
     case _ => None
   }
 
-  def makeFront(indexPage: IndexPage, edition: Edition)(implicit context: ApplicationContext): Front = {
-    val isCartoonPage = indexPage.isTagWithId("type/cartoon")
-    val isReviewPage = indexPage.isTagWithId("tone/reviews")
+  def makeFront(tagPage: TagPage, edition: Edition)(implicit context: ApplicationContext): Front = {
+    val isCartoonPage = tagPage.isTagWithId("type/cartoon")
+    val isReviewPage = tagPage.isTagWithId("tone/reviews")
 
-    val isSlow = SlowOrFastByTrails.isSlow(indexPage.trails.map(_.trail))
+    val isSlow = SlowOrFastByTrails.isSlow(tagPage.trails.map(_.trail))
 
     @tailrec
-    def containerDefinition(groupings: Seq[IndexPageGrouping],
+    def containerDefinition(groupings: Seq[TagPageGrouping],
                             mpuState: MpuState,
                             accumulation: Vector[((ContainerDisplayConfig, CollectionEssentials), Container)] = Vector.empty
                            ): Seq[((ContainerDisplayConfig, CollectionEssentials), Container)] = {
@@ -68,7 +68,7 @@ object IndexPage {
         case grouping :: remainingGroupings =>
         val collection = CollectionEssentials.fromFaciaContent(
           grouping.items.flatMap { item =>
-            indexPage.contents.find(_.item.metadata.id == item.metadata.id).map(_.faciaItem)
+            tagPage.contents.find(_.item.metadata.id == item.metadata.id).map(_.faciaItem)
           }
         )
 
@@ -105,22 +105,22 @@ object IndexPage {
 
     }
 
-    val grouped = if (isSlow || indexPage.forcesDayView)
-      IndexPageGrouping.byDay(indexPage.trails, edition.timezone)
+    val grouped = if (isSlow || tagPage.forcesDayView)
+      TagPageGrouping.byDay(tagPage.trails, edition.timezone)
     else
-      IndexPageGrouping.fromContent(indexPage.trails, edition.timezone)
+      TagPageGrouping.fromContent(tagPage.trails, edition.timezone)
 
     val front = Front.fromConfigsAndContainers(
       containerDefinition(grouped.toList, MpuState(injected = false)),
       ContainerLayoutContext(
         Set.empty,
-        hideCutOuts = indexPage.tags.isContributorPage
+        hideCutOuts = tagPage.tags.isContributorPage
       )
     )
 
     val headers = grouped.map(_.dateHeadline).zipWithIndex map { case (headline, index) =>
       if (index == 0) {
-        indexPage.page match {
+        tagPage.page match {
           case tag: Tag => FaciaContainerHeader.fromTagPage(tag, headline)
           case section: Section => FaciaContainerHeader.fromSection(section, headline)
           case page: Page => FaciaContainerHeader.fromPage(page, headline)
@@ -144,32 +144,32 @@ object IndexPage {
         customClasses = Some(Seq(
           Some("fc-container--tag"),
           if (container.index == 0 &&
-              indexPage.isFootballTeam &&
+              tagPage.isFootballTeam &&
               Switches.FixturesAndResultsContainerSwitch.isSwitchedOn)  Some("js-insert-team-stats-after") else None
         ).flatten),
         hideToggle = true,
         showTimestamps = true,
         useShowMore = false,
-        dateLinkPath = Some(s"/${indexPage.idWithoutEdition}")
+        dateLinkPath = Some(s"/${tagPage.idWithoutEdition}")
       ).transformCards({ card =>
         card.copy(
           timeStampDisplay = timeStampDisplay,
-          byline = if (indexPage.tags.isContributorPage) None else card.byline,
+          byline = if (tagPage.tags.isContributorPage) None else card.byline,
           useShortByline = true
         ).setKicker(card.header.kicker flatMap {
           case ReviewKicker if isReviewPage => None
           case CartoonKicker if isCartoonPage => None
-          case TagKicker(_, _, _, id) if indexPage.isTagWithId(id) => None
+          case TagKicker(_, _, _, id) if tagPage.isTagWithId(id) => None
           case otherKicker => Some(otherKicker)
         })
       })
     }))
   }
 
-  def makeLinkedData(indexPage: IndexPage)(implicit request: RequestHeader): ItemList = {
+  def makeLinkedData(tagPage: TagPage)(implicit request: RequestHeader): ItemList = {
     ItemList(
-      LinkTo(indexPage.page.metadata.url),
-      indexPage.trails.zipWithIndex.map {
+      LinkTo(tagPage.page.metadata.url),
+      tagPage.trails.zipWithIndex.map {
         case (trail, index) =>
           ListItem(position = index, url = Some(LinkTo(trail.metadata.url)))
       }
@@ -177,21 +177,21 @@ object IndexPage {
   }
 
 }
-object IndexPageItem {
-  def apply(content: ApiContent): IndexPageItem = {
-    IndexPageItem(
+object TagPageItem {
+  def apply(content: ApiContent): TagPageItem = {
+    TagPageItem(
       Content(content),
       FaciaContentConvert.contentToFaciaContent(content))
   }
 }
-case class IndexPageItem(
+case class TagPageItem(
   item: ContentType,
   faciaItem: PressedContent
 )
 
-case class IndexPage(
+case class TagPage(
   page: Page,
-  contents: Seq[IndexPageItem],
+  contents: Seq[TagPageItem],
   tags: Tags,
   date: DateTime,
   tzOverride: Option[DateTimeZone],

@@ -1,8 +1,9 @@
-package common
+package controllers
 
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import test.ConfiguredTestSuite
-import collection.JavaConverters._
+
+import scala.collection.JavaConverters._
 
 @DoNotDiscover class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 

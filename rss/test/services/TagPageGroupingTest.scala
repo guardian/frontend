@@ -3,17 +3,17 @@ package services
 import java.time.ZoneOffset
 import java.util.UUID
 
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import common.JodaTime._
+import contentapi.FixtureTemplates.emptyApiContent
+import implicits.Dates.jodaToJavaInstant
 import model.{Content, ContentType}
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
-import contentapi.FixtureTemplates.emptyApiContent
-import IndexPageGrouping.fromContent
-import common.JodaTime._
+import services.TagPageGrouping.fromContent
 import test.ConfiguredTestSuite
-import implicits.Dates.jodaToJavaInstant
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 
-@DoNotDiscover class IndexPageGroupingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class TagPageGroupingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   val timeZone = DateTimeZone.forOffsetHours(0)
 
   def makeFixture(dateTime: DateTime): ContentType = Content(

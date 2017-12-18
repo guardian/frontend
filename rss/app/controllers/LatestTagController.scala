@@ -1,25 +1,24 @@
 package controllers
 
 import common._
-import contentapi.ContentApiClient
-import contentapi.Paths
+import contentapi.{ContentApiClient, Paths}
 import model.Cached.WithoutRevalidationResult
 import model._
 import org.joda.time.DateTime
 import play.api.mvc._
-import services.{IndexPage, IndexPageItem}
+import services.{TagPage, TagPageItem}
 
 import scala.concurrent.Future
 
-class LatestIndexController(
+class LatestTagController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents)
   extends BaseController with ImplicitControllerExecutionContext with implicits.ItemResponses with Logging {
 
   def latest(path: String): Action[AnyContent] = Action.async { implicit request =>
-    loadLatest(path).map { _.map { index =>
-      index.page match {
-        case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => {
+    loadLatest(path).map { _.map { tagPage =>
+      tagPage.page match {
+        case tag: Tag if tag.isSeries || tag.isBlog => tagPage.trails.headOption.map(latest => {
           if (request.isEmail) {
             Redirect(latest.metadata.url + "/email", request.campaignCode.fold(Map[String, Seq[String]]())(c => Map("CMP" -> Seq(c))))
           }
@@ -36,24 +35,24 @@ class LatestIndexController(
   }
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
-  private def loadLatest(path: String)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
+  private def loadLatest(path: String)(implicit request: RequestHeader): Future[Option[TagPage]] = {
     val result = contentApiClient.getResponse(
       contentApiClient.item(s"/$path", Edition(request))
         .pageSize(1)
         .orderBy("newest")
     ).map{ item =>
       item.section.map( section =>
-        IndexPage(
+        TagPage(
           page = Section.make(section),
-          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(TagPageItem(_)),
           tags = Tags(Nil),
           date = DateTime.now,
           tzOverride = None
         )
       ).orElse(item.tag.map( tag =>
-        IndexPage(
+        TagPage(
           page = Tag.make(tag),
-          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(TagPageItem(_)),
           tags = Tags(Nil),
           date = DateTime.now,
           tzOverride = None

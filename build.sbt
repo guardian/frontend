@@ -132,6 +132,10 @@ val commercial = application("commercial").dependsOn(commonWithTests).aggregate(
 
 val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
+val rss = application("rss")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
+
 val dev = application("dev-build")
   .dependsOn(
     withTests(article)
@@ -145,7 +149,8 @@ val dev = application("dev-build")
     identity,
     admin,
     commercial,
-    onward
+    onward,
+    rss
   ).settings(
     RoutesKeys.routesImport += "bindables._",
     javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
@@ -158,13 +163,10 @@ val preview = application("preview").dependsOn(
   applications,
   sport,
   commercial,
-  onward
+  onward,
+  rss
 ).settings(
 )
-
-val rss = application("rss")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
 
 val main = root().aggregate(
   common,

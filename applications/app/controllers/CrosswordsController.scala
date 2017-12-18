@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => Ap
 import common.{Edition, ImplicitControllerExecutionContext, Logging}
 import conf.Static
 import contentapi.ContentApiClient
-import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
+import pages.{CrosswordHtmlPage, PrintableCrosswordHtmlPage}
 import crosswords.{AccessibleCrosswordPage, AccessibleCrosswordRows, CrosswordPageWithSvg, CrosswordSearchPageNoResult, CrosswordSearchPageWithResults, CrosswordSvg}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
@@ -12,7 +12,6 @@ import org.joda.time.{DateTime, LocalDate}
 import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, RequestHeader, Result, _}
-import services.{IndexPage, IndexPageItem}
 import html.HtmlPageHelpers.ContentCSSFile
 
 import scala.concurrent.Future
@@ -162,10 +161,10 @@ class CrosswordSearchController(
             case Nil => noResults
 
             case results =>
-              val section = Section.make(ApiSection("crosswords", "Crosswords search results", "http://www.theguardian.com/crosswords/search", "", Nil))
-              val page = IndexPage(
+              val section = Section.make(ApiSection("crosswords", "Crosswords search results", "https://www.theguardian.com/crosswords/search", "", Nil))
+              val page = TagPage(
                 page = section,
-                contents = results.map(IndexPageItem(_)),
+                contents = results.map(TagPageItem(_)),
                 tags = Tags(Nil),
                 date = DateTime.now,
                 tzOverride = None

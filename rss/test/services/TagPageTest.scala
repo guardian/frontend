@@ -2,17 +2,17 @@ package services
 
 import common.Edition
 import common.editions.Uk
+import layout.slices.Fixed
 import model.{Section, Tags}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
-import layout.slices.Fixed
 import test._
 
 import scala.concurrent.Future
 
-@DoNotDiscover class IndexPageTest
+@DoNotDiscover class TagPageTest
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
@@ -24,14 +24,14 @@ import scala.concurrent.Future
   with ScalaFutures {
 
   private val pageSize = 10
-  private def getIndexPage(path: String, edition: Edition = Uk): Future[Option[IndexPage]] = {
+  private def getIndexPage(path: String, edition: Edition = Uk): Future[Option[TagPage]] = {
     testContentApiClient.getResponse(
       testContentApiClient.item(s"/$path", Uk).pageSize(pageSize).orderBy("newest")
     ).map { item =>
       item.section.map(section =>
-        IndexPage(
+        TagPage(
           page = Section.make(section),
-          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(TagPageItem(_)),
           tags = Tags(Nil),
           date = DateTime.now,
           tzOverride = None
@@ -47,7 +47,7 @@ import scala.concurrent.Future
       case None =>
         fail("Wrong type (expected: IndexPage, real: Result)")
       case Some(page) =>
-        val front = IndexPage.makeFront(page, edition)
+        val front = TagPage.makeFront(page, edition)
         front.containers should not be empty
 
         val firstContainer = front.containers.head

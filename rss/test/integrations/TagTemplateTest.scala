@@ -1,6 +1,7 @@
-package test
+package integrations
 
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import test.ConfiguredTestSuite
 
 @DoNotDiscover class TagTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 

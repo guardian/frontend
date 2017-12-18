@@ -10,10 +10,10 @@ import org.joda.time.{DateTimeZone, LocalDate}
 
 case class TrailAndDate(trail: Content, date: LocalDate)
 
-object IndexPageGrouping extends Collections {
+object TagPageGrouping extends Collections {
   val MinimumPerDayPopOutFrequency = 2
 
-  def fromContent(trails: Seq[Content], timezone: DateTimeZone): Seq[IndexPageGrouping] = {
+  def fromContent(trails: Seq[Content], timezone: DateTimeZone): Seq[TagPageGrouping] = {
     val trailsAndDates = trails.map(content => TrailAndDate(content, content.trail.webPublicationDate.withZone(timezone).toLocalDate))
 
     trailsAndDates.groupBy(_.date.withDayOfYear(1)).toSeq.sortBy(_._1).reverse flatMap { case (_, trailsThatYear) =>
@@ -43,16 +43,16 @@ object IndexPageGrouping extends Collections {
   }
 }
 
-sealed trait IndexPageGrouping {
+sealed trait TagPageGrouping {
   val day: LocalDate
   val items: Seq[Content]
   def dateHeadline: DateHeadline
 }
 
-case class Day(day: LocalDate, items: Seq[Content]) extends IndexPageGrouping {
+case class Day(day: LocalDate, items: Seq[Content]) extends TagPageGrouping {
   override def dateHeadline: DateHeadline = DayHeadline(day)
 }
 
-case class Month(day: LocalDate, items: Seq[Content]) extends IndexPageGrouping {
+case class Month(day: LocalDate, items: Seq[Content]) extends TagPageGrouping {
   override def dateHeadline: DateHeadline = MonthHeadline(day)
 }
