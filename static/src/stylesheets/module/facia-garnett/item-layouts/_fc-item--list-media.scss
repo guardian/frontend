@@ -54,6 +54,17 @@ Media list item. Looks a bit like this:
         }
     }
 
+    .fc-item__video {
+        @include mq($until: tablet) {
+            position: absolute;
+            width: $image-width;
+            
+            .fc-item__video-play {
+                padding-bottom: 60%;
+            }
+        }
+    }
+
     &[class*='fc-item--has-sublinks'] {
         .fc-item__footer--vertical {
             display: none;
