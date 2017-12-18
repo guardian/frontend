@@ -1,6 +1,7 @@
 package weather
 
 import java.net.{URI, URLEncoder}
+import java.util.concurrent.TimeoutException
 
 import akka.actor.{ActorSystem, Scheduler}
 import common.{Logging, ResourcesHelper}
@@ -13,7 +14,8 @@ import weather.models.accuweather.{ForecastResponse, LocationResponse, WeatherRe
 import model.ApplicationContext
 
 import scala.concurrent.duration._
-import play.api.Mode
+import play.api.{MarkerContext, Mode}
+import net.logstash.logback.marker.Markers.append
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
@@ -54,9 +56,15 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
   }
 
   private def getJsonWithRetry(url: String): Future[JsValue] = {
+    val weatherLogsMarkerContext: MarkerContext = MarkerContext(append("weatherRequestPath", url))
     WeatherApi.retryWeatherRequest(() => getJsonRequest(url), requestRetryDelay, actorSystem.scheduler, requestRetryMax).recover {
+      case NonFatal(error: TimeoutException) =>
+        log.warn(
+          s"Request to weather api ($url) timed out (this is expected, especially at 0 and 30 mins past the hour due to" +
+          s" a problem with accuweather).", error)(weatherLogsMarkerContext)
+        throw error
       case NonFatal(error) =>
-        log.error(s"Error fetching $url - $error")
+        log.error("Weather API request failed", error)(weatherLogsMarkerContext)
         throw error
     }
   }
