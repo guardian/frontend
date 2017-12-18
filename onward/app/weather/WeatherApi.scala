@@ -13,8 +13,7 @@ import weather.models.accuweather.{ForecastResponse, LocationResponse, WeatherRe
 import model.ApplicationContext
 
 import scala.concurrent.duration._
-import play.api.{MarkerContext, Mode}
-import net.logstash.logback.marker.Markers.append
+import play.api.Mode
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
@@ -50,11 +49,15 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
     if (context.environment.mode == Mode.Test) {
       Future(Json.parse(slurpOrDie(new URI(url).getPath.stripPrefix("/"))))
     } else {
-      getJsonRequest(url).recover {
-        case NonFatal(error) =>
-          log.error(s"Error fetching $url", error)(MarkerContext(append("weatherRequestPath", url)))
-          throw error
-      }
+      getJsonWithRetry(url)
+    }
+  }
+
+  private def getJsonWithRetry(url: String): Future[JsValue] = {
+    WeatherApi.retryWeatherRequest(() => getJsonRequest(url), requestRetryDelay, actorSystem.scheduler, requestRetryMax).recover {
+      case NonFatal(error) =>
+        log.error(s"Error fetching $url - $error")
+        throw error
     }
   }
 
@@ -89,4 +92,18 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
     getJson(forecastLookUp(cityId)).map({ r =>
       Json.fromJson[Seq[ForecastResponse]](r).get
     })
+}
+
+object WeatherApi extends Logging {
+
+  def retryWeatherRequest(request: () => Future[JsValue], retryDelay: FiniteDuration, scheduler: Scheduler, attempts: Int)(implicit ec: ExecutionContext): Future[JsValue] = {
+    def loop(attemptsRemaining: Int): Future[JsValue] = {
+      request().recoverWith {
+        case NonFatal(error) =>
+          if (attemptsRemaining <= 1) Future.failed(error) else after(retryDelay, scheduler)(loop(attemptsRemaining - 1))
+      }
+    }
+    loop(attempts)
+  }
+
 }
