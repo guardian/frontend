@@ -2,7 +2,6 @@ package test
 
 import conf.Configuration
 import conf.switches.Switches._
-import org.openqa.selenium.By
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import org.fluentlenium.core.filter.FilterConstructor._
 import collection.JavaConverters._

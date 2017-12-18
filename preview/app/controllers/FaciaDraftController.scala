@@ -17,7 +17,7 @@ class FaciaDraftController(
 )(implicit val context: ApplicationContext)
   extends FaciaController with RendersItemResponse {
 
-  private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents)
+  private val indexController = new TagController(contentApiClient, sectionsLookUp, controllerComponents)
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     log.info(s"Serving Path: $path")

@@ -1,12 +1,12 @@
-package test
+package controllers
 
 import contentapi.SectionsLookUp
-import controllers.IndexController
-import play.api.test._
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
-import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
+import play.api.test._
+import test._
 
-@DoNotDiscover class IndexControllerTest
+@DoNotDiscover class TagControllerTest
   extends FlatSpec
   with Matchers
   with BeforeAndAfterAll
@@ -23,14 +23,14 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
     sectionsLookUp.refresh()
   }
 
-  lazy val indexController = new IndexController(
+  lazy val tagController = new TagController(
     testContentApiClient,
     sectionsLookUp,
     play.api.test.Helpers.stubControllerComponents()
   )
 
-  "Index Controller" should "200 when content type is front" in {
-    val result = indexController.render(section)(TestRequest(s"/$section"))
+  "Tag Controller" should "200 when content type is front" in {
+    val result = tagController.render(section)(TestRequest(s"/$section"))
     status(result) should be(200)
   }
 
@@ -39,26 +39,26 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = indexController.render(section)(fakeRequest)
+    val result = tagController.render(section)(fakeRequest)
     status(result) should be(200)
     contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("{\"html\"")
   }
 
   it should "internal redirect when content type is not front" in {
-    val result = indexController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("/world/video/2012/feb/10/inside-tibet-heart-protest-video"))
+    val result = tagController.render("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("/world/video/2012/feb/10/inside-tibet-heart-protest-video"))
     status(result) should be(200)
     header("X-Accel-Redirect", result).get should be("/applications/world/video/2012/feb/10/inside-tibet-heart-protest-video")
   }
 
   it should "200 when content type is front trails" in {
-    val result = indexController.renderTrails(section)(TestRequest(s"/$section"))
+    val result = tagController.renderTrails(section)(TestRequest(s"/$section"))
     status(result) should be(200)
   }
 
   it should "redirect when content api says it is on the wrong web url" in {
 
-    val result = indexController.render("type/video")(TestRequest("/type/video"))
+    val result = tagController.render("type/video")(TestRequest("/type/video"))
 
     status(result) should be (302)
     header("Location", result).get should be ("/video")
@@ -66,7 +66,7 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
 
   it should "correctly redirect short urls to other servers" in {
 
-    val result = indexController.render("p/3jdag")(TestRequest("/p/3jdag"))
+    val result = tagController.render("p/3jdag")(TestRequest("/p/3jdag"))
 
     status(result) should be (302)
     header("Location", result).get should be ("/music/2013/oct/11/david-byrne-internet-content-world")
@@ -77,7 +77,7 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = indexController.renderTrails(section)(fakeRequest)
+    val result = tagController.renderTrails(section)(fakeRequest)
     status(result) should be(200)
     contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("{\"html\"")
@@ -86,7 +86,7 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
   it should "redirect tag to first page if pagination goes beyond last page" in {
 
     val request = FakeRequest(GET, "/sport/cycling?page=10000")
-    val result = indexController.render("/sport/cycling")(request)
+    val result = tagController.render("/sport/cycling")(request)
 
     // temporary as this page may well exist tomorrow
     status(result) should be (302)
@@ -97,7 +97,7 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
   it should "redirect tag combiner to first page if pagination goes beyond last page" in {
 
     val request = FakeRequest(GET, "/books+tone/reviews?page=10000")
-    val result = indexController.renderCombiner("books", "tone/reviews")(request)
+    val result = tagController.renderCombiner("books", "tone/reviews")(request)
 
     // temporary as this page may well exist tomorrow
     status(result) should be (302)
@@ -106,7 +106,7 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
 
   it should "remove editions from section tags on all pages" in {
     val request = FakeRequest(GET, "/uk/culture/all")
-    val result = indexController.render("uk/culture")(request)
+    val result = tagController.render("uk/culture")(request)
 
     status(result) should be (302)
 
@@ -115,7 +115,7 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
 
   it should "remove editions past the first page of section tags" in {
     val request = FakeRequest(GET, "/uk/business?page=2")
-    val result = indexController.render("uk/business")(request)
+    val result = tagController.render("uk/business")(request)
 
     status(result) should be (302)
 
@@ -124,21 +124,21 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
 
   it should "not accidentally truncate tags that contain valid strings that are also editions" in {
     val request = FakeRequest(GET, "/uk/london?page=2")
-    val result = indexController.render("uk/london")(request)
+    val result = tagController.render("uk/london")(request)
 
     status(result) should be (200)
   }
 
   it should "not add editions to section tags" in {
     val request = FakeRequest(GET, "/sport?page=2")
-    val result = indexController.render("sport")(request)
+    val result = tagController.render("sport")(request)
 
     status(result) should be (200)
   }
 
   "Normalise tags" should "convert content/gallery to type/gallery" in {
     val tag = "content/gallery"
-    val result = indexController.normaliseTag(tag)
+    val result = tagController.normaliseTag(tag)
     result should be ("type/gallery")
   }
 
@@ -146,28 +146,28 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
     val tags = Seq("conten/gallery", "contentt/gallery", "content",
       "type/gallery", "media/media", "media", "content", "type")
     tags.map{ tag =>
-      val result = indexController.normaliseTag(tag)
+      val result = tagController.normaliseTag(tag)
       result should be (tag)
     }
   }
 
   it should "serve RSS for a section" in {
-    val result = indexController.render("books")(TestRequest("/books/rss"))
+    val result = tagController.render("books")(TestRequest("/books/rss"))
     status(result) should be(200)
     contentType(result) should be(Some("text/xml"))
     contentAsString(result) should startWith("<?xml")
   }
 
   it should "resolve uk-news combiner pages" in {
-    val result = indexController.renderCombiner("uk-news/series/writlarge", "law/trial-by-jury")(TestRequest("/uk-news/series/writlarge+law/trial-by-jury"))
+    val result = tagController.renderCombiner("uk-news/series/writlarge", "law/trial-by-jury")(TestRequest("/uk-news/series/writlarge+law/trial-by-jury"))
     status(result) should be(200)
 
-    val result2 = indexController.renderCombiner("uk-news/the-northerner", "blackpool")(TestRequest("/uk-news/the-northerner+blackpool"))
+    val result2 = tagController.renderCombiner("uk-news/the-northerner", "blackpool")(TestRequest("/uk-news/the-northerner+blackpool"))
     status(result2) should be(200)
   }
 
   it should "redirect 'section tags' to the section page" in {
-    val result = indexController.render("sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone")(TestRequest())
+    val result = tagController.render("sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone")(TestRequest())
     status(result) should be(301)
     header("Location", result).head should be ("/sustainable-business-grundfos-partner-zone")
   }

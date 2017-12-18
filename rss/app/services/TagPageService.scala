@@ -1,5 +1,6 @@
 package services
 
+import com.github.nscala_time.time.Implicits._
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.{ItemResponse, SearchResponse, Section => ApiSection}
 import common._
@@ -7,12 +8,11 @@ import contentapi.{ContentApiClient, QueryDefaults, SectionTagLookUp, SectionsLo
 import implicits.Collections
 import model._
 import org.joda.time.DateTime
-import com.github.nscala_time.time.Implicits._
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 
 import scala.concurrent.Future
 
-trait Index extends ConciergeRepository with Collections {
+trait TagPageService extends ConciergeRepository with Collections {
 
   implicit val context: ApplicationContext
 
@@ -41,8 +41,8 @@ trait Index extends ConciergeRepository with Collections {
 
   }
 
-  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean)
-           (implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
+  def tagPage(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean)
+           (implicit request: RequestHeader): Future[Either[TagPage, PlayResult]] = {
 
     val section = leftSide.split('/').head
 
@@ -66,10 +66,10 @@ trait Index extends ConciergeRepository with Collections {
     val promiseOfResponse = contentApiClient.getResponse(contentApiClient.search(edition)
       .tag(s"$firstTag,$secondTag")
       .page(page)
-      .pageSize(IndexPagePagination.pageSize)
+      .pageSize(TagPagePagination.pageSize)
       .showFields(if (isRss) rssFields else QueryDefaults.trailFieldsWithMain)
     ).map {response =>
-      val trails = response.results.map(IndexPageItem(_)).toList
+      val trails = response.results.map(TagPageItem(_)).toList
       trails match {
         case Nil => Right(NotFound)
         case head :: _ =>
@@ -77,7 +77,7 @@ trait Index extends ConciergeRepository with Collections {
           val tag2 = findTag(head.item, secondTag)
           if (tag1.isDefined && tag2.isDefined) {
             val page = TagCombiner(s"$leftSide+$rightSide", tag1.get, tag2.get, pagination(response))
-            Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
+            Left(TagPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
           } else {
             Right(NotFound)
           }
@@ -109,7 +109,7 @@ trait Index extends ConciergeRepository with Collections {
     response.total
   ))
 
-  def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
+  def tagPage(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[TagPage, PlayResult]] = {
     val fields = if (isRss) rssFields else QueryDefaults.trailFieldsWithMain
 
     val maybeSection = sectionsLookUp.get(path)
@@ -125,7 +125,7 @@ trait Index extends ConciergeRepository with Collections {
     val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
 
     val promiseOfResponse = contentApiClient.getResponse(contentApiClient.item(queryPath, edition).page(pageNum)
-      .pageSize(IndexPagePagination.pageSize)
+      .pageSize(TagPagePagination.pageSize)
       .showFields(fields)
     ) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse
@@ -146,26 +146,26 @@ trait Index extends ConciergeRepository with Collections {
     val editorsPicks = response.editorsPicks.getOrElse(Nil)
     val editorsPicksIds = editorsPicks.map(_.id)
     val latestContent = response.results.getOrElse(Nil).filterNot(c => editorsPicksIds contains c.id)
-    val trails = (editorsPicks ++ latestContent).map(IndexPageItem(_))
+    val trails = (editorsPicks ++ latestContent).map(TagPageItem(_))
     val commercial = Commercial.empty
 
-    IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial)
+    TagPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial)
   }
 
   private def tag(response: ItemResponse, page: Int) = {
     val tag = response.tag map { Tag.make(_, pagination(response)) }
     val leadContentCutOff = DateTime.now - QueryDefaults.leadContentMaxAge
-    val editorsPicks = response.editorsPicks.getOrElse(Nil).map(IndexPageItem(_))
+    val editorsPicks = response.editorsPicks.getOrElse(Nil).map(TagPageItem(_))
     val leadContent = if (editorsPicks.isEmpty && page == 1) //only promote lead content on first page
-      response.leadContent.getOrElse(Nil).take(1).map(IndexPageItem(_)).filter(_.item.trail.webPublicationDate > leadContentCutOff)
+      response.leadContent.getOrElse(Nil).take(1).map(TagPageItem(_)).filter(_.item.trail.webPublicationDate > leadContentCutOff)
     else
       Nil
     val leadContentIds = leadContent.map(_.item.metadata.id)
 
-    val latest: Seq[IndexPageItem] = response.results.getOrElse(Nil).map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
+    val latest: Seq[TagPageItem] = response.results.getOrElse(Nil).map(TagPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
     tag map { tag =>
-      IndexPage(page = tag, contents = allTrails, tags = Tags(List(tag)), date = DateTime.now, tzOverride = None)
+      TagPage(page = tag, contents = allTrails, tags = Tags(List(tag)), date = DateTime.now, tzOverride = None)
     }
   }
 

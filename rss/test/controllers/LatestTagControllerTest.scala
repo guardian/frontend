@@ -1,10 +1,10 @@
-package test
+package controllers
 
-import controllers.LatestIndexController
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
+import test._
 
-@DoNotDiscover class LatestIndexControllerTest
+@DoNotDiscover class LatestTagControllerTest
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
@@ -15,34 +15,34 @@ import play.api.test.Helpers._
 
   private val MovedPermanently = 301
   private val Found = 302
-  lazy val latestIndexController = new LatestIndexController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
+  lazy val latestTagController = new LatestTagController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   it should "redirect to latest for a series" in {
-    val result = latestIndexController.latest("football/series/thefiver")(TestRequest())
+    val result = latestTagController.latest("football/series/thefiver")(TestRequest())
     status(result) should be(Found)
     header("Location", result).head should include ("/football/20")
   }
 
   it should "redirect to latest for a blog" in {
-    val result = latestIndexController.latest("fashion/fashion-blog")(TestRequest())
+    val result = latestTagController.latest("fashion/fashion-blog")(TestRequest())
     status(result) should be(Found)
     header("Location", result).head should include ("/fashion-blog/")
   }
 
   it should "redirect to the all page for keywords" in {
-    val result = latestIndexController.latest("football/arsenal")(TestRequest())
+    val result = latestTagController.latest("football/arsenal")(TestRequest())
     status(result) should be(MovedPermanently)
     header("Location", result).head should endWith ("/football/arsenal/all")
   }
 
   it should "redirect to the all page for a section" in {
-    val result = latestIndexController.latest("books")(TestRequest())
+    val result = latestTagController.latest("books")(TestRequest())
     status(result) should be(MovedPermanently)
     header("Location", result).head should be ("/books/all")
   }
 
   it should "404 for a bad url" in {
-    val result = latestIndexController.latest("books/not-here")(TestRequest())
+    val result = latestTagController.latest("books/not-here")(TestRequest())
     status(result) should be(404)
   }
 }

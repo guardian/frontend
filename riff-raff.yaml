@@ -37,7 +37,7 @@ deployments:
     template: frontend
   preview:
     template: frontend
-  rss:
+  tag:
     template: frontend
   sport:
     template: frontend

@@ -34,16 +34,8 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
   }
 
-  def applicationsRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
-    successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
-  }
-
-  def rssRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
-    successful(InternalRedirect.internalRedirect(
-      "rss_server",
-      path,
-      request.rawQueryStringOption.map("?" + _)
-    ))
+  def forwardToTag(path: String)(implicit request: RequestHeader): Future[Result] = {
+    successful(InternalRedirect.internalRedirect("tag_service", path, request.rawQueryStringOption.map("?" + _)))
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
@@ -76,7 +68,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     if (shouldEditionRedirect(path))
       redirectTo(s"${Editionalise(path, Edition(request))}/rss")
     else if (!ConfigAgent.shouldServeFront(path))
-      rssRedirect(s"$path/rss")
+      forwardToTag(path)
     else
       renderFrontPressResult(path)
   }
@@ -87,7 +79,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     if (shouldEditionRedirect(path))
       redirectTo(Editionalise(path, Edition(request)))
     else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
-      applicationsRedirect(path)
+      forwardToTag(path)
     else
       renderFrontPressResult(path)
   }

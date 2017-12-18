@@ -2,24 +2,21 @@ package pages
 
 import common.Edition
 import conf.switches.Switches.WeAreHiring
-import html.HtmlPageHelpers._
+import html.HtmlPageHelpers.{ContentCSSFile, _}
 import html.{HtmlPage, Styles}
 import model.ApplicationContext
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import services.IndexPage
-import views.IndexCleaner
-import views.html.all
+import services.TagPage
 import views.html.fragments._
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import views.html.fragments.page.{devTakeShot, htmlTag}
-import html.HtmlPageHelpers.ContentCSSFile
 import views.html.stacked
 
-object IndexHtml {
+object TagHtml {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = stacked(
@@ -35,11 +32,11 @@ object IndexHtml {
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
-  def html( page: IndexPage)(
+  def html(page: TagPage)(
     headContent: Html = Html(""),
     bodyContent: Html = Html("")
   )(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
-    implicit val p: IndexPage = page
+    implicit val p: TagPage = page
 
     htmlTag(
       headTag(
@@ -69,17 +66,17 @@ object IndexHtml {
 
 }
 
-object IndexHtmlPage extends HtmlPage[IndexPage] {
-  def html(page: IndexPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html =
-    IndexHtml.html(page)(
-      headContent = indexHead(page),
-      bodyContent = IndexCleaner(page, indexBody(page))
+object TagHtmlPage extends HtmlPage[TagPage] {
+  def html(page: TagPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html =
+    TagHtml.html(page)(
+      headContent = tagPageHead(page),
+      bodyContent = TagPageCleaner(page, tagPageBody(page))
     )
 }
 
-object AllIndexHtmlPage extends HtmlPage[IndexPage] {
-  def html(page: IndexPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html =
-    IndexHtml.html(page)(
+object AllTagHtmlPage extends HtmlPage[TagPage] {
+  def html(page: TagPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html =
+    TagHtml.html(page)(
       bodyContent = all(page)
     )
 }
