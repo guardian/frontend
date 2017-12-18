@@ -10,7 +10,8 @@ $pillars: (
         headlineIcon: $news-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $news-garnett-main-1,
-        invertedKicker: $news-garnett-media-main-1
+        invertedKicker: $news-garnett-media-main-1,
+        underline: $news-garnett-main-2
     ),
     opinion: (
         cardBackground: $garnett-neutral-3,
@@ -23,7 +24,9 @@ $pillars: (
         headlineIcon: $opinion-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $opinion-garnett-main-1,
-        invertedKicker: $opinion-garnett-media-main-1
+        invertedKicker: $opinion-garnett-media-main-1,
+        underline: $opinion-garnett-main-2
+
     ),
     sport: (
         cardBackground: $garnett-neutral-3,
@@ -36,7 +39,9 @@ $pillars: (
         headlineIcon: $sport-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $sport-garnett-feature,
-        invertedKicker: $sport-garnett-media-main-1
+        invertedKicker: $sport-garnett-media-main-1,
+        underline: $sport-garnett-main-2
+
     ),
     arts: (
         cardBackground: $garnett-neutral-3,
@@ -49,7 +54,9 @@ $pillars: (
         headlineIcon: $arts-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $arts-garnett-main-1,
-        invertedKicker: $arts-garnett-media-main-1
+        invertedKicker: $arts-garnett-media-main-1,
+        underline: $arts-garnett-main-2
+
     ),
     lifestyle: (
         cardBackground: $garnett-neutral-3,
@@ -62,9 +69,21 @@ $pillars: (
         headlineIcon: $lifestyle-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $lifestyle-garnett-feature,
-        invertedKicker: $lifestyle-garnett-media-main-1
+        invertedKicker: $lifestyle-garnett-media-main-1,
+        underline: $lifestyle-garnett-main-2
     )
 );
+
+@mixin garnett-underline($colour, $line-height) {
+    background-image: linear-gradient(to bottom, 
+        transparent,
+        transparent calc(#{$line-height} - 1px),
+        $colour);
+    background-size: 1px $line-height;
+    background-origin: content-box;
+    background-clip: content-box;
+    margin-right: $gs-gutter / -4;
+}
 
 @mixin colours($palette) {
     $cardBackground: map-get($palette, cardBackground);
@@ -172,6 +191,12 @@ $pillars: (
     &.fc-item--type-media {
         .fc-sublink__kicker {
             color: map-get($palette, kicker);
+        }
+    }
+
+    &.fc-item--type-analysis {
+        .fc-item__title {
+            @include garnett-underline(map-get($palette, underline), 28px);
         }
     }
 
