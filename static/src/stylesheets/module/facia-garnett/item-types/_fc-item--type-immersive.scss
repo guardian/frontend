@@ -1,4 +1,8 @@
-@mixin immersiveBottom() {
+@mixin immersiveCommon() {
+    .fc-item__kicker {
+        display: block;
+    }
+
     .fc-item__container {
         overflow: hidden;
     }
@@ -6,6 +10,11 @@
     .fc-item__content {
         background-color: $immersive-garnett-main-1;
         z-index: 1;
+    }
+
+    .fc-item__content {
+        position: absolute;
+        left: 0;
     }
 
     .fc-item__headline {
@@ -18,40 +27,88 @@
         }
     }
 
+    .fc-slice--h-q-q & .fc-item__standfirst,
+    &.fc-item--three-quarters-tablet .fc-item__standfirst,
+    &.fc-item--three-quarters-tall-tablet .fc-item__standfirst {
+        display: none;
+    }
+
     // ensures image is positioned relative to fc-item__container
     .u-responsive-ratio {
         position: static;
     }
+
+}
+
+@mixin immersiveBottom() {
+    @include immersiveCommon();
+
+    .fc-item__content {
+        bottom: 0;
+        right: 0;
+    }
+
+    &.fc-item--half-tablet {
+        @include mq($from: tablet) {
+            .u-responsive-ratio {
+                padding-bottom: 100%;
+            }
+        }
+    }
+
+    &.fc-item--three-quarters-tall-tablet {
+        @include mq($from: tablet) {
+            .u-responsive-ratio {
+                padding-bottom: 80%;
+            }
+        }
+    }    
 }
 
 @mixin immersiveLeft() {
-    .fc-item__container {
-        overflow: hidden;
-    }
-
-    .fc-item__media-wrapper {
-        position: absolute;
-        width: 100%;
-        flex: none;
-    }
-
+    @include immersiveCommon();
+    
     .fc-item__content {
-        flex: none;
-        position: absolute;
-        left: 0;
-        height: 100%;
-        background-color: $immersive-garnett-main-1;
+        bottom: 0;
+        top: 0;
     }
+    
 
-    .fc-item__headline {
-        color: #ffffff;
+    .u-responsive-ratio {
+        padding-bottom: 45%;
+    }
+}
+
+@mixin immersiveRight() {
+    @include immersiveCommon();
+    
+    .fc-item__content {
+        left: auto;
+        right: 0;
+        bottom: 0;
+        top: 0;
+    }
+    
+
+    .u-responsive-ratio {
+        padding-bottom: 45%;
     }
 }
 
 .fc-item--type-immersive {
+    
     .fc-item__kicker:before,
     .fc-item__kicker:after {
         content: none;
+    }
+
+    .fc-item__meta {
+        margin-left: auto;
+        color: #ffffff;
+    }
+
+    .inline-icon {
+        fill: #ffffff;
     }
 
     &.fc-item--standard-mobile {
@@ -62,17 +119,22 @@
 
     &.fc-item--standard-tablet,
     &.fc-item--third-tablet,
-    &.fc-item--half-tablet {
+    &.fc-item--half-tablet,
+    &.fc-item--three-quarters-tall-tablet {
         @include mq($from: tablet) {
             @include immersiveBottom();
         }
     }
-
-    &.fc-item--three-quarters-tablet,
-    &.fc-item--three-quarters-right-tablet,
-    &.fc-item--three-quarters-tall-tablet {
+    
+    &.fc-item--three-quarters-tablet {
         @include mq($from: tablet) {
             @include immersiveLeft();
+        }
+    }
+    
+    &.fc-item--three-quarters-right-tablet {
+        @include mq($from: tablet) {
+            @include immersiveRight();
         }
     }
 }
