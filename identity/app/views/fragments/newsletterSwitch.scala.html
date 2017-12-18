@@ -8,8 +8,7 @@
 @(
     emailPrefsForm: Form[_],
     emailSubscriptions: List[String],
-    newsletter: EmailNewsletter,
-    transferV1SubscriptionsPrompt: Boolean = false
+    newsletter: EmailNewsletter
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages, request: RequestHeader)
 
 @buildFooter(newsletter: EmailNewsletter) = {
@@ -24,13 +23,6 @@
     }
 }
 
-@isPreTicked = @{
-    if (transferV1SubscriptionsPrompt)
-        None
-    else
-        Some(newsletter.subscribedTo(emailSubscriptions).toString)
-}
-
 @newsletterField = @{
     new Field(
         form = emailPrefsForm,
@@ -38,7 +30,7 @@
         constraints = Nil,
         format = None,
         errors = Nil,
-        value = isPreTicked
+        value = Some(newsletter.subscribedTo(emailSubscriptions).toString)
     )
 }
 

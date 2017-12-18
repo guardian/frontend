@@ -1,6 +1,33 @@
 @mixin headline-boost($size) {
     .fc-item--has-boosted-title & {
         @include fs-headline($size, true);
+        @include fs-headline-quote($size);
+    }
+}
+
+@mixin cutout-sublinks {
+    .fc-item__footer--vertical {
+        display: none;
+    }
+
+    .fc-item__footer--horizontal {
+        display: block;
+        padding-left: $fc-item-gutter;
+        padding-right: $fc-item-gutter;
+    }
+}
+
+@mixin cutout-first-sublink {
+    .fc-sublink:first-child {
+        margin-top: 0;
+
+        .fc-sublink__title {                
+            &:before {
+                width: auto;
+                left: 0 - $fc-item-gutter;
+                right: 0 - $fc-item-gutter;
+            }
+        }
     }
 }
 
@@ -20,9 +47,8 @@
 @import 'item-layouts/fc-item--fluid';
 
 @import 'item-types/_fc-item--type-liveblog';
-@import 'item-types/_fc-item--type-video';
-@import 'item-types/_fc-item--type-audio';
-@import 'item-types/_fc-item--type-gallery';
+@import 'item-types/_fc-item--type-media';
+@import 'item-types/_fc-item--type-comment';
 
 .fc-slice__item {
     width: 100%;
@@ -60,34 +86,35 @@
 .fc-item--standard-mobile {
     @include mq($until: tablet) {
         &.fc-item--has-cutout {
-            .fc-item__header,
-            .fc-sublinks {
-                padding-right: 25%;
+            .fc-item__header {
+                padding-right: gs-span(1.5);
             }
-        }
 
-        &[class*='fc-item--has-sublinks'] {
-            &.fc-item--has-cutout {
-                .fc-item__header {
-                    padding-right: 0;
-                }
+            .fc-item__standfirst {
+                display: none;
+            }
 
-                .fc-sublinks {
-                    min-height: gs-height(3) + $gs-baseline;
-                }
+            .fc-item__content {
+                min-height: gs-height(2) + $gs-baseline;
+            }
 
-                .fc-item__footer--vertical {
-                    max-width: gs-span(5);
+            .fc-item__avatar {
+                width: gs-span(1.5);
+                height: gs-span(1.5);
+            }
+    
+            .fc-item__avatar__media {
+                right: 0 - $gs-gutter;
+                height: gs-span(1) + $gs-baseline * 3;
+            }
+
+            &[class*='fc-item--has-sublinks'] {
+                @include cutout-sublinks;
+
+                &:not(.fc-item--type-comment) {
+                    @include cutout-first-sublink;
                 }
             }
-        }
-
-        .fc-item__avatar {
-            height: gs-height(2) + $gs-baseline  * 2;
-        }
-
-        .fc-item__avatar__media {
-            right: - $gs-gutter;
         }
     }
 }
@@ -99,6 +126,7 @@
         .fc-item__header {
             @include mq($until: desktop) {
                 @include fs-headline(2, true);
+                @include fs-headline-quote(2);
                 @include headline-boost(3);
             }
         }
@@ -110,27 +138,35 @@
         }
 
         &.fc-item--has-cutout {
-            .fc-item__container {
-                padding-bottom: gs-height(3) + $gs-baseline * 3;
+            .fc-item__standfirst {
+                display: none;
             }
-        }
 
-        .fc-item__avatar {
-            height: gs-height(4);
-        }
+            .fc-item__header {
+                padding-bottom: gs-height(4);
+    
+                @include mq(desktop) {
+                    padding-bottom: gs-height(4.5);
+                }
+            }
 
-        .fc-item__avatar__media {
-            right: -40%;
-        }
-    }
+            .fc-item__avatar {
+                width: gs-height(3);
+                height: gs-height(3);
+            }
+    
+            .fc-item__avatar__media {
+                height: gs-height(4);
+                right: -35%;
+            }
 
-    @include mq(desktop) {
-        &.fc-item--has-cutout .fc-item__container {
-            padding-bottom: gs-height(3) + $gs-baseline  * 2;
-        }
+            &[class*='fc-item--has-sublinks'] {
+                @include cutout-sublinks;
 
-        .fc-item__avatar__media {
-            right: -20%;
+                &:not(.fc-item--type-comment) {
+                    @include cutout-first-sublink;
+                }
+            }
         }
     }
 }
@@ -138,6 +174,16 @@
 .fc-item--third-tablet {
     @include mq(tablet) {
         @include fc-item--third;
+
+        &.fc-item--has-cutout {
+            &[class*='fc-item--has-sublinks'] {
+                @include cutout-sublinks;
+
+                &:not(.fc-item--type-comment) {
+                    @include cutout-first-sublink;
+                }
+            }
+        }
     }
 }
 
@@ -213,33 +259,67 @@
 .fc-item--full-media-100-tablet {
     @include mq(tablet) {
         &.fc-item--has-cutout {
+            .fc-item__avatar {
+                width: gs-height(4.5);
+                height: gs-height(4.5);
+            }
+
+            .fc-item__avatar__media {
+                right: -35%;
+                height: gs-height(6);
+            }
+
             .fc-item__container {
-                min-height: gs-height(5) + $gs-baseline * 3;
-                flex-direction: row;
+                min-height: gs-height(7);
             }
 
             .fc-item__content {
-                width: auto;
-                max-width: gs-span(6);
+                max-width: 100%;
+            }
+
+            .fc-item__header {
+                @include fs-headline(4, true);
+                @include fs-headline-quote(4);
+                @include headline-boost(5);
 
                 @include mq(desktop) {
-                    max-width: gs-span(8);
+                    @include fs-headline(6, true);
+                    @include fs-headline-quote(6);
+                    @include headline-boost(7);
+                }
+
+                padding-right: gs-height(4.5);
+            }
+
+            .fc-item__footer--vertical,
+            .fc-item__standfirst-wrapper {
+                padding-right: gs-span(5);
+
+                @include mq(desktop) {
+                    padding-right: gs-span(7);
                 }
             }
 
             .fc-item__standfirst {
-                @include fs-headline(2);
-                padding-right: gs-span(2);
+                // @include fs-headline(2);
                 display: block;
             }
-        }
 
-        .fc-item__avatar {
-            height: gs-height(6);
-        }
+            &.fc-item--has-sublinks-4 {
+                @include fc-sublinks--below;
 
-        .fc-item__avatar__media {
-            right: -5%;
+                &:not(.fc-item--type-comment) .fc-item__footer--horizontal .fc-sublink {
+                    margin-top: 0;
+        
+                    .fc-sublink__title {                
+                        &:before {
+                            width: auto;
+                            left: 0 - $fc-item-gutter;
+                            right: 0 - $fc-item-gutter;
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -250,9 +330,11 @@
         &:not(.fc-item--has-cutout) {
             .fc-item__header {
                 @include fs-headline(3, true);
+                @include fs-headline-quote(3);
 
                 @include mq(desktop) {
                     @include fs-headline(5, true);
+                    @include fs-headline-quote(5);
                     @include headline-boost(6);
                 }
             }
@@ -275,18 +357,6 @@
                 display: none;
             }
         }
-
-        &.fc-item--has-cutout {
-            .fc-item__header {
-                @include fs-headline(4, true);
-                @include headline-boost(5);
-
-                @include mq(desktop) {
-                    @include fs-headline(6, true);
-                    @include headline-boost(7);
-                }
-            }
-        }
     }
 }
 
@@ -302,6 +372,7 @@
 
         .fc-item__header {
             @include fs-headline(5, true);
+            @include fs-headline-quote(5);
         }
     }
 }
@@ -317,6 +388,7 @@
 
         .fc-item__header {
             @include fs-headline(3, true);
+            @include fs-headline-quote(3);
         }
 
         &[class*='fc-item--has-sublinks'] {
@@ -329,6 +401,7 @@
     @include mq(desktop) {
         .fc-item__header {
             @include fs-headline(6, true);
+            @include fs-headline-quote(6);
         }
 
         .fc-item__header,

@@ -541,7 +541,7 @@ trait FeatureSwitches {
     "profile-show-cancel-contributor",
     "When ON, the edit profile page will include the cancel contribution button",
     owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2018, 1, 15),
     exposeClientSide = true
   )

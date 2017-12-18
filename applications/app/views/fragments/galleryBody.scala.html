@@ -14,7 +14,7 @@
     @* Manually placing tonal--tone-media as temporary fix to ensute special report tones have it *@
     <article id="article" class="@RenderClasses(
             Map("content--paidgallery" -> isPaidContent(page)),
-            "content", "content--media", "content--gallery", "tonal", "content--immersive", "tonal--tone-media", s"tonal--${toneClass(page.item)}"
+            "content", "content--media", "content--gallery", s"content--pillar-${page.metadata.pillar.nameOrDefault}", "tonal", "content--immersive", "tonal--tone-media", s"tonal--${toneClass(page.item)}"
         )"
         itemscope itemtype="@page.item.metadata.schemaType" role="main">
 

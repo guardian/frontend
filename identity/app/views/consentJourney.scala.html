@@ -22,15 +22,9 @@
     newsletterHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@onlySubscribedToNewsletters(onlyV1Newsletters: Boolean) = @{
-    if (onlyV1Newsletters) {
-        EmailNewsletters.all.subscriptions.filter { newsletter =>
-            emailSubscriptions.intersect(newsletter.aliasedIds.map(_.toString)).nonEmpty
-        }
-    } else {
-        EmailNewsletters.all.subscriptions.filter { newsletter =>
-            emailSubscriptions.intersect(newsletter.allIds.map(_.toString)).nonEmpty
-        }
+@onlySubscribedToNewsletters = @{
+    EmailNewsletters.all.subscriptions.filter { newsletter =>
+        emailSubscriptions.contains(newsletter.listId.toString)
     }
 }
 
@@ -91,20 +85,19 @@
                         You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
                     </p>
                 }
-            <div class="manage-account__switches">
-                <ul>
-                @onlySubscribedToNewsletters(isNarrow).zipWithRowInfo.map { case (newsletter, row) =>
-                <li>
-                    @fragments.newsletterSwitch(
-                        emailPrefsForm,
-                        emailSubscriptions,
-                        newsletter = newsletter,
-                        isNarrow
-                    )(nonInputFields, messages, request)
-                </li>
-                }
-                </ul>
-            </div>
+                <div class="manage-account__switches">
+                    <ul>
+                        @onlySubscribedToNewsletters.zipWithRowInfo.map { case (newsletter, row) =>
+                            <li>
+                                @fragments.newsletterSwitch(
+                                    emailPrefsForm,
+                                    emailSubscriptions,
+                                    newsletter = newsletter
+                                )(nonInputFields, messages, request)
+                            </li>
+                        }
+                    </ul>
+                </div>
             </form>
         </div>
     }
