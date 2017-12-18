@@ -68,7 +68,7 @@ const buildFormDataForFields = (
 ): FormData => {
     const formData: FormData = new FormData();
     formData.append('csrfToken', csrfToken);
-    fields.forEach((field: HTMLInputElement) => {
+    [...fields].forEach((field: HTMLInputElement) => {
         switch (field.type) {
             case 'checkbox':
                 formData.append(field.name, field.checked.toString());

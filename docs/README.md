@@ -30,7 +30,7 @@
 - [Testing externally on your localhost](03-dev-howtos/09-testing-externally-on-localhost.md)
 - [Testing AMIs or provisioning in AWS](03-dev-howtos/10-testing-platform.md)
 - [Accessing HTTP access logs for your localhost](03-dev-howtos/11-access-logs-for-your-localhost.md)
-- [Update configuration in s3](03-dev-howtos/12-Update-configuration-in-s3.md)
+- [Update configuration](03-dev-howtos/12-Update-configuration.md)
 - [Implement Google Analytics](03-dev-howtos/13-implement-google-analytics.md)
 - [Overriding default configuration](03-dev-howtos/14-override-default-configuration.md)
 - [Updating the test database](03-dev-howtos/15-updating-test-database.md)

@@ -5,6 +5,7 @@ $quote-mark: 35px;
     padding-bottom: 0;
 }
 
+.content--media,
 .content--type-analysis,
 .content--type-article,
 .content--type-comment,
@@ -19,7 +20,7 @@ $quote-mark: 35px;
         padding-top: $gs-baseline / 2;
 
         &:before {
-            @include multiline(4);
+            @include multiline(4, $garnett-neutral-4);
         }
     }
 
@@ -104,7 +105,7 @@ $quote-mark: 35px;
         }
 
         &:before {
-            @include multiline(4);
+            @include multiline(4, $garnett-neutral-4);
         }
     }
 
@@ -192,7 +193,6 @@ $quote-mark: 35px;
         //only way to override behaviour
     }
 
-
     .meta__extras {
         border: 0;
     }
@@ -202,13 +202,14 @@ $quote-mark: 35px;
         border-top: 0;
 
         &:before {
-            @include multiline(1);
+            @include multiline(1, $garnett-neutral-4);
         }
     }
 
     .meta__numbers {
         @include mq($until: leftCol) {
             margin-right: $gs-gutter/2;
+
             &:before {
                 content: none;
             }
@@ -223,7 +224,7 @@ $quote-mark: 35px;
         border-top: 0;
         @include mq(phablet) {
             &:before {
-                @include multiline(1);
+                @include multiline(1, $garnett-neutral-4);
             }
         }
     }
@@ -341,6 +342,11 @@ $quote-mark: 35px;
         display: none;
     }
 
+    .media-primary.media-primary--showcase {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
     .article__fullscreen:hover,
     .article__img-container:hover .article__fullscreen,
     .article__img-container:hover .gallery__fullscreen,
@@ -357,6 +363,49 @@ $quote-mark: 35px;
             @include fs-headlineGarnett(6);
             font-weight: 400;
             padding-bottom: $gs-baseline*2;
+        }
+    }
+
+    //Review stars
+    .stars {
+        background-color: $news-garnett-highlight;
+        display: inline-block;
+        line-height: 0;
+        padding: calc((#{$gs-baseline} / 2) - 2px);
+        margin-top: $gs-baseline / 2;
+        margin-left: $gs-gutter / 2;
+        margin-bottom: $gs-baseline;
+        transform: translatey(-$gs-baseline / 2);
+
+        @include mq($from: mobileLandscape) {
+            margin-left: $gs-gutter;
+        }
+
+        @include mq($from: phablet) {
+            margin-left: 0;
+        }
+
+        @include mq($from: tablet) {
+            margin-bottom: 0;
+            transform: translatey(-$gs-gutter);
+        }
+    }
+
+    .inline-star {
+        display: inline;
+
+        svg {
+            stroke: $garnett-neutral-1;
+            fill: transparent;
+            height: 1.2em;
+            width: 1.2em;
+        }
+    }
+
+    .inline-star.star__item--golden {
+        svg {
+            fill: $garnett-neutral-1;
+            stroke: none;
         }
     }
 
@@ -407,7 +456,7 @@ $quote-mark: 35px;
     .element-pullquote {
         background-color: $garnett-neutral-3;
         margin: $gs-gutter/4 0 $gs-baseline*2;
-        padding: 0 $gs-gutter/2 $gs-baseline;
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
         position: relative;
         clear: none;
         float: none;
@@ -456,7 +505,6 @@ $quote-mark: 35px;
         blockquote {
             display: inline;
         }
-
         // these are all temp until we get new quote mark in
         .inline-quote {
             width: 28px;
@@ -467,8 +515,9 @@ $quote-mark: 35px;
 
             svg {
                 width: inherit;
+                height: auto;
                 position: relative;
-                top: $gs-baseline/2;
+                top: 0;
             }
         }
         // Hack hide for svg
@@ -502,10 +551,9 @@ $quote-mark: 35px;
         }
         // temp fix for old quote svg, will be replaced
         .inline-quote svg {
-            width: 30px;
+            width: 25px;
             position: relative;
-            top: 8px;
-            margin-right: 0;
+            margin-right: -2px;
         }
     }
     // Quote halfWidth
@@ -593,19 +641,6 @@ $quote-mark: 35px;
         }
     }
 }
-// *************** Opinion and Feature standfirst overrides ***************
-
-.content--type-comment,
-.content--type-feature,
-.content--type-review {
-    .content__standfirst {
-        @include fs-headlineGarnett(1);
-        font-weight: 200;
-        @include mq(tablet) {
-            @include fs-headlineGarnett(2);
-        }
-    }
-}
 
 .content--type-feature,
 .content--type-review {
@@ -633,7 +668,7 @@ $quote-mark: 35px;
         position: relative;
 
         &:after {
-            @include multiline(8);
+            @include multiline(8, $garnett-neutral-4);
         }
     }
 
@@ -649,11 +684,12 @@ $quote-mark: 35px;
     .content__headline--byline {
         font-style: italic;
         margin-left: 0;
-        padding: 0 $gs-baseline/2 $gs-gutter*3;
+        padding: $gs-gutter $gs-baseline/2 $gs-gutter*2;
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
         }
         @include mq(phablet) {
+            padding-top: 0;
             padding-left: 0;
         }
         @include mq(leftCol) {
@@ -675,6 +711,7 @@ $quote-mark: 35px;
         bottom: 3px;
         // counters the 3px bottom margin on multi-rule mixin
         right: 0;
+        background: none;
         @include mq(mobileLandscape) {
             right: gs-span(3) - $gs-gutter;
         }
@@ -694,5 +731,181 @@ $quote-mark: 35px;
     .content__section-label__link {
         display: block!important;
         // only way to override defaults
+    }
+}
+// *************** Media Styles ***************
+
+.content--media:not(.paid-content) {
+    &.tonal--tone-media {
+        background-color: $garnett-neutral-1;
+    }
+
+    .content__main {
+        padding-bottom: $gs-baseline*3;
+    }
+
+    .content__header {
+        @include mq(tablet) {
+            max-width: 100%;
+        }
+    }
+
+    .content__headline {
+        color: $garnett-neutral-5;
+        padding-bottom: $gs-baseline*3;
+    }
+
+    .byline,
+    .content__headline,
+    .content__standfirst,
+    .social {
+        @include mq($until: tablet) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        @include mq(phablet) {
+            margin-left: 0;
+        }
+    }
+
+    .byline,
+    .byline a,
+    .content__dateline,
+    .content__standfirst,
+    .meta__numbers .sharecount__value,
+    a {
+        color: $garnett-neutral-4;
+    }
+
+    .byline,
+    .byline span {
+        @include fs-headline(2);
+        font-style: normal;
+    }
+
+    .content__labels {
+        padding-top: $gs-baseline/2;
+        @include mq(phablet) {
+            border-color: $garnett-neutral-6;
+        }
+    }
+
+    .content__standfirst {
+        @include mq(mobileMedium) {
+            max-width: 100%;
+        }
+    }
+
+    .u-underline {
+        border-bottom: solid 1px $garnett-neutral-6;
+    }
+
+    .content__meta-container {
+        &:before {
+            @include multiline(4, $garnett-neutral-7);
+        }
+    }
+
+    .meta__numbers,
+    .meta__social {
+        &:before {
+            @include multiline(1, $garnett-neutral-7);
+        }
+    }
+
+    .meta__numbers {
+        &:before {
+            @include mq($until: leftCol) {
+                content: none;
+            }
+        }
+    }
+
+    .inline-tone-fill,
+    .meta__numbers .inline-share svg,
+    .social-icon__svg {
+        fill: $garnett-neutral-4;
+    }
+
+    .content__dateline {
+        @include mq(phablet) {
+            &:before {
+                @include multiline(1, $garnett-neutral-6);
+            }
+        }
+    }
+
+    .byline span {
+        display: inline;
+    }
+
+    .submeta {
+        &:before {
+            @include multiline(4, $garnett-neutral-6);
+        }
+    }
+
+    .submeta__keywords {
+        border-bottom: 0;
+    }
+
+    .vjs-control-text {
+        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
+        @include video-play-button-size($vjs-small-button-size);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        user-select: none;
+        @include mq(mobileLandscape) {
+            @include video-play-button-size($vjs-large-button-size);
+        }
+
+        &:before {
+            @include circular;
+            @include video-play-button-size($vjs-small-button-size);
+            content: '';
+            display: block;
+            @include mq(mobileLandscape) {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+            background-color: $media-default;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
+            border-style: solid;
+            border-width: 1em 0 1em 2.4em;
+            border-color: transparent transparent transparent $garnett-neutral-5;
+            @include mq(tablet) {
+                // 0 border radius on mobile because stock android has a render bug with it here
+                border-radius: .2em;
+            }
+        }
+    }
+}
+// *************** Feature showcase overrides ***************
+.has-feature-showcase-element {
+    .media-primary.media-primary--showcase {
+        @include mq(wide) {
+            margin: 0 auto;
+        }
+    }
+}
+// *************** Opinion and Feature standfirst overrides ***************
+.content--type-comment,
+.content--type-feature,
+.content--type-review {
+    .content__standfirst {
+        @include fs-headlineGarnett(1);
+        font-weight: 200;
+        @include mq(tablet) {
+            @include fs-headlineGarnett(2);
+        }
     }
 }

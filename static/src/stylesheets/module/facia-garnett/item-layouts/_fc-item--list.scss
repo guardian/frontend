@@ -15,11 +15,12 @@ x x x x x x x x x x x x x x x x x x x x x x x x
 
     .fc-item__header {
         @include fs-headline(2, true);
+        @include fs-headline-quote(2);
         @include headline-boost(3);
     }
 
     &.fc-item--has-cutout {
-        .fc-item__avatar__media {
+        .fc-item__avatar {
             display: none;
         }
     }

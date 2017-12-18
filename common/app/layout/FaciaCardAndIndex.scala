@@ -37,4 +37,9 @@ case class FaciaCardAndIndex(
     case content: ContentCard => f(content)
     case other => other
   })
+
+  def withFromShowMore: FaciaCardAndIndex = item match {
+    case contentCard: ContentCard => copy(item = contentCard.copy(fromShowMore = true))
+    case _ => this
+  }
 }
