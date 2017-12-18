@@ -5,7 +5,7 @@ $fc-item-gutter: $gs-gutter / 4;
 */
 
 @mixin fs-headline-quote($level) {
-    .inline-garnett-quote__svg {
+    .fc-item__title--quoted .inline-garnett-quote__svg {
         height: get-font-size(headline, $level);
         width: get-font-size(headline, $level) * .5;
         margin-right: get-font-size(headline, $level) * .5;
@@ -59,6 +59,8 @@ $fc-item-gutter: $gs-gutter / 4;
         padding-right: gs-span(3);
     }
 }
+
+@include fs-headline-quote(2);
 
 .fc-item {
     @include mq($until: tablet) {
@@ -176,11 +178,6 @@ $fc-item-gutter: $gs-gutter / 4;
     padding-bottom: 0;
     word-wrap: break-word;
     overflow: hidden;
-}
-
-.inline-garnett-quote {
-    @include fs-headline-quote(2);
-    fill: $neutral-2;
 }
 
 .fc-item__kicker,
