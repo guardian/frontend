@@ -190,11 +190,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     }
   }
 
-  private def withFromShowMore(faciaCardAndIndex: FaciaCardAndIndex): FaciaCardAndIndex = faciaCardAndIndex.item match {
-    case contentCard: ContentCard => faciaCardAndIndex.copy(item = contentCard.copy(fromShowMore = true))
-    case _ => faciaCardAndIndex
-  }
-
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] = Action.async { implicit request =>
     frontJsonFapi.get(path).flatMap {
       case Some(pressedPage) =>
@@ -204,7 +199,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)
             containerLayout <- container.containerLayout
           } yield {
-            val withFrom = containerLayout.remainingCards.map(withFromShowMore)
+            val withFrom = containerLayout.remainingCards.map(_.withFromShowMore)
             successful(Cached(CacheTime.Facia) {
               JsonComponent(views.html.fragments.containers.facia_cards.showMore(withFrom, index))
             })
