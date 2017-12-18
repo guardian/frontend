@@ -30,25 +30,38 @@
 }
 
 @channelStep() = {
-    @if(@communicationChannelsForUser(user).nonEmpty)
-    {
-        <div class="manage-account-wizard__step" data-wizard-step-name="consent">
-
-            <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
-                @views.html.helper.CSRF.formField
+    @if(communicationChannelsForUser(user).nonEmpty) {
+        <div class="manage-account-wizard__step" data-wizard-step-name="channels">
 
             <h1 class="identity-title">
                     How can we get in touch with you?
             </h1>
-            <p class="manage-account-headerNote">Besides email, are there any other ways you would like us to get in touch with you?</p>
+            <p class="manage-account-headerNote">
+                Besides email, are there any other ways you would like us to get in touch with you?
+            </p>
 
             <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
                 <div class="manage-account__switches manage-account__switches--wide">
                     <ul>
-                        </ul>
+                        @communicationChannelsForUser(user).map((channel) =>
+                            fragments.form.switch(
+                                title = checkboxName(channel),
+                                subheading = None,
+                                description = None,
+                                behaviour = ConsentSwitch,
+                                field = new Field(
+                                    form = emailPrefsForm,
+                                    name = "test",
+                                    constraints = Nil,
+                                    format = None,
+                                    errors = Nil,
+                                    value = None
+                                ),
+                            )(nonInputFields, messages)
+                        )
+                    </ul>
                 </div>
             </div>
-            </form>
 
         </div>
     }
