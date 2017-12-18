@@ -14,7 +14,7 @@
     </ol>
 
     Properties can override each other. <br/>
-    Parameter store configuration can be modified via the <a href="https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=eu-west-1#Parameters:sort=Name">AWS console</a> <br/>.
+    Parameter store configuration can be modified via the <a href="https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=eu-west-1#Parameters:sort=Name">AWS console</a>. <br/>
 
 
     <h3>Find parameters</h3>
@@ -41,10 +41,9 @@
         <b>Status:</b> <span id="status">Ready</span> <br/>
         <b>Results:</b>
         <br/>
-        <dl class="key-value" id="key-values">
-            <dt>Key</dt>
-            <dd>Value</dd>
-        </dl>
+        <div class="key-value" id="key-values">
+            key : value
+        </div>
         <br/>
         <br/>
     </div>
@@ -54,26 +53,21 @@
             $("#key-values").empty();
             $("#status").text("Finding config...");
 
-            /* stop form from submitting normally */
             event.preventDefault();
 
-            /* get some values from elements on the page: */
             var $form = $(this),
                 term = $form.find('input[name="property"]').val(),
                 url = "/config/parameter/" + term;
 
-            /* Send the data using post */
-            var getting = $.get(url);
+            var getParametersEvent = $.get(url);
 
-            /* Put the results in a div */
-            getting.done(function(data) {
+            getParametersEvent.done(function(data) {
                 $("#status").text("Ready");
                 Object.keys(data).forEach(function(key) {
-                    $("#key-values").append("<dt>"+key+"</dt>");
-                    $("#key-values").append("<dd>"+data[key]+"</dd>");
+                    $("#key-values").append("<p>"+key+" <b>:</b> "+data[key]+"</p>");
                 });
             });
-            getting.fail(function() {
+            getParametersEvent.fail(function() {
                 $("#status").text("Failed to find config");
             });
         });
