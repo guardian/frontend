@@ -438,6 +438,7 @@ const changeContributionAmountSubmit = (): void => {
     }
     const newAmount = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
     toggleAmountChangeInputMode(false);
+    hideContributionUpdateSuccessMessage();
     hideContributionInfo();
     displayLoader();
     fetch(
