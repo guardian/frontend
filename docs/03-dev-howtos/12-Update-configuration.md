@@ -24,9 +24,9 @@ and use the console UI to edit the config.
 
 ### Finding your properties
 
-[Admin Property Search](https://frontend.code.dev-gutools.co.uk/)
+[Admin Property Search](https://frontend.code.dev-gutools.co.uk/config)
 
 The AWS console UI only enables search by prefix with no wildcard support. 
 A parameter could potentially have 8 different prefixes if it were overridden by all the frontend apps.
-The [admin tool](https://frontend.code.dev-gutools.co.uk/) enables property search across all apps and stages.
+The [admin tool](https://frontend.code.dev-gutools.co.uk/config) enables property search across all apps and stages.
 
