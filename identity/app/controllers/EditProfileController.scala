@@ -29,7 +29,13 @@ object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Emails")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
-object ConsentJourneyPage extends IdentityPage("/consent", "Consent")
+
+sealed abstract class ConsentJourneyPage(id: String, journey: String) extends IdentityPage(id, "Consent") {
+  val journeyParam: String = journey
+}
+object ConsentJourneyPageAll extends ConsentJourneyPage("/consents/all", "all")
+object ConsentJourneyPageNewsletters extends ConsentJourneyPage("/consents/newsletters", "newsletters")
+object ConsentJourneyPageDefault extends ConsentJourneyPage("/consents", "default")
 
 class EditProfileController(
     idUrlBuilder: IdentityUrlBuilder,
@@ -58,10 +64,14 @@ class EditProfileController(
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
 
+  def displayConsentsJourneyAll(consentHint: Option[String] = None, newsletterHint: Option[String] = None): Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageAll, consentHint, newsletterHint)
+  def displayConsentsJourneyNewsletters: Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageNewsletters, None, None)
+  def displayConsentsJourney(consentHint: Option[String] = None, newsletterHint: Option[String] = None): Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint, newsletterHint)
+
   def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
     displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
 
-  def displayConsentJourneyForm(journey: String, consentHint: Option[String], newsletterHint: Option[String]): Action[AnyContent] = {
+  def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String], newsletterHint: Option[String]): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
@@ -71,8 +81,8 @@ class EditProfileController(
       csrfAddToken {
         permissionAuthentication.async { implicit request =>
           consentJourneyView(
-            page = ConsentJourneyPage,
-            journey = journey,
+            page = page,
+            journey = page.journeyParam,
             forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
             request.user,
             consentHint,
