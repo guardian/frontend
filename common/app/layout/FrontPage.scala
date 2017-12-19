@@ -1,19 +1,64 @@
-package services
+package layout
 
 import common.JodaTime._
 import common.Maps.RichMapSeq
 import implicits.Collections
 import implicits.Dates._
-import layout.{DateHeadline, DayHeadline, MonthHeadline}
-import model.Content
+import model.pressed.{ItemKicker, PressedContent}
+import model.{Content, ContentType, MetaData, Page, StandalonePage}
 import org.joda.time.{DateTimeZone, LocalDate}
+import services.FaciaContentConvert
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import common.{Edition, LinkTo}
+import model.meta.{ItemList, ListItem}
+import play.api.mvc.RequestHeader
+
 
 case class TrailAndDate(trail: Content, date: LocalDate)
 
-object TagPageGrouping extends Collections {
+trait FrontPage extends StandalonePage {
+  def contents: Seq[FrontPageItem]
+  def page: Page
+
+  def isFootballTeam: Boolean
+  def idWithoutEdition: String
+  def hideCutOuts: Boolean
+  def bylineTransformer: Option[Byline] => Option[Byline]
+  def isSlow: Boolean
+  def kickerTransformer: ItemKicker => Option[ItemKicker]
+  def grouping:Edition => Seq[FrontPageGrouping]
+
+  override val metadata: MetaData = page.metadata
+  val trails: Seq[Content] = contents.map(_.item.content)
+  val faciaTrails: Seq[PressedContent] = contents.map(_.faciaItem)
+
+  def makeLinkedData(implicit request: RequestHeader): ItemList = {
+    ItemList(
+      LinkTo(page.metadata.url),
+      trails.zipWithIndex.map {
+        case (trail, index) =>
+          ListItem(position = index, url = Some(LinkTo(trail.metadata.url)))
+      }
+    )
+  }
+}
+
+object FrontPageItem {
+  def apply(content: ApiContent): FrontPageItem = {
+    FrontPageItem(
+      Content(content),
+      FaciaContentConvert.contentToFaciaContent(content))
+  }
+}
+case class FrontPageItem(
+  item: ContentType,
+  faciaItem: PressedContent
+)
+
+object FrontPageGrouping extends Collections {
   val MinimumPerDayPopOutFrequency = 2
 
-  def fromContent(trails: Seq[Content], timezone: DateTimeZone): Seq[TagPageGrouping] = {
+  def fromContent(trails: Seq[Content], timezone: DateTimeZone): Seq[FrontPageGrouping] = {
     val trailsAndDates = trails.map(content => TrailAndDate(content, content.trail.webPublicationDate.withZone(timezone).toLocalDate))
 
     trailsAndDates.groupBy(_.date.withDayOfYear(1)).toSeq.sortBy(_._1).reverse flatMap { case (_, trailsThatYear) =>
@@ -43,16 +88,16 @@ object TagPageGrouping extends Collections {
   }
 }
 
-sealed trait TagPageGrouping {
+sealed trait FrontPageGrouping {
   val day: LocalDate
   val items: Seq[Content]
   def dateHeadline: DateHeadline
 }
 
-case class Day(day: LocalDate, items: Seq[Content]) extends TagPageGrouping {
+case class Day(day: LocalDate, items: Seq[Content]) extends FrontPageGrouping {
   override def dateHeadline: DateHeadline = DayHeadline(day)
 }
 
-case class Month(day: LocalDate, items: Seq[Content]) extends TagPageGrouping {
+case class Month(day: LocalDate, items: Seq[Content]) extends FrontPageGrouping {
   override def dateHeadline: DateHeadline = MonthHeadline(day)
 }

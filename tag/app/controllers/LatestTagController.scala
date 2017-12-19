@@ -2,11 +2,12 @@ package controllers
 
 import common._
 import contentapi.{ContentApiClient, Paths}
+import layout.FrontPageItem
 import model.Cached.WithoutRevalidationResult
 import model._
 import org.joda.time.DateTime
 import play.api.mvc._
-import services.{TagPage, TagPageItem}
+import services.TagPage
 
 import scala.concurrent.Future
 
@@ -44,7 +45,7 @@ class LatestTagController(
       item.section.map( section =>
         TagPage(
           page = Section.make(section),
-          contents = item.results.getOrElse(Nil).map(TagPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(FrontPageItem(_)),
           tags = Tags(Nil),
           date = DateTime.now,
           tzOverride = None
@@ -52,7 +53,7 @@ class LatestTagController(
       ).orElse(item.tag.map( tag =>
         TagPage(
           page = Tag.make(tag),
-          contents = item.results.getOrElse(Nil).map(TagPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(FrontPageItem(_)),
           tags = Tags(Nil),
           date = DateTime.now,
           tzOverride = None

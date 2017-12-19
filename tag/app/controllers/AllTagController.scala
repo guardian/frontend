@@ -5,13 +5,14 @@ import common.Edition.defaultEdition
 import common.{Edition, ImplicitControllerExecutionContext, Logging}
 import contentapi.{ContentApiClient, SectionsLookUp}
 import implicits.{Dates, ItemResponses}
+import layout.FrontPageItem
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
 import pages.AllTagHtmlPage
 import play.api.mvc._
-import services.{ConfigAgent, TagPage, TagPageItem}
+import services.{ConfigAgent, TagPage}
 import views.support.PreviousAndNext
 
 import scala.concurrent.Future
@@ -127,7 +128,7 @@ class AllTagController(
       item.section.map( section =>
         TagPage(
           page = Section.make(section),
-          contents = item.results.getOrElse(Nil).map(TagPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(FrontPageItem(_)),
           Tags(Nil),
           date,
           tzOverride = None
@@ -137,7 +138,7 @@ class AllTagController(
           val tag = Tag.make(apitag)
           TagPage(
             page = tag,
-            contents = item.results.getOrElse(Nil).map(TagPageItem(_)),
+            contents = item.results.getOrElse(Nil).map(FrontPageItem(_)),
             Tags(List(tag)),
             date,
             tzOverride = None
