@@ -1,4 +1,5 @@
 @import common.LinkTo
+@import views.support.DropdownMenus.accountDropdownMenu
 
 @()(implicit page: model.Page, request: RequestHeader)
 
@@ -15,7 +16,23 @@
                     @fragments.inlineSvg("profile-36", "icon", List("mobile-only"))
                     <span class="hide-on-mobile-inline">My Account</span>
                 </button>
-                @fragments.nav.userAccountDropdownMenu()
+                <ul class="identity-dropdown">
+                @for((item) <- accountDropdownMenu) {
+                    <li class="identity-dropdown__item">
+                        <a
+                        class="identity-dropdown__title"
+                            @if(item.href.isDefined) {
+                                href="@item.href"
+                            }
+                            @if(item.dataName.isDefined) {
+                                data-link-name="@item.dataName"
+                            }
+                        >
+                        @item.label
+                        </a>
+                    </li>
+                }
+                </ul>
             </div>
         </div>
 

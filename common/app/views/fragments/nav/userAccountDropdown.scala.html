@@ -1,6 +1,7 @@
 @()(implicit request: RequestHeader)
 
 @import conf.Configuration
+@import views.support.DropdownMenus.accountDropdownMenu
 
 <div class="new-header__user-account-container hide-until-desktop">
 
@@ -22,38 +23,22 @@
                 Comment activity
             </a>
         </li>
-        <li class="dropdown-menu__item">
-            <a href="@Configuration.id.url/public/edit"
-                data-link-name="nav2 : topbar : edit profile"
-                class="dropdown-menu__title">
 
-                Edit profile
-            </a>
-        </li>
-        <li class="dropdown-menu__item">
-            <a href="@Configuration.id.url/email-prefs"
-                data-link-name="nav2 : topbar : email preferences"
-                class="dropdown-menu__title">
-
-                Email preferences
-            </a>
-        </li>
-        <li class="dropdown-menu__item">
-            <a href="@Configuration.id.url/password/change"
-                data-link-name="nav2 : topbar : change password"
-                class="dropdown-menu__title">
-
-                Change password
-            </a>
-        </li>
-        <li class="dropdown-menu__item">
-            <a href="@Configuration.id.url/signout"
-                data-link-name="nav2 : topbar : sign out"
-                class="dropdown-menu__title">
-
-                Sign out
-            </a>
-        </li>
+        @for((item) <- accountDropdownMenu) {
+            <li class="dropdown-menu__item">
+                <a
+                    class="dropdown-menu__title"
+                    @if(item.href.isDefined) {
+                        href="@item.href"
+                    }
+                    @if(item.dataName.isDefined) {
+                        data-link-name="@item.dataName"
+                    }
+                >
+                    @item.label
+                </a>
+            </li>
+        }
     </ul>
 
     <button class="is-hidden dropdown-menu-fallback js-user-account-trigger"
