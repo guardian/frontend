@@ -57,6 +57,35 @@
         }
     }
 }
+
+@mixin richLink($pillarColor, $cardBackground) {
+    background-color: $cardBackground;
+
+    a {
+        color: inherit;
+    }
+
+    .inline-garnett-quote__svg {
+        height: get-font-size(headline, 3);
+        width: get-font-size(headline, 3) * .5;
+        margin-right: get-font-size(headline, 3) * .5;
+        fill: $pillarColor;
+    }
+
+    .inline-arrow-in-circle-garnett__svg {
+        fill: $pillarColor;
+    }
+
+    .rich-link__container::before {
+        background-color: $pillarColor;
+    }
+
+    .rich-link__byline {
+        color: $pillarColor;
+        font-style: italic;
+    }
+}
+
 @mixin mediaPalatte($mediaColor) {
     .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
@@ -123,4 +152,41 @@
 .content--media:not(.paid-content).content--pillar-sport,
 .immersive-main-media__headline-container.content--pillar-sport {
     @include mediaPalatte($sport-garnett-media-main-1);
+}
+
+.rich-link {
+    &.tone-news--item {
+        @include richLink($news-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.tone-comment--item {
+        @include richLink($opinion-garnett-main-1, $garnett-neutral-3);
+
+        .rich-link__container {
+            padding-bottom: 13px;
+            background-image: linear-gradient(to bottom, 
+                #dcdcdc,
+                #dcdcdc 1px,
+                transparent 1px,
+                transparent 4px,
+                #dcdcdc 4px,
+                #dcdcdc 5px,
+                transparent 5px,
+                transparent 8px,
+                #dcdcdc 8px,
+                #dcdcdc 9px,
+                transparent 9px,
+                transparent 12px,
+                #dcdcdc 12px,
+                #dcdcdc 13px
+            );
+            background-size: 1px 13px;
+            background-position: 0 100%;
+            background-repeat: repeat-x;
+        }
+    }
+
+    &.rich-link--pillar-sport.tone-comment--item {
+        @include richLink($sport-garnett-main-1, $garnett-neutral-3);
+    }
 }
