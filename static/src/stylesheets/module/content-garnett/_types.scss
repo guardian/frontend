@@ -993,3 +993,9 @@ $quote-mark: 35px;
         width: $gs-gutter * 7;
     }
 }
+
+.rich-link {
+    .rich-link__header {
+        font-weight: 400;
+    }
+}
