@@ -230,36 +230,36 @@ module.exports = [
             {
                 'font-weight': '200',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.ttf',
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Light.ttf',
             },
             {
                 'font-weight': '200',
                 'font-style': 'italic',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.ttf',
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-LightItalic.ttf',
             },
             {
                 'font-weight': '400',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
             },
             {
                 'font-weight': '400',
                 'font-style': 'italic',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
             },
             {
                 'font-weight': '500',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.ttf',
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Semibold.ttf',
             },
             // This weight contains only a certain set of chars
             // since it is used only in one place (section names)
             {
                 'font-weight': '900',
                 src:
-                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.ttf',
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Bold.ttf',
             },
         ],
     },
@@ -554,36 +554,36 @@ module.exports = [
             {
                 'font-weight': '200',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Light.ttf',
             },
             {
                 'font-weight': '200',
                 'font-style': 'italic',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-LightItalic.ttf',
             },
             {
                 'font-weight': '400',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
             },
             {
                 'font-weight': '400',
                 'font-style': 'italic',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
             },
             {
                 'font-weight': '500',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Semibold.ttf',
             },
             // This weight contains only a certain set of chars
             // since it is used only in one place (section names)
             {
                 'font-weight': '900',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Bold.ttf',
             },
         ],
     },
@@ -878,36 +878,36 @@ module.exports = [
             {
                 'font-weight': '200',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Light.ttf',
             },
             {
                 'font-weight': '200',
                 'font-style': 'italic',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-LightItalic.ttf',
             },
             {
                 'font-weight': '400',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
             },
             {
                 'font-weight': '400',
                 'font-style': 'italic',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
             },
             {
                 'font-weight': '500',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Semibold.ttf',
             },
             // This weight contains only a certain set of chars
             // since it is used only in one place (section names)
             {
                 'font-weight': '900',
                 src:
-                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Bold.ttf',
             },
         ],
     },
