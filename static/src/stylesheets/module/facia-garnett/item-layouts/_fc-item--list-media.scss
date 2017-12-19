@@ -92,4 +92,16 @@ Media list item. Looks a bit like this:
             height: gs-span(1) + $gs-baseline * 2;
         }
     }
+
+    &.fc-item--list-media-mobile {
+        @include mq($until: tablet) {
+            .fc-item__video {
+                width: $image-width;
+                
+                .fc-item__video-play {
+                    padding-bottom: 60%;
+                }
+            }
+        }
+    }
 }

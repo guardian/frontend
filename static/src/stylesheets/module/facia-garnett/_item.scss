@@ -180,7 +180,6 @@ $fc-item-gutter: $gs-gutter / 4;
     overflow: hidden;
 }
 
-.fc-item__kicker,
 .fc-sublink__kicker,
 .rich-link__kicker {
     &:hover:after {
@@ -195,30 +194,11 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__kicker {
     position: relative;
-    padding-right: $gs-gutter / 6;
     margin-right: $gs-gutter / 4;
     font-weight: 700;
-
-    // hides kicker if it exceeds 1 line in height
-    &:before {
-        content: '';
-        position: absolute;
-        width: 1px;
-        top: 0;
-        right: 0 - $gs-gutter / 6;
-        bottom: 1.3em;
-        z-index: -1;
-    }
-
-    &:after {
-        content: '';
-        position: absolute;
-        width: 1px;
-        height: 2em;
-        right: 0 - $gs-gutter / 6;
-        bottom: $gs-gutter / 10;
-        z-index: -2;
-    }
+    border-right-style: solid;
+    border-right-width: 1px;
+    padding-right: .375em;
 }
 
 .fc-item__byline {
@@ -419,14 +399,6 @@ $block-height: 58px;
         flex: 0 1 auto;
     }
 
-    .fc-item__kicker {
-        background-color: $media-garnett-main-1;
-
-        &::before {
-            background-color: $media-garnett-main-1;
-        }
-    }
-
     .fc-item__headline {
         color: #ffffff;
     }
@@ -469,7 +441,6 @@ $block-height: 58px;
     .u-faux-block-link--hover {
         background-color: darken($media-garnett-main-1, 5%);
 
-        .fc-item__kicker,
         .fc-item__container::before {
             background-color: darken($media-garnett-main-1, 5%);
         }
