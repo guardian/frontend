@@ -65,12 +65,7 @@
     .inline-numbers {
         float: left;
         margin-top: $gs-baseline / 4;
-
-        svg {
-            path {
-                fill: $garnett-neutral-1;
-            }
-        }
+        fill: $garnett-neutral-1;
     }
 
     .inline-icon {
