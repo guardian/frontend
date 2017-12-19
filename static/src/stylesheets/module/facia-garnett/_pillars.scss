@@ -11,7 +11,7 @@ $pillars: (
         metaText: $garnett-neutral-2,
         cutoutBackground: $news-garnett-main-1,
         invertedKicker: $news-garnett-media-main-1,
-        underline: $news-garnett-main-2
+        analysisUnderline: $news-garnett-analysis
     ),
     opinion: (
         cardBackground: $garnett-neutral-3,
@@ -25,8 +25,7 @@ $pillars: (
         metaText: $garnett-neutral-2,
         cutoutBackground: $opinion-garnett-main-1,
         invertedKicker: $opinion-garnett-media-main-1,
-        underline: $opinion-garnett-main-2
-
+        analysisUnderline: $opinion-garnett-analysis
     ),
     sport: (
         cardBackground: $garnett-neutral-3,
@@ -40,8 +39,7 @@ $pillars: (
         metaText: $garnett-neutral-2,
         cutoutBackground: $sport-garnett-feature,
         invertedKicker: $sport-garnett-media-main-1,
-        underline: $sport-garnett-main-2
-
+        analysisUnderline: $sport-garnett-analysis
     ),
     arts: (
         cardBackground: $garnett-neutral-3,
@@ -55,8 +53,7 @@ $pillars: (
         metaText: $garnett-neutral-2,
         cutoutBackground: $arts-garnett-main-1,
         invertedKicker: $arts-garnett-media-main-1,
-        underline: $arts-garnett-main-2
-
+        analysisUnderline: $arts-garnett-analysis
     ),
     lifestyle: (
         cardBackground: $garnett-neutral-3,
@@ -70,7 +67,7 @@ $pillars: (
         metaText: $garnett-neutral-2,
         cutoutBackground: $lifestyle-garnett-feature,
         invertedKicker: $lifestyle-garnett-media-main-1,
-        underline: $lifestyle-garnett-main-2
+        analysisUnderline: $lifestyle-garnett-analysis
     )
 );
 
@@ -196,7 +193,7 @@ $pillars: (
 
     &.fc-item--type-analysis {
         .fc-item__title {
-            @include garnett-underline(map-get($palette, underline), 28px);
+            @include garnett-underline(map-get($palette, analysisUnderline), 28px);
         }
     }
 
