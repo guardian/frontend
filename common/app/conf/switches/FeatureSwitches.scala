@@ -545,14 +545,4 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 1, 15),
     exposeClientSide = true
   )
-
-  val HeaderFeedback = Switch(
-    SwitchGroup.Feature,
-    "header-feedback",
-    "When ON a feedback prompt will be visible within the header test",
-    owners = Seq(Owner.withGithub("zeftilldeath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 12, 4),
-    exposeClientSide = false
-  )
 }
