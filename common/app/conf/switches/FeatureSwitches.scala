@@ -175,15 +175,25 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val IdentityRedirectUsersWithLingeringV1ConsentsSwitch = Switch(
+  val IdentityShowCommunicationChannelConsents = Switch(
     SwitchGroup.Identity,
-    "id-redirect-users-with-lingering-v1-consents",
-    "If switched on, users trying to reach /email-prefs will go to /consent to repermission",
+    "id-show-communication-channel-consents",
+    "If switched on, users will see UI for opting in or out of different communication channels",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 1, 15),
     exposeClientSide = false
   )
+  val IdentityAllowAccessToGdprJourneyPageSwitch = Switch(
+    SwitchGroup.Identity,
+    "id-allow-access-to-gdpr-journey-page",
+    "If switched on, users will be able to access the /repermission endpoint",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 1),
+    exposeClientSide = false
+  )
+
 
   val EnhanceTweetsSwitch = Switch(
     SwitchGroup.Feature,

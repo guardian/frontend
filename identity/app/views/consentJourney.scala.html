@@ -7,6 +7,7 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.fragment.Switch._
 @import views.support.fragment.ConsentChannel._
+import conf.switches.Switches.IdentityShowCommunicationChannelConsents
 
 
 @(
@@ -30,7 +31,7 @@
 }
 
 @channelStep() = {
-    @if(communicationChannelsForUser(user).nonEmpty) {
+    @if(IdentityShowCommunicationChannelConsents.isSwitchedOn && communicationChannelsForUser(user).nonEmpty) {
         <div class="manage-account-wizard__step" data-wizard-step-name="channels">
 
             <h1 class="identity-title">
@@ -41,7 +42,7 @@
             </p>
 
             <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
-                <div class="manage-account__switches manage-account__switches--wide">
+                <div class="manage-account__switches">
                     <ul>
                         @communicationChannelsForUser(user).map((channel) =>
                             fragments.form.switch(
