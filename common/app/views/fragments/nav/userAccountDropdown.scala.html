@@ -15,19 +15,11 @@
     <ul class="dropdown-menu js-user-account-dropdown-menu"
         id="my-account-dropdown"
         aria-hidden="true">
-
-        <li class="dropdown-menu__item u-h js-show-comment-activity">
-            <a data-link-name="nav2 : topbar : comment activity"
-                class="dropdown-menu__title js-add-comment-activity-link">
-
-                Comment activity
-            </a>
-        </li>
-
+        
         @for((item) <- accountDropdownMenu) {
-            <li class="dropdown-menu__item">
+            <li class="@{(List("dropdown-menu__item") ++ item.parentClassList).mkString(" ")}">
                 <a
-                    class="dropdown-menu__title"
+                    class="@{(List("dropdown-menu__title") ++ item.classList).mkString(" ")}"
                     @if(item.href.isDefined) {
                         href="@item.href"
                     }

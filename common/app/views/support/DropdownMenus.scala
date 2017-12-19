@@ -6,16 +6,24 @@ import conf.Configuration
 object DropdownMenus {
 
   case class DropdownMenuItem (
-    href: Option[String],
-    dataName: Option[String],
+    href: Option[String]  = None,
+    dataName: Option[String]  = None,
     label: String,
+    classList: List[String] = List(),
+    parentClassList: List[String] = List()
   )
 
   val accountDropdownMenu: List[DropdownMenuItem] = List(
     DropdownMenuItem(
+      dataName = Some("nav2 : topbar : comment activity"),
+      label = "Comment activity",
+      classList = List("js-add-comment-activity-link"),
+      parentClassList = List("u-h","js-show-comment-activity")
+    ),
+    DropdownMenuItem(
       href =Some(s"${Configuration.id.url}/public/edit"),
       dataName = Some("nav2 : topbar : edit profile"),
-      label = "Edit profile"
+      label = "Edit profile",
     ),
     DropdownMenuItem(
       href =Some(s"${Configuration.id.url}/email-prefs"),

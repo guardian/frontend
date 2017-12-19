@@ -18,9 +18,11 @@
                 </button>
                 <ul class="identity-dropdown" id="my-account-dropdown" aria-hidden="true">
                     @for((item) <- accountDropdownMenu) {
-                        <li class="identity-dropdown__item">
+                        <li
+                            class="@{(List("identity-dropdown__item") ++ item.parentClassList).mkString(" ")}""
+                        >
                             <a
-                            class="identity-dropdown__title"
+                                class="@{(List("identity-dropdown__title") ++ item.classList).mkString(" ")}"
                                 @if(item.href.isDefined) {
                                     href="@item.href"
                                 }
