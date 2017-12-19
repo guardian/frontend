@@ -46,7 +46,11 @@
                 @if(content.content.cardStyle == Comment ||
                     (content.content.cardStyle == SpecialReport && content.content.hasTonalHeaderByline)
                 ) {
+                    @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                     @fragments.inlineSvg("quote", "icon")
+                    } else {
+                        @fragments.inlineSvg("garnett-quote", "icon")
+                }
                 }
                 <a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)</a>
             </h1>
