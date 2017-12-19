@@ -9,6 +9,7 @@ import org.joda.time.format.DateTimeFormat
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import test._
+import layout.Front
 
 import scala.concurrent.Future
 
@@ -47,7 +48,7 @@ import scala.concurrent.Future
       case None =>
         fail("Wrong type (expected: IndexPage, real: Result)")
       case Some(page) =>
-        val front = TagPage.makeFront(page, edition)
+        val front = Front.makeFront(page, edition)
         front.containers should not be empty
 
         val firstContainer = front.containers.head

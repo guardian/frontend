@@ -6,6 +6,7 @@ import com.gu.contentapi.client.model.v1.{ItemResponse, SearchResponse, Section 
 import common._
 import contentapi.{ContentApiClient, QueryDefaults, SectionTagLookUp, SectionsLookUp}
 import implicits.Collections
+import layout.FrontPageItem
 import model._
 import org.joda.time.DateTime
 import play.api.mvc.{RequestHeader, Result => PlayResult}
@@ -69,7 +70,7 @@ trait TagPageService extends ConciergeRepository with Collections {
       .pageSize(TagPagePagination.pageSize)
       .showFields(if (isRss) rssFields else QueryDefaults.trailFieldsWithMain)
     ).map {response =>
-      val trails = response.results.map(TagPageItem(_)).toList
+      val trails = response.results.map(FrontPageItem(_)).toList
       trails match {
         case Nil => Right(NotFound)
         case head :: _ =>
@@ -146,7 +147,7 @@ trait TagPageService extends ConciergeRepository with Collections {
     val editorsPicks = response.editorsPicks.getOrElse(Nil)
     val editorsPicksIds = editorsPicks.map(_.id)
     val latestContent = response.results.getOrElse(Nil).filterNot(c => editorsPicksIds contains c.id)
-    val trails = (editorsPicks ++ latestContent).map(TagPageItem(_))
+    val trails = (editorsPicks ++ latestContent).map(FrontPageItem(_))
     val commercial = Commercial.empty
 
     TagPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial)
@@ -155,14 +156,14 @@ trait TagPageService extends ConciergeRepository with Collections {
   private def tag(response: ItemResponse, page: Int) = {
     val tag = response.tag map { Tag.make(_, pagination(response)) }
     val leadContentCutOff = DateTime.now - QueryDefaults.leadContentMaxAge
-    val editorsPicks = response.editorsPicks.getOrElse(Nil).map(TagPageItem(_))
+    val editorsPicks = response.editorsPicks.getOrElse(Nil).map(FrontPageItem(_))
     val leadContent = if (editorsPicks.isEmpty && page == 1) //only promote lead content on first page
-      response.leadContent.getOrElse(Nil).take(1).map(TagPageItem(_)).filter(_.item.trail.webPublicationDate > leadContentCutOff)
+      response.leadContent.getOrElse(Nil).take(1).map(FrontPageItem(_)).filter(_.item.trail.webPublicationDate > leadContentCutOff)
     else
       Nil
     val leadContentIds = leadContent.map(_.item.metadata.id)
 
-    val latest: Seq[TagPageItem] = response.results.getOrElse(Nil).map(TagPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
+    val latest: Seq[FrontPageItem] = response.results.getOrElse(Nil).map(FrontPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
     tag map { tag =>
       TagPage(page = tag, contents = allTrails, tags = Tags(List(tag)), date = DateTime.now, tzOverride = None)

@@ -13,6 +13,8 @@ import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, RequestHeader, Result, _}
 import html.HtmlPageHelpers.ContentCSSFile
+import layout.FrontPageItem
+import pages.CrosswordResultsHtmlPage
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -162,15 +164,13 @@ class CrosswordSearchController(
 
             case results =>
               val section = Section.make(ApiSection("crosswords", "Crosswords search results", "https://www.theguardian.com/crosswords/search", "", Nil))
-              val page = TagPage(
+              val page = CrosswordResultsPage(
                 page = section,
-                contents = results.map(TagPageItem(_)),
-                tags = Tags(Nil),
+                contents = results.map(FrontPageItem(_)),
                 date = DateTime.now,
-                tzOverride = None
               )
 
-              Cached(15.minutes)(RevalidatableResult.Ok(IndexHtmlPage.html(page)))
+              Cached(15.minutes)(RevalidatableResult.Ok(CrosswordResultsHtmlPage.html(page)))
           }
         }
       }
