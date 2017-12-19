@@ -224,7 +224,9 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__byline {
     margin-bottom: 0;
     font-style: italic;
+    //close up the line height to make it look the same as the headline
     line-height: 15px;
+    letter-spacing: .2px;
 }
 
 .fc-item__standfirst-wrapper {
