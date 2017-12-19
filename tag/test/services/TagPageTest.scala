@@ -9,7 +9,7 @@ import org.joda.time.format.DateTimeFormat
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import test._
-import layout.Front
+import layout.{Front, FrontPageItem}
 
 import scala.concurrent.Future
 
@@ -32,7 +32,7 @@ import scala.concurrent.Future
       item.section.map(section =>
         TagPage(
           page = Section.make(section),
-          contents = item.results.getOrElse(Nil).map(TagPageItem(_)),
+          contents = item.results.getOrElse(Nil).map(FrontPageItem(_)),
           tags = Tags(Nil),
           date = DateTime.now,
           tzOverride = None
@@ -43,10 +43,10 @@ import scala.concurrent.Future
 
   "Given a page Index, correct containers" should "be created" in {
     val edition = Uk
-    val indexPage = getIndexPage("uk/sport", edition)
-    whenReady(indexPage) {
+    val tagPage = getIndexPage("uk/wales", edition)
+    whenReady(tagPage) {
       case None =>
-        fail("Wrong type (expected: IndexPage, real: Result)")
+        fail("Wrong type (expected: TagPage, real: Result)")
       case Some(page) =>
         val front = Front.makeFront(page, edition)
         front.containers should not be empty
