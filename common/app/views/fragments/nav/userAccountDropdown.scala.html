@@ -11,7 +11,50 @@
         sign in
     </a>
 
-    @fragments.nav.userAccountDropdownMenu()
+    <ul class="dropdown-menu js-user-account-dropdown-menu"
+        id="my-account-dropdown"
+        aria-hidden="true">
+
+        <li class="dropdown-menu__item u-h js-show-comment-activity">
+            <a data-link-name="nav2 : topbar : comment activity"
+                class="dropdown-menu__title js-add-comment-activity-link">
+
+                Comment activity
+            </a>
+        </li>
+        <li class="dropdown-menu__item">
+            <a href="@Configuration.id.url/public/edit"
+                data-link-name="nav2 : topbar : edit profile"
+                class="dropdown-menu__title">
+
+                Edit profile
+            </a>
+        </li>
+        <li class="dropdown-menu__item">
+            <a href="@Configuration.id.url/email-prefs"
+                data-link-name="nav2 : topbar : email preferences"
+                class="dropdown-menu__title">
+
+                Email preferences
+            </a>
+        </li>
+        <li class="dropdown-menu__item">
+            <a href="@Configuration.id.url/password/change"
+                data-link-name="nav2 : topbar : change password"
+                class="dropdown-menu__title">
+
+                Change password
+            </a>
+        </li>
+        <li class="dropdown-menu__item">
+            <a href="@Configuration.id.url/signout"
+                data-link-name="nav2 : topbar : sign out"
+                class="dropdown-menu__title">
+
+                Sign out
+            </a>
+        </li>
+    </ul>
 
     <button class="is-hidden dropdown-menu-fallback js-user-account-trigger"
         id="my-account-toggle"
