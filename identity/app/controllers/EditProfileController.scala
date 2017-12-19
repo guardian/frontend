@@ -21,7 +21,7 @@ import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
 import play.api.http.HttpConfiguration
 
-import pages.JourneyHtmlPage
+import pages.IdentityHtmlPage
 
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
 object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
@@ -230,8 +230,7 @@ class EditProfileController(
     newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
       NoCache(Ok(
-          JourneyHtmlPage.html(content = views.html.consentJourney(
-          page,
+          IdentityHtmlPage.html(content = views.html.consentJourney(
           user,
           forms,
           journey,
