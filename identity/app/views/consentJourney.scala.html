@@ -93,38 +93,41 @@
 }
 
 @emailStep(isNarrow: Boolean = false) = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="email">
 
-        <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
-            @views.html.helper.CSRF.formField
-            @fragments.form.hidden(emailPrefsForm("htmlPreference"))
+    @if( onlySubscribedToNewsletters(isNarrow).nonEmpty ) {
+        <div class="manage-account-wizard__step" data-wizard-step-name="email">
 
-            @if(isNarrow) {
-                <h2 class="identity-title">Sorry for the interruption</h2>
-                <p class="manage-account-headerNote">
-                    You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
-                </p>
-            } else {
-                <h2 class="identity-title">Your existing newsletters</h2>
-                <p class="manage-account-headerNote">
-                    You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
-                </p>
-            }
-            <div class="manage-account__switches">
-                <ul>
-                    @onlySubscribedToNewsletters.zipWithRowInfo.map { case (newsletter, row) =>
-                        <li>
-                            @fragments.newsletterSwitch(
-                                emailPrefsForm,
-                                emailSubscriptions,
-                                newsletter = newsletter
-                            )(nonInputFields, messages, request)
-                        </li>
-                    }
-                </ul>
-            </div>
-        </form>
-    </div>
+            <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+                @views.html.helper.CSRF.formField
+                @fragments.form.hidden(emailPrefsForm("htmlPreference"))
+
+                @if(isNarrow) {
+                    <h2 class="identity-title">Sorry for the interruption</h2>
+                    <p class="manage-account-headerNote">
+                        You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
+                    </p>
+                } else {
+                    <h2 class="identity-title">Your existing newsletters</h2>
+                    <p class="manage-account-headerNote">
+                        You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
+                    </p>
+                }
+                <div class="manage-account__switches">
+                    <ul>
+                        @onlySubscribedToNewsletters.zipWithRowInfo.map { case (newsletter, row) =>
+                            <li>
+                                @fragments.newsletterSwitch(
+                                    emailPrefsForm,
+                                    emailSubscriptions,
+                                    newsletter = newsletter
+                                )(nonInputFields, messages, request)
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </form>
+        </div>
+    }
 }
 
 @emailSignupStep() = {
