@@ -333,35 +333,33 @@ $block-height: 58px;
     display: none;
 }
 
-.fc-item__timestamp {
-    display: flex;
-
-    .inline-icon {
-        margin-top: -2px;
-        padding-right: 4px;
-        height: 11px;
-        width: 11px;
-    }
-
-    .fc-timestamp__text {
-        display: block;
-        line-height: 10px;
-    }
-}
-
+.fc-item__timestamp,
 .fc-trail__count {
     display: flex;
     line-height: 10px;
 
     .inline-icon {
         padding-right: 2px;
+    }
+}
+
+.fc-item__timestamp .inline-icon {
+    height: 11px;
+    width: 11px;
+
+    svg {
+        height: 11px;
+        width: 11px;
+    }
+}
+
+.fc-trail__count .inline-icon {
+    height: 14px;
+    width: 14px;
+
+    svg {
         height: 14px;
         width: 14px;
-
-        svg {
-            height: 14px;
-            width: 14px;
-        }
     }
 }
 
