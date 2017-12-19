@@ -2,10 +2,6 @@
     .fc-item--type-live.fc-item--pillar-#{$pillar} {
         background-color: $color1;
 
-        .fc-item__kicker {
-            background-color: $color1;
-        }
-
         .fc-item__container::before {
             background-color: $color2;
         }
@@ -15,17 +11,8 @@
         }
 
         .fc-item__kicker {
-            background-color: $color1;
             color: $color2;
-            border: 0;
-
-            &::before {
-                background-color: $color1;
-            }
-
-            &::after {
-                background-color: $color2;
-            }
+            border-right-color: $color2;
         }
 
         .fc-item__headline {
