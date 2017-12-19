@@ -12,7 +12,7 @@
 
         .fc-item__kicker {
             color: $color2;
-            border-right-color: $color2;
+            border-image: linear-gradient(to top, transparent, transparent .25em, $color2 .25em) 0 1;
         }
 
         .fc-item__headline {
