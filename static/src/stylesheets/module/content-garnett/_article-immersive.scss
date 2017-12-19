@@ -41,8 +41,7 @@
             animation: slideImmersiveTitleDownHeadline 360ms ease-in-out forwards;
         }
         .immersive-main-media__headline-container--dark {
-            background-color: rgba(51, 51, 51, 1);
-            background: linear-gradient(rgba(51, 51, 51, 1), rgba(51, 51, 51, 1));
+            background-color: $garnett-neutral-1;
         }
         @keyframes slideImmersiveTitleDownHeadline {
             0% {
@@ -124,21 +123,33 @@
 }
 
 .immersive-main-media__headline-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    margin-top: -($gs-column-width * 2) + 4px;
+    position: relative;
+
+    &:after {
+        position: absolute;
+        content: '';
+        display: block;
+        width: 50%;
+        right: 0;
+        background-color: $garnett-neutral-1;
+        z-index: 0;
+        top: 0;
+        bottom: 0;
+    }
 
     .content__labels {
         padding-bottom: 0;
         margin-bottom: 0;
+        overflow: visible;
     }
-}
-
-.immersive-main-media__headline-container--dark {
-    transition: background 500ms ease-out 200ms, background-color 500ms ease-out 200ms;
-    background-color: rgba(0, 0, 0, .6);
-    background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
+    .content__main-column {
+        background-color: $garnett-neutral-1;
+        z-index: 10;
+        position: relative;
+        padding-left: $gs-gutter;
+        left: -$gs-gutter / 2;
+    }
 }
 
 .content__headline--immersive {
@@ -163,9 +174,11 @@
     }
 }
 
-.content__headline--immersive--with-main-media {
+.content__headline--immersive--with-main-media,
+.immersive-main-media__headline-container .content__series-label__link {
     @include mq(desktop) {
-        font-size: 3.25rem;
+        font-size: 50px;
+        line-height: 50px;
     }
 }
 
@@ -175,6 +188,18 @@
 
         @include mq(desktop) {
             padding-top: $gs-baseline * 2;
+        }
+    }
+
+    .content__main-column--article {
+        &:before {
+            position: absolute;
+            top: -$gs-baseline * 2;
+            bottom: 0;
+            left: -$gs-gutter / 2;
+            width: 1px;
+            background-color: $garnett-neutral-4;
+            content: '';
         }
     }
 }

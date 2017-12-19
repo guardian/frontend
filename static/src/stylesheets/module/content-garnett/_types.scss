@@ -13,7 +13,8 @@ $quote-mark: 35px;
 .content--type-feature,
 .content--type-live,
 .content--type-media,
-.content--type-review {
+.content--type-review,
+.content--type-immersive {
     // *************** Meta and Social ***************
     .submeta {
         @include multiline(4, $garnett-neutral-4, top);

@@ -8,7 +8,6 @@
 
 @defining(model.article) { article =>
   @defining(isPaidContent(model)) { isPaidContent =>
-    <div class="l-side-margins">
         <article id="article" data-test-id="article-root"
             class="content content--article content--immersive content--immersive-article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
             @if(isPaidContent){content--paid-content}
@@ -23,6 +22,7 @@
                 @fragments.guBand()
             }
             @fragments.headerImmersive(article)
+            @fragments.immersiveGarnettHeadline()
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
@@ -52,7 +52,6 @@
 
                     </div>
                 </div>
-            </div>
         </article>
 
         @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent)
