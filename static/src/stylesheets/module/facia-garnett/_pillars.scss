@@ -82,11 +82,8 @@ $pillars: (
                 background-color: darken(map-get($palette, cutoutBackground), 3%);
             }
     
+            .fc-item__timestamp,
             .fc-trail__count--commentcount {
-                background-color: $darkerCardBackground;
-            }
-
-            .fc-item__timestamp {
                 background-color: $darkerCardBackground;
             }
         }
