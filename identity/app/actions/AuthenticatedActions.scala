@@ -38,11 +38,11 @@ class AuthenticatedActions(
     SeeOther(identityUrlBuilder.buildUrl(redirectUrlWithParams))
   }
 
-  def sendUserToConsentJourney(request: RequestHeader): Result =
-    redirectWithReturn(request, "/consent?journey=repermission")
+  def sendUserToAllConsentsJourney(request: RequestHeader): Result =
+    redirectWithReturn(request, "/consents/all")
 
-  def sendUserToNarrowConsentJourney(request: RequestHeader): Result =
-    redirectWithReturn(request, "/consent?journey=repermission-narrow")
+  def sendUserToNewslettersConsentsJourney(request: RequestHeader): Result =
+    redirectWithReturn(request, "/consents/newsletters")
 
   def sendUserToSignin(request: RequestHeader): Result =
     redirectWithReturn(request, "/signin")
@@ -127,9 +127,9 @@ class AuthenticatedActions(
           if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
             Right(request)
           else
-            Left(sendUserToNarrowConsentJourney(request))
+            Left(sendUserToNewslettersConsentsJourney(request))
         }
-      else Future.successful(Left(sendUserToConsentJourney(request)))
+      else Future.successful(Left(sendUserToAllConsentsJourney(request)))
 
     private def userHasRepermissioned[A](request: AuthRequest[A]): Boolean =
       request.user.statusFields.hasRepermissioned.contains(true)
