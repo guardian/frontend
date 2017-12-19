@@ -4,10 +4,11 @@
     padding: 5px 0;
     color: #ffffff;
     min-height: $identity-header-height - 10px;
-    .dropdown-menu {
-        color: $identity-main;
+    .identity-dropdown {
+        position: absolute;
+        display: none;
         left: 0;
-        right: auto;
+        top: $identity-header-height - 10px;
         li {
             display: block;
         }

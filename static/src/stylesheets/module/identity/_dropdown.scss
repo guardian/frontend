@@ -1,0 +1,23 @@
+.identity-dropdown {
+    @include fs-textSans(3);
+    background: #ffffff;
+    border-radius: 2px;
+    list-style: none;
+    color: $identity-main;
+}
+
+.identity-dropdown__item {
+    display: inline;
+}
+
+.identity-dropdown__title {
+    display: block;
+    padding: ($gs-gutter / 4) $gs-gutter ($gs-gutter / 2);
+    border-bottom: 1px solid $neutral-8;
+    text-decoration: none;
+    color: $neutral-1;
+    &:hover {
+        background: $neutral-8;
+        color: currentColor;
+    }
+}
