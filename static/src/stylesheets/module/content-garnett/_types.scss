@@ -982,3 +982,14 @@ $quote-mark: 35px;
         }
     }
 }
+
+// *************** Rich links ***************
+.element-rich-link {
+    @include mq(mobileLandscape, leftCol) {
+        width: $gs-gutter * 6.5;
+    }
+
+    @include mq(leftCol, wide) {
+        width: $gs-gutter * 7;
+    }
+}
