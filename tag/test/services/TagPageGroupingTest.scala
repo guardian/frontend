@@ -7,10 +7,10 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import common.JodaTime._
 import contentapi.FixtureTemplates.emptyApiContent
 import implicits.Dates.jodaToJavaInstant
+import layout.{Day, FrontPageGrouping, Month}
 import model.{Content, ContentType}
 import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
-import services.TagPageGrouping.fromContent
 import test.ConfiguredTestSuite
 
 @DoNotDiscover class TagPageGroupingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
@@ -28,7 +28,7 @@ import test.ConfiguredTestSuite
       makeFixture(new DateTime(1987, 2, 5, 13, 0, 0, timeZone))
     )
 
-    fromContent(fixtures.map(_.content), timeZone) shouldEqual Seq(
+    FrontPageGrouping.fromContent(fixtures.map(_.content), timeZone) shouldEqual Seq(
       Day(
         new LocalDate(1987, 2, 5),
         fixtures.sortBy(_.trail.webPublicationDate).reverse.map(_.content)
@@ -42,7 +42,7 @@ import test.ConfiguredTestSuite
       makeFixture(new DateTime(1987, 2, 6, 13, 0, 0, timeZone))
     )
 
-    fromContent(fixtures.map(_.content), timeZone) shouldEqual Seq(
+    FrontPageGrouping.fromContent(fixtures.map(_.content), timeZone) shouldEqual Seq(
       Month(
         new LocalDate(1987, 2, 1),
         fixtures.sortBy(_.trail.webPublicationDate).reverse.map(_.content)

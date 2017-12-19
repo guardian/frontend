@@ -70,7 +70,7 @@ object TagHtmlPage extends HtmlPage[TagPage] {
   def html(page: TagPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html =
     TagHtml.html(page)(
       headContent = tagPageHead(page),
-      bodyContent = tagPageBody(page)//TODO FIXME BEFORE MERGE TagPageCleaner(page, tagPageBody(page))
+      bodyContent = TagPageCleaner(page, tagPageBody(page))
     )
 }
 
