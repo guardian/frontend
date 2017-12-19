@@ -38,8 +38,9 @@ object IdentityHtmlPage {
       bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
         views.html.layout.identityHeader(),
-        mainContent(),
-        content,
+        views.html.layout.identityVerticalWrapper(
+          content
+        ),
         inlineJSNonBlocking(),
         views.html.layout.identityFooter(),
         analytics.base()
