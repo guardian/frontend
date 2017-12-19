@@ -110,7 +110,7 @@ $quote-mark: 35px;
     }
 
     .content__labels--not-immersive {
-        padding-top: $gs-gutter/2;
+        // padding-top: $gs-baseline/2;
         @include mq(tablet, leftCol) {
             border-bottom: solid 1px $garnett-neutral-4;
         }
@@ -138,6 +138,7 @@ $quote-mark: 35px;
     .content__headline,
     .content__labels,
     .content__standfirst,
+    .meta__image,
     .social {
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
@@ -218,11 +219,20 @@ $quote-mark: 35px;
 
     .meta__image {
         border-top: 0;
+        @include mq($until: phablet) {
+            padding-right: 0;
+            margin-right: 0;
+        }
     }
 
     .content__dateline {
         border-top: 0;
+        float: right;
+        text-align: right;
         @include mq(phablet) {
+            float: none;
+            text-align: left;
+
             &:before {
                 @include multiline(1, $garnett-neutral-4);
             }
@@ -231,12 +241,10 @@ $quote-mark: 35px;
 
     .byline,
     .content__dateline {
+        padding-top: 0;
         padding-bottom: $gs-baseline;
         @include mq($until: phablet) {
-            display: inline-block;
             border-top: 0;
-            width: 45%;
-            padding-top: $gs-baseline/2;
             vertical-align: top;
         }
     }
@@ -259,7 +267,23 @@ $quote-mark: 35px;
         margin-bottom: $gs-baseline/2;
     }
 
-    .meta__twitter {
+    .meta__twitter,
+    .meta__email {
+        margin-top: $gs-baseline/3;
+
+    .button {
+            height: 1.5rem;
+            padding: 0 0.5rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: auto;
+        }
+        .hide-until-leftcol {
+            display: inline-block!important;
+        }
         a {
             background-color: transparent;
             border: 1px solid $neutral-4;
@@ -277,15 +301,9 @@ $quote-mark: 35px;
         }
     }
     // *************** Header and Body Styles ***************
-    .gs-container {
-        @include mq(tablet, desktop) {
-            padding-top: $gs-baseline;
-        }
-    }
-
     .content__article-body {
         &:before {
-            @include mq(desktop) {
+            @include mq(leftCol) {
                 content: '';
                 position: absolute;
                 top: 0;
@@ -297,18 +315,18 @@ $quote-mark: 35px;
             }
         }
         @include mq(desktop) {
-            padding-left: $gs-gutter/2;
+            padding-left: 0;
             margin-left: 0;
-            padding-top: $gs-gutter/2;
             padding-bottom: 100px;
         }
         @include mq(leftCol) {
+            padding-left: $gs-gutter/2;
             margin-left: -$gs-gutter/2;
         }
     }
 
     .content__secondary-column {
-        padding-top: $gs-gutter/2;
+        padding-top: $gs-baseline/2;
     }
 
     .reveal-caption {
@@ -356,12 +374,12 @@ $quote-mark: 35px;
     .content__headline {
         @include fs-headlineGarnett(4);
         font-weight: 400;
-        padding-top: 0;
-        padding-bottom: $gs-baseline/2;
+        padding-top: $gs-baseline/3;
+        padding-bottom: $gs-baseline*2;
         @include mq(tablet) {
             @include fs-headlineGarnett(6);
             font-weight: 400;
-            padding-bottom: $gs-baseline*2;
+            padding-bottom: $gs-baseline*3;
         }
     }
     //Review stars
@@ -421,6 +439,9 @@ $quote-mark: 35px;
             max-width: gs-span(6);
             margin-left: 0;
         }
+        @include mq(leftCol) {
+            margin-bottom: $gs-baseline/2;
+        }
     }
 
     .badge,
@@ -434,7 +455,7 @@ $quote-mark: 35px;
     }
 
     .media-primary {
-        margin-bottom: $gs-baseline;
+        margin-bottom: $gs-baseline/2;
     }
 
     .badge--alt {
@@ -777,8 +798,8 @@ $quote-mark: 35px;
     .byline a,
     .from-content-api a {
         text-decoration: none;
-        border-bottom: .1px solid $garnett-neutral-6;
-        transition: border-color .15s ease-out;
+        border-bottom: 0.1px solid $garnett-neutral-6;
+        transition: border-color 0.15s ease-out;
 
         &:hover {
             border-color: $garnett-neutral-4;
@@ -903,7 +924,7 @@ $quote-mark: 35px;
                 border-color: transparent transparent transparent $garnett-neutral-5;
                 @include mq(tablet) {
                     // 0 border radius on mobile because stock android has a render bug with it here
-                    border-radius: .2em;
+                    border-radius: 0.2em;
                 }
             }
         }

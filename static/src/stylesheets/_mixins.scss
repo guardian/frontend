@@ -279,7 +279,7 @@
     content: '';
     display: block;
     width: 100%;
-    margin-bottom: $gs-baseline/4;
+    margin-bottom: 1px;
     background-image: repeating-linear-gradient($color, $color 1px, transparent 1px, transparent 4px);
     height: $number * 4px;
 }
