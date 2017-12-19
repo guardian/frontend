@@ -174,7 +174,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__title {
-    padding-top: $gs-baseline/4;
+    padding-top: $gs-baseline/6;
     padding-bottom: $gs-baseline/6;
     word-wrap: break-word;
     overflow: hidden;
@@ -198,7 +198,7 @@ $fc-item-gutter: $gs-gutter / 4;
     margin-right: $gs-gutter / 4;
     border-right-style: solid;
     border-right-width: 1px;
-    }
+}
 
 .fc-item__byline {
     margin-bottom: 0;
