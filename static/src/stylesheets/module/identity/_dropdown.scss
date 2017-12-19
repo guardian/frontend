@@ -1,9 +1,12 @@
 .identity-dropdown {
     @include fs-textSans(3);
-    background: #ffffff;
-    border-radius: 2px;
+    background: $neutral-8;
     list-style: none;
-    color: $identity-main;
+    box-shadow: 0 1px 0 .5px $neutral-5;
+    margin: 0;
+    padding: 0;
+    color: $neutral-1;
+    overflow: hidden;
 }
 
 .identity-dropdown__item {
@@ -12,12 +15,10 @@
 
 .identity-dropdown__title {
     display: block;
-    padding: ($gs-gutter / 4) $gs-gutter ($gs-gutter / 2);
-    border-bottom: 1px solid $neutral-8;
+    padding: ($gs-gutter / 2) 0;
+    margin: 0 ($gs-gutter / 2) -1px;
+    border-bottom: 1px solid $neutral-5;
     text-decoration: none;
-    color: $neutral-1;
-    &:hover {
-        background: $neutral-8;
-        color: currentColor;
-    }
+    color: currentColor;
+    white-space: nowrap;
 }

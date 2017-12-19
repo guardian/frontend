@@ -4,11 +4,13 @@
     padding: 5px 0;
     color: #ffffff;
     min-height: $identity-header-height - 10px;
+    z-index: 999;
     .identity-dropdown {
         position: absolute;
         display: none;
         left: 0;
         top: $identity-header-height - 10px;
+        z-index: 999;
         li {
             display: block;
         }
