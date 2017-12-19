@@ -7,7 +7,7 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.fragment.Switch._
 @import views.support.fragment.ConsentChannel._
-import conf.switches.Switches.IdentityShowCommunicationChannelConsents
+@import conf.switches.Switches.IdentityShowCommunicationChannelConsents
 
 
 @(
@@ -35,7 +35,7 @@ import conf.switches.Switches.IdentityShowCommunicationChannelConsents
         <div class="manage-account-wizard__step" data-wizard-step-name="channels">
 
             <h1 class="identity-title">
-                    How can we get in touch with you?
+                How can we get in touch with you?
             </h1>
             <p class="manage-account-headerNote">
                 Besides email, are there any other ways you would like us to get in touch with you?
@@ -45,7 +45,7 @@ import conf.switches.Switches.IdentityShowCommunicationChannelConsents
                 <div class="manage-account__switches">
                     <ul>
                         @communicationChannelsForUser(user).map((channel) =>
-                            <li>checkboxName(channel)</li>
+                            <li>@checkboxName(channel)</li>
                         )
                     </ul>
                 </div>
