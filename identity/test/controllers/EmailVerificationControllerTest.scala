@@ -51,7 +51,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
     "when the api call succeeds" - {
       when(api.validateEmail(token, trackingData)).thenReturn(Future.successful(Right(())))
-      val result = controller.verify(token, "EmailValidation")(testRequest)
+      val result = controller.verify(token)(testRequest)
 
       "should display the validation completed page" in {
         status(result) should be(OK)
@@ -65,7 +65,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
     "when the api call returns already validated error" - {
       val err = Error("User Already Validated", "This user account has already been validated")
       when(api.validateEmail(token, trackingData)).thenReturn(Future.successful(Left(List(err))))
-      val result = controller.verify(token, "EmailValidation")(testRequest)
+      val result = controller.verify(token)(testRequest)
 
       "should display the validation completed page" in {
         status(result) should be(OK)
@@ -79,7 +79,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
     "when the api call returns token expired error" - {
       val err = Error("Token expired", "The activation token is no longer valid")
       when(api.validateEmail(token, trackingData)).thenReturn(Future.successful(Left(List(err))))
-      val result = controller.verify(token, "EmailValidation")(testRequest)
+      val result = controller.verify(token)(testRequest)
 
       "should display the validation completed page" in {
         status(result) should be(OK)
@@ -93,7 +93,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
     "when the api call returns invalid token error" - {
       val err = Error("Invalid json", "This request contains invalid json")
       when(api.validateEmail(token, trackingData)).thenReturn(Future.successful(Left(List(err))))
-      val result = controller.verify(token, "EmailValidation")(testRequest)
+      val result = controller.verify(token)(testRequest)
 
       "should display the validation completed page" in {
         status(result) should be(OK)

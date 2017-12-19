@@ -64,5 +64,5 @@ POST        /email-prefs                            controllers.EditProfileContr
 
 GET         /consents                               controllers.EditProfileController.displayConsentJourneyForm(journey = "consent", consentHint: Option[String], newsletterHint: Option[String])
 GET         /consents/:journey                      controllers.EditProfileController.displayConsentJourneyForm(journey: String, consentHint: Option[String], newsletterHint: Option[String])
-POST        /complete-consent                       controllers.EditProfileController.submitRepermissionedFlag
+POST        /complete-consents                       controllers.EditProfileController.submitRepermissionedFlag
 ########################################################################################################################
