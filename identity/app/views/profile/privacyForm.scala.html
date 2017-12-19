@@ -71,20 +71,7 @@ import conf.switches.Switches.IdentityShowCommunicationChannelConsents
     <div class="manage-account__switches">
         <ul>
             @communicationChannelsForUser(user).map((channel) =>
-                fragments.form.switch(
-                    title = checkboxName(channel),
-                    subheading = None,
-                    description = None,
-                    behaviour = ConsentSwitch,
-                    field = new Field(
-                        form = emailPrefsForm,
-                        name = "test",
-                        constraints = Nil,
-                        format = None,
-                        errors = Nil,
-                        value = None
-                    ),
-                )(nonInputFields, messages)
+                <li>checkboxName(channel)</li>
             )
         </ul>
     </div>
