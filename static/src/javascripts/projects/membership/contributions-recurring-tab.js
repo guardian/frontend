@@ -503,6 +503,12 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
 
     $(CONTRIBUTION_GLYPH).text(glyph);
 
+    $(CONTRIBUTION_NO_CHANGE_WARNING).text(
+        `Your current contribution is ${formatAmount(
+            contributorDetails.subscription.nextPaymentPrice, glyph
+        )} per ${isMonthly ? 'month' : 'year'}. Please enter a different amount.`
+    );
+
     $(CONTRIBUTION_TOO_LOW_WARNING).text(
         `Please enter an amount of ${formatAmount(500, glyph)} or more`
     );
