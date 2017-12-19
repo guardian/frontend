@@ -20,9 +20,7 @@
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
-    consentHint: Option[String] = None,
-    newsletterHint: Option[String] = None
-)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+    consentHint: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @onlySubscribedToNewsletters = @{
     EmailNewsletters.all.subscriptions.filter { newsletter =>

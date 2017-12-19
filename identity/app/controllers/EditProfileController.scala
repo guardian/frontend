@@ -64,14 +64,14 @@ class EditProfileController(
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
 
-  def displayConsentsJourneyAll(consentHint: Option[String] = None, newsletterHint: Option[String] = None): Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageAll, consentHint, newsletterHint)
-  def displayConsentsJourneyNewsletters: Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageNewsletters, None, None)
-  def displayConsentsJourney(consentHint: Option[String] = None, newsletterHint: Option[String] = None): Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint, newsletterHint)
+  def displayConsentsJourneyAll(consentHint: Option[String] = None, newsletterHint: Option[String] = None): Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageAll, consentHint)
+  def displayConsentsJourneyNewsletters: Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageNewsletters, None)
+  def displayConsentsJourney(consentHint: Option[String] = None): Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint)
 
   def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
     displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
 
-  def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String], newsletterHint: Option[String]): Action[AnyContent] = {
+  def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String]): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
@@ -85,8 +85,7 @@ class EditProfileController(
             journey = page.journeyParam,
             forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
             request.user,
-            consentHint,
-            newsletterHint
+            consentHint
           )
         }
       }
@@ -234,8 +233,7 @@ class EditProfileController(
       journey: String,
       forms: ProfileForms,
       user: User,
-      consentHint: Option[String],
-      newsletterHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
+      consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
@@ -251,7 +249,6 @@ class EditProfileController(
           newsletterService.getEmailSubscriptions(emailFilledForm),
           EmailNewsletters.all,
           consentHint,
-          newsletterHint
         ))(page, request, context)
       ))
 
