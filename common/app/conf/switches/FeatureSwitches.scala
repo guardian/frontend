@@ -185,6 +185,16 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val IdentityShowCommunicationChannelConsents = Switch(
+    SwitchGroup.Identity,
+    "id-show-communication-channel-consents",
+    "If switched on, users will see UI for opting in or out of different communication channels",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 15),
+    exposeClientSide = false
+  )
+
   val EnhanceTweetsSwitch = Switch(
     SwitchGroup.Feature,
     "enhance-tweets",
