@@ -71,7 +71,7 @@
     <div class="manage-account__switches">
         <ul>
             @communicationChannelsForUser(user).map((channel) =>
-                s"<li>${checkboxName(channel)}</li>"
+                <li>{s"${checkboxName(channel)}"}</li>
             )
         </ul>
     </div>
