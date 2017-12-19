@@ -165,13 +165,13 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val IdentityAllowAccessToGdprJourneyPageSwitch = Switch(
+  val IdentityRedirectUsersWithLingeringV1ConsentsSwitch = Switch(
     SwitchGroup.Identity,
-    "id-allow-access-to-gdpr-journey-page",
-    "If switched on, users will be able to access the /repermission endpoint",
+    "id-redirect-users-with-lingering-v1-consents",
+    "If switched on, users trying to reach /email-prefs will go to /consent to repermission",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 1),
+    sellByDate = new LocalDate(2018, 1, 15),
     exposeClientSide = false
   )
 
@@ -184,6 +184,7 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 1, 15),
     exposeClientSide = false
   )
+
   val IdentityAllowAccessToGdprJourneyPageSwitch = Switch(
     SwitchGroup.Identity,
     "id-allow-access-to-gdpr-journey-page",
