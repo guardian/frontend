@@ -1,0 +1,8 @@
+@()(implicit page: model.ContentPage, request: RequestHeader, applicationContext: model.ApplicationContext)
+
+<div class="@if(page.item.fields.main.nonEmpty) { immersive-header-container }">
+    @if(experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {
+        @fragments.header()
+    }
+    @fragments.immersiveMainMedia()
+</div>
