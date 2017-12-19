@@ -6,6 +6,9 @@
 @import model.IdentityPage
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
+@import views.support.fragment.Switch._
+@import views.support.fragment.ConsentChannel._
+import conf.switches.Switches.IdentityShowCommunicationChannelConsents
 
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
@@ -64,6 +67,29 @@
     </form>
 }
 
+@channelConsentForm = {
+    <div class="manage-account__switches">
+        <ul>
+            @communicationChannelsForUser(user).map((channel) =>
+                fragments.form.switch(
+                    title = checkboxName(channel),
+                    subheading = None,
+                    description = None,
+                    behaviour = ConsentSwitch,
+                    field = new Field(
+                        form = emailPrefsForm,
+                        name = "test",
+                        constraints = Nil,
+                        format = None,
+                        errors = Nil,
+                        value = None
+                    ),
+                )(nonInputFields, messages)
+            )
+        </ul>
+    </div>
+}
+
 @if(consentsUpdated) {
     <div class="form__success">
         <h2>Thank you</h2>
@@ -83,4 +109,10 @@
 <h2 class="manage-account-header">Select which newsletters you would like to receive</h2>
 @profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
 
+@* CHANNELS *@
+@if(IdentityShowCommunicationChannelConsents.isSwitchedOn && communicationChannelsForUser(user).nonEmpty) {
+    <hr class="manage-account-divider" />
+    <h2 class="manage-account-header">How can we get in touch with you?</h2>
+    @channelConsentForm()
+}
 @registrationFooter(idRequest, idUrlBuilder)
