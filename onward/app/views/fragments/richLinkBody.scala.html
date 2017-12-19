@@ -21,6 +21,7 @@
 }
 
 <div class="rich-link @toneClass(content)--item @RenderClasses(Map(
+    "rich-link--pillar-" + content.metadata.pillar.nameOrDefault -> experiments.ActiveExperiments.isParticipating(experiments.Garnett),
     "rich-link--video" -> content.tags.isVideo,
     "rich-link--gallery" -> content.tags.isGallery,
     "rich-link--audio" -> content.tags.isAudio,
