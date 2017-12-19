@@ -1,7 +1,8 @@
-@import com.gu.identity.model.{EmailNewsletters, EmailNewsletter}
+@import com.gu.identity.model.EmailNewsletter
 @import common.LinkTo
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.Switch._
+@import conf.switches.Switches.IdentityGdprV2NewslettersConsents
 
 @* Editorial Newsletter switch/checkbox *@
 
@@ -25,7 +26,7 @@
 }
 
 @newsletterListId = @{
-    if (true) // switch
+    if (IdentityGdprV2NewslettersConsents.isSwitchedOn)
         newsletter.listIdV2.toString
     else
         newsletter.listId.toString
@@ -35,13 +36,12 @@
     if (unchecked)
         None
     else {
-        if (true) // switch
+        if (IdentityGdprV2NewslettersConsents.isSwitchedOn)
             Some(newsletter.subscribedToV2(emailSubscriptions).toString)
         else
             Some(newsletter.subscribedTo(emailSubscriptions).toString)
     }
 }
-
 
 @newsletterField = @{
     new Field(

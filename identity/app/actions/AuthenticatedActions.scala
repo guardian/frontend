@@ -116,10 +116,10 @@ class AuthenticatedActions(
     override val executionContext = ec
 
     def refine[A](request: AuthRequest[A]) =
-//      if (IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
+      if (IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
         decideConsentJourney(request)
-//      else
-//        Future.successful(Right(request))
+      else
+        Future.successful(Right(request))
 
     private def decideConsentJourney[A](request: AuthRequest[A]) =
       if (userHasRepermissioned(request))
