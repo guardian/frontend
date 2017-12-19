@@ -88,7 +88,11 @@
 
         <div class="rich-link__read-more">
             <div class="rich-link__arrow">
+                @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                 @inlineSvg("arrow-in-circle", "icon")
+                } else {
+                    @inlineSvg("arrow-in-circle-garnett", "icon")
+                }
             </div>
             <div class="rich-link__read-more-text">
                 @{content.metadata.contentType match {
