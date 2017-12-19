@@ -36,14 +36,22 @@
             bottom: 3px;
         }
 
-        .fc-trail__count {
+        .fc-trail__count,
+        .fc-item__timestamp {
             position: absolute;
-            padding-bottom: $gs-gutter * .1;
             padding-right: $gs-gutter * .25;
             padding-left: $gs-gutter * .25;
-            right: 0;
             bottom: -1px;
             top: -1px;
+            z-index: 1;
+        }
+
+        .fc-trail__count {
+            right: 0;
+        }
+
+        .fc-item__timestamp {
+            left: 0;
         }
     }
 

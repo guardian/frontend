@@ -333,6 +333,22 @@ $block-height: 58px;
     display: none;
 }
 
+.fc-item__timestamp {
+    display: flex;
+
+    .inline-icon {
+        margin-top: -2px;
+        padding-right: 4px;
+        height: 11px;
+        width: 11px;
+    }
+
+    .fc-timestamp__text {
+        display: block;
+        line-height: 10px;
+    }
+}
+
 .fc-trail__count {
     display: flex;
     line-height: 10px;
@@ -341,8 +357,6 @@ $block-height: 58px;
         padding-right: 2px;
         height: 14px;
         width: 14px;
-        bottom: 0;
-        top: 0;
 
         svg {
             height: 14px;

@@ -173,6 +173,7 @@ $pillars: (
             background-color: map-get($palette, cutoutBackground);
         }
 
+        .fc-item__timestamp,
         .fc-trail__count--commentcount {
             color: map-get($palette, commentCount);
             background-color: map-get($palette, cardBackground);
