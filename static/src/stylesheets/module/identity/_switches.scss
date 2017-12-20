@@ -55,6 +55,9 @@ $checkbox-size: $gs-gutter / 1.25;
 
     &:hover {
         background-color: darken($neutral-8, 1%);
+        .manage-account__switch-checkbox {
+            border-color: $identity-main;
+        }
     }
 
     &.manage-account__switch--hinted {
@@ -115,19 +118,34 @@ $checkbox-size: $gs-gutter / 1.25;
     show normal checkboxes on
     older browsers
     */
+
+    /*override pasteup*/
+    input[type=checkbox] {
+        float: none;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        height: $checkbox-size;
+        width: $checkbox-size;
+    }
+
     @supports (transform: scale(1)) {
 
         input[type=checkbox] {
-            visibility: hidden;
-            position: absolute;
-            top: 0;
-            right: 0;
+            opacity: 0;
             & + .manage-account__switch-checkbox {
                 display: block;
                 position: absolute;
                 top: 0;
                 left: 0;
+                z-index: 11;
             }
+        }
+
+        input:focus, input:focus + .manage-account__switch-checkbox {
+            outline: 5px auto $identity-main;
         }
 
         input:checked + .manage-account__switch-checkbox {
