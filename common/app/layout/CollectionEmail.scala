@@ -1,13 +1,11 @@
 package layout
 
-import conf.switches.Switches
 import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, PressedContent}
 import com.gu.commercial.branding.ContainerBranding
 import commercial.campaigns.EmailAdvertisements._
 import common.Edition
-
 import PartialFunction.condOpt
 
 sealed trait EmailContainer
@@ -20,23 +18,17 @@ case class EmailContentContainer(displayName: String, href: Option[String], card
 object EmailContentContainer {
 
   def fromPressedCollections(pressedCollections: List[PressedCollection]): List[EmailContentContainer] = {
-    val (_, reversedContainers) = pressedCollections.foldLeft((List.empty[EditionalisedLink], List.empty[EmailContentContainer])) {
-      case ((alreadySeen, emailContainers), pressedCollection) =>
-        val cards = collectionCardsDeduplicated(pressedCollection, alreadySeen)
-        val emailContainer = fromCollectionAndCards(pressedCollection, cards)
-        val newUrls = cards.map(_.header.url)
-        (newUrls ::: alreadySeen, emailContainer :: emailContainers)
-    }
-    reversedContainers.reverse.filter(_.cards.nonEmpty)
+    pressedCollections
+      .map(pressedCollectionToContentContainer)
+      .filter(_.cards.nonEmpty)
+  }
+
+  private def pressedCollectionToContentContainer(pressedCollection: PressedCollection): EmailContentContainer = {
+    val cards = pressedCollection.curatedPlusBackfillDeduplicated.flatMap(contentCard(_, pressedCollection.config))
+    fromCollectionAndCards(pressedCollection, cards)
   }
 
   def storiesCount(collectionConfig: CollectionConfig): Int = collectionConfig.displayHints.flatMap(_.maxItemsToDisplay).getOrElse(6)
-
-  private def collectionCardsDeduplicated(collection: PressedCollection, alreadySeen: List[EditionalisedLink]): List[ContentCard] = collection
-    .curatedPlusBackfillDeduplicated
-    .flatMap(contentCard(_, collection.config))
-    .filterNot(content => alreadySeen.contains(content.header.url))
-    .take(storiesCount(collection.config))
 
   private def fromCollectionAndCards(collection: PressedCollection, cards: List[ContentCard]) =
     EmailContentContainer(

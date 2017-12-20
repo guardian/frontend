@@ -1,3 +1,8 @@
+/* Variables
+   ========================================================================== */
+$identity-header-height: 44px;
+$identity-footer-height: 36px;
+
 /* Identity and registration
    ========================================================================== */
 .l-header--identity {
@@ -77,11 +82,9 @@
 }
 
 .identity-layout-vertical-wrapper {
-    /*rough estimate of header + footer height*/
-    /*TODO: get a more precise estimate post garnett*/
-    min-height: calc(100vh - #{$gs-gutter*4});
+    min-height: calc(100vh - #{$identity-footer-height+$identity-header-height});
     &.identity-layout-vertical-wrapper__tabs {
-        min-height: calc(100vh - #{$gs-gutter*10});
+        min-height: calc(100vh - #{($gs-gutter*6)+$identity-footer-height+$identity-header-height});
         /*TODO: remove if page shadow goes away*/
         /*rough estimate of header + top tabs height*/
     }

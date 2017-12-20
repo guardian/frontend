@@ -22,7 +22,7 @@
     availableLists: EmailNewsletters,
     consentHint: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@onlySubscribedToNewsletters = @{
+@onlySubscribedToV1Newsletters = @{
     EmailNewsletters.all.subscriptions.filter { newsletter =>
         emailSubscriptions.contains(newsletter.listId.toString)
     }
@@ -91,7 +91,7 @@
 }
 
 @emailStep(isNarrow: Boolean = false) = {
-    @if( onlySubscribedToNewsletters.nonEmpty ) {
+    @if(onlySubscribedToV1Newsletters.nonEmpty) {
         <div class="manage-account-wizard__step" data-wizard-step-name="email">
 
             <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
@@ -111,12 +111,13 @@
                 }
                 <div class="manage-account__switches">
                     <ul>
-                    @onlySubscribedToNewsletters.zipWithRowInfo.map { case (newsletter, row) =>
+                    @onlySubscribedToV1Newsletters.zipWithRowInfo.map { case (newsletter, row) =>
                     <li>
                         @fragments.newsletterSwitch(
                             emailPrefsForm,
                             emailSubscriptions,
-                            newsletter = newsletter
+                            newsletter = newsletter,
+                            unchecked = true
                         )(nonInputFields, messages, request)
                     </li>
                     }
