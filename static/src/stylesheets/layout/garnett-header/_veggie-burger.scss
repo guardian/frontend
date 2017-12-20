@@ -1,5 +1,5 @@
 .veggie-burger {
-    background-color: #000000;
+    background-color: $nav-primary-colour;
     color: $neutral-7;
     cursor: pointer;
     display: block;
@@ -19,7 +19,6 @@
 
     // menu is open
     .new-header--open & {
-        background-color: $highlight-blue;
         z-index: $zindex-main-menu + 1;
     }
 

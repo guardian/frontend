@@ -38,7 +38,8 @@ object HtmlPageHelpers {
       ("has-localnav", Navigation.topLevelItem(edition.navigation, page).filter(_.links.nonEmpty).nonEmpty),
       ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
       ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
-      ("has-super-sticky-banner", model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner))
+      ("has-super-sticky-banner", model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)),
+      ("has-garnett-header", ActiveExperiments.isParticipating(GarnettHeader))
     )
   }
 

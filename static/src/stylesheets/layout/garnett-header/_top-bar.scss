@@ -1,13 +1,12 @@
 .top-bar__item {
-    color: #000000;
+    color: $nav-primary-colour;
     float: left;
     @include fs-textSans(2);
-    letter-spacing: .01rem;
     line-height: 1;
     position: relative;
     transition: color 80ms ease-out;
     padding: ($gs-baseline / 2) ($gs-gutter / 2);
-    margin: 3px 0 0;
+    margin: 1px 0 0;
 
     &:nth-child(2) {
         padding-left: $gs-gutter / 2 + $gs-gutter / 4;
@@ -21,20 +20,16 @@
 
     &:hover,
     &:focus {
-        color: #000000;
-
-        &:before {
-            opacity: 1;
-        }
+        color: $nav-secondary-colour;
+        text-decoration: none;
     }
 
     @include mq(tablet) {
-        font-size: 15px;
+        font-size: 14px;
     }
 }
 
 .top-bar__item--dropdown {
-    border-radius: 99999px;
     cursor: pointer;
 
     &:after {
@@ -48,19 +43,17 @@
         border-top: transparent;
         margin-left: 2px;
         vertical-align: middle;
+        // Prevents wobble on webkit browsers
+        -webkit-backface-visibility: hidden;
         transition: transform 250ms ease-out;
     }
 
     .dropdown-menu--open ~ &,
     &.is-active {
-        background-color: rgba(0, 0, 0, .1);
+        color: $nav-primary-colour;
 
-        &:before {
-            content: none;
-        }
-
-        &:after {
-            transform: translateY(0) rotate(45deg);
+        &:hover {
+            color: $nav-secondary-colour;
         }
     }
 
@@ -70,7 +63,7 @@
 }
 
 .top-bar__item--cta {
-    color: $neutral-6;
+    color: $nav-background-colour;
     font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
     font-weight: 800;
     padding: 0;
@@ -87,7 +80,7 @@
 
     &:hover,
     &:focus {
-        color: $neutral-6;
+        color: $nav-background-colour;
 
         & .top-bar__item--cta--circle {
             transform: scale(1.05);
@@ -106,7 +99,7 @@
     transform-origin: top center;
 
     &:before {
-        background: #000000;
+        background: $nav-primary-colour;
         border-radius: 50%;
         bottom: 0;
         content: '';

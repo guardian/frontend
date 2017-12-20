@@ -25,7 +25,7 @@
 }
 
 .menu-search__search-box {
-    background-color: $neutral-4;
+    background-color: darken($nav-background-colour, 5%);
     border: 0;
     border-radius: 1000px;
     box-sizing: border-box;
@@ -36,13 +36,13 @@
     width: 100%;
 
     &::placeholder {
-        color: $neutral-1;
+        color: $nav-primary-colour;
     }
 
     &:focus {
         background-color: #ffffff;
-        border: 2px solid $neutral-2;
-        color: $neutral-1;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
+        color: $nav-primary-colour;
         outline: none;
         padding-right: $gs-gutter * 2;
         transition: background-color 500ms;
@@ -64,13 +64,9 @@
     }
 
     .inline-search-36__svg {
-        fill: $neutral-2;
+        fill: $nav-secondary-colour;
         height: 22px;
         width: 22px;
-
-        .menu-search__search-box:focus ~ & {
-            fill: $neutral-2;
-        }
     }
 }
 
@@ -89,7 +85,7 @@
 
     &:before,
     &:after {
-        border: 2px solid $guardian-brand;
+        border: 2px solid $nav-primary-colour;
         border-left: 0;
         border-top: 0;
         content: '';
@@ -125,7 +121,7 @@
 
     &:hover,
     &:active {
-        border-color: $guardian-brand;
+        border-color: $nav-primary-colour;
     }
 
     &:focus {

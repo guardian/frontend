@@ -5,11 +5,10 @@
     }
 
     & ~ .top-bar__item--dropdown {
-        color: #ffffff;
-        background-color: $guardian-brand-dark;
+        color: $nav-primary-colour;
 
-        &:after {
-            transform: translateY(0) rotate(45deg);
+        &:hover {
+            color: $nav-secondary-colour;
         }
     }
 }
@@ -33,8 +32,8 @@
 }
 
 .dropdown-menu__title {
-    @include fs-textSans(2);
-    color: $neutral-1;
+    @include fs-textSans(4);
+    color: $nav-primary-colour;
     cursor: pointer;
     display: block;
     letter-spacing: .01rem;
@@ -47,7 +46,7 @@
 
     &:hover,
     &:focus {
-        color: currentColor;
+        color: $nav-primary-colour;
         background-color: $neutral-6;
         text-decoration: none;
     }
@@ -79,7 +78,7 @@
     &:after {
         // Tick icon
         content: '';
-        border: 2px solid #000000;
+        border: 2px solid $nav-secondary-colour;
         border-top: 0;
         border-right: 0;
         position: absolute;

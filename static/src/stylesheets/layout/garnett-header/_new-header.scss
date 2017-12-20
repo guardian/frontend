@@ -1,10 +1,3 @@
-.l-side-margins {
-    &:before,
-    &:after {
-        display: none;
-    }
-}
-
 /* When the menu is open this class is added to the html to prevent users
 from scrolling */
 .nav-is-open {
@@ -20,9 +13,21 @@ from scrolling */
 }
 
 .new-header {
-    background-color: $neutral-7;
+    background-color: $nav-background-colour;
     position: relative;
-    text-transform: capitalize; // temporary
+    text-transform: capitalize; // TODO change this
+
+    &:not(.new-header--slim) {
+        margin-bottom: $gs-baseline;
+        margin-bottom: 0;
+
+        &:after {
+            @include multiline(4, $garnett-neutral-4);
+            background-color: #ffffff;
+            height: 13px;
+            margin-bottom: 0;
+        }
+    }
 
     @include mq(tablet) {
         display: block;
@@ -34,7 +39,7 @@ from scrolling */
 
     @include mq(desktop) {
         &.new-header--open {
-            background-color: $neutral-7;
+            background-color: $nav-background-colour;
         }
 
         // Switch: ABNewDesktopHeader
@@ -50,6 +55,17 @@ from scrolling */
     }
 }
 
+.l-side-margins { // TODO remove this line
+    &:before,
+    &:after {
+        display: none;
+    }
+}
+
+.inline-guardian-logo-160__svg {
+    display: none;
+}
+
 .new-header__inner {
     @include clearfix();
 }
@@ -59,13 +75,14 @@ from scrolling */
     top: 0;
     // Needs to sit above the menu, and the veggie burger
     z-index: $zindex-main-menu + 2;
-
-    .new-header--open & {
-        display: none;
-    }
+    transform: translateX(100%);
 
     @include mq(desktop) {
-        right: $gs-gutter / 2;
+        right:120px;
+    }
+
+    @include mq(wide) {
+        right: 200px;
     }
 }
 
@@ -80,15 +97,6 @@ from scrolling */
     left: 0;
     position: absolute;
     top: 0;
-
-    .new-header--open & {
-        display: none;
-    }
-}
-
-.new-header__logo {
-    display: block;
-    float: right;
 }
 
 .new-header__menu-toggle {
@@ -116,66 +124,38 @@ from scrolling */
         right: $gutter-large;
     }
 
-    @include mq(desktop) {
-        .new-header--open & {
-            position: absolute;
-            left: $gs-gutter - $gs-gutter / 4;
-            right: auto;
-            top: $gs-baseline;
-        }
-
-        .new-header--slim.new-header--open & {
-            top: $gs-baseline / 2;
-        }
-    }
-
     &:focus {
         outline: 0;
     }
 }
 
-.new-header__logo__svg {
-    display: block;
-    height: calc(3 / 16 * 180px);
-    margin-bottom: $gs-baseline / 2;
+.new-header__logo {
+    float: right;
     margin-right: $gs-gutter / 2;
-    margin-top: $gs-baseline / 2;
-    width: 180px;
-
-    @include mq(mobileMedium) {
-        height: calc(3 / 16 * 225px);
-        width: 225px;
-    }
+    margin-top: $gs-baseline / 4;
 
     @include mq(mobileLandscape) {
-        margin-bottom: 0;
         margin-right: $gs-gutter;
     }
 
-    @include mq(tablet) {
-        height: calc(3 / 16 * 345px);
-        margin-top: $gs-baseline + $gs-baseline / 4;
-        width: 345px;
-    }
-
     @include mq(desktop) {
-        // height: calc(4 / 12 * 280px);
-        height: auto;
-        margin-right: 120px;
-        margin-top: 3px;
-        width: 280px;
+        margin-bottom: -30px;
+        margin-right: 17px;
+        margin-top: 5px;
     }
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
-            margin-bottom: -24px;
+            margin-bottom: -34px;
+        }
+
+        @include mq(wide) {
+            margin-right: 97px;
         }
     }
 
     .new-header--slim & {
-        height: calc(3 / 16 * 180px);
         margin: 5px ($veggie-burger-large + $gs-gutter) 0 0;
-        width: 180px;
 
         @include mq(mobileLandscape) {
             margin-right: $veggie-burger-large + $gs-gutter + ($gs-gutter / 2);
@@ -184,6 +164,43 @@ from scrolling */
         @include mq(desktop) {
             margin-right: $gs-gutter;
         }
+    }
+}
+
+.inline-the-guardian-logo { // TODO remove this in the future
+    display: block !important;
+}
+
+.inline-the-guardian-logo__svg {
+    display: block;
+    height: 40px;
+    width: 140px;
+
+    @include mq(mobileMedium) {
+        height: 52px;
+        width: 164px;
+    }
+
+    @include mq(tablet) {
+        height: calc(3 / 16 * 345px);
+        width: 345px;
+    }
+
+    @include mq(desktop) {
+        height: 82px;
+        width: 249px;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            height: 97px;
+            width: 295px;
+        }
+    }
+
+    .new-header--slim & {
+        height: calc(3 / 16 * 180px);
+        width: 180px;
     }
 }
 

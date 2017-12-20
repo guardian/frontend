@@ -5,13 +5,12 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, getContributionOrSupporterUrl, NewHeader, getSupportOrSubscriptionUrl}
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
-@import experiments.{ ABNewDesktopHeader, GarnettHeader, ActiveExperiments}
+@import experiments.{ ABNewDesktopHeader, ActiveExperiments}
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
 <header class="@RenderClasses(Map(
             "new-header--mvt-desktop" -> ActiveExperiments.isParticipating(ABNewDesktopHeader),
-            "new-header--slim" -> page.metadata.hasSlimHeader,
-            "new-header--garnett" -> ActiveExperiments.isParticipating(GarnettHeader)
+            "new-header--slim" -> page.metadata.hasSlimHeader
         ), s"new-header--${navMenu.currentPillar.map(_.title).getOrElse("")}", "new-header")"
         role="banner">
 
@@ -28,8 +27,11 @@
                 data-link-name="nav2 : logo">
 
                 <span class="u-h">The Guardian - Back to home</span>
-                @fragments.inlineSvg("the-guardian-logo", "logo", List(
+                @fragments.inlineSvg("guardian-logo-160", "logo", List(
                     "new-header__logo"
+                ))
+                @fragments.inlineSvg("the-guardian-logo", "logo", List(
+                    "is-hidden"
                 ))
             </a>
 
@@ -123,9 +125,9 @@
                 </span>
 
                 <span class="pillar-link pillar-link--dropdown pillar-link--sections hide-until-desktop">
-                    <span class="u-h">All</span>
-                    sections
-                    <span class="pillar-link--dropdown__icon"></span>
+                    <span class="u-h">Show</span>
+                    more
+                    <i class="pillar-link--dropdown__icon"></i>
                 </span>
 
                 <span class="menu-close hide-until-desktop">
