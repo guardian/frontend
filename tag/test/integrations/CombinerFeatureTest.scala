@@ -1,4 +1,4 @@
-package controllers
+package integrations
 
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import test.ConfiguredTestSuite
