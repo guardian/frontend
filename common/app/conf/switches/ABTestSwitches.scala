@@ -146,13 +146,4 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-split-cta-referrer",
-    "Test a split cta, and changing the product set for people who click on the epic",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 10),
-    exposeClientSide = true
-  )
 }
