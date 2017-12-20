@@ -99,11 +99,6 @@ $checkbox-size: $gs-gutter / 1.25;
         > * {
             opacity: .5;
         }
-
-        input[type=checkbox],
-        .manage-account__switch-checkbox {
-            opacity: .25!important;
-        }
     }
 
     &.is-just-updated {
