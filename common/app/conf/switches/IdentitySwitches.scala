@@ -28,7 +28,7 @@ trait IdentitySwitches {
   val IdentityAllowAccessToGdprJourneyPageSwitch = Switch(
     SwitchGroup.Identity,
     "id-allow-access-to-gdpr-journey-page",
-    "If switched on, users will be able to access the /repermission endpoint",
+    "If switched on, users will be able to access the Journey page",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 1),
@@ -38,7 +38,7 @@ trait IdentitySwitches {
   val IdentityPointToConsentJourneyPage = Switch(
     SwitchGroup.Identity,
     "id-point-to-consent-journey-page",
-    "If switched on, public facing links will redirect to journey page",
+    "If switched on, public facing links will redirect to Journey page",
     owners = Seq(Owner.withGithub("calum-campbell")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 1),
@@ -49,7 +49,7 @@ trait IdentitySwitches {
   val IdentityRedirectUsersWithLingeringV1ConsentsSwitch = Switch(
     SwitchGroup.Identity,
     "id-redirect-users-with-lingering-v1-consents",
-    "If switched on, users trying to reach /email-prefs will go to /consent to repermission",
+    "If switched on, users trying to reach Account prefs will go to the Journey page to repermission",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 1),
