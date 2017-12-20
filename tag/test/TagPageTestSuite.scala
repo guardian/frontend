@@ -16,6 +16,7 @@ class TagPageTestSuite extends Suites (
   new TagPageGroupingTest,
   new TagFeatureTest,
   new TagTemplateTest,
+  new SectionTemplateTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19003
 }
