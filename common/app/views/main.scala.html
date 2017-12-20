@@ -91,6 +91,31 @@
             </script>
         }
 
+        @**********************
+          H A C K D A Y - healine fast testing (mch)
+
+          We update the headline with another one.  
+        ************************@
+        @if(request.path == "/uk") {
+            <script type="text/javascript">
+                var anchorElement = document.querySelectorAll('a.fc-item__link[href^="https://www.theguardian.com/politics/2017/nov/29/brexit-bill-of-50bn-no-more-than-what-uk-owes-eu-says-grayling"]')[0];
+                if (anchorElement) {
+                    var headlineElement = container.querySelector('span.js-headline-text');
+                    if (headlineElement) {
+                        var newHeadline = 'Leading Brexiter tell Britain should pay the Brexit bill';
+                        var oldHeadline = headlineElement.textContent;
+                        
+                        if (Date.now() % 2) {
+                            headlineElement.textContent = newHeadline;
+                            anchorElement.setAttribute('data-headline', newHeadline);
+                        } else {
+                            anchorElement.setAttribute('data-headline', oldHeadline);
+                        }
+                    }
+                }
+            </script>
+        }
+
         @fragments.footer()
 
         @fragments.inlineJSNonBlocking()
