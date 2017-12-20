@@ -1,33 +1,40 @@
 @mixin garnett-underline($colour, $line-height, $factor: .25) {
-    background-image: linear-gradient(to bottom, transparent, transparent calc(#{$line-height} - 1px), $colour);
-    background-size: 1px $line-height;
-    background-origin: content-box;
-    background-clip: content-box;
-    margin-right: -1 * $factor * $gs-gutter;
-}
-
-.fc-item--type-analysis {
     .fc-item__title {
-        @include garnett-underline($analysis-garnett-underline, 24px);
-    }
-
-    &.fc-item--half-tablet,
-    &.fc-item--three-quarters-tall-tablet,
-    &.fc-item--three-quarter-tablet {
-        @include mq(tablet) {
-            @include garnett-underline($analysis-garnett-underline, 28px, .5);
-        }
-    }
-
-    &.fc-item--full-media-75-tablet {
-        @include mq(tablet) {
-            @include garnett-underline($analysis-garnett-underline, 32px, .5);
-        }
-    }
-
-    &.fc-item--list-mobile,
-    &.fc-item--list-media-mobile {
-        @include garnett-underline($analysis-garnett-underline, 20px);
+        background-image: linear-gradient(to bottom, transparent, transparent calc(#{$line-height} - 1px), rgba($colour, .5));
+        background-size: 1px $line-height;
+        background-origin: content-box;
+        background-clip: content-box;
+        margin-right: -1 * $factor * $gs-gutter;
     }
 }
 
+$pillars: (
+    news:      $news-garnett-main-1,
+    opinion:   $opinion-garnett-main-1,
+    sport:     $sport-garnett-main-1,
+    arts:      $arts-garnett-main-1,
+    lifestyle: $lifestyle-garnett-main-1
+);
+
+@each $pillar, $pillarColor in $pillars {
+    .fc-item--pillar-#{$pillar}.fc-item--type-analysis {
+        @include garnett-underline($pillarColor, 20px);
+
+        @include mq(tablet) {
+            &.fc-item--standard-tablet {
+                @include garnett-underline($pillarColor, 24px);
+            }
+
+            &.fc-item--half-tablet,
+            &.fc-item--three-quarters-tall-tablet,
+            &.fc-item--three-quarters-tablet {
+                @include garnett-underline($pillarColor, 28px, .5);
+            }
+
+            &.fc-item--full-media-75-tablet {
+                @include garnett-underline($pillarColor, 32px, .5);
+            }
+        }
+
+    }
+}
