@@ -98,14 +98,13 @@
                 min-height: gs-height(2) + $gs-baseline;
             }
 
-            .fc-item__avatar {
-                width: gs-span(1.5);
-                height: gs-span(1.5);
+            .fc-item__avatar,
+            .fc-item__avatar__media {
+                height: gs-height(2.4);
             }
     
             .fc-item__avatar__media {
-                right: 0 - $gs-gutter;
-                height: gs-span(1) + $gs-baseline * 3;
+                right: 0 - $gs-gutter * 1.2;
             }
 
             &[class*='fc-item--has-sublinks'] {
@@ -144,20 +143,15 @@
 
             .fc-item__header {
                 padding-bottom: gs-height(4);
-    
-                @include mq(desktop) {
-                    padding-bottom: gs-height(4.5);
-                }
             }
 
-            .fc-item__avatar {
-                width: gs-height(3);
-                height: gs-height(3);
+            .fc-item__avatar,
+            .fc-item__avatar__media {
+                height: gs-height(4);
             }
     
             .fc-item__avatar__media {
-                height: gs-height(4);
-                right: -35%;
+                right: 0 - $gs-gutter * 2;
             }
 
             &[class*='fc-item--has-sublinks'] {
@@ -253,24 +247,24 @@
     }
 }
 
-// full media 50/75/100 all look same if class fc-item--has-cutout is present
+// full media 50/75/100 and fluid-tablet all look same if class fc-item--has-cutout is present
 .fc-item--full-media-50-tablet,
 .fc-item--full-media-75-tablet,
-.fc-item--full-media-100-tablet {
+.fc-item--full-media-100-tablet,
+.fc-item--fluid-tablet {
     @include mq(tablet) {
         &.fc-item--has-cutout {
-            .fc-item__avatar {
-                width: gs-height(4.5);
-                height: gs-height(4.5);
-            }
-
+            .fc-item__avatar,
             .fc-item__avatar__media {
-                right: -35%;
                 height: gs-height(6);
             }
 
+            .fc-item__avatar__media {
+                right: 0 - $gs-gutter * 3;
+            }
+
             .fc-item__container {
-                min-height: gs-height(7);
+                min-height: gs-height(6);
             }
 
             .fc-item__content {
@@ -363,6 +357,10 @@
 .fc-item--fluid-mobile {
     @include mq($until: tablet) {
         @include fc-item--fluid;
+
+        .fc-item__avatar {
+            display: none;
+        }
     }
 
     @include mq(mobileLandscape, tablet) {

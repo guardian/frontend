@@ -82,22 +82,20 @@ Three quarter item. Looks like a wide standard, a bit like this:
             display: flex;
         }
 
-        .fc-item__avatar {
-            width: gs-height(4.5);
-            height: gs-height(4.5);
-
+        .fc-item__avatar,
+        .fc-item__avatar__media {
+            height: gs-height(6);
+    
             @include mq(desktop) {
-                width: gs-height(5);
-                height: gs-height(5);
+                height: gs-height(7);
             }
         }
 
         .fc-item__avatar__media {
-            right: -35%;
-            height: gs-height(6);
-
+            right: 0 - $gs-gutter * 3;
+    
             @include mq(desktop) {
-                height: gs-height(6.5);
+                right: 0 - $gs-gutter * 3.5;
             }
         }
 

@@ -34,17 +34,29 @@ x x x x x x x x
     }
 
     &.fc-item--has-cutout {
-        .fc-item__avatar {
-            width: gs-height(3);
+        .fc-item__avatar,
+        .fc-item__avatar__media {
             height: gs-height(3);
+
+            @include mq(desktop) {
+                height: gs-height(4);
+            }
         }
 
         .fc-item__avatar__media {
-            right: -35%;
+            right: 0 - $gs-gutter * 1.5;
+
+            @include mq(desktop) {
+                right: 0 - $gs-gutter * 2;
+            }
         }
 
         .fc-item__header {
-            padding-bottom: gs-height(4);
+            padding-bottom: gs-height(3) + $gs-baseline * 2;
+
+            @include mq(desktop) {
+                padding-bottom: gs-height(4);
+            }
         }
 
         .fc-item__standfirst-wrapper {
