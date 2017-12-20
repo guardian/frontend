@@ -1,3 +1,14 @@
+@mixin avatar($size) {
+    .fc-item__avatar,
+    .fc-item__avatar__media {
+        height: gs-height($size);
+    }
+
+    .fc-item__avatar__media {
+        right: 0 - ($gs-gutter * ($size / 2));
+    }
+}
+
 @mixin headline-boost($size) {
     .fc-item--has-boosted-title & {
         @include fs-headline($size, true);
@@ -86,6 +97,8 @@
 .fc-item--standard-mobile {
     @include mq($until: tablet) {
         &.fc-item--has-cutout {
+            @include avatar(2.4);
+
             .fc-item__header {
                 padding-right: gs-span(1.5);
             }
@@ -96,15 +109,6 @@
 
             .fc-item__content {
                 min-height: gs-height(2) + $gs-baseline;
-            }
-
-            .fc-item__avatar,
-            .fc-item__avatar__media {
-                height: gs-height(2.4);
-            }
-    
-            .fc-item__avatar__media {
-                right: 0 - $gs-gutter * 1.2;
             }
 
             &[class*='fc-item--has-sublinks'] {
@@ -137,21 +141,14 @@
         }
 
         &.fc-item--has-cutout {
+            @include avatar(4);
+
             .fc-item__standfirst {
                 display: none;
             }
 
             .fc-item__header {
                 padding-bottom: gs-height(4);
-            }
-
-            .fc-item__avatar,
-            .fc-item__avatar__media {
-                height: gs-height(4);
-            }
-    
-            .fc-item__avatar__media {
-                right: 0 - $gs-gutter * 2;
             }
 
             &[class*='fc-item--has-sublinks'] {
@@ -254,14 +251,7 @@
 .fc-item--fluid-tablet {
     @include mq(tablet) {
         &.fc-item--has-cutout {
-            .fc-item__avatar,
-            .fc-item__avatar__media {
-                height: gs-height(6);
-            }
-
-            .fc-item__avatar__media {
-                right: 0 - $gs-gutter * 3;
-            }
+            @include avatar(6);
 
             .fc-item__container {
                 min-height: gs-height(6);

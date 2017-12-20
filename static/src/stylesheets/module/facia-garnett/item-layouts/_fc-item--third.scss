@@ -34,21 +34,10 @@ x x x x x x x x
     }
 
     &.fc-item--has-cutout {
-        .fc-item__avatar,
-        .fc-item__avatar__media {
-            height: gs-height(3);
-
-            @include mq(desktop) {
-                height: gs-height(4);
-            }
-        }
-
-        .fc-item__avatar__media {
-            right: 0 - $gs-gutter * 1.5;
-
-            @include mq(desktop) {
-                right: 0 - $gs-gutter * 2;
-            }
+        @include avatar(3);
+        
+        @include mq(desktop) {
+            @include avatar(4);
         }
 
         .fc-item__header {

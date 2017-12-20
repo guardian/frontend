@@ -46,6 +46,12 @@ Three quarter item. Looks like a wide standard, a bit like this:
     }
 
     &.fc-item--has-cutout {
+        @include avatar(6);
+
+        @include mq(desktop) {
+            @include avatar(7);
+        }
+
         .fc-item__container {
             min-height: gs-height(7);
             flex-direction: column;
@@ -80,23 +86,6 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
         .fc-item__standfirst {
             display: flex;
-        }
-
-        .fc-item__avatar,
-        .fc-item__avatar__media {
-            height: gs-height(6);
-    
-            @include mq(desktop) {
-                height: gs-height(7);
-            }
-        }
-
-        .fc-item__avatar__media {
-            right: 0 - $gs-gutter * 3;
-    
-            @include mq(desktop) {
-                right: 0 - $gs-gutter * 3.5;
-            }
         }
 
         &.fc-item--has-sublinks-3 {
