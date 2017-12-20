@@ -145,6 +145,7 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+<<<<<<< HEAD
   val IdentityCookieRefreshSwitch = Switch(
     SwitchGroup.Identity,
     "id-cookie-refresh",
@@ -216,6 +217,8 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+=======
+>>>>>>> 6926457... move id switches to IdentitySwitches
   val EnhanceTweetsSwitch = Switch(
     SwitchGroup.Feature,
     "enhance-tweets",
