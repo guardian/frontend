@@ -413,6 +413,13 @@ $block-height: 58px;
 
     }
 
+    .fc-item__footer-meta-wrapper {
+        flex: 0 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
     .fc-item__media-meta,
     .fc-item__meta {
         flex: 0 0 auto;
