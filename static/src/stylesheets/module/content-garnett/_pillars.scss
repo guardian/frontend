@@ -76,6 +76,7 @@
         fill: $pillarColor;
     }
 
+    .rick-link__avatar__media,
     .rich-link__container::before {
         background-color: $pillarColor;
     }
@@ -175,6 +176,13 @@
 
     &.tone-comment--item {
         @include richLink($opinion-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.tone-comment--item,
+    &.tone-feature--item.rich-link--pillar-sport {
+        .rich-link__image-container {
+            display: none;
+        }
 
         .rich-link__container {
             padding-bottom: 13px;

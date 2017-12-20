@@ -1002,5 +1002,25 @@ $quote-mark: 35px;
         @include mq(wide) {
             @include fs-headline(3);
         }
+    }   
+}
+
+.rich-link__avatar {
+    margin-left: auto;
+    margin-right: $gs-gutter / 4;
+    width: 80px;
+    height: 80px;
+
+    @include mq(wide) {
+        width: 138px;
+        height: 138px;
     }
+}
+
+.rick-link__avatar__media {
+    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
 }
