@@ -44,17 +44,17 @@
         <div class="rich-link__header">
             <h1 class="rich-link__title">
                 @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                @if(content.content.cardStyle == Comment ||
-                    (content.content.cardStyle == SpecialReport && content.content.hasTonalHeaderByline)
-                ) {
-                    @fragments.inlineSvg("quote", "icon")
+                    @if(content.content.cardStyle == Comment ||
+                        (content.content.cardStyle == SpecialReport && content.content.hasTonalHeaderByline)
+                    ) {
+                        @fragments.inlineSvg("quote", "icon")
                     }
-                    } else {
+                } else {
                     @if(content.content.cardStyle == Comment ||
                         (content.content.cardStyle == Feature && content.content.metadata.pillar.exists(_.toString.toLowerCase == "sport"))
                     ) {
                         @fragments.inlineSvg("garnett-quote", "icon")
-                }
+                    }
                 }
                 <a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)</a>
             </h1>
@@ -93,7 +93,7 @@
         <div class="rich-link__read-more">
             <div class="rich-link__arrow">
                 @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                @inlineSvg("arrow-in-circle", "icon")
+                    @inlineSvg("arrow-in-circle", "icon")
                 } else {
                     @inlineSvg("arrow-in-circle-garnett", "icon")
                 }
