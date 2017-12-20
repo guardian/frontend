@@ -68,7 +68,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     if (shouldEditionRedirect(path))
       redirectTo(s"${Editionalise(path, Edition(request))}/rss")
     else if (!ConfigAgent.shouldServeFront(path))
-      forwardToTag(path)
+      forwardToTag(s"$path/rss")
     else
       renderFrontPressResult(path)
   }
