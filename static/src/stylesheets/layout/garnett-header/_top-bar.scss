@@ -1,7 +1,7 @@
 .top-bar__item {
+    @include fs-textSans(2);
     color: $nav-primary-colour;
     float: left;
-    @include fs-textSans(2);
     line-height: 1;
     position: relative;
     transition: color 80ms ease-out;
