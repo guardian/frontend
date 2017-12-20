@@ -206,6 +206,16 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val IdentityGdprV2NewslettersConsents = Switch(
+    SwitchGroup.Identity,
+    "id-gdpr-use-v2-newsletters-list-ids-in-edit-profile",
+    "If switched on, users will subscribe to new V2 newsletter lists in email-prefs and consents journey",
+    owners = Seq(Owner.withGithub("mario-galic")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 15),
+    exposeClientSide = false
+  )
+
   val EnhanceTweetsSwitch = Switch(
     SwitchGroup.Feature,
     "enhance-tweets",
