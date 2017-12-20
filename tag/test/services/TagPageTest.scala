@@ -48,7 +48,7 @@ import scala.concurrent.Future
       case None =>
         fail("Wrong type (expected: TagPage, real: Result)")
       case Some(page) =>
-        val front = Front.makeFront(page, edition)
+        val front = Front.fromSectionPage(page, edition)
         front.containers should not be empty
 
         val firstContainer = front.containers.head

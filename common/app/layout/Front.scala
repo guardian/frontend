@@ -380,7 +380,7 @@ object Front extends implicits.Collections {
                       adFree: Boolean)(implicit requestHeader: RequestHeader): Front =
     Front(fromPressedPageWithDeduped(pressedPage, edition, initialContext, adFree))
 
-  def makeFront(frontPage: FrontPage, edition: Edition)(implicit context: ApplicationContext): Front = {
+  def fromSectionPage(frontPage: SectionPage, edition: Edition)(implicit context: ApplicationContext): Front = {
 
     def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
       case 2 => Some(FixedContainers.fastIndexPageMpuII)

@@ -16,7 +16,7 @@ import play.api.mvc.RequestHeader
 
 case class TrailAndDate(trail: Content, date: LocalDate)
 
-trait FrontPage extends StandalonePage {
+trait SectionPage extends StandalonePage {
   def contents: Seq[FrontPageItem]
   def page: Page
 
