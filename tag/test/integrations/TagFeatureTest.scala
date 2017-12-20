@@ -3,7 +3,6 @@ package integrations
 import conf.switches.Switches
 import org.fluentlenium.core.domain.{FluentList, FluentWebElement}
 import org.scalatest._
-import play.api.test.TestBrowser
 import services.TagPagePagination
 import test.ConfiguredTestSuite
 
@@ -84,54 +83,6 @@ import collection.JavaConverters._
         val cardsOnPreviousPage = browser.find("[data-test-id=facia-card]")
         cardsOnPreviousPage.asScala.map(_.attribute("data-id")).toSet should be(dataIdsOnFirstPage)
       }
-    }
-  }
-
-  feature("Section Sponsorships") {
-    def testFrontSponsorship(browser: TestBrowser, sponsorshipType: String): Assertion = {
-      import browser._
-
-      Then("the page should be styled differently")
-      $(s".facia-container--$sponsorshipType").size should be (1)
-
-      And(s"the ${sponsorshipType.replace("-", " ")} badge should be displayed")
-      $(".js-sponsored-front") should have size 1
-      $(s".facia-container--$sponsorshipType").attribute("data-sponsorship") should be (sponsorshipType)
-    }
-
-    /**
-      * NOTE - these tests run off real sponsored data which might not be reliable
-      *
-      * If a test fails, i.e. because a sponsorship expires, see
-      * https://frontend.gutools.co.uk/analytics/commercial/sponsorships for a different sponsorship to use
-      *
-      * If they fail often, might need to look into setting up a reliable data source
-      */
-    scenario("Advertisement Feature Front") {
-
-      Given("I am on an advertisement feature front")
-      goTo("/visa-partner-zone") { browser =>
-        testFrontSponsorship(browser, "advertisement-feature");
-      }
-
-    }
-
-    scenario("Sponsored Front") {
-
-      Given("I am on ansponsored front")
-      goTo("/sustainable-business/role-business-development") { browser =>
-        testFrontSponsorship(browser, "sponsored");
-      }
-
-    }
-
-    scenario("Foundation Supported Front") {
-
-      Given("I am on a foundation supported front")
-      goTo("/global-development") { browser =>
-        testFrontSponsorship(browser, "foundation-supported");
-      }
-
     }
   }
 
