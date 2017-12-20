@@ -84,6 +84,10 @@
         color: $pillarColor;
         font-style: italic;
     }
+
+    .rich-link__read-more-text {
+        color: $pillarColor;
+    }
 }
 
 @mixin mediaPalatte($mediaColor) {
