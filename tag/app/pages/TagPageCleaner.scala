@@ -5,8 +5,7 @@ import model.ApplicationContext
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import services.TagPage
-import views.support.{BulletCleaner, CommercialComponentHigh, CommercialMPUForFronts}
-import views.support._
+import views.support.{BulletCleaner, CommercialComponentHigh, CommercialMPUForFronts, _}
 
 object TagPageCleaner {
   def apply(page: TagPage, html: Html)(implicit request: RequestHeader, context: ApplicationContext): Html = {
