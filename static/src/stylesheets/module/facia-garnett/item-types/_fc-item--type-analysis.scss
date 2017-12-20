@@ -1,0 +1,26 @@
+@mixin garnett-underline($colour, $line-height, $factor: .25) {
+    background-image: linear-gradient(to bottom, transparent, transparent calc(#{$line-height} - 1px), $colour);
+    background-size: 1px $line-height;
+    background-origin: content-box;
+    background-clip: content-box;
+    margin-right: -1 * $factor * $gs-gutter;
+}
+
+.fc-item--type-analysis {
+    .fc-item__title {
+        @include garnett-underline($analysis-garnett-underline, 24px);
+    }
+
+    &.fc-item--three-quarter-tablet {
+        @include mq(tablet) {
+            @include garnett-underline($analysis-garnett-underline, 28px, .5);
+        }
+    }
+
+    &.fc-item--full-media-75-tablet {
+        @include mq(tablet) {
+            @include garnett-underline($analysis-garnett-underline, 32px, .5);
+        }
+    }
+}
+
