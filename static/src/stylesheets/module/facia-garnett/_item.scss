@@ -174,13 +174,12 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__title {
-    padding-top: $gs-baseline/4;
+    padding-top: $gs-baseline/12;
     padding-bottom: $gs-baseline/6;
     word-wrap: break-word;
     overflow: hidden;
 }
 
-.fc-item__kicker,
 .fc-sublink__kicker,
 .rich-link__kicker {
     &:hover:after {
@@ -195,34 +194,18 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__kicker {
     position: relative;
-    padding-right: $gs-gutter / 6;
     margin-right: $gs-gutter / 4;
-
-    // hides kicker if it exceeds 1 line in height
-    &:before {
-        content: '';
-        position: absolute;
-        width: 1px;
-        top: 0;
-        right: 0 - $gs-gutter / 6;
-        bottom: 1.3em;
-        z-index: -1;
-    }
-
-    &:after {
-        content: '';
-        position: absolute;
-        width: 1px;
-        height: 2em;
-        right: 0 - $gs-gutter / 6;
-        bottom: $gs-gutter / 10;
-        z-index: -2;
-    }
+    font-weight: 700;
+    border-right: 1px solid transparent;
+    padding-right: .375em;
 }
 
 .fc-item__byline {
     margin-bottom: 0;
     font-style: italic;
+    //close up the line height to make it look the same as the headline
+    line-height: 15px;
+    letter-spacing: .2px;
 }
 
 .fc-item__standfirst-wrapper {
@@ -257,7 +240,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 // Liveblog blocks
-$block-height: 71px;
+$block-height: 58px;
 
 .fc-item__liveblog-blocks {
     display: none;
@@ -269,7 +252,6 @@ $block-height: 71px;
         box-sizing: content-box !important;
         height: $block-height;
         overflow: hidden;
-        border-bottom: $gs-gutter/4 solid transparent;
     }
 }
 
@@ -328,7 +310,7 @@ $block-height: 71px;
 
 .fc-item__meta {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $garnett-neutral-6;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -336,7 +318,7 @@ $block-height: 71px;
     margin-left: auto;
 
     .inline-icon {
-        fill: $neutral-3;
+        fill: $garnett-neutral-6;
     }
 
     a {
@@ -416,14 +398,6 @@ $block-height: 71px;
         flex: 0 1 auto;
     }
 
-    .fc-item__kicker {
-        background-color: $media-garnett-main-1;
-
-        &::before {
-            background-color: $media-garnett-main-1;
-        }
-    }
-
     .fc-item__headline {
         color: #ffffff;
     }
@@ -466,7 +440,6 @@ $block-height: 71px;
     .u-faux-block-link--hover {
         background-color: darken($media-garnett-main-1, 5%);
 
-        .fc-item__kicker,
         .fc-item__container::before {
             background-color: darken($media-garnett-main-1, 5%);
         }

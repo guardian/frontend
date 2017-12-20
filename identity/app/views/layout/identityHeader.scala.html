@@ -1,0 +1,46 @@
+@import common.LinkTo
+@import views.support.DropdownMenus.accountDropdownMenu
+
+@()(implicit page: model.Page, request: RequestHeader)
+
+<header class="identity-header">
+    <div class="gs-container identity-header__container">
+
+        <div class="identity-header__links">
+            <div class="identity-header__link">
+                <button
+                    class="identity-header__nav js_identity-header__nav-toggle"
+                    aria-expanded="false"
+                    aria-controls="my-account-dropdown"
+                >
+                    @fragments.inlineSvg("profile-36", "icon", List("mobile-only"))
+                    <span class="hide-on-mobile-inline">My Account</span>
+                </button>
+                <ul class="identity-dropdown" id="my-account-dropdown" aria-hidden="true">
+                    @for((item) <- accountDropdownMenu) {
+                        <li
+                            class="@{(List("identity-dropdown__item") ++ item.parentClassList).mkString(" ")}""
+                        >
+                            <a
+                                class="@{(List("identity-dropdown__title") ++ item.classList).mkString(" ")}"
+                                @if(item.href.isDefined) {
+                                    href="@item.href"
+                                }
+                                @if(item.linkName.isDefined) {
+                                    data-link-name="nav2 : topbar : @item.linkName"
+                                }
+                            >
+                            @item.label
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <a href="@LinkTo {/}" data-link-name="site logo" id="logo" class="identity-header__logo" data-component="logo">
+            <span class="u-h">The Guardian - Back to home</span>
+            @fragments.inlineSvg("guardian-logo-160", "logo")
+        </a>
+    </div>
+</header>

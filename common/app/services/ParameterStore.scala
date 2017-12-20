@@ -23,7 +23,7 @@ class ParameterStore(region: String) {
     client.getParameter(parameterRequest).getParameter.getValue
   }
 
-  def getPath(path: String): Map[String, String] = {
+  def getPath(path: String, isRecursiveSearch: Boolean = false): Map[String, String] = {
 
     @tailrec
     def pagination(accum: Map[String, String], nextToken: Option[String]): Map[String, String] = {
@@ -31,7 +31,7 @@ class ParameterStore(region: String) {
       val parameterRequest = new GetParametersByPathRequest()
         .withWithDecryption(true)
         .withPath(path)
-        .withRecursive(false)
+        .withRecursive(isRecursiveSearch)
 
       val parameterRequestWithNextToken = nextToken.map(parameterRequest.withNextToken).getOrElse(parameterRequest)
 

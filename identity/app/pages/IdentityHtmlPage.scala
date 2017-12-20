@@ -1,18 +1,18 @@
 package pages
 
 import html.HtmlPageHelpers._
-import html.Styles
-import model.{ApplicationContext, Page}
+import html.{HtmlPage, Styles}
+import model.{ApplicationContext, IdentityPage}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import views.html.fragments.{_}
+import views.html.fragments._
 import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import html.HtmlPageHelpers.ContentCSSFile
 
-object JourneyHtmlPage {
+object IdentityHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("identity")
@@ -24,30 +24,25 @@ object JourneyHtmlPage {
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
-  def html(
-            content: Html,
-            maybeHeadContent: Option[Html] = None
-          )(implicit page: Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
-
-    val head: Html = maybeHeadContent.getOrElse(Html(""))
-    val bodyClasses: Map[String, Boolean] = defaultBodyClasses()
+  def html(content: Html)
+          (implicit page: IdentityPage, request: RequestHeader, applicationContext: ApplicationContext): Html = {
 
     htmlTag(
       headTag(
         titleTag(),
         metaData(),
-        head,
         styles(allStyles),
         fixIEReferenceErrors(),
         inlineJSBlocking()
       ),
-      bodyTag(classes = bodyClasses)(
+      bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
-        guardianHeaderHtml(),
-        mainContent(),
-        content,
+        views.html.layout.identityHeader(),
+        views.html.layout.identityVerticalWrapper(
+          content
+        ),
         inlineJSNonBlocking(),
-        views.html.fragments.identitySlimFooter(),
+        views.html.layout.identityFooter(),
         analytics.base()
       ),
       devTakeShot()

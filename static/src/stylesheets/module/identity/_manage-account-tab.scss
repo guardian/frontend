@@ -85,6 +85,11 @@
         &:focus {
             text-decoration: none;
         }
+
+        &-half--left &-half--right {
+            width: $gs-baseline*5;
+        }
+
     }
 
     .manage-account-cta--disabled {
@@ -429,6 +434,12 @@
 
 /* Button styles
 ========================================================================== */
+.manage-account__button-container {
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+}
+
 .manage-account__button {
     @include fs-textSans(2);
     background-color: $identity-main;
@@ -471,6 +482,26 @@
         margin: 0 ($gs-gutter * -.5);
     }
 
+    &-half--left {
+        width: $gs-baseline*5;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        min-width: $gs-baseline * 7;
+        float: left;
+        background-color: $news-main-2;
+    }
+
+    &-half--right {
+        width: $gs-baseline*5;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        min-width: $gs-baseline * 7;
+        float: right;
+    }
+
+    .disabled {
+        background-color: $neutral-4;
+    }
 }
 
 .manage-account__button--round {
@@ -532,4 +563,8 @@
 }
 .manage-account-flexrow_item--static {
     flex: 0 0 auto;
+}
+
+.js-contribution-next-payment-new-price {
+    max-width: 80px;
 }

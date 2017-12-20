@@ -1,12 +1,10 @@
-@(page: model.Page, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, reauthenticationForm: Form[String], loginHint: Option[String])(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+@(idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder, reauthenticationForm: Form[String], loginHint: Option[String])(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.inputField
 @import views.html.fragments.socialSignin
 @import views.SocialSigninRoute.Confirm
 
-@mainLegacy(page, projectName = Option("identity")){
-}{
 <div class="identity-wrapper monocolumn-wrapper">
     <h1 class="identity-title" data-test-id="reauthentication-header">Confirm your identity</h1>
     <p>Your privacy is important to us. Please re-enter your password to access your personal data.</p>
@@ -50,4 +48,3 @@
         </fieldset>
     </form>
 </div>
-}
