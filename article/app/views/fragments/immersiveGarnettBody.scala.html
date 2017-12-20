@@ -3,15 +3,30 @@
 @import views.html.fragments.langAttributes
 @import common.LinkTo
 @import views.BodyCleaner
+@import views.support.RenderClasses
 @import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.TrailCssClasses.toneClass
+@import experiments._
+@import _root_.model.ContentDesignType.RichContentDesignType
 
 @defining(model.article) { article =>
   @defining(isPaidContent(model)) { isPaidContent =>
         <article id="article" data-test-id="article-root"
-            class="content content--article content--immersive content--immersive-article tonal tonal--@toneClass(article) section-@article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
-            @if(isPaidContent){content--paid-content}
-            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement){has-feature-showcase-element}"
+
+            class="@RenderClasses(Map(
+                "has-feature-showcase-element" -> (article.tags.isFeature && article.elements.hasShowcaseMainElement),
+                "paid-content" -> isPaidContent,
+                "paid-content--white" -> (isPaidContent && ActiveExperiments.isParticipating(CommercialPaidContentTemplate))
+            ),
+                "content",
+                "content--article",
+                s"content--pillar-${article.metadata.pillar.nameOrDefault}",
+                s"content--type-${article.metadata.designType.nameOrDefault}",
+                "tonal",
+                s"tonal--${toneClass(article)}",
+                s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"
+            ), content content--type-immersive content--article content--immersive content--immersive-article tonal"
+
             itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
             <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -23,6 +38,11 @@
             }
             @fragments.headerImmersive(article)
             @fragments.immersiveGarnettHeadline()
+            <div class="gs-container">
+                <div class="content__main-column">
+                    @fragments.standfirst(article)
+                </div>
+            </div>
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
