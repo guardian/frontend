@@ -55,6 +55,9 @@ $checkbox-size: $gs-gutter / 1.25;
 
     &:hover {
         background-color: darken($neutral-8, 1%);
+        .manage-account__switch-checkbox {
+            border-color: $identity-main;
+        }
     }
 
     &.manage-account__switch--hinted {
@@ -96,11 +99,6 @@ $checkbox-size: $gs-gutter / 1.25;
         > * {
             opacity: .5;
         }
-
-        input[type=checkbox],
-        .manage-account__switch-checkbox {
-            opacity: .25!important;
-        }
     }
 
     &.is-just-updated {
@@ -115,19 +113,35 @@ $checkbox-size: $gs-gutter / 1.25;
     show normal checkboxes on
     older browsers
     */
+
+    /*override pasteup*/
+    input[type=checkbox] {
+        float: none;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        height: $checkbox-size;
+        width: $checkbox-size;
+    }
+
     @supports (transform: scale(1)) {
 
         input[type=checkbox] {
-            visibility: hidden;
-            position: absolute;
-            top: 0;
-            right: 0;
+            opacity: 0!important;
             & + .manage-account__switch-checkbox {
                 display: block;
                 position: absolute;
                 top: 0;
                 left: 0;
+                z-index: 11;
             }
+        }
+
+        input:focus, input:focus + .manage-account__switch-checkbox {
+            outline: 5px auto $identity-main;
+            border-color: $identity-main;
         }
 
         input:checked + .manage-account__switch-checkbox {
@@ -150,14 +164,15 @@ $checkbox-size: $gs-gutter / 1.25;
     background-size: $checkbox-size / 1.5;
     background: #ffffff no-repeat center center;
     cursor: pointer;
-    transition: background-color .125s;
+    transition: background-color .125s, border-color .125s;
 }
 
 .manage-account__switch-content {
-    width: auto;
+    width: 100%;
     position: relative;
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     padding-left: $local-gutter * 1.5 + $checkbox-size;
 }
 
