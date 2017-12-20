@@ -1,10 +1,10 @@
-package test
+package integrations
 
 import java.net.URI
-
+import org.scalatest._
 import org.fluentlenium.core.domain.FluentWebElement
-import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.TestBrowser
+import test.ConfiguredTestSuite
 
 import scala.collection.JavaConverters._
 

@@ -24,7 +24,6 @@ class ApplicationsTestSuite extends Suites (
   new InteractiveTemplateTest,
   new MediaControllerTest,
   new MediaFeatureTest,
-  new SectionTemplateTest,
   new ShareLinksTest,
   new CrosswordDataTest,
   new NewspaperControllerTest,
