@@ -30,9 +30,7 @@ object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membe
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
 
-sealed abstract class ConsentJourneyPage(id: String, journey: String) extends IdentityPage(id, "Consent") {
-  val journeyParam: String = journey
-}
+sealed abstract class ConsentJourneyPage(id: String, val journey: String) extends IdentityPage(id, "Consent")
 object ConsentJourneyPageAll extends ConsentJourneyPage("/consents/all", "all")
 object ConsentJourneyPageNewsletters extends ConsentJourneyPage("/consents/newsletters", "newsletters")
 object ConsentJourneyPageDefault extends ConsentJourneyPage("/consents", "default")
@@ -82,7 +80,7 @@ class EditProfileController(
         permissionAuthentication.async { implicit request =>
           consentJourneyView(
             page = page,
-            journey = page.journeyParam,
+            journey = page.journey,
             forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
             request.user,
             consentHint
