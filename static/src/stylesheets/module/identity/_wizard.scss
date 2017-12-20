@@ -86,7 +86,7 @@ for a .2s transition
         opacity: 1;
     }
     to {
-        transform: translateX($gs-gutter*-4);
+        transform: translateX($gs-gutter*-2);
         opacity: 0;
     }
 }
@@ -97,7 +97,7 @@ for a .2s transition
         opacity: 1;
     }
     to {
-        transform: translateX($gs-gutter*4);
+        transform: translateX($gs-gutter*2);
         opacity: 0;
     }
 }
