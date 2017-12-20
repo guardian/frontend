@@ -1,5 +1,6 @@
+package test
+
 import org.scalatest.Suites
-import test.SingleServerSuite
 import controllers._
 import integrations._
 import services.{TagPageGroupingTest, TagPageTest}
@@ -18,6 +19,6 @@ class TagTestSuite extends Suites (
   new TagTemplateTest,
   new SectionTemplateTest
 ) with SingleServerSuite {
-  override lazy val port: Int = 19003
+  override lazy val port: Int = 19014
 }
 
