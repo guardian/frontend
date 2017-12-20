@@ -20,9 +20,7 @@
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
-    consentHint: Option[String] = None,
-    newsletterHint: Option[String] = None
-)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+    consentHint: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @onlySubscribedToNewsletters = @{
     EmailNewsletters.all.subscriptions.filter { newsletter =>
@@ -61,7 +59,7 @@
         <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
             @views.html.helper.CSRF.formField
 
-            @if(journey == "repermission") {
+            @if(journey == "all") {
                 <h1 class="identity-title">
                     We need you to consent again to receiving communications from The Guardian
                 </h1>
@@ -93,38 +91,40 @@
 }
 
 @emailStep(isNarrow: Boolean = false) = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="email">
+    @if( onlySubscribedToNewsletters.nonEmpty ) {
+        <div class="manage-account-wizard__step" data-wizard-step-name="email">
 
-        <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
-            @views.html.helper.CSRF.formField
-            @fragments.form.hidden(emailPrefsForm("htmlPreference"))
+            <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+                @views.html.helper.CSRF.formField
+                @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
-            @if(isNarrow) {
-                <h2 class="identity-title">Sorry for the interruption</h2>
-                <p class="manage-account-headerNote">
-                    You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
-                </p>
-            } else {
-                <h2 class="identity-title">Your existing newsletters</h2>
-                <p class="manage-account-headerNote">
-                    You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
-                </p>
-            }
-            <div class="manage-account__switches">
-                <ul>
+                @if(isNarrow) {
+                    <h2 class="identity-title">Sorry for the interruption</h2>
+                    <p class="manage-account-headerNote">
+                        You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
+                    </p>
+                } else {
+                    <h2 class="identity-title">Your existing newsletters</h2>
+                    <p class="manage-account-headerNote">
+                        You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
+                    </p>
+                }
+                <div class="manage-account__switches">
+                    <ul>
                     @onlySubscribedToNewsletters.zipWithRowInfo.map { case (newsletter, row) =>
-                        <li>
-                            @fragments.newsletterSwitch(
-                                emailPrefsForm,
-                                emailSubscriptions,
-                                newsletter = newsletter
-                            )(nonInputFields, messages, request)
-                        </li>
+                    <li>
+                        @fragments.newsletterSwitch(
+                            emailPrefsForm,
+                            emailSubscriptions,
+                            newsletter = newsletter
+                        )(nonInputFields, messages, request)
+                    </li>
                     }
-                </ul>
-            </div>
-        </form>
-    </div>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    }
 }
 
 @emailSignupStep() = {
@@ -148,7 +148,7 @@
 
 @endcardStep() = {
     <div class="manage-account-wizard__step" data-wizard-step-name="endcard">
-        <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consent", idRequest)">
+        <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
             <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
             @views.html.helper.CSRF.formField
             <h2 class="manage-account-consent-thanks__title">Thank you</h2>
@@ -175,18 +175,18 @@
                 <div class="manage-account-wizard manage-account-wizard--consent" data-journey="@journey">
 
                     @journey match {
-                        case "repermission-narrow" => {
+                        case "newsletters" => {
                             @emailStep(isNarrow = true)
                             @channelStep()
                         }
-                        case "repermission" => {
-                            @consentStep(journey = "repermission")
+                        case "all" => {
+                            @consentStep(journey = "all")
                             @emailStep()
                             @channelStep()
                         }
-                        case "signup" => {
-                            @consentStep(journey = "signup")
-                            @emailSignupStep()
+                        case _ => {
+                            @consentStep("consent")
+                            @emailStep()
                             @channelStep()
                         }
                     }
