@@ -4,7 +4,7 @@ import controllers._
 import integrations._
 import services.{TagPageGroupingTest, TagPageTest}
 
-class TagPageTestSuite extends Suites (
+class TagTestSuite extends Suites (
   new AllTagControllerTest,
   new AllTagTemplateTest,
   new CombinerControllerTest,

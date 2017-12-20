@@ -25,7 +25,7 @@ import scala.concurrent.Future
   with ScalaFutures {
 
   private val pageSize = 10
-  private def getIndexPage(path: String, edition: Edition = Uk): Future[Option[TagPage]] = {
+  private def getTagPage(path: String, edition: Edition = Uk): Future[Option[TagPage]] = {
     testContentApiClient.getResponse(
       testContentApiClient.item(s"/$path", Uk).pageSize(pageSize).orderBy("newest")
     ).map { item =>
@@ -43,7 +43,7 @@ import scala.concurrent.Future
 
   "Given a page Index, correct containers" should "be created" in {
     val edition = Uk
-    val tagPage = getIndexPage("uk/wales", edition)
+    val tagPage = getTagPage("uk/sport", edition)
     whenReady(tagPage) {
       case None =>
         fail("Wrong type (expected: TagPage, real: Result)")
