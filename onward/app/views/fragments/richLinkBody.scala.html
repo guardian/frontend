@@ -43,12 +43,16 @@
 
         <div class="rich-link__header">
             <h1 class="rich-link__title">
+                @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                 @if(content.content.cardStyle == Comment ||
                     (content.content.cardStyle == SpecialReport && content.content.hasTonalHeaderByline)
                 ) {
-                    @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                     @fragments.inlineSvg("quote", "icon")
+                    }
                     } else {
+                    @if(content.content.cardStyle == Comment ||
+                        (content.content.cardStyle == Feature && content.content.metadata.pillar.exists(_.toString.toLowerCase == "sport"))
+                    ) {
                         @fragments.inlineSvg("garnett-quote", "icon")
                 }
                 }
