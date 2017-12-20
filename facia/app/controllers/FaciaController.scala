@@ -64,7 +64,6 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   // Needed as aliases for reverse routing
   def renderRootFrontRss(): Action[AnyContent] = renderFrontRss(path = "")
   def renderFrontRss(path: String): Action[AnyContent] = Action.async { implicit  request =>
-    log.info(s"Serving RSS Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(s"${Editionalise(path, Edition(request))}/rss")
     else if (!ConfigAgent.shouldServeFront(path))
