@@ -77,8 +77,6 @@ class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
       backfill = backfill.toList,
       treats = List.empty,
       lastUpdated = None,
-      updatedBy = None,
-      updatedEmail = None,
       href = None,
       description = None,
       collectionType = "unknown",
