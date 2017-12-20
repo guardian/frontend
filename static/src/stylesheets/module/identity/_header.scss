@@ -1,0 +1,15 @@
+.identity-header {
+    @include clearfix;
+    background-color: $guardian-brand;
+    padding: 5px $gs-gutter;
+    color: #ffffff;
+    span {
+        display: block;
+        float: right;
+    }
+    svg {
+        display: block;
+        height: 34px;
+        width: 180px;
+    }
+}

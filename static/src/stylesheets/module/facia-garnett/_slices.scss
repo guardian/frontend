@@ -24,7 +24,7 @@ Hence why a greater depth of selector specificity is needed.
 
         .fc-item--half-tablet {
             @include vertical-item-separator;
-            
+
             .fc-item__standfirst {
                 @include mq(desktop) {
                     display: none;
@@ -78,6 +78,12 @@ Hence why a greater depth of selector specificity is needed.
             .fc-item__header {
                 @include fs-headline(3, true);
             }
+
+            .inline-garnett-quote__svg {
+                height: 20px;
+                width: 10px;
+                margin-right: 10px;
+            }
         }
     }
 }
@@ -102,6 +108,12 @@ Hence why a greater depth of selector specificity is needed.
                     @include fs-headline(2, true);
                 }
             }
+
+            .inline-garnett-quote__svg {
+                height: 16px;
+                width: 8px;
+                margin-right: 8px;
+            }
         }
     }
 }
@@ -122,6 +134,14 @@ Hence why a greater depth of selector specificity is needed.
             @include mq(tablet) {
                 display: block;
             }
+        }
+    }
+    //this fixes an odd spacing issue on mobile
+    .fc-slice__item {
+        margin-bottom: 0;
+
+        @include mq($from: tablet) {
+            margin-bottom: $gs-baseline;
         }
     }
 }

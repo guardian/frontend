@@ -24,10 +24,12 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
 @mixin fc-item--full-media-100 {
     .fc-item__header {
         @include fs-headline(4, true);
+        @include fs-headline-quote(4);
         @include headline-boost(5);
 
         @include mq(desktop) {
             @include fs-headline(6, true);
+            @include fs-headline-quote(6);
             @include headline-boost(7);
         }
     }

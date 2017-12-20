@@ -19,7 +19,7 @@ $pillars: (
         headline: $garnett-neutral-1,
         featureHeadline: $opinion-garnett-feature,
         byline: $opinion-garnett-main-1,
-        commentCount: $garnett-neutral-2,
+        commentCount: $garnett-neutral-6,
         headlineIcon: $opinion-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $opinion-garnett-main-1,
@@ -77,10 +77,12 @@ $pillars: (
     &:hover {
         background-color: $darkerCardBackground;
 
-        .fc-item__kicker {
-            background-color: $darkerCardBackground;
-
-            &:before {
+        &.fc-item--type-comment {
+            .fc-item__avatar {
+                background-color: darken(map-get($palette, cutoutBackground), 3%);
+            }
+    
+            .fc-trail__count--commentcount {
                 background-color: $darkerCardBackground;
             }
         }
@@ -95,16 +97,8 @@ $pillars: (
     }
 
     .fc-item__kicker {
-        background-color: $cardBackground;
         color: map-get($palette, kicker);
-
-        &:before {
-            background-color: $cardBackground;
-        }
-
-        &:after {
-            background-color: $lines;
-        }
+        border-image: linear-gradient(to top, transparent, transparent .25em, $lines .25em) 0 1;
     }
 
     //this is to make the colour lighter for the media cards
@@ -128,7 +122,7 @@ $pillars: (
     }
 
     .inline-icon {
-        color: map-get($palette, headlineIcon);
+        fill: map-get($palette, headlineIcon);
     }
 
     .fc-item__meta {
@@ -144,7 +138,6 @@ $pillars: (
     &.fc-item--type-feature .fc-item__headline {
         color: map-get($palette, featureHeadline);
     }
-
 
     &.fc-item--type-media {
         .inline-video-icon,
@@ -172,6 +165,21 @@ $pillars: (
 
     .vjs-big-play-button .vjs-control-text:before {
         background-color: map-get($palette, kicker);
+    }
+    
+    &.fc-item--type-comment {
+        .fc-item__avatar {
+            background-color: map-get($palette, cutoutBackground);
+        }
+
+        .fc-trail__count--commentcount {
+            color: map-get($palette, commentCount);
+            background-color: map-get($palette, cardBackground);
+
+            .inline-icon {
+                fill: map-get($palette, commentCount);
+            }
+        }
     }
 }
 
