@@ -98,7 +98,6 @@ $quote-mark: 35px;
     }
 
     .content__meta-container {
-        margin-top: -$gs-baseline;
         margin-bottom: 0;
         @include mq(leftCol) {
             position: absolute;
