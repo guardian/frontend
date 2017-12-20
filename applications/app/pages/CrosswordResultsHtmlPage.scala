@@ -19,7 +19,7 @@ import model.CrosswordResultsPage
 object CrosswordResultsHtmlPage extends HtmlPage[CrosswordResultsPage] {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
+    override def criticalCssLink: Html = criticalStyleLink(FaciaCSSFile)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$FaciaCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
@@ -48,7 +48,6 @@ object CrosswordResultsHtmlPage extends HtmlPage[CrosswordResultsPage] {
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),
-//        CrosswordResultsPageCleaner(page, crosswordResultsPageBody(page)),
         crosswordResultsPageBody(page),
         footer(),
         inlineJSNonBlocking(),
