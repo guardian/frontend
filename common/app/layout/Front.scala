@@ -398,7 +398,6 @@ object Front extends implicits.Collections {
       case _ => None
     }
 
-    //noinspection ScalaStyle
     @tailrec
     def containerDefinition(groupings: Seq[FrontPageGrouping],
       mpuInjected: Boolean,

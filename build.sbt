@@ -150,7 +150,7 @@ val dev = application("dev-build")
     admin,
     commercial,
     onward,
-  tag
+    tag
   ).settings(
     RoutesKeys.routesImport += "bindables._",
     javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
