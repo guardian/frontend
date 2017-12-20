@@ -4,6 +4,7 @@ import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 
 trait IdentitySwitches {
+
   val IdentityCookieRefreshSwitch = Switch(
     SwitchGroup.Identity,
     "id-cookie-refresh",
@@ -20,7 +21,7 @@ trait IdentitySwitches {
     "If switched on, users will post GDPR compliant marketing consent from 'Edit Profile' page",
     owners = Seq(Owner.withGithub("mario-galic")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 1),
+    sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
   )
 
@@ -30,7 +31,7 @@ trait IdentitySwitches {
     "If switched on, users will be able to access the /repermission endpoint",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 1),
+    sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
   )
 
@@ -40,7 +41,7 @@ trait IdentitySwitches {
     "If switched on, public facing links will redirect to journey page",
     owners = Seq(Owner.withGithub("calum-campbell")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 15),
+    sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
 
   )
@@ -51,7 +52,7 @@ trait IdentitySwitches {
     "If switched on, users trying to reach /email-prefs will go to /consent to repermission",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 15),
+    sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
   )
 
@@ -61,7 +62,8 @@ trait IdentitySwitches {
     "If switched on, users will see UI for opting in or out of different communication channels",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 15),
+    sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
   )
+
 }
