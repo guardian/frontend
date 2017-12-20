@@ -193,6 +193,7 @@ const updateSteps = (
             switch (i) {
                 case newPosition:
                     stepEl.setAttribute('aria-hidden', 'false');
+                    stepEl.removeAttribute('hidden');
                     animateIncomingStep(
                         wizardEl,
                         stepEl,
@@ -201,6 +202,7 @@ const updateSteps = (
                     break;
                 case currentPosition:
                     stepEl.setAttribute('aria-hidden', 'true');
+                    stepEl.removeAttribute('hidden');
                     animateOutgoingStep(
                         wizardEl,
                         stepEl,
@@ -209,6 +211,7 @@ const updateSteps = (
                     break;
                 default:
                     stepEl.setAttribute('aria-hidden', 'true');
+                    stepEl.setAttribute('hidden', 'hidden');
                     stepEl.classList.add(stepHiddenClassname);
                     stepEl.classList.remove(...stepTransitionClassnames);
             }
