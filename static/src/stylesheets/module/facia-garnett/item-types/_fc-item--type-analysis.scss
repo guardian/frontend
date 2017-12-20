@@ -11,6 +11,8 @@
         @include garnett-underline($analysis-garnett-underline, 24px);
     }
 
+    &.fc-item--half-tablet,
+    &.fc-item--three-quarters-tall-tablet,
     &.fc-item--three-quarter-tablet {
         @include mq(tablet) {
             @include garnett-underline($analysis-garnett-underline, 28px, .5);
@@ -21,6 +23,11 @@
         @include mq(tablet) {
             @include garnett-underline($analysis-garnett-underline, 32px, .5);
         }
+    }
+
+    &.fc-item--list-mobile,
+    &.fc-item--list-media-mobile {
+        @include garnett-underline($analysis-garnett-underline, 20px);
     }
 }
 
