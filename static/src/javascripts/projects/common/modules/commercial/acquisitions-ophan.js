@@ -19,6 +19,7 @@ type AcquisitionLinkParams = {
     componentId: string,
     campaignCode?: string,
     abTest?: { name: string, variant: string },
+    geolocation?: string,
 };
 
 export const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
@@ -53,6 +54,7 @@ export const addTrackingCodesToUrl = ({
     componentId,
     campaignCode,
     abTest,
+    geolocation,
 }: AcquisitionLinkParams) => {
     const acquisitionData = addReferrerData({
         source: 'GUARDIAN_WEB',
@@ -62,11 +64,20 @@ export const addTrackingCodesToUrl = ({
         abTest,
     });
 
-    const params = {
+    const params: {
+        REFPVID: string,
+        INTCMP?: string,
+        acquisitionData: string,
+        bundle?: string,
+    } = {
         REFPVID: config.get('ophan.pageViewId') || 'not_found',
         INTCMP: campaignCode,
         acquisitionData: JSON.stringify(acquisitionData),
     };
+
+    if (geolocation === 'GB' && componentType === 'ACQUISITIONS_EPIC') {
+        params.bundle = 'contribute';
+    }
 
     return `${base}${base.includes('?') ? '&' : '?'}${constructURLQuery(
         params

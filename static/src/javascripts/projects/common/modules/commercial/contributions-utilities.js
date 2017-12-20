@@ -368,8 +368,35 @@ const makeABTestVariant = (
                 render.apply(this);
             }
         },
+
         impression,
         success,
+
+        contributionsURLBuilder(codeModifier) {
+            return addTrackingCodesToUrl({
+                base: contributionsBaseURL,
+                componentType: parentTest.componentType,
+                componentId: codeModifier(campaignCode),
+                campaignCode: codeModifier(campaignCode),
+                abTest: {
+                    name: parentTest.id,
+                    variant: id,
+                },
+            });
+        },
+
+        membershipURLBuilder(codeModifier) {
+            return addTrackingCodesToUrl({
+                base: membershipBaseURL,
+                componentType: parentTest.componentType,
+                componentId: codeModifier(campaignCode),
+                campaignCode: codeModifier(campaignCode),
+                abTest: {
+                    name: parentTest.id,
+                    variant: id,
+                },
+            });
+        },
     };
 };
 

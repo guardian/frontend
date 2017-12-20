@@ -54,7 +54,6 @@ export const acquisitionsEpicElectionInteractiveEnd = makeABTest({
                         componentName: variant.options.componentName,
                         buttonTemplate: defaultButtonTemplate({
                             contributeUrl: variant.options.contributeURL,
-                            supportUrl: variant.options.supportURL,
                         }),
                         testimonialBlock: variant.options.testimonialBlock,
                         epicClass:
