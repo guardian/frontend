@@ -122,34 +122,6 @@ $quote-mark: 35px;
         }
     }
 
-    .content__header,
-    .content__headline,
-    .content__meta-container,
-    .content__standfirst {
-        @include mq(phablet, tablet) {
-            max-width: 38.75rem;
-            margin: auto;
-            position: relative;
-        }
-    }
-
-    .byline,
-    .content__dateline,
-    .content__headline,
-    .content__labels,
-    .content__standfirst,
-    .social {
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-        @include mq(phablet) {
-            padding-left: 0;
-            padding-right: 0;
-        }
-    }
 
     .inline-close,
     .social-icon,
@@ -277,8 +249,8 @@ $quote-mark: 35px;
         }
     }
     // *************** Header and Body Styles ***************
-    .gs-container {
-        @include mq(tablet, desktop) {
+    .content__meta-container {
+        @include mq(tablet, leftCol) {
             padding-top: $gs-baseline;
         }
     }
@@ -413,9 +385,6 @@ $quote-mark: 35px;
         margin-bottom: $gs-baseline*2;
         @include mq(mobileMedium) {
             max-width: gs-span(4);
-        }
-        @include mq(phablet) {
-            margin-left: 20px;
         }
         @include mq(tablet) {
             max-width: gs-span(6);
@@ -748,19 +717,6 @@ $quote-mark: 35px;
     .content__headline {
         color: $garnett-neutral-5;
         padding-bottom: $gs-baseline*3;
-    }
-
-    .byline,
-    .content__headline,
-    .content__standfirst,
-    .social {
-        @include mq($until: tablet) {
-            padding-left: 0;
-            padding-right: 0;
-        }
-        @include mq(phablet) {
-            margin-left: 0;
-        }
     }
 
     .byline,
