@@ -79,7 +79,7 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                             } else if (buttonBackEl) {
                                 const displayButtonBack = ev.detail.position > 0;
                                 buttonBackEl.setAttribute('aria-hidden', (!displayButtonBack).toString() );
-                                displayButtonBack ? buttonBackEl.removeAttribute('hidden') : buttonBackEl.setAttribute('hidden','hidden');
+                                displayButtonBack ? buttonBackEl.removeAttribute('disabled') : buttonBackEl.setAttribute('disabled','disabled');
                                 buttonBackEl.classList.toggle(
                                     'manage-account-consent-wizard__revealable--visible',
                                     displayButtonBack
