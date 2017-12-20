@@ -200,7 +200,7 @@
         }
     }
 
-    &.rich-link--pillar-sport {
+    &.tone-feature--item.rich-link--pillar-sport {
         @include richLink($sport-garnett-main-1, $garnett-neutral-3);
     }
 
@@ -215,5 +215,37 @@
         .rich-link__link {
             color: #ffffff;
         }
+    }
+    
+    &.tone-media--item {
+        &.rich-link--pillar-opinion {
+            @include richLink($news-garnett-main-1, $media-garnett-main-1);
+        }
+        &.rich-link--pillar-opinion {
+            @include richLink($opinion-garnett-main-1, $media-garnett-main-1);
+        }
+        &.rich-link--pillar-opinion {
+            @include richLink($sport-garnett-main-1, $media-garnett-main-1);
+        }
+        &.rich-link--pillar-opinion {
+            @include richLink($arts-garnett-main-1, $media-garnett-main-1);
+        }
+        &.rich-link--pillar-opinion {
+            @include richLink($lifestyle-garnett-main-1, $media-garnett-main-1);
+        }
+        
+        .u-faux-block-link--hover {
+            background-color: darken($media-garnett-main-1, 5%);
+        }
+
+        &,
+        .rich-link__link {
+            color: #ffffff;
+        }
+
+        .rich-link__read-more-text {
+            display: none;
+        }
+
     }
 }
