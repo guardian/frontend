@@ -77,12 +77,6 @@ $pillars: (
     &:hover {
         background-color: $darkerCardBackground;
 
-        .fc-item__kicker {
-            &:before {
-                background-color: $darkerCardBackground;
-            }
-        }
-
         &.fc-item--type-comment {
             .fc-item__avatar {
                 background-color: darken(map-get($palette, cutoutBackground), 3%);
@@ -104,14 +98,7 @@ $pillars: (
 
     .fc-item__kicker {
         color: map-get($palette, kicker);
-
-        &:before {
-            background-color: $cardBackground;
-        }
-
-        &:after {
-            background-color: $lines;
-        }
+        border-image: linear-gradient(to top, transparent, transparent .25em, $lines .25em) 0 1;
     }
 
     //this is to make the colour lighter for the media cards

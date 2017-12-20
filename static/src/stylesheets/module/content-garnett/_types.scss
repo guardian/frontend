@@ -283,8 +283,7 @@ $quote-mark: 35px;
         }
     }
 
-    .content__article-body,
-    .immersive-main-media__headline-container .content__main-column {
+    .content__article-body {
         &:before {
             @include mq(desktop) {
                 content: '';
@@ -365,7 +364,6 @@ $quote-mark: 35px;
             padding-bottom: $gs-baseline*2;
         }
     }
-
     //Review stars
     .stars {
         background-color: $news-garnett-highlight;
@@ -376,15 +374,12 @@ $quote-mark: 35px;
         margin-left: $gs-gutter / 2;
         margin-bottom: $gs-baseline;
         transform: translatey(-$gs-baseline / 2);
-
         @include mq($from: mobileLandscape) {
             margin-left: $gs-gutter;
         }
-
         @include mq($from: phablet) {
             margin-left: 0;
         }
-
         @include mq($from: tablet) {
             margin-bottom: 0;
             transform: translatey(-$gs-gutter);
@@ -772,9 +767,22 @@ $quote-mark: 35px;
     .byline a,
     .content__dateline,
     .content__standfirst,
+    .from-content-api,
     .meta__numbers .sharecount__value,
+    .tone-colour,
     a {
         color: $garnett-neutral-4;
+    }
+
+    .byline a,
+    .from-content-api a {
+        text-decoration: none;
+        border-bottom: .1px solid $garnett-neutral-6;
+        transition: border-color .15s ease-out;
+
+        &:hover {
+            border-color: $garnett-neutral-4;
+        }
     }
 
     .byline,
@@ -796,8 +804,19 @@ $quote-mark: 35px;
         }
     }
 
+    .content__standfirst--gallery {
+        @include mq(desktop) {
+            margin-left: gs-span(3) + $gs-gutter;
+            max-width: gs-span(8);
+        }
+    }
+
     .u-underline {
         border-bottom: solid 1px $garnett-neutral-6;
+    }
+
+    .bullet:before {
+        background-color: $garnett-neutral-4;
     }
 
     .content__meta-container {
@@ -830,7 +849,7 @@ $quote-mark: 35px;
     .content__dateline {
         @include mq(phablet) {
             &:before {
-                @include multiline(1, $garnett-neutral-6);
+                @include multiline(1, $garnett-neutral-7);
             }
         }
     }
@@ -841,55 +860,108 @@ $quote-mark: 35px;
 
     .submeta {
         &:before {
-            @include multiline(4, $garnett-neutral-6);
+            @include multiline(4, $garnett-neutral-7);
         }
     }
 
     .submeta__keywords {
         border-bottom: 0;
     }
-
-    .vjs-control-text {
-        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
-        @include video-play-button-size($vjs-small-button-size);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-        user-select: none;
-        @include mq(mobileLandscape) {
-            @include video-play-button-size($vjs-large-button-size);
-        }
-
-        &:before {
-            @include circular;
+    // *************** Video overrides ***************
+    &.content--media--video {
+        .vjs-control-text {
+            // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
             @include video-play-button-size($vjs-small-button-size);
-            content: '';
-            display: block;
-            @include mq(mobileLandscape) {
-                @include video-play-button-size($vjs-large-button-size);
-            }
-            background-color: $media-default;
-        }
-
-        &:after {
-            content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-40%, -50%);
-            border-style: solid;
-            border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent $garnett-neutral-5;
-            @include mq(tablet) {
-                // 0 border radius on mobile because stock android has a render bug with it here
-                border-radius: .2em;
+            transform: translate(-50%, -50%);
+            transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+            user-select: none;
+            @include mq(mobileLandscape) {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+
+            &:before {
+                @include circular;
+                @include video-play-button-size($vjs-small-button-size);
+                content: '';
+                display: block;
+                @include mq(mobileLandscape) {
+                    @include video-play-button-size($vjs-large-button-size);
+                }
+            }
+
+            &:after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-40%, -50%);
+                border-style: solid;
+                border-width: 1em 0 1em 2.4em;
+                border-color: transparent transparent transparent $garnett-neutral-5;
+                @include mq(tablet) {
+                    // 0 border radius on mobile because stock android has a render bug with it here
+                    border-radius: .2em;
+                }
+            }
+        }
+    }
+    // *************** Gallery overrides ***************
+    &.content--gallery {
+        .content__dateline:before {
+            content: none;
+        }
+
+        .meta__extras {
+            border: 0;
+        }
+
+        .gallery__meta-container,
+        .meta__numbers,
+        .meta__social {
+            &:before {
+                content: none;
+            }
+        }
+
+        .gallery:before,
+        .gallery__divider {
+            border-color: $garnett-neutral-7;
+        }
+
+        .submeta {
+            @include mq(desktop) {
+                max-width: gs-span(8);
             }
         }
     }
 }
+
+.immersive-main-media__headline-container {
+    .content__series-label__link {
+        color: $garnett-neutral-3;
+    }
+}
+
+.gallery__main-content {
+    .content__series-label__link {
+        color: $garnett-neutral-5;
+    }
+
+    .gallery__most-popular {
+        background-color: $garnett-neutral-1;
+    }
+
+    .container__title:after,
+    .fc-container__header__title--sticky:after,
+    .fc-container__header__title:after {
+        background-color: $garnett-neutral-7;
+    }
+}
 // *************** Feature showcase overrides ***************
+
 .has-feature-showcase-element {
     .media-primary.media-primary--showcase {
         @include mq(wide) {
@@ -898,6 +970,7 @@ $quote-mark: 35px;
     }
 }
 // *************** Opinion and Feature standfirst overrides ***************
+
 .content--type-comment,
 .content--type-feature,
 .content--type-review {
@@ -907,5 +980,16 @@ $quote-mark: 35px;
         @include mq(tablet) {
             @include fs-headlineGarnett(2);
         }
+    }
+}
+
+// *************** Rich links ***************
+.element-rich-link {
+    @include mq(mobileLandscape, leftCol) {
+        width: $gs-gutter * 6.5;
+    }
+
+    @include mq(leftCol, wide) {
+        width: $gs-gutter * 7;
     }
 }

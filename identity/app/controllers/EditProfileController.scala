@@ -21,7 +21,7 @@ import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
 import play.api.http.HttpConfiguration
 
-import pages.JourneyHtmlPage
+import pages.IdentityHtmlPage
 
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
 object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
@@ -29,7 +29,13 @@ object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Emails")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
-object ConsentJourneyPage extends IdentityPage("/consent", "Consent")
+
+sealed abstract class ConsentJourneyPage(id: String, journey: String) extends IdentityPage(id, "Consent") {
+  val journeyParam: String = journey
+}
+object ConsentJourneyPageAll extends ConsentJourneyPage("/consents/all", "all")
+object ConsentJourneyPageNewsletters extends ConsentJourneyPage("/consents/newsletters", "newsletters")
+object ConsentJourneyPageDefault extends ConsentJourneyPage("/consents", "default")
 
 class EditProfileController(
     idUrlBuilder: IdentityUrlBuilder,
@@ -58,10 +64,14 @@ class EditProfileController(
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
 
+  def displayConsentsJourneyAll(consentHint: Option[String] = None, newsletterHint: Option[String] = None): Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageAll, consentHint)
+  def displayConsentsJourneyNewsletters: Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageNewsletters, None)
+  def displayConsentsJourney(consentHint: Option[String] = None): Action[AnyContent] = displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint)
+
   def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
     displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
 
-  def displayConsentJourneyForm(journey: Option[String], consentHint: Option[String], newsletterHint: Option[String]): Action[AnyContent] = {
+  def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String]): Action[AnyContent] = {
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
       recentlyAuthenticated { implicit request =>
         NotFound(views.html.errors._404())
@@ -71,12 +81,11 @@ class EditProfileController(
       csrfAddToken {
         permissionAuthentication.async { implicit request =>
           consentJourneyView(
-            page = ConsentJourneyPage,
-            journey = journey.getOrElse("repermission"),
+            page = page,
+            journey = page.journeyParam,
             forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
             request.user,
-            consentHint,
-            newsletterHint
+            consentHint
           )
         }
       }
@@ -224,14 +233,12 @@ class EditProfileController(
       journey: String,
       forms: ProfileForms,
       user: User,
-      consentHint: Option[String],
-      newsletterHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
+      consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
       NoCache(Ok(
-          JourneyHtmlPage.html(content = views.html.consentJourney(
-          page,
+          IdentityHtmlPage.html(content = views.html.consentJourney(
           user,
           forms,
           journey,
@@ -242,7 +249,6 @@ class EditProfileController(
           newsletterService.getEmailSubscriptions(emailFilledForm),
           EmailNewsletters.all,
           consentHint,
-          newsletterHint
         ))(page, request, context)
       ))
 

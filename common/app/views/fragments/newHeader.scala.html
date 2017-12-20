@@ -5,10 +5,12 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, getContributionOrSupporterUrl, NewHeader, getSupportOrSubscriptionUrl}
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
+@import experiments.{ ABNewDesktopHeader, GarnettHeader, ActiveExperiments}
 
 <header class="@RenderClasses(Map(
-            "new-header--mvt-desktop" -> experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader),
-            "new-header--slim" -> page.metadata.hasSlimHeader
+            "new-header--mvt-desktop" -> ActiveExperiments.isParticipating(ABNewDesktopHeader),
+            "new-header--slim" -> page.metadata.hasSlimHeader,
+            "new-header--garnett" -> ActiveExperiments.isParticipating(GarnettHeader)
         ), "new-header")"
         role="banner">
 
