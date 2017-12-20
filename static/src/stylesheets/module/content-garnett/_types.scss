@@ -110,7 +110,6 @@ $quote-mark: 35px;
     }
 
     .content__labels--not-immersive {
-        // padding-top: $gs-baseline/2;
         @include mq(tablet, leftCol) {
             border-bottom: solid 1px $garnett-neutral-4;
         }
@@ -133,13 +132,18 @@ $quote-mark: 35px;
         }
     }
 
+    .badge,
+    .badge--alt,
     .byline,
     .content__dateline,
     .content__headline,
     .content__labels,
     .content__standfirst,
+    .meta__email,
     .meta__image,
-    .social {
+    .meta__twitter,
+    .old-article-message,
+    .social--top {
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
         @include mq(mobileLandscape) {
@@ -149,6 +153,29 @@ $quote-mark: 35px;
         @include mq(phablet) {
             padding-left: 0;
             padding-right: 0;
+        }
+    }
+
+    .badge,
+    .content__meta-container {
+        @include mq(leftCol) {
+            width: gs-span(2);
+        }
+        @include mq(wide) {
+            width: gs-span(3);
+        }
+    }
+
+    .badge--alt {
+        padding-top: 0;
+        border-top: 0;
+    }
+
+    .byline-img {
+        margin-top: 0;
+        margin-right: $gs-baseline/2;
+        @include mq(phablet) {
+            margin-right: 0;
         }
     }
 
@@ -208,13 +235,22 @@ $quote-mark: 35px;
     }
 
     .meta__numbers {
+        margin-right: $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter;
+        }
+        @include mq(phablet) {
+            margin-right: 0;
+        }
         @include mq($until: leftCol) {
-            margin-right: $gs-gutter/2;
-
             &:before {
                 content: none;
             }
         }
+    }
+
+    .meta__number:not(.u-h)+.meta__number {
+        border-color: $garnett-neutral-4;
     }
 
     .meta__image {
@@ -229,13 +265,18 @@ $quote-mark: 35px;
         border-top: 0;
         float: right;
         text-align: right;
-        @include mq(phablet) {
+        min-height: 0;
+        margin-bottom: 0;
+        position: absolute;
+        top: $gs-gutter;
+        right: 0;
+        max-width: 120px;
+        @include mq(leftCol) {
             float: none;
             text-align: left;
-
-            &:before {
-                @include multiline(1, $garnett-neutral-4);
-            }
+            max-width: none;
+            position: relative;
+            top: 0;
         }
     }
 
@@ -254,6 +295,7 @@ $quote-mark: 35px;
         font-weight: 200;
         color: #333333;
         font-style: italic;
+        min-height: 0;
 
         span[itemprop='author'] {
             @include f-header;
@@ -267,22 +309,48 @@ $quote-mark: 35px;
         margin-bottom: $gs-baseline/2;
     }
 
+    .meta__contact-header {
+        display: none;
+    }
+
+    .content__meta-container--email.content__meta-container--twitter .meta__twitter {
+        margin-top: 0;
+        margin-bottom: $gs-baseline/2;
+    }
+
+    .content__meta-container--email.content__meta-container--twitter .meta__email {
+        margin-top: 0;
+        margin-bottom: $gs-baseline;
+    }
+
     .meta__email,
     .meta__twitter {
-        margin-top: $gs-baseline/3;
+        margin-top: 0;
+        margin-bottom: $gs-baseline;
+        display: block;
 
         .button {
             height: 1.5rem;
-            padding: 0 0.5rem;
             font-size: 0.75rem;
             font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             width: auto;
+            @include mq($until: leftCol) {
+                padding: 0 8px;
+            }
         }
 
-        .hide-until-leftcol {
+        .button svg {
+            @include mq($until: leftCol) {
+                position: relative;
+                top: 3px;
+                margin-right: 5px;
+            }
+        }
+
+        .contact {
             display: inline-block!important;
         }
 
@@ -376,7 +444,7 @@ $quote-mark: 35px;
     .content__headline {
         @include fs-headlineGarnett(4);
         font-weight: 400;
-        padding-top: $gs-baseline/3;
+        padding-top: $gs-baseline/2;
         padding-bottom: $gs-baseline*2;
         @include mq(tablet) {
             @include fs-headlineGarnett(6);
@@ -390,7 +458,7 @@ $quote-mark: 35px;
         display: inline-block;
         line-height: 0;
         padding: calc((#{$gs-baseline} / 2) - 2px);
-        margin-top: $gs-baseline / 2;
+        margin-top: -$gs-baseline / 2;
         margin-left: $gs-gutter / 2;
         margin-bottom: $gs-baseline;
         transform: translatey(-$gs-baseline / 2);
@@ -431,37 +499,26 @@ $quote-mark: 35px;
         color: $neutral-1;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
+        max-width: gs-span(3);
         @include mq(mobileMedium) {
             max-width: gs-span(4);
         }
         @include mq(phablet) {
             margin-left: 20px;
+            margin-bottom: $gs-baseline;
         }
         @include mq(tablet) {
             max-width: gs-span(6);
             margin-left: 0;
+            margin-bottom: $gs-baseline*2;
         }
         @include mq(leftCol) {
-            margin-bottom: $gs-baseline/2;
-        }
-    }
-
-    .badge,
-    .content__meta-container {
-        @include mq(leftCol) {
-            width: gs-span(2) -$gs-gutter/2;
-        }
-        @include mq(wide) {
-            width: gs-span(3) -$gs-gutter/2;
+            margin-bottom: $gs-baseline;
         }
     }
 
     .media-primary {
         margin-bottom: $gs-baseline/2;
-    }
-
-    .badge--alt {
-        border-top: 0;
     }
 
     .drop-cap__inner {
@@ -660,6 +717,11 @@ $quote-mark: 35px;
     }
 }
 
+.content--type-comment,
+.content--type-feature {
+
+}
+
 .content--type-feature,
 .content--type-review {
     .content__headline {
@@ -682,6 +744,12 @@ $quote-mark: 35px;
         }
     }
 
+    .content__dateline:before {
+        @include mq($from: leftCol) {
+            @include multiline(1, $garnett-neutral-4);
+        }
+    }
+
     .content__header {
         position: relative;
 
@@ -693,16 +761,19 @@ $quote-mark: 35px;
     .content__headline {
         width: 70%;
         font-weight: 100;
-        padding-top: 0;
+        padding-bottom: 0;
         @include mq(phablet) {
             float: left;
+        }
+        @include mq(leftCol) {
+            padding-bottom: 38px;
         }
     }
 
     .content__headline--byline {
         font-style: italic;
         margin-left: 0;
-        padding: $gs-gutter $gs-baseline/2 $gs-gutter*2;
+        padding: 26px $gs-gutter/2 $gs-gutter*2;
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
         }
@@ -710,8 +781,11 @@ $quote-mark: 35px;
             padding-top: 0;
             padding-left: 0;
         }
+        @include mq(tablet) {
+            padding-top: 28px;
+        }
         @include mq(leftCol) {
-            padding-top: $gs-baseline;
+            padding-top: 0;
         }
     }
 
@@ -724,31 +798,24 @@ $quote-mark: 35px;
         color: $neutral-3;
     }
 
+    .content__dateline {
+        top: -44px;
+        @include mq(leftCol) {
+            position: relative;;
+            top: 0;
+        }
+    }
+
     .byline-img {
         position: absolute;
         bottom: 3px;
         // counters the 3px bottom margin on multi-rule mixin
-        right: 0;
-        background: none;
+        right: -$gs-gutter*2;
+        background: none!important;
+        margin: 0;
         @include mq(mobileLandscape) {
             right: gs-span(3) - $gs-gutter;
         }
-    }
-
-    .content__labels,
-    .content__labels--not-immersive {
-        padding-top: $gs-baseline/2;
-        padding-bottom: $gs-baseline/3;
-        @include mq(tablet) {
-            padding-top: $gs-gutter/2;
-            margin-top: -$gs-gutter/2;
-        }
-    }
-
-    .content__section-label,
-    .content__section-label__link {
-        display: block!important;
-        // only way to override defaults
     }
 }
 // *************** Media Styles ***************
@@ -926,7 +993,7 @@ $quote-mark: 35px;
                 border-color: transparent transparent transparent $garnett-neutral-5;
                 @include mq(tablet) {
                     // 0 border radius on mobile because stock android has a render bug with it here
-                    border-radius: .2em;
+                    border-radius: 0.2em;
                 }
             }
         }
@@ -1005,13 +1072,12 @@ $quote-mark: 35px;
         }
     }
 }
-
 // *************** Rich links ***************
+
 .element-rich-link {
     @include mq(mobileLandscape, leftCol) {
         width: $gs-gutter * 6.5;
     }
-
     @include mq(leftCol, wide) {
         width: $gs-gutter * 7;
     }
