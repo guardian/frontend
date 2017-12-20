@@ -15,7 +15,7 @@
     <ul class="dropdown-menu js-user-account-dropdown-menu"
         id="my-account-dropdown"
         aria-hidden="true">
-        
+
         @for((item) <- accountDropdownMenu) {
             <li class="@{(List("dropdown-menu__item") ++ item.parentClassList).mkString(" ")}">
                 <a
@@ -23,8 +23,8 @@
                     @if(item.href.isDefined) {
                         href="@item.href"
                     }
-                    @if(item.dataName.isDefined) {
-                        data-link-name="@item.dataName"
+                    @if(item.linkName.isDefined) {
+                        data-link-name="nav2 : topbar : @item.linkName"
                     }
                 >
                     @item.label

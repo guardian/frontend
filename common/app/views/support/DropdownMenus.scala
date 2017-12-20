@@ -7,7 +7,7 @@ object DropdownMenus {
 
   case class DropdownMenuItem (
     href: Option[String]  = None,
-    dataName: Option[String]  = None,
+    linkName: Option[String]  = None,
     label: String,
     classList: List[String] = List(),
     parentClassList: List[String] = List()
@@ -15,29 +15,29 @@ object DropdownMenus {
 
   val accountDropdownMenu: List[DropdownMenuItem] = List(
     DropdownMenuItem(
-      dataName = Some("nav2 : topbar : comment activity"),
+      linkName = Some("comment activity"),
       label = "Comment activity",
       classList = List("js-add-comment-activity-link"),
       parentClassList = List("u-h","js-show-comment-activity")
     ),
     DropdownMenuItem(
       href =Some(s"${Configuration.id.url}/public/edit"),
-      dataName = Some("nav2 : topbar : edit profile"),
+      linkName = Some("edit profile"),
       label = "Edit profile",
     ),
     DropdownMenuItem(
       href =Some(s"${Configuration.id.url}/email-prefs"),
-      dataName = Some("nav2 : topbar : edit profile"),
+      linkName = Some("email prefs"),
       label = "Email preferences"
     ),
     DropdownMenuItem(
       href =Some(s"${Configuration.id.url}/password/change"),
-      dataName = Some("nav2 : topbar : change password"),
+      linkName = Some("change password"),
       label = "Change password"
     ),
     DropdownMenuItem(
       href =Some(s"${Configuration.id.url}/signout"),
-      dataName = Some("nav2 : topbar : sign out"),
+      linkName = Some("sign out"),
       label = "Sign out"
     )
   )
