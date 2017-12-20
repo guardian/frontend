@@ -267,11 +267,11 @@ $quote-mark: 35px;
         margin-bottom: $gs-baseline/2;
     }
 
-    .meta__twitter,
-    .meta__email {
+    .meta__email,
+    .meta__twitter {
         margin-top: $gs-baseline/3;
 
-    .button {
+        .button {
             height: 1.5rem;
             padding: 0 0.5rem;
             font-size: 0.75rem;
@@ -281,9 +281,11 @@ $quote-mark: 35px;
             text-overflow: ellipsis;
             width: auto;
         }
+
         .hide-until-leftcol {
             display: inline-block!important;
         }
+
         a {
             background-color: transparent;
             border: 1px solid $neutral-4;
@@ -924,7 +926,7 @@ $quote-mark: 35px;
                 border-color: transparent transparent transparent $garnett-neutral-5;
                 @include mq(tablet) {
                     // 0 border radius on mobile because stock android has a render bug with it here
-                    border-radius: 0.2em;
+                    border-radius: .2em;
                 }
             }
         }
