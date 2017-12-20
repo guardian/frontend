@@ -6,7 +6,7 @@ import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi._
 import controllers._
-import dev.DevParametersHttpRequestHandler
+import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.CommonFilters
 import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
@@ -32,6 +32,8 @@ trait AppComponents extends FrontendComponents with TagControllers {
 
   // Controllers
   lazy val healthCheck = wire[HealthCheck]
+
+  lazy val devAssetsController = wire[DevAssetsController]
 
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
