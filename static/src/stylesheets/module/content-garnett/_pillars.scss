@@ -81,12 +81,22 @@
     }
 
     .rich-link__byline {
-        color: $pillarColor;
         font-style: italic;
     }
 
+    .rich-link__header {
+        padding-top: $gs-baseline / 6;
+    }
+    
+    .rich-link__kicker,
+    .rich-link__byline,
     .rich-link__read-more-text {
         color: $pillarColor;
+    }
+
+    .rich-link__kicker {
+        border-right: 1px solid $pillarColor;
+        padding-right: .375em;
     }
 }
 
@@ -192,5 +202,18 @@
 
     &.rich-link--pillar-sport {
         @include richLink($sport-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.tone-live--item {
+        @include richLink($live-garnett-main-2, $live-garnett-main-1);
+
+        .u-faux-block-link--hover {
+            background-color: darken($live-garnett-main-1, 5%);
+        }
+        
+        &,
+        .rich-link__link {
+            color: #ffffff;
+        }
     }
 }
