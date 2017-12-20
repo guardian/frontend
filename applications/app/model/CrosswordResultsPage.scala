@@ -5,13 +5,13 @@ import org.joda.time.DateTime
 import services.FaciaContentConvert
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common.Edition
-import layout.{Byline, FrontPage, FrontPageGrouping, FrontPageItem}
+import layout.{Byline, SectionPage, FrontPageGrouping, FrontPageItem}
 
 case class CrosswordResultsPage(
   page: Page,
   contents: Seq[FrontPageItem],
   date: DateTime,
-) extends FrontPage {
+) extends SectionPage {
 
   override def isFootballTeam: Boolean = false
   override def hideCutOuts: Boolean = false

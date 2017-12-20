@@ -39,7 +39,7 @@ case class TagPage(
   tzOverride: Option[DateTimeZone],
   commercial: Commercial,
   previousAndNext: Option[PreviousAndNext] = None
-) extends FrontPage {
+) extends SectionPage {
 
   private def isSectionKeyword(sectionId: String, id: String) = Set(
     Some(s"$sectionId/$sectionId"),

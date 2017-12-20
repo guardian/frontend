@@ -14,7 +14,7 @@
 <div class="l-side-margins">
     <div class="u-cf index-page" data-link-name="Front | @request.path" role="main">
 
-        @defining(Front.makeFront(crosswordResultsPage, Edition(request)).containers) { containers =>
+        @defining(Front.fromSectionPage(crosswordResultsPage, Edition(request)).containers) { containers =>
             @containers.map { containerDefinition =>
                 @container(
                     containerDefinition = containerDefinition,
