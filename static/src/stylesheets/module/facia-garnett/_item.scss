@@ -196,8 +196,7 @@ $fc-item-gutter: $gs-gutter / 4;
     position: relative;
     margin-right: $gs-gutter / 4;
     font-weight: 700;
-    border-right-style: solid;
-    border-right-width: 1px;
+    border-right: 1px solid transparent;
     padding-right: .375em;
 }
 
