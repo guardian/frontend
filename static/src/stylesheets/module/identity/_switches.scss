@@ -154,10 +154,11 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch-content {
-    width: auto;
+    width: 100%;
     position: relative;
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     padding-left: $local-gutter * 1.5 + $checkbox-size;
 }
 
