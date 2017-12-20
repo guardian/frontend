@@ -164,7 +164,7 @@ $checkbox-size: $gs-gutter / 1.25;
     background-size: $checkbox-size / 1.5;
     background: #ffffff no-repeat center center;
     cursor: pointer;
-    transition: background-color .125s;
+    transition: background-color .125s, border-color .125s;
 }
 
 .manage-account__switch-content {
