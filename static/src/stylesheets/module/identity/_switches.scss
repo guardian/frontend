@@ -134,7 +134,7 @@ $checkbox-size: $gs-gutter / 1.25;
     @supports (transform: scale(1)) {
 
         input[type=checkbox] {
-            opacity: 0;
+            opacity: 0!important;
             & + .manage-account__switch-checkbox {
                 display: block;
                 position: absolute;
@@ -146,6 +146,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
         input:focus, input:focus + .manage-account__switch-checkbox {
             outline: 5px auto $identity-main;
+            border-color: $identity-main;
         }
 
         input:checked + .manage-account__switch-checkbox {
