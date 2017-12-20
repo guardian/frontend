@@ -10,39 +10,21 @@
     }
 
     .fc-item__container > .fc-item__meta {
+        @include multiline(4, $garnett-neutral-4);
+
         display: flex;
         position: absolute;
         bottom: 0;
         width: 100%;
-        height: 13px;
-        box-sizing: border-box;
-        border-top: 1px solid $garnett-neutral-4;
-        border-bottom: 1px solid $garnett-neutral-4;
-
-        &:before,
-        &:after {
-            content: '';
-            position: absolute;
-            height: 1px;
-            width: 100%;
-            background-color: $garnett-neutral-4;
-        }
-
-        &:before {
-            top: 3px;
-        }
-
-        &:after {
-            bottom: 3px;
-        }
+        margin-bottom: -3px;
 
         .fc-trail__count,
         .fc-item__timestamp {
             position: absolute;
             padding-right: $gs-gutter * .25;
             padding-left: $gs-gutter * .25;
-            bottom: -1px;
-            top: -1px;
+            bottom: 3px;
+            top: 0;
             z-index: 1;
         }
 
