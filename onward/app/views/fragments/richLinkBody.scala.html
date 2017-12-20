@@ -74,23 +74,23 @@
             </div>
         }
 
-        @if(!content.tags.isGallery && !content.tags.isVideo) {
-            <div class="rich-link__standfirst u-cf">
-                @content.fields.trailText.map { trailText => @Html(BulletCleaner(trailText)) }
-            </div>
-            @if(content.content.hasTonalHeaderByline && content.tags.hasLargeContributorImage) {
-                @content.tags.contributors.headOption.map { profile =>
-                    @profile.properties.contributorLargeImagePath.map{ image =>
-                        <div class="rich-link__byline-img">
-                            <img class="rich-link__byline-img__img" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
-                        </div>
+        @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+            @if(!content.tags.isGallery && !content.tags.isVideo) {
+                <div class="rich-link__standfirst u-cf">
+                    @content.fields.trailText.map { trailText => @Html(BulletCleaner(trailText)) }
+                </div>
+                @if(content.content.hasTonalHeaderByline && content.tags.hasLargeContributorImage) {
+                    @content.tags.contributors.headOption.map { profile =>
+                        @profile.properties.contributorLargeImagePath.map{ image =>
+                            <div class="rich-link__byline-img">
+                                <img class="rich-link__byline-img__img" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
+                            </div>
+                        }
                     }
                 }
+                @*<div class="u-h meta__number" data-discussion-id="@content.discussionId"/>*@
             }
-            @*<div class="u-h meta__number" data-discussion-id="@content.discussionId"/>*@
-        }
-
-        @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) { 
+        } else { 
             @content.tags.contributors.headOption.map { profile => 
                 @profile.properties.contributorLargeImagePath.map{ image =>
                     <div class="rich-link__avatar">
