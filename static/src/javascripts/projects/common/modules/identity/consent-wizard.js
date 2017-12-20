@@ -77,14 +77,19 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                             if (stepCount <= 2) {
                                 buttonBackEl.remove();
                             } else if (buttonBackEl) {
+                                const displayButtonBack = ev.detail.position > 0;
+                                buttonBackEl.setAttribute('aria-hidden', (!displayButtonBack).toString() );
+                                displayButtonBack ? buttonBackEl.removeAttribute('hidden') : buttonBackEl.setAttribute('hidden','hidden');
                                 buttonBackEl.classList.toggle(
                                     'manage-account-consent-wizard__revealable--visible',
-                                    ev.detail.position > 0
+                                    displayButtonBack
                                 );
                             }
+                            const displayCounter = ev.detail.positionName === positions.email;
+                            counterEl.setAttribute('aria-hidden', (!displayCounter).toString() );
                             counterEl.classList.toggle(
                                 'manage-account-consent-wizard__revealable--visible',
-                                ev.detail.positionName === positions.email
+                                displayCounter
                             );
                         })
                 );
