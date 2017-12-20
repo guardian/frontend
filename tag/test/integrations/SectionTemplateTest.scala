@@ -10,7 +10,7 @@ import scala.collection.JavaConverters._
 
 @DoNotDiscover class SectionTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
-  it should "render front title" in goTo("/uk-news") { browser =>
+  "Tag" should "render front title" in goTo("/uk-news") { browser =>
     browser.el("[data-test-id=header-title]").text should be ("UK news")
   }
 

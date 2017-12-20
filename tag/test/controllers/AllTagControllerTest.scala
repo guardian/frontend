@@ -20,7 +20,7 @@ import test._
   private val TemporaryRedirect = 302
   private val OK = 200
 
-  it should "render /all pages with UTC date for any region" in {
+  "Tag" should "render /all pages with UTC date for any region" in {
     val dayOfWeekEx = """<span class=.*js-dayofweek">[\s]*Thursday[\s]*<\/span>""".r
     val dayOfMonthEx = """<span class=.*js-dayofmonth">[\s]*11[\s]*<\/span>""".r
     val todayMonthEx = """<span class=.*fc-today__month">[\s]*June[\s]*<\/span>""".r
