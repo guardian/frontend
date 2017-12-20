@@ -996,6 +996,11 @@ $quote-mark: 35px;
 
 .rich-link {
     .rich-link__header {
+        @include fs-headline(1, true);
         font-weight: 400;
+        
+        @include mq(wide) {
+            @include fs-headline(3);
+        }
     }
 }
