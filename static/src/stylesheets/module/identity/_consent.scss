@@ -81,12 +81,13 @@
 
 .manage-account-consent-thanks__title {
     @include fs-headline(8);
-    color: $maps-main-1;
+    color: $identity-main;
+    font-weight: 800;
     @include mq(desktop) {
         grid-column: 1 / 3;
         grid-row: 1 / 3;
         @supports (display: grid) {
-            font-size: 10em;
+            font-size: 9em;
             text-align: right;
             line-height: .9em;
         }
