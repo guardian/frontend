@@ -1,6 +1,5 @@
 .pillars {
     clear: right;
-    color: #000000;
     margin: 0;
     padding: 0 $gs-gutter / 2;
 
@@ -36,14 +35,12 @@
     float: left;
 
     @include mq(desktop) {
-        width: 120px;
+        width: $pillar-width--desktop;
+    }
 
-        .new-header--open & {
-            width: 160px;
-
-            &:first-child {
-                width: 153px;
-            }
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            width: $pillar-width--leftCol;
         }
     }
 

@@ -1,35 +1,20 @@
 .subnav {
     background-color: #ffffff;
     border-top: 1px solid $rule;
-    padding-bottom: $gs-baseline;
-    color: $neutral-1;
     height: $veggie-burger-medium - $gs-baseline;
     overflow: hidden;
     position: relative;
-
-    &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        height: 2px;
-        bottom: 0;
-        width: 100%;
-        border-top: 4px double $rule;
-        border-bottom: 4px double $rule;
-    }
 
     @include mq(tablet) {
         height: 42px;
     }
 
     .l-footer & {
-
         &:after {
             bottom: auto;
             top: 0;
         }
     }
-
 }
 
 .subnav--expanded {
@@ -72,7 +57,7 @@
     display: inline-block;
     width: 0;
     height: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 8px solid #000000;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 10px solid $nav-primary-colour;
 }

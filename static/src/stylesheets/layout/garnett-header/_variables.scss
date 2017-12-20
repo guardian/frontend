@@ -8,10 +8,17 @@ $menu-spacing-left-medium: $gs-gutter * 2 + $gs-gutter;
 
 $search-and-edition-height-desktop: 42px;
 
-$highlight-blue: #74e7ff;
-$rule: #dfdfdf;
+$nav-background-colour: mix($sport-garnett-main-1, $neutral-7, 4%);
+$nav-primary-colour: $garnett-neutral-1;
+$nav-secondary-colour: darken($nav-background-colour, 50%);
+
+$rule: darken($nav-background-colour, 20%);
 
 $veggie-burger-medium: 48px;
 $veggie-burger-large: 56px;
 
 $slim-nav-height: $veggie-burger-large - $gs-baseline;
+
+$pillar-width--desktop: 118px;
+$pillar-width--leftCol: 140px;
+$pillar-padding: 5px;
