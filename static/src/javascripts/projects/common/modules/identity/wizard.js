@@ -167,6 +167,21 @@ const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
             })
         );
 
+const updateFocus = (stepEl: HTMLElement): Promise<void> =>
+    fastdom.write(() => {
+        window.setTimeout(() => {
+            stepEl
+                .querySelectorAll(
+                    'button, [href], input:not([type=hidden]), select, textarea, [tabindex]:not([tabindex="-1"]'
+                )[0]
+                .focus();
+        }, 0);
+        /*
+        focus is buggy, a timeout kinda fixes it
+        https://stackoverflow.com/questions/1096436/document-getelementbyidid-focus-is-not-working-for-firefox-or-chrome/
+        */
+    });
+
 const updateSteps = (
     wizardEl: HTMLElement,
     currentPosition: number,
@@ -251,6 +266,7 @@ const setPosition = (
                     : updateBrowserState(wizardEl, newPosition),
                 updateCounter(wizardEl),
                 updateSteps(wizardEl, currentPosition, newPosition, stepEls),
+                updateFocus(stepEls[newPosition]),
             ])
         )
         .then(([currentPosition, newPosition]) =>

@@ -77,16 +77,31 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                             if (stepCount <= 2) {
                                 buttonBackEl.remove();
                             } else if (buttonBackEl) {
-                                const displayButtonBack = ev.detail.position > 0;
-                                buttonBackEl.setAttribute('aria-hidden', (!displayButtonBack).toString() );
-                                displayButtonBack ? buttonBackEl.removeAttribute('disabled') : buttonBackEl.setAttribute('disabled','disabled');
+                                const displayButtonBack =
+                                    ev.detail.position > 0;
+                                buttonBackEl.setAttribute(
+                                    'aria-hidden',
+                                    (!displayButtonBack).toString()
+                                );
+                                if (displayButtonBack) {
+                                    buttonBackEl.removeAttribute('disabled');
+                                } else {
+                                    buttonBackEl.setAttribute(
+                                        'disabled',
+                                        'disabled'
+                                    );
+                                }
                                 buttonBackEl.classList.toggle(
                                     'manage-account-consent-wizard__revealable--visible',
                                     displayButtonBack
                                 );
                             }
-                            const displayCounter = ev.detail.positionName === positions.email;
-                            counterEl.setAttribute('aria-hidden', (!displayCounter).toString() );
+                            const displayCounter =
+                                ev.detail.positionName === positions.email;
+                            counterEl.setAttribute(
+                                'aria-hidden',
+                                (!displayCounter).toString()
+                            );
                             counterEl.classList.toggle(
                                 'manage-account-consent-wizard__revealable--visible',
                                 displayCounter
