@@ -1,11 +1,48 @@
 .identity-footer {
-    @include fs-textSans(1);
+    @include fs-textSans(2);
     background: $neutral-1;
-    color: $neutral-3;
-    min-height: $identity-footer-height - ($gs-gutter);
-    padding: $gs-gutter / 2 $gs-gutter / 2;
+    color: $neutral-4;
+    min-height: $identity-footer-height - ($gs-gutter * 2);
+    padding: $gs-gutter /2 $gs-gutter / 2;
+
+    box-shadow: 0 ($identity-footer-height - ($gs-gutter * 2)) 0 0 $neutral-1;
+
     @include mq(mobileLandscape) {
         padding: $gs-gutter / 2 $gs-gutter;
+    }
+
+    .identity-footer-colophon__list, .identity-footer-colophon__item {
+        margin: 0;
+        padding: 0;
+    }
+
+    .identity-footer-colophon__list {
+        @include clearfix();
+        list-style: none;
+        margin-top: $gs-gutter / 2;
+    }
+
+    .identity-footer-colophon__item {
+        width: 50%;
+        float: left;
+        text-transform: lowercase;
+        @include mq(mobileLandscape) {
+            width: 33.3333%;
+        }
+
+    }
+
+    .identity-footer-colophon__item a {
+        display: block;
+        padding: 5px 0;
+        color: currentColor;
+    }
+
+    .identity-footer-copy {
+        border-top: 1px solid lighten($neutral-1, 10%);
+        margin-top: $gs-gutter / 2;
+        padding-top: $gs-gutter / 2;
+        color: $neutral-3;
     }
 
 }
