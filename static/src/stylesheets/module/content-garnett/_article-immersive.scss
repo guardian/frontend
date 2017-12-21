@@ -160,7 +160,6 @@
 .content--type-immersive .content__headline--immersive {
     @include fs-headline(7, true);
     line-height: 1.1;
-    font-weight: 200;
     color: #ffffff;
     padding: 0;
     padding-bottom: $gs-baseline * 2;
@@ -263,8 +262,7 @@
                 display: block;
                 background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNCA1Ij48cGF0aCBkPSJNMCAwYzIgMCAzIDEuMiAzLjkgMi4yQzQuNyAzLjIgNS41IDQgNyA0czIuMy0uOCAzLjEtMS44QzExIDEuMiAxMiAwIDE0IDB2MWMtMS41IDAtMi4zLjgtMy4xIDEuOEMxMCAzLjggOSA1IDcgNVM0IDMuOCAzLjEgMi44QzIuMyAxLjggMS41IDEgMCAxVjB6IiBmaWxsPSIjZGNkY2RjIi8+PC9zdmc+);
                 background-size: 10%;
-                background-position:top;
-
+                background-position: top;
             }
         }
     }
@@ -272,7 +270,6 @@
 .content--immersive-article .content__standfirst--immersive-article {
     @include fs-headline(1);
     position: relative;
-    margin-bottom: $gs-baseline / 2;
     padding-left: 0px;
     font-size: 20px;
     line-height: 24px;
@@ -670,7 +667,7 @@
 @mixin immersivePillarColours($pillar, $color, $color2) {
     .content--pillar-#{$pillar}.content--immersive-article {
         .content__series-label__link {
-                color: $color;
+            color: $color;
         }
         .u-underline {
             color: $color2;
