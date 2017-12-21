@@ -51,7 +51,7 @@
                     }
                 } else {
                     @if(content.content.cardStyle == Comment ||
-                        (content.content.cardStyle == Feature && content.content.metadata.pillar.exists(_.toString.toLowerCase == "sport"))
+                        (content.content.cardStyle == Feature && content.content.metadata.pillar.nameOrDefault == "sport")
                     ) {
                         @fragments.inlineSvg("garnett-quote", "icon")
                     }
