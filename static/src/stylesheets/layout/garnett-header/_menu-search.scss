@@ -25,7 +25,7 @@
 }
 
 .menu-search__search-box {
-    background-color: darken($nav-background-colour, 5%);
+    background-color: $nav-darker-colour;
     border: 0;
     border-radius: 1000px;
     box-sizing: border-box;

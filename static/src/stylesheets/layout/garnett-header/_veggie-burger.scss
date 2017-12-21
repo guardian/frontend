@@ -1,6 +1,6 @@
 .veggie-burger {
     background-color: $nav-primary-colour;
-    color: $neutral-7;
+    color: $nav-background-colour;
     cursor: pointer;
     display: block;
     height: $veggie-burger-medium;
@@ -10,7 +10,7 @@
     border-radius: 50%;
     outline: none;
     user-select: none;
-    z-index: 1;
+    z-index: 2;
 
     @include mq(tablet) {
         height: $veggie-burger-large;
@@ -28,8 +28,14 @@
     }
 
     .new-header--slim & {
+        background-color: $nav-secondary-colour;
+        color: $nav-background-colour;
         height: $veggie-burger-large;
         width: $veggie-burger-large;
+    }
+
+    .new-header--open.new-header--slim & {
+        background-color: $nav-primary-colour;
     }
 }
 

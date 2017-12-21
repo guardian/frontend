@@ -12,7 +12,6 @@
 
     @include mq(mobileMedium) {
         font-size: 17px;
-        line-height: 40px;
     }
 
     @include mq(tablet) {
