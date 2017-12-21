@@ -1,11 +1,11 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
-
-import loadEnhancers from './modules/loadEnhancers';
 import mediator from 'lib/mediator';
 import debounce from 'lodash/functions/debounce';
 import { scrollTo } from 'lib/scroller';
+
+import loadEnhancers from './modules/loadEnhancers';
 import { newsletterCheckboxClassName } from './consents';
 import {
     wizardPageChangedEv,
@@ -115,6 +115,13 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
     });
 };
 
+const shouldNextButtonScroll = (): Promise<boolean> =>
+    fastdom.read(
+        () =>
+            window.scrollY + window.innerHeight + 100 <
+            (document.body ? document.body.clientHeight : 0)
+    );
+
 const bindScrollForNextButton = (buttonEl: HTMLElement): void => {
     const check = () =>
         shouldNextButtonScroll().then(shouldIt =>
@@ -130,13 +137,6 @@ const bindScrollForNextButton = (buttonEl: HTMLElement): void => {
 
     check();
 };
-
-const shouldNextButtonScroll = (): Promise<boolean> =>
-    fastdom.read(
-        () =>
-            window.scrollY + window.innerHeight + 100 <
-            document.body.offsetHeight
-    );
 
 const bindNextButton = (buttonEl: HTMLElement): void => {
     const wizardEl: ?Element = buttonEl.closest(
