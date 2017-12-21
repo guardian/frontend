@@ -162,7 +162,7 @@ trait ABTestSwitches {
     "Test linking to a contributions-only version of support.theguardian.com",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 20),
+    sellByDate = new LocalDate(2018, 1, 22),
     exposeClientSide = true
   )
 }
