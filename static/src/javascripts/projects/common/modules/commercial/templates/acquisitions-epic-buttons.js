@@ -3,7 +3,7 @@ import type { CtaUrls } from 'common/modules/commercial/contributions-utilities'
 import config from 'lib/config';
 
 export const epicButtonsTemplate = (
-    { membershipUrl = '', contributeUrl = '' }: CtaUrls,
+    { supportUrl = '', contributeUrl = '' }: CtaUrls,
     useSupportDomain: boolean = false
 ) => {
     const contribButton = `
@@ -17,7 +17,7 @@ export const epicButtonsTemplate = (
     const supportButtonBecome = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
-              href="${membershipUrl}"
+              href="${supportUrl}"
               target="_blank">
               Become a supporter
             </a>
@@ -25,7 +25,7 @@ export const epicButtonsTemplate = (
     const supportButtonSupport = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-single-button"
-              href="${membershipUrl}"
+              href="${supportUrl}"
               target="_blank">
               Support the Guardian
             </a>
@@ -38,8 +38,11 @@ export const epicButtonsTemplate = (
 
     return `
         <div class="contributions__amount-field">
-            ${!useSupportDomain ? supportButtonBecome : supportButtonSupport}
-            ${!useSupportDomain ? contribButton : ''}
+            ${
+                useSupportDomain
+                    ? supportButtonSupport
+                    : supportButtonBecome + contribButton
+            }
             ${paymentLogos}
         </div>`;
 };

@@ -525,28 +525,7 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  // Owner: Simple & Coherent
-  val UkSupportFrontendActive = Switch(
-    SwitchGroup.Feature,
-    "uk-supporter-traffic-to-new-support-frontend",
-    "When ON, all UK membership/contribute/support links send traffic to support.theguardian.com (aside from the banner)",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 10, 17),
-    exposeClientSide = true
-  )
-
-  val UsSupportFrontendActive = Switch(
-    SwitchGroup.Feature,
-    "us-supporter-traffic-to-new-support-frontend",
-    "When ON, all US membership/contribute/support links send traffic to support.theguardian.com (aside from the banner)",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 10, 17),
-    exposeClientSide = true
-  )
-
-    // Owner: Journalism
+  // Owner: Journalism
   val ReaderAnswersDeliveryMechanism = Switch(
     SwitchGroup.Feature,
     "reader-answers-preferred-delivery-mechanism",

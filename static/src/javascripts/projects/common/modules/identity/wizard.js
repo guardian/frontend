@@ -167,6 +167,18 @@ const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
             })
         );
 
+const updateFocus = (stepEl: HTMLElement): Promise<void> =>
+    fastdom.write(() => {
+        window.setTimeout(() => {
+            stepEl.setAttribute('tabindex', '-1');
+            stepEl.focus();
+        }, 0);
+        /*
+        focus is buggy, a timeout kinda fixes it
+        https://stackoverflow.com/questions/1096436/document-getelementbyidid-focus-is-not-working-for-firefox-or-chrome/
+        */
+    });
+
 const updateSteps = (
     wizardEl: HTMLElement,
     currentPosition: number,
@@ -178,6 +190,7 @@ const updateSteps = (
             switch (i) {
                 case newPosition:
                     stepEl.setAttribute('aria-hidden', 'false');
+                    stepEl.removeAttribute('hidden');
                     animateIncomingStep(
                         wizardEl,
                         stepEl,
@@ -186,6 +199,7 @@ const updateSteps = (
                     break;
                 case currentPosition:
                     stepEl.setAttribute('aria-hidden', 'true');
+                    stepEl.removeAttribute('hidden');
                     animateOutgoingStep(
                         wizardEl,
                         stepEl,
@@ -194,6 +208,7 @@ const updateSteps = (
                     break;
                 default:
                     stepEl.setAttribute('aria-hidden', 'true');
+                    stepEl.setAttribute('hidden', 'hidden');
                     stepEl.classList.add(stepHiddenClassname);
                     stepEl.classList.remove(...stepTransitionClassnames);
             }
@@ -247,7 +262,8 @@ const setPosition = (
                 currentPosition,
                 newPosition,
                 userInitiated
-                    ? pushBrowserState(wizardEl, newPosition)
+                    ? pushBrowserState(wizardEl, newPosition) &&
+                      updateFocus(stepEls[newPosition])
                     : updateBrowserState(wizardEl, newPosition),
                 updateCounter(wizardEl),
                 updateSteps(wizardEl, currentPosition, newPosition, stepEls),
