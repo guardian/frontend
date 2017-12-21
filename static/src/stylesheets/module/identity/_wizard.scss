@@ -15,6 +15,7 @@
     left: 0;
     right: 0;
     will-change: transform;
+    outline: none;
 }
 .js-off .manage-account-wizard__step {
     border: 1px solid $neutral-8;

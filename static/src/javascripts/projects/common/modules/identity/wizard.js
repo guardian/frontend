@@ -170,11 +170,8 @@ const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
 const updateFocus = (stepEl: HTMLElement): Promise<void> =>
     fastdom.write(() => {
         window.setTimeout(() => {
-            stepEl
-                .querySelectorAll(
-                    'button, [href], input:not([type=hidden]), select, textarea, [tabindex]:not([tabindex="-1"]'
-                )[0]
-                .focus();
+            stepEl.setAttribute('tabindex', '-1');
+            stepEl.focus();
         }, 0);
         /*
         focus is buggy, a timeout kinda fixes it
@@ -265,11 +262,11 @@ const setPosition = (
                 currentPosition,
                 newPosition,
                 userInitiated
-                    ? pushBrowserState(wizardEl, newPosition)
+                    ? pushBrowserState(wizardEl, newPosition) &&
+                      updateFocus(stepEls[newPosition])
                     : updateBrowserState(wizardEl, newPosition),
                 updateCounter(wizardEl),
                 updateSteps(wizardEl, currentPosition, newPosition, stepEls),
-                updateFocus(stepEls[newPosition]),
             ])
         )
         .then(([currentPosition, newPosition]) =>
