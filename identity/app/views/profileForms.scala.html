@@ -5,7 +5,7 @@
 @import services.EmailPrefsData
 
 @(
-    page: model.Page,
+    activeUrl: String,
     user: com.gu.identity.model.User,
     forms: controllers.ProfileForms,
     idRequest: services.IdentityRequest,
@@ -18,7 +18,7 @@
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
-    <li class="tabs__tab @if(hidden){is-hidden} @if(page.metadata.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.metadata.id == url)" aria-controls="tabs-account-profile-@i">
+    <li class="tabs__tab @if(hidden){is-hidden} @if(activeUrl == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(activeUrl == url)" aria-controls="tabs-account-profile-@i">
         <a href="@url" data-tabs-href="#tabs-account-profile-@i" data-link-name="@url edit profile tab" data-pushstate-url="@url"
             @dataTestId.map{idValue => data-test-id="@idValue"}>@name</a>
     </li>
@@ -27,7 +27,7 @@
 @content(i: Int, url: String, optionalClass: String = "")(body: => Html) = {
     <div id="tabs-account-profile-@i"
          class="@RenderClasses(Map(
-            "u-h" -> (page.metadata.id != url)
+            "u-h" -> (activeUrl != url)
          ), "tabs__pane u-cf @optionalClass")"
          role="tabpanel"
          aria-labelledby="tabs-account-profile-@i-tab"
@@ -37,9 +37,6 @@
     </div>
 }
 
-@mainLegacy(page, projectName = Option("identity")){
-    <link rel="stylesheet" id="stripe-sprite" type="text/css" media="all" href="@Static("stylesheets/membership-icons.css")"/>
-}{
 <div class="tabs">
 
     <div class="identity-wrapper-for-bg identity-wrapper-for-bg--header">
@@ -88,4 +85,3 @@
 
     <script src="https://checkout.stripe.com/checkout.js" async></script>
 </div>
-}
