@@ -67,6 +67,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     top: 0;
 }
 
+.content__head {
+    margin-bottom: $gs-baseline / 2;
+}
+
 .content__head__comment-count--liveblog {
     display: block;
 
