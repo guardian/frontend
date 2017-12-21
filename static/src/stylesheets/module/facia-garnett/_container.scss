@@ -2,7 +2,9 @@ $header-image-size-mobile: 80px;
 $header-image-size-desktop: 100px;
 
 .fc-container {
-    border-top: 1px solid $garnett-neutral-4;
+    .fc-container__inner {
+        border-top: 1px solid $neutral-5;
+    }
 }
 
 .fc-container,
