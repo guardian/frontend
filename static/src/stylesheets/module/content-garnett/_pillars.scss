@@ -186,21 +186,11 @@
 
         .rich-link__container {
             padding-bottom: 13px;
-            background-image: linear-gradient(to bottom, 
+            background-image: repeating-linear-gradient(to bottom, 
                 #dcdcdc,
                 #dcdcdc 1px,
                 transparent 1px,
-                transparent 4px,
-                #dcdcdc 4px,
-                #dcdcdc 5px,
-                transparent 5px,
-                transparent 8px,
-                #dcdcdc 8px,
-                #dcdcdc 9px,
-                transparent 9px,
-                transparent 12px,
-                #dcdcdc 12px,
-                #dcdcdc 13px
+                transparent 4px
             );
             background-size: 1px 13px;
             background-position: 0 100%;
