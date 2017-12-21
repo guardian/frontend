@@ -3,12 +3,12 @@ import type { CtaUrls } from 'common/modules/commercial/contributions-utilities'
 import config from 'lib/config';
 
 export const epicButtonsSplitCtaTemplate = ({
-    membershipUrl = '',
+    supportUrl = '',
 }: CtaUrls): string => {
     const contribButton = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
-             href="${membershipUrl}&bundle=contribute"
+             href="${supportUrl}&bundle=contribute"
              target="_blank">
              Make a contribution
             </a>
@@ -16,7 +16,7 @@ export const epicButtonsSplitCtaTemplate = ({
     const subscribeButton = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
-              href="${membershipUrl}&bundle=subscribe"
+              href="${supportUrl}&bundle=subscribe"
               target="_blank">
               Get a subscription
             </a>
