@@ -25,10 +25,10 @@
             "has-feature-showcase-element" -> (article.tags.isFeature && article.elements.hasShowcaseMainElement),
             "paid-content" -> isPaidContent,
             "paid-content--white" -> (isPaidContent && ActiveExperiments.isParticipating(CommercialPaidContentTemplate)),
-            (s"content--pillar-${article.metadata.pillar.nameOrDefault}", experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-            (s"content--type-${article.metadata.designType.nameOrDefault}", experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-            ("tonal", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-            (s"tonal--${toneClass(article)}", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
+            s"content--pillar-${article.metadata.pillar.nameOrDefault}" -> experiments.ActiveExperiments.isParticipating(experiments.Garnett),
+            s"content--type-${article.metadata.designType.nameOrDefault}" -> experiments.ActiveExperiments.isParticipating(experiments.Garnett),
+            "tonal" -> !experiments.ActiveExperiments.isParticipating(experiments.Garnett),
+            s"tonal--${toneClass(article)}" -> !experiments.ActiveExperiments.isParticipating(experiments.Garnett)
         ),
             "content",
             "content--article",
@@ -63,8 +63,8 @@
             }
 
             <div class="@RenderClasses(Map(
-                ("tonal__main", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-                (s"tonal__main--${toneClass(article)}", !experiments.ActiveExperiments.isParticipating(experiments.Garnett))
+                "tonal__main" -> !experiments.ActiveExperiments.isParticipating(experiments.Garnett),
+                s"tonal__main--${toneClass(article)}" -> !experiments.ActiveExperiments.isParticipating(experiments.Garnett)
             ),
                 "content__main"
             )">
