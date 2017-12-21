@@ -1,9 +1,6 @@
 // @flow
-import {
-    getSync as geolocationGetSync,
-    getLocalCurrencySymbol,
-} from 'lib/geolocation';
-
+import { getLocalCurrencySymbol } from 'lib/geolocation';
+import { useSupportDomain } from 'common/modules/commercial/support-utilities';
 // control
 const controlHeading = 'Since you’re here &hellip;';
 const controlP1 =
@@ -27,14 +24,8 @@ const ctaLinkSentence = (
     contributionUrl: string,
     currencySymbol: string
 ): string => {
-    if (geolocationGetSync() === 'US') {
+    if (useSupportDomain()) {
         return `<span class="contributions__highlight"> For as little as ${
-            currencySymbol
-        }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
-            supportUrl
-        }" target="_blank" class="u-underline">Make a contribution</a>`;
-    } else if (geolocationGetSync() === 'GB') {
-        return `<span class="contributions__highlight">For as little as ${
             currencySymbol
         }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
             supportUrl
