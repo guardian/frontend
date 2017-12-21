@@ -1,12 +1,12 @@
 <configuration>
 
-    <contextName>frontend-rss</contextName>
+    <contextName>frontend-tag</contextName>
 
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/frontend-rss.log</file>
+        <file>logs/frontend-tag.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/frontend-rss.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>logs/frontend-tag.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
 
