@@ -98,7 +98,7 @@ $pillars: (
 
     .fc-item__kicker {
         color: map-get($palette, kicker);
-        border-image: linear-gradient(to top, transparent, transparent .25em, $lines .25em) 0 1;
+        border-image: linear-gradient(to top, transparent, transparent .125em, $lines .125em) 0 1;
     }
 
     //this is to make the colour lighter for the media cards
@@ -158,6 +158,7 @@ $pillars: (
             color: map-get($palette, kicker);
         }
     }
+
 
     .fc-item__media-meta {
         color: map-get($palette, invertedKicker);
