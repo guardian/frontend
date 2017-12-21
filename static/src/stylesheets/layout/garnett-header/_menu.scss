@@ -9,6 +9,10 @@
     top: 0;
     z-index: $zindex-main-menu;
 
+    .new-header--slim & {
+        margin-right: $gs-gutter / 2 + ($veggie-burger-large / 2);
+    }
+
     @include mq($until: desktop) {
         @include menu-animation(-110%);
         -webkit-overflow-scrolling: touch;
@@ -58,19 +62,6 @@
         // TODO: replace with sexy animation
         @include mq(desktop) {
             display: block;
-        }
-    }
-
-    .new-header--slim.new-header--open & {
-        margin-right: ($gs-gutter / 2) + ($veggie-burger-large / 2);
-
-        @include mq(mobileLandscape) {
-            margin-right: $gs-gutter + ($veggie-burger-large / 2);
-        }
-
-        @include mq(desktop) {
-            padding-top: $veggie-burger-large;
-            margin-right: 0;
         }
     }
 

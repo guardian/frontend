@@ -44,7 +44,7 @@
 
 .menu-group--membership,
 .menu-group--editions {
-    background-color: $neutral-5;
+    background-color: $nav-darker-colour;
 }
 
 .menu-group--membership {
@@ -56,12 +56,12 @@
     padding-bottom: 0;
 
     .menu-group {
-        background-color: $neutral-3;
+        background-color: darken($nav-background-colour, 10%);
     }
 }
 
 .menu-group--membership-actions {
-    background-color:  $neutral-3;
+    background-color:  $nav-darker-colour;
 }
 
 .menu-group--footer {
@@ -110,5 +110,9 @@
         @include mq(wide) {
             width: gs-span(4);
         }
+    }
+
+    .new-header--slim & {
+        top: 24px;
     }
 }

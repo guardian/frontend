@@ -3,9 +3,9 @@
         border-left-color: $colourOne;
     }
 
-    // .dropdown-menu__title--active:after {
-    //     border-color: $colourOne;
-    // }
+    .dropdown-menu__title--active:after {
+        border-color: $colourOne;
+    }
 
     .subnav-link {
         &:hover,
@@ -14,14 +14,14 @@
         }
     }
 
-    // .top-bar__item--cta {
-    //     &:hover,
-    //     &:focus {
-    //         & .top-bar__item--cta--circle:before {
-    //             background-color: $colourOne;
-    //         }
-    //     }
-    // }
+    .top-bar__item--cta {
+        &:hover,
+        &:focus {
+            & .top-bar__item--cta--circle:before {
+                background-color: $colourOne;
+            }
+        }
+    }
 }
 
 .new-header--news {
@@ -46,7 +46,7 @@
 
 .menu-group {
     .menu-item:first-child > .menu-group .menu-item__title:hover,
-    .menu-item__title--news {
+    .new-header--slim & .menu-item__title--news {
         color: $news-garnett-main-1;
     }
 

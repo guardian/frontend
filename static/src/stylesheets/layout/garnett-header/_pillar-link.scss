@@ -4,27 +4,27 @@
     color: currentColor;
     cursor: pointer;
     display: block;
-    font-size: 16px;
-    height: $veggie-burger-medium - $gs-baseline;
-    line-height: $veggie-burger-medium - $gs-baseline;
-    padding: 0 ($gs-gutter / 4);
+    font-size: 14px;
+    height: $gs-baseline * 2 + $gs-baseline / 2;
+    line-height: 1;
+    // Hides border bottom from view
+    overflow: hidden;
+    padding: 0 4px;
     position: relative;
     transition: color 150ms ease-out;
 
     @include mq(mobileMedium) {
-        font-size: 18px;
+        font-size: 17px;
     }
 
     @include mq(tablet) {
-        font-size: 23px;
+        font-size: 22px;
         height: $gs-baseline * 3 + $gs-baseline / 2;
-        line-height: 1;
         padding-right: $gs-gutter;
         padding-left: $pillar-padding;
     }
 
     @include mq(desktop) {
-        font-size: 22px;
         height: $gs-baseline * 3;
     }
 
@@ -47,7 +47,7 @@
     &:before {
         // Dividing lines
         border-left: 1px solid $rule;
-        top: $gs-baseline + 1;
+        top: $gs-baseline / 4;
         z-index: 1;
 
         @include mq(tablet) {
@@ -78,7 +78,8 @@
         }
     }
 
-    .new-header--slim & {
+    // Ugly specificity to override body:not(.has-page-skin)
+    body .new-header--slim & {
         font-size: 20px;
         height: $slim-nav-height;
         line-height: $slim-nav-height;

@@ -14,18 +14,8 @@
     }
 
     .new-header--slim & {
-        clear: none;
-
         @include mq($until: tablet) {
             display: none;
-        }
-    }
-
-    .new-header--slim.new-header--open & {
-        @include mq(desktop) {
-            z-index: $zindex-main-menu + 1;
-            position: absolute;
-            top: $gs-baseline * 4;
         }
     }
 }
