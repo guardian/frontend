@@ -316,7 +316,7 @@
     @include fs-header(3);
     color: $identity-main;
 }
-.manage-account-headerNote {
+.identity-title-subtitle {
     @include fs-bodyCopy(2);
     margin-top: $gs-baseline / 2;
 }
