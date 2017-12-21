@@ -1,11 +1,12 @@
 .identity-footer {
     @include fs-textSans(2);
+    $height: $identity-footer-height - ($gs-gutter * 2);
     background: $neutral-1;
     color: $neutral-4;
-    min-height: $identity-footer-height - ($gs-gutter * 2);
+    min-height: $height;
     padding: $gs-gutter /2 $gs-gutter / 2;
 
-    box-shadow: 0 ($identity-footer-height - ($gs-gutter * 2)) 0 0 $neutral-1;
+    box-shadow: 0 $height 0 0 $neutral-1;
 
     @include mq(mobileLandscape) {
         padding: $gs-gutter / 2 $gs-gutter;
@@ -19,7 +20,6 @@
     .identity-footer-colophon__list {
         @include clearfix();
         list-style: none;
-        margin-top: $gs-gutter / 2;
     }
 
     .identity-footer-colophon__item {
