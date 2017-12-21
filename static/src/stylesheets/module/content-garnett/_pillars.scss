@@ -179,22 +179,14 @@
     }
 
     &.tone-comment--item,
-    &.tone-feature--item.rich-link--pillar-sport {
+    &.tone-feature--item.rich-link--pillar-sport {       
         .rich-link__image-container {
             display: none;
         }
-
+        
         .rich-link__container {
+            @include multiline(4, $garnett-neutral-4);
             padding-bottom: 13px;
-            background-image: repeating-linear-gradient(to bottom, 
-                #dcdcdc,
-                #dcdcdc 1px,
-                transparent 1px,
-                transparent 4px
-            );
-            background-size: 1px 13px;
-            background-position: 0 100%;
-            background-repeat: repeat-x;
         }
     }
 

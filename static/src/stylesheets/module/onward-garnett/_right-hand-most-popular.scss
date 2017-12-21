@@ -4,10 +4,6 @@
 
 .right-most-popular__heading {
     border-top: 0;
-
-    &:before {
-        @include multiline(4, $garnett-neutral-6);
-    }
 }
 
 .right-most-popular-item {
