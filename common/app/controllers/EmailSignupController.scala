@@ -77,15 +77,15 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
     Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
   }
 
-  // This listId can be either an exactTarget listId or the corresponding identity name which is stored in the Identity model
-  def renderForm(emailType: String, listId: String): Action[AnyContent] = Action { implicit request =>
-    Try(listId.toInt) match {
-      case Success(id) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, id)))
-      case Failure(_) => {
-        val id = EmailNewsletter.fromIdentityName(listId).map(_.listId).getOrElse(-1)
-        Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, id)))
-      }
+  def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
+    Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
+  }
 
+  def renderFormFromName(emailType: String, listName: String): Action[AnyContent] = Action { implicit request =>
+    val id = EmailNewsletter.fromIdentityName(listName).map(_.listId)
+    id match {
+      case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
+      case _            => BadRequest("Invalid list name")
     }
   }
 
