@@ -28,6 +28,10 @@
     }
 }
 
+@emailRepermissionStepShouldDisplay = @{
+    onlySubscribedToV1Newsletters.nonEmpty
+}
+
 @channelStep() = {
     @if(IdentityShowCommunicationChannelConsents.isSwitchedOn && communicationChannelsForUser(user).nonEmpty) {
         <div class="manage-account-wizard__step" data-wizard-step-name="channels" role="dialog" aria-labelledby="consentWizardChannelsTitle">
@@ -90,25 +94,19 @@
     </div>
 }
 
-@emailStep(isNarrow: Boolean = false) = {
-    @if(onlySubscribedToV1Newsletters.nonEmpty) {
+@emailRepermissionStep() = {
+    @if(emailRepermissionStepShouldDisplay) {
         <div class="manage-account-wizard__step" data-wizard-step-name="email" role="dialog" aria-labelledby="consentWizardEmailTitle">
 
             <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
                 @views.html.helper.CSRF.formField
                 @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
-                @if(isNarrow) {
-                    <h2 class="identity-title" id="consentWizardEmailTitle">Sorry for the interruption</h2>
-                    <p class="identity-title-subtitle">
-                        You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
-                    </p>
-                } else {
-                    <h2 class="identity-title" id="consentWizardEmailTitle">Your existing newsletters</h2>
-                    <p class="identity-title-subtitle">
-                        You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
-                    </p>
-                }
+                <h2 class="identity-title" id="consentWizardEmailTitle">Your existing newsletters</h2>
+                <p class="identity-title-subtitle">
+                    You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
+                </p>
+
                 <div class="manage-account__switches">
                     <ul>
                     @onlySubscribedToV1Newsletters.zipWithRowInfo.map { case (newsletter, row) =>
@@ -147,6 +145,14 @@
     </div>
 }
 
+@emailRepermissionOrSignupStep() = {
+    @if(emailRepermissionStepShouldDisplay) {
+        @emailRepermissionStep()
+    } else {
+        @emailSignupStep()
+    }
+}
+
 @endcardStep() = {
     <div class="manage-account-wizard__step" data-wizard-step-name="endcard" role="dialog" aria-labelledby="consentWizardEmailSignupTitle">
         <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
@@ -177,17 +183,17 @@
 
                     @journey match {
                         case "newsletters" => {
-                            @emailStep(isNarrow = true)
+                            @emailRepermissionStep()
                             @channelStep()
                         }
                         case "all" => {
                             @consentStep(journey = "all")
-                            @emailStep()
+                            @emailRepermissionStep()
                             @channelStep()
                         }
                         case _ => {
-                            @consentStep("consent")
-                            @emailStep()
+                            @consentStep(journey = "consent")
+                            @emailRepermissionOrSignupStep()
                             @channelStep()
                         }
                     }
