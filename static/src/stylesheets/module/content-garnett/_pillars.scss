@@ -12,7 +12,7 @@
     .tonal__head--tone-feature .content__headline,
     .tonal__head--tone-review .content__headline,
     .tone-colour,
-    a {
+    a[href] {
         color: $kickerColor;
     }
 
