@@ -85,7 +85,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
     val id = EmailNewsletter.fromIdentityName(listName).map(_.listId)
     id match {
       case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
-      case _            => BadRequest("Invalid list name")
+      case _            => Cached(15.minute)(WithoutRevalidationResult(NotFound))
     }
   }
 
