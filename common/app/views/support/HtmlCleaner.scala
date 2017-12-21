@@ -782,3 +782,18 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
   }
 
 }
+
+object GarnettQuoteCleaner extends HtmlCleaner {
+  val garnettQuote = views.html.fragments.inlineSvg("garnett-quote", "icon").toString
+
+  override def clean(document: Document): Document = {
+    for {
+      quote <- document.getElementsByClass("inline-quote").asScala
+    } {
+      quote.before(garnettQuote)
+      quote.remove()
+    }
+
+    document
+  }
+}
