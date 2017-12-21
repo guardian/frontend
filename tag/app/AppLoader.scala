@@ -47,7 +47,7 @@ trait AppComponents extends FrontendComponents with TagControllers {
 
   lazy val router: Router = wire[Routes]
 
-  lazy val appIdentity = ApplicationIdentity("rss")
+  lazy val appIdentity = ApplicationIdentity("tag")
 
   override lazy val appMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
