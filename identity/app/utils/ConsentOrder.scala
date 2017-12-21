@@ -22,8 +22,12 @@ object ConsentOrder {
     * @param consentHint optional hint which would move that particular consent to the front
     * @return copy of user with reordered consents
     */
-  def userWithOrderedConsents(userDO: User, consentHint: Option[String]): User =
-    userDO.copy(consents = hintedConsents(orderedConsents(userDO.consents), consentHint))
+  def userWithOrderedConsents(userDO: User, consentHint: Option[String]): User = {
+    val consentsToReorder =
+      if (userDO.consents.isEmpty) Consent.defaultConsents else userDO.consents
+
+    userDO.copy(consents = hintedConsents(orderedConsents(consentsToReorder), consentHint))
+  }
 
   /** If consentHint is provided it moves that consent to the head of consents list */
   private def hintedConsents(consents: List[Consent], consentHint: Option[String]): List[Consent] = {
