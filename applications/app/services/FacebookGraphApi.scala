@@ -1,5 +1,7 @@
 package services
 
+import java.util.concurrent.TimeoutException
+
 import common.Logging
 import conf.Configuration
 import play.api.libs.json.Json
@@ -7,6 +9,8 @@ import play.api.libs.ws.{WSClient, WSResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.{Duration, DurationInt}
+import scala.util.Failure
+import scala.util.control.NonFatal
 
 
 object URLResponseDeserializer {
@@ -20,16 +24,19 @@ case class ShareObject(share_count: Int)
 class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests with Logging {
   val apiRootUrl = s"https://graph.facebook.com/v${Configuration.facebook.graphApi.version}/"
 
-  def GET(endpoint: Option[String], timeout: Duration, queryString: (String, String)*)(implicit executionContext: ExecutionContext): Future[WSResponse] =
-    wsClient
-      .url(apiRootUrl + endpoint.getOrElse(""))
+  def GET(endpoint: Option[String], timeout: Duration, queryString: (String, String)*)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
+    val url = apiRootUrl + endpoint.getOrElse("")
+    val res = wsClient
+      .url(url)
       .withQueryStringParameters(addAccessToken(queryString): _*)
       .withRequestTimeout(timeout)
       .getOKResponse()
-      .recoverWith { case e: Exception =>
-        log.error(s"Failed to fetch from Facebook Graph API endpoint: $endpoint", e)
-        Future.failed(e)
-      }
+    res.onComplete {
+      case Failure(t: TimeoutException) => log.warn(s"Timeout when fetching Facebook Graph API: $url", t)
+      case Failure(NonFatal(t)) => log.error(s"Failed to fetch from Facebook Graph API: $url", t)
+    }
+    res
+  }
 
   protected def makeUrl(endpoint: Option[String]): String = apiRootUrl + endpoint.getOrElse("")
   private def addAccessToken(queryString: Seq[(String, String)]): Seq[(String, String)] =
