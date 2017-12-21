@@ -3,12 +3,12 @@ import type { CtaUrls } from 'common/modules/commercial/contributions-utilities'
 import config from 'lib/config';
 
 export const epicButtonsReferrerJustContributeTemplate = ({
-    membershipUrl = '',
+    supportUrl = '',
 }: CtaUrls) => {
     const button = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-single-button"
-             href="${membershipUrl}&bundle=contribute"
+             href="${supportUrl}&bundle=contribute"
              target="_blank">
              Support the Guardian
             </a>
