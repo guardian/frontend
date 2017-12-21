@@ -23,11 +23,14 @@
     .inline-close svg,
     .inline-tone-fill,
     .social-icon svg,
-    .social-icon__svg {
+    .social-icon__svg,
+    .block-share__item--facebook .inline-icon,
+    .block-share__item--twitter .inline-icon,
+    .block-share__item--gplus .inline-icon {
         fill: $kickerColor;
     }
 
-    .inline-quote svg {
+    .inline-garnett-quote svg {
         fill: $pillarColor;
     }
 
@@ -41,7 +44,11 @@
 
     .meta__twitter a,
     .social-icon,
-    .social-icon.social-icon--more {
+    .social-icon.social-icon--more,
+    .block-share__item--facebook,
+    .block-share__item--twitter,
+    .block-share__item--gplus {
+
         &:focus,
         &:hover {
             background-color: $kickerColor;
