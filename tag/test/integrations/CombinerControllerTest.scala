@@ -1,6 +1,7 @@
-package controllers
+package integrations
 
 import contentapi.SectionsLookUp
+import controllers.TagController
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 import test._
