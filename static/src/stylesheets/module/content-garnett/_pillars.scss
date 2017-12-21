@@ -29,7 +29,7 @@
     .block-share__item--gplus .inline-icon {
         fill: $kickerColor;
     }
-
+    
     .inline-garnett-quote svg {
         fill: $pillarColor;
     }
@@ -62,6 +62,10 @@
                 background-color: $kickerColor;
             }
         }
+    }
+
+    .block--content {
+        border-top-color: $pillarColor;
     }
 }
 @mixin mediaPalatte($mediaColor) {
