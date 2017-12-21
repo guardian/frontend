@@ -25,14 +25,13 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 import {
-    supportBaseURL,
     useSupportDomain,
+    supportBaseURL,
 } from 'common/modules/commercial/support-utilities';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 export type CtaUrls = {
-    membershipUrl?: string,
     contributeUrl?: string,
     supportUrl?: string,
 };
@@ -198,7 +197,9 @@ const makeABTestVariant = (
             },
         }),
         supportURL = addTrackingCodesToUrl({
-            base: supportBaseURL,
+            base: `${supportBaseURL}${
+                geolocationGetSync() === 'GB' ? '?bundle=contribute' : ''
+            }`,
             componentType: parentTest.componentType,
             componentId: campaignCode,
             campaignCode,
@@ -369,35 +370,8 @@ const makeABTestVariant = (
                 render.apply(this);
             }
         },
-
         impression,
         success,
-
-        contributionsURLBuilder(codeModifier) {
-            return addTrackingCodesToUrl({
-                base: contributionsBaseURL,
-                componentType: parentTest.componentType,
-                componentId: codeModifier(campaignCode),
-                campaignCode: codeModifier(campaignCode),
-                abTest: {
-                    name: parentTest.id,
-                    variant: id,
-                },
-            });
-        },
-
-        membershipURLBuilder(codeModifier) {
-            return addTrackingCodesToUrl({
-                base: membershipBaseURL,
-                componentType: parentTest.componentType,
-                componentId: codeModifier(campaignCode),
-                campaignCode: codeModifier(campaignCode),
-                abTest: {
-                    name: parentTest.id,
-                    variant: id,
-                },
-            });
-        },
     };
 };
 

@@ -38,7 +38,7 @@ const ctaLinkSentence = (
             currencySymbol
         }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
             supportUrl
-        }" target="_blank" class="u-underline">Make a contribution or get a subscription</a>`;
+        }" target="_blank" class="u-underline">Make a contribution</a>`;
     }
     return `<span class="contributions__highlight"> For as little as ${
         currencySymbol
