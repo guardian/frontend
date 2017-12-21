@@ -101,7 +101,7 @@
     }
 }
 
-@mixin mediaPalatte($mediaColor) {
+@mixin mediaPalatte($mediaColor, $pillar) {
     .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
@@ -120,6 +120,15 @@
     .inline-volume-high {
         fill: $mediaColor;
     }
+    
+    .vjs-paused .vjs-play-control {
+        @include icon(play-icon--#{$pillar});
+    }
+
+    .vjs-playing .vjs-play-control {
+        @include icon(pause-icon--#{$pillar});
+    }
+
 }
 
 .content--pillar-news {
@@ -146,27 +155,27 @@
 
 .content--media:not(.paid-content).content--pillar-news,
 .immersive-main-media__headline-container.content--pillar-news {
-    @include mediaPalatte($news-garnett-media-main-1);
+    @include mediaPalatte($news-garnett-media-main-1, news);
 }
 
 .content--media:not(.paid-content).content--pillar-opinion,
 .immersive-main-media__headline-container.content--pillar-opinion {
-    @include mediaPalatte($opinion-garnett-media-main-1);
+    @include mediaPalatte($opinion-garnett-media-main-1, opinion);
 }
 
 .content--media:not(.paid-content).content--pillar-arts,
 .immersive-main-media__headline-container.content--pillar-arts {
-    @include mediaPalatte($arts-garnett-media-main-1);
+    @include mediaPalatte($arts-garnett-media-main-1, arts);
 }
 
 .content--media:not(.paid-content).content--pillar-lifestyle,
 .immersive-main-media__headline-container.content--pillar-lifestyle {
-    @include mediaPalatte($lifestyle-garnett-media-main-1);
+    @include mediaPalatte($lifestyle-garnett-media-main-1, lifestyle);
 }
 
 .content--media:not(.paid-content).content--pillar-sport,
 .immersive-main-media__headline-container.content--pillar-sport {
-    @include mediaPalatte($sport-garnett-media-main-1);
+    @include mediaPalatte($sport-garnett-media-main-1, sport);
 }
 
 .rich-link {
