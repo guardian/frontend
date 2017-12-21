@@ -43,6 +43,10 @@ $fc-item-gutter: $gs-gutter / 4;
         flex-basis: $media-width;
     }
 
+    .fc-item__video-fallback {
+        flex-basis: $media-width;
+    }
+
     .fc-item__content {
         flex-basis: (100% - $media-width);
         // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
