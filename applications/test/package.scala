@@ -27,7 +27,8 @@ class ApplicationsTestSuite extends Suites (
   new ShareLinksTest,
   new CrosswordDataTest,
   new NewspaperControllerTest,
-  new FacebookGraphApiTest
+  new FacebookGraphApiTest,
+  new ShortUrlsControllerTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19003
 }
