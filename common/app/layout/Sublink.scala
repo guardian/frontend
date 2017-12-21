@@ -339,7 +339,11 @@ case class ContentCard(
 
   def showStandfirst: Boolean = cardTypes.allTypes.exists(_.showStandfirst)
 
-  def mediaWidthsByBreakpoint: WidthsByBreakpoint = FaciaWidths.mediaFromItemClasses(cardTypes)
+  def mediaWidthsByBreakpoint(implicit requestHeader: RequestHeader) : WidthsByBreakpoint = 
+    if (experiments.ActiveExperiments.isParticipating(experiments.Garnett))
+      GarnettFaciaWidths.mediaFromItemClasses(cardTypes)
+    else
+      FaciaWidths.mediaFromItemClasses(cardTypes)
 
   def showTimestamp: Boolean = timeStampDisplay.isDefined && webPublicationDate.isDefined
 

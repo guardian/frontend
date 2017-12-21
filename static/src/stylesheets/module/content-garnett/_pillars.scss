@@ -57,6 +57,50 @@
         }
     }
 }
+
+@mixin richLink($pillarColor, $cardBackground) {
+    background-color: $cardBackground;
+
+    a {
+        color: inherit;
+    }
+
+    .inline-garnett-quote__svg {
+        height: get-font-size(headline, 3);
+        width: get-font-size(headline, 3) * .5;
+        margin-right: get-font-size(headline, 3) * .5;
+        fill: $pillarColor;
+    }
+
+    .inline-arrow-in-circle-garnett__svg {
+        fill: $pillarColor;
+    }
+
+    .rich-link__avatar__media,
+    .rich-link__container::before {
+        background-color: $pillarColor;
+    }
+
+    .rich-link__byline {
+        font-style: italic;
+    }
+
+    .rich-link__header {
+        padding-top: $gs-baseline / 6;
+    }
+    
+    .rich-link__kicker,
+    .rich-link__byline,
+    .rich-link__read-more-text {
+        color: $pillarColor;
+    }
+
+    .rich-link__kicker {
+        border-right: 1px solid $pillarColor;
+        padding-right: .375em;
+    }
+}
+
 @mixin mediaPalatte($mediaColor) {
     .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
@@ -123,4 +167,75 @@
 .content--media:not(.paid-content).content--pillar-sport,
 .immersive-main-media__headline-container.content--pillar-sport {
     @include mediaPalatte($sport-garnett-media-main-1);
+}
+
+.rich-link {
+    &.tone-news--item {
+        @include richLink($news-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.tone-comment--item {
+        @include richLink($opinion-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.tone-comment--item,
+    &.tone-feature--item.rich-link--pillar-sport {       
+        .rich-link__image-container {
+            display: none;
+        }
+        
+        .rich-link__container {
+            @include multiline(4, $garnett-neutral-4);
+            padding-bottom: 13px;
+        }
+    }
+
+    &.tone-feature--item.rich-link--pillar-sport {
+        @include richLink($sport-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.tone-live--item {
+        @include richLink($live-garnett-main-2, $live-garnett-main-1);
+
+        .u-faux-block-link--hover {
+            background-color: darken($live-garnett-main-1, 5%);
+        }
+        
+        &,
+        .rich-link__link {
+            color: #ffffff;
+        }
+    }
+    
+    &.tone-media--item {
+        &.rich-link--pillar-opinion {
+            @include richLink($news-garnett-main-1, $media-garnett-main-1);
+        }
+        &.rich-link--pillar-opinion {
+            @include richLink($opinion-garnett-main-1, $media-garnett-main-1);
+        }
+        &.rich-link--pillar-opinion {
+            @include richLink($sport-garnett-main-1, $media-garnett-main-1);
+        }
+        &.rich-link--pillar-opinion {
+            @include richLink($arts-garnett-main-1, $media-garnett-main-1);
+        }
+        &.rich-link--pillar-opinion {
+            @include richLink($lifestyle-garnett-main-1, $media-garnett-main-1);
+        }
+        
+        .u-faux-block-link--hover {
+            background-color: darken($media-garnett-main-1, 5%);
+        }
+
+        &,
+        .rich-link__link {
+            color: #ffffff;
+        }
+
+        .rich-link__read-more-text {
+            display: none;
+        }
+
+    }
 }
