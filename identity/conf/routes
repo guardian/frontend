@@ -32,7 +32,7 @@ GET         /et/subscribe/:subDefId                 controllers.ExactTargetContr
 
 
 #Email Footer signup routes
-GET        /email/form/$emailType<article|footer>/:listId                       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<article|footer>/:listId                       controllers.EmailSignupController.renderForm(emailType: String, listId: String)
 GET        /email/:result                                                       controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                               controllers.EmailSignupController.submit()
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
