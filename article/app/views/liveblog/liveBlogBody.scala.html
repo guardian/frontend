@@ -18,7 +18,7 @@
     <article
         id="live-blog"
         data-test-id="live-blog"
-        class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
+        class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase content--pillar-@article.metadata.pillar.nameOrDefault"
         role="main"
         itemscope
         itemtype="http://schema.org/LiveBlogPosting"
@@ -80,7 +80,7 @@
                         @fragments.contentMeta(article, model, amp = amp)
 
                         <div class="js-top-marker"></div>
-                        <div class="js-live-blog__sticky-components">
+                        <div class="js-live-blog__sticky-components content__timeline-container">
                             <div class="js-live-blog__sticky-components-container live-blog__sticky-components-container">
                                 @if(article.hasKeyEvents) {
                                     <div class="modern-visible js-updates-desktop">
