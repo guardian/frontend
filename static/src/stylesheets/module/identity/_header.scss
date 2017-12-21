@@ -57,13 +57,18 @@
     border: 0;
     cursor: pointer;
     color: #ffffff;
-    opacity: .9;
+    opacity: .8;
     text-transform: lowercase;
-    padding: 5px 0;
+    padding: 0;
+    height: $identity-header-height - 10px;
+    line-height: $identity-header-height - 10px;
+    white-space: nowrap;
+    transition: .125s;
 
     .inline-icon {
         vertical-align: middle;
         display: inline-block;
+        line-height: 0;
         &, & > svg {
             height: $gs-baseline * 1.5;
             width: $gs-baseline * 1.5;
