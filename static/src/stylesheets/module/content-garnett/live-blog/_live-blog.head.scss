@@ -807,7 +807,8 @@ $pillars: (
 );
 
 @each $pillar, $palette in $pillars {
-    .content--pillar-#{$pillar} {
+    .content--liveblog.content--pillar-#{$pillar} {
+
         .content__header {
             background: map-get($palette, pillarColor);
         }
