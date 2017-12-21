@@ -30,12 +30,12 @@
 
 @channelStep() = {
     @if(IdentityShowCommunicationChannelConsents.isSwitchedOn && communicationChannelsForUser(user).nonEmpty) {
-        <div class="manage-account-wizard__step" data-wizard-step-name="channels">
+        <div class="manage-account-wizard__step" data-wizard-step-name="channels" role="dialog" aria-labelledby="consentWizardChannelsTitle">
 
-            <h1 class="identity-title">
+            <h2 class="identity-title" id="consentWizardChannelsTitle">
                 How can we get in touch with you?
-            </h1>
-            <p class="manage-account-headerNote">
+            </h2>
+            <p class="identity-title-subtitle">
                 Besides email, are there any other ways you would like us to get in touch with you?
             </p>
 
@@ -54,21 +54,21 @@
 }
 
 @consentStep(journey:String) = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="consent">
+    <div class="manage-account-wizard__step" data-wizard-step-name="consent" role="dialog" aria-labelledby="consentWizardConsentTitle">
 
         <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
             @views.html.helper.CSRF.formField
 
             @if(journey == "all") {
-                <h1 class="identity-title">
+                <h2 class="identity-title" id="consentWizardConsentTitle">
                     We need you to consent again to receiving communications from The Guardian
-                </h1>
-                <p class="manage-account-headerNote">Tick the boxes you are interested in. We have featured some you might be interested in.</p>
+                </h2>
+                <p class="identity-title-subtitle">Tick the boxes you are interested in. We have featured some you might be interested in.</p>
             } else {
-                <h1 class="identity-title">
+                <h2 class="identity-title" id="consentWizardConsentTitle">
                     What would you like to hear about?
-                </h1>
-                <p class="manage-account-headerNote">Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.</p>
+                </h2>
+                <p class="identity-title-subtitle">Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.</p>
             }
             <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
                 <div class="manage-account__switches manage-account__switches--wide">
@@ -92,20 +92,20 @@
 
 @emailStep(isNarrow: Boolean = false) = {
     @if(onlySubscribedToV1Newsletters.nonEmpty) {
-        <div class="manage-account-wizard__step" data-wizard-step-name="email">
+        <div class="manage-account-wizard__step" data-wizard-step-name="email" role="dialog" aria-labelledby="consentWizardEmailTitle">
 
             <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
                 @views.html.helper.CSRF.formField
                 @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
                 @if(isNarrow) {
-                    <h2 class="identity-title">Sorry for the interruption</h2>
-                    <p class="manage-account-headerNote">
+                    <h2 class="identity-title" id="consentWizardEmailTitle">Sorry for the interruption</h2>
+                    <p class="identity-title-subtitle">
                         You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
                     </p>
                 } else {
-                    <h2 class="identity-title">Your existing newsletters</h2>
-                    <p class="manage-account-headerNote">
+                    <h2 class="identity-title" id="consentWizardEmailTitle">Your existing newsletters</h2>
+                    <p class="identity-title-subtitle">
                         You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
                     </p>
                 }
@@ -129,14 +129,14 @@
 }
 
 @emailSignupStep() = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="email-signup">
+    <div class="manage-account-wizard__step" data-wizard-step-name="email-signup" role="dialog" aria-labelledby="consentWizardEmailSignupTitle">
 
         <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
             @views.html.helper.CSRF.formField
             @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
-            <h2 class="identity-title">Your newsletters</h2>
-            <p class="manage-account-headerNote">
+            <h2 class="identity-title" id="consentWizardEmailSignupTitle">Your newsletters</h2>
+            <p class="identity-title-subtitle">
                 Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below. Just so you know, your newsletter might include messages about how you can support the Guardian, as well as our events, jobs, masterclasses and holidays.
             </p>
 
@@ -148,11 +148,11 @@
 }
 
 @endcardStep() = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="endcard">
+    <div class="manage-account-wizard__step" data-wizard-step-name="endcard" role="dialog" aria-labelledby="consentWizardEmailSignupTitle">
         <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
             <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
             @views.html.helper.CSRF.formField
-            <h2 class="manage-account-consent-thanks__title">Thank you</h2>
+            <h2 class="manage-account-consent-thanks__title" id="consentWizardEmailSignupTitle">Thank you</h2>
             <aside class="manage-account-consent-thanks__content">
                 <p>Your support helps us deliver the quality independent journalism the world needs</p>
                 <button
@@ -206,7 +206,7 @@
                         </div>
                         <button
                             data-link-name="consent : @journey : navigation : next"
-                            class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next"
+                            class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next manage-account__button--icon--rotate-down"
                         >
                             <span>Next</span>
                             @fragments.inlineSvg("arrow-right", "icon")
