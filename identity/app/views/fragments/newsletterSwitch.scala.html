@@ -1,14 +1,16 @@
-@import com.gu.identity.model.{EmailNewsletters, EmailNewsletter}
+@import com.gu.identity.model.EmailNewsletter
 @import common.LinkTo
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.Switch._
+@import conf.switches.Switches.IdentityGdprV2NewslettersConsents
 
 @* Editorial Newsletter switch/checkbox *@
 
 @(
     emailPrefsForm: Form[_],
     emailSubscriptions: List[String],
-    newsletter: EmailNewsletter
+    newsletter: EmailNewsletter,
+    unchecked: Boolean = false
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages, request: RequestHeader)
 
 @buildFooter(newsletter: EmailNewsletter) = {
@@ -17,20 +19,38 @@
         @newsletter.frequency
     </div>
     @if(newsletter.exampleUrl.isDefined){
-        <a class="manage-account__switch-footer-email-preview" target="preview-email-@newsletter.listId" href="@LinkTo({ newsletter.exampleUrl.getOrElse("") })">
+        <a class="manage-account__switch-footer-email-preview" target="preview-email-@newsletterListId" href="@LinkTo({ newsletter.exampleUrl.getOrElse("") })">
             See the latest email
         </a>
+    }
+}
+
+@newsletterListId = @{
+    if (IdentityGdprV2NewslettersConsents.isSwitchedOn)
+        newsletter.listIdV2.toString
+    else
+        newsletter.listId.toString
+}
+
+@checkboxValue = @{
+    if (unchecked)
+        None
+    else {
+        if (IdentityGdprV2NewslettersConsents.isSwitchedOn)
+            Some(newsletter.subscribedToV2(emailSubscriptions).toString)
+        else
+            Some(newsletter.subscribedTo(emailSubscriptions).toString)
     }
 }
 
 @newsletterField = @{
     new Field(
         form = emailPrefsForm,
-        name = newsletter.listId.toString,
+        name = newsletterListId,
         constraints = Nil,
         format = None,
         errors = Nil,
-        value = Some(newsletter.subscribedTo(emailSubscriptions).toString)
+        value = checkboxValue
     )
 }
 

@@ -175,11 +175,42 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val IdentityPointToConsentJourneyPage = Switch(
+    SwitchGroup.Identity,
+    "id-point-to-consent-journey-page",
+    "If switched on, public facing links will redirect to journey page",
+    owners = Seq(Owner.withGithub("calum-campbell")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 15),
+    exposeClientSide = false
+
+  )
+
   val IdentityRedirectUsersWithLingeringV1ConsentsSwitch = Switch(
     SwitchGroup.Identity,
     "id-redirect-users-with-lingering-v1-consents",
     "If switched on, users trying to reach /email-prefs will go to /consent to repermission",
     owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 15),
+    exposeClientSide = false
+  )
+
+  val IdentityShowCommunicationChannelConsents = Switch(
+    SwitchGroup.Identity,
+    "id-show-communication-channel-consents",
+    "If switched on, users will see UI for opting in or out of different communication channels",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 15),
+    exposeClientSide = false
+  )
+
+  val IdentityGdprV2NewslettersConsents = Switch(
+    SwitchGroup.Identity,
+    "id-gdpr-use-v2-newsletters-list-ids-in-edit-profile",
+    "If switched on, users will subscribe to new V2 newsletter lists in email-prefs and consents journey",
+    owners = Seq(Owner.withGithub("mario-galic")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 1, 15),
     exposeClientSide = false

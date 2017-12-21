@@ -1,15 +1,90 @@
 .identity-header {
     @include clearfix;
-    background-color: $guardian-brand;
-    padding: 5px $gs-gutter;
+    background-color: $identity-main;
+    padding: 5px 0;
     color: #ffffff;
-    span {
-        display: block;
-        float: right;
+    min-height: $identity-header-height - 10px;
+    z-index: 999;
+    .identity-dropdown {
+        position: absolute;
+        display: none;
+        left: 0;
+        top: $identity-header-height - 10px;
+        z-index: 999;
+        li {
+            display: block;
+        }
+        &.is-active {
+            display: block;
+        }
     }
+
+    .gs-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+    }
+
+}
+
+.identity-header__links {
+    float: left;
+}
+
+.identity-header__link {
+    float: left;
+    position: relative;
+}
+
+.identity-header__logo {
+    float: right;
     svg {
         display: block;
-        height: 34px;
+        height: $identity-header-height - 10px;
         width: 180px;
+    }
+}
+
+.identity-header__nav {
+    @include fs-textSans(3);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
+    opacity: .9;
+    text-transform: lowercase;
+    padding: 5px 0;
+
+    .inline-icon {
+        vertical-align: middle;
+        display: inline-block;
+        &, & > svg {
+            height: $gs-baseline * 1.5;
+            width: $gs-baseline * 1.5;
+        }
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:after {
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        transform: translateY(-2px) rotate(45deg);
+        border: 1px solid currentColor;
+        border-left: transparent;
+        border-top: transparent;
+        margin-left: 2px;
+        vertical-align: middle;
+        transition: transform 250ms ease-out;
     }
 }
