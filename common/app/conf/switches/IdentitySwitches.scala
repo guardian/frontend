@@ -19,7 +19,7 @@ trait IdentitySwitches {
     SwitchGroup.Identity,
     "id-gdpr-marketing-consent",
     "If switched on, UI for enabling V2 marketing+newsletter consents will be shown instead of the V1 one",
-    owners = Seq(Owner.withGithub("mario-galic"), Owner.withGithub("mario-galic")),
+    owners = Seq(Owner.withGithub("mario-galic"), Owner.withGithub("walaura")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
