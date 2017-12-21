@@ -144,7 +144,7 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
-  
+
   val EnhanceTweetsSwitch = Switch(
     SwitchGroup.Feature,
     "enhance-tweets",

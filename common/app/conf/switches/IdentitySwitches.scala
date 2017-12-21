@@ -18,8 +18,8 @@ trait IdentitySwitches {
   val IdentityGdprMarketingConsentSwitch = Switch(
     SwitchGroup.Identity,
     "id-gdpr-marketing-consent",
-    "If switched on, users will post GDPR compliant marketing consent from 'Edit Profile' page",
-    owners = Seq(Owner.withGithub("mario-galic")),
+    "If switched on, UI for enabling V2 marketing+newsletter consents will be shown instead of the V1 one",
+    owners = Seq(Owner.withGithub("mario-galic"), Owner.withGithub("mario-galic")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
@@ -35,22 +35,11 @@ trait IdentitySwitches {
     exposeClientSide = false
   )
 
-  val IdentityPointToConsentJourneyPage = Switch(
-    SwitchGroup.Identity,
-    "id-point-to-consent-journey-page",
-    "If switched on, public facing links will redirect to Journey page",
-    owners = Seq(Owner.withGithub("calum-campbell")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 1),
-    exposeClientSide = false
-
-  )
-
   val IdentityRedirectUsersWithLingeringV1ConsentsSwitch = Switch(
     SwitchGroup.Identity,
     "id-redirect-users-with-lingering-v1-consents",
-    "If switched on, users trying to reach Account prefs will go to the Journey page to repermission",
-    owners = Seq(Owner.withGithub("walaura")),
+    "If switched on, several endpoints will redirect qualifying users to the Journey page to repermission",
+    owners = Seq(Owner.withGithub("walaura"), Owner.withGithub("calum-campbell")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
@@ -66,14 +55,4 @@ trait IdentitySwitches {
     exposeClientSide = false
   )
 
-  val IdentityGdprV2NewslettersConsents = Switch(
-    SwitchGroup.Identity,
-    "id-gdpr-use-v2-newsletters-list-ids-in-edit-profile",
-    "If switched on, users will subscribe to new V2 newsletter lists in email-prefs and consents journey",
-    owners = Seq(Owner.withGithub("mario-galic")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 15),
-    exposeClientSide = false
-  )
-  
 }
