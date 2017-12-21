@@ -158,7 +158,7 @@
                 <button
                     type="submit"
                     class="manage-account__button"
-                    data-link-name="consent : @journey : submit"
+                    data-link-name="consents : submit"
                 >Continue</button>
             </aside>
         </form>
@@ -173,7 +173,7 @@
 
                 <div class="js-errorHolder manage-account__errors"></div>
 
-                <div class="manage-account-wizard manage-account-wizard--consent" data-journey="@journey">
+                <div class="manage-account-wizard manage-account-wizard--consent" data-journey="@journey" data-component="identity-consent-journey-@journey">
 
                     @journey match {
                         case "newsletters" => {
@@ -196,7 +196,7 @@
 
                     <div class="manage-account-wizard__controls">
                         <button
-                            data-link-name="consent : @journey : navigation : prev"
+                            data-link-name="consents : navigation : prev"
                             class="manage-account-consent-wizard-button-back manage-account-consent-wizard__revealable manage-account__button--round manage-account__button js-manage-account-wizard__prev"
                         >
                             <span class="u-h">Previous</span>
@@ -205,7 +205,7 @@
                         <div class="manage-account-consent-wizard__revealable manage-account-consent-wizard-counter">
                         </div>
                         <button
-                            data-link-name="consent : @journey : navigation : next"
+                            data-link-name="consents : navigation : next"
                             class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next manage-account__button--icon--rotate-down"
                         >
                             <span>Next</span>
