@@ -5,7 +5,7 @@ import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import com.gu.identity.model.EmailNewsletters
+import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats.stringFormat
@@ -16,6 +16,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.util.{Failure, Success, Try}
 
 object emailLandingPage extends StandalonePage {
   private val id = "email-landing-page"
@@ -76,8 +77,17 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
     Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
   }
 
-  def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
-    Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))}
+  // This listId can be either an exactTarget listId or the corresponding identity name which is stored in the Identity model
+  def renderForm(emailType: String, listId: String): Action[AnyContent] = Action { implicit request =>
+    Try(listId.toInt) match {
+      case Success(id) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, id)))
+      case Failure(_) => {
+        val id = EmailNewsletter.fromIdentityName(listId).map(_.listId).getOrElse(-1)
+        Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, id)))
+      }
+
+    }
+  }
 
   def subscriptionResult(result: String): Action[AnyContent] = Action { implicit request =>
     Cached(7.days)(result match {
