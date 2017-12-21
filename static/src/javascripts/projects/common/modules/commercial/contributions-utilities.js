@@ -25,13 +25,14 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 import {
-    useSupportDomain,
     supportBaseURL,
+    useSupportDomain,
 } from 'common/modules/commercial/support-utilities';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 export type CtaUrls = {
+    membershipUrl?: string,
     contributeUrl?: string,
     supportUrl?: string,
 };
