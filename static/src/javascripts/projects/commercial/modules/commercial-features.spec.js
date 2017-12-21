@@ -256,6 +256,7 @@ describe('Commercial features', () => {
                 get: () => config.page.pageId,
                 page: config.page,
                 switches: config.switches,
+                hasTone: jest.fn(),
             };
             const features = new CommercialFeatures(mockConfig);
             expect(features.thirdPartyTags).toBe(false);
