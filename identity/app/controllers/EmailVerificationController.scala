@@ -9,7 +9,7 @@ import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
-import conf.switches.Switches.IdentityRedirectUsersWithLingeringV1ConsentsSwitch
+import conf.switches.Switches.IdentityPointToConsentJourneyPage
 
 
 class EmailVerificationController(api: IdApiClient,
@@ -48,7 +48,7 @@ class EmailVerificationController(api: IdApiClient,
           val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
           val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
 
-          if(validationState.isExpired || IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOff) {
+          if(validationState.isExpired || IdentityPointToConsentJourneyPage.isSwitchedOff) {
             Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))
           } else {
             SeeOther(idUrlBuilder.buildUrl(s"/consents?returnUrl=${encodedReturnUrl}"))

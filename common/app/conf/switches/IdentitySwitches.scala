@@ -35,9 +35,9 @@ trait IdentitySwitches {
     exposeClientSide = false
   )
 
-  val IdentityRedirectUsersWithLingeringV1ConsentsSwitch = Switch(
+  val IdentityPointToConsentJourneyPage = Switch(
     SwitchGroup.Identity,
-    "id-redirect-users-with-lingering-v1-consents",
+    "id-point-to-consent-journey-page",
     "If switched on, several endpoints will redirect qualifying users to the Journey page to repermission",
     owners = Seq(Owner.withGithub("walaura"), Owner.withGithub("calum-campbell")),
     safeState = Off,
