@@ -62,11 +62,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     }
 }
 
-.content--liveblog .content__timeline-container {
-    position: sticky;
-    top: 0;
-}
-
 .content__head {
     margin-bottom: $gs-baseline / 2;
 }
