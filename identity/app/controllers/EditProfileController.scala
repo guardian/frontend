@@ -2,7 +2,7 @@ package controllers
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
+import com.gu.identity.model.{EmailNewsletters, StatusFields, User}
 import common.ImplicitControllerExecutionContext
 import form._
 import idapiclient.responses.Error
@@ -16,6 +16,7 @@ import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 import utils.SafeLogging
+import utils.ConsentOrder._
 
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
@@ -81,7 +82,7 @@ class EditProfileController(
           consentJourneyView(
             page = page,
             journey = page.journey,
-            forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
+            forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
             request.user,
             consentHint
           )
@@ -138,7 +139,9 @@ class EditProfileController(
                 InternalServerError(Json.toJson(idapiErrors))
 
               case Right(updatedUser) =>
-                Ok(s"Successfully updated marketing consent for user ${userDO.getId}")
+                val successMsg = s"Successfully updated marketing consent for user ${userDO.getId}"
+                logger.info(successMsg)
+                Ok(successMsg)
             }
           }
         ) // end bindFromRequest.fold(
@@ -180,7 +183,7 @@ class EditProfileController(
       authWithConsentRedirectAction.async { implicit request =>
         profileFormsView(
           page = page,
-          forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
+          forms = ProfileForms(userWithOrderedConsents(request.user, consentHint),PublicEditProfilePage),
           request.user,
           consentsUpdated,
           consentHint
@@ -279,26 +282,6 @@ class EditProfileController(
     }
   }
 
-  /** If consentHint is provided it moves that consent to the head of consents list */
-  private def userWithHintedConsent(
-    consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): User = {
-
-    // https://stackoverflow.com/questions/24870729/moving-an-element-to-the-front-of-a-list-in-scala
-    def moveToFront(hint: String, consents: List[Consent]): List[Consent] = {
-      consents.span(consent => consent.id != hint) match {
-        case (as, h :: bs) => h :: as ++ bs
-        case _ => consents
-      }
-    }
-
-    consentHint match {
-      case None => request.user
-
-      case Some(hint) =>
-        val hintedConsents = moveToFront(hint, request.user.consents)
-        request.user.user.copy(consents = hintedConsents)
-    }
-  }
 }
 
 /**
