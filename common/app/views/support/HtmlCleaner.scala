@@ -67,11 +67,9 @@ object PullquoteCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
     val pullquotes = document.getElementsByTag("aside").asScala.filter(_.hasClass("element-pullquote"))
     val openingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("inline-tone-fill")).toString()
-    val closingQuoteSvg = views.html.fragments.inlineSvg("quote", "icon", List("closing", "inline-tone-fill")).toString()
 
     pullquotes.foreach { element: Element =>
       element.prepend(openingQuoteSvg)
-      element.append(closingQuoteSvg)
       element.getElementsByTag("p").addClass("pullquote-paragraph")
       element.getElementsByTag("cite").addClass("pullquote-cite")
     }
