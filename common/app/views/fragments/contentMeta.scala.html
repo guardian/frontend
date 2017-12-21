@@ -41,7 +41,9 @@
             }
             @fragments.meta.contactAuthor(item.tags, amp)
         }
-    </div>
+        @if(!item.content.hasTonalHeaderByline) {
+        </div>
+        }
     }
 
     @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
