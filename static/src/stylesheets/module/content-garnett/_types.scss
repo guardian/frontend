@@ -97,18 +97,6 @@ $quote-mark: 35px;
         overflow-y: visible;
     }
 
-    .content__meta-container {
-        margin-top: -$gs-baseline;
-        margin-bottom: 0;
-        @include mq(leftCol) {
-            position: absolute;
-        }
-
-        &:before {
-            @include multiline(4, $garnett-neutral-4);
-        }
-    }
-
     .content__labels--not-immersive {
         @include mq(tablet, leftCol) {
             border-bottom: solid 1px $garnett-neutral-4;
@@ -156,8 +144,25 @@ $quote-mark: 35px;
         }
     }
 
+    .content__meta-container {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        margin-top: -$gs-baseline;
+        margin-bottom: 0;
+        @include mq(leftCol) {
+            position: absolute;
+        }
+
+        &:before {
+            @include multiline(4, $garnett-neutral-4);
+        }
+    }
+
     .badge,
     .content__meta-container {
+        order: 0;
+        flex: 1 100%;
         @include mq(leftCol) {
             width: gs-span(2);
         }
@@ -171,115 +176,6 @@ $quote-mark: 35px;
         border-top: 0;
     }
 
-    .byline-img {
-        margin-top: 0;
-        margin-right: $gs-baseline/2;
-        @include mq(phablet) {
-            margin-right: 0;
-        }
-    }
-
-    .inline-close,
-    .social-icon,
-    .social-icon.social-icon--more {
-        background-color: transparent;
-        border: 1px solid $neutral-4;
-
-        &:focus,
-        &:hover {
-            svg {
-                fill: $garnett-neutral-5;
-            }
-        }
-    }
-
-    .social-icon {
-        @include mq(leftCol) {
-            max-width: 29px;
-            min-width: 29px;
-            height: 29px;
-        }
-        @include mq(wide) {
-            min-width: 32px;
-            max-width: 100%;
-            width: auto;
-            height: 32px;
-        }
-    }
-
-    .social__item {
-        @include mq(leftCol) {
-            padding: 0;
-        }
-        @include mq(wide) {
-            padding: 0 3px 6px 0;
-        }
-    }
-
-    .social--top {
-        padding-top: 0!important;
-        //only way to override behaviour
-    }
-
-    .meta__extras {
-        border: 0;
-    }
-
-    .meta__numbers,
-    .meta__social {
-        border-top: 0;
-
-        &:before {
-            @include multiline(1, $garnett-neutral-4);
-        }
-    }
-
-    .meta__numbers {
-        margin-right: $gs-gutter/2;
-        @include mq(mobileLandscape) {
-            margin-right: $gs-gutter;
-        }
-        @include mq(phablet) {
-            margin-right: 0;
-        }
-        @include mq($until: leftCol) {
-            &:before {
-                content: none;
-            }
-        }
-    }
-
-    .meta__number:not(.u-h)+.meta__number {
-        border-color: $garnett-neutral-4;
-    }
-
-    .meta__image {
-        border-top: 0;
-        @include mq($until: phablet) {
-            padding-right: 0;
-            margin-right: 0;
-        }
-    }
-
-    .content__dateline {
-        border-top: 0;
-        float: right;
-        text-align: right;
-        min-height: 0;
-        margin-bottom: 0;
-        position: absolute;
-        top: $gs-gutter;
-        right: 0;
-        max-width: 120px;
-        @include mq(leftCol) {
-            float: none;
-            text-align: left;
-            max-width: none;
-            position: relative;
-            top: 0;
-        }
-    }
-
     .byline,
     .content__dateline {
         padding-top: 0;
@@ -288,6 +184,40 @@ $quote-mark: 35px;
             border-top: 0;
             vertical-align: top;
         }
+    }
+
+    .meta__image {
+        max-width: 60px;
+        order: 1;
+        border-top: 0;
+        @include mq($until: phablet) {
+            padding-right: 0;
+            margin-right: 0;
+        }
+        @include mq(leftCol) {
+            max-width: none;
+        }
+    }
+
+    .byline-img {
+        margin-top: 0;
+        margin-right: $gs-baseline/2;
+        @include mq(phablet) {
+            margin-right: 0;
+        }
+    }
+
+    .meta__contact-wrap {
+        order: 2;
+        flex: 1;
+        margin-right: auto;
+        @include mq(leftCol) {
+            flex: 100%;
+        }
+    }
+
+    .meta__contact-wrap:empty{
+        display: none;
     }
 
     .byline {
@@ -299,14 +229,34 @@ $quote-mark: 35px;
 
         span[itemprop='author'] {
             @include f-header;
-            display: block;
+            display: inline;
             font-style: normal;
             font-weight: 900;
         }
     }
 
-    .social {
-        margin-bottom: $gs-baseline/2;
+    .content__dateline {
+        order: 3;
+        border-top: 0;
+        align-self: flex-end top;
+        text-align: right;
+        min-height: 0;
+        margin-bottom: 0;
+        max-width: 100px;
+        margin-left: auto;
+        @include mq(mobileLandscape) {
+            max-width: 120px;
+        }
+        @include mq(leftCol) {
+            text-align: left;
+            max-width: none;
+            margin-left: 0;
+            flex:100%;
+        }
+    }
+
+    .old-article-message {
+        order: 4;
     }
 
     .meta__contact-header {
@@ -328,10 +278,11 @@ $quote-mark: 35px;
         margin-top: 0;
         margin-bottom: $gs-baseline;
         display: block;
+        width: 100%;
 
         .button {
             height: 1.5rem;
-            font-size: .75rem;
+            font-size: 0.75rem;
             font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
@@ -369,6 +320,80 @@ $quote-mark: 35px;
                 }
             }
         }
+    }
+
+    .meta__extras {
+        order: 5;
+        border: 0;
+        flex: 1 100%;
+    }
+
+    .social {
+        margin-bottom: $gs-baseline/2;
+    }
+
+    .inline-close,
+    .social-icon,
+    .social-icon.social-icon--more {
+        background-color: transparent;
+        border: 1px solid $neutral-4;
+
+        &:focus,
+        &:hover {
+            svg {
+                fill: $garnett-neutral-5;
+            }
+        }
+    }
+
+    .social-icon {
+        @include mq(leftCol) {
+            max-width: 29px;
+            min-width: 29px;
+            height: 29px;
+        }
+        @include mq(wide) {
+            min-width: 32px;
+            max-width: 100%;
+            width: auto;
+            height: 32px;
+        }
+    }
+
+    .social--top {
+        padding-top: 0!important;
+        //only way to override behaviour
+    }
+
+    .meta__numbers,
+    .meta__social {
+        border-top: 0;
+        @include mq(leftCol) {
+            padding-top: 0;
+        }
+
+        &:before {
+            @include multiline(1, $garnett-neutral-4);
+        }
+    }
+
+    .meta__numbers {
+        margin-right: $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter;
+        }
+        @include mq(phablet) {
+            margin-right: 0;
+        }
+        @include mq($until: leftCol) {
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    .meta__number:not(.u-h)+.meta__number {
+        border-color: $garnett-neutral-4;
     }
     // *************** Header and Body Styles ***************
     .content__article-body {
@@ -718,9 +743,7 @@ $quote-mark: 35px;
 }
 
 .content--type-comment,
-.content--type-feature {
-
-}
+.content--type-feature {}
 
 .content--type-feature,
 .content--type-review {
@@ -798,14 +821,6 @@ $quote-mark: 35px;
         color: $neutral-3;
     }
 
-    .content__dateline {
-        top: -44px;
-        @include mq(leftCol) {
-            position: relative;;
-            top: 0;
-        }
-    }
-
     .byline-img {
         position: absolute;
         bottom: 3px;
@@ -867,8 +882,8 @@ $quote-mark: 35px;
     .byline a,
     .from-content-api a {
         text-decoration: none;
-        border-bottom: .1px solid $garnett-neutral-6;
-        transition: border-color .15s ease-out;
+        border-bottom: 0.1px solid $garnett-neutral-6;
+        transition: border-color 0.15s ease-out;
 
         &:hover {
             border-color: $garnett-neutral-4;
@@ -993,7 +1008,7 @@ $quote-mark: 35px;
                 border-color: transparent transparent transparent $garnett-neutral-5;
                 @include mq(tablet) {
                     // 0 border radius on mobile because stock android has a render bug with it here
-                    border-radius: .2em;
+                    border-radius: 0.2em;
                 }
             }
         }
