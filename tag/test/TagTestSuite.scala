@@ -14,7 +14,7 @@ class TagTestSuite extends Suites (
   new TagMetaDataTest,
   new LatestTagControllerTest,
   new TagPageTest,
-  new TagPageGroupingTest,
+  new FrontPageGroupingTest,
   new TagFeatureTest,
   new TagTemplateTest,
   new SectionTemplateTest
