@@ -36,9 +36,9 @@
     @if(IdentityShowCommunicationChannelConsents.isSwitchedOn && communicationChannelsForUser(user).nonEmpty) {
         <fieldset class="identity-wizard__step" data-wizard-step-name="channels" role="dialog" aria-labelledby="consentWizardChannelsTitle">
 
-            <h2 class="identity-title" id="consentWizardChannelsTitle">
+            <legend class="identity-title" id="consentWizardChannelsTitle">
                 How can we get in touch with you?
-            </h2>
+            </legend>
             <p class="identity-title-subtitle">
                 Besides email, are there any other ways you would like us to get in touch with you?
             </p>
@@ -64,14 +64,14 @@
             @views.html.helper.CSRF.formField
 
             @if(journey == "all") {
-                <h2 class="identity-title" id="consentWizardConsentTitle">
+                <legend class="identity-title" id="consentWizardConsentTitle">
                     We need you to consent again to receiving communications from The Guardian
-                </h2>
+                </legend>
                 <p class="identity-title-subtitle">Tick the boxes you are interested in. We have featured some you might be interested in.</p>
             } else {
-                <h2 class="identity-title" id="consentWizardConsentTitle">
+                <legend class="identity-title" id="consentWizardConsentTitle">
                     What would you like to hear about?
-                </h2>
+                </legend>
                 <p class="identity-title-subtitle">Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.</p>
             }
             <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
@@ -102,7 +102,7 @@
                 @views.html.helper.CSRF.formField
                 @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
-                <h2 class="identity-title" id="consentWizardEmailTitle">Your existing newsletters</h2>
+                <legend class="identity-title" id="consentWizardEmailTitle">Your existing newsletters</legend>
                 <p class="identity-title-subtitle">
                     You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
                 </p>
@@ -133,7 +133,7 @@
             @views.html.helper.CSRF.formField
             @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
-            <h2 class="identity-title" id="consentWizardEmailSignupTitle">Your newsletters</h2>
+            <legend class="identity-title" id="consentWizardEmailSignupTitle">Your newsletters</legend>
             <p class="identity-title-subtitle">
                 Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below. Just so you know, your newsletter might include messages about how you can support the Guardian, as well as our events, jobs, masterclasses and holidays.
             </p>
@@ -159,7 +159,7 @@
             <form class="identity-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
                 <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
                 @views.html.helper.CSRF.formField
-                <h2 class="identity-consent-thanks__title" id="consentWizardEmailSignupTitle">Thank you</h2>
+                <legend class="identity-consent-thanks__title" id="consentWizardEmailSignupTitle">Thank you</legend>
                 <aside class="identity-consent-thanks__content">
                     <p>Your support helps us deliver the quality independent journalism the world needs</p>
                     <button
