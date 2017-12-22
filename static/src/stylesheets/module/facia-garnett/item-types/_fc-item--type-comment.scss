@@ -16,14 +16,15 @@
         position: absolute;
         bottom: 0;
         width: 100%;
-        margin-bottom: -3px;
+        height: 16px;
 
         .fc-trail__count,
         .fc-item__timestamp {
             position: absolute;
+            padding-top: 2px;
             padding-right: $gs-gutter * .25;
             padding-left: $gs-gutter * .25;
-            bottom: 3px;
+            bottom: 0;
             top: 0;
             z-index: 1;
             line-height: 10px;
