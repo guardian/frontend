@@ -20,7 +20,7 @@
         flex: 1 1 auto;
         margin: 0 $gs-gutter / 3;
     }
-    &[data-journey=repermission], &[data-journey=repermission-narrow] {
+    &[data-journey=all], &[data-journey=newsletters] {
         .manage-account__switch-footer-email-preview {
             display: none;
         }
