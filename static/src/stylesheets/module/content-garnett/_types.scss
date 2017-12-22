@@ -165,17 +165,17 @@ $quote-mark: 35px;
         }
     }
 
-    .social-icon {
+    .social-icon,
+    .social-tray__icon {
+        box-sizing: content-box;
+        
         @include mq(leftCol) {
-            max-width: 29px;
-            min-width: 29px;
             height: 29px;
+            width: 29px;
         }
         @include mq(wide) {
-            min-width: 32px;
-            max-width: 100%;
-            width: auto;
             height: 32px;
+            width: 32px;
         }
     }
 
