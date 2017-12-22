@@ -1,13 +1,13 @@
 package controllers.admin
 
 import common.{ImplicitControllerExecutionContext, Logging}
+import conf.switches.Switches
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import tools._
 import model.{ApplicationContext, NoCache}
 import conf.{Configuration, Static}
-
-import scala.concurrent.Future
+import controllers.AdminAudit
 
 class MetricsController(
   wsClient: WSClient,
@@ -44,9 +44,11 @@ class MetricsController(
   }
 
   def renderGooglebot404s(): Action[AnyContent] = Action.async { implicit request =>
-    for {
-      googleBot404s <- HttpErrors.googlebot404s()
-    } yield NoCache(Ok(views.html.lineCharts(googleBot404s, Some("GoogleBot 404s"))))
+    AdminAudit.endpointAuditF(Switches.AdminRemoveMetricsGooglebot) {
+      for {
+        googleBot404s <- HttpErrors.googlebot404s()
+      } yield NoCache(Ok(views.html.lineCharts(googleBot404s, Some("GoogleBot 404s"))))
+    }
   }
 
   def renderAfg(): Action[AnyContent] = Action.async { implicit request =>

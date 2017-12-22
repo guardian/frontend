@@ -637,4 +637,77 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
+
+
+
+
+  val AdminRemoveApiProxy = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-api-proxy",
+    "When ON, the /api/proxy page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveApiTag = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-api-tag",
+    "When ON, the /api/tag page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveApiItem = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-api-item",
+    "When ON, the /api/item page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveJsonProxy = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-json-proxy",
+    "When ON, the /josn/proxy page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveOphan = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-ophan",
+    "When ON, the /ophan page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveAnalyticsConfidence = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-analytics-confidence",
+    "When ON, the /analytics/confidence page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveMetricsGooglebot = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-metrics-googlebot",
+    "When ON, the /metrics/googlebot page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
 }
