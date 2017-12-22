@@ -7,7 +7,6 @@
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
 @import experiments._
-@import _root_.model.ContentDesignType.RichContentDesignType
 
 @schemaType(page: ArticlePage) = @{page.article.metadata.schemaType}
 
@@ -24,14 +23,12 @@
         class="@RenderClasses(Map(
             "has-feature-showcase-element" -> (article.tags.isFeature && article.elements.hasShowcaseMainElement),
             "paid-content" -> isPaidContent,
-            "paid-content--white" -> (isPaidContent && ActiveExperiments.isParticipating(CommercialPaidContentTemplate)),
-            s"content--pillar-${article.metadata.pillar.nameOrDefault}" -> experiments.ActiveExperiments.isParticipating(experiments.Garnett),
-            s"content--type-${article.metadata.designType.nameOrDefault}" -> experiments.ActiveExperiments.isParticipating(experiments.Garnett),
-            "tonal" -> !experiments.ActiveExperiments.isParticipating(experiments.Garnett),
-            s"tonal--${toneClass(article)}" -> !experiments.ActiveExperiments.isParticipating(experiments.Garnett)
+            "paid-content--white" -> (isPaidContent && ActiveExperiments.isParticipating(CommercialPaidContentTemplate))
         ),
             "content",
             "content--article",
+            "tonal",
+            s"tonal--${toneClass(article)}",
             s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"
         )"
 
@@ -62,12 +59,7 @@
                 }
             }
 
-            <div class="@RenderClasses(Map(
-                "tonal__main" -> !experiments.ActiveExperiments.isParticipating(experiments.Garnett),
-                s"tonal__main--${toneClass(article)}" -> !experiments.ActiveExperiments.isParticipating(experiments.Garnett)
-            ),
-                "content__main"
-            )">
+            <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
                         <div class="js-score"></div>

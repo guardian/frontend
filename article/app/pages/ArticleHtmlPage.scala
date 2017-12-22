@@ -17,7 +17,7 @@ object ArticleHtmlPage extends HtmlPage[ArticlePage] {
       case article if article.isPhotoEssay => (photoEssayHeader(), immersiveBody())
       case article if article.isImmersive => (immersiveHeader(), immersiveBody())
       case _ if !request.isAmp && experiments.ActiveExperiments.isParticipating(experiments.Garnett) => (
-        guardianHeaderHtml(), articleBody(page)
+        guardianHeaderHtml(), articleBodyGarnett(page)
       )
       case _ => (guardianHeaderHtml(), articleBody(page))
     }
