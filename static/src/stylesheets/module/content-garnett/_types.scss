@@ -6,6 +6,7 @@ $quote-mark: 35px;
 }
 
 .content--media,
+.content--liveblog,
 .content--type-analysis,
 .content--type-article,
 .content--type-comment,
@@ -121,7 +122,10 @@ $quote-mark: 35px;
 
     .inline-close,
     .social-icon,
-    .social-icon.social-icon--more {
+    .social-icon.social-icon--more,
+    .block-share__item--facebook,
+    .block-share__item--twitter,
+    .block-share__item--gplus {
         background-color: transparent;
         border: 1px solid $neutral-4;
 
@@ -478,10 +482,6 @@ $quote-mark: 35px;
                 top: 0;
             }
         }
-        // Hack hide for svg
-        .closing {
-            display: none;
-        }
     }
     // Quote supporting
     .element-pullquote.element--supporting {
@@ -596,6 +596,19 @@ $quote-mark: 35px;
             @include mq(leftCol) {
                 width: 40px;
             }
+        }
+    }
+
+    .quoted {
+        .inline-garnett-quote {
+            position: absolute;
+        }
+
+        .inline-garnett-quote__svg {
+            width: 35px;
+            height: 25px;
+            transform: scale(.4);
+            transform-origin: top left;
         }
     }
 }
