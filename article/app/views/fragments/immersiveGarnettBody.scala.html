@@ -38,9 +38,11 @@
             }
             @fragments.headerImmersive(article)
             @fragments.immersiveGarnettHeadline()
-            <div class="gs-container">
-                <div class="content__main-column">
-                    @fragments.standfirst(article)
+            <div class="content__standfirst--wrapper">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        @fragments.standfirst(article)
+                    </div>
                 </div>
             </div>
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
