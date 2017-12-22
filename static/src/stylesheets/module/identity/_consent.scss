@@ -67,6 +67,14 @@
 }
 
 
+.identity-consent-thanks__wrap {
+    @supports(display: flex) and (min-height: 1vh) {
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+    }
+}
+
 
 .identity-consent-thanks {
     @include mq(desktop) {
