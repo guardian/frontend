@@ -25,12 +25,16 @@ const isEqualAdSize = (a: PrebidSize, b: PrebidSize): boolean =>
 
 const filterConfigEntries = (
     bidder: string,
-    slotSizes: PrebidSize[]
+    slotSizes: PrebidSize[],
+    slotId: string
 ): PrebidAdSlotCriteria[] => {
     let bidConfigEntries: PrebidAdSlotCriteria[] = bidderConfig[bidder] || [];
 
     bidConfigEntries = bidConfigEntries.filter(
-        bid => bid.edition === config.page.edition
+        bid => bid.slots.some( slotName => slotId.startsWith(slotName))
+    );
+    bidConfigEntries = bidConfigEntries.filter(
+        bid => bid.edition === config.page.edition || bid.edition === 'any'
     );
     bidConfigEntries = bidConfigEntries.filter(bid =>
         isBreakpoint(bid.breakpoint)
@@ -51,7 +55,8 @@ const getMatchingBids = (
     bidders.forEach((bidder: PrebidBidder) => {
         const matchingConfigEntries: PrebidAdSlotCriteria[] = filterConfigEntries(
             bidder.name,
-            availableSizes
+            availableSizes,
+            slotId
         );
         if (matchingConfigEntries.length > 0) {
             // A config entry will specify a size, which should be added to the prebid ad unit if's not already included.
@@ -132,15 +137,8 @@ class PrebidTestService {
         });
     }
 
-    static slotIsInTest(advert: Advert): boolean {
-        return ['dfp-ad--inline1', 'dfp-ad--inline2'].indexOf(advert.id) !== -1;
-    }
-
     static requestBids(advert: Advert): Promise<void> {
-        if (
-            !PrebidTestService.slotIsInTest(advert) ||
-            dfpEnv.externalDemand !== 'prebid'
-        ) {
+        if (dfpEnv.externalDemand !== 'prebid') {
             return Promise.resolve();
         }
         const adUnit = new PrebidAdUnit(advert);
