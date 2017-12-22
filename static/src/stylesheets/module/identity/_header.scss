@@ -1,9 +1,8 @@
+$gutter: 9px;
+$height: $identity-header-height - ($gutter * 2);
+
 .identity-header {
-
     @include clearfix;
-    $gutter: 9px;
-    $height: $identity-header-height - ($gutter * 2);
-
     background-color: $identity-main;
     padding: 5px 0;
     color: #ffffff;
