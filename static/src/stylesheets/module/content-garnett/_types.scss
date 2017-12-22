@@ -5,6 +5,7 @@ $quote-mark: 35px;
     padding-bottom: 0;
 }
 
+.content--liveblog,
 .content--media,
 .content--type-analysis,
 .content--type-article,
@@ -15,13 +16,9 @@ $quote-mark: 35px;
 .content--type-review {
     // *************** Meta and Social ***************
     .submeta {
+        @include multiline(4, $garnett-neutral-4, top);
         border-top: 0;
-        margin-top: $gs-baseline;
-        padding-top: $gs-baseline / 2;
-
-        &:before {
-            @include multiline(4, $garnett-neutral-4);
-        }
+        padding-top: $gs-baseline * 1.5;
     }
 
     .submeta--borderless-bottom .submeta__keywords {
@@ -145,6 +142,7 @@ $quote-mark: 35px;
     }
 
     .content__meta-container {
+        @include multiline(4, $garnett-neutral-4, top);
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;
@@ -152,10 +150,6 @@ $quote-mark: 35px;
         margin-bottom: 0;
         @include mq(leftCol) {
             position: absolute;
-        }
-
-        &:before {
-            @include multiline(4, $garnett-neutral-4);
         }
     }
 
@@ -216,10 +210,6 @@ $quote-mark: 35px;
         }
     }
 
-    .meta__contact-wrap:empty {
-        display: none;
-    }
-
     .byline {
         border-top: 0;
         font-weight: 200;
@@ -236,6 +226,7 @@ $quote-mark: 35px;
     }
 
     .content__dateline {
+        @include multiline(1, $garnett-neutral-4, top);
         order: 3;
         border-top: 0;
         align-self: flex-end top;
@@ -282,7 +273,7 @@ $quote-mark: 35px;
 
         .button {
             height: 1.5rem;
-            font-size: .75rem;
+            font-size: 0.75rem;
             font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
@@ -332,6 +323,9 @@ $quote-mark: 35px;
         margin-bottom: $gs-baseline/2;
     }
 
+    .block-share__item--facebook,
+    .block-share__item--gplus,
+    .block-share__item--twitter,
     .inline-close,
     .social-icon,
     .social-icon.social-icon--more {
@@ -367,13 +361,11 @@ $quote-mark: 35px;
 
     .meta__numbers,
     .meta__social {
+        @include multiline(1, $garnett-neutral-4, top);
         border-top: 0;
+        padding-top: $gs-baseline / 2;
         @include mq(leftCol) {
             padding-top: 0;
-        }
-
-        &:before {
-            @include multiline(1, $garnett-neutral-4);
         }
     }
 
@@ -619,10 +611,6 @@ $quote-mark: 35px;
                 top: 0;
             }
         }
-        // Hack hide for svg
-        .closing {
-            display: none;
-        }
     }
     // Quote supporting
     .element-pullquote.element--supporting {
@@ -739,10 +727,20 @@ $quote-mark: 35px;
             }
         }
     }
-}
 
-.content--type-comment,
-.content--type-feature {}
+    .quoted {
+        .inline-garnett-quote {
+            position: absolute;
+        }
+
+        .inline-garnett-quote__svg {
+            width: 35px;
+            height: 25px;
+            transform: scale(.4);
+            transform-origin: top left;
+        }
+    }
+}
 
 .content--type-feature,
 .content--type-review {
@@ -765,9 +763,8 @@ $quote-mark: 35px;
         @include mq(leftCol) {
             margin-top: 0;
         }
-        &:before {
-            content: none;
-        }
+        background-image: none;
+        padding-top: 0;
     }
 
     .content__dateline:before {
@@ -777,11 +774,9 @@ $quote-mark: 35px;
     }
 
     .content__header {
+        @include multiline(8, $garnett-neutral-4);
         position: relative;
-
-        &:after {
-            @include multiline(8, $garnett-neutral-4);
-        }
+        padding-bottom: 29px;
     }
 
     .content__headline {
@@ -826,11 +821,11 @@ $quote-mark: 35px;
 
     .byline-img {
         position: absolute;
-        bottom: 3px;
-        // counters the 3px bottom margin on multi-rule mixin
+        bottom: 0;
         right: -$gs-gutter*2;
         background: none!important;
         margin: 0;
+        background-image: none;
         @include mq(mobileLandscape) {
             right: gs-span(3) - $gs-gutter;
         }
@@ -885,8 +880,8 @@ $quote-mark: 35px;
     .byline a,
     .from-content-api a {
         text-decoration: none;
-        border-bottom: .1px solid $garnett-neutral-6;
-        transition: border-color .15s ease-out;
+        border-bottom: 0.1px solid $garnett-neutral-6;
+        transition: border-color 0.15s ease-out;
 
         &:hover {
             border-color: $garnett-neutral-4;
@@ -928,24 +923,17 @@ $quote-mark: 35px;
     }
 
     .content__meta-container {
-        &:before {
-            @include multiline(4, $garnett-neutral-7);
-        }
+        @include multiline(4, $garnett-neutral-7, top);
     }
 
     .meta__numbers,
     .meta__social {
-        &:before {
-            @include multiline(1, $garnett-neutral-7);
-        }
+        @include multiline(1, $garnett-neutral-7, top);
     }
 
     .meta__numbers {
-        &:before {
-            @include mq($until: leftCol) {
-                content: none;
-            }
-        }
+        background-image: none;
+        padding-top: 0;
     }
 
     .inline-tone-fill,
@@ -956,9 +944,8 @@ $quote-mark: 35px;
 
     .content__dateline {
         @include mq(phablet) {
-            &:before {
-                @include multiline(1, $garnett-neutral-7);
-            }
+            @include multiline(1, $garnett-neutral-7, top);
+            padding-top: $gs-baseline / 2;
         }
     }
 
@@ -967,9 +954,7 @@ $quote-mark: 35px;
     }
 
     .submeta {
-        &:before {
-            @include multiline(4, $garnett-neutral-7);
-        }
+        @include multiline(4, $garnett-neutral-7, top);
     }
 
     .submeta__keywords {
@@ -1011,15 +996,15 @@ $quote-mark: 35px;
                 border-color: transparent transparent transparent $garnett-neutral-5;
                 @include mq(tablet) {
                     // 0 border radius on mobile because stock android has a render bug with it here
-                    border-radius: .2em;
+                    border-radius: 0.2em;
                 }
             }
         }
     }
     // *************** Gallery overrides ***************
     &.content--gallery {
-        .content__dateline:before {
-            content: none;
+        .content__dateline {
+            background-image: none;
         }
 
         .meta__extras {
@@ -1029,7 +1014,10 @@ $quote-mark: 35px;
         .gallery__meta-container,
         .meta__numbers,
         .meta__social {
-            &:before {
+            background-image: none;
+            padding-top: 0;
+
+            &::before {
                 content: none;
             }
         }
@@ -1099,4 +1087,33 @@ $quote-mark: 35px;
     @include mq(leftCol, wide) {
         width: $gs-gutter * 7;
     }
+}
+
+.rich-link {
+    .rich-link__header {
+        @include fs-headline(1, true);
+        font-weight: 400;
+        @include mq(wide) {
+            @include fs-headline(3);
+        }
+    }
+}
+
+.rich-link__avatar {
+    margin-left: auto;
+    margin-right: $gs-gutter / 4;
+    width: 80px;
+    height: 80px;
+    @include mq(wide) {
+        width: 138px;
+        height: 138px;
+    }
+}
+
+.rich-link__avatar__media {
+    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
 }

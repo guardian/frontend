@@ -6,8 +6,7 @@
 }
 .manage-account-wizard--completed {
     .manage-account-wizard__controls {
-        visibility: hidden;
-        pointer-events: none;
+        display: none;
     }
 }
 
@@ -16,6 +15,7 @@
     left: 0;
     right: 0;
     will-change: transform;
+    outline: none;
 }
 .js-off .manage-account-wizard__step {
     border: 1px solid $neutral-8;
@@ -86,7 +86,7 @@ for a .2s transition
         opacity: 1;
     }
     to {
-        transform: translateX($gs-gutter*-4);
+        transform: translateX($gs-gutter*-2);
         opacity: 0;
     }
 }
@@ -97,7 +97,7 @@ for a .2s transition
         opacity: 1;
     }
     to {
-        transform: translateX($gs-gutter*4);
+        transform: translateX($gs-gutter*2);
         opacity: 0;
     }
 }

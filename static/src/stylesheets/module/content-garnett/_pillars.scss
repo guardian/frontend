@@ -13,7 +13,7 @@
     .tonal__head--tone-feature .content__headline,
     .tonal__head--tone-review .content__headline,
     .tone-colour,
-    a {
+    a[href] {
         color: $kickerColor;
     }
 
@@ -25,11 +25,14 @@
     .inline-tone-fill,
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
-    .social-icon__svg {
+    .social-icon__svg,
+    .block-share__item--facebook .inline-icon,
+    .block-share__item--twitter .inline-icon,
+    .block-share__item--gplus .inline-icon {
         fill: $kickerColor;
     }
-
-    .inline-quote svg {
+    
+    .inline-garnett-quote svg {
         fill: $pillarColor;
     }
 
@@ -43,7 +46,11 @@
 
     .meta__twitter a,
     .social-icon,
-    .social-icon.social-icon--more {
+    .social-icon.social-icon--more,
+    .block-share__item--facebook,
+    .block-share__item--twitter,
+    .block-share__item--gplus {
+
         &:focus,
         &:hover {
             background-color: $kickerColor;
@@ -58,8 +65,60 @@
             }
         }
     }
+
+    .block--content {
+        border-top-color: $pillarColor;
+    }
 }
-@mixin mediaPalatte($mediaColor) {
+
+@mixin richLink($pillarColor, $cardBackground) {
+    background-color: $cardBackground;
+
+    .u-faux-block-link--hover {
+        background-color: darken($cardBackground, 5%);
+    }
+
+    a {
+        color: inherit;
+    }
+
+    .inline-garnett-quote__svg {
+        height: get-font-size(headline, 3);
+        width: get-font-size(headline, 3) * .5;
+        margin-right: get-font-size(headline, 3) * .5;
+        fill: $pillarColor;
+    }
+
+    .inline-arrow-in-circle-garnett__svg {
+        fill: $pillarColor;
+    }
+
+    .rich-link__avatar__media,
+    .rich-link__container::before {
+        background-color: $pillarColor;
+    }
+
+    .rich-link__byline {
+        font-style: italic;
+    }
+
+    .rich-link__header {
+        padding-top: $gs-baseline / 6;
+    }
+    
+    .rich-link__kicker,
+    .rich-link__byline,
+    .rich-link__read-more-text {
+        color: $pillarColor;
+    }
+
+    .rich-link__kicker {
+        border-right: 1px solid $pillarColor;
+        padding-right: .375em;
+    }
+}
+
+@mixin mediaPalatte($mediaColor, $pillar) {
     .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
@@ -78,6 +137,15 @@
     .inline-volume-high {
         fill: $mediaColor;
     }
+    
+    .vjs-paused .vjs-play-control {
+        @include icon(play-icon--#{$pillar});
+    }
+
+    .vjs-playing .vjs-play-control {
+        @include icon(pause-icon--#{$pillar});
+    }
+
 }
 
 .content--pillar-news {
@@ -106,25 +174,103 @@
 
 .content--media:not(.paid-content).content--pillar-news,
 .immersive-main-media__headline-container.content--pillar-news {
-    @include mediaPalatte($news-garnett-media-main-1);
+    @include mediaPalatte($news-garnett-media-main-1, news);
 }
 
 .content--media:not(.paid-content).content--pillar-opinion,
 .immersive-main-media__headline-container.content--pillar-opinion {
-    @include mediaPalatte($opinion-garnett-media-main-1);
+    @include mediaPalatte($opinion-garnett-media-main-1, opinion);
 }
 
 .content--media:not(.paid-content).content--pillar-arts,
 .immersive-main-media__headline-container.content--pillar-arts {
-    @include mediaPalatte($arts-garnett-media-main-1);
+    @include mediaPalatte($arts-garnett-media-main-1, arts);
 }
 
 .content--media:not(.paid-content).content--pillar-lifestyle,
 .immersive-main-media__headline-container.content--pillar-lifestyle {
-    @include mediaPalatte($lifestyle-garnett-media-main-1);
+    @include mediaPalatte($lifestyle-garnett-media-main-1, lifestyle);
 }
 
 .content--media:not(.paid-content).content--pillar-sport,
 .immersive-main-media__headline-container.content--pillar-sport {
-    @include mediaPalatte($sport-garnett-media-main-1);
+    @include mediaPalatte($sport-garnett-media-main-1, sport);
+}
+
+.rich-link {
+    &.rich-link--pillar-news {
+        @include richLink($news-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.rich-link--pillar-opinion {
+        @include richLink($opinion-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.rich-link--pillar-sport {
+        @include richLink($sport-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.rich-link--pillar-arts {
+        @include richLink($arts-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.rich-link--pillar-lifestyle {
+        @include richLink($lifestyle-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.tone-comment--item {
+        .rich-link__image-container {
+            display: none;
+        }
+        
+        .rich-link__container {
+            @include multiline(4, $garnett-neutral-4);
+            padding-bottom: 13px;
+        }
+    }
+
+    &.tone-live--item {
+        &.rich-link--pillar-news {
+            @include richLink(#ffffff, $news-garnett-feature);
+        }
+
+        &.rich-link--pillar-opinion {
+            @include richLink(#ffffff, $opinion-garnett-main-1);
+        }
+
+        &.rich-link--pillar-sport {
+            @include richLink(#ffffff, $sport-garnett-feature);
+        }
+
+        &.rich-link--pillar-arts {
+            @include richLink(#ffffff, $arts-garnett-feature);
+        }
+
+        &.rich-link--pillar-lifestyle {
+            @include richLink(#ffffff, $lifestyle-garnett-feature);
+        }
+        
+        &,
+        .rich-link__link {
+            color: #ffffff;
+        }
+    }
+    
+    &.tone-media--item {
+        background: $media-garnett-main-1;
+
+        .u-faux-block-link--hover {
+            background-color: darken($media-garnett-main-1, 5%);
+        }
+
+        &,
+        .rich-link__link {
+            color: #ffffff;
+        }
+
+        .rich-link__read-more-text {
+            display: none;
+        }
+
+    }
 }

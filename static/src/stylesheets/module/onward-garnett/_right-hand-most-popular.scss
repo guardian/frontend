@@ -3,11 +3,9 @@
 }
 
 .right-most-popular__heading {
+    @include multiline(4, $garnett-neutral-6, top);
     border-top: 0;
-
-    &:before {
-        @include multiline(4, $garnett-neutral-4);
-    }
+    padding-top: $gs-baseline * 1.5;
 }
 
 .right-most-popular-item {

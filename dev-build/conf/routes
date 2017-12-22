@@ -195,6 +195,8 @@ POST           /login                                                           
 GET            /oauth2callback                                                                                                   controllers.admin.OAuthLoginAdminController.oauth2Callback
 GET            /logout                                                                                                           controllers.admin.OAuthLoginAdminController.logout
 GET            /admin                                                                                                            controllers.admin.AdminIndexController.admin()
+GET            /config                                                                                                           controllers.AppConfigController.renderAppConfig()
+GET            /config/parameter/*key                                                                                            controllers.AppConfigController.findParameter(key: String)
 GET            /api/proxy/*path                                                                                                  controllers.admin.Api.proxy(path, callback)
 GET            /api/tag                                                                                                          controllers.admin.Api.tag(q, callback)
 GET            /api/item/*path                                                                                                   controllers.admin.Api.item(path, callback)

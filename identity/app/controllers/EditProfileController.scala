@@ -2,7 +2,7 @@ package controllers
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{EmailNewsletters, StatusFields, User}
+import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
 import common.ImplicitControllerExecutionContext
 import form._
 import idapiclient.responses.Error
@@ -21,7 +21,6 @@ import utils.ConsentOrder._
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
 import play.api.http.HttpConfiguration
-
 import pages.IdentityHtmlPage
 
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
@@ -156,10 +155,11 @@ class EditProfileController(
         val returnUrlForm = Form(single("returnUrl" -> nonEmptyText))
         returnUrlForm.bindFromRequest.fold(
           formWithErrors => Future.successful(BadRequest(Json.toJson(formWithErrors.errors.toList))),
-          returnUrl =>
+          returnUrl => {
+            val newConsents = if (request.user.consents.isEmpty) Consent.defaultConsents else request.user.consents
             identityApiClient.saveUser(
               request.user.id,
-              UserUpdateDTO(statusFields = Some(StatusFields(hasRepermissioned = Some(true)))),
+              UserUpdateDTO(consents = Some(newConsents), statusFields = Some(StatusFields(hasRepermissioned = Some(true)))),
               request.user.auth
             ).map {
               case Left(idapiErrors) =>
@@ -170,6 +170,7 @@ class EditProfileController(
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
                 SeeOther(returnUrl)
             }
+          }
         )
       }
     }
