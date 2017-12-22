@@ -17,9 +17,11 @@ $height: $identity-header-height - ($gutter * 2);
         li {
             display: block;
         }
-        &.is-active {
-            display: block;
-        }
+    }
+
+    .identity-dropdown.is-active,
+    .identity-header__nav-fallback:checked ~ .identity-dropdown {
+        display: block;
     }
 
     .gs-container {
@@ -67,6 +69,7 @@ $height: $identity-header-height - ($gutter * 2);
     line-height: $height;
     white-space: nowrap;
     transition: .125s;
+    display: block;
 
     .inline-icon {
         vertical-align: middle;
