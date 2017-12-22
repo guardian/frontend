@@ -260,6 +260,7 @@ data-test-id="facia-card"
                 }
                 @meta(item)
             }
+        </div>
 
         @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.cardTypes.showCutOut) {
             @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
@@ -272,7 +273,6 @@ data-test-id="facia-card"
             </div>
             }
         }
-        </div>
 
         @if(item.sublinks.nonEmpty) {
             <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
