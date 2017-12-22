@@ -10,7 +10,6 @@ const updateAria = (container: Element): void => {
     const v: boolean = container.classList.contains('dropdown--active');
     const content = [...container.getElementsByClassName(contentCN)];
     const button = container.getElementsByClassName(buttonCN);
-
     content.forEach((c: Element) => {
         c.setAttribute('aria-hidden', (!v).toString());
     });
@@ -31,9 +30,13 @@ const init = (): void => {
                     const isActive: boolean = container.classList.contains(
                         'dropdown--active'
                     );
-                    const isAnimated: boolean = container.classList.contains(
-                        'dropdown--animated'
-                    );
+                    const isAnimated: boolean =
+                        container.classList.contains(
+                            'dropdown--animated'
+                        )
+                        && document.documentElement
+                        && !document.documentElement.classList.contains('disable-flashing-elements')
+                    ;
                     const contentEstimatedHeight =
                         content.offsetHeight !== undefined &&
                         content.offsetHeight < window.innerHeight
@@ -85,7 +88,6 @@ const init = (): void => {
                                             'transitionend',
                                             () => {
                                                 fastdom.write(() => {
-                                                    updateAria(container);
                                                     content.style.height =
                                                         'auto';
                                                     container.style.pointerEvents =
@@ -95,7 +97,8 @@ const init = (): void => {
                                                             'dropdown--active'
                                                         );
                                                     }
-                                                });
+                                                    updateAria(container);
+                                                })
                                             }
                                         );
                                     });
