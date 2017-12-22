@@ -31,9 +31,9 @@ class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests wi
       .withQueryStringParameters(addAccessToken(queryString): _*)
       .withRequestTimeout(timeout)
       .getOKResponse()
-    res.onComplete {
-      case Failure(t: TimeoutException) => log.warn(s"Timeout when fetching Facebook Graph API: $url", t)
-      case Failure(NonFatal(t)) => log.error(s"Failed to fetch from Facebook Graph API: $url", t)
+    res.failed.foreach {
+      case t: TimeoutException => log.warn(s"Timeout when fetching Facebook Graph API: $url", t)
+      case t => log.error(s"Failed to fetch from Facebook Graph API: $url", t)
     }
     res
   }
