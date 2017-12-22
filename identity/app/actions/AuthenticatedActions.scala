@@ -14,6 +14,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object AuthenticatedActions {
   type AuthRequest[A] = AuthenticatedRequest[A, AuthenticatedUser]
+//  type UserWithPermissions = (AuthenticatedUser, List[])
 }
 
 class AuthenticatedActions(
@@ -91,6 +92,8 @@ class AuthenticatedActions(
       }
   }
 
+//  def permissionsFromCookie: Action
+
   def agreeAction(unAuthorizedCallback: (RequestHeader) => Result): AuthenticatedBuilder[AuthenticatedUser] =
     new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
 
@@ -155,7 +158,9 @@ class AuthenticatedActions(
   def authWithConsentRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
     recentlyAuthenticated andThen apiUserShouldRepermissionRefiner
 
-  def permissionAuthentication: ActionBuilder[AuthRequest, AnyContent] =
-    noOpActionBuilder andThen permissionRefiner andThen apiVerifiedUserRefiner
+  def permissionAuthentication: ActionBuilder[AuthRequest, AnyContent] = {
+    logger.info("permission auth")
+    noOpActionBuilder andThen permissionRefiner
+  }
 
 }

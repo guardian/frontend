@@ -70,12 +70,6 @@ class EditProfileController(
     displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
 
   def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String]): Action[AnyContent] = {
-    if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
-      recentlyAuthenticated { implicit request =>
-        NotFound(views.html.errors._404())
-      }
-    }
-    else {
       csrfAddToken {
         permissionAuthentication.async { implicit request =>
           consentJourneyView(
@@ -87,7 +81,6 @@ class EditProfileController(
           )
         }
       }
-    }
   }
 
   def displayPrivacyFormRedirect(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] = csrfAddToken {
