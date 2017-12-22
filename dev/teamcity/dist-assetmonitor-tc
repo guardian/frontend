@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -o xtrace
+set -o nounset
+set -o errexit
+
+node ./tools/asset-monitor
+
+exit 0 #always ignore a failure
