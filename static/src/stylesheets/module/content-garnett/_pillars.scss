@@ -72,6 +72,10 @@
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
 
+    .u-faux-block-link--hover {
+        background-color: darken($cardBackground, 5%);
+    }
+
     a {
         color: inherit;
     }
@@ -190,16 +194,27 @@
 }
 
 .rich-link {
-    &.tone-news--item {
+    &.rich-link--pillar-news {
         @include richLink($news-garnett-main-1, $garnett-neutral-3);
     }
 
-    &.tone-comment--item {
+    &.rich-link--pillar-opinion {
         @include richLink($opinion-garnett-main-1, $garnett-neutral-3);
     }
 
-    &.tone-comment--item,
-    &.tone-feature--item.rich-link--pillar-sport {       
+    &.rich-link--pillar-sport {
+        @include richLink($sport-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.rich-link--pillar-arts {
+        @include richLink($arts-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.rich-link--pillar-lifestyle {
+        @include richLink($lifestyle-garnett-main-1, $garnett-neutral-3);
+    }
+
+    &.tone-comment--item {
         .rich-link__image-container {
             display: none;
         }
@@ -210,15 +225,25 @@
         }
     }
 
-    &.tone-feature--item.rich-link--pillar-sport {
-        @include richLink($sport-garnett-main-1, $garnett-neutral-3);
-    }
-
     &.tone-live--item {
-        @include richLink($live-garnett-main-2, $live-garnett-main-1);
+        &.rich-link--pillar-news {
+            @include richLink(#ffffff, $news-garnett-feature);
+        }
 
-        .u-faux-block-link--hover {
-            background-color: darken($live-garnett-main-1, 5%);
+        &.rich-link--pillar-opinion {
+            @include richLink(#ffffff, $opinion-garnett-main-1);
+        }
+
+        &.rich-link--pillar-sport {
+            @include richLink(#ffffff, $sport-garnett-feature);
+        }
+
+        &.rich-link--pillar-arts {
+            @include richLink(#ffffff, $arts-garnett-feature);
+        }
+
+        &.rich-link--pillar-lifestyle {
+            @include richLink(#ffffff, $lifestyle-garnett-feature);
         }
         
         &,
@@ -228,22 +253,8 @@
     }
     
     &.tone-media--item {
-        &.rich-link--pillar-opinion {
-            @include richLink($news-garnett-main-1, $media-garnett-main-1);
-        }
-        &.rich-link--pillar-opinion {
-            @include richLink($opinion-garnett-main-1, $media-garnett-main-1);
-        }
-        &.rich-link--pillar-opinion {
-            @include richLink($sport-garnett-main-1, $media-garnett-main-1);
-        }
-        &.rich-link--pillar-opinion {
-            @include richLink($arts-garnett-main-1, $media-garnett-main-1);
-        }
-        &.rich-link--pillar-opinion {
-            @include richLink($lifestyle-garnett-main-1, $media-garnett-main-1);
-        }
-        
+        background: $media-garnett-main-1;
+
         .u-faux-block-link--hover {
             background-color: darken($media-garnett-main-1, 5%);
         }
