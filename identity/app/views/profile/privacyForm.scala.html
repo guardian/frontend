@@ -35,23 +35,31 @@
 
         <div class="js-errorHolder manage-account__errors"></div>
 
-        <h2 class="manage-account-header">Would you like to receive information from the Guardian and their partners?</h2>
-        <p class="identity-title-subtitle">The Guardian and their partners would like to occasionally send you information about their products, services and events</p>
-        <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
-            <div class="manage-account__switches">
-                <ul>
-                @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
-                    <li>
-                        @if(index == 0) {
-                            @fragments.consentSwitch(consentField, consentHint)(messages)
-                        } else {
-                            @fragments.consentSwitch(consentField)(messages)
-                        }
-                    </li>
-                }
-                </ul>
+        <fieldset class="fieldset fieldset--manage-account-noborder">
+
+            <div class="fieldset__heading">
+                <h2 class="form__heading">What would you like to hear about?</h2>
+                <p class="form__note">The Guardian and their partners would like to occasionally send you information about their products, services and events</p>
             </div>
-        </div>
+
+            <div class="fieldset__fields">
+
+                <div class="manage-account__switches manage-account__switches--single-column">
+                    <ul>
+                    @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
+                        <li>
+                            @if(index == 0) {
+                                @fragments.consentSwitch(consentField, consentHint)(messages)
+                            } else {
+                                @fragments.consentSwitch(consentField)(messages)
+                            }
+                        </li>
+                    }
+                    </ul>
+                </div>
+            </div>
+
+        </fieldset>
 
         <fieldset class="fieldset fieldset--manage-account-rightsubmit js-manage-account__ajaxForm-submit">
             <div class="fieldset__heading"></div>
