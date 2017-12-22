@@ -27,6 +27,10 @@
         color: $neutral-1;
         text-align: left;
 
+        &:focus {
+            color: $guardian-brand;
+        }
+
         .control {
             border-color: $neutral-5;
             float: right;
