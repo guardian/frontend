@@ -4,7 +4,7 @@ import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
 import model.{ApplicationContext, IdentityPage}
 import play.api.mvc.RequestHeader
-import play.twirl.api.Html
+import play.twirl.api.{Html, HtmlFormat}
 import views.html.fragments._
 import views.html.fragments.page._
 import views.html.fragments.page.body._
@@ -17,7 +17,10 @@ object IdentityHtmlPage {
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("identity")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
+    override def linkCss: Html = HtmlFormat.fill(List(
+      stylesheetLink(s"stylesheets/$ContentCSSFile.css"),
+      stylesheetLink(s"stylesheets/membership-icons.css")
+    ))
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
     override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
@@ -38,11 +41,9 @@ object IdentityHtmlPage {
       bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
         views.html.layout.identityHeader(),
-        views.html.layout.identityVerticalWrapper(
-          content
-        ),
+        content,
         inlineJSNonBlocking(),
-        views.html.layout.identityFooter() when !page.isFlow,
+        footer() when !page.isFlow,
         analytics.base()
       ),
       devTakeShot()
