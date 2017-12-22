@@ -1,6 +1,5 @@
 package football
 
-import _root_.conf.switches.Switches
 import _root_.controllers.admin.TablesController
 import football.model.PA
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, Matchers}
@@ -23,7 +22,6 @@ import scala.language.postfixOps
     with WithTestApplicationContext {
 
   "test tables index page loads with leagues" in {
-    Switches.AdminRemoveAdminFootballTables.switchOff()
     val Some(result) = route(app, FakeRequest(GET, "/admin/football/tables"))
     status(result) should equal(OK)
     val content = contentAsString(result)
