@@ -26,14 +26,23 @@
             bottom: 3px;
             top: 0;
             z-index: 1;
+            line-height: 10px;
         }
 
         .fc-trail__count {
             right: 0;
+
+            .inline-icon {
+                margin-top: 0;
+            }
         }
 
         .fc-item__timestamp {
             left: 0;
+
+            .inline-icon {
+                margin-top: -1px;
+            }
         }
     }
 
