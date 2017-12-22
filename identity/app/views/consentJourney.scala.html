@@ -34,7 +34,7 @@
 
 @channelStep() = {
     @if(IdentityShowCommunicationChannelConsents.isSwitchedOn && communicationChannelsForUser(user).nonEmpty) {
-        <div class="manage-account-wizard__step" data-wizard-step-name="channels" role="dialog" aria-labelledby="consentWizardChannelsTitle">
+        <fieldset class="manage-account-wizard__step" data-wizard-step-name="channels" role="dialog" aria-labelledby="consentWizardChannelsTitle">
 
             <h2 class="identity-title" id="consentWizardChannelsTitle">
                 How can we get in touch with you?
@@ -53,12 +53,12 @@
                 </div>
             </div>
 
-        </div>
+        </fieldset>
     }
 }
 
 @consentStep(journey:String) = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="consent" role="dialog" aria-labelledby="consentWizardConsentTitle">
+    <fieldset class="manage-account-wizard__step" data-wizard-step-name="consent" role="dialog" aria-labelledby="consentWizardConsentTitle">
 
         <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
             @views.html.helper.CSRF.formField
@@ -91,12 +91,12 @@
             </div>
         </form>
 
-    </div>
+    </fieldset>
 }
 
 @emailRepermissionStep() = {
     @if(emailRepermissionStepShouldDisplay) {
-        <div class="manage-account-wizard__step" data-wizard-step-name="email" role="dialog" aria-labelledby="consentWizardEmailTitle">
+        <fieldset class="manage-account-wizard__step" data-wizard-step-name="email" role="dialog" aria-labelledby="consentWizardEmailTitle">
 
             <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
                 @views.html.helper.CSRF.formField
@@ -122,12 +122,12 @@
                     </ul>
                 </div>
             </form>
-        </div>
+        </fieldset>
     }
 }
 
 @emailSignupStep() = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="email-signup" role="dialog" aria-labelledby="consentWizardEmailSignupTitle">
+    <fieldset class="manage-account-wizard__step" data-wizard-step-name="email-signup" role="dialog" aria-labelledby="consentWizardEmailSignupTitle">
 
         <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
             @views.html.helper.CSRF.formField
@@ -142,7 +142,7 @@
                 @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions,true)(request, messages)
             </div>
         </form>
-    </div>
+    </fieldset>
 }
 
 @emailRepermissionOrSignupStep() = {
@@ -154,7 +154,7 @@
 }
 
 @endcardStep() = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="endcard" role="dialog" aria-labelledby="consentWizardEmailSignupTitle">
+    <fieldset class="manage-account-wizard__step" data-wizard-step-name="endcard" role="dialog" aria-labelledby="consentWizardEmailSignupTitle">
         <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
             <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
             @views.html.helper.CSRF.formField
@@ -168,7 +168,7 @@
                 >Continue</button>
             </aside>
         </form>
-    </div>
+    </fieldset>
 }
 
 <div class="identity-wrapper-for-bg identity-wrapper-for-bg--overflows">
