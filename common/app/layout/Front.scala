@@ -382,22 +382,6 @@ object Front extends implicits.Collections {
 
   def fromSectionPage(frontPage: SectionPage, edition: Edition)(implicit context: ApplicationContext): Front = {
 
-    def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
-      case 2 => Some(FixedContainers.fastIndexPageMpuII)
-      case 4 => Some(FixedContainers.fastIndexPageMpuIV)
-      case 6 => Some(FixedContainers.fastIndexPageMpuVI)
-      case n if n >= 9 => Some(FixedContainers.fastIndexPageMpuIX)
-      case _ => None
-    }
-
-    def slowContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
-      case 2 => Some(FixedContainers.slowIndexPageMpuII)
-      case 4 => Some(FixedContainers.slowIndexPageMpuIV)
-      case 5 => Some(FixedContainers.slowIndexPageMpuV)
-      case 7 => Some(FixedContainers.slowIndexPageMpuVII)
-      case _ => None
-    }
-
     @tailrec
     def containerDefinition(groupings: Seq[FrontPageGrouping],
       mpuInjected: Boolean,
@@ -413,9 +397,9 @@ object Front extends implicits.Collections {
           )
 
           val mpuContainer = (if (frontPage.isSlow)
-            slowContainerWithMpu(grouping.items.length)
+            ContainerDefinition.slowContainerWithMpu(grouping.items.length)
           else
-            fastContainerWithMpu(grouping.items.length)).filter(const(!mpuInjected))
+            ContainerDefinition.fastContainerWithMpu(grouping.items.length)).filter(const(!mpuInjected))
 
           val (container, newMpuInjected) = mpuContainer.map { mpuContainer =>
             (mpuContainer, true)
