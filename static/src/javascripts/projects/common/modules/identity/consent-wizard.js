@@ -55,7 +55,7 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
             fastdom
                 .read(() => [
                     wizardEl.getElementsByClassName(
-                        'manage-account-wizard__step'
+                        'identity-wizard__step'
                     ).length,
                     [
                         ...document.getElementsByClassName(
@@ -140,7 +140,7 @@ const bindScrollForNextButton = (buttonEl: HTMLElement): void => {
 
 const bindNextButton = (buttonEl: HTMLElement): void => {
     const wizardEl: ?Element = buttonEl.closest(
-        '.manage-account-wizard--consent'
+        '.identity-wizard--consent'
     );
     if (wizardEl && wizardEl instanceof HTMLElement) {
         buttonEl.addEventListener('click', (ev: Event) => {
@@ -193,7 +193,7 @@ const createEmailConsentCounter = (counterEl: HTMLElement): void => {
 const enhanceConsentWizard = (): void => {
     const loaders = [
         ['.manage-account-consent-wizard-counter', createEmailConsentCounter],
-        ['.manage-account-wizard--consent', bindEmailConsentCounterToWizard],
+        ['.identity-wizard--consent', bindEmailConsentCounterToWizard],
         ['.js-manage-account-consent-wizard__next', bindNextButton],
         ['.js-manage-account-consent-wizard__next', bindScrollForNextButton],
     ];
