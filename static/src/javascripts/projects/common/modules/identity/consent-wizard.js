@@ -122,7 +122,6 @@ const shouldNextButtonScroll = (): Promise<boolean> =>
     );
 
 const bindScrollForNextButton = (buttonEl: HTMLElement): void => {
-
     const check = () =>
         shouldNextButtonScroll().then(shouldIt =>
             fastdom.write(() => {
@@ -134,7 +133,7 @@ const bindScrollForNextButton = (buttonEl: HTMLElement): void => {
         );
 
     mediator.on('window:throttledScroll', debounce(check, 100));
-    window.addEventListener(wizardPageChangedEv, ev => {
+    window.addEventListener(wizardPageChangedEv, () => {
         check();
     });
 };
