@@ -1,15 +1,19 @@
 .identity-header {
+
     @include clearfix;
+    $gutter: 9px;
+    $height: $identity-header-height - ($gutter * 2);
+
     background-color: $identity-main;
     padding: 5px 0;
     color: #ffffff;
-    min-height: $identity-header-height - 10px;
+    min-height: $height;
     z-index: 999;
     .identity-dropdown {
         position: absolute;
         display: none;
         left: 0;
-        top: $identity-header-height - 10px;
+        top: $height;
         z-index: 999;
         li {
             display: block;
@@ -46,8 +50,8 @@
     float: right;
     svg {
         display: block;
-        height: $identity-header-height - 10px;
-        width: 180px;
+        width: 160px;
+        height: 30px;
     }
 }
 
@@ -60,8 +64,8 @@
     opacity: .8;
     text-transform: lowercase;
     padding: 0;
-    height: $identity-header-height - 10px;
-    line-height: $identity-header-height - 10px;
+    height: $height;
+    line-height: $height;
     white-space: nowrap;
     transition: .125s;
 
