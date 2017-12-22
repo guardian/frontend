@@ -3,7 +3,7 @@ package test
 import org.scalatest.Suites
 import controllers._
 import integrations._
-import services.{TagPageGroupingTest, TagPageTest}
+import services.{FrontPageGroupingTest, TagPageTest}
 
 class TagTestSuite extends Suites (
   new AllTagControllerTest,
