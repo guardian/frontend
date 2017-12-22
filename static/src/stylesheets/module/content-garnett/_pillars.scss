@@ -195,8 +195,7 @@
         @include richLink($lifestyle-garnett-main-1, $garnett-neutral-3);
     }
 
-    &.tone-comment--item,
-    &.tone-feature--item.rich-link--pillar-sport {       
+    &.tone-comment--item {
         .rich-link__image-container {
             display: none;
         }

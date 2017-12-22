@@ -50,9 +50,7 @@
                         @fragments.inlineSvg("quote", "icon")
                     }
                 } else {
-                    @if(content.content.cardStyle == Comment ||
-                        (content.content.cardStyle == Feature && content.content.metadata.pillar.nameOrDefault == "sport")
-                    ) {
+                    @if(content.content.cardStyle == Comment) {
                         @fragments.inlineSvg("garnett-quote", "icon")
                     }
                 }
@@ -91,13 +89,15 @@
                 @*<div class="u-h meta__number" data-discussion-id="@content.discussionId"/>*@
             }
         } else { 
-            @content.tags.contributors.headOption.map { profile => 
-                @profile.properties.contributorLargeImagePath.map{ image =>
-                    <div class="rich-link__avatar">
-                        <img class="rich-link__avatar__media" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
-                    </div>
-                }
-            } 
+            @if(content.content.cardStyle == Comment) {
+                @content.tags.contributors.headOption.map { profile => 
+                    @profile.properties.contributorLargeImagePath.map{ image =>
+                        <div class="rich-link__avatar">
+                            <img class="rich-link__avatar__media" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
+                        </div>
+                    }
+                } 
+            }
         }
 
         <div class="rich-link__read-more">
