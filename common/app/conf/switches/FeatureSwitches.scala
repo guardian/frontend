@@ -573,7 +573,7 @@ trait FeatureSwitches {
     "admin-audit-remove-press-r2",
     "When ON, the /press/r2 page returns 503",
     owners = Seq(Owner.withGithub("quarpt")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
@@ -583,7 +583,7 @@ trait FeatureSwitches {
     "admin-audit-remove-admin-football",
     "When ON, the /admin/football page returns 503",
     owners = Seq(Owner.withGithub("quarpt")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
@@ -593,7 +593,7 @@ trait FeatureSwitches {
     "admin-audit-remove-admin-football-tables",
     "When ON, the /admin/football/tables page returns 503",
     owners = Seq(Owner.withGithub("quarpt")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
@@ -603,7 +603,7 @@ trait FeatureSwitches {
     "admin-audit-remove-admin-player",
     "When ON, the /admin/football/player page returns 503",
     owners = Seq(Owner.withGithub("quarpt")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
@@ -613,7 +613,7 @@ trait FeatureSwitches {
     "admin-audit-remove-admin-football-fronts",
     "When ON, the /admin/football/fronts page returns 503",
     owners = Seq(Owner.withGithub("quarpt")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
@@ -623,7 +623,7 @@ trait FeatureSwitches {
     "admin-audit-remove-troubleshoot-football",
     "When ON, the /troubleshoot/football page returns 503",
     owners = Seq(Owner.withGithub("quarpt")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
@@ -633,7 +633,7 @@ trait FeatureSwitches {
     "admin-audit-remove-troubleshoot-cricket",
     "When ON, the /troubleshoot/cricket page returns 503",
     owners = Seq(Owner.withGithub("quarpt")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
