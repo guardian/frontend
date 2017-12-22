@@ -565,4 +565,76 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 1, 11),
     exposeClientSide = true
   )
+
+  // Admin Audit Switches:
+
+  val AdminRemovePressR2 = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-press-r2",
+    "When ON, the /press/r2 page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveAdminFootball = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-admin-football",
+    "When ON, the /admin/football page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveAdminFootballTables = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-admin-football-tables",
+    "When ON, the /admin/football/tables page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveAdminFootballPlayer = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-admin-player",
+    "When ON, the /admin/football/player page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveAdminFootballFronts = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-admin-football-fronts",
+    "When ON, the /admin/football/fronts page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveTroubleshootFootball = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-troubleshoot-football",
+    "When ON, the /troubleshoot/football page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveTroubleshootCricket = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-troubleshoot-cricket",
+    "When ON, the /troubleshoot/cricket page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
 }
