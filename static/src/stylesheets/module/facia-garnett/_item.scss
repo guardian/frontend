@@ -214,10 +214,6 @@ $fc-item-gutter: $gs-gutter / 4;
     flex-direction: row;
     padding-bottom: 0;
 
-    @include mq($from: tablet) {
-        padding-bottom: $gs-gutter * .25;
-    }
-
     &.fc-item__standfirst-wrapper--timestamp {
         flex-direction: column;
 

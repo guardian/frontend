@@ -6,7 +6,7 @@
     }
 
     .fc-item__container {
-        padding-bottom: 13px;
+        padding-bottom: $gs-gutter;
     }
 
     .fc-item__container > .fc-item__meta {
@@ -72,7 +72,6 @@
         .fc-item__avatar {
             border-radius: 50%;
             right: $gs-gutter * .5;
-            bottom: $gs-baseline / 2;
             overflow: hidden;
         }
 
