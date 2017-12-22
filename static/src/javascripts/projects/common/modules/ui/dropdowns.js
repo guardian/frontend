@@ -26,17 +26,19 @@ const init = (): void => {
         if (container) {
             fastdom
                 .read(() => {
+                    const documentElement: ?HTMLElement =
+                        document.documentElement;
                     const content = container.querySelector(`.${contentCN}`);
                     const isActive: boolean = container.classList.contains(
                         'dropdown--active'
                     );
                     const isAnimated: boolean =
-                        container.classList.contains(
-                            'dropdown--animated'
-                        )
-                        && document.documentElement
-                        && !document.documentElement.classList.contains('disable-flashing-elements')
-                    ;
+                        container.classList.contains('dropdown--animated') &&
+                        (documentElement !== null &&
+                            documentElement !== undefined &&
+                            documentElement.classList.contains(
+                                'disable-flashing-elements'
+                            ) === false);
                     const contentEstimatedHeight =
                         content.offsetHeight !== undefined &&
                         content.offsetHeight < window.innerHeight
@@ -98,7 +100,7 @@ const init = (): void => {
                                                         );
                                                     }
                                                     updateAria(container);
-                                                })
+                                                });
                                             }
                                         );
                                     });

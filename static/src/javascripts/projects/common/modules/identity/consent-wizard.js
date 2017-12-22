@@ -54,9 +54,8 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
         if (ev.target === wizardEl) {
             fastdom
                 .read(() => [
-                    wizardEl.getElementsByClassName(
-                        'identity-wizard__step'
-                    ).length,
+                    wizardEl.getElementsByClassName('identity-wizard__step')
+                        .length,
                     [
                         ...document.getElementsByClassName(
                             'identity-consent-wizard-counter'
@@ -139,9 +138,7 @@ const bindScrollForNextButton = (buttonEl: HTMLElement): void => {
 };
 
 const bindNextButton = (buttonEl: HTMLElement): void => {
-    const wizardEl: ?Element = buttonEl.closest(
-        '.identity-wizard--consent'
-    );
+    const wizardEl: ?Element = buttonEl.closest('.identity-wizard--consent');
     if (wizardEl && wizardEl instanceof HTMLElement) {
         buttonEl.addEventListener('click', (ev: Event) => {
             ev.preventDefault();
@@ -169,9 +166,7 @@ const createEmailConsentCounter = (counterEl: HTMLElement): void => {
     const textEl = document.createElement('div');
     const checkboxesEl = getEmailCheckboxes();
 
-    indicatorEl.classList.add(
-        'identity-consent-wizard-counter__indicator'
-    );
+    indicatorEl.classList.add('identity-consent-wizard-counter__indicator');
     textEl.classList.add('identity-consent-wizard-counter__text');
 
     updateCounterIndicator(indicatorEl, checkboxesEl);

@@ -78,8 +78,7 @@ test('only the first element should be visible', () => {
             `.identity-wizard__step:nth-child(${index + 1})`
         );
         expect(
-            stepEl &&
-                stepEl.classList.contains('identity-wizard__step--hidden')
+            stepEl && stepEl.classList.contains('identity-wizard__step--hidden')
         ).toEqual(index !== 0);
     });
 });
@@ -93,9 +92,7 @@ test('only the second element should be visible after moving', () => {
             );
             expect(
                 stepEl &&
-                    stepEl.classList.contains(
-                        'identity-wizard__step--hidden'
-                    )
+                    stepEl.classList.contains('identity-wizard__step--hidden')
             ).toEqual(index !== 2);
         });
     });
