@@ -42,7 +42,7 @@ object IdentityHtmlPage {
           content
         ),
         inlineJSNonBlocking(),
-        views.html.layout.identityFooter(),
+        views.html.layout.identityFooter() when !page.isFlow,
         analytics.base()
       ),
       devTakeShot()

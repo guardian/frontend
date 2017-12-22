@@ -30,7 +30,7 @@ object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membe
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
 
-sealed abstract class ConsentJourneyPage(id: String, val journey: String) extends IdentityPage(id, "Consent")
+sealed abstract class ConsentJourneyPage(id: String, val journey: String) extends IdentityPage(id, "Consent", isFlow = true)
 object ConsentJourneyPageAll extends ConsentJourneyPage("/consents/all", "all")
 object ConsentJourneyPageNewsletters extends ConsentJourneyPage("/consents/newsletters", "newsletters")
 object ConsentJourneyPageDefault extends ConsentJourneyPage("/consents", "default")

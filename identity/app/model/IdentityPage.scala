@@ -6,7 +6,8 @@ case class IdentityPage(
   id: String,
   webTitle: String,
   returnUrl: Option[String] = None,
-  registrationType: Option[String] = None) extends StandalonePage {
+  registrationType: Option[String] = None,
+  isFlow: Boolean = false ) extends StandalonePage {
 
   private val javascriptConfig = Seq(
     returnUrl.map("returnUrl" -> JsString(_)),
