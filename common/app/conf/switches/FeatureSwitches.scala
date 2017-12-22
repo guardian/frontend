@@ -638,9 +638,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-
-
-
   val AdminRemoveApiProxy = Switch(
     SwitchGroup.Feature,
     "admin-audit-remove-api-proxy",
