@@ -68,7 +68,7 @@
 
 
 
-.manage-account-consent-thanks {
+.identity-consent-thanks {
     @include mq(desktop) {
         display: grid;
         grid-column-gap: $gs-gutter * 4;
@@ -79,7 +79,7 @@
     }
 }
 
-.manage-account-consent-thanks__title {
+.identity-consent-thanks__title {
     @include fs-headline(8);
     color: $identity-main;
     font-weight: 800;
@@ -94,7 +94,7 @@
     }
 }
 
-.manage-account-consent-thanks__content {
+.identity-consent-thanks__content {
 
     @include mq(desktop) {
         grid-column: 3;

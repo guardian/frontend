@@ -155,11 +155,11 @@
 
 @endcardStep() = {
     <fieldset class="identity-wizard__step" data-wizard-step-name="endcard" role="dialog" aria-labelledby="consentWizardEmailSignupTitle">
-        <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
+        <form class="identity-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
             <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
             @views.html.helper.CSRF.formField
-            <h2 class="manage-account-consent-thanks__title" id="consentWizardEmailSignupTitle">Thank you</h2>
-            <aside class="manage-account-consent-thanks__content">
+            <h2 class="identity-consent-thanks__title" id="consentWizardEmailSignupTitle">Thank you</h2>
+            <aside class="identity-consent-thanks__content">
                 <p>Your support helps us deliver the quality independent journalism the world needs</p>
                 <button
                     type="submit"
