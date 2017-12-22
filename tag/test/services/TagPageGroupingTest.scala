@@ -13,7 +13,7 @@ import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class TagPageGroupingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class FrontPageGroupingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   val timeZone = DateTimeZone.forOffsetHours(0)
 
   def makeFixture(dateTime: DateTime): ContentType = Content(
