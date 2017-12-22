@@ -18,7 +18,6 @@ $checkbox-size: $gs-gutter / 1.25;
 
     ul {
         display: grid;
-        padding-top: $local-gutter;
         grid-row-gap: $row-gutter;
         grid-column-gap: $row-gutter;
         grid-template-columns: repeat(1, 1fr);
