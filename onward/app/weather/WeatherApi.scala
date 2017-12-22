@@ -58,14 +58,13 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
   private def getJsonWithRetry(url: String): Future[JsValue] = {
     val weatherLogsMarkerContext: MarkerContext = MarkerContext(append("weatherRequestPath", url))
     val weatherApiResponse: Future[JsValue] = WeatherApi.retryWeatherRequest(() => getJsonRequest(url), requestRetryDelay, actorSystem.scheduler, requestRetryMax)
-    weatherApiResponse.foreach {
-      case NonFatal(error: TimeoutException) =>
+    weatherApiResponse.failed.foreach {
+      case error: TimeoutException =>
         log.warn(
           s"Request to weather api ($url) timed out (this is expected, especially at 0 and 30 mins past the hour due to" +
           s" a problem with accuweather).", error)(weatherLogsMarkerContext)
-      case NonFatal(error: Throwable) =>
+      case error: Throwable =>
         log.error("Weather API request failed", error)(weatherLogsMarkerContext)
-      case _ => Unit
     }
     weatherApiResponse
   }
