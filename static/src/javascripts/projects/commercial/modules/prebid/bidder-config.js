@@ -10,10 +10,12 @@ import type {
 
 export const bidderConfig: PrebidBidderCriteria = {
     sonobi: [
-        { edition: 'any', breakpoint: { min: 'mobile' }, size: [300, 250], slots: ['dfp-ad--inline'] }
+        { edition: 'any', breakpoint: { min: 'mobile' }, sizes: [[300, 250]], slots: ['dfp-ad--inline'] },
+        { edition: 'any', breakpoint: { min: 'desktop' }, sizes: [[728, 90], [970, 250]], slots: ['dfp-ad--top-above-nav'] }
     ],
     indexExchange: [
-        { edition: 'any', breakpoint: { min: 'mobile' }, size: [300, 250], slots: ['dfp-ad--inline'] }
+        { edition: 'any', breakpoint: { min: 'mobile' }, sizes: [[300, 250]], slots: ['dfp-ad--inline'] },
+        { edition: 'any', breakpoint: { min: 'desktop' }, sizes: [[728, 90], [970, 250]], slots: ['dfp-ad--top-above-nav'] }
     ],
 };
 

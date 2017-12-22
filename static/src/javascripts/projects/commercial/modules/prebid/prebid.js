@@ -40,7 +40,7 @@ const filterConfigEntries = (
         bid => isBreakpoint(bid.breakpoint)
     );
     bidConfigEntries = bidConfigEntries.filter(
-        bid => slotSizes.find(size => isEqualAdSize(size, bid.size))
+        bid => slotSizes.some(slotSize => bid.sizes.some( configSize => isEqualAdSize(configSize, slotSize)))
     );
 
     return bidConfigEntries;

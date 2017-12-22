@@ -28,7 +28,7 @@ export type PrebidSize = [number, number];
 export type PrebidAdSlotCriteria = {
     edition: 'UK' | 'US' | 'AUS' | 'INT' | 'any',
     breakpoint: Object,
-    size: PrebidSize,
+    sizes: PrebidSize[],
     slots: string[]
 };
 
