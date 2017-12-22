@@ -14,7 +14,7 @@ case class IdentityPage(
     registrationType.map("registrationType" -> JsString(_))
   ).flatten.toMap
 
-  override val metadata: MetaData = MetaData.make(
+  override val metadata = MetaData.make(
     id = id,
     section = Some(SectionId.fromId("identity")),
     webTitle = webTitle,
