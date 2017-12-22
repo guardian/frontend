@@ -3,7 +3,7 @@ package actions
 import java.net.URLEncoder
 
 import actions.AuthenticatedActions.AuthRequest
-import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityRedirectUsersWithLingeringV1ConsentsSwitch}
+import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
 import play.api.mvc._
@@ -116,7 +116,7 @@ class AuthenticatedActions(
     override val executionContext = ec
 
     def refine[A](request: AuthRequest[A]) =
-      if (IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
+      if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
         decideConsentJourney(request)
       else
         Future.successful(Right(request))

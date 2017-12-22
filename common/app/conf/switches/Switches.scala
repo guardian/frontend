@@ -159,6 +159,7 @@ with CommercialSwitches
 with DiscussionSwitches
 with PerformanceSwitches
 with MonitoringSwitches
+with IdentitySwitches
 with JournalismSwitches {
 
   def all: Seq[Switch] = Switch.allSwitches
