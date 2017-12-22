@@ -215,7 +215,10 @@ data-test-id="facia-card"
                 @if(item.isMediaLink) {
                     @standfirst(item)
                 } else {
-                    <div class="fc-item__standfirst-wrapper">
+                    <div class="@RenderClasses(Map(
+                        ("fc-item__standfirst-wrapper", true),
+                        ("fc-item__standfirst-wrapper--timestamp", !item.timeStampDisplay.isEmpty)
+                    ))">
                         @standfirst(item)
                         @meta(item)
                     </div>

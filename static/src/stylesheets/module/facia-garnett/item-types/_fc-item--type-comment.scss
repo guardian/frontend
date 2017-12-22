@@ -6,44 +6,44 @@
     }
 
     .fc-item__container {
-        padding-bottom: 13px;
+        padding-bottom: $gs-gutter;
     }
 
     .fc-item__container > .fc-item__meta {
+        @include multiline(4, $garnett-neutral-4);
+
         display: flex;
         position: absolute;
         bottom: 0;
         width: 100%;
-        height: 13px;
-        box-sizing: border-box;
-        border-top: 1px solid $garnett-neutral-4;
-        border-bottom: 1px solid $garnett-neutral-4;
+        height: 16px;
 
-        &:before,
-        &:after {
-            content: '';
+        .fc-trail__count,
+        .fc-item__timestamp {
             position: absolute;
-            height: 1px;
-            width: 100%;
-            background-color: $garnett-neutral-4;
-        }
-
-        &:before {
-            top: 3px;
-        }
-
-        &:after {
-            bottom: 3px;
+            padding-top: 2px;
+            padding-right: $gs-gutter * .25;
+            padding-left: $gs-gutter * .25;
+            bottom: 0;
+            top: 0;
+            z-index: 1;
+            line-height: 10px;
         }
 
         .fc-trail__count {
-            position: absolute;
-            padding-bottom: $gs-gutter * .1;
-            padding-right: $gs-gutter * .25;
-            padding-left: $gs-gutter * .25;
             right: 0;
-            bottom: -1px;
-            top: -1px;
+
+            .inline-icon {
+                margin-top: 0;
+            }
+        }
+
+        .fc-item__timestamp {
+            left: 0;
+
+            .inline-icon {
+                margin-top: -1px;
+            }
         }
     }
 
@@ -73,7 +73,6 @@
         .fc-item__avatar {
             border-radius: 50%;
             right: $gs-gutter * .5;
-            bottom: $gs-baseline / 2;
             overflow: hidden;
         }
 
