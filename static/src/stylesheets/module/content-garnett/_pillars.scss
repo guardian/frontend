@@ -178,7 +178,6 @@
         @include richLink($news-garnett-main-1, $garnett-neutral-3);
     }
 
-    &.tone-comment--item,
     &.rich-link--pillar-opinion {
         @include richLink($opinion-garnett-main-1, $garnett-neutral-3);
     }
@@ -211,7 +210,6 @@
             @include richLink(#ffffff, $news-garnett-feature);
         }
 
-        &.tone-comment--item,
         &.rich-link--pillar-opinion {
             @include richLink(#ffffff, $opinion-garnett-main-1);
         }
