@@ -81,15 +81,6 @@ $identity-footer-height: 130px;
     }
 }
 
-.identity-layout-vertical-wrapper {
-    min-height: calc(100vh - #{$identity-footer-height+$identity-header-height});
-    &.identity-layout-vertical-wrapper__tabs {
-        min-height: calc(100vh - #{($gs-gutter*6)+$identity-footer-height+$identity-header-height});
-        /*TODO: remove if page shadow goes away*/
-        /*rough estimate of header + top tabs height*/
-    }
-}
-
 @include mq(desktop) {
     .identity-page-header {
         .identity-page-header__title {

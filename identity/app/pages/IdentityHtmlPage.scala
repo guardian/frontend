@@ -41,11 +41,9 @@ object IdentityHtmlPage {
       bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
         views.html.layout.identityHeader(),
-        views.html.layout.identityVerticalWrapper(
-          content
-        ),
+        content,
         inlineJSNonBlocking(),
-        views.html.layout.identityFooter() when !page.isFlow,
+        footer() when !page.isFlow,
         analytics.base()
       ),
       devTakeShot()
