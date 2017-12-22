@@ -214,7 +214,6 @@ data-test-id="facia-card"
             @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                 @if(item.isMediaLink) {
                     @standfirst(item)
-                    @mediaMeta(item)
                 } else {
                     <div class="fc-item__standfirst-wrapper">
                         @standfirst(item)
@@ -239,15 +238,25 @@ data-test-id="facia-card"
             @if(item.isLive && item.displaySettings.showLivePlayable && !isList) {
                 <div class="js-liveblog-blocks fc-item__liveblog-blocks" data-article-id="@item.id"></div>
             }
-
-            @if(item.sublinks.nonEmpty) {
-                <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
-            }
-
-            @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+            @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+                @if(item.isMediaLink) {
+                    <div class="fc-item__footer-meta-wrapper">
+                        @mediaMeta(item)
+                        @if(item.sublinks.nonEmpty) {
+                            <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
+                        }
+                    </div>
+                } else {
+                    @if(item.sublinks.nonEmpty) {
+                        <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
+                    }
+                }
+            } else {
+                @if(item.sublinks.nonEmpty) {
+                    <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
+                }
                 @meta(item)
             }
-        </div>
 
         @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.cardTypes.showCutOut) {
             @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
@@ -260,7 +269,7 @@ data-test-id="facia-card"
             </div>
             }
         }
-        
+
 
         @if(item.sublinks.nonEmpty) {
             <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
