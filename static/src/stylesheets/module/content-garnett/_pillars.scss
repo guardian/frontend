@@ -19,6 +19,7 @@
     .byline,
     .content--media .content__headline,
     .element-pullquote p,
+    .old-article-message,
     .tonal__head--tone-feature .content__headline,
     .tonal__head--tone-review .content__headline,
     .tone-colour,
@@ -32,6 +33,7 @@
 
     .inline-close svg,
     .inline-tone-fill,
+    .old-article-message .old-article-message--clock svg,
     .social-icon svg,
     .social-icon__svg,
     .block-share__item--facebook .inline-icon,
@@ -160,17 +162,19 @@
     @include colorPalatte($news-garnett-main-1, $news-garnett-feature, $news-garnett-media-main-1);
 }
 
-.content--pillar-arts {
-    @include colorPalatte($arts-garnett-main-1, $arts-garnett-feature, $arts-garnett-media-main-1);
-}
-
-.content--pillar-lifestyle {
-    @include colorPalatte($lifestyle-garnett-feature, $lifestyle-garnett-main-1, $lifestyle-garnett-media-main-1);
-}
-
 .content--pillar-opinion,
 .content--type-comment {
     @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
+}
+
+.content--pillar-arts,
+.content--pillar-arts.content--type-comment {
+    @include colorPalatte($arts-garnett-main-1, $arts-garnett-feature, $arts-garnett-media-main-1);
+}
+
+.content--pillar-lifestyle,
+.content--pillar-lifestyle.content--type-comment  {
+    @include colorPalatte($lifestyle-garnett-feature, $lifestyle-garnett-main-1, $lifestyle-garnett-media-main-1);
 }
 
 .content--pillar-sport,
