@@ -3,7 +3,7 @@
 }
 
 .right-most-popular__heading {
-    @include multiline(4, $garnett-neutral-6, top);
+    @include multiline(4, $garnett-neutral-4, top);
     border-top: 0;
     padding-top: $gs-baseline * 1.5;
 }

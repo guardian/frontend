@@ -542,6 +542,7 @@ $quote-mark: 35px;
     }
 
     .drop-cap__inner {
+        font-weight: 700;
         line-height: 2.3rem;
         @include mq(tablet) {
             line-height: 3.7rem;
@@ -837,6 +838,10 @@ $quote-mark: 35px;
         @include mq(mobileLandscape) {
             right: gs-span(3) - $gs-gutter;
         }
+    }
+
+    .drop-cap__inner {
+        font-weight: 200;
     }
 }
 // *************** Media Styles ***************
