@@ -214,8 +214,17 @@ $fc-item-gutter: $gs-gutter / 4;
     flex-direction: row;
     padding-bottom: 0;
 
-    @include mq($from: tablet) {
-        padding-bottom: $gs-gutter * .25;
+    &.fc-item__standfirst-wrapper--timestamp {
+        flex-direction: column;
+
+        .fc-item__meta {
+            width: 100%;
+            flex-direction: row;
+        }
+
+        .fc-item__timestamp {
+            flex: 1;
+        }
     }
 }
 
@@ -333,21 +342,34 @@ $block-height: 58px;
     display: none;
 }
 
+.fc-item__timestamp,
 .fc-trail__count {
     display: flex;
-    line-height: 10px;
 
     .inline-icon {
         padding-right: 2px;
+    }
+}
+
+.fc-item__timestamp .inline-icon {
+    height: 11px;
+    width: 11px;
+    margin-top: 1px;
+
+    svg {
+        height: 11px;
+        width: 11px;
+    }
+}
+
+.fc-trail__count .inline-icon {
+    height: 14px;
+    width: 14px;
+    margin-top: 3px;
+
+    svg {
         height: 14px;
         width: 14px;
-        bottom: 0;
-        top: 0;
-
-        svg {
-            height: 14px;
-            width: 14px;
-        }
     }
 }
 
@@ -411,6 +433,13 @@ $block-height: 58px;
         padding-top: $gs-baseline / 2;
         padding-bottom: $gs-baseline / 2;
 
+    }
+
+    .fc-item__footer-meta-wrapper {
+        flex: 0 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
     }
 
     .fc-item__media-meta,

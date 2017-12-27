@@ -10,7 +10,6 @@ const updateAria = (container: Element): void => {
     const v: boolean = container.classList.contains('dropdown--active');
     const content = [...container.getElementsByClassName(contentCN)];
     const button = container.getElementsByClassName(buttonCN);
-
     content.forEach((c: Element) => {
         c.setAttribute('aria-hidden', (!v).toString());
     });
@@ -27,13 +26,19 @@ const init = (): void => {
         if (container) {
             fastdom
                 .read(() => {
+                    const documentElement: ?HTMLElement =
+                        document.documentElement;
                     const content = container.querySelector(`.${contentCN}`);
                     const isActive: boolean = container.classList.contains(
                         'dropdown--active'
                     );
-                    const isAnimated: boolean = container.classList.contains(
-                        'dropdown--animated'
-                    );
+                    const isAnimated: boolean =
+                        container.classList.contains('dropdown--animated') &&
+                        (documentElement !== null &&
+                            documentElement !== undefined &&
+                            documentElement.classList.contains(
+                                'disable-flashing-elements'
+                            ) === false);
                     const contentEstimatedHeight =
                         content.offsetHeight !== undefined &&
                         content.offsetHeight < window.innerHeight
@@ -85,7 +90,6 @@ const init = (): void => {
                                             'transitionend',
                                             () => {
                                                 fastdom.write(() => {
-                                                    updateAria(container);
                                                     content.style.height =
                                                         'auto';
                                                     container.style.pointerEvents =
@@ -95,6 +99,7 @@ const init = (): void => {
                                                             'dropdown--active'
                                                         );
                                                     }
+                                                    updateAria(container);
                                                 });
                                             }
                                         );

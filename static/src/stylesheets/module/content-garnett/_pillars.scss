@@ -1,4 +1,14 @@
 @mixin colorPalatte($pillarColor, $kickerColor, $mediaColor) {
+    &.content--type-analysis {
+        .content__headline {
+            background-image: repeating-linear-gradient(to bottom, transparent, transparent 39px, rgba($pillarColor, .5));
+            
+            @include mq(tablet) {
+                background-image: repeating-linear-gradient(to bottom, transparent, transparent 47px, rgba($pillarColor, .5));
+            }
+        }
+    }
+
     .button--secondary,
     .content__section-label__link,
     .drop-cap,
@@ -195,6 +205,19 @@
 .content--media:not(.paid-content).content--pillar-sport,
 .immersive-main-media__headline-container.content--pillar-sport {
     @include mediaPalatte($sport-garnett-media-main-1, sport);
+}
+
+.content--type-analysis {
+    .content__headline {
+        background-position: top left;
+        background-size: 1px 40px;
+        background-clip: content-box;
+        background-origin: content-box;
+
+        @include mq(tablet) {
+            background-size: 1px 48px;
+        }
+    }
 }
 
 .rich-link {

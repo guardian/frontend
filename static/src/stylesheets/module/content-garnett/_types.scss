@@ -1065,6 +1065,33 @@ $quote-mark: 35px;
         }
     }
 }
+// *************** Analysis ***************
+.content--type-analysis {
+    .media-primary {
+        margin-bottom: 0;
+    }
+
+    .content__labels--not-immersive {
+        display: none;
+    }
+
+    .content__headline {
+        line-height: 40px;
+        margin-right: -10px;
+
+        @include mq(mobileLandscape) {
+            margin-right: -20px;
+        }
+
+        @include mq(phablet) {
+            margin-right: 0;
+        }
+
+        @include mq(tablet) {
+            line-height: 48px;
+        }
+    }
+}
 // *************** Opinion and Feature standfirst overrides ***************
 
 .content--type-comment,

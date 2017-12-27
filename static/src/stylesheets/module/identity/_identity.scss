@@ -1,7 +1,6 @@
 /* Variables
    ========================================================================== */
-$identity-header-height: 44px;
-$identity-footer-height: 36px;
+$identity-header-height: 48px;
 
 /* Identity and registration
    ========================================================================== */
@@ -78,15 +77,6 @@ $identity-footer-height: 36px;
     @include mq(tablet) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
-    }
-}
-
-.identity-layout-vertical-wrapper {
-    min-height: calc(100vh - #{$identity-footer-height+$identity-header-height});
-    &.identity-layout-vertical-wrapper__tabs {
-        min-height: calc(100vh - #{($gs-gutter*6)+$identity-footer-height+$identity-header-height});
-        /*TODO: remove if page shadow goes away*/
-        /*rough estimate of header + top tabs height*/
     }
 }
 

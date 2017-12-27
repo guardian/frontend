@@ -54,17 +54,16 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
         if (ev.target === wizardEl) {
             fastdom
                 .read(() => [
-                    wizardEl.getElementsByClassName(
-                        'manage-account-wizard__step'
-                    ).length,
+                    wizardEl.getElementsByClassName('identity-wizard__step')
+                        .length,
                     [
                         ...document.getElementsByClassName(
-                            'manage-account-consent-wizard-counter'
+                            'identity-consent-wizard-counter'
                         ),
                     ][0],
                     [
                         ...document.getElementsByClassName(
-                            'manage-account-consent-wizard-button-back'
+                            'identity-consent-wizard-button-back'
                         ),
                     ][0],
                 ])
@@ -95,7 +94,7 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                                     );
                                 }
                                 buttonBackEl.classList.toggle(
-                                    'manage-account-consent-wizard__revealable--visible',
+                                    'identity-consent-wizard__revealable--visible',
                                     displayButtonBack
                                 );
                             }
@@ -106,7 +105,7 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                                 (!displayCounter).toString()
                             );
                             counterEl.classList.toggle(
-                                'manage-account-consent-wizard__revealable--visible',
+                                'identity-consent-wizard__revealable--visible',
                                 displayCounter
                             );
                         })
@@ -134,14 +133,13 @@ const bindScrollForNextButton = (buttonEl: HTMLElement): void => {
         );
 
     mediator.on('window:throttledScroll', debounce(check, 100));
-
-    check();
+    window.addEventListener(wizardPageChangedEv, () => {
+        check();
+    });
 };
 
 const bindNextButton = (buttonEl: HTMLElement): void => {
-    const wizardEl: ?Element = buttonEl.closest(
-        '.manage-account-wizard--consent'
-    );
+    const wizardEl: ?Element = buttonEl.closest('.identity-wizard--consent');
     if (wizardEl && wizardEl instanceof HTMLElement) {
         buttonEl.addEventListener('click', (ev: Event) => {
             ev.preventDefault();
@@ -169,10 +167,8 @@ const createEmailConsentCounter = (counterEl: HTMLElement): void => {
     const textEl = document.createElement('div');
     const checkboxesEl = getEmailCheckboxes();
 
-    indicatorEl.classList.add(
-        'manage-account-consent-wizard-counter__indicator'
-    );
-    textEl.classList.add('manage-account-consent-wizard-counter__text');
+    indicatorEl.classList.add('identity-consent-wizard-counter__indicator');
+    textEl.classList.add('identity-consent-wizard-counter__text');
 
     updateCounterIndicator(indicatorEl, checkboxesEl);
 
@@ -192,10 +188,10 @@ const createEmailConsentCounter = (counterEl: HTMLElement): void => {
 
 const enhanceConsentWizard = (): void => {
     const loaders = [
-        ['.manage-account-consent-wizard-counter', createEmailConsentCounter],
-        ['.manage-account-wizard--consent', bindEmailConsentCounterToWizard],
-        ['.js-manage-account-consent-wizard__next', bindNextButton],
-        ['.js-manage-account-consent-wizard__next', bindScrollForNextButton],
+        ['.identity-consent-wizard-counter', createEmailConsentCounter],
+        ['.identity-wizard--consent', bindEmailConsentCounterToWizard],
+        ['.js-identity-consent-wizard__next', bindNextButton],
+        ['.js-identity-consent-wizard__next', bindScrollForNextButton],
     ];
     loadEnhancers(loaders);
 };

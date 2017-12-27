@@ -3,18 +3,18 @@
 import fastdom from 'lib/fastdom-promise';
 import { scrollTo } from 'lib/scroller';
 
-const completedClassname = 'manage-account-wizard--completed';
-const pagerClassname = 'manage-account-wizard__controls-pager';
-const nextButtonElClassname = 'js-manage-account-wizard__next';
-const prevButtonElClassname = 'js-manage-account-wizard__prev';
-const containerClassname = 'manage-account-wizard';
+const completedClassname = 'identity-wizard--completed';
+const pagerClassname = 'identity-wizard__controls-pager';
+const nextButtonElClassname = 'js-identity-wizard__next';
+const prevButtonElClassname = 'js-identity-wizard__prev';
+const containerClassname = 'identity-wizard';
 
-const stepClassname = 'manage-account-wizard__step';
-const stepHiddenClassname = 'manage-account-wizard__step--hidden';
-const stepOutClassname = 'manage-account-wizard__step--out';
-const stepInClassname = 'manage-account-wizard__step--in';
-const stepOutReverseClassname = 'manage-account-wizard__step--out-reverse';
-const stepInReverseClassname = 'manage-account-wizard__step--in-reverse';
+const stepClassname = 'identity-wizard__step';
+const stepHiddenClassname = 'identity-wizard__step--hidden';
+const stepOutClassname = 'identity-wizard__step--out';
+const stepInClassname = 'identity-wizard__step--in';
+const stepOutReverseClassname = 'identity-wizard__step--out-reverse';
+const stepInReverseClassname = 'identity-wizard__step--in-reverse';
 const stepTransitionClassnames = [
     stepInClassname,
     stepInReverseClassname,
