@@ -21,10 +21,11 @@ from scrolling */
         margin-bottom: 0;
 
         &:after {
-            @include multiline(4, $garnett-neutral-4);
+            @include multiline(4, $garnett-neutral-4, bottom);
             background-color: #ffffff;
+            content: '';
+            display: block;
             height: 13px;
-            margin-bottom: 0;
         }
     }
 

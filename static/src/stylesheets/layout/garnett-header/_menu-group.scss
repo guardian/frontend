@@ -95,10 +95,9 @@
 }
 
 .menu-group--brand-extensions {
-    border-top: 0;
     position: absolute;
     right: $gs-gutter;
-    top: 12px;
+    top: $gs-baseline;
     bottom: 0;
     width: 186px;
 
@@ -113,6 +112,6 @@
     }
 
     .new-header--slim & {
-        top: 24px;
+        top: $gs-baseline * 2;
     }
 }

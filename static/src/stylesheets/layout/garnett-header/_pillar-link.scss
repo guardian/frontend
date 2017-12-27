@@ -7,11 +7,10 @@
     font-size: 14px;
     height: $gs-baseline * 2 + $gs-baseline / 2;
     line-height: 1;
-    // Hides border bottom from view
-    overflow: hidden;
     padding: 0 4px;
     position: relative;
     transition: color 150ms ease-out;
+    overflow: hidden;
 
     @include mq(mobileMedium) {
         font-size: 17px;
@@ -73,6 +72,11 @@
     }
 
     .new-header--open & {
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+
         &:after {
             content: none;
         }
