@@ -16,11 +16,11 @@ import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
 import utils.SafeLogging
+import utils.ConsentOrder._
 
 import scala.concurrent.Future
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
 import play.api.http.HttpConfiguration
-
 import pages.IdentityHtmlPage
 
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
@@ -30,7 +30,7 @@ object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membe
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
 
-sealed abstract class ConsentJourneyPage(id: String, val journey: String) extends IdentityPage(id, "Consent")
+sealed abstract class ConsentJourneyPage(id: String, val journey: String) extends IdentityPage(id, "Consent", isFlow = true)
 object ConsentJourneyPageAll extends ConsentJourneyPage("/consents/all", "all")
 object ConsentJourneyPageNewsletters extends ConsentJourneyPage("/consents/newsletters", "newsletters")
 object ConsentJourneyPageDefault extends ConsentJourneyPage("/consents", "default")
@@ -81,7 +81,7 @@ class EditProfileController(
           consentJourneyView(
             page = page,
             journey = page.journey,
-            forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
+            forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
             request.user,
             consentHint
           )
@@ -138,7 +138,9 @@ class EditProfileController(
                 InternalServerError(Json.toJson(idapiErrors))
 
               case Right(updatedUser) =>
-                Ok(s"Successfully updated marketing consent for user ${userDO.getId}")
+                val successMsg = s"Successfully updated marketing consent for user ${userDO.getId}"
+                logger.info(successMsg)
+                Ok(successMsg)
             }
           }
         ) // end bindFromRequest.fold(
@@ -153,10 +155,11 @@ class EditProfileController(
         val returnUrlForm = Form(single("returnUrl" -> nonEmptyText))
         returnUrlForm.bindFromRequest.fold(
           formWithErrors => Future.successful(BadRequest(Json.toJson(formWithErrors.errors.toList))),
-          returnUrl =>
+          returnUrl => {
+            val newConsents = if (request.user.consents.isEmpty) Consent.defaultConsents else request.user.consents
             identityApiClient.saveUser(
               request.user.id,
-              UserUpdateDTO(statusFields = Some(StatusFields(hasRepermissioned = Some(true)))),
+              UserUpdateDTO(consents = Some(newConsents), statusFields = Some(StatusFields(hasRepermissioned = Some(true)))),
               request.user.auth
             ).map {
               case Left(idapiErrors) =>
@@ -167,6 +170,7 @@ class EditProfileController(
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
                 SeeOther(returnUrl)
             }
+          }
         )
       }
     }
@@ -180,7 +184,7 @@ class EditProfileController(
       authWithConsentRedirectAction.async { implicit request =>
         profileFormsView(
           page = page,
-          forms = ProfileForms(userWithHintedConsent(consentHint), PublicEditProfilePage),
+          forms = ProfileForms(userWithOrderedConsents(request.user, consentHint),PublicEditProfilePage),
           request.user,
           consentsUpdated,
           consentHint
@@ -263,42 +267,26 @@ class EditProfileController(
 
     newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
-      NoCache(Ok(views.html.profileForms(
-        page,
-        user,
-        forms,
-        idRequestParser(request),
-        idUrlBuilder,
-        emailFilledForm,
-        newsletterService.getEmailSubscriptions(emailFilledForm),
-        EmailNewsletters.all,
-        consentsUpdated,
-        consentHint
-      )))
+      NoCache(Ok(
+        IdentityHtmlPage.html(
+          content = views.html.profileForms(
+            page.metadata.id,
+            user,
+            forms,
+            idRequestParser(request),
+            idUrlBuilder,
+            emailFilledForm,
+            newsletterService.getEmailSubscriptions(emailFilledForm),
+            EmailNewsletters.all,
+            consentsUpdated,
+            consentHint
+          )
+        )(page, request, context)
+      ))
 
     }
   }
 
-  /** If consentHint is provided it moves that consent to the head of consents list */
-  private def userWithHintedConsent(
-    consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): User = {
-
-    // https://stackoverflow.com/questions/24870729/moving-an-element-to-the-front-of-a-list-in-scala
-    def moveToFront(hint: String, consents: List[Consent]): List[Consent] = {
-      consents.span(consent => consent.id != hint) match {
-        case (as, h :: bs) => h :: as ++ bs
-        case _ => consents
-      }
-    }
-
-    consentHint match {
-      case None => request.user
-
-      case Some(hint) =>
-        val hintedConsents = moveToFront(hint, request.user.consents)
-        request.user.user.copy(consents = hintedConsents)
-    }
-  }
 }
 
 /**

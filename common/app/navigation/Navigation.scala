@@ -1,6 +1,6 @@
 package navigation
 
-import common.{Edition, Navigation, editions}
+import common.{Edition, NavItem, Navigation, editions}
 import _root_.model.Page
 import NavLinks._
 
@@ -103,7 +103,7 @@ case class NavMenu private (page: Page, root: NavRoot, edition: Edition) {
   def currentNavLink: Option[NavLink] = root.findDescendantByUrl(currentUrl, edition)
   def currentParent: Option[NavLink] = currentNavLink.flatMap( link => root.findParent(link, edition) )
   def currentPillar: Option[NavLink] = root.getPillar(currentParent, edition)
-  def subNavSections: Subnav = NavMenu.getSubnav(currentNavLink, currentParent, currentPillar)
+  def subNavSections: Subnav = NavMenu.getSubnav(page, currentNavLink, currentParent, currentPillar)
 }
 
 object NavMenu {
@@ -146,16 +146,27 @@ object NavMenu {
     s"/$id"
   }
 
-  private[navigation] def getSubnav(currentNavLink: Option[NavLink], currentParent: Option[NavLink], currentPillar: Option[NavLink]): Subnav = {
-    val currentNavHasChildren = currentNavLink.exists(_.children.nonEmpty)
-    val parentIsPillar =  currentParent.equals(currentPillar)
-    def currentNavIsPillar = currentNavLink.equals(currentPillar)
+  private[navigation] def getCustomSignPosting(navItem: NavItem): Subnav = {
+    val children = navItem.links.map( link => NavLink(link.breadcrumbTitle, link.href) )
+    val parent = NavLink(navItem.name.breadcrumbTitle, navItem.name.href)
+    Subnav(Some(parent), children)
+  }
 
-    val parent = if(currentNavHasChildren & !currentNavIsPillar) currentNavLink else if (parentIsPillar) None else currentParent
+  private[navigation] def getSubnav(page: Page, currentNavLink: Option[NavLink], currentParent: Option[NavLink], currentPillar: Option[NavLink]): Subnav = {
+    lazy val subnav = {
+      val currentNavHasChildren = currentNavLink.exists(_.children.nonEmpty)
+      val parentIsPillar = currentParent.equals(currentPillar)
 
-    val childrenToShow = if (currentNavHasChildren) currentNavLink else currentParent
-    val children = childrenToShow.map( navLink => navLink.children ).getOrElse(Nil)
+      val currentNavIsPillar = currentNavLink.equals(currentPillar)
 
-    Subnav(parent, children)
+      val parent = if (currentNavHasChildren & !currentNavIsPillar) currentNavLink else if (parentIsPillar) None else currentParent
+
+      val childrenToShow = if (currentNavHasChildren) currentNavLink else currentParent
+      val children = childrenToShow.map(navLink => navLink.children).getOrElse(Nil)
+
+      Subnav(parent, children)
+    }
+
+    page.metadata.customSignPosting.map(getCustomSignPosting).getOrElse(subnav)
   }
 }
