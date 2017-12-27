@@ -108,6 +108,9 @@
 
         &.fc-item--standard-tablet {
             @include mq(tablet) {
+                @include comment-avatar(2.5);
+            }
+            @include mq(desktop) {
                 @include comment-avatar(3);
             }
         }
@@ -124,10 +127,10 @@
 
         &.fc-item--list-media-mobile {
             @include mq($until: tablet) {
-                @include comment-avatar(1.05);
+                @include comment-avatar(2);
 
                 .fc-item__content {
-                    min-height: gs-span(1.2);
+                    min-height: gs-span(1.5);
                 }
 
                 .fc-item__footer--horizontal {
