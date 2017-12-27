@@ -143,12 +143,13 @@ $quote-mark: 35px;
 
     .content__meta-container {
         @include multiline(4, $garnett-neutral-4, top);
+        // creates correct top spacing for multiline bg image
+        padding-top: 17px;
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;
         margin-top: -$gs-baseline;
         margin-bottom: 0;
-        padding-top: 17px;
         @include mq(leftCol) {
             position: absolute;
         }
@@ -220,6 +221,7 @@ $quote-mark: 35px;
         font-style: italic;
         min-height: 0;
         line-height: 1;
+
         span[itemprop='author'] {
             @include f-header;
             display: inline;
@@ -237,13 +239,12 @@ $quote-mark: 35px;
         margin-bottom: 0;
         max-width: 100px;
         margin-left: auto;
-        margin-top: -5px;
-        padding-top: $gs-baseline/3;
         @include mq(mobileLandscape) {
             max-width: 120px;
         }
         @include mq(leftCol) {
             @include multiline(1, $garnett-neutral-4, top);
+            padding-top: $gs-baseline/3;
             text-align: left;
             max-width: none;
             margin-left: 0;
@@ -767,6 +768,7 @@ $quote-mark: 35px;
     }
 
     .content__dateline {
+        // magic number used to align date stamp with standfirst baseline in opinion pieces per design
         margin-top: -48px;
         @include mq(leftCol) {
             margin-top: 0;
@@ -1072,6 +1074,7 @@ $quote-mark: 35px;
     }
 }
 // *************** Analysis ***************
+
 .content--type-analysis {
     .media-primary {
         margin-bottom: 0;
@@ -1084,15 +1087,12 @@ $quote-mark: 35px;
     .content__headline {
         line-height: 40px;
         margin-right: -10px;
-
         @include mq(mobileLandscape) {
             margin-right: -20px;
         }
-
         @include mq(phablet) {
             margin-right: 0;
         }
-
         @include mq(tablet) {
             line-height: 48px;
         }
