@@ -25,7 +25,7 @@
         itemscope
         itemtype="http://schema.org/ImageObject"
         data-component="image"
-        class="@figureClasses @shareInfo.map { _ => fig--narrow-caption fig--has-shares} @if(!imageOption.map(_.showCaption).getOrElse(false)){fig--no-caption}"
+        class="@figureClasses @shareInfo.map { _ => fig--narrow-caption fig--has-shares} @if(!imageOption.map(_.showCaption).getOrElse(false)){fig--no-caption} @if(isFeature && isShowcase){fig-showcase}"
             @defining(imageOption.flatMap(_.mediaId)){ id =>
                 @id.map{ id => data-media-id="@id" }
             }
