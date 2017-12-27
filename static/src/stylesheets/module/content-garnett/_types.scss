@@ -220,7 +220,7 @@ $quote-mark: 35px;
         color: #333333;
         font-style: italic;
         min-height: 0;
-        line-height: 1;
+        margin-top: -$gs-baseline/4;
 
         span[itemprop='author'] {
             @include f-header;
@@ -243,8 +243,6 @@ $quote-mark: 35px;
             max-width: 120px;
         }
         @include mq(leftCol) {
-            @include multiline(1, $garnett-neutral-4, top);
-            padding-top: $gs-baseline/3;
             text-align: left;
             max-width: none;
             margin-left: 0;
@@ -393,6 +391,7 @@ $quote-mark: 35px;
     }
     // *************** Header and Body Styles ***************
     .content__article-body {
+        line-height: 1.4;
         &:before {
             @include mq(leftCol) {
                 content: '';
