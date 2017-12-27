@@ -25,7 +25,7 @@
             role="menu">
             @pillar.children.map { sectionItem =>
                 <li class="@RenderClasses(Map(
-                            "menu-item--home" -> (sectionItem.iconName == "home")
+                            "menu-item--home hide-from-desktop" -> (sectionItem.iconName == "home")
                         ), "menu-item")"
                     role="menuitem">
                     <a class="menu-item__title"

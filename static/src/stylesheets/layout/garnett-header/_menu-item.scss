@@ -9,7 +9,7 @@
             float: left;
             overflow: visible;
             width: $pillar-width--desktop;
-            padding: 0 $pillar-padding $gs-baseline ;
+            padding: 0 $pillar-padding $gs-baseline;
 
             &:first-child {
                 padding-left: 0;
@@ -21,12 +21,6 @@
                 width: $pillar-width--leftCol;
             }
         }
-    }
-}
-
-.menu-item--home {
-    @include mq(desktop) {
-        display: none;
     }
 }
 
