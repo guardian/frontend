@@ -1,7 +1,5 @@
 package actions
 
-import java.net.URLEncoder
-
 import actions.AuthenticatedActions.AuthRequest
 import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
@@ -14,7 +12,6 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object AuthenticatedActions {
   type AuthRequest[A] = AuthenticatedRequest[A, AuthenticatedUser]
-//  type UserWithPermissions = (AuthenticatedUser, List[])
 }
 
 class AuthenticatedActions(
