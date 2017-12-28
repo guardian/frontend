@@ -1,9 +1,6 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import {
-    endOfYearCountdown,
-    asWeHeadInto2018,
-} from 'common/modules/commercial/acquisitions-copy';
+import { endOfYearCountdown } from 'common/modules/commercial/acquisitions-copy';
 
 const daysLeftUntilEndOfYear = (): string => {
     const now = Date.now();
@@ -41,13 +38,6 @@ export const acquisitionsEpicEndOfYearCountdown = makeABTest({
             products: [],
             options: {
                 copy: endOfYearCountdown(daysLeftUntilEndOfYear()),
-            },
-        },
-        {
-            id: 'as_we_head_into_2018',
-            products: [],
-            options: {
-                copy: asWeHeadInto2018,
             },
         },
     ],

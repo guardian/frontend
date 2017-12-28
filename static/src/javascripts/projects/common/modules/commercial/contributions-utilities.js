@@ -26,23 +26,17 @@ import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 import {
     useSupportDomain,
-    selectBaseUrl,
+    supportBaseURL,
 } from 'common/modules/commercial/support-utilities';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 export type CtaUrls = {
-    membershipUrl?: string,
     contributeUrl?: string,
     supportUrl?: string,
 };
 
-const membershipBaseURL = selectBaseUrl(
-    'https://membership.theguardian.com/supporter'
-);
-const contributionsBaseURL = selectBaseUrl(
-    'https://contribute.theguardian.com'
-);
+const contributionsBaseURL = 'https://contribute.theguardian.com';
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -65,7 +59,6 @@ const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
         componentName: options.componentName,
         testimonialBlock: options.testimonialBlock,
         buttonTemplate: options.buttonTemplate({
-            membershipUrl: options.membershipURL,
             contributeUrl: options.contributeURL,
             supportUrl: options.supportURL,
         }),
@@ -203,19 +196,10 @@ const makeABTestVariant = (
                 variant: id,
             },
         }),
-        membershipURL = addTrackingCodesToUrl({
-            base: membershipBaseURL,
-            componentType: parentTest.componentType,
-            componentId: campaignCode,
-            campaignCode,
-            abTest: {
-                name: parentTest.id,
-                variant: id,
-            },
-        }),
-        supportCustomURL = null,
         supportURL = addTrackingCodesToUrl({
-            base: supportCustomURL || selectBaseUrl(),
+            base: `${supportBaseURL}${
+                geolocationGetSync() === 'GB' ? '?bundle=contribute' : ''
+            }`,
             componentType: parentTest.componentType,
             componentId: campaignCode,
             campaignCode,
@@ -291,7 +275,6 @@ const makeABTestVariant = (
             products,
             campaignCode,
             contributeURL,
-            membershipURL,
             supportURL,
             template,
             buttonTemplate,
@@ -387,35 +370,8 @@ const makeABTestVariant = (
                 render.apply(this);
             }
         },
-
         impression,
         success,
-
-        contributionsURLBuilder(codeModifier) {
-            return addTrackingCodesToUrl({
-                base: contributionsBaseURL,
-                componentType: parentTest.componentType,
-                componentId: codeModifier(campaignCode),
-                campaignCode: codeModifier(campaignCode),
-                abTest: {
-                    name: parentTest.id,
-                    variant: id,
-                },
-            });
-        },
-
-        membershipURLBuilder(codeModifier) {
-            return addTrackingCodesToUrl({
-                base: membershipBaseURL,
-                componentType: parentTest.componentType,
-                componentId: codeModifier(campaignCode),
-                campaignCode: codeModifier(campaignCode),
-                abTest: {
-                    name: parentTest.id,
-                    variant: id,
-                },
-            });
-        },
     };
 };
 

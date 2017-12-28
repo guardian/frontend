@@ -8,36 +8,6 @@ import org.scalatest.{FlatSpec, Matchers, OptionValues}
 import FixtureBuilder.mkPressedContent
 
 class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
-  it should "deduplicate content" in {
-    val duplicatedA = mkPressedContent(99)
-    val duplicatedB = mkPressedContent(88)
-
-    val pressedPage = mkPressedPage(
-      List(
-        mkPressedCollection(id = "1", curated = List(duplicatedA, mkContent(1)), backfill = List(mkContent(2))),
-        mkPressedCollection(id = "2", curated = List(mkContent(3)), backfill = List(duplicatedA, duplicatedB, mkContent(4))),
-        mkPressedCollection(id = "3", curated = List(duplicatedA, duplicatedB, mkContent(5)), backfill = List(mkContent(6)))
-      )
-    )
-
-    val result = CollectionEmail.fromPressedPage(pressedPage)
-    result.contentCollections(1).cards.map(_.header.url) should not contain EditionalisedLink("/99")
-    result.contentCollections(2).cards.map(_.header.url) should contain noneOf(EditionalisedLink("/99"), EditionalisedLink("/88"))
-  }
-
-  it should "default to 6 items per collection" in {
-    val pressedPage = mkPressedPage(
-      List(
-        mkPressedCollection(
-          id = "1",
-          curated = (1 to 4).map(mkContent),
-          backfill = (5 to 8).map(mkContent))
-      )
-    )
-
-    val result = CollectionEmail.fromPressedPage(pressedPage)
-    result.contentCollections.headOption.map(_.cards.length) shouldEqual Some(6)
-  }
 
   it should "respect the maxItemsToDisplay property if set" in {
     val pressedPage = mkPressedPage(
@@ -57,7 +27,7 @@ class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
     val pressedPage = mkPressedPage(
       List(
         mkPressedCollection(id = "1", curated = (10 to 12).map(mkContent), backfill = (13 to 15).map(mkContent)),
-        mkPressedCollection(id = "2", curated = (10 to 12).map(mkContent), backfill = (13 to 15).map(mkContent)),
+        mkPressedCollection(id = "2", curated = Nil, backfill = Nil),
         mkPressedCollection(id = "3", curated = (30 to 32).map(mkContent), backfill = (33 to 35).map(mkContent))
       )
     )
@@ -77,8 +47,6 @@ class CollectionEmailTest extends FlatSpec with Matchers with OptionValues {
       backfill = backfill.toList,
       treats = List.empty,
       lastUpdated = None,
-      updatedBy = None,
-      updatedEmail = None,
       href = None,
       description = None,
       collectionType = "unknown",

@@ -1,7 +1,6 @@
 package navigation
 
 import experiments._
-import conf.switches.Switches.{UkSupportFrontendActive, UsSupportFrontendActive}
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import common.Edition
@@ -108,9 +107,8 @@ object UrlHelpers {
 
   def countryUrlLogic(editionId: String, position: Position, defaultDestination: ReaderRevenueSite)(implicit request: RequestHeader): String =
     editionId match {
-      case "us" if UsSupportFrontendActive.isSwitchedOn => getReaderRevenueUrl(SupportUsContribute, position)
-      case "us" if !UsSupportFrontendActive.isSwitchedOn => getReaderRevenueUrl(Contribute, position)
-      case "uk" if UkSupportFrontendActive.isSwitchedOn => getReaderRevenueUrl(Support, position)
+      case "us" => getReaderRevenueUrl(SupportUsContribute, position)
+      case "uk" => getReaderRevenueUrl(Support, position)
       case _ => getReaderRevenueUrl(defaultDestination, position)
     }
 
@@ -130,7 +128,7 @@ object UrlHelpers {
 
   def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
     val editionId = Edition(request).id.toLowerCase()
-    if (editionId == "uk" && UkSupportFrontendActive.isSwitchedOn) {
+    if (editionId == "uk") {
       getReaderRevenueUrl(Support, position)
     } else {
       getReaderRevenueUrl(Subscribe, position)

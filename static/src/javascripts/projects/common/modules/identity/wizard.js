@@ -3,18 +3,18 @@
 import fastdom from 'lib/fastdom-promise';
 import { scrollTo } from 'lib/scroller';
 
-const completedClassname = 'manage-account-wizard--completed';
-const pagerClassname = 'manage-account-wizard__controls-pager';
-const nextButtonElClassname = 'js-manage-account-wizard__next';
-const prevButtonElClassname = 'js-manage-account-wizard__prev';
-const containerClassname = 'manage-account-wizard';
+const completedClassname = 'identity-wizard--completed';
+const pagerClassname = 'identity-wizard__controls-pager';
+const nextButtonElClassname = 'js-identity-wizard__next';
+const prevButtonElClassname = 'js-identity-wizard__prev';
+const containerClassname = 'identity-wizard';
 
-const stepClassname = 'manage-account-wizard__step';
-const stepHiddenClassname = 'manage-account-wizard__step--hidden';
-const stepOutClassname = 'manage-account-wizard__step--out';
-const stepInClassname = 'manage-account-wizard__step--in';
-const stepOutReverseClassname = 'manage-account-wizard__step--out-reverse';
-const stepInReverseClassname = 'manage-account-wizard__step--in-reverse';
+const stepClassname = 'identity-wizard__step';
+const stepHiddenClassname = 'identity-wizard__step--hidden';
+const stepOutClassname = 'identity-wizard__step--out';
+const stepInClassname = 'identity-wizard__step--in';
+const stepOutReverseClassname = 'identity-wizard__step--out-reverse';
+const stepInReverseClassname = 'identity-wizard__step--in-reverse';
 const stepTransitionClassnames = [
     stepInClassname,
     stepInReverseClassname,
@@ -167,6 +167,18 @@ const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
             })
         );
 
+const updateFocus = (stepEl: HTMLElement): Promise<void> =>
+    fastdom.write(() => {
+        window.setTimeout(() => {
+            stepEl.setAttribute('tabindex', '-1');
+            stepEl.focus();
+        }, 0);
+        /*
+        focus is buggy, a timeout kinda fixes it
+        https://stackoverflow.com/questions/1096436/document-getelementbyidid-focus-is-not-working-for-firefox-or-chrome/
+        */
+    });
+
 const updateSteps = (
     wizardEl: HTMLElement,
     currentPosition: number,
@@ -178,6 +190,7 @@ const updateSteps = (
             switch (i) {
                 case newPosition:
                     stepEl.setAttribute('aria-hidden', 'false');
+                    stepEl.removeAttribute('hidden');
                     animateIncomingStep(
                         wizardEl,
                         stepEl,
@@ -186,6 +199,7 @@ const updateSteps = (
                     break;
                 case currentPosition:
                     stepEl.setAttribute('aria-hidden', 'true');
+                    stepEl.removeAttribute('hidden');
                     animateOutgoingStep(
                         wizardEl,
                         stepEl,
@@ -194,6 +208,7 @@ const updateSteps = (
                     break;
                 default:
                     stepEl.setAttribute('aria-hidden', 'true');
+                    stepEl.setAttribute('hidden', 'hidden');
                     stepEl.classList.add(stepHiddenClassname);
                     stepEl.classList.remove(...stepTransitionClassnames);
             }
@@ -247,7 +262,8 @@ const setPosition = (
                 currentPosition,
                 newPosition,
                 userInitiated
-                    ? pushBrowserState(wizardEl, newPosition)
+                    ? pushBrowserState(wizardEl, newPosition) &&
+                      updateFocus(stepEls[newPosition])
                     : updateBrowserState(wizardEl, newPosition),
                 updateCounter(wizardEl),
                 updateSteps(wizardEl, currentPosition, newPosition, stepEls),

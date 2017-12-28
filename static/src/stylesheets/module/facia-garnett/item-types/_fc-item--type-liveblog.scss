@@ -12,7 +12,7 @@
 
         .fc-item__kicker {
             color: $color2;
-            border-image: linear-gradient(to top, transparent, transparent .25em, $color2 .25em) 0 1;
+            border-image: linear-gradient(to top, transparent, transparent .125em, $color2 .125em) 0 1;
         }
 
         .fc-item__headline {
@@ -23,7 +23,7 @@
             color: #ffffff;
         }
 
-        .fc-trail__count--commentcount {
+        .fc-item__meta {
             color: $color2;
 
             .inline-icon {

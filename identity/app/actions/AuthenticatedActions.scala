@@ -3,7 +3,7 @@ package actions
 import java.net.URLEncoder
 
 import actions.AuthenticatedActions.AuthRequest
-import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityRedirectUsersWithLingeringV1ConsentsSwitch}
+import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
 import play.api.mvc._
@@ -38,11 +38,11 @@ class AuthenticatedActions(
     SeeOther(identityUrlBuilder.buildUrl(redirectUrlWithParams))
   }
 
-  def sendUserToConsentJourney(request: RequestHeader): Result =
-    redirectWithReturn(request, "/consent?journey=repermission")
+  def sendUserToAllConsentsJourney(request: RequestHeader): Result =
+    redirectWithReturn(request, "/consents/all")
 
-  def sendUserToNarrowConsentJourney(request: RequestHeader): Result =
-    redirectWithReturn(request, "/consent?journey=repermission-narrow")
+  def sendUserToNewslettersConsentsJourney(request: RequestHeader): Result =
+    redirectWithReturn(request, "/consents/newsletters")
 
   def sendUserToSignin(request: RequestHeader): Result =
     redirectWithReturn(request, "/signin")
@@ -116,7 +116,7 @@ class AuthenticatedActions(
     override val executionContext = ec
 
     def refine[A](request: AuthRequest[A]) =
-      if (IdentityRedirectUsersWithLingeringV1ConsentsSwitch.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
+      if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
         decideConsentJourney(request)
       else
         Future.successful(Right(request))
@@ -127,9 +127,9 @@ class AuthenticatedActions(
           if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
             Right(request)
           else
-            Left(sendUserToNarrowConsentJourney(request))
+            Left(sendUserToNewslettersConsentsJourney(request))
         }
-      else Future.successful(Left(sendUserToConsentJourney(request)))
+      else Future.successful(Left(sendUserToAllConsentsJourney(request)))
 
     private def userHasRepermissioned[A](request: AuthRequest[A]): Boolean =
       request.user.statusFields.hasRepermissioned.contains(true)

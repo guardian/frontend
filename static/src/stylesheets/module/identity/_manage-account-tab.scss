@@ -316,7 +316,7 @@
     @include fs-header(3);
     color: $identity-main;
 }
-.manage-account-headerNote {
+.identity-title-subtitle {
     @include fs-bodyCopy(2);
     margin-top: $gs-baseline / 2;
 }
@@ -511,6 +511,14 @@
 
 .manage-account__button--icon {
     justify-content: space-between;
+    .inline-icon {
+        transition: .125s;
+    }
+    &.manage-account__button--icon--rotate-down {
+        .inline-icon {
+            transform: rotate(90deg);
+        }
+    }
 }
 
 .manage-account__button--light {
