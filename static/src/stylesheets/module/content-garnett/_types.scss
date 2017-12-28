@@ -278,7 +278,7 @@ $quote-mark: 35px;
 
         .button {
             height: 1.5rem;
-            font-size: .75rem;
+            font-size: 0.75rem;
             font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
@@ -392,6 +392,7 @@ $quote-mark: 35px;
     // *************** Header and Body Styles ***************
     .content__article-body {
         line-height: 1.4;
+
         &:before {
             @include mq(leftCol) {
                 content: '';
@@ -540,12 +541,14 @@ $quote-mark: 35px;
         margin-bottom: $gs-baseline/2;
     }
 
+    .drop-cap {
+        height: 80px;
+    }
+
     .drop-cap__inner {
         font-weight: 700;
-        line-height: 2.3rem;
-        @include mq(tablet) {
-            line-height: 3.7rem;
-        }
+        font-size: 109px;
+        line-height: 75px;
     }
     // *************** Quote Styles ***************
     .element-pullquote {
@@ -892,8 +895,8 @@ $quote-mark: 35px;
     .byline a,
     .from-content-api a {
         text-decoration: none;
-        border-bottom: .1px solid $garnett-neutral-6;
-        transition: border-color .15s ease-out;
+        border-bottom: 0.1px solid $garnett-neutral-6;
+        transition: border-color 0.15s ease-out;
 
         &:hover {
             border-color: $garnett-neutral-4;
@@ -1008,7 +1011,7 @@ $quote-mark: 35px;
                 border-color: transparent transparent transparent $garnett-neutral-5;
                 @include mq(tablet) {
                     // 0 border radius on mobile because stock android has a render bug with it here
-                    border-radius: .2em;
+                    border-radius: 0.2em;
                 }
             }
         }
@@ -1159,16 +1162,17 @@ $quote-mark: 35px;
 .content--type-article {
     .team__info {
         @include fs-headlineGarnett(3);
-
         @include mq(mobileLandscape) {
             @include fs-headlineGarnett(4);
         }
     }
+
     .match-summary--responsive {
         .team__info {
             @include fs-headlineGarnett(7);
         }
     }
+
     .goal-attempts__off-target,
     .goal-attempts__on-target {
         @include fs-headerGarnett(2);
@@ -1180,9 +1184,10 @@ $quote-mark: 35px;
             @include fs-headerGarnett(5);
         }
     }
+
     .bar-fight__bar {
         @include fs-headerGarnett(2);
         line-height: $gs-baseline * 1.5;
-        padding: $gs-baseline/6 ($gs-gutter/4)+3  $gs-baseline/2;
+        padding: $gs-baseline/6 ($gs-gutter/4)+3 $gs-baseline/2;
     }
 }
