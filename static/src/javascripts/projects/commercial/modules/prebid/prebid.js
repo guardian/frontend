@@ -133,28 +133,36 @@ class PrebidService {
         });
     }
 
+    // Prebid 1.0 supports concurrent bid requests, but for 0.34, each request
+    // must be enqueued sequentially.
+    static requestQueue: Promise<void> = Promise.resolve();
+
     static requestBids(advert: Advert): Promise<void> {
         if (dfpEnv.externalDemand !== 'prebid') {
-            return Promise.resolve();
+            return PrebidService.requestQueue;
         }
         const adUnit = new PrebidAdUnit(advert);
 
         if (adUnit.bids.length === 0) {
-            return Promise.resolve();
+            return PrebidService.requestQueue;
         }
 
-        return new Promise(resolve => {
-            window.pbjs.que.push(() => {
-                window.pbjs.requestBids({
-                    adUnits: [adUnit],
-                    timeout: bidderTimeout,
-                    bidsBackHandler() {
-                        window.pbjs.setTargetingForGPTAsync([adUnit.code]);
-                        resolve();
-                    },
+        PrebidService.requestQueue = PrebidService.requestQueue.then(() => 
+            new Promise(resolve => {
+                window.pbjs.que.push(() => {
+                    window.pbjs.requestBids({
+                        adUnits: [adUnit],
+                        timeout: bidderTimeout,
+                        bidsBackHandler() {
+                            window.pbjs.setTargetingForGPTAsync([adUnit.code]);
+                            resolve();
+                        },
+                    });
                 });
-            });
-        });
+            })
+        );
+
+        return PrebidService.requestQueue;
     }
 }
 
