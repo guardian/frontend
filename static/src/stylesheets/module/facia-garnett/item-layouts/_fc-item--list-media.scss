@@ -71,25 +71,20 @@ Media list item. Looks a bit like this:
     }
 
     &.fc-item--has-cutout {
+        @include avatar(2.6);
+
+        .fc-item__avatar {
+            display: block;
+        }
+        
         .fc-item__content {
-            min-height: gs-span(2);
+            min-height: gs-height(2.6);
             padding-left: $gs-gutter * .25;
             padding-right: gs-span(1.5);
         }
 
         .fc-item__standfirst {
             display: none;
-        }
-
-        .fc-item__avatar {
-            display: block;
-            width: gs-span(1.15);
-            height: gs-span(1.15);
-        }
-
-        .fc-item__avatar__media {
-            right: - $gs-gutter / 2;
-            height: gs-span(1) + $gs-baseline * 2;
         }
     }
 
