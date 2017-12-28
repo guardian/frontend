@@ -18,7 +18,6 @@ $checkbox-size: $gs-gutter / 1.25;
 
     ul {
         display: grid;
-        padding-top: $local-gutter;
         grid-row-gap: $row-gutter;
         grid-column-gap: $row-gutter;
         grid-template-columns: repeat(1, 1fr);
@@ -31,6 +30,11 @@ $checkbox-size: $gs-gutter / 1.25;
 
     &.manage-account__switches--wide ul {
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    &.manage-account__switches--single-column ul {
+        grid-template-columns: repeat(1, 1fr);
+        grid-auto-rows: min-content;
     }
 
     li {
