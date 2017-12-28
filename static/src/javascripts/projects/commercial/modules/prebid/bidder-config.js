@@ -14,7 +14,7 @@ export const bidderConfig: PrebidBidderCriteria = {
             edition: 'any',
             breakpoint: { min: 'mobile' },
             sizes: [[300, 250]],
-            slots: ['dfp-ad--inline'],
+            slots: ['dfp-ad--inline', 'dfp-ad--mostpop'],
         },
         {
             edition: 'any',
@@ -28,7 +28,7 @@ export const bidderConfig: PrebidBidderCriteria = {
             edition: 'any',
             breakpoint: { min: 'mobile' },
             sizes: [[300, 250]],
-            slots: ['dfp-ad--inline'],
+            slots: ['dfp-ad--inline', 'dfp-ad--mostpop'],
         },
         {
             edition: 'any',
