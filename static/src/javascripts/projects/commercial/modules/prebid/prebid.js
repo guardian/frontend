@@ -30,17 +30,19 @@ const filterConfigEntries = (
 ): PrebidAdSlotCriteria[] => {
     let bidConfigEntries: PrebidAdSlotCriteria[] = bidderConfig[bidder] || [];
 
-    bidConfigEntries = bidConfigEntries.filter(
-        bid => bid.slots.some( slotName => slotId.startsWith(slotName))
+    bidConfigEntries = bidConfigEntries.filter(bid =>
+        bid.slots.some(slotName => slotId.startsWith(slotName))
     );
     bidConfigEntries = bidConfigEntries.filter(
         bid => bid.edition === config.page.edition || bid.edition === 'any'
     );
-    bidConfigEntries = bidConfigEntries.filter(
-        bid => isBreakpoint(bid.breakpoint)
+    bidConfigEntries = bidConfigEntries.filter(bid =>
+        isBreakpoint(bid.breakpoint)
     );
-    bidConfigEntries = bidConfigEntries.filter(
-        bid => slotSizes.some(slotSize => bid.sizes.some( configSize => isEqualAdSize(configSize, slotSize)))
+    bidConfigEntries = bidConfigEntries.filter(bid =>
+        slotSizes.some(slotSize =>
+            bid.sizes.some(configSize => isEqualAdSize(configSize, slotSize))
+        )
     );
 
     return bidConfigEntries;
@@ -93,27 +95,31 @@ class PrebidAdUnit {
                 // A config entry will specify a size, which should be added to the prebid ad unit if's not already included.
                 matchingConfigEntries.forEach(
                     (matchedEntry: PrebidAdSlotCriteria) => {
-                        const newSizes = matchedEntry.sizes.filter( (newSize: PrebidSize) => 
-                            this.sizes.findIndex(size => isEqualAdSize(size, newSize)) === -1);    
+                        const newSizes = matchedEntry.sizes.filter(
+                            (newSize: PrebidSize) =>
+                                this.sizes.findIndex(size =>
+                                    isEqualAdSize(size, newSize)
+                                ) === -1
+                        );
                         this.sizes.push(...newSizes);
-                    } 
+                    }
                 );
-    
+
                 this.bids.push({
                     bidder: bidder.name,
                     params: bidder.bidParams(this.code),
                 });
             }
         });
-    };
+    }
 }
 
 class PrebidService {
     static initialise(): Promise<any> {
-        return new Promise( (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             require.ensure(
                 [],
-                (require) => {
+                require => {
                     require('prebid.js/build/dist/prebid');
                     window.pbjs.bidderSettings = {
                         standard: {
