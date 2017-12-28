@@ -116,7 +116,7 @@ class PrebidAdUnit {
 
 class PrebidService {
     static initialise(): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             require.ensure(
                 [],
                 require => {
@@ -128,7 +128,6 @@ class PrebidService {
                     };
                     resolve();
                 },
-                reject,
                 'commercial-prebid'
             );
         });
