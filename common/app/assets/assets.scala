@@ -59,7 +59,7 @@ object css {
   private val memoizedCss: ConcurrentMap[String, Try[String]] = TrieMap()
 
   def head(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
-  def inlineNavigation(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(GarnettHeader)) "head.navigation.garnett" else "head.navigation"
+  def inlineNavigation(implicit request: RequestHeader, context: ApplicationContext): String = if (ActiveExperiments.isParticipating(GarnettHeader)) inline("head.navigation.garnett") else inline("head.navigation")
   def inlineStoryPackage(implicit context: ApplicationContext): String = inline("story-package")
   def inlineStoryPackageGarnett(implicit context: ApplicationContext): String = inline("story-package-garnett")
   def inlinePhotoEssay(implicit context: ApplicationContext): String = inline("article-photo-essay")
