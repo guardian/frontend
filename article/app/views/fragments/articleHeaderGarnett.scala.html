@@ -1,0 +1,90 @@
+@(article: model.Article, page: model.Page, showBadge: Boolean = false, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@import views.html.fragments.langAttributes
+@import model.Badges.badgeFor
+@import views.support.Commercial.isPaidContent
+@import views.support.ContributorLinks
+@import views.support.TrailCssClasses.toneClass
+
+<header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)
+    @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) { content__head--byline-pic}
+    @badgeFor(article).map { badge => content__head--is-badged
+        @badge.classModifier.map(modifier => s"content__head--$modifier")
+    }">
+
+    @fragments.meta.metaInline(article, amp)
+
+    <div class="content__headline-standfirst-wrapper">
+        <div class="content__header tonal__header">
+            <div class="u-cf">
+
+                <h1 class="content__headline" articleprop="headline" @langAttributes(article.content)>
+                    @Html(article.trail.headline)
+                </h1>
+
+                @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) {
+                    @fragments.meta.bylineImage(article.tags)
+                }
+
+                @if(article.content.hasTonalHeaderByline) {
+                    @article.trail.byline.map { text =>
+                        <span class="content__headline content__headline--byline">@ContributorLinks(text, article.tags.contributors)</span>
+                    }
+                }
+
+                @if(article.content.hasTonalHeaderIllustration) {
+                    <span class="content__head__illustration hide-on-mobile">@fragments.inlineSvg("illustration-letters", "icon")</span>
+                }
+
+                @article.content.starRating.map { rating =>
+                    <span class="u-h" articleprop="reviewRating" articlescope articletype="http://schema.org/Rating">
+                        <meta articleprop="worstRating" content="1" />
+                        <span articleprop="ratingValue">@rating</span> /
+                        <span articleprop="bestRating">5</span> stars
+                    </span>
+                    @fragments.items.elements.starRating(rating)
+                }
+
+                @article.content.imdb.map { imdbId =>
+                    <div articleprop="articleReviewed" articlescope articletype="http://schema.org/Movie">
+                        <link articleprop="sameAs" href="http://www.imdb.com/title/@imdbId/">
+                        @defining(article.content.primaryKeyWordTag.map(_.name).getOrElse(".")) { tag =>
+                            @* we're not the authority on the film name, but just to keep google validator happy
+                            *@<meta articleprop="name" content="@tag"/>
+                        }
+                    </div>
+                }
+
+                @article.content.isbn.map { isbn =>
+                    <div articleprop="articleReviewed" articlescope articletype="http://schema.org/Book">
+                        <meta articleprop="isbn" content="@isbn">
+                        <div articleprop="author" articlescope articletype="http://schema.org/Person">
+                            <meta articleprop="sameAs" content="http://schema.org/Person@* we can't know *@">
+                            <meta articleprop="name" content=".@* we can't know *@">
+                        </div>
+                        <meta articleprop="name" content=".@* we can't know *@">
+                    </div>
+                }
+
+                @if(showBadge && !isPaidContent(page)) {
+                    @fragments.commercial.badge(article, page)
+                }
+
+            </div>
+        </div>
+
+        <div class="tonal__standfirst u-cf">
+            @if(article.fields.standfirst.isDefined) {
+                @if(showBadge && isPaidContent(page)) {
+                    <div class="content__meta-container js-content-meta js-football-meta u-cf">
+                        @fragments.commercial.badge(article, page)
+                    </div>
+                }
+                @fragments.standfirst(article)
+            }
+        </div>
+    </div>
+
+    @fragments.mainMedia(article, amp)
+    @fragments.contentMeta(article, page, amp = amp)
+</header>
