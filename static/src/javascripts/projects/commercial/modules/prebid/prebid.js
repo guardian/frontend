@@ -145,11 +145,11 @@ class PrebidService {
 
         return new Promise(resolve => {
             window.pbjs.que.push(() => {
-                window.pbjs.addAdUnits([adUnit]);
                 window.pbjs.requestBids({
+                    adUnits: [adUnit],
                     timeout: bidderTimeout,
                     bidsBackHandler() {
-                        window.pbjs.setTargetingForGPTAsync();
+                        window.pbjs.setTargetingForGPTAsync([adUnit.code]);
                         resolve();
                     },
                 });
