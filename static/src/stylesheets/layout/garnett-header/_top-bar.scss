@@ -55,6 +55,19 @@
             transform: translateY(0) rotate(45deg);
         }
     }
+
+    &.is-active,
+    &[aria-expanded=true] {
+        &:after {
+            transform: translateY(1px) rotate(-135deg);
+        }
+
+        &:hover {
+            &:after {
+                transform: translateY(-1px) rotate(-135deg);
+            }
+        }
+    }
 }
 
 .top-bar__item--cta {

@@ -61,6 +61,11 @@
         transition: transform 150ms ease-out;
     }
 
+    .is-not-modern &:after {
+        // Hides avtive and hover underlines from masking text on pillars in non-js
+        content: none;
+    }
+
     &:hover,
     &:focus {
         text-decoration: none;

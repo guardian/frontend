@@ -40,14 +40,5 @@
                 }
             }
         }
-
-        & ~ .new-header__menu-toggle .pillar-link--sections {
-            // color: #ffffff;
-            // background-color: $guardian-brand-dark;
-
-            &:before {
-                content: none;
-            }
-        }
     }
 }
