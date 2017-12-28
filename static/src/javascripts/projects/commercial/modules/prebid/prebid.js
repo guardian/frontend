@@ -147,19 +147,22 @@ class PrebidService {
             return PrebidService.requestQueue;
         }
 
-        PrebidService.requestQueue = PrebidService.requestQueue.then(() => 
-            new Promise(resolve => {
-                window.pbjs.que.push(() => {
-                    window.pbjs.requestBids({
-                        adUnits: [adUnit],
-                        timeout: bidderTimeout,
-                        bidsBackHandler() {
-                            window.pbjs.setTargetingForGPTAsync([adUnit.code]);
-                            resolve();
-                        },
+        PrebidService.requestQueue = PrebidService.requestQueue.then(
+            () =>
+                new Promise(resolve => {
+                    window.pbjs.que.push(() => {
+                        window.pbjs.requestBids({
+                            adUnits: [adUnit],
+                            timeout: bidderTimeout,
+                            bidsBackHandler() {
+                                window.pbjs.setTargetingForGPTAsync([
+                                    adUnit.code,
+                                ]);
+                                resolve();
+                            },
+                        });
                     });
-                });
-            })
+                })
         );
 
         return PrebidService.requestQueue;
