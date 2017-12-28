@@ -49,6 +49,7 @@ from scrolling */
 
 .new-header__edition-container {
     position: absolute;
+    text-transform: none;
     top: 0;
     transform: translateX(100%);
     // Needs to sit above the menu, and the veggie burger
