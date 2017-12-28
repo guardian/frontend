@@ -67,11 +67,6 @@ from scrolling */
     }
 }
 
-.inline-guardian-logo-160,
-.menu-close { // TODO remove this line
-    display: none !important;
-}
-
 .new-header__inner {
     @include clearfix();
 }
