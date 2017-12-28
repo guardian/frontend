@@ -144,7 +144,7 @@ $quote-mark: 35px;
     .content__meta-container {
         @include multiline(4, $garnett-neutral-4, top);
         // creates correct top spacing for multiline bg image
-        padding-top: 17px;
+        padding-top: 15px;
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;
@@ -183,25 +183,31 @@ $quote-mark: 35px;
     }
 
     .meta__image {
-        max-width: 60px;
-        order: 1;
-        border-top: 0;
-        flex: 1 100%;
-        @include mq($until: phablet) {
-            padding-right: 0;
-            margin-right: 0;
-        }
+        padding: 0;
+        margin: 0;
+        border: 0;
+        width: auto;
         @include mq(leftCol) {
-            max-width: none;
+            width: 100%;
         }
     }
 
     .byline-img {
-        margin-top: 0;
-        margin-right: $gs-baseline/2;
-        margin-bottom: $gs-baseline;
+        max-width: 60px;
+        order: 1;
+        border-top: 0;
+        flex: 1 100%;
+        margin: 3px 0 $gs-baseline $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            margin-left: $gs-gutter;
+        }
         @include mq(phablet) {
-            margin-right: 0;
+            margin-left: 0;
+            margin-right: $gs-gutter/2;
+        }
+        @include mq(leftCol) {
+            margin-top: $gs-baseline/2;
+            max-width: none;
         }
     }
 
@@ -219,12 +225,14 @@ $quote-mark: 35px;
         font-weight: 200;
         color: #333333;
         font-style: italic;
+        line-height: 20px;
         min-height: 0;
         margin-top: -$gs-baseline/4;
+        padding-bottom: 8px;
+        padding-top: 2px;
 
         span[itemprop='author'] {
             @include f-header;
-            display: inline;
             font-style: normal;
             font-weight: 900;
         }
@@ -390,6 +398,10 @@ $quote-mark: 35px;
         border-color: $garnett-neutral-4;
     }
     // *************** Header and Body Styles ***************
+    .content__head {
+        margin-bottom: 0;
+    }
+
     .content__article-body {
         line-height: 1.4;
 
@@ -465,7 +477,7 @@ $quote-mark: 35px;
     .content__headline {
         @include fs-headlineGarnett(4);
         font-weight: 400;
-        padding-top: $gs-baseline/2;
+        padding-top: 3px;
         padding-bottom: $gs-baseline*2;
         @include mq(tablet) {
             @include fs-headlineGarnett(6);
@@ -520,11 +532,15 @@ $quote-mark: 35px;
         color: $neutral-1;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
-        max-width: gs-span(3);
+        max-width: gs-span(3) - $gs-gutter;
         @include mq(mobileMedium) {
+            max-width: gs-span(4)- $gs-gutter;
+        }
+        @include mq(mobileLandscape) {
             max-width: gs-span(4);
         }
         @include mq(phablet) {
+            max-width: gs-span(5);
             margin-left: 20px;
             margin-bottom: $gs-baseline*2;
         }
@@ -772,7 +788,7 @@ $quote-mark: 35px;
 
     .content__dateline {
         // magic number used to align date stamp with standfirst baseline in opinion pieces per design
-        margin-top: -48px;
+        margin-top: -45px;
         @include mq(leftCol) {
             margin-top: 0;
         }
@@ -830,6 +846,10 @@ $quote-mark: 35px;
         color: $neutral-3;
     }
 
+    .content__standfirst {
+        padding-top: $gs-baseline/2;
+    }
+
     .byline-img {
         position: absolute;
         bottom: 0;
@@ -837,6 +857,7 @@ $quote-mark: 35px;
         background: none!important;
         margin: 0;
         background-image: none;
+        max-width: none;
         @include mq(mobileLandscape) {
             right: gs-span(3) - $gs-gutter;
         }
