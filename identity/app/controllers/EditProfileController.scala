@@ -69,9 +69,14 @@ class EditProfileController(
   def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
     displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
 
-  def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String]): Action[AnyContent] = {
+  def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String]): Action[AnyContent] =
+    if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
+      recentlyAuthenticated { implicit request =>
+        NotFound(views.html.errors._404())
+      }
+    } else {
       csrfAddToken {
-        permissionAuthentication.async { implicit request =>
+        authWithRPCookie.async { implicit request =>
           consentJourneyView(
             page = page,
             journey = page.journey,
@@ -81,7 +86,7 @@ class EditProfileController(
           )
         }
       }
-  }
+    }
 
   def displayPrivacyFormRedirect(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] = csrfAddToken {
     recentlyAuthenticated { implicit request =>
@@ -113,7 +118,7 @@ class EditProfileController(
 
   def saveConsentPreferencesAjax: Action[AnyContent] =
     csrfCheck {
-      authActionWithUser.async { implicit request =>
+      authWithRPCookie.async { implicit request =>
         val userDO = request.user
         val marketingConsentForm: Form[PrivacyFormData] = Form(profileFormsMapping.privacyMapping.formMapping)
 
@@ -144,7 +149,7 @@ class EditProfileController(
 
   def submitRepermissionedFlag: Action[AnyContent] =
     csrfCheck {
-      authActionWithUser.async { implicit request =>
+      authWithRPCookie.async { implicit request =>
         val returnUrlForm = Form(single("returnUrl" -> nonEmptyText))
         returnUrlForm.bindFromRequest.fold(
           formWithErrors => Future.successful(BadRequest(Json.toJson(formWithErrors.errors.toList))),

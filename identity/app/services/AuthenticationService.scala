@@ -35,12 +35,9 @@ class AuthenticationService(cookieDecoder: FrontendIdentityCookieDecoder,
   }
 
   def authenticateUserForPermissions(request: RequestHeader): Option[AuthenticatedUser] = {
-    logger.info(s"Auth user for permissions")
     for {
       scGuRp <- request.cookies.get("SC_GU_RP")
-      _ = logger.info(s"RPCOOKIE: $scGuRp")
       fullUser <- cookieDecoder.getUserDataForGuRp(scGuRp.value)
-      _ = logger.info(s"RPCOOKIEUSER: $fullUser")
     } yield AuthenticatedUser(fullUser, ScGuRp(scGuRp.value))
   }
 
