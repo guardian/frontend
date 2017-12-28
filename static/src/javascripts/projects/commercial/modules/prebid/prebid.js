@@ -46,41 +46,6 @@ const filterConfigEntries = (
     return bidConfigEntries;
 };
 
-const getMatchingBids = (
-    availableSizes: PrebidSize[],
-    matchedSizes: PrebidSize[],
-    slotId: string
-): PrebidBid[] => {
-    const bids: PrebidBid[] = [];
-    bidders.forEach((bidder: PrebidBidder) => {
-        const matchingConfigEntries: PrebidAdSlotCriteria[] = filterConfigEntries(
-            bidder.name,
-            availableSizes,
-            slotId
-        );
-        if (matchingConfigEntries.length > 0) {
-            // A config entry will specify a size, which should be added to the prebid ad unit if's not already included.
-            matchingConfigEntries.forEach(
-                (matchedEntry: PrebidAdSlotCriteria) => {
-                    if (
-                        matchedSizes.findIndex(size =>
-                            isEqualAdSize(size, matchedEntry.size)
-                        ) === -1
-                    ) {
-                        matchedSizes.push(matchedEntry.size);
-                    }
-                }
-            );
-
-            bids.push({
-                bidder: bidder.name,
-                params: bidder.bidParams(slotId),
-            });
-        }
-    });
-    return bids;
-};
-
 // Returns array of dimensions, eg. [[300, 250], [300, 600]]
 const getAdSizesFromAdvert = (advert: Advert): PrebidSize[] => {
     const validBreakpoints: Breakpoint[] = breakpoints.filter(breakpoint =>
@@ -109,15 +74,41 @@ class PrebidAdUnit {
     constructor(advert: Advert) {
         this.code = advert.id;
         this.sizes = [];
+        this.bids = [];
 
         // Each Advert can take a number of possible of sizes. Using this array of sizes,
         // find an entry in the bidder-config.js config object that matches the criteria.
         const advertSizes: PrebidSize[] = getAdSizesFromAdvert(advert);
-        this.bids = getMatchingBids(advertSizes, this.sizes, this.code);
+        this.getMatchingBids(advertSizes);
     }
+
+    getMatchingBids(availableSizes: PrebidSize[]) {
+        bidders.forEach((bidder: PrebidBidder) => {
+            const matchingConfigEntries: PrebidAdSlotCriteria[] = filterConfigEntries(
+                bidder.name,
+                availableSizes,
+                this.code
+            );
+            if (matchingConfigEntries.length > 0) {
+                // A config entry will specify a size, which should be added to the prebid ad unit if's not already included.
+                matchingConfigEntries.forEach(
+                    (matchedEntry: PrebidAdSlotCriteria) => {
+                        const newSizes = matchedEntry.sizes.filter( (newSize: PrebidSize) => 
+                            this.sizes.findIndex(size => isEqualAdSize(size, newSize)) === -1);    
+                        this.sizes.push(...newSizes);
+                    } 
+                );
+    
+                this.bids.push({
+                    bidder: bidder.name,
+                    params: bidder.bidParams(this.code),
+                });
+            }
+        });
+    };
 }
 
-class PrebidTestService {
+class PrebidService {
     static initialise(): Promise<any> {
         return new Promise( (resolve, reject) => {
             require.ensure(
@@ -162,4 +153,4 @@ class PrebidTestService {
     }
 }
 
-export const prebid = PrebidTestService;
+export const prebid = PrebidService;
