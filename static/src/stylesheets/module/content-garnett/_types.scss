@@ -492,6 +492,10 @@ $quote-mark: 35px;
             margin-bottom: 0;
             transform: translatey(-$gs-gutter);
         }
+        @include mq($from: leftCol) {
+            margin-left: -$gs-gutter / 2;
+            padding-left: $gs-gutter / 2;
+        }
     }
 
     .inline-star {
