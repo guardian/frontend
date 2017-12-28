@@ -4,7 +4,7 @@ $height: $identity-header-height - ($gutter * 2);
 .identity-header {
     @include clearfix;
     background-color: $identity-main;
-    padding: 5px 0;
+    padding: $gutter 0;
     color: #ffffff;
     min-height: $height;
     z-index: 999;
