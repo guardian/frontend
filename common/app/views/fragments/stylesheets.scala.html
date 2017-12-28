@@ -4,6 +4,7 @@
 @import play.api.Mode.Dev
 @import conf.Static
 @import html.HtmlPageHelpers.ContentCSSFile
+@import experiments.{ ActiveExperiments, GarnettHeader }
 
 @* any images in head need to go here (or they'll be relative to the page)} *@
 <style class="js-loggable">
@@ -56,12 +57,19 @@
 @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
     <link rel="stylesheet" id="head-css" data-reload="head@projectName.map("." + _).getOrElse(".content")" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".content") + ".css")" />
 
+    @defining(
+        if (ActiveExperiments.isParticipating(GarnettHeader)) "navigation.garnett" else "navigation"
+    ) { navigationFileName =>
+        <link rel="stylesheet" id="head-css" data-reload="head.@{navigationFileName}" type="text/css" href="@Static(s"stylesheets/head.${navigationFileName}.css")" />
+    }
+
     @if(isInteractive) {
         <link rel="stylesheet" id="head-interactive" data-reload="head.interactive" type="text/css" href="@Static("stylesheets/head.interactive.css")" />
     }
 } else {
     <style class="js-loggable">
         @Html(common.Assets.css.head(projectName))
+        @Html(common.Assets.css.inlineNavigation)
         @if(isInteractive) {
             @Html(common.Assets.css.interactive)
         }
