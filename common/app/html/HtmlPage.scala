@@ -38,13 +38,11 @@ object HtmlPageHelpers {
       ("has-localnav", Navigation.topLevelItem(edition.navigation, page).filter(_.links.nonEmpty).nonEmpty),
       ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
       ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
-      ("has-super-sticky-banner", model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)),
-      ("has-garnett-header", ActiveExperiments.isParticipating(GarnettHeader))
-    )
+      ("has-super-sticky-banner", model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)))
   }
 
   def FaciaCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "facia.garnett" else "facia"
   def ContentCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "content.garnett" else "content"
   def RichLinksCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "rich-links.garnett" else "rich-links"
-
+  def InlineNavigationCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(GarnettHeader)) "navigation.garnett" else "navigation"
 }
