@@ -56,11 +56,12 @@
                             <div class="js-score"></div>
                             <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
-
-                            @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp){
-                                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                                @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp) {
                                     @fragments.mainMedia(article, amp)
                                 }
+                            } else {
+                                @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp)
                             }
 
                             @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
