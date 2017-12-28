@@ -31,7 +31,7 @@ const catchPolyfillErrors = () => {
     };
 };
 
-const setupSonobi = once(() => {
+const setupSonobi: () => Promise<void> = once(() => {
     if (
         dfpEnv.externalDemand === 'none' ||
         !commercialFeatures.dfpAdvertising
