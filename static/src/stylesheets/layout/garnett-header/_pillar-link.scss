@@ -9,7 +9,6 @@
     line-height: 1;
     padding: 0 4px;
     position: relative;
-    transition: color 150ms ease-out;
     overflow: hidden;
 
     @include mq(mobileMedium) {
@@ -35,7 +34,7 @@
     }
 
     &:before,
-    &:after {
+    &:not(.pillar-link--dropdown):after {
         bottom: 0;
         content: '';
         display: block;
@@ -54,7 +53,7 @@
         }
     }
 
-    &:after {
+    &:not(.pillar-link--dropdown):after {
         // Underlines
         border-bottom: 4px solid currentColor;
         right: 0;
@@ -72,8 +71,8 @@
     }
 
     .new-header--open & {
-        &:hover,
-        &:focus {
+        &:not(.pillar-link--dropdown):hover,
+        &:not(.pillar-link--dropdown):focus {
             text-decoration: underline;
         }
 
@@ -114,13 +113,21 @@
     display: inline-block;
     height: 6px;
     margin-left: 2px;
-    transform: translateY(-2px) rotate(45deg);
+    transform: translateY(-3px) rotate(45deg);
     transition: transform 250ms ease-out;
     vertical-align: middle;
     width: 6px;
 
     .pillar-link--dropdown:hover & {
         transform: translateY(0) rotate(45deg);
+    }
+
+    .new-header--open .pillar-link--dropdown & {
+        transform: translateY(1px) rotate(-135deg);
+    }
+
+    .new-header--open .pillar-link--dropdown:hover & {
+        transform: translateY(-2px) rotate(-135deg);
     }
 }
 
@@ -129,8 +136,10 @@
     font-weight: 400;
     float: left;
     padding-right: $gs-gutter / 4;
+    transition: color 250ms ease-out;
 
-    .new-header__menu-toggle:focus & {
-        color: $nav-secondary-colour;
+    &:hover,
+    &:focus {
+        color: $nav-primary-colour;
     }
 }

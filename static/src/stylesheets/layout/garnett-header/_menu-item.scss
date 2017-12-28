@@ -48,13 +48,11 @@
         font-size: 15px;
         line-height: 1.2;
         padding: ($gs-baseline / 2) 0;
-        transition: color 80ms ease-out;
     }
 
     &:hover,
     &:focus {
         color: $nav-secondary-colour;
-        text-decoration: none;
     }
 
     > * {

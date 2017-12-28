@@ -8,7 +8,6 @@
     line-height: $veggie-burger-medium - $gs-baseline;
     padding: 0 ($gs-gutter / 4);
     position: relative;
-    transition: color 150ms ease-out;
 
     @include mq(mobileMedium) {
         font-size: 17px;
@@ -38,7 +37,6 @@
     &:hover,
     &:focus {
         color: $nav-secondary-colour;
-        text-decoration: none;
     }
 }
 

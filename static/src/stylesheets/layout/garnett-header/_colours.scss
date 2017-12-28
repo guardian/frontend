@@ -80,11 +80,6 @@
     &.pillar-link--news {
         color: $news-garnett-main-1;
 
-        .new-header--open &:hover,
-        .new-header--open &:focus {
-            color: darken($news-garnett-main-1, 10%)
-        }
-
         &:after {
             border-color: $news-garnett-feature;
         }
@@ -92,11 +87,6 @@
 
     &.pillar-link--opinion {
         color: $opinion-garnett-main-1;
-
-        .new-header--open &:hover,
-        .new-header--open &:focus {
-            color: darken($opinion-garnett-main-1, 10%)
-        }
 
         &:after {
             border-color: $opinion-garnett-feature;
@@ -106,11 +96,6 @@
     &.pillar-link--sport {
         color: $sport-garnett-main-1;
 
-        .new-header--open &:hover,
-        .new-header--open &:focus {
-            color: darken($sport-garnett-main-1, 10%)
-        }
-
         &:after {
             border-color: $sport-garnett-feature;
         }
@@ -119,11 +104,6 @@
     &.pillar-link--arts {
         color: $arts-garnett-main-1;
 
-        .new-header--open &:hover,
-        .new-header--open &:focus {
-            color: darken($arts-garnett-main-1, 10%)
-        }
-
         &:after {
             border-color: $arts-garnett-feature;
         }
@@ -131,11 +111,6 @@
 
     &.pillar-link--lifestyle {
         color: $lifestyle-garnett-main-1;
-
-        .new-header--open &:hover,
-        .new-header--open &:focus {
-            color: darken($lifestyle-garnett-main-1, 10%)
-        }
 
         &:after {
             border-color: $lifestyle-garnett-feature;

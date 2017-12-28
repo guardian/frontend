@@ -21,7 +21,6 @@
     &:hover,
     &:focus {
         color: $nav-secondary-colour;
-        text-decoration: none;
     }
 
     @include mq(tablet) {
@@ -48,17 +47,13 @@
         transition: transform 250ms ease-out;
     }
 
-    .dropdown-menu--open ~ &,
-    &.is-active {
-        color: $nav-primary-colour;
+    &:hover,
+    &:focus {
+        text-decoration: none;
 
-        &:hover {
-            color: $nav-secondary-colour;
+        &:after {
+            transform: translateY(0) rotate(45deg);
         }
-    }
-
-    &:hover:after {
-        transform: translateY(0) rotate(45deg);
     }
 }
 
@@ -81,6 +76,7 @@
     &:hover,
     &:focus {
         color: $nav-background-colour;
+        text-decoration: none;
 
         & .top-bar__item--cta--circle {
             transform: scale(1.05);
