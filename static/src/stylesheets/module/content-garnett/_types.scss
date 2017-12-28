@@ -228,6 +228,7 @@ $quote-mark: 35px;
         line-height: 20px;
         min-height: 0;
         margin-top: -$gs-baseline/4;
+        // magic numbers are correcting line heights so vertical alignment apprears even
         padding-bottom: 8px;
         padding-top: 2px;
 
@@ -477,6 +478,7 @@ $quote-mark: 35px;
     .content__headline {
         @include fs-headlineGarnett(4);
         font-weight: 400;
+        // magic number correcting line height so vertical alignment apprears even with labels
         padding-top: 3px;
         padding-bottom: $gs-baseline*2;
         @include mq(tablet) {
