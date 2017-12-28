@@ -10,6 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     ABNewDesktopHeader,
+    GarnettHeader,
     Garnett,
     HideShowMoreButtonExperiment
   )
