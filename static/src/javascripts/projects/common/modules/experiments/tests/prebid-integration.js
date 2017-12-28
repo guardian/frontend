@@ -5,7 +5,7 @@ import config from 'lib/config';
 
 export const prebidIntegration: ABTest = {
     id: 'PrebidIntegration',
-    start: '2017-11-30',
+    start: '2017-12-28',
     expiry: '2018-04-02',
     author: 'Richard Nguyen',
     description:
