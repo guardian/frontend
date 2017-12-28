@@ -1,14 +1,22 @@
-$gutter: 9px;
+$gutter: 17px;
 $height: $identity-header-height - ($gutter * 2);
 
 .identity-header {
     @include clearfix;
     background-color: $garnett-neutral-3;
-    border-bottom: 1px solid $garnett-neutral-4;
     padding: $gutter 0;
-    color: #000000;
+    color: $identity-main;
     min-height: $height;
     z-index: 999;
+    &:after {
+        @include multiline(4, $garnett-neutral-4, top);
+        content: '';
+        height: 4px * 4.5;
+        background-color: #ffffff;
+        margin-bottom: $gutter * -1;
+        margin-top: $gutter;
+        width: 100%;
+    }
     .identity-dropdown {
         position: absolute;
         display: none;
@@ -67,7 +75,6 @@ $height: $identity-header-height - ($gutter * 2);
     cursor: pointer;
     color: inherit;
     opacity: .8;
-    text-transform: lowercase;
     padding: 0;
     height: $height;
     line-height: $height;

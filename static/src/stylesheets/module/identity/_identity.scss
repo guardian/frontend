@@ -14,7 +14,10 @@ $identity-header-height: 48px;
 
 .identity-wrapper-for-bg {
     @include clearfix();
-    background: $neutral-8;
+
+    @if $identity-is-garnett != true {
+        background: $neutral-8;
+    }
     .tabs__container {
         margin: $gs-gutter * 2 auto 0;
     }
@@ -24,8 +27,10 @@ $identity-header-height: 48px;
     }
     .gs-container {
         @include clearfix();
-        background: #ffffff;
-        overflow: hidden;
+        @if $identity-is-garnett != true {
+            background: #ffffff;
+            overflow: hidden;
+        }
     }
     .monocol-wrapper {
         max-width: gs-span(10);
@@ -40,13 +45,20 @@ $identity-header-height: 48px;
         }
     }
     &.identity-wrapper-for-bg--header {
-        background: darken($neutral-8, 5%);
+        @if $identity-is-garnett != true {
+            background: darken($neutral-8, 5%);
+        }
+        @else {
+            border-bottom: 1px solid $garnett-neutral-4;
+        }
         .monocol-wrapper {
             padding-bottom: 0;
             overflow: hidden;
         }
         .gs-container {
-            background: darken(#ffffff, 5%);
+            @if $identity-is-garnett != true {
+                background: darken(#ffffff, 5%);
+            }
             padding-top: $gs-gutter;
         }
 
