@@ -39,11 +39,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .fc-item__media-wrapper {
-        flex-basis: $media-width;
-    }
-
-    .fc-item__video-fallback {
+    .fc-item__media-wrapper, .fc-item__video-fallback {
         flex-basis: $media-width;
     }
 
