@@ -562,7 +562,10 @@ $quote-mark: 35px;
     }
 
     .media-primary {
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: 0;
+        @include mq(tablet) {
+            margin-bottom: $gs-baseline/2;
+        }
     }
 
     .drop-cap {
