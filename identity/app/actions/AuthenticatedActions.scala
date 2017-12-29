@@ -155,7 +155,7 @@ class AuthenticatedActions(
   def authWithConsentRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
     recentlyAuthenticated andThen apiUserShouldRepermissionRefiner
 
-  def permissionAuthentication: ActionBuilder[AuthRequest, AnyContent] =
+  def authWithRPCookie: ActionBuilder[AuthRequest, AnyContent] =
     noOpActionBuilder andThen permissionRefiner andThen apiVerifiedUserRefiner
 
 }
