@@ -2,9 +2,9 @@
 import fakeMediator from 'lib/mediator';
 import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
-import { commercialFeatures as fakeCommercialFeatures } from 'commercial/modules/commercial-features';
 import { engagementBannerParams as engagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
+import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const engagementBannerParams: any = engagementBannerParams_;
 
@@ -92,13 +92,6 @@ jest.mock('common/modules/experiments/segment-util', () => ({
     isInTest: jest.fn(() => true),
     variantFor: jest.fn(() => ({ id: 'fake-variant-id' })),
 }));
-jest.mock('commercial/modules/commercial-features', () => ({
-    commercialFeatures: {
-        asynchronous: {
-            canDisplayMembershipEngagementBanner: Promise.resolve(true),
-        },
-    },
-}));
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-block',
     () => ({
@@ -113,6 +106,12 @@ jest.mock('ophan/ng', () => ({
 }));
 jest.mock('lib/config', () => ({
     get: jest.fn(() => ''),
+}));
+jest.mock('lib/detect', () => ({
+    adblockInUse: Promise.resolve(false)
+}));
+jest.mock('common/modules/commercial/contributions-utilities', () => ({
+    shouldShowReaderRevenue: jest.fn(() => true)
 }));
 
 const FakeMessage: any = require('common/modules/ui/message').Message;
@@ -192,23 +191,13 @@ describe('Membership engagement banner', () => {
     });
 
     describe('If user already member', () => {
-        beforeEach(() => {
-            fakeCommercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = Promise.resolve(
-                false
-            );
-        });
-
-        afterEach(() => {
-            fakeCommercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = Promise.resolve(
-                true
-            );
-        });
-
-        it('should not show any messages even to engaged readers', () =>
+        it('should not show any messages even to engaged readers', () => {
+            (shouldShowReaderRevenue: any).mockImplementationOnce(() => false);
             membershipEngagementBannerInit().then(() => {
                 fakeMediator.emit('modules:onwards:breaking-news:ready', false);
                 expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
-            }));
+            });
+        })
     });
 
     describe('creates message with', () => {

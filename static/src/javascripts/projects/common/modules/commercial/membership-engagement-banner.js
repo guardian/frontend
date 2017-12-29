@@ -1,8 +1,8 @@
 // @flow
 import config from 'lib/config';
 import { local } from 'lib/storage';
+import { adblockInUse } from 'lib/detect';
 import { Message } from 'common/modules/ui/message';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { inlineSvg } from 'common/views/svgs';
@@ -11,6 +11,7 @@ import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { getSync as getGeoLocation } from 'lib/geolocation';
+import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 import {
     submitComponentEvent,
@@ -20,6 +21,10 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-12-14';
+
+const canDisplayMembershipEngagementBanner = (): Promise<boolean> => adblockInUse.then(
+    adblockUsed => !adblockUsed && shouldShowReaderRevenue()
+);
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
@@ -183,7 +188,7 @@ const showBanner = (params: EngagementBannerParams): void => {
 const membershipEngagementBannerInit = (): Promise<void> => {
     const bannerParams = deriveBannerParams(getGeoLocation());
     if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
-        return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
+        return canDisplayMembershipEngagementBanner().then(
             canShow => {
                 if (canShow) {
                     mediator.on(
