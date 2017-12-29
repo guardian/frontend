@@ -234,9 +234,9 @@ figure {
 
         .u-responsive-ratio--letterbox {
             transition: padding-bottom 1s;
-            padding-bottom: aspect-ratio-height(5,3,140%);
+            padding-bottom: aspect-ratio-height(5, 3, 140%);
             @include mq(tablet) {
-                padding-bottom: aspect-ratio-height(5,3,100%);
+                padding-bottom: aspect-ratio-height(5, 3, 100%);
             }
         }
         .media-primary.media-primary--showcase {
