@@ -61,7 +61,7 @@
                                     @fragments.mainMedia(article, amp)
                                 }
                             } else {
-                                @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp)
+                                @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp)()
                             }
 
                             @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
