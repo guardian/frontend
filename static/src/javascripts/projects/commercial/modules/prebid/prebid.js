@@ -147,8 +147,8 @@ class PrebidService {
             return PrebidService.requestQueue;
         }
 
-        PrebidService.requestQueue = PrebidService.requestQueue.then(
-            () =>
+        PrebidService.requestQueue = PrebidService.requestQueue
+            .then( () =>
                 new Promise(resolve => {
                     window.pbjs.que.push(() => {
                         window.pbjs.requestBids({
@@ -162,8 +162,8 @@ class PrebidService {
                             },
                         });
                     });
-                })
-        );
+                }))
+            .catch(() => {});
 
         return PrebidService.requestQueue;
     }
