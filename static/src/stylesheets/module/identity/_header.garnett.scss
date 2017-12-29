@@ -1,4 +1,4 @@
-$gutter: 17px;
+$gutter: 4px;
 $height: $identity-header-height - ($gutter * 2);
 
 .identity-header {
@@ -45,6 +45,12 @@ $height: $identity-header-height - ($gutter * 2);
         }
     }
 
+    .inline-logo {
+        height: 60px;
+        display: flex;
+        align-items: center;
+    }
+
 }
 
 .identity-header__links {
@@ -73,14 +79,13 @@ $height: $identity-header-height - ($gutter * 2);
     background: none;
     border: 0;
     cursor: pointer;
-    color: inherit;
-    opacity: .8;
+    color: $identity-main;
     padding: 0;
     height: $height;
     line-height: $height;
     white-space: nowrap;
-    transition: .125s;
     display: block;
+    transition: .25s ease-out;
 
     .inline-icon {
         vertical-align: middle;
@@ -95,10 +100,6 @@ $height: $identity-header-height - ($gutter * 2);
         }
     }
 
-    &:hover {
-        opacity: 1;
-    }
-
     &:after {
         content: '';
         display: inline-block;
@@ -110,6 +111,16 @@ $height: $identity-header-height - ($gutter * 2);
         border-top: transparent;
         margin-left: 2px;
         vertical-align: middle;
-        transition: transform 250ms ease-out;
+        transition: .25s ease-out;
     }
+
+
+    &:hover {
+        opacity: 1;
+        color: darken($identity-main, 25%);
+        &:after {
+            transform: translateY(0px) rotate(45deg);
+        }
+    }
+
 }
