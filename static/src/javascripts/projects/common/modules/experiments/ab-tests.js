@@ -6,6 +6,7 @@ import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-co
 import { outstreamFrequencyCapHoldback } from 'common/modules/experiments/tests/outstream-cap-holdback';
 import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import { unrulyPerformanceTest } from 'common/modules/experiments/tests/unruly-performance';
+import { prebidIntegration } from 'common/modules/experiments/tests/prebid-integration';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     paidContentVsOutbrain2,
@@ -13,6 +14,7 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     acquisitionsEpicElectionInteractiveEnd,
     outstreamFrequencyCapHoldback,
     unrulyPerformanceTest,
+    prebidIntegration,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>

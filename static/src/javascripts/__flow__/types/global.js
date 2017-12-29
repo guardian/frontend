@@ -14,8 +14,7 @@ declare var require: {
     ensure(
         ids: Array<string>,
         callback?: { (require: typeof require): void },
-        chunk
-        ? : string
+        chunkName? : string
     ): void,
     resolve: (id: string) => string,
     cache: any,
