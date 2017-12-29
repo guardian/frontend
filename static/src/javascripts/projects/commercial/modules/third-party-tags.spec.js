@@ -18,10 +18,6 @@ afterEach(() => {
     }
 });
 
-jest.mock('common/modules/experiments/tests/paid-content-vs-outbrain', () => ({
-    paidContentVsOutbrain2: jest.fn(),
-}));
-
 jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
     initOutbrain: jest.fn(),
 }));
