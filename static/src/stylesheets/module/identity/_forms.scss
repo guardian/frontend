@@ -1,0 +1,23 @@
+.identity-forms-wrapper__title {
+    margin-bottom: $gs-baseline * 2;
+}
+
+
+@supports (display: flex) {
+    @include mq(desktop) {
+        .identity-forms-wrapper {
+            display: flex;
+        }
+        .identity-forms-wrapper__title {
+            width: gs-span(3.5);
+            flex: 0 0 1;
+            margin-bottom: 0;
+        }
+        .identity-forms-wrapper__fields {
+            flex: 1 1 0;
+        }
+        .identity-forms-wrapper__title + .identity-forms-wrapper__fields {
+            margin-left: gs-span(1);
+        }
+    }
+}
