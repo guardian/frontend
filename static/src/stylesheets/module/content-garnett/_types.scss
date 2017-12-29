@@ -111,6 +111,7 @@ $quote-mark: 35px;
     .content__meta-container,
     .content__standfirst {
         @include mq(phablet, tablet) {
+            width: 100%;
             max-width: 38.75rem;
             margin: auto;
             position: relative;
@@ -148,16 +149,16 @@ $quote-mark: 35px;
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;
-        margin-top: -$gs-baseline;
         margin-bottom: 0;
+
         @include mq(leftCol) {
             position: absolute;
+            margin-top: -$gs-baseline;
         }
     }
 
     .badge,
     .content__meta-container {
-        order: 0;
         flex: 1 100%;
         @include mq(leftCol) {
             width: gs-span(2);
