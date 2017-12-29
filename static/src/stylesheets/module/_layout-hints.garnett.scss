@@ -166,29 +166,36 @@ figure {
         margin-left: -1px;
         padding-left: 1px;
         margin-right: 1px;
+        // Removes a slither of image from left border of headline.
+
         position: relative;
         z-index: 3; //put over feature showcase
 
         width: gs-span(3);
         background: #ffffff;
         margin-top: gs-height(2) * -1;
-        @include mq(mobileLandscape) {
+        @include mq(mobileMedium) {
             width: gs-span(4);
+        }
+        @include mq(phablet) {
+            width: gs-span(5);
         }
         @include mq(tablet) {
             width: gs-span(6);
         }
-        @include mq(leftCol) {
-            margin-top: 0;
+        @include mq(desktop) {
             position: absolute;
             top: 10px;
+            margin: unset;
             width: gs-span(8);
         }
     }
     figure > .gs-container {
         padding: 0;
         margin: 0;
-        @include mq($until: leftCol) {
+        @include mq($until: desktop) {
+            // Until desktop, the headline is at bottom of image.
+            // Make the caption appear above the headline when displayed in this case.
             figcaption, .caption.caption--main.caption--img {
                 padding: 0 ($gs-gutter / 2) (gs-height(2) + $gs-baseline / 2);
             }
@@ -201,13 +208,12 @@ figure {
     }
 
     .media-primary.media-primary--showcase {
-        margin-left: 0;
-        margin-right: 0;
+        margin: 10px 0 0;
         z-index: 2; // Put the showcase element on top of the left and right layout borders
         position: relative;
 
         @include mq(desktop) {
-            margin: 0 auto;
+            margin: 10px auto 0;
             width: gs-span(12);
             max-width: gs-span(12);
         }
@@ -219,12 +225,14 @@ figure {
 
         .responsive-img {
             @include mq(tablet) {
-                top: 0 !important;
+                top: 10px;
                 margin: unset;
                 width: 100%;
             }
             margin-left: -20%;
             width: 140%;
+            // Crop a square from the 5:3 by taking left and right 20% off the image.
+            // The containing div will cause this negative margin and overwidth to not display.
             height: auto;
         }
 
@@ -235,8 +243,12 @@ figure {
         .u-responsive-ratio--letterbox {
             transition: padding-bottom 1s;
             padding-bottom: aspect-ratio-height(5, 3, 140%);
+            // To crop 5:3 to square, we're making the image extra wide-
+            // this calculates the correct height, making the same assumptions as the 5:3 crop.
+
             @include mq(tablet) {
                 padding-bottom: aspect-ratio-height(5, 3, 100%);
+                //Effectively crop the bottom off the image if 5:>3 or leave whitespace if 5:<3
             }
         }
         .media-primary.media-primary--showcase {
@@ -248,6 +260,7 @@ figure {
 
     .content__secondary-column {
         padding-top: (aspect-ratio-height(5, 3, gs-span(13)) + $gs-baseline) !important;
+        //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
     }
 }
 
