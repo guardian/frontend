@@ -223,7 +223,6 @@ $quote-mark: 35px;
     .byline {
         @include fs-header(1);
         border-top: 0;
-        font-weight: 200;
         color: #333333;
         font-style: italic;
         line-height: 20px;
