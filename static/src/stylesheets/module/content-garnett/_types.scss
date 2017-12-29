@@ -222,8 +222,8 @@ $quote-mark: 35px;
     }
 
     .byline {
+        @include fs-header(1);
         border-top: 0;
-        font-weight: 200;
         color: #333333;
         font-style: italic;
         line-height: 20px;
@@ -232,11 +232,12 @@ $quote-mark: 35px;
         // magic numbers are correcting line heights so vertical alignment apprears even
         padding-bottom: 8px;
         padding-top: 2px;
+        font-weight: normal;
 
         span[itemprop='author'] {
-            @include f-header;
+            @include fs-header(1);
             font-style: normal;
-            font-weight: 900;
+            font-weight: 700;
         }
     }
 
@@ -561,7 +562,10 @@ $quote-mark: 35px;
     }
 
     .media-primary {
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: 0;
+        @include mq(tablet) {
+            margin-bottom: $gs-baseline/2;
+        }
     }
 
     .drop-cap {
