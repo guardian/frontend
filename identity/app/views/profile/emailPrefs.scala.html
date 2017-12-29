@@ -23,13 +23,22 @@
         <div class="form__error">@emailPrefsForm.globalErrors.map(_.message).mkString(", ")</div>
     }
 
-    @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions)(request, messages)
+    <fieldset class="fieldset fieldset--manage-account-noborder">
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Your newsletters</h2>
+            <p class="form__note">Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below.</p>
+        </div>
+        <div class="fieldset__fields">
+            @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions)(request, messages)
+        </div>
+    </fieldset>
+
 
     <div class="email-subscription__fieldset">
 
         <fieldset class="fieldset">
             <div class="fieldset__heading">
-                <h2 class="form__heading">Newsletter options</h2>
+                <h2 class="form__heading">Options</h2>
             </div>
 
             <div class="fieldset__fields email-subscription__options">
