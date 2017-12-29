@@ -1,7 +1,5 @@
 package actions
 
-import java.net.URLEncoder
-
 import actions.AuthenticatedActions.AuthRequest
 import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
@@ -91,6 +89,8 @@ class AuthenticatedActions(
       }
   }
 
+//  def permissionsFromCookie: Action
+
   def agreeAction(unAuthorizedCallback: (RequestHeader) => Result): AuthenticatedBuilder[AuthenticatedUser] =
     new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
 
@@ -155,7 +155,7 @@ class AuthenticatedActions(
   def authWithConsentRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
     recentlyAuthenticated andThen apiUserShouldRepermissionRefiner
 
-  def permissionAuthentication: ActionBuilder[AuthRequest, AnyContent] =
+  def authWithRPCookie: ActionBuilder[AuthRequest, AnyContent] =
     noOpActionBuilder andThen permissionRefiner andThen apiVerifiedUserRefiner
 
 }
