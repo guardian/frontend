@@ -600,26 +600,26 @@ $quote-mark: 35px;
         .pullquote-cite,
         .pullquote-paragraph {
             display: inline;
-            font-weight: 700!important;
         }
 
         .inline-quote,
         blockquote {
             display: inline;
         }
-        // these are all temp until we get new quote mark in
+
         .inline-garnett-quote {
-            width: 15px;
-            margin-right: 20px;
-            @include mq(desktop) {
-                width: 15px;
-            }
+            margin-right: 15px;
+            width: $gs-gutter;
 
             svg {
-                width: inherit;
+                width: 12px;
                 height: auto;
                 position: relative;
-                top: -10px;
+                top: -8px;
+                @include mq(desktop) {
+                    width: 14px;
+                    top: -$gs-gutter/2;
+                }
             }
         }
     }
@@ -645,13 +645,15 @@ $quote-mark: 35px;
         .pullquote-cite,
         .pullquote-paragraph {
             @include fs-headlineGarnett(1);
-            font-weight: 400!important;
         }
-        // temp fix for old quote svg, will be replaced
-        .inline-quote svg {
-            width: 25px;
-            position: relative;
-            margin-right: -2px;
+
+        .inline-garnett-quote {
+            margin-right: $gs-gutter/2;
+
+            svg {
+                height: 8px;
+                top: -7px;
+            }
         }
     }
     // Quote halfWidth
@@ -668,9 +670,7 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include mq(mobile) {
-                @include fs-headlineGarnett(2);
-            }
+            @include fs-headlineGarnett(2);
             @include mq(desktop) {
                 @include fs-headlineGarnett(3);
             }
@@ -678,9 +678,7 @@ $quote-mark: 35px;
     }
     // Quote inline
     .element-pullquote.element--inline {
-        @include mq(mobile) {
-            width: gs-span(4);
-        }
+        width: gs-span(4);
         @include mq(mobileLandscape) {
             width: gs-span(5);
         }
@@ -690,9 +688,7 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include mq(mobile) {
-                @include fs-headlineGarnett(2);
-            }
+            @include fs-headlineGarnett(2);
             @include mq(desktop) {
                 @include fs-headlineGarnett(3);
             }
@@ -714,15 +710,13 @@ $quote-mark: 35px;
         &:after {
             border-radius: 0 0 $quote-tail;
             @include mq(leftCol) {
-                left: gs-span(2)-$gs-baseline;
+                left: gs-span(2)-$gs-gutter/2;
             }
         }
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include mq(mobile) {
-                @include fs-headlineGarnett(3);
-            }
+            @include fs-headlineGarnett(3);
             @include mq(phablet) {
                 @include fs-headlineGarnett(4);
             }
@@ -731,10 +725,18 @@ $quote-mark: 35px;
             }
         }
 
-        .inline-quote svg {
-            width: $quote-mark;
-            @include mq(leftCol) {
-                width: 40px;
+        .inline-garnett-quote {
+            margin-right: 15px;
+            @include mq(desktop) {
+                margin-right: 20px;
+            }
+
+            svg {
+                width: 14px;
+                top: -10px;
+                @include mq(desktop) {
+                    width: 16px;
+                }
             }
         }
     }
@@ -1107,6 +1109,30 @@ $quote-mark: 35px;
         @include mq(tablet) {
             line-height: 48px;
         }
+    }
+}
+// *************** Feature quote weight overrides ***************
+
+.content--type-article {
+    .pullquote-cite,
+    .pullquote-paragraph {
+        font-weight: 400!important;
+    }
+}
+// *************** Feature quote weight overrides ***************
+
+.content--type-feature {
+    .pullquote-cite,
+    .pullquote-paragraph {
+        font-weight: 700!important;
+    }
+}
+// *************** Opinion quote weight overrides ***************
+
+.content--type-comment {
+    .pullquote-cite,
+    .pullquote-paragraph {
+        font-weight: 200!important;
     }
 }
 // *************** Opinion and Feature standfirst overrides ***************
