@@ -158,37 +158,96 @@ figure {
 }
 
 // Articles can have the feature tone applied, but it's not always primary tone
-.has-feature-showcase-element .media-primary.media-primary--showcase {
-    margin-left: 0;
-    margin-right: 0;
-    z-index: 2; // Put the showcase element on top of the left and right layout borders
-    position: relative;
+.has-feature-showcase-element {
+    .tonal__header > .u-cf {
+        .content__labels--not-immersive {
+            display: none;
+        }
+        margin-left: -1px;
+        padding-left: 1px;
+        margin-right: 1px;
+        position: relative;
+        z-index: 3; //put over feature showcase
 
-    @include mq(leftCol) {
-        margin: 0 auto;
-        max-width: gs-span(14) + $gs-gutter * 2;
+        width: gs-span(3);
+        background: #ffffff;
+        margin-top: gs-height(2) * -1;
+        @include mq(mobileLandscape) {
+            width: gs-span(4);
+        }
+        @include mq(tablet) {
+            width: gs-span(6);
+        }
+        @include mq(leftCol) {
+            margin-top: 0;
+            position: absolute;
+            top: 10px;
+            width: gs-span(8);
+        }
+    }
+    figure > .gs-container {
+        padding: 0;
+        margin: 0;
+        @include mq($until: leftCol) {
+            figcaption, .caption.caption--main.caption--img {
+                padding: 0 ($gs-gutter / 2) (gs-height(2) + $gs-baseline / 2);
+            }
+        }
+        .content__main-column {
+            padding: 0;
+            margin: 0;
+            max-width: unset;
+        }
     }
 
-    @include mq(wide) {
-        max-width: gs-span(16) + $gs-gutter * 2;
-    }
+    .media-primary.media-primary--showcase {
+        margin-left: 0;
+        margin-right: 0;
+        z-index: 2; // Put the showcase element on top of the left and right layout borders
+        position: relative;
 
-    .responsive-img {
         @include mq(desktop) {
-            top: -25%;
+            margin: 0 auto;
+            width: gs-span(12);
+            max-width: gs-span(12);
         }
-        height: auto;
+
+        @include mq(wide) {
+            width: gs-span(13);
+            max-width: gs-span(13);
+        }
+
+        .responsive-img {
+            @include mq(tablet) {
+                top: 0 !important;
+                margin: unset;
+                width: 100%;
+            }
+            margin-left: -20%;
+            width: 140%;
+            height: auto;
+        }
+
+        .caption--main {
+            padding-left: 0;
+        }
+
+        .u-responsive-ratio--letterbox {
+            transition: padding-bottom 1s;
+            padding-bottom: aspect-ratio-height(5,3,140%);
+            @include mq(tablet) {
+                padding-bottom: aspect-ratio-height(5,3,100%);
+            }
+        }
+        .media-primary.media-primary--showcase {
+            @include mq(wide) {
+                margin: 0 auto;
+            }
+        }
     }
 
-    .caption--main {
-        padding-left: 0;
-    }
-
-    .u-responsive-ratio--letterbox {
-        transition: padding-bottom 1s;
-
-        @include mq($until: desktop) {
-            padding-bottom: aspect-ratio-height(5, 3);
-        }
+    .content__secondary-column {
+        padding-top: (aspect-ratio-height(5, 3, gs-span(13)) + $gs-baseline) !important;
     }
 }
+
