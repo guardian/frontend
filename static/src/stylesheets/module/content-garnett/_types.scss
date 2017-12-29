@@ -728,12 +728,12 @@ $quote-mark: 35px;
         .inline-garnett-quote {
             margin-right: 15px;
             @include mq(desktop) {
-                margin-right: 20px;
+                margin-right: $gs-gutter;
             }
 
             svg {
                 width: 14px;
-                top: -10px;
+                top: -$gs-gutter/2;
                 @include mq(desktop) {
                     width: 16px;
                 }
