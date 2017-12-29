@@ -1,5 +1,6 @@
 // @flow
 import { Advert } from 'commercial/modules/dfp/Advert';
+import { prebid } from 'commercial/modules/prebid/prebid';
 
 const loadAdvert = (advert: Advert): void => {
     advert.whenSlotReady
@@ -8,6 +9,9 @@ const loadAdvert = (advert: Advert): void => {
         })
         .then(() => {
             advert.startLoading();
+            return prebid.requestBids(advert);
+        })
+        .then(() => {
             window.googletag.display(advert.id);
         });
 };
