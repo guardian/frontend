@@ -1353,6 +1353,10 @@
     .content__headline-standfirst-wrapper {
         @include mq($until: tablet) {
             order: 1;
+
+            .content--type-comment & {
+                order: 0;
+            }
         }
 
         @include mq($from: leftCol) {
@@ -1370,6 +1374,10 @@
         @include mq($until: tablet) {
             order: 1;
             margin-top: 0;
+
+            .content--type-comment & {
+                order: 0;
+            }
         }
 
         @include mq($from: leftCol) {
