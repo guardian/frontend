@@ -221,6 +221,7 @@ $quote-mark: 35px;
     }
 
     .byline {
+        @include fs-header(1);
         border-top: 0;
         font-weight: 200;
         color: #333333;
@@ -231,7 +232,6 @@ $quote-mark: 35px;
         // magic numbers are correcting line heights so vertical alignment apprears even
         padding-bottom: 8px;
         padding-top: 2px;
-        @include fs-header(1);
         font-weight: normal;
 
         span[itemprop='author'] {
