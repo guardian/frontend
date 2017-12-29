@@ -231,11 +231,13 @@ $quote-mark: 35px;
         // magic numbers are correcting line heights so vertical alignment apprears even
         padding-bottom: 8px;
         padding-top: 2px;
+        @include fs-header(1);
+        font-weight: normal;
 
         span[itemprop='author'] {
-            @include f-header;
+            @include fs-header(1);
             font-style: normal;
-            font-weight: 900;
+            font-weight: 700;
         }
     }
 
