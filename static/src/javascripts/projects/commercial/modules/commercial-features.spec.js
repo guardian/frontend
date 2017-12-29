@@ -2,10 +2,7 @@
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
-import {
-    getBreakpoint as getBreakpoint_,
-    adblockInUse as adblockInUse_,
-} from 'lib/detect';
+import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import {
     isPayingMember as isPayingMember_,
@@ -37,11 +34,9 @@ jest.mock('commercial/modules/user-features', () => ({
     isAdFreeUser: jest.fn(),
 }));
 
-jest.mock('lib/detect', () => {
-    return {
-        getBreakpoint: jest.fn()
-    };
-});
+jest.mock('lib/detect', () => ({
+    getBreakpoint: jest.fn(),
+}));
 
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),

@@ -108,10 +108,10 @@ jest.mock('lib/config', () => ({
     get: jest.fn(() => ''),
 }));
 jest.mock('lib/detect', () => ({
-    adblockInUse: Promise.resolve(false)
+    adblockInUse: Promise.resolve(false),
 }));
 jest.mock('common/modules/commercial/contributions-utilities', () => ({
-    shouldShowReaderRevenue: jest.fn(() => true)
+    shouldShowReaderRevenue: jest.fn(() => true),
 }));
 
 const FakeMessage: any = require('common/modules/ui/message').Message;
@@ -197,7 +197,7 @@ describe('Membership engagement banner', () => {
                 fakeMediator.emit('modules:onwards:breaking-news:ready', false);
                 expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
             });
-        })
+        });
     });
 
     describe('creates message with', () => {

@@ -50,26 +50,36 @@ const loadHostedBundle = (): Promise<void> => {
                 [],
                 require => {
                     const hostedAbout = require('commercial/modules/hosted/about');
-                    const initHostedVideo  = require('commercial/modules/hosted/video');
+                    const initHostedVideo = require('commercial/modules/hosted/video');
                     const hostedGallery = require('commercial/modules/hosted/gallery');
-                    const initHostedCarousel  = require('commercial/modules/hosted/onward-journey-carousel');
-                    const loadOnwardComponent  = require('commercial/modules/hosted/onward');
+                    const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel');
+                    const loadOnwardComponent = require('commercial/modules/hosted/onward');
                     commercialModules.push(
                         ['cm-hostedAbout', hostedAbout.init],
-                        ['cm-hostedVideo', initHostedVideo.initHostedVideo, true],
+                        [
+                            'cm-hostedVideo',
+                            initHostedVideo.initHostedVideo,
+                            true,
+                        ],
                         ['cm-hostedGallery', hostedGallery.init],
-                        ['cm-hostedOnward', loadOnwardComponent.loadOnwardComponent, true],
-                        ['cm-hostedOJCarousel', initHostedCarousel.initHostedCarousel]
+                        [
+                            'cm-hostedOnward',
+                            loadOnwardComponent.loadOnwardComponent,
+                            true,
+                        ],
+                        [
+                            'cm-hostedOJCarousel',
+                            initHostedCarousel.initHostedCarousel,
+                        ]
                     );
                     resolve();
                 },
                 'commercial-hosted'
             );
         });
-    } else {
-        return Promise.resolve();
     }
-}
+    return Promise.resolve();
+};
 
 const loadModules = (): Promise<void> => {
     addStartTimeBaseline(primaryBaseline);

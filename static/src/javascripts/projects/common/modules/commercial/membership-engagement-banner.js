@@ -22,9 +22,8 @@ import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/tem
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-12-14';
 
-const canDisplayMembershipEngagementBanner = (): Promise<boolean> => adblockInUse.then(
-    adblockUsed => !adblockUsed && shouldShowReaderRevenue()
-);
+const canDisplayMembershipEngagementBanner = (): Promise<boolean> =>
+    adblockInUse.then(adblockUsed => !adblockUsed && shouldShowReaderRevenue());
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
@@ -188,20 +187,18 @@ const showBanner = (params: EngagementBannerParams): void => {
 const membershipEngagementBannerInit = (): Promise<void> => {
     const bannerParams = deriveBannerParams(getGeoLocation());
     if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
-        return canDisplayMembershipEngagementBanner().then(
-            canShow => {
-                if (canShow) {
-                    mediator.on(
-                        'modules:onwards:breaking-news:ready',
-                        breakingShown => {
-                            if (!breakingShown) {
-                                showBanner(bannerParams);
-                            }
+        return canDisplayMembershipEngagementBanner().then(canShow => {
+            if (canShow) {
+                mediator.on(
+                    'modules:onwards:breaking-news:ready',
+                    breakingShown => {
+                        if (!breakingShown) {
+                            showBanner(bannerParams);
                         }
-                    );
-                }
+                    }
+                );
             }
-        );
+        });
     }
     return Promise.resolve(undefined);
 };
