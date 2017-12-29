@@ -8,7 +8,6 @@ import play.api.data.JodaForms.jodaDate
 import play.api.data.Mapping
 import play.api.i18n.MessagesProvider
 import utils.SafeLogging
-
 import scala.util.Try
 
 class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
@@ -94,7 +93,7 @@ case class PrivacyFormData(
     val newConsents = updateConsents(oldUserDO.consents, consents)
 
     UserUpdateDTO(
-      statusFields = Some(new StatusFields(
+      statusFields = Some(StatusFields(
         receive3rdPartyMarketing = newReceive3rdPartyMarketing,
         receiveGnmMarketing = newReceiveGnmMarketing,
         allowThirdPartyProfiling = newAllowThirdPartyProfiling
