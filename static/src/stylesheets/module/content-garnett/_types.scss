@@ -600,7 +600,7 @@ $quote-mark: 35px;
         .pullquote-cite,
         .pullquote-paragraph {
             display: inline;
-            font-weight: 400!important;
+            font-weight: 700!important;
         }
 
         .inline-quote,
@@ -608,18 +608,18 @@ $quote-mark: 35px;
             display: inline;
         }
         // these are all temp until we get new quote mark in
-        .inline-quote {
-            width: 28px;
-            margin-right: 3px;
+        .inline-garnett-quote {
+            width: 15px;
+            margin-right: 20px;
             @include mq(desktop) {
-                width: $quote-mark;
+                width: 15px;
             }
 
             svg {
                 width: inherit;
                 height: auto;
                 position: relative;
-                top: 0;
+                top: -10px;
             }
         }
     }
