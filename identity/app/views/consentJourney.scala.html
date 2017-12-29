@@ -188,61 +188,59 @@
     </fieldset>
 }
 
-<div class="monocol-wrapper">
-    <div class="u-cf identity-wrapper identity-wrapper--with-wizard">
+<div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-wizard">
 
-        <div class="js-errorHolder manage-account__errors"></div>
+    <div class="js-errorHolder manage-account__errors"></div>
 
-        <noscript>
-            <div class="form__error">
-                <p>
-                    Setting your preferences requires a browser with Javascript enabled.
-                </p>
-                <p>
-                    Please consider upgrading to one of our <a href="@LinkTo{/help/recommended-browsers}">recommended browsers</a>. If you need more help please <a href="@LinkTo{/info/tech-feedback}">contact us</a>.
-                </p>
-            </div>
-        </noscript>
-
-        <div class="identity-wizard identity-wizard--consent u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
-
-            @journey match {
-                case "newsletters" => {
-                    @emailRepermissionStep()
-                }
-                case "all" => {
-                    @consentStep(journey = "all")
-                    @emailRepermissionStep()
-                    @channelStep()
-                }
-                case _ => {
-                    @consentStep(journey = "consent")
-                    @emailRepermissionOrSignupStep()
-                    @channelStep()
-                }
-            }
-
-            @endcardStep()
-
-            <div class="identity-wizard__controls">
-                <button
-                    data-link-name="consents : navigation : prev"
-                    class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
-                >
-                    <span class="u-h">Previous</span>
-                    @fragments.inlineSvg("arrow-left-stem", "icon")
-                </button>
-                <div class="identity-consent-wizard__revealable identity-consent-wizard-counter">
-                </div>
-                <button
-                    data-link-name="consents : navigation : next"
-                    class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next manage-account__button--icon--rotate-down"
-                >
-                    <span>Next</span>
-                    @fragments.inlineSvg("arrow-right", "icon")
-                </button>
-            </div>
+    <noscript>
+        <div class="form__error">
+            <p>
+                Setting your preferences requires a browser with Javascript enabled.
+            </p>
+            <p>
+                Please consider upgrading to one of our <a href="@LinkTo{/help/recommended-browsers}">recommended browsers</a>. If you need more help please <a href="@LinkTo{/info/tech-feedback}">contact us</a>.
+            </p>
         </div>
+    </noscript>
 
+    <div class="identity-wizard identity-wizard--consent u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
+
+        @journey match {
+            case "newsletters" => {
+                @emailRepermissionStep()
+            }
+            case "all" => {
+                @consentStep(journey = "all")
+                @emailRepermissionStep()
+                @channelStep()
+            }
+            case _ => {
+                @consentStep(journey = "consent")
+                @emailRepermissionOrSignupStep()
+                @channelStep()
+            }
+        }
+
+        @endcardStep()
+
+        <div class="identity-wizard__controls">
+            <button
+                data-link-name="consents : navigation : prev"
+                class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
+            >
+                <span class="u-h">Previous</span>
+                @fragments.inlineSvg("arrow-left-stem", "icon")
+            </button>
+            <div class="identity-consent-wizard__revealable identity-consent-wizard-counter">
+            </div>
+            <button
+                data-link-name="consents : navigation : next"
+                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next manage-account__button--icon--rotate-down"
+            >
+                <span>Next</span>
+                @fragments.inlineSvg("arrow-right", "icon")
+            </button>
+        </div>
     </div>
+
 </div>
