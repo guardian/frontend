@@ -1316,7 +1316,6 @@
     }
 }
 
-
 // This section below makes the meta align with the image on leftCol, and has the main media first on mobile.
 .content__head--article {
     @include mq($until: tablet) {
@@ -1329,7 +1328,11 @@
             margin-left: -($left-column + $gs-gutter);
             display: grid;
             grid-template-columns: ($left-column + $gs-gutter) auto;
-            grid-template-areas: 'labels headline' 'meta main-media';
+            grid-template-areas: 'labels headline-standfirst' 'meta main-media';
+
+            .content--type-comment & {
+                grid-template-areas: 'labels headline' 'meta standfirst' '. main-media';
+            }
         }
     }
 
@@ -1360,13 +1363,25 @@
         }
 
         @include mq($from: leftCol) {
-            grid-area: headline;
+            grid-area: headline-standfirst;
         }
     }
 
     .media-primary {
         @include mq($from: leftCol) {
             grid-area: main-media;
+        }
+    }
+
+    .content__header {
+        @include mq($from: leftCol) {
+            grid-area: headline;
+        }
+    }
+
+    .tonal__standfirst {
+        @include mq($from: leftCol) {
+            grid-area: standfirst;
         }
     }
 

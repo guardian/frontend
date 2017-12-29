@@ -64,7 +64,11 @@
 
 
                             @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
-                                @fragments.articleHeaderGarnett(article, model, isPaidContent, amp = amp)
+                                @if(article.metadata.designType.nameOrDefault == "comment") {
+                                    @fragments.articleHeaderCommentGarnett(article, model, isPaidContent, amp = amp)
+                                } else {
+                                    @fragments.articleHeaderGarnett(article, model, isPaidContent, amp = amp)
+                                }
                             }
 
                             @fragments.witnessCallToAction(article.content)
