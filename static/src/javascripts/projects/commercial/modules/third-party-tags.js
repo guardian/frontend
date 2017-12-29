@@ -5,8 +5,6 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import { getTestVariantId } from 'common/modules/experiments/utils';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';

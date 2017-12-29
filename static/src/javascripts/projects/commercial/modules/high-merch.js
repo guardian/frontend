@@ -1,8 +1,6 @@
 // @flow
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import { getTestVariantId } from 'common/modules/experiments/utils';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 
