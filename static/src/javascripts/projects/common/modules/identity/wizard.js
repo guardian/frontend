@@ -104,29 +104,22 @@ const animateIncomingStep = (
     stepEl: HTMLElement,
     direction: string
 ): Promise<void> =>
-    fastdom
-        .write(() => {
-            stepEl.classList.remove(
-                stepHiddenClassname,
-                ...stepTransitionClassnames
-            );
-            if (direction !== 'none') {
-                stepEl.classList.add(
-                    direction === 'forwards'
-                        ? stepInClassname
-                        : stepInReverseClassname
-                );
-            }
-            setTimeout(() => {
-                stepEl.classList.remove(...stepTransitionClassnames);
-            }, 300);
-        })
-        .then(() => fastdom.read(() => stepEl.getBoundingClientRect().height))
-        .then(stepHeight =>
-            fastdom.write(() => {
-                wizardEl.style.minHeight = `${stepHeight}px`;
-            })
+    fastdom.write(() => {
+        stepEl.classList.remove(
+            stepHiddenClassname,
+            ...stepTransitionClassnames
         );
+        if (direction !== 'none') {
+            stepEl.classList.add(
+                direction === 'forwards'
+                    ? stepInClassname
+                    : stepInReverseClassname
+            );
+        }
+        setTimeout(() => {
+            stepEl.classList.remove(...stepTransitionClassnames);
+        }, 300);
+    });
 
 const animateOutgoingStep = (
     wizardEl: HTMLElement,
@@ -222,7 +215,7 @@ const setPosition = (
 ): Promise<void> =>
     fastdom
         .read(() => [
-            wizardEl.getBoundingClientRect().top - 20,
+            wizardEl.getBoundingClientRect().top - 120,
             parseInt(
                 wizardEl.dataset.position ? wizardEl.dataset.position : -1,
                 10
