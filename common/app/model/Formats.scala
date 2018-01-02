@@ -157,6 +157,13 @@ object PressedContentFormat {
       case JsString("Comment") => JsSuccess(com.gu.contentapi.client.utils.Comment)
       case JsString("Feature") => JsSuccess(com.gu.contentapi.client.utils.Feature)
       case JsString("Live") => JsSuccess(com.gu.contentapi.client.utils.Live)
+      case JsString("SpecialReport") => JsSuccess(com.gu.contentapi.client.utils.SpecialReport)
+      case JsString("Recipe") => JsSuccess(com.gu.contentapi.client.utils.Recipe)
+      case JsString("MatchReport") => JsSuccess(com.gu.contentapi.client.utils.MatchReport)
+      case JsString("Interview") => JsSuccess(com.gu.contentapi.client.utils.Interview)
+      case JsString("GuardianView") => JsSuccess(com.gu.contentapi.client.utils.GuardianView)
+      case JsString("Quiz") => JsSuccess(com.gu.contentapi.client.utils.Quiz)
+      case JsString("GuardianLabs") => JsSuccess(com.gu.contentapi.client.utils.GuardianLabs)
       case _ => JsError(s"Unknown design type: '$json'")
     }
     override def writes(dt: DesignType): JsValue = dt match {
@@ -168,6 +175,13 @@ object PressedContentFormat {
       case com.gu.contentapi.client.utils.Comment => JsString("Comment")
       case com.gu.contentapi.client.utils.Feature => JsString("Feature")
       case com.gu.contentapi.client.utils.Live => JsString("Live")
+      case com.gu.contentapi.client.utils.SpecialReport => JsString("SpecialReport")
+      case com.gu.contentapi.client.utils.Recipe => JsString("Recipe")
+      case com.gu.contentapi.client.utils.MatchReport => JsString("MatchReport")
+      case com.gu.contentapi.client.utils.Interview => JsString("Interview")
+      case com.gu.contentapi.client.utils.GuardianView => JsString("GuardianView")
+      case com.gu.contentapi.client.utils.Quiz => JsString("Quiz")
+      case com.gu.contentapi.client.utils.GuardianLabs => JsString("GuardianLabs")
     }
   }
 

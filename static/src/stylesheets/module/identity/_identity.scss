@@ -1,3 +1,7 @@
+/* Variables
+   ========================================================================== */
+$identity-header-height: 48px;
+
 /* Identity and registration
    ========================================================================== */
 .l-header--identity {
@@ -76,17 +80,6 @@
     }
 }
 
-.identity-layout-vertical-wrapper {
-    /*rough estimate of header + footer height*/
-    /*TODO: get a more precise estimate post garnett*/
-    min-height: calc(100vh - #{$gs-gutter*4});
-    &.identity-layout-vertical-wrapper__tabs {
-        min-height: calc(100vh - #{$gs-gutter*10});
-        /*TODO: remove if page shadow goes away*/
-        /*rough estimate of header + top tabs height*/
-    }
-}
-
 @include mq(desktop) {
     .identity-page-header {
         .identity-page-header__title {
@@ -123,6 +116,12 @@
         @include fs-headline(6, $size-only: true);
     }
 }
+
+.identity-title-subtitle {
+    @include fs-bodyCopy(2);
+    margin-top: $gs-baseline;
+}
+
 .identity-title--public-profile {
     @include mq(desktop) {
         float: left;
@@ -350,9 +349,6 @@
 
 /* Email subscriptions
    ========================================================================== */
-.email-subscriptions {
-    margin-top: $gs-baseline*2;
-}
 .email-subscription {
     border-top: 1px solid $neutral-5;
     margin-bottom: $gs-baseline*2;
@@ -375,6 +371,7 @@
 .dropdown--email-subscription {
     .dropdown__label {
         @include fs-bodyHeading(3);
+        text-transform: lowercase;
     }
     .dropdown__content {
         padding-bottom: 2em;

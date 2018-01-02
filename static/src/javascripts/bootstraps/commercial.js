@@ -9,12 +9,7 @@ import { articleBodyAdvertsInit } from 'commercial/modules/article-body-adverts'
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
-import hostedAbout from 'commercial/modules/hosted/about';
-import { initHostedVideo } from 'commercial/modules/hosted/video';
 import { carrotTrafficDriverInit } from 'commercial/modules/carrot-traffic-driver';
-import hostedGallery from 'commercial/modules/hosted/gallery';
-import { initHostedCarousel } from 'commercial/modules/hosted/onward-journey-carousel';
-import { loadOnwardComponent } from 'commercial/modules/hosted/onward';
 import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { initThirdPartyTags } from 'commercial/modules/third-party-tags';
@@ -50,22 +45,50 @@ if (!commercialFeatures.adFree) {
     );
 }
 
-if (config.page.isHosted) {
-    commercialModules.push(
-        ['cm-hostedAbout', hostedAbout.init],
-        ['cm-hostedVideo', initHostedVideo, true],
-        ['cm-hostedGallery', hostedGallery.init],
-        ['cm-hostedOnward', loadOnwardComponent, true],
-        ['cm-hostedOJCarousel', initHostedCarousel]
-    );
-}
+const loadHostedBundle = (): Promise<void> => {
+    if (config.page.isHosted) {
+        return new Promise(resolve => {
+            require.ensure(
+                [],
+                require => {
+                    const hostedAbout = require('commercial/modules/hosted/about');
+                    const initHostedVideo = require('commercial/modules/hosted/video');
+                    const hostedGallery = require('commercial/modules/hosted/gallery');
+                    const initHostedCarousel = require('commercial/modules/hosted/onward-journey-carousel');
+                    const loadOnwardComponent = require('commercial/modules/hosted/onward');
+                    commercialModules.push(
+                        ['cm-hostedAbout', hostedAbout.init],
+                        [
+                            'cm-hostedVideo',
+                            initHostedVideo.initHostedVideo,
+                            true,
+                        ],
+                        ['cm-hostedGallery', hostedGallery.init],
+                        [
+                            'cm-hostedOnward',
+                            loadOnwardComponent.loadOnwardComponent,
+                            true,
+                        ],
+                        [
+                            'cm-hostedOJCarousel',
+                            initHostedCarousel.initHostedCarousel,
+                        ]
+                    );
+                    resolve();
+                },
+                'commercial-hosted'
+            );
+        });
+    }
+    return Promise.resolve();
+};
 
-const loadModules = (modules, baseline): Promise<void> => {
-    addStartTimeBaseline(baseline);
+const loadModules = (): Promise<void> => {
+    addStartTimeBaseline(primaryBaseline);
 
     const modulePromises = [];
 
-    modules.forEach(module => {
+    commercialModules.forEach(module => {
         const moduleName: string = module[0];
         const moduleInit: () => void = module[1];
         const moduleDefer: boolean = module[2];
@@ -86,9 +109,8 @@ const loadModules = (modules, baseline): Promise<void> => {
             ],
         ]);
     });
-
     return Promise.all(modulePromises).then((): void => {
-        addEndTimeBaseline(baseline);
+        addEndTimeBaseline(primaryBaseline);
     });
 };
 
@@ -112,7 +134,8 @@ export default (): Promise<void> => {
         cmd: [],
     };
 
-    return loadModules(commercialModules, primaryBaseline)
+    return loadHostedBundle()
+        .then(loadModules)
         .then(() => {
             markTime('commercial end');
             catchErrorsWithContext([

@@ -97,7 +97,8 @@
                 @fragments.standfirst(item)
             }
         }
-
-        @fragments.contentMeta(item, page, amp = amp)
+        @if(item.tags.isFeature && item.elements.hasShowcaseMainElement) {
+            @fragments.contentMeta(item, page, amp = amp)
+        }
     </div>
 </header>

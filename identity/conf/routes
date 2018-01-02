@@ -32,7 +32,8 @@ GET         /et/subscribe/:subDefId                 controllers.ExactTargetContr
 
 
 #Email Footer signup routes
-GET        /email/form/$emailType<article|footer>/:listId                       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<article|footer>/$listId<[0-9]+>               controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<article|footer>/:listName                       controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
 GET        /email/:result                                                       controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                               controllers.EmailSignupController.submit()
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
@@ -62,6 +63,8 @@ POST        /privacy/edit-ajax                      controllers.EditProfileContr
 GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
 POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferencesAjax
 
-GET         /consent                                controllers.EditProfileController.displayConsentJourneyForm(journey: Option[String], consentHint: Option[String], newsletterHint: Option[String])
-POST        /complete-consent                         controllers.EditProfileController.submitRepermissionedFlag
+GET         /consents/all                           controllers.EditProfileController.displayConsentsJourneyAll(consentHint: Option[String])
+GET         /consents/newsletters                   controllers.EditProfileController.displayConsentsJourneyNewsletters
+GET         /consents                               controllers.EditProfileController.displayConsentsJourney(consentHint: Option[String])
+POST        /complete-consents                      controllers.EditProfileController.submitRepermissionedFlag
 ########################################################################################################################

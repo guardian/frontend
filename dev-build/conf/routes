@@ -195,6 +195,8 @@ POST           /login                                                           
 GET            /oauth2callback                                                                                                   controllers.admin.OAuthLoginAdminController.oauth2Callback
 GET            /logout                                                                                                           controllers.admin.OAuthLoginAdminController.logout
 GET            /admin                                                                                                            controllers.admin.AdminIndexController.admin()
+GET            /config                                                                                                           controllers.AppConfigController.renderAppConfig()
+GET            /config/parameter/*key                                                                                            controllers.AppConfigController.findParameter(key: String)
 GET            /api/proxy/*path                                                                                                  controllers.admin.Api.proxy(path, callback)
 GET            /api/tag                                                                                                          controllers.admin.Api.tag(q, callback)
 GET            /api/item/*path                                                                                                   controllers.admin.Api.item(path, callback)
@@ -211,8 +213,6 @@ GET            /metrics/fastly                                                  
 GET            /metrics/errors                                                                                                   controllers.admin.MetricsController.renderErrors()
 GET            /metrics/errors/4xx                                                                                               controllers.admin.MetricsController.render4XX()
 GET            /metrics/errors/5xx                                                                                               controllers.admin.MetricsController.render5XX()
-GET            /metrics/memory                                                                                                   controllers.admin.MetricsController.renderMemory()
-GET            /metrics/assets                                                                                                   controllers.admin.MetricsController.renderAssets()
 GET            /metrics/afg                                                                                                      controllers.admin.MetricsController.renderAfg()
 GET            /metrics/webpack-bundle-visualization                                                                             controllers.admin.MetricsController.renderBundleVisualization()
 GET            /metrics/webpack-bundle-analyzer                                                                                  controllers.admin.MetricsController.renderBundleAnalyzer()

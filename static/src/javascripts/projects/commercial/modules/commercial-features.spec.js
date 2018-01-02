@@ -2,10 +2,7 @@
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
-import {
-    getBreakpoint as getBreakpoint_,
-    adblockInUse as adblockInUse_,
-} from 'lib/detect';
+import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import {
     isPayingMember as isPayingMember_,
@@ -13,17 +10,11 @@ import {
     shouldSeeReaderRevenue as shouldSeeReaderRevenue_,
     isAdFreeUser as isAdFreeUser_,
 } from 'commercial/modules/user-features';
-import { shouldShowReaderRevenue as shouldShowReaderRevenue_ } from 'common/modules/commercial/contributions-utilities';
 
 const isPayingMember: JestMockFn<*, *> = (isPayingMember_: any);
 const isRecentContributor: JestMockFn<*, *> = (isRecentContributor_: any);
 const shouldSeeReaderRevenue: JestMockFn<*, *> = (shouldSeeReaderRevenue_: any);
 const isAdFreeUser: JestMockFn<*, *> = (isAdFreeUser_: any);
-const shouldShowReaderRevenue: JestMockFn<
-    *,
-    *
-> = (shouldShowReaderRevenue_: any);
-const adblockInUse: any = adblockInUse_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 
@@ -43,26 +34,12 @@ jest.mock('commercial/modules/user-features', () => ({
     isAdFreeUser: jest.fn(),
 }));
 
-jest.mock('lib/detect', () => {
-    let adblockInUseMock = false;
-
-    return {
-        getBreakpoint: jest.fn(),
-        adblockInUse: {
-            then: fn => Promise.resolve(fn(adblockInUseMock)),
-            mockReturnValue: value => {
-                adblockInUseMock = value;
-            },
-        },
-    };
-});
+jest.mock('lib/detect', () => ({
+    getBreakpoint: jest.fn(),
+}));
 
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
-}));
-
-jest.mock('common/modules/commercial/contributions-utilities', () => ({
-    shouldShowReaderRevenue: jest.fn(),
 }));
 
 describe('Commercial features', () => {
@@ -453,29 +430,6 @@ describe('Commercial features', () => {
                 const features = new CommercialFeatures();
                 expect(features.commentAdverts).toBe(false);
             });
-        });
-    });
-
-    describe('Membership messages', () => {
-        it('Displays messages by default', () => {
-            shouldShowReaderRevenue.mockReturnValue(true);
-            const features = new CommercialFeatures();
-            return features.asynchronous.canDisplayMembershipEngagementBanner.then(
-                flag => {
-                    expect(flag).toBe(true);
-                }
-            );
-        });
-
-        it('Does not display messages when adBlock is enabled', () => {
-            // i.e. we want to show the adblock message instead
-            adblockInUse.mockReturnValue(true);
-            const features = new CommercialFeatures();
-            return features.asynchronous.canDisplayMembershipEngagementBanner.then(
-                flag => {
-                    expect(flag).toBe(false);
-                }
-            );
         });
     });
 });

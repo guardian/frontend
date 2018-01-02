@@ -34,17 +34,18 @@ x x x x x x x x
     }
 
     &.fc-item--has-cutout {
-        .fc-item__avatar {
-            width: gs-height(3);
-            height: gs-height(3);
-        }
-
-        .fc-item__avatar__media {
-            right: -35%;
+        @include avatar(3);
+        
+        @include mq(desktop) {
+            @include avatar(4);
         }
 
         .fc-item__header {
-            padding-bottom: gs-height(4);
+            padding-bottom: gs-height(3) + $gs-baseline * 2;
+
+            @include mq(desktop) {
+                padding-bottom: gs-height(4);
+            }
         }
 
         .fc-item__standfirst-wrapper {

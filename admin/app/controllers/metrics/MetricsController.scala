@@ -1,13 +1,13 @@
 package controllers.admin
 
 import common.{ImplicitControllerExecutionContext, Logging}
+import conf.switches.Switches
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import tools._
 import model.{ApplicationContext, NoCache}
 import conf.{Configuration, Static}
-
-import scala.concurrent.Future
+import controllers.AdminAudit
 
 class MetricsController(
   wsClient: WSClient,
@@ -47,16 +47,6 @@ class MetricsController(
     for {
       googleBot404s <- HttpErrors.googlebot404s()
     } yield NoCache(Ok(views.html.lineCharts(googleBot404s, Some("GoogleBot 404s"))))
-  }
-
-  def renderMemory(): Action[AnyContent] = Action.async { implicit request =>
-    for {
-      metrics <- MemoryMetrics.memory()
-    } yield NoCache(Ok(views.html.lineCharts(metrics)))
-  }
-
-  def renderAssets(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(NoCache(Ok(views.html.staticAssets(AssetMetricsCache.sizes))))
   }
 
   def renderAfg(): Action[AnyContent] = Action.async { implicit request =>

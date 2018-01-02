@@ -1,5 +1,5 @@
 @import common.{ LinkTo, Edition }
-@import conf.switches.Switches.{SearchSwitch, HeaderFeedback}
+@import conf.switches.Switches.SearchSwitch
 @import navigation.{ NavMenu, NavigationHelpers, NavLink }
 @import views.support.RenderClasses
 
@@ -179,19 +179,6 @@
             <ul class="menu-group menu-group--brand-extensions hide-until-desktop">
                 @navMenu.brandExtensions.map { item =>
                     @brandExtensions(item)
-                }
-
-                @if(HeaderFeedback.isSwitchedOn) {
-                    <a data-link-name="nav2 : feedback-form"
-                        href="https://goo.gl/forms/j5pMsPSWINu7X2R62">
-
-                        <li class="hide-until-desktop feedback-form">
-                            @fragments.inlineSvg("information-circle", "icon", List("feedback-form__icon"))
-                            We&rsquo;d appreciate your feedback on our new navigation.
-                            <span class="feedback-form__link">
-                            Share your thoughts here.</span>
-                        </li>
-                    </a>
                 }
             </ul>
         </div>

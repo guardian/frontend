@@ -3,18 +3,19 @@
 import fastdom from 'lib/fastdom-promise';
 import { scrollTo } from 'lib/scroller';
 
-const completedClassname = 'manage-account-wizard--completed';
-const pagerClassname = 'manage-account-wizard__controls-pager';
-const nextButtonElClassname = 'js-manage-account-wizard__next';
-const prevButtonElClassname = 'js-manage-account-wizard__prev';
-const containerClassname = 'manage-account-wizard';
+const completedClassname = 'identity-wizard--completed';
+const introductionClassname = 'identity-wizard--introduction';
+const pagerClassname = 'identity-wizard__controls-pager';
+const nextButtonElClassname = 'js-identity-wizard__next';
+const prevButtonElClassname = 'js-identity-wizard__prev';
+const containerClassname = 'identity-wizard';
 
-const stepClassname = 'manage-account-wizard__step';
-const stepHiddenClassname = 'manage-account-wizard__step--hidden';
-const stepOutClassname = 'manage-account-wizard__step--out';
-const stepInClassname = 'manage-account-wizard__step--in';
-const stepOutReverseClassname = 'manage-account-wizard__step--out-reverse';
-const stepInReverseClassname = 'manage-account-wizard__step--in-reverse';
+const stepClassname = 'identity-wizard__step';
+const stepHiddenClassname = 'identity-wizard__step--hidden';
+const stepOutClassname = 'identity-wizard__step--out';
+const stepInClassname = 'identity-wizard__step--in';
+const stepOutReverseClassname = 'identity-wizard__step--out-reverse';
+const stepInReverseClassname = 'identity-wizard__step--in-reverse';
 const stepTransitionClassnames = [
     stepInClassname,
     stepInReverseClassname,
@@ -104,29 +105,22 @@ const animateIncomingStep = (
     stepEl: HTMLElement,
     direction: string
 ): Promise<void> =>
-    fastdom
-        .write(() => {
-            stepEl.classList.remove(
-                stepHiddenClassname,
-                ...stepTransitionClassnames
-            );
-            if (direction !== 'none') {
-                stepEl.classList.add(
-                    direction === 'forwards'
-                        ? stepInClassname
-                        : stepInReverseClassname
-                );
-            }
-            setTimeout(() => {
-                stepEl.classList.remove(...stepTransitionClassnames);
-            }, 300);
-        })
-        .then(() => fastdom.read(() => stepEl.getBoundingClientRect().height))
-        .then(stepHeight =>
-            fastdom.write(() => {
-                wizardEl.style.minHeight = `${stepHeight}px`;
-            })
+    fastdom.write(() => {
+        stepEl.classList.remove(
+            stepHiddenClassname,
+            ...stepTransitionClassnames
         );
+        if (direction !== 'none') {
+            stepEl.classList.add(
+                direction === 'forwards'
+                    ? stepInClassname
+                    : stepInReverseClassname
+            );
+        }
+        setTimeout(() => {
+            stepEl.classList.remove(...stepTransitionClassnames);
+        }, 300);
+    });
 
 const animateOutgoingStep = (
     wizardEl: HTMLElement,
@@ -158,6 +152,10 @@ const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
                     parseInt(wizardEl.dataset.position, 10) >=
                         parseInt(wizardEl.dataset.length, 10) - 1
                 );
+                wizardEl.classList.toggle(
+                    introductionClassname,
+                    parseInt(wizardEl.dataset.position, 10) < 1
+                );
                 pagerEls.forEach((pagerEl: HTMLElement) => {
                     pagerEl.innerText = `${parseInt(
                         wizardEl.dataset.position,
@@ -166,6 +164,18 @@ const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
                 });
             })
         );
+
+const updateFocus = (stepEl: HTMLElement): Promise<void> =>
+    fastdom.write(() => {
+        window.setTimeout(() => {
+            stepEl.setAttribute('tabindex', '-1');
+            stepEl.focus();
+        }, 0);
+        /*
+        focus is buggy, a timeout kinda fixes it
+        https://stackoverflow.com/questions/1096436/document-getelementbyidid-focus-is-not-working-for-firefox-or-chrome/
+        */
+    });
 
 const updateSteps = (
     wizardEl: HTMLElement,
@@ -178,6 +188,7 @@ const updateSteps = (
             switch (i) {
                 case newPosition:
                     stepEl.setAttribute('aria-hidden', 'false');
+                    stepEl.removeAttribute('hidden');
                     animateIncomingStep(
                         wizardEl,
                         stepEl,
@@ -186,6 +197,7 @@ const updateSteps = (
                     break;
                 case currentPosition:
                     stepEl.setAttribute('aria-hidden', 'true');
+                    stepEl.removeAttribute('hidden');
                     animateOutgoingStep(
                         wizardEl,
                         stepEl,
@@ -194,6 +206,7 @@ const updateSteps = (
                     break;
                 default:
                     stepEl.setAttribute('aria-hidden', 'true');
+                    stepEl.setAttribute('hidden', 'hidden');
                     stepEl.classList.add(stepHiddenClassname);
                     stepEl.classList.remove(...stepTransitionClassnames);
             }
@@ -207,7 +220,15 @@ const setPosition = (
 ): Promise<void> =>
     fastdom
         .read(() => [
-            wizardEl.getBoundingClientRect().top - 20,
+            /*
+            scrolls to the wizard's top (+ a bit of breathing room)
+            if it's halfway through a page, and to the page's
+            top if it's very close to it, as it looks
+            cleaner than scrolling to half of the header
+            */
+            wizardEl.getBoundingClientRect().top < 120
+                ? 0
+                : wizardEl.getBoundingClientRect().top - 20,
             parseInt(
                 wizardEl.dataset.position ? wizardEl.dataset.position : -1,
                 10
@@ -247,7 +268,8 @@ const setPosition = (
                 currentPosition,
                 newPosition,
                 userInitiated
-                    ? pushBrowserState(wizardEl, newPosition)
+                    ? pushBrowserState(wizardEl, newPosition) &&
+                      updateFocus(stepEls[newPosition])
                     : updateBrowserState(wizardEl, newPosition),
                 updateCounter(wizardEl),
                 updateSteps(wizardEl, currentPosition, newPosition, stepEls),

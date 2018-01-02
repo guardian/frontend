@@ -58,8 +58,14 @@
         margin-left: gs-span(1);
 
         @include mq(mobile) {
-            margin-left: gs-span(1) - $gs-gutter / 2;
+            margin-left: gs-span(1) + $gs-gutter / 2;
         }
+    }
+
+    .inline-numbers {
+        float: left;
+        margin-top: $gs-baseline / 4;
+        fill: $garnett-neutral-1;
     }
 
     .inline-icon {

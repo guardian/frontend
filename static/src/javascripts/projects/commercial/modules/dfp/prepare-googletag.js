@@ -83,7 +83,11 @@ const setPublisherProvidedId = (): void => {
 
 const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
-        addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
+        addTag(
+            dfpEnv.externalDemand === 'none'
+                ? 'waterfall'
+                : dfpEnv.externalDemand
+        );
 
         start();
 

@@ -58,16 +58,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-paid-content-vs-outbrain-2",
-    "Displays a paid content widget instead of Outbrain",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 8),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -128,6 +118,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-prebid-integration",
+    "Test prebid as a header-bidding implementation",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 2),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-testimonials-group",
     "Test changing the epic testimonial each view",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -148,11 +148,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-split-cta-referrer",
-    "Test a split cta, and changing the product set for people who click on the epic",
-    owners = Seq(Owner.withGithub("jranks123")),
+    "ab-acquisitions-banner-just-contribute",
+    "Test linking to a contributions-only version of support.theguardian.com",
+    owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 10),
+    sellByDate = new LocalDate(2018, 1, 22),
     exposeClientSide = true
   )
 }

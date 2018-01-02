@@ -47,7 +47,8 @@ class DevParametersHttpRequestHandler(
     "amp_latest_update_time", // used by amp-live-list to check for latest updates
     "heatmap", // used by ophan javascript to enable the heatmap
     "format", // used to determine whether HTML should be served in email-friendly format or not
-    "timestamp" //used to get specific builds for inteactive serviceworkers
+    "timestamp", //used to get specific builds for inteactive serviceworkers
+    "pbjs_debug" // set to true to enable prebid debugging
   )
 
   val commercialParams = Seq(

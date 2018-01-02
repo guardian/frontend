@@ -74,7 +74,8 @@ object BodyCleaner {
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++
       ListIf(amp)(AttributeCleaner("style")) ++ // The inline 'style' attribute is not allowed in AMP documents
-      ListIf(amp && shouldShowAds && !article.isLiveBlog)(AmpAdCleaner(edition, request.uri, article))
+      ListIf(amp && shouldShowAds && !article.isLiveBlog)(AmpAdCleaner(edition, request.uri, article)) ++
+      ListIf(experiments.ActiveExperiments.isParticipating(experiments.Garnett))(GarnettQuoteCleaner)
 
     withJsoup(BulletCleaner(html))(cleaners :_*)
   }
