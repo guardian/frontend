@@ -12,7 +12,7 @@ import renderAdvertLabel from 'commercial/modules/dfp/render-advert-label';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { Toggles } from 'common/modules/ui/toggles';
 import { recordUserAdFeedback } from 'commercial/modules/user-ad-feedback';
-import type SlotRenderEndedEvent from 'commercial/types';
+import type { SlotRenderEndedEvent } from 'commercial/types';
 /**
  * ADVERT RENDERING
  * ----------------
@@ -207,7 +207,7 @@ export const renderAdvert = (
                       })
                     : Promise.resolve();
 
-            const applyFeedbackOnClickListeners = slotRender => {
+            const applyFeedbackOnClickListeners = () => {
                 const readyClass = 'js-onclick-ready';
                 return isRendered
                     ? fastdom.write(() => {
@@ -216,11 +216,12 @@ export const renderAdvert = (
                           ).forEach(el => {
                               const slotId = el.getAttribute('data-slot');
                               const problem = el.getAttribute('data-problem');
+
                               el.addEventListener('click', () => {
                                   recordUserAdFeedback(
                                       window.location.pathname,
                                       slotId,
-                                      slotRender,
+                                      slotRenderEndedEvent,
                                       problem
                                   );
                               });
@@ -233,7 +234,7 @@ export const renderAdvert = (
             return callSizeCallback()
                 .then(() => renderAdvertLabel(advert.node))
                 .then(addFeedbackDropdownToggle)
-                .then(() => applyFeedbackOnClickListeners(slotRenderEndedEvent))
+                .then(applyFeedbackOnClickListeners)
                 .then(addRenderedClass)
                 .then(() => isRendered);
         })
