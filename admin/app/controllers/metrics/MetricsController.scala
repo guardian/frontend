@@ -44,11 +44,9 @@ class MetricsController(
   }
 
   def renderGooglebot404s(): Action[AnyContent] = Action.async { implicit request =>
-    AdminAudit.endpointAuditF(Switches.AdminRemoveMetricsGooglebot) {
-      for {
-        googleBot404s <- HttpErrors.googlebot404s()
-      } yield NoCache(Ok(views.html.lineCharts(googleBot404s, Some("GoogleBot 404s"))))
-    }
+    for {
+      googleBot404s <- HttpErrors.googlebot404s()
+    } yield NoCache(Ok(views.html.lineCharts(googleBot404s, Some("GoogleBot 404s"))))
   }
 
   def renderAfg(): Action[AnyContent] = Action.async { implicit request =>

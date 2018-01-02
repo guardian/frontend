@@ -547,26 +547,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val AdminRemoveTroubleshootFootball = Switch(
-    SwitchGroup.Feature,
-    "admin-audit-remove-troubleshoot-football",
-    "When ON, the /troubleshoot/football page returns 503",
-    owners = Seq(Owner.withGithub("quarpt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 1),
-    exposeClientSide = false
-  )
-
-  val AdminRemoveTroubleshootCricket = Switch(
-    SwitchGroup.Feature,
-    "admin-audit-remove-troubleshoot-cricket",
-    "When ON, the /troubleshoot/cricket page returns 503",
-    owners = Seq(Owner.withGithub("quarpt")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 1),
-    exposeClientSide = false
-  )
-
   val AdminRemoveApiProxy = Switch(
     SwitchGroup.Feature,
     "admin-audit-remove-api-proxy",
@@ -617,20 +597,20 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val AdminRemoveAnalyticsConfidence = Switch(
+  val AdminRemoveRadiator = Switch(
     SwitchGroup.Feature,
-    "admin-audit-remove-analytics-confidence",
-    "When ON, the /analytics/confidence page returns 503",
+    "admin-audit-remove-radiator",
+    "When ON, the /radiator page returns 503",
     owners = Seq(Owner.withGithub("quarpt")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
 
-  val AdminRemoveMetricsGooglebot = Switch(
+  val AdminRemoveRadiatorCommit = Switch(
     SwitchGroup.Feature,
-    "admin-audit-remove-metrics-googlebot",
-    "When ON, the /metrics/googlebot page returns 503",
+    "admin-audit-remove-radiator-commit",
+    "When ON, the /radiator/commit/*hash page returns 503",
     owners = Seq(Owner.withGithub("quarpt")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
