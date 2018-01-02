@@ -293,7 +293,7 @@ $quote-mark: 35px;
 
         .button {
             height: 1.5rem;
-            font-size: 0.75rem;
+            font-size: .75rem;
             font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
@@ -1050,7 +1050,7 @@ $quote-mark: 35px;
                 border-color: transparent transparent transparent $garnett-neutral-5;
                 @include mq(tablet) {
                     // 0 border radius on mobile because stock android has a render bug with it here
-                    border-radius: 0.2em;
+                    border-radius: .2em;
                 }
             }
         }
