@@ -1,4 +1,4 @@
-@mixin colorPalatte($pillarColor, $kickerColor, $mediaColor) {
+@mixin colorPalatte($kickerColor, $pillarColor, $mediaColor) {
     &.content--type-analysis {
         .content__headline {
             background-image: repeating-linear-gradient(to bottom, transparent, transparent 39px, rgba($pillarColor, .5));
@@ -11,17 +11,18 @@
 
     .button--secondary,
     .content__section-label__link,
+    .element-pullquote p,
     .drop-cap,
-    .pullquote-cite {
+    .tonal__head--tone-feature .content__headline,
+    .tonal__head--tone-review .content__headline,
+    .u-underline[href] {
         color: $pillarColor;
     }
 
     .byline,
     .content--media .content__headline,
-    .element-pullquote p,
+    .pullquote-cite,
     .old-article-message,
-    .tonal__head--tone-feature .content__headline,
-    .tonal__head--tone-review .content__headline,
     .tone-colour,
     a[href] {
         color: $kickerColor;
@@ -50,7 +51,7 @@
     }
 
     .inline-garnett-quote svg {
-        fill: $pillarColor;
+        fill: $kickerColor;
     }
 
     .u-underline:hover {
@@ -205,7 +206,7 @@
 
 .content--pillar-lifestyle,
 .content--pillar-lifestyle.content--type-comment  {
-    @include colorPalatte($lifestyle-garnett-feature, $lifestyle-garnett-main-1, $lifestyle-garnett-media-main-1);
+    @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
 }
 
 .content--pillar-sport,
