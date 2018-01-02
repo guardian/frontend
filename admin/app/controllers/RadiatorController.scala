@@ -8,6 +8,7 @@ import play.api.libs.ws.WSClient
 import conf.Configuration
 import model.{ApplicationContext, NoCache}
 import conf.switches.{Switch, Switches}
+import controllers.AdminAudit
 import model.deploys.{HttpClient, TeamCityBuild, TeamcityService}
 
 import scala.concurrent.Future
@@ -34,37 +35,41 @@ class RadiatorController(
 
   // proxy call to github so we do not leak the access key
   def commitDetail(hash: String): Action[AnyContent] = Action.async { implicit request =>
-    val call = wsClient.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
-    call.map{ c =>
-      NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
+    AdminAudit.endpointAuditF(Switches.AdminRemoveRadiatorCommit) {
+      val call = wsClient.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
+      call.map { c =>
+        NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
+      }
     }
   }
   def renderRadiator(): Action[AnyContent] = Action.async { implicit request =>
-    val apiKey = Configuration.riffraff.apiKey
+    AdminAudit.endpointAuditF(Switches.AdminRemoveRadiator) {
+      val apiKey = Configuration.riffraff.apiKey
 
-    case class buildProject(name: String, branch: Option[String] = None)
+      case class buildProject(name: String, branch: Option[String] = None)
 
-    def mostRecentBuild(projects: buildProject*): Future[Seq[TeamCityBuild]] = {
-      Future.sequence(projects.map { project =>
-        teamcityService
-          .getBuilds(project.name, project.branch, count = 1)
-          .map(_.head)
-      })
-    }
+      def mostRecentBuild(projects: buildProject*): Future[Seq[TeamCityBuild]] = {
+        Future.sequence(projects.map { project =>
+          teamcityService
+            .getBuilds(project.name, project.branch, count = 1)
+            .map(_.head)
+        })
+      }
 
-    for {
-      ciBuilds <- mostRecentBuild(buildProject("dotcom_frontend", Some("master")), buildProject("dotcom_ampValidation"))
-      router50x <- CloudWatch.routerBackend50x()
-      latencyGraphs <- CloudWatch.shortStackLatency()
-      fastlyErrors <- CloudWatch.fastlyErrors()
-      fastlyHitMiss <- CloudWatch.fastlyHitMissStatistics()
-      cost <- CloudWatch.cost()
-    } yield {
-      val errorGraphs = Seq(router50x)
-      val fastlyGraphs = fastlyErrors ++ fastlyHitMiss
-      NoCache(Ok(views.html.radiator(
-        ciBuilds, errorGraphs, latencyGraphs, fastlyGraphs, cost, switchesExpiringSoon, apiKey
-      )))
+      for {
+        ciBuilds <- mostRecentBuild(buildProject("dotcom_frontend", Some("master")), buildProject("dotcom_ampValidation"))
+        router50x <- CloudWatch.routerBackend50x()
+        latencyGraphs <- CloudWatch.shortStackLatency()
+        fastlyErrors <- CloudWatch.fastlyErrors()
+        fastlyHitMiss <- CloudWatch.fastlyHitMissStatistics()
+        cost <- CloudWatch.cost()
+      } yield {
+        val errorGraphs = Seq(router50x)
+        val fastlyGraphs = fastlyErrors ++ fastlyHitMiss
+        NoCache(Ok(views.html.radiator(
+          ciBuilds, errorGraphs, latencyGraphs, fastlyGraphs, cost, switchesExpiringSoon, apiKey
+        )))
+      }
     }
   }
 }
