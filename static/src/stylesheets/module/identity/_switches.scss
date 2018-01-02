@@ -182,6 +182,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
 .manage-account__switch-title {
     @include fs-bodyCopy(1);
+    font-weight: 700;
     margin-bottom: $local-gutter * .5;
     cursor: pointer;
     display: block;

@@ -318,7 +318,7 @@
 }
 .identity-title-subtitle {
     @include fs-bodyCopy(2);
-    margin-top: $gs-baseline / 2;
+    margin-top: $gs-baseline;
 }
 
 .manage-account-headerWrapper {
