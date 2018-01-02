@@ -90,6 +90,15 @@
     }
 }
 
+@mixin footerPalette($pillarColor) {
+    .discussion a[href],
+    // #? temporary fix: this class is in the comment.js template (line 139)
+    // we can get rid of it once we clean up the pre-garnett code
+    .discussion .button--tone-news {
+        color: $pillarColor;
+    }
+}
+
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
 
@@ -189,6 +198,26 @@
 .content--pillar-sport,
 .content--pillar-sport.content--type-comment {
     @include colorPalatte($sport-garnett-main-1, $sport-garnett-feature, $sport-garnett-media-main-1);
+}
+
+.content-footer--pillar-news {
+    @include footerPalette($news-garnett-main-1);
+}
+
+.content-footer--pillar-arts {
+    @include footerPalette($arts-garnett-main-1);
+}
+
+.content-footer--pillar-lifestyle {
+    @include footerPalette($lifestyle-garnett-feature);
+}
+
+.content-footer--pillar-opinion {
+    @include footerPalette($opinion-garnett-main-1);
+}
+
+.content-footer--pillar-sport {
+    @include footerPalette($sport-garnett-main-1);
 }
 
 .content--media:not(.paid-content).content--pillar-news,
