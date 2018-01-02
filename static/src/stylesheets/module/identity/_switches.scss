@@ -2,7 +2,7 @@
 /* Switchboard
    ========================================================================== */
 
-$local-gutter: $gs-gutter / 2;
+$local-gutter: $gs-gutter / 3;
 $row-gutter: $gs-gutter / 2;
 
 $checkbox-size: $gs-gutter / 1.25;
@@ -48,7 +48,7 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch {
-    @include fs-textSans(2);
+    @include fs-bodyCopy(1);
     background-color: $neutral-8;
     border-top: 1px solid $neutral-4;
     overflow: hidden;
@@ -172,13 +172,13 @@ $checkbox-size: $gs-gutter / 1.25;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding-left: $local-gutter * 1.25 + $checkbox-size;
+    padding-left: $local-gutter + $checkbox-size + 2;
 }
 
 .manage-account__switch-title {
-    @include fs-headline(1);
+    @include fs-headline(2);
     font-weight: 500;
-    margin-bottom: $local-gutter * .5;
+    margin: -1px 0 ($local-gutter / 2);
     cursor: pointer;
     display: block;
     em {
@@ -189,8 +189,9 @@ $checkbox-size: $gs-gutter / 1.25;
 
 .manage-account__switch-copy {
     cursor: pointer;
-    opacity: .9;
+    opacity: .8;
     flex: 1 1 auto;
+    margin: 0;
 }
 
 .manage-account__switch-footer {
