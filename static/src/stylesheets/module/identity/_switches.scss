@@ -195,11 +195,11 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch-footer {
+    @include fs-textSans(1);
     margin-top: $local-gutter * 2;
     display: flex;
     justify-content: space-between;
     width: 100%;
-    @include fs-textSans(1);
 
     > :last-child {
         text-align: right;
