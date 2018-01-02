@@ -365,6 +365,7 @@ $identity-header-height: 48px;
 .dropdown--email-subscription {
     .dropdown__label {
         @include fs-bodyHeading(3);
+        text-transform: lowercase;
     }
     .dropdown__content {
         padding-bottom: 2em;
