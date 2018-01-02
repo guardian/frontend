@@ -2,7 +2,6 @@
     &.content--type-analysis {
         .content__headline {
             background-image: repeating-linear-gradient(to bottom, transparent, transparent 39px, rgba($pillarColor, .5));
-
             @include mq(tablet) {
                 background-image: repeating-linear-gradient(to bottom, transparent, transparent 47px, rgba($pillarColor, .5));
             }
@@ -11,8 +10,8 @@
 
     .button--secondary,
     .content__section-label__link,
-    .element-pullquote p,
     .drop-cap,
+    .element-pullquote p,
     .tonal__head--tone-feature .content__headline,
     .tonal__head--tone-review .content__headline,
     .u-underline[href] {
@@ -21,8 +20,8 @@
 
     .byline,
     .content--media .content__headline,
-    .pullquote-cite,
     .old-article-message,
+    .pullquote-cite,
     .tone-colour,
     a[href] {
         color: $kickerColor;
@@ -32,18 +31,20 @@
         background: $mediaColor;
     }
 
+    .block-share__item--facebook .inline-icon,
+    .block-share__item--gplus .inline-icon,
+    .block-share__item--twitter .inline-icon,
     .inline-close svg,
     .inline-tone-fill,
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
-    .social-icon__svg,
-    .block-share__item .inline-icon {
+    .social-icon__svg {
         fill: $kickerColor;
     }
 
     .social__tray-close .social-tray__button {
-        &:hover,
-        &:focus {
+        &:focus,
+        &:hover {
             .inline-close {
                 border-color: $kickerColor;
             }
@@ -103,7 +104,6 @@
 
     }
 }
-
 @mixin footerPalette($pillarColor) {
     .discussion a[href],
     // #? temporary fix: this class is in the comment.js template (line 139)
@@ -112,7 +112,6 @@
         color: $pillarColor;
     }
 }
-
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
 
@@ -126,8 +125,8 @@
 
     .inline-garnett-quote__svg {
         height: get-font-size(headline, 3);
-        width: get-font-size(headline, 3) * .5;
-        margin-right: get-font-size(headline, 3) * .5;
+        width: get-font-size(headline, 3) * 0.5;
+        margin-right: get-font-size(headline, 3) * 0.5;
         fill: $pillarColor;
     }
 
@@ -148,18 +147,17 @@
         padding-top: $gs-baseline / 6;
     }
 
-    .rich-link__kicker,
     .rich-link__byline,
+    .rich-link__kicker,
     .rich-link__read-more-text {
         color: $pillarColor;
     }
 
     .rich-link__kicker {
         border-right: 1px solid $pillarColor;
-        padding-right: .375em;
+        padding-right: 0.375em;
     }
 }
-
 @mixin mediaPalatte($mediaColor, $pillar) {
     .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
@@ -187,7 +185,6 @@
     .vjs-playing .vjs-play-control {
         @include icon(pause-icon--#{$pillar});
     }
-
 }
 
 .content--pillar-news {
@@ -205,7 +202,7 @@
 }
 
 .content--pillar-lifestyle,
-.content--pillar-lifestyle.content--type-comment  {
+.content--pillar-lifestyle.content--type-comment {
     @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
 }
 
@@ -265,7 +262,6 @@
         background-size: 1px 40px;
         background-clip: content-box;
         background-origin: content-box;
-
         @include mq(tablet) {
             background-size: 1px 48px;
         }
@@ -346,7 +342,6 @@
         .rich-link__read-more-text {
             display: none;
         }
-
     }
 }
 
