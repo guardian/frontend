@@ -39,10 +39,10 @@
 
             <div class="identity-forms-wrapper">
                 <div class="identity-forms-wrapper__title">
-                    <legend class="identity-title" id="consentWizardChannelsTitle">
+                    <legend class="identity-title identity-title--small" id="consentWizardChannelsTitle">
                         How can we get in touch with you?
                     </legend>
-                    <p class="identity-title-subtitle">
+                    <p class="identity-title-explainer">
                         Besides email, are there any other ways you would like us to get in touch with you?
                     </p>
                 </div>
@@ -69,15 +69,15 @@
             @views.html.helper.CSRF.formField
             <div class="identity-forms-wrapper__title">
                 @if(journey == "all") {
-                    <legend class="identity-title" id="consentWizardConsentTitle">
+                    <legend class="identity-title identity-title--small" id="consentWizardConsentTitle">
                         We need you to consent again to receiving communications from The Guardian
                     </legend>
-                    <p class="identity-title-subtitle">Tick the boxes you are interested in. We have featured some you might be interested in.</p>
+                    <p class="identity-title-explainer">Tick the boxes you are interested in. We have featured some you might be interested in.</p>
                 } else {
-                    <legend class="identity-title" id="consentWizardConsentTitle">
+                    <legend class="identity-title identity-title--small" id="consentWizardConsentTitle">
                         What would you like to hear about?
                     </legend>
-                    <p class="identity-title-subtitle">Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.</p>
+                    <p class="identity-title-explainer">Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.</p>
                 }
             </div>
             <div class="identity-forms-wrapper__fields">
@@ -110,8 +110,8 @@
                     @views.html.helper.CSRF.formField
                     @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
-                    <legend class="identity-title" id="consentWizardEmailTitle">Your existing newsletters</legend>
-                    <p class="identity-title-subtitle">
+                    <legend class="identity-title identity-title--small" id="consentWizardEmailTitle">Your existing newsletters</legend>
+                    <p class="identity-title-explainer">
                         You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
                     </p>
                 </div>
@@ -145,8 +145,8 @@
 
             <div class="identity-forms-wrapper__title">
 
-                <legend class="identity-title" id="consentWizardEmailSignupTitle">Your newsletters</legend>
-                <p class="identity-title-subtitle">
+                <legend class="identity-title identity-title--small" id="consentWizardEmailSignupTitle">Your newsletters</legend>
+                <p class="identity-title-explainer">
                     Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below.
                 </p>
             </div>
@@ -168,9 +168,18 @@
     }
 }
 
+@title(journey: String) = @{
+    journey match {
+        case "default" => "Complete your registration"
+        case _ => "Edit your profile"
+    }
+}
+
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-wizard">
 
     <div class="js-errorHolder manage-account__errors"></div>
+
+    <h1 class="identity-title identity-title--page-title">@title(journey)</h1>
 
     <noscript>
         <div class="form__error">
