@@ -25,10 +25,8 @@
         flex: 0 0 auto;
         margin: 0 $gs-gutter / 3 0 $gs-gutter / 1.5;
     }
-    &[data-journey=all], &[data-journey=newsletters] {
-        .manage-account__switch-footer-email-preview {
-            display: none;
-        }
+    .identity-wizard__step[data-wizard-step-name=email] .manage-account__switch-footer-email-preview {
+        display: none;
     }
 }
 
