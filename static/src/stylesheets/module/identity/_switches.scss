@@ -48,7 +48,8 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch {
-    @include fs-bodyCopy(1);
+    @include fs-bodyCopy(1, true);
+    font-family: $f-serif-headline;
     background-color: $neutral-8;
     border-top: 1px solid $neutral-4;
     overflow: hidden;
