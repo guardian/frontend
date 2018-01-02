@@ -12,7 +12,7 @@
 
 @emailListCategoryList(theme: String, newsletters: List[EmailNewsletter], isActive: Boolean) = {
     @fragments.dropdown(theme, modifier = Some("email-subscription"), isActive = isActive, isAnimated = true) {
-        <div class="manage-account__switches">
+        <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
                 @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
                     <li>

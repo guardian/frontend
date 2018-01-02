@@ -3,11 +3,12 @@
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
+import { determineExternalDemand } from 'common/modules/experiments/tests/prebid-integration';
 
 export type DfpEnv = {
     renderStartTime: number,
     adSlotSelector: string,
-    sonobiEnabled: boolean,
+    externalDemand: string,
     lazyLoadEnabled: boolean,
     lazyLoadObserve: boolean,
     creativeIDs: Array<number>,
@@ -25,8 +26,8 @@ export const dfpEnv: DfpEnv = {
     /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
     adSlotSelector: '.js-ad-slot',
 
-    /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled */
-    sonobiEnabled: config.switches.sonobiHeaderBidding || getUrlVars().sonobi,
+    /* externalDemand: string. Set to 'sonobi' for direct sonobi connection, 'none', or 'prebid' for header-bidding connections. */
+    externalDemand: determineExternalDemand(),
 
     /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
     lazyLoadEnabled: false,

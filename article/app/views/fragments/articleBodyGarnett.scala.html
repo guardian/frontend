@@ -46,7 +46,9 @@
                 @fragments.guBand()
             }
 
-
+            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                @fragments.mainMedia(article, amp)
+            }
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
@@ -60,12 +62,15 @@
                                 @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp) {
                                     @fragments.mainMedia(article, amp)
                                 }
-                            } else {
-                                @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp)()
                             }
 
+
                             @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
-                                @fragments.mainMedia(article, amp)
+                                @if(article.metadata.designType.nameOrDefault == "comment") {
+                                    @fragments.articleHeaderCommentGarnett(article, model, isPaidContent, amp = amp)
+                                } else {
+                                    @fragments.articleHeaderGarnett(article, model, isPaidContent, amp = amp)
+                                }
                             }
 
                             @fragments.witnessCallToAction(article.content)

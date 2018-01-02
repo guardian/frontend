@@ -41,6 +41,15 @@
     .block-share__item--gplus .inline-icon {
         fill: $kickerColor;
     }
+
+    .social__tray-close .social-tray__button {
+        &:hover,
+        &:focus {
+            .inline-close {
+                border-color: $kickerColor;
+            }
+        }
+    }
     
     .inline-garnett-quote svg {
         fill: $pillarColor;

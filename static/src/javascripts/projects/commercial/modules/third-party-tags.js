@@ -5,10 +5,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import { getTestVariantId } from 'common/modules/experiments/utils';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
-import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -20,10 +17,6 @@ import { ias } from 'commercial/modules/third-party-tags/ias';
 import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
 import { doubleClickAdFree } from 'commercial/modules/third-party-tags/doubleclick-ad-free';
 import plista from 'commercial/modules/third-party-tags/plista';
-
-const isLuckyBastard = (): boolean =>
-    testCanBeRun(paidContentVsOutbrain2) &&
-    getTestVariantId(paidContentVsOutbrain2.id) === 'paid-content';
 
 const loadExternalContentWidget = (): void => {
     const externalTpl = template(externalContentContainerStr);
@@ -103,9 +96,7 @@ export const initThirdPartyTags = (): Promise<any> => {
 
     // Outbrain/Plista needs to be loaded before the first ad as it is checking
     // for the presence of high relevance component on page
-    if (!isLuckyBastard()) {
-        loadExternalContentWidget();
-    }
+    loadExternalContentWidget();
 
     loadOther();
 

@@ -1315,3 +1315,97 @@
         display: none;
     }
 }
+
+// This section below makes the meta align with the image on leftCol, and has the main media first on mobile.
+.content__head--article {
+    @include mq($until: tablet) {
+        display: flex;
+        flex-direction: column;
+    }
+
+    @include mq($from: leftCol) {
+        @supports (display: grid) {
+            margin-left: -($left-column + $gs-gutter);
+            display: grid;
+            grid-template-columns: ($left-column + $gs-gutter) auto;
+            grid-template-areas: 'labels headline-standfirst' 'meta main-media';
+
+            .content--type-comment & {
+                grid-template-areas: 'labels headline' 'meta standfirst' '. main-media';
+            }
+        }
+    }
+
+    @include mq($from: wide) {
+        @supports (display: grid) {
+            margin-left: -($left-column-wide + $gs-gutter);
+            grid-template-columns: ($left-column-wide + $gs-gutter) auto;
+        }
+    }
+
+    .content__labels {
+        @include mq($from: leftCol) {
+            @supports (display: grid) {
+                grid-area: labels;
+                position: relative;
+                margin: 0;
+            }
+        }
+    }
+
+    .content__headline-standfirst-wrapper {
+        @include mq($until: tablet) {
+            order: 1;
+
+            .content--type-comment & {
+                order: 0;
+            }
+        }
+
+        @include mq($from: leftCol) {
+            grid-area: headline-standfirst;
+        }
+    }
+
+    .media-primary {
+        @include mq($from: leftCol) {
+            grid-area: main-media;
+        }
+    }
+
+    .content__header {
+        @include mq($from: leftCol) {
+            grid-area: headline;
+        }
+    }
+
+    .tonal__standfirst {
+        @include mq($from: leftCol) {
+            grid-area: standfirst;
+        }
+    }
+
+    .content__meta-container {
+        @include mq($until: tablet) {
+            order: 1;
+            margin-top: 0;
+
+            .content--type-comment & {
+                order: 0;
+            }
+        }
+
+        @include mq($from: leftCol) {
+            // adds enough space so that this doesn't clash with the content labels if css gris is not supported
+            top: gs-height(3);
+
+            @supports (display: grid) {
+                grid-area: meta;
+                position: relative !important;
+                top: 0;
+                margin: 0;
+                align-self: start;
+            }
+        }
+    }
+}

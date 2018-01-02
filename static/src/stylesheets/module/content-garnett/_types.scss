@@ -111,6 +111,7 @@ $quote-mark: 35px;
     .content__meta-container,
     .content__standfirst {
         @include mq(phablet, tablet) {
+            width: 100%;
             max-width: 38.75rem;
             margin: auto;
             position: relative;
@@ -144,20 +145,20 @@ $quote-mark: 35px;
     .content__meta-container {
         @include multiline(4, $garnett-neutral-4, top);
         // creates correct top spacing for multiline bg image
-        padding-top: 17px;
+        padding-top: 15px;
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;
-        margin-top: -$gs-baseline;
         margin-bottom: 0;
+
         @include mq(leftCol) {
             position: absolute;
+            margin-top: -$gs-baseline;
         }
     }
 
     .badge,
     .content__meta-container {
-        order: 0;
         flex: 1 100%;
         @include mq(leftCol) {
             width: gs-span(2);
@@ -183,25 +184,31 @@ $quote-mark: 35px;
     }
 
     .meta__image {
-        max-width: 60px;
-        order: 1;
-        border-top: 0;
-        flex: 1 100%;
-        @include mq($until: phablet) {
-            padding-right: 0;
-            margin-right: 0;
-        }
+        padding: 0;
+        margin: 0;
+        border: 0;
+        width: auto;
         @include mq(leftCol) {
-            max-width: none;
+            width: 100%;
         }
     }
 
     .byline-img {
-        margin-top: 0;
-        margin-right: $gs-baseline/2;
-        margin-bottom: $gs-baseline;
+        max-width: 60px;
+        order: 1;
+        border-top: 0;
+        flex: 1 100%;
+        margin: 3px 0 $gs-baseline $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            margin-left: $gs-gutter;
+        }
         @include mq(phablet) {
-            margin-right: 0;
+            margin-left: 0;
+            margin-right: $gs-gutter/2;
+        }
+        @include mq(leftCol) {
+            margin-top: $gs-baseline/2;
+            max-width: none;
         }
     }
 
@@ -215,18 +222,22 @@ $quote-mark: 35px;
     }
 
     .byline {
+        @include fs-header(1);
         border-top: 0;
-        font-weight: 200;
         color: #333333;
         font-style: italic;
+        line-height: 20px;
         min-height: 0;
         margin-top: -$gs-baseline/4;
+        // magic numbers are correcting line heights so vertical alignment apprears even
+        padding-bottom: 8px;
+        padding-top: 2px;
+        font-weight: normal;
 
         span[itemprop='author'] {
-            @include f-header;
-            display: inline;
+            @include fs-header(1);
             font-style: normal;
-            font-weight: 900;
+            font-weight: 700;
         }
     }
 
@@ -390,6 +401,10 @@ $quote-mark: 35px;
         border-color: $garnett-neutral-4;
     }
     // *************** Header and Body Styles ***************
+    .content__head {
+        margin-bottom: 0;
+    }
+
     .content__article-body {
         line-height: 1.4;
 
@@ -465,7 +480,8 @@ $quote-mark: 35px;
     .content__headline {
         @include fs-headlineGarnett(4);
         font-weight: 400;
-        padding-top: $gs-baseline/2;
+        // magic number correcting line height so vertical alignment apprears even with labels
+        padding-top: 3px;
         padding-bottom: $gs-baseline*2;
         @include mq(tablet) {
             @include fs-headlineGarnett(6);
@@ -524,11 +540,15 @@ $quote-mark: 35px;
         color: $neutral-1;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
-        max-width: gs-span(3);
+        max-width: gs-span(3) - $gs-gutter;
         @include mq(mobileMedium) {
+            max-width: gs-span(4)- $gs-gutter;
+        }
+        @include mq(mobileLandscape) {
             max-width: gs-span(4);
         }
         @include mq(phablet) {
+            max-width: gs-span(5);
             margin-left: 20px;
             margin-bottom: $gs-baseline*2;
         }
@@ -542,7 +562,10 @@ $quote-mark: 35px;
     }
 
     .media-primary {
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: 0;
+        @include mq(tablet) {
+            margin-bottom: $gs-baseline/2;
+        }
     }
 
     .drop-cap {
@@ -600,26 +623,26 @@ $quote-mark: 35px;
         .pullquote-cite,
         .pullquote-paragraph {
             display: inline;
-            font-weight: 400!important;
         }
 
         .inline-quote,
         blockquote {
             display: inline;
         }
-        // these are all temp until we get new quote mark in
-        .inline-quote {
-            width: 28px;
-            margin-right: 3px;
-            @include mq(desktop) {
-                width: $quote-mark;
-            }
+
+        .inline-garnett-quote {
+            margin-right: 15px;
+            width: $gs-gutter;
 
             svg {
-                width: inherit;
+                width: 12px;
                 height: auto;
                 position: relative;
-                top: 0;
+                top: -8px;
+                @include mq(desktop) {
+                    width: 14px;
+                    top: -$gs-gutter/2;
+                }
             }
         }
     }
@@ -645,13 +668,15 @@ $quote-mark: 35px;
         .pullquote-cite,
         .pullquote-paragraph {
             @include fs-headlineGarnett(1);
-            font-weight: 400!important;
         }
-        // temp fix for old quote svg, will be replaced
-        .inline-quote svg {
-            width: 25px;
-            position: relative;
-            margin-right: -2px;
+
+        .inline-garnett-quote {
+            margin-right: $gs-gutter/2;
+
+            svg {
+                height: 8px;
+                top: -7px;
+            }
         }
     }
     // Quote halfWidth
@@ -668,9 +693,7 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include mq(mobile) {
-                @include fs-headlineGarnett(2);
-            }
+            @include fs-headlineGarnett(2);
             @include mq(desktop) {
                 @include fs-headlineGarnett(3);
             }
@@ -678,9 +701,7 @@ $quote-mark: 35px;
     }
     // Quote inline
     .element-pullquote.element--inline {
-        @include mq(mobile) {
-            width: gs-span(4);
-        }
+        width: gs-span(4);
         @include mq(mobileLandscape) {
             width: gs-span(5);
         }
@@ -690,9 +711,7 @@ $quote-mark: 35px;
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include mq(mobile) {
-                @include fs-headlineGarnett(2);
-            }
+            @include fs-headlineGarnett(2);
             @include mq(desktop) {
                 @include fs-headlineGarnett(3);
             }
@@ -714,15 +733,13 @@ $quote-mark: 35px;
         &:after {
             border-radius: 0 0 $quote-tail;
             @include mq(leftCol) {
-                left: gs-span(2)-$gs-baseline;
+                left: gs-span(2)-$gs-gutter/2;
             }
         }
 
         .pullquote-cite,
         .pullquote-paragraph {
-            @include mq(mobile) {
-                @include fs-headlineGarnett(3);
-            }
+            @include fs-headlineGarnett(3);
             @include mq(phablet) {
                 @include fs-headlineGarnett(4);
             }
@@ -731,10 +748,18 @@ $quote-mark: 35px;
             }
         }
 
-        .inline-quote svg {
-            width: $quote-mark;
-            @include mq(leftCol) {
-                width: 40px;
+        .inline-garnett-quote {
+            margin-right: 15px;
+            @include mq(desktop) {
+                margin-right: $gs-gutter;
+            }
+
+            svg {
+                width: 14px;
+                top: -$gs-gutter/2;
+                @include mq(desktop) {
+                    width: 16px;
+                }
             }
         }
     }
@@ -776,7 +801,7 @@ $quote-mark: 35px;
 
     .content__dateline {
         // magic number used to align date stamp with standfirst baseline in opinion pieces per design
-        margin-top: -48px;
+        margin-top: -45px;
         @include mq(leftCol) {
             margin-top: 0;
         }
@@ -834,6 +859,10 @@ $quote-mark: 35px;
         color: $neutral-3;
     }
 
+    .content__standfirst {
+        padding-top: $gs-baseline/2;
+    }
+
     .byline-img {
         position: absolute;
         bottom: 0;
@@ -841,6 +870,7 @@ $quote-mark: 35px;
         background: none!important;
         margin: 0;
         background-image: none;
+        max-width: none;
         @include mq(mobileLandscape) {
             right: gs-span(3) - $gs-gutter;
         }
@@ -1076,6 +1106,62 @@ $quote-mark: 35px;
     }
 }
 
+.has-feature-showcase-element {
+    .media-primary.media-primary--showcase {
+        @include mq(wide) {
+            margin: 0 auto;
+        }
+    }
+}
+// *************** Analysis ***************
+
+.content--type-analysis {
+    .media-primary {
+        margin-bottom: 0;
+    }
+
+    .content__labels--not-immersive {
+        display: none;
+    }
+
+    .content__headline {
+        line-height: 40px;
+        margin-right: -10px;
+        @include mq(mobileLandscape) {
+            margin-right: -20px;
+        }
+        @include mq(phablet) {
+            margin-right: 0;
+        }
+        @include mq(tablet) {
+            line-height: 48px;
+        }
+    }
+}
+// *************** Feature quote weight overrides ***************
+
+.content--type-article {
+    .element-pullquote.element--supporting .pullquote-cite,
+    .element-pullquote.element--supporting .pullquote-paragraph {
+        font-weight: 400;
+    }
+}
+// *************** Feature quote weight overrides ***************
+
+.content--type-feature {
+    .element-pullquote.element--supporting .pullquote-cite,
+    .element-pullquote.element--supporting .pullquote-paragraph {
+        font-weight: 700;
+    }
+}
+// *************** Opinion quote weight overrides ***************
+
+.content--type-comment {
+    .element-pullquote.element--supporting .pullquote-cite,
+    .element-pullquote.element--supporting .pullquote-paragraph {
+        font-weight: 200;
+    }
+}
 // *************** Opinion and Feature standfirst overrides ***************
 
 .content--type-comment,
@@ -1161,4 +1247,18 @@ $quote-mark: 35px;
         line-height: $gs-baseline * 1.5;
         padding: $gs-baseline/6 ($gs-gutter/4)+3 $gs-baseline/2;
     }
+}
+
+
+.social__tray-close .social-tray__button {
+    &:hover,
+    &:focus {
+        .social-tray__icon__svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.social__tray-close .social-tray__icon {
+    box-sizing: content-box;
 }
