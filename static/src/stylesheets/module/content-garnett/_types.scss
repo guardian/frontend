@@ -934,8 +934,8 @@ $quote-mark: 35px;
     .byline a,
     .from-content-api a {
         text-decoration: none;
-        border-bottom: 0.1px solid $garnett-neutral-6;
-        transition: border-color 0.15s ease-out;
+        border-bottom: .1px solid $garnett-neutral-6;
+        transition: border-color .15s ease-out;
 
         &:hover {
             border-color: $garnett-neutral-4;
