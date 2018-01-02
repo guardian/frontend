@@ -1,8 +1,8 @@
-@mixin colorPalatte($pillarColor, $kickerColor, $mediaColor) {
+@mixin colorPalatte($kickerColor, $pillarColor, $mediaColor) {
     &.content--type-analysis {
         .content__headline {
             background-image: repeating-linear-gradient(to bottom, transparent, transparent 39px, rgba($pillarColor, .5));
-            
+
             @include mq(tablet) {
                 background-image: repeating-linear-gradient(to bottom, transparent, transparent 47px, rgba($pillarColor, .5));
             }
@@ -11,17 +11,18 @@
 
     .button--secondary,
     .content__section-label__link,
+    .element-pullquote p,
     .drop-cap,
-    .pullquote-cite {
+    .tonal__head--tone-feature .content__headline,
+    .tonal__head--tone-review .content__headline,
+    .u-underline[href] {
         color: $pillarColor;
     }
 
     .byline,
     .content--media .content__headline,
-    .element-pullquote p,
+    .pullquote-cite,
     .old-article-message,
-    .tonal__head--tone-feature .content__headline,
-    .tonal__head--tone-review .content__headline,
     .tone-colour,
     a[href] {
         color: $kickerColor;
@@ -50,9 +51,9 @@
             }
         }
     }
-    
+
     .inline-garnett-quote svg {
-        fill: $pillarColor;
+        fill: $kickerColor;
     }
 
     .u-underline:hover {
@@ -133,7 +134,7 @@
     .rich-link__header {
         padding-top: $gs-baseline / 6;
     }
-    
+
     .rich-link__kicker,
     .rich-link__byline,
     .rich-link__read-more-text {
@@ -165,7 +166,7 @@
     .inline-volume-high {
         fill: $mediaColor;
     }
-    
+
     .vjs-paused .vjs-play-control {
         @include icon(play-icon--#{$pillar});
     }
@@ -192,7 +193,7 @@
 
 .content--pillar-lifestyle,
 .content--pillar-lifestyle.content--type-comment  {
-    @include colorPalatte($lifestyle-garnett-feature, $lifestyle-garnett-main-1, $lifestyle-garnett-media-main-1);
+    @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
 }
 
 .content--pillar-sport,
@@ -283,7 +284,7 @@
         .rich-link__image-container {
             display: none;
         }
-        
+
         .rich-link__container {
             @include multiline(4, $garnett-neutral-4);
             padding-bottom: 13px;
@@ -310,13 +311,13 @@
         &.rich-link--pillar-lifestyle {
             @include richLink(#ffffff, $lifestyle-garnett-feature);
         }
-        
+
         &,
         .rich-link__link {
             color: #ffffff;
         }
     }
-    
+
     &.tone-media--item {
         background: $media-garnett-main-1;
 
