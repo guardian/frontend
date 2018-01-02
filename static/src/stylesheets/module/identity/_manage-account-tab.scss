@@ -316,10 +316,6 @@
     @include fs-header(3);
     color: $identity-main;
 }
-.identity-title-subtitle {
-    @include fs-bodyCopy(2);
-    margin-top: $gs-baseline;
-}
 
 .manage-account-headerWrapper {
     margin-bottom: $gs-baseline;
