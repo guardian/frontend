@@ -37,20 +37,24 @@
     @if(IdentityShowCommunicationChannelConsents.isSwitchedOn && communicationChannelsForUser(user).nonEmpty) {
         <fieldset class="identity-wizard__step" data-wizard-step-name="channels" role="dialog" aria-labelledby="consentWizardChannelsTitle">
 
-            <legend class="identity-title" id="consentWizardChannelsTitle">
-                How can we get in touch with you?
-            </legend>
-            <p class="identity-title-subtitle">
-                Besides email, are there any other ways you would like us to get in touch with you?
-            </p>
+            <div class="identity-forms-wrapper">
+                <div class="identity-forms-wrapper__title">
+                    <legend class="identity-title" id="consentWizardChannelsTitle">
+                        How can we get in touch with you?
+                    </legend>
+                    <p class="identity-title-subtitle">
+                        Besides email, are there any other ways you would like us to get in touch with you?
+                    </p>
+                </div>
 
-            <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
-                <div class="manage-account__switches">
-                    <ul>
-                        @communicationChannelsForUser(user).map((channel) =>
-                            Html(s"<li>${checkboxName(channel)}</li>")
-                        )
-                    </ul>
+                <div class="identity-forms-wrapper__fields">
+                    <div class="manage-account__switches">
+                        <ul>
+                            @communicationChannelsForUser(user).map((channel) =>
+                                Html(s"<li>${checkboxName(channel)}</li>")
+                            )
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -61,22 +65,23 @@
 @consentStep(journey:String) = {
     <fieldset class="identity-wizard__step" data-wizard-step-name="consent" role="dialog" aria-labelledby="consentWizardConsentTitle">
 
-        <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+        <form class="identity-forms-wrapper" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
             @views.html.helper.CSRF.formField
-
-            @if(journey == "all") {
-                <legend class="identity-title" id="consentWizardConsentTitle">
-                    We need you to consent again to receiving communications from The Guardian
-                </legend>
-                <p class="identity-title-subtitle">Tick the boxes you are interested in. We have featured some you might be interested in.</p>
-            } else {
-                <legend class="identity-title" id="consentWizardConsentTitle">
-                    What would you like to hear about?
-                </legend>
-                <p class="identity-title-subtitle">Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.</p>
-            }
-            <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
-                <div class="manage-account__switches manage-account__switches--wide">
+            <div class="identity-forms-wrapper__title">
+                @if(journey == "all") {
+                    <legend class="identity-title" id="consentWizardConsentTitle">
+                        We need you to consent again to receiving communications from The Guardian
+                    </legend>
+                    <p class="identity-title-subtitle">Tick the boxes you are interested in. We have featured some you might be interested in.</p>
+                } else {
+                    <legend class="identity-title" id="consentWizardConsentTitle">
+                        What would you like to hear about?
+                    </legend>
+                    <p class="identity-title-subtitle">Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.</p>
+                }
+            </div>
+            <div class="identity-forms-wrapper__fields">
+                <div class="manage-account__switches manage-account__switches--single-column">
                     <ul>
                     @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
                         <li>
@@ -99,28 +104,32 @@
     @if(emailRepermissionStepShouldDisplay) {
         <fieldset class="identity-wizard__step" data-wizard-step-name="email" role="dialog" aria-labelledby="consentWizardEmailTitle">
 
-            <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
-                @views.html.helper.CSRF.formField
-                @fragments.form.hidden(emailPrefsForm("htmlPreference"))
+            <form class="identity-forms-wrapper" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
 
-                <legend class="identity-title" id="consentWizardEmailTitle">Your existing newsletters</legend>
-                <p class="identity-title-subtitle">
-                    You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
-                </p>
+                <div class="identity-forms-wrapper__title">
+                    @views.html.helper.CSRF.formField
+                    @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
-                <div class="manage-account__switches">
-                    <ul>
-                    @onlySubscribedToV1Newsletters.zipWithRowInfo.map { case (newsletter, row) =>
-                    <li>
-                        @fragments.newsletterSwitch(
-                            emailPrefsForm,
-                            emailSubscriptions,
-                            newsletter = newsletter,
-                            unchecked = true
-                        )(nonInputFields, messages, request)
-                    </li>
-                    }
-                    </ul>
+                    <legend class="identity-title" id="consentWizardEmailTitle">Your existing newsletters</legend>
+                    <p class="identity-title-subtitle">
+                        You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
+                    </p>
+                </div>
+                <div class="identity-forms-wrapper__fields">
+                    <div class="manage-account__switches manage-account__switches--single-column">
+                        <ul>
+                        @onlySubscribedToV1Newsletters.zipWithRowInfo.map { case (newsletter, row) =>
+                        <li>
+                            @fragments.newsletterSwitch(
+                                emailPrefsForm,
+                                emailSubscriptions,
+                                newsletter = newsletter,
+                                unchecked = true
+                            )(nonInputFields, messages, request)
+                        </li>
+                        }
+                        </ul>
+                    </div>
                 </div>
             </form>
         </fieldset>
@@ -130,17 +139,22 @@
 @emailSignupStep() = {
     <fieldset class="identity-wizard__step" data-wizard-step-name="email-signup" role="dialog" aria-labelledby="consentWizardEmailSignupTitle">
 
-        <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+        <form class="identity-forms-wrapper" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
             @views.html.helper.CSRF.formField
             @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
-            <legend class="identity-title" id="consentWizardEmailSignupTitle">Your newsletters</legend>
-            <p class="identity-title-subtitle">
-                Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below. Just so you know, your newsletter might include messages about how you can support the Guardian, as well as our events, jobs, masterclasses and holidays.
-            </p>
+            <div class="identity-forms-wrapper__title">
 
-            <div class="manage-account__switches">
-                @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions,true)(request, messages)
+                <legend class="identity-title" id="consentWizardEmailSignupTitle">Your newsletters</legend>
+                <p class="identity-title-subtitle">
+                    Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below.
+                </p>
+            </div>
+
+            <div class="identity-forms-wrapper__fields">
+                <div class="manage-account__switches">
+                    @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions,true)(request, messages)
+                </div>
             </div>
         </form>
     </fieldset>
@@ -174,66 +188,59 @@
     </fieldset>
 }
 
-<div class="identity-wrapper-for-bg identity-wrapper-for-bg--overflows">
-    <div class="gs-container">
-        <div class="monocol-wrapper">
+<div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-wizard">
 
-            <div class="u-cf identity-section identity-wrapper identity-wrapper--with-wizard">
+    <div class="js-errorHolder manage-account__errors"></div>
 
-                <div class="js-errorHolder manage-account__errors"></div>
+    <noscript>
+        <div class="form__error">
+            <p>
+                Setting your preferences requires a browser with Javascript enabled.
+            </p>
+            <p>
+                Please consider upgrading to one of our <a href="@LinkTo{/help/recommended-browsers}">recommended browsers</a>. If you need more help please <a href="@LinkTo{/info/tech-feedback}">contact us</a>.
+            </p>
+        </div>
+    </noscript>
 
-                <noscript>
-                    <div class="form__error">
-                        <p>
-                            Setting your preferences requires a browser with Javascript enabled.
-                        </p>
-                        <p>
-                            Please consider upgrading to one of our <a href="@LinkTo{/help/recommended-browsers}">recommended browsers</a>. If you need more help please <a href="@LinkTo{/info/tech-feedback}">contact us</a>.
-                        </p>
-                    </div>
-                </noscript>
+    <div class="identity-wizard identity-wizard--consent u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
 
-                <div class="identity-wizard identity-wizard--consent u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
+        @journey match {
+            case "newsletters" => {
+                @emailRepermissionStep()
+            }
+            case "all" => {
+                @consentStep(journey = "all")
+                @emailRepermissionStep()
+                @channelStep()
+            }
+            case _ => {
+                @consentStep(journey = "consent")
+                @emailRepermissionOrSignupStep()
+                @channelStep()
+            }
+        }
 
-                    @journey match {
-                        case "newsletters" => {
-                            @emailRepermissionStep()
-                        }
-                        case "all" => {
-                            @consentStep(journey = "all")
-                            @emailRepermissionStep()
-                            @channelStep()
-                        }
-                        case _ => {
-                            @consentStep(journey = "consent")
-                            @emailRepermissionOrSignupStep()
-                            @channelStep()
-                        }
-                    }
+        @endcardStep()
 
-                    @endcardStep()
-
-                    <div class="identity-wizard__controls">
-                        <button
-                            data-link-name="consents : navigation : prev"
-                            class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
-                        >
-                            <span class="u-h">Previous</span>
-                            @fragments.inlineSvg("arrow-left-stem", "icon")
-                        </button>
-                        <div class="identity-consent-wizard__revealable identity-consent-wizard-counter">
-                        </div>
-                        <button
-                            data-link-name="consents : navigation : next"
-                            class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next manage-account__button--icon--rotate-down"
-                        >
-                            <span>Next</span>
-                            @fragments.inlineSvg("arrow-right", "icon")
-                        </button>
-                    </div>
-                </div>
-
+        <div class="identity-wizard__controls">
+            <button
+                data-link-name="consents : navigation : prev"
+                class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
+            >
+                <span class="u-h">Previous</span>
+                @fragments.inlineSvg("arrow-left-stem", "icon")
+            </button>
+            <div class="identity-consent-wizard__revealable identity-consent-wizard-counter">
             </div>
+            <button
+                data-link-name="consents : navigation : next"
+                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next manage-account__button--icon--rotate-down"
+            >
+                <span>Next</span>
+                @fragments.inlineSvg("arrow-right", "icon")
+            </button>
         </div>
     </div>
+
 </div>

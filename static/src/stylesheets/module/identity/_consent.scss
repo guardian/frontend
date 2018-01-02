@@ -1,20 +1,19 @@
 .identity-wizard--consent {
-    .identity-wizard__step {
-        min-height: 72vh;
-        padding: $gs-gutter 0;
-    }
     .identity-wizard__controls {
-        padding: $gs-gutter;
-        margin-top: $gs-gutter;
+        padding: $gs-gutter 0;
         background: #ffffff;
-        border-top: 1px solid transparentize($identity-main, .5);
         position: sticky;
         bottom: 0;
         left: 0;
         right: 0;
-        margin-left: $gs-gutter * -1;
-        margin-right: $gs-gutter * -1;
+        margin-top: $gs-gutter * 2;
+        border-top: 1px solid transparentize($identity-main, .5);
         justify-content: space-between;
+        @include mq($until: tablet) {
+            padding: $gs-gutter * .5;
+            margin-left: $gs-gutter * -.5;
+            margin-right: $gs-gutter * -.5;
+        }
     }
     .identity-consent-wizard-counter {
         flex: 1 1 auto;
