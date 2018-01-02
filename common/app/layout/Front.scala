@@ -368,7 +368,7 @@ object Front extends implicits.Collections {
   }
 
   private def applyShowMoreExperiment(faciaContainer: FaciaContainer)(implicit request: RequestHeader): FaciaContainer = {
-    val showMoreEnabled = !ActiveExperiments.isParticipating(HideShowMoreButtonExperiment)
+    val showMoreEnabled = if (faciaContainer.hasShowMoreEnabled) !ActiveExperiments.isParticipating(HideShowMoreButtonExperiment) else false
     faciaContainer.copy(hasShowMoreEnabled = showMoreEnabled)
   }
 
