@@ -58,19 +58,14 @@ $checkbox-size: $gs-gutter / 1.25;
     padding: $local-gutter;
 
     &:hover {
-        background-color: darken($neutral-8, 1%);
+        background-color: $neutral-6;
         .manage-account__switch-checkbox {
             border-color: $identity-main;
         }
     }
 
     &.manage-account__switch--hinted {
-        background-color: $features-support-3;
         color: $features-main-1;
-        border-color: $features-main-1;
-        &:hover {
-            background-color: darken($features-support-3, 1%);
-        }
     }
 
     &:before {
@@ -177,15 +172,19 @@ $checkbox-size: $gs-gutter / 1.25;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding-left: $local-gutter * 1.5 + $checkbox-size;
+    padding-left: $local-gutter * 1.25 + $checkbox-size;
 }
 
 .manage-account__switch-title {
-    @include fs-bodyCopy(1);
-    font-weight: 700;
+    @include fs-headline(1);
+    font-weight: 500;
     margin-bottom: $local-gutter * .5;
     cursor: pointer;
     display: block;
+    em {
+        font-style: normal;
+        font-weight: 400;
+    }
 }
 
 .manage-account__switch-copy {
@@ -194,8 +193,19 @@ $checkbox-size: $gs-gutter / 1.25;
     flex: 1 1 auto;
 }
 
-.manage-account__switch-footer-tidbit {
+.manage-account__switch-footer {
+    margin-top: $local-gutter * 2;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     @include fs-textSans(1);
+
+    > :last-child {
+        text-align: right;
+    }
+}
+
+.manage-account__switch-footer-tidbit {
     opacity: .75;
     svg {
         vertical-align: -10%;
@@ -203,38 +213,6 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 }
 
-.manage-account__switch-footer {
-    margin-top: $local-gutter * 2;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-
-    > :last-child {
-        text-align: right;
-    }
-}
-
-.manage-account__switches--wide {
-    @include mq(desktop) {
-        .manage-account__switch {
-            @include fs-textSans(4, true);
-        }
-        .manage-account__switch-content {
-            flex-direction: row;
-            width: 100%;
-        }
-        .manage-account__switch-title {
-            @include fs-headline(3, true);
-            flex: 0 0 30%;
-            padding: 0 $local-gutter * 2;
-            border-left: 1px solid $neutral-5;
-        }
-        .manage-account__switch-copy {
-            border-left: 1px solid $neutral-5;
-            padding: 0 $local-gutter * 2;
-        }
-    }
-}
 
 @keyframes manage-account__switch-anim-loading {
     from {
