@@ -150,7 +150,7 @@ const addContentClass = adSlotNode => {
  * @param slotRenderEndedEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
  */
-const renderAdvert = (
+export const renderAdvert = (
     advert: Advert,
     slotRenderEndedEvent: SlotRenderEndedEvent
 ): Promise<boolean> => {
@@ -239,5 +239,3 @@ const renderAdvert = (
         })
         .catch(raven.captureException);
 };
-
-export default renderAdvert;
