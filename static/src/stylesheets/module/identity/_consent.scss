@@ -14,10 +14,16 @@
             margin-left: $gs-gutter * -.5;
             margin-right: $gs-gutter * -.5;
         }
+        .manage-account__button:not(.manage-account__button--round) {
+            flex: 1 1 auto;
+            min-width: 0;
+            width: $gs-baseline * 14;
+            max-width: $gs-baseline * 14;
+        }
     }
     .identity-consent-wizard-counter {
-        flex: 1 1 auto;
-        margin: 0 $gs-gutter / 3;
+        flex: 0 0 auto;
+        margin: 0 $gs-gutter / 3 0 $gs-gutter / 1.5;
     }
     &[data-journey=all], &[data-journey=newsletters] {
         .manage-account__switch-footer-email-preview {
