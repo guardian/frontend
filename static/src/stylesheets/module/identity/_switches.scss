@@ -181,6 +181,9 @@ $checkbox-size: $gs-gutter / 1.25;
     margin: -1px 0 ($local-gutter / 2);
     cursor: pointer;
     display: block;
+    .manage-account__switch--small & {
+        font-weight: 400;
+    }
     em {
         font-style: normal;
         font-weight: 400;

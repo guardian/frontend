@@ -13,20 +13,22 @@
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
 
-@highlight = @{
-    if(highlighted)
-        "manage-account__switch--hinted"
-    else
-        ""
+@classes = @{
+    Map(
+        ("manage-account__switch", true),
+        (switchJsBehaviour(behaviour), true),
+        ("manage-account__switch--hinted", highlighted),
+        ("manage-account__switch--small", !description)
+    )
 }
 
-<label class="manage-account__switch @switchJsBehaviour(behaviour) @highlight" data-originally-checked="@field.value">
+<label class="@views.support.RenderClasses(classes)" data-originally-checked="@field.value">
     <div class="manage-account__switch-content">
         @fragments.form.checkbox(field, Checkbox(field).args:_*)
         <div class="manage-account__switch-checkbox"></div>
         <h3 class="manage-account__switch-title">
             @title
-            @if(subheading.isDefined){
+            @if(subheading){
                 <em>@subheading</em>
             }
         </h3>
