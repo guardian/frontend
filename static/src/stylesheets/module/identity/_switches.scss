@@ -2,7 +2,7 @@
 /* Switchboard
    ========================================================================== */
 
-$local-gutter: $gs-gutter / 2;
+$local-gutter: $gs-gutter / 3;
 $row-gutter: $gs-gutter / 2;
 
 $checkbox-size: $gs-gutter / 1.25;
@@ -48,7 +48,8 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch {
-    @include fs-textSans(2);
+    @include fs-bodyCopy(1, true);
+    font-family: $f-serif-headline;
     background-color: $neutral-8;
     border-top: 1px solid $neutral-4;
     overflow: hidden;
@@ -58,19 +59,14 @@ $checkbox-size: $gs-gutter / 1.25;
     padding: $local-gutter;
 
     &:hover {
-        background-color: darken($neutral-8, 1%);
+        background-color: $neutral-6;
         .manage-account__switch-checkbox {
             border-color: $identity-main;
         }
     }
 
     &.manage-account__switch--hinted {
-        background-color: $features-support-3;
         color: $features-main-1;
-        border-color: $features-main-1;
-        &:hover {
-            background-color: darken($features-support-3, 1%);
-        }
     }
 
     &:before {
@@ -177,32 +173,33 @@ $checkbox-size: $gs-gutter / 1.25;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding-left: $local-gutter * 1.5 + $checkbox-size;
+    padding-left: $local-gutter + $checkbox-size + 2;
 }
 
 .manage-account__switch-title {
-    @include fs-bodyCopy(1);
-    margin-bottom: $local-gutter * .5;
+    @include fs-headline(2);
+    font-weight: 500;
+    margin: -1px 0 ($local-gutter / 2);
     cursor: pointer;
     display: block;
+    .manage-account__switch--small & {
+        font-weight: 400;
+    }
+    em {
+        font-style: normal;
+        font-weight: 400;
+    }
 }
 
 .manage-account__switch-copy {
     cursor: pointer;
-    opacity: .9;
+    opacity: .8;
     flex: 1 1 auto;
-}
-
-.manage-account__switch-footer-tidbit {
-    @include fs-textSans(1);
-    opacity: .75;
-    svg {
-        vertical-align: -10%;
-        margin-right: .25em;
-    }
+    margin: 0;
 }
 
 .manage-account__switch-footer {
+    @include fs-textSans(1);
     margin-top: $local-gutter * 2;
     display: flex;
     justify-content: space-between;
@@ -213,27 +210,14 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 }
 
-.manage-account__switches--wide {
-    @include mq(desktop) {
-        .manage-account__switch {
-            @include fs-textSans(4, true);
-        }
-        .manage-account__switch-content {
-            flex-direction: row;
-            width: 100%;
-        }
-        .manage-account__switch-title {
-            @include fs-headline(3, true);
-            flex: 0 0 30%;
-            padding: 0 $local-gutter * 2;
-            border-left: 1px solid $neutral-5;
-        }
-        .manage-account__switch-copy {
-            border-left: 1px solid $neutral-5;
-            padding: 0 $local-gutter * 2;
-        }
+.manage-account__switch-footer-tidbit {
+    opacity: .75;
+    svg {
+        vertical-align: -10%;
+        margin-right: .25em;
     }
 }
+
 
 @keyframes manage-account__switch-anim-loading {
     from {
