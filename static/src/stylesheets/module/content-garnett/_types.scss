@@ -1249,3 +1249,17 @@ $quote-mark: 35px;
         padding: $gs-baseline/6 ($gs-gutter/4)+3 $gs-baseline/2;
     }
 }
+
+
+.social__tray-close .social-tray__button {
+    &:hover,
+    &:focus {
+        .social-tray__icon__svg {
+            fill: #ffffff;
+        }
+    }
+}
+
+.social__tray-close .social-tray__icon {
+    box-sizing: content-box;
+}
