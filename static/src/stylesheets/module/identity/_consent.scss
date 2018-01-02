@@ -29,6 +29,18 @@
     .identity-wizard__step[data-wizard-step-name=email] .manage-account__switch-footer-email-preview {
         display: none;
     }
+    .js-identity-consent-wizard__complete {
+        display: none;
+    }
+    &.identity-wizard--completed {
+        .js-identity-consent-wizard__complete {
+            display: block;
+            display: inline-flex;
+        }
+        .js-identity-consent-wizard__next {
+            display: none;
+        }
+    }
 }
 
 .identity-consent-wizard__revealable {

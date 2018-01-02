@@ -521,6 +521,10 @@
     }
     .inline-icon {
         transition: .125s;
+        svg {
+            width: 28px;
+            height: 28px;
+        }
     }
     &.manage-account__button--icon--rotate-down {
         .inline-icon {

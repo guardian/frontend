@@ -4,6 +4,7 @@ import fastdom from 'lib/fastdom-promise';
 import { scrollTo } from 'lib/scroller';
 
 const completedClassname = 'identity-wizard--completed';
+const introductionClassname = 'identity-wizard--introduction';
 const pagerClassname = 'identity-wizard__controls-pager';
 const nextButtonElClassname = 'js-identity-wizard__next';
 const prevButtonElClassname = 'js-identity-wizard__prev';
@@ -150,6 +151,10 @@ const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
                     completedClassname,
                     parseInt(wizardEl.dataset.position, 10) >=
                         parseInt(wizardEl.dataset.length, 10) - 1
+                );
+                wizardEl.classList.toggle(
+                    introductionClassname,
+                    parseInt(wizardEl.dataset.position, 10) < 1
                 );
                 pagerEls.forEach((pagerEl: HTMLElement) => {
                     pagerEl.innerText = `${parseInt(
