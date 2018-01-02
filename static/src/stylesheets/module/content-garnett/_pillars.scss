@@ -12,7 +12,7 @@
     .button--secondary,
     .content__section-label__link,
     .drop-cap,
-    .pullquote-cite {
+    .pullquote-cite  {
         color: $pillarColor;
     }
 
@@ -23,7 +23,8 @@
     .tonal__head--tone-feature .content__headline,
     .tonal__head--tone-review .content__headline,
     .tone-colour,
-    a[href] {
+    a[href]
+    {
         color: $kickerColor;
     }
 
