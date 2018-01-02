@@ -9,6 +9,7 @@
         margin-top: $gs-gutter * 2;
         border-top: 1px solid transparentize($identity-main, .5);
         justify-content: space-between;
+        z-index: $zindex-sticky;
         @include mq($until: tablet) {
             padding: $gs-gutter * .5;
             margin-left: $gs-gutter * -.5;
