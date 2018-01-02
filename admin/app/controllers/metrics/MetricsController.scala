@@ -49,16 +49,6 @@ class MetricsController(
     } yield NoCache(Ok(views.html.lineCharts(googleBot404s, Some("GoogleBot 404s"))))
   }
 
-  def renderMemory(): Action[AnyContent] = Action.async { implicit request =>
-    for {
-      metrics <- MemoryMetrics.memory()
-    } yield NoCache(Ok(views.html.lineCharts(metrics)))
-  }
-
-  def renderAssets(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(NoCache(Ok(views.html.staticAssets(AssetMetricsCache.sizes))))
-  }
-
   def renderAfg(): Action[AnyContent] = Action.async { implicit request =>
     wsClient.url("https://s3-eu-west-1.amazonaws.com/aws-frontend-metrics/frequency/index.html").get() map { response =>
       NoCache(Ok(views.html.afg(response.body)))
