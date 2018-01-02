@@ -1259,3 +1259,12 @@ $quote-mark: 35px;
 .social__tray-close .social-tray__icon {
     box-sizing: content-box;
 }
+
+.content__head--byline-pic .content__header {
+    box-sizing: border-box;
+    min-height: 150px;
+
+    @include mq(phablet) {
+        min-height: 180px;
+    }
+}
