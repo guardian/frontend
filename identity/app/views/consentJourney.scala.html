@@ -187,7 +187,15 @@
 
         @journey match {
             case "newsletters" => {
-                @emailRepermissionStep()
+                @if(emailRepermissionStepShouldDisplay) {
+                    @emailRepermissionStep()
+                } else {
+                    <div class="identity-wizard__step form__error">
+                        <p>
+                            Something went wrong updating your newsletters.
+                        </p>
+                    </div>
+                }
             }
             case "all" => {
                 @consentStep(journey = "all")
