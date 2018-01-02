@@ -215,7 +215,15 @@ const setPosition = (
 ): Promise<void> =>
     fastdom
         .read(() => [
-            wizardEl.getBoundingClientRect().top - 120,
+            /*
+            scrolls to the wizard's top (+ a bit of breathing room)
+            if it's halfway through a page, and to the page's
+            top if it's very close to it, as it looks
+            cleaner than scrolling to half of the header
+            */
+            wizardEl.getBoundingClientRect().top < 120
+                ? 0
+                : wizardEl.getBoundingClientRect().top - 20,
             parseInt(
                 wizardEl.dataset.position ? wizardEl.dataset.position : -1,
                 10
