@@ -138,6 +138,9 @@ const bindScrollForNextButton = (buttonEl: HTMLElement): void => {
     });
 };
 
+const showWizard = (wizardEl: HTMLElement): Promise<void> =>
+    fastdom.write(() => wizardEl.classList.remove('u-h'));
+
 const bindNextButton = (buttonEl: HTMLElement): void => {
     const wizardEl: ?Element = buttonEl.closest('.identity-wizard--consent');
     if (wizardEl && wizardEl instanceof HTMLElement) {
@@ -190,6 +193,7 @@ const enhanceConsentWizard = (): void => {
     const loaders = [
         ['.identity-consent-wizard-counter', createEmailConsentCounter],
         ['.identity-wizard--consent', bindEmailConsentCounterToWizard],
+        ['.identity-wizard--consent', showWizard],
         ['.js-identity-consent-wizard__next', bindNextButton],
         ['.js-identity-consent-wizard__next', bindScrollForNextButton],
     ];
