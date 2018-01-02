@@ -158,7 +158,6 @@ $quote-mark: 35px;
 
         @include mq(leftCol) {
             position: absolute;
-            margin-top: -$gs-baseline;
         }
     }
 
