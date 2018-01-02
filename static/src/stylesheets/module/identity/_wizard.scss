@@ -4,11 +4,6 @@
     transition: min-height .2s;
     will-change: min-height;
 }
-.identity-wizard--completed {
-    .identity-wizard__controls {
-        display: none;
-    }
-}
 
 .identity-wizard__step {
     top: 0;

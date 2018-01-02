@@ -168,26 +168,6 @@
     }
 }
 
-@endcardStep() = {
-    <fieldset class="identity-wizard__step" data-wizard-step-name="endcard" role="dialog" aria-labelledby="consentWizardEmailSignupTitle">
-        <div class="identity-consent-thanks__wrap">
-            <form class="identity-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
-                <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
-                @views.html.helper.CSRF.formField
-                <legend class="identity-consent-thanks__title" id="consentWizardEmailSignupTitle">Thank you</legend>
-                <aside class="identity-consent-thanks__content">
-                    <p>Your support helps us deliver the quality independent journalism the world needs</p>
-                    <button
-                        type="submit"
-                        class="manage-account__button"
-                        data-link-name="consents : submit"
-                    >Continue</button>
-                </aside>
-            </form>
-        </div>
-    </fieldset>
-}
-
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-wizard">
 
     <div class="js-errorHolder manage-account__errors"></div>
@@ -207,7 +187,15 @@
 
         @journey match {
             case "newsletters" => {
-                @emailRepermissionStep()
+                @if(emailRepermissionStepShouldDisplay) {
+                    @emailRepermissionStep()
+                } else {
+                    <div class="identity-wizard__step form__error">
+                        <p>
+                            Something went wrong updating your newsletters.
+                        </p>
+                    </div>
+                }
             }
             case "all" => {
                 @consentStep(journey = "all")
@@ -221,9 +209,7 @@
             }
         }
 
-        @endcardStep()
-
-        <div class="identity-wizard__controls">
+        <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
             <button
                 data-link-name="consents : navigation : prev"
                 class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
@@ -233,14 +219,28 @@
             </button>
             <div class="identity-consent-wizard__revealable identity-consent-wizard-counter">
             </div>
+            @views.html.helper.CSRF.formField
+            <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
             <button
                 data-link-name="consents : navigation : next"
                 class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next manage-account__button--icon--rotate-down"
             >
-                <span>Next</span>
-                @fragments.inlineSvg("arrow-right", "icon")
+                <div class="manage-account__button-flexwrap">
+                    <span>Next</span>
+                    @fragments.inlineSvg("arrow-right", "icon")
+                </div>
             </button>
-        </div>
+            <button
+                type="submit"
+                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__complete"
+                data-link-name="consents : navigation : submit"
+            >
+                <div class="manage-account__button-flexwrap">
+                    <span>Finish</span>
+                    @fragments.inlineSvg("tick-button", "icon")
+                </div>
+            </button>
+        </form>
     </div>
 
 </div>

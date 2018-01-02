@@ -284,14 +284,4 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
-
-  val sponsoredPremierLeagueTable = Switch(
-    group = SwitchGroup.Commercial,
-    name = "sponsored-premier-league-table",
-    description = "Show a hardcoded sponsor's logo on Premier League table page.",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 3),
-    exposeClientSide = false
-  )
 }

@@ -4,6 +4,7 @@ import fastdom from 'lib/fastdom-promise';
 import { scrollTo } from 'lib/scroller';
 
 const completedClassname = 'identity-wizard--completed';
+const introductionClassname = 'identity-wizard--introduction';
 const pagerClassname = 'identity-wizard__controls-pager';
 const nextButtonElClassname = 'js-identity-wizard__next';
 const prevButtonElClassname = 'js-identity-wizard__prev';
@@ -104,29 +105,22 @@ const animateIncomingStep = (
     stepEl: HTMLElement,
     direction: string
 ): Promise<void> =>
-    fastdom
-        .write(() => {
-            stepEl.classList.remove(
-                stepHiddenClassname,
-                ...stepTransitionClassnames
-            );
-            if (direction !== 'none') {
-                stepEl.classList.add(
-                    direction === 'forwards'
-                        ? stepInClassname
-                        : stepInReverseClassname
-                );
-            }
-            setTimeout(() => {
-                stepEl.classList.remove(...stepTransitionClassnames);
-            }, 300);
-        })
-        .then(() => fastdom.read(() => stepEl.getBoundingClientRect().height))
-        .then(stepHeight =>
-            fastdom.write(() => {
-                wizardEl.style.minHeight = `${stepHeight}px`;
-            })
+    fastdom.write(() => {
+        stepEl.classList.remove(
+            stepHiddenClassname,
+            ...stepTransitionClassnames
         );
+        if (direction !== 'none') {
+            stepEl.classList.add(
+                direction === 'forwards'
+                    ? stepInClassname
+                    : stepInReverseClassname
+            );
+        }
+        setTimeout(() => {
+            stepEl.classList.remove(...stepTransitionClassnames);
+        }, 300);
+    });
 
 const animateOutgoingStep = (
     wizardEl: HTMLElement,
@@ -157,6 +151,10 @@ const updateCounter = (wizardEl: HTMLElement): Promise<void> =>
                     completedClassname,
                     parseInt(wizardEl.dataset.position, 10) >=
                         parseInt(wizardEl.dataset.length, 10) - 1
+                );
+                wizardEl.classList.toggle(
+                    introductionClassname,
+                    parseInt(wizardEl.dataset.position, 10) < 1
                 );
                 pagerEls.forEach((pagerEl: HTMLElement) => {
                     pagerEl.innerText = `${parseInt(
@@ -222,7 +220,15 @@ const setPosition = (
 ): Promise<void> =>
     fastdom
         .read(() => [
-            wizardEl.getBoundingClientRect().top - 20,
+            /*
+            scrolls to the wizard's top (+ a bit of breathing room)
+            if it's halfway through a page, and to the page's
+            top if it's very close to it, as it looks
+            cleaner than scrolling to half of the header
+            */
+            wizardEl.getBoundingClientRect().top < 120
+                ? 0
+                : wizardEl.getBoundingClientRect().top - 20,
             parseInt(
                 wizardEl.dataset.position ? wizardEl.dataset.position : -1,
                 10
