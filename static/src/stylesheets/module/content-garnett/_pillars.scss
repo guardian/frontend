@@ -38,7 +38,8 @@
     .social-icon__svg,
     .block-share__item--facebook .inline-icon,
     .block-share__item--twitter .inline-icon,
-    .block-share__item--gplus .inline-icon {
+    .block-share__item--gplus .inline-icon,
+    .block-share__item--pinterest .inline-icon {
         fill: $kickerColor;
     }
 
@@ -68,7 +69,8 @@
     .social-icon.social-icon--more,
     .block-share__item--facebook,
     .block-share__item--twitter,
-    .block-share__item--gplus {
+    .block-share__item--gplus,
+    .block-share__item--pinterest {
 
         &:focus,
         &:hover {
