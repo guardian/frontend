@@ -58,11 +58,17 @@
                             <div class="js-score"></div>
                             <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
 
+                            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                                @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp)
+                            }
 
-                            @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp)
 
                             @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
-                                @fragments.mainMedia(article, amp)
+                                @if(article.metadata.designType.nameOrDefault == "comment") {
+                                    @fragments.articleHeaderCommentGarnett(article, model, isPaidContent, amp = amp)
+                                } else {
+                                    @fragments.articleHeaderGarnett(article, model, isPaidContent, amp = amp)
+                                }
                             }
 
                             @fragments.witnessCallToAction(article.content)

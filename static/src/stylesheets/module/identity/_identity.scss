@@ -116,6 +116,12 @@ $identity-header-height: 48px;
         @include fs-headline(6, $size-only: true);
     }
 }
+
+.identity-title-subtitle {
+    @include fs-bodyCopy(2);
+    margin-top: $gs-baseline;
+}
+
 .identity-title--public-profile {
     @include mq(desktop) {
         float: left;
@@ -343,9 +349,6 @@ $identity-header-height: 48px;
 
 /* Email subscriptions
    ========================================================================== */
-.email-subscriptions {
-    margin-top: $gs-baseline*2;
-}
 .email-subscription {
     border-top: 1px solid $neutral-5;
     margin-bottom: $gs-baseline*2;
@@ -368,6 +371,7 @@ $identity-header-height: 48px;
 .dropdown--email-subscription {
     .dropdown__label {
         @include fs-bodyHeading(3);
+        text-transform: lowercase;
     }
     .dropdown__content {
         padding-bottom: 2em;

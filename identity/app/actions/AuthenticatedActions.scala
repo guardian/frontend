@@ -153,9 +153,10 @@ class AuthenticatedActions(
     authAction andThen recentlyAuthenticatedRefiner andThen apiVerifiedUserRefiner
 
   def authWithConsentRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
-    recentlyAuthenticated andThen apiUserShouldRepermissionRefiner
+    authWithRPCookie andThen apiUserShouldRepermissionRefiner
 
-  def permissionAuthentication: ActionBuilder[AuthRequest, AnyContent] =
+  /** Auth with at least SC_GU_RP, that is, auth with SC_GU_U or else SC_GU_RP */
+  def authWithRPCookie: ActionBuilder[AuthRequest, AnyContent] =
     noOpActionBuilder andThen permissionRefiner andThen apiVerifiedUserRefiner
 
 }

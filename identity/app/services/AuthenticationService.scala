@@ -34,10 +34,14 @@ class AuthenticationService(cookieDecoder: FrontendIdentityCookieDecoder,
     cookie.exists(scGuLa => cookieDecoder.userHasRecentScGuLaCookie(user, scGuLa.value, Minutes.minutes(20).toStandardDuration))
   }
 
-  def authenticateUserForPermissions(request: RequestHeader): Option[AuthenticatedUser] = for {
-    scGuRp <- request.cookies.get("SC_GU_RP")
-    fullUser <- cookieDecoder.getUserDataForGuRp(scGuRp.value)
-  } yield AuthenticatedUser(fullUser, ScGuRp(scGuRp.value))
+  def authenticateUserForPermissions(request: RequestHeader): Option[AuthenticatedUser] = {
+    lazy val guRpAuth =
+      for {
+        scGuRp <- request.cookies.get("SC_GU_RP")
+        fullUser <- cookieDecoder.getUserDataForGuRp(scGuRp.value)
+      } yield AuthenticatedUser(fullUser, ScGuRp(scGuRp.value))
+    authenticatedUserFor(request).orElse(guRpAuth)
+  }
 
   def requestPresentsAuthenticationCredentials(request: RequestHeader): Boolean = authenticatedUserFor(request).isDefined
 

@@ -43,30 +43,17 @@ x x x x x x x x x x x x x x x x x x
     }
 
     &.fc-item--has-cutout {
-        .fc-item__avatar {
-            width: gs-height(4);
-            height: gs-height(4);
+        @include avatar(5);
 
-            @include mq(desktop) {
-                width: gs-height(4.5);
-                height: gs-height(4.5);
-            }
-        }
-
-        .fc-item__avatar__media {
-            right: -35%;
-            height: gs-height(5.5);
-
-            @include mq(desktop) {
-                height: gs-height(6);
-            }
+        @include mq(desktop) {
+            @include avatar(6);
         }
 
         .fc-item__header {
-            padding-bottom: gs-height(4);
+            padding-bottom: gs-height(5);
 
             @include mq(desktop) {
-                padding-bottom: gs-height(4.5);
+                padding-bottom: gs-height(6);
             }
         }
 

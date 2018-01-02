@@ -4,11 +4,6 @@
     transition: min-height .2s;
     will-change: min-height;
 }
-.identity-wizard--completed {
-    .identity-wizard__controls {
-        display: none;
-    }
-}
 
 .identity-wizard__step {
     top: 0;
@@ -17,6 +12,8 @@
     will-change: transform;
     outline: none;
     border: 0;
+    margin: 0;
+    padding: 0;
 }
 .js-off .identity-wizard__step {
     border: 1px solid $neutral-8;
