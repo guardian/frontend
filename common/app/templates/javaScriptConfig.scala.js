@@ -5,6 +5,7 @@
 @import play.api.libs.json.Json
 @import views.support.{CamelCase, JavaScriptPage, GoogleAnalyticsAccount}
 @import conf.Configuration.environment
+@import com.gu.identity.model.EmailNewsletters
 
 @defining(Edition(request)) { edition =>
     {
@@ -52,6 +53,9 @@
         "libs": {
             "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
             "sonobi": "@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}"
-        }
+        },
+        "emailListIds": { @{JavaScript(EmailNewsletters.all.subscriptions.map{ newsLetter =>
+            s"""${newsLetter.listId}:"${newsLetter.identityName}""""}.mkString(", "))}
+    }
     }
 }

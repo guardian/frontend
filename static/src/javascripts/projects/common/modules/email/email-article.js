@@ -243,6 +243,11 @@ const addListToPage = (
     listConfig: ListConfig,
     successEventName: string = ''
 ): void => {
+    // We want to request the iframe based on the listName from the Identity model to keep
+    const listName = config.get('emailListIds')[listConfig.listId];
+    if (listName !== undefined) {
+        listConfig.listId = listName;
+    }
     const iframe = bonzo.create(
         template(iframeTemplate, { ...listConfig, ...{ successEventName } })
     )[0];
