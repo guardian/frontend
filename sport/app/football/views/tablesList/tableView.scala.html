@@ -1,7 +1,5 @@
-@import com.gu.commercial.branding.Branding
 @import conf.Configuration
 @import model.{Competition, Group, TeamUrl}
-@import views.html.fragments.commercial.pageLogo
 @import views.support.RenderClasses
 @import views.support.`package`.Seq2zipWithRowInfo
 @(competition: Competition, group: Group,
@@ -9,8 +7,7 @@
     headingLink: Option[String] = None,
     highlightTeamId: Option[String] = None, striped: Boolean = false,
     responsiveFont: Boolean = false, linkToCompetition: Boolean = false,
-    withCrests: Boolean = false,
-    branding: Option[Branding] = None)(implicit request: RequestHeader)
+    withCrests: Boolean = false)
 <div class="table__container">
     <table class="@RenderClasses(Map(
             "table" -> true,
@@ -72,11 +69,6 @@
             <caption class="table__caption table__caption--top">
                 <a href="@headingLink.getOrElse(competition.url)" class="football-matches__heading">@h</a>
             </caption>
-            <div class="page-sponsor--football">
-                @for(brand <- branding) {
-                    @pageLogo(brand, isInteractive = false)
-                }
-            </div>
         }
         @if(linkToCompetition){
             <tfoot class="table__caption table__caption--bottom" >
