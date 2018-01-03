@@ -48,6 +48,7 @@ const listConfigs: ListConfigs = {
     theFilmToday: {
         listId: '1950',
         listName: 'theFilmToday',
+        identityListName: 'film-today',
         campaignCode: 'film_article_signup',
         displayName: {
             normalText: 'film',
@@ -63,6 +64,7 @@ const listConfigs: ListConfigs = {
     theFiver: {
         listId: '218',
         listName: 'theFiver',
+        identityListName: 'the-fiver',
         campaignCode: 'fiver_article_signup',
         displayName: {
             normalText: 'the',
@@ -78,6 +80,7 @@ const listConfigs: ListConfigs = {
     labNotes: {
         listId: '3701',
         listName: 'labNotes',
+        identityListName: 'lab-notes',
         campaignCode: 'lab_notes_article_signup',
         displayName: {
             normalText: 'lab',
@@ -93,6 +96,7 @@ const listConfigs: ListConfigs = {
     euRef: {
         listId: '3698',
         listName: 'euRef',
+        identityListName: 'brexit-briefing',
         campaignCode: 'eu_ref_article_signup',
         displayName: {
             normalText: 'brexit',
@@ -109,6 +113,7 @@ const listConfigs: ListConfigs = {
     usBriefing: {
         listId: '1493',
         listName: 'usBriefing',
+        identityListName: 'today-us',
         campaignCode: 'guardian_today_article_bottom',
         displayName: {
             normalText: 'us',
@@ -125,6 +130,7 @@ const listConfigs: ListConfigs = {
     sleevenotes: {
         listId: '39',
         listName: 'sleevenotes',
+        identityListName: 'sleeve-notes',
         campaignCode: 'sleevenotes_article_bottom',
         displayName: {
             normalText: 'sleeve',
@@ -140,6 +146,7 @@ const listConfigs: ListConfigs = {
     longReads: {
         listId: '3322',
         listName: 'longReads',
+        identityListName: 'the-long-read',
         campaignCode: 'long_reads_article_bottom',
         displayName: {
             normalText: 'long',
@@ -155,6 +162,7 @@ const listConfigs: ListConfigs = {
     bookmarks: {
         listId: '3039',
         listName: 'bookmarks',
+        identityListName: 'bookmarks',
         campaignCode: 'bookmarks_article_bottom',
         displayName: {
             normalText: 'book',
@@ -170,6 +178,7 @@ const listConfigs: ListConfigs = {
     greenLight: {
         listId: '38',
         listName: 'greenLight',
+        identityListName: 'green-light',
         campaignCode: 'green_light_article_bottom',
         displayName: {
             normalText: 'green',
@@ -196,6 +205,18 @@ const listConfigs: ListConfigs = {
             }
         })(),
         listName: 'theGuardianToday',
+        identityListName: (() => {
+            switch (config.get('page.edition')) {
+                default:
+                    return 'today-uk';
+
+                case 'US':
+                    return 'today-us';
+
+                case 'AU':
+                    return 'today-au';
+            }
+        })(),
         campaignCode: 'guardian_today_article_bottom',
         displayName: {
             normalText: 'theguardian',
@@ -243,11 +264,6 @@ const addListToPage = (
     listConfig: ListConfig,
     successEventName: string = ''
 ): void => {
-    // We want to request the iframe based on the listName from the Identity model to keep
-    const listName = config.get('emailListIds')[listConfig.listId];
-    if (listName !== undefined) {
-        listConfig.listId = listName;
-    }
     const iframe = bonzo.create(
         template(iframeTemplate, { ...listConfig, ...{ successEventName } })
     )[0];
