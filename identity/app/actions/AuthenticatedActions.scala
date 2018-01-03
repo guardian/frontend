@@ -55,7 +55,9 @@ class AuthenticatedActions(
 
   private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
     request.getQueryString("email") match {
-      case None => Future.successful(Left(sendUserToSignin(request)))
+      case None =>
+        Future.successful(Left(sendUserToSignin(request)))
+
       case Some(email) =>
         identityApiClient.userFromQueryParam(email, "emailAddress").map {
           case Right(_) => Left(sendUserToSignin(request)) // user exists
@@ -64,12 +66,16 @@ class AuthenticatedActions(
     }
   }
 
-  private def checkRecentAuthenticationAndRedirect[A](request: Request[A]): Future[Either[Result, AuthRequest[A]]] = Future.successful {
-    authService.fullyAuthenticatedUser(request) match {
-      case Some(user) if user.hasRecentlyAuthenticated => Right(new AuthenticatedRequest(user, request))
-      case _ => Left(sendUserToReauthenticate(request))
+  private def checkRecentAuthenticationAndRedirect[A](request: Request[A]): Future[Either[Result, AuthRequest[A]]] =
+    Future.successful {
+      authService.fullyAuthenticatedUser(request) match {
+        case Some(user) if user.hasRecentlyAuthenticated =>
+          Right(new AuthenticatedRequest(user, request))
+
+        case _ =>
+          Left(sendUserToReauthenticate(request))
+      }
     }
-  }
 
   private def fullAuthRefiner: ActionRefiner[Request, AuthRequest] =
     new ActionRefiner[Request, AuthRequest] {
@@ -77,19 +83,25 @@ class AuthenticatedActions(
 
       def refine[A](request: Request[A]) =
         authService.fullyAuthenticatedUser(request) match {
-          case Some(authenticatedUser) => Future.successful(Right(new AuthenticatedRequest(authenticatedUser, request)))
-          case None => checkIdApiForUserAndRedirect(request)
+          case Some(userFromCookie) =>
+            Future.successful(Right(new AuthenticatedRequest(userFromCookie, request)))
+
+          case None =>
+            checkIdApiForUserAndRedirect(request)
         }
     }
 
-  private def permissionRefiner: ActionRefiner[Request, AuthRequest] =
+  private def consentAuthRefiner: ActionRefiner[Request, AuthRequest] =
     new ActionRefiner[Request, AuthRequest] {
       override val executionContext = ec
 
       def refine[A](request: Request[A]) =
         authService.consentAuthenticatedUser(request) match {
-          case Some(permUser) => Future.successful(Right(new AuthenticatedRequest(permUser, request)))
-          case _ => checkRecentAuthenticationAndRedirect(request)
+          case Some(userFormCookie) =>
+            Future.successful(Right(new AuthenticatedRequest(userFormCookie, request)))
+
+          case _ =>
+            checkRecentAuthenticationAndRedirect(request)
         }
     }
 
@@ -175,7 +187,7 @@ class AuthenticatedActions(
 
   /** Auth with at least SC_GU_RP, that is, auth with SC_GU_U or else SC_GU_RP, and user retrieved from IDAPI */
   def consentAuthWithIdapiUserAction: ActionBuilder[AuthRequest, AnyContent] =
-    noOpActionBuilder andThen permissionRefiner andThen retrieveUserFromIdapiRefiner
+    noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
   /** Auth wiht at least SC_GU_RP and decide if user should be redirected to consent journey */
   def consentJourneyRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
