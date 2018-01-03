@@ -1214,12 +1214,16 @@ $quote-mark: 35px;
 }
 // *************** Rich links ***************
 
-.element-rich-link {
+.element-rich-link,
+.element-rich-link.element--supporting {
     @include mq(mobileLandscape, leftCol) {
         width: $gs-gutter * 6.5;
     }
     @include mq(leftCol, wide) {
-        width: $gs-gutter * 7;
+        width: $left-column;
+    }
+    @include mq(wide) {
+        width: $left-column-wide;
     }
 }
 
