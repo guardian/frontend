@@ -53,9 +53,6 @@
         "libs": {
             "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
             "sonobi": "@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}"
-        },
-        "emailListIds": { @{JavaScript(EmailNewsletters.all.subscriptions.map{ newsLetter =>
-            s"""${newsLetter.listId}:"${newsLetter.identityName}""""}.mkString(", "))}
-    }
+        }
     }
 }
