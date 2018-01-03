@@ -5,9 +5,9 @@ Messages
     max-width: gs-span(6);
     margin: 0 auto;
     @include mq(tablet) {
-        margin: ($gs-baseline * 4) auto;
+        margin: ($gs-baseline * 4) auto ($gs-baseline * 2);
         @supports(height: 1vh) {
-            margin: 15vh auto;
+            margin: 12.5vh auto 17.5vh;
         }
     }
     .identity-forms-message__body {
