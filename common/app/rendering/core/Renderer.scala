@@ -22,15 +22,17 @@ class Renderer(implicit actorSystem: ActorSystem, executionContext: ExecutionCon
   implicit val timeout = Timeout(timeoutValue.seconds)
 
   def render[R <: Renderable](renderable: R): Future[Html] = {
-    (actor ? Rendering(renderable))
+    val htmlF = (actor ? Rendering(renderable))
       .mapTo[Try[String]]
-      .flatMap(Future.fromTry(_))
+      .flatMap(Future.fromTry)
       .map(Html(_))
-      .failed.foreach { t: Throwable =>
-        val errorMessage = Option(t.getLocalizedMessage).map(_.replaceAll("\u001B\\[[0-9]*m", "")).getOrElse("RendererError") // stripping terminal colors
-        log.error(errorMessage, t)
-      }
 
+    htmlF.failed.foreach { t =>
+      val errorMessage = Option(t.getLocalizedMessage).map(_.replaceAll("\u001B\\[[0-9]*m", "")).getOrElse("RendererError") // stripping terminal colors
+      log.error(errorMessage, t)
+    }
+
+    htmlF
   }
 
 }
