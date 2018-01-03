@@ -30,7 +30,7 @@
     }
 }
 
-@renderStep(step: ConsentStep) = {
+@renderStep(step: ConsentStep, index: Option[Int] = None) = {
     @if(step.show) {
         <fieldset
             class="identity-wizard__step"
@@ -45,6 +45,11 @@
                         @step.help.map(paragraph =>
                             Html(s"<p class='identity-title-explainer'>$paragraph</p>")
                         )
+                        @if(index.contains(0)) {
+                            <p class='identity-title-explainer'>
+                                By continuing you are confirming that you are aged over 13.
+                            </p>
+                        }
                     </div>
                 }
                 <div class="identity-forms-wrapper__fields">
@@ -56,7 +61,7 @@
     }
 }
 @renderSteps(steps:List[ConsentStep]) = @{
-    steps.map(renderStep)
+    steps.zipWithIndex.map{ case (element, index) => renderStep(element, Some(index)) }
 }
 
 @channelStepContent = {
