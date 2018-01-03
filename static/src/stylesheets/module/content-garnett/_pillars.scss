@@ -63,20 +63,10 @@
         background-color: $kickerColor;
     }
 
-<<<<<<< HEAD
-    .meta__twitter a,
-    .social-icon,
-    .social-icon.social-icon--more,
-    .block-share__item {
-
-=======
-    .block-share__item--facebook,
-    .block-share__item--gplus,
-    .block-share__item--twitter,
+    .block-share__item,
     .meta__twitter a,
     .social-icon,
     .social-icon.social-icon--more {
->>>>>>> 7ee7405a58f530de60035dcd7a8dc6d4d6ff7d67
         &:focus,
         &:hover {
             background-color: $kickerColor;
@@ -96,8 +86,6 @@
     .block.is-summary {
         border-top-color: $pillarColor;
     }
-<<<<<<< HEAD
-
     /** Youtube player styling */
     .youtube-media-atom__play-button {
         background: $mediaColor;
@@ -106,15 +94,11 @@
 
     .youtube-media-atom__bottom-bar__icon .inline-video-icon__svg {
         fill: $mediaColor;
-
     }
 
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
-
     }
-=======
->>>>>>> 7ee7405a58f530de60035dcd7a8dc6d4d6ff7d67
 }
 @mixin footerPalette($pillarColor) {
     .discussion a[href],
@@ -137,8 +121,8 @@
 
     .inline-garnett-quote__svg {
         height: get-font-size(headline, 3);
-        width: get-font-size(headline, 3) * .5;
-        margin-right: get-font-size(headline, 3) * .5;
+        width: get-font-size(headline, 3) * 0.5;
+        margin-right: get-font-size(headline, 3) * 0.5;
         fill: $pillarColor;
     }
 
@@ -167,7 +151,7 @@
 
     .rich-link__kicker {
         border-right: 1px solid $pillarColor;
-        padding-right: .375em;
+        padding-right: 0.375em;
     }
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
