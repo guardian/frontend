@@ -55,16 +55,6 @@ export const regulars: AcquisitionsEpicTemplateCopy = {
     p2: controlP2(),
 };
 
-export const endOfYearCountdown = (
-    daysLeft: string
-): AcquisitionsEpicTemplateCopy => ({
-    heading: controlHeading,
-    p1: `<strong>${
-        daysLeft
-    } left to give to the Guardian in 2017.</strong> More people are reading our independent, investigative journalism than ever but advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can. So you can see why we need to ask for your help. The Guardian’s journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.`,
-    p2: controlP2(),
-});
-
 export const liveblogCopy = (
     supportUrl: string,
     contributionsUrl: string
