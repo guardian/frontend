@@ -1,4 +1,4 @@
-@(item: model.ContentType, page: model.Page, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
+@(item: model.ContentType, page: model.Page, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(mediaHtml: Html = Html(""))(implicit request: RequestHeader)
 
 @import views.html.fragments.langAttributes
 @import model.Badges.badgeFor
@@ -13,6 +13,7 @@
     }">
 
     <div class="content__header tonal__header">
+        @mediaHtml @** We can't directly call the media fragment here. So passing it in as a parameter. **@
         <div class="u-cf">
 
             @if(showMeta) {
