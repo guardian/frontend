@@ -1330,7 +1330,7 @@
             grid-template-columns: ($left-column + $gs-gutter) auto;
             grid-template-areas: 'labels headline-standfirst' 'meta main-media';
 
-            .content--type-guardianview,
+            .content--type-guardianview &,
             .content--type-comment & {
                 grid-template-areas: 'labels headline' 'meta standfirst' '. main-media';
             }
