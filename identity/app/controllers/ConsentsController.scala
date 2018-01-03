@@ -1,6 +1,5 @@
 package controllers
 
-import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
 import play.api.mvc._
@@ -8,12 +7,11 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.json.Json
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
-import form.{AccountFormData, PrivacyFormData, ProfileFormsMapping, UserFormData}
-import idapiclient.{IdApiClient, UserUpdateDTO}
-import model.{ApplicationContext, IdentityPage, NoCache}
+import form.PrivacyFormData
+import idapiclient.UserUpdateDTO
+import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
 import utils.ConsentOrder.userWithOrderedConsents
-
 import scala.concurrent.Future
 
 trait ConsentsController

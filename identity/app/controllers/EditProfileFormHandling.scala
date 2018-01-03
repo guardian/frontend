@@ -1,22 +1,12 @@
 package controllers
 
-
-import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
-import common.ImplicitControllerExecutionContext
+import com.gu.identity.model.{EmailNewsletters, User}
 import play.api.mvc._
-
-import form.{AccountFormData, PrivacyFormData, ProfileFormsMapping, UserFormData}
-import idapiclient.{IdApiClient, UserUpdateDTO}
-import model.{ApplicationContext, IdentityPage, NoCache}
+import form.{AccountFormData, UserFormData}
+import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
-import play.api.i18n.I18nSupport
 import utils.ConsentOrder.userWithOrderedConsents
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.{IdRequestParser, IdentityUrlBuilder, NewsletterService, ReturnUrlVerifier}
-import utils.SafeLogging
-
 import scala.concurrent.Future
 
 trait EditProfileFormHandling extends EditProfileControllerComponents {
@@ -77,8 +67,6 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
         ) // end fold
       } // end authActionWithUser.async
     } // end csrfCheck
-
-
 
   private def profileFormsView(
     page: IdentityPage,

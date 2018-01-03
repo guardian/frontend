@@ -1,25 +1,17 @@
 package controllers
 
 import actions.AuthenticatedActions
-import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
-import common.ImplicitControllerExecutionContext
+import com.gu.identity.model.User
 import form._
 import idapiclient.responses.Error
-import idapiclient.{IdApiClient, UserUpdateDTO}
+import idapiclient.IdApiClient
 import model._
 import play.api.data.Form
-import play.api.data.Forms._
-import play.api.i18n.{I18nSupport, MessagesProvider}
-import play.api.libs.json.Json
+import play.api.i18n.MessagesProvider
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
-import utils.SafeLogging
-import utils.ConsentOrder._
-import scala.concurrent.Future
 import play.api.http.HttpConfiguration
-import pages.IdentityHtmlPage
 
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
 object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
@@ -46,14 +38,9 @@ class EditProfileController(
     override val newsletterService: NewsletterService,
     val httpConfiguration: HttpConfiguration,
     override implicit val context: ApplicationContext)
-  extends BaseController
-  with ImplicitControllerExecutionContext
-  with SafeLogging
-  with I18nSupport
-  with implicits.Forms
-  with EditProfileControllerComponents
+  extends EditProfileControllerComponents
   with EditProfileFormHandling
-  with ConsentsController { this: EditProfileFormHandling =>
+  with ConsentsController {
 
   import authenticatedActions._
 
@@ -78,8 +65,6 @@ class EditProfileController(
 
   /** POST /account/edit */
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
-
-
 
 }
 
