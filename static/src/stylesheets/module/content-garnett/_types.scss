@@ -799,6 +799,13 @@ $quote-mark: 35px;
     .content__meta-container {
         background-image: none;
         padding-top: 0;
+
+        @include mq(leftCol) {
+            @include multiline(8, $garnett-neutral-4, 8);
+            padding-top: $gs-baseline * 3;
+            // the multiline pattern is 4px high, so its height for n lines is (n - 1) * 4 + 1
+            margin-top: -1 * (7 * 4px + 1);
+        }
     }
 
     .content__dateline {
