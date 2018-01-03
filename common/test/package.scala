@@ -73,6 +73,9 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
 
 trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBrowserPerSuite with HtmlUnitFactory {
 
+  // Fixes `Failed to listen for HTTP on /0.0.0.0:19001`
+  System.setProperty("testserver.port", "0")
+
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
   lazy val initialSettings: Map[String, AnyRef] = Map(
