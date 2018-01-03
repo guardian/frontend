@@ -3,17 +3,18 @@
     font-weight: 400;
     color: $nav-primary-colour;
     display: block;
-    font-size: 15px;
+    font-size: 14px;
     height: $veggie-burger-medium - $gs-baseline;
     line-height: $veggie-burger-medium - $gs-baseline;
     padding: 0 ($gs-gutter / 4);
     position: relative;
 
     @include mq(mobileMedium) {
-        font-size: 17px;
+        font-size: 16px;
     }
 
     @include mq(tablet) {
+        font-size: 17px;
         height: 42px;
         line-height: 42px;
     }

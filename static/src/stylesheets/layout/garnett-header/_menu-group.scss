@@ -33,10 +33,12 @@
 }
 
 .menu-group--secondary {
+    background-color: $nav-darker-colour;
     margin-top: 0;
     padding-top: 0;
 
     @include mq(desktop) {
+        background-color: transparent;
         padding-bottom: 0;
         width: 100%;
     }

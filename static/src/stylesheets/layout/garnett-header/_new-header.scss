@@ -118,6 +118,10 @@ from scrolling */
                 right: $gs-gutter;
             }
         }
+
+        @include mq(tablet) {
+            right: $gutter-large;
+        }
     }
 
     &:focus {
@@ -158,7 +162,7 @@ from scrolling */
         top: -$gs-baseline / 2;
         z-index: 3;
 
-        @include mq(tablet) {
+        @include mq(mobileLandscape) {
             right: $veggie-burger-large + $gs-gutter / 2;
         }
 
