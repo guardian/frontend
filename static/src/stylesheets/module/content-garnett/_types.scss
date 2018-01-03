@@ -155,7 +155,6 @@ $quote-mark: 35px;
         flex-flow: row wrap;
         justify-content: space-between;
         margin-bottom: 0;
-
         @include mq(leftCol) {
             position: absolute;
         }
@@ -343,9 +342,7 @@ $quote-mark: 35px;
         margin-bottom: $gs-baseline/2;
     }
 
-    .block-share__item--facebook,
-    .block-share__item--gplus,
-    .block-share__item--twitter,
+    .block-share__item,
     .inline-close,
     .social-icon,
     .social-icon.social-icon--more {
@@ -420,10 +417,15 @@ $quote-mark: 35px;
                 background: $garnett-neutral-4;
             }
         }
+        @include mq(tablet) {
+            padding-left: 0;
+            margin-left: 0;
+            padding-bottom: $gs-baseline*4;
+        }
         @include mq(desktop) {
             padding-left: 0;
             margin-left: 0;
-            padding-bottom: 100px;
+            padding-bottom: $gs-baseline*6;
         }
         @include mq(leftCol) {
             padding-left: $gs-gutter/2;
@@ -1250,10 +1252,9 @@ $quote-mark: 35px;
     }
 }
 
-
 .social__tray-close .social-tray__button {
-    &:hover,
-    &:focus {
+    &:focus,
+    &:hover {
         .social-tray__icon__svg {
             fill: #ffffff;
         }
@@ -1267,7 +1268,6 @@ $quote-mark: 35px;
 .content__head--byline-pic .content__header {
     box-sizing: border-box;
     min-height: 150px;
-
     @include mq(phablet) {
         min-height: 180px;
     }

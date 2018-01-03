@@ -2,7 +2,7 @@
     &.content--type-analysis {
         .content__headline {
             background-image: repeating-linear-gradient(to bottom, transparent, transparent 39px, rgba($pillarColor, .5));
-            
+
             @include mq(tablet) {
                 background-image: repeating-linear-gradient(to bottom, transparent, transparent 47px, rgba($pillarColor, .5));
             }
@@ -36,9 +36,7 @@
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
     .social-icon__svg,
-    .block-share__item--facebook .inline-icon,
-    .block-share__item--twitter .inline-icon,
-    .block-share__item--gplus .inline-icon {
+    .block-share__item .inline-icon {
         fill: $kickerColor;
     }
 
@@ -50,7 +48,7 @@
             }
         }
     }
-    
+
     .inline-garnett-quote svg {
         fill: $pillarColor;
     }
@@ -66,9 +64,7 @@
     .meta__twitter a,
     .social-icon,
     .social-icon.social-icon--more,
-    .block-share__item--facebook,
-    .block-share__item--twitter,
-    .block-share__item--gplus {
+    .block-share__item {
 
         &:focus,
         &:hover {
@@ -85,8 +81,25 @@
         }
     }
 
-    .block--content {
+    .block--content,
+    .block.is-summary {
         border-top-color: $pillarColor;
+    }
+
+    /** Youtube player styling */
+    .youtube-media-atom__play-button {
+        background: $mediaColor;
+        border-radius: 100%;
+    }
+
+    .youtube-media-atom__bottom-bar__icon .inline-video-icon__svg {
+        fill: $mediaColor;
+
+    }
+
+    .youtube-media-atom__bottom-bar__duration {
+        color: $mediaColor;
+
     }
 }
 
@@ -133,7 +146,7 @@
     .rich-link__header {
         padding-top: $gs-baseline / 6;
     }
-    
+
     .rich-link__kicker,
     .rich-link__byline,
     .rich-link__read-more-text {
@@ -165,7 +178,7 @@
     .inline-volume-high {
         fill: $mediaColor;
     }
-    
+
     .vjs-paused .vjs-play-control {
         @include icon(play-icon--#{$pillar});
     }
@@ -283,7 +296,7 @@
         .rich-link__image-container {
             display: none;
         }
-        
+
         .rich-link__container {
             @include multiline(4, $garnett-neutral-4);
             padding-bottom: 13px;
@@ -310,13 +323,13 @@
         &.rich-link--pillar-lifestyle {
             @include richLink(#ffffff, $lifestyle-garnett-feature);
         }
-        
+
         &,
         .rich-link__link {
             color: #ffffff;
         }
     }
-    
+
     &.tone-media--item {
         background: $media-garnett-main-1;
 

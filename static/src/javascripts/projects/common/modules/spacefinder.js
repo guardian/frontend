@@ -195,22 +195,6 @@ const testCandidates = (
     opponents: SpacefinderItem[]
 ): boolean => opponents.every(testCandidate.bind(undefined, rules, challenger));
 
-const mapElementToComputedDimensions = (el: Element): SpacefinderItem => {
-    const rect = el.getBoundingClientRect();
-    return Object.freeze({
-        top: rect.top,
-        bottom: rect.bottom,
-        element: el,
-    });
-};
-
-const mapElementToDimensions = (el: HTMLElement): SpacefinderItem =>
-    Object.freeze({
-        top: el.offsetTop,
-        bottom: el.offsetTop + el.offsetHeight,
-        element: el,
-    });
-
 const enforceRules = (
     data: Object,
     rules: SpacefinderRules
@@ -220,7 +204,7 @@ const enforceRules = (
     // enforce absoluteMinAbove rule
     if (rules.absoluteMinAbove) {
         candidates = candidates.filter(
-            candidate => candidate.top >= rules.absoluteMinAbove
+            candidate => candidate.top + data.bodyTop >= rules.absoluteMinAbove
         );
     }
 
@@ -312,11 +296,14 @@ const getCandidates = (rules: SpacefinderRules): Element[] => {
     return candidates;
 };
 
-const getMeasurements = (
-    rules,
-    candidates: Element[],
-    getDimensions: (x: HTMLElement) => SpacefinderItem
-): Promise<Object> => {
+const getDimensions = (el: HTMLElement): SpacefinderItem =>
+    Object.freeze({
+        top: el.offsetTop,
+        bottom: el.offsetTop + el.offsetHeight,
+        element: el,
+    });
+
+const getMeasurements = (rules, candidates: Element[]): Promise<Object> => {
     const contentMeta: ?Element = rules.clearContentMeta
         ? document.querySelector('.js-content-meta')
         : null;
@@ -343,11 +330,8 @@ const getMeasurements = (
               }, {})
             : null;
 
-        if (rules.body && rules.absoluteMinAbove) {
-            rules.absoluteMinAbove -= (bodyDims && bodyDims.top) || 0;
-        }
-
         return {
+            bodyTop: bodyDims.top || 0,
             bodyHeight: bodyDims.height || 0,
             candidates: candidatesWithDims,
             contentMeta: contentMetaWithDims,
@@ -372,17 +356,13 @@ const findSpace = (
     rules: SpacefinderRules,
     options: ?SpacefinderOptions
 ): Promise<Element[]> => {
-    const getDimensions = rules.absoluteMinAbove
-        ? mapElementToComputedDimensions
-        : mapElementToDimensions;
-
     rules.body =
         (rules.bodySelector && document.querySelector(rules.bodySelector)) ||
         document;
 
     return getReady(rules, options || defaultOptions)
         .then(getCandidates)
-        .then(candidates => getMeasurements(rules, candidates, getDimensions))
+        .then(candidates => getMeasurements(rules, candidates))
         .then(data => enforceRules(data, rules))
         .then(winners => returnCandidates(rules, winners));
 };

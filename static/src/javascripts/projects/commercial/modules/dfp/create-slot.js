@@ -76,6 +76,14 @@ const adSlotDefinitions = {
             ],
         },
     },
+    carrot: {
+        label: false,
+        refresh: false,
+        name: 'carrot',
+        sizeMappings: {
+            mobile: [adSizes.fluid],
+        },
+    },
 };
 
 const createAdSlotElement = (

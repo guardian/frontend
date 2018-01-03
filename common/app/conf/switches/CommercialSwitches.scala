@@ -15,7 +15,17 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  Switch(
+  val CarrotTrafficDriverSwitch = Switch(
+    SwitchGroup.Commercial,
+    "carrot-traffic-driver",
+    "Enables the requesting and rendering of the carrot traffic driving component.",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val IasTargetingSwitch = Switch(
     SwitchGroup.Commercial,
     "ias-ad-targeting",
     "Enables the IAS slot-targeting optimisation.",
