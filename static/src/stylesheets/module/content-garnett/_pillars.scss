@@ -2,7 +2,7 @@
     &.content--type-analysis {
         .content__headline {
             background-image: repeating-linear-gradient(to bottom, transparent, transparent 39px, rgba($pillarColor, .5));
-            
+
             @include mq(tablet) {
                 background-image: repeating-linear-gradient(to bottom, transparent, transparent 47px, rgba($pillarColor, .5));
             }
@@ -50,7 +50,7 @@
             }
         }
     }
-    
+
     .inline-garnett-quote svg {
         fill: $pillarColor;
     }
@@ -85,7 +85,8 @@
         }
     }
 
-    .block--content {
+    .block--content,
+    .block.is-summary {
         border-top-color: $pillarColor;
     }
 }
@@ -133,7 +134,7 @@
     .rich-link__header {
         padding-top: $gs-baseline / 6;
     }
-    
+
     .rich-link__kicker,
     .rich-link__byline,
     .rich-link__read-more-text {
@@ -165,7 +166,7 @@
     .inline-volume-high {
         fill: $mediaColor;
     }
-    
+
     .vjs-paused .vjs-play-control {
         @include icon(play-icon--#{$pillar});
     }
@@ -283,7 +284,7 @@
         .rich-link__image-container {
             display: none;
         }
-        
+
         .rich-link__container {
             @include multiline(4, $garnett-neutral-4);
             padding-bottom: 13px;
@@ -310,13 +311,13 @@
         &.rich-link--pillar-lifestyle {
             @include richLink(#ffffff, $lifestyle-garnett-feature);
         }
-        
+
         &,
         .rich-link__link {
             color: #ffffff;
         }
     }
-    
+
     &.tone-media--item {
         background: $media-garnett-main-1;
 
