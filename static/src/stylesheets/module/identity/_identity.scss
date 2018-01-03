@@ -58,7 +58,7 @@ $identity-header-height: 48px;
     margin-right: auto;
     max-width: gs-span(6);
     padding-bottom: $gs-baseline*4;
-    padding-top: $gs-baseline*4;
+    padding-top: $gs-baseline * 2;
 
     &.identity-wrapper--with-wizard {
         padding-bottom: 0;
@@ -117,8 +117,20 @@ $identity-header-height: 48px;
     }
 }
 
-.identity-title-subtitle {
-    @include fs-bodyCopy(2);
+.identity-title--small {
+    @include fs-headline(3);
+    @include mq(desktop) {
+        @include fs-headline(3, true);
+        font-weight: 500;
+    }
+}
+
+.identity-title--page-title {
+    margin-bottom: $gs-baseline * 2;
+}
+
+.identity-title-explainer {
+    @include fs-bodyCopy(1);
     margin-top: $gs-baseline;
 }
 

@@ -1,7 +1,14 @@
-.identity-forms-wrapper__title {
-    margin-bottom: $gs-baseline * 2;
+.identity-forms-wrapper {
+    border-top: 1px solid $neutral-8;
+    padding-top: $gs-baseline;
 }
 
+.identity-forms-wrapper__title {
+    margin-bottom: $gs-baseline * 2;
+    .identity-title-explainer:first-child {
+        margin-top: 0;
+    }
+}
 
 @supports (display: flex) {
     @include mq(desktop) {
