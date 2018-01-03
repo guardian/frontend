@@ -8,6 +8,7 @@ $quote-mark: 35px;
 .content--liveblog,
 .content--media,
 .content--type-analysis,
+.content--type-guardianview,
 .content--type-article,
 .content--type-comment,
 .content--type-feature,
@@ -816,6 +817,7 @@ $quote-mark: 35px;
 }
 // *************** Opinion Styles ***************
 
+.content--type-guardianview,
 .content--type-comment {
     .content__head {
         overflow: hidden;
@@ -1187,6 +1189,7 @@ $quote-mark: 35px;
 }
 // *************** Opinion quote weight overrides ***************
 
+.content--type-guardianview,
 .content--type-comment {
     .element-pullquote.element--supporting .pullquote-cite,
     .element-pullquote.element--supporting .pullquote-paragraph {
@@ -1195,6 +1198,7 @@ $quote-mark: 35px;
 }
 // *************** Opinion and Feature standfirst overrides ***************
 
+.content--type-guardianview,
 .content--type-comment,
 .content--type-feature,
 .content--type-review {
