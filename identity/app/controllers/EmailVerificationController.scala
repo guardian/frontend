@@ -56,11 +56,12 @@ class EmailVerificationController(api: IdApiClient,
       }
   }
 
-  def resendEmailValidationEmail(): Action[AnyContent] = authActionWithUser.async {
+  def resendEmailValidationEmail(isRepermissioningRedirect: Boolean): Action[AnyContent] = authActionWithUser.async {
     implicit request =>
       val idRequest = idRequestParser(request)
+      val customMessage = if (isRepermissioningRedirect) Some("You must verify your email to continue.") else None
       api.resendEmailValidationEmail(request.user.auth, idRequest.trackingData).map { _ =>
-        Ok(views.html.verificationEmailResent(request.user, page, idRequest, idUrlBuilder))
+        Ok(views.html.verificationEmailResent(request.user, page, idRequest, idUrlBuilder, customMessage))
       }
   }
 }

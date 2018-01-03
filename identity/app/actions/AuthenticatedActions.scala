@@ -22,10 +22,11 @@ class AuthenticatedActions(
     identityUrlBuilder: IdentityUrlBuilder,
     controllerComponents: ControllerComponents,
     newsletterService: NewsletterService,
-    idRequestParser: IdRequestParser) extends Logging with Results {
+    idRequestParser: IdRequestParser
+) extends Logging with Results {
 
-  private val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
-  private implicit val ec: ExecutionContext = controllerComponents.executionContext
+  private lazy val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
+  private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
   def redirectWithReturn(request: RequestHeader, path: String): Result = {
     val returnUrl = identityUrlBuilder.buildUrl(request.uri)
@@ -52,6 +53,9 @@ class AuthenticatedActions(
 
   def sendUserToRegister(request: RequestHeader): Result =
     redirectWithReturn(request, "/register")
+
+  def sendUserToValidateEmail(request: RequestHeader): Result =
+    redirectWithReturn(request, "/verify-email?isRepermissioningRedirect=true")
 
   private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
     request.getQueryString("email") match {
@@ -122,17 +126,23 @@ class AuthenticatedActions(
         Future.successful(Right(request))
 
     private def decideConsentJourney[A](request: AuthRequest[A]) =
-      if (userHasRepermissioned(request))
-        newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
-          if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
-            Right(request)
-          else
-            Left(sendUserToNewslettersConsentsJourney(request))
-        }
-      else Future.successful(Left(sendUserToAllConsentsJourney(request)))
+      userEmailValidated(request) -> userHasRepermissioned(request) match {
+        case (false, _) => Future.successful(Left(sendUserToValidateEmail(request)))
+        case (true, false) => Future.successful(Left(sendUserToAllConsentsJourney(request)))
+        case (true, true) =>
+          newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+            if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
+              Right(request)
+            else
+              Left(sendUserToNewslettersConsentsJourney(request))
+          }
+      }
 
-    private def userHasRepermissioned[A](request: AuthRequest[A]): Boolean =
+    private def userHasRepermissioned(request: AuthRequest[_]): Boolean =
       request.user.statusFields.hasRepermissioned.contains(true)
+
+    private def userEmailValidated(request: AuthRequest[_]): Boolean =
+      request.user.statusFields.isUserEmailValidated
 }
 
   def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
