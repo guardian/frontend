@@ -29,6 +29,7 @@ object emailLandingPage extends StandalonePage {
 case class EmailForm(
   email: String,
   listId: Int,
+  listName: String,
   referrer: Option[String],
   campaignCode: Option[String])
 
@@ -49,16 +50,15 @@ class EmailFormService(wsClient: WSClient) {
   def submit(form: EmailForm): Future[WSResponse] = {
     val maybeTriggeredSendKey: Option[Int] = listIdsWithTrigger.get(form.listId)
 
-    wsClient.url(Configuration.emailSignup.url).post(
+    val idAccessClientToken = Configuration.id.apiClientToken
+    wsClient.url(Configuration.id.consentEmailerApi)
+      .addHttpHeaders("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken")
+      .post(
       JsObject(Json.obj(
-      "email" -> form.email,
-      "listId" -> form.listId,
-      "triggeredSendKey" -> maybeTriggeredSendKey,
-      "emailGroup" -> "email-footer-test",
-      "referrer" -> form.referrer,
-      "campaignCode" -> form.campaignCode)
-      .fields
-      .filterNot{ case (_, v) => v == JsNull}))
+        "email" -> form.email,
+        "set-lists" -> List(form.listName)
+      ).fields)
+    )
   }
 }
 
@@ -68,6 +68,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listId" -> number,
+      "listName" -> nonEmptyText,
       "referrer" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String])
     )(EmailForm.apply)(EmailForm.unapply)
@@ -78,13 +79,14 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
   }
 
   def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
-    Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
+    val identityName = EmailNewsletter(listId).map(_.identityName).getOrElse("")
+    Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId, identityName)))
   }
 
   def renderFormFromName(emailType: String, listName: String): Action[AnyContent] = Action { implicit request =>
     val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
     id match {
-      case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
+      case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId, listName)))
       case _            => Cached(15.minute)(WithoutRevalidationResult(NotFound))
     }
   }
@@ -120,7 +122,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
           NotAcceptable
       }
     }
-
+q
     emailForm.bindFromRequest.fold(
       formWithErrors => {
         log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
