@@ -36,9 +36,7 @@
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
     .social-icon__svg,
-    .block-share__item--facebook .inline-icon,
-    .block-share__item--twitter .inline-icon,
-    .block-share__item--gplus .inline-icon {
+    .block-share__item .inline-icon {
         fill: $kickerColor;
     }
 
@@ -66,9 +64,7 @@
     .meta__twitter a,
     .social-icon,
     .social-icon.social-icon--more,
-    .block-share__item--facebook,
-    .block-share__item--twitter,
-    .block-share__item--gplus {
+    .block-share__item {
 
         &:focus,
         &:hover {
