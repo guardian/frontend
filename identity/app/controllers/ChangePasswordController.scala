@@ -30,7 +30,7 @@ class ChangePasswordController(
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with implicits.Forms {
 
-  import authenticatedActions.authAction
+  import authenticatedActions.fullAuthAction
 
   val page = IdentityPage("/password/change", "Change Password")
 
@@ -57,7 +57,7 @@ class ChangePasswordController(
   )
 
   def displayForm(): Action[AnyContent] = csrfAddToken {
-    authAction.async {
+    fullAuthAction.async {
       implicit request =>
 
         val form = passwordForm.bindFromFlash.getOrElse(passwordForm)
@@ -73,12 +73,12 @@ class ChangePasswordController(
 
   def renderPasswordConfirmation: Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
-    val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
+    val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
     NoCache(Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
   }
 
   def submitForm(): Action[AnyContent] = csrfCheck {
-    authAction.async {
+    fullAuthAction.async {
       implicit request =>
         val idRequest = idRequestParser(request)
         val boundForm = passwordFormWithConstraints.bindFromRequest()
@@ -102,7 +102,7 @@ class ChangePasswordController(
               SeeOther(routes.ChangePasswordController.displayForm().url).flashing(clearPasswords(form).toFlash)
             )
           } else {
-            val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
+            val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
             NoCache(SeeOther(routes.ChangePasswordController.renderPasswordConfirmation().url))
           }
         }

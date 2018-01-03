@@ -51,14 +51,14 @@ class AccountDeletionController(
   ))
 
   def renderAccountDeletionForm: Action[AnyContent] = csrfAddToken {
-    authActionWithUser.async { implicit request =>
+    fullAuthWithIdapiUserAction.async { implicit request =>
       val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
       Future(NoCache(Ok(views.html.profile.deletion.accountDeletion(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user))))
     }
   }
 
   def processAccountDeletionForm: Action[AnyContent] = csrfCheck {
-    authActionWithUser.async { implicit request =>
+    fullAuthWithIdapiUserAction.async { implicit request =>
       val boundForm = accountDeletionForm.bindFromRequest
 
       boundForm.fold(

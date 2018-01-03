@@ -71,12 +71,12 @@ class EditProfileController(
 
   def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String]): Action[AnyContent] =
     if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
-      recentlyAuthenticated { implicit request =>
+      recentFullAuthWithIdapiUserAction { implicit request =>
         NotFound(views.html.errors._404())
       }
     } else {
       csrfAddToken {
-        authWithRPCookie.async { implicit request =>
+        consentAuthWithIdapiUserAction.async { implicit request =>
           consentJourneyView(
             page = page,
             journey = page.journey,
@@ -89,7 +89,7 @@ class EditProfileController(
     }
 
   def displayPrivacyFormRedirect(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] = csrfAddToken {
-    recentlyAuthenticated { implicit request =>
+    recentFullAuthWithIdapiUserAction { implicit request =>
       Redirect(routes.EditProfileController.displayEmailPrefsForm(consentsUpdated, consentHint), MOVED_PERMANENTLY)
     }
   }
@@ -99,7 +99,7 @@ class EditProfileController(
 
   def saveEmailPreferencesAjax: Action[AnyContent] =
     csrfCheck {
-      authActionWithUser.async { implicit request =>
+      fullAuthWithIdapiUserAction.async { implicit request =>
         newsletterService.savePreferences().map { form  =>
           if (form.hasErrors) {
             val errorsAsJson = Json.toJson(
@@ -118,7 +118,7 @@ class EditProfileController(
 
   def saveConsentPreferencesAjax: Action[AnyContent] =
     csrfCheck {
-      authWithRPCookie.async { implicit request =>
+      consentAuthWithIdapiUserAction.async { implicit request =>
         val userDO = request.user
         val marketingConsentForm: Form[PrivacyFormData] = Form(profileFormsMapping.privacyMapping.formMapping)
 
@@ -149,7 +149,7 @@ class EditProfileController(
 
   def submitRepermissionedFlag: Action[AnyContent] =
     csrfCheck {
-      authWithRPCookie.async { implicit request =>
+      consentAuthWithIdapiUserAction.async { implicit request =>
         val returnUrlForm = Form(single("returnUrl" -> nonEmptyText))
         returnUrlForm.bindFromRequest.fold(
           formWithErrors => Future.successful(BadRequest(Json.toJson(formWithErrors.errors.toList))),
@@ -179,7 +179,7 @@ class EditProfileController(
       consentHint: Option[String] = None) = {
 
     csrfAddToken {
-      authWithConsentRedirectAction.async { implicit request =>
+      consentJourneyRedirectAction.async { implicit request =>
         profileFormsView(
           page = page,
           forms = ProfileForms(userWithOrderedConsents(request.user, consentHint),PublicEditProfilePage),
@@ -194,7 +194,7 @@ class EditProfileController(
 
   private def submitForm(page: IdentityPage): Action[AnyContent] =
     csrfCheck {
-      authActionWithUser.async { implicit request =>
+      fullAuthWithIdapiUserAction.async { implicit request =>
         val userDO = request.user
         val boundProfileForms =
           ProfileForms(userDO, activePage = page).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
