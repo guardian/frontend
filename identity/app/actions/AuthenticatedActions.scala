@@ -112,31 +112,35 @@ class AuthenticatedActions(
         }
     }
 
-  private def apiUserShouldRepermissionRefiner: ActionRefiner[AuthRequest, AuthRequest] =
-    new ActionRefiner[AuthRequest, AuthRequest] {
+  private def apiUserShouldRepermissionFilter: ActionFilter[AuthRequest] =
+    new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
-      def refine[A](request: AuthRequest[A]) =
+      def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
           decideConsentJourney(request)
         else
-          Future.successful(Right(request))
+          Future.successful(None)
+      }
 
       private def decideConsentJourney[A](request: AuthRequest[A]) =
         (userEmailValidated(request), userHasRepermissioned(request)) match {
           case (false, _) =>
-            Future.successful(Left(sendUserToValidateEmail(request)))
+            Future.successful(Some(sendUserToValidateEmail(request)))
 
           case (true, false) =>
-            Future.successful(Left(sendUserToAllConsentsJourney(request)))
+            Future.successful(Some(sendUserToAllConsentsJourney(request)))
 
           case (true, true) =>
-            newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map {
+            newsletterService.subscriptions(
+                request.user.getId,
+                idRequestParser(request).trackingData).map {
+
               emailFilledForm =>
                 if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
-                  Right(request)
+                  None
                 else
-                  Left(sendUserToNewslettersConsentsJourney(request))
+                  Some(sendUserToNewslettersConsentsJourney(request))
               }
         }
 
@@ -175,6 +179,6 @@ class AuthenticatedActions(
 
   /** Auth wiht at least SC_GU_RP and decide if user should be redirected to consent journey */
   def consentJourneyRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
-    consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionRefiner
+    consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionFilter
 
 }
