@@ -189,7 +189,7 @@ class AuthenticatedActions(
   def consentAuthWithIdapiUserAction: ActionBuilder[AuthRequest, AnyContent] =
     noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
-  /** Auth wiht at least SC_GU_RP and decide if user should be redirected to consent journey */
+  /** Auth with at least SC_GU_RP and decide if user should be redirected to consent journey */
   def consentJourneyRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
     consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionFilter
 
