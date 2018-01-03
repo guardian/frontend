@@ -27,7 +27,7 @@
         top: 0;
         left: 0;
         content: '';
-        width: gs-span(2) - 10px;
+        width: $gs-gutter * 6 + 2px;
         border-top: 1px solid $neutral-3;
 
         @include mq($from: tablet) {

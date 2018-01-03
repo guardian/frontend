@@ -58,6 +58,10 @@ Media list item. Looks a bit like this:
         }
     }
 
+    .fc-item__header {
+        padding-bottom: 0;
+    }
+
     &[class*='fc-item--has-sublinks'] {
         .fc-item__footer--vertical {
             display: none;
@@ -76,7 +80,7 @@ Media list item. Looks a bit like this:
         .fc-item__avatar {
             display: block;
         }
-        
+
         .fc-item__content {
             min-height: gs-height(2.6);
             padding-left: $gs-gutter * .25;

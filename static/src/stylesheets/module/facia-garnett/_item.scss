@@ -194,17 +194,22 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__kicker {
     position: relative;
-    margin-right: $gs-gutter / 4;
     font-weight: 700;
-    border-width: 0 1px 0 0;
-    border-style: solid;
-    padding-right: .375em;
+
+    &:after {
+        content: '/';
+        display: inline-block;
+        font-weight: 900;
+        margin-left: 4px;
+    }
 }
 
 .fc-item__byline {
     margin-bottom: 0;
     font-style: italic;
     letter-spacing: .2px;
+    //This is to compensate for the line height of the headline
+    margin-top: -2px;
 }
 
 .fc-item__standfirst-wrapper {
