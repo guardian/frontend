@@ -167,6 +167,38 @@
     }
 }
 
+@getStepsForJourney(journey: String) = @{
+    @journey match {
+        case "newsletters" => {
+            List(
+                if(emailRepermissionStep.show) {
+                    emailRepermissionStep
+                } else {
+                    ConsentStep(
+                        name = "error",
+                        title = "Sorry",
+                        content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
+                    )
+                }
+            )
+        }
+        case "all" => {
+            List(
+                communicationConsentStep,
+                emailRepermissionStep,
+                channelStep
+            )
+        }
+        case _ => {
+            List(
+                communicationConsentStep,
+                emailRepermissionOrSignupStep,
+                channelStep
+            )
+        }
+    }
+}
+
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-wizard">
 
     <div class="js-errorHolder manage-account__errors"></div>
@@ -184,35 +216,7 @@
 
     <div class="identity-wizard identity-wizard--consent u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
 
-        @journey match {
-            case "newsletters" => {
-                @renderSteps(List(
-                    if(emailRepermissionStep.show) {
-                        emailRepermissionStep
-                    } else {
-                        ConsentStep(
-                            name = "error",
-                            title = "Sorry",
-                            content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
-                        )
-                    }
-                ))
-            }
-            case "all" => {
-                @renderSteps(List(
-                    communicationConsentStep,
-                    emailRepermissionStep,
-                    channelStep
-                ))
-            }
-            case _ => {
-                @renderSteps(List(
-                    communicationConsentStep,
-                    emailRepermissionOrSignupStep,
-                    channelStep
-                ))
-            }
-        }
+        @renderSteps(getStepsForJourney(journey))
 
         <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
             <button
