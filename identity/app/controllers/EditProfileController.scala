@@ -51,6 +51,7 @@ class EditProfileController(
   with SafeLogging
   with I18nSupport
   with implicits.Forms
+  with EditProfileControllerComponents
   with EditProfileFormHandling
   with ConsentsController { this: EditProfileFormHandling =>
 

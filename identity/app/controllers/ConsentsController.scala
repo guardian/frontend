@@ -3,42 +3,22 @@ package controllers
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
-import common.ImplicitControllerExecutionContext
 import play.api.mvc._
-import play.api.http.Status._
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.i18n.{I18nSupport, MessagesProvider}
 import play.api.libs.json.Json
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
 import form.{AccountFormData, PrivacyFormData, ProfileFormsMapping, UserFormData}
 import idapiclient.{IdApiClient, UserUpdateDTO}
 import model.{ApplicationContext, IdentityPage, NoCache}
 import pages.IdentityHtmlPage
-import play.api.i18n.I18nSupport
 import utils.ConsentOrder.userWithOrderedConsents
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.{IdRequestParser, IdentityUrlBuilder, NewsletterService, ReturnUrlVerifier}
-import utils.SafeLogging
 
 import scala.concurrent.Future
 
-trait ConsentsController extends BaseController
-    with ImplicitControllerExecutionContext
-    with SafeLogging
-    with I18nSupport
-    with implicits.Forms { this: EditProfileFormHandling =>
-
-  val authenticatedActions: AuthenticatedActions
-  val csrfCheck: CSRFCheck
-  val csrfAddToken: CSRFAddToken
-  val newsletterService: NewsletterService
-  val idRequestParser: IdRequestParser
-  val returnUrlVerifier: ReturnUrlVerifier
-  val idUrlBuilder: IdentityUrlBuilder
-  val identityApiClient: IdApiClient
-  implicit val context: ApplicationContext
-  implicit val profileFormsMapping: ProfileFormsMapping
+trait ConsentsController
+    extends EditProfileControllerComponents
+    with EditProfileFormHandling {
 
   import authenticatedActions._
 

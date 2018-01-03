@@ -19,24 +19,9 @@ import utils.SafeLogging
 
 import scala.concurrent.Future
 
-trait EditProfileFormHandling extends BaseController
-  with ImplicitControllerExecutionContext
-  with SafeLogging
-  with I18nSupport
-  with implicits.Forms {
+trait EditProfileFormHandling extends EditProfileControllerComponents {
 
-    val authenticatedActions: AuthenticatedActions
-    val csrfCheck: CSRFCheck
-    val csrfAddToken: CSRFAddToken
-    val newsletterService: NewsletterService
-    val idRequestParser: IdRequestParser
-    val returnUrlVerifier: ReturnUrlVerifier
-    val idUrlBuilder: IdentityUrlBuilder
-    val identityApiClient: IdApiClient
-    implicit val context: ApplicationContext
-    implicit val profileFormsMapping: ProfileFormsMapping
-
-    import authenticatedActions._
+  import authenticatedActions._
 
   def displayForm(
     page: IdentityPage,
@@ -56,7 +41,6 @@ trait EditProfileFormHandling extends BaseController
     }
 
   }
-
 
   def submitForm(page: IdentityPage): Action[AnyContent] =
     csrfCheck {
