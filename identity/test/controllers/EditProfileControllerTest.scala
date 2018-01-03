@@ -84,7 +84,8 @@ import scala.concurrent.Future
       profileFormsMapping,
       controllerComponent,
       newsletterService,
-      httpConfiguration
+      httpConfiguration,
+      testApplicationContext
     )
   }
 
