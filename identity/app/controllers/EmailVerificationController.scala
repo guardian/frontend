@@ -10,6 +10,7 @@ import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
 import conf.switches.Switches.IdentityPointToConsentJourneyPage
+import pages.IdentityHtmlPage
 
 
 class EmailVerificationController(api: IdApiClient,
@@ -61,7 +62,9 @@ class EmailVerificationController(api: IdApiClient,
       val idRequest = idRequestParser(request)
       val customMessage = if (isRepermissioningRedirect) Some("You must verify your email to continue.") else None
       api.resendEmailValidationEmail(request.user.auth, idRequest.trackingData).map { _ =>
-        Ok(views.html.verificationEmailResent(request.user, page, idRequest, idUrlBuilder, customMessage))
+        Ok(
+          IdentityHtmlPage.html(views.html.verificationEmailResent(request.user, idRequest, idUrlBuilder, customMessage))(page, request, context)
+        )
       }
   }
 }
