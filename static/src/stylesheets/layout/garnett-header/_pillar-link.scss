@@ -62,7 +62,7 @@
     }
 
     .is-not-modern &:after {
-        // Hides avtive and hover underlines from masking text on pillars in non-js
+        // Hides active and hover underlines from masking text on pillars in non-js
         content: none;
     }
 
