@@ -88,6 +88,7 @@
         .headline-list__body,
         .fc-item__headline {
             text-decoration: underline;
+            text-decoration-skip: ink;
         }
 
         .headline-list__count {
