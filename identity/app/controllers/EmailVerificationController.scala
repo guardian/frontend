@@ -24,7 +24,7 @@ class EmailVerificationController(api: IdApiClient,
   extends BaseController with ImplicitControllerExecutionContext with SafeLogging {
 
   import ValidationState._
-  import authenticatedActions.authActionWithUser
+  import authenticatedActions.fullAuthWithIdapiUserAction
 
   val page = IdentityPage("/verify-email", "Verify Email")
 
@@ -44,7 +44,7 @@ class EmailVerificationController(api: IdApiClient,
 
             case Right(ok) => validated
           }
-          val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
+          val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
           val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
           val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
           val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
@@ -57,7 +57,7 @@ class EmailVerificationController(api: IdApiClient,
       }
   }
 
-  def resendEmailValidationEmail(isRepermissioningRedirect: Boolean): Action[AnyContent] = authActionWithUser.async {
+  def resendEmailValidationEmail(isRepermissioningRedirect: Boolean): Action[AnyContent] = fullAuthWithIdapiUserAction.async {
     implicit request =>
       val idRequest = idRequestParser(request)
       val customMessage = if (isRepermissioningRedirect) Some("You must verify your email to continue.") else None
