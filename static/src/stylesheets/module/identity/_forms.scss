@@ -5,6 +5,9 @@
 
 .identity-forms-wrapper__title {
     margin-bottom: $gs-baseline * 2;
+    .identity-title-explainer:first-child {
+        margin-top: 0;
+    }
 }
 
 @supports (display: flex) {
