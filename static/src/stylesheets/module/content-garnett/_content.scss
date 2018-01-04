@@ -1330,6 +1330,7 @@
             grid-template-columns: ($left-column + $gs-gutter) auto;
             grid-template-areas: 'labels headline-standfirst' 'meta main-media';
 
+            .content--type-guardianview &,
             .content--type-comment & {
                 grid-template-areas: 'labels headline' 'meta standfirst' '. main-media';
             }
@@ -1361,6 +1362,7 @@
         @include mq($until: tablet) {
             order: 1;
 
+            .content--type-guardianview &,
             .content--type-comment & {
                 order: 0;
             }
@@ -1394,6 +1396,7 @@
             order: 1;
             margin-top: 0;
 
+            .content--type-guardianview &,
             .content--type-comment & {
                 order: 0;
             }
