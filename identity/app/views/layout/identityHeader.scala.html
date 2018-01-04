@@ -47,7 +47,11 @@
 
         <a href="@LinkTo {/}" data-link-name="site logo" id="logo" class="identity-header__logo" data-component="logo">
             <span class="u-h">The Guardian - Back to home</span>
-            @fragments.inlineSvg("guardian-logo-160", "logo")
+            @if(experiments.ActiveExperiments.isParticipating(experiments.GarnettIdentity)){
+                @fragments.inlineSvg("the-guardian-logo", "logo")
+            } else {
+                @fragments.inlineSvg("guardian-logo-160", "logo")
+            }
         </a>
     </div>
 </header>
