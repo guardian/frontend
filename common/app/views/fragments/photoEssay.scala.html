@@ -12,11 +12,10 @@
     page.item.tags.isPaidContent
 )) { case (hasEmbed, hasMainMedia, hasVideo, isPaidContent) =>
   <style>
-  @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-    @Html(common.Assets.css.inlinePhotoEssay)
-  }
   @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
     @Html(common.Assets.css.inlinePhotoEssayGarnett)
+  } else {
+    @Html(common.Assets.css.inlinePhotoEssay)
   }
 
   </style>
