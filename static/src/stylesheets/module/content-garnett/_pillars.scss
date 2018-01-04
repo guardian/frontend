@@ -18,6 +18,10 @@
         color: $pillarColor;
     }
 
+    .button--primary {
+        background: $pillarColor;
+    }
+
     .byline,
     .content--media .content__headline,
     .old-article-message,
@@ -98,12 +102,40 @@
         color: $mediaColor;
     }
 }
-@mixin footerPalette($pillarColor) {
-    .discussion a[href],
+//////** Discussion (comment) styling **//////////
+@mixin footerPalette($kickerColor) {
+    .d-comment__author a[href], ._underline_1lj47_3,
+    //.discussion a[href],
     // #? temporary fix: this class is in the comment.js template (line 139)
     // we can get rid of it once we clean up the pre-garnett code
-    .discussion .button--tone-news {
-        color: $pillarColor;
+    .button--tone-news,
+    .d-comment__action,
+    .d-comment__reply-to-author {
+        color: $kickerColor;
+    }
+
+    .comment-share-icon,
+    .d-show-more-replies__button.button--show-more svg {
+        fill: $garnett-neutral-6;
+        left: $gs-gutter/3;
+    }
+
+    .container__meta,
+    .container__meta__title {
+        color: $garnett-neutral-1;
+    }
+
+    .discussion__top-border {
+        border-top: 1px solid $garnett-neutral-4;
+    }
+
+    .button--primary {
+        background-color: $kickerColor;
+        border-color: $kickerColor;
+    }
+
+    .button--show-more svg {
+        left: $gs-gutter/2;
     }
 }
 @mixin richLink($pillarColor, $cardBackground) {
@@ -119,8 +151,8 @@
 
     .inline-garnett-quote__svg {
         height: get-font-size(headline, 3);
-        width: get-font-size(headline, 3) * .5;
-        margin-right: get-font-size(headline, 3) * .5;
+        width: get-font-size(headline, 3) * 0.5;
+        margin-right: get-font-size(headline, 3) * 0.5;
         fill: $pillarColor;
     }
 
@@ -149,7 +181,7 @@
 
     .rich-link__kicker {
         border-right: 1px solid $pillarColor;
-        padding-right: .375em;
+        padding-right: 0.375em;
     }
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
