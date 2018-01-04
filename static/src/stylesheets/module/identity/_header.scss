@@ -106,7 +106,8 @@ $height: $identity-header-height - ($gutter * 2);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    & > div:not(.identity-header):not(.identity-footer) {
+    align-items: stretch;
+    & > .identity-header-flex-wrap__content {
         flex: 1 1 auto;
     }
 }

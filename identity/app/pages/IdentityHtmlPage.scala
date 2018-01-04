@@ -47,7 +47,9 @@ object IdentityHtmlPage {
         views.html.layout.identityFlexWrap()(
           skipToMainContent(),
           views.html.layout.identityHeader(hideNavigation=page.isFlow),
-          content,
+        )(
+          content
+        )(
           inlineJSNonBlocking(),
           if(page.isFlow){
             views.html.layout.identitySkinnyFooter()
