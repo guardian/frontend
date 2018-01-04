@@ -40,7 +40,7 @@ object IdentityHtmlPage {
       ),
       bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
-        views.html.layout.identityHeader(),
+        views.html.layout.identityHeader(hideNavigation=page.isFlow),
         content,
         inlineJSNonBlocking(),
         footer() when !page.isFlow,
