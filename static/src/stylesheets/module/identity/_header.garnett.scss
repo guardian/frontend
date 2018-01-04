@@ -1,15 +1,18 @@
 $gutter: 4px;
 $height: $identity-header-height - ($gutter * 2);
 
+$nav-background-colour: mix($sport-garnett-main-1, $neutral-7, 4%); // BG of the nav & menu
+$rule: darken($nav-background-colour, 20%); // All borders on the nav
+
 .identity-header {
     @include clearfix;
-    background-color: $garnett-neutral-3;
+    background-color: mix($sport-garnett-main-1, $neutral-7, 4%);
     padding: $gutter 0;
     color: $identity-main;
     min-height: $height;
     z-index: 999;
     &:after {
-        @include multiline(4, $garnett-neutral-4, top);
+        @include multiline(4, $rule, top);
         content: '';
         height: 4px * 4.5;
         background-color: #ffffff;
@@ -35,6 +38,7 @@ $height: $identity-header-height - ($gutter * 2);
 
     .gs-container {
         display: flex;
+        flex-direction: row-reverse;
         justify-content: space-between;
         align-items: center;
         padding-left: $gs-gutter / 2;
@@ -64,10 +68,11 @@ $height: $identity-header-height - ($gutter * 2);
 
 .identity-header__logo {
     float: right;
+    order: -99;
     svg {
         display: block;
-        width: 160px;
-        height: 30px;
+        height: 60px;
+        width: 183px;
         * {
             fill: #000000;
         }
