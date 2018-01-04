@@ -25,23 +25,19 @@
                     <ul class="identity-dropdown" id="my-account-dropdown" aria-hidden="true">
                     @for((item) <- accountDropdownMenu) {
                         <li
-                        class="@{
-                            (List("identity-dropdown__item") ++ item.parentClassList).mkString(" ")
-                        }""
+                            class="@{(List("identity-dropdown__item") ++ item.parentClassList).mkString(" ")}"
                         >
-                        <a
-                        class="@{
-                            (List("identity-dropdown__title") ++ item.classList).mkString(" ")
-                        }"
-                            @if(item.href.isDefined) {
-                                href="@item.href"
-                            }
-                            @if(item.linkName.isDefined) {
-                                data-link-name="identity-nav : menu : @item.linkName"
+                            <a
+                                class="@{(List("identity-dropdown__title") ++ item.classList).mkString(" ")}"
+                                @if(item.href.isDefined) {
+                                    href="@item.href"
                                 }
-                        >
-                        @item.label
-                        </a>
+                                @if(item.linkName.isDefined) {
+                                    data-link-name="identity-nav : menu : @item.linkName"
+                                }
+                            >
+                                @item.label
+                            </a>
                         </li>
                     }
                     </ul>
