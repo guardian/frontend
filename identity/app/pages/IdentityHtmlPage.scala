@@ -17,7 +17,7 @@ object IdentityHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = stacked(
-      if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)){
+      if(experiments.ActiveExperiments.isParticipating(experiments.GarnettIdentity)){
         criticalStyleLink("identity.garnett")
       } else {
         criticalStyleLink("identity")
