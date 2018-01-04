@@ -1205,6 +1205,15 @@ $quote-mark: 35px;
         }
 
     }
+    figure > .gs-container {
+        margin: 0;
+        padding: 0;
+        .content__main-column {
+            max-width: unset;
+            margin: 0;
+            padding: 0;
+        }
+    }
     .content__secondary-column {
         @include mq($from: wide) {
             padding-top: (aspect-ratio-height(5, 3, gs-span(13)) + gs-height(5));
