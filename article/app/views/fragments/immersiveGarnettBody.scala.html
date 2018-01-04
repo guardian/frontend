@@ -10,6 +10,7 @@
 @import _root_.model.ContentDesignType.RichContentDesignType
 
 @defining((model.article, isPaidContent(model))) { case (article, isPaidContent) =>
+
         <article id="article" data-test-id="article-root"
 
             class="@RenderClasses(Map(
@@ -77,5 +78,4 @@
         @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent)
 
     </div>
-  }
 }
