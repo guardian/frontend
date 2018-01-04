@@ -252,6 +252,17 @@ $video-width-desktop: 700px;
     }
 }
 
+.youtube-media-atom__play-button {
+    background-color: $garnett-neutral-1;
+    border-radius: 50%;
+    padding: $gs-baseline / 2;
+    color: transparent;
+
+    .vjs-control-text::before {
+        background-color: red;
+    }
+}
+
 .video-playlist__item {
     position: relative;
     display: inline-block;

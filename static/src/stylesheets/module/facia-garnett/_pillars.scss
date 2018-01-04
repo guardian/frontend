@@ -164,6 +164,10 @@ $pillars: (
         background-color: map-get($palette, kicker);
     }
 
+    .youtube-media-atom__play-button {
+        background-color: map-get($palette, kicker);
+    }
+
     &.fc-item--type-comment {
         .fc-item__avatar {
             background-color: map-get($palette, cutoutBackground);

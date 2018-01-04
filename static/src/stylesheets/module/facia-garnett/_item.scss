@@ -149,6 +149,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__header,
+.video-overlay__headline,
 .item__title,
 .rich-link__header {
     @include fs-headline(3);
