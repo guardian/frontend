@@ -35,30 +35,16 @@ case class EmailForm(
 
 class EmailFormService(wsClient: WSClient) {
 
-  val testListId = 3485
-  val testListTrigger = 2529
-
-  /**
-    * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
-    */
-  val listIdsWithTrigger: Map[Int, Int] = (for {
-    list <- EmailNewsletters.all.subscriptions
-    id <- list.allIds
-    triggerId <- list.triggerId
-  } yield id -> triggerId).toMap.updated(testListId, testListTrigger)
-
   def submit(form: EmailForm): Future[WSResponse] = {
-    val maybeTriggeredSendKey: Option[Int] = listIdsWithTrigger.get(form.listId)
 
-    val idAccessClientToken = Configuration.id.apiClientToken
-    wsClient.url(Configuration.id.consentEmailerApi)
+    val idAccessClientToken =Configuration.id.apiClientToken
+    val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
+    val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
+
+    wsClient
+      .url(consentMailerUrl)
       .addHttpHeaders("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken")
-      .post(
-      JsObject(Json.obj(
-        "email" -> form.email,
-        "set-lists" -> List(form.listName)
-      ).fields)
-    )
+      .post(consentMailerPayload)
   }
 }
 
