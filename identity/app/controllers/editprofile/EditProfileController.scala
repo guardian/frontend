@@ -1,13 +1,13 @@
-package controllers
+package controllers.editprofile
 
 import actions.AuthenticatedActions
 import form._
 import idapiclient.IdApiClient
 import model._
+import play.api.http.HttpConfiguration
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
-import play.api.http.HttpConfiguration
 
 class EditProfileController(
     override val idUrlBuilder: IdentityUrlBuilder,

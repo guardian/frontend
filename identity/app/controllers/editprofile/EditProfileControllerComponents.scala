@@ -1,4 +1,4 @@
-package controllers
+package controllers.editprofile
 
 import actions.AuthenticatedActions
 import common.ImplicitControllerExecutionContext

@@ -1,6 +1,6 @@
-package controllers
+package controllers.editprofile
 
-import play.api.mvc._
+import play.api.mvc.{Action, AnyContent}
 
 /**
   * DigiPack, Mebership, Contributions tabs

@@ -4,10 +4,11 @@
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
 
+@import controllers.editprofile.ProfileForms
 @(
     activeUrl: String,
     user: com.gu.identity.model.User,
-    forms: controllers.ProfileForms,
+    forms: ProfileForms,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
     emailPrefsForm: Form[EmailPrefsData],

@@ -1,12 +1,13 @@
-package controllers
+package controllers.editprofile
 
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.{EmailNewsletters, User}
-import play.api.mvc._
 import form.{AccountFormData, UserFormData}
 import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
+import play.api.mvc.{Action, AnyContent, Result}
 import utils.ConsentOrder.userWithOrderedConsents
+
 import scala.concurrent.Future
 
 trait EditProfileFormHandling extends EditProfileControllerComponents {

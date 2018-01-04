@@ -46,25 +46,25 @@ GET         /delete/confirm                         controllers.AccountDeletionC
 ########################################################################################################################
 # EDIT PROFILE
 ########################################################################################################################
-GET         /public/edit                            controllers.EditProfileController.displayPublicProfileForm
-POST        /public/edit                            controllers.EditProfileController.submitPublicProfileForm
+GET         /public/edit                            controllers.editprofile.EditProfileController.displayPublicProfileForm
+POST        /public/edit                            controllers.editprofile.EditProfileController.submitPublicProfileForm
 
-GET         /account/edit                           controllers.EditProfileController.displayAccountForm
-POST        /account/edit                           controllers.EditProfileController.submitAccountForm
+GET         /account/edit                           controllers.editprofile.EditProfileController.displayAccountForm
+POST        /account/edit                           controllers.editprofile.EditProfileController.submitAccountForm
 
-GET         /membership/edit                        controllers.EditProfileController.displayMembershipForm
-GET         /contribution/recurring/edit            controllers.EditProfileController.displayRecurringContributionForm
-GET         /digitalpack/edit                       controllers.EditProfileController.displayDigitalPackForm
+GET         /membership/edit                        controllers.editprofile.EditProfileController.displayMembershipForm
+GET         /contribution/recurring/edit            controllers.editprofile.EditProfileController.displayRecurringContributionForm
+GET         /digitalpack/edit                       controllers.editprofile.EditProfileController.displayDigitalPackForm
 
-GET         /privacy/edit                           controllers.EditProfileController.displayPrivacyFormRedirect(consentsUpdated: Boolean ?= false, consentHint: Option[String])
-POST        /privacy/edit                           controllers.EditProfileController.saveConsentPreferences
-POST        /privacy/edit-ajax                      controllers.EditProfileController.saveConsentPreferencesAjax
+GET         /privacy/edit                           controllers.editprofile.EditProfileController.displayPrivacyFormRedirect(consentsUpdated: Boolean ?= false, consentHint: Option[String])
+POST        /privacy/edit                           controllers.editprofile.EditProfileController.saveConsentPreferences
+POST        /privacy/edit-ajax                      controllers.editprofile.EditProfileController.saveConsentPreferencesAjax
 
-GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
-POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferencesAjax
+GET         /email-prefs                            controllers.editprofile.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
+POST        /email-prefs                            controllers.editprofile.EditProfileController.saveEmailPreferencesAjax
 
-GET         /consents/all                           controllers.EditProfileController.displayConsentsJourneyAll(consentHint: Option[String])
-GET         /consents/newsletters                   controllers.EditProfileController.displayConsentsJourneyNewsletters
-GET         /consents                               controllers.EditProfileController.displayConsentsJourney(consentHint: Option[String])
-POST        /complete-consents                      controllers.EditProfileController.submitRepermissionedFlag
+GET         /consents/all                           controllers.editprofile.EditProfileController.displayConsentsJourneyAll(consentHint: Option[String])
+GET         /consents/newsletters                   controllers.editprofile.EditProfileController.displayConsentsJourneyNewsletters
+GET         /consents                               controllers.editprofile.EditProfileController.displayConsentsJourney(consentHint: Option[String])
+POST        /complete-consents                      controllers.editprofile.EditProfileController.submitRepermissionedFlag
 ########################################################################################################################

@@ -1,4 +1,4 @@
-package controllers
+package controllers.editprofile
 
 import com.gu.identity.model.User
 import form._
