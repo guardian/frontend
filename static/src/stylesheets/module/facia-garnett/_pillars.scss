@@ -104,7 +104,8 @@ $pillars: (
     //this is to make the colour lighter for the media cards
     &.fc-item--audio .fc-item__kicker,
     &.fc-item--gallery .fc-item__kicker,
-    &.fc-item--video .fc-item__kicker
+    &.fc-item--video .fc-item__kicker,
+    &.video-playlist__item .fc-item__kicker
     {
         color: map-get($palette, invertedKicker);
     }
@@ -134,6 +135,15 @@ $pillars: (
     &.fc-item--type-feature .fc-item__headline {
         color: map-get($palette, featureHeadline);
     }
+
+    &.video-playlist__item .video-overlay {
+        border-top-color:  map-get($palette, invertedKicker);
+    }
+
+    &.video-playlist__item .inline-icon {
+        fill: map-get($palette, invertedKicker);
+    }
+
 
     &.fc-item--type-media {
         .inline-video-icon,

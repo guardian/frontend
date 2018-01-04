@@ -7,7 +7,6 @@ $video-width-desktop: 700px;
 
     .gs-container {
         background-color: $media-background;
-        border-top: 1px solid $media-default;
     }
 
     .fc-container__inner {
@@ -69,11 +68,11 @@ $video-width-desktop: 700px;
 
     .treats__treat {
         background-color: transparent;
-        border-color: $media-default;
+        border-color: rgba(255,255,255,.3);
 
         &:hover {
-            border-color: $media-default;
-            background-color: $media-default;
+            border-color: #ffffff;
+            background-color: #ffffff;
             color: $media-background;
         }
     }
@@ -100,7 +99,7 @@ $video-width-desktop: 700px;
 }
 
 .video-title {
-    color: $media-default;
+    color: #ffffff;
     display: block;
     margin-bottom: $gs-baseline;
 
@@ -154,6 +153,10 @@ $video-width-desktop: 700px;
     &::-webkit-scrollbar {
         display: none;
     }
+
+    .video-playlist__item {
+        background-color: $garnett-neutral-1;
+    }
 }
 
 .video-playlist__control {
@@ -169,7 +172,7 @@ $video-width-desktop: 700px;
         cursor: pointer;
 
         &:hover .video-playlist__icon {
-            background-color: $media-default;
+            background-color: $news-garnett-highlight;
 
             svg {
                 fill: $media-background;
@@ -366,7 +369,7 @@ $video-width-desktop: 700px;
     box-sizing: border-box;
     border-top: 1px solid $media-default;
     color: #ffffff;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .9);
     height: gs-height(3);
     margin-bottom: -(get-line-height(textSans, 3) + 4px);
     pointer-events: auto;
@@ -392,16 +395,20 @@ $video-width-desktop: 700px;
 
     .video-overlay__headline {
         @include fs-headline(2);
-        font-weight: 500;
+        font-weight: 400;
 
         @include mq(mobileLandscape) {
             @include fs-headline(3);
-            font-weight: 500;
+            font-weight: 400;
         }
 
         @include mq(desktop) {
             height: get-line-height(headline, 3) * 4;
             overflow: hidden;
+        }
+
+        .fc-item__headline {
+            color: #ffffff;
         }
     }
 

@@ -48,21 +48,13 @@
         right: 0;
     }
 
-    &.fc-item--half-tablet {
-        @include mq($from: tablet) {
-            .u-responsive-ratio {
-                padding-bottom: 100%;
-            }
-        }
-    }
-
     &.fc-item--three-quarters-tall-tablet {
         @include mq($from: tablet) {
             .u-responsive-ratio {
                 padding-bottom: 80%;
             }
         }
-    }  
+    }
 
     &.fc-item--standard-mobile {
         @include mq($from: mobile, $until: tablet) {
@@ -75,12 +67,12 @@
 
 @mixin immersiveLeft() {
     @include immersiveCommon();
-    
+
     .fc-item__content {
         bottom: 0;
         top: 0;
     }
-    
+
 
     .u-responsive-ratio {
         padding-bottom: 45%;
@@ -89,14 +81,14 @@
 
 @mixin immersiveRight() {
     @include immersiveCommon();
-    
+
     .fc-item__content {
         left: auto;
         right: 0;
         bottom: 0;
         top: 0;
     }
-    
+
 
     .u-responsive-ratio {
         padding-bottom: 45%;
@@ -104,7 +96,7 @@
 }
 
 .fc-item--type-immersive {
-    
+
     .fc-item__kicker:before,
     .fc-item__kicker:after {
         content: none;
@@ -133,13 +125,13 @@
             @include immersiveBottom();
         }
     }
-    
+
     &.fc-item--three-quarters-tablet {
         @include mq($from: tablet) {
             @include immersiveLeft();
         }
     }
-    
+
     &.fc-item--three-quarters-right-tablet {
         @include mq($from: tablet) {
             @include immersiveRight();
