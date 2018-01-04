@@ -36,7 +36,7 @@
 
         @containerDefinition.collectionEssentials.items.filter(i => i.header.isVideo).zipWithIndex.map { case (item, index) =>
            <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first}">
-               <h1> @GetClasses.forItem(item, index == 0)</h1>
+               <h1>This is the pillar: @item.maybePillar.getOrElse("")</h1>
                 @item.properties.maybeContent.map { content =>
                     @defining(content.elements.mediaAtoms.find(_.assets.exists(_.platform == MediaAssetPlatform.Youtube))) { youTubeAtom =>
                         @youTubeAtom.map { youTubeAtom =>
