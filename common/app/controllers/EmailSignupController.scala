@@ -79,7 +79,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
   }
 
   def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
-    val identityName = EmailNewsletter(listId).map(_.identityName).getOrElse("")
+    val identityName = EmailNewsletter(listId).map(_.identityName).getOrElse("today-uk")
     Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId, identityName)))
   }
 
