@@ -22,7 +22,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
       consentJourneyRedirectAction.async { implicit request =>
         profileFormsView(
           page = page,
-          forms = ProfileForms(userWithOrderedConsents(request.user, consentHint),PublicEditProfilePage),
+          forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
           request.user,
           consentsUpdated,
           consentHint
