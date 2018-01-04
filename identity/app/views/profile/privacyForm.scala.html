@@ -21,6 +21,18 @@
   consentHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
+@isChannel(consentField: Field) = @{
+    consentField("id").value.exists {
+        id => List("phone", "sms", "post").contains(id)
+    }
+}
+
+@isMarketing(consentField: Field) = @{
+    consentField("id").value.exists {
+        id => List("supporter", "jobs", "holidays", "events", "offers").contains(id)
+    }
+}
+
 @marketingConsentForm = {
     <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
@@ -48,11 +60,14 @@
                     <ul>
                     @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
                         <li>
-                            @if(index == 0) {
-                                @fragments.consentSwitch(consentField, consentHint)(messages)
-                            } else {
-                                @fragments.consentSwitch(consentField)(messages)
+                            @if(isMarketing(consentField)) {
+                                @if(index == 0) {
+                                    @fragments.consentSwitch(consentField, consentHint)(messages)
+                                } else {
+                                    @fragments.consentSwitch(consentField)(messages)
+                                }
                             }
+
                         </li>
                     }
                     </ul>
@@ -76,13 +91,18 @@
 }
 
 @channelConsentForm = {
-    <div class="manage-account__switches">
-        <ul>
-            @communicationChannelsForUser(user).map((channel) =>
-                Html(s"<li>${checkboxName(channel)}</li>")
-            )
-        </ul>
-    </div>
+    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+        @views.html.helper.CSRF.formField
+        <div class="manage-account__switches">
+        @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
+            <li>
+            @if(isChannel(consentField)) {
+                @fragments.consentSwitch(consentField)(messages)
+            }
+            </li>
+        }
+        </div>
+    </form>
 }
 
 @if(consentsUpdated) {
