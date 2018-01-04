@@ -1,13 +1,9 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.gu.identity.model.User
 import form._
-import idapiclient.responses.Error
 import idapiclient.IdApiClient
 import model._
-import play.api.data.Form
-import play.api.i18n.MessagesProvider
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
