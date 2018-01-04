@@ -711,7 +711,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         svg path {
             fill: #fff;
         }
-        background-color: #121212;
+        background-color: $garnett-neutral-1;
         color: #fff;
     }
     .message-button-rounded__cta.purple {
@@ -745,7 +745,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--membership-prominent.yellow {
     @include site-message-dark-text;
-    background-color: #ffe500;
+    background-color: $news-garnett-highlight;
     svg {
         fill: #000000;
     }
