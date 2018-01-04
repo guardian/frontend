@@ -26,20 +26,14 @@ class EditProfileController(
     with EditProfileFormHandling
     with EmailsTab
     with AccountTab
-    with PublicTab {
+    with PublicTab
+    with SupporterTabs {
 
   import authenticatedActions._
 
 
 
-  /** GET /membership/edit */
-  def displayMembershipForm: Action[AnyContent] = displayForm(MembershipEditProfilePage)
 
-  /** GET /contribution/recurring/edit */
-  def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
-
-  /** GET /digitalpack/edit */
-  def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
 
 
 
