@@ -7,10 +7,19 @@
     .menu-group--primary > & {
         @include mq(desktop) {
             float: left;
-            margin-right: $gs-gutter;
             overflow: visible;
-            width: gs-span(2);
-            padding-bottom: $gs-baseline;
+            width: $pillar-width--desktop;
+            padding: 0 $pillar-padding $gs-baseline;
+
+            &:first-child {
+                padding-left: 0;
+            }
+        }
+
+        body:not(.has-page-skin) & {
+            @include mq(leftCol) {
+                width: $pillar-width--leftCol;
+            }
         }
     }
 }
@@ -19,15 +28,16 @@
     background-color: transparent;
     border: 0;
     box-sizing: border-box;
-    color: currentColor;
+    color: $nav-primary-colour;
     cursor: pointer;
     display: inline-block;
     font-size: 20px;
+    font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+    font-weight: 400;
     outline: none;
     padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
     position: relative;
     text-align: left;
-    text-transform: lowercase;
     width: 100%;
 
     @include mq(tablet) {
@@ -35,18 +45,14 @@
     }
 
     @include mq(desktop) {
-        font-size: 16px;
+        font-size: 15px;
         line-height: 1.2;
-        letter-spacing: .3px;
         padding: ($gs-baseline / 2) 0;
-        transition: color 80ms ease-out;
     }
 
     &:hover,
     &:focus {
-        @include mq(desktop) {
-            color: #ffffff;
-        }
+        color: $nav-secondary-colour;
     }
 
     > * {
@@ -58,7 +64,7 @@
     &[data-link-name='nav2 : facebook'] {
         @include mq($until: desktop) {
             &:not([aria-expanded='true']):after {
-                background-color: darken($guardian-brand-dark, 4%);
+                background-color: $rule;
                 bottom: 0;
                 content: '';
                 display: block;
@@ -89,8 +95,10 @@
     // only match the ones, which are not in --secondary
     .menu-group--primary > .menu-item > & {
         font-size: 24px;
-        padding-bottom: 16px;
+        font-weight: 700;
+        padding-bottom: 18px;
         padding-top: $gs-baseline / 2;
+        text-transform: capitalize; //TODO remove this line
 
         @include mq(desktop) {
             font-size: 32px;
@@ -107,28 +115,20 @@
 }
 
 .menu-item--brand-extension {
-    float: left;
-    margin-right: $gs-gutter / 2 + $gs-gutter / 4;
-    padding-bottom: $gs-baseline;
-
-    body:not(.has-page-skin) & {
-        @include mq(leftCol) {
-            float: none;
-            margin-right: 0;
-            margin-top: -$gs-baseline / 2;
-            padding-bottom: 0;
-        }
-    }
+    margin-right: 0;
+    margin-top: -$gs-baseline / 2;
+    padding-bottom: 0;
 }
 
 .menu-item__title--brand-extension {
-    font-size: 22px;
-    line-height: 1.18;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.1;
 }
 
 .menu-item__icon,
 .menu-item__toggle {
-    color: $news-support-2;
+    color: $nav-secondary-colour;
     left: 25px;
     position: absolute;
 

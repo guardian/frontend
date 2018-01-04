@@ -1,0 +1,246 @@
+/* When the menu is open this class is added to the html to prevent users
+from scrolling */
+.nav-is-open {
+    @include mq($until: desktop) {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    // Prevents horizontal scrollbar https://codepen.io/tigt/post/bust-elements-out-of-containers-with-one-line-of-css#oh-no-a-horizontal-scrollbar-6
+    @include mq(desktop) {
+        overflow-x: hidden;
+    }
+}
+
+.new-header {
+    background-color: $nav-background-colour;
+    position: relative;
+    text-transform: capitalize; // TODO change this
+
+    &:not(.new-header--slim) {
+        margin-bottom: 0;
+
+        &:after {
+            @include multiline(4, $garnett-neutral-4, bottom);
+            background-color: #ffffff;
+            content: '';
+            display: block;
+            height: 13px;
+        }
+    }
+
+    @include mq(tablet) {
+        display: block;
+
+        @include mq(desktop) {
+            display: none;
+        }
+    }
+
+    @include mq(desktop) {
+        &.new-header--open {
+            background-color: $nav-background-colour;
+        }
+
+        // Switch: ABNewDesktopHeader
+        &.new-header--mvt-desktop {
+            display: block;
+        }
+    }
+
+    .has-page-skin & .gs-container {
+        @include mq(wide) {
+            width: gs-span(12) + ($gs-gutter * 2);
+        }
+    }
+}
+
+.new-header__inner {
+    @include clearfix();
+}
+
+.new-header__edition-container {
+    position: absolute;
+    top: 0;
+    // Needs to sit above the menu, and the veggie burger
+    z-index: $zindex-main-menu + 2;
+    transform: translateX(100%);
+
+    @include mq(desktop) {
+        right: 120px;
+    }
+
+    @include mq(wide) {
+        right: 200px;
+    }
+}
+
+.new-header__user-account-container {
+    float: left;
+    position: relative;
+    // Needs to sit above the menu, and the veggie burger
+    z-index: $zindex-main-menu + 2;
+}
+
+.new-header__top-bar {
+    left: 0;
+    position: absolute;
+    top: 0;
+}
+
+.new-header__menu-toggle {
+    @include mq($until: desktop) {
+        bottom: -$gs-baseline / 2;
+        position: absolute;
+        right: $gutter-small;
+
+        .new-header--slim & {
+            right: $gs-gutter / 2;
+            top: -$gs-baseline / 2;
+        }
+
+        @include mq(mobileLandscape) {
+            right: $gutter-medium;
+
+            .new-header--slim & {
+                right: $gs-gutter;
+            }
+        }
+
+        @include mq(tablet) {
+            right: $gutter-large;
+        }
+    }
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+.new-header__logo {
+    float: right;
+    margin-bottom: $gs-baseline + $gs-baseline / 4;
+    margin-right: 5px;
+    margin-top: $gs-baseline / 4;
+
+    @include mq(mobileLandscape) {
+        margin-right: 17px;
+    }
+
+    @include mq(desktop) {
+        margin-bottom: -30px;
+        margin-right: 17px;
+        margin-top: 5px;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            margin-bottom: -34px;
+        }
+
+        @include mq(wide) {
+            margin-right: 97px;
+        }
+    }
+
+    .new-header--slim & {
+        position: absolute;
+        margin: 0;
+        right: $veggie-burger-large;
+        top: -$gs-baseline / 2;
+        z-index: 3;
+
+        @include mq(mobileLandscape) {
+            right: $veggie-burger-large + $gs-gutter / 2;
+        }
+
+        @include mq(desktop) {
+            left: gs-span(10) - $gs-gutter + $gs-gutter / 4;
+            right: auto;
+        }
+    }
+
+    body:not(.has-page-skin) .new-header--slim & {
+        margin: 0;
+
+        @include mq(leftCol) {
+            left: gs-span(11) + $gs-gutter + $gs-gutter / 2;
+        }
+
+        @include mq(wide) {
+            left: gs-span(12) + $gs-gutter + $gs-gutter / 2;
+        }
+    }
+
+    .new-header--slim.new-header--open & {
+        @include mq(desktop) {
+            z-index: $zindex-main-menu + 2;
+        }
+    }
+}
+
+.inline-the-guardian-roundel__svg {
+    height: $veggie-burger-large;
+    width: $veggie-burger-large;
+}
+
+.inline-the-guardian-logo { // TODO remove this in the future
+    display: block !important;
+}
+
+.new-header--slim {
+    .inline-the-guardian-roundel { // TODO remove/improve this in the future
+        display: block !important;
+    }
+
+    .inline-the-guardian-logo { // TODO remove this in the future
+        display: none !important;
+    }
+}
+
+.inline-the-guardian-logo__svg {
+    display: block;
+    height: 57px;
+    width: 175px;
+
+    @include mq(mobileMedium) {
+        height: 52px;
+        width: 164px;
+    }
+
+    @include mq(tablet) {
+        height: 74px;
+        width: 224px;
+    }
+
+    @include mq(desktop) {
+        height: 82px;
+        width: 249px;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            height: 97px;
+            width: 295px;
+        }
+    }
+}
+
+.new-header--slim {
+    border-bottom: 1px solid $rule;
+    height: $slim-nav-height;
+}
+
+
+.new-header .popup--search {
+    background-color: #ffffff;
+    border-radius: $gs-baseline / 4;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
+    padding: $gs-baseline 0;
+    top: $gs-baseline * 2 + $gs-baseline / 2;
+}
+
+// Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
+x:-o-prefocus, .new-header__cta-container  {
+    display: none;
+}
