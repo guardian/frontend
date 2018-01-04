@@ -15,6 +15,7 @@ from scrolling */
 .new-header {
     background-color: $guardian-brand;
     position: relative;
+    text-transform: lowercase;
 
     @include mq(tablet) {
         display: block;
