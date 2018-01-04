@@ -7,7 +7,6 @@ import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
 import play.api.mvc.{Action, AnyContent, Result}
 import utils.ConsentOrder.userWithOrderedConsents
-
 import scala.concurrent.Future
 
 trait EditProfileFormHandling extends EditProfileControllerComponents {

@@ -13,7 +13,6 @@ import play.api.data.Forms.{nonEmptyText, single}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Result}
 import utils.ConsentOrder.userWithOrderedConsents
-
 import scala.concurrent.Future
 
 trait EmailsTab

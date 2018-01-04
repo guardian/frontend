@@ -24,11 +24,11 @@ class EditProfileController(
     val httpConfiguration: HttpConfiguration,
     override implicit val context: ApplicationContext)
 
-  extends EditProfileControllerComponents
-  with EditProfileFormHandling
-  with EmailsTab
-  with AccountTab
-  with PublicTab
-  with SupporterTabs
+    extends EditProfileControllerComponents
+    with EditProfileFormHandling
+    with EmailsTab
+    with AccountTab
+    with PublicTab
+    with SupporterTabs
 
 
