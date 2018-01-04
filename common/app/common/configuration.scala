@@ -306,7 +306,6 @@ class GuardianConfiguration extends Logging {
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
     lazy val accountDeletionApiKey = configuration.getStringProperty("id.accountDeletion.apiKey").getOrElse("")
     lazy val accountDeletionApiRoot = configuration.getStringProperty("id.accountDeletion.apiRoot").getOrElse("")
-    lazy val consentEmailerApi = configuration.getMandatoryStringProperty("id.consentEmailerApi")
   }
 
   object images {
