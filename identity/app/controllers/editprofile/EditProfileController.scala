@@ -1,6 +1,7 @@
 package controllers.editprofile
 
 import actions.AuthenticatedActions
+import controllers.editprofile.tabs.{AccountTab, EmailsTab, PublicTab, SupporterTabs}
 import form._
 import idapiclient.IdApiClient
 import model._

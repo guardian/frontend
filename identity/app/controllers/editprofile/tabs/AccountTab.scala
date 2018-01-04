@@ -1,5 +1,6 @@
-package controllers.editprofile
+package controllers.editprofile.tabs
 
+import controllers.editprofile.{AccountEditProfilePage, EditProfileControllerComponents, EditProfileFormHandling}
 import play.api.mvc.{Action, AnyContent}
 
 trait AccountTab

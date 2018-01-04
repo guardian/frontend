@@ -1,17 +1,19 @@
-package controllers.editprofile
+package controllers.editprofile.tabs
 
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
 import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
+import controllers.editprofile._
 import form.PrivacyFormData
 import idapiclient.UserUpdateDTO
 import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
 import play.api.data.Form
-import play.api.data.Forms.{single, nonEmptyText}
+import play.api.data.Forms.{nonEmptyText, single}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Result}
 import utils.ConsentOrder.userWithOrderedConsents
+
 import scala.concurrent.Future
 
 trait EmailsTab

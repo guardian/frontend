@@ -1,5 +1,6 @@
-package controllers.editprofile
+package controllers.editprofile.tabs
 
+import controllers.editprofile._
 import play.api.mvc.{Action, AnyContent}
 
 /**

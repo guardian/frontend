@@ -1,5 +1,6 @@
-package controllers.editprofile
+package controllers.editprofile.tabs
 
+import controllers.editprofile.{EditProfileControllerComponents, EditProfileFormHandling, PublicEditProfilePage}
 import play.api.mvc.{Action, AnyContent}
 
 trait PublicTab
