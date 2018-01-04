@@ -10,10 +10,11 @@ import domready from 'domready';
 import raven from 'lib/raven';
 import { bootStandard } from 'bootstraps/standard/main';
 import config from 'lib/config';
+import { getTestVariantId } from 'common/modules/experiments/utils';
 import { markTime } from 'lib/user-timing';
 import { capturePerfTimings } from 'lib/capture-perf-timings';
 
-// let webpack know where to get files from
+// Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
 // https://webpack.js.org/guides/public-path/#set-value-on-the-fly
 // eslint-disable-next-line camelcase,no-undef
@@ -40,48 +41,82 @@ const go = () => {
         }
 
         markTime('commercial request');
-        require.ensure(
-            [],
-            // webpack needs the require function to be called 'require'
-            // eslint-disable-next-line no-shadow
-            require => {
-                raven.context({ tags: { feature: 'commercial' } }, () => {
-                    markTime('commercial boot');
-                    const commercialBoot = config.switches.commercial
-                        ? require('bootstraps/commercial')
-                        : Promise.resolve;
+        let commercialBoot = Promise.resolve;
 
-                    commercialBoot().then(() => {
-                        // 3. finally, try enhanced
-                        // this is defined here so that webpack's code-splitting algo
-                        // excludes all the modules bundled in the commercial chunk from this one
-                        if (window.guardian.isEnhanced) {
-                            markTime('enhanced request');
-                            require.ensure(
-                                [],
-                                // webpack needs the require function to be called 'require'
-                                // eslint-disable-next-line no-shadow
-                                require => {
-                                    markTime('enhanced boot');
-                                    require('bootstraps/enhanced/main').bootEnhanced();
-
-                                    if (document.readyState === 'complete') {
-                                        capturePerfTimings();
-                                    } else {
-                                        window.addEventListener(
-                                            'load',
-                                            capturePerfTimings
-                                        );
+        if (config.switches.commercial) {
+            commercialBoot = () =>
+                new Promise(resolve => {
+                    if (
+                        getTestVariantId('CommercialStackFreeze') === 'frozen'
+                    ) {
+                        require.ensure(
+                            [],
+                            // webpack needs the require function to be called 'require'
+                            // eslint-disable-next-line no-shadow
+                            require => {
+                                raven.context(
+                                    { tags: { feature: 'commercial-legacy' } },
+                                    () => {
+                                        markTime('commercial boot');
+                                        require(`bootstraps/commercial-legacy`)();
                                     }
-                                },
-                                'enhanced'
-                            );
-                        }
-                    });
+                                );
+                            },
+                            'commercial-legacy'
+                        );
+                    } else {
+                        require.ensure(
+                            [],
+                            // eslint-disable-next-line no-shadow
+                            require => {
+                                raven.context(
+                                    { tags: { feature: 'commercial' } },
+                                    () => {
+                                        markTime('commercial boot');
+                                        require(`bootstraps/commercial`)();
+                                    }
+                                );
+                            },
+                            'commercial'
+                        );
+                    }
+                    resolve();
                 });
-            },
-            'commercial'
-        );
+        }
+
+        // 3. finally, try enhanced
+        // this is defined here so that webpack's code-splitting also
+        // excludes all the modules bundled in the commercial chunk from this one
+
+        let enhancedBoot = Promise.resolve;
+        if (window.guardian.isEnhanced) {
+            enhancedBoot = () =>
+                new Promise(resolve => {
+                    markTime('enhanced request');
+                    require.ensure(
+                        [],
+                        // webpack needs the require function to be called 'require'
+                        // eslint-disable-next-line no-shadow
+                        require => {
+                            markTime('enhanced boot');
+                            require('bootstraps/enhanced/main').bootEnhanced();
+
+                            if (document.readyState === 'complete') {
+                                capturePerfTimings();
+                            } else {
+                                window.addEventListener(
+                                    'load',
+                                    capturePerfTimings
+                                );
+                            }
+                            resolve();
+                        },
+                        'enhanced'
+                    );
+                });
+        }
+
+        commercialBoot().then(enhancedBoot);
     });
 };
 
