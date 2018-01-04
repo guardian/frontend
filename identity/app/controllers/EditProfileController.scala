@@ -22,15 +22,15 @@ class EditProfileController(
     override val newsletterService: NewsletterService,
     val httpConfiguration: HttpConfiguration,
     override implicit val context: ApplicationContext)
-  extends EditProfileControllerComponents
-  with EditProfileFormHandling
-  with EmailsTab
-  with AccountTab {
+    extends EditProfileControllerComponents
+    with EditProfileFormHandling
+    with EmailsTab
+    with AccountTab
+    with PublicTab {
 
   import authenticatedActions._
 
-  /** GET /public/edit */
-  def displayPublicProfileForm: Action[AnyContent] = displayForm(PublicEditProfilePage)
+
 
   /** GET /membership/edit */
   def displayMembershipForm: Action[AnyContent] = displayForm(MembershipEditProfilePage)
@@ -41,8 +41,7 @@ class EditProfileController(
   /** GET /digitalpack/edit */
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
 
-  /** POST /public/edit */
-  def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
+
 
 
 
