@@ -298,17 +298,6 @@
         display: block;
     }
 
-    @include mq(desktop) {
-        &:hover,
-        .article__img-container:hover & {
-            background-color: $media-default;
-
-            &.inline-expand-image {
-                fill: #000000;
-            }
-        }
-    }
-
     @if $old-ie {
         display: none;
     }
