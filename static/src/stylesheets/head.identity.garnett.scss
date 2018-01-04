@@ -7,13 +7,6 @@
 @import '_head.common';
 
 
-
-/* ==========================================================================
-   Identity overrides
-   ========================================================================== */
-$identity-main: #567681;
-
-
 /* ==========================================================================
    Identity core
    ========================================================================== */
@@ -23,8 +16,9 @@ $identity-main: #567681;
 
 @import 'module/identity/_identity';
 
-@import 'module/identity/_header.garnett';
+@import 'module/identity/_header';
 @import 'module/identity/_forms';
+
 @import 'module/identity/_manage-account-tab';
 @import 'module/identity/_formstack';
 @import 'module/identity/_dropdown';
