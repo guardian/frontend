@@ -1082,6 +1082,14 @@ $quote-mark: 35px;
     }
     // *************** Gallery overrides ***************
     &.content--gallery {
+        .meta__twitter {
+            margin-top: $gs-baseline / 2;
+            .button:hover,
+            .button:focus {
+                border-width: 0;
+            }
+        }
+
         .content__dateline {
             background-image: none;
         }
@@ -1090,15 +1098,18 @@ $quote-mark: 35px;
             border: 0;
         }
 
-        .gallery__meta-container,
         .meta__numbers,
         .meta__social {
             background-image: none;
             padding-top: 0;
-
+            
             &::before {
                 content: none;
             }
+        }
+
+        .gallery__meta-container {
+            background-image: none;
         }
 
         .gallery:before,

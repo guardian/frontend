@@ -8,21 +8,6 @@
     left: 0;
 }
 
-.gallery__meta-container {
-    &:before {
-        content: '';
-        border-top: 1px solid $media-mute;
-        padding-top: $gs-baseline / 4;
-        display: block;
-        width: gs-span(1);
-    }
-
-    .meta__twitter .button,
-    .meta__email .button {
-        margin-top: -$gs-baseline/2;
-    }
-}
-
 .gallery__divider {
     border-top: 1px solid $media-mute;
 
