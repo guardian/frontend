@@ -190,6 +190,10 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__header {
     flex: 1 1 auto;
     font-weight: 400;
+
+    .fc-item--has-boosted-title & {
+        font-weight: 900;
+    }
 }
 
 .fc-item__kicker {
