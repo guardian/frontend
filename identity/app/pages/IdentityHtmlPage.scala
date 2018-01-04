@@ -48,7 +48,11 @@ object IdentityHtmlPage {
         views.html.layout.identityHeader(hideNavigation=page.isFlow),
         content,
         inlineJSNonBlocking(),
-        footer() when !page.isFlow,
+        if(page.isFlow){
+          views.html.layout.identitySkinnyFooter()
+        } else {
+          footer()
+        },
         analytics.base()
       ),
       devTakeShot()
