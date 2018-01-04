@@ -275,11 +275,11 @@
     transition: transform .4s cubic-bezier(.23, 1, .32, 1);
 }
 // Create single and multiline rules across the site
-@mixin multiline($number) {
-    content: '';
-    display: block;
-    width: 100%;
-    margin-bottom: $gs-baseline/4;
-    background-image: repeating-linear-gradient($garnett-neutral-4, $garnett-neutral-4 1px, #ffffff 1px, #ffffff 4px);
-    height: $number * 4px;
+@mixin multiline($number, $color, $position: bottom) {
+    $bgSize: $number * 4 - 3;
+
+    background-image: repeating-linear-gradient(to bottom, $color, $color 1px, transparent 1px, transparent 4px);
+    background-repeat: repeat-x;
+    background-position: $position;
+    background-size: 1px #{$bgSize}px;
 }

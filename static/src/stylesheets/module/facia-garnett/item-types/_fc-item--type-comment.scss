@@ -1,0 +1,267 @@
+@mixin comment-avatar($size) {
+    .fc-item__avatar {
+        border-radius: 50%;
+        right: $gs-gutter * .5;
+        bottom: $gs-baseline / 2;
+        overflow: hidden;
+        height: gs-height($size);
+        width: gs-height($size);
+    }
+
+    .fc-item__avatar__media {
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        height: gs-height($size);
+        left: 0 - ($gs-gutter * ($size / 6));
+    }
+}
+
+.fc-item--type-comment {
+    .fc-item__standfirst-wrapper {
+        .fc-item__meta {
+            display: none;
+        }
+    }
+
+    .fc-item__container {
+        padding-bottom: $gs-gutter;
+    }
+
+    .fc-item__container > .fc-item__meta {
+        @include multiline(4, $garnett-neutral-4);
+
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 16px;
+
+        .fc-trail__count,
+        .fc-item__timestamp {
+            position: absolute;
+            padding-top: 2px;
+            padding-right: $gs-gutter * .25;
+            padding-left: $gs-gutter * .25;
+            bottom: 0;
+            top: 0;
+            z-index: 1;
+            line-height: 10px;
+        }
+
+        .fc-trail__count {
+            right: 0;
+
+            .inline-icon {
+                margin-top: 0;
+            }
+        }
+
+        .fc-item__timestamp {
+            left: 0;
+
+            .inline-icon {
+                margin-top: -1px;
+            }
+        }
+    }
+
+    &:not(.fc-item--has-cutout) {
+        &.fc-item--three-quarters-tablet,
+        &.fc-item--three-quarters-right-tablet,
+        &.fc-item--full-media-50-tablet,
+        &.fc-item--full-media-75-tablet,
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--fluid-tablet {
+            @include mq(tablet) {
+                .fc-item__container > .fc-item__meta {
+                    .fc-trail__count--commentcount {
+                        display: none;
+                    }
+                }
+
+                .fc-item__standfirst-wrapper {
+                    .fc-item__meta {
+                        display: flex;
+                    }
+                }
+            }
+        }
+    }
+
+    &.fc-item--has-cutout {
+        &.fc-item--standard-mobile {
+            @include mq($until: tablet) {
+                @include comment-avatar(2.4);
+
+                .fc-item__content {
+                    min-height: gs-span(1.5) + $gs-baseline * 1.75;
+                }
+
+                .fc-item__header {
+                    padding-right: gs-span(1.5) + $gs-gutter * .5;
+                }
+            }
+        }
+
+        &.fc-item--standard-tablet {
+            @include mq(tablet) {
+                @include comment-avatar(2.5);
+            }
+            @include mq(desktop) {
+                @include comment-avatar(3);
+            }
+        }
+
+        &.fc-item--third-tablet {
+            @include mq(tablet) {
+                @include comment-avatar(3);
+
+                .fc-item__standfirst-wrapper {
+                    padding-right: gs-height(3.5);
+                }
+            }
+        }
+
+        &.fc-item--list-media-mobile {
+            @include mq($until: tablet) {
+                @include comment-avatar(2);
+
+                .fc-item__content {
+                    min-height: gs-span(1.5);
+                }
+
+                .fc-item__footer--horizontal {
+                    .fc-sublink:first-child {
+                        .fc-sublink__title:before {
+                            left: 0;
+                            width: 40%;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.fc-item--list-media-tablet {
+            @include mq(tablet) {
+                @include comment-avatar(1.75);
+
+                .fc-item__container {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .fc-item__header {
+                    padding-right: $gs-gutter;
+                }
+
+                .fc-item__content {
+                    min-height: gs-height(2);
+                }
+
+                .fc-item__footer--horizontal {
+                    .fc-sublink:first-child {
+                        .fc-sublink__title:before {
+                            left: 0;
+                            width: 40%;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.fc-item--half-tablet {
+            @include mq(tablet) {
+                @include comment-avatar(3.5);
+            }
+            @include mq(desktop) {
+                @include comment-avatar(4);
+            }
+        }
+
+        &.fc-item--three-quarters-tablet,
+        &.fc-item--three-quarters-right-tablet {
+            @include mq(tablet) {
+                @include comment-avatar(5);
+
+                .fc-item__header {
+                    padding-bottom: 0;
+                }
+            }
+            @include mq(desktop) {
+                @include comment-avatar(5.5);
+            }
+        }
+
+        &.fc-item--three-quarters-tablet {
+            @include mq(tablet) {
+                .fc-item__header,
+                .fc-item__footer--vertical,
+                .fc-item__standfirst-wrapper {
+                    width: auto;
+                    padding-right: gs-span(4.5);
+
+                    @include mq(desktop) {
+                        padding-right: gs-span(6) + $gs-gutter;
+                    }
+                }
+            }
+        }
+
+        &.fc-item--three-quarters-right-tablet {
+            @include mq(tablet) {
+                .fc-item__avatar {
+                    left: $gs-gutter * .5;
+                }
+
+                .fc-item__header,
+                .fc-item__footer--vertical,
+                .fc-item__standfirst-wrapper {
+                    width: auto;
+                    padding-right: 0;
+                    padding-left: gs-span(3.5);
+
+                    @include mq(desktop) {
+                        padding-right: 0;
+                        padding-left: gs-span(6) + $gs-gutter;
+                    }
+                }
+            }
+        }
+
+        &.fc-item--full-media-50-tablet,
+        &.fc-item--full-media-75-tablet,
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--fluid-tablet {
+            @include mq(tablet) {
+                @include comment-avatar(5);
+
+                .fc-item__header {
+                    width: auto;
+                    padding-right: gs-span(2.5) - $gs-gutter;
+
+                    @include mq(desktop) {
+                        padding-right: gs-span(3);
+                    }
+                }
+
+                .fc-item__footer--vertical,
+                .fc-item__standfirst-wrapper {
+                    width: auto;
+                    padding-right: gs-span(4.5);
+
+                    @include mq(desktop) {
+                        padding-right: gs-span(6) + $gs-gutter;
+                    }
+                }
+            }
+        }
+    }
+
+    // if pillar news we override news pallete with opinion palette for comment cards
+    &.fc-item--pillar-news {
+        @include colours(map-get($pillars, opinion));
+    }
+}

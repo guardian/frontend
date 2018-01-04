@@ -21,11 +21,11 @@ class FormstackController(
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with SafeLogging {
 
-  import authenticatedActions.authAction
+  import authenticatedActions.fullAuthAction
 
   val page = IdentityPage("/form", "Form")
 
-  def formstackForm(formReference: String, composer: Boolean): Action[AnyContent] = authAction.async { implicit request =>
+  def formstackForm(formReference: String, composer: Boolean): Action[AnyContent] = fullAuthAction.async { implicit request =>
     if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
       FormstackForm.extractFromSlug(formReference).map { formstackForm =>
         formStackApi.checkForm(formstackForm).map {

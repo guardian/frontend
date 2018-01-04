@@ -55,7 +55,7 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
 
   it should "not decode encoded urls" in {
     val result = archiveController.lookup("/foo/%2Cfoo")(TestRequest())
-    status(result) should be (404)
+    status(result) should be(404)
 
     val combinerPattern = archiveController.lookup("/foo+foo+foo")(TestRequest())
     status(combinerPattern) should be (404)

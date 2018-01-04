@@ -1,0 +1,103 @@
+.right-most-popular {
+    clear: left;
+}
+
+.right-most-popular__heading {
+    @include multiline(4, $garnett-neutral-4, top);
+    border-top: 0;
+    padding-top: $gs-baseline*1.2;
+    padding-bottom: $gs-baseline/1.5;
+}
+
+.right-most-popular-item {
+    clear: left;
+    padding-top: $gs-baseline/3;
+    margin-bottom: $gs-baseline;
+
+    border-top: 1px solid $neutral-4;
+    &:first-child {
+        padding-top: 0;
+        border-top: 0;
+    }
+}
+
+.right-most-popular-item__headline {
+    @include fs-headline(2);
+    @include text-clamp(4);
+    color: $neutral-1;
+    margin-bottom: 0;
+}
+
+.right-most-popular__kicker {
+    color: $news-garnett-main-1;
+}
+
+.right-most-popular__byline {
+    @include fs-headline(2);
+    font-style: italic;
+}
+
+@each $pillar, $palette in (
+news: $news-garnett-feature,
+opinion: $opinion-garnett-main-1,
+sport: $sport-garnett-main-1,
+arts: $arts-garnett-main-1,
+lifestyle: $lifestyle-garnett-main-1
+) {
+    .right-most-popular__byline--#{$pillar} {
+        color: $palette;
+    }
+}
+
+.right-most-popular-item__url {
+    &:hover,
+    &:active,
+    &:focus {
+        color: $neutral-1;
+        text-decoration: underline;
+    }
+
+    &:visited,
+    &:active {
+        .right-most-popular-item__headline {
+            color: $neutral-2;
+        }
+    }
+}
+
+.right-most-popular--image {
+    .right-most-popular-item {
+        position: relative;
+    }
+
+    .right-most-popular-item__img {
+        width: $gs-baseline*6;
+        height: $gs-baseline*6;
+        padding-top: 3px;
+        margin-right: $gs-gutter/2;
+        overflow: hidden;
+        position: relative;
+
+        img {
+            position: absolute;
+            width: auto;
+            height: $gs-baseline*6;
+            left: 0 - ($gs-baseline*2);
+            clip-path: circle(36% at 50% 50%);
+        }
+    }
+
+    .trail__count {
+        bottom: -4px;
+        top: auto;
+        left: $gs-column-width*2 + $gs-gutter/2;
+
+        a {
+            @include fs-textSans(2, true);
+        }
+    }
+}
+
+.right-most-popular__content {
+    margin-left: ($gs-baseline*6) + ($gs-gutter/2);
+}

@@ -14,8 +14,6 @@ import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicTestimonialsGroup } from 'common/modules/experiments/tests/acquisitions-epic-testimonials-group';
-import { acquisitionsEpicEndOfYearCountdown } from 'common/modules/experiments/tests/acquisitions-epic-end-of-year-countdown';
-import { acquisitionsEpicSplitCtaReferrer } from 'common/modules/experiments/tests/acquisitions-epic-split-cta-referrer';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -23,8 +21,6 @@ import { acquisitionsEpicSplitCtaReferrer } from 'common/modules/experiments/tes
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
     acquisitionsEpicUSGunCampaign,
-    acquisitionsEpicSplitCtaReferrer,
-    acquisitionsEpicEndOfYearCountdown,
     acquisitionsEpicTestimonialsGroup,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,

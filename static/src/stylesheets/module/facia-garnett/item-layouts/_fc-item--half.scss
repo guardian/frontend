@@ -28,10 +28,12 @@ x x x x x x x x x x x x x x x x x x
 @mixin fc-item--half {
     .fc-item__header {
         @include fs-headline(4, true);
+        @include fs-headline-quote(4);
         @include headline-boost(5);
 
         @include mq(tablet, desktop) {
             @include fs-headline(3, true);
+            @include fs-headline-quote(3);
             @include headline-boost(4);
         }
     }
@@ -40,23 +42,27 @@ x x x x x x x x x x x x x x x x x x
         display: block;
     }
 
-    &[class*='fc-item--has-sublinks'] {
-        .fc-item__standfirst {
-            display: none;
-        }
-
-        &:not(.fc-item--has-cutout),
-        &:not(.fc-item--has-sublinks-1) {
-            @include fc-sublinks--below;
-        }
-    }
-
     &.fc-item--has-cutout {
+        @include avatar(5);
+
+        @include mq(desktop) {
+            @include avatar(6);
+        }
+
         .fc-item__header {
-            padding-bottom: gs-height(2) + $gs-baseline * 2;
+            padding-bottom: gs-height(5);
 
             @include mq(desktop) {
-                padding-bottom: gs-height(4.5);
+                padding-bottom: gs-height(6);
+            }
+        }
+
+        .fc-item__footer--vertical,
+        .fc-item__standfirst-wrapper {
+            padding-right: gs-height(4);
+
+            @include mq(desktop) {
+                padding-right: gs-height(4.5);
             }
         }
 
@@ -65,28 +71,35 @@ x x x x x x x x x x x x x x x x x x
             display: block;
         }
 
-        .fc-item__standfirst-wrapper {
-            padding-right: gs-span(2) + $gs-gutter * 2;
+        &[class*='fc-item--has-sublinks']:not(.fc-item--has-sublinks-1) {
+            .fc-item__header {
+                padding-bottom: gs-height(2) + $gs-baseline * 2;
+    
+                @include mq(desktop) {
+                    padding-bottom: gs-height(4.6);
+                }
+            }
 
-            @include mq(desktop) {
-                padding-right: gs-span(3.5);
+            &:not(.fc-item--type-comment) {
+                .fc-sublink {
+                    margin-top: 0;
+        
+                    .fc-sublink__title {                
+                        &:before {
+                            width: auto;
+                            left: 0 - $fc-item-gutter;
+                            right: 0 - $fc-item-gutter;
+                        }
+                    }
+                }
             }
         }
-    }
+     }
 
-    .fc-item__avatar {
-        height: gs-height(7);
-    }
-
-    .fc-item__avatar {
-        height: gs-height(5);
-
-        @include mq(desktop) {
-            height: gs-height(6);
+    &[class*='fc-item--has-sublinks'] {
+        &:not(.fc-item--has-cutout),
+        &:not(.fc-item--has-sublinks-1) {
+            @include fc-sublinks--below;
         }
-    }
-
-    .fc-item__avatar__media {
-        right: -15%;
     }
 }

@@ -32,7 +32,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
   when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
-  when(authenticationService.requestPresentsAuthenticationCredentials(MockitoMatchers.any[Request[_]])) thenReturn true
+  when(authenticationService.userIsFullyAuthenticated(MockitoMatchers.any[Request[_]])) thenReturn true
   when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
 
   val controller = new EmailVerificationController(

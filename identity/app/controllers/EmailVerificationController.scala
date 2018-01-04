@@ -1,12 +1,17 @@
 package controllers
 
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import java.net.URLEncoder
+
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, Result}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
+import conf.switches.Switches.IdentityPointToConsentJourneyPage
+import pages.IdentityHtmlPage
+
 
 class EmailVerificationController(api: IdApiClient,
   authenticatedActions: AuthenticatedActions,
@@ -19,7 +24,7 @@ class EmailVerificationController(api: IdApiClient,
   extends BaseController with ImplicitControllerExecutionContext with SafeLogging {
 
   import ValidationState._
-  import authenticatedActions.authActionWithUser
+  import authenticatedActions.fullAuthWithIdapiUserAction
 
   val page = IdentityPage("/verify-email", "Verify Email")
 
@@ -39,19 +44,27 @@ class EmailVerificationController(api: IdApiClient,
 
             case Right(ok) => validated
           }
-          val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
+          val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
           val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
           val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
+          val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
 
-          Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))
+          if(validationState.isExpired || IdentityPointToConsentJourneyPage.isSwitchedOff) {
+            Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))
+          } else {
+            SeeOther(idUrlBuilder.buildUrl(s"/consents?returnUrl=${encodedReturnUrl}"))
+          }
       }
   }
 
-  def resendEmailValidationEmail(): Action[AnyContent] = authActionWithUser.async {
+  def resendEmailValidationEmail(isRepermissioningRedirect: Boolean): Action[AnyContent] = fullAuthWithIdapiUserAction.async {
     implicit request =>
       val idRequest = idRequestParser(request)
+      val customMessage = if (isRepermissioningRedirect) Some("You must verify your email to continue.") else None
       api.resendEmailValidationEmail(request.user.auth, idRequest.trackingData).map { _ =>
-        Ok(views.html.verificationEmailResent(request.user, page, idRequest, idUrlBuilder))
+        Ok(
+          IdentityHtmlPage.html(views.html.verificationEmailResent(request.user, idRequest, idUrlBuilder, customMessage))(page, request, context)
+        )
       }
   }
 }

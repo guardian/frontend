@@ -66,9 +66,11 @@ module.exports = {
                                 );
 
                                 error.stdout += `\n${chalk.red(
-                                    `✋ Linting failed. You can attempt to fix lint errors by running ${chalk.underline(
-                                        'make fix-commits'
-                                    )}.\nYour changes have not been pushed`
+                                    `✋  Your changes have not been pushed.\n${chalk.reset(
+                                        `You may be able to fix things by running ${chalk.dim(
+                                            'make fix-commits'
+                                        )}.`
+                                    )}`
                                 )}`;
 
                                 return Promise.reject(error);

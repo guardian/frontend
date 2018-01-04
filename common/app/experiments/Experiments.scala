@@ -10,7 +10,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     ABNewDesktopHeader,
-    Garnett
+    Garnett,
+    HideShowMoreButtonExperiment
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -48,9 +49,17 @@ object CommercialPaidContentTemplate extends Experiment(
 object ABNewDesktopHeader extends Experiment(
   name = "ab-new-desktop-header",
   description = "Users in this experiment will see the new desktop design.",
-  owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-  sellByDate = new LocalDate(2018, 1, 10),
+  owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("zeftilldeath")),
+  sellByDate = new LocalDate(2018, 2, 1),
   participationGroup = Perc20A
+)
+
+object GarnettHeader extends Experiment(
+  name = "garnett-header",
+  description = "Users in this experiment will see the new desktop design, but with garnett styling",
+  owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("zeftilldeath")),
+  sellByDate = new LocalDate(2018, 2, 1),
+  participationGroup = Perc0A
 )
 
 object Garnett extends Experiment(
@@ -59,4 +68,12 @@ object Garnett extends Experiment(
   owners = Seq(Owner.withName("dotcom.platform")),
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup= Perc0C
+)
+
+object HideShowMoreButtonExperiment extends Experiment(
+  name = "remove-show-more-ab",
+  description = "Users in this experiment will not see the show more button on front collections",
+  owners = Seq(Owner.withGithub("Quarpt")),
+  sellByDate = new LocalDate(2018, 2, 1),
+  participationGroup = Perc5A
 )

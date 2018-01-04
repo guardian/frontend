@@ -27,7 +27,9 @@
     }
 
     @if(!(item.content.isGallery || item.content.isImmersive)) {
+
         @if(!item.content.hasTonalHeaderByline) {
+            <div class="meta__contact-wrap">
             @byline()
         }
 
@@ -38,6 +40,9 @@
                 <p class="meta__contact-header">Contact author</p>
             }
             @fragments.meta.contactAuthor(item.tags, amp)
+        }
+        @if(!item.content.hasTonalHeaderByline) {
+        </div>
         }
     }
 

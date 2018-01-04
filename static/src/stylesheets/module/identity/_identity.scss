@@ -1,3 +1,7 @@
+/* Variables
+   ========================================================================== */
+$identity-header-height: 48px;
+
 /* Identity and registration
    ========================================================================== */
 .l-header--identity {
@@ -54,7 +58,7 @@
     margin-right: auto;
     max-width: gs-span(6);
     padding-bottom: $gs-baseline*4;
-    padding-top: $gs-baseline*4;
+    padding-top: $gs-baseline * 2;
 
     &.identity-wrapper--with-wizard {
         padding-bottom: 0;
@@ -69,7 +73,7 @@
     max-width: gs-span(16);
 }
 
-.identity-header {
+.identity-layout__header {
     @include mq(tablet) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
@@ -112,6 +116,24 @@
         @include fs-headline(6, $size-only: true);
     }
 }
+
+.identity-title--small {
+    @include fs-headline(3);
+    @include mq(desktop) {
+        @include fs-headline(3, true);
+        font-weight: 500;
+    }
+}
+
+.identity-title--page-title {
+    margin-bottom: $gs-baseline * 2;
+}
+
+.identity-title-explainer {
+    @include fs-bodyCopy(1);
+    margin-top: $gs-baseline;
+}
+
 .identity-title--public-profile {
     @include mq(desktop) {
         float: left;
@@ -339,9 +361,6 @@
 
 /* Email subscriptions
    ========================================================================== */
-.email-subscriptions {
-    margin-top: $gs-baseline*2;
-}
 .email-subscription {
     border-top: 1px solid $neutral-5;
     margin-bottom: $gs-baseline*2;
@@ -364,6 +383,7 @@
 .dropdown--email-subscription {
     .dropdown__label {
         @include fs-bodyHeading(3);
+        text-transform: lowercase;
     }
     .dropdown__content {
         padding-bottom: 2em;
