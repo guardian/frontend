@@ -1,9 +1,6 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
-import debounce from 'lodash/functions/debounce';
-import { scrollTo } from 'lib/scroller';
 
 import loadEnhancers from './modules/loadEnhancers';
 import { newsletterCheckboxClassName } from './consents';
@@ -49,13 +46,50 @@ const updateCounterIndicator = (
         );
     });
 
+const showOrHideBackButtonEl = (
+    buttonBackEl: HTMLElement,
+    position: number
+) => {
+    const displayButtonBack = position > 0;
+    return fastdom.write(() => {
+        buttonBackEl.setAttribute(
+            'aria-hidden',
+            (!displayButtonBack).toString()
+        );
+        if (displayButtonBack) {
+            buttonBackEl.removeAttribute('disabled');
+        } else {
+            buttonBackEl.setAttribute('disabled', 'disabled');
+        }
+        buttonBackEl.classList.toggle(
+            'identity-consent-wizard__revealable--visible',
+            displayButtonBack
+        );
+    });
+};
+
+const showOrHideEmailCounter = (
+    emailCounterEl: HTMLElement,
+    positionName: string
+) => {
+    const displayCounter = positionName === positions.email;
+    return fastdom.write(() => {
+        emailCounterEl.setAttribute(
+            'aria-hidden',
+            (!displayCounter).toString()
+        );
+        emailCounterEl.classList.toggle(
+            'identity-consent-wizard__revealable--visible',
+            displayCounter
+        );
+    });
+};
+
 const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
     window.addEventListener(wizardPageChangedEv, ev => {
         if (ev.target === wizardEl) {
             fastdom
                 .read(() => [
-                    wizardEl.getElementsByClassName('identity-wizard__step')
-                        .length,
                     [
                         ...document.getElementsByClassName(
                             'identity-consent-wizard-counter'
@@ -67,48 +101,17 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                         ),
                     ][0],
                 ])
-                .then(
-                    (
-                        [
-                            stepCount: number,
-                            counterEl: HTMLElement,
-                            buttonBackEl: HTMLElement,
-                        ]
-                    ) =>
-                        fastdom.write(() => {
-                            if (stepCount <= 2) {
-                                buttonBackEl.remove();
-                            } else if (buttonBackEl) {
-                                const displayButtonBack =
-                                    ev.detail.position > 0;
-                                buttonBackEl.setAttribute(
-                                    'aria-hidden',
-                                    (!displayButtonBack).toString()
-                                );
-                                if (displayButtonBack) {
-                                    buttonBackEl.removeAttribute('disabled');
-                                } else {
-                                    buttonBackEl.setAttribute(
-                                        'disabled',
-                                        'disabled'
-                                    );
-                                }
-                                buttonBackEl.classList.toggle(
-                                    'identity-consent-wizard__revealable--visible',
-                                    displayButtonBack
-                                );
-                            }
-                            const displayCounter =
-                                ev.detail.positionName === positions.email;
-                            counterEl.setAttribute(
-                                'aria-hidden',
-                                (!displayCounter).toString()
-                            );
-                            counterEl.classList.toggle(
-                                'identity-consent-wizard__revealable--visible',
-                                displayCounter
-                            );
-                        })
+                .then(([counterEl: HTMLElement, buttonBackEl: HTMLElement]) =>
+                    Promise.all([
+                        showOrHideBackButtonEl(
+                            buttonBackEl,
+                            ev.detail.position
+                        ),
+                        showOrHideEmailCounter(
+                            counterEl,
+                            ev.detail.positionName
+                        ),
+                    ])
                 );
         }
     });
