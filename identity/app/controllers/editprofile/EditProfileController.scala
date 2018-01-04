@@ -18,11 +18,11 @@ class EditProfileController(
     override val csrfCheck: CSRFCheck,
     override val csrfAddToken: CSRFAddToken,
     override val returnUrlVerifier: ReturnUrlVerifier,
-    override implicit val profileFormsMapping: ProfileFormsMapping,
-    val controllerComponents: ControllerComponents,
     override val newsletterService: NewsletterService,
+    override implicit val profileFormsMapping: ProfileFormsMapping,
+    override implicit val context: ApplicationContext,
     val httpConfiguration: HttpConfiguration,
-    override implicit val context: ApplicationContext)
+    val controllerComponents: ControllerComponents)
 
     extends EditProfileControllerComponents
     with EditProfileFormHandling

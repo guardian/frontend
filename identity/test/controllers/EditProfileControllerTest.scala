@@ -1,7 +1,6 @@
 package controllers
 
 import actions.AuthenticatedActions
-import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.Consent.FirstParty
 import com.gu.identity.model._
@@ -18,14 +17,12 @@ import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
 import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
-import play.api.data.Form
 import play.api.http.HttpConfiguration
 import play.api.mvc._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services._
 import test._
-
 import scala.concurrent.Future
 
 //TODO test form validation and population of form fields.
@@ -82,11 +79,11 @@ import scala.concurrent.Future
       csrfCheck,
       csrfAddToken,
       returnUrlVerifier,
-      profileFormsMapping,
-      controllerComponent,
       newsletterService,
+      profileFormsMapping,
+      testApplicationContext,
       httpConfiguration,
-      testApplicationContext
+      controllerComponent
     )
   }
 
