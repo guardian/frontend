@@ -102,7 +102,7 @@ trait ABTestSwitches {
     "Show a custom Epic for articles with the US gun campaign tag",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 1, 4),
+    sellByDate = new LocalDate(2018, 1, 11),
     exposeClientSide = true
   )
 
