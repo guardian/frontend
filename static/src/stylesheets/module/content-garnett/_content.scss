@@ -1333,6 +1333,10 @@
             .content--type-comment & {
                 grid-template-areas: 'labels headline' 'meta standfirst' '. main-media';
             }
+
+            .content--type-matchreport & {
+                grid-template-areas: 'labels headline-standfirst' '. report' 'meta main-media';
+            }
         }
     }
 
@@ -1407,5 +1411,10 @@
                 align-self: start;
             }
         }
+    }
+
+    /*** position match stats ***/
+    .matchreport {
+        grid-area: report;
     }
 }
