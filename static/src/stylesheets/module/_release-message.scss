@@ -709,9 +709,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .message-button-rounded__cta.yellow {
         svg path {
-            fill: #000333;
+            fill: #fff;
         }
-        background-color: #ff9b0b;
+        background-color: #121212;
+        color: #fff;
     }
     .message-button-rounded__cta.purple {
 
