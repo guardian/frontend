@@ -19,8 +19,6 @@ object ArticleHtmlPage extends HtmlPage[ArticlePage] {
           immersiveGarnettHeader(), immersiveGarnettBody()
       )
       case article if article.isImmersive => (immersiveHeader(), immersiveBody())
-
-
       case _ if !request.isAmp && experiments.ActiveExperiments.isParticipating(experiments.Garnett) => (
         guardianHeaderHtml(), articleBodyGarnett(page)
       )
