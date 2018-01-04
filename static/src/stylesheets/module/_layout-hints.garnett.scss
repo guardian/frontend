@@ -1,0 +1,191 @@
+@mixin deport-left {
+    @include mq(leftCol) {
+        margin-left: -1 * ($left-column + $gs-gutter);
+    }
+
+    @include mq(wide) {
+        margin-left: -1 * ($left-column-wide + $gs-gutter);
+    }
+}
+
+@mixin reduce-left {
+    @include mq(leftCol) {
+        width: $left-column;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+}
+
+@mixin pull-quote {
+    @include fs-headline(4);
+    float: left;
+    margin-top: 0;
+    margin-right: 24px;
+    font-weight: 200;
+    font-style: normal;
+    color: $neutral-2;
+
+    @if ($svg-support) {
+        &:before {
+            @extend %i-quote-blue;
+            @extend %svg-i-quote-blue;
+            content: '';
+            display: block;
+        }
+    }
+}
+
+figure.element.element--supporting {
+    @include mq(tablet) {
+        position: relative;
+        float: left;
+        width: gs-span(4);
+        margin-top: $gs-baseline/2;
+        margin-bottom: $gs-baseline;
+        margin-right: $gs-gutter;
+
+        &.img--landscape {
+            margin-right: $gs-gutter;
+        }
+    }
+
+    @include mq(leftCol) {
+        @include deport-left;
+    }
+
+    @include mq(wide) {
+        width: gs-span(5);
+    }
+}
+
+figure.element.element--thumbnail {
+    float: left;
+    clear: left;
+    margin-bottom: 0;
+    width: gs-span(2) - $gs-gutter;
+    margin-right: $gs-gutter;
+    margin-top: $gs-baseline/2;
+
+    @include mq(tablet) {
+        width: gs-span(2);
+
+        &.img--landscape {
+            margin-right: $gs-gutter; // repeat to override negative margin on img--landscape
+        }
+    }
+
+    @include mq(leftCol) {
+        @include deport-left;
+        position: relative;
+    }
+
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+    }
+}
+
+figure.element.element--showcase {
+    @include mq(leftCol) {
+        @include deport-left;
+        position: relative;
+        margin-bottom: ($gs-baseline/3)*4;
+        clear: both;
+    }
+}
+
+figure.element.element--supporting,
+figure.element-video,
+figure.element-atom {
+    figcaption {
+        padding-top: ($gs-baseline/3)*2;
+        padding-bottom: ($gs-baseline/3)*2;
+    }
+    @include mq(leftCol) {
+        figcaption {
+            padding-left: 0;
+            top: 100%;
+        }
+    }
+}
+
+figure.element.element--showcase {
+    @include mq(leftCol) {
+        figcaption {
+            padding-left: 0;
+            top: 100%;
+        }
+    }
+}
+
+figure.element-video {
+    @include mq(leftCol) {
+        &.element--thumbnail {
+            padding-bottom: 0;
+            border-bottom: 0;
+        }
+    }
+}
+
+
+figure.element.element--supporting.element-tweet {
+    margin-top: -$gs-baseline/2;
+}
+
+figure {
+    &.img--supporting {
+        @include mq(leftCol) {
+            float: left;
+            width: gs-span(5);
+            margin-top: $gs-baseline/2;
+            margin-right: $gs-gutter;
+        }
+
+        @include mq(wide) {
+            width: gs-span(6);
+        }
+    }
+}
+
+.media-primary--full-width {
+    width: 100%;
+    margin-bottom: $gs-baseline*2;
+}
+
+.media-primary.media-primary--showcase {
+    @include deport-left;
+}
+
+// Articles can have the feature tone applied, but it's not always primary tone
+.has-feature-showcase-element .media-primary.media-primary--showcase {
+    margin-left: 0;
+    margin-right: 0;
+    z-index: 2; // Put the showcase element on top of the left and right layout borders
+    position: relative;
+
+    @include mq(leftCol) {
+        margin: 0 auto;
+        width: gs-span(12);
+        max-width: unset;
+    }
+
+    @include mq(wide) {
+        width: gs-span(13);
+    }
+
+
+    .responsive-img {
+        height: auto;
+    }
+
+    .caption--main {
+        padding-left: 0;
+    }
+
+    .u-responsive-ratio--letterbox {
+        transition: padding-bottom 1s;
+    }
+
+
+}

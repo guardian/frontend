@@ -1148,6 +1148,73 @@ $quote-mark: 35px;
             padding-left: $gs-gutter / 2;
         }
     }
+
+    .content__head--article {
+        @include mq($until: tablet) {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @include mq($from: leftCol) {
+            width: gs-span(8);
+            @supports (display: grid) {
+                margin-left: -($left-column + $gs-gutter);
+                display: grid;
+                grid-template-columns: ($left-column + $gs-gutter) auto;
+                grid-template-areas: 'labels headline' 'meta main-media' '. standfirst';
+
+            }
+        }
+
+        @include mq($from: wide) {
+            @supports (display: grid) {
+                margin-left: -($left-column-wide + $gs-gutter);
+                grid-template-columns: ($left-column-wide + $gs-gutter) auto;
+            }
+        }
+
+        .content__headline-showcase-wrapper {
+            display: none;
+
+            @include mq($from: leftCol) {
+                display: block;
+                grid-area: headline;
+                max-width: gs-span(8);
+            }
+            .content__headline {
+                padding-bottom: $gs-baseline * 2;
+            }
+        }
+        .content__headline-standfirst-wrapper .content__headline {
+            @include mq(leftCol) {
+                display: none;
+            }
+        }
+        .content__headline-standfirst-wrapper {
+            @include mq($until: tablet) {
+                order: 1;
+
+                .content--type-comment & {
+                    order: 0;
+                }
+            }
+
+            @include mq($from: leftCol) {
+                grid-area: standfirst;
+            }
+        }
+
+    }
+    .content__secondary-column {
+        @include mq($from: wide) {
+            padding-top: (aspect-ratio-height(5, 3, gs-span(13)) + gs-height(5));
+            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
+        }
+        @include mq($from: leftCol) {
+            padding-top: (aspect-ratio-height(5, 3, gs-span(12)) + gs-height(5));
+            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
+        }
+    }
 }
 
 // *************** Analysis ***************
