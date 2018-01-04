@@ -14,7 +14,7 @@ import pages.IdentityHtmlPage
 import utils.ConsentOrder.userWithOrderedConsents
 import scala.concurrent.Future
 
-trait ConsentsController
+trait EmailsTab
     extends EditProfileControllerComponents
     with EditProfileFormHandling {
 

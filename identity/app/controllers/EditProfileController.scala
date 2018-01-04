@@ -24,15 +24,13 @@ class EditProfileController(
     override implicit val context: ApplicationContext)
   extends EditProfileControllerComponents
   with EditProfileFormHandling
-  with ConsentsController {
+  with EmailsTab
+  with AccountTab {
 
   import authenticatedActions._
 
   /** GET /public/edit */
   def displayPublicProfileForm: Action[AnyContent] = displayForm(PublicEditProfilePage)
-
-  /** GET /account/edit */
-  def displayAccountForm: Action[AnyContent] = displayForm(AccountEditProfilePage)
 
   /** GET /membership/edit */
   def displayMembershipForm: Action[AnyContent] = displayForm(MembershipEditProfilePage)
@@ -43,12 +41,10 @@ class EditProfileController(
   /** GET /digitalpack/edit */
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
 
-
   /** POST /public/edit */
   def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
 
-  /** POST /account/edit */
-  def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
+
 
 }
 
