@@ -38,6 +38,7 @@ const classes = {
     inlineLabel: 'js-email-sub__inline-label',
     textInput: 'js-email-sub__text-input',
     listIdHiddenInput: 'js-email-sub__listid-input',
+    listNameHiddenInput: 'js-email-sub__listname-input',
 };
 
 const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
@@ -253,6 +254,7 @@ const submitForm = (
     return event => {
         const emailAddress = $(`.${classes.textInput}`, $form).val();
         const listId = $(`.${classes.listIdHiddenInput}`, $form).val();
+        const listName = $(`.${classes.listNameHiddenInput}`, $form).val();
         let analyticsInfo;
 
         event.preventDefault();
@@ -263,7 +265,7 @@ const submitForm = (
                 listId
             }&campaignCode=${formData.campaignCode}&referrer=${
                 formData.referrer
-            }`;
+            }&listName=${listName}`;
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType

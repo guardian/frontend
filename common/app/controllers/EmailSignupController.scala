@@ -122,7 +122,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
           NotAcceptable
       }
     }
-q
+
     emailForm.bindFromRequest.fold(
       formWithErrors => {
         log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")

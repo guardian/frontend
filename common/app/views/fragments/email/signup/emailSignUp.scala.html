@@ -1,6 +1,7 @@
 @import com.gu.identity.model.EmailNewsletters._
 @(  componentClass: String,
     listId: Int,
+    listName: String,
     formHeading: String = "",
     formDescription: String = "",
     labelText: String = "Email address",
@@ -40,7 +41,7 @@
 
 
 @form = {
-    <form action="@LinkTo("/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-id="@listId">
+    <form action="@LinkTo("/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-id="@listId", data-email-list-name="@listName">
         <div class="email-sub__form-wrapper">
             <div class="email-sub__inline-label js-email-sub__inline-label">
                 @if(componentClass == "plaintone") {
@@ -50,6 +51,8 @@
                     <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" id="@inputId" required />
                 }
                 <input class="js-email-sub__listid-input" type="hidden" name="listId" value="@listId" />
+                <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@listName" />
+
             </div>
             <button type="submit" class="email-sub__submit-button js-email-sub__submit-button button button--tertiary button--large">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))@submitText</button>
         </div>
