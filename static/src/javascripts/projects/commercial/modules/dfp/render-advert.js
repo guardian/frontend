@@ -12,6 +12,7 @@ import renderAdvertLabel from 'commercial/modules/dfp/render-advert-label';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { Toggles } from 'common/modules/ui/toggles';
 import { recordUserAdFeedback } from 'commercial/modules/user-ad-feedback';
+import type { SlotRenderEndedEvent } from 'commercial/types';
 /**
  * ADVERT RENDERING
  * ----------------
@@ -146,12 +147,12 @@ const addContentClass = adSlotNode => {
 
 /**
  * @param advert - as defined in commercial/modules/dfp/Advert
- * @param slotRenderEvent - GPT slotRenderEndedEvent
+ * @param slotRenderEndedEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
  */
-const renderAdvert = (
+export const renderAdvert = (
     advert: Advert,
-    slotRenderEvent: any
+    slotRenderEndedEvent: SlotRenderEndedEvent
 ): Promise<boolean> => {
     addContentClass(advert.node);
 
@@ -164,11 +165,25 @@ const renderAdvert = (
                         size = 'fluid';
                     }
 
-                    return Promise.resolve(
+                    const applyCallback = Promise.resolve(
                         sizeCallbacks[size]
-                            ? sizeCallbacks[size](slotRenderEvent, advert)
+                            ? sizeCallbacks[size](slotRenderEndedEvent, advert)
                             : null
                     );
+
+                    const fixContainerSize = fastdom.write(() => {
+                        if (size !== 'fluid') {
+                            const container = advert.node;
+                            container.style.width = `${
+                                slotRenderEndedEvent.size[0]
+                            }px`;
+                            container.style.height = `${
+                                slotRenderEndedEvent.size[1]
+                            }px`;
+                        }
+                    });
+
+                    return Promise.all([applyCallback, fixContainerSize]);
                 }
                 return Promise.resolve(null);
             };
@@ -192,7 +207,7 @@ const renderAdvert = (
                       })
                     : Promise.resolve();
 
-            const applyFeedbackOnClickListeners = slotRender => {
+            const applyFeedbackOnClickListeners = () => {
                 const readyClass = 'js-onclick-ready';
                 return isRendered
                     ? fastdom.write(() => {
@@ -201,11 +216,12 @@ const renderAdvert = (
                           ).forEach(el => {
                               const slotId = el.getAttribute('data-slot');
                               const problem = el.getAttribute('data-problem');
+
                               el.addEventListener('click', () => {
                                   recordUserAdFeedback(
                                       window.location.pathname,
                                       slotId,
-                                      slotRender,
+                                      slotRenderEndedEvent,
                                       problem
                                   );
                               });
@@ -218,11 +234,9 @@ const renderAdvert = (
             return callSizeCallback()
                 .then(() => renderAdvertLabel(advert.node))
                 .then(addFeedbackDropdownToggle)
-                .then(() => applyFeedbackOnClickListeners(slotRenderEvent))
+                .then(applyFeedbackOnClickListeners)
                 .then(addRenderedClass)
                 .then(() => isRendered);
         })
         .catch(raven.captureException);
 };
-
-export default renderAdvert;
