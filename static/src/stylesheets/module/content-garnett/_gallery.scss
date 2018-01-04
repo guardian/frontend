@@ -283,29 +283,21 @@
         display: block;
     }
 
-    @include mq(desktop) {
-        &:hover,
-        .article__img-container:hover & {
-            background-color: $media-default;
-
-            &.inline-expand-image {
-                fill: #000000;
-            }
-        }
-    }
-
     @if $old-ie {
         display: none;
     }
 }
 
 @include mq(desktop) {
+    .article__fullscreen,
     .gallery__fullscreen {
         opacity: 0;
         transition: opacity .15s ease-out;
+    }
 
-        .gallery__img-container:hover & {
-            opacity: 1;
-        }
+    .article__img-container:hover .article__fullscreen,
+    .gallery__img-container:hover .gallery__fullscreen {
+        opacity: 1;
     }
 }
+
