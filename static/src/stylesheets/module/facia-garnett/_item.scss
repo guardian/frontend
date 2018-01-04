@@ -192,7 +192,9 @@ $fc-item-gutter: $gs-gutter / 4;
     font-weight: 400;
 
     .fc-item--has-boosted-title & {
-        font-weight: 900;
+        @include mq($from: tablet) {
+            font-weight: 900;
+        }
     }
 }
 
