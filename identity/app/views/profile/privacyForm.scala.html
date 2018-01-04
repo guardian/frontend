@@ -104,15 +104,21 @@
 @profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
 
 @* CHANNELS *@
-@if(IdentityShowCommunicationChannelConsents.isSwitchedOn && communicationChannelsForUser(user).nonEmpty) {
+@if(IdentityShowCommunicationChannelConsents.isSwitchedOn) {
     <hr class="manage-account-divider" />
 
     <fieldset class="fieldset fieldset--manage-account-noborder">
         <div class="fieldset__heading">
-            <h2 class="form__heading">How can we get in touch with you?</h2>
+            <h2 class="form__heading">How else can we get in touch with you?</h2>
         </div>
         <div class="fieldset__fields">
-            @channelConsentForm
+            @if(communicationChannelsForUser(user).nonEmpty) {
+                @channelConsentForm
+            } else {
+                <p class="identity-title-explainer">
+                    Update your <a href="@idUrlBuilder.buildUrl(routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="identity : email : add-channel-info">account details</a> with your phone number or home address to be able to opt in to receiving phone, SMS, and post communications from the Guardian.
+                </p>
+            }
         </div>
     </fieldset>
 }
