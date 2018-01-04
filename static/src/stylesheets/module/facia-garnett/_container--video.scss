@@ -257,10 +257,6 @@ $video-width-desktop: 700px;
     border-radius: 50%;
     padding: $gs-baseline / 2;
     color: transparent;
-
-    .vjs-control-text::before {
-        background-color: red;
-    }
 }
 
 .video-playlist__item {
