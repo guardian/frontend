@@ -11,6 +11,10 @@
     @badgeFor(article).map { badge => content__head--is-badged
         @badge.classModifier.map(modifier => s"content__head--$modifier")
     }">
+    <div class="matchreport">
+        <div class="js-score"></div>
+        <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
+    </div>
 
     @fragments.meta.metaInline(article, amp)
 
