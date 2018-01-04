@@ -59,17 +59,16 @@
 
 .u-underline,
 %u-underline {
-    text-decoration: underline;
-    text-decoration-color: $neutral-4;
-    text-decoration-skip: ink;
+    text-decoration: none;
+    border-bottom: 1px solid $neutral-4;
+    transition: border-color .15s ease-out;
 
     &:hover,
     &:focus {
-        text-decoration-color: mix($news-default, $neutral-4, 50%);
+        border-color: mix($news-default, $neutral-4, 50%);
     }
     &:active {
-        text-decoration-color: $news-accent;
-        text-decoration: underline;
+        border-color: $news-accent;
     }
 }
 
