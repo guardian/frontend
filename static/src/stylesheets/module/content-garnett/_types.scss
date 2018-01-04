@@ -542,20 +542,14 @@ $quote-mark: 35px;
         color: $neutral-1;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
-        max-width: gs-span(3) - $gs-gutter;
-        @include mq(mobileMedium) {
-            max-width: gs-span(4)- $gs-gutter;
-        }
-        @include mq(mobileLandscape) {
-            max-width: gs-span(4);
-        }
+        max-width: 80%;
         @include mq(phablet) {
-            max-width: gs-span(5);
+            max-width: gs-span(6);
             margin-left: 20px;
             margin-bottom: $gs-baseline*2;
         }
         @include mq(tablet) {
-            max-width: gs-span(6);
+            max-width: gs-span(7);
             margin-left: 0;
         }
         @include mq(leftCol) {
@@ -1205,10 +1199,10 @@ $quote-mark: 35px;
 .content--type-feature,
 .content--type-review {
     .content__standfirst {
-        @include fs-headlineGarnett(1);
+        @include fs-headlineGarnett(0);
         font-weight: 200;
         @include mq(tablet) {
-            @include fs-headlineGarnett(2);
+            @include fs-headlineGarnett(1);
         }
     }
 }
