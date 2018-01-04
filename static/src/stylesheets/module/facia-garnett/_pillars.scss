@@ -104,13 +104,18 @@ $pillars: (
     //this is to make the colour lighter for the media cards
     &.fc-item--audio .fc-item__kicker,
     &.fc-item--gallery .fc-item__kicker,
-    &.fc-item--video .fc-item__kicker
+    &.fc-item--video .fc-item__kicker,
+    &.fc-item--type-immersive .fc-item__kicker
     {
         color: map-get($palette, invertedKicker);
     }
 
     .fc-item__standfirst {
         color: $headline;
+    }
+
+    &.fc-item--type-immersive .fc-item__standfirst {
+        color: #ffffff;
     }
 
     .fc-item__sublinks {
