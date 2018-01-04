@@ -1148,6 +1148,12 @@ $quote-mark: 35px;
         @include mq(wide) {
             margin: 0 auto;
         }
+
+        .caption--main {
+            padding-left: $gs-gutter / 2;
+        }
+    }
+}
     }
 }
 // *************** Analysis ***************
