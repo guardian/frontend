@@ -22,23 +22,12 @@ class EditProfileController(
     override val newsletterService: NewsletterService,
     val httpConfiguration: HttpConfiguration,
     override implicit val context: ApplicationContext)
-    extends EditProfileControllerComponents
-    with EditProfileFormHandling
-    with EmailsTab
-    with AccountTab
-    with PublicTab
-    with SupporterTabs {
 
-  import authenticatedActions._
-
-
-
-
-
-
-
-
-
-}
+  extends EditProfileControllerComponents
+  with EditProfileFormHandling
+  with EmailsTab
+  with AccountTab
+  with PublicTab
+  with SupporterTabs
 
 

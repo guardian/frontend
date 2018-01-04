@@ -6,8 +6,6 @@ trait AccountTab
     extends EditProfileControllerComponents
     with EditProfileFormHandling {
 
-  import authenticatedActions._
-
   /** GET /account/edit */
   def displayAccountForm: Action[AnyContent] = displayForm(AccountEditProfilePage)
 

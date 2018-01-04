@@ -11,11 +11,12 @@ import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{IdRequestParser, IdentityUrlBuilder, NewsletterService, ReturnUrlVerifier}
 import utils.SafeLogging
 
-trait EditProfileControllerComponents extends BaseController
-  with ImplicitControllerExecutionContext
-  with SafeLogging
-  with I18nSupport
-  with implicits.Forms {
+trait EditProfileControllerComponents
+    extends BaseController
+    with ImplicitControllerExecutionContext
+    with SafeLogging
+    with I18nSupport
+    with implicits.Forms {
 
   val authenticatedActions: AuthenticatedActions
   val csrfCheck: CSRFCheck
@@ -27,7 +28,4 @@ trait EditProfileControllerComponents extends BaseController
   val identityApiClient: IdApiClient
   implicit val context: ApplicationContext
   implicit val profileFormsMapping: ProfileFormsMapping
-
-  import authenticatedActions._
-
 }
