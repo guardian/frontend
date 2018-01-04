@@ -745,7 +745,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message--membership-prominent.yellow {
     @include site-message-dark-text;
-    background-color: #ffce4b;
+    background-color: #ffe500;
     svg {
         fill: #000000;
     }
