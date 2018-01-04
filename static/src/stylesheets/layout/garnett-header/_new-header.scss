@@ -53,18 +53,6 @@ from scrolling */
             width: gs-span(12) + ($gs-gutter * 2);
         }
     }
-
-    :hover,
-    :focus {
-        text-decoration-skip: ink;
-    }
-}
-
-.l-side-margins { // TODO remove this line
-    &:before,
-    &:after {
-        display: none ;
-    }
 }
 
 .new-header__inner {
