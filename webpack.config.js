@@ -52,6 +52,7 @@ module.exports = {
             facia: 'projects/facia',
             membership: 'projects/membership',
             commercial: 'projects/commercial',
+            'commercial-legacy': 'projects/commercial-legacy',
             journalism: 'projects/journalism',
 
             // #wp-rjs weird old aliasing from requirejs
