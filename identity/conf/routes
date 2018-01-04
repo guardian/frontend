@@ -63,6 +63,10 @@ POST        /privacy/edit-ajax                      controllers.editprofile.Edit
 GET         /email-prefs                            controllers.editprofile.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
 POST        /email-prefs                            controllers.editprofile.EditProfileController.saveEmailPreferencesAjax
 
+
+########################################################################################################################
+# Consents journey
+########################################################################################################################
 GET         /consents/all                           controllers.editprofile.EditProfileController.displayConsentsJourneyAll(consentHint: Option[String])
 GET         /consents/newsletters                   controllers.editprofile.EditProfileController.displayConsentsJourneyNewsletters
 GET         /consents                               controllers.editprofile.EditProfileController.displayConsentsJourney(consentHint: Option[String])

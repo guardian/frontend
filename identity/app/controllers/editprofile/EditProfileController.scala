@@ -30,5 +30,6 @@ class EditProfileController(
     with AccountTab
     with PublicTab
     with SupporterTabs
+    with ConsentsJourney
 
 
