@@ -1155,16 +1155,6 @@ $quote-mark: 35px;
     }
 }
 
-.has-feature-showcase-element .media-primary.media-primary--showcase,
-.content__head .media-primary { 
-    > a {
-        &:hover,
-        &:focus {
-            cursor: nesw-resize;
-        }
-    }
-}
-
 // *************** Analysis ***************
 
 .content--type-analysis {
