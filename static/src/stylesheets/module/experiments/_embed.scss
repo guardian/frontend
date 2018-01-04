@@ -161,7 +161,7 @@
 // Specificity needed to override an inline rule in _pillars.scss that's messing with the epic link colour.
 a[href].contributions__contribute.contributions__contribute--epic {
     margin-top: 0;
-    background-color: $multimedia-main-2;
+    background-color: #ffe500;
     color: $neutral-1;
     &:hover {
         color: $neutral-1;
