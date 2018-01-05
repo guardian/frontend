@@ -1,40 +1,46 @@
 //TODO: most of this is not actually needed post-switch it's just overrides
 
+
+
+/* Full width wrapper
+   ========================================================================== */
+
 .identity-wrapper-for-bg {
     @include clearfix();
-    .tabs__container {
-        margin: $gs-gutter * 2 auto 0;
-        .tabs__tab a {
-            font-weight: 500!important;
-            /*text can't fit otherwise*/
-        }
-    }
-    .tabs__content {
-        margin: $gs-gutter * 2 auto;
-        border: 0;
-    }
     .gs-container {
-        @include clearfix();
         max-width: none;
     }
     .monocol-wrapper {
         max-width: gs-span(10);
         margin: auto;
-        @include mq($until: desktop) {
-            padding: 0 $gs-gutter * 1;
-        }
+        padding-top: $gs-baseline / 2;
+        padding-bottom: $gs-baseline * 2;
     }
-    &.identity-wrapper-for-bg--header {
-        border-bottom: 1px solid $neutral-5;
-        .monocol-wrapper {
-            padding-bottom: 0;
-            overflow: hidden;
-        }
-        .gs-container {
-            padding-top: $gs-gutter / 2;
-        }
+    .tabs__content {
+        border: 0;
     }
 }
+
+.identity-wrapper-for-bg.identity-wrapper-for-bg--header {
+    border-bottom: 1px solid $neutral-5;
+    overflow: hidden;
+    .tabs__container {
+        margin: $gs-gutter * 2 auto 0 -1px;
+        .tabs__tab a {
+            font-weight: 500!important;
+            /*text can't fit otherwise*/
+        }
+    }
+    .monocol-wrapper {
+        overflow: hidden;
+        padding-bottom: 0;
+    }
+}
+
+
+
+/* Normal wrapper
+   ========================================================================== */
 
 .identity-wrapper {
     margin-left: auto;
@@ -55,7 +61,6 @@
 .identity-wrapper--stretched {
     max-width: gs-span(16);
 }
-
 
 
 /* Account Edit page
