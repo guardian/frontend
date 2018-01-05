@@ -8,13 +8,15 @@ $quote-mark: 35px;
 .content--liveblog,
 .content--media,
 .content--type-analysis,
+.content--type-guardianview,
 .content--type-article,
 .content--type-comment,
 .content--type-feature,
 .content--type-matchreport,
 .content--type-live,
 .content--type-media,
-.content--type-review {
+.content--type-review,
+.content--type-immersive {
     // *************** Meta and Social ***************
     .submeta {
         @include multiline(4, $garnett-neutral-4, top);
@@ -464,20 +466,9 @@ $quote-mark: 35px;
         display: block;
     }
 
-    .media-primary .inline-expand-image {
-        display: none;
-    }
-
     .media-primary.media-primary--showcase {
         margin-left: 0;
         margin-right: 0;
-    }
-
-    .article__fullscreen:hover,
-    .article__img-container:hover .article__fullscreen,
-    .article__img-container:hover .gallery__fullscreen,
-    .gallery__fullscreen:hover {
-        background-color: $neutral-4;
     }
 
     .content__headline {
@@ -810,6 +801,7 @@ $quote-mark: 35px;
 }
 // *************** Opinion Styles ***************
 
+.content--type-guardianview,
 .content--type-comment {
     .content__head {
         overflow: hidden;
@@ -1126,12 +1118,6 @@ $quote-mark: 35px;
     }
 }
 
-.immersive-main-media__headline-container {
-    .content__series-label__link {
-        color: $garnett-neutral-3;
-    }
-}
-
 .gallery__main-content {
     .content__series-label__link {
         color: $garnett-neutral-5;
@@ -1154,8 +1140,13 @@ $quote-mark: 35px;
         @include mq(wide) {
             margin: 0 auto;
         }
+
+        .caption--main {
+            padding-left: $gs-gutter / 2;
+        }
     }
 }
+
 // *************** Analysis ***************
 
 .content--type-analysis {
@@ -1199,6 +1190,7 @@ $quote-mark: 35px;
 }
 // *************** Opinion quote weight overrides ***************
 
+.content--type-guardianview,
 .content--type-comment {
     .element-pullquote.element--supporting .pullquote-cite,
     .element-pullquote.element--supporting .pullquote-paragraph {
@@ -1207,6 +1199,7 @@ $quote-mark: 35px;
 }
 // *************** Opinion and Feature standfirst overrides ***************
 
+.content--type-guardianview,
 .content--type-comment,
 .content--type-feature,
 .content--type-review {

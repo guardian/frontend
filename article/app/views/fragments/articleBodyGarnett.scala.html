@@ -61,7 +61,8 @@
 
 
                             @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
-                                @if(article.metadata.designType.nameOrDefault == "comment") {
+                                @if(article.metadata.designType.nameOrDefault == "comment" ||
+                                    article.metadata.designType.nameOrDefault == "guardianview") {
                                     @fragments.articleHeaderCommentGarnett(article, model, isPaidContent, amp = amp)
                                 } else {
                                     @fragments.articleHeaderGarnett(article, model, isPaidContent, amp = amp)

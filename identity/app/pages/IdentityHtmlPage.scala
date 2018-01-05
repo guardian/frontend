@@ -17,7 +17,11 @@ object IdentityHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = stacked(
-      criticalStyleLink("identity"),
+      if(experiments.ActiveExperiments.isParticipating(experiments.GarnettIdentity)){
+        criticalStyleLink("identity.garnett")
+      } else {
+        criticalStyleLink("identity")
+      },
       criticalStyleLink(InlineNavigationCSSFile))
     override def criticalCssInline: Html = criticalStyleInline(
       Html(common.Assets.css.head(None)),
@@ -44,12 +48,20 @@ object IdentityHtmlPage {
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses())(
-        skipToMainContent(),
-        views.html.layout.identityHeader(hideNavigation=page.isFlow),
-        content,
-        inlineJSNonBlocking(),
-        footer() when !page.isFlow,
-        analytics.base()
+        views.html.layout.identityFlexWrap()(
+          skipToMainContent(),
+          views.html.layout.identityHeader(hideNavigation=page.isFlow),
+        )(
+          content
+        )(
+          inlineJSNonBlocking(),
+          if(page.isFlow){
+            views.html.layout.identitySkinnyFooter()
+          } else {
+            footer()
+          },
+          analytics.base()
+        )
       ),
       devTakeShot()
     )

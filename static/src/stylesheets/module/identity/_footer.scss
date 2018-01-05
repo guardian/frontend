@@ -1,0 +1,6 @@
+.identity-footer {
+    @include fs-textSans(1);
+    background: $neutral-1;
+    color: $neutral-3;
+    padding: $gs-gutter;
+}
