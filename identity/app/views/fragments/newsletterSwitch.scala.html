@@ -27,9 +27,9 @@
 
 @newsletterListId = @{
     if (IdentityGdprV2NewslettersConsents.isSwitchedOn)
-        newsletter.listIdV2.toString
-    else
         newsletter.listId.toString
+    else
+        newsletter.listIdV1.toString
 }
 
 @checkboxValue = @{
@@ -37,9 +37,9 @@
         None
     else {
         if (IdentityGdprV2NewslettersConsents.isSwitchedOn)
-            Some(newsletter.subscribedToV2(emailSubscriptions).toString)
-        else
             Some(newsletter.subscribedTo(emailSubscriptions).toString)
+        else
+            Some(newsletter.subscribedToV1(emailSubscriptions).toString)
     }
 }
 

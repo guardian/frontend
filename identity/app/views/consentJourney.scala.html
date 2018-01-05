@@ -24,7 +24,7 @@
 
 @onlySubscribedToV1Newsletters = @{
     EmailNewsletters.all.subscriptions.filter { newsletter =>
-        emailSubscriptions.contains(newsletter.listId.toString)
+        emailSubscriptions.contains(newsletter.listIdV1.toString)
     }
 }
 
