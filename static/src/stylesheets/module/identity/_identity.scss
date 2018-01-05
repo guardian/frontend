@@ -380,13 +380,47 @@ $identity-header-height: 48px;
     margin-top: 3em;
 }
 
-.dropdown--email-subscription {
+.dropdown-styled.dropdown--email-subscription {
+    border-color: $neutral-6;
+    .dropdown__button {
+        padding: $gs-baseline / 4 0 $gs-baseline;
+        color: $identity-main;
+        text-transform: lowercase;
+    }
     .dropdown__label {
         @include fs-bodyHeading(3);
-        text-transform: lowercase;
+        &:after {
+            content: '';
+            border: 2px solid currentColor;
+            border-left: transparent;
+            border-top: transparent;
+            display: inline-block;
+            height: 5px;
+            color: inherit;
+            transform: translateY(-2px) rotate(45deg);
+            transition: transform 250ms ease-out;
+            vertical-align: middle;
+            width: 5px;
+            margin-left: 4px;
+        }
     }
     .dropdown__content {
         padding-bottom: 2em;
+    }
+    .inline-dropdown-mask {
+        display: none;
+    }
+    &:hover .dropdown__button {
+        color: darken($identity-main, 10%);
+    }
+    &:hover .dropdown__label:after {
+        transform: translateY(-1px) rotate(45deg);
+    }
+    &.dropdown--active .dropdown__label:after {
+        transform: translateY(1px) rotate(-135deg);
+    }
+    &.dropdown--active:hover .dropdown__label:after {
+        transform: translateY(0px) rotate(-135deg);
     }
 }
 
