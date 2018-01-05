@@ -67,14 +67,16 @@
 @channelStepContent = {
     <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
-        <div class="manage-account__switches">
-        @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
-            <li>
+        <div class="manage-account__switches manage-account__switches--single-column">
+            <ul>
+            @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
                 @if(isUsersChannel(consentField, user)) {
-                    @fragments.consentSwitch(consentField)(messages)
+                    <li>
+                        @fragments.consentSwitch(consentField)(messages)
+                    </li>
                 }
-            </li>
-        }
+            }
+            </ul>
         </div>
     </form>
 }

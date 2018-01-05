@@ -82,13 +82,15 @@
     <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
         <div class="manage-account__switches">
-        @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
-            <li>
-            @if(isUsersChannel(consentField, user)) {
-                @fragments.consentSwitch(consentField)(messages)
+            <ul>
+            @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
+                @if(isUsersChannel(consentField, user)) {
+                  <li>
+                      @fragments.consentSwitch(consentField)(messages)
+                  </li>
+                }
             }
-            </li>
-        }
+            </ul>
         </div>
     </form>
 }
@@ -118,6 +120,7 @@
     <fieldset class="fieldset fieldset--manage-account-noborder">
         <div class="fieldset__heading">
             <h2 class="form__heading">How else can we get in touch with you?</h2>
+            <p class="form__note">Besides email, are there any other ways you would like us to get in touch with you?</p>
         </div>
         <div class="fieldset__fields">
             @if(channelsProvidedBy(user).nonEmpty) {
