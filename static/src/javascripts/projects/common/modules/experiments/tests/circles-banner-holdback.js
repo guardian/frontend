@@ -14,6 +14,7 @@ export const CirclesBannerHoldback: AcquisitionsABTest = {
     audienceCriteria: 'All',
     audience: 0.1,
     audienceOffset: 0,
+    showForSensitive: true,
     canRun: () => true,
 
     variants: makeBannerABTestVariants([
