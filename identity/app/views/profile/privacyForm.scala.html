@@ -79,7 +79,7 @@
 }
 
 @channelConsentForm = {
-    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    <form method="post" action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" novalidate>
         @views.html.helper.CSRF.formField
         <div class="manage-account__switches">
             <ul>
