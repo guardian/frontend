@@ -1150,7 +1150,7 @@ $quote-mark: 35px;
     }
 
     .content__head--article {
-         @include mq($from: leftCol) {
+        @include mq($from: leftCol) {
             @supports (display: grid) {
                 grid-template-areas: 'labels headline' 'meta main-media' '. standfirst';
 
