@@ -84,7 +84,7 @@
         <div class="manage-account__switches">
         @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
             <li>
-            @if(isChannel(consentField)) {
+            @if(isUsersChannel(consentField, user)) {
                 @fragments.consentSwitch(consentField)(messages)
             }
             </li>
@@ -120,7 +120,7 @@
             <h2 class="form__heading">How else can we get in touch with you?</h2>
         </div>
         <div class="fieldset__fields">
-            @if(communicationChannelsForUser(user).nonEmpty) {
+            @if(channelsProvidedBy(user).nonEmpty) {
                 @channelConsentForm
             } else {
                 <p class="identity-title-explainer">

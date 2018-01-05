@@ -4,20 +4,13 @@ import com.gu.identity.model.User
 import play.api.data.Field
 
 object ConsentChannel {
-  sealed trait ConsentChannelBehaviour
-  case object TextConsentChannel extends ConsentChannelBehaviour
-  case object PhoneConsentChannel extends ConsentChannelBehaviour
-  case object PostConsentChannel extends ConsentChannelBehaviour
+  sealed abstract class ConsentChannelBehaviour(val channelName: String)
 
-  def checkboxName(behaviour: ConsentChannelBehaviour): String = {
-    behaviour match {
-      case TextConsentChannel => "Text"
-      case PhoneConsentChannel => "Phone"
-      case PostConsentChannel => "Post"
-    }
-  }
+  case object TextConsentChannel  extends ConsentChannelBehaviour("sms")
+  case object PhoneConsentChannel extends ConsentChannelBehaviour("phone")
+  case object PostConsentChannel  extends ConsentChannelBehaviour("post")
 
-  def communicationChannelsForUser(user: User): List[ConsentChannelBehaviour] = {
+  def channelsProvidedBy(user: User): List[ConsentChannelBehaviour] = {
     val telephoneDefined = user.privateFields.telephoneNumber.isDefined
     val postcodeDefined = user.privateFields.postcode.isDefined
 
@@ -30,9 +23,16 @@ object ConsentChannel {
     channels.filter(_._2).map(_._1)
   }
 
+  /** Field is a channel and user has provided details for this channel */
+  def isUsersChannel(consentField: Field, user: User): Boolean = {
+      consentField("id").value.exists { id =>
+        List("phone", "sms", "post").contains(id) && channelsProvidedBy(user).exists(_.channelName == id)
+      }
+  }
+
   def isChannel(consentField: Field): Boolean = {
-    consentField("id").value.exists {
-      id => List("phone", "sms", "post").contains(id)
+    consentField("id").value.exists { id =>
+      List("phone", "sms", "post").contains(id)
     }
   }
 
