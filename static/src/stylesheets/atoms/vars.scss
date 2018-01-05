@@ -3,10 +3,16 @@
 /* in the CSS provided by the atom library                                  */
 /* ************************************************************************ */
 
+@import '../_vars';
 @import '../pasteup/typography/src';
 
 :root {
     --f-serif-text: $f-serif-text;
     --f-serif-headline: $f-serif-headline;
     --f-sans-serif-text: $f-sans-serif-text;
-};
+    --c-pillar-news: $news-garnett-main-1;
+    --c-pillar-arts: $arts-garnett-main-1;
+    --c-pillar-opinion: $opinion-garnett-main-1;
+    --c-pillar-lifestyle: $lifestyle-garnett-main-1;
+    --c-pillar-sport: $sport-garnett-main-1;
+}
