@@ -83,7 +83,7 @@
     )
 }
 
-@consentStepContent = {
+@marketingStepContent = {
     <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
         <div class="manage-account__switches manage-account__switches--single-column">
@@ -101,16 +101,28 @@
         </div>
     </form>
 }
-@communicationConsentStep = @{
+@marketingConsentStep = @{
     ConsentStep(
         name = "consent",
-        title = if(journey == "all") {
-            "We need you to consent again to receiving communications from the Guardian"
-        } else {
-            "What would you like to hear about?"
-        },
+        title = "What would you like to hear about?",
         help = List("Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful."),
-        content = consentStepContent
+        content = marketingStepContent
+    )
+}
+@marketingConsentRepermissionStep = @{
+    ConsentStep(
+        name = "consent-repermission",
+        title = "We need you to consent again to receiving communications from the Guardian",
+        help = List("Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful."),
+        content = marketingStepContent
+    )
+}
+@marketingConsentThankYouStep = @{
+    ConsentStep(
+        name = "consent-thank-you",
+        title = "Thank you for signing up",
+        help = List("While you are here, you can tell us what you’re interested in, so we can send you emails that we think you’ll find useful."),
+        content = marketingStepContent
     )
 }
 
@@ -189,14 +201,21 @@
         }
         case "all" => {
             List(
-                communicationConsentStep,
+                marketingConsentRepermissionStep,
                 emailRepermissionStep,
                 channelStep
             )
         }
-        case _ => {
+        case "thank-you" => {
             List(
-                communicationConsentStep,
+                marketingConsentThankYouStep,
+                emailRepermissionStep,
+                channelStep
+            )
+        }
+        case "default" => {
+            List(
+                marketingConsentStep,
                 emailRepermissionOrSignupStep,
                 channelStep
             )
