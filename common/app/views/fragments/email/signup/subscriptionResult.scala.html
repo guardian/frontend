@@ -6,8 +6,8 @@
     <div class="email-sub__message">
         @result match {
             case Subscribed => {
-                @fragments.inlineSvg("tick", "icon")
-                <h3 class="email-sub__message__headline">You've subscribed!</h3>
+                @fragments.inlineSvg("mail", "icon")
+                <h3 class="email-sub__message__headline">Please check you're emails to confirm you're subscription!</h3>
             }
 
             case InvalidEmail => {
