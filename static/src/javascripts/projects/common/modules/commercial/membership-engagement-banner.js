@@ -156,7 +156,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
         trackDisplay: true,
-        cssModifierClass: colourClass,
+        cssModifierClass: `${colourClass} ${params.bannerModifierClass || ''}`,
     }).show(renderedBanner);
 
     if (messageShown) {

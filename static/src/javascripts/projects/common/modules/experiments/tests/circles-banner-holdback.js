@@ -12,8 +12,9 @@ export const CirclesBannerHoldback: AcquisitionsABTest = {
     idealOutcome: 'No drop-off in conversions either way',
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     audienceCriteria: 'All',
-    audience: 0.1,
+    audience: 1,
     audienceOffset: 0,
+    // Should always be true, because the banner shows regardless.
     showForSensitive: true,
     canRun: () => true,
 
@@ -23,6 +24,11 @@ export const CirclesBannerHoldback: AcquisitionsABTest = {
         },
         {
             id: 'holdback',
+            options: {
+                engagementBannerParams: {
+                    bannerModifierClass: 'circles-banner-holdback',
+                },
+            },
         },
     ]),
 };
