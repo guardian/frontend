@@ -28,7 +28,6 @@ object emailLandingPage extends StandalonePage {
 
 case class EmailForm(
   email: String,
-  listId: Int,
   listName: String,
   referrer: Option[String],
   campaignCode: Option[String])
@@ -53,7 +52,6 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
-      "listId" -> number,
       "listName" -> nonEmptyText,
       "referrer" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String])
@@ -67,11 +65,11 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
   def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
 
     val identityName = EmailNewsletter(listId)
-                        .orElse(EmailNewsletter.fromV1ListId(listId))
+//                        .orElse(EmailNewsletter.fromV1ListId(listId))
                         .map(_.identityName)
 
     identityName match {
-      case Some(listName) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId, listName)))
+      case Some(listName) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
       case _ => Cached(15.minute)(WithoutRevalidationResult(NotFound))
     }
   }
@@ -79,7 +77,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
   def renderFormFromName(emailType: String, listName: String): Action[AnyContent] = Action { implicit request =>
     val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
     id match {
-      case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId, listName)))
+      case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
       case _            => Cached(15.minute)(WithoutRevalidationResult(NotFound))
     }
   }
