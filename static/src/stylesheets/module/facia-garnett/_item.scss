@@ -7,8 +7,9 @@ $fc-item-gutter: $gs-gutter / 4;
 @mixin fs-headline-quote($level) {
     .fc-item__title--quoted .inline-garnett-quote__svg {
         height: get-font-size(headline, $level);
-        width: get-font-size(headline, $level) * .5;
+        width: get-font-size(headline, $level) * .54;
         margin-right: get-font-size(headline, $level) * .5;
+        transform: translateY(-1px);
     }
 }
 
@@ -39,7 +40,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .fc-item__media-wrapper {
+    .fc-item__media-wrapper, .fc-item__video-fallback {
         flex-basis: $media-width;
     }
 
@@ -149,6 +150,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__header,
+.video-overlay__headline,
 .item__title,
 .rich-link__header {
     @include fs-headline(3);

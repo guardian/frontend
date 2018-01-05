@@ -131,7 +131,7 @@ $identity-header-height: 48px;
 
 .identity-title-explainer {
     @include fs-bodyCopy(1);
-    margin-top: $gs-baseline;
+    margin-bottom: $gs-baseline;
 }
 
 .identity-title--public-profile {

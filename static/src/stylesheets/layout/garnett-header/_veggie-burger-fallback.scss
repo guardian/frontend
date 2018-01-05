@@ -1,0 +1,44 @@
+.veggie-burger-fallback {
+    &:checked {
+        & ~ .menu {
+            @include mq($until: desktop) {
+                @include menu-animation(0%);
+            }
+
+            @include mq(desktop) {
+                display: block;
+            }
+        }
+
+        & ~ .menu__overlay {
+            @include mq($until: desktop) {
+                opacity: 1;
+                width: 100%;
+            }
+        }
+
+        & ~ .veggie-burger {
+            z-index: $zindex-main-menu + 1;
+
+            .veggie-burger__icon {
+                background-color: transparent;
+
+                &:before {
+                    top: 0;
+                    transform: rotate(-45deg);
+                }
+
+                &:after {
+                    bottom: 0;
+                    transform: rotate(45deg);
+                }
+            }
+
+            .veggie-burger__label {
+                @include mq(desktop) {
+                    @include u-h();
+                }
+            }
+        }
+    }
+}

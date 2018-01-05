@@ -1,30 +1,31 @@
 @import common.LinkTo
 @import views.support.DropdownMenus.accountDropdownMenu
 
-@()(implicit page: model.Page, request: RequestHeader)
+@(hideNavigation: Boolean = false)(implicit page: model.Page, request: RequestHeader)
 
 <header class="identity-header" data-component="identity-nav">
     <div class="gs-container identity-header__container">
 
-        <div class="identity-header__links">
-            <div class="identity-header__link">
-                <label for="identity-header-account-menu-fallback" tabindex="0">
-                    <span
+        @if(!hideNavigation) {
+            <div class="identity-header__links">
+                <div class="identity-header__link">
+                    <label for="identity-header-account-menu-fallback" tabindex="0">
+                        <span
                         role="button"
                         class="identity-header__nav js_identity-header__nav-toggle"
                         aria-expanded="false"
                         aria-controls="my-account-dropdown"
                         data-link-name="identity-nav : menu : toggle"
-                    >
-                        @fragments.inlineSvg("profile-36", "icon", List("mobile-only"))
-                        <span class="hide-on-mobile-inline">My Account</span>
-                    </span>
-                </label>
-                <input type="checkbox" value="open" id="identity-header-account-menu-fallback" class="identity-header__nav-fallback u-h" title="Open Menu" />
-                <ul class="identity-dropdown" id="my-account-dropdown" aria-hidden="true">
+                        >
+                            @fragments.inlineSvg("profile-36", "icon", List("mobile-only"))
+                            <span class="hide-on-mobile-inline">My Account</span>
+                        </span>
+                    </label>
+                    <input type="checkbox" value="open" id="identity-header-account-menu-fallback" class="identity-header__nav-fallback u-h" title="Open Menu" />
+                    <ul class="identity-dropdown" id="my-account-dropdown" aria-hidden="true">
                     @for((item) <- accountDropdownMenu) {
                         <li
-                            class="@{(List("identity-dropdown__item") ++ item.parentClassList).mkString(" ")}""
+                            class="@{(List("identity-dropdown__item") ++ item.parentClassList).mkString(" ")}"
                         >
                             <a
                                 class="@{(List("identity-dropdown__title") ++ item.classList).mkString(" ")}"
@@ -35,13 +36,14 @@
                                     data-link-name="identity-nav : menu : @item.linkName"
                                 }
                             >
-                            @item.label
+                                @item.label
                             </a>
                         </li>
                     }
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
+        }
 
         <a href="@LinkTo {/}" data-link-name="site logo" id="logo" class="identity-header__logo" data-component="logo">
             <span class="u-h">The Guardian - Back to home</span>

@@ -116,6 +116,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     time {
         display: inline-block;
         margin-bottom: $gs-baseline/2;
+        color: $garnett-neutral-1;
     }
 }
 
@@ -173,7 +174,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 .block-time__link {
-    color: $neutral-1;
+    color: $garnett-neutral-1;
 }
 
 .updated-time {
@@ -309,7 +310,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     .liveblog-block-byline__name {
         @include fs-bodyCopy(2);
         display: inline;
-        color: $neutral-1;
+        color: $garnett-neutral-1;
     }
 
     .block-elements {
@@ -576,7 +577,7 @@ $timeline-width: 15px;
     &:hover,
     &:visited,
     &:active {
-        color: $neutral-1;
+        color: $garnett-neutral-1;
         text-decoration: none;
     }
 
@@ -601,7 +602,7 @@ $timeline-width: 15px;
             background-color: $neutral-2;
         }
         &.live-blog__key-event--selected:before {
-            background-color: $neutral-1;
+            background-color: $garnett-neutral-1;
         }
 
         .timeline__item:first-child &:before,
@@ -622,6 +623,10 @@ $timeline-width: 15px;
     width: gs-span(1);
     font-weight: bold;
 
+    time {
+        color: $garnett-neutral-1;
+    }
+
     .block-time__absolute,
     .timezone {
         display: none;
@@ -638,10 +643,7 @@ $timeline-width: 15px;
     @include fs-textSans(3);
     display: table-cell;
     border-color: $neutral-8;
-
-    .timeline__link:hover & {
-        border-color: $neutral-2;
-    }
+    color: $garnett-neutral-1;
 
     @include mq(desktop) {
         display: inline;
@@ -709,7 +711,7 @@ $timeline-width: 15px;
         }
         .player-card__position {
             @include fs-textSans(2);
-            color: $neutral-1;
+            color: $garnett-neutral-1;
             font-weight: 700;
         }
     }
@@ -777,7 +779,7 @@ $timeline-width: 15px;
             color: $neutral-2;
         }
         .content__headline {
-            color: $neutral-1;
+            color: #ffffff;
         }
     }
 }
@@ -813,13 +815,16 @@ $pillars: (
         }
 
         .tonal__standfirst {
-            background: lighten(map-get($palette, pillarColor), 10);
+            background: lighten(map-get($palette, pillarColor), 5);
         }
 
         .content__section-label__link[href] {
             color: map-get($palette, kickerColor);
         }
 
+        .timeline__link:hover & {
+            border-color: map-get($palette, pillarColor);
+        }
 
     }
 }

@@ -26,6 +26,7 @@ $height: $identity-header-height - ($gutter * 2);
 
     .gs-container {
         display: flex;
+        flex-direction: row-reverse;
         justify-content: space-between;
         align-items: center;
         padding-left: $gs-gutter / 2;
@@ -49,6 +50,7 @@ $height: $identity-header-height - ($gutter * 2);
 
 .identity-header__logo {
     float: right;
+    order: -99;
     svg {
         display: block;
         width: 160px;

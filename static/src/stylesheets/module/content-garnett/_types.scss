@@ -8,12 +8,15 @@ $quote-mark: 35px;
 .content--liveblog,
 .content--media,
 .content--type-analysis,
+.content--type-guardianview,
 .content--type-article,
 .content--type-comment,
 .content--type-feature,
+.content--type-matchreport,
 .content--type-live,
 .content--type-media,
-.content--type-review {
+.content--type-review,
+.content--type-immersive {
     // *************** Meta and Social ***************
     .submeta {
         @include multiline(4, $garnett-neutral-4, top);
@@ -463,20 +466,9 @@ $quote-mark: 35px;
         display: block;
     }
 
-    .media-primary .inline-expand-image {
-        display: none;
-    }
-
     .media-primary.media-primary--showcase {
         margin-left: 0;
         margin-right: 0;
-    }
-
-    .article__fullscreen:hover,
-    .article__img-container:hover .article__fullscreen,
-    .article__img-container:hover .gallery__fullscreen,
-    .gallery__fullscreen:hover {
-        background-color: $neutral-4;
     }
 
     .content__headline {
@@ -542,20 +534,14 @@ $quote-mark: 35px;
         color: $neutral-1;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
-        max-width: gs-span(3) - $gs-gutter;
-        @include mq(mobileMedium) {
-            max-width: gs-span(4)- $gs-gutter;
-        }
-        @include mq(mobileLandscape) {
-            max-width: gs-span(4);
-        }
+        max-width: 80%;
         @include mq(phablet) {
-            max-width: gs-span(5);
+            max-width: gs-span(6);
             margin-left: 20px;
             margin-bottom: $gs-baseline*2;
         }
         @include mq(tablet) {
-            max-width: gs-span(6);
+            max-width: gs-span(7);
             margin-left: 0;
         }
         @include mq(leftCol) {
@@ -815,6 +801,7 @@ $quote-mark: 35px;
 }
 // *************** Opinion Styles ***************
 
+.content--type-guardianview,
 .content--type-comment {
     .content__head {
         overflow: hidden;
@@ -1088,6 +1075,14 @@ $quote-mark: 35px;
     }
     // *************** Gallery overrides ***************
     &.content--gallery {
+        .meta__twitter {
+            margin-top: $gs-baseline / 2;
+            .button:hover,
+            .button:focus {
+                border-width: 0;
+            }
+        }
+
         .content__dateline {
             background-image: none;
         }
@@ -1096,15 +1091,18 @@ $quote-mark: 35px;
             border: 0;
         }
 
-        .gallery__meta-container,
         .meta__numbers,
         .meta__social {
             background-image: none;
             padding-top: 0;
-
+            
             &::before {
                 content: none;
             }
+        }
+
+        .gallery__meta-container {
+            background-image: none;
         }
 
         .gallery:before,
@@ -1117,12 +1115,6 @@ $quote-mark: 35px;
                 max-width: gs-span(8);
             }
         }
-    }
-}
-
-.immersive-main-media__headline-container {
-    .content__series-label__link {
-        color: $garnett-neutral-3;
     }
 }
 
@@ -1148,8 +1140,13 @@ $quote-mark: 35px;
         @include mq(wide) {
             margin: 0 auto;
         }
+
+        .caption--main {
+            padding-left: $gs-gutter / 2;
+        }
     }
 }
+
 // *************** Analysis ***************
 
 .content--type-analysis {
@@ -1193,6 +1190,7 @@ $quote-mark: 35px;
 }
 // *************** Opinion quote weight overrides ***************
 
+.content--type-guardianview,
 .content--type-comment {
     .element-pullquote.element--supporting .pullquote-cite,
     .element-pullquote.element--supporting .pullquote-paragraph {
@@ -1201,14 +1199,15 @@ $quote-mark: 35px;
 }
 // *************** Opinion and Feature standfirst overrides ***************
 
+.content--type-guardianview,
 .content--type-comment,
 .content--type-feature,
 .content--type-review {
     .content__standfirst {
-        @include fs-headlineGarnett(1);
+        @include fs-headlineGarnett(0);
         font-weight: 200;
         @include mq(tablet) {
-            @include fs-headlineGarnett(2);
+            @include fs-headlineGarnett(1);
         }
     }
 }

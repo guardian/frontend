@@ -11,12 +11,17 @@ import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import html.HtmlPageHelpers.ContentCSSFile
+import views.html.stacked
 
 object IdentityHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink("identity")
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
+    override def criticalCssLink: Html = stacked(
+      criticalStyleLink("identity"),
+      criticalStyleLink(InlineNavigationCSSFile))
+    override def criticalCssInline: Html = criticalStyleInline(
+      Html(common.Assets.css.head(None)),
+      Html(common.Assets.css.inlineNavigation))
     override def linkCss: Html = HtmlFormat.fill(List(
       stylesheetLink(s"stylesheets/$ContentCSSFile.css"),
       stylesheetLink(s"stylesheets/membership-icons.css")
@@ -40,7 +45,7 @@ object IdentityHtmlPage {
       ),
       bodyTag(classes = defaultBodyClasses())(
         skipToMainContent(),
-        views.html.layout.identityHeader(),
+        views.html.layout.identityHeader(hideNavigation=page.isFlow),
         content,
         inlineJSNonBlocking(),
         footer() when !page.isFlow,

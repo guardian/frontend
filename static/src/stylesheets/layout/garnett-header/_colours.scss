@@ -1,0 +1,119 @@
+@mixin PillarColourOne ($colourOne) {
+    .subnav__item--parent:after {
+        border-left-color: $colourOne;
+    }
+
+    .dropdown-menu__title--active:after {
+        border-color: $colourOne;
+    }
+
+    .subnav-link {
+        &:hover,
+        &:focus {
+            color: $colourOne;
+        }
+    }
+
+    .top-bar__item--cta {
+        &:hover,
+        &:focus {
+            & .top-bar__item--cta--circle:before {
+                background-color: $colourOne;
+            }
+        }
+    }
+}
+
+.new-header--news {
+    @include PillarColourOne($news-garnett-main-1);
+}
+
+.new-header--opinion {
+    @include PillarColourOne($opinion-garnett-main-1);
+}
+
+.new-header--sport {
+    @include PillarColourOne($sport-garnett-main-1);
+}
+
+.new-header--arts {
+    @include PillarColourOne($arts-garnett-main-1);
+}
+
+.new-header--lifestyle {
+    @include PillarColourOne($lifestyle-garnett-main-1);
+}
+
+.menu-group {
+    .menu-item:first-child > .menu-group .menu-item__title:hover,
+    .menu-item:first-child > .menu-group .menu-item__title:focus,
+    .menu-item__title--news {
+        color: $news-garnett-main-1;
+    }
+
+    .menu-item:nth-child(2) > .menu-group .menu-item__title:hover,
+    .menu-item:nth-child(2) > .menu-group .menu-item__title:focus,
+    .menu-item__title--opinion {
+        color: $opinion-garnett-main-1;
+    }
+
+    .menu-item:nth-child(3) > .menu-group .menu-item__title:hover,
+    .menu-item:nth-child(3) > .menu-group .menu-item__title:focus,
+    .menu-item__title--sport {
+        color: $sport-garnett-main-1;
+    }
+
+    .menu-item:nth-child(4) > .menu-group .menu-item__title:hover,
+    .menu-item:nth-child(4) > .menu-group .menu-item__title:focus,
+    .menu-item__title--arts {
+        color: $arts-garnett-main-1;
+    }
+
+    .menu-item:nth-child(5) > .menu-group .menu-item__title:hover,
+    .menu-item:nth-child(5) > .menu-group .menu-item__title:focus,
+    .menu-item__title--lifestyle {
+        color: $lifestyle-garnett-main-1;
+    }
+}
+
+.pillar-link {
+    &.pillar-link--news {
+        color: $news-garnett-main-1;
+
+        &:after {
+            border-color: $news-garnett-feature;
+        }
+    }
+
+    &.pillar-link--opinion {
+        color: $opinion-garnett-main-1;
+
+        &:after {
+            border-color: $opinion-garnett-feature;
+        }
+    }
+
+    &.pillar-link--sport {
+        color: $sport-garnett-main-1;
+
+        &:after {
+            border-color: $sport-garnett-feature;
+        }
+    }
+
+    &.pillar-link--arts {
+        color: $arts-garnett-main-1;
+
+        &:after {
+            border-color: $arts-garnett-feature;
+        }
+    }
+
+    &.pillar-link--lifestyle {
+        color: $lifestyle-garnett-main-1;
+
+        &:after {
+            border-color: $lifestyle-garnett-feature;
+        }
+    }
+}
