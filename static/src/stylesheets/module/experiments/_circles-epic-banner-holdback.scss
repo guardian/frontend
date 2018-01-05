@@ -7,6 +7,10 @@
 
     .contributions__contribute--epic {
         background-color: $multimedia-main-2;
+
+        &:hover {
+            background-color: darken($multimedia-main-2, 5%);
+        }
     }
 }
 
