@@ -6,7 +6,7 @@
 
 @()(implicit page: ContentPage, request: RequestHeader)
 
-<div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media">
+<div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media immersive-main-media__gallery">
 
     @if(isPaidContent(page)) {
         @fragments.guBand()

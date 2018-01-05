@@ -15,7 +15,8 @@ $quote-mark: 35px;
 .content--type-matchreport,
 .content--type-live,
 .content--type-media,
-.content--type-review {
+.content--type-review,
+.content--type-immersive {
     // *************** Meta and Social ***************
     .submeta {
         @include multiline(4, $garnett-neutral-4, top);
@@ -1114,12 +1115,6 @@ $quote-mark: 35px;
                 max-width: gs-span(8);
             }
         }
-    }
-}
-
-.immersive-main-media__headline-container {
-    .content__series-label__link {
-        color: $garnett-neutral-3;
     }
 }
 

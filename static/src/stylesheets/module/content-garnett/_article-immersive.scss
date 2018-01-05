@@ -188,15 +188,6 @@
 
     @include mq(desktop) {
         padding-bottom: 1rem;
-
-        &:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            height: 2px;
-            width: gs-span(2);
-            background-color: rgba(255, 255, 255, .2);
-        }
     }
 
     .u-underline {
@@ -553,7 +544,9 @@
         }
     }
 
-    .element--showcase {
+    .element--showcase,
+    .element--inline,
+    .element--halfWidth {
         float: none;
     }
 
@@ -567,3 +560,193 @@
         }
     }
 }
+
+//overides the immersive article — done like this to keep gallery's and photo eassy in ok shape
+.content--immersive:not(.immersive-main-media__gallery) {
+    &.immersive-main-media {
+        @include mq(wide) {
+            min-height: 600px;
+        }
+    }
+    .content__article-body {
+        @include mq($from: desktop) {
+            margin-left: -$gs-gutter / 2;
+        }
+    }
+    .immersive-main-media__headline-container {
+        margin-top: -124px;
+        position: relative;
+        background: transparent;
+
+        &:after {
+            position: absolute;
+            content: '';
+            display: none;
+            width: 50%;
+            right: 0;
+            background-color: $garnett-neutral-1;
+            z-index: 0;
+            top: 0;
+            bottom: 0;
+
+            @include mq($from: mobileLandscape) {
+                display: block;
+            }
+        }
+
+        .gs-container {
+            padding: 0;
+        }
+
+        .content__labels {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            overflow: visible;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .content__series-label--immersive-article {
+            display: block;
+            float: none;
+        }
+
+        .content__series-label__link {
+            font-size: 36px;
+            line-height: 1;
+
+            @include mq(desktop) {
+                font-size: 50px;
+                line-height: 50px;
+            }
+        }
+
+        .content__main-column {
+            background-color: $garnett-neutral-1;
+            z-index: 10;
+            position: relative;
+            padding-left: $gs-baseline;
+            left: -$gs-baseline / 2;
+            padding-top: $gs-baseline / 2;
+            //This allows the headline block to be aligned to the left and not run full width
+            width: 94%;
+            padding-bottom: $gs-baseline * 2;
+
+            @include mq($from: tablet) {
+                width: 100%;
+                left: $gs-baseline / 2;
+            }
+            @include mq($from: desktop) {
+                left: $gs-gutter / 2;
+            }
+        }
+    }
+
+    .content__headline--immersive {
+        @include fs-headline(7, true);
+        line-height: 1.1;
+        color: #ffffff;
+        padding: 0;
+        padding-bottom: $gs-baseline * 2;
+        font-weight: 700;
+
+        @include mq(desktop) {
+            font-size: 50px;
+        }
+    }
+
+    .content__standfirst--immersive-article {
+        @include fs-headline(1);
+        position: relative;
+        padding-left: 0px;
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 200;
+        margin-top: $gs-baseline / 2;
+        max-width: 280px;
+        margin-bottom: $gs-baseline;
+        margin-left: 0px;
+
+        @include mq($from: tablet) {
+            max-width: 400px;
+            font-size: 22px;
+            line-height: 25px;
+            margin-top: 0;
+        }
+
+        @include mq(desktop) {
+            max-width: 460px;
+            padding-bottom: 1rem;
+            margin-bottom: -$gs-baseline / 2;
+            margin-top: $gs-baseline / 2;
+        }
+
+        //this is immersive specific to connect the vertical rule to the top of the page
+        &:before {
+            position: absolute;
+            top: -$gs-baseline * 3;
+            bottom: -$gs-baseline * 2;
+            left: -$gs-gutter / 2;
+            width: 1px;
+            background-color: $garnett-neutral-4;
+            content: '';
+            display: none;
+            @include mq($from: leftCol) {
+                display: block;
+                bottom: -$gs-baseline * 3;
+            }
+        }
+    }
+    .content__meta-container {
+        &:before {
+            display: none;
+        }
+
+        .content__dateline {
+            display: block;
+            margin-left: auto;
+            width: 28%;
+
+            @include mq($from: leftCol) {
+                width: 100%;
+                margin: auto;
+            }
+        }
+    }
+    .drop-cap {
+        height: 7.25em;
+
+        .drop-cap__inner {
+            font-weight: 900;
+            font-size: 9.5em;
+            line-height: .7; // To optically align to top of five lines of text
+        }
+    }
+}
+
+
+//variable pillar colours
+
+@mixin immersivePillarColours($pillar, $color, $color2) {
+    .content--pillar-#{$pillar}.content--immersive-article {
+        .content__series-label--immersive-article {
+            .content__series-label__link {
+                color: $color;
+            }
+        }
+        .u-underline {
+            color: $color2;
+            border-bottom: 1px solid rgba($color2, .4);
+
+            &:hover {
+                border-bottom-color: rgba($color2, 1);
+            }
+        }
+    }
+}
+
+@include immersivePillarColours('news', $news-garnett-media-main-1, $news-garnett-main-1);
+@include immersivePillarColours('opinion', $opinion-garnett-media-main-1, $opinion-garnett-main-1);
+@include immersivePillarColours('sport', $sport-garnett-media-main-1, $sport-garnett-main-1);
+@include immersivePillarColours('arts', $arts-garnett-media-main-1, $arts-garnett-main-1);
+@include immersivePillarColours('lifestyle', $lifestyle-garnett-media-main-1, $lifestyle-garnett-main-1);
