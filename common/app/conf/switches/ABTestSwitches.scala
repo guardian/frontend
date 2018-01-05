@@ -128,8 +128,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-circles-epic-banner-holdback",
-    "A holdback for the epic and banner colour changes",
+    "ab-circles-epic-holdback",
+    "A holdback for the epic colour changes",
     owners = Seq(Owner.withGithub("Ap0c")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 15),

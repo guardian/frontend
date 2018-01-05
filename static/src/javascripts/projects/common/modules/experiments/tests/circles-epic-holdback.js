@@ -6,15 +6,15 @@ import {
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { control } from 'common/modules/commercial/acquisitions-copy';
 
-export const circlesEpicBannerHoldback = makeABTest({
-    id: 'CirclesEpicBannerHoldback',
-    campaignId: 'circles_epic_banner_holdback',
+export const circlesEpicHoldback = makeABTest({
+    id: 'CirclesEpicHoldback',
+    campaignId: 'circles_epic_holdback',
 
     start: '2018-01-05',
     expiry: '2018-02-15',
 
     author: 'Ap0c',
-    description: 'A holdback for the epic and banner colour changes',
+    description: 'A holdback for the epic colour changes',
     successMeasure: 'Who knows',
     idealOutcome: 'No drop-off in conversions either way',
     audienceCriteria: 'All',

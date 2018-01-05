@@ -14,14 +14,14 @@ import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicTestimonialsGroup } from 'common/modules/experiments/tests/acquisitions-epic-testimonials-group';
-import { circlesEpicBannerHoldback } from 'common/modules/experiments/tests/circles-epic-banner-holdback';
+import { circlesEpicHoldback } from 'common/modules/experiments/tests/circles-epic-holdback';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
-    circlesEpicBannerHoldback,
+    circlesEpicHoldback,
     acquisitionsEpicUSGunCampaign,
     acquisitionsEpicTestimonialsGroup,
     askFourEarning,
