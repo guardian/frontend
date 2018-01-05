@@ -438,15 +438,19 @@
 }
 
 .manage-account__button {
-    @include fs-textSans(2);
+    $font-size: 2;
+    $height: $gs-gutter * 2;
+    $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
+    $padding-horizontal: $gs-gutter;
+    @include fs-textSans($font-size);
     background-color: $identity-main;
-    height: $gs-gutter * 2;
+    height: $height;
     border-radius: 100px;
     border: 0;
     color: #ffffff;
     cursor: pointer;
     float: left;
-    padding: 0 $gs-gutter;
+    padding: $padding-vertical $padding-horizontal;
     min-width: $gs-baseline * 14;
     white-space: nowrap;
     text-overflow: clip;
@@ -516,6 +520,8 @@
 }
 
 .manage-account__button--icon {
+    padding-top: 0;
+    padding-bottom: 0;
     &, & > .manage-account__button-flexwrap {
         justify-content: space-between;
     }
@@ -524,11 +530,6 @@
         svg {
             width: 28px;
             height: 28px;
-        }
-    }
-    &.manage-account__button--icon--rotate-down {
-        .inline-icon {
-            transform: rotate(90deg);
         }
     }
 }

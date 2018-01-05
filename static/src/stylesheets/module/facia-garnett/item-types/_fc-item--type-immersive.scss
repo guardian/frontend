@@ -12,6 +12,13 @@
         z-index: 1;
     }
 
+    //Todo better way to get this immersive card type to set the height when sublinks. This is fixed height enough to fit two lines of sublink
+    &.fc-item--has-sublinks-2 .fc-item__content {
+        @include mq($from: tablet) {
+            padding-bottom: $gs-gutter * 3.6;
+        }
+    }
+
     .fc-item__content {
         position: absolute;
         left: 0;
@@ -33,9 +40,18 @@
         display: none;
     }
 
+    .fc-sublink__title {
+        color: #ffffff;
+    }
+
     // ensures image is positioned relative to fc-item__container
     .u-responsive-ratio {
         position: static;
+    }
+
+    .fc-item__footer--horizontal {
+        position: absolute;
+        bottom: 0;
     }
 
 }

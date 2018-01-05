@@ -13,9 +13,9 @@ $font-scale: (
     headerGarnett: (
         1: (font-size: 14, line-height: 18),
         2: (font-size: 16, line-height: 20),
-        3: (font-size: 18, line-height: 20),
+        3: (font-size: 18, line-height: 22),
         4: (font-size: 20, line-height: 24),
-        5: (font-size: 22, line-height: 24),
+        5: (font-size: 22, line-height: 26),
     ),
     headline: (
         1: (font-size: 14, line-height: 18),
@@ -29,6 +29,7 @@ $font-scale: (
         9: (font-size: 44, line-height: 48),
     ),
     headlineGarnett: (
+        0: (font-size: 18, line-height: 22),
         1: (font-size: 20, line-height: 24),
         2: (font-size: 22, line-height: 26),
         3: (font-size: 26, line-height: 30),

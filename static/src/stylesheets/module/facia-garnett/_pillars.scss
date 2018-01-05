@@ -105,13 +105,18 @@ $pillars: (
     &.fc-item--audio .fc-item__kicker,
     &.fc-item--gallery .fc-item__kicker,
     &.fc-item--video .fc-item__kicker,
-    &.video-playlist__item .fc-item__kicker
+    &.video-playlist__item .fc-item__kicker,
+    &.fc-item--type-immersive .fc-item__kicker
     {
         color: map-get($palette, invertedKicker);
     }
 
     .fc-item__standfirst {
         color: $headline;
+    }
+
+    &.fc-item--type-immersive .fc-item__standfirst {
+        color: #ffffff;
     }
 
     .fc-item__sublinks {
@@ -159,12 +164,12 @@ $pillars: (
         }
     }
 
-    &.fc-item--type-media {
+    &.fc-item--type-media,
+    &.fc-item--type-immersive {
         .fc-sublink__kicker {
-            color: map-get($palette, kicker);
+            color: map-get($palette, invertedKicker);
         }
     }
-
 
     .fc-item__media-meta {
         color: map-get($palette, invertedKicker);

@@ -115,6 +115,8 @@ object NavLinks {
   val relationshipsAu = NavLink("relationships", "/au/lifeandstyle/relationships")
   val loveAndSex = NavLink("love & sex", "/lifeandstyle/love-and-sex")
   val family = NavLink("family", "/lifeandstyle/family")
+  val beauty = NavLink("beauty", "/fashion/beauty")
+  val cars = NavLink("cars", "/technology/motoring")
   val home = NavLink("home & garden", "/lifeandstyle/home-and-garden")
   val health = NavLink("health & fitness", "/lifeandstyle/health-and-wellbeing")
   val healthAu = NavLink("health & fitness", "/au/lifeandstyle/health-and-wellbeing")
@@ -374,11 +376,12 @@ object NavLinks {
       recipes,
       ukTravel,
       loveAndSex,
-      family,
+      beauty,
       home,
       health,
       women,
-      money
+      money,
+      cars
     )
   )
   val auLifestylePillar = ukLifestylePillar.copy(
@@ -573,6 +576,8 @@ object NavLinks {
     "crosswords/series/genius",
     "crosswords/series/speedy",
     "crosswords/series/everyman",
-    "crosswords/series/azed"
+    "crosswords/series/azed",
+    "fashion/beauty",
+    "technology/motoring"
   )
 }
