@@ -267,6 +267,7 @@
 }
 
 .rich-link {
+    &,
     &.rich-link--pillar-news {
         @include richLink($news-garnett-main-1, $garnett-neutral-3);
     }
