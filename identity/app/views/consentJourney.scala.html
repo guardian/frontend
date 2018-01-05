@@ -120,8 +120,8 @@
 @marketingConsentThankYouStep = @{
     ConsentStep(
         name = "consent-thank-you",
-        title = "Thank you for signing up",
-        help = List("While you are here, you can tell us what you’re interested in, so we can send you emails that we think you’ll find useful."),
+        title = "Thank you",
+        help = List("Your email choices have now been recorded. While you're here, feel free to have a look at other Guardian content that might interest you."),
         content = marketingStepContent
     )
 }
@@ -209,7 +209,7 @@
         case "thank-you" => {
             List(
                 marketingConsentThankYouStep,
-                emailRepermissionStep,
+                emailRepermissionOrSignupStep,
                 channelStep
             )
         }
