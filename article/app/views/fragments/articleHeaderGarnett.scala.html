@@ -107,5 +107,18 @@
         </div>
     </div>
     @fragments.contentMeta(article, page, amp = amp)
+    @if((article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
+    <div class="media-primary media-content  media-primary--showcase  ">
+        @article.content.starRating.map { rating =>
+            <span class="u-h" articleprop="reviewRating" articlescope articletype="http://schema.org/Rating">
+                <meta articleprop="worstRating" content="1" />
+                <span articleprop="ratingValue">@rating</span> /
+                <span articleprop="bestRating">5</span> stars
+            </span>
+
+        @fragments.items.elements.starRating(rating)
+        }
+    }
     @fragments.mainMedia(article, amp)
+    @if((article.tags.isFeature && article.elements.hasShowcaseMainElement)) {</div>}
 </header>
