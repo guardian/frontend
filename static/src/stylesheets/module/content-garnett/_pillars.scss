@@ -103,27 +103,28 @@
     }
 }
 //////** Discussion (comment) styling **//////////
+//d-comment__author a[href], ._underline_1lj47_3, .js-discussion-author-link
+// #? temporary fix: this class is in the comment.js template (line 139)
+// we can get rid of it once we clean up the pre-garnett code
 @mixin footerPalette($kickerColor) {
-    .d-comment__author a[href], ._underline_1lj47_3,
-    //.discussion a[href],
-    // #? temporary fix: this class is in the comment.js template (line 139)
-    // we can get rid of it once we clean up the pre-garnett code
+    ._underline_1lj47_3,
     .button--tone-news,
     .d-comment__action,
+    .d-comment__author a[href],
     .d-comment__reply-to-author,
     .js-discussion-author-link {
         color: $kickerColor;
+    }
+
+    ._underline_1lj47_3:focus,
+    ._underline_1lj47_3:hover {
+        border-color: $kickerColor;
     }
 
     .comment-share-icon,
     .d-show-more-replies__button.button--show-more svg {
         fill: $garnett-neutral-6;
         left: $gs-gutter/3;
-    }
-
-    .container__meta,
-    .container__meta__title {
-        color: $garnett-neutral-1;
     }
 
     .discussion__top-border {
@@ -140,6 +141,16 @@
     .button--primary:hover {
         background-color: darken($kickerColor, 10%);
         border-color: darken($kickerColor, 10%);
+    }
+
+    .button--tertiary:active,
+    .button--tertiary:focus {
+        color: $kickerColor;
+    }
+
+    .d-show-more-replies__button {
+        border: 1px solid $garnett-neutral-4;
+        background: $garnett-neutral-5;
     }
 
     .button--show-more svg {
