@@ -1,17 +1,21 @@
+//TODO: most of this is not actually needed post-switch it's just overrides
+
 .identity-wrapper-for-bg {
     @include clearfix();
-    background: $neutral-8;
     .tabs__container {
         margin: $gs-gutter * 2 auto 0;
+        .tabs__tab a {
+            font-weight: 500!important;
+            /*text can't fit otherwise*/
+        }
     }
     .tabs__content {
-        margin: $gs-gutter * 3 auto;
+        margin: $gs-gutter * 2 auto;
         border: 0;
     }
     .gs-container {
         @include clearfix();
-        background: #ffffff;
-        overflow: hidden;
+        max-width: none;
     }
     .monocol-wrapper {
         max-width: gs-span(10);
@@ -20,22 +24,15 @@
             padding: 0 $gs-gutter * 1;
         }
     }
-    &.identity-wrapper-for-bg--overflows {
-        .gs-container {
-            overflow: visible;
-        }
-    }
     &.identity-wrapper-for-bg--header {
-        background: darken($neutral-8, 5%);
+        border-bottom: 1px solid $neutral-5;
         .monocol-wrapper {
             padding-bottom: 0;
             overflow: hidden;
         }
         .gs-container {
-            background: darken(#ffffff, 5%);
-            padding-top: $gs-gutter;
+            padding-top: $gs-gutter / 2;
         }
-
     }
 }
 
@@ -43,8 +40,8 @@
     margin-left: auto;
     margin-right: auto;
     max-width: gs-span(6);
-    padding-bottom: $gs-baseline*4;
-    padding-top: $gs-baseline * 2;
+    padding-bottom: $gs-baseline * 2;
+    padding-top: $gs-baseline / 2;
 
     &.identity-wrapper--with-wizard {
         padding-bottom: 0;
