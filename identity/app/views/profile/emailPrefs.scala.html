@@ -26,7 +26,12 @@
     <fieldset class="fieldset fieldset--manage-account-noborder">
         <div class="fieldset__heading">
             <h2 class="form__heading">Your newsletters</h2>
-            <p class="form__note">Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below.</p>
+            <p class="form__note">
+                Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below.
+            </p>
+            <p class="form__note">
+                The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.
+            </p>
         </div>
         <div class="fieldset__fields">
             @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions)(request, messages)
