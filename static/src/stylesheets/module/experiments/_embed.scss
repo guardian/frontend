@@ -162,10 +162,10 @@
 a[href].contributions__contribute.contributions__contribute--epic {
     margin-top: 0;
     background-color: $news-garnett-highlight;
-    color: $neutral-1;
+    color: $garnett-neutral-1;
     &:hover {
-        color: $neutral-1;
-        background-color: darken($multimedia-main-2, 5%);
+        background-color: #b3a000;
+        color: $garnett-neutral-1;
     }
 
     &:after {
