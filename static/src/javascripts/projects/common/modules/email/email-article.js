@@ -46,6 +46,8 @@ const insertBottomOfArticle = ($iframeEl: bonzo): void => {
 };
 
 const listConfigs: ListConfigs = {
+    /* The difference between listName and identityListName:
+     listName is a reference used in the javascript for legacy reasons where as the identityListName is is the name stored in the identity model and used in the backend. */
     theFilmToday: {
         listId: '1950',
         listName: 'theFilmToday',
