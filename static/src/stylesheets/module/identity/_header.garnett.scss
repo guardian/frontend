@@ -1,4 +1,4 @@
-$gutter: 4px;
+$gutter: 6px;
 $height: $identity-header-height - ($gutter * 2);
 
 $nav-background-colour: mix($sport-garnett-main-1, $neutral-7, 4%); // BG of the nav & menu
@@ -79,7 +79,6 @@ html body .identity-header__logo {
     cursor: pointer;
     padding: 0;
     height: $height;
-    line-height: $height;
     white-space: nowrap;
     display: block;
     transition: .25s ease-out;
