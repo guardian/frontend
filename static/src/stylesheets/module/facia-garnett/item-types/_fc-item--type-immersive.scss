@@ -12,6 +12,13 @@
         z-index: 1;
     }
 
+    //Todo better way to get this immersive card type to set the height when sublinks. This is fixed height enough to fit two lines of sublink
+    &.fc-item--has-sublinks-2 .fc-item__content {
+        @include mq($from: tablet) {
+            padding-bottom: $gs-gutter * 3.6;
+        }
+    }
+
     .fc-item__content {
         position: absolute;
         left: 0;
@@ -33,9 +40,18 @@
         display: none;
     }
 
+    .fc-sublink__title {
+        color: #ffffff;
+    }
+
     // ensures image is positioned relative to fc-item__container
     .u-responsive-ratio {
         position: static;
+    }
+
+    .fc-item__footer--horizontal {
+        position: absolute;
+        bottom: 0;
     }
 
 }
@@ -48,21 +64,13 @@
         right: 0;
     }
 
-    &.fc-item--half-tablet {
-        @include mq($from: tablet) {
-            .u-responsive-ratio {
-                padding-bottom: 100%;
-            }
-        }
-    }
-
     &.fc-item--three-quarters-tall-tablet {
         @include mq($from: tablet) {
             .u-responsive-ratio {
                 padding-bottom: 80%;
             }
         }
-    }  
+    }
 
     &.fc-item--standard-mobile {
         @include mq($from: mobile, $until: tablet) {
@@ -75,12 +83,12 @@
 
 @mixin immersiveLeft() {
     @include immersiveCommon();
-    
+
     .fc-item__content {
         bottom: 0;
         top: 0;
     }
-    
+
 
     .u-responsive-ratio {
         padding-bottom: 45%;
@@ -89,14 +97,14 @@
 
 @mixin immersiveRight() {
     @include immersiveCommon();
-    
+
     .fc-item__content {
         left: auto;
         right: 0;
         bottom: 0;
         top: 0;
     }
-    
+
 
     .u-responsive-ratio {
         padding-bottom: 45%;
@@ -104,7 +112,7 @@
 }
 
 .fc-item--type-immersive {
-    
+
     .fc-item__kicker:before,
     .fc-item__kicker:after {
         content: none;
@@ -133,13 +141,13 @@
             @include immersiveBottom();
         }
     }
-    
+
     &.fc-item--three-quarters-tablet {
         @include mq($from: tablet) {
             @include immersiveLeft();
         }
     }
-    
+
     &.fc-item--three-quarters-right-tablet {
         @include mq($from: tablet) {
             @include immersiveRight();
