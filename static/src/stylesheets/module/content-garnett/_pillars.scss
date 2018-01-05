@@ -151,6 +151,11 @@
     .d-show-more-replies__button {
         border: 1px solid $garnett-neutral-4;
         background: $garnett-neutral-5;
+        &:focus,
+        &:hover {
+            border: 1px solid darken($garnett-neutral-4, 20%);
+            background: $garnett-neutral-5;
+        }
     }
 
     .button--show-more svg {
