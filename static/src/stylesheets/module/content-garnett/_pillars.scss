@@ -110,7 +110,8 @@
     // we can get rid of it once we clean up the pre-garnett code
     .button--tone-news,
     .d-comment__action,
-    .d-comment__reply-to-author {
+    .d-comment__reply-to-author,
+    .d-comment__reply-to-author a {
         color: $kickerColor;
     }
 
@@ -134,8 +135,50 @@
         border-color: $kickerColor;
     }
 
+    .button--primary:active,
+    .button--primary:focus,
+    .button--primary:hover {
+        background-color: darken($kickerColor, 10%);
+        border-color: darken($kickerColor, 10%);
+    }
+
     .button--show-more svg {
         left: $gs-gutter/2;
+    }
+
+    .block-share__item,
+    .inline-close,
+    .social-icon,
+    .social-icon.social-icon--more {
+        background-color: transparent;
+        border: 1px solid $neutral-4;
+
+        &:focus,
+        &:hover {
+            svg {
+                fill: $garnett-neutral-5;
+            }
+        }
+    }
+
+    .block-share__item .inline-icon,
+    .inline-close svg,
+    .inline-tone-fill,
+    .old-article-message .old-article-message--clock svg,
+    .social-icon svg,
+    .social-icon__svg {
+        fill: $kickerColor;
+    }
+
+    .block-share__item,
+    .meta__twitter a,
+    .social-icon,
+    .social-icon.social-icon--more {
+        &:focus,
+        &:hover {
+            background-color: $kickerColor;
+            border: 1px solid $kickerColor;
+        }
     }
 }
 @mixin richLink($pillarColor, $cardBackground) {
