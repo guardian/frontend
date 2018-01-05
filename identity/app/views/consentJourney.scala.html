@@ -172,7 +172,7 @@
         @fragments.form.hidden(emailPrefsForm("htmlPreference"))
 
         <div class="manage-account__switches">
-        @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions,true)(request, messages)
+            @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions)(request, messages)
         </div>
     </form>
 }
