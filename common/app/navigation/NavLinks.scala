@@ -180,12 +180,13 @@ object NavLinks {
     List(
       ukNews,
       world,
-      ukBusiness,
-      football,
-      ukEnvironment,
-      tech,
       politics,
+      football,
+      ukBusiness,
+      ukEnvironment,
+      education,
       science,
+      tech,
       globalDevelopment,
       cities,
       obituaries
@@ -324,13 +325,13 @@ object NavLinks {
   // Arts Pillar
   val ukArtsPillar = NavLink("Arts", "/culture", longTitle = "Culture home", iconName = "home",
     List(
-      tvAndRadio,
-      music,
       film,
-      stage,
+      music,
+      tvAndRadio,
       books,
-      games,
       artAndDesign,
+      stage,
+      games,
       classical
     )
   )
@@ -377,11 +378,11 @@ object NavLinks {
       food,
       recipes,
       ukTravel,
+      health,
+      women,
       loveAndSex,
       beauty,
       home,
-      health,
-      women,
       money,
       cars
     )
