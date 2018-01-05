@@ -163,6 +163,11 @@ a[href].contributions__contribute.contributions__contribute--epic {
     margin-top: 0;
     background-color: $news-garnett-highlight;
     color: $garnett-neutral-1;
+
+    svg path {
+        fill: $garnett-neutral-1; 
+    }
+
     &:hover {
         background-color: #b3a000;
         color: $garnett-neutral-1;
