@@ -6,7 +6,7 @@
 @import form.IdFormHelpers.nonInputFields
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.fragment.Switch._
-@import views.support.fragment.ConsentStep
+@import views.support.fragment.ConsentStep._
 @import views.support.fragment.ConsentChannel._
 @import conf.switches.Switches.IdentityShowCommunicationChannelConsents
 @import common.LinkTo
@@ -43,10 +43,17 @@
                 @if(step.help) {
                     <div class="identity-forms-wrapper__title">
                         @step.help.map(paragraph =>
-                            Html(s"<p class='identity-title-explainer'>$paragraph</p>")
+                            paragraph match {
+                                case m: ConsentStepHelpLegalText => {
+                                    Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
+                                }
+                                case m: ConsentStepHelpText => {
+                                    Html(s"<p class='identity-title-explainer'>${m.text}</p>")
+                                }
+                            }
                         )
                         @if(index.contains(0)) {
-                            <p class='identity-title-explainer'>
+                            <p class='identity-title-explainer identity-title-explainer--small'>
                                 By continuing you are confirming that you are aged over 13.
                             </p>
                         }
@@ -85,7 +92,9 @@
     ConsentStep(
         name = "channels",
         title = "How else can we get in touch with you?",
-        help = List("Besides email, are there any other ways you would like us to get in touch with you?"),
+        help = List(
+            ConsentStepHelpText("Besides email, are there any other ways you would like us to get in touch with you?")
+        ),
         content = channelStepContent,
         show = IdentityShowCommunicationChannelConsents.isSwitchedOn && channelsProvidedBy(user).nonEmpty
     )
@@ -115,7 +124,7 @@
     ConsentStep(
         name = "consent",
         title = "What would you like to hear about?",
-        help = List("Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful."),
+        help = List(ConsentStepHelpText("Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.")),
         content = marketingStepContent
     )
 }
@@ -123,7 +132,9 @@
     ConsentStep(
         name = "consent-repermission",
         title = "We need you to consent again to receiving communications from the Guardian",
-        help = List("Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful."),
+        help = List(
+            ConsentStepHelpText("Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.")
+        ),
         content = marketingStepContent
     )
 }
@@ -131,7 +142,9 @@
     ConsentStep(
         name = "consent-thank-you",
         title = "Thank you",
-        help = List("Your email choices have now been recorded. While you're here, feel free to have a look at other Guardian content that might interest you."),
+        help = List(
+            ConsentStepHelpText("Your email choices have now been recorded. While you're here, feel free to have a look at other Guardian content that might interest you.")
+        ),
         content = marketingStepContent
     )
 }
@@ -160,7 +173,10 @@
     ConsentStep(
         name = "email",
         title = "Your existing newsletters",
-        help = List("You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.","The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements."),
+        help = List(
+            ConsentStepHelpText("You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them."),
+            ConsentStepHelpLegalText("The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.")
+        ),
         content = emailRepermissionStepContent,
         show = onlySubscribedToV1Newsletters.nonEmpty
     )
@@ -180,7 +196,10 @@
     ConsentStep(
         name = "email-signup",
         title = "Your newsletters",
-        help = List("Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below.","The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements."),
+        help = List(
+            ConsentStepHelpText("Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below."),
+            ConsentStepHelpLegalText("The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.")
+        ),
         content = emailSignupStepContent,
         show = true
     )

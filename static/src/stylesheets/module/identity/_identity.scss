@@ -132,6 +132,10 @@ $identity-header-height: 48px;
 .identity-title-explainer {
     @include fs-bodyCopy(1);
     margin-bottom: $gs-baseline;
+    &.identity-title-explainer--small {
+        @include fs-textSans(1);
+        color: $neutral-2;
+    }
 }
 
 .identity-title--public-profile {
