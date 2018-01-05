@@ -1,0 +1,131 @@
+$gutter: 4px;
+$height: $identity-header-height - ($gutter * 2);
+
+$nav-background-colour: mix($sport-garnett-main-1, $neutral-7, 4%); // BG of the nav & menu
+$rule: darken($nav-background-colour, 20%); // All borders on the nav
+
+.identity-header {
+    @include clearfix;
+    background-color: mix($sport-garnett-main-1, $neutral-7, 4%);
+    padding: $gutter 0;
+    color: $identity-main;
+    min-height: $height;
+    z-index: 999;
+    &:after {
+        @include multiline(4, $rule, top);
+        content: '';
+        height: 4px * 4.5;
+        background-color: #ffffff;
+        margin-bottom: $gutter * -1;
+        margin-top: $gutter;
+        width: 100%;
+    }
+    .identity-dropdown {
+        position: absolute;
+        display: none;
+        left: 0;
+        top: $height;
+        z-index: 999;
+        li {
+            display: block;
+        }
+    }
+
+    .identity-dropdown.is-active,
+    .identity-header__nav-fallback:checked ~ .identity-dropdown {
+        display: block;
+    }
+
+    .gs-container {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+    }
+
+    .inline-logo {
+        height: 60px;
+        display: flex;
+        align-items: center;
+    }
+
+}
+
+.identity-header__links {
+    float: left;
+}
+
+.identity-header__link {
+    float: left;
+    position: relative;
+}
+
+.identity-header__logo {
+    float: right;
+    order: -99;
+    svg {
+        display: block;
+        height: 60px;
+        width: 183px;
+        * {
+            fill: #000000;
+        }
+    }
+}
+
+.identity-header__nav {
+    @include fs-textSans(3);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    color: $identity-main;
+    padding: 0;
+    height: $height;
+    line-height: $height;
+    white-space: nowrap;
+    display: block;
+    transition: .25s ease-out;
+
+    .inline-icon {
+        vertical-align: middle;
+        display: inline-block;
+        line-height: 0;
+        &, & > svg {
+            height: $gs-baseline * 1.5;
+            width: $gs-baseline * 1.5;
+            * {
+                fill: currentColor;
+            }
+        }
+    }
+
+    &:after {
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        transform: translateY(-2px) rotate(45deg);
+        border: 1px solid currentColor;
+        border-left: transparent;
+        border-top: transparent;
+        margin-left: 2px;
+        vertical-align: middle;
+        transition: .25s ease-out;
+    }
+
+
+    &:hover {
+        opacity: 1;
+        color: darken($identity-main, 25%);
+        &:after {
+            transform: translateY(0px) rotate(45deg);
+        }
+    }
+
+}
