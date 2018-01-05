@@ -6,7 +6,7 @@ $rule: darken($nav-background-colour, 20%); // All borders on the nav
 
 .identity-header {
     @include clearfix;
-    background-color: mix($sport-garnett-main-1, $neutral-7, 4%);
+    background-color: $nav-background-colour;
     padding: $gutter 0;
     color: $identity-main;
     min-height: $height;
@@ -40,7 +40,7 @@ $rule: darken($nav-background-colour, 20%); // All borders on the nav
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         padding-left: $gs-gutter / 2;
         padding-right: $gs-gutter / 2;
         @include mq(mobileLandscape) {
@@ -48,13 +48,6 @@ $rule: darken($nav-background-colour, 20%); // All borders on the nav
             padding-right: $gs-gutter;
         }
     }
-
-    .inline-logo {
-        height: 60px;
-        display: flex;
-        align-items: center;
-    }
-
 }
 
 .identity-header__links {
@@ -66,10 +59,10 @@ $rule: darken($nav-background-colour, 20%); // All borders on the nav
     position: relative;
 }
 
-.identity-header__logo {
+html body .identity-header__logo {
     float: right;
     order: -99;
-    svg {
+    .inline-the-guardian-logo__svg {
         display: block;
         height: 60px;
         width: 183px;
@@ -128,4 +121,14 @@ $rule: darken($nav-background-colour, 20%); // All borders on the nav
         }
     }
 
+}
+
+.identity-header-flex-wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: stretch;
+    & > .identity-header-flex-wrap__content {
+        flex: 1 1 auto;
+    }
 }
