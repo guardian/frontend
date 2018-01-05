@@ -446,7 +446,7 @@
     color: #ffffff;
     cursor: pointer;
     float: left;
-    padding: 0 $gs-gutter;
+    padding: (($gs-gutter * 2) - get-line-height(textSans, 2))/2 $gs-gutter;
     min-width: $gs-baseline * 14;
     white-space: nowrap;
     text-overflow: clip;
@@ -516,6 +516,8 @@
 }
 
 .manage-account__button--icon {
+    padding-top: 0;
+    padding-bottom: 0;
     &, & > .manage-account__button-flexwrap {
         justify-content: space-between;
     }
