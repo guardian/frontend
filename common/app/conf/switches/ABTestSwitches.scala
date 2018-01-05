@@ -136,4 +136,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-circles-banner-holdback",
+    "A holdback for the banner colour changes",
+    owners = Seq(Owner.withGithub("Ap0c")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 2, 15),
+    exposeClientSide = true
+  )
+
 }
