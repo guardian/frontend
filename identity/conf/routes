@@ -69,6 +69,7 @@ POST        /email-prefs                            controllers.editprofile.Edit
 ########################################################################################################################
 GET         /consents/all                           controllers.editprofile.EditProfileController.displayConsentsJourneyAll(consentHint: Option[String])
 GET         /consents/newsletters                   controllers.editprofile.EditProfileController.displayConsentsJourneyNewsletters
+GET         /consents/thank-you                     controllers.editprofile.EditProfileController.displayConsentsJourneyThankYou
 GET         /consents                               controllers.editprofile.EditProfileController.displayConsentsJourney(consentHint: Option[String])
 POST        /complete-consents                      controllers.editprofile.EditProfileController.submitRepermissionedFlag
 ########################################################################################################################
