@@ -93,6 +93,7 @@ GET         /commercial/adgrabber/order/:orderId                                
 GET         /commercial/adgrabber/previewUrls/:lineItemId/:section                                  controllers.admin.CommercialController.getCreativesListing(lineItemId: String, section: String)
 GET         /commercial/adops/ads-txt                                                               controllers.admin.commercial.AdsDotTextEditController.renderAdsDotText()
 POST        /commercial/adops/ads-txt                                                               controllers.admin.commercial.AdsDotTextEditController.postAdsDotText()
+GET         /commercial/kpi/revenue                                                                 controllers.admin.commercial.TeamKPIController.renderDashboard()
 
 # Config
 
