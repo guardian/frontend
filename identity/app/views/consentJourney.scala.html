@@ -65,21 +65,29 @@
 }
 
 @channelStepContent = {
-    <div class="manage-account__switches">
-        <ul>
-        @communicationChannelsForUser(user).map((channel) =>
-            Html(s"<li>${checkboxName(channel)}</li>")
-        )
-        </ul>
-    </div>
+    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+        @views.html.helper.CSRF.formField
+        <div class="manage-account__switches manage-account__switches--single-column">
+            <ul>
+            @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
+                @if(isUsersChannel(consentField, user)) {
+                    <li>
+                        @fragments.consentSwitch(consentField)(messages)
+                    </li>
+                }
+            }
+            </ul>
+        </div>
+    </form>
 }
+
 @channelStep = @{
     ConsentStep(
         name = "channels",
-        title = "How can we get in touch with you?",
+        title = "How else can we get in touch with you?",
         help = List("Besides email, are there any other ways you would like us to get in touch with you?"),
         content = channelStepContent,
-        show = IdentityShowCommunicationChannelConsents.isSwitchedOn && communicationChannelsForUser(user).nonEmpty
+        show = IdentityShowCommunicationChannelConsents.isSwitchedOn && channelsProvidedBy(user).nonEmpty
     )
 }
 
@@ -90,10 +98,12 @@
             <ul>
             @helper.repeatWithIndex(forms.privacyForm("consents"), min = 1) { (consentField, index) =>
                 <li>
-                    @if(index == 0) {
-                        @fragments.consentSwitch(consentField, consentHint)(messages)
-                    } else {
-                        @fragments.consentSwitch(consentField)(messages)
+                    @if(!isChannel(consentField)) {
+                        @if(index == 0) {
+                            @fragments.consentSwitch(consentField, consentHint)(messages)
+                        } else {
+                            @fragments.consentSwitch(consentField)(messages)
+                        }
                     }
                 </li>
             }
