@@ -25,6 +25,8 @@
 }
 
 .fc-container--story-package {
+    background-color: $garnett-neutral-4;
+
     .fc-container__header__title {
         padding-left: calc((#{$gs-baseline} / 2) - 2px);
 
@@ -70,7 +72,7 @@
     }
 
     //These need to exist for all kickers because of tone on tone action
-    @include kicker-override(lifestyle, $lifestyle-garnett-main-media-1);
+    @include kicker-override(lifestyle, $lifestyle-garnett-media-main-1);
     @include kicker-override(arts, $arts-garnett-media-main-1);
     @include kicker-override(sport, $sport-garnett-media-main-1);
     @include kicker-override(opinion, $opinion-garnett-media-main-1);
@@ -78,7 +80,7 @@
 }
 
 //
-// .fc-container--story-package  {
+// .  {
 //     background-color: $neutral-4;
 //     margin-bottom: $gs-baseline;
 //     border-top: 1px solid #ffffff;
