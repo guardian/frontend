@@ -24,18 +24,6 @@
     availableLists: EmailNewsletters,
     consentHint: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@isChannel(consentField: Field) = @{
-    consentField("id").value.exists {
-        id => List("phone", "sms", "post").contains(id)
-    }
-}
-
-@isMarketing(consentField: Field) = @{
-    consentField("id").value.exists {
-        id => List("supporter", "jobs", "holidays", "events", "offers").contains(id)
-    }
-}
-
 @onlySubscribedToV1Newsletters = @{
     EmailNewsletters.all.subscriptions.filter { newsletter =>
         emailSubscriptions.contains(newsletter.listId.toString)
@@ -108,7 +96,7 @@
             <ul>
             @helper.repeatWithIndex(forms.privacyForm("consents"), min = 1) { (consentField, index) =>
                 <li>
-                    @if(isMarketing(consentField)) {
+                    @if(!isChannel(consentField)) {
                         @if(index == 0) {
                             @fragments.consentSwitch(consentField, consentHint)(messages)
                         } else {

@@ -21,18 +21,6 @@
   consentHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
-@isChannel(consentField: Field) = @{
-    consentField("id").value.exists {
-        id => List("phone", "sms", "post").contains(id)
-    }
-}
-
-@isMarketing(consentField: Field) = @{
-    consentField("id").value.exists {
-        id => List("supporter", "jobs", "holidays", "events", "offers").contains(id)
-    }
-}
-
 @marketingConsentForm = {
     <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
@@ -60,7 +48,7 @@
                     <ul>
                     @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
                         <li>
-                            @if(isMarketing(consentField)) {
+                            @if(!isChannel(consentField)) {
                                 @if(index == 0) {
                                     @fragments.consentSwitch(consentField, consentHint)(messages)
                                 } else {

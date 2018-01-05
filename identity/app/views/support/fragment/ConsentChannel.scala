@@ -1,10 +1,7 @@
 package views.support.fragment
 
-import play.twirl.api.Html
-import views.support.fragment.Switch.ConsentSwitch
 import com.gu.identity.model.User
-
-// Helper for consentJourney.scala.html
+import play.api.data.Field
 
 object ConsentChannel {
   sealed trait ConsentChannelBehaviour
@@ -31,6 +28,12 @@ object ConsentChannel {
     )
 
     channels.filter(_._2).map(_._1)
+  }
+
+  def isChannel(consentField: Field): Boolean = {
+    consentField("id").value.exists {
+      id => List("phone", "sms", "post").contains(id)
+    }
   }
 
 }
