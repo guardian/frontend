@@ -65,7 +65,11 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
   }
 
   def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
-    val identityName = EmailNewsletter(listId).map(_.identityName)
+
+    val identityName = EmailNewsletter(listId)
+                        .orElse(EmailNewsletter.fromV1ListId(listId))
+                        .map(_.identityName)
+
     identityName match {
       case Some(listName) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId, listName)))
       case _ => Cached(15.minute)(WithoutRevalidationResult(NotFound))
