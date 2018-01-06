@@ -2,10 +2,6 @@
     .identity-wizard__controls {
         padding: $gs-gutter 0;
         background: #ffffff;
-        position: sticky;
-        bottom: 0;
-        left: 0;
-        right: 0;
         margin-top: $gs-gutter * 2;
         border-top: 1px solid $neutral-5;
         justify-content: space-between;
@@ -23,8 +19,8 @@
         }
     }
     .identity-consent-wizard-counter {
-        flex: 0 0 auto;
-        margin: 0 $gs-gutter / 3 0 $gs-gutter / 1.5;
+        flex: 1 0 auto;
+        padding: 0 $gs-gutter / 2;
     }
     .identity-wizard__step[data-wizard-step-name=email] .manage-account__switch-footer-email-preview {
         display: none;

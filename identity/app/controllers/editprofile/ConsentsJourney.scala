@@ -29,6 +29,10 @@ trait ConsentsJourney
   def displayConsentsJourneyNewsletters: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageNewsletters, None)
 
+  /** GET /consents/thank-you */
+  def displayConsentsJourneyThankYou: Action[AnyContent] =
+    displayConsentJourneyForm(ConsentJourneyPageThankYou, None)
+
   /** GET /consents */
   def displayConsentsJourney(consentHint: Option[String] = None): Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint)

@@ -11,6 +11,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialPaidContentTemplate,
     ABNewDesktopHeader,
     GarnettHeader,
+    GarnettIdentity,
     Garnett,
     HideShowMoreButtonExperiment
   )
@@ -53,6 +54,14 @@ object ABNewDesktopHeader extends Experiment(
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("zeftilldeath")),
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup = Perc20A
+)
+
+object GarnettIdentity extends Experiment(
+  name = "garnett-identity",
+  description = "Users in this experiment will see garnett styling on identity pages",
+  owners = Seq(Owner.withGithub("walaura")),
+  sellByDate = new LocalDate(2018, 2, 1),
+  participationGroup = Perc0E
 )
 
 object GarnettHeader extends Experiment(

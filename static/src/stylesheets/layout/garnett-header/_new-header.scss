@@ -15,7 +15,6 @@ from scrolling */
 .new-header {
     background-color: $nav-background-colour;
     position: relative;
-    text-transform: capitalize; // TODO change this
 
     &:not(.new-header--slim) {
         margin-bottom: 0;
