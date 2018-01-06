@@ -492,24 +492,37 @@ $block-height: 58px;
 
 }
 
+//Base stars styling on facia cards *****
 .fc-item--type-review {
-    .fc-item__header {
+    .fc-item__media-wrapper,
+    .fc-item__header
+    {
         .stars {
             background-color: $news-garnett-highlight;
             display: inline-block;
             line-height: 0;
-            padding: calc((#{$gs-baseline} / 2) - 2px);
-            margin-top: $gs-baseline / 2;
+            padding: $gs-baseline / 4;
+            margin-top: $gs-baseline / 6;
         }
 
         .inline-star {
-            display: inline;
+            display: inline-block;
+            width: 0.65em;
+
+            @include mq($from: desktop) {
+                width: 1em;
+            }
 
             svg {
                 stroke: $garnett-neutral-1;
                 fill: transparent;
-                height: .8em;
-                width: .8em;
+                height: 0.75em;
+                width: 0.75em;
+
+                @include mq($from:desktop) {
+                    height: 1em;
+                    width: 1em;
+                }
             }
         }
 
@@ -517,6 +530,63 @@ $block-height: 58px;
             svg {
                 fill: $garnett-neutral-1;
                 stroke: none;
+            }
+        }
+    }
+    
+    //Specific card type styling overides
+    .fc-item__media-wrapper {
+        position: relative;
+        .stars {
+            position: absolute;
+            z-index: 10;
+            bottom: 0;
+        }
+    }
+
+    &.fc-item--list-media-tablet,
+    &.fc-item--list-mobile
+    {
+        .inline-star {
+            width: 0.65em;
+
+            svg {
+                stroke: $garnett-neutral-1;
+                fill: transparent;
+                height: .75em;
+                width: .75em;
+            }
+        }
+    }
+
+    &.fc-item--has-image {
+        .fc-item__header {
+            .stars {
+                display: none;
+            }
+        }
+    }
+
+    &.fc-item--list-mobile {
+        .fc-item__header {
+            .stars {
+                display: inline-block;
+                @include mq($from: tablet) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    //Removes the space caused by the comment count
+    &.fc-item--list-mobile.fc-item--is-commentable {
+        .fc-item__content--has-stars {
+            .fc-item__header {
+                margin-bottom: -$gs-gutter;
+
+                @include mq($from: tablet) {
+                    margin-bottom: auto;
+                }
             }
         }
     }

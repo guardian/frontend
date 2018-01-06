@@ -197,7 +197,7 @@ data-test-id="facia-card"
             case _ => {}
         }
 
-        <div class="fc-item__content">
+        <div class="fc-item__content @if(item.starRating){fc-item__content--has-stars}">
             @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
                 @kicker(item.header, List("fc-item__kicker--dreamsnap"))
             }
@@ -210,10 +210,8 @@ data-test-id="facia-card"
                 @item.bylineText.map { byline =>
                     <div class="fc-item__byline">@byline</div>
                 }
-                @if(item.showReviewStars) {
-                    @item.starRating.map { rating =>
-                        @starRating(rating)
-                    }
+                @item.starRating.map { rating =>
+                    @starRating(rating)
                 }
             </div>
 
