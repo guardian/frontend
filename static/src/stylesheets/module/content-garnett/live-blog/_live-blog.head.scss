@@ -33,10 +33,22 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
 .content--liveblog .content__meta-container--liveblog {
     border-bottom: 0;
+    margin-left: -$gs-gutter / 2;
+    margin-right: -$gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        margin-left: -$gs-gutter;
+        margin-right: -$gs-gutter;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    @include mq(phablet) {
+        margin-left: 0;
+        margin-right: 0;
+    }
 
     @include mq(desktop) {
         border-top: 0;
-        margin-left: 0;
         margin-top: 0;
         min-height: gs-height(1)*1.5;
         position: static;
@@ -456,14 +468,32 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
     $content-gutter: $gs-gutter / 2;
 
-    @include mq($until: desktop) {
-        margin-right: $content-gutter * -1;
-        margin-left: $content-gutter * -1;
+    margin-right: $content-gutter * -1;
+    margin-left: $content-gutter * -1;
+
+    @include mq(mobileLandscape) {
+        margin-right: $content-gutter * -2;
+        margin-left: $content-gutter * -2;
+    }
+    @include mq(phablet) {
+        margin-right: 0;
+        margin-left: 0;
+    }
+    @include mq(tablet) {
+        margin-right: $content-gutter * -2;
+        margin-left: $content-gutter * -2;
+    }
+    @include mq(desktop) {
+        margin-right: 0;
+        margin-left: 0;
     }
 
-    .dropdown__button {
-        @include mq($until: desktop) {
-            background-color: #ffffff;
+    button.dropdown__button {
+        background-color: #ffffff;
+        padding-right: $gs-gutter / 2;
+        padding-left: $gs-gutter / 2;
+
+        @include mq(mobileLandscape) {
             padding-right: $gs-gutter;
             padding-left: $gs-gutter;
         }
@@ -476,7 +506,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
             @include mq(desktop) {
                 display: block;
                 border-top: 0;
-                padding-top: 0;
+                padding-top: 10px;
                 margin-top: ($gs-baseline/3)*-1;
                 margin-bottom: $gs-baseline/2;
             }
@@ -505,6 +535,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         border-top: 0;
     }
 }
+
+// .dropdown-styled button.dropdown__button {
+//     padding: 40px;
+// }
 
 /* Timeline
    ========================================================================== */
@@ -550,8 +584,14 @@ $timeline-width: 15px;
 .timeline {
     position: relative;
 
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+    }
+
     @include mq(desktop) {
         margin-left: $timeline-width/2;
+        margin-top: $gs-baseline / 2;
     }
 }
 .timeline__item {
