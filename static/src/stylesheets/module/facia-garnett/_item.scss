@@ -507,7 +507,7 @@ $block-height: 58px;
 
         .inline-star {
             display: inline-block;
-            width: 0.65em;
+            width: .65em;
 
             @include mq($from: desktop) {
                 width: 1em;
@@ -516,10 +516,10 @@ $block-height: 58px;
             svg {
                 stroke: $garnett-neutral-1;
                 fill: transparent;
-                height: 0.75em;
-                width: 0.75em;
+                height: .75em;
+                width: .75em;
 
-                @include mq($from:desktop) {
+                @include mq($from: desktop) {
                     height: 1em;
                     width: 1em;
                 }
@@ -533,7 +533,7 @@ $block-height: 58px;
             }
         }
     }
-    
+
     //Specific card type styling overides
     .fc-item__media-wrapper {
         position: relative;
@@ -548,7 +548,7 @@ $block-height: 58px;
     &.fc-item--list-mobile
     {
         .inline-star {
-            width: 0.65em;
+            width: .65em;
 
             svg {
                 stroke: $garnett-neutral-1;
