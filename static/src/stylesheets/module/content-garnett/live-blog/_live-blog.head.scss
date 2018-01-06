@@ -765,25 +765,6 @@ $timeline-width: 15px;
     }
 }
 
-.content--liveblog.section-football, .content--liveblog--rugby { // Football & rugby overrides
-    .tonal__header {
-        background-color: #ffffff;
-
-        .content__labels {
-            border-bottom-color: $neutral-5;
-        }
-        .content__section-label__link {
-            color: $live-default;
-        }
-        .content__series-label__link {
-            color: $neutral-2;
-        }
-        .content__headline {
-            color: #ffffff;
-        }
-    }
-}
-
 $pillars: (
     news: (
         pillarColor: $news-garnett-feature,
@@ -825,7 +806,25 @@ $pillars: (
         .timeline__link:hover & {
             border-color: map-get($palette, pillarColor);
         }
+    }
+}
 
+.content--liveblog.section-football, .content--liveblog--rugby { // Football & rugby overrides
+    .tonal__header {
+        background-color: #ffffff;
+
+        .content__labels {
+            border-bottom-color: $neutral-5;
+        }
+        .content__section-label__link {
+            color: $sport-garnett-feature;
+        }
+        .content__series-label__link {
+            color: $neutral-2;
+        }
+        .content__headline {
+            color: #ffffff;
+        }
     }
 }
 
