@@ -15,5 +15,6 @@ package object editprofile {
 
   object ConsentJourneyPageAll extends ConsentJourneyPage("/consents/all", "all")
   object ConsentJourneyPageNewsletters extends ConsentJourneyPage("/consents/newsletters", "newsletters")
+  object ConsentJourneyPageThankYou extends ConsentJourneyPage("/consents/thank-you", "thank-you")
   object ConsentJourneyPageDefault extends ConsentJourneyPage("/consents", "default")
 }
