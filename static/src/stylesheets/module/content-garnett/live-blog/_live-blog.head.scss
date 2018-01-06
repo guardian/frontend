@@ -221,11 +221,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     border-bottom: 1px solid $neutral-6;
 }
 
-.block.is-key-event,
-.block.is-summary {
-    border-top: 1px solid $live-accent;
-}
-
 .truncated-block {
     display: none;
 }
@@ -847,6 +842,11 @@ $pillars: (
 
         .timeline__link:hover & {
             border-color: map-get($palette, pillarColor);
+        }
+
+        .block.is-key-event,
+        .block.is-summary {
+            border-top: 1px solid map-get($palette, pillarColor);
         }
     }
 }
