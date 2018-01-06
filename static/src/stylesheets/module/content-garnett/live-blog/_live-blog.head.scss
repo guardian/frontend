@@ -891,3 +891,10 @@ $pillars: (
         }
     }
 }
+
+.js-sport-tabs {
+    @include mq(phablet) {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
