@@ -209,8 +209,7 @@
     background-color: rgba(0, 0, 0, .5);
 }
 
-//FIX THIS
-.content--immersive-article:not(.content--immersive-garnett) {
+.content--immersive-article:not(.content--immersive-garnett){
     .element-pullquote {
         position: relative;
         width: auto;
@@ -630,10 +629,10 @@
             position: relative;
             padding-left: $gs-baseline;
             left: -$gs-baseline / 2;
-            padding-top: $gs-baseline / 2;
+            padding-top: 0;
             //This allows the headline block to be aligned to the left and not run full width
             width: 94%;
-            padding-bottom: $gs-baseline * 2;
+            padding-bottom: $gs-baseline;
 
             @include mq($from: tablet) {
                 width: 100%;
@@ -703,9 +702,10 @@
         @include mq(desktop) {
             max-width: 460px;
             padding-bottom: 1rem;
-            margin-bottom: -$gs-baseline / 2;
+            margin-bottom: -$gs-baseline * 2;
             margin-top: $gs-baseline / 2;
         }
+
 
         //this is immersive specific to connect the vertical rule to the top of the page
         &:before {
@@ -740,12 +740,16 @@
         }
     }
     .drop-cap {
-        height: 7.25em;
+        height: 105px;
 
         .drop-cap__inner {
             font-weight: 900;
-            font-size: 9.5em;
+            font-size: 140px;
             line-height: .7; // To optically align to top of five lines of text
+
+            @include mq($from: tablet) {
+                font-size: 138px;
+            }
         }
     }
 
