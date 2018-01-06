@@ -881,4 +881,13 @@ $pillars: (
     .tonal__standfirst ul>li::before {
         background: rgba(255, 255, 255, .4);
     }
+    .content__standfirst {
+        margin-left: -$gs-gutter / 2;
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter;
+        }
+        @include mq(phablet) {
+            margin-left: 0;
+        }
+    }
 }
