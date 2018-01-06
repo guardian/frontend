@@ -17,6 +17,7 @@ $quote-mark: 35px;
 .content--type-live,
 .content--type-media,
 .content--type-review,
+.content--type-interview,
 .content--type-immersive {
     // *************** Meta and Social ***************
     .submeta {
@@ -795,6 +796,7 @@ $quote-mark: 35px;
 }
 
 .content--type-feature,
+.content--type-interview,
 .content--type-review {
     .content__headline {
         font-weight: 700;
@@ -1096,7 +1098,7 @@ $quote-mark: 35px;
         .meta__social {
             background-image: none;
             padding-top: 0;
-            
+
             &::before {
                 content: none;
             }
