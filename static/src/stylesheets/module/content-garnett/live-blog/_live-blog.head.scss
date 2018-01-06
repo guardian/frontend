@@ -471,7 +471,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         margin-left: $content-gutter * -2;
     }
     @include mq(phablet) {
-        margin-right: 0;
+        margin-right: 0x;
         margin-left: 0;
     }
     @include mq(tablet) {
@@ -896,5 +896,15 @@ $pillars: (
     @include mq(phablet) {
         margin-left: 0;
         margin-right: 0;
+    }
+}
+
+.tabs__tab a[href] {
+    padding-left: $gs-gutter / 2;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+    }
+    @include mq(phablet) {
+        padding-left: $gs-gutter / 2;
     }
 }
