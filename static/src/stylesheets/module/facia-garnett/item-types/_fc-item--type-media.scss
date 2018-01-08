@@ -1,19 +1,21 @@
 .fc-item--type-media {
+    .inline-icon__svg {
+        padding: 5px;
+        border-radius: 50%;
+    }
+    .fc-item__video-duration {
+        //ensures the alingment of the timestamp
+        display: inline-block;
+        transform: translateY(-6px);
+    }
+
     &.fc-item--audio {
         .inline-volume-high {
             position: relative;
             top: 2px;
 
             > svg {
-                width: 18px;
-            }
-
-            &::after {
-                display: inline-block;
-                content: '';
-                height: $gs-baseline + 1px;
-                margin: 0 6px;
-                width: 2px;
+                width: 14px;
             }
         }
 
@@ -25,15 +27,7 @@
             top: 2px;
 
             > svg {
-                width: 18px;
-            }
-
-            &::after {
-                display: inline-block;
-                content: '';
-                height: $gs-baseline + 1px;
-                margin: 0 6px;
-                width: 2px;
+                width: 14px;
             }
         }
     }
@@ -41,18 +35,11 @@
     &.fc-item--video {
         .inline-video-icon {
             position: relative;
-            top: 7px;
+            top: 2px;
 
             > svg {
-                width: 18px;
-            }
-
-            &::after {
-                display: inline-block;
-                content: '';
-                height: $gs-baseline + 1px;
-                margin: 6px;
-                width: 2px;
+                width: 14px;
+                padding: 0px 5px 0px 5px;
             }
         }
 

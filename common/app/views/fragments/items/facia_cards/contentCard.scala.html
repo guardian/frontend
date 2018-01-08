@@ -44,14 +44,14 @@ data-test-id="facia-card"
                 case Some(InlineVideo(videoElement, _, _, _)) => {
                     <div class="fc-item__media-meta">
                         @inlineSvg("video-icon", "icon")
-                        @videoElement.videos.formattedDuration
+                        <span class="fc-item__video-duration">@videoElement.videos.formattedDuration</span>
                     </div>
                 }
 
                 case Some(media@InlineYouTubeMediaAtom(youTubeAtom, _)) => {
                     <div class="fc-item__media-meta">
                         @inlineSvg("video-icon", "icon")
-                        @youTubeAtom.formattedDuration
+                        <span class="fc-item__video-duration">@youTubeAtom.formattedDuration</span>
                     </div>
                 }
 
@@ -62,14 +62,12 @@ data-test-id="facia-card"
         @if(item.contentType.name.toLowerCase == "audio") {
             <div class="fc-item__media-meta">
                 @inlineSvg("volume-high", "icon")
-                Podcast
             </div>
         }
 
         @if(item.contentType.name.toLowerCase == "gallery") {
             <div class="fc-item__media-meta">
                 @inlineSvg("camera", "icon")
-                Gallery
             </div>
         }
 

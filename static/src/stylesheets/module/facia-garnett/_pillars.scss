@@ -156,6 +156,7 @@ $pillars: (
         .inline-camera {
             svg {
                 fill: map-get($palette, invertedKicker);
+                border: 1px solid map-get($palette, invertedKicker);
             }
 
             &::after {
