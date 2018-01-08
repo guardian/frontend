@@ -50,7 +50,9 @@ class EmailVerificationController(api: IdApiClient,
           val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
 
           if(validationState.isExpired || IdentityPointToConsentJourneyPage.isSwitchedOff) {
-            Ok(views.html.emailVerified(validationState, page, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))
+            Ok(
+              IdentityHtmlPage.html(views.html.emailVerified(validationState, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))(page, request, context)
+            )
           } else {
             SeeOther(idUrlBuilder.buildUrl(s"/consents?returnUrl=${encodedReturnUrl}"))
           }
