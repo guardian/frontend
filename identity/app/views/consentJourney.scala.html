@@ -30,6 +30,14 @@
     }
 }
 
+@showAgeStep(index: Option[Int]) = @{
+    if(index.contains(0)){
+        List(ConsentStepHelpLegalText("By continuing you confirm that you are aged 13 or over."))
+    } else {
+        Nil
+    }
+}
+
 @renderStep(step: ConsentStep, index: Option[Int] = None) = {
     @if(step.show) {
         <fieldset
@@ -40,9 +48,9 @@
         >
             <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
             <div class="identity-forms-wrapper">
-                @if(step.help) {
+                @if(step.help || showAgeStep(index)) {
                     <div class="identity-forms-wrapper__title">
-                        @step.help.map(paragraph =>
+                        @((step.help ++ showAgeStep(index)).map(paragraph =>
                             paragraph match {
                                 case m: ConsentStepHelpLegalText => {
                                     Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
@@ -51,12 +59,7 @@
                                     Html(s"<p class='identity-title-explainer'>${m.text}</p>")
                                 }
                             }
-                        )
-                        @if(index.contains(0)) {
-                            <p class='identity-title-explainer identity-title-explainer--small'>
-                                By continuing you confirm that you are aged 13 or over.
-                            </p>
-                        }
+                        ))
                     </div>
                 }
                 <div class="identity-forms-wrapper__fields">
