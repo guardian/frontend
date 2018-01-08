@@ -468,11 +468,6 @@ $quote-mark: 35px;
         display: block;
     }
 
-    .media-primary.media-primary--showcase {
-        margin-left: 0;
-        margin-right: 0;
-    }
-
     .content__headline {
         @include fs-headlineGarnett(4);
         font-weight: 400;
@@ -777,10 +772,6 @@ $quote-mark: 35px;
         }
     }
 
-    .element .caption {
-        background: #ffffff;
-    }
-
     .quoted {
         .inline-garnett-quote {
             position: absolute;
@@ -793,6 +784,18 @@ $quote-mark: 35px;
             transform-origin: top left;
         }
     }
+
+    &:not(.paid-content) {
+        .media-primary.media-primary--showcase {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+        .element .caption {
+            background: #ffffff;
+        }
+    }
+
 }
 
 .content--type-feature,
