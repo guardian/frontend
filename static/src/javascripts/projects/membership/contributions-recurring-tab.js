@@ -98,6 +98,10 @@ const displayContributionUpdateErrorMessage = (): void => {
     $(CONTRIBUTION_UPDATE_ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
+const hideContributionUpdateErrorMessage = (): void => {
+    $(CONTRIBUTION_UPDATE_ERROR).addClass(IS_HIDDEN_CLASSNAME);
+};
+
 const displayContributionUpdateSuccessMessage = (): void => {
     $(CONTRIBUTION_CHANGE_SUCCESS).removeClass(IS_HIDDEN_CLASSNAME);
 };
@@ -439,6 +443,7 @@ const changeContributionAmountSubmit = (): void => {
     const newAmount = $(CONTRIBUTION_NEW_AMOUNT_FIELD).val();
     toggleAmountChangeInputMode(false);
     hideContributionUpdateSuccessMessage();
+    hideContributionUpdateErrorMessage();
     hideContributionInfo();
     displayLoader();
     fetch(
@@ -457,8 +462,18 @@ const changeContributionAmountSubmit = (): void => {
             },
         }
     )
-        // eslint-disable-next-line no-use-before-define
-        .then(recurringContributionTab(true))
+        .then(resp => {
+            hideLoader();
+            if (resp.status === 200) {
+                // eslint-disable-next-line no-use-before-define
+                recurringContributionTab(true);
+            } else {
+                displayContributionUpdateErrorMessage();
+                throw new Error(
+                    'Members Data API returned non-200 result for contribution-update-amount'
+                );
+            }
+        })
         .catch(err => {
             hideLoader();
             hideContributionUpdateSuccessMessage();
