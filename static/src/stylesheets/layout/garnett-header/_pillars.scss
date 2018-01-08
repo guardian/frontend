@@ -1,0 +1,44 @@
+.pillars {
+    clear: right;
+    margin: 0;
+    padding: 0 $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        .new-header--open & {
+            z-index: $zindex-main-menu;
+        }
+    }
+
+    .new-header--slim & {
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
+}
+
+.pillars__item {
+    display: block;
+    float: left;
+
+    @include mq(desktop) {
+        width: $pillar-width--desktop;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            width: $pillar-width--leftCol;
+        }
+    }
+
+    &:first-child .pillar-link {
+        padding-left: 0;
+
+        &:before {
+            content: none;
+        }
+    }
+}

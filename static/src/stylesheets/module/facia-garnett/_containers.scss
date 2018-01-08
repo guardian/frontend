@@ -46,6 +46,22 @@
     }
 }
 
+.fc-container {
+    .button--primary {
+        background-color: $garnett-neutral-1;
+        border-color: $garnett-neutral-1;
+
+        &:hover {
+            background-color: darken($garnett-neutral-1, 5%);
+        }
+
+        &:focus {
+            background-color: darken($garnett-neutral-1, 5%);
+            border-color: darken($garnett-neutral-1, 5%);
+        }
+    }
+}
+
 .fc-container--outbrain {
     background-color: $neutral-8;
     display: none;

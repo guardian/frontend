@@ -1,14 +1,14 @@
 package form
 
-import com.gu.identity.model.{Consent,User,ConsentWording}
 import com.gu.identity.model.Consent._
+import com.gu.identity.model.{Consent, StatusFields, User}
 import idapiclient.UserUpdateDTO
 import play.api.data.Forms._
 import play.api.data.JodaForms.jodaDate
 import play.api.data.Mapping
 import play.api.i18n.MessagesProvider
 import utils.SafeLogging
-import scala.util.{Try, Success, Failure}
+import scala.util.Try
 
 class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
@@ -90,19 +90,10 @@ case class PrivacyFormData(
       case Some(_) => allowThirdPartyProfiling
     }
 
-    val newConsents =
-        for {
-          oldConsent <- if (oldUserDO.consents.isEmpty) defaultConsents else oldUserDO.consents
-          newConsent <- consents
-        } yield {
-          if (oldConsent.id == newConsent.id)
-            newConsent
-          else
-            oldConsent
-        }
+    val newConsents = updateConsents(oldUserDO.consents, consents)
 
     UserUpdateDTO(
-      statusFields = Some(oldUserDO.statusFields.copy(
+      statusFields = Some(StatusFields(
         receive3rdPartyMarketing = newReceive3rdPartyMarketing,
         receiveGnmMarketing = newReceiveGnmMarketing,
         allowThirdPartyProfiling = newAllowThirdPartyProfiling

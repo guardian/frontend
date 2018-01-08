@@ -1,26 +1,32 @@
+$gutter: 9px;
+$height: $identity-header-height - ($gutter * 2);
+
 .identity-header {
     @include clearfix;
     background-color: $identity-main;
-    padding: 5px 0;
+    padding: $gutter 0;
     color: #ffffff;
-    min-height: $identity-header-height - 10px;
+    min-height: $height;
     z-index: 999;
     .identity-dropdown {
         position: absolute;
         display: none;
         left: 0;
-        top: $identity-header-height - 10px;
+        top: $height;
         z-index: 999;
         li {
             display: block;
         }
-        &.is-active {
-            display: block;
-        }
+    }
+
+    .identity-dropdown.is-active,
+    .identity-header__nav-fallback:checked ~ .identity-dropdown {
+        display: block;
     }
 
     .gs-container {
         display: flex;
+        flex-direction: row-reverse;
         justify-content: space-between;
         align-items: center;
         padding-left: $gs-gutter / 2;
@@ -44,10 +50,11 @@
 
 .identity-header__logo {
     float: right;
+    order: -99;
     svg {
         display: block;
-        height: $identity-header-height - 10px;
-        width: 180px;
+        width: 160px;
+        height: 30px;
     }
 }
 
@@ -57,13 +64,19 @@
     border: 0;
     cursor: pointer;
     color: #ffffff;
-    opacity: .9;
+    opacity: .8;
     text-transform: lowercase;
-    padding: 5px 0;
+    padding: 0;
+    height: $height;
+    line-height: $height;
+    white-space: nowrap;
+    transition: .125s;
+    display: block;
 
     .inline-icon {
         vertical-align: middle;
         display: inline-block;
+        line-height: 0;
         &, & > svg {
             height: $gs-baseline * 1.5;
             width: $gs-baseline * 1.5;
@@ -86,5 +99,15 @@
         margin-left: 2px;
         vertical-align: middle;
         transition: transform 250ms ease-out;
+    }
+}
+
+.identity-header-flex-wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: stretch;
+    & > .identity-header-flex-wrap__content {
+        flex: 1 1 auto;
     }
 }

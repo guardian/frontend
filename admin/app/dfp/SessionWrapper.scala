@@ -2,13 +2,15 @@ package dfp
 
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
-import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
+import com.google.api.ads.dfp.axis.utils.v201705.{ReportDownloader, StatementBuilder}
 import com.google.api.ads.dfp.axis.v201705._
 import com.google.api.ads.dfp.lib.client.DfpSession
+import com.google.common.io.CharSource
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
 import dfp.Reader.read
 import dfp.SessionLogger.{logAroundCreate, logAroundPerform, logAroundRead, logAroundReadSingle}
+import collection.JavaConverters._
 
 import scala.util.control.NonFatal
 
@@ -99,6 +101,36 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
 
   def getRootAdUnitId: String = {
     services.networkService.getCurrentNetwork.getEffectiveRootAdUnitId
+  }
+
+  def getReportQuery(reportId: Long): ReportQuery = {
+    // Retrieve the saved query.
+    val stmtBuilder = new StatementBuilder()
+      .where("id = :id")
+      .limit(1)
+      .withBindVariableValue("id", reportId)
+
+    val page: SavedQueryPage = services.reportService.getSavedQueriesByStatement(stmtBuilder.toStatement)
+    val savedQuery: SavedQuery = page.getResults(0)
+    savedQuery.getReportQuery
+  }
+
+  def runReportJob(report: ReportQuery): Seq[String] = {
+
+    val reportJob = new ReportJob()
+    reportJob.setReportQuery(report)
+
+    val runningJob = services.reportService.runReportJob(reportJob)
+
+    val reportDownloader = new ReportDownloader(services.reportService, runningJob.getId)
+    reportDownloader.waitForReportReady()
+
+    // Download the report.
+    val options: ReportDownloadOptions = new ReportDownloadOptions()
+    options.setExportFormat(ExportFormat.CSV_DUMP)
+    options.setUseGzipCompression(true)
+    val charSource: CharSource = reportDownloader.getReportAsCharSource(options)
+    charSource.readLines().asScala
   }
 
   object lineItemCreativeAssociations {

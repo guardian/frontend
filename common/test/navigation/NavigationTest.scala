@@ -3,7 +3,7 @@ package navigation
 import common.editions._
 import NavLinks._
 import com.gu.contentapi.client.model.v1.ItemResponse
-import model.{Content, ContentPage, ContentType}
+import model.{Content, ContentPage, ContentType, Page, MetaData}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
@@ -21,6 +21,14 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
   private case class TestPage(content: ContentType) extends ContentPage {
     override lazy val item = content
+  }
+
+  private case class fakePage() extends Page {
+    override val metadata = MetaData.make(
+      id = "",
+      section = None,
+      webTitle = ""
+    )
   }
 
   "Simple menu" should "just return the 5 primary links" in {
@@ -102,7 +110,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/uk-news", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = NavMenu.getSubnav(maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
 
     subnav.parent.map( p => p should be(ukNews) )
     subnav.children should be(ukNews.children)
@@ -114,7 +122,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/money/work-and-careers", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = NavMenu.getSubnav(maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
 
     subnav.parent.map( p => p should be(money) )
     subnav.children should be(money.children)
@@ -126,7 +134,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/culture", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = NavMenu.getSubnav(maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
 
     subnav.parent.isDefined should be(false)
     subnav.children should be(auArtsPillar.children)
@@ -169,7 +177,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/crosswords", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = NavMenu.getSubnav(maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
 
     pillar should be(None)
     subnav.parent.map(_ should be(crosswords))
@@ -182,7 +190,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val maybeNavLink = root.findDescendantByUrl("/crosswords/series/cryptic", edition)
     val parent = maybeNavLink.flatMap( link => root.findParent(link, edition) )
     val pillar = root.getPillar(parent, edition)
-    val subnav = NavMenu.getSubnav(maybeNavLink, parent, pillar)
+    val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
 
     pillar should be(None)
     subnav.parent.map(_ should be(crosswords))

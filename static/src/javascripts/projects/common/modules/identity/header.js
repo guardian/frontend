@@ -26,16 +26,18 @@ const hideAccountMenu = (
     });
 
 const bindNavToggle = (buttonEl: HTMLElement): void => {
-    buttonEl.addEventListener('click', () => {
+    buttonEl.addEventListener('click', (ev: Event) => {
         const menuElSelector: ?string = buttonEl.getAttribute('aria-controls');
         if (!menuElSelector) throw new Error(ERR_UNDEFINED_MENU);
+
+        ev.preventDefault();
 
         fastdom
             .read(() => document.getElementById(menuElSelector))
             .then((menuEl: HTMLElement) => {
                 if (!menuEl) throw new Error(ERR_UNDEFINED_MENU);
-                const watchForOutsideClick = ev => {
-                    if (!menuEl.contains(ev.target)) {
+                const watchForOutsideClick = subEv => {
+                    if (!menuEl.contains(subEv.target)) {
                         hideAccountMenu(buttonEl, menuEl);
                         window.removeEventListener(
                             'click',

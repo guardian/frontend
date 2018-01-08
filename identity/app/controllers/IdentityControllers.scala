@@ -2,6 +2,7 @@ package controllers
 
 import actions.AuthenticatedActions
 import com.softwaremill.macwire._
+import controllers.editprofile.EditProfileController
 import form.FormComponents
 import formstack.FormStackComponents
 import idapiclient.IdApiComponents

@@ -15,9 +15,12 @@ object ArticleHtmlPage extends HtmlPage[ArticlePage] {
 
     val (header, content): (Html, Html) = page.article match {
       case article if article.isPhotoEssay => (photoEssayHeader(), immersiveBody())
+      case article if article.isImmersive && experiments.ActiveExperiments.isParticipating(experiments.Garnett) => (
+          immersiveGarnettHeader(), immersiveGarnettBody()
+      )
       case article if article.isImmersive => (immersiveHeader(), immersiveBody())
       case _ if !request.isAmp && experiments.ActiveExperiments.isParticipating(experiments.Garnett) => (
-        guardianHeaderHtml(), articleBody(page)
+        guardianHeaderHtml(), articleBodyGarnett(page)
       )
       case _ => (guardianHeaderHtml(), articleBody(page))
     }

@@ -58,16 +58,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-paid-content-vs-outbrain-2",
-    "Displays a paid content widget instead of Outbrain",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 8),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -98,21 +88,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-outstream-frequency-cap",
-    "Test adds a hold-back variant which keeps a frequency cap on outstream video format ads.",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-us-gun-campaign-2017",
     "Show a custom Epic for articles with the US gun campaign tag",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 1, 4),
+    sellByDate = new LocalDate(2018, 1, 11),
     exposeClientSide = true
   )
 
@@ -128,6 +108,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-prebid-integration",
+    "Test prebid as a header-bidding implementation",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 2),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-testimonials-group",
     "Test changing the epic testimonial each view",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -136,23 +126,4 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-end-of-year-countdown",
-    "Test a countdown until the end of year",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-banner-just-contribute",
-    "Test linking to a contributions-only version of support.theguardian.com",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 22),
-    exposeClientSide = true
-  )
 }

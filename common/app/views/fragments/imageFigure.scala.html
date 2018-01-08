@@ -17,7 +17,7 @@
 
 @defining(image_figureClasses match {
     case Some((image, figureClasses)) => (Some(image), s"element element-image $figureClasses", false)
-    case None => (ImgSrc.getFallbackAsset(picture), s"media-primary media-content${if(isShowcase) " media-primary--showcase"}", true)
+    case None => (ImgSrc.getFallbackAsset(picture), s"media-primary media-content ${if(isShowcase) " media-primary--showcase"}", true)
 } ) { case (imageOption, figureClasses, isMain) =>
 
     <figure
@@ -76,7 +76,7 @@
 
 @showcaseFeature(captionHtml: => Html) =  {
 
-    @if(isFeature && isShowcase) {
+    @if(isFeature && isShowcase && !experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
         <div class="gs-container">
             <div class="content__main-column">
                 @captionHtml

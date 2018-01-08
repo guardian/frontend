@@ -8,6 +8,7 @@ import rendering.Renderable
 
 import scala.util.Try
 
+case class RenderingException(error: String) extends RuntimeException(error)
 case class Rendering(renderable: Renderable)
 
 class RenderingActor(ac: ApplicationContext) extends Actor with JavascriptRendering {
@@ -30,7 +31,7 @@ class RenderingActor(ac: ApplicationContext) extends Actor with JavascriptRender
     case Rendering(renderable) =>
       sender ! render(renderable.props, !isRunningInProd)
     case  _ =>
-      sender ! Try(throw new RenderingException("RenderingActor received an unknown message"))
+      sender ! Try(throw RenderingException("RenderingActor received an unknown message"))
   }
 
 }

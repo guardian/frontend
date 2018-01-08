@@ -2,7 +2,7 @@
 @import common.LinkTo
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.Switch._
-@import conf.switches.Switches.IdentityGdprV2NewslettersConsents
+@import conf.switches.Switches.IdentityGdprMarketingConsentSwitch
 
 @* Editorial Newsletter switch/checkbox *@
 
@@ -26,7 +26,7 @@
 }
 
 @newsletterListId = @{
-    if (IdentityGdprV2NewslettersConsents.isSwitchedOn)
+    if (IdentityGdprMarketingConsentSwitch.isSwitchedOn)
         newsletter.listId.toString
     else
         newsletter.listIdV1.toString
@@ -36,7 +36,7 @@
     if (unchecked)
         None
     else {
-        if (IdentityGdprV2NewslettersConsents.isSwitchedOn)
+        if (IdentityGdprMarketingConsentSwitch.isSwitchedOn)
             Some(newsletter.subscribedTo(emailSubscriptions).toString)
         else
             Some(newsletter.subscribedToV1(emailSubscriptions).toString)

@@ -2,10 +2,5 @@
     @include fs-textSans(1);
     background: $neutral-1;
     color: $neutral-3;
-    min-height: $identity-footer-height - ($gs-gutter);
-    padding: $gs-gutter / 2 $gs-gutter / 2;
-    @include mq(mobileLandscape) {
-        padding: $gs-gutter / 2 $gs-gutter;
-    }
-
+    padding: $gs-gutter;
 }

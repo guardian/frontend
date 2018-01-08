@@ -1,65 +1,65 @@
-.manage-account-wizard {
+.identity-wizard {
     @include clearfix();
+    @include mq($until: desktop) {
+        overflow: hidden;
+    }
     position: relative;
     transition: min-height .2s;
     will-change: min-height;
 }
-.manage-account-wizard--completed {
-    .manage-account-wizard__controls {
-        display: none;
-    }
-}
-
-.manage-account-wizard__step {
+.identity-wizard__step {
     top: 0;
     left: 0;
     right: 0;
     will-change: transform;
     outline: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
 }
-.js-off .manage-account-wizard__step {
+.js-off .identity-wizard__step {
     border: 1px solid $neutral-8;
     margin-bottom: $gs-gutter*4;
     padding-bottom: $gs-gutter*4;
 }
-.manage-account-wizard__step--hidden {
+.identity-wizard__step--hidden {
     display: none;
 }
-.manage-account-wizard__step--out {
+.identity-wizard__step--out {
     display: block;
     position: absolute;
-    animation: manage-account-wizard__fadeLeft .2s both;
-    .disable-flashing-elements .manage-account-wizard__step--out {
+    animation: identity-wizard__fadeLeft .2s both;
+    .disable-flashing-elements .identity-wizard__step--out {
         animation: none;
         display: none;
     }
 }
-.manage-account-wizard__step--in {
-    animation: manage-account-wizard__fadeRight .2s reverse both;
-    .disable-flashing-elements .manage-account-wizard__step--in {
+.identity-wizard__step--in {
+    animation: identity-wizard__fadeRight .2s reverse both;
+    .disable-flashing-elements .identity-wizard__step--in {
         animation: none;
         display: block;
     }
 }
-.manage-account-wizard__step--out-reverse {
+.identity-wizard__step--out-reverse {
     display: block;
     position: absolute;
-    animation: manage-account-wizard__fadeRight .2s both;
-    .disable-flashing-elements .manage-account-wizard__step--out-reverse {
+    animation: identity-wizard__fadeRight .2s both;
+    .disable-flashing-elements .identity-wizard__step--out-reverse {
         animation: none;
         display: none;
     }
 }
-.manage-account-wizard__step--in-reverse {
-    animation: manage-account-wizard__fadeLeft .2s reverse both;
-    .disable-flashing-elements .manage-account-wizard__step--in-reverse {
+.identity-wizard__step--in-reverse {
+    animation: identity-wizard__fadeLeft .2s reverse both;
+    .disable-flashing-elements .identity-wizard__step--in-reverse {
         animation: none;
         display: block;
     }
 }
 
 
-.manage-account-wizard__controls {
+.identity-wizard__controls {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -68,7 +68,7 @@
     }
 }
 
-.manage-account-wizard__controls-pager {
+.identity-wizard__controls-pager {
     @include fs-textSans(1);
     @include mq($until: tablet) {
         display: none;
@@ -80,7 +80,7 @@
 for a .2s transition
 */
 
-@keyframes manage-account-wizard__fadeLeft {
+@keyframes identity-wizard__fadeLeft {
     from {
         transform: translateX(0);
         opacity: 1;
@@ -91,7 +91,7 @@ for a .2s transition
     }
 }
 
-@keyframes manage-account-wizard__fadeRight {
+@keyframes identity-wizard__fadeRight {
     from {
         transform: translateX(0);
         opacity: 1;

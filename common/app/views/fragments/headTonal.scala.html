@@ -5,25 +5,14 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
-@import _root_.model.ContentDesignType.RichContentDesignType
-@import views.support.RenderClasses
 
-<header class="@RenderClasses(Map(
-        ("tonal__head", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-        (s"tonal__head--${toneClass(item)}", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-        ("content__head--byline-pic", item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage),
-    ),
-        "content__head"
-    )
+<header class="content__head tonal__head tonal__head--@toneClass(item)
+    @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}
     @badgeFor(item).map { badge => content__head--is-badged
         @badge.classModifier.map(modifier => s"content__head--$modifier")
     }">
 
-    <div class="@RenderClasses(Map(
-        ("tonal__header", !experiments.ActiveExperiments.isParticipating(experiments.Garnett))
-    ),
-        "content__header"
-    )">
+    <div class="content__header tonal__header">
         <div class="gs-container">
             <div class="content__main-column u-cf">
 
@@ -109,11 +98,7 @@
         </div>
     </div>
 
-    <div class="@RenderClasses(Map(
-        ("tonal__standfirst", !experiments.ActiveExperiments.isParticipating(experiments.Garnett))
-    ),
-        "u-cf"
-    )">
+    <div class="tonal__standfirst u-cf">
         @if(item.fields.standfirst.isDefined) {
             <div class="gs-container">
                 <div class="content__main-column">

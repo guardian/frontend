@@ -1,0 +1,184 @@
+.menu-item {
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    .menu-group--primary > & {
+        @include mq(desktop) {
+            float: left;
+            overflow: visible;
+            width: $pillar-width--desktop;
+            padding: 0 $pillar-padding $gs-baseline;
+
+            &:first-child {
+                padding-left: 0;
+            }
+        }
+
+        body:not(.has-page-skin) & {
+            @include mq(leftCol) {
+                width: $pillar-width--leftCol;
+            }
+        }
+    }
+}
+
+.menu-item__title {
+    background-color: transparent;
+    border: 0;
+    box-sizing: border-box;
+    color: $nav-primary-colour;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+    font-weight: 400;
+    outline: none;
+    padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
+    position: relative;
+    text-align: left;
+    width: 100%;
+
+    @include mq(tablet) {
+        padding-left: $menu-spacing-left-medium;
+    }
+
+    @include mq(desktop) {
+        font-size: 15px;
+        line-height: 1.2;
+        padding: ($gs-baseline / 2) 0;
+    }
+
+    &:hover,
+    &:focus {
+        color: $nav-secondary-colour;
+    }
+
+    > * {
+        pointer-events: none;
+    }
+
+    .menu-group--primary > *:not(:last-child) > &,
+    &[data-link-name='nav2 : the guardian app'],
+    &[data-link-name='nav2 : facebook'] {
+        @include mq($until: desktop) {
+            &:not([aria-expanded='true']):after {
+                background-color: $rule;
+                bottom: 0;
+                content: '';
+                display: block;
+                height: 1px;
+                left: $menu-spacing-left-small;
+                position: absolute;
+                width: 100%;
+
+                @include mq(tablet) {
+                    left: $menu-spacing-left-medium;
+                }
+            }
+        }
+    }
+
+    &[data-link-name='nav2 : the guardian app'],
+    &[data-link-name='nav2 : facebook'] {
+        @include mq($until: desktop) {
+            margin-top: $gs-baseline * 2;
+
+            &:after {
+                bottom: auto;
+                top: 0;
+            }
+        }
+    }
+
+    // only match the ones, which are not in --secondary
+    .menu-group--primary > .menu-item > & {
+        font-size: 24px;
+        font-weight: 700;
+        padding-bottom: 18px;
+        padding-top: $gs-baseline / 2;
+        text-transform: capitalize; //TODO remove this line
+
+        @include mq(desktop) {
+            font-size: 32px;
+        }
+    }
+
+    .menu-group--editions &[aria-haspopup='true'] {
+        margin-bottom: $gs-baseline;
+
+        &[aria-expanded='true'] {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.menu-item--brand-extension {
+    margin-right: 0;
+    margin-top: -$gs-baseline / 2;
+    padding-bottom: 0;
+}
+
+.menu-item__title--brand-extension {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.menu-item__icon,
+.menu-item__toggle {
+    color: $nav-secondary-colour;
+    left: 25px;
+    position: absolute;
+
+    @include mq(tablet) {
+        left: 35px;
+    }
+
+    @include mq(desktop) {
+        display: none;
+    }
+}
+
+.menu-item__toggle {
+    margin-top: -4px;
+
+    [aria-expanded='true'] > & {
+        margin-top: 2px;
+    }
+
+    &:before {
+        border: 2px solid currentColor;
+        border-top: 0;
+        border-left: 0;
+        content: '';
+        display: inline-block;
+        height: 8px;
+        transform: rotate(45deg);
+        width: 8px;
+
+        [aria-expanded='true'] > & {
+            transform: rotate(-135deg);
+        }
+    }
+}
+
+.menu-item__icon {
+    margin-left: -3px;
+
+    .inline-icon__svg {
+        fill: currentColor;
+    }
+
+    .inline-home__svg {
+        height: 16px;
+        width: 16px;
+    }
+
+    .inline-share-facebook__svg,
+    .inline-share-twitter__svg {
+        margin-left: -6px;
+        margin-top: -5px;
+    }
+}

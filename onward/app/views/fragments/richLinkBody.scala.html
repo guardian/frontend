@@ -26,7 +26,7 @@
     "rich-link--gallery" -> content.tags.isGallery,
     "rich-link--audio" -> content.tags.isAudio,
     "rich-link--paidfor" -> content.tags.isPaidContent,
-    "rich-link--has-byline-pic" -> (content.content.hasTonalHeaderByline && content.tags.hasLargeContributorImage)
+    "rich-link--has-byline-pic" -> (!experiments.ActiveExperiments.isParticipating(experiments.Garnett) && content.content.hasTonalHeaderByline && content.tags.hasLargeContributorImage)
     ))">
 
     <div class="rich-link__container">
@@ -50,9 +50,7 @@
                         @fragments.inlineSvg("quote", "icon")
                     }
                 } else {
-                    @if(content.content.cardStyle == Comment ||
-                        (content.content.cardStyle == Feature && content.content.metadata.pillar.nameOrDefault == "sport")
-                    ) {
+                    @if(content.content.cardStyle == Comment) {
                         @fragments.inlineSvg("garnett-quote", "icon")
                     }
                 }
@@ -91,13 +89,15 @@
                 @*<div class="u-h meta__number" data-discussion-id="@content.discussionId"/>*@
             }
         } else { 
-            @content.tags.contributors.headOption.map { profile => 
-                @profile.properties.contributorLargeImagePath.map{ image =>
-                    <div class="rich-link__avatar">
-                        <img class="rich-link__avatar__media" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
-                    </div>
-                }
-            } 
+            @if(content.content.cardStyle == Comment) {
+                @content.tags.contributors.headOption.map { profile => 
+                    @profile.properties.contributorLargeImagePath.map{ image =>
+                        <div class="rich-link__avatar">
+                            <img class="rich-link__avatar__media" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
+                        </div>
+                    }
+                } 
+            }
         }
 
         <div class="rich-link__read-more">

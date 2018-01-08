@@ -363,7 +363,7 @@ sealed trait PressedContent {
   def card: PressedCard
   def discussion: PressedDiscussionSettings
   def display: PressedDisplaySettings
-
+  def maybePillar: Option[Pillar] = Pillar(properties.maybeContent)
   lazy val participatesInDeduplication: Boolean = properties.embedType.isEmpty
 
   def branding(edition: Edition): Option[Branding] =

@@ -1,5 +1,6 @@
-@(title: String, href: String)
+@(title: String, href: String)(implicit request: RequestHeader)
 
+@import experiments._
 @import views.html.fragments.inlineSvg
 
 <div class="rich-link">
@@ -12,7 +13,11 @@
 
     <div class="rich-link__read-more">
         <div class="rich-link__arrow">
-            @inlineSvg("arrow-in-circle", "icon")
+            @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) { 
+                @inlineSvg("arrow-in-circle", "icon") 
+            } else { 
+                @inlineSvg("arrow-in-circle-garnett", "icon") 
+            }
         </div>
         <div class="rich-link__read-more-text">
             Read more

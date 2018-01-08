@@ -4,11 +4,12 @@ import java.nio.charset.Charset
 
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
+import experiments.{ActiveExperiments, GarnettHeader}
 import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
-import html.HtmlPageHelpers.{ContentCSSFile,FaciaCSSFile,RichLinksCSSFile}
+import html.HtmlPageHelpers.{ContentCSSFile, FaciaCSSFile, RichLinksCSSFile}
 import play.api.mvc.RequestHeader
 
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
@@ -58,9 +59,11 @@ object css {
   private val memoizedCss: ConcurrentMap[String, Try[String]] = TrieMap()
 
   def head(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
+  def inlineNavigation(implicit request: RequestHeader, context: ApplicationContext): String = if (ActiveExperiments.isParticipating(GarnettHeader)) inline("head.navigation.garnett") else inline("head.navigation")
   def inlineStoryPackage(implicit context: ApplicationContext): String = inline("story-package")
   def inlineStoryPackageGarnett(implicit context: ApplicationContext): String = inline("story-package-garnett")
   def inlinePhotoEssay(implicit context: ApplicationContext): String = inline("article-photo-essay")
+  def inlinePhotoEssayGarnett(implicit context: ApplicationContext): String = inline("article-photo-essay-garnett")
   def amp(implicit context: ApplicationContext): String = inline("head.amp")
   def hostedAmp(implicit context: ApplicationContext): String = inline("head.hosted-amp")
   def liveblogAmp(implicit context: ApplicationContext): String = inline("head.amp-liveblog")

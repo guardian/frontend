@@ -200,6 +200,26 @@ Hence why a greater depth of selector specificity is needed.
                 flex: 2 1 auto;
                 width: 50% !important;
             }
+
+            .fc-item.fc-item--type-comment.fc-item--has-cutout.fc-item--third-tablet {
+                .fc-item__avatar {
+                    height: gs-height(2.5);
+                    width: gs-height(2.5);
+                }
+            
+                .fc-item__avatar__media {
+                    height: gs-height(2.5);
+                    left: 0 - ($gs-gutter * (2.5 / 6));
+                }
+            
+                .fc-item__standfirst {
+                    display: none;
+                }
+    
+                .fc-item__standfirst-wrapper {
+                    padding-right: 0;
+                }
+            }
         }
     }
 }
