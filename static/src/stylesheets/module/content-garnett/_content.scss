@@ -1421,3 +1421,16 @@
         grid-area: report;
     }
 }
+
+.paid-content {
+    .content__head {
+        display: block;
+        margin-left: 0;
+    }
+
+    .content__labels,
+    .content__meta-container {
+        float: left;
+        @include deport-left;
+    }
+}
