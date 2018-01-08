@@ -230,7 +230,7 @@ $quote-mark: 35px;
     }
 
     .byline {
-        @include fs-header(1);
+        @include fs-bodyCopy(2);
         border-top: 0;
         color: $garnett-neutral-1;
         font-style: italic;
@@ -243,9 +243,9 @@ $quote-mark: 35px;
         font-weight: normal;
 
         span[itemprop='author'] {
-            @include fs-header(1);
+            @include fs-bodyCopy(2);
+            font-weight: 900;
             font-style: normal;
-            font-weight: 700;
         }
     }
 
@@ -965,7 +965,7 @@ $quote-mark: 35px;
 
     .byline,
     .byline span {
-        @include fs-headline(2);
+        @include fs-bodyCopy(2);
         font-style: normal;
     }
 
