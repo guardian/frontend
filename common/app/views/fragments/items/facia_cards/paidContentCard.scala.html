@@ -18,7 +18,9 @@
             </div>
 
             @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                <div class="fc-item__standfirst">@Html(text)</div>
+                <span>
+                    <div class="fc-item__standfirst">@Html(text)</div>
+                </span>
             }
 
             @item.branding.map { branding =>
