@@ -130,7 +130,6 @@ $quote-mark: 35px;
 
     .badge,
     .badge--alt,
-    .content__dateline,
     .content__headline,
     .content__labels,
     .content__standfirst,
@@ -153,9 +152,6 @@ $quote-mark: 35px;
         @include multiline(4, $garnett-neutral-4, top);
         // creates correct top spacing for multiline bg image
         padding-top: 15px;
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
         margin-bottom: $gs-baseline / 2;
         @include mq(leftCol) {
             position: absolute;
@@ -200,9 +196,8 @@ $quote-mark: 35px;
 
     .byline-img {
         max-width: 60px;
-        order: 1;
+        float: left;
         border-top: 0;
-        flex: 1 100%;
         margin: 3px 0 $gs-baseline $gs-gutter/2;
         @include mq(mobileLandscape) {
             margin-left: $gs-gutter;
@@ -218,16 +213,14 @@ $quote-mark: 35px;
     }
 
     .meta__contact-wrap {
-        order: 2;
-        flex: 1;
+        float: left;
+        max-width: 300px;
         margin-right: auto;
-        @include mq(leftCol) {
-            flex: 100%;
-        }
     }
 
     .byline {
         @include fs-header(1);
+        display: block;
         border-top: 0;
         color: $garnett-neutral-1;
         font-style: italic;
@@ -235,10 +228,10 @@ $quote-mark: 35px;
         min-height: 0;
         margin-top: -$gs-baseline/4;
         // magic numbers are correcting line heights so vertical alignment apprears even
-        padding-bottom: 8px;
         padding-top: 2px;
         font-weight: normal;
         width: 100%;
+        margin-bottom: -$gs-baseline;
 
         span[itemprop='author'] {
             @include fs-header(1);
@@ -248,24 +241,29 @@ $quote-mark: 35px;
     }
 
     .content__dateline {
-        order: 3;
         border: 0;
-        align-self: flex-end top;
-        text-align: right;
+        // align-self: flex-end top;
+        // text-align: right;
         min-height: 0;
         margin-bottom: 0;
-        max-width: 100px;
-        margin-left: auto;
-        @include mq(mobileLandscape) {
-            max-width: 120px;
+        // order: 3;
+        // display: inline-block;
+
+        time {
+            display: inline-block;
         }
-        @include mq(leftCol) {
-            text-align: left;
-            max-width: none;
-            margin-left: 0;
-            margin-top: 0;
-            flex: 100%;
-        }
+        // max-width: 100px;
+        // margin-left: auto;
+        // @include mq(mobileLandscape) {
+        //     max-width: 120px;
+        // }
+        // @include mq(leftCol) {
+        //     text-align: left;
+        //     max-width: none;
+        //     margin-left: 0;
+        //     margin-top: 0;
+        //     flex: 100%;
+        // }
     }
 
     .old-article-message {
