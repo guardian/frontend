@@ -1302,13 +1302,6 @@ $quote-mark: 35px;
     box-sizing: content-box;
 }
 
-.content__head--byline-pic .content__header {
-    box-sizing: border-box;
-    min-height: 150px;
-    @include mq(phablet) {
-        min-height: 180px;
-    }
-}
 // *************** Interactive elements ***************
 
 .interactive.element--showcase,
@@ -1320,3 +1313,52 @@ $quote-mark: 35px;
         border-bottom: 1px solid $garnett-neutral-4;
     }
 }
+
+// *************** By line cutouts ****************
+.content__head--byline-pic .content__header {
+    padding-bottom: 0;
+
+    .content__headline {
+        padding-right: 0;
+        padding-bottom: 0;
+        width: auto;
+        float: none;
+    }
+
+    .content__headline__byline {
+        @include fs-headline(5);
+
+        @include mq(mobileLandscape) {
+            @include fs-headline(7, true);
+        }
+        overflow: hidden;
+        font-style: italic;
+        font-weight: 100;
+
+        padding: 0 $gs-gutter / 2;
+        @include mq(mobileLandscape) {
+            padding: 0 $gs-gutter;
+        }
+        @include mq(phablet) {
+            padding: 0;
+        }
+    }
+
+    .byline-img {
+        position: static;
+        float: right;
+        width: auto;
+        shape-outside: polygon(0 130px, 0 150px, 180px 150px, 180px 0, 36px 0, 36px 96px);
+
+        @include mq(desktop) {
+            shape-outside: polygon(0 160px, 0 180px, 216px 180px, 216px 0, 36px 0, 24px 121px, 0 128px);
+        }
+    }
+    
+    .byline-img__img {
+        width: 160px;
+        object-fit: cover;
+        float: none;
+    }
+}
+
