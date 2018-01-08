@@ -1348,6 +1348,7 @@ $quote-mark: 35px;
         position: static;
         float: right;
         width: auto;
+        margin-right: -$gs-gutter;
         shape-outside: polygon(0 130px, 0 150px, 180px 150px, 180px 0, 36px 0, 36px 96px);
 
         @include mq(desktop) {
@@ -1356,8 +1357,6 @@ $quote-mark: 35px;
     }
     
     .byline-img__img {
-        width: 160px;
-        object-fit: cover;
         float: none;
     }
 }
