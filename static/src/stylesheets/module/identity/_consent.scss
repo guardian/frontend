@@ -2,25 +2,38 @@
     .identity-wizard__controls {
         padding: $gs-gutter 0;
         background: #ffffff;
-        position: sticky;
-        bottom: 0;
-        left: 0;
-        right: 0;
         margin-top: $gs-gutter * 2;
-        border-top: 1px solid transparentize($identity-main, .5);
+        border-top: 1px solid $neutral-5;
         justify-content: space-between;
+        z-index: $zindex-sticky;
         @include mq($until: tablet) {
             padding: $gs-gutter * .5;
             margin-left: $gs-gutter * -.5;
             margin-right: $gs-gutter * -.5;
         }
+        .manage-account__button:not(.manage-account__button--round) {
+            flex: 1 1 auto;
+            min-width: 0;
+            width: $gs-baseline * 14;
+            max-width: $gs-baseline * 14;
+        }
     }
     .identity-consent-wizard-counter {
-        flex: 1 1 auto;
-        margin: 0 $gs-gutter / 3;
+        flex: 1 0 auto;
+        padding: 0 $gs-gutter / 2;
     }
-    &[data-journey=all], &[data-journey=newsletters] {
-        .manage-account__switch-footer-email-preview {
+    .identity-wizard__step[data-wizard-step-name=email] .manage-account__switch-footer-email-preview {
+        display: none;
+    }
+    .js-identity-consent-wizard__complete {
+        display: none;
+    }
+    &.identity-wizard--completed {
+        .js-identity-consent-wizard__complete {
+            display: block;
+            display: inline-flex;
+        }
+        .js-identity-consent-wizard__next {
             display: none;
         }
     }
@@ -109,6 +122,6 @@
     }
 
     p {
-        @include fs-textSans(2);
+        @include fs-textSans(3);
     }
 }

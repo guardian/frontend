@@ -9,6 +9,7 @@ import { articleBodyAdvertsInit } from 'commercial/modules/article-body-adverts'
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
+import { carrotTrafficDriverInit } from 'commercial/modules/carrot-traffic-driver';
 import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { initThirdPartyTags } from 'commercial/modules/third-party-tags';
@@ -31,6 +32,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', initPaidForBand],
+    ['cm-carrot', carrotTrafficDriverInit],
 ];
 
 if (!commercialFeatures.adFree) {

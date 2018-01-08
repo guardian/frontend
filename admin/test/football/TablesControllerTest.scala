@@ -1,6 +1,5 @@
 package football
 
-
 import _root_.controllers.admin.TablesController
 import football.model.PA
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, Matchers}

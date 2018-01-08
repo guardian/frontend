@@ -1,8 +1,7 @@
-@mixin colorPalatte($pillarColor, $kickerColor, $mediaColor) {
+@mixin colorPalatte($kickerColor, $pillarColor, $mediaColor) {
     &.content--type-analysis {
         .content__headline {
             background-image: repeating-linear-gradient(to bottom, transparent, transparent 39px, rgba($pillarColor, .5));
-            
             @include mq(tablet) {
                 background-image: repeating-linear-gradient(to bottom, transparent, transparent 47px, rgba($pillarColor, .5));
             }
@@ -12,16 +11,17 @@
     .button--secondary,
     .content__section-label__link,
     .drop-cap,
-    .pullquote-cite {
+    .element-pullquote p,
+    .tonal__head--tone-feature .content__headline,
+    .tonal__head--tone-review .content__headline,
+    .u-underline[href] {
         color: $pillarColor;
     }
 
     .byline,
     .content--media .content__headline,
-    .element-pullquote p,
     .old-article-message,
-    .tonal__head--tone-feature .content__headline,
-    .tonal__head--tone-review .content__headline,
+    .pullquote-cite,
     .tone-colour,
     a[href] {
         color: $kickerColor;
@@ -31,28 +31,26 @@
         background: $mediaColor;
     }
 
+    .block-share__item .inline-icon,
     .inline-close svg,
     .inline-tone-fill,
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
-    .social-icon__svg,
-    .block-share__item--facebook .inline-icon,
-    .block-share__item--twitter .inline-icon,
-    .block-share__item--gplus .inline-icon {
+    .social-icon__svg {
         fill: $kickerColor;
     }
 
     .social__tray-close .social-tray__button {
-        &:hover,
-        &:focus {
+        &:focus,
+        &:hover {
             .inline-close {
                 border-color: $kickerColor;
             }
         }
     }
-    
+
     .inline-garnett-quote svg {
-        fill: $pillarColor;
+        fill: $kickerColor;
     }
 
     .u-underline:hover {
@@ -63,13 +61,10 @@
         background-color: $kickerColor;
     }
 
+    .block-share__item,
     .meta__twitter a,
     .social-icon,
-    .social-icon.social-icon--more,
-    .block-share__item--facebook,
-    .block-share__item--twitter,
-    .block-share__item--gplus {
-
+    .social-icon.social-icon--more {
         &:focus,
         &:hover {
             background-color: $kickerColor;
@@ -85,11 +80,32 @@
         }
     }
 
-    .block--content {
+    .block--content,
+    .block.is-summary {
         border-top-color: $pillarColor;
     }
-}
+    /** Youtube player styling */
+    .youtube-media-atom__play-button {
+        background: $mediaColor;
+        border-radius: 100%;
+    }
 
+    .youtube-media-atom__bottom-bar__icon .inline-video-icon__svg {
+        fill: $mediaColor;
+    }
+
+    .youtube-media-atom__bottom-bar__duration {
+        color: $mediaColor;
+    }
+}
+@mixin footerPalette($pillarColor) {
+    .discussion a[href],
+    // #? temporary fix: this class is in the comment.js template (line 139)
+    // we can get rid of it once we clean up the pre-garnett code
+    .discussion .button--tone-news {
+        color: $pillarColor;
+    }
+}
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
 
@@ -124,9 +140,9 @@
     .rich-link__header {
         padding-top: $gs-baseline / 6;
     }
-    
-    .rich-link__kicker,
+
     .rich-link__byline,
+    .rich-link__kicker,
     .rich-link__read-more-text {
         color: $pillarColor;
     }
@@ -136,7 +152,6 @@
         padding-right: .375em;
     }
 }
-
 @mixin mediaPalatte($mediaColor, $pillar) {
     .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
@@ -156,7 +171,7 @@
     .inline-volume-high {
         fill: $mediaColor;
     }
-    
+
     .vjs-paused .vjs-play-control {
         @include icon(play-icon--#{$pillar});
     }
@@ -164,7 +179,6 @@
     .vjs-playing .vjs-play-control {
         @include icon(pause-icon--#{$pillar});
     }
-
 }
 
 .content--pillar-news {
@@ -172,23 +186,47 @@
 }
 
 .content--pillar-opinion,
-.content--type-comment {
+.content--type-comment,
+.content--type-guardianview {
     @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
 }
 
 .content--pillar-arts,
-.content--pillar-arts.content--type-comment {
+.content--pillar-arts.content--type-comment,
+.content--pillar-arts.content--type-guardianview {
     @include colorPalatte($arts-garnett-main-1, $arts-garnett-feature, $arts-garnett-media-main-1);
 }
 
 .content--pillar-lifestyle,
-.content--pillar-lifestyle.content--type-comment  {
-    @include colorPalatte($lifestyle-garnett-feature, $lifestyle-garnett-main-1, $lifestyle-garnett-media-main-1);
+.content--pillar-lifestyle.content--type-comment,
+.content--pillar-lifestyle.content--type-guardianview {
+    @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
 }
 
 .content--pillar-sport,
-.content--pillar-sport.content--type-comment {
+.content--pillar-sport.content--type-comment,
+.content--pillar-sport.content--type-guardianview {
     @include colorPalatte($sport-garnett-main-1, $sport-garnett-feature, $sport-garnett-media-main-1);
+}
+
+.content-footer--pillar-news {
+    @include footerPalette($news-garnett-main-1);
+}
+
+.content-footer--pillar-arts {
+    @include footerPalette($arts-garnett-main-1);
+}
+
+.content-footer--pillar-lifestyle {
+    @include footerPalette($lifestyle-garnett-feature);
+}
+
+.content-footer--pillar-opinion {
+    @include footerPalette($opinion-garnett-main-1);
+}
+
+.content-footer--pillar-sport {
+    @include footerPalette($sport-garnett-main-1);
 }
 
 .content--media:not(.paid-content).content--pillar-news,
@@ -222,7 +260,6 @@
         background-size: 1px 40px;
         background-clip: content-box;
         background-origin: content-box;
-
         @include mq(tablet) {
             background-size: 1px 48px;
         }
@@ -254,7 +291,7 @@
         .rich-link__image-container {
             display: none;
         }
-        
+
         .rich-link__container {
             @include multiline(4, $garnett-neutral-4);
             padding-bottom: 13px;
@@ -281,13 +318,13 @@
         &.rich-link--pillar-lifestyle {
             @include richLink(#ffffff, $lifestyle-garnett-feature);
         }
-        
+
         &,
         .rich-link__link {
             color: #ffffff;
         }
     }
-    
+
     &.tone-media--item {
         background: $media-garnett-main-1;
 
@@ -303,6 +340,9 @@
         .rich-link__read-more-text {
             display: none;
         }
-
     }
+}
+
+.immersive-main-media__headline-container .content__series-label__link[href] {
+    color: $garnett-neutral-3;
 }

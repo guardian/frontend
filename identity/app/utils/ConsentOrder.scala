@@ -12,7 +12,10 @@ object ConsentOrder {
       "jobs",
       "holidays",
       "events",
-      "offers"
+      "offers",
+      "post",
+      "phone",
+      "sms"
     )
 
   /**

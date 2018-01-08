@@ -19,9 +19,9 @@ class ExactTargetController(
   val controllerComponents: ControllerComponents
 ) extends BaseController with ImplicitControllerExecutionContext with SafeLogging {
 
-  import authenticatedActions.authAction
+  import authenticatedActions.fullAuthAction
 
-  def subscribe(subscriptionDefId: String, returnUrl: String): Action[AnyContent] = authAction.apply {
+  def subscribe(subscriptionDefId: String, returnUrl: String): Action[AnyContent] = fullAuthAction.apply {
     implicit request =>
 
       idRequestParser(request).returnUrl match {

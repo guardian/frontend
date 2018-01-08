@@ -15,7 +15,17 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  Switch(
+  val CarrotTrafficDriverSwitch = Switch(
+    SwitchGroup.Commercial,
+    "carrot-traffic-driver",
+    "Enables the requesting and rendering of the carrot traffic driving component.",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val IasTargetingSwitch = Switch(
     SwitchGroup.Commercial,
     "ias-ad-targeting",
     "Enables the IAS slot-targeting optimisation.",
@@ -283,15 +293,5 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  val sponsoredPremierLeagueTable = Switch(
-    group = SwitchGroup.Commercial,
-    name = "sponsored-premier-league-table",
-    description = "Show a hardcoded sponsor's logo on Premier League table page.",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 3),
-    exposeClientSide = false
   )
 }

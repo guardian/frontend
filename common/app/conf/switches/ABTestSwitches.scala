@@ -88,21 +88,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-outstream-frequency-cap",
-    "Test adds a hold-back variant which keeps a frequency cap on outstream video format ads.",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-us-gun-campaign-2017",
     "Show a custom Epic for articles with the US gun campaign tag",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 1, 4),
+    sellByDate = new LocalDate(2018, 1, 11),
     exposeClientSide = true
   )
 
@@ -136,23 +126,4 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-end-of-year-countdown",
-    "Test a countdown until the end of year",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-banner-just-contribute",
-    "Test linking to a contributions-only version of support.theguardian.com",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 22),
-    exposeClientSide = true
-  )
 }

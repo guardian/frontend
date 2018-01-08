@@ -7,8 +7,9 @@ $fc-item-gutter: $gs-gutter / 4;
 @mixin fs-headline-quote($level) {
     .fc-item__title--quoted .inline-garnett-quote__svg {
         height: get-font-size(headline, $level);
-        width: get-font-size(headline, $level) * .5;
+        width: get-font-size(headline, $level) * .54;
         margin-right: get-font-size(headline, $level) * .5;
+        transform: translateY(-1px);
     }
 }
 
@@ -39,7 +40,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .fc-item__media-wrapper {
+    .fc-item__media-wrapper, .fc-item__video-fallback {
         flex-basis: $media-width;
     }
 
@@ -149,6 +150,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__header,
+.video-overlay__headline,
 .item__title,
 .rich-link__header {
     @include fs-headline(3);
@@ -190,21 +192,32 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__header {
     flex: 1 1 auto;
     font-weight: 400;
+
+    .fc-item--has-boosted-title & {
+        @include mq($from: tablet) {
+            font-weight: 900;
+        }
+    }
 }
 
 .fc-item__kicker {
     position: relative;
-    margin-right: $gs-gutter / 4;
     font-weight: 700;
-    border-width: 0 1px 0 0;
-    border-style: solid;
-    padding-right: .375em;
+
+    &:after {
+        content: '/';
+        display: inline-block;
+        font-weight: 900;
+        margin-left: 4px;
+    }
 }
 
 .fc-item__byline {
     margin-bottom: 0;
     font-style: italic;
     letter-spacing: .2px;
+    //This is to compensate for the line height of the headline
+    margin-top: -2px;
 }
 
 .fc-item__standfirst-wrapper {

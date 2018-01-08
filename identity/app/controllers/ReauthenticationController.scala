@@ -26,10 +26,10 @@ class ReauthenticationController(
     val controllerComponents: ControllerComponents,
     val httpConfiguration: HttpConfiguration)
     (implicit context: ApplicationContext)
-  extends BaseController 
-  with ImplicitControllerExecutionContext 
-  with SafeLogging 
-  with Mappings 
+  extends BaseController
+  with ImplicitControllerExecutionContext
+  with SafeLogging
+  with Mappings
   with Forms {
 
   val page = IdentityPage("/reauthenticate", "Re-authenticate")
@@ -47,7 +47,7 @@ class ReauthenticationController(
     )
   )
 
-  def renderForm(returnUrl: Option[String]): Action[AnyContent] = authenticatedActions.authActionWithUser { implicit request =>
+  def renderForm(returnUrl: Option[String]): Action[AnyContent] = authenticatedActions.fullAuthWithIdapiUserAction { implicit request =>
     val filledForm = form.bindFromFlash.getOrElse(form.fill(""))
 
     logger.trace("Rendering reauth form")
@@ -61,7 +61,7 @@ class ReauthenticationController(
     ))
   }
 
-  def processForm: Action[AnyContent] = authenticatedActions.authActionWithUser.async { implicit request =>
+  def processForm: Action[AnyContent] = authenticatedActions.fullAuthWithIdapiUserAction.async { implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = formWithConstraints.bindFromRequest
     val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)

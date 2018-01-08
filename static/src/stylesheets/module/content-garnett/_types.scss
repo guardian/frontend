@@ -3,17 +3,22 @@ $quote-mark: 35px;
 
 .content {
     padding-bottom: 0;
+    color: $garnett-neutral-1;
 }
 
 .content--liveblog,
 .content--media,
 .content--type-analysis,
+.content--type-guardianview,
 .content--type-article,
 .content--type-comment,
 .content--type-feature,
+.content--type-matchreport,
 .content--type-live,
 .content--type-media,
-.content--type-review {
+.content--type-review,
+.content--type-interview,
+.content--type-immersive {
     // *************** Meta and Social ***************
     .submeta {
         @include multiline(4, $garnett-neutral-4, top);
@@ -25,16 +30,21 @@ $quote-mark: 35px;
         border-bottom: 0;
     }
 
+    .submeta__section-labels {
+        padding-top: $gs-baseline / 4;
+    }
+
     .submeta__label {
         font-size: 12px;
         line-height: 16px;
         color: $neutral-2;
         display: block;
         margin-bottom: -($gs-baseline / 4);
+        margin-top: -($gs-baseline / 4);
     }
 
     .submeta__keywords {
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline / 6;
         padding-bottom: $gs-baseline / 2;
         border-bottom: solid 1px $garnett-neutral-4;
         margin-bottom: $gs-baseline / 2;
@@ -150,10 +160,8 @@ $quote-mark: 35px;
         flex-flow: row wrap;
         justify-content: space-between;
         margin-bottom: 0;
-
         @include mq(leftCol) {
             position: absolute;
-            margin-top: -$gs-baseline;
         }
     }
 
@@ -224,7 +232,7 @@ $quote-mark: 35px;
     .byline {
         @include fs-header(1);
         border-top: 0;
-        color: #333333;
+        color: $garnett-neutral-1;
         font-style: italic;
         line-height: 20px;
         min-height: 0;
@@ -339,9 +347,7 @@ $quote-mark: 35px;
         margin-bottom: $gs-baseline/2;
     }
 
-    .block-share__item--facebook,
-    .block-share__item--gplus,
-    .block-share__item--twitter,
+    .block-share__item,
     .inline-close,
     .social-icon,
     .social-icon.social-icon--more {
@@ -401,10 +407,6 @@ $quote-mark: 35px;
         border-color: $garnett-neutral-4;
     }
     // *************** Header and Body Styles ***************
-    .content__head {
-        margin-bottom: 0;
-    }
-
     .content__article-body {
         line-height: 1.4;
 
@@ -420,10 +422,15 @@ $quote-mark: 35px;
                 background: $garnett-neutral-4;
             }
         }
+        @include mq(tablet) {
+            padding-left: 0;
+            margin-left: 0;
+            padding-bottom: $gs-baseline*4;
+        }
         @include mq(desktop) {
             padding-left: 0;
             margin-left: 0;
-            padding-bottom: 100px;
+            padding-bottom: $gs-baseline*6;
         }
         @include mq(leftCol) {
             padding-left: $gs-gutter/2;
@@ -461,20 +468,9 @@ $quote-mark: 35px;
         display: block;
     }
 
-    .media-primary .inline-expand-image {
-        display: none;
-    }
-
     .media-primary.media-primary--showcase {
         margin-left: 0;
         margin-right: 0;
-    }
-
-    .article__fullscreen:hover,
-    .article__img-container:hover .article__fullscreen,
-    .article__img-container:hover .gallery__fullscreen,
-    .gallery__fullscreen:hover {
-        background-color: $neutral-4;
     }
 
     .content__headline {
@@ -537,23 +533,17 @@ $quote-mark: 35px;
         @include fs-headline(2);
         font-weight: 400;
         border-top: 0;
-        color: $neutral-1;
+        color: $garnett-neutral-1;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
-        max-width: gs-span(3) - $gs-gutter;
-        @include mq(mobileMedium) {
-            max-width: gs-span(4)- $gs-gutter;
-        }
-        @include mq(mobileLandscape) {
-            max-width: gs-span(4);
-        }
+        max-width: 80%;
         @include mq(phablet) {
-            max-width: gs-span(5);
+            max-width: gs-span(6);
             margin-left: 20px;
             margin-bottom: $gs-baseline*2;
         }
         @include mq(tablet) {
-            max-width: gs-span(6);
+            max-width: gs-span(7);
             margin-left: 0;
         }
         @include mq(leftCol) {
@@ -764,6 +754,33 @@ $quote-mark: 35px;
         }
     }
 
+    .element-image.element--showcase,
+    .element-image.element--supporting {
+
+        @include mq(leftCol) {
+            .caption {
+                float: left;
+                width: $left-column;
+            }
+        }
+
+        @include mq(wide) {
+            .caption {
+                width: $left-column-wide;
+            }
+        }
+    }
+
+    .element-image.element--showcase {
+        @include mq(leftCol) {
+            margin-bottom: $gs-baseline * 3;
+        }
+    }
+
+    .element .caption {
+        background: #ffffff;
+    }
+
     .quoted {
         .inline-garnett-quote {
             position: absolute;
@@ -790,6 +807,7 @@ $quote-mark: 35px;
 
 
 .content--type-feature,
+.content--type-interview,
 .content--type-review {
     .content__headline {
         font-weight: 700;
@@ -797,6 +815,7 @@ $quote-mark: 35px;
 }
 // *************** Opinion Styles ***************
 
+.content--type-guardianview,
 .content--type-comment {
     .content__head {
         overflow: hidden;
@@ -808,6 +827,13 @@ $quote-mark: 35px;
     .content__meta-container {
         background-image: none;
         padding-top: 0;
+
+        @include mq(leftCol) {
+            @include multiline(8, $garnett-neutral-4, 8);
+            padding-top: $gs-baseline * 3;
+            // the multiline pattern is 4px high, so its height for n lines is (n - 1) * 4 + 1
+            margin-top: -1 * (7 * 4px + 1);
+        }
     }
 
     .content__dateline {
@@ -1063,6 +1089,14 @@ $quote-mark: 35px;
     }
     // *************** Gallery overrides ***************
     &.content--gallery {
+        .meta__twitter {
+            margin-top: $gs-baseline / 2;
+            .button:hover,
+            .button:focus {
+                border-width: 0;
+            }
+        }
+
         .content__dateline {
             background-image: none;
         }
@@ -1071,7 +1105,6 @@ $quote-mark: 35px;
             border: 0;
         }
 
-        .gallery__meta-container,
         .meta__numbers,
         .meta__social {
             background-image: none;
@@ -1080,6 +1113,10 @@ $quote-mark: 35px;
             &::before {
                 content: none;
             }
+        }
+
+        .gallery__meta-container {
+            background-image: none;
         }
 
         .gallery:before,
@@ -1092,12 +1129,6 @@ $quote-mark: 35px;
                 max-width: gs-span(8);
             }
         }
-    }
-}
-
-.immersive-main-media__headline-container {
-    .content__series-label__link {
-        color: $garnett-neutral-3;
     }
 }
 
@@ -1123,8 +1154,13 @@ $quote-mark: 35px;
         @include mq(wide) {
             margin: 0 auto;
         }
+
+        .caption--main {
+            padding-left: $gs-gutter / 2;
+        }
     }
 }
+
 // *************** Analysis ***************
 
 .content--type-analysis {
@@ -1168,6 +1204,7 @@ $quote-mark: 35px;
 }
 // *************** Opinion quote weight overrides ***************
 
+.content--type-guardianview,
 .content--type-comment {
     .element-pullquote.element--supporting .pullquote-cite,
     .element-pullquote.element--supporting .pullquote-paragraph {
@@ -1176,25 +1213,30 @@ $quote-mark: 35px;
 }
 // *************** Opinion and Feature standfirst overrides ***************
 
+.content--type-guardianview,
 .content--type-comment,
 .content--type-feature,
 .content--type-review {
     .content__standfirst {
-        @include fs-headlineGarnett(1);
+        @include fs-headlineGarnett(0);
         font-weight: 200;
         @include mq(tablet) {
-            @include fs-headlineGarnett(2);
+            @include fs-headlineGarnett(1);
         }
     }
 }
 // *************** Rich links ***************
 
-.element-rich-link {
+.element-rich-link,
+.element-rich-link.element--supporting {
     @include mq(mobileLandscape, leftCol) {
         width: $gs-gutter * 6.5;
     }
     @include mq(leftCol, wide) {
-        width: $gs-gutter * 7;
+        width: $left-column;
+    }
+    @include mq(wide) {
+        width: $left-column-wide;
     }
 }
 
@@ -1261,10 +1303,9 @@ $quote-mark: 35px;
     }
 }
 
-
 .social__tray-close .social-tray__button {
-    &:hover,
-    &:focus {
+    &:focus,
+    &:hover {
         .social-tray__icon__svg {
             fill: #ffffff;
         }
@@ -1273,4 +1314,23 @@ $quote-mark: 35px;
 
 .social__tray-close .social-tray__icon {
     box-sizing: content-box;
+}
+
+.content__head--byline-pic .content__header {
+    box-sizing: border-box;
+    min-height: 150px;
+    @include mq(phablet) {
+        min-height: 180px;
+    }
+}
+// *************** Interactive elements ***************
+
+.interactive.element--showcase,
+.interactive.element--supporting {
+    background: $garnett-neutral-5;
+    padding-top: $gs-baseline/4;
+    @include mq(leftCol) {
+        border-top: 1px solid $garnett-neutral-4;
+        border-bottom: 1px solid $garnett-neutral-4;
+    }
 }

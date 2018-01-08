@@ -1,4 +1,6 @@
 @mixin overide-live-blog-colours($pillar, $color1, $color2) {
+    //when live blog is tagged match report
+    .fc-item--live.fc-item--type-matchreport.fc-item--pillar-#{$pillar},
     .fc-item--type-live.fc-item--pillar-#{$pillar} {
         background-color: $color1;
 
@@ -12,7 +14,6 @@
 
         .fc-item__kicker {
             color: $color2;
-            border-image: linear-gradient(to top, transparent, transparent .125em, $color2 .125em) 0 1;
         }
 
         .fc-item__headline {
@@ -48,11 +49,6 @@
         // darken on hover
         .u-faux-block-link--hover {
             background-color: darken($color1, 5%);
-
-            .fc-item__kicker,
-            .fc-item__container::before {
-                background-color: darken($color1, 5%);
-            }
 
             .fc-item__kicker::before {
                 background-color: darken($color1, 5%);

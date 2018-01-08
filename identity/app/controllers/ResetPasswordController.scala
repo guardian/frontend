@@ -109,7 +109,7 @@ class ResetPasswordController(
             }
 
           case Right(ok) =>
-            val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
+            val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
             NoCache(SeeOther(routes.ResetPasswordController.renderPasswordResetConfirmation.url))
         }
     }
@@ -119,7 +119,7 @@ class ResetPasswordController(
 
   def renderPasswordResetConfirmation: Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
-    val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
+    val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
     Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn))
   }
 

@@ -10,8 +10,8 @@ object NavigationHelpers {
     val editionId = edition.id.toLowerCase()
 
     List(
-      NavLink("become a supporter", getSupportOrMembershipUrl(SideMenu)),
-      NavLink("subscribe", getSupportOrSubscriptionUrl(SideMenu))
+      NavLink("Become a supporter", getSupportOrMembershipUrl(SideMenu)),
+      NavLink("Subscribe", getSupportOrSubscriptionUrl(SideMenu))
     )
   }
 }
