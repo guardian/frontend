@@ -1349,7 +1349,7 @@ $quote-mark: 35px;
         float: right;
         width: auto;
         margin-right: -$gs-gutter;
-        shape-outside: polygon(0 130px, 0 150px, 180px 150px, 180px 0, 36px 0, 36px 96px);
+        shape-outside: polygon(0 130px, 0 150px, 180px 150px, 180px 0, 20px 0, 20px 96px);
 
         @include mq(desktop) {
             shape-outside: polygon(0 160px, 0 180px, 216px 180px, 216px 0, 36px 0, 24px 121px, 0 128px);
