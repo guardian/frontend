@@ -50,6 +50,10 @@
                 @fragments.mainMedia(article, amp)
             }
 
+            @if(isPaidContent) {
+                @fragments.articleHeaderPaidGarnett(article, model, amp = amp)
+            }
+
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
@@ -59,14 +63,17 @@
                                 @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp)
                             }
 
-
-                            @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
+                            @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement) && !isPaidContent) {
                                 @if(article.metadata.designType.nameOrDefault == "comment" ||
                                     article.metadata.designType.nameOrDefault == "guardianview") {
                                     @fragments.articleHeaderCommentGarnett(article, model, isPaidContent, amp = amp)
                                 } else {
-                                    @fragments.articleHeaderGarnett(article, model, isPaidContent, amp = amp)
+                                    @fragments.articleHeaderGarnett(article, model, amp = amp)
                                 }
+                            }
+
+                            @if(isPaidContent){
+                                @fragments.mainMedia(article, amp)
                             }
 
                             @fragments.witnessCallToAction(article.content)
