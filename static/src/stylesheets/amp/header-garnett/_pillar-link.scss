@@ -1,0 +1,28 @@
+.pillar-link {
+    font-size: 16px;
+    display: block;
+    height: $veggie-burger-medium - $gs-baseline;
+    line-height: $veggie-burger-medium - $gs-baseline;
+    padding: 0 ($gs-gutter / 4);
+    position: relative;
+    color: currentColor;
+    cursor: pointer;
+
+    @include mq(mobileMedium) {
+        font-size: 18px;
+    }
+
+    &:before {
+        content: '';
+        display: block;
+        left: 0;
+        bottom: 0;
+        position: absolute;
+        border-left: 1px solid $news-support-2;
+        top: $gs-baseline + 1;
+    }
+
+    .guardian-text-sans-loaded & {
+        font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    }
+}

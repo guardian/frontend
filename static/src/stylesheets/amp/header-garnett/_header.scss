@@ -1,0 +1,41 @@
+.header {
+    background-color: $guardian-brand;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    text-transform: lowercase;
+}
+
+.header__cta-container {
+    left: -$gs-gutter / 2;
+    position: absolute;
+    top: 0;
+
+    @include mq(mobileLandscape) {
+        left: 0;
+    }
+}
+
+.header__logo {
+    display: flex;
+    float: none;
+    margin-left: auto;
+}
+
+.header__logo__svg {
+    display: block;
+    height: calc(3 / 16 * 170px);
+    width: 170px;
+    margin-bottom: $gs-baseline / 2;
+    margin-right: $gs-gutter / 2;
+    margin-top: $gs-baseline / 2;
+
+    @include mq(mobileMedium) {
+        height: calc(3 / 16 * 225px);
+        width: 225px;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-right: $gs-gutter
+    }
+}
