@@ -631,10 +631,12 @@
             //This allows the headline block to be aligned to the left and not run full width
             width: 94%;
             padding-bottom: $gs-baseline * 2;
+            min-height: 112px;
 
             @include mq($from: tablet) {
                 width: 100%;
                 left: $gs-baseline / 2;
+
             }
             @include mq($from: desktop) {
                 left: $gs-gutter / 2;
