@@ -33,10 +33,22 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
 .content--liveblog .content__meta-container--liveblog {
     border-bottom: 0;
+    margin-left: -$gs-gutter / 2;
+    margin-right: -$gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        margin-left: -$gs-gutter;
+        margin-right: -$gs-gutter;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    @include mq(phablet) {
+        margin-left: 0;
+        margin-right: 0;
+    }
 
     @include mq(desktop) {
         border-top: 0;
-        margin-left: 0;
         margin-top: 0;
         min-height: gs-height(1)*1.5;
         position: static;
@@ -61,8 +73,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     }
 }
 
-.content__head {
-    margin-bottom: $gs-baseline / 2;
+.tonal__main--tone-live {
+    @include mq(tablet) {
+        padding-top: $gs-gutter;
+    }
 }
 
 .content__head__comment-count--liveblog {
@@ -205,11 +219,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     background-color: #ffffff;
     border-top: 1px solid $neutral-3;
     border-bottom: 1px solid $neutral-6;
-}
-
-.block.is-key-event,
-.block.is-summary {
-    border-top: 1px solid $live-accent;
 }
 
 .truncated-block {
@@ -454,14 +463,32 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
     $content-gutter: $gs-gutter / 2;
 
-    @include mq($until: desktop) {
-        margin-right: $content-gutter * -1;
-        margin-left: $content-gutter * -1;
+    margin-right: $content-gutter * -1;
+    margin-left: $content-gutter * -1;
+
+    @include mq(mobileLandscape) {
+        margin-right: $content-gutter * -2;
+        margin-left: $content-gutter * -2;
+    }
+    @include mq(phablet) {
+        margin-right: 0x;
+        margin-left: 0;
+    }
+    @include mq(tablet) {
+        margin-right: $content-gutter * -2;
+        margin-left: $content-gutter * -2;
+    }
+    @include mq(desktop) {
+        margin-right: 0;
+        margin-left: 0;
     }
 
-    .dropdown__button {
-        @include mq($until: desktop) {
-            background-color: #ffffff;
+    button.dropdown__button {
+        background-color: #ffffff;
+        padding-right: $gs-gutter / 2;
+        padding-left: $gs-gutter / 2;
+
+        @include mq(mobileLandscape) {
             padding-right: $gs-gutter;
             padding-left: $gs-gutter;
         }
@@ -474,7 +501,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
             @include mq(desktop) {
                 display: block;
                 border-top: 0;
-                padding-top: 0;
+                padding-top: 10px;
                 margin-top: ($gs-baseline/3)*-1;
                 margin-bottom: $gs-baseline/2;
             }
@@ -503,6 +530,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         border-top: 0;
     }
 }
+
+// .dropdown-styled button.dropdown__button {
+//     padding: 40px;
+// }
 
 /* Timeline
    ========================================================================== */
@@ -548,8 +579,14 @@ $timeline-width: 15px;
 .timeline {
     position: relative;
 
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+    }
+
     @include mq(desktop) {
         margin-left: $timeline-width/2;
+        margin-top: $gs-baseline / 2;
     }
 }
 .timeline__item {
@@ -765,25 +802,6 @@ $timeline-width: 15px;
     }
 }
 
-.content--liveblog.section-football, .content--liveblog--rugby { // Football & rugby overrides
-    .tonal__header {
-        background-color: #ffffff;
-
-        .content__labels {
-            border-bottom-color: $neutral-5;
-        }
-        .content__section-label__link {
-            color: $live-default;
-        }
-        .content__series-label__link {
-            color: $neutral-2;
-        }
-        .content__headline {
-            color: #ffffff;
-        }
-    }
-}
-
 $pillars: (
     news: (
         pillarColor: $news-garnett-feature,
@@ -826,6 +844,29 @@ $pillars: (
             border-color: map-get($palette, pillarColor);
         }
 
+        .block.is-key-event,
+        .block.is-summary {
+            border-top: 1px solid map-get($palette, pillarColor);
+        }
+    }
+}
+
+.content--liveblog.section-football, .content--liveblog--rugby { // Football & rugby overrides
+    .tonal__header {
+        background-color: #ffffff;
+
+        .content__labels {
+            border-bottom-color: $neutral-5;
+        }
+        .content__section-label__link {
+            color: $sport-garnett-feature;
+        }
+        .content__series-label__link {
+            color: $neutral-2;
+        }
+        .content__headline {
+            color: #ffffff;
+        }
     }
 }
 
@@ -839,5 +880,31 @@ $pillars: (
 
     .tonal__standfirst ul>li::before {
         background: rgba(255, 255, 255, .4);
+    }
+    .content__standfirst {
+        margin-left: -$gs-gutter / 2;
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter;
+        }
+        @include mq(phablet) {
+            margin-left: 0;
+        }
+    }
+}
+
+.football-tabs {
+    @include mq(phablet) {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.tabs__tab a[href] {
+    padding-left: $gs-gutter / 2;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+    }
+    @include mq(phablet) {
+        padding-left: $gs-gutter / 2;
     }
 }
