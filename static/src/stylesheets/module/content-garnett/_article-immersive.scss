@@ -260,10 +260,6 @@
     }
 
     .element-pullquote.element--showcase {
-        @include mq(tablet) {
-            // margin-bottom: $gs-baseline * 3;
-        }
-
         .inline-quote svg {
             @include mq(tablet) {
                 width: 3em;
