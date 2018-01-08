@@ -60,7 +60,7 @@
             @include mq($from: mobile, $until: tablet) {
                 .fc-sublink__title {
                     &::before {
-                        border-top-color: $live-garnett-accent;
+                        border-top-color: $color2;
                     }
                 }
             }
@@ -70,7 +70,7 @@
             @include mq($from: tablet) {
                 .fc-sublink__title {
                     &::before {
-                        border-top-color: $live-garnett-accent;
+                        border-top-color: $color2;
                     }
                 }
             }
