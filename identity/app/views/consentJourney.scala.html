@@ -131,16 +131,6 @@
         content = marketingStepContent
     )
 }
-@marketingConsentRepermissionStep = @{
-    ConsentStep(
-        name = "consent-repermission",
-        title = "We need you to consent again to receiving communications from the Guardian",
-        help = List(
-            ConsentStepHelpText("Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.")
-        ),
-        content = marketingStepContent
-    )
-}
 @marketingConsentThankYouStep = @{
     ConsentStep(
         name = "consent-thank-you",
@@ -229,13 +219,6 @@
                         content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
                     )
                 }
-            )
-        }
-        case "all" => {
-            List(
-                marketingConsentRepermissionStep,
-                emailRepermissionStep,
-                channelStep
             )
         }
         case "thank-you" => {

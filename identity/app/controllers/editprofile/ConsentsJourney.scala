@@ -18,7 +18,7 @@ trait ConsentsJourney
     with EditProfileFormHandling {
 
   import authenticatedActions._
-  
+
   /** GET /consents/newsletters */
   def displayConsentsJourneyNewsletters: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageNewsletters, None)
