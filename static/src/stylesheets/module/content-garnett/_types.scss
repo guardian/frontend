@@ -278,7 +278,7 @@ $quote-mark: 35px;
 
     .content__meta-container--email.content__meta-container--twitter .meta__twitter {
         margin-top: 0;
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: -$gs-baseline / 2;
     }
 
     .content__meta-container--email.content__meta-container--twitter .meta__email {
