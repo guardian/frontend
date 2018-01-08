@@ -652,6 +652,7 @@
             font-size: 50px;
         }
 
+        //This is the line when there is no image that connetcs to the body
         &:before {
             position: absolute;
             top: -$gs-baseline / 2;
