@@ -1148,6 +1148,69 @@ $quote-mark: 35px;
             padding-left: $gs-gutter / 2;
         }
     }
+
+    .content__head--article {
+        @include mq($from: leftCol) {
+            @supports (display: grid) {
+                grid-template-areas: 'labels headline' 'meta main-media' '. standfirst';
+
+            }
+        }
+
+        .content__headline-showcase-wrapper {
+            display: none;
+
+            @include mq($from: leftCol) {
+                display: block;
+                grid-area: headline;
+                max-width: gs-span(8);
+            }
+            .content__headline {
+                padding-bottom: $gs-baseline * 2;
+            }
+        }
+        .content__headline-standfirst-wrapper .content__headline {
+            @include mq(leftCol) {
+                display: none;
+            }
+        }
+        .content__headline-standfirst-wrapper {
+            @include mq($from: leftCol) {
+                grid-area: standfirst;
+            }
+        }
+
+    }
+    .stars {
+        position: absolute;
+        margin: 0;
+        transform: none;
+        z-index: 5;
+        bottom: 0;
+        @include mq(desktop) {
+            bottom: unset;
+            top: 0;
+        }
+    }
+    figure > .gs-container {
+        margin: 0;
+        padding: 0;
+        .content__main-column {
+            max-width: unset;
+            margin: 0;
+            padding: 0;
+        }
+    }
+    .content__secondary-column {
+        @include mq($from: wide) {
+            padding-top: (aspect-ratio-height(5, 3, gs-span(13)) + gs-height(5));
+            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
+        }
+        @include mq($from: leftCol) {
+            padding-top: (aspect-ratio-height(5, 3, gs-span(12)) + gs-height(5));
+            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
+        }
+    }
 }
 
 // *************** Analysis ***************
