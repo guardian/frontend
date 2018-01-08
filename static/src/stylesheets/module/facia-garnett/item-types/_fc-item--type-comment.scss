@@ -2,10 +2,15 @@
     .fc-item__avatar {
         border-radius: 50%;
         right: $gs-gutter * .5;
-        bottom: $gs-baseline / 2;
+        top: $gs-baseline / 2;
         overflow: hidden;
         height: gs-height($size);
         width: gs-height($size);
+
+        @include mq($from: tablet) {
+            top: auto;
+            bottom: $gs-baseline / 2;
+        }
     }
 
     .fc-item__avatar__media {
