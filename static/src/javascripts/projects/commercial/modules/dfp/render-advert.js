@@ -73,12 +73,6 @@ sizeCallbacks[adSizes.mpu] = (slotRenderEndedEvent, advert) => {
     if (advert.node.classList.contains('js-sticky-mpu')) {
         stickyMpu(advert.node);
     }
-
-    fastdom.write(() => {
-        const container = advert.node;
-        container.style.width = `${slotRenderEndedEvent.size[0]}px`;
-        container.style.height = `${slotRenderEndedEvent.size[1]}px`;
-    });
 };
 
 /**

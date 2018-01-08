@@ -105,6 +105,7 @@ $pillars: (
     &.fc-item--audio .fc-item__kicker,
     &.fc-item--gallery .fc-item__kicker,
     &.fc-item--video .fc-item__kicker,
+    &.video-playlist__item .fc-item__kicker,
     &.fc-item--type-immersive .fc-item__kicker
     {
         color: map-get($palette, invertedKicker);
@@ -140,6 +141,15 @@ $pillars: (
         color: map-get($palette, featureHeadline);
     }
 
+    &.video-playlist__item .video-overlay {
+        border-top-color:  map-get($palette, invertedKicker);
+    }
+
+    &.video-playlist__item .inline-icon {
+        fill: map-get($palette, invertedKicker);
+    }
+
+
     &.fc-item--type-media {
         .inline-video-icon,
         .inline-volume-high,
@@ -166,6 +176,10 @@ $pillars: (
     }
 
     .vjs-big-play-button .vjs-control-text:before {
+        background-color: map-get($palette, kicker);
+    }
+
+    .youtube-media-atom__play-button {
         background-color: map-get($palette, kicker);
     }
 

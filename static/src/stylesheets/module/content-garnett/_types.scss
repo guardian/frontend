@@ -3,6 +3,7 @@ $quote-mark: 35px;
 
 .content {
     padding-bottom: 0;
+    color: $garnett-neutral-1;
 }
 
 .content--liveblog,
@@ -16,6 +17,7 @@ $quote-mark: 35px;
 .content--type-live,
 .content--type-media,
 .content--type-review,
+.content--type-interview,
 .content--type-immersive {
     // *************** Meta and Social ***************
     .submeta {
@@ -230,7 +232,7 @@ $quote-mark: 35px;
     .byline {
         @include fs-header(1);
         border-top: 0;
-        color: #333333;
+        color: $garnett-neutral-1;
         font-style: italic;
         line-height: 20px;
         min-height: 0;
@@ -531,7 +533,7 @@ $quote-mark: 35px;
         @include fs-headline(2);
         font-weight: 400;
         border-top: 0;
-        color: $neutral-1;
+        color: $garnett-neutral-1;
         padding-top: 2px;
         margin-bottom: $gs-baseline*2;
         max-width: 80%;
@@ -794,6 +796,7 @@ $quote-mark: 35px;
 }
 
 .content--type-feature,
+.content--type-interview,
 .content--type-review {
     .content__headline {
         font-weight: 700;
@@ -1095,7 +1098,7 @@ $quote-mark: 35px;
         .meta__social {
             background-image: none;
             padding-top: 0;
-            
+
             &::before {
                 content: none;
             }

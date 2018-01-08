@@ -355,7 +355,7 @@
 .content__standfirst {
     @include fs-headline(2);
     margin-bottom: $gs-baseline/2;
-    color: $neutral-2;
+    color: $garnett-neutral-1;
 
     @include mq(tablet) {
         @include font-size(18px, 22px);
