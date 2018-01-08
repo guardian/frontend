@@ -275,14 +275,17 @@
         @renderSteps(getStepsForJourney(journey))
 
         <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
-            <button
-                type="button"
-                data-link-name="consents : navigation : prev"
-                class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
-            >
-                <span class="u-h">Previous</span>
-                @fragments.inlineSvg("arrow-left-stem", "icon")
-            </button>
+
+            @if(getStepsForJourney(journey).size > 1){
+                <button
+                    type="button"
+                    data-link-name="consents : navigation : prev"
+                    class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
+                >
+                    <span class="u-h">Previous</span>
+                    @fragments.inlineSvg("arrow-left-stem", "icon")
+                </button>
+            }
             <div class="identity-consent-wizard__revealable identity-consent-wizard-counter">
             </div>
             @views.html.helper.CSRF.formField
