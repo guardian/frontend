@@ -130,16 +130,13 @@ $quote-mark: 35px;
 
     .badge,
     .badge--alt,
-    .byline,
     .content__dateline,
     .content__headline,
     .content__labels,
     .content__standfirst,
-    .meta__email,
-    .meta__image,
-    .meta__twitter,
     .old-article-message,
-    .social--top {
+    .social--top,
+    .meta__contact-wrap {
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
         @include mq(mobileLandscape) {
@@ -241,6 +238,7 @@ $quote-mark: 35px;
         padding-bottom: 8px;
         padding-top: 2px;
         font-weight: normal;
+        width: 100%;
 
         span[itemprop='author'] {
             @include fs-header(1);
@@ -290,56 +288,83 @@ $quote-mark: 35px;
 
     .meta__email,
     .meta__twitter {
+        @include fs-textSans(1);
         margin-top: 0;
         margin-bottom: $gs-baseline;
-        display: block;
-        width: 100%;
+        margin-right: 0px;
+        display: inline-block;
+        font-weight: bold;
+        text-decoration: none;
+        padding-right: $gs-gutter / 2;
 
-        .button {
-            height: 1.5rem;
-            font-size: .75rem;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: auto;
-            @include mq($until: leftCol) {
-                // padding: 0 8px;
+
+        svg {
+            height: 10px;
+            max-width: 12px;
+            margin-right: 0px;
+        }
+
+        a {
+            color: $garnett-neutral-6;
+
+            .inline-tone-fill {
+                fill: $garnett-neutral-6;
+            }
+
+            &:focus,
+            &:hover {
+                text-decoration: none;
+                .contact {
+                    text-decoration: underline;
+                }
             }
         }
 
-        .button svg {
-            @include mq($until: leftCol) {
-                position: relative;
-                top: 3px;
-                margin-right: 5px;
-            }
-        }
+        // .button {
+        //     height: 1.5rem;
+        //     font-size: .75rem;
+        //     font-weight: bold;
+        //     white-space: nowrap;
+        //     overflow: hidden;
+        //     text-overflow: ellipsis;
+        //     width: auto;
+        //     @include mq($until: leftCol) {
+        //         // padding: 0 8px;
+        //     }
+        // }
+
+        // .button svg {
+        //     @include mq($until: leftCol) {
+        //         position: relative;
+        //         top: 3px;
+        //         margin-right: 5px;
+        //     }
+        // }
 
         .contact {
             display: inline-block!important;
         }
 
-        a {
-            background-color: transparent;
-            color: $garnett-neutral-2;
-            // border: 1px solid $neutral-4;
-
-            .inline-tone-fill {
-                fill: $garnett-neutral-2;
-            }
-
-            &:focus,
-            &:hover {
-                .inline-tone-fill {
-                    fill: $garnett-neutral-5;
-                }
-
-                .contact {
-                    color: $garnett-neutral-5;
-                }
-            }
-        }
+        // a {
+        //     background-color: transparent;
+        //     color: $garnett-neutral-2;
+        //     // border: 1px solid $neutral-4;
+        //
+        //     .inline-tone-fill {
+        //         fill: $garnett-neutral-2;
+        //     }
+        //
+        //     &:focus,
+        //     &:hover {
+        //         .inline-tone-fill {
+        //             fill: $garnett-neutral-5;
+        //         }
+        //
+        //         .contact {
+        //             color: $garnett-neutral-5;
+        //         }
+        //     }
+        // }
     }
 
     .meta__extras {
