@@ -19,12 +19,6 @@ trait ConsentsJourney
 
   import authenticatedActions._
 
-  /** GET /consents/all */
-  def displayConsentsJourneyAll(
-    consentHint: Option[String] = None,
-    newsletterHint: Option[String] = None): Action[AnyContent] =
-    displayConsentJourneyForm(ConsentJourneyPageAll, consentHint)
-
   /** GET /consents/newsletters */
   def displayConsentsJourneyNewsletters: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageNewsletters, None)
