@@ -159,7 +159,7 @@ $quote-mark: 35px;
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;
-        margin-bottom: 0;
+        margin-bottom: $gs-baseline / 2;
         @include mq(leftCol) {
             position: absolute;
         }
@@ -304,7 +304,7 @@ $quote-mark: 35px;
             text-overflow: ellipsis;
             width: auto;
             @include mq($until: leftCol) {
-                padding: 0 8px;
+                // padding: 0 8px;
             }
         }
 
@@ -322,7 +322,12 @@ $quote-mark: 35px;
 
         a {
             background-color: transparent;
-            border: 1px solid $neutral-4;
+            color: $garnett-neutral-2;
+            // border: 1px solid $neutral-4;
+
+            .inline-tone-fill {
+                fill: $garnett-neutral-2;
+            }
 
             &:focus,
             &:hover {
@@ -384,8 +389,15 @@ $quote-mark: 35px;
     .meta__numbers,
     .meta__social {
         @include multiline(1, $garnett-neutral-4, top);
+        // @include multiline(1, $garnett-neutral-4, bottom);
         border-top: 0;
         padding-top: $gs-baseline / 2;
+    }
+
+    .meta__social {
+        @include mq($until: tablet) {
+            border-bottom: 1px solid $garnett-neutral-4;
+        }
     }
 
     .meta__numbers {
