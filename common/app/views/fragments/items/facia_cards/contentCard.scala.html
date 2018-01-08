@@ -79,9 +79,7 @@ data-test-id="facia-card"
 
 @standfirst(item: layout.ContentCard) = {
     @item.trailText.filter(const(item.showStandfirst)).map { text =>
-        <span>
-            <div class="fc-item__standfirst">@Html(text)</div>
-        </span>
+        <div class="fc-item__standfirst">@Html(text)</div>
     }
 }
 
