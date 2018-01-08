@@ -26,15 +26,6 @@
     font-weight: 200;
     font-style: normal;
     color: $neutral-2;
-
-    @if ($svg-support) {
-        &:before {
-            @extend %i-quote-blue;
-            @extend %svg-i-quote-blue;
-            content: '';
-            display: block;
-        }
-    }
 }
 
 figure.element.element--supporting {
