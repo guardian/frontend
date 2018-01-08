@@ -12,7 +12,7 @@ object CommercialDfpReporting {
 
   case class DfpReportRow(value: String)
 
-  private val dfpReports = Box[Map[Long, Seq[DfpReportRow]](Map.empty)
+  private val dfpReports = Box[Map[Long, Seq[DfpReportRow]]](Map.empty)
 
   val teamKPIReport = "All ab-test impressions and CPM"
   // These IDs correspond to queries saved in DFP's web console.
@@ -21,7 +21,7 @@ object CommercialDfpReporting {
   )
 
 
-  def update(dfpApi: DfpApi, executionContext: ExecutionContext): Unit = {
+  def update(dfpApi: DfpApi)(implicit executionContext: ExecutionContext): Future[Unit] = Future {
     for {
       (reportName, reportId) <- reportMappings.toSeq
     } {
@@ -55,11 +55,12 @@ class CommercialDfpReportingLifecycle(
   override def start(): Unit = {
     jobs.deschedule("CommercialDfpReportingJob")
 
+    CommercialDfpReporting.update(dfpApi)(ec)
+
     // 30 minutes between each log write.
     jobs.scheduleEveryNMinutes("CommercialDfpReportingJob", 30) {
       log.logger.info(s"Fetching commercial dfp report from dfp api")
-      CommercialDfpReporting.update(dfpApi, ec)
-      log.logger.info(s"Fetched commercial dfp report.")
+      CommercialDfpReporting.update(dfpApi)(ec)
     }
   }
 
