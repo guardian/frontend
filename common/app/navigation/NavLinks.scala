@@ -180,9 +180,9 @@ object NavLinks {
     List(
       ukNews,
       world,
-      politics,
-      football,
       ukBusiness,
+      football,
+      politics,
       ukEnvironment,
       education,
       science,
