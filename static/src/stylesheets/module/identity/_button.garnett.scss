@@ -33,6 +33,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: .15s linear;
 
     > .manage-account__button-flexwrap {
         width: 100%;
