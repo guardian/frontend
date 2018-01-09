@@ -18,6 +18,10 @@
         color: $pillarColor;
     }
 
+    .button--primary {
+        background: $pillarColor;
+    }
+
     .byline,
     .content--media .content__headline,
     .old-article-message,
@@ -98,12 +102,99 @@
         color: $mediaColor;
     }
 }
-@mixin footerPalette($pillarColor) {
-    .discussion a[href],
-    // #? temporary fix: this class is in the comment.js template (line 139)
-    // we can get rid of it once we clean up the pre-garnett code
-    .discussion .button--tone-news {
-        color: $pillarColor;
+//////** Discussion (comment) styling **//////////
+//d-comment__author a[href], ._underline_1lj47_3, .js-discussion-author-link
+// #? temporary fix: this class is in the comment.js template (line 139)
+// we can get rid of it once we clean up the pre-garnett code
+@mixin footerPalette($kickerColor) {
+    ._underline_1lj47_3,
+    .button--tone-news,
+    .d-comment__action,
+    .d-comment__author a[href],
+    .d-comment__reply-to-author,
+    .js-discussion-author-link {
+        color: $kickerColor;
+    }
+
+    ._underline_1lj47_3:focus,
+    ._underline_1lj47_3:hover {
+        border-color: $kickerColor;
+    }
+
+    .comment-share-icon,
+    .d-show-more-replies__button.button--show-more svg {
+        fill: $garnett-neutral-6;
+        left: $gs-gutter/3;
+    }
+
+    .discussion__top-border {
+        border-top: 1px solid $garnett-neutral-4;
+    }
+
+    .button--primary {
+        background-color: $kickerColor;
+        border-color: $kickerColor;
+    }
+
+    .button--primary:active,
+    .button--primary:focus,
+    .button--primary:hover {
+        background-color: darken($kickerColor, 10%);
+        border-color: darken($kickerColor, 10%);
+    }
+
+    .button--tertiary:active,
+    .button--tertiary:focus {
+        color: $kickerColor;
+    }
+
+    .d-show-more-replies__button {
+        border: 1px solid $garnett-neutral-4;
+        background: $garnett-neutral-5;
+        &:focus,
+        &:hover {
+            border: 1px solid darken($garnett-neutral-4, 20%);
+            background: $garnett-neutral-5;
+        }
+    }
+
+    .button--show-more svg {
+        left: $gs-gutter/2;
+    }
+
+    .block-share__item,
+    .inline-close,
+    .social-icon,
+    .social-icon.social-icon--more {
+        background-color: transparent;
+        border: 1px solid $neutral-4;
+
+        &:focus,
+        &:hover {
+            svg {
+                fill: $garnett-neutral-5;
+            }
+        }
+    }
+
+    .block-share__item .inline-icon,
+    .inline-close svg,
+    .inline-tone-fill,
+    .old-article-message .old-article-message--clock svg,
+    .social-icon svg,
+    .social-icon__svg {
+        fill: $kickerColor;
+    }
+
+    .block-share__item,
+    .meta__twitter a,
+    .social-icon,
+    .social-icon.social-icon--more {
+        &:focus,
+        &:hover {
+            background-color: $kickerColor;
+            border: 1px solid $kickerColor;
+        }
     }
 }
 @mixin richLink($pillarColor, $cardBackground) {
@@ -214,7 +305,7 @@
 }
 
 .content-footer--pillar-arts {
-    @include footerPalette($arts-garnett-main-1);
+    @include footerPalette($arts-garnett-feature);
 }
 
 .content-footer--pillar-lifestyle {
