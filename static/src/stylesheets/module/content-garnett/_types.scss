@@ -177,7 +177,7 @@ $quote-mark: 35px;
     .byline,
     .content__dateline {
         padding-top: 0;
-        padding-bottom: $gs-baseline;
+        padding-bottom: $gs-baseline * 1.5;
         @include mq($until: phablet) {
             border-top: 0;
             vertical-align: top;
@@ -198,7 +198,7 @@ $quote-mark: 35px;
         max-width: 60px;
         float: left;
         border-top: 0;
-        margin: 3px 0 $gs-baseline $gs-gutter/2;
+        margin: 3px $gs-gutter/2 $gs-baseline $gs-gutter/2;
         @include mq(mobileLandscape) {
             margin-left: $gs-gutter;
         }
@@ -212,12 +212,6 @@ $quote-mark: 35px;
         }
     }
 
-    .meta__contact-wrap {
-        float: left;
-        max-width: 300px;
-        margin-right: auto;
-    }
-
     .byline {
         @include fs-header(1);
         display: block;
@@ -227,7 +221,7 @@ $quote-mark: 35px;
         line-height: 20px;
         min-height: 0;
         margin-top: -$gs-baseline/4;
-        // magic numbers are correcting line heights so vertical alignment apprears even
+        // magic numbers are correcting line heights so vertical alignment appears even
         padding-top: 2px;
         font-weight: normal;
         width: 100%;
@@ -242,28 +236,13 @@ $quote-mark: 35px;
 
     .content__dateline {
         border: 0;
-        // align-self: flex-end top;
-        // text-align: right;
         min-height: 0;
-        margin-bottom: 0;
-        // order: 3;
-        // display: inline-block;
+        // magic numbers are correcting line heights so vertical alignment appears even
+        margin-bottom: -4px;
+        display: block;
+        padding-bottom: $gs-baseline;
+        margin-top: -$gs-baseline / 4;
 
-        time {
-            display: inline-block;
-        }
-        // max-width: 100px;
-        // margin-left: auto;
-        // @include mq(mobileLandscape) {
-        //     max-width: 120px;
-        // }
-        // @include mq(leftCol) {
-        //     text-align: left;
-        //     max-width: none;
-        //     margin-left: 0;
-        //     margin-top: 0;
-        //     flex: 100%;
-        // }
     }
 
     .old-article-message {
@@ -276,19 +255,19 @@ $quote-mark: 35px;
 
     .content__meta-container--email.content__meta-container--twitter .meta__twitter {
         margin-top: 0;
-        margin-bottom: -$gs-baseline / 2;
+        margin-bottom: 0;
     }
 
     .content__meta-container--email.content__meta-container--twitter .meta__email {
         margin-top: 0;
-        margin-bottom: $gs-baseline;
+        margin-bottom: 0;
     }
 
     .meta__email,
     .meta__twitter {
         @include fs-textSans(1);
+        margin:0;
         margin-top: 0;
-        margin-bottom: $gs-baseline;
         margin-right: 0px;
         display: inline-block;
         font-weight: bold;
@@ -318,51 +297,9 @@ $quote-mark: 35px;
             }
         }
 
-        // .button {
-        //     height: 1.5rem;
-        //     font-size: .75rem;
-        //     font-weight: bold;
-        //     white-space: nowrap;
-        //     overflow: hidden;
-        //     text-overflow: ellipsis;
-        //     width: auto;
-        //     @include mq($until: leftCol) {
-        //         // padding: 0 8px;
-        //     }
-        // }
-
-        // .button svg {
-        //     @include mq($until: leftCol) {
-        //         position: relative;
-        //         top: 3px;
-        //         margin-right: 5px;
-        //     }
-        // }
-
         .contact {
             display: inline-block!important;
         }
-
-        // a {
-        //     background-color: transparent;
-        //     color: $garnett-neutral-2;
-        //     // border: 1px solid $neutral-4;
-        //
-        //     .inline-tone-fill {
-        //         fill: $garnett-neutral-2;
-        //     }
-        //
-        //     &:focus,
-        //     &:hover {
-        //         .inline-tone-fill {
-        //             fill: $garnett-neutral-5;
-        //         }
-        //
-        //         .contact {
-        //             color: $garnett-neutral-5;
-        //         }
-        //     }
-        // }
     }
 
     .meta__extras {
@@ -412,7 +349,6 @@ $quote-mark: 35px;
     .meta__numbers,
     .meta__social {
         @include multiline(1, $garnett-neutral-4, top);
-        // @include multiline(1, $garnett-neutral-4, bottom);
         border-top: 0;
         padding-top: $gs-baseline / 2;
     }
@@ -1456,9 +1392,12 @@ $quote-mark: 35px;
             shape-outside: polygon(0 160px, 0 180px, 216px 180px, 216px 0, 36px 0, 24px 121px, 0 128px);
         }
     }
-    
+
+    .content__meta-container .byline-img {
+
+    }
+
     .byline-img__img {
         float: none;
     }
 }
-
