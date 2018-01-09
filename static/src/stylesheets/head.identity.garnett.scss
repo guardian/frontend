@@ -12,7 +12,7 @@
    Identity overrides
    ========================================================================== */
 @import 'layout/garnett-header/_variables';
-$identity-main: $nav-secondary-colour;
+$identity-main: #121212;
 
 
 /* ==========================================================================
@@ -26,6 +26,7 @@ $identity-main: $nav-secondary-colour;
 
 @import 'module/identity/_header.garnett';
 @import 'module/identity/_wrapper.garnett';
+@import 'module/identity/_button.garnett';
 @import 'module/identity/_forms';
 @import 'module/identity/_footer';
 @import 'module/identity/_manage-account-tab';
