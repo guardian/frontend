@@ -103,7 +103,7 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
     services.networkService.getCurrentNetwork.getEffectiveRootAdUnitId
   }
 
-  def getReportQuery(reportId: Long): ReportQuery = {
+  def getReportQuery(reportId: Long): Option[ReportQuery] = {
     // Retrieve the saved query.
     val stmtBuilder = new StatementBuilder()
       .where("id = :id")
@@ -111,8 +111,8 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
       .withBindVariableValue("id", reportId)
 
     val page: SavedQueryPage = services.reportService.getSavedQueriesByStatement(stmtBuilder.toStatement)
-    val savedQuery: SavedQuery = page.getResults(0)
-    savedQuery.getReportQuery
+    val savedQuery: Option[SavedQuery] = page.getResults().toList.headOption
+    savedQuery.map(_.getReportQuery)
   }
 
   def runReportJob(report: ReportQuery): Seq[String] = {
