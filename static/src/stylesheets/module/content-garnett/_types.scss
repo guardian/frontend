@@ -230,7 +230,7 @@ $quote-mark: 35px;
     }
 
     .byline {
-        @include fs-header(1);
+        @include fs-bodyCopy(2);
         border-top: 0;
         color: $garnett-neutral-1;
         font-style: italic;
@@ -243,9 +243,8 @@ $quote-mark: 35px;
         font-weight: normal;
 
         span[itemprop='author'] {
-            @include fs-header(1);
-            font-style: normal;
             font-weight: 700;
+            font-style: normal;
         }
     }
 
@@ -530,8 +529,9 @@ $quote-mark: 35px;
     }
 
     .content__standfirst {
-        @include fs-headline(2);
-        font-weight: 400;
+        @include fs-bodyCopy(2);
+        font-weight: 700;
+        line-height: 20px;
         border-top: 0;
         color: $garnett-neutral-1;
         padding-top: 2px;
@@ -965,7 +965,7 @@ $quote-mark: 35px;
 
     .byline,
     .byline span {
-        @include fs-headline(2);
+        @include fs-bodyCopy(2);
         font-style: normal;
     }
 
@@ -1421,9 +1421,8 @@ $quote-mark: 35px;
             shape-outside: polygon(0 160px, 0 180px, 216px 180px, 216px 0, 36px 0, 24px 121px, 0 128px);
         }
     }
-    
+
     .byline-img__img {
         float: none;
     }
 }
-
