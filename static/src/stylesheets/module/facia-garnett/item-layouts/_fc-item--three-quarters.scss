@@ -33,10 +33,10 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
     .fc-item__standfirst {
         @include mq(desktop) {
-            display: flex;
+            display: block;
         }
     }
-    
+
     .fc-item__liveblog-blocks {
         padding-right: 0;
     }
@@ -97,8 +97,8 @@ Three quarter item. Looks like a wide standard, a bit like this:
                 .fc-item__footer--horizontal {
                     .fc-sublink {
                         margin-top: 0;
-            
-                        .fc-sublink__title {                
+
+                        .fc-sublink__title {
                             &:before {
                                 width: auto;
                                 left: 0 - $fc-item-gutter;

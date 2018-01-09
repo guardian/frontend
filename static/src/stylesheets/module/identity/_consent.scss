@@ -21,6 +21,9 @@
     .identity-consent-wizard-counter {
         flex: 1 0 auto;
         padding: 0 $gs-gutter / 2;
+        &:first-child {
+            padding-left: 0;
+        }
     }
     .identity-wizard__step[data-wizard-step-name=email] .manage-account__switch-footer-email-preview {
         display: none;
