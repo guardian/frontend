@@ -24,7 +24,7 @@
                 "tonal",
                 s"tonal--${toneClass(article)}",
                 s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"
-            ), content content--type-immersive content--article content--immersive content--immersive-article tonal"
+            ), content content--type-immersive content--article content--immersive content--immersive-article content--immersive-garnett tonal"
 
             itemscope itemtype="@article.metadata.schemaType" role="main">
             <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
@@ -58,11 +58,11 @@
                              itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
                              data-test-id="article-review-body" @langAttributes(article.content)>
                             @BodyCleaner(article, article.fields.body, amp = amp)
+                            @fragments.submeta(article)
+
                         </div>
 
                         @fragments.witnessCallToAction(article.content)
-
-                        @fragments.submeta(article)
 
                         <div class="after-article js-after-article"></div>
                     </div>
