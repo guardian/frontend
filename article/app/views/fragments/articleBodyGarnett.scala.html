@@ -46,9 +46,7 @@
                 @fragments.guBand()
             }
 
-            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                @fragments.mainMedia(article, amp)
-            }
+
 
             @if(isPaidContent) {
                 @fragments.articleHeaderPaidGarnett(article, model, amp = amp)
@@ -59,11 +57,8 @@
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
                         <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
                             data-test-id="article-review-body" @langAttributes(article.content)>
-                            @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                                @fragments.headTonalGarnett(article, model, isPaidContent, amp = amp)
-                            }
 
-                            @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement) && !isPaidContent) {
+                            @if(!isPaidContent) {
                                 @if(article.metadata.designType.nameOrDefault == "comment" ||
                                     article.metadata.designType.nameOrDefault == "guardianview") {
                                     @fragments.articleHeaderCommentGarnett(article, model, isPaidContent, amp = amp)
@@ -71,6 +66,7 @@
                                     @fragments.articleHeaderGarnett(article, model, amp = amp)
                                 }
                             }
+
 
                             @if(isPaidContent){
                                 @fragments.mainMedia(article, amp)

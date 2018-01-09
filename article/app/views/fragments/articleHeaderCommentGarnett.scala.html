@@ -22,10 +22,13 @@
             </h1>
 
             @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) {
-                @fragments.meta.bylineImage(article.tags)
-            }
-
-            @if(article.content.hasTonalHeaderByline) {
+                <div class="content__headline__byline">
+                    @fragments.meta.bylineImage(article.tags)
+                    @article.trail.byline.map { text =>
+                        <span class="byline-name">@ContributorLinks(text, article.tags.contributors)</span>
+                    }
+                </div>
+            } else if(article.content.hasTonalHeaderByline) {
                 @article.trail.byline.map { text =>
                     <span class="content__headline content__headline--byline">@ContributorLinks(text, article.tags.contributors)</span>
                 }
