@@ -169,6 +169,29 @@ $quote-mark: 35px;
         }
     }
 
+    .meta__contact-wrap {
+            float: left;
+            max-width: 230px;
+            @include mq(mobileMedium) {
+                max-width: 270px;
+            }
+            @include mq(mobileLandscape) {
+                max-width: 70%;
+            }
+            @include mq(phablet) {
+                padding-left: 0;
+            }
+            @include mq(leftCol) {
+                max-width: 100%;
+            }
+        }
+
+        .meta__image + .meta__contact-wrap {
+            @include mq(mobileLandscape) {
+                padding-left: $gs-gutter / 2;
+            }
+        }
+
     .badge--alt {
         padding-top: 0;
         border-top: 0;
@@ -198,13 +221,9 @@ $quote-mark: 35px;
         max-width: 60px;
         float: left;
         border-top: 0;
-        margin: 3px $gs-gutter/2 $gs-baseline $gs-gutter/2;
-        @include mq(mobileMedium) {
-            max-width: 80px;
-            width: 80px;
-            height: 80px;
-        }
+        margin: 3px 0 $gs-baseline $gs-gutter/2;
         @include mq(mobileLandscape) {
+            max-width: 64px;
             margin-left: $gs-gutter;
         }
         @include mq(phablet) {
@@ -226,7 +245,7 @@ $quote-mark: 35px;
         min-height: 0;
         margin-top: -$gs-baseline/4;
         // magic numbers are correcting line heights so vertical alignment appears even
-        padding-top: 2px;
+        padding-top: 4px;
         font-weight: normal;
         width: 100%;
         margin-bottom: -$gs-baseline;
@@ -1003,7 +1022,7 @@ $quote-mark: 35px;
     .content__dateline {
         @include mq(phablet) {
             @include multiline(1, $garnett-neutral-7, top);
-            padding-top: $gs-baseline / 2;
+            padding-top: $gs-baseline;
         }
     }
 
