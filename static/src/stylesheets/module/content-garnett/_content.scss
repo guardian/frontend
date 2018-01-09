@@ -1430,7 +1430,7 @@
 
     .content__labels,
     .content__meta-container {
-        float: left;
         @include deport-left;
+        float: left;
     }
 }
