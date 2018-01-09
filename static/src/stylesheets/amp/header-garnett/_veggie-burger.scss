@@ -1,8 +1,8 @@
 .veggie-burger {
-    background-color: $news-main-2;
+    background-color: $nav-primary-colour;
     bottom: -$gs-baseline / 2;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
-    color: $guardian-brand-dark;
+    color: $nav-background-colour;
     cursor: pointer;
     height: $veggie-burger-medium;
     min-width: $veggie-burger-medium;
@@ -13,7 +13,7 @@
     right: $gutter-small;
 
     @include mq(mobileLandscape) {
-        right: $gutter-medium;
+        right: $gutter-medium + $gs-gutter / 4;
     }
 }
 

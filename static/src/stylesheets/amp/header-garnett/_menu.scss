@@ -1,11 +1,8 @@
 .menu {
-    background-color: $guardian-brand-dark;
+    background-color: $nav-background-colour;
+    color: $garnett-neutral-1;
     // This is the max width AMP allows
     width: 80vw;
-
-    .guardian-text-sans-loaded & {
-        font-family: $f-sans-serif-text;
-    }
 
     div:first-of-type {
         overflow-y: scroll;

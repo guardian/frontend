@@ -1,9 +1,10 @@
 .header {
-    background-color: $guardian-brand;
+    background-color: $nav-background-colour;
+    border-bottom: 1px solid $rule;
+    color: $nav-primary-colour;
     position: relative;
     max-width: 600px;
     margin: 0 auto;
-    text-transform: lowercase;
 }
 
 .header__cta-container {
@@ -24,15 +25,15 @@
 
 .header__logo__svg {
     display: block;
-    height: calc(3 / 16 * 170px);
-    width: 170px;
-    margin-bottom: $gs-baseline / 2;
+    height: 52px;
+    width: 164px;
+    margin-bottom: $gs-baseline + $gs-baseline / 4;
     margin-right: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;
 
     @include mq(mobileMedium) {
-        height: calc(3 / 16 * 225px);
-        width: 225px;
+        height: 57px;
+        width: 175px;
     }
 
     @include mq(mobileLandscape) {

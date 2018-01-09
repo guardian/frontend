@@ -1,5 +1,5 @@
 .header-cta-item {
-    color: $guardian-brand-dark;
+    color: $nav-background-colour;
 }
 
 .header-cta-item--text {
@@ -27,7 +27,7 @@
     transform-origin: top center;
 
     &:before {
-        background: $news-main-2;
+        background: $nav-primary-colour;
         border-radius: 50%;
         bottom: 0;
         content: '';

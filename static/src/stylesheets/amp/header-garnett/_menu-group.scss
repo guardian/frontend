@@ -1,5 +1,4 @@
 .menu-group {
-    color: #ffffff;
     font-size: 18px;
     list-style: none;
     margin: 0;
@@ -7,24 +6,21 @@
 }
 
 .menu-group--primary {
-    color: $news-support-1;
     padding-top: $gs-baseline / 2;
 }
 
 .menu-group--secondary {
-    background-color: darken($guardian-brand-dark, 4%);
+    background-color: $nav-darker-colour;
     margin-top: 0;
     padding-top: 0;
 }
 
 .menu-group--membership,
 .menu-group--editions {
-    background-color: $news-main-2;
-    color: $guardian-brand-dark;
+    background-color: $nav-darker-colour;
     padding-bottom: 0;
 }
 
 .menu-group--editions .menu-group {
-    color: $guardian-brand-dark;
-    background-color: darken($news-main-2, 10%);
+    background-color: darken($nav-background-colour, 10%);
 }

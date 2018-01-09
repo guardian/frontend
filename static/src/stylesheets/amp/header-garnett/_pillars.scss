@@ -1,6 +1,5 @@
 .pillars {
-    color: #ffffff;
-    height: $veggie-burger-medium - $gs-baseline;
+    height: $gs-baseline * 2 + $gs-baseline / 2;
     margin: 0;
     padding: 0 $gs-gutter / 2;
 
@@ -19,5 +18,25 @@
         &:before {
             content: none;
         }
+    }
+
+    &:nth-child(1) {
+        color: $news-garnett-main-1;
+    }
+
+    &:nth-child(2) {
+        color: $opinion-garnett-main-1;
+    }
+
+    &:nth-child(3) {
+        color: $sport-garnett-main-1;
+    }
+
+    &:nth-child(4) {
+        color: $arts-garnett-main-1;
+    }
+
+    &:nth-child(5) {
+        color: $lifestyle-garnett-main-1;
     }
 }

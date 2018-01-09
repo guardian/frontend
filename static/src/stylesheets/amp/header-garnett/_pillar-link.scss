@@ -1,15 +1,16 @@
 .pillar-link {
-    font-size: 16px;
+    font-size: 15px;
+    font-weight: 500;
     display: block;
-    height: $veggie-burger-medium - $gs-baseline;
-    line-height: $veggie-burger-medium - $gs-baseline;
-    padding: 0 ($gs-gutter / 4);
+    height: $gs-baseline * 2 + $gs-baseline / 2;
+    line-height: 1;
+    padding: 0 4px;
     position: relative;
     color: currentColor;
     cursor: pointer;
 
     @include mq(mobileMedium) {
-        font-size: 18px;
+        font-size: 17px;
     }
 
     &:before {
@@ -18,11 +19,7 @@
         left: 0;
         bottom: 0;
         position: absolute;
-        border-left: 1px solid $news-support-2;
-        top: $gs-baseline + 1;
-    }
-
-    .guardian-text-sans-loaded & {
-        font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+        border-left: 1px solid $rule;
+        top: $gs-baseline / 4;
     }
 }

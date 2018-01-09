@@ -4,9 +4,9 @@
     position: relative;
     width: 100%;
 
-    .menu-group--primary & {
+    .menu-group--primary > & {
         &:not(:last-child):after {
-            background-color: darken($guardian-brand-dark, 4%);
+            background-color: $rule;
             bottom: 0;
             content: '';
             display: block;
@@ -32,12 +32,36 @@
     padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
     position: relative;
     text-align: left;
-    text-transform: lowercase;
     width: 100%;
 
     > * {
         pointer-events: none;
     }
+}
+
+.menu-item__title--primary {
+    font-weight: 500;
+}
+
+// TODO move to colours?
+.menu-item__title--News {
+    color: $news-garnett-main-1;
+}
+
+.menu-item__title--Opinion {
+    color: $opinion-garnett-main-1;
+}
+
+.menu-item__title--Sport {
+    color: $sport-garnett-main-1;
+}
+
+.menu-item__title--Arts {
+    color: $arts-garnett-main-1;
+}
+
+.menu-item__title--Lifestyle {
+    color: $lifestyle-garnett-main-1;
 }
 
 .menu-item__title--primary {
@@ -48,7 +72,6 @@
 
 
 .menu-item__toggle {
-    color: $news-support-2;
     left: 25px;
     position: absolute;
 }
@@ -61,7 +84,7 @@
     }
 
     &:before {
-        border: 2px solid currentColor;
+        border: 2px solid $nav-secondary-colour;
         border-top: 0;
         border-left: 0;
         content: '';
