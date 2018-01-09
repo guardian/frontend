@@ -43,7 +43,7 @@
         <h1 class="identity-title">You must verify your email to continue.</h1>
         <div class="identity-forms-message__body">
             <p>Please validate your email (@user.primaryEmailAddress) to edit your preferences.</p>
-            <p>If your address seems wrong you can <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="identity : email : reverify-email-change">change it</a>.</p>
+            <p>If your address seems wrong you can <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" class="u-underline" data-link-name="identity : email : reverify-email-change">change it</a>.</p>
             <a class="manage-account__button identity-forms-message__button" href="@idUrlBuilder.buildUrl("/verify-email", idRequest)" data-link-name="identity : email : reverify-email-resend">Resend me a validation email</a>
         </div>
     </div>
