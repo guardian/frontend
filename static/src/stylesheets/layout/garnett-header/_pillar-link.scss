@@ -1,0 +1,150 @@
+.pillar-link {
+    font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+    font-weight: 600;
+    color: currentColor;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    height: $gs-baseline * 2 + $gs-baseline / 2;
+    line-height: 1;
+    padding: 0 4px;
+    position: relative;
+    overflow: hidden;
+
+    @include mq(mobileMedium) {
+        font-size: 17px;
+    }
+
+    @include mq(tablet) {
+        font-size: 22px;
+        height: $gs-baseline * 3 + $gs-baseline / 2;
+        padding-right: $gs-gutter;
+        padding-left: $pillar-padding;
+    }
+
+    @include mq(desktop) {
+        height: $gs-baseline * 3;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            font-size: 24px;
+            height: $gs-baseline * 3 + $gs-baseline / 2;
+        }
+    }
+
+    &:before,
+    &:not(.pillar-link--dropdown):after {
+        bottom: 0;
+        content: '';
+        display: block;
+        left: 0;
+        position: absolute;
+    }
+
+    &:before {
+        // Dividing lines
+        border-left: 1px solid $rule;
+        top: $gs-baseline / 4;
+        z-index: 1;
+
+        @include mq(tablet) {
+            top: $gs-baseline / 4;
+        }
+    }
+
+    &:not(.pillar-link--dropdown):after {
+        // Underlines
+        border-bottom: 4px solid currentColor;
+        right: 0;
+        bottom: -4px;
+        transition: transform 150ms ease-out;
+    }
+
+    .is-not-modern &:after {
+        // Hides active and hover underlines from masking text on pillars in non-js
+        content: none;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        &:after {
+            transform: translateY(-4px)
+        }
+    }
+
+    .new-header--open & {
+        &:not(.pillar-link--dropdown):hover,
+        &:not(.pillar-link--dropdown):focus {
+            text-decoration: underline;
+        }
+
+        &:after {
+            content: none;
+        }
+    }
+
+    // Ugly specificity to override body:not(.has-page-skin)
+    body .new-header--slim & {
+        font-size: 20px;
+        height: $slim-nav-height;
+        line-height: $slim-nav-height;
+        padding-top: 0;
+
+        &:before {
+            top: 17px;
+        }
+    }
+}
+
+.pillar-link--current-section {
+    &:after {
+        transform: translateY(-4px)
+    }
+
+    .new-header--open & {
+        &:after {
+            content: none;
+        }
+    }
+}
+
+.pillar-link--dropdown__icon {
+    border: 2px solid currentColor;
+    border-left: transparent;
+    border-top: transparent;
+    display: inline-block;
+    height: 6px;
+    margin-left: 2px;
+    transform: translateY(-3px) rotate(45deg);
+    transition: transform 250ms ease-out;
+    vertical-align: middle;
+    width: 6px;
+
+    .pillar-link--dropdown:hover & {
+        transform: translateY(0) rotate(45deg);
+    }
+
+    .new-header--open .pillar-link--dropdown & {
+        transform: translateY(1px) rotate(-135deg);
+    }
+
+    .new-header--open .pillar-link--dropdown:hover & {
+        transform: translateY(-2px) rotate(-135deg);
+    }
+}
+
+.pillar-link--sections {
+    color: $nav-secondary-colour;
+    font-weight: 400;
+    float: left;
+    padding-right: $gs-gutter / 4;
+    transition: color 250ms ease-out;
+
+    &:hover,
+    &:focus {
+        color: $nav-primary-colour;
+    }
+}

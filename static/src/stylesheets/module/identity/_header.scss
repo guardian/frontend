@@ -26,6 +26,7 @@ $height: $identity-header-height - ($gutter * 2);
 
     .gs-container {
         display: flex;
+        flex-direction: row-reverse;
         justify-content: space-between;
         align-items: center;
         padding-left: $gs-gutter / 2;
@@ -49,6 +50,7 @@ $height: $identity-header-height - ($gutter * 2);
 
 .identity-header__logo {
     float: right;
+    order: -99;
     svg {
         display: block;
         width: 160px;
@@ -97,5 +99,15 @@ $height: $identity-header-height - ($gutter * 2);
         margin-left: 2px;
         vertical-align: middle;
         transition: transform 250ms ease-out;
+    }
+}
+
+.identity-header-flex-wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: stretch;
+    & > .identity-header-flex-wrap__content {
+        flex: 1 1 auto;
     }
 }

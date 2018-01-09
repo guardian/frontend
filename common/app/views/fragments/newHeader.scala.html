@@ -5,16 +5,15 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, getContributionOrSupporterUrl, NewHeader, getSupportOrSubscriptionUrl}
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
-@import experiments.{ ABNewDesktopHeader, GarnettHeader, ActiveExperiments}
+@import experiments.{ ABNewDesktopHeader, ActiveExperiments, GarnettHeader}
 
+@defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
 <header class="@RenderClasses(Map(
             "new-header--mvt-desktop" -> ActiveExperiments.isParticipating(ABNewDesktopHeader),
-            "new-header--slim" -> page.metadata.hasSlimHeader,
-            "new-header--garnett" -> ActiveExperiments.isParticipating(GarnettHeader)
-        ), "new-header")"
+            "new-header--slim" -> page.metadata.hasSlimHeader
+        ), s"new-header--${navMenu.currentPillar.map(_.title).getOrElse("")}", "new-header")"
         role="banner">
 
-    @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
         <nav class="new-header__inner gs-container"
             data-component="nav2"
             aria-label="Guardian sections">
@@ -28,11 +27,16 @@
                 data-link-name="nav2 : logo">
 
                 <span class="u-h">The Guardian - Back to home</span>
-                @fragments.inlineSvg("guardian-logo-160", "logo", List(
-                    "new-header__logo"
-                ))
+                @if(ActiveExperiments.isParticipating(GarnettHeader) && !page.metadata.hasSlimHeader) {
+                    @fragments.inlineSvg("the-guardian-logo", "logo")
+                } else if(ActiveExperiments.isParticipating(GarnettHeader) && page.metadata.hasSlimHeader) {
+                    @fragments.inlineSvg("the-guardian-roundel", "logo")
+                } else {
+                    @fragments.inlineSvg("guardian-logo-160", "logo", List(
+                        "new-header__logo"
+                    ))
+                }
             </a>
-
 
             <div class="new-header__top-bar hide-until-mobile">
                 @defining(Edition(request).id.toLowerCase()) { editionId =>
@@ -46,9 +50,9 @@
                             <span class="top-bar__item--cta--circle"></span>
                             <span class="top-bar__item--cta--text">
                                 @if(editionId == "us") {
-                                    make a <br>contribution
+                                    Make a <br>contribution
                                 } else {
-                                    become a <br>supporter
+                                    Become a <br>supporter
                                 }
 
                             </span>
@@ -59,7 +63,7 @@
                             data-edition="@{editionId}"
                             href="@getSupportOrSubscriptionUrl(NewHeader)">
 
-                            subscribe
+                            Subscribe
                         </a>
 
                         <a class="top-bar__item hide-until-tablet"
@@ -67,8 +71,8 @@
                             data-edition="@{editionId}"
                             href="@getJobUrl(editionId)">
 
-                            <span class="hide-until-tablet">find a job</span>
-                            <span class="hide-from-tablet">jobs</span>
+                            <span class="hide-until-tablet">Find a job</span>
+                            <span class="hide-from-tablet">Jobs</span>
                         </a>
 
                         @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
@@ -83,7 +87,7 @@
                                 data-toggle="js-search-new"
                                 aria-haspopup="true">
 
-                                search
+                                Search
                             </a>
                         }
                     }
@@ -102,8 +106,8 @@
                 @navMenu.pillars.map { link =>
                     <li class="pillars__item">
                         <a class="@RenderClasses(Map(
-                            "pillar-link" -> true,
-                            "pillar-link--current-section" -> ((link.title == navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)))"
+                            "pillar-link--current-section" -> ((link.title == navMenu.currentPillar.map(_.title).getOrElse("")) && !page.metadata.hasSlimHeader)
+                            ), "pillar-link", s"pillar-link--${link.title}")"
                         href="@LinkTo(link.url)"
                         data-link-name="nav2 : primary : @link.title">
 
@@ -123,15 +127,17 @@
                 </span>
 
                 <span class="pillar-link pillar-link--dropdown pillar-link--sections hide-until-desktop">
-                    <span class="u-h">All</span>
-                    sections
-                    <span class="pillar-link--dropdown__icon"></span>
+                    <span class="u-h">Show</span>
+                    More
+                    <i class="pillar-link--dropdown__icon"></i>
                 </span>
 
-                <span class="menu-close hide-until-desktop">
-                    <span class="u-h">Close</span>
-                    @fragments.inlineSvg("close", "icon", List("menu-close__icon", "centered-icon"))
-                </span>
+                @if(!ActiveExperiments.isParticipating(GarnettHeader)) {
+                    <span class="menu-close hide-until-desktop">
+                        <span class="u-h">Close</span>
+                        @fragments.inlineSvg("close", "icon", List("menu-close__icon", "centered-icon"))
+                    </span>
+                }
             </label>
 
             @fragments.nav.newHeaderMenu(navMenu)
@@ -140,5 +146,5 @@
         @if(!page.metadata.hasSlimHeader) {
             @fragments.nav.subNav(navMenu)
         }
-    }
-</header>
+    </header>
+}

@@ -1,0 +1,12 @@
+@mixin overide-interview-headline-colours($pillar, $color1, $color2) {
+    .fc-item--type-interview.fc-item--pillar-#{$pillar} {
+        .fc-item__headline {
+            color: $color1;
+        }
+    }
+}
+
+@include overide-interview-headline-colours(news, $live-garnett-main-1, $live-garnett-main-2);
+@include overide-interview-headline-colours(sport, $live-garnett-sport1, $live-garnett-sport2);
+@include overide-interview-headline-colours(arts, $live-garnett-arts1, $live-garnett-arts2);
+@include overide-interview-headline-colours(lifestyle, $live-garnett-lifestyle1, $live-garnett-lifestyle2);

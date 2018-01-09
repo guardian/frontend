@@ -50,6 +50,7 @@
 }
 
 .subnav__item--parent:after {
+    // Triangle to illustrate tertiary links
     content: '';
     display: inline-block;
     width: 0;

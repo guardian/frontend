@@ -31,4 +31,6 @@ private[dfp] class ServicesWrapper(session: DfpSession) {
   lazy val orderService = dfpServices.get(session, classOf[OrderServiceInterface])
 
   lazy val companyService = dfpServices.get(session, classOf[CompanyServiceInterface])
+
+  lazy val reportService = dfpServices.get(session, classOf[ReportServiceInterface])
 }

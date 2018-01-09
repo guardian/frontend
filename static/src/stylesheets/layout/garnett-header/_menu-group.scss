@@ -1,0 +1,120 @@
+.menu-group {
+    box-sizing: border-box;
+    display: flex;
+    font-size: 18px;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 $gs-baseline;
+    position: relative;
+
+    @include mq(desktop) {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 0;
+    }
+
+    [aria-expanded='false'] ~ & {
+        @include mq($until: desktop) {
+            display: none;
+        }
+    }
+}
+
+.menu-group--primary {
+    @include clearfix();
+    padding-top: 0;
+
+    @include mq(desktop) {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        order: 1;
+    }
+}
+
+.menu-group--secondary {
+    background-color: $nav-darker-colour;
+    margin-top: 0;
+    padding-top: 0;
+
+    @include mq(desktop) {
+        background-color: transparent;
+        padding-bottom: 0;
+        width: 100%;
+    }
+}
+
+.menu-group--membership,
+.menu-group--editions {
+    background-color: $nav-darker-colour;
+}
+
+.menu-group--membership {
+    padding-bottom: 0;
+    position: relative;
+}
+
+.menu-group--editions {
+    padding-bottom: 0;
+
+    .menu-group {
+        background-color: darken($nav-background-colour, 10%);
+    }
+}
+
+.menu-group--membership-actions {
+    background-color:  $nav-darker-colour;
+}
+
+.menu-group--footer {
+    @include mq(desktop) {
+        bottom: 0;
+        left: $pillar-width--desktop * 5 + $gs-gutter;
+        padding-left: $pillar-padding;
+        position: absolute;
+        top: 0;
+        width: $pillar-width--desktop;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            left: $pillar-width--leftCol * 5 + $gs-gutter;
+            width: $pillar-width--leftCol;
+        }
+    }
+}
+
+.menu-group--footer,
+.menu-group--primary > .menu-item:not(:first-child) {
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        border-left: 1px solid $rule;
+    }
+}
+
+.menu-group--brand-extensions {
+    position: absolute;
+    right: $gs-gutter;
+    top: $gs-baseline;
+    bottom: 0;
+    // Specific number for aligmnent with logo
+    width: 186px;
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            width: gs-span(3);
+        }
+
+        @include mq(wide) {
+            width: gs-span(4);
+        }
+    }
+
+    .new-header--slim & {
+        top: $gs-baseline * 2;
+    }
+}

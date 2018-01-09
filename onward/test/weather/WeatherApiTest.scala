@@ -21,14 +21,7 @@ class WeatherApiTest extends FlatSpec with ScalaFutures with Matchers with Mocki
     when(funMock.apply()) thenReturn Future.successful(jsValue)
 
     whenReady(WeatherApi.retryWeatherRequest(funMock, 100 milli, actorSystem.scheduler, 5))(_ shouldBe jsValue)
-    verify(funMock, times(1)).apply()
+    verify(funMock).apply()
   }
 
-  "retryWeatherRequest" should "fail after 5 exceptions" in {
-    val funMock = mock[() => Future[JsValue]]
-    when(funMock.apply()) thenReturn Future.failed(new RuntimeException("failure"))
-
-    WeatherApi.retryWeatherRequest(funMock, 1 milli, actorSystem.scheduler, 5).failed.futureValue shouldBe a [RuntimeException]
-    verify(funMock, times(5)).apply()
-  }
 }
