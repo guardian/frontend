@@ -199,6 +199,11 @@ $quote-mark: 35px;
         float: left;
         border-top: 0;
         margin: 3px $gs-gutter/2 $gs-baseline $gs-gutter/2;
+        @include mq(mobileMedium) {
+            max-width: 80px;
+            width: 80px;
+            height: 80px;
+        }
         @include mq(mobileLandscape) {
             margin-left: $gs-gutter;
         }
