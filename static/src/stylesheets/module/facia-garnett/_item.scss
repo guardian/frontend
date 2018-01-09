@@ -349,6 +349,24 @@ $block-height: 58px;
     }
 }
 
+// reserve space for comment count on commentable card
+.fc-item--is-commentable:not(.fc-item--type-comment) .fc-item__meta {
+    min-height: 17px;
+    min-width: 40px;
+
+    .fc-trail__count--commentcount {
+        display: flex;
+        flex-direction: row;
+
+        &::before {
+            content: '';
+            display: block;
+            flex-grow: 1;
+            height: 100%;
+        } 
+    }
+}
+
 .fc-item__container > .fc-item__meta {
     display: none;
 }
