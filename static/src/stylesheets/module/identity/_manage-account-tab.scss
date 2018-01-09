@@ -400,7 +400,8 @@
 .js-on .manage-account__modalCloser {
     width: $gs-gutter * 1.75;
     height: $gs-gutter * 1.75;
-    border: 1px solid $guardian-brand;
+    color: $identity-main;
+    border: 1px solid currentColor;
     border-radius: 100%;
     display: block;
     position: absolute;
@@ -418,14 +419,11 @@
     }
 
     svg * {
-        fill: $guardian-brand;
+        fill: currentColor;
     }
 
     &:hover {
-        border-color: #000000;
-        svg * {
-            fill: #000000;
-        }
+        color: #000000;
     }
 }
 

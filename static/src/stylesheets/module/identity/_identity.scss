@@ -436,6 +436,7 @@ $identity-header-height: 48px;
     &.email-unsubscribe--confirm:hover,
     &.email-unsubscribe--confirm:focus {
         color: $error;
+        background: #ffffff!important;
         font-weight: bold;
         border: 2px solid $error;
     }
