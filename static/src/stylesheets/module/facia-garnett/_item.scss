@@ -544,8 +544,8 @@ $block-height: 58px;
     }
 }
 
-&.fc-item--list-media-tablet,
-&.fc-item--list-mobile
+.fc-item--list-media-tablet,
+.fc-item--list-mobile
 {
     .inline-star {
         width: .65em;
@@ -559,7 +559,7 @@ $block-height: 58px;
     }
 }
 
-&.fc-item--has-image {
+.fc-item--has-image {
     .fc-item__header {
         .fc-item__stars {
             display: none;
@@ -567,7 +567,7 @@ $block-height: 58px;
     }
 }
 
-&.fc-item--list-mobile {
+.fc-item--list-mobile {
     .fc-item__header {
         .fc-item__stars {
             display: inline-block;
@@ -579,7 +579,7 @@ $block-height: 58px;
 }
 
 //Removes the space caused by the comment count
-&.fc-item--list-mobile.fc-item--is-commentable {
+.fc-item--list-mobile.fc-item--is-commentable {
     .fc-item__content--has-stars {
         .fc-item__header {
             margin-bottom: -$gs-gutter;
