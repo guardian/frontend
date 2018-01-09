@@ -15,7 +15,7 @@
                 href="@getReaderRevenueUrl(Membership, AmpHeader)">
                 <span class="header-cta-item--circle"></span>
                 <span class="header-cta-item--text">
-                    Become a <br>supporter</span>
+                    become a <br>supporter</span>
                 </span>
             </a>
         </div>
@@ -24,9 +24,15 @@
         class="header__logo"
         data-link-name="nav2 : logo">
             <span class="u-h">The Guardian - Back to home</span>
-            @fragments.inlineSvg("the-guardian-logo", "logo", List(
-                "header__logo"
-            ))
+            @if(ActiveExperiments.isParticipating(GarnettHeader)) {
+                @fragments.inlineSvg("the-guardian-logo", "logo", List(
+                    "header__logo"
+                ))
+            } else {
+                @fragments.inlineSvg("guardian-logo-160", "logo", List(
+                    "header__logo"
+                ))
+            }
         </a>
 
         <ul class="pillars">
