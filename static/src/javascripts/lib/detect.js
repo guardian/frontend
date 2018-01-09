@@ -25,7 +25,7 @@ type BreakpointName =
     | 'leftCol'
     | 'wide';
 
-type Breakpoint = {
+export type Breakpoint = {
     name: BreakpointName,
     isTweakpoint: boolean,
     listener?: (mql: MediaQueryList) => void,

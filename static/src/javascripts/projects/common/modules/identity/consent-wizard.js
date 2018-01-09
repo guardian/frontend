@@ -46,56 +46,82 @@ const updateCounterIndicator = (
         );
     });
 
+const showOrHideBackButtonEl = (
+    buttonBackEl: HTMLElement,
+    position: number
+) => {
+    const displayButtonBack = position > 0;
+    return fastdom.write(() => {
+        buttonBackEl.setAttribute(
+            'aria-hidden',
+            (!displayButtonBack).toString()
+        );
+        if (displayButtonBack) {
+            buttonBackEl.removeAttribute('disabled');
+        } else {
+            buttonBackEl.setAttribute('disabled', 'disabled');
+        }
+        buttonBackEl.classList.toggle(
+            'identity-consent-wizard__revealable--visible',
+            displayButtonBack
+        );
+    });
+};
+
+const showOrHideEmailCounter = (
+    emailCounterEl: HTMLElement,
+    positionName: string
+) => {
+    const displayCounter = positionName === positions.email;
+    return fastdom.write(() => {
+        emailCounterEl.setAttribute(
+            'aria-hidden',
+            (!displayCounter).toString()
+        );
+        emailCounterEl.classList.toggle(
+            'identity-consent-wizard__revealable--visible',
+            displayCounter
+        );
+    });
+};
+
 const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
     window.addEventListener(wizardPageChangedEv, ev => {
         if (ev.target === wizardEl) {
             fastdom
                 .read(() => [
-                    wizardEl.getElementsByClassName(
-                        'manage-account-wizard__step'
-                    ).length,
                     [
                         ...document.getElementsByClassName(
-                            'manage-account-consent-wizard-counter'
+                            'identity-consent-wizard-counter'
                         ),
                     ][0],
                     [
                         ...document.getElementsByClassName(
-                            'manage-account-consent-wizard-button-back'
+                            'identity-consent-wizard-button-back'
                         ),
                     ][0],
                 ])
-                .then(
-                    (
-                        [
-                            stepCount: number,
-                            counterEl: HTMLElement,
-                            buttonBackEl: HTMLElement,
-                        ]
-                    ) =>
-                        fastdom.write(() => {
-                            if (stepCount <= 2) {
-                                buttonBackEl.remove();
-                            } else if (buttonBackEl) {
-                                buttonBackEl.classList.toggle(
-                                    'manage-account-consent-wizard__revealable--visible',
-                                    ev.detail.position > 0
-                                );
-                            }
-                            counterEl.classList.toggle(
-                                'manage-account-consent-wizard__revealable--visible',
-                                ev.detail.positionName === positions.email
-                            );
-                        })
+                .then(([counterEl: HTMLElement, buttonBackEl: HTMLElement]) =>
+                    Promise.all([
+                        showOrHideBackButtonEl(
+                            buttonBackEl,
+                            ev.detail.position
+                        ),
+                        showOrHideEmailCounter(
+                            counterEl,
+                            ev.detail.positionName
+                        ),
+                    ])
                 );
         }
     });
 };
 
+const showWizard = (wizardEl: HTMLElement): Promise<void> =>
+    fastdom.write(() => wizardEl.classList.remove('u-h'));
+
 const bindNextButton = (buttonEl: HTMLElement): void => {
-    const wizardEl: ?Element = buttonEl.closest(
-        '.manage-account-wizard--consent'
-    );
+    const wizardEl: ?Element = buttonEl.closest('.identity-wizard--consent');
     if (wizardEl && wizardEl instanceof HTMLElement) {
         buttonEl.addEventListener('click', (ev: Event) => {
             ev.preventDefault();
@@ -113,10 +139,8 @@ const createEmailConsentCounter = (counterEl: HTMLElement): void => {
     const textEl = document.createElement('div');
     const checkboxesEl = getEmailCheckboxes();
 
-    indicatorEl.classList.add(
-        'manage-account-consent-wizard-counter__indicator'
-    );
-    textEl.classList.add('manage-account-consent-wizard-counter__text');
+    indicatorEl.classList.add('identity-consent-wizard-counter__indicator');
+    textEl.classList.add('identity-consent-wizard-counter__text');
 
     updateCounterIndicator(indicatorEl, checkboxesEl);
 
@@ -136,9 +160,10 @@ const createEmailConsentCounter = (counterEl: HTMLElement): void => {
 
 const enhanceConsentWizard = (): void => {
     const loaders = [
-        ['.manage-account-consent-wizard-counter', createEmailConsentCounter],
-        ['.manage-account-wizard--consent', bindEmailConsentCounterToWizard],
-        ['.js-manage-account-consent-wizard__next', bindNextButton],
+        ['.identity-consent-wizard-counter', createEmailConsentCounter],
+        ['.identity-wizard--consent', bindEmailConsentCounterToWizard],
+        ['.identity-wizard--consent', showWizard],
+        ['.js-identity-consent-wizard__next', bindNextButton],
     ];
     loadEnhancers(loaders);
 };

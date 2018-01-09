@@ -188,15 +188,6 @@
 
     @include mq(desktop) {
         padding-bottom: 1rem;
-
-        &:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            height: 2px;
-            width: gs-span(2);
-            background-color: rgba(255, 255, 255, .2);
-        }
     }
 
     .u-underline {
@@ -216,6 +207,126 @@
 .content__wrapper--standfirst {
     @include content-gutter();
     background-color: rgba(0, 0, 0, .5);
+}
+
+.content--immersive-article:not(.content--immersive-garnett) {
+    .element-pullquote {
+        position: relative;
+        width: auto;
+        margin-left: 0;
+        margin-bottom: $gs-baseline / 2;
+        border-top: 1px solid $neutral-7;
+        border-bottom: 1px solid $neutral-7;
+        padding: 0;
+        padding-top: .2em;
+        padding-bottom: $gs-baseline * 3;
+
+        .inline-quote {
+            margin: ($gs-baseline / 4) 0;
+            height: auto;
+            width: auto;
+            line-height: 1;
+        }
+
+        .inline-quote svg {
+            fill: $neutral-3;
+            width: 2.5em;
+            height: 1.4em;
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            font-family: $f-serif-headline;
+            font-weight: 200;
+            font-size: 1.75rem;
+            line-height: 1.1;
+        }
+
+        .pullquote-paragraph {
+            color: $feature-default;
+        }
+
+        .pullquote-cite {
+            color: $neutral-1 !important; // important to override super specific tonal classes
+        }
+    }
+
+    .element-pullquote.element--showcase,
+    .element-pullquote.element--supporting {
+        @include mq(tablet) {
+            padding: 0;
+            border: 0;
+        }
+    }
+
+    .element-pullquote.element--showcase {
+        .inline-quote svg {
+            @include mq(tablet) {
+                width: 3em;
+                height: 1.8em;
+            }
+        }
+
+        .inline-quote {
+            @include mq(leftCol) {
+                position: absolute;
+                left: -3.5em;
+            }
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            @include mq(tablet) {
+                font-size: 2.25em;
+            }
+        }
+    }
+
+    .element-pullquote.element--supporting {
+        @include mq(tablet) {
+            width: gs-span(3);
+            border: 0;
+            margin-right: $gs-gutter;
+            margin-bottom: $gs-baseline * 2;
+        }
+
+        @include mq(leftCol) {
+            width: gs-span(2);
+            margin-left: -(gs-span(2) + $gs-gutter);
+        }
+
+        @include mq(wide) {
+            width: gs-span(3);
+            margin-left: -(gs-span(3) + $gs-gutter);
+        }
+
+        .inline-quote {
+            @include mq(tablet) {
+                position: absolute;
+            }
+        }
+
+        .inline-quote svg {
+            @include mq(tablet) {
+                width: 1.8em;
+                height: 1em;
+            }
+        }
+
+        .pullquote-paragraph {
+            @include mq(tablet) {
+                text-indent: 1.7em;
+            }
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            @include mq(tablet) {
+                font-size: 1.25em;
+                line-height: 1.2;
+            }
+        }
+    }
 }
 
 .content--immersive-article {
@@ -338,132 +449,6 @@
         margin-top: 0;
     }
 
-    .element-pullquote {
-        position: relative;
-        width: auto;
-        margin-left: 0;
-        margin-bottom: $gs-baseline / 2;
-        border-top: 1px solid $neutral-7;
-        border-bottom: 1px solid $neutral-7;
-        padding: 0;
-        padding-top: .2em;
-        padding-bottom: $gs-baseline * 3;
-
-        .inline-quote {
-            margin: ($gs-baseline / 4) 0;
-            height: auto;
-            width: auto;
-            line-height: 1;
-        }
-
-        .inline-quote svg {
-            fill: $neutral-3;
-            width: 2.5em;
-            height: 1.4em;
-        }
-
-        .pullquote-paragraph,
-        .pullquote-cite {
-            font-family: $f-serif-headline;
-            font-weight: 200;
-            font-size: 1.75rem;
-            line-height: 1.1;
-        }
-
-        .pullquote-paragraph {
-            color: $feature-default;
-        }
-
-        .pullquote-cite {
-            color: $neutral-1 !important; // important to override super specific tonal classes
-        }
-
-        .inline-quote.closing {
-            display: none;
-        }
-    }
-
-    .element-pullquote.element--showcase,
-    .element-pullquote.element--supporting {
-        @include mq(tablet) {
-            padding: 0;
-            border: 0;
-        }
-    }
-
-    .element-pullquote.element--showcase {
-        @include mq(tablet) {
-            margin-bottom: $gs-baseline * 3;
-        }
-
-        .inline-quote svg {
-            @include mq(tablet) {
-                width: 3em;
-                height: 1.8em;
-            }
-        }
-
-        .inline-quote {
-            @include mq(leftCol) {
-                position: absolute;
-                left: -3.5em;
-            }
-        }
-
-        .pullquote-paragraph,
-        .pullquote-cite {
-            @include mq(tablet) {
-                font-size: 2.25em;
-            }
-        }
-    }
-
-    .element-pullquote.element--supporting {
-        @include mq(tablet) {
-            width: gs-span(3);
-            border: 0;
-            margin-right: $gs-gutter;
-            margin-bottom: $gs-baseline * 2;
-        }
-
-        @include mq(leftCol) {
-            width: gs-span(2);
-            margin-left: -(gs-span(2) + $gs-gutter);
-        }
-
-        @include mq(wide) {
-            width: gs-span(3);
-            margin-left: -(gs-span(3) + $gs-gutter);
-        }
-
-        .inline-quote {
-            @include mq(tablet) {
-                position: absolute;
-            }
-        }
-
-        .inline-quote svg {
-            @include mq(tablet) {
-                width: 1.8em;
-                height: 1em;
-            }
-        }
-
-        .pullquote-paragraph {
-            @include mq(tablet) {
-                text-indent: 1.7em;
-            }
-        }
-
-        .pullquote-paragraph,
-        .pullquote-cite {
-            @include mq(tablet) {
-                font-size: 1.25em;
-                line-height: 1.2;
-            }
-        }
-    }
-
     figure.element--immersive {
         margin-left: -$gs-gutter / 2;
         margin-right: -$gs-gutter / 2;
@@ -557,7 +542,9 @@
         }
     }
 
-    .element--showcase {
+    .element--showcase,
+    .element--inline,
+    .element--halfWidth {
         float: none;
     }
 
@@ -571,3 +558,233 @@
         }
     }
 }
+
+//overides the immersive article — done like this to keep gallery's and photo eassy in ok shape
+.content--immersive:not(.immersive-main-media__gallery) {
+    &.immersive-main-media {
+        @include mq(wide) {
+            min-height: 600px;
+        }
+    }
+    .content__article-body {
+        @include mq($from: desktop) {
+            margin-left: -$gs-gutter / 2;
+        }
+    }
+    .immersive-main-media__headline-container {
+        margin-top: -124px;
+        position: relative;
+        background: transparent;
+
+        &:after {
+            position: absolute;
+            content: '';
+            display: none;
+            width: 50%;
+            right: 0;
+            background-color: $garnett-neutral-1;
+            z-index: 0;
+            top: 0;
+            bottom: 0;
+
+            @include mq($from: mobileLandscape) {
+                display: block;
+            }
+        }
+
+        .gs-container {
+            padding: 0;
+        }
+
+        .content__labels {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            overflow: visible;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .content__series-label--immersive-article {
+            display: block;
+            float: none;
+        }
+
+        .content__series-label__link {
+            font-size: 36px;
+            line-height: 1;
+
+            @include mq(desktop) {
+                font-size: 50px;
+                line-height: 50px;
+            }
+        }
+
+        .content__main-column {
+            background-color: $garnett-neutral-1;
+            z-index: 10;
+            position: relative;
+            padding-left: $gs-baseline;
+            left: -$gs-baseline / 2;
+            padding-top: 0;
+            //This allows the headline block to be aligned to the left and not run full width
+            width: 94%;
+            padding-bottom: $gs-baseline;
+
+            @include mq($from: tablet) {
+                width: 100%;
+                left: $gs-baseline / 2;
+            }
+            @include mq($from: desktop) {
+                left: $gs-gutter / 2;
+            }
+        }
+    }
+
+    .content__headline--immersive {
+        @include fs-headline(7, true);
+        line-height: 1.1;
+        color: $garnett-neutral-1;
+        padding: 0;
+        padding-bottom: $gs-baseline * 2;
+        font-weight: 700;
+
+        @include mq(desktop) {
+            font-size: 50px;
+        }
+
+        //This is the line when there is no image that connetcs to the body
+        &:before {
+            position: absolute;
+            top: -$gs-baseline / 2;
+            bottom: -$gs-baseline * 2;
+            left: -$gs-gutter / 2;
+            width: 1px;
+            background-color: $garnett-neutral-4;
+            content: '';
+            display: none;
+            @include mq($from: leftCol) {
+                display: block;
+                bottom: -$gs-baseline * 3;
+            }
+        }
+    }
+
+    .content__headline--immersive.content__headline--immersive--with-main-media {
+        color: #ffffff;
+
+        &:before {
+            display: none;
+        }
+    }
+
+    .content__standfirst--immersive-article {
+        @include fs-headline(1);
+        position: relative;
+        padding-left: 0px;
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 200;
+        margin-top: $gs-baseline / 2;
+        max-width: 280px;
+        margin-bottom: $gs-baseline;
+        margin-left: 0px;
+
+        @include mq($from: tablet) {
+            max-width: 400px;
+            font-size: 22px;
+            line-height: 25px;
+            margin-top: 0;
+        }
+
+        @include mq(desktop) {
+            max-width: 460px;
+            padding-bottom: 1rem;
+            margin-bottom: -$gs-baseline * 2;
+            margin-top: $gs-baseline / 2;
+        }
+
+
+        //this is immersive specific to connect the vertical rule to the top of the page
+        &:before {
+            position: absolute;
+            top: -$gs-baseline * 3;
+            bottom: -$gs-baseline * 2;
+            left: -$gs-gutter / 2;
+            width: 1px;
+            background-color: $garnett-neutral-4;
+            content: '';
+            display: none;
+            @include mq($from: leftCol) {
+                display: block;
+                bottom: -$gs-baseline * 3;
+            }
+        }
+    }
+    .content__meta-container {
+        &:before {
+            display: none;
+        }
+
+        .content__dateline {
+            display: block;
+            margin-left: auto;
+            width: 28%;
+
+            @include mq($from: leftCol) {
+                width: 100%;
+                margin: auto;
+            }
+        }
+    }
+    .drop-cap {
+        height: 105px;
+
+        .drop-cap__inner {
+            font-weight: 900;
+            font-size: 140px;
+            line-height: .7; // To optically align to top of five lines of text
+
+            @include mq($from: tablet) {
+                font-size: 138px;
+            }
+        }
+    }
+
+    .element-pullquote {
+        padding: $gs-baseline / 2;
+        padding-bottom: $gs-baseline;
+    }
+}
+
+
+//variable pillar colours
+
+@mixin immersivePillarColours($pillar, $color, $color2) {
+    .content--pillar-#{$pillar}.content--immersive-article {
+        .content__series-label--immersive-article {
+            .content__series-label__link {
+                color: $color;
+            }
+        }
+        .u-underline {
+            color: $color2;
+            border-bottom: 1px solid rgba($color2, .4);
+
+            &:hover {
+                border-bottom-color: rgba($color2, 1);
+            }
+        }
+
+        .element-pullquote.element--showcase {
+            .pullquote-paragraph {
+                color: $color2;
+            }
+        }
+    }
+}
+
+@include immersivePillarColours('news', $news-garnett-media-main-1, $news-garnett-main-1);
+@include immersivePillarColours('opinion', $opinion-garnett-media-main-1, $opinion-garnett-main-1);
+@include immersivePillarColours('sport', $sport-garnett-media-main-1, $sport-garnett-main-1);
+@include immersivePillarColours('arts', $arts-garnett-media-main-1, $arts-garnett-main-1);
+@include immersivePillarColours('lifestyle', $lifestyle-garnett-media-main-1, $lifestyle-garnett-main-1);

@@ -539,8 +539,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 
 .site-message--membership-prominent {
+    max-height: 80%;
+
     .site-message__message {
-        max-height: 80%;
         padding-right: 45px;
         @include mq($until: tablet) {
             padding-left: 5px;

@@ -4,10 +4,12 @@
 @import conf.Static
 
 <div class="manage-account-tab js-mem-tab" data-sprite-url="@Static("stylesheets/membership-icons.css")">
-    <div class="manage-account-loader js-mem-loader">
+    <div class="manage-account-loader js-recurring-contribution-loader">
         <span class="is-updating show-updating"></span>
     </div>
     <div id="qa-success-message" class="form__success is-hidden js-mem-card-change-success-msg">Your card details have been updated</div>
+    <div id="qa-success-message-contribution-amount-change" class="form__success is-hidden js-contribution-change-success-msg">Your contribution has been updated. Thank you.</div>
+    <div id="qa-failure-message-contribution-amount-change" class="form__error is-hidden js-contribution-update-error-msg">Sorry, there was a problem updating your contribution. Please reload this page and try again.</div>
     @fragments.error("mem") {
         <p>
             Please contact us on <a href="mailto:membershipsupport@@theguardian.com">✉️ membershipsupport@@theguardian.com</a> or phone <a href="tel:0044330 333 6898">📞 +44 (0)330 333 6898</a>.

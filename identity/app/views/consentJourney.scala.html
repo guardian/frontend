@@ -5,12 +5,16 @@
 @import services.EmailPrefsData
 @import form.IdFormHelpers.nonInputFields
 @import views.support.`package`.Seq2zipWithRowInfo
-
+@import views.support.fragment.Switch._
+@import views.support.fragment.ConsentStep._
+@import views.support.fragment.ConsentChannel._
+@import conf.switches.Switches.IdentityShowCommunicationChannelConsents
+@import common.LinkTo
+@import controllers.editprofile.ProfileForms
 
 @(
-    page: model.Page,
     user: com.gu.identity.model.User,
-    forms: controllers.ProfileForms,
+    forms: ProfileForms,
     journey: String,
     verifiedReturnUrl: String,
     idRequest: services.IdentityRequest,
@@ -18,179 +22,292 @@
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
-    consentHint: Option[String] = None,
-    newsletterHint: Option[String] = None
-)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+    consentHint: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@onlySubscribedToNewsletters(onlyV1Newsletters: Boolean) = @{
-    if (onlyV1Newsletters) {
-        EmailNewsletters.all.subscriptions.filter { newsletter =>
-            emailSubscriptions.intersect(newsletter.aliasedIds.map(_.toString)).nonEmpty
-        }
+@onlySubscribedToV1Newsletters = @{
+    EmailNewsletters.all.subscriptions.filter { newsletter =>
+        emailSubscriptions.contains(newsletter.listId.toString)
+    }
+}
+
+@showAgeStep(index: Option[Int]) = @{
+    if(index.contains(0)){
+        List(ConsentStepHelpLegalText("By continuing you confirm that you are aged 13 or over."))
     } else {
-        EmailNewsletters.all.subscriptions.filter { newsletter =>
-            emailSubscriptions.intersect(newsletter.allIds.map(_.toString)).nonEmpty
+        Nil
+    }
+}
+
+@renderStep(step: ConsentStep, index: Option[Int] = None) = {
+    @if(step.show) {
+        <fieldset
+            class="identity-wizard__step"
+            data-wizard-step-name="@step.name"
+            role="dialog"
+            aria-labelledby="consentWizard@{step.name.capitalize}Title"
+        >
+            <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
+            <div class="identity-forms-wrapper">
+                @if(step.help || showAgeStep(index)) {
+                    <div class="identity-forms-wrapper__title">
+                        @((step.help ++ showAgeStep(index)).map(paragraph =>
+                            paragraph match {
+                                case m: ConsentStepHelpLegalText => {
+                                    Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
+                                }
+                                case m: ConsentStepHelpText => {
+                                    Html(s"<p class='identity-title-explainer'>${m.text}</p>")
+                                }
+                            }
+                        ))
+                    </div>
+                }
+                <div class="identity-forms-wrapper__fields">
+                    @step.content
+                </div>
+            </div>
+
+        </fieldset>
+    }
+}
+@renderSteps(steps:List[ConsentStep]) = @{
+    steps.zipWithIndex.map{ case (element, index) => renderStep(element, Some(index)) }
+}
+
+@channelStepContent = {
+    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+        @views.html.helper.CSRF.formField
+        <div class="manage-account__switches manage-account__switches--single-column">
+            <ul>
+            @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
+                @if(isUsersChannel(consentField, user)) {
+                    <li>
+                        @fragments.consentSwitch(consentField)(messages)
+                    </li>
+                }
+            }
+            </ul>
+        </div>
+    </form>
+}
+
+@channelStep = @{
+    ConsentStep(
+        name = "channels",
+        title = "How else can we get in touch with you?",
+        help = List(
+            ConsentStepHelpText("Besides email, are there any other ways you would like us to get in touch with you?")
+        ),
+        content = channelStepContent,
+        show = IdentityShowCommunicationChannelConsents.isSwitchedOn && channelsProvidedBy(user).nonEmpty
+    )
+}
+
+@marketingStepContent = {
+    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+        @views.html.helper.CSRF.formField
+        <div class="manage-account__switches manage-account__switches--single-column">
+            <ul>
+            @helper.repeatWithIndex(forms.privacyForm("consents"), min = 1) { (consentField, index) =>
+                <li>
+                    @if(!isChannel(consentField)) {
+                        @if(index == 0) {
+                            @fragments.consentSwitch(consentField, consentHint)(messages)
+                        } else {
+                            @fragments.consentSwitch(consentField)(messages)
+                        }
+                    }
+                </li>
+            }
+            </ul>
+        </div>
+    </form>
+}
+@marketingConsentStep = @{
+    ConsentStep(
+        name = "consent",
+        title = "What would you like to hear about?",
+        help = List(ConsentStepHelpText("Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.")),
+        content = marketingStepContent
+    )
+}
+@marketingConsentThankYouStep = @{
+    ConsentStep(
+        name = "consent-thank-you",
+        title = "Thank you",
+        help = List(
+            ConsentStepHelpText("Your email choices have now been recorded. While you're here, feel free to have a look at other Guardian content that might interest you.")
+        ),
+        content = marketingStepContent
+    )
+}
+
+@emailRepermissionStepContent = {
+    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+        @views.html.helper.CSRF.formField
+        @fragments.form.hidden(emailPrefsForm("htmlPreference"))
+        <div class="manage-account__switches manage-account__switches--single-column">
+            <ul>
+            @onlySubscribedToV1Newsletters.zipWithRowInfo.map { case (newsletter, row) =>
+            <li>
+                @fragments.newsletterSwitch(
+                    emailPrefsForm,
+                    emailSubscriptions,
+                    newsletter = newsletter,
+                    unchecked = true
+                )(nonInputFields, messages, request)
+            </li>
+            }
+            </ul>
+        </div>
+    </form>
+}
+@emailRepermissionStep() = @{
+    ConsentStep(
+        name = "email",
+        title = "Your existing newsletters",
+        help = List(
+            ConsentStepHelpText("You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them."),
+            ConsentStepHelpLegalText("The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.")
+        ),
+        content = emailRepermissionStepContent,
+        show = onlySubscribedToV1Newsletters.nonEmpty
+    )
+}
+
+@emailSignupStepContent = {
+    <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+        @views.html.helper.CSRF.formField
+        @fragments.form.hidden(emailPrefsForm("htmlPreference"))
+
+        <div class="manage-account__switches">
+            @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions)(request, messages)
+        </div>
+    </form>
+}
+@emailSignupStep() = @{
+    ConsentStep(
+        name = "email-signup",
+        title = "Your newsletters",
+        help = List(
+            ConsentStepHelpText("Our regular newsletters help you get closer to our quality, independent journalism. Pick the issues and topics that interest you below."),
+            ConsentStepHelpLegalText("The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.")
+        ),
+        content = emailSignupStepContent,
+        show = true
+    )
+}
+
+@emailRepermissionOrSignupStep = @{
+    if(emailRepermissionStep.show) {
+        emailRepermissionStep()
+    } else {
+        emailSignupStep()
+    }
+}
+
+@getStepsForJourney(journey: String) = @{
+    journey match {
+        case "newsletters" => {
+            List(
+                if(emailRepermissionStep.show) {
+                    emailRepermissionStep
+                } else {
+                    ConsentStep(
+                        name = "error",
+                        title = "Sorry",
+                        content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
+                    )
+                }
+            )
+        }
+        case "thank-you" => {
+            List(
+                marketingConsentThankYouStep,
+                emailRepermissionOrSignupStep,
+                channelStep
+            )
+        }
+        case "default" => {
+            List(
+                marketingConsentStep,
+                emailRepermissionOrSignupStep,
+                channelStep
+            )
         }
     }
 }
 
-@consentStep(journey:String) = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="consent">
+<div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-wizard">
 
-        <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
-            @views.html.helper.CSRF.formField
+    <div class="js-errorHolder manage-account__errors"></div>
 
-            @if(journey == "repermission") {
-                <h1 class="identity-title">
-                    We need you to consent again to receiving communications from The Guardian
-                </h1>
-                <p class="manage-account-headerNote">Tick the boxes you are interested in. We have featured some you might be interested in.</p>
-            } else {
-                <h1 class="identity-title">
-                    What would you like to hear about?
-                </h1>
-                <p class="manage-account-headerNote">Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.</p>
-            }
-            <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
-                <div class="manage-account__switches manage-account__switches--wide">
-                    <ul>
-                    @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
-                        <li>
-                            @if(index == 0) {
-                                @fragments.consentSwitch(consentField, consentHint)(messages)
-                            } else {
-                                @fragments.consentSwitch(consentField)(messages)
-                            }
-                        </li>
-                    }
-                    </ul>
-                </div>
-            </div>
-        </form>
-
-    </div>
-}
-
-@emailStep(isNarrow: Boolean = false) = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="email">
-
-        <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
-            @views.html.helper.CSRF.formField
-            @fragments.form.hidden(emailPrefsForm("htmlPreference"))
-
-            @if(isNarrow) {
-                <h2 class="identity-title">Sorry for the interruption</h2>
-                <p class="manage-account-headerNote">
-                    You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
-                </p>
-            } else {
-                <h2 class="identity-title">Your existing newsletters</h2>
-                <p class="manage-account-headerNote">
-                    You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them.
-                </p>
-            }
-            <div class="manage-account__switches">
-                <ul>
-                    @onlySubscribedToNewsletters(isNarrow).zipWithRowInfo.map { case (newsletter, row) =>
-                        <li>
-                            @fragments.newsletterSwitch(
-                                emailPrefsForm,
-                                emailSubscriptions,
-                                newsletter = newsletter,
-                                isNarrow
-                            )(nonInputFields, messages, request)
-                        </li>
-                    }
-                </ul>
-            </div>
-        </form>
-    </div>
-}
-
-@emailSignupStep() = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="email-signup">
-
-        <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
-            @views.html.helper.CSRF.formField
-            @fragments.form.hidden(emailPrefsForm("htmlPreference"))
-
-            <h2 class="identity-title">Your newsletters</h2>
-            <p class="manage-account-headerNote">
-                Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below. Just so you know, your newsletter might include messages about how you can support the Guardian, as well as our events, jobs, masterclasses and holidays.
+    <noscript>
+        <div class="form__error">
+            <p>
+                Setting your communication preferences requires a browser with Javascript enabled.
             </p>
-
-            <div class="manage-account__switches">
-                @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions,true)(request, messages)
-            </div>
-        </form>
-    </div>
-}
-
-@endcardStep() = {
-    <div class="manage-account-wizard__step" data-wizard-step-name="endcard">
-        <form class="manage-account-consent-thanks" method="POST" action="@idUrlBuilder.buildUrl("/complete-consent", idRequest)">
-            <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
-            @views.html.helper.CSRF.formField
-            <h2 class="manage-account-consent-thanks__title">Thank you</h2>
-            <aside class="manage-account-consent-thanks__content">
-                <p>Your support helps us deliver the quality independent journalism the world needs</p>
-                <button
-                    type="submit"
-                    class="manage-account__button"
-                    data-link-name="consent : @journey : submit"
-                >Continue</button>
-            </aside>
-        </form>
-    </div>
-}
-
-<div class="identity-wrapper-for-bg identity-wrapper-for-bg--overflows">
-    <div class="gs-container">
-        <div class="monocol-wrapper">
-
-            <div class="u-cf identity-section identity-wrapper identity-wrapper--with-wizard">
-
-                <div class="js-errorHolder manage-account__errors"></div>
-
-                <div class="manage-account-wizard manage-account-wizard--consent" data-journey="@journey">
-
-                    @journey match {
-                        case "repermission-narrow" => {
-                            @emailStep(isNarrow = true)
-                        }
-                        case "repermission" => {
-                            @consentStep(journey = "repermission")
-                            @emailStep()
-                        }
-                        case "signup" => {
-                            @consentStep(journey = "signup")
-                            @emailSignupStep()
-                        }
-                    }
-
-                    @endcardStep()
-
-                    <div class="manage-account-wizard__controls">
-                        <button
-                            data-link-name="consent : @journey : navigation : prev"
-                            class="manage-account-consent-wizard-button-back manage-account-consent-wizard__revealable manage-account__button--round manage-account__button js-manage-account-wizard__prev"
-                        >
-                            <span class="u-h">Previous</span>
-                            @fragments.inlineSvg("arrow-left-stem", "icon")
-                        </button>
-                        <div class="manage-account-consent-wizard__revealable manage-account-consent-wizard-counter">
-                        </div>
-                        <button
-                            data-link-name="consent : @journey : navigation : next"
-                            class="manage-account__button--icon manage-account__button js-manage-account-consent-wizard__next"
-                        >
-                            <span>Next</span>
-                            @fragments.inlineSvg("arrow-right", "icon")
-                        </button>
-                    </div>
-                </div>
-
-            </div>
+            <p>
+                Please consider upgrading to one of our <a href="@LinkTo{/help/recommended-browsers}">recommended browsers</a>. If you need more help please <a href="@LinkTo{/info/tech-feedback}">contact us</a>.
+            </p>
         </div>
+        <br/><br/>
+        <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
+            @views.html.helper.CSRF.formField
+            <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
+            <button
+                type="submit"
+                class="manage-account__button--icon manage-account__button"
+            >
+                <div class="manage-account__button-flexwrap">
+                    <span>Continue</span>
+                    @fragments.inlineSvg("tick-button", "icon")
+                </div>
+            </button>
+        </form>
+    </noscript>
+
+    <div class="identity-wizard identity-wizard--consent u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
+
+        @renderSteps(getStepsForJourney(journey))
+
+        <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
+
+            @if(getStepsForJourney(journey).size > 1){
+                <button
+                    type="button"
+                    data-link-name="consents : navigation : prev"
+                    class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
+                >
+                    <span class="u-h">Previous</span>
+                    @fragments.inlineSvg("arrow-left-stem", "icon")
+                </button>
+            }
+            <div class="identity-consent-wizard__revealable identity-consent-wizard-counter">
+            </div>
+            @views.html.helper.CSRF.formField
+            <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
+            <button
+                type="button"
+                data-link-name="consents : navigation : next"
+                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next"
+            >
+                <div class="manage-account__button-flexwrap">
+                    <span>Next</span>
+                    @fragments.inlineSvg("arrow-right", "icon")
+                </div>
+            </button>
+            <button
+                type="submit"
+                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__complete"
+                data-link-name="consents : navigation : submit"
+            >
+                <div class="manage-account__button-flexwrap">
+                    <span>Finish</span>
+                    @fragments.inlineSvg("tick-button", "icon")
+                </div>
+            </button>
+        </form>
     </div>
+
 </div>

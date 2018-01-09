@@ -1,0 +1,137 @@
+.headline-list__item {
+    position: relative;
+    box-sizing: border-box;
+    padding-top: $gs-baseline / 3;
+    padding-bottom: $gs-baseline * 2;
+
+    &:before {
+        position: absolute;
+        top: 0;
+        right: $gs-gutter / 2;
+        left: 0;
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: $neutral-4;
+    }
+
+    &:first-child:before {
+        display: none;
+    }
+
+    @include mq($from: desktop) {
+        &:nth-child(6):before {
+            display: none;
+        }
+    }
+
+    @include mq(tablet) {
+        padding-top: $gs-baseline / 4;
+        padding-bottom: 0;
+        min-height: gs-height(2) - $gs-baseline;
+    }
+}
+
+.headline-list__count {
+    @include font($f-serif-headline, 500, 44px);
+    float: left;
+    width: gs-span(1);
+    color: $garnett-neutral-1;
+    letter-spacing: -.5px;
+    font-variant-numeric: lining-nums;
+
+    @include mq(mobile) {
+        width: gs-span(1) - $gs-gutter / 2;
+    }
+}
+
+.headline-list__link {
+    @include fs-headline(2);
+    display: block;
+    overflow: hidden;
+    color: $garnett-neutral-1;
+    font-weight: 400;
+
+    .headline-list__text {
+        margin-top: -1 * ($gs-baseline / 3);
+        margin-left: gs-span(1);
+
+        @include mq(mobile) {
+            margin-left: gs-span(1) + $gs-gutter / 2;
+        }
+    }
+
+    .inline-numbers {
+        float: left;
+        margin-top: $gs-baseline / 4;
+        fill: $garnett-neutral-1;
+    }
+
+    .inline-icon {
+        fill: $neutral-2;
+    }
+
+    .inline-camera,
+    .inline-volume-high,
+    .inline-video-icon {
+        fill: $media-default;
+    }
+
+    .inline-video-icon svg {
+        width: 1.2em;
+        height: .75em;
+    }
+
+    &:visited {
+        .headline-list__body,
+        .fc-item__link {
+            color: $garnett-neutral-1;
+        }
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        .headline-list__body,
+        .fc-item__headline {
+            text-decoration: underline;
+        }
+
+        .headline-list__count {
+            color: $neutral-3;
+        }
+    }
+
+    .old-article-message {
+        margin-bottom: 0;
+    }
+
+}
+
+.headline-list__body {
+    .fc-item__link & {
+        color: $garnett-neutral-1;
+    }
+}
+
+
+@include mq(tablet, desktop) {
+    @include layout-columns('headline-column--tablet',
+        $column-min-width: 340px,
+        $columns-fallback-width: gs-span(9),
+        $columns-fallback-columns: 2
+    );
+
+    .headline-column__item {
+        height: auto;
+    }
+}
+
+@include mq(desktop) {
+    @include layout-columns('headline-column--desktop',
+        $column-min-width: 300px,
+        $columns-fallback-width: gs-span(8),
+        $columns-fallback-columns: 2
+    );
+}

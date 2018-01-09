@@ -3,10 +3,10 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.97"
+  val identityLibVersion = "3.100"
   val awsVersion = "1.11.240"
   val faciaVersion = "2.5.0"
-  val capiVersion = "11.43"
+  val capiVersion = "11.46"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -34,7 +34,6 @@ object Dependencies {
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "3.7.0"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.26"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
-  val configMagic = "com.gu" %% "configuration-magic-core" %  "1.4.0"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityRequest = "com.gu.identity" %% "identity-request" % identityLibVersion

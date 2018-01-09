@@ -10,7 +10,7 @@ import model.ApplicationContext
 import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
-import services.{OphanApi, RedirectService}
+import services.{OphanApi, ParameterStoreService, RedirectService}
 
 trait AdminControllers {
   def akkaAsync: AkkaAsync
@@ -38,6 +38,7 @@ trait AdminControllers {
   def placementAgent: PlacementAgent
   def placementService: PlacementService
   def dfpApi: DfpApi
+  def parameterStoreService: ParameterStoreService
 
   lazy val oAuthLoginController = wire[OAuthLoginAdminController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
@@ -48,6 +49,7 @@ trait AdminControllers {
   lazy val apiController = wire[Api]
   lazy val imageDecacheController = wire[ImageDecacheController]
   lazy val pageDecacheController = wire[PageDecacheController]
+  lazy val appConfigController = wire[AppConfigController]
   lazy val ophanApiController = wire[OphanApiController]
   lazy val switchboardController = wire[SwitchboardController]
   lazy val switchboardPlistaController = wire[SwitchboardPlistaController]
@@ -71,4 +73,5 @@ trait AdminControllers {
   lazy val tablesController = wire[TablesController]
   lazy val frontsController = wire[FrontsController]
   lazy val adsDotTextController = wire[AdsDotTextEditController]
+  lazy val commercialKPIController = wire[TeamKPIController]
 }

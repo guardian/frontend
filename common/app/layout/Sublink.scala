@@ -288,7 +288,8 @@ case class ContentCard(
   useShortByline: Boolean,
   group: String,
   branding: Option[Branding],
-  properties: Option[PressedProperties]
+  properties: Option[PressedProperties],
+  fromShowMore: Boolean = false
 ) extends FaciaCard {
 
   private lazy val storyContent: Option[PressedStory] = properties.flatMap(_.maybeContent)
@@ -325,6 +326,12 @@ case class ContentCard(
     case _ => false
   }
 
+  def dataLinkName(index: Int): String = {
+    val name = s"$analyticsPrefix | card-@${index + 1}"
+    val withFromShowMore = if (fromShowMore) s"showmore | $name" else name
+    withFromShowMore
+  }
+
   def withTimeStamp: ContentCard = copy(timeStampDisplay = Some(DateOrTimeAgo))
 
   def showDisplayElement: Boolean =
@@ -332,7 +339,11 @@ case class ContentCard(
 
   def showStandfirst: Boolean = cardTypes.allTypes.exists(_.showStandfirst)
 
-  def mediaWidthsByBreakpoint: WidthsByBreakpoint = FaciaWidths.mediaFromItemClasses(cardTypes)
+  def mediaWidthsByBreakpoint(implicit requestHeader: RequestHeader) : WidthsByBreakpoint = 
+    if (experiments.ActiveExperiments.isParticipating(experiments.Garnett))
+      GarnettFaciaWidths.mediaFromItemClasses(cardTypes)
+    else
+      FaciaWidths.mediaFromItemClasses(cardTypes)
 
   def showTimestamp: Boolean = timeStampDisplay.isDefined && webPublicationDate.isDefined
 

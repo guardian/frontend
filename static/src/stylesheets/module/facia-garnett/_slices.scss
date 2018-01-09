@@ -24,7 +24,7 @@ Hence why a greater depth of selector specificity is needed.
 
         .fc-item--half-tablet {
             @include vertical-item-separator;
-            
+
             .fc-item__standfirst {
                 @include mq(desktop) {
                     display: none;
@@ -136,6 +136,14 @@ Hence why a greater depth of selector specificity is needed.
             }
         }
     }
+    //this fixes an odd spacing issue on mobile
+    .fc-slice__item {
+        margin-bottom: 0;
+
+        @include mq($from: tablet) {
+            margin-bottom: $gs-baseline;
+        }
+    }
 }
 
 /**
@@ -191,6 +199,26 @@ Hence why a greater depth of selector specificity is needed.
             &:last-child {
                 flex: 2 1 auto;
                 width: 50% !important;
+            }
+
+            .fc-item.fc-item--type-comment.fc-item--has-cutout.fc-item--third-tablet {
+                .fc-item__avatar {
+                    height: gs-height(2.5);
+                    width: gs-height(2.5);
+                }
+            
+                .fc-item__avatar__media {
+                    height: gs-height(2.5);
+                    left: 0 - ($gs-gutter * (2.5 / 6));
+                }
+            
+                .fc-item__standfirst {
+                    display: none;
+                }
+    
+                .fc-item__standfirst-wrapper {
+                    padding-right: 0;
+                }
             }
         }
     }

@@ -13,21 +13,24 @@ import play.api.i18n.{Messages, MessagesProvider}
 import play.api.mvc._
 import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
 import utils.SafeLogging
-
+import pages.IdentityHtmlPage
 import scala.concurrent.Future
 
-
 class ReauthenticationController(
-  returnUrlVerifier: ReturnUrlVerifier,
-  api: IdApiClient,
-  idRequestParser: IdRequestParser,
-  idUrlBuilder: IdentityUrlBuilder,
-  authenticatedActions: AuthenticatedActions,
-  signInService : PlaySigninService,
-  val controllerComponents: ControllerComponents,
-  val httpConfiguration: HttpConfiguration
-)(implicit context: ApplicationContext)
-  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with Forms {
+    returnUrlVerifier: ReturnUrlVerifier,
+    api: IdApiClient,
+    idRequestParser: IdRequestParser,
+    idUrlBuilder: IdentityUrlBuilder,
+    authenticatedActions: AuthenticatedActions,
+    signInService : PlaySigninService,
+    val controllerComponents: ControllerComponents,
+    val httpConfiguration: HttpConfiguration)
+    (implicit context: ApplicationContext)
+  extends BaseController
+  with ImplicitControllerExecutionContext
+  with SafeLogging
+  with Mappings
+  with Forms {
 
   val page = IdentityPage("/reauthenticate", "Re-authenticate")
 
@@ -44,17 +47,21 @@ class ReauthenticationController(
     )
   )
 
-  def renderForm(returnUrl: Option[String]): Action[AnyContent] = authenticatedActions.authActionWithUser { implicit request =>
+  def renderForm(returnUrl: Option[String]): Action[AnyContent] = authenticatedActions.fullAuthWithIdapiUserAction { implicit request =>
     val filledForm = form.bindFromFlash.getOrElse(form.fill(""))
 
     logger.trace("Rendering reauth form")
     val idRequest = idRequestParser(request)
     val googleId = request.user.socialLinks.find(_.getNetwork == "google").map(_.getSocialId)
 
-    NoCache(Ok(views.html.reauthenticate(page, idRequest, idUrlBuilder, filledForm, googleId)))
+    NoCache(Ok(
+      IdentityHtmlPage.html(
+        content = views.html.reauthenticate(idRequest, idUrlBuilder, filledForm, googleId)
+      )(page, request, context)
+    ))
   }
 
-  def processForm: Action[AnyContent] = authenticatedActions.authActionWithUser.async { implicit request =>
+  def processForm: Action[AnyContent] = authenticatedActions.fullAuthWithIdapiUserAction.async { implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = formWithConstraints.bindFromRequest
     val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)

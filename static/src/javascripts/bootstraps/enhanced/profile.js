@@ -19,6 +19,7 @@ import { enhanceFormAjax } from 'common/modules/identity/form-ajax';
 import { enhanceConsents } from 'common/modules/identity/consents';
 import { enhanceConsentWizard } from 'common/modules/identity/consent-wizard';
 import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
+import { initHeader } from 'common/modules/identity/header';
 import { initUserAvatars } from 'common/modules/discussion/user-avatars';
 import { init as initTabs } from 'common/modules/ui/tabs';
 
@@ -79,6 +80,7 @@ const initProfile = (): void => {
         ['enhance-consents', enhanceConsents],
         ['enhance-form-ajax', enhanceFormAjax],
         ['enhance-consent-wizard', enhanceConsentWizard],
+        ['init-header', initHeader],
     ];
     catchErrorsWithContext(modules);
 };

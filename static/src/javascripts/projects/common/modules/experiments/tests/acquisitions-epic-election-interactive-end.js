@@ -53,7 +53,6 @@ export const acquisitionsEpicElectionInteractiveEnd = makeABTest({
                         copy: control,
                         componentName: variant.options.componentName,
                         buttonTemplate: defaultButtonTemplate({
-                            membershipUrl: variant.options.membershipURL,
                             contributeUrl: variant.options.contributeURL,
                             supportUrl: variant.options.supportURL,
                         }),

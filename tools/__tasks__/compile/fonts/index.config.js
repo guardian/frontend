@@ -15,7 +15,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
+                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff2',
             },
         ],
     },
@@ -35,7 +35,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
+                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff',
             },
         ],
     },
@@ -55,7 +55,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
+                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.ttf',
             },
         ],
     },
@@ -339,7 +339,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
+                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff2',
             },
         ],
     },
@@ -359,7 +359,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
+                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff',
             },
         ],
     },
@@ -379,7 +379,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
+                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.ttf',
             },
         ],
     },
@@ -663,7 +663,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
+                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff2',
             },
         ],
     },
@@ -683,7 +683,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
+                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff',
             },
         ],
     },
@@ -703,7 +703,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.ttf',
             },
         ],
     },

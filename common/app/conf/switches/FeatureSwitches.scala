@@ -145,46 +145,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val IdentityCookieRefreshSwitch = Switch(
-    SwitchGroup.Identity,
-    "id-cookie-refresh",
-    "If switched on, users cookies will be refreshed.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val IdentityGdprMarketingConsentSwitch = Switch(
-    SwitchGroup.Identity,
-    "id-gdpr-marketing-consent",
-    "If switched on, users will post GDPR compliant marketing consent from 'Edit Profile' page",
-    owners = Seq(Owner.withGithub("mario-galic")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 1),
-    exposeClientSide = false
-  )
-
-  val IdentityAllowAccessToGdprJourneyPageSwitch = Switch(
-    SwitchGroup.Identity,
-    "id-allow-access-to-gdpr-journey-page",
-    "If switched on, users will be able to access the /repermission endpoint",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 1),
-    exposeClientSide = false
-  )
-
-  val IdentityRedirectUsersWithLingeringV1ConsentsSwitch = Switch(
-    SwitchGroup.Identity,
-    "id-redirect-users-with-lingering-v1-consents",
-    "If switched on, users trying to reach /email-prefs will go to /consent to repermission",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 15),
-    exposeClientSide = false
-  )
-
   val EnhanceTweetsSwitch = Switch(
     SwitchGroup.Feature,
     "enhance-tweets",
@@ -494,28 +454,7 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  // Owner: Simple & Coherent
-  val UkSupportFrontendActive = Switch(
-    SwitchGroup.Feature,
-    "uk-supporter-traffic-to-new-support-frontend",
-    "When ON, all UK membership/contribute/support links send traffic to support.theguardian.com (aside from the banner)",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 10, 17),
-    exposeClientSide = true
-  )
-
-  val UsSupportFrontendActive = Switch(
-    SwitchGroup.Feature,
-    "us-supporter-traffic-to-new-support-frontend",
-    "When ON, all US membership/contribute/support links send traffic to support.theguardian.com (aside from the banner)",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 10, 17),
-    exposeClientSide = true
-  )
-
-    // Owner: Journalism
+  // Owner: Journalism
   val ReaderAnswersDeliveryMechanism = Switch(
     SwitchGroup.Feature,
     "reader-answers-preferred-delivery-mechanism",
@@ -546,13 +485,135 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val HeaderFeedback = Switch(
+  val ProfileShowChangeContributionAmount = Switch(
     SwitchGroup.Feature,
-    "header-feedback",
-    "When ON a feedback prompt will be visible within the header test",
-    owners = Seq(Owner.withGithub("zeftilldeath")),
+    "profile-show-change-contribution-amount",
+    "When ON, the edit profile page will include the change (amount) button for recurring contributors",
+    owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 12, 4),
+    sellByDate = new LocalDate(2018, 1, 11),
+    exposeClientSide = true
+  )
+
+  // Admin Audit Switches:
+
+  val AdminRemovePressR2 = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-press-r2",
+    "When ON, the /press/r2 page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveAdminFootball = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-admin-football",
+    "When ON, the /admin/football page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveAdminFootballTables = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-admin-football-tables",
+    "When ON, the /admin/football/tables page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveAdminFootballPlayer = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-admin-player",
+    "When ON, the /admin/football/player page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveAdminFootballFronts = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-admin-football-fronts",
+    "When ON, the /admin/football/fronts page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveApiProxy = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-api-proxy",
+    "When ON, the /api/proxy page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveApiTag = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-api-tag",
+    "When ON, the /api/tag page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveApiItem = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-api-item",
+    "When ON, the /api/item page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveJsonProxy = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-json-proxy",
+    "When ON, the /josn/proxy page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveOphan = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-ophan",
+    "When ON, the /ophan page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveRadiator = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-radiator",
+    "When ON, the /radiator page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  val AdminRemoveRadiatorCommit = Switch(
+    SwitchGroup.Feature,
+    "admin-audit-remove-radiator-commit",
+    "When ON, the /radiator/commit/*hash page returns 503",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
 }

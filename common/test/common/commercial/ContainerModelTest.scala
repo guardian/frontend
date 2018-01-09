@@ -43,8 +43,6 @@ class ContainerModelTest extends FlatSpec with Matchers with OptionValues {
       backfill,
       treats = Nil,
       lastUpdated = None,
-      updatedBy = None,
-      updatedEmail = None,
       href = Some(
         "/am-resorts-partner-zone/2016/jan/20/be-a-hero-on-the-half-shell-release-baby-turtles-on-your-next-vacation"
       ),

@@ -1,6 +1,12 @@
 $header-image-size-mobile: 80px;
 $header-image-size-desktop: 100px;
 
+.fc-container {
+    .fc-container__inner {
+        border-top: 1px solid $neutral-5;
+    }
+}
+
 .fc-container,
 .facia-container {
     @include clearfix;
@@ -33,10 +39,6 @@ $header-image-size-desktop: 100px;
         .has-page-skin & {
             width: gs-span(12);
         }
-    }
-
-    .fc-container & {
-        border-top: 1px solid $garnett-neutral-4;
     }
 }
 
@@ -172,7 +174,9 @@ $header-image-size-desktop: 100px;
         color: inherit;
 
         &:hover {
-            color: $news-accent;
+            color: $news-garnett-main-1;
+            text-decoration: none;
+            border-bottom: 1px solid $news-garnett-main-1;
 
             & .inline-icon {
                 fill: $news-accent;
@@ -264,6 +268,7 @@ $header-image-size-desktop: 100px;
     @include fs-headline(2);
     padding-bottom: $gs-baseline / 2;
     color: $neutral-2;
+    font-weight: 500;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline;
@@ -278,6 +283,10 @@ $header-image-size-desktop: 100px;
 
     @include mq(wide) {
         width: $left-column-wide;
+    }
+
+    a {
+        color: $news-garnett-main-1;
     }
 }
 
@@ -324,7 +333,7 @@ $header-image-size-desktop: 100px;
 .fc-today {
     @include fs-headline(2);
     line-height: 16px;
-    font-weight: 700;
+    font-weight: 500;
     display: none;
     margin-top: $gs-baseline;
 
@@ -333,6 +342,7 @@ $header-image-size-desktop: 100px;
     }
 
     .fc-today__sub {
+        color: $news-garnett-main-1;
         @include mq(wide) {
             .has-page-skin & {
                 border-top: 0;

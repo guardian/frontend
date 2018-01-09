@@ -43,10 +43,10 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
     val Some(result) = route(app, fakeRequest)
 
-    contentAsString(result) should include("\"news\"")
-    contentAsString(result) should include("\"opinion\"")
-    contentAsString(result) should include("\"sport\"")
-    contentAsString(result) should include("\"arts\"")
-    contentAsString(result) should include("\"lifestyle\"")
+    contentAsString(result) should include("\"News\"")
+    contentAsString(result) should include("\"Opinion\"")
+    contentAsString(result) should include("\"Sport\"")
+    contentAsString(result) should include("\"Arts\"")
+    contentAsString(result) should include("\"Lifestyle\"")
   }
 }

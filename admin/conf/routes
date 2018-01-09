@@ -93,14 +93,19 @@ GET         /commercial/adgrabber/order/:orderId                                
 GET         /commercial/adgrabber/previewUrls/:lineItemId/:section                                  controllers.admin.CommercialController.getCreativesListing(lineItemId: String, section: String)
 GET         /commercial/adops/ads-txt                                                               controllers.admin.commercial.AdsDotTextEditController.renderAdsDotText()
 POST        /commercial/adops/ads-txt                                                               controllers.admin.commercial.AdsDotTextEditController.postAdsDotText()
+GET         /commercial/kpi/revenue                                                                 controllers.admin.commercial.TeamKPIController.renderDashboard()
+
+# Config
+
+GET         /config                                                                                 controllers.AppConfigController.renderAppConfig()
+GET         /config/parameter/*key                                                                  controllers.AppConfigController.findParameter(key: String)
+
 # Metrics
 GET         /metrics/loadbalancers                                                                  controllers.admin.MetricsController.renderLoadBalancers()
 GET         /metrics/fastly                                                                         controllers.admin.FastlyController.renderFastly()
 GET         /metrics/errors                                                                         controllers.admin.MetricsController.renderErrors()
 GET         /metrics/errors/4xx                                                                     controllers.admin.MetricsController.render4XX()
 GET         /metrics/errors/5xx                                                                     controllers.admin.MetricsController.render5XX()
-GET         /metrics/memory                                                                         controllers.admin.MetricsController.renderMemory()
-GET         /metrics/assets                                                                         controllers.admin.MetricsController.renderAssets()
 GET         /metrics/googlebot/404                                                                  controllers.admin.MetricsController.renderGooglebot404s()
 GET         /metrics/afg                                                                            controllers.admin.MetricsController.renderAfg()
 GET         /metrics/webpack-bundle-visualization                                                   controllers.admin.MetricsController.renderBundleVisualization()

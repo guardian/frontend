@@ -12,7 +12,7 @@ import renderAdvertLabel from 'commercial/modules/dfp/render-advert-label';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { Toggles } from 'common/modules/ui/toggles';
 import { recordUserAdFeedback } from 'commercial/modules/user-ad-feedback';
-import config from 'lib/config';
+import type { SlotRenderEndedEvent } from 'commercial/types';
 /**
  * ADVERT RENDERING
  * ----------------
@@ -69,7 +69,7 @@ sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
 /**
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
-sizeCallbacks[adSizes.mpu] = (_, advert) => {
+sizeCallbacks[adSizes.mpu] = (slotRenderEndedEvent, advert) => {
     if (advert.node.classList.contains('js-sticky-mpu')) {
         stickyMpu(advert.node);
     }
@@ -82,13 +82,11 @@ sizeCallbacks[adSizes.halfPage] = () => {
     mediator.emit('page:commercial:sticky-mpu');
 };
 
-if (!config.switches.keepVideoAdSlotsOpen) {
-    sizeCallbacks[adSizes.video] = (_, advert) => {
-        fastdom.write(() => {
-            advert.node.classList.add('u-h');
-        });
-    };
-}
+sizeCallbacks[adSizes.video] = (_, advert) => {
+    fastdom.write(() => {
+        advert.node.classList.add('u-h');
+    });
+};
 
 sizeCallbacks[adSizes.video2] = (_, advert) => {
     fastdom.write(() => {
@@ -149,12 +147,12 @@ const addContentClass = adSlotNode => {
 
 /**
  * @param advert - as defined in commercial/modules/dfp/Advert
- * @param slotRenderEvent - GPT slotRenderEndedEvent
+ * @param slotRenderEndedEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
  */
-const renderAdvert = (
+export const renderAdvert = (
     advert: Advert,
-    slotRenderEvent: any
+    slotRenderEndedEvent: SlotRenderEndedEvent
 ): Promise<boolean> => {
     addContentClass(advert.node);
 
@@ -169,7 +167,7 @@ const renderAdvert = (
 
                     return Promise.resolve(
                         sizeCallbacks[size]
-                            ? sizeCallbacks[size](slotRenderEvent, advert)
+                            ? sizeCallbacks[size](slotRenderEndedEvent, advert)
                             : null
                     );
                 }
@@ -195,7 +193,7 @@ const renderAdvert = (
                       })
                     : Promise.resolve();
 
-            const applyFeedbackOnClickListeners = slotRender => {
+            const applyFeedbackOnClickListeners = () => {
                 const readyClass = 'js-onclick-ready';
                 return isRendered
                     ? fastdom.write(() => {
@@ -204,11 +202,12 @@ const renderAdvert = (
                           ).forEach(el => {
                               const slotId = el.getAttribute('data-slot');
                               const problem = el.getAttribute('data-problem');
+
                               el.addEventListener('click', () => {
                                   recordUserAdFeedback(
                                       window.location.pathname,
                                       slotId,
-                                      slotRender,
+                                      slotRenderEndedEvent,
                                       problem
                                   );
                               });
@@ -221,11 +220,9 @@ const renderAdvert = (
             return callSizeCallback()
                 .then(() => renderAdvertLabel(advert.node))
                 .then(addFeedbackDropdownToggle)
-                .then(() => applyFeedbackOnClickListeners(slotRenderEvent))
+                .then(applyFeedbackOnClickListeners)
                 .then(addRenderedClass)
                 .then(() => isRendered);
         })
         .catch(raven.captureException);
 };
-
-export default renderAdvert;

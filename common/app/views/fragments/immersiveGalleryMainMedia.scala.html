@@ -6,7 +6,7 @@
 
 @()(implicit page: ContentPage, request: RequestHeader)
 
-<div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media">
+<div class="content content--immersive tonal tonal--@toneClass(page.item) immersive-main-media immersive-main-media__gallery">
 
     @if(isPaidContent(page)) {
         @fragments.guBand()
@@ -22,7 +22,7 @@
         )
     }
 
-    <div class="immersive-main-media__headline-container--dark immersive-main-media__headline-container">
+    <div class="@RenderClasses("immersive-main-media__headline-container--dark", "immersive-main-media__headline-container", "content--pillar-news", s"content--pillar-${page.metadata.pillar.nameOrDefault}")">
         <div class="gs-container">
             @fragments.meta.metaInline(page.item)
 

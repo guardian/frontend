@@ -1,13 +1,22 @@
-@(user: com.gu.identity.model.User, page: model.Page, idRequest: services.IdentityRequest, idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(
+    user: com.gu.identity.model.User,
+    idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder,
+    customMessage: Option[String] = None
+)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import views.html.fragments.registrationFooter
 
-@mainLegacy(page, projectName = Option("identity")){
-}{
-    <div class="identity-wrapper monocolumn-wrapper">
+<div class="identity-wrapper monocolumn-wrapper">
+    <div class="identity-forms-message">
         <h1 class="identity-title">A new validation email has been sent to your account.</h1>
+        <div class="identity-forms-message__body">
+            @for(m <- customMessage) {
+                <p><strong>@m</strong></p>
+            }
         <p>Please check your email (@user.getPrimaryEmailAddress) and follow the enclosed link.</p>
         <p>Validation links are valid for 30 minutes before expiring.</p>
-        @registrationFooter(idRequest, idUrlBuilder)
+        </div>
     </div>
-}
+    @registrationFooter(idRequest, idUrlBuilder)
+</div>

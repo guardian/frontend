@@ -3,6 +3,7 @@ import fastdom from 'fastdom';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
 import { getUserAgent, getBreakpoint } from 'lib/detect';
+import type { SlotRenderEndedEvent } from 'commercial/types';
 
 const onComplete = adSlotId => {
     // we're complete - update the UI
@@ -17,10 +18,7 @@ const onComplete = adSlotId => {
 const recordUserAdFeedback = function(
     pagePath: string,
     adSlotId: string,
-    slotRenderEvent: {
-        sourceAgnosticCreativeId: string,
-        sourceAgnosticLineItemId: string,
-    },
+    slotRenderEndedEvent: SlotRenderEndedEvent,
     feedbackType: string
 ): Promise<void> {
     const feedbackUrl =
@@ -33,8 +31,8 @@ const recordUserAdFeedback = function(
         stage,
         page: pagePath,
         adSlotId,
-        creativeId: slotRenderEvent.sourceAgnosticCreativeId.toString(),
-        lineId: slotRenderEvent.sourceAgnosticLineItemId.toString(),
+        creativeId: slotRenderEndedEvent.creativeId,
+        lineId: slotRenderEndedEvent.lineItemId,
         feedback: feedbackType,
         browser:
             typeof ua === 'object'

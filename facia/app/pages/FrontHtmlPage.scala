@@ -13,6 +13,7 @@ import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, sk
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
+import views.html.stacked
 
 object FrontHtmlPage extends HtmlPage[PressedPage] {
 
@@ -28,8 +29,12 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
   }
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(FaciaCSSFile)
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
+    override def criticalCssLink: Html = stacked(
+      criticalStyleLink(FaciaCSSFile),
+      criticalStyleLink(InlineNavigationCSSFile))
+    override def criticalCssInline: Html = criticalStyleInline(
+      Html(common.Assets.css.head(Some("facia"))),
+      Html(common.Assets.css.inlineNavigation))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$FaciaCSSFile.css")
 
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")

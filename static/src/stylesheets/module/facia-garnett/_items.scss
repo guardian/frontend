@@ -1,3 +1,14 @@
+@mixin avatar($size) {
+    .fc-item__avatar,
+    .fc-item__avatar__media {
+        height: gs-height($size);
+    }
+
+    .fc-item__avatar__media {
+        right: 0 - ($gs-gutter * ($size / 2));
+    }
+}
+
 @mixin headline-boost($size) {
     .fc-item--has-boosted-title & {
         @include fs-headline($size, true);
@@ -21,7 +32,7 @@
     .fc-sublink:first-child {
         margin-top: 0;
 
-        .fc-sublink__title {                
+        .fc-sublink__title {
             &:before {
                 width: auto;
                 left: 0 - $fc-item-gutter;
@@ -49,6 +60,10 @@
 @import 'item-types/_fc-item--type-liveblog';
 @import 'item-types/_fc-item--type-media';
 @import 'item-types/_fc-item--type-comment';
+@import 'item-types/_fc-item--type-immersive';
+@import 'item-types/_fc-item--type-analysis';
+@import 'item-types/_fc-item--type-interview';
+
 
 .fc-slice__item {
     width: 100%;
@@ -86,6 +101,8 @@
 .fc-item--standard-mobile {
     @include mq($until: tablet) {
         &.fc-item--has-cutout {
+            @include avatar(2.4);
+
             .fc-item__header {
                 padding-right: gs-span(1.5);
             }
@@ -96,16 +113,6 @@
 
             .fc-item__content {
                 min-height: gs-height(2) + $gs-baseline;
-            }
-
-            .fc-item__avatar {
-                width: gs-span(1.5);
-                height: gs-span(1.5);
-            }
-    
-            .fc-item__avatar__media {
-                right: 0 - $gs-gutter;
-                height: gs-span(1) + $gs-baseline * 3;
             }
 
             &[class*='fc-item--has-sublinks'] {
@@ -138,26 +145,14 @@
         }
 
         &.fc-item--has-cutout {
+            @include avatar(4);
+
             .fc-item__standfirst {
                 display: none;
             }
 
             .fc-item__header {
                 padding-bottom: gs-height(4);
-    
-                @include mq(desktop) {
-                    padding-bottom: gs-height(4.5);
-                }
-            }
-
-            .fc-item__avatar {
-                width: gs-height(3);
-                height: gs-height(3);
-            }
-    
-            .fc-item__avatar__media {
-                height: gs-height(4);
-                right: -35%;
             }
 
             &[class*='fc-item--has-sublinks'] {
@@ -253,24 +248,17 @@
     }
 }
 
-// full media 50/75/100 all look same if class fc-item--has-cutout is present
+// full media 50/75/100 and fluid-tablet all look same if class fc-item--has-cutout is present
 .fc-item--full-media-50-tablet,
 .fc-item--full-media-75-tablet,
-.fc-item--full-media-100-tablet {
+.fc-item--full-media-100-tablet,
+.fc-item--fluid-tablet {
     @include mq(tablet) {
         &.fc-item--has-cutout {
-            .fc-item__avatar {
-                width: gs-height(4.5);
-                height: gs-height(4.5);
-            }
-
-            .fc-item__avatar__media {
-                right: -35%;
-                height: gs-height(6);
-            }
+            @include avatar(6);
 
             .fc-item__container {
-                min-height: gs-height(7);
+                min-height: gs-height(6);
             }
 
             .fc-item__content {
@@ -310,8 +298,8 @@
 
                 &:not(.fc-item--type-comment) .fc-item__footer--horizontal .fc-sublink {
                     margin-top: 0;
-        
-                    .fc-sublink__title {                
+
+                    .fc-sublink__title {
                         &:before {
                             width: auto;
                             left: 0 - $fc-item-gutter;
@@ -363,6 +351,10 @@
 .fc-item--fluid-mobile {
     @include mq($until: tablet) {
         @include fc-item--fluid;
+
+        .fc-item__avatar {
+            display: none;
+        }
     }
 
     @include mq(mobileLandscape, tablet) {

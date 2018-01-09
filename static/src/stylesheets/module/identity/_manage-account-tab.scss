@@ -85,6 +85,11 @@
         &:focus {
             text-decoration: none;
         }
+
+        &-half--left &-half--right {
+            width: $gs-baseline*5;
+        }
+
     }
 
     .manage-account-cta--disabled {
@@ -311,10 +316,6 @@
     @include fs-header(3);
     color: $identity-main;
 }
-.manage-account-headerNote {
-    @include fs-bodyCopy(2);
-    margin-top: $gs-baseline / 2;
-}
 
 .manage-account-headerWrapper {
     margin-bottom: $gs-baseline;
@@ -332,6 +333,7 @@
     display: block;
     width: 100%;
     border-top: 1px solid #d9d9d9;
+    border-bottom: 0;
     margin-bottom: gs-span(.5);
     transform: scaleX(3);
     @include mq(desktop) {
@@ -429,16 +431,26 @@
 
 /* Button styles
 ========================================================================== */
+.manage-account__button-container {
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+}
+
 .manage-account__button {
-    @include fs-textSans(2);
+    $font-size: 2;
+    $height: $gs-gutter * 2;
+    $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
+    $padding-horizontal: $gs-gutter;
+    @include fs-textSans($font-size);
     background-color: $identity-main;
-    height: $gs-gutter * 2;
+    height: $height;
     border-radius: 100px;
     border: 0;
     color: #ffffff;
     cursor: pointer;
     float: left;
-    padding: 0 $gs-gutter;
+    padding: $padding-vertical $padding-horizontal;
     min-width: $gs-baseline * 14;
     white-space: nowrap;
     text-overflow: clip;
@@ -452,6 +464,15 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
+    > .manage-account__button-flexwrap {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     &:not(.is-updating, .is-disabled):hover {
         background-color: darken($identity-main, 10%);
@@ -471,15 +492,47 @@
         margin: 0 ($gs-gutter * -.5);
     }
 
+    &-half--left {
+        width: $gs-baseline*5;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        min-width: $gs-baseline * 7;
+        float: left;
+        background-color: $news-main-2;
+    }
+
+    &-half--right {
+        width: $gs-baseline*5;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        min-width: $gs-baseline * 7;
+        float: right;
+    }
+
+    .disabled {
+        background-color: $neutral-4;
+    }
 }
 
 .manage-account__button--round {
     min-width: $gs-gutter * 2;
     max-width: $gs-gutter * 2;
+    padding: 0;
 }
 
 .manage-account__button--icon {
-    justify-content: space-between;
+    padding-top: 0;
+    padding-bottom: 0;
+    &, & > .manage-account__button-flexwrap {
+        justify-content: space-between;
+    }
+    .inline-icon {
+        transition: .125s;
+        svg {
+            width: 28px;
+            height: 28px;
+        }
+    }
 }
 
 .manage-account__button--light {
@@ -532,4 +585,8 @@
 }
 .manage-account-flexrow_item--static {
     flex: 0 0 auto;
+}
+
+.js-contribution-next-payment-new-price {
+    max-width: 80px;
 }

@@ -1,7 +1,7 @@
 @(name: String, modifier: Option[String] = None, isActive: Boolean = false, isClientSideTemplate: Boolean = false, isAnimated: Boolean = false)(content: Html)
 
 @defining("dropdown-"+content.hashCode){ hash =>
-<div class="dropdown dropdown-styled u-cf @modifier.map("dropdown--" + _) @if(isActive){dropdown--active} @if(isAnimated){dropdown--animated}">
+<div class="dropdown dropdown-styled u-cf @modifier.map("dropdown--" + _) @if(isActive){dropdown--active} @if(isAnimated){dropdown--animated}" data-dropdown-label="@if(isClientSideTemplate) {<%=name%>} else {@name}">
     <button class="dropdown__button u-button-reset js-dropdown-button"
             type="button"
             data-link-name="Show dropdown: @if(isClientSideTemplate) {<%=name%>} else {@name}"
@@ -11,10 +11,10 @@
         @fragments.inlineSvg("dropdown-mask", "icon", List("control", "modern-visible"))
     </button>
 
-    <label class="dropdown__toggle-label u-h"
+    <label class="dropdown__toggle-label"
            aria-controls="@hash"
            for="@{hash}__label">Show</label>
-    <input class="dropdown__toggle u-h"
+    <input class="dropdown__toggle"
             aria-controls="@hash"
             type="checkbox"
             id="@{hash}__label" />

@@ -44,6 +44,7 @@ object Container extends Logging {
     resolve(collectionType) match {
       case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
       case Dynamic(_) => true
+      case Email(_) => true
       case _ => false
     }
   }
@@ -51,6 +52,7 @@ object Container extends Logging {
   def affectedByDuplicates(collectionType: String): Boolean = {
     resolve(collectionType) match {
       case Fixed(fixedContainer) if !fixedContainer.isSingleton => true
+      case Email(_) => true
       case _ => false
     }
   }

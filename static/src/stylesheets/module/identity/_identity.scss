@@ -1,3 +1,7 @@
+/* Variables
+   ========================================================================== */
+$identity-header-height: 48px;
+
 /* Identity and registration
    ========================================================================== */
 .l-header--identity {
@@ -54,7 +58,7 @@
     margin-right: auto;
     max-width: gs-span(6);
     padding-bottom: $gs-baseline*4;
-    padding-top: $gs-baseline*4;
+    padding-top: $gs-baseline * 2;
 
     &.identity-wrapper--with-wizard {
         padding-bottom: 0;
@@ -69,7 +73,7 @@
     max-width: gs-span(16);
 }
 
-.identity-header {
+.identity-layout__header {
     @include mq(tablet) {
         margin-left: $gs-gutter;
         margin-right: $gs-gutter;
@@ -112,6 +116,28 @@
         @include fs-headline(6, $size-only: true);
     }
 }
+
+.identity-title--small {
+    @include fs-headline(3);
+    @include mq(desktop) {
+        @include fs-headline(3, true);
+        font-weight: 500;
+    }
+}
+
+.identity-title--page-title {
+    margin-bottom: $gs-baseline * 2;
+}
+
+.identity-title-explainer {
+    @include fs-bodyCopy(1);
+    margin-bottom: $gs-baseline;
+    &.identity-title-explainer--small {
+        @include fs-textSans(1);
+        color: $neutral-2;
+    }
+}
+
 .identity-title--public-profile {
     @include mq(desktop) {
         float: left;
@@ -339,9 +365,6 @@
 
 /* Email subscriptions
    ========================================================================== */
-.email-subscriptions {
-    margin-top: $gs-baseline*2;
-}
 .email-subscription {
     border-top: 1px solid $neutral-5;
     margin-bottom: $gs-baseline*2;
@@ -361,12 +384,55 @@
     margin-top: 3em;
 }
 
-.dropdown--email-subscription {
-    .dropdown__label {
-        @include fs-bodyHeading(3);
-    }
-    .dropdown__content {
-        padding-bottom: 2em;
+.dropdown-styled.dropdown--email-subscription {
+    @supports (transform: rotate(45deg)) {
+        border-color: $neutral-6;
+        .dropdown__button {
+            padding: $gs-baseline / 4 0 $gs-baseline;
+            color: $identity-main;
+            text-transform: lowercase;
+        }
+        .dropdown__label {
+            @include fs-bodyHeading(3);
+            &:after {
+                content: '';
+                border: 2px solid currentColor;
+                border-left: transparent;
+                border-top: transparent;
+                display: inline-block;
+                height: 5px;
+                color: inherit;
+                transform: translateY(-2px) rotate(45deg);
+                transition: transform 250ms ease-out;
+                vertical-align: middle;
+                width: 5px;
+                margin-left: 4px;
+            }
+        }
+        .dropdown__content {
+            padding-bottom: 2em;
+        }
+        .inline-dropdown-mask {
+            display: none;
+        }
+        &:hover .dropdown__button,
+        .dropdown__button:focus {
+            color: darken($identity-main, 15%);
+            &:hover, &:focus {
+                text-decoration: underline;
+            }
+        }
+        &:hover .dropdown__label:after,
+        .dropdown__button:focus:after {
+            transform: translateY(-1px) rotate(45deg);
+        }
+        &.dropdown--active .dropdown__label:after {
+            transform: translateY(1px) rotate(-135deg);
+        }
+        &.dropdown--active:hover .dropdown__label:after,
+        &.dropdown--active .dropdown__button:focus .dropdown__label:after {
+            transform: translateY(0px) rotate(-135deg);
+        }
     }
 }
 
