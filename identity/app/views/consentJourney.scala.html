@@ -131,16 +131,6 @@
         content = marketingStepContent
     )
 }
-@marketingConsentRepermissionStep = @{
-    ConsentStep(
-        name = "consent-repermission",
-        title = "We need you to consent again to receiving communications from the Guardian",
-        help = List(
-            ConsentStepHelpText("Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.")
-        ),
-        content = marketingStepContent
-    )
-}
 @marketingConsentThankYouStep = @{
     ConsentStep(
         name = "consent-thank-you",
@@ -231,13 +221,6 @@
                 }
             )
         }
-        case "all" => {
-            List(
-                marketingConsentRepermissionStep,
-                emailRepermissionStep,
-                channelStep
-            )
-        }
         case "thank-you" => {
             List(
                 marketingConsentThankYouStep,
@@ -289,14 +272,17 @@
         @renderSteps(getStepsForJourney(journey))
 
         <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
-            <button
-                type="button"
-                data-link-name="consents : navigation : prev"
-                class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
-            >
-                <span class="u-h">Previous</span>
-                @fragments.inlineSvg("arrow-left-stem", "icon")
-            </button>
+
+            @if(getStepsForJourney(journey).size > 1){
+                <button
+                    type="button"
+                    data-link-name="consents : navigation : prev"
+                    class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
+                >
+                    <span class="u-h">Previous</span>
+                    @fragments.inlineSvg("arrow-left-stem", "icon")
+                </button>
+            }
             <div class="identity-consent-wizard__revealable identity-consent-wizard-counter">
             </div>
             @views.html.helper.CSRF.formField
