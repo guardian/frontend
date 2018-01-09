@@ -487,18 +487,12 @@ const changeContributionAmountSubmit = (): void => {
 const changeAmountButtonOnClick = (): void => {
     const currentAmount = $(CURRENT_CONTRIBUTION_AMOUNT).text();
     toggleAmountChangeInputMode(true);
-    setupEditableNewAmountField(
-        formatAmount(
-            currentAmount,
-            ''
-        ).toString()
-    );
+    setupEditableNewAmountField(formatAmount(currentAmount, '').toString());
 };
 
 const changeAmountCancelButtonOnClick = (): void => {
     toggleAmountChangeInputMode(false);
 };
-
 
 const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     const isMonthly = contributorDetails.subscription.plan.interval === 'month';
@@ -563,20 +557,29 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
             CHANGE_CONTRIBUTION_AMOUNT_BUTTON
         );
         if (changeAmountButton) {
-            changeAmountButton.addEventListener('click', changeAmountButtonOnClick);
+            changeAmountButton.addEventListener(
+                'click',
+                changeAmountButtonOnClick
+            );
         }
         const changeAmountCancelButton = document.querySelector(
             CHANGE_CONTRIBUTION_AMOUNT_CANCEL
         );
         if (changeAmountCancelButton) {
-            changeAmountCancelButton.addEventListener('click', changeAmountCancelButtonOnClick);
+            changeAmountCancelButton.addEventListener(
+                'click',
+                changeAmountCancelButtonOnClick
+            );
         }
 
         const changeAmountConfirmButton = document.querySelector(
             CHANGE_CONTRIBUTION_AMOUNT_SUBMIT
         );
         if (changeAmountConfirmButton) {
-            changeAmountConfirmButton.addEventListener('click', changeContributionAmountSubmit);
+            changeAmountConfirmButton.addEventListener(
+                'click',
+                changeContributionAmountSubmit
+            );
         }
     }
 
