@@ -1325,3 +1325,24 @@ $quote-mark: 35px;
         border-bottom: 1px solid $garnett-neutral-4;
     }
 }
+
+.paid-content {
+    .content__meta-container {
+        @include multiline(3, $garnett-neutral-6, top);
+    }
+
+    .submeta {
+        @include multiline(4, $garnett-neutral-6, top);
+    }
+
+    .social-icon,
+    .block-share__item,
+    .submeta__keywords {
+        border-color: $garnett-neutral-6;
+    }
+
+    .content__article-body::before {
+        background: $garnett-neutral-6;
+    }
+
+}
