@@ -15,12 +15,17 @@ import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, 
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments.crosswords.{crosswordResultsPageBody, crosswordResultsPageHead}
 import model.CrosswordResultsPage
+import views.html.stacked
 
 object CrosswordResultsHtmlPage extends HtmlPage[CrosswordResultsPage] {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(FaciaCSSFile)
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
+    override def criticalCssLink: Html = stacked(
+      criticalStyleLink(FaciaCSSFile),
+      criticalStyleLink(InlineNavigationCSSFile))
+    override def criticalCssInline: Html = criticalStyleInline(
+      Html(common.Assets.css.head(None)),
+      Html(common.Assets.css.head(Some("facia"))))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$FaciaCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
