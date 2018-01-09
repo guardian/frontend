@@ -21,7 +21,7 @@ $height: $identity-header-height - ($gutter * 2);
         position: absolute;
         display: none;
         left: 0;
-        top: $height;
+        top: get-line-height(textSans, 3)*1.25;
         z-index: 999;
         li {
             display: block;
@@ -66,13 +66,16 @@ html body .identity-header__logo {
     }
 }
 
+label[for=identity-header-account-menu-fallback]:focus {
+    outline: none;
+}
+
 .identity-header__nav {
     @include fs-textSans(3);
     background: none;
     border: 0;
     cursor: pointer;
     padding: 0;
-    height: $height;
     white-space: nowrap;
     display: block;
     transition: .25s ease-out;
@@ -105,8 +108,10 @@ html body .identity-header__logo {
     }
 
 
-    &:hover {
-        opacity: 1;
+    &:hover,
+    &:focus,
+    label[for=identity-header-account-menu-fallback]:focus & {
+        outline: 0;
         color: $nav-secondary-colour;
         &:after {
             transform: translateY(0px) rotate(45deg);
