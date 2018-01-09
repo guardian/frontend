@@ -22,7 +22,11 @@
     }
 }
 
-.content--article {
+.content--article.content--immersive-article {
+    .content__article-body {
+        margin: 0;
+    }
+
     a.u-underline.in-body-link--immersive {
         color: $news-main-1;
 
@@ -41,6 +45,14 @@
             padding: $gs-baseline / 1.5  $gs-baseline $gs-baseline;
         }
 
+        .inline-icon {
+            fill: $news-main-1;
+        }
+
+        .quoted__contents {
+            margin: 0;
+        }
+
         h2 {
             color: $news-main-1;
             font-weight: 100;
@@ -48,25 +60,21 @@
             line-height: 1;
         }
 
-        a.u-underline.in-body-link--immersive {
-            border: 1px solid $news-main-1;
-            border-radius: $gs-baseline * 2;
-            padding: $gs-baseline / 2 $gs-baseline;
-
-            &:hover {
-                border-bottom: 0px solid $news-main-1;
-                background-color: $news-main-1;
-                color: #ffffff;
-            }
-        }
-
         &.quoted {
             color: $news-main-1;
             font-size: 26px;
             line-height: 28px;
 
-            .inline-quote {
+            .inline-icon {
                 fill: $news-main-2;
+                width: $gs-baseline * 2;
+                display: block;
+                margin-bottom: $gs-baseline;
+            }
+
+            .inline-icon .inline-garnett-quote__svg {
+                width: 100%;
+                height: auto;
             }
         }
     }
@@ -86,17 +94,6 @@
             .inline-information.reveal-caption-icon {
                 background-color: $news-main-1;
             }
-        }
-        .article__fullscreen {
-            background-color: transparent;
-            border: 1px solid rgba($neutral-6, .5);
-            opacity: 0;
-        }
-
-        &:hover .article__fullscreen {
-            background-color: #ffffff;
-            border: 0;
-            opacity: 1;
         }
 
         .section-title {
@@ -159,6 +156,12 @@
         }
     }
 
+    .element-pullquote--photo-essay.element--supporting {
+        .pullquote-paragraph {
+            text-indent: 0;
+        }
+    }
+
     .element-pullquote--photo-essay {
         .pullquote-paragraph {
             color: $news-main-1;
@@ -180,9 +183,15 @@
             clear: none;
         }
 
-        .inline-quote {
-            svg {
-                fill: $news-main-2;
+        .inline-icon {
+            fill: $news-main-2;
+            width: $gs-baseline * 2;
+            display: block;
+            margin-bottom: $gs-baseline;
+
+            .inline-garnett-quote__svg {
+                width: 100%;
+                height: auto;
             }
         }
     }

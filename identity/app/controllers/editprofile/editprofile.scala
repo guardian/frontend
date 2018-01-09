@@ -13,7 +13,6 @@ package object editprofile {
   sealed abstract class ConsentJourneyPage(id: String, val journey: String)
       extends IdentityPage(id, "Consent", isFlow = true)
 
-  object ConsentJourneyPageAll extends ConsentJourneyPage("/consents/all", "all")
   object ConsentJourneyPageNewsletters extends ConsentJourneyPage("/consents/newsletters", "newsletters")
   object ConsentJourneyPageThankYou extends ConsentJourneyPage("/consents/thank-you", "thank-you")
   object ConsentJourneyPageDefault extends ConsentJourneyPage("/consents", "default")
