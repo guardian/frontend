@@ -170,27 +170,27 @@ $quote-mark: 35px;
     }
 
     .meta__contact-wrap {
-            float: left;
-            max-width: 230px;
-            @include mq(mobileMedium) {
-                max-width: 270px;
-            }
-            @include mq(mobileLandscape) {
-                max-width: 70%;
-            }
-            @include mq(phablet) {
-                padding-left: 0;
-            }
-            @include mq(leftCol) {
-                max-width: 100%;
-            }
+        float: left;
+        max-width: 230px;
+        @include mq(mobileMedium) {
+            max-width: 270px;
         }
+        @include mq(mobileLandscape) {
+            max-width: 70%;
+        }
+        @include mq(phablet) {
+            padding-left: 0;
+        }
+        @include mq(leftCol) {
+            max-width: 100%;
+        }
+    }
 
-        .meta__image + .meta__contact-wrap {
-            @include mq(mobileLandscape) {
-                padding-left: $gs-gutter / 2;
-            }
+    .meta__image + .meta__contact-wrap {
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter / 2;
         }
+    }
 
     .badge--alt {
         padding-top: 0;
@@ -288,7 +288,7 @@ $quote-mark: 35px;
     .meta__email,
     .meta__twitter {
         @include fs-textSans(1);
-        margin:0;
+        margin: 0;
         margin-top: 0;
         margin-right: 0px;
         display: inline-block;
