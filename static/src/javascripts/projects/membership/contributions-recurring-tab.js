@@ -381,9 +381,9 @@ const validatePriceChangeInput = (): void => {
     hideInvalidNumberWarning();
 
     if (fieldVal && Number(fieldVal)) {
-        const currentVal = Number(currentAmount);
+        const currentVal = Number(currentAmount) / 100;
         const newVal = Number(fieldVal);
-        if (newVal >= 5 && newVal <= 2000 && newVal !== currentVal) {
+        if (newVal >= 2 && newVal <= 2000 && newVal !== currentVal) {
             enablePriceChangeConfirmButton();
         } else {
             disablePriceChangeConfirmButton();
@@ -395,7 +395,7 @@ const validatePriceChangeInput = (): void => {
             displayHighContributionWarningMessage();
         } else if (newVal === currentVal) {
             displayContributionNoChangeWarning();
-        } else if (newVal < 5) {
+        } else if (newVal < 2) {
             displayContributionTooLowWarning();
         }
     } else {
@@ -484,6 +484,22 @@ const changeContributionAmountSubmit = (): void => {
         });
 };
 
+const changeAmountButtonOnClick = (): void => {
+    const currentAmount = $(CURRENT_CONTRIBUTION_AMOUNT).text();
+    toggleAmountChangeInputMode(true);
+    setupEditableNewAmountField(
+        formatAmount(
+            currentAmount,
+            ''
+        ).toString()
+    );
+};
+
+const changeAmountCancelButtonOnClick = (): void => {
+    toggleAmountChangeInputMode(false);
+};
+
+
 const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     const isMonthly = contributorDetails.subscription.plan.interval === 'month';
     const intervalText = isMonthly ? 'Monthly' : 'Annual';
@@ -513,7 +529,7 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     );
 
     $(CURRENT_CONTRIBUTION_AMOUNT).text(
-        contributorDetails.subscription.nextPaymentPrice / 100
+        contributorDetails.subscription.nextPaymentPrice
     );
 
     $(CONTRIBUTION_GLYPH).text(glyph);
@@ -527,7 +543,7 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     );
 
     $(CONTRIBUTION_TOO_LOW_WARNING).text(
-        `Please enter an amount of ${formatAmount(500, glyph)} or more`
+        `Please enter an amount of ${formatAmount(200, glyph)} or more`
     );
 
     $(CONTRIBUTION_TOO_HIGH_WARNING).text(
@@ -547,32 +563,20 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
             CHANGE_CONTRIBUTION_AMOUNT_BUTTON
         );
         if (changeAmountButton) {
-            changeAmountButton.addEventListener('click', () => {
-                toggleAmountChangeInputMode(true);
-                setupEditableNewAmountField(
-                    formatAmount(
-                        contributorDetails.subscription.nextPaymentPrice,
-                        ''
-                    ).toString()
-                );
-            });
+            changeAmountButton.addEventListener('click', changeAmountButtonOnClick);
         }
         const changeAmountCancelButton = document.querySelector(
             CHANGE_CONTRIBUTION_AMOUNT_CANCEL
         );
         if (changeAmountCancelButton) {
-            changeAmountCancelButton.addEventListener('click', () => {
-                toggleAmountChangeInputMode(false);
-            });
+            changeAmountCancelButton.addEventListener('click', changeAmountCancelButtonOnClick);
         }
 
         const changeAmountConfirmButton = document.querySelector(
             CHANGE_CONTRIBUTION_AMOUNT_SUBMIT
         );
         if (changeAmountConfirmButton) {
-            changeAmountConfirmButton.addEventListener('click', () => {
-                changeContributionAmountSubmit();
-            });
+            changeAmountConfirmButton.addEventListener('click', changeContributionAmountSubmit);
         }
     }
 
