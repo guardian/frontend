@@ -24,8 +24,8 @@ object CrosswordResultsHtmlPage extends HtmlPage[CrosswordResultsPage] {
       criticalStyleLink(FaciaCSSFile),
       criticalStyleLink(InlineNavigationCSSFile))
     override def criticalCssInline: Html = criticalStyleInline(
-      Html(common.Assets.css.head(None)),
-      Html(common.Assets.css.head(Some("facia"))))
+      Html(common.Assets.css.head(Some("facia"))),
+      Html(common.Assets.css.inlineNavigation))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$FaciaCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
