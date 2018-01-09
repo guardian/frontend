@@ -111,6 +111,14 @@ $pillars: (
         color: map-get($palette, invertedKicker);
     }
 
+    &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker,
+    &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker,
+    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker,
+    &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker
+    {
+        color: map-get($palette, kicker);
+    }
+
     .fc-item__standfirst {
         color: $headline;
     }
