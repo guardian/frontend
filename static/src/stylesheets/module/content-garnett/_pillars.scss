@@ -101,6 +101,13 @@
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
     }
+
+    .fc-container__header__title a:hover,
+    a:focus {
+        color: $pillarColor;
+        text-decoration: none;
+        border-bottom: solid 1px $pillarColor;
+    }
 }
 //////** Discussion (comment) styling **//////////
 //d-comment__author a[href], ._underline_1lj47_3, .js-discussion-author-link
@@ -151,6 +158,7 @@
     .d-show-more-replies__button {
         border: 1px solid $garnett-neutral-4;
         background: $garnett-neutral-5;
+
         &:focus,
         &:hover {
             border: 1px solid darken($garnett-neutral-4, 20%);
@@ -196,12 +204,6 @@
             border: 1px solid $kickerColor;
         }
     }
-
-    .fc-container__header__title a:hover, a:focus {
-        color: $pillarColor;
-        text-decoration: none;
-        border-bottom: solid 1px $pillarColor;
-    }
 }
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
@@ -216,8 +218,8 @@
 
     .inline-garnett-quote__svg {
         height: get-font-size(headline, 3);
-        width: get-font-size(headline, 3) * .5;
-        margin-right: get-font-size(headline, 3) * .5;
+        width: get-font-size(headline, 3) * 0.5;
+        margin-right: get-font-size(headline, 3) * 0.5;
         fill: $pillarColor;
     }
 
@@ -246,7 +248,7 @@
 
     .rich-link__kicker {
         border-right: 1px solid $pillarColor;
-        padding-right: .375em;
+        padding-right: 0.375em;
     }
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
