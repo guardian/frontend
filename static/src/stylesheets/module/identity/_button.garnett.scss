@@ -51,6 +51,7 @@
     &:hover, &:active, &:focus {
         color: #ffffff;
         text-decoration: none;
+        background: lighten($identity-main, 25%);
     }
 
     &.is-updating {
