@@ -160,12 +160,15 @@
     &.fc-item--standard-tablet,
     &.fc-item--third-tablet,
     &.fc-item--half-tablet,
+    &.fc-item--full-media-100-tablet,
     &.fc-item--three-quarters-tall-tablet {
         @include mq($from: tablet) {
             @include immersiveBottom();
         }
     }
 
+    &.fc-item--full-media-75-tablet,
+    &.fc-item--full-media-50-tablet,
     &.fc-item--three-quarters-tablet {
         @include mq($from: tablet) {
             @include immersiveLeft();

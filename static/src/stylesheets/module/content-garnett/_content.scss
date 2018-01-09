@@ -1332,7 +1332,7 @@
 
             .content--type-guardianview &,
             .content--type-comment & {
-                grid-template-areas: 'labels headline' 'meta standfirst' '. main-media';
+                grid-template-areas: 'labels headline' 'meta standfirst' 'meta main-media';
             }
 
             .content--type-matchreport & {
