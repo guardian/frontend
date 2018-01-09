@@ -32,7 +32,7 @@
 
 @showAgeStep(index: Option[Int]) = @{
     if(index.contains(0)){
-        List(ConsentStepHelpLegalText("By continuing you confirm that you are aged 13 or over."))
+        List(ConsentStepHelpLegalText("By clicking the button, you confirm that you are holder than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
     } else {
         Nil
     }
@@ -165,9 +165,9 @@
 @emailRepermissionStep() = @{
     ConsentStep(
         name = "email",
-        title = "Your existing newsletters",
+        title = "Please resubscribe!",
         help = List(
-            ConsentStepHelpText("You were receiving the following newsletters, tick their boxes again to confirm you want to keep receiving them."),
+            ConsentStepHelpText("You have been receiving the following newsletters. <strong>Tick their boxes again to keep receiving them</strong>."),
             ConsentStepHelpLegalText("The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.")
         ),
         content = emailRepermissionStepContent,
