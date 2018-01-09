@@ -47,7 +47,6 @@ object ProjectSettings {
     resolvers ++= Seq(
       Resolver.typesafeRepo("releases"),
       Resolver.sonatypeRepo("releases"),
-      "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
       "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
