@@ -1,7 +1,7 @@
 @import navigation.UrlHelpers.{getReaderRevenueUrl, ManageMyAccountCancel}
 @import navigation.ReaderRevenueSite.Support
 
-@(user: com.gu.identity.model.User)
+@(user: com.gu.identity.model.User)(implicit request: RequestHeader)
 <ul class="details-list details-list--lower u-unstyled contribution-cancellation">
     <li class="details-list__item">
         <span><a class="js-cancel-contribution-link contribution-cancellation__main-link">Cancel contribution</a></span>
