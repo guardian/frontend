@@ -128,4 +128,9 @@ label[for=identity-header-account-menu-fallback]:focus {
     & > .identity-header-flex-wrap__content {
         flex: 1 1 auto;
     }
+
+    a {
+        @extend %u-underline;
+        color: $identity-main;
+    }
 }
