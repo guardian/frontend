@@ -626,7 +626,7 @@ object MainFigCaptionCleaner extends HtmlCleaner {
   }
 }
 
-case class RichLinkCleaner(amp: Boolean = false) extends HtmlCleaner {
+case class RichLinkCleaner(amp: Boolean = false)(implicit val request: RequestHeader) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
     val richLinks = document.getElementsByClass("element-rich-link")
