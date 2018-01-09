@@ -18,6 +18,8 @@ object UrlHelpers {
   case object SideMenu extends Position
   case object AmpHeader extends Position
   case object Footer extends Position
+  case object ManageMyAccountUpsell extends Position
+  case object ManageMyAccountCancel extends Position
 
   def getCampaignCode(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): Option[String] = {
     val isInHeaderTestControlGroup = ActiveExperiments.isControl(ABNewDesktopHeader)
@@ -45,6 +47,7 @@ object UrlHelpers {
 
       case (Support, Footer, _) => Some("gdnwb_copts_memco_dotcom_footer")
       case (Support, AmpHeader, _) => Some("gdnwb_copts_memco_header_amp")
+      case (Support, ManageMyAccountUpsell, _) => Some(s"DOTCOM_MANAGE_JOIN")
       case (Support, _, _) => Some("gdnwb_copts_memco_header")
 
       case (_, _, _) => None
@@ -77,6 +80,7 @@ object UrlHelpers {
       "source" -> "GUARDIAN_WEB",
       "componentType" -> (position match {
         case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
+        case ManageMyAccountUpsell | ManageMyAccountCancel => "ACQUISITIONS_MANAGE_MY_ACCOUNT"
         case Footer => "ACQUISITIONS_FOOTER"
       })
     ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
