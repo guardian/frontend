@@ -111,7 +111,8 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
       .withBindVariableValue("id", reportId)
 
     val page: SavedQueryPage = services.reportService.getSavedQueriesByStatement(stmtBuilder.toStatement)
-    val savedQuery: Option[SavedQuery] = page.getResults().toList.headOption
+    // page.getResults() may return null.
+    val savedQuery: Option[SavedQuery] = Option(page.getResults()).flatMap(_.toList.headOption)
     savedQuery.map(_.getReportQuery)
   }
 
