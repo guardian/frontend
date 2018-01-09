@@ -1159,6 +1159,69 @@ $quote-mark: 35px;
             padding-left: $gs-gutter / 2;
         }
     }
+
+    .content__head--article {
+        @include mq($from: leftCol) {
+            @supports (display: grid) {
+                grid-template-areas: 'labels headline' 'meta main-media' '. standfirst';
+
+            }
+        }
+
+        .content__headline-showcase-wrapper {
+            display: none;
+
+            @include mq($from: leftCol) {
+                display: block;
+                grid-area: headline;
+                max-width: gs-span(8);
+            }
+            .content__headline {
+                padding-bottom: $gs-baseline * 2;
+            }
+        }
+        .content__headline-standfirst-wrapper .content__headline {
+            @include mq(leftCol) {
+                display: none;
+            }
+        }
+        .content__headline-standfirst-wrapper {
+            @include mq($from: leftCol) {
+                grid-area: standfirst;
+            }
+        }
+
+    }
+    .stars {
+        position: absolute;
+        margin: 0;
+        transform: none;
+        z-index: 5;
+        bottom: 0;
+        @include mq(desktop) {
+            bottom: unset;
+            top: 0;
+        }
+    }
+    figure > .gs-container {
+        margin: 0;
+        padding: 0;
+        .content__main-column {
+            max-width: unset;
+            margin: 0;
+            padding: 0;
+        }
+    }
+    .content__secondary-column {
+        @include mq($from: wide) {
+            padding-top: (aspect-ratio-height(5, 3, gs-span(13)) + gs-height(5));
+            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
+        }
+        @include mq($from: leftCol) {
+            padding-top: (aspect-ratio-height(5, 3, gs-span(12)) + gs-height(5));
+            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
+        }
+    }
 }
 
 // *************** Analysis ***************
@@ -1316,13 +1379,6 @@ $quote-mark: 35px;
     box-sizing: content-box;
 }
 
-.content__head--byline-pic .content__header {
-    box-sizing: border-box;
-    min-height: 150px;
-    @include mq(phablet) {
-        min-height: 180px;
-    }
-}
 // *************** Interactive elements ***************
 
 .interactive.element--showcase,
@@ -1334,3 +1390,51 @@ $quote-mark: 35px;
         border-bottom: 1px solid $garnett-neutral-4;
     }
 }
+
+// *************** By line cutouts ****************
+.content__head--byline-pic .content__header {
+    padding-bottom: 0;
+
+    .content__headline {
+        padding-right: 0;
+        padding-bottom: 0;
+        width: auto;
+        float: none;
+    }
+
+    .content__headline__byline {
+        @include fs-headline(5);
+
+        @include mq(mobileLandscape) {
+            @include fs-headline(7, true);
+        }
+        overflow: hidden;
+        font-style: italic;
+        font-weight: 100;
+
+        padding: 0 $gs-gutter / 2;
+        @include mq(mobileLandscape) {
+            padding: 0 $gs-gutter;
+        }
+        @include mq(phablet) {
+            padding: 0;
+        }
+    }
+
+    .byline-img {
+        position: static;
+        float: right;
+        width: auto;
+        margin-right: -$gs-gutter;
+        shape-outside: polygon(0 130px, 0 150px, 180px 150px, 180px 0, 20px 0, 20px 96px);
+
+        @include mq(desktop) {
+            shape-outside: polygon(0 160px, 0 180px, 216px 180px, 216px 0, 36px 0, 24px 121px, 0 128px);
+        }
+    }
+    
+    .byline-img__img {
+        float: none;
+    }
+}
+
