@@ -56,7 +56,7 @@
                             @if(!isPaidContent) {
                                 @if(article.metadata.designType.nameOrDefault == "comment" ||
                                     article.metadata.designType.nameOrDefault == "guardianview") {
-                                    @fragments.articleHeaderCommentGarnett(article, model, isPaidContent, amp = amp)
+                                    @fragments.articleHeaderCommentGarnett(article, model, amp = amp)
                                 } else {
                                     @fragments.articleHeaderGarnett(article, model, amp = amp)
                                 }
