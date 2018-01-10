@@ -479,7 +479,7 @@ import scala.concurrent.Future
         val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should include (EmailNewsletters.guardianTodayUk.name)
-        contentAsString(result) should include ("Unsubscribe")
+        contentAsString(result) should include ("data-originally-checked=\"true\"")
       }
     }
   }
