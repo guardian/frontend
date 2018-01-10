@@ -88,8 +88,10 @@
 }
 
 .content__head {
-    display: flex;
-    flex-direction: column;
+    @include mq($from: tablet, $until: desktop) {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .content__hr {
