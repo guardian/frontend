@@ -89,6 +89,11 @@ $pillars: (
         }
     }
 
+    //overides the most popular list item
+    &.headline-list__item {
+        background-color: #ffffff;
+    }
+
     .fc-item__headline {
         color: $headline;
     }
