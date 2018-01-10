@@ -48,7 +48,7 @@ import scala.concurrent.Future
     val httpConfiguration = HttpConfiguration.createWithDefaults()
 
     val userId: String = "123"
-    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
+    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
     val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
