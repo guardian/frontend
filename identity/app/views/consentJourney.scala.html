@@ -32,7 +32,7 @@
 
 @showAgeStep(index: Option[Int]) = @{
     if(index.contains(0)){
-        List(ConsentStepHelpLegalText("By clicking the button, you confirm that you are holder than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
+        List(ConsentStepHelpLegalText("By clicking the button, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
     } else {
         Nil
     }
