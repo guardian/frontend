@@ -6,7 +6,7 @@ import sbt._
 import Keys._
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 
-object VersionInfo extends AutoPlugin {
+object VersionInfo extends Plugin {
 
   val branch = SettingKey[String]("version-branch")
   val buildNumber = SettingKey[String]("version-build-number")
@@ -25,7 +25,7 @@ object VersionInfo extends AutoPlugin {
     }
   }
 
-  override val projectSettings = Seq(
+  override val settings = Seq(
     buildNumber := System.getenv().getOrDefault("BUILD_NUMBER", "DEV"),
     branch := baseDirectory( baseDir => {
       getRepo(baseDir).map( gitRepo => {

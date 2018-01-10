@@ -128,7 +128,7 @@ class ExperimentsTest extends FlatSpec with Matchers {
       participationGroup = Perc1B
     )
     object experimentWithTruePriorCondition extends Experiment(
-      "experiment-with-true-prior-condition",
+      "experimentWithTruePriorCondition",
       "an experiment",
       Seq(Owner.withName("Fake owner")),
       new LocalDate(2100, 1, 1),
@@ -137,7 +137,7 @@ class ExperimentsTest extends FlatSpec with Matchers {
       override def priorCondition(implicit request: RequestHeader): Boolean = true
     }
     object experimentWithFalsePriorCondition extends Experiment(
-      "experiment-with-false-prior-condition",
+      "experimentWithFalsePriorCondition",
       "an experiment",
       Seq(Owner.withName("Fake owner")),
       new LocalDate(2100, 1, 1),
@@ -146,7 +146,7 @@ class ExperimentsTest extends FlatSpec with Matchers {
       override def priorCondition(implicit request: RequestHeader): Boolean = false
     }
     object experimentWithExtraHeader extends Experiment(
-      "experiment-with-extra-header",
+      "experimentWithExtraHeader",
       "an experiment",
       Seq(Owner.withName("Fake owner")),
       new LocalDate(2100, 1, 1),
