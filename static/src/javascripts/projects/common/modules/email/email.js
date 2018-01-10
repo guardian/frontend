@@ -28,7 +28,8 @@ const state = {
 };
 
 const messages = {
-    defaultSuccessHeadline: 'Thank you for subscribing',
+    defaultSuccessHeadline:
+        'Please now check your Inbox (or Spam folder) to confirm this subscription',
     defaultSuccessDesc: '',
 };
 
@@ -253,7 +254,6 @@ const submitForm = (
 
     return event => {
         const emailAddress = $(`.${classes.textInput}`, $form).val();
-        const listId = $(`.${classes.listIdHiddenInput}`, $form).val();
         const listName = $(`.${classes.listNameHiddenInput}`, $form).val();
         let analyticsInfo;
 
@@ -261,15 +261,15 @@ const submitForm = (
 
         if (!state.submitting && validate(emailAddress)) {
             const formData = $form.data('formData');
-            const data = `email=${encodeURIComponent(emailAddress)}&listId=${
-                listId
+            const data = `email=${encodeURIComponent(emailAddress)}&listName=${
+                listName
             }&campaignCode=${formData.campaignCode}&referrer=${
                 formData.referrer
-            }&listName=${listName}`;
+            }`;
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType
-            } | ${analytics.listId} | ${analytics.signedIn} | %action%`;
+            } | ${analytics.signedIn} | %action%`;
 
             state.submitting = true;
 
