@@ -1327,7 +1327,7 @@
         @supports (display: grid) {
             margin-left: -($left-column + $gs-gutter);
             display: grid;
-            grid-template-columns: ($left-column + $gs-gutter) auto;
+            grid-template-columns: ($left-column + $gs-gutter)  1fr;
             grid-template-areas: 'labels headline-standfirst' 'meta main-media';
 
             .content--type-guardianview &,
@@ -1344,7 +1344,7 @@
     @include mq($from: wide) {
         @supports (display: grid) {
             margin-left: -($left-column-wide + $gs-gutter);
-            grid-template-columns: ($left-column-wide + $gs-gutter) auto;
+            grid-template-columns: ($left-column-wide + $gs-gutter) 1fr;
         }
     }
 
