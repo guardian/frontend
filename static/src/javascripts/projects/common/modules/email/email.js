@@ -13,6 +13,8 @@ import { inlineSvg } from 'common/views/svgs';
 import { getUserFromApi, isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import uniq from 'lodash/arrays/uniq';
+import envelope from 'svgs/icon/envelope.svg';
+import crossIcon from 'svgs/icon/cross.svg';
 
 import type { IdentityUser } from 'common/modules/identity/api';
 import type { bonzo } from 'bonzo';
@@ -54,8 +56,8 @@ const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
         ? formData.customSuccessDesc || messages.defaultSuccessDesc
         : 'Please try again.';
     const submissionIcon = isSuccess
-        ? inlineSvg('tick')
-        : inlineSvg('crossIcon');
+        ? envelope.markup
+        : crossIcon.markup;
     const submissionHtml = `
         <div class="email-sub__message ${
             statusClass
