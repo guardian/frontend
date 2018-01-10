@@ -18,7 +18,7 @@ export const circlesEpicHoldback = makeABTest({
     successMeasure: 'Who knows',
     idealOutcome: 'No drop-off in conversions either way',
     audienceCriteria: 'All',
-    audience: 0.1,
+    audience: 0.2,
     audienceOffset: 0,
 
     variants: [
