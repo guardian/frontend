@@ -53,6 +53,10 @@
     padding-bottom: $gs-gutter * 2;
     padding-top: $gs-gutter / 2;
 
+    a.u-underline {
+        color: $identity-main;
+    }
+
     &.identity-wrapper--with-wizard {
         padding-bottom: 0;
     }
