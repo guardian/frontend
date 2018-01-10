@@ -55,9 +55,7 @@ const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
     const submissionMessage = isSuccess
         ? formData.customSuccessDesc || messages.defaultSuccessDesc
         : 'Please try again.';
-    const submissionIcon = isSuccess
-        ? envelope.markup
-        : crossIcon.markup;
+    const submissionIcon = isSuccess ? envelope.markup : crossIcon.markup;
     const submissionHtml = `
         <div class="email-sub__message ${
             statusClass

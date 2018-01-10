@@ -29,7 +29,6 @@ export type ListConfig = {
     },
     headline: string,
     description: string,
-    successHeadline: string,
     successDescription: string,
     insertMethod: bonzo => void,
     successEventName?: string,
@@ -57,8 +56,6 @@ const listConfigs: ListConfigs = {
         headline: 'Film Today: now booking',
         description:
             'Sign up to the Guardian Film Today email and we’ll make sure you don’t miss a thing &ndash; the day’s insider news and our latest reviews, plus big name interviews and film festival coverage.',
-        successHeadline:
-            'Thank you for signing up to Film Today, please check your emails to confirm the subscription',
         successDescription:
             'You’ll receive an email every afternoon after you have clicked the link in the confirmation mail.',
         insertMethod: insertBottomOfArticle,
@@ -74,8 +71,6 @@ const listConfigs: ListConfigs = {
         headline: 'Kick off your evenings with our football roundup',
         description:
             'Sign up to the Fiver, our daily email on the world of football. We’ll deliver the day’s news and gossip in our own belligerent, sometimes intelligent and &ndash; very occasionally &ndash; funny way.',
-        successHeadline:
-            'Thank you for signing up to The Fiver, please check your emails to confirm the subscription',
         successDescription:
             'You’ll receive the Fiver daily around 5pm after you have clicked the link in the confirmation mail.',
         insertMethod: insertBottomOfArticle,
@@ -91,8 +86,6 @@ const listConfigs: ListConfigs = {
         headline: 'Science news you’ll want to read. Fact.',
         description:
             'Sign up to Lab Notes and we’ll email you the top stories in science, from medical breakthroughs to dinosaur discoveries &ndash; plus brainteasers, podcasts and more.',
-        successHeadline:
-            'Thank you for signing up for Lab notes, please check your emails to confirm the subscription',
         successDescription:
             'You’ll receive an email every week after you have clicked the link in the confirmation mail.',
         insertMethod: insertBottomOfArticle,
@@ -108,8 +101,6 @@ const listConfigs: ListConfigs = {
         headline: 'Brexit: your weekly briefing',
         description:
             'Sign up and we’ll email you the key developments and most important debates as Britain takes its first steps on the long road to leaving the EU.',
-        successHeadline:
-            'Thank you for signing up for the Brexit weekly briefing, please check your emails to confirm the subscription',
         successDescription:
             'You’ll receive an email every morning after you have clicked the link in the confirmation mail.',
         insertMethod: insertBottomOfArticle,
@@ -125,8 +116,6 @@ const listConfigs: ListConfigs = {
         headline: 'Want stories like this in your inbox?',
         description:
             'Sign up to the Guardian US briefing to get the top stories in your inbox every weekday.',
-        successHeadline:
-            'Thank you for signing up to the Guardian US briefing, please check your emails to confirm the subscription',
         successDescription:
             'We will send you our pick of the most important stories after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
@@ -142,8 +131,6 @@ const listConfigs: ListConfigs = {
         headline: 'Sleeve notes: sounds good',
         description:
             'Get music news, bold reviews and unexpected extras emailed direct to you from the Guardian’s music desk every Friday.',
-        successHeadline:
-            'Thank you for signing up to sleeve notes, please check your emails to confirm the subscription',
         successDescription:
             'You’ll receive an email every Friday after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
@@ -159,8 +146,6 @@ const listConfigs: ListConfigs = {
         headline: 'Here’s the real story',
         description:
             'Lose yourself in a great story. From politics to psychology, food to technology, culture to crime – the best stories, the biggest ideas, the arguments that matter.',
-        successHeadline:
-            'Thank you for signing up to The Long Read, please check your emails to confirm the subscription',
         successDescription:
             'You’ll receive an email every weekend after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
@@ -176,8 +161,6 @@ const listConfigs: ListConfigs = {
         headline: 'Bookmarks: read me first',
         description:
             'Sign up for our weekly email for book lovers and discover top 10s, expert book reviews, author interviews, and enjoy highlights from our columnists and community every weekend.',
-        successHeadline:
-            'Thank you for signing up to Bookmarks, please check your emails to confirm the subscription',
         successDescription:
             'You’ll receive an email every weekend after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
@@ -193,8 +176,6 @@ const listConfigs: ListConfigs = {
         headline: 'The most important stories on the planet',
         description:
             'Sign up to Green Light for environment news emailed direct to you every Friday. And besides the week’s biggest stories and debates, you can expect beautifully curated wildlife galleries, absorbing podcasts and eco-living guides.',
-        successHeadline:
-            'Thank you for signing up to Green Light, please check your emails to confirm the subscription',
         successDescription:
             'You’ll receive an email every Friday after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
@@ -221,8 +202,6 @@ const listConfigs: ListConfigs = {
         headline: 'The headlines, the analysis, the debate',
         description:
             'Get the whole picture from a source you trust, emailed to you every morning. The biggest stories examined, and diverse, independent views &ndash; the Guardian Today delivers the best of our journalism.',
-        successHeadline:
-            'Thank you for signing up to the Guardian Today, please check your emails to confirm the subscription',
         successDescription:
             'We will send you our picks of the most important headlines tomorrow morning after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
