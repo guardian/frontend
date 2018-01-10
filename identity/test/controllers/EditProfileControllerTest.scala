@@ -48,7 +48,7 @@ import scala.concurrent.Future
     val httpConfiguration = HttpConfiguration.createWithDefaults()
 
     val userId: String = "123"
-    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
+    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
     val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
@@ -479,7 +479,7 @@ import scala.concurrent.Future
         val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should include (EmailNewsletters.guardianTodayUk.name)
-        contentAsString(result) should include ("Unsubscribe")
+        contentAsString(result) should include ("data-originally-checked=\"true\"")
       }
     }
   }
