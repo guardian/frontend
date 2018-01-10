@@ -10,6 +10,8 @@ type AdSpec = {
     backgroundImage: string,
     backgroundRepeat: string,
     backgroundPosition: string,
+    backgroundSize: string,
+    transform: string,
 };
 
 type SpecStyles = {
