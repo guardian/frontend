@@ -1136,6 +1136,10 @@ $quote-mark: 35px;
             border: 0;
         }
 
+        .u-underline[href] {
+            color: $garnett-neutral-4;
+        }
+
         .meta__numbers,
         .meta__social {
             background-image: none;

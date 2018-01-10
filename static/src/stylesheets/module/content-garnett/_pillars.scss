@@ -253,8 +253,7 @@
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
     .content__section-label__link,
-    .youtube-media-atom__bottom-bar__duration,
-    .u-underline[href] {
+    .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
     }
 
