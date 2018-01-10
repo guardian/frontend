@@ -828,9 +828,9 @@ $quote-mark: 35px;
         }
     }
 
+    .meta__twitter,
+    .meta__email,
     .content__dateline {
-        // magic number used to align date stamp with standfirst baseline in opinion pieces per design
-        margin-top: -14px;
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
         @include mq(mobileLandscape) {
@@ -841,8 +841,14 @@ $quote-mark: 35px;
             padding-left: 0;
             padding-right: 0;
         }
+    }
+
+    .content__dateline {
+        // magic number used to align date stamp with standfirst baseline in opinion pieces per design
+        margin-top: 8px;
+
         @include mq(leftCol) {
-            margin-top: 0;
+            margin-top: -4px;
         }
     }
 
@@ -850,6 +856,20 @@ $quote-mark: 35px;
         @include mq($from: leftCol) {
             @include multiline(1, $garnett-neutral-4);
         }
+    }
+
+    .meta__twitter {
+        display: block;
+        padding-top: 8px;
+        @include mq($from: leftCol) {
+            padding-top: -8px;
+            margin-top: -$gs-baseline;
+        }
+    }
+
+    .meta__twitter + .content__dateline {
+        // magic number used to align date stamp with Twitter handle
+        margin-top: -3px;
     }
 
     .content__header {
@@ -900,6 +920,14 @@ $quote-mark: 35px;
 
     .content__standfirst {
         padding-top: $gs-baseline/2;
+        margin-bottom: 0;
+        p {
+            margin-bottom: 0;
+        }
+        @include mq(leftCol) {
+            margin-bottom: $gs-baseline;
+        }
+
     }
 
     .byline-img {
