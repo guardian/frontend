@@ -9,6 +9,7 @@
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
 @import conf.switches.Switches.EmailInlineInFooterSwitch
+@import com.gu.identity.model.EmailNewsletters
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
     @if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader) && !isAmp) {
@@ -69,16 +70,16 @@
                     <div class="footer__email-container js-footer__email-container">
                     @currentEdition match {
                         case Uk => {
-                            @fragments.email.signup.emailIframe("37", "footer-daily-email-uk")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.listIdV1.toString, "footer-daily-email-uk")
                         }
                         case Us => {
-                            @fragments.email.signup.emailIframe("1493", "footer-daily-email-us")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUs.listIdV1.toString, "footer-daily-email-us")
                         }
                         case Au => {
-                            @fragments.email.signup.emailIframe("1506", "footer-daily-email-au")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayAu.listIdV1.toString, "footer-daily-email-au")
                         }
                         case International => {
-                            @fragments.email.signup.emailIframe("37", "footer-daily-email-int")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.listIdV1.toString, "footer-daily-email-int")
                         }
                     }
                     </div>
