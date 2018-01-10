@@ -916,6 +916,13 @@ $quote-mark: 35px;
     .inline-illustration-letters__svg {
         display: none;
     }
+
+    .media-primary {
+        margin-bottom: 0;
+        @include mq(mobile) {
+            margin-bottom: $gs-baseline/2;
+        }
+    }
 }
 // *************** Media Styles ***************
 
