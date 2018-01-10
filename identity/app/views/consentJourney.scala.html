@@ -238,6 +238,20 @@
     }
 }
 
+@forceSubmitFallback = {
+    <form method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
+        @views.html.helper.CSRF.formField
+        <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
+        <button
+        type="submit"
+        class="manage-account__button"
+        data-link-name="consents : navigation : submit-force"
+        >
+            <span>Continue</span>
+        </button>
+    </form>
+}
+
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-wizard">
 
     <div class="js-errorHolder manage-account__errors"></div>
@@ -251,21 +265,21 @@
                 Please consider upgrading to one of our <a class="u-underline" href="@LinkTo{/help/recommended-browsers}">recommended browsers</a>. If you need more help please <a href="@LinkTo{/info/tech-feedback}">contact us</a>.
             </p>
         </div>
-        <br/><br/>
-        <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
-            @views.html.helper.CSRF.formField
-            <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
-            <button
-                type="submit"
-                class="manage-account__button--icon manage-account__button"
-            >
-                <div class="manage-account__button-flexwrap">
-                    <span>Continue</span>
-                    @fragments.inlineSvg("tick-button", "icon")
-                </div>
-            </button>
-        </form>
+        @forceSubmitFallback
     </noscript>
+
+    <div id="identityWizardloadingError" class="identity-forms-loading identity-forms-loading--hide-text u-identity-forms-padded">
+        <div class="identity-forms-loading__spinner is-updating"></div>
+        <div class="identity-forms-loading__text">
+            Loading seems to be taking a while. If you are in a hurry you can skip this and edit your consents later from your email preferences.
+            @forceSubmitFallback
+        </div>
+    </div>
+    <script>
+        setTimeout(function(){
+            if(window.identityWizardloadingError) window.identityWizardloadingError.className = window.identityWizardloadingError.className.replace('identity-forms-loading--hide-text','')
+        },2000);
+    </script>
 
     <div class="identity-wizard identity-wizard--consent u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
 
