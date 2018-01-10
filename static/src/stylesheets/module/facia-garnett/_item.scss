@@ -236,6 +236,10 @@ $fc-item-gutter: $gs-gutter / 4;
         .fc-item__timestamp {
             flex: 1;
         }
+        
+        .fc-item__standfirst {
+            padding-bottom: $gs-gutter * .25;
+        }
     }
 }
 

@@ -82,6 +82,7 @@
         &.fc-item--fluid-tablet {
             @include mq(tablet) {
                 .fc-item__container > .fc-item__meta {
+                    .fc-item__timestamp,
                     .fc-trail__count--commentcount {
                         display: none;
                     }
