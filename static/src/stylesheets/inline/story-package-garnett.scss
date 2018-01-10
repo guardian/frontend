@@ -8,7 +8,7 @@
 //         .fc-item__byline {
 //             color: $colour;
 //         }
-// 
+//
 //         .fc-item__kicker {
 //             &:after {
 //                 background-color: $colour;
@@ -151,7 +151,7 @@
 //
 //     //These need to exist for all kickers because of tone on tone action
 //     @include kicker-override(life, $lifestyle-garnett-main-media-1);
-//     @include kicker-override(arts, $arts-garnett-media-main-1);
+//     @include kicker-override(culture, $culture-garnett-media-main-1);
 //     @include kicker-override(sports, $sport-garnett-media-main-1);
 //     @include kicker-override(opinion, $opinion-garnett-media-main-1);
 //     @include kicker-override(news, $news-garnett-media-main-1);
