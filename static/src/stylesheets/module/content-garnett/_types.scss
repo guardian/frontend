@@ -191,9 +191,14 @@ $quote-mark: 35px;
         }
     }
 
+    // .badge {
+    //     margin-bottom: $gs-baseline;
+    // }
+
     .badge--alt {
         padding-top: 0;
         border-top: 0;
+        padding-bottom: $gs-baseline;
     }
 
     .byline,
