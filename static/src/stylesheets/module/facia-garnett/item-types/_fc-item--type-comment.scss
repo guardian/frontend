@@ -29,6 +29,10 @@
         .fc-item__meta {
             display: none;
         }
+
+        .fc-item__standfirst {
+            padding-bottom: $gs-gutter * .25;
+        }
     }
 
     .fc-item__container {
