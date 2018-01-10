@@ -160,7 +160,6 @@ $quote-mark: 35px;
 
     .badge,
     .content__meta-container {
-        flex: 1 100%;
         @include mq(leftCol) {
             width: gs-span(2);
         }
@@ -327,7 +326,6 @@ $quote-mark: 35px;
     .meta__extras {
         order: 5;
         border: 0;
-        flex: 1 100%;
     }
 
     .social {
