@@ -50,7 +50,7 @@
     }
 
     &:not(.is-updating, .is-disabled):hover {
-        background: lighten($identity-main, 25%);
+        background: lighten($identity-main, 30%);
     }
 
     &.is-updating {
