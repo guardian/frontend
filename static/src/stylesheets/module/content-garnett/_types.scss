@@ -130,16 +130,12 @@ $quote-mark: 35px;
 
     .badge,
     .badge--alt,
-    .byline,
-    .content__dateline,
     .content__headline,
     .content__labels,
     .content__standfirst,
-    .meta__email,
-    .meta__image,
-    .meta__twitter,
     .old-article-message,
-    .social--top {
+    .social--top,
+    .meta__contact-wrap {
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
         @include mq(mobileLandscape) {
@@ -156,10 +152,7 @@ $quote-mark: 35px;
         @include multiline(4, $garnett-neutral-4, top);
         // creates correct top spacing for multiline bg image
         padding-top: 15px;
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        margin-bottom: 0;
+        margin-bottom: $gs-baseline / 2;
         @include mq(leftCol) {
             position: absolute;
         }
@@ -167,7 +160,6 @@ $quote-mark: 35px;
 
     .badge,
     .content__meta-container {
-        flex: 1 100%;
         @include mq(leftCol) {
             width: gs-span(2);
         }
@@ -176,15 +168,48 @@ $quote-mark: 35px;
         }
     }
 
+    .meta__contact-wrap {
+        float: left;
+        max-width: gs-span(3) + $gs-gutter/2;
+        @include mq(mobileMedium) {
+            max-width: gs-span(4) - $gs-column-width/2;
+        }
+        @include mq(mobileLandscape) {
+            max-width: 70%;
+        }
+        @include mq(phablet) {
+            padding-left: 0;
+        }
+        @include mq(leftCol) {
+            max-width: 100%;
+        }
+    }
+
+    .meta__image + .meta__contact-wrap {
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter/2;
+        }
+    }
+    .content__main-column--article .badge--alt {
+        padding-bottom: $gs-baseline;
+    }
+
     .badge--alt {
         padding-top: 0;
         border-top: 0;
+        // magic numbers are correcting line heights so vertical alignment appears even
+        margin-top: 2px;
+
+        a {
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
     }
 
     .byline,
     .content__dateline {
         padding-top: 0;
-        padding-bottom: $gs-baseline;
+        padding-bottom: $gs-baseline*1.5;
         @include mq($until: phablet) {
             border-top: 0;
             vertical-align: top;
@@ -202,12 +227,12 @@ $quote-mark: 35px;
     }
 
     .byline-img {
-        max-width: 60px;
-        order: 1;
+        max-width: gs-span(1)/2;
+        float: left;
         border-top: 0;
-        flex: 1 100%;
         margin: 3px 0 $gs-baseline $gs-gutter/2;
         @include mq(mobileLandscape) {
+            max-width: gs-span(1) + $gs-baseline / 3;
             margin-left: $gs-gutter;
         }
         @include mq(phablet) {
@@ -220,15 +245,6 @@ $quote-mark: 35px;
         }
     }
 
-    .meta__contact-wrap {
-        order: 2;
-        flex: 1;
-        margin-right: auto;
-        @include mq(leftCol) {
-            flex: 100%;
-        }
-    }
-
     .byline {
         @include fs-bodyCopy(2);
         border-top: 0;
@@ -237,10 +253,11 @@ $quote-mark: 35px;
         line-height: 20px;
         min-height: 0;
         margin-top: -$gs-baseline/4;
-        // magic numbers are correcting line heights so vertical alignment apprears even
-        padding-bottom: 8px;
-        padding-top: 2px;
+        // magic numbers are correcting line heights so vertical alignment appears even
+        padding-top: 4px;
         font-weight: normal;
+        width: 100%;
+        margin-bottom: -$gs-baseline;
 
         span[itemprop='author'] {
             font-weight: 700;
@@ -249,24 +266,14 @@ $quote-mark: 35px;
     }
 
     .content__dateline {
-        order: 3;
         border: 0;
-        align-self: flex-end top;
-        text-align: right;
         min-height: 0;
-        margin-bottom: 0;
-        max-width: 100px;
-        margin-left: auto;
-        @include mq(mobileLandscape) {
-            max-width: 120px;
-        }
-        @include mq(leftCol) {
-            text-align: left;
-            max-width: none;
-            margin-left: 0;
-            margin-top: 0;
-            flex: 100%;
-        }
+        // magic numbers are correcting line heights so vertical alignment appears even
+        margin-bottom: -4px;
+        display: block;
+        padding-bottom: $gs-baseline;
+        margin-top: -$gs-baseline / 4;
+
     }
 
     .old-article-message {
@@ -279,67 +286,56 @@ $quote-mark: 35px;
 
     .content__meta-container--email.content__meta-container--twitter .meta__twitter {
         margin-top: 0;
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: 0;
     }
 
     .content__meta-container--email.content__meta-container--twitter .meta__email {
         margin-top: 0;
-        margin-bottom: $gs-baseline;
+        margin-bottom: 0;
     }
 
     .meta__email,
     .meta__twitter {
+        @include fs-textSans(1);
+        margin: 0;
         margin-top: 0;
-        margin-bottom: $gs-baseline;
-        display: block;
-        width: 100%;
+        margin-right: 0px;
+        display: inline-block;
+        font-weight: bold;
+        text-decoration: none;
+        padding-right: $gs-gutter / 2;
 
-        .button {
-            height: 1.5rem;
-            font-size: .75rem;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: auto;
-            @include mq($until: leftCol) {
-                padding: 0 8px;
-            }
+
+        svg {
+            height: 10px;
+            max-width: 12px;
+            margin-right: 0px;
         }
 
-        .button svg {
-            @include mq($until: leftCol) {
-                position: relative;
-                top: 3px;
-                margin-right: 5px;
+        a {
+            color: $garnett-neutral-6;
+
+            .inline-tone-fill {
+                fill: $garnett-neutral-6;
+            }
+
+            &:focus,
+            &:hover {
+                text-decoration: none;
+                .contact {
+                    text-decoration: underline;
+                }
             }
         }
 
         .contact {
             display: inline-block!important;
         }
-
-        a {
-            background-color: transparent;
-            border: 1px solid $neutral-4;
-
-            &:focus,
-            &:hover {
-                .inline-tone-fill {
-                    fill: $garnett-neutral-5;
-                }
-
-                .contact {
-                    color: $garnett-neutral-5;
-                }
-            }
-        }
     }
 
     .meta__extras {
         order: 5;
         border: 0;
-        flex: 1 100%;
     }
 
     .social {
@@ -385,6 +381,12 @@ $quote-mark: 35px;
         @include multiline(1, $garnett-neutral-4, top);
         border-top: 0;
         padding-top: $gs-baseline / 2;
+    }
+
+    .meta__social {
+        @include mq($until: tablet) {
+            border-bottom: 1px solid $garnett-neutral-4;
+        }
     }
 
     .meta__numbers {
@@ -825,6 +827,7 @@ $quote-mark: 35px;
     .content__meta-container {
         background-image: none;
         padding-top: 0;
+        margin-bottom: 0;
         @include mq(leftCol) {
             @include multiline(8, $garnett-neutral-4, 8);
             padding-top: $gs-baseline * 3;
@@ -833,11 +836,27 @@ $quote-mark: 35px;
         }
     }
 
+    .meta__twitter,
+    .meta__email,
+    .content__dateline {
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+        @include mq(phablet) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
     .content__dateline {
         // magic number used to align date stamp with standfirst baseline in opinion pieces per design
-        margin-top: -45px;
+        margin-top: 8px;
+
         @include mq(leftCol) {
-            margin-top: 0;
+            margin-top: -4px;
         }
     }
 
@@ -845,6 +864,20 @@ $quote-mark: 35px;
         @include mq($from: leftCol) {
             @include multiline(1, $garnett-neutral-4);
         }
+    }
+
+    .meta__twitter {
+        display: block;
+        padding-top: 8px;
+        @include mq($from: leftCol) {
+            padding-top: -8px;
+            margin-top: -$gs-baseline;
+        }
+    }
+
+    .meta__twitter + .content__dateline {
+        // magic number used to align date stamp with Twitter handle
+        margin-top: -3px;
     }
 
     .content__header {
@@ -895,6 +928,14 @@ $quote-mark: 35px;
 
     .content__standfirst {
         padding-top: $gs-baseline/2;
+        margin-bottom: 0;
+        p {
+            margin-bottom: 0;
+        }
+        @include mq(leftCol) {
+            margin-bottom: $gs-baseline;
+        }
+
     }
 
     .byline-img {
@@ -1028,7 +1069,7 @@ $quote-mark: 35px;
     .content__dateline {
         @include mq(phablet) {
             @include multiline(1, $garnett-neutral-7, top);
-            padding-top: $gs-baseline / 2;
+            padding-top: $gs-baseline;
         }
     }
 
