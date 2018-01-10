@@ -62,12 +62,14 @@ data-test-id="facia-card"
         @if(item.contentType.name.toLowerCase == "audio") {
             <div class="fc-item__media-meta">
                 @inlineSvg("volume-high", "icon")
+                <span class="u-h">Podcast</span>
             </div>
         }
 
         @if(item.contentType.name.toLowerCase == "gallery") {
             <div class="fc-item__media-meta">
                 @inlineSvg("camera", "icon")
+                <span class="u-h">Gallery</span>
             </div>
         }
 
