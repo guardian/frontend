@@ -1405,6 +1405,13 @@ $quote-mark: 35px;
 }
 
 .paid-content {
+    .content__headline,
+    .content__standfirst,
+    .from-content-api,
+    .submeta__section-labels .submeta__link {
+        @include f-textSans;
+    }
+    
     .content__meta-container {
         @include multiline(3, $garnett-neutral-6, top);
     }

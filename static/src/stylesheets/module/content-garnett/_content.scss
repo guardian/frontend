@@ -1116,13 +1116,6 @@
     .caption--main {
         color: $neutral-2-contrasted;
     }
-    .content__headline,
-    .content__standfirst {
-        @include f-textSans;
-    }
-    .from-content-api {
-        @include f-textSans;
-    }
     .element.element-pullquote {
         .pullquote-paragraph {
             font-family: $f-sans-serif-text;
