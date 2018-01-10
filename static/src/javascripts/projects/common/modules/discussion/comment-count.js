@@ -102,9 +102,6 @@ const updateElement = (el: HTMLElement, count: number): Promise<void> => {
     return fastdom.write(() => {
         containers.forEach(container => {
             container.insertAdjacentHTML('beforeend', html);
-            if (container.classList.contains('fc-item__meta')) {
-                container.classList.add('fc-item__meta--enhanced-comments');
-            }
         });
         el.removeAttribute(ATTRIBUTE_NAME);
         el.classList.remove('u-h');
