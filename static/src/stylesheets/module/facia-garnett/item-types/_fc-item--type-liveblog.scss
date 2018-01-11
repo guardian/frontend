@@ -1,4 +1,6 @@
 @mixin overide-live-blog-colours($pillar, $color1, $color2) {
+    //when live blog is tagged match report
+    .fc-item--live.fc-item--type-matchreport.fc-item--pillar-#{$pillar},
     .fc-item--type-live.fc-item--pillar-#{$pillar} {
         background-color: $color1;
 

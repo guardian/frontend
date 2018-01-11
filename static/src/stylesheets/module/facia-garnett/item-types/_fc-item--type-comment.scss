@@ -2,10 +2,15 @@
     .fc-item__avatar {
         border-radius: 50%;
         right: $gs-gutter * .5;
-        bottom: $gs-baseline / 2;
+        top: $gs-baseline / 2;
         overflow: hidden;
         height: gs-height($size);
         width: gs-height($size);
+
+        @include mq($from: tablet) {
+            top: auto;
+            bottom: $gs-baseline / 2;
+        }
     }
 
     .fc-item__avatar__media {
@@ -24,10 +29,14 @@
         .fc-item__meta {
             display: none;
         }
+
+        .fc-item__standfirst {
+            padding-bottom: $gs-gutter * .25;
+        }
     }
 
     .fc-item__container {
-        padding-bottom: $gs-gutter;
+        padding-bottom: $gs-baseline;
     }
 
     .fc-item__container > .fc-item__meta {
@@ -77,6 +86,7 @@
         &.fc-item--fluid-tablet {
             @include mq(tablet) {
                 .fc-item__container > .fc-item__meta {
+                    .fc-item__timestamp,
                     .fc-trail__count--commentcount {
                         display: none;
                     }

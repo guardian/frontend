@@ -209,6 +209,126 @@
     background-color: rgba(0, 0, 0, .5);
 }
 
+.content--immersive-article:not(.content--immersive-garnett) {
+    .element-pullquote {
+        position: relative;
+        width: auto;
+        margin-left: 0;
+        margin-bottom: $gs-baseline / 2;
+        border-top: 1px solid $neutral-7;
+        border-bottom: 1px solid $neutral-7;
+        padding: 0;
+        padding-top: .2em;
+        padding-bottom: $gs-baseline * 3;
+
+        .inline-quote {
+            margin: ($gs-baseline / 4) 0;
+            height: auto;
+            width: auto;
+            line-height: 1;
+        }
+
+        .inline-quote svg {
+            fill: $neutral-3;
+            width: 2.5em;
+            height: 1.4em;
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            font-family: $f-serif-headline;
+            font-weight: 200;
+            font-size: 1.75rem;
+            line-height: 1.1;
+        }
+
+        .pullquote-paragraph {
+            color: $feature-default;
+        }
+
+        .pullquote-cite {
+            color: $neutral-1 !important; // important to override super specific tonal classes
+        }
+    }
+
+    .element-pullquote.element--showcase,
+    .element-pullquote.element--supporting {
+        @include mq(tablet) {
+            padding: 0;
+            border: 0;
+        }
+    }
+
+    .element-pullquote.element--showcase {
+        .inline-quote svg {
+            @include mq(tablet) {
+                width: 3em;
+                height: 1.8em;
+            }
+        }
+
+        .inline-quote {
+            @include mq(leftCol) {
+                position: absolute;
+                left: -3.5em;
+            }
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            @include mq(tablet) {
+                font-size: 2.25em;
+            }
+        }
+    }
+
+    .element-pullquote.element--supporting {
+        @include mq(tablet) {
+            width: gs-span(3);
+            border: 0;
+            margin-right: $gs-gutter;
+            margin-bottom: $gs-baseline * 2;
+        }
+
+        @include mq(leftCol) {
+            width: gs-span(2);
+            margin-left: -(gs-span(2) + $gs-gutter);
+        }
+
+        @include mq(wide) {
+            width: gs-span(3);
+            margin-left: -(gs-span(3) + $gs-gutter);
+        }
+
+        .inline-quote {
+            @include mq(tablet) {
+                position: absolute;
+            }
+        }
+
+        .inline-quote svg {
+            @include mq(tablet) {
+                width: 1.8em;
+                height: 1em;
+            }
+        }
+
+        .pullquote-paragraph {
+            @include mq(tablet) {
+                text-indent: 1.7em;
+            }
+        }
+
+        .pullquote-paragraph,
+        .pullquote-cite {
+            @include mq(tablet) {
+                font-size: 1.25em;
+                line-height: 1.2;
+            }
+        }
+    }
+}
+
 .content--immersive-article {
     &.content {
         border-top: 0;
@@ -329,128 +449,6 @@
         margin-top: 0;
     }
 
-    .element-pullquote {
-        position: relative;
-        width: auto;
-        margin-left: 0;
-        margin-bottom: $gs-baseline / 2;
-        border-top: 1px solid $neutral-7;
-        border-bottom: 1px solid $neutral-7;
-        padding: 0;
-        padding-top: .2em;
-        padding-bottom: $gs-baseline * 3;
-
-        .inline-quote {
-            margin: ($gs-baseline / 4) 0;
-            height: auto;
-            width: auto;
-            line-height: 1;
-        }
-
-        .inline-quote svg {
-            fill: $neutral-3;
-            width: 2.5em;
-            height: 1.4em;
-        }
-
-        .pullquote-paragraph,
-        .pullquote-cite {
-            font-family: $f-serif-headline;
-            font-weight: 200;
-            font-size: 1.75rem;
-            line-height: 1.1;
-        }
-
-        .pullquote-paragraph {
-            color: $feature-default;
-        }
-
-        .pullquote-cite {
-            color: $neutral-1 !important; // important to override super specific tonal classes
-        }
-    }
-
-    .element-pullquote.element--showcase,
-    .element-pullquote.element--supporting {
-        @include mq(tablet) {
-            padding: 0;
-            border: 0;
-        }
-    }
-
-    .element-pullquote.element--showcase {
-        @include mq(tablet) {
-            margin-bottom: $gs-baseline * 3;
-        }
-
-        .inline-quote svg {
-            @include mq(tablet) {
-                width: 3em;
-                height: 1.8em;
-            }
-        }
-
-        .inline-quote {
-            @include mq(leftCol) {
-                position: absolute;
-                left: -3.5em;
-            }
-        }
-
-        .pullquote-paragraph,
-        .pullquote-cite {
-            @include mq(tablet) {
-                font-size: 2.25em;
-            }
-        }
-    }
-
-    .element-pullquote.element--supporting {
-        @include mq(tablet) {
-            width: gs-span(3);
-            border: 0;
-            margin-right: $gs-gutter;
-            margin-bottom: $gs-baseline * 2;
-        }
-
-        @include mq(leftCol) {
-            width: gs-span(2);
-            margin-left: -(gs-span(2) + $gs-gutter);
-        }
-
-        @include mq(wide) {
-            width: gs-span(3);
-            margin-left: -(gs-span(3) + $gs-gutter);
-        }
-
-        .inline-quote {
-            @include mq(tablet) {
-                position: absolute;
-            }
-        }
-
-        .inline-quote svg {
-            @include mq(tablet) {
-                width: 1.8em;
-                height: 1em;
-            }
-        }
-
-        .pullquote-paragraph {
-            @include mq(tablet) {
-                text-indent: 1.7em;
-            }
-        }
-
-        .pullquote-paragraph,
-        .pullquote-cite {
-            @include mq(tablet) {
-                font-size: 1.25em;
-                line-height: 1.2;
-            }
-        }
-    }
-
     figure.element--immersive {
         margin-left: -$gs-gutter / 2;
         margin-right: -$gs-gutter / 2;
@@ -538,10 +536,6 @@
                 width: gs-span(3);
             }
         }
-
-        .block-share {
-            display: none !important; // To override hide on mobile
-        }
     }
 
     .element--showcase,
@@ -627,10 +621,10 @@
             position: relative;
             padding-left: $gs-baseline;
             left: -$gs-baseline / 2;
-            padding-top: $gs-baseline / 2;
+            padding-top: 0;
             //This allows the headline block to be aligned to the left and not run full width
             width: 94%;
-            padding-bottom: $gs-baseline * 2;
+            padding-bottom: $gs-baseline;
 
             @include mq($from: tablet) {
                 width: 100%;
@@ -645,13 +639,37 @@
     .content__headline--immersive {
         @include fs-headline(7, true);
         line-height: 1.1;
-        color: #ffffff;
+        color: $garnett-neutral-1;
         padding: 0;
         padding-bottom: $gs-baseline * 2;
         font-weight: 700;
 
         @include mq(desktop) {
             font-size: 50px;
+        }
+
+        //This is the line when there is no image that connetcs to the body
+        &:before {
+            position: absolute;
+            top: -$gs-baseline / 2;
+            bottom: -$gs-baseline * 2;
+            left: -$gs-gutter / 2;
+            width: 1px;
+            background-color: $garnett-neutral-4;
+            content: '';
+            display: none;
+            @include mq($from: leftCol) {
+                display: block;
+                bottom: -$gs-baseline * 3;
+            }
+        }
+    }
+
+    .content__headline--immersive.content__headline--immersive--with-main-media {
+        color: #ffffff;
+
+        &:before {
+            display: none;
         }
     }
 
@@ -677,9 +695,10 @@
         @include mq(desktop) {
             max-width: 460px;
             padding-bottom: 1rem;
-            margin-bottom: -$gs-baseline / 2;
+            margin-bottom: -$gs-baseline * 2;
             margin-top: $gs-baseline / 2;
         }
+
 
         //this is immersive specific to connect the vertical rule to the top of the page
         &:before {
@@ -714,13 +733,22 @@
         }
     }
     .drop-cap {
-        height: 7.25em;
+        height: 105px;
 
         .drop-cap__inner {
             font-weight: 900;
-            font-size: 9.5em;
+            font-size: 140px;
             line-height: .7; // To optically align to top of five lines of text
+
+            @include mq($from: tablet) {
+                font-size: 138px;
+            }
         }
+    }
+
+    .element-pullquote {
+        padding: $gs-baseline / 2;
+        padding-bottom: $gs-baseline;
     }
 }
 
@@ -740,6 +768,12 @@
 
             &:hover {
                 border-bottom-color: rgba($color2, 1);
+            }
+        }
+
+        .element-pullquote.element--showcase {
+            .pullquote-paragraph {
+                color: $color2;
             }
         }
     }

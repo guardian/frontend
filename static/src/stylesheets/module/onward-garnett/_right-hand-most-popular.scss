@@ -13,8 +13,8 @@
     clear: left;
     padding-top: $gs-baseline/3;
     margin-bottom: $gs-baseline;
-
     border-top: 1px solid $neutral-4;
+
     &:first-child {
         padding-top: 0;
         border-top: 0;
@@ -24,7 +24,7 @@
 .right-most-popular-item__headline {
     @include fs-headline(2);
     @include text-clamp(4);
-    color: $neutral-1;
+    color: $garnett-neutral-1;
     margin-bottom: 0;
 }
 
@@ -36,29 +36,24 @@
     @include fs-headline(2);
     font-style: italic;
 }
-
-@each $pillar, $palette in (
-news: $news-garnett-feature,
-opinion: $opinion-garnett-main-1,
-sport: $sport-garnett-main-1,
-arts: $arts-garnett-main-1,
-lifestyle: $lifestyle-garnett-main-1
-) {
+@each $pillar, $palette in (news: $news-garnett-feature, opinion: $opinion-garnett-main-1, sport: $sport-garnett-main-1, arts: $arts-garnett-main-1, lifestyle: $lifestyle-garnett-main-1) {
     .right-most-popular__byline--#{$pillar} {
         color: $palette;
     }
 }
 
 .right-most-popular-item__url {
-    &:hover,
     &:active,
-    &:focus {
-        color: $neutral-1;
-        text-decoration: underline;
+    &:focus,
+    &:hover {
+        .right-most-popular-item__headline {
+            color: $neutral-1;
+            text-decoration: underline;
+        }
     }
 
-    &:visited,
-    &:active {
+    &:active,
+    &:visited {
         .right-most-popular-item__headline {
             color: $neutral-2;
         }
