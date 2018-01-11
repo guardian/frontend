@@ -58,7 +58,13 @@
 
     .inline-icon {
         display: flex;
-        margin: 0 ($gs-gutter * -.5);
+        margin: 0 ($gs-gutter / 2 * -1) 0 ($gs-gutter/2);
+        &, & * {
+            fill: currentColor;
+        }
+        &.inline-cross {
+            transform: scale(.5);
+        }
     }
 
     &-half--left {

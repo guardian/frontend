@@ -161,9 +161,11 @@ data-test-id="facia-card"
 
             case Some(InlineImage(images)) => {
                 <div class="fc-item__media-wrapper">
+                @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                     @item.starRating.map { rating =>
                         @starRating(rating)
                     }
+                }
                 @itemImage(
                     images,
                     inlineImage = containerIndex == 0 && index < 4,

@@ -495,8 +495,7 @@ import collection.JavaConverters._
         $("header").attribute("role") should be("banner")
         $(".l-footer__secondary").attribute("role") should be("contentinfo")
         $("nav").attribute("aria-label") should not be empty
-        browser.find("nav").index(1).attribute("role") should be("navigation")
-        browser.find("nav").index(1).attribute("aria-label") should not be empty
+        browser.find("nav").attribute("role") should be("navigation")
         $("#article").attribute("role") should be("main")
         $(".related").attribute("aria-labelledby") should be("related-content-head")
       }
@@ -599,44 +598,5 @@ import collection.JavaConverters._
         $(".content").attribute("class") should include("tone-comment")
       }
     }
-
-    scenario("Display breadcrumbs correctly") {
-      Given("I am on a piece of content with a primary nav, secondary nav and a key woro")
-      goTo("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
-        import browser._
-        Then("I should see three breadcrumbs")
-        $(".breadcrumb .signposting__item").size() should be(3)
-
-        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Culture"))
-        link.asScala.length should be > 0
-        val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Books"))
-        link2.asScala.length should be > 0
-        val link3 = browser.find(".breadcrumb .signposting__item a", withText().contains("Orwell prize"))
-        link3.asScala.length should be > 0
-      }
-
-      Given("I am on a piece of content with a primary nav and a key woro")
-      goTo("/commentisfree/2013/jan/07/blue-plaque-english-heritage") { browser =>
-        import browser._
-        Then("I should see three breadcrumbs")
-        $(".breadcrumb .signposting__item").size() should be(2)
-
-        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Opinion"))
-        link.asScala.length should be > 0
-        val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Heritage"))
-        link2.asScala.length should be > 0
-      }
-
-      Given("I am on a piece of content with no primary nav and a no key words")
-      goTo("/observer-ethical-awards/shortlist-2014") { browser =>
-        import browser._
-        Then("I should see one breadcrumbs")
-        $(".breadcrumb .signposting__item").size() should be(1)
-
-        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Observer Ethical Awards"))
-        link.asScala.length should be > 0
-      }
-    }
-
   }
 }

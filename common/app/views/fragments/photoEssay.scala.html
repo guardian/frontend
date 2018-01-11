@@ -3,6 +3,8 @@
 @import model.ContentPage
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
+@import conf.switches.Switches.NewDesktopNavigation
+
 @()(implicit page: ContentPage, request: RequestHeader, context: model.ApplicationContext)
 
 @defining((
@@ -26,7 +28,7 @@
         ),
         "content", "tonal", s"tonal--${toneClass(page.item)}")
     ">
-        @if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {
+        @if(!NewDesktopNavigation.isSwitchedOn) {
             <div class="gs-container immersive-main-media__logo">
                 <a href="@LinkTo {/}">
                     <span class="u-h">The Guardian</span>

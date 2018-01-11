@@ -19,6 +19,7 @@
         padding: $gs-gutter*2;
         .manage-account__button {
             margin-right: 1em;
+            min-width: 0;
         }
     }
 
@@ -301,7 +302,7 @@
 
     .contribution-cancellation__keep-contributing {
         margin-left: $gs-gutter;
-        margin-top: 10px;
+        margin-top: 6px;
         display: inline-block;
     }
 

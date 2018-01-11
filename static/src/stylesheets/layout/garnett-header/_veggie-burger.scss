@@ -3,14 +3,19 @@
     color: $nav-background-colour;
     cursor: pointer;
     display: block;
-    height: $veggie-burger-medium;
-    width: $veggie-burger-medium;
+    height: $veggie-burger-small;
+    width: $veggie-burger-small;
     position: relative;
     border: 0;
     border-radius: 50%;
     outline: none;
     user-select: none;
     z-index: 2;
+
+    @include mq(mobileMedium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+    }
 
     @include mq(tablet) {
         height: $veggie-burger-large;

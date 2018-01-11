@@ -100,13 +100,6 @@
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
     }
-
-    .fc-container__header__title a:hover,
-    a:focus {
-        color: $pillarColor;
-        text-decoration: none;
-        border-bottom: solid 1px $pillarColor;
-    }
 }
 //////** Discussion (comment) styling **//////////
 //d-comment__author a[href], ._underline_1lj47_3, .js-discussion-author-link
@@ -294,7 +287,7 @@
 .content--pillar-arts,
 .content--pillar-arts.content--type-comment,
 .content--pillar-arts.content--type-guardianview {
-    @include colorPalatte($arts-garnett-main-1, $arts-garnett-feature, $arts-garnett-media-main-1);
+    @include colorPalatte($culture-garnett-main-1, $culture-garnett-feature, $culture-garnett-media-main-1);
 }
 
 .content--pillar-lifestyle,
@@ -314,7 +307,7 @@
 }
 
 .content-footer--pillar-arts {
-    @include footerPalette($arts-garnett-feature);
+    @include footerPalette($culture-garnett-feature);
 }
 
 .content-footer--pillar-lifestyle {
@@ -341,7 +334,7 @@
 
 .content--media:not(.paid-content).content--pillar-arts,
 .immersive-main-media__headline-container.content--pillar-arts {
-    @include mediaPalatte($arts-garnett-media-main-1, arts);
+    @include mediaPalatte($culture-garnett-media-main-1, culture);
 }
 
 .content--media:not(.paid-content).content--pillar-lifestyle,
@@ -381,7 +374,7 @@
     }
 
     &.rich-link--pillar-arts {
-        @include richLink($arts-garnett-main-1, $garnett-neutral-3);
+        @include richLink($culture-garnett-main-1, $garnett-neutral-3);
     }
 
     &.rich-link--pillar-lifestyle {
@@ -413,7 +406,7 @@
         }
 
         &.rich-link--pillar-arts {
-            @include richLink(#ffffff, $arts-garnett-feature);
+            @include richLink(#ffffff, $culture-garnett-feature);
         }
 
         &.rich-link--pillar-lifestyle {

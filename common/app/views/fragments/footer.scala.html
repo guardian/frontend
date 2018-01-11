@@ -8,11 +8,11 @@
 @import navigation.UrlHelpers.{getReaderRevenueUrl, Footer, getSupportOrMembershipUrl, getSupportOrSubscriptionUrl, getSupportOrContributeUrl}
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
-@import conf.switches.Switches.EmailInlineInFooterSwitch
+@import conf.switches.Switches.{ EmailInlineInFooterSwitch, NewDesktopNavigation }
 @import com.gu.identity.model.EmailNewsletters
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
-    @if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader) && !isAmp) {
+    @if(!NewDesktopNavigation.isSwitchedOn && !isAmp) {
         <div class="l-footer__primary hide-on-mobile">
             <div id="footer-nav" class="gs-container">
                 <div class="brand-bar modern-visible u-cf">
@@ -40,7 +40,7 @@
         </div>
     }
 
-    <div class="footer__primary @if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {mobile-only}">
+    <div class="footer__primary @if(!NewDesktopNavigation.isSwitchedOn) {mobile-only}">
 
         @if(!isAmp) {
             @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
