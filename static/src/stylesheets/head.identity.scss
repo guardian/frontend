@@ -40,3 +40,10 @@
         color: $identity-main!important;
     }
 }
+
+.tabs--identity {
+    .tabs__tab--selected {
+        border-top-color: $news-accent;
+        color: $news-accent;
+    }
+}

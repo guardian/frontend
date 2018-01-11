@@ -282,11 +282,6 @@ $identity-header-height: 48px;
         }
     }
 
-    .tabs__tab--selected {
-        border-top-color: $news-accent;
-        color: $news-accent;
-    }
-
     @include mq($until: tablet) {
         a {
             padding-top: $gs-baseline/4;
