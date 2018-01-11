@@ -46,7 +46,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     contentAsString(result) should include("\"News\"")
     contentAsString(result) should include("\"Opinion\"")
     contentAsString(result) should include("\"Sport\"")
-    contentAsString(result) should include("\"Arts\"")
+    contentAsString(result) should include("\"Culture\"")
     contentAsString(result) should include("\"Lifestyle\"")
   }
 }

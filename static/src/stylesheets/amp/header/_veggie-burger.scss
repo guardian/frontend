@@ -1,16 +1,23 @@
 .veggie-burger {
     background-color: $news-main-2;
-    bottom: -$gs-baseline / 2;
+    top: $gs-baseline / 4;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
     color: $guardian-brand-dark;
     cursor: pointer;
-    height: $veggie-burger-medium;
-    min-width: $veggie-burger-medium;
+    height: $veggie-burger-small;
+    min-width: $veggie-burger-small;
     position: absolute;
     border: 0;
     border-radius: 50%;
     outline: none;
     right: $gutter-small;
+
+    @include mq(mobileMedium) {
+        bottom: -$gs-baseline / 2;
+        height: $veggie-burger-medium;
+        min-width: $veggie-burger-medium;
+        top: auto;
+    }
 
     @include mq(mobileLandscape) {
         right: $gutter-medium;
