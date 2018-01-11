@@ -6,7 +6,6 @@
 
 @(signupPage: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-
 @newsletterSignup(route: String, listId: String, emailName: String) = {
     <iframe src="/email/form/@route/@listId"
         data-form-title="Sign up for @emailName"
@@ -61,11 +60,11 @@
                           type="email"
                           name="email"
                           placeholder="Email address" required />
-                        <input class="js-email-sub__listid-input" type="hidden" name="listId" value="@emailListing.listId" />
+                        <input class="js-email-sub__listid-input" type="hidden" name="listId" value="@emailListing.listIdV1" />
                         <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit"
                           data-link-name="Subscribe to @emailListing.name"
                           type="submit"
-                          value="@emailListing.listId">
+                          value="@emailListing.listIdV1">
                           <span>Sign up</span>
                         </button>
                     </form>
