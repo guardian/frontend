@@ -26,9 +26,6 @@ type Background = {
     background: HTMLElement,
 };
 
-const IntersectionObserver = window.IntersectionObserver;
-const IntersectionObserverEntry = window.IntersectionObserverEntry;
-
 const getStylesFromSpec = (specs: AdSpec): SpecStyles =>
     Object.keys(specs).reduce((result, key) => {
         if (key !== 'scrollType') {
@@ -169,16 +166,18 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
                 const backgroundParent = entry.target;
                 const background = backgroundParent.firstChild;
 
-                addEventListener(
-                    window,
-                    'scroll',
-                    () => onScroll(backgroundParent, background),
-                    {
-                        passive: true,
-                    }
-                );
+                if (background && background instanceof HTMLElement) {
+                    addEventListener(
+                        window,
+                        'scroll',
+                        () => onScroll(backgroundParent, background),
+                        {
+                            passive: true,
+                        }
+                    );
 
-                onScroll(backgroundParent, background);
+                    onScroll(backgroundParent, background);
+                }
             }
         });
     };
