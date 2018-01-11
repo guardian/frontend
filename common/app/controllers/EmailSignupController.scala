@@ -37,10 +37,15 @@ class EmailFormService(wsClient: WSClient) {
 
   def submit(form: EmailForm): Future[WSResponse] = {
 
-    val idAccessClientToken =Configuration.id.apiClientToken
+    val idAccessClientToken = Configuration.id.apiClientToken
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
 
-    val listName = if(form.listName.isDefined) form.listName else EmailNewsletter.apply(form.listId.get).flatMap(_.identityNameOverride)
+    val listName = (form.listName, form.listId) match {
+      case (None, Some(id)) =>
+        EmailNewsletter(id) orElse EmailNewsletter.fromV1ListId(id) map { _.identityName }
+      case (name, _) => name
+    }
+
     val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(listName)).fields)
 
     wsClient
