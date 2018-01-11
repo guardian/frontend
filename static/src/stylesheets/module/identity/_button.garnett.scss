@@ -7,8 +7,8 @@
 }
 
 .manage-account__button {
-    $font-size: 2;
-    $height: $gs-gutter * 2;
+    $font-size: 3;
+    $height: $gs-baseline * 3;
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
     $padding-horizontal: $gs-gutter;
     @include fs-textSans($font-size);
@@ -28,25 +28,29 @@
     -moz-appearance: none;
     -ms-appearance: none;
     box-sizing: border-box;
-    text-align: center;
-    display: inline-block;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     transition: .15s linear;
+    text-align: left;
+
+    &, & > .manage-account__button-flexwrap {
+        justify-content: space-between;
+        align-items: center;
+        display: inline-block;
+        display: inline-flex;
+    }
 
     > .manage-account__button-flexwrap {
         width: 100%;
-        height: 100%;
-        display: inline-block;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
     }
 
     &:hover, &:active, &:focus {
         color: #ffffff;
         text-decoration: none;
+        .inline-arrow-right.inline-icon {
+            transform: translateX(3px);
+        }
+        .inline-arrow-left-stem.inline-icon {
+            transform: translateX(-3px);
+        }
     }
 
     &:not(.is-updating, .is-disabled):hover {
@@ -58,8 +62,22 @@
     }
 
     .inline-icon {
-        display: flex;
-        margin: 0 ($gs-gutter * -.5);
+        transition: .125s;
+        display: inline-block;
+        height: 28px;
+        width: 28px;
+        vertical-align: middle;
+        margin: 0 ($gs-gutter / 2 * -1) 0 ($gs-gutter/2);
+        &, & * {
+            fill: currentColor;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        &.inline-cross {
+            transform: scale(.5);
+        }
     }
 
     &-half--left {
@@ -68,7 +86,9 @@
         border-bottom-right-radius: 0;
         min-width: $gs-baseline * 7;
         float: left;
-        background-color: $news-main-2;
+        text-align: center;
+        justify-content: center;
+        border-right: 1px solid #ffffff;
     }
 
     &-half--right {
@@ -77,6 +97,8 @@
         border-bottom-left-radius: 0;
         min-width: $gs-baseline * 7;
         float: right;
+        justify-content: center;
+        text-align: center;
     }
 
     .disabled {
@@ -85,24 +107,19 @@
 }
 
 .manage-account__button--round {
-    min-width: $gs-gutter * 2;
-    max-width: $gs-gutter * 2;
+    min-width: $gs-baseline * 3;
+    max-width: $gs-baseline * 3;
     padding: 0;
+    text-align: center;
+    justify-content: center;
+    .inline-icon {
+        margin: 0;
+    }
 }
 
 .manage-account__button--icon {
     padding-top: 0;
     padding-bottom: 0;
-    &, & > .manage-account__button-flexwrap {
-        justify-content: space-between;
-    }
-    .inline-icon {
-        transition: .125s;
-        svg {
-            width: 28px;
-            height: 28px;
-        }
-    }
 }
 
 .manage-account__button--light {
@@ -112,7 +129,7 @@
 .manage-account__button--mini {
     @extend %manage-account__button--light;
     @include fs-textSans(1);
-    min-width: $gs-baseline * 10;
+    min-width: $gs-baseline * 20;
     display: inline-flex;
     height: $gs-gutter * 1.5;
     line-height: .8;
@@ -121,12 +138,14 @@
 %manage-account__button--light {
     color: $identity-main;
     background-color: transparent;
-    border: 1px solid lighten($identity-main, 50%);
-    &:not(.is-updating, .is-disabled):hover,
-    &:not(.is-updating, .is-disabled):focus,
-    &:not(.is-updating, .is-disabled):active {
+    text-decoration: underline;
+    @supports (box-shadow: 0 0 0 red) {
+        text-decoration: none;
+        box-shadow: inset 0 0 0 1px lighten($identity-main, 75%);
+    }
+    &:hover, &:focus, &:active {
+        background-color: transparent!important;
         color: $identity-main;
-        background-color: transparent;
-        border-color: currentColor;
+        box-shadow: inset 0 0 0 1px $identity-main;
     }
 }
