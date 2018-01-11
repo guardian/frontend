@@ -76,17 +76,6 @@ $pillars: (
 
     &:hover {
         background-color: $darkerCardBackground;
-
-        &.fc-item--type-comment {
-            .fc-item__avatar {
-                background-color: darken(map-get($palette, cutoutBackground), 3%);
-            }
-
-            .fc-item__timestamp,
-            .fc-trail__count--commentcount {
-                background-color: $darkerCardBackground;
-            }
-        }
     }
 
     .fc-item__headline {
@@ -196,6 +185,17 @@ $pillars: (
 
             .inline-icon {
                 fill: map-get($palette, commentCount);
+            }
+        }
+
+        &:hover {
+            .fc-item__avatar {
+                background-color: darken(map-get($palette, cutoutBackground), 3%);
+            }
+
+            .fc-item__timestamp,
+            .fc-trail__count--commentcount {
+                background-color: $darkerCardBackground;
             }
         }
     }
