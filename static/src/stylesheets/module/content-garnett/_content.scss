@@ -87,6 +87,13 @@
     }
 }
 
+.content__head {
+    @include mq($from: tablet, $until: desktop) {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .content__hr {
     border: 0;
     margin: 0;
@@ -474,6 +481,11 @@
     min-height: gs-height(1);
     position: relative;
     margin-bottom: $gs-baseline;
+
+    @include mq($from: tablet, $until: leftCol) {
+        // move meta below image
+        order: 1;
+    }
 
     @include mq(leftCol) {
         position: absolute;
