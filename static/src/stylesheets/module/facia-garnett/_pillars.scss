@@ -150,7 +150,8 @@ $pillars: (
     }
 
 
-    &.fc-item--type-media {
+    &.fc-item--type-media,
+    &.fc-item--type-interview {
         .inline-video-icon,
         .inline-volume-high,
         .inline-camera {
