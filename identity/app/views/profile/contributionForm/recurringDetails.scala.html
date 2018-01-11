@@ -1,7 +1,7 @@
 @import conf.switches.Switches.ProfileShowCancelContributor
 @import conf.switches.Switches.ProfileShowChangeContributionAmount
 
-@(user: com.gu.identity.model.User)
+@(user: com.gu.identity.model.User)(implicit request: RequestHeader)
 <div class="is-hidden js-contribution-info">
     <ul class="details-list u-unstyled js-contribution-details">
         <li class="details-list__item">

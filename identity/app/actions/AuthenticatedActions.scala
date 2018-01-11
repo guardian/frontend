@@ -137,8 +137,11 @@ class AuthenticatedActions(
 
       private def decideConsentJourney[A](request: AuthRequest[A]) =
         (userEmailValidated(request), userHasRepermissioned(request)) match {
-          case (false, _) =>
+          case (false, false) =>
             Future.successful(Some(sendUserToValidateEmail(request)))
+
+          case (false, true) =>
+            Future.successful(None)
 
           case (true, false) =>
             Future.successful(Some(sendUserToConsentsJourney(request)))

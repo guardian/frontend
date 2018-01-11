@@ -38,6 +38,17 @@
     </div>
 }
 
+@validationRoadblock = {
+    <div class="identity-forms-message identity-forms-message--inline">
+        <h1 class="identity-title">You must verify your email to continue.</h1>
+        <div class="identity-forms-message__body">
+            <p>Please validate your email (@user.primaryEmailAddress) to edit your preferences.</p>
+            <p>If your address seems wrong you can <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" class="u-underline" data-link-name="identity : email : reverify-email-change">change it</a>.</p>
+            <a class="manage-account__button identity-forms-message__button" href="@idUrlBuilder.buildUrl("/verify-email", idRequest)" data-link-name="identity : email : reverify-email-resend">Resend me a validation email</a>
+        </div>
+    </div>
+}
+
 <div class="tabs">
 
     <div class="identity-wrapper-for-bg identity-wrapper-for-bg--header">
@@ -77,7 +88,13 @@
 
                         @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
-                        @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint))
+                        @content(6, "/email-prefs")(
+                            if(user.statusFields.userEmailValidated.fold(false)(identity)) {
+                                profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint)
+                            } else {
+                                validationRoadblock
+                            }
+                        )
                     </div>
                 </div>
             </div>
