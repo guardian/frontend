@@ -99,7 +99,7 @@
 .menu-group--brand-extensions {
     position: absolute;
     right: $gs-gutter;
-    top: $gs-baseline;
+    top: $gs-baseline * 2;
     bottom: 0;
     // Specific number for aligmnent with logo
     width: 186px;

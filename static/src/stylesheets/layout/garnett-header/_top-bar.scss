@@ -124,10 +124,6 @@
 .top-bar__item--cta--text {
     box-sizing: border-box;
     display: block;
-    padding: ($gs-baseline / 2 + $gs-baseline / 4) ($gs-gutter) ($gs-baseline / 4);
+    padding: ($gs-baseline / 2) ($gs-gutter) ($gs-baseline / 4);
     position: relative;
-
-    @include mq($until: mobileMedium) {
-        padding-top: $gs-baseline / 2;
-    }
 }

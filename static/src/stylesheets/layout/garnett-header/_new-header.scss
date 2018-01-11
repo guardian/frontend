@@ -124,7 +124,7 @@ from scrolling */
 .new-header__logo {
     float: right;
     margin-bottom: $gs-baseline + $gs-baseline / 4;
-    margin-right: $gs-gutter / 4 + $veggie-burger-small;
+    margin-right: $gs-gutter / 4;
     margin-top: $gs-baseline / 4;
 
     @include mq(mobileMedium) {
@@ -132,18 +132,17 @@ from scrolling */
     }
 
     @include mq(mobileLandscape) {
-        margin-right: 17px;
+        margin-right: $gs-gutter - 3;
     }
 
     @include mq(desktop) {
-        margin-bottom: -30px;
-        margin-right: 17px;
+        margin-bottom: -34px;
         margin-top: 5px;
     }
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
-            margin-bottom: -34px;
+            margin-bottom: -40px;
         }
 
         @include mq(wide) {
