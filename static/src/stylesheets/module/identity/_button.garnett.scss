@@ -29,6 +29,7 @@
     -ms-appearance: none;
     box-sizing: border-box;
     transition: .15s linear;
+    text-align: left;
 
     &, & > .manage-account__button-flexwrap {
         justify-content: space-between;
@@ -77,7 +78,9 @@
         border-bottom-right-radius: 0;
         min-width: $gs-baseline * 7;
         float: left;
-        background-color: $news-main-2;
+        text-align: center;
+        justify-content: center;
+        border-right: 1px solid #fff;
     }
 
     &-half--right {
@@ -86,6 +89,8 @@
         border-bottom-left-radius: 0;
         min-width: $gs-baseline * 7;
         float: right;
+        justify-content: center;
+        text-align: center;
     }
 
     .disabled {
