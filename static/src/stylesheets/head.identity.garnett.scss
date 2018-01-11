@@ -7,6 +7,14 @@
 @import '_head.common';
 
 
+
+/* ==========================================================================
+   Identity overrides
+   ========================================================================== */
+@import 'layout/garnett-header/_variables';
+$identity-main: #121212;
+
+
 /* ==========================================================================
    Identity core
    ========================================================================== */
@@ -16,12 +24,14 @@
 
 @import 'module/identity/_identity';
 
-@import 'module/identity/_header';
+@import 'module/identity/_header.garnett';
+@import 'module/identity/_wrapper.garnett';
+@import 'module/identity/_button.garnett';
 @import 'module/identity/_forms';
-
+@import 'module/identity/_footer';
 @import 'module/identity/_manage-account-tab';
 @import 'module/identity/_formstack';
-@import 'module/identity/_dropdown';
+@import 'module/identity/_dropdown.garnett';
 @import 'module/identity/_switches';
 @import 'module/identity/_wizard';
 @import 'module/identity/_consent';

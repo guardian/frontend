@@ -9,7 +9,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
     CommercialPaidContentTemplate,
-    ABNewDesktopHeader,
     GarnettHeader,
     GarnettIdentity,
     Garnett,
@@ -47,14 +46,6 @@ object CommercialPaidContentTemplate extends Experiment(
     "/discover-canal-river-trust/2017/oct/20/top-10-waterside-places-to-enjoy-in-autumn"
   )
 }
-
-object ABNewDesktopHeader extends Experiment(
-  name = "ab-new-desktop-header",
-  description = "Users in this experiment will see the new desktop design.",
-  owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("zeftilldeath")),
-  sellByDate = new LocalDate(2018, 2, 1),
-  participationGroup = Perc20A
-)
 
 object GarnettIdentity extends Experiment(
   name = "garnett-identity",

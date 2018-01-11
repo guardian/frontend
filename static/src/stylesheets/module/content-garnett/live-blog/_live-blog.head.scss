@@ -805,23 +805,28 @@ $timeline-width: 15px;
 $pillars: (
     news: (
         pillarColor: $news-garnett-feature,
-        kickerColor: $live-garnett-main-2
+        kickerColor: $live-garnett-main-2,
+        altKickerColor: $news-garnett-main-1
     ),
     opinion: (
         pillarColor: $opinion-garnett-main-1,
-        kickerColor: $opinion-garnett-feature
+        kickerColor: $opinion-garnett-feature,
+        altKickerColor: $opinion-garnett-main-1
     ),
     sport: (
         pillarColor: $sport-garnett-feature,
-        kickerColor:  $live-garnett-sport2
+        kickerColor:  $live-garnett-sport2,
+        altKickerColor: $sport-garnett-main-1
     ),
     arts: (
-        pillarColor: $arts-garnett-feature,
-        kickerColor: $live-garnett-arts2,
+        pillarColor: $culture-garnett-feature,
+        kickerColor: $live-garnett-culture2,
+        altKickerColor: $culture-garnett-main-1
     ),
     lifestyle: (
         pillarColor: $lifestyle-garnett-feature,
-        kickerColor: $live-garnett-lifestyle2
+        kickerColor: $live-garnett-lifestyle2,
+        altKickerColor: $lifestyle-garnett-main-1
     )
 );
 
@@ -906,5 +911,45 @@ $pillars: (
     }
     @include mq(phablet) {
         padding-left: $gs-gutter / 2;
+    }
+}
+
+// Dead blog overrides
+@each $pillar, $palette in $pillars {
+    .content--liveblog.tonal--tone-dead.content--pillar-#{$pillar} {
+        .tonal__main--tone-dead {
+            @include mq(tablet) {
+                padding-top: $gs-gutter;
+            }
+        }
+
+        .content__head,
+        .content__standfirst {
+            color: $garnett-neutral-1;
+        }
+
+        .content__section-label__link {
+            color: map-get($palette, altKickerColor);
+        }
+
+        .content__series-label__link {
+            color: $garnett-neutral-6;
+        }
+
+        .content__header {
+            background: $garnett-neutral-5;
+        }
+
+        .tonal__standfirst {
+            background: $live-garnett-dead-background;
+        }
+
+        .content__standfirst a {
+            color: map-get($palette, altKickerColor);
+        }
+
+        .tonal__standfirst ul > li::before {
+            background: rgba(51, 51, 51, .4);
+        }
     }
 }

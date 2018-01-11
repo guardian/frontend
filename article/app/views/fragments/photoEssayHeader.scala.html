@@ -6,7 +6,7 @@
     ("immersive-header-container", page.item.fields.main.nonEmpty),
     ("immersive-header-container--photo-essay", page.item.content.isPhotoEssay)))">
 
-    @if(experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {
+    @if(conf.switches.Switches.NewDesktopNavigation.isSwitchedOn) {
         @fragments.header()
     }
 
