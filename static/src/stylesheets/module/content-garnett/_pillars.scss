@@ -291,9 +291,9 @@
     @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
 }
 
-.content--pillar-culture,
-.content--pillar-culture.content--type-comment,
-.content--pillar-culture.content--type-guardianview {
+.content--pillar-arts,
+.content--pillar-arts.content--type-comment,
+.content--pillar-arts.content--type-guardianview {
     @include colorPalatte($culture-garnett-main-1, $culture-garnett-feature, $culture-garnett-media-main-1);
 }
 
@@ -313,7 +313,7 @@
     @include footerPalette($news-garnett-main-1);
 }
 
-.content-footer--pillar-culture {
+.content-footer--pillar-arts {
     @include footerPalette($culture-garnett-feature);
 }
 
@@ -339,8 +339,8 @@
     @include mediaPalatte($opinion-garnett-media-main-1, opinion);
 }
 
-.content--media:not(.paid-content).content--pillar-culture,
-.immersive-main-media__headline-container.content--pillar-culture {
+.content--media:not(.paid-content).content--pillar-arts,
+.immersive-main-media__headline-container.content--pillar-arts {
     @include mediaPalatte($culture-garnett-media-main-1, culture);
 }
 
@@ -380,7 +380,7 @@
         @include richLink($sport-garnett-main-1, $garnett-neutral-3);
     }
 
-    &.rich-link--pillar-culture {
+    &.rich-link--pillar-arts {
         @include richLink($culture-garnett-main-1, $garnett-neutral-3);
     }
 
@@ -412,7 +412,7 @@
             @include richLink(#ffffff, $sport-garnett-feature);
         }
 
-        &.rich-link--pillar-culture {
+        &.rich-link--pillar-arts {
             @include richLink(#ffffff, $culture-garnett-feature);
         }
 
