@@ -18,6 +18,7 @@
     .manage-account-up-sell {
         padding: $gs-gutter*2;
         .manage-account__button {
+            margin-bottom: .25em;
             margin-right: 1em;
             min-width: 0;
         }
@@ -388,7 +389,7 @@
     width: 100%;
     position: relative;
     z-index: 10;
-    border-top: 1px solid $news-main-2;
+    border-top: 1px solid $neutral-1;
     padding: ($gs-gutter * 3.75) ($gs-gutter * 1) ($gs-gutter * 1);
     margin: auto;
     float: none;
