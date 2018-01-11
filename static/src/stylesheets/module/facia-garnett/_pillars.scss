@@ -84,8 +84,26 @@ $pillars: (
 
             .fc-item__timestamp,
             .fc-trail__count--commentcount {
-                background-color: $darkerCardBackground;
+                background-color: darken($opinion-garnett-background, 3%);
             }
+        }
+    }
+
+    .fc-item__container.u-faux-block-link--hover {
+        background-color: $darkerCardBackground;
+    }
+
+    &.fc-item--type-comment {
+        &.fc-item--pillar-news,
+        &.fc-item--pillar-opinion,
+        &.fc-item--pillar-sport,
+        &.fc-item--pillar-arts,
+        &.fc-item--pillar-lifestyle {
+            background-color: $opinion-garnett-background;
+        }
+
+        .fc-item__container.u-faux-block-link--hover {
+            background-color: darken($opinion-garnett-background, 2%);
         }
     }
 
