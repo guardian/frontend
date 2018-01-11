@@ -18,7 +18,8 @@ $quote-mark: 35px;
 .content--type-live,
 .content--type-matchreport,
 .content--type-media,
-.content--type-review {
+.content--type-review,
+.content--type-quiz {
     // *************** Meta and Social ***************
     .submeta {
         @include multiline(4, $garnett-neutral-4, top);
@@ -885,12 +886,8 @@ $quote-mark: 35px;
     }
 
     .content__headline {
-        width: 70%;
         font-weight: 100;
         padding-bottom: 0;
-        @include mq(phablet) {
-            float: left;
-        }
         @include mq(leftCol) {
             padding-bottom: 38px;
         }
