@@ -18,7 +18,8 @@ $quote-mark: 35px;
 .content--type-live,
 .content--type-matchreport,
 .content--type-media,
-.content--type-review {
+.content--type-review,
+.content--type-quiz {
     // *************** Meta and Social ***************
     .submeta {
         @include multiline(4, $garnett-neutral-4, top);
