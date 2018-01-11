@@ -170,24 +170,14 @@ $quote-mark: 35px;
 
     .meta__contact-wrap {
         float: left;
-        max-width: 100%;
-    }
-
-    .meta__image + .meta__contact-wrap {
-        max-width: gs-span(3) + $gs-gutter/2;
-        @include mq(mobileMedium) {
-            max-width: 70%;
-        }
+        max-width: calc(100% - 90px);
         @include mq(mobileLandscape) {
-            padding-left: $gs-gutter/2;
+            max-width: calc(100% - 110px);
         }
-        @include mq(phablet) {
-            padding-left: 0;
-        }
-
         @include mq(leftCol) {
             max-width: 100%;
         }
+
     }
 
     .content__main-column--article .badge--alt {
@@ -221,6 +211,12 @@ $quote-mark: 35px;
         margin: 0;
         border: 0;
         width: auto;
+        @include mq(mobileLandscape) {
+            margin-right: -$gs-gutter/2;
+        }
+        @include mq(phablet) {
+            margin-right: 0;
+        }
         @include mq(leftCol) {
             width: 100%;
         }
