@@ -139,7 +139,8 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
   def getReportQuery(reportId: Long): Option[ReportQuery] =
     for {
       session <- SessionWrapper()
-    } yield session.getReportQuery(reportId)
+      query <- session.getReportQuery(reportId)
+    } yield query
 
   def runReportJob(report: ReportQuery): Seq[String] = {
     withDfpSession { session =>
