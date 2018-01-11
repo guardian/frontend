@@ -1,37 +1,4 @@
 .fc-item--type-media {
-    background-color: $media-garnett-main-1;
-
-    .fc-item__content {
-        justify-content: space-between;
-    }
-
-    .fc-item__header,
-    .fc-item__standfirst {
-        flex: 0 1 auto;
-    }
-
-    .fc-item__headline {
-        color: #ffffff;
-    }
-
-    .fc-item__standfirst {
-        color: #ffffff;
-    }
-
-    // darken on hover
-    &:hover,
-    .u-faux-block-link--hover {
-        background-color: darken($media-garnett-main-1, 5%);
-
-        .fc-item__container::before {
-            background-color: darken($media-garnett-main-1, 5%);
-        }
-    }
-
-    .fc-sublink__link {
-        color: #ffffff;
-    }
-
     &.fc-item--audio {
         .inline-volume-high {
             position: relative;
@@ -75,6 +42,39 @@
 // Styles shared by media and interview types
 .fc-item--type-interview,
 .fc-item--type-media {
+    background-color: $media-garnett-main-1;
+
+    .fc-item__content {
+        justify-content: space-between;
+    }
+
+    .fc-item__header,
+    .fc-item__standfirst {
+        flex: 0 1 auto;
+    }
+
+    .fc-item__headline {
+        color: #ffffff;
+    }
+
+    .fc-item__standfirst {
+        color: #ffffff;
+    }
+
+    // darken on hover
+    &:hover,
+    .u-faux-block-link--hover {
+        background-color: darken($media-garnett-main-1, 5%);
+
+        .fc-item__container::before {
+            background-color: darken($media-garnett-main-1, 5%);
+        }
+    }
+
+    .fc-sublink__link {
+        color: #ffffff;
+    }
+
     .fc-item__meta-wrapper {
         flex: 0 1 auto;
         display: flex;
