@@ -5,14 +5,12 @@ import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquis
 import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import { unrulyPerformanceTest } from 'common/modules/experiments/tests/unruly-performance';
 import { prebidIntegration } from 'common/modules/experiments/tests/prebid-integration';
-import { commercialStackFreeze } from 'common/modules/experiments/tests/commercial-stack-freeze';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
     acquisitionsEpicElectionInteractiveEnd,
     unrulyPerformanceTest,
     prebidIntegration,
-    commercialStackFreeze,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>

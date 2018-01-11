@@ -10,7 +10,6 @@ import domready from 'domready';
 import raven from 'lib/raven';
 import { bootStandard } from 'bootstraps/standard/main';
 import config from 'lib/config';
-import { getTestVariantId } from 'common/modules/experiments/utils';
 import { markTime } from 'lib/user-timing';
 import { capturePerfTimings } from 'lib/capture-perf-timings';
 
@@ -46,9 +45,7 @@ const go = () => {
         if (config.switches.commercial) {
             commercialBoot = () =>
                 new Promise(resolve => {
-                    if (
-                        getTestVariantId('CommercialStackFreeze') === 'frozen'
-                    ) {
+                    if (config.tests.commercialBaseline === 'variant') {
                         require.ensure(
                             [],
                             // webpack needs the require function to be called 'require'
