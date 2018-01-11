@@ -1,0 +1,81 @@
+//TODO: Post garnett launch (January 15th, 2018) most of this wont be needed/will need to be refactored as it is all overrides
+
+
+
+/* Full width wrapper
+   ========================================================================== */
+
+.identity-wrapper-for-bg {
+    @include clearfix();
+    .gs-container {
+        max-width: none;
+        overflow: hidden;
+    }
+    .monocol-wrapper {
+        @include mq($until: desktop) {
+            padding: 0 $gs-gutter;
+        }
+        max-width: gs-span(10);
+        margin: auto;
+        padding-bottom: $gs-gutter * 2;
+        padding-top: $gs-gutter / 2;
+    }
+    .tabs__content {
+        border: 0;
+    }
+}
+
+.identity-wrapper-for-bg.identity-wrapper-for-bg--header {
+    border-bottom: 1px solid $neutral-5;
+    overflow: hidden;
+    .tabs__container {
+        margin: $gs-gutter * 2 auto 0 -1px;
+        .tabs__tab a {
+            font-weight: 500!important;
+            /*text can't fit otherwise*/
+        }
+    }
+    .monocol-wrapper {
+        overflow: hidden;
+        padding-bottom: 0;
+    }
+}
+
+
+
+/* Normal wrapper
+   ========================================================================== */
+
+.identity-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: gs-span(6);
+    padding-bottom: $gs-gutter * 2;
+    padding-top: $gs-gutter / 2;
+
+    a.u-underline {
+        color: $identity-main;
+    }
+
+    &.identity-wrapper--with-wizard {
+        padding-bottom: 0;
+    }
+
+    @include mq(desktop) {
+        max-width: gs-span(10);
+    }
+}
+
+.identity-wrapper--stretched {
+    max-width: gs-span(16);
+}
+
+
+/* Account Edit page
+   ========================================================================== */
+
+.identity-wrapper .tabs {
+    .fieldset:first-of-type {
+        border-top: 0; // Included so as not to break tabs metaphor
+    }
+}

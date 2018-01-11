@@ -2,7 +2,7 @@ package controllers
 
 import actions.AuthenticatedActions
 import com.gu.identity.cookie.GuUCookieData
-import com.gu.identity.model.Consent.FirstParty
+import com.gu.identity.model.Consent.Supporter
 import com.gu.identity.model._
 import form._
 import idapiclient.{TrackingData, _}
@@ -48,7 +48,7 @@ import scala.concurrent.Future
     val httpConfiguration = HttpConfiguration.createWithDefaults()
 
     val userId: String = "123"
-    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
+    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
     val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
@@ -133,7 +133,7 @@ import scala.concurrent.Future
 
     "submitPrivacyForm method is called with valid CSRF request" should {
       "post UserUpdateDTO with consent to IDAPI" in new EditProfileFixture {
-        val consent = Consent(FirstParty.id, "user", false)
+        val consent = Consent(Supporter.id, "user", false)
 
         val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(

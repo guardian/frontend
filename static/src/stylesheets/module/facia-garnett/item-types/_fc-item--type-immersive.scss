@@ -135,9 +135,16 @@
     }
 
     &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker:after,
+    &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker:after {
+         content: '/';
+
+         @include mq($from: tablet){
+             content: none;
+         }
+    }
+
     &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker:after,
-    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker:after,
-    &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker:after
+    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker:after
     {
         content: '/';
     }
