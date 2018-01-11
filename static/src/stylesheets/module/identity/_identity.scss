@@ -125,11 +125,14 @@ $identity-header-height: 48px;
         display: block;
         font-family: $f-sans-serif-text;
         font-size: 14px;
-        padding: 8px 0 9px;
-        text-indent: 24px;
+        padding: 4px 0;
+        line-height: 28px;
+        height: 28px;
+        text-indent: 40px;
         width: 240px;
         position: relative;
-        text-align: center;
+        text-align: left;
+        border-radius: 9999px;
     }
 
     .social-signin__action--fb {
@@ -152,13 +155,13 @@ $identity-header-height: 48px;
 
     .social-signin__icon {
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 3px;
+        left: 6px;
 
         svg {
             float: left;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
         }
     }
 }
