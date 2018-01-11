@@ -88,17 +88,25 @@ $identity-header-height: 48px;
 .nav--registration {
     margin-top: ($gs-baseline/3)*8;
     font-size: 14px;
-    text-align: center;
+
+    .nav__item {
+        display: block;
+        margin-bottom: $gs-baseline / 4;
+    }
 
     @include mq(tablet) {
         font-size: 16px;
+        text-align: center;
+        .nav__item {
+            display: inline;
+            margin: 0;
+        }
+        .nav__item + .nav__item:before {
+            content: '\b7';
+            margin-left: 4px;
+            margin-right: 9px;
+        }
     }
-}
-
-.nav--registration .nav__item + .nav__item:before {
-    content: '\b7';
-    margin-left: 4px;
-    margin-right: 9px;
 }
 
 .social-signin {
