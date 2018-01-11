@@ -171,6 +171,7 @@ $quote-mark: 35px;
 
     .meta__contact-wrap {
         float: left;
+        // magic numbers used for custom byline image
         max-width: calc(100% - 90px);
         @include mq(mobileLandscape) {
             max-width: calc(100% - 110px);
