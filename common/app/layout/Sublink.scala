@@ -337,9 +337,14 @@ case class ContentCard(
   def showDisplayElement: Boolean =
     cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide && cutOut.isEmpty
 
+  def showReviewStars: Boolean = starRating.isDefined && (displayElement match {
+    case Some(InlineImage(_)) if showDisplayElement => false
+    case _ => true
+  })
+
   def showStandfirst: Boolean = cardTypes.allTypes.exists(_.showStandfirst)
 
-  def mediaWidthsByBreakpoint(implicit requestHeader: RequestHeader) : WidthsByBreakpoint = 
+  def mediaWidthsByBreakpoint(implicit requestHeader: RequestHeader) : WidthsByBreakpoint =
     if (experiments.ActiveExperiments.isParticipating(experiments.Garnett))
       GarnettFaciaWidths.mediaFromItemClasses(cardTypes)
     else

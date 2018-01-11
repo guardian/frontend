@@ -606,4 +606,15 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
+
+  // When this switch is deleted, all the old navigation can be deleted as well
+  val NewDesktopNavigation = Switch(
+    SwitchGroup.Feature,
+    "new-desktop-navigation",
+    "When ON, the new desktop navigation will show to all the audience (this is the design with 5 pillars)",
+    owners = Seq(Owner.withGithub("NataliaLKB")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 1, 24),
+    exposeClientSide = false
+  )
 }
