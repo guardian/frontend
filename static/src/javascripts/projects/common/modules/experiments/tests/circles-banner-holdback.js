@@ -4,7 +4,7 @@ import { makeBannerABTestVariants } from 'common/modules/commercial/contribution
 export const CirclesBannerHoldback: AcquisitionsABTest = {
     id: 'CirclesBannerHoldback',
     campaignId: 'circles_banner_holdback',
-    start: '2018-01-05',
+    start: '2018-01-11',
     expiry: '2018-02-15',
     author: 'Ap0c',
     description: 'A holdback for the banner colour changes',

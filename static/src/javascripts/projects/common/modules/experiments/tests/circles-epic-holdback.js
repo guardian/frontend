@@ -10,7 +10,7 @@ export const circlesEpicHoldback = makeABTest({
     id: 'CirclesEpicHoldback',
     campaignId: 'circles_epic_holdback',
 
-    start: '2018-01-05',
+    start: '2018-01-11',
     expiry: '2018-02-15',
 
     author: 'Ap0c',
