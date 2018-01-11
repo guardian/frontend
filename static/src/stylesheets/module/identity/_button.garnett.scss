@@ -45,6 +45,12 @@
     &:hover, &:active, &:focus {
         color: #ffffff;
         text-decoration: none;
+        .inline-arrow-right.inline-icon {
+            transform: translateX(3px);
+        }
+        .inline-arrow-left-stem.inline-icon {
+            transform: translateX(-3px);
+        }
     }
 
     &:not(.is-updating, .is-disabled):hover {
