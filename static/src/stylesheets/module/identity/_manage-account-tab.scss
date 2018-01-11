@@ -19,6 +19,7 @@
         padding: $gs-gutter*2;
         .manage-account__button {
             margin-right: 1em;
+            min-width: 0;
         }
     }
 
