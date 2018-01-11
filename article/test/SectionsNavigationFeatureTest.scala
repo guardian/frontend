@@ -12,29 +12,13 @@ import conf.Configuration
 
   feature("Section Navigation") {
 
-    scenario("Links to sections", ArticleComponents) {
-
-      Given("I am on any guardian.co.uk page")
-      goTo("/world/2012/aug/23/australia-mining-boom-end") { browser =>
-
-        Then("I should see a list of top sections")
-
-        val sections = browser.find("#footer-nav li a")
-
-        sections.asScala.length should be > 0
-
-        And("a button to activate that list")
-        browser.$(".navigation-toggle").attribute("href") should include("australia-mining-boom-end#footer-nav")
-      }
-    }
-
     scenario("Link to US edition", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
       goTo("/world/2012/aug/23/australia-mining-boom-end") { browser =>
 
         Then("I should see a link to the US edition")
 
-        val editionLink = browser.el("[data-link-name='switch to US edition']")
+        val editionLink = browser.el("[data-link-name='nav2 : topbar : edition-picker: US']")
 
         editionLink.attribute("href") should be(s"http://localhost:${port}/preference/edition/us")
       }
@@ -46,7 +30,7 @@ import conf.Configuration
 
         Then("I should see a link to the UK edition")
 
-        val editionLink = browser.el("[data-link-name='switch to UK edition']")
+        val editionLink = browser.el("[data-link-name='nav2 : topbar : edition-picker: UK']")
 
         editionLink.attribute("href") should be(s"http://localhost:${port}/preference/edition/uk")
       }
