@@ -189,6 +189,7 @@ $quote-mark: 35px;
         border-top: 0;
         // magic numbers are correcting line heights so vertical alignment appears even
         margin-top: 2px;
+        margin-bottom: -4px;
 
         a {
             padding-bottom: 0;
@@ -253,7 +254,7 @@ $quote-mark: 35px;
         padding-top: 4px;
         font-weight: normal;
         width: 100%;
-        margin-bottom: -$gs-baseline;
+        margin-bottom: -14px;
 
         span[itemprop='author'] {
             font-weight: 700;
@@ -268,6 +269,7 @@ $quote-mark: 35px;
         margin-bottom: -4px;
         display: block;
         padding-bottom: $gs-baseline;
+        padding-top: 2px;
         margin-top: -$gs-baseline / 4;
     }
 
@@ -294,7 +296,9 @@ $quote-mark: 35px;
         @include fs-textSans(1);
         margin: 0;
         margin-top: 0;
-        margin-right: 0px;
+        margin-right: 0;
+        // magic number correcting line height so vertical alignment with datestamp is correct
+        margin-bottom: -2px;
         display: inline-block;
         font-weight: bold;
         text-decoration: none;
