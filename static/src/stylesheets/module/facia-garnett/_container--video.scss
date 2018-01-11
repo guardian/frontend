@@ -370,7 +370,7 @@ $video-width-desktop: 700px;
     border-top: 1px solid $media-default;
     color: #ffffff;
     background-color: rgba(0, 0, 0, .9);
-    height: gs-height(3);
+    min-height: gs-height(3);
     margin-bottom: -(get-line-height(textSans, 3) + 4px);
     pointer-events: auto;
 
@@ -403,7 +403,7 @@ $video-width-desktop: 700px;
         }
 
         @include mq(desktop) {
-            height: get-line-height(headline, 3) * 4;
+            min-height: get-line-height(headline, 3) * 4;
             overflow: hidden;
         }
 
