@@ -27,3 +27,15 @@
 @import 'module/identity/_switches';
 @import 'module/identity/_wizard';
 @import 'module/identity/_consent';
+
+
+
+/* ==========================================================================
+   Misc
+   ========================================================================== */
+
+.dropdown-styled.dropdown--email-subscription {
+    .dropdown__button {
+        text-transform: lowercase;
+    }
+}

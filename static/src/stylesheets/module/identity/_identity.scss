@@ -323,7 +323,6 @@ $identity-header-height: 48px;
         .dropdown__button {
             padding: $gs-baseline / 4 0 $gs-baseline;
             color: $identity-main;
-            text-transform: lowercase;
         }
         .dropdown__label {
             @include fs-bodyHeading(3);
