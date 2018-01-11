@@ -21,8 +21,8 @@ import { circlesEpicHoldback } from 'common/modules/experiments/tests/circles-ep
  */
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
-    circlesEpicHoldback,
     acquisitionsEpicUSGunCampaign,
+    circlesEpicHoldback,
     acquisitionsEpicTestimonialsGroup,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
