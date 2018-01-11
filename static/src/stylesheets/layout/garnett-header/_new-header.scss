@@ -89,9 +89,14 @@ from scrolling */
 
 .new-header__menu-toggle {
     @include mq($until: desktop) {
-        bottom: -$gs-baseline / 2;
         position: absolute;
         right: $gutter-small;
+        top: 24px;
+
+        @include mq(mobileMedium) {
+            bottom: -$gs-baseline / 2;
+            top: auto;
+        }
 
         .new-header--slim & {
             right: $gs-gutter / 2;
@@ -119,8 +124,12 @@ from scrolling */
 .new-header__logo {
     float: right;
     margin-bottom: $gs-baseline + $gs-baseline / 4;
-    margin-right: 5px;
+    margin-right: $gs-gutter / 4 + $veggie-burger-small;
     margin-top: $gs-baseline / 4;
+
+    @include mq(mobileMedium) {
+        margin-right: $gs-gutter / 4;
+    }
 
     @include mq(mobileLandscape) {
         margin-right: 17px;
@@ -199,12 +208,12 @@ from scrolling */
 
 .inline-the-guardian-logo__svg {
     display: block;
-    height: 57px;
-    width: 175px;
+    height: 52px;
+    width: 159px;
 
     @include mq(mobileMedium) {
-        height: 52px;
-        width: 164px;
+        height: 57px;
+        width: 175px;
     }
 
     @include mq(tablet) {

@@ -88,9 +88,14 @@ from scrolling */
 
 .new-header__menu-toggle {
     @include mq($until: desktop) {
-        bottom: -$gs-baseline / 2;
+        top: $gs-baseline / 4;
         position: absolute;
         right: $gutter-small;
+
+        @include mq(mobileMedium) {
+            bottom: -$gs-baseline / 2;
+            top: auto;
+        }
 
         .new-header--slim & {
             right: $gs-gutter / 2;
@@ -132,14 +137,17 @@ from scrolling */
 
 .new-header__logo__svg {
     display: block;
-    height: 34px;
-    margin-bottom: $gs-baseline / 2;
-    margin-right: $gs-gutter / 2;
-    margin-top: $gs-baseline / 2;
-    width: 180px;
+    height: 30px;
+    margin-bottom: $gs-baseline / 4;
+    margin-right: $veggie-burger-small + $gs-gutter / 4;
+    margin-top: 8px;
+    width: 161px;
 
     @include mq(mobileMedium) {
         height: 42px;
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
+        margin-top: $gs-baseline / 2;
         width: 225px;
     }
 
