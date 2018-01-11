@@ -31,7 +31,7 @@ const state = {
 
 const messages = {
     defaultSuccessHeadline:
-        'Please now check your Inbox (or Spam folder) to confirm this subscription',
+        'Check your Inbox to confirm subscription',
     defaultSuccessDesc: '',
 };
 
