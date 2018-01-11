@@ -10,7 +10,7 @@ export const colourTestEpicHoldback = makeABTest({
     id: 'ColourTestEpicHoldback',
     campaignId: 'colour_test_epic_holdback',
 
-    start: '2018-01-11',
+    start: '2018-01-12',
     expiry: '2018-02-15',
 
     author: 'Ap0c',

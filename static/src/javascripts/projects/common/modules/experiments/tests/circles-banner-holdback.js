@@ -4,7 +4,7 @@ import { makeBannerABTestVariants } from 'common/modules/commercial/contribution
 export const ColourTestBannerHoldback: AcquisitionsABTest = {
     id: 'ColourTestBannerHoldback',
     campaignId: 'colour_test_banner_holdback',
-    start: '2018-01-11',
+    start: '2018-01-12',
     expiry: '2018-02-15',
     author: 'Ap0c',
     description: 'A holdback for the banner colour changes',
