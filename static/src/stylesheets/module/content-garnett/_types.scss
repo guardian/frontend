@@ -469,6 +469,24 @@ $quote-mark: 35px;
     .reveal-caption__checkbox:checked ~ .caption--main {
         display: block;
     }
+
+    &:not(.paid-content) .media-primary.media-primary--showcase {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .content__headline {
+        @include fs-headlineGarnett(4);
+        font-weight: 400; // magic number correcting line height so vertical alignment apprears even with labels
+        padding-top: 3px;
+        padding-bottom: $gs-baseline*2;
+        @include mq(tablet) {
+            @include fs-headlineGarnett(6);
+            font-weight: 400;
+            padding-bottom: $gs-baseline*3;
+        }
+    }
+
     //Review stars
     .stars {
         background-color: $news-garnett-highlight;
@@ -760,6 +778,10 @@ $quote-mark: 35px;
         }
     }
 
+    .element .caption {
+        background: #ffffff;
+    }
+
     .quoted {
         .inline-garnett-quote {
             position: absolute;
@@ -772,30 +794,6 @@ $quote-mark: 35px;
             transform-origin: top left;
         }
     }
-
-    &:not(.paid-content) {
-        .content__headline {
-            @include fs-headlineGarnett(4);
-            font-weight: 400; // magic number correcting line height so vertical alignment apprears even with labels
-            padding-top: 3px;
-            padding-bottom: $gs-baseline*2;
-            @include mq(tablet) {
-                @include fs-headlineGarnett(6);
-                font-weight: 400;
-                padding-bottom: $gs-baseline*3;
-            }
-        }
-
-        .media-primary.media-primary--showcase {
-            margin-left: 0;
-            margin-right: 0;
-        }
-        
-        .element .caption {
-            background: #ffffff;
-        }
-    }
-
 }
 // *************** Feature overides *************
 .content--type-feature {
@@ -1450,6 +1448,10 @@ $quote-mark: 35px;
 
     .content__article-body::before {
         background: $garnett-neutral-6;
+    }
+
+    .element .caption {
+        background: transparent;
     }
 }
 
