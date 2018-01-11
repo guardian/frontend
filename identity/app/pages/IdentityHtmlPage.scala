@@ -25,7 +25,9 @@ object IdentityHtmlPage {
       criticalStyleLink(InlineNavigationCSSFile))
     override def criticalCssInline: Html = criticalStyleInline(
       Html(common.Assets.css.head(None)),
-      Html(common.Assets.css.inlineNavigation))
+      Html(common.Assets.css.inlineNavigation),
+      Html(common.Assets.css.inlineIdentity)
+    )
     override def linkCss: Html = HtmlFormat.fill(List(
       stylesheetLink(s"stylesheets/$ContentCSSFile.css"),
       stylesheetLink(s"stylesheets/membership-icons.css")

@@ -4,7 +4,7 @@ import java.nio.charset.Charset
 
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
-import experiments.{ActiveExperiments, GarnettHeader}
+import experiments.{ActiveExperiments, GarnettHeader, GarnettIdentity}
 import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
@@ -60,6 +60,7 @@ object css {
 
   def head(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
   def inlineNavigation(implicit request: RequestHeader, context: ApplicationContext): String = if (ActiveExperiments.isParticipating(GarnettHeader)) inline("head.navigation.garnett") else inline("head.navigation")
+  def inlineIdentity(implicit request: RequestHeader, context: ApplicationContext): String = if (ActiveExperiments.isParticipating(GarnettIdentity)) inline("head.identity.garnett") else inline("head.identity")
   def inlineStoryPackage(implicit context: ApplicationContext): String = inline("story-package")
   def inlineStoryPackageGarnett(implicit context: ApplicationContext): String = inline("story-package-garnett")
   def inlinePhotoEssay(implicit context: ApplicationContext): String = inline("article-photo-essay")
