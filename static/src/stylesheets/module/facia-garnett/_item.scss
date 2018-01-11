@@ -418,3 +418,58 @@ $block-height: 58px;
 .fc-item__timestamp {
     white-space: nowrap;
 }
+
+.fc-item__slideshow {
+    picture {
+        @include mq($until: tablet) {
+            &:nth-child(1n+2) img {
+                display: none;
+            }
+        }
+    }
+
+    img {
+        @include mq(tablet) {
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            opacity: 0;
+        }
+    }
+}
+
+@for $i from 2 through 5 {
+    $hangTime: 4;
+    $fadeTime: 1;
+    $totalLoopTime: $i * ($hangTime + $fadeTime);
+    @keyframes fc-item__slideshow--#{$i} {
+        0% {
+            opacity: 0;
+        }
+        #{(100% / $totalLoopTime) * $fadeTime} {
+            opacity: 1;
+        }
+        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime)} {
+            opacity: 1;
+        }
+        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime + $fadeTime)} {
+            opacity: 0;
+        }
+    }
+    @include mq(tablet) {
+        .fc-item__slideshow--#{$i} {
+            img {
+                animation-duration: #{$totalLoopTime}s;
+                animation-name: fc-item__slideshow--#{$i};
+            }
+
+            @for $j from 2 through $i {
+                picture:nth-child(#{$j}) {
+                    img {
+                        animation-delay: #{($totalLoopTime / $i) * ($j - 1)}s;
+                    }
+                }
+            }
+        }
+    }
+}
