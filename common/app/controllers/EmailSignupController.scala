@@ -65,7 +65,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
   def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
 
     val identityName = EmailNewsletter(listId)
-//                        .orElse(EmailNewsletter.fromV1ListId(listId))
+                        .orElse(EmailNewsletter.fromV1ListId(listId))
                         .map(_.identityName)
 
     identityName match {
