@@ -928,11 +928,11 @@ $pillars: (
             color: $garnett-neutral-1;
         }
 
-        .content__section-label__link[href] {
+        .content__section-label__link {
             color: map-get($palette, altKickerColor);
         }
 
-        .content__series-label__link[href] {
+        .content__series-label__link {
             color: $garnett-neutral-6;
         }
 
@@ -944,7 +944,7 @@ $pillars: (
             background: $live-garnett-dead-background;
         }
 
-        .content__standfirst a[href] {
+        .content__standfirst a {
             color: map-get($palette, altKickerColor);
         }
 
