@@ -90,15 +90,13 @@ case class PrivacyFormData(
       case Some(_) => allowThirdPartyProfiling
     }
 
-    val newConsents = updateConsents(oldUserDO.consents, consents)
-
     UserUpdateDTO(
       statusFields = Some(StatusFields(
         receive3rdPartyMarketing = newReceive3rdPartyMarketing,
         receiveGnmMarketing = newReceiveGnmMarketing,
         allowThirdPartyProfiling = newAllowThirdPartyProfiling
       )),
-      consents = Some(newConsents))
+      consents = Some(consents))
   }
 }
 

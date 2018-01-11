@@ -10,6 +10,10 @@ Messages
             margin: 12.5vh auto 17.5vh;
         }
     }
+    &.identity-forms-message--inline {
+        margin-top: $gs-baseline;
+        margin-bottom: $gs-baseline;
+    }
     .identity-title {
         padding-right: $gs-baseline * 2;
     }

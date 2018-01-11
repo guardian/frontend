@@ -17,7 +17,7 @@ object CommercialDfpReporting {
   val teamKPIReport = "All ab-test impressions and CPM"
   // These IDs correspond to queries saved in DFP's web console.
   val reportMappings = Map(
-    teamKPIReport -> 10060521970L
+    teamKPIReport -> 10060521970L // This report is accessible by the DFP user: "NGW DFP Production"
   )
 
 
