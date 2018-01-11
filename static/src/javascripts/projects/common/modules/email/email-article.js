@@ -20,6 +20,7 @@ import { waitForCheck } from 'common/modules/check-mediator';
 import type { SpacefinderRules } from 'common/modules/spacefinder.js';
 
 export type ListConfig = {
+    listId: string,
     listName: string,
     identityListName: string,
     campaignCode: string,
@@ -46,6 +47,7 @@ const listConfigs: ListConfigs = {
     /* The difference between listName and identityListName:
      listName is a reference used in the javascript for legacy reasons where as the identityListName is is the name stored in the identity model and used in the backend. */
     theFilmToday: {
+        listId: '1950',
         listName: 'theFilmToday',
         identityListName: 'film-today',
         campaignCode: 'film_article_signup',
@@ -61,6 +63,7 @@ const listConfigs: ListConfigs = {
         insertMethod: insertBottomOfArticle,
     },
     theFiver: {
+        listId: '218',
         listName: 'theFiver',
         identityListName: 'the-fiver',
         campaignCode: 'fiver_article_signup',
@@ -76,6 +79,7 @@ const listConfigs: ListConfigs = {
         insertMethod: insertBottomOfArticle,
     },
     labNotes: {
+        listId: '3701',
         listName: 'labNotes',
         identityListName: 'lab-notes',
         campaignCode: 'lab_notes_article_signup',
@@ -91,6 +95,7 @@ const listConfigs: ListConfigs = {
         insertMethod: insertBottomOfArticle,
     },
     euRef: {
+        listId: '3698',
         listName: 'euRef',
         identityListName: 'brexit-briefing',
         campaignCode: 'eu_ref_article_signup',
@@ -106,6 +111,7 @@ const listConfigs: ListConfigs = {
         insertMethod: insertBottomOfArticle,
     },
     usBriefing: {
+        listId: '1493',
         listName: 'usBriefing',
         identityListName: 'today-us',
         campaignCode: 'guardian_today_article_bottom',
@@ -121,6 +127,7 @@ const listConfigs: ListConfigs = {
         insertMethod: insertBottomOfArticle,
     },
     sleevenotes: {
+        listId: '39',
         listName: 'sleevenotes',
         identityListName: 'sleeve-notes',
         campaignCode: 'sleevenotes_article_bottom',
@@ -136,6 +143,7 @@ const listConfigs: ListConfigs = {
         insertMethod: insertBottomOfArticle,
     },
     longReads: {
+        listId: '3322',
         listName: 'longReads',
         identityListName: 'the-long-read',
         campaignCode: 'long_reads_article_bottom',
@@ -151,6 +159,7 @@ const listConfigs: ListConfigs = {
         insertMethod: insertBottomOfArticle,
     },
     bookmarks: {
+        listId: '3039',
         listName: 'bookmarks',
         identityListName: 'bookmarks',
         campaignCode: 'bookmarks_article_bottom',
@@ -166,6 +175,7 @@ const listConfigs: ListConfigs = {
         insertMethod: insertBottomOfArticle,
     },
     greenLight: {
+        listId: '38',
         listName: 'greenLight',
         identityListName: 'green-light',
         campaignCode: 'green_light_article_bottom',
@@ -181,6 +191,16 @@ const listConfigs: ListConfigs = {
         insertMethod: insertBottomOfArticle,
     },
     theGuardianToday: {
+        listId: (() => {
+            switch (config.get('page.edition')) {
+                default:
+                    return '37';
+                case 'US':
+                    return '1493';
+                case 'AU':
+                    return '1506';
+            }
+        })(),
         listName: 'theGuardianToday',
         identityListName: (() => {
             switch (config.get('page.edition')) {
