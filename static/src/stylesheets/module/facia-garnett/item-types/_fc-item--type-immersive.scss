@@ -9,7 +9,6 @@
 
     .fc-item__content {
         background-color: $immersive-garnett-main-1;
-        z-index: 1;
     }
 
     //Todo better way to get this immersive card type to set the height when sublinks. This is fixed height enough to fit two lines of sublink
@@ -29,6 +28,8 @@
     }
 
     .fc-item__media-wrapper {
+        position: static;
+
         img {
             object-fit: cover;
         }
