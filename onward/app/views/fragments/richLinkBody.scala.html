@@ -54,7 +54,13 @@
                         @fragments.inlineSvg("garnett-quote", "icon")
                     }
                 }
-                <a class="rich-link__link">@Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)</a>
+                <a class="rich-link__link">
+                    @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+                        @Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)
+                    } else {
+                        @Html(content.trail.headline)
+                    }
+                </a>
             </h1>
             @if(!content.tags.isMedia && (
                 content.content.cardStyle == Comment ||
