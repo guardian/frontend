@@ -1264,12 +1264,32 @@
                 }
             }
         }
-        .meta__twitter .button {
-            color: $neutral-2-contrasted;
-            background-color: $neutral-6;
-            &:hover {
-                color: $neutral-2-contrasted;
-                background-color: $neutral-3;
+    }
+}
+
+.inline-expand-image {
+    @include mq($until: tablet) {
+        display: none;
+    }
+}
+
+// This section below makes the meta align with the image on leftCol, and has the main media first on mobile.
+.content__head--article {
+    @include mq($until: tablet) {
+        display: flex;
+        flex-direction: column;
+    }
+
+    @include mq($from: leftCol) {
+        @supports (display: grid) {
+            margin-left: -($left-column + $gs-gutter);
+            display: grid;
+            grid-template-columns: ($left-column + $gs-gutter)  1fr;
+            grid-template-areas: 'labels headline-standfirst' 'meta main-media';
+
+            .content--type-guardianview &,
+            .content--type-comment & {
+                grid-template-areas: 'labels headline' 'meta standfirst' 'meta main-media';
             }
         }
         .button--tone-media {
@@ -1281,10 +1301,12 @@
                 border-color: $neutral-3;
             }
         }
-        .content__main-column--audio {
-            .caption--img {
-                color: $neutral-4;
-            }
+    }
+
+    @include mq($from: wide) {
+        @supports (display: grid) {
+            margin-left: -($left-column-wide + $gs-gutter);
+            grid-template-columns: ($left-column-wide + $gs-gutter) 1fr;
         }
         .gu-media-wrapper--audio,
         .vjs-control-bar,
@@ -1352,18 +1374,18 @@
                 }
             }
         }
-    }
-    &.content--gallery {
-        .content__headline:before {
-            @include icon(camera-black-large, $with-width: false);
-        }
-        .content__standfirst {
-            color: $neutral-2-contrasted;
-            a {
-                color: $guardian-brand;
-                &:hover {
-                    border-bottom-color: $guardian-brand;
-                }
+
+        @include mq($from: leftCol) {
+            // adds enough space so that this doesn't clash with the content labels if css gris is not supported
+            top: gs-height(3);
+
+            @supports (display: grid) {
+                grid-area: meta;
+                position: relative !important;
+                top: 0;
+                margin: 0;
+                align-self: start;
+                height: 0;
             }
         }
         .ad-slot--dark {

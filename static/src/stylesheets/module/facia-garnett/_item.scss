@@ -236,6 +236,10 @@ $fc-item-gutter: $gs-gutter / 4;
         .fc-item__timestamp {
             flex: 1;
         }
+        
+        .fc-item__standfirst {
+            padding-bottom: $gs-gutter * .25;
+        }
     }
 }
 
@@ -348,6 +352,26 @@ $block-height: 58px;
         z-index: 1 !important;
     }
 }
+
+// reserve space for comment count on commentable card
+.fc-item--is-commentable:not(.fc-item--type-comment) .fc-item__meta {
+    min-height: 17px; // 17px = 14px height + 3px margin-top of inline-icon
+    min-width: calc(3ch + 16px); // 16px = 14px height + 2px padding-right of inline-icon
+
+    .fc-trail__count--commentcount {
+        display: flex;
+        flex-direction: row;
+
+        &::before {
+            content: '';
+            display: block;
+            flex-grow: 1;
+            height: 100%;
+        } 
+    }
+}
+
+
 
 .fc-item__container > .fc-item__meta {
     display: none;
