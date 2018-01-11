@@ -166,7 +166,9 @@ $header-image-size-desktop: 100px;
         height: $gs-gutter * 1.5;
         width: 1px;
         background-color: $garnett-neutral-4;
-        right: -11px; //has to be 11 to align to the rule on articles
+        // Offset by 1px to the right so that it coincides
+        // with the rule in the body of articles
+        right: -$gs-gutter / 2 - 1;
         top: -$gs-baseline / 2;
 
         @include mq($from: leftCol) {
