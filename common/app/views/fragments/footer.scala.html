@@ -71,16 +71,16 @@
                     <div class="footer__email-container js-footer__email-container">
                     @currentEdition match {
                         case Uk => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.identityNameOverride.getOrElse("today-uk"), "footer-daily-email-uk")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.identityName, "footer-daily-email-uk")
                         }
                         case Us => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUs.identityNameOverride.getOrElse("today-us"), "footer-daily-email-us")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUs.identityName, "footer-daily-email-us")
                         }
                         case Au => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayAu.identityNameOverride.getOrElse("today-au"), "footer-daily-email-au")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayAu.identityName, "footer-daily-email-au")
                         }
                         case International => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.identityNameOverride.getOrElse("today-uk"), "footer-daily-email-int")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.identityName, "footer-daily-email-int")
                         }
                     }
                     </div>
