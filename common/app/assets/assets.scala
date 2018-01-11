@@ -94,11 +94,11 @@ object css {
     }
   }
 
-  private def cssHead(project: String)(implicit request: RequestHeader): String =
+  private def cssHead(project: String)(implicit request: RequestHeader, context: ApplicationContext): String =
     project match {
       case "footballSnaps" => "head.footballSnaps"
       case "facia" => s"head.$FaciaCSSFile"
-      case "identity" => "head.identity"
+      case "identity" => if (ActiveExperiments.isParticipating(GarnettIdentity)) "head.identity.garnett" else "head.identity"
       case "football" => "head.football"
       case "index" => "head.index"
       case "rich-links" => s"head.$RichLinksCSSFile"
