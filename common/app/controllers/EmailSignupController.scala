@@ -8,7 +8,7 @@ import model._
 import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
 import play.api.data.Forms._
 import play.api.data._
-import play.api.data.format.Formats.stringFormat
+import play.api.data.format.Formats._
 import play.api.data.validation.Constraints.emailAddress
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -28,7 +28,8 @@ object emailLandingPage extends StandalonePage {
 
 case class EmailForm(
   email: String,
-  listName: String,
+  listName: Option[String],
+  listId: Option[Int],
   referrer: Option[String],
   campaignCode: Option[String])
 
@@ -38,7 +39,9 @@ class EmailFormService(wsClient: WSClient) {
 
     val idAccessClientToken =Configuration.id.apiClientToken
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
-    val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
+
+    val listName = if(form.listName.isDefined) form.listName else EmailNewsletter.apply(form.listId.get).flatMap(_.identityNameOverride)
+    val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(listName)).fields)
 
     wsClient
       .url(consentMailerUrl)
@@ -52,7 +55,8 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
-      "listName" -> nonEmptyText,
+      "listName" -> optional[String](of[String]),
+      "listId" -> optional[Int](of[Int]),
       "referrer" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String])
     )(EmailForm.apply)(EmailForm.unapply)

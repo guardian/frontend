@@ -254,18 +254,24 @@ const submitForm = (
 
     return event => {
         const emailAddress = $(`.${classes.textInput}`, $form).val();
-        const listName = $(`.${classes.listNameHiddenInput}`, $form).val();
+        // Cached widgets will continue to post listId so have to deal with both until cache clears
+        const listName = $(`.${classes.listNameHiddenInput}`, $form);
+        const listId = $(`.${classes.listIdHiddenInput}`, $form);
+        const listParam = listName
+            ? `&listName=${listName.val()}`
+            : `&listId=${listId.val()}`;
+
         let analyticsInfo;
 
         event.preventDefault();
 
         if (!state.submitting && validate(emailAddress)) {
             const formData = $form.data('formData');
-            const data = `email=${encodeURIComponent(emailAddress)}&listName=${
-                listName
-            }&campaignCode=${formData.campaignCode}&referrer=${
+            const data = `email=${encodeURIComponent(
+                emailAddress
+            )}&campaignCode=${formData.campaignCode}&referrer=${
                 formData.referrer
-            }`;
+            }${listParam}`;
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType
