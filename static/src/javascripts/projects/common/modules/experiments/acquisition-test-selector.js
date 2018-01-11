@@ -14,7 +14,7 @@ import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicTestimonialsGroup } from 'common/modules/experiments/tests/acquisitions-epic-testimonials-group';
-import { circlesEpicHoldback } from 'common/modules/experiments/tests/circles-epic-holdback';
+import { colourTestEpicHoldback } from 'common/modules/experiments/tests/circles-epic-holdback';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -22,7 +22,7 @@ import { circlesEpicHoldback } from 'common/modules/experiments/tests/circles-ep
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
     acquisitionsEpicUSGunCampaign,
-    circlesEpicHoldback,
+    colourTestEpicHoldback,
     acquisitionsEpicTestimonialsGroup,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,

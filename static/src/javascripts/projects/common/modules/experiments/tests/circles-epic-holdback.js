@@ -6,9 +6,9 @@ import {
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { control } from 'common/modules/commercial/acquisitions-copy';
 
-export const circlesEpicHoldback = makeABTest({
-    id: 'CirclesEpicHoldback',
-    campaignId: 'circles_epic_holdback',
+export const colourTestEpicHoldback = makeABTest({
+    id: 'ColourTestEpicHoldback',
+    campaignId: 'colour_test_epic_holdback',
 
     start: '2018-01-11',
     expiry: '2018-02-15',

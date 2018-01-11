@@ -128,7 +128,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-circles-epic-holdback",
+    "ab-colour-test-epic-holdback",
     "A holdback for the epic colour changes",
     owners = Seq(Owner.withGithub("Ap0c")),
     safeState = Off,
@@ -138,7 +138,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-circles-banner-holdback",
+    "ab-colour-test-banner-holdback",
     "A holdback for the banner colour changes",
     owners = Seq(Owner.withGithub("Ap0c")),
     safeState = Off,

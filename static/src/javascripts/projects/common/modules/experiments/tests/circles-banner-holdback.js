@@ -1,9 +1,9 @@
 // @flow
 import { makeBannerABTestVariants } from 'common/modules/commercial/contributions-utilities';
 
-export const CirclesBannerHoldback: AcquisitionsABTest = {
-    id: 'CirclesBannerHoldback',
-    campaignId: 'circles_banner_holdback',
+export const ColourTestBannerHoldback: AcquisitionsABTest = {
+    id: 'ColourTestBannerHoldback',
+    campaignId: 'colour_test_banner_holdback',
     start: '2018-01-11',
     expiry: '2018-02-15',
     author: 'Ap0c',
