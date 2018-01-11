@@ -11,6 +11,9 @@
         max-width: none;
         overflow: hidden;
     }
+    a.u-underline {
+        color: $identity-main;
+    }
     .monocol-wrapper {
         @include mq($until: desktop) {
             padding: 0 $gs-gutter;
