@@ -207,22 +207,6 @@ $quote-mark: 35px;
         }
     }
 
-    .meta__image {
-        padding: 0;
-        margin: 0;
-        border: 0;
-        width: auto;
-        @include mq(mobileLandscape) {
-            margin-right: -$gs-gutter/2;
-        }
-        @include mq(phablet) {
-            margin-right: 0;
-        }
-        @include mq(leftCol) {
-            width: 100%;
-        }
-    }
-
     .byline-img {
         max-width: gs-span(1);
         float: left;
@@ -811,6 +795,22 @@ $quote-mark: 35px;
     .content__headline {
         font-weight: 700;
     }
+
+    .meta__image {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        width: auto;
+        @include mq(mobileLandscape) {
+            margin-right: -$gs-gutter/2;
+        }
+        @include mq(phablet) {
+            margin-right: 0;
+        }
+        @include mq(leftCol) {
+            width: 100%;
+        }
+    }
 }
 // *************** Opinion Styles ***************
 
@@ -936,6 +936,9 @@ $quote-mark: 35px;
             margin-bottom: $gs-baseline;
         }
 
+    }
+    .meta__image {
+        float: none;
     }
 
     .byline-img {
