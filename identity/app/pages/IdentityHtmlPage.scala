@@ -24,7 +24,6 @@ object IdentityHtmlPage {
       },
       criticalStyleLink(InlineNavigationCSSFile))
     override def criticalCssInline: Html = criticalStyleInline(
-      Html(common.Assets.css.head(None)),
       Html(common.Assets.css.inlineNavigation),
       Html(common.Assets.css.inlineIdentity)
     )
