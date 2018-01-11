@@ -40,6 +40,7 @@ class EmailFormService(wsClient: WSClient) {
     val idAccessClientToken = Configuration.id.apiClientToken
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
 
+    // FIXME: Cached widgets will continue to post listId so have to deal with both until cache clears
     val listName = (form.listName, form.listId) match {
       case (None, Some(id)) =>
         EmailNewsletter(id) orElse EmailNewsletter.fromV1ListId(id) map { _.identityName }

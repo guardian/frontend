@@ -254,7 +254,7 @@ const submitForm = (
 
     return event => {
         const emailAddress = $(`.${classes.textInput}`, $form).val();
-        // Cached widgets will continue to post listId so have to deal with both until cache clears
+        // FIXME: Cached widgets will continue to post listId so have to deal with both until cache clears
         const listName = $(`.${classes.listNameHiddenInput}`, $form);
         const listId = $(`.${classes.listIdHiddenInput}`, $form);
         const listParam = listName
