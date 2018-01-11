@@ -11,9 +11,9 @@ import reportError from 'lib/report-error';
 import { spaceFiller } from 'common/modules/article/space-filler';
 
 const richLinkTag = ({ href }: { href: string }): string =>
-    `<aside class=" element element-rich-link element-rich-link--tag 
-                    element--thumbnail element-rich-link--not-upgraded" 
-            data-component="rich-link-tag" 
+    `<aside class=" element element-rich-link element-rich-link--tag
+                    element--thumbnail element-rich-link--not-upgraded"
+            data-component="rich-link-tag"
             data-link-name="rich-link-tag"
             >
         <p><a href="${href}">${href}</a></p>
@@ -49,7 +49,7 @@ const upgradeRichLink = (el: Element): Promise<void> => {
     if (!link) return Promise.resolve();
 
     const href: string = link.href;
-    const host: string = config.get('page.host');
+    const host: string = config.get('page.host') || 'http://localhost:3000';
     const matches: ?(string[]) = href.split(host);
     const isOnMobile: boolean = isBreakpoint({
         max: 'mobileLandscape',
