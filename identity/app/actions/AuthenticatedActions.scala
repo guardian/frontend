@@ -171,7 +171,7 @@ class AuthenticatedActions(
     }
 
   // Play will not let you set up an ActionBuilder with a Refiner hence this empty actionBuilder to set up Auth
-  private def noOpActionBuilder: DefaultActionBuilder = DefaultActionBuilder(anyContentParser)
+  protected def noOpActionBuilder: DefaultActionBuilder = DefaultActionBuilder(anyContentParser)
 
   /** SC_GU_U cookie present */
   def fullAuthAction: ActionBuilder[AuthRequest, AnyContent] =
