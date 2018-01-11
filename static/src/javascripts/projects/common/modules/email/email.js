@@ -256,7 +256,7 @@ const submitForm = (
         // FIXME: Cached widgets will continue to post listId so have to deal with both until cache clears
         const listName = $(`.${classes.listNameHiddenInput}`, $form);
         const listId = $(`.${classes.listIdHiddenInput}`, $form);
-        const listParam = listName
+        const listParam = listName && listName.val()
             ? `&listName=${listName.val()}`
             : `&listId=${listId.val()}`;
 
