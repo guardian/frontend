@@ -27,7 +27,7 @@ export const circlesEpicHoldback = makeABTest({
             products: [],
         },
         {
-            id: 'holdback',
+            id: 'variant',
             products: [],
             options: {
                 template: function makeControlTemplate(variant) {

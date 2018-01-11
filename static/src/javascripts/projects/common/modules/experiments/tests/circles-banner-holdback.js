@@ -23,7 +23,7 @@ export const CirclesBannerHoldback: AcquisitionsABTest = {
             id: 'control',
         },
         {
-            id: 'holdback',
+            id: 'variant',
             options: {
                 engagementBannerParams: {
                     bannerModifierClass: 'circles-banner-holdback',
