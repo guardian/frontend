@@ -30,8 +30,7 @@ const state = {
 };
 
 const messages = {
-    defaultSuccessHeadline:
-        'Check your Inbox to confirm subscription',
+    defaultSuccessHeadline: 'Check your Inbox to confirm subscription',
     defaultSuccessDesc: '',
 };
 
