@@ -1,4 +1,47 @@
 .fc-item--type-media {
+    &.fc-item--audio {
+        .inline-volume-high {
+            position: relative;
+            top: 2px;
+
+            > svg {
+                width: 18px;
+            }
+
+            &::after {
+                display: inline-block;
+                content: '';
+                height: $gs-baseline + 1px;
+                margin: 0 6px;
+                width: 2px;
+            }
+        }
+
+    }
+
+    &.fc-item--gallery {
+        .inline-camera {
+            position: relative;
+            top: 2px;
+
+            > svg {
+                width: 18px;
+            }
+
+            &::after {
+                display: inline-block;
+                content: '';
+                height: $gs-baseline + 1px;
+                margin: 0 6px;
+                width: 2px;
+            }
+        }
+    }
+}
+
+// Styles shared by media and interview types
+.fc-item--type-interview,
+.fc-item--type-media {
     background-color: $media-garnett-main-1;
 
     .inline-icon__svg {
@@ -24,6 +67,24 @@
         color: #ffffff;
     }
 
+    .fc-item__standfirst {
+        color: #ffffff;
+    }
+
+    // darken on hover
+    &:hover,
+    .u-faux-block-link--hover {
+        background-color: darken($media-garnett-main-1, 5%);
+
+        .fc-item__container::before {
+            background-color: darken($media-garnett-main-1, 5%);
+        }
+    }
+
+    .fc-sublink__link {
+        color: #ffffff;
+    }
+
     .fc-item__meta-wrapper {
         flex: 0 1 auto;
         display: flex;
@@ -44,10 +105,6 @@
     .fc-item__media-meta,
     .fc-item__meta {
         flex: 0 0 auto;
-    }
-
-    .fc-item__standfirst {
-        color: #ffffff;
     }
 
     .fc-item__media-meta,

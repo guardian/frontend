@@ -160,11 +160,16 @@ data-test-id="facia-card"
             }
 
             case Some(InlineImage(images)) => {
+                <div class="fc-item__media-wrapper">
+                    @item.starRating.map { rating =>
+                        @starRating(rating)
+                    }
                 @itemImage(
                     images,
                     inlineImage = containerIndex == 0 && index < 4,
                     widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                 )
+                </div>
             }
 
             case Some(InlineSlideshow(imageElements)) => {
@@ -192,7 +197,7 @@ data-test-id="facia-card"
             case _ => {}
         }
 
-        <div class="fc-item__content">
+        <div class="fc-item__content @if(item.starRating.isDefined){fc-item__content--has-stars}">
             @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
                 @kicker(item.header, List("fc-item__kicker--dreamsnap"))
             }
@@ -205,7 +210,6 @@ data-test-id="facia-card"
                 @item.bylineText.map { byline =>
                     <div class="fc-item__byline">@byline</div>
                 }
-
                 @item.starRating.map { rating =>
                     @starRating(rating)
                 }
