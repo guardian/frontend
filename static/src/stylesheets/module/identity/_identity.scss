@@ -282,11 +282,6 @@ $identity-header-height: 48px;
         }
     }
 
-    .tabs__tab--selected {
-        border-top-color: $news-accent;
-        color: $news-accent;
-    }
-
     @include mq($until: tablet) {
         a {
             padding-top: $gs-baseline/4;
@@ -323,7 +318,23 @@ $identity-header-height: 48px;
         .dropdown__button {
             padding: $gs-baseline / 4 0 $gs-baseline;
             color: $identity-main;
-            text-transform: lowercase;
+        }
+        @if($identity-main == $garnett-neutral-1) {
+            &[data-dropdown-label='News'] .dropdown__button {
+                color: $news-garnett-main-1;
+            }
+            &[data-dropdown-label='Sport'] .dropdown__button {
+                color: $sport-garnett-main-1;
+            }
+            &[data-dropdown-label='Culture'] .dropdown__button {
+                color: $culture-garnett-main-1;
+            }
+            &[data-dropdown-label='Lifestyle'] .dropdown__button {
+                color: $lifestyle-garnett-main-1;
+            }
+            &[data-dropdown-label='Comment'] .dropdown__button {
+                color: $opinion-garnett-main-1;
+            }
         }
         .dropdown__label {
             @include fs-bodyHeading(3);

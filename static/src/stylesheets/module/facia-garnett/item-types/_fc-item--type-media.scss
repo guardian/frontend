@@ -7,14 +7,6 @@
             > svg {
                 width: 18px;
             }
-
-            &::after {
-                display: inline-block;
-                content: '';
-                height: $gs-baseline + 1px;
-                margin: 0 6px;
-                width: 2px;
-            }
         }
 
     }
@@ -27,14 +19,6 @@
             > svg {
                 width: 18px;
             }
-
-            &::after {
-                display: inline-block;
-                content: '';
-                height: $gs-baseline + 1px;
-                margin: 0 6px;
-                width: 2px;
-            }
         }
     }
 }
@@ -43,6 +27,16 @@
 .fc-item--type-interview,
 .fc-item--type-media {
     background-color: $media-garnett-main-1;
+
+    .inline-icon__svg {
+        padding: 5px;
+        border-radius: 50%;
+    }
+    .fc-item__video-duration {
+        //ensures the alingment of the timestamp
+        display: inline-block;
+        transform: translateY(-6px);
+    }
 
     .fc-item__content {
         justify-content: space-between;
@@ -111,21 +105,51 @@
         }
     }
 
+    // darken on hover
+    &:hover,
+    .u-faux-block-link--hover {
+        background-color: darken($media-garnett-main-1, 5%);
+
+        .fc-item__container::before {
+            background-color: darken($media-garnett-main-1, 5%);
+        }
+    }
+
+    .fc-sublink__link {
+        color: #ffffff;
+    }
+
+    &.fc-item--audio {
+        .inline-volume-high {
+            position: relative;
+            top: 2px;
+
+            > svg {
+                width: 14px;
+            }
+        }
+
+    }
+
+    &.fc-item--gallery {
+        .inline-camera {
+            position: relative;
+            top: 2px;
+
+            > svg {
+                width: 14px;
+            }
+        }
+    }
+
     &.fc-item--video {
         .inline-video-icon {
             position: relative;
-            top: 7px;
+            top: 2px;
 
             > svg {
-                width: 18px;
-            }
-
-            &::after {
-                display: inline-block;
-                content: '';
-                height: $gs-baseline + 1px;
-                margin: 6px;
-                width: 2px;
+                width: 14px;
+                padding: 0px $gs-gutter/4;
             }
         }
 

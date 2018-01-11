@@ -78,6 +78,11 @@ $pillars: (
         background-color: $darkerCardBackground;
     }
 
+    //overides the most popular list item
+    &.headline-list__item {
+        background-color: #ffffff;
+    }
+
     .fc-item__headline {
         color: $headline;
     }
@@ -98,6 +103,28 @@ $pillars: (
     &.fc-item--type-immersive .fc-item__kicker
     {
         color: map-get($palette, invertedKicker);
+    }
+
+
+    &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker,
+    &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker
+    {
+        color: map-get($palette, kicker);
+        @include mq($from: tablet) {
+            color: map-get($palette, invertedKicker);
+        }
+    }
+
+    &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker,
+    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker
+    {
+        color: map-get($palette, kicker);
+    }
+
+    &.fc-item--list-media-tablet.fc-item--type-immersive .inline-icon,
+    &.fc-item--list-tablet.fc-item--type-immersive .inline-icon
+    {
+        fill: map-get($palette, kicker);
     }
 
     .fc-item__standfirst {
@@ -146,6 +173,7 @@ $pillars: (
         .inline-camera {
             svg {
                 fill: map-get($palette, invertedKicker);
+                border: 1px solid map-get($palette, invertedKicker);
             }
 
             &::after {

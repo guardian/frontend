@@ -93,6 +93,9 @@
     min-width: $gs-gutter * 2;
     max-width: $gs-gutter * 2;
     padding: 0;
+    .inline-icon {
+        margin: 0;
+    }
 }
 
 .manage-account__button--icon {
