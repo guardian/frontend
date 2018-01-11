@@ -101,7 +101,7 @@ class AuthenticatedActions(
             Future.successful(Right(new AuthenticatedRequest(userFormCookie, request)))
 
           case _ =>
-            checkRecentAuthenticationAndRedirect(request)
+            Future.successful(Left(sendUserToSignin(request)))
         }
     }
 
