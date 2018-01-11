@@ -23,6 +23,34 @@
     box-sizing: border-box;
 }
 
+.content .gs-container--grid {
+    @include mq(leftCol) {
+        display: grid;
+        grid-template-areas: 'head head . secondary' '. main . secondary';
+        grid-template-columns: (gs-span(2) + $gs-gutter) gs-span(8) $gs-gutter gs-span(4);
+    }
+
+    .has-feature-showcase-element & {
+        grid-template-areas: 'head head head head' '. main . secondary';
+    }
+
+    @include mq(wide) {
+        grid-template-columns: (gs-span(3) + $gs-gutter) gs-span(8) (gs-span(1) + $gs-gutter * 2) gs-span(4);
+    }
+
+    .content__head {
+        grid-area: head;
+    }
+
+    .content__main-column {
+        grid-area: main;
+    }
+
+    .content__secondary-column {
+        grid-area: secondary;
+    }
+}
+
 .content__main-column {
     max-width: gs-span(8);
     margin: auto;
@@ -54,11 +82,8 @@
     }
 
     @include mq(leftCol) {
-        margin-left: $left-column + $gs-gutter;
-    }
-
-    @include mq(wide) {
-        margin-left: $left-column-wide + $gs-gutter;
+        max-width: none;
+        margin: 0;
     }
 
     &.content__main-column--single-column {
@@ -71,10 +96,6 @@
     &.content__main-column--wide {
         @include mq(desktop) {
             max-width: none;
-        }
-
-        @include mq(wide) {
-            margin-right: gs-span(1) + $gs-gutter;
         }
     }
 
@@ -102,13 +123,6 @@
 }
 
 .content__secondary-column {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-right: $gs-gutter;
-    width: gs-span(4);
-    padding-left: $gs-gutter;
-
     @include mq($until: desktop) {
         display: none;
     }
@@ -1338,7 +1352,7 @@
     @include mq($from: leftCol) {
         @supports (display: grid) {
             display: grid;
-            grid-template-columns: ($left-column + $gs-gutter)  1fr;
+            grid-template-columns: ($left-column + $gs-gutter / 2) 1fr;
             grid-template-areas: 'labels headline-standfirst' 'meta main-media';
 
             .content--type-guardianview &,
@@ -1354,7 +1368,7 @@
 
     @include mq($from: wide) {
         @supports (display: grid) {
-            grid-template-columns: ($left-column-wide + $gs-gutter) 1fr;
+            grid-template-columns: ($left-column-wide + $gs-gutter / 2) 1fr;
         }
     }
 
