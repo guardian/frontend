@@ -12,6 +12,7 @@
 /* ==========================================================================
    Global modules
    ========================================================================== */
+@import 'module/_layout-hints.garnett';
 @import 'module/content-garnett/_article';
 @import 'module/content-garnett/_content';
 @import 'module/content-garnett/_pillars';
@@ -20,7 +21,6 @@
 @import 'module/content-garnett/live-blog/_live-blog.head';
 @import 'module/_breadcrumbs';
 @import 'module/_social';
-@import 'module/_layout-hints';
 @import 'module/_live-pulse';
 @import 'module/content-garnett/_article-immersive';
 @import 'module/content-garnett/_article-minute';

@@ -16,10 +16,25 @@
         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
     </div>
 
+@if((article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
+    <div class="content__headline-showcase-wrapper">
+        <div class="content__header tonal__header">
+
+            <div class="u-cf">
+
+                <h1 class="content__headline" articleprop="headline" @langAttributes(article.content)>
+                @Html(article.trail.headline)
+                </h1>
+            </div>
+        </div>
+    </div>
+}
+
     @fragments.meta.metaInline(article, amp)
 
     <div class="content__headline-standfirst-wrapper">
         <div class="content__header tonal__header">
+
             <div class="u-cf">
 
                 <h1 class="content__headline" articleprop="headline" @langAttributes(article.content)>
@@ -39,14 +54,17 @@
                 @if(article.content.hasTonalHeaderIllustration) {
                     <span class="content__head__illustration hide-on-mobile">@fragments.inlineSvg("illustration-letters", "icon")</span>
                 }
+                @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
 
-                @article.content.starRating.map { rating =>
-                    <span class="u-h" articleprop="reviewRating" articlescope articletype="http://schema.org/Rating">
-                        <meta articleprop="worstRating" content="1" />
-                        <span articleprop="ratingValue">@rating</span> /
-                        <span articleprop="bestRating">5</span> stars
-                    </span>
+                    @article.content.starRating.map { rating =>
+                        <span class="u-h" articleprop="reviewRating" articlescope articletype="http://schema.org/Rating">
+                            <meta articleprop="worstRating" content="1" />
+                            <span articleprop="ratingValue">@rating</span> /
+                            <span articleprop="bestRating">5</span> stars
+                        </span>
+
                     @fragments.items.elements.starRating(rating)
+                    }
                 }
 
                 @article.content.imdb.map { imdbId =>
@@ -89,5 +107,20 @@
         </div>
     </div>
     @fragments.contentMeta(article, page, amp = amp)
+    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
+    <div class="media-primary media-content  media-primary--showcase  ">
+        @article.content.starRating.map { rating =>
+            <span class="u-h" articleprop="reviewRating" articlescope articletype="http://schema.org/Rating">
+                <meta articleprop="worstRating" content="1" />
+                <span articleprop="ratingValue">@rating</span> /
+                <span articleprop="bestRating">5</span> stars
+            </span>
+
+        @fragments.items.elements.starRating(rating)
+        }
+    }
     @fragments.mainMedia(article, amp)
+    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
+    </div>
+    }
 </header>

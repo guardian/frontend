@@ -150,30 +150,12 @@ do you have fonts in localStorage?
                     const fontInfo = fontURL.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/);
                     const fontName = fontInfo[2];
                     const fontHash = fontInfo[1];
-                    @if(ActiveExperiments.isParticipating(Garnett)) {
-                        let garnettHash, garnettURL;
-                        if (fontName === 'GuardianEgyptianWeb') {
-                            garnettHash = 'garnett-20171215';
-                            garnettURL = `https://s3-eu-west-1.amazonaws.com/garnett/20171215/GuardianEgyptianWeb${fontHinting === 'Off' ? '' : fontHinting}.${fontFormat}.json`;
-                        } else {
-                            garnettHash = fontHash;
-                            garnettURL = fontURL;
-                        }
-                        const fontData = localStorage.getItem(fontStorageKey(fontName, garnettHash));
+                    const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
 
-                        if (fontData) {
-                            useFont(font, JSON.parse(fontData).value);
-                        } else {
-                            fetchFont(garnettURL, font, fontName, garnettHash);
-                        }
+                    if (fontData) {
+                        useFont(font, JSON.parse(fontData).value);
                     } else {
-                        const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
-
-                        if (fontData) {
-                            useFont(font, JSON.parse(fontData).value);
-                        } else {
-                            fetchFont(fontURL, font, fontName, fontHash);
-                        }
+                        fetchFont(fontURL, font, fontName, fontHash);
                     }
                 }
                 return true;

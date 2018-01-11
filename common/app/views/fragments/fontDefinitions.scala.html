@@ -1,6 +1,17 @@
-@import conf.Static
+@()(implicit request: RequestHeader)
 
-@List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianTextSansWeb").map { typeface =>
+@import conf.Static
+@import experiments._
+
+@getFonts = @{
+    if(ActiveExperiments.isParticipating(Garnett)) {
+        List("GuardianHeadline", "GuardianTextEgyptianWeb", "GuardianTextSansWeb")
+    } else {
+        List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianTextSansWeb")
+    }
+}
+
+@getFonts.map { typeface =>
     <style class="webfont" data-cache-name="@typeface"
         @List("woff2", "woff", "ttf").map { font =>
             data-cache-file-@font="@Static(s"fonts/${typeface}.${font}.json")"

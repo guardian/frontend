@@ -1,9 +1,6 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
-import debounce from 'lodash/functions/debounce';
-import { scrollTo } from 'lib/scroller';
 
 import loadEnhancers from './modules/loadEnhancers';
 import { newsletterCheckboxClassName } from './consents';
@@ -49,13 +46,50 @@ const updateCounterIndicator = (
         );
     });
 
+const showOrHideBackButtonEl = (
+    buttonBackEl: HTMLElement,
+    position: number
+) => {
+    const displayButtonBack = position > 0;
+    return fastdom.write(() => {
+        buttonBackEl.setAttribute(
+            'aria-hidden',
+            (!displayButtonBack).toString()
+        );
+        if (displayButtonBack) {
+            buttonBackEl.removeAttribute('disabled');
+        } else {
+            buttonBackEl.setAttribute('disabled', 'disabled');
+        }
+        buttonBackEl.classList.toggle(
+            'identity-consent-wizard__revealable--visible',
+            displayButtonBack
+        );
+    });
+};
+
+const showOrHideEmailCounter = (
+    emailCounterEl: HTMLElement,
+    positionName: string
+) => {
+    const displayCounter = positionName === positions.email;
+    return fastdom.write(() => {
+        emailCounterEl.setAttribute(
+            'aria-hidden',
+            (!displayCounter).toString()
+        );
+        emailCounterEl.classList.toggle(
+            'identity-consent-wizard__revealable--visible',
+            displayCounter
+        );
+    });
+};
+
 const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
     window.addEventListener(wizardPageChangedEv, ev => {
         if (ev.target === wizardEl) {
             fastdom
                 .read(() => [
-                    wizardEl.getElementsByClassName('identity-wizard__step')
-                        .length,
                     [
                         ...document.getElementsByClassName(
                             'identity-consent-wizard-counter'
@@ -67,74 +101,19 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                         ),
                     ][0],
                 ])
-                .then(
-                    (
-                        [
-                            stepCount: number,
-                            counterEl: HTMLElement,
-                            buttonBackEl: HTMLElement,
-                        ]
-                    ) =>
-                        fastdom.write(() => {
-                            if (stepCount <= 2) {
-                                buttonBackEl.remove();
-                            } else if (buttonBackEl) {
-                                const displayButtonBack =
-                                    ev.detail.position > 0;
-                                buttonBackEl.setAttribute(
-                                    'aria-hidden',
-                                    (!displayButtonBack).toString()
-                                );
-                                if (displayButtonBack) {
-                                    buttonBackEl.removeAttribute('disabled');
-                                } else {
-                                    buttonBackEl.setAttribute(
-                                        'disabled',
-                                        'disabled'
-                                    );
-                                }
-                                buttonBackEl.classList.toggle(
-                                    'identity-consent-wizard__revealable--visible',
-                                    displayButtonBack
-                                );
-                            }
-                            const displayCounter =
-                                ev.detail.positionName === positions.email;
-                            counterEl.setAttribute(
-                                'aria-hidden',
-                                (!displayCounter).toString()
-                            );
-                            counterEl.classList.toggle(
-                                'identity-consent-wizard__revealable--visible',
-                                displayCounter
-                            );
-                        })
+                .then(([counterEl: HTMLElement, buttonBackEl: HTMLElement]) =>
+                    Promise.all([
+                        showOrHideBackButtonEl(
+                            buttonBackEl,
+                            ev.detail.position
+                        ),
+                        showOrHideEmailCounter(
+                            counterEl,
+                            ev.detail.positionName
+                        ),
+                    ])
                 );
         }
-    });
-};
-
-const shouldNextButtonScroll = (): Promise<boolean> =>
-    fastdom.read(
-        () =>
-            window.scrollY + window.innerHeight + 100 <
-            (document.body ? document.body.clientHeight : 0)
-    );
-
-const bindScrollForNextButton = (buttonEl: HTMLElement): void => {
-    const check = () =>
-        shouldNextButtonScroll().then(shouldIt =>
-            fastdom.write(() => {
-                buttonEl.classList.toggle(
-                    'manage-account__button--icon--rotate-down',
-                    shouldIt
-                );
-            })
-        );
-
-    mediator.on('window:throttledScroll', debounce(check, 100));
-    window.addEventListener(wizardPageChangedEv, () => {
-        check();
     });
 };
 
@@ -146,19 +125,9 @@ const bindNextButton = (buttonEl: HTMLElement): void => {
     if (wizardEl && wizardEl instanceof HTMLElement) {
         buttonEl.addEventListener('click', (ev: Event) => {
             ev.preventDefault();
-            shouldNextButtonScroll().then(shouldIt => {
-                if (shouldIt) {
-                    scrollTo(
-                        window.scrollY + window.innerHeight * 0.75,
-                        250,
-                        'linear'
-                    );
-                } else {
-                    getWizardInfoObject(wizardEl).then(wizardInfo =>
-                        setPosition(wizardEl, wizardInfo.position + 1)
-                    );
-                }
-            });
+            getWizardInfoObject(wizardEl).then(wizardInfo =>
+                setPosition(wizardEl, wizardInfo.position + 1)
+            );
         });
     } else {
         throw new Error(ERR_IDENTITY_CONSENT_WIZARD_MISSING);
@@ -195,7 +164,6 @@ const enhanceConsentWizard = (): void => {
         ['.identity-wizard--consent', bindEmailConsentCounterToWizard],
         ['.identity-wizard--consent', showWizard],
         ['.js-identity-consent-wizard__next', bindNextButton],
-        ['.js-identity-consent-wizard__next', bindScrollForNextButton],
     ];
     loadEnhancers(loaders);
 };

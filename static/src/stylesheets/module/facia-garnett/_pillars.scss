@@ -104,13 +104,19 @@ $pillars: (
     //this is to make the colour lighter for the media cards
     &.fc-item--audio .fc-item__kicker,
     &.fc-item--gallery .fc-item__kicker,
-    &.fc-item--video .fc-item__kicker
+    &.fc-item--video .fc-item__kicker,
+    &.video-playlist__item .fc-item__kicker,
+    &.fc-item--type-immersive .fc-item__kicker
     {
         color: map-get($palette, invertedKicker);
     }
 
     .fc-item__standfirst {
         color: $headline;
+    }
+
+    &.fc-item--type-immersive .fc-item__standfirst {
+        color: #ffffff;
     }
 
     .fc-item__sublinks {
@@ -135,7 +141,17 @@ $pillars: (
         color: map-get($palette, featureHeadline);
     }
 
-    &.fc-item--type-media {
+    &.video-playlist__item .video-overlay {
+        border-top-color:  map-get($palette, invertedKicker);
+    }
+
+    &.video-playlist__item .inline-icon {
+        fill: map-get($palette, invertedKicker);
+    }
+
+
+    &.fc-item--type-media,
+    &.fc-item--type-interview {
         .inline-video-icon,
         .inline-volume-high,
         .inline-camera {
@@ -149,18 +165,22 @@ $pillars: (
         }
     }
 
-    &.fc-item--type-media {
+    &.fc-item--type-media,
+    &.fc-item--type-immersive {
         .fc-sublink__kicker {
-            color: map-get($palette, kicker);
+            color: map-get($palette, invertedKicker);
         }
     }
-
 
     .fc-item__media-meta {
         color: map-get($palette, invertedKicker);
     }
 
     .vjs-big-play-button .vjs-control-text:before {
+        background-color: map-get($palette, kicker);
+    }
+
+    .youtube-media-atom__play-button {
         background-color: map-get($palette, kicker);
     }
 

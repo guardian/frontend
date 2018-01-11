@@ -1,9 +1,8 @@
 package controllers
 
 import actions.AuthenticatedActions
-import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.cookie.GuUCookieData
-import com.gu.identity.model.Consent.FirstParty
+import com.gu.identity.model.Consent.Supporter
 import com.gu.identity.model._
 import form._
 import idapiclient.{TrackingData, _}
@@ -11,20 +10,19 @@ import idapiclient.Auth
 import idapiclient.responses.Error
 import model.{Countries, PhoneNumbers}
 import com.gu.identity.model.EmailNewsletters
+import controllers.editprofile.EditProfileController
 import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
 import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
-import play.api.data.Form
 import play.api.http.HttpConfiguration
 import play.api.mvc._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services._
 import test._
-
 import scala.concurrent.Future
 
 //TODO test form validation and population of form fields.
@@ -50,7 +48,7 @@ import scala.concurrent.Future
     val httpConfiguration = HttpConfiguration.createWithDefaults()
 
     val userId: String = "123"
-    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
+    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
     val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
@@ -81,10 +79,11 @@ import scala.concurrent.Future
       csrfCheck,
       csrfAddToken,
       returnUrlVerifier,
-      profileFormsMapping,
-      controllerComponent,
       newsletterService,
-      httpConfiguration
+      profileFormsMapping,
+      testApplicationContext,
+      httpConfiguration,
+      controllerComponent
     )
   }
 
@@ -134,7 +133,7 @@ import scala.concurrent.Future
 
     "submitPrivacyForm method is called with valid CSRF request" should {
       "post UserUpdateDTO with consent to IDAPI" in new EditProfileFixture {
-        val consent = Consent(FirstParty.id, "user", false)
+        val consent = Consent(Supporter.id, "user", false)
 
         val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(

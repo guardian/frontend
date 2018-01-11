@@ -1,7 +1,6 @@
 @import conf.switches.Switches.ProfileShowCancelContributor
-@import conf.switches.Switches.ProfileShowChangeContributionAmount
 
-@(user: com.gu.identity.model.User)
+@(user: com.gu.identity.model.User)(implicit request: RequestHeader)
 <div class="is-hidden js-contribution-info">
     <ul class="details-list u-unstyled js-contribution-details">
         <li class="details-list__item">
@@ -40,11 +39,9 @@
             <div class="fieldset__fields">
                 <div class="form-field">
                     <span id="qa-contribution-next-payment-price" class="js-contribution-next-payment-price"></span>
-                    @if(ProfileShowChangeContributionAmount.isSwitchedOn) {
-                        <button id="qa-change-contribution-amount" class="manage-account__button manage-account-cta js-manage-account-change-contribution-amount" data-link-name="Change contribution" data-email="@user.primaryEmailAddress">
-                            Change amount
-                        </button>
-                    }
+                    <button id="qa-change-contribution-amount" class="manage-account__button manage-account-cta js-manage-account-change-contribution-amount" data-link-name="Change contribution" data-email="@user.primaryEmailAddress">
+                        Change amount
+                    </button>
                 </div>
             </div>
         </li>

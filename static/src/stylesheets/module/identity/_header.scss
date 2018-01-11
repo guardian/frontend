@@ -101,3 +101,13 @@ $height: $identity-header-height - ($gutter * 2);
         transition: transform 250ms ease-out;
     }
 }
+
+.identity-header-flex-wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: stretch;
+    & > .identity-header-flex-wrap__content {
+        flex: 1 1 auto;
+    }
+}
