@@ -3,6 +3,8 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.ContentOldAgeDescriber
 @import experiments._
+@import _root_.model.ContentDesignType.RichContentDesignType
+
 
 @byline() = {
     @item match {
@@ -28,7 +30,7 @@
 
     @if(!(item.content.isGallery || item.content.isImmersive)) {
 
-        @if(!item.content.hasTonalHeaderByline) {
+        @if(!(item.content.hasTonalHeaderByline && item.metadata.designType.nameOrDefault != "analysis")) {
             <div class="meta__contact-wrap">
             @byline()
         }
@@ -48,7 +50,7 @@
             }
         }
 
-        @if(!item.content.hasTonalHeaderByline) {
+        @if(!(item.content.hasTonalHeaderByline && item.metadata.designType.nameOrDefault != "analysis")) {
         </div>
         }
     }
@@ -85,7 +87,7 @@
     @if(item.trail.byline.isEmpty){ content__meta-container--no-byline}
     @if(item.tags.isLiveBlog) { content__meta-container--liveblog}
     @if(item.elements.hasShowcaseMainElement && !item.content.isImmersive){ content__meta-container--showcase}
-    @if(item.content.hasTonalHeaderByline){ content__meta-container--tonal-header}
+    @if(item.content.hasTonalHeaderByline && item.metadata.designType.nameOrDefault != "analysis"){ content__meta-container--tonal-header}
     @item.content.contributorBio.map { bio => content__meta-container--bio}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">

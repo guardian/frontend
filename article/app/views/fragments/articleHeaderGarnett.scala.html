@@ -3,9 +3,11 @@
 @import views.html.fragments.langAttributes
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
+@import _root_.model.ContentDesignType.RichContentDesignType
 
-<header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)
-    @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) { content__head--byline-pic}">
+
+    <header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)
+    @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage && article.metadata.designType.nameOrDefault != "analysis") { content__head--byline-pic}">
     <div class="matchreport">
         <div class="js-score"></div>
         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
@@ -36,11 +38,11 @@
                     @Html(article.trail.headline)
                 </h1>
 
-                @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) {
+                @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage && article.metadata.designType.nameOrDefault != "analysis") {
                     @fragments.meta.bylineImage(article.tags)
                 }
 
-                @if(article.content.hasTonalHeaderByline) {
+                @if(article.content.hasTonalHeaderByline && article.metadata.designType.nameOrDefault != "analysis") {
                     @article.trail.byline.map { text =>
                         <span class="content__headline content__headline--byline">@ContributorLinks(text, article.tags.contributors)</span>
                     }
