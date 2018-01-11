@@ -430,6 +430,11 @@ $identity-header-height: 48px;
 
     &.email-unsubscribe {
         float: none;
+        &.is-updating {
+            svg {
+                display: none;
+            }
+        }
     }
 
     &.email-unsubscribe--confirm,
@@ -469,7 +474,7 @@ $identity-header-height: 48px;
     display: inline;
 
     &.hide {
-        display: none;
+        display: none!important;
     }
 }
 
