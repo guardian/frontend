@@ -96,6 +96,11 @@
                     .fc-item__meta {
                         display: flex;
                     }
+
+                    .fc-item__timestamp,
+                    .fc-trail__count--commentcount {
+                        background-color: transparent;
+                    }
                 }
             }
         }
