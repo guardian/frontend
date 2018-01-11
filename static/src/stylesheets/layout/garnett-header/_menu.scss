@@ -89,6 +89,10 @@
     @include mq(desktop) {
         margin-top: -20px ;
         padding: 0 $gs-gutter;
+
+        .new-header--slim & {
+            margin-top: -10px;
+        }
     }
 }
 
