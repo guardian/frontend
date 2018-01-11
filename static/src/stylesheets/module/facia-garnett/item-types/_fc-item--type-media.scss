@@ -23,8 +23,8 @@
     }
 }
 
-// Styles shared by media and interview types
-.fc-item--type-interview,
+// Styles shared by media and interview (video) types
+.fc-item--type-interview.fc-item--video,
 .fc-item--type-media {
     background-color: $media-garnett-main-1;
 
