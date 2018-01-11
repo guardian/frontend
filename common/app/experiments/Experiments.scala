@@ -1,6 +1,7 @@
 package experiments
 
 import conf.switches.Owner
+import conf.switches.Switches.{ GarnettLaunch, GarnettHeaderLaunch }
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -61,7 +62,9 @@ object GarnettHeader extends Experiment(
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("zeftilldeath")),
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup = Perc0A
-)
+) {
+  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettHeaderLaunch.isSwitchedOn
+}
 
 object Garnett extends Experiment(
   name = "garnett",
@@ -69,7 +72,9 @@ object Garnett extends Experiment(
   owners = Seq(Owner.withName("dotcom.platform")),
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup= Perc0C
-)
+) {
+  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettLaunch.isSwitchedOn
+}
 
 object HideShowMoreButtonExperiment extends Experiment(
   name = "remove-show-more-ab",
