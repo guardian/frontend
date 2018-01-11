@@ -153,6 +153,10 @@ $header-image-size-desktop: 100px;
             float: left;
             width: gs-span(4);
         }
+
+        &:after {
+            display: none;
+        }
     }
 
     &:after {
