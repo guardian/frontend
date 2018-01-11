@@ -14,6 +14,16 @@ const adSpec = {
 };
 
 describe('Cross-frame messenger: setBackground', () => {
+    class IntersectionObserver {
+        constructor() {
+            return Object.freeze({
+                observe: () => {},
+                unobserve: () => {},
+                disconnect: () => {},
+            });
+        }
+    }
+
     beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `
@@ -21,6 +31,12 @@ describe('Cross-frame messenger: setBackground', () => {
                   <div id="slot01"><div id="iframe01" class="iframe"></div></div>
               </div>`;
         }
+
+        Object.defineProperty(global, 'IntersectionObserver', {
+            value: IntersectionObserver,
+            writable: true,
+        });
+
         expect.hasAssertions();
     });
 
