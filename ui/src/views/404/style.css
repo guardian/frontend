@@ -1,7 +1,7 @@
 .wrapper {
     &:before {
         content: '';
-        background: var(--colour-brand-blue);
+        background: #e7edef;
         position: fixed;
         top: 0;
         right: 0;
@@ -38,17 +38,17 @@
 .logoWrapper {
     display: block;
     margin: 6px 0 36px auto;
-    max-width: 384px;
-    width: 65%;
+    max-width: 295px;
+    width: 55%;
     position: relative;
     z-index: 1;
 
     @media (--from-tablet) {
-        width: 384px;
+        width: 295px;
     }
 
     @media (--from-desktop) {
-        margin-bottom: -60px;
+        margin-bottom: -94px;
     }
 }
 
@@ -105,7 +105,7 @@
 }
 
 .heading {
-    color: var(--colour-news-support1);
+    color: var(--colour-garnett-neutral-1);
     font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
     font-size: 28px;
     font-weight: 200;
@@ -119,7 +119,7 @@
 }
 
 .bodyCopy {
-    color: #ffffff;
+    color: var(--colour-garnett-neutral-1);
     font-family: "Guardian Text Egyptian Web", Georgia, serif;
     font-size: 15px;
     margin-bottom: 24px;
@@ -132,13 +132,13 @@
 }
 
 .link {
-    border-bottom: 2px solid var(--colour-news-support2);
-    color: #ffffff;
+    border-bottom: 2px solid #aabfc7;
+    color: var(--colour-garnett-neutral-1);
     padding-bottom: 3px;
     text-decoration: none;
     transition: border-color .3s;
 
     &:hover {
-        border-color: var(--colour-news-support8);
+        border-color: var(--colour-garnett-neutral-1);
     }
 }
