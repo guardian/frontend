@@ -5,7 +5,7 @@
         background-color: #ffe399;
     }
 
-    .contributions__contribute--epic {
+    a[href].contributions__contribute--epic {
         background-color: $multimedia-main-2;
 
         &:hover {
