@@ -40,7 +40,6 @@
 
     > .manage-account__button-flexwrap {
         width: 100%;
-        height: 100%;
     }
 
     &:hover, &:active, &:focus {
@@ -58,14 +57,17 @@
 
     .inline-icon {
         transition: .125s;
-        display: flex;
-        margin: 0 ($gs-gutter * -.5);
+        display: inline-block;
+        height: 28px;
+        width: 28px;
+        vertical-align: middle;
+        margin: 0 ($gs-gutter / 2 * -1) 0 ($gs-gutter/2);
         &, & * {
             fill: currentColor;
         }
         svg {
-            height: 28px;
-            width: 28px;
+            width: 100%;
+            height: 100%;
         }
         &.inline-cross {
             transform: scale(.5);
