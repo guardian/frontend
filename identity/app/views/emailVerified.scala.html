@@ -21,7 +21,7 @@
         <div class="identity-forms-message__body">
             @if(state.isValidated){
                 <p>Your email address has been validated.</p>
-                <a class="manage-account__button" href="@returnUrl" data-link-name="Continue">Continue</a>
+                <a class="u-underline manage-account__button" href="@returnUrl" data-link-name="Continue">Continue</a>
             } else {
                 @if(state.isExpired){
                     <p>The link in the email we sent you is valid for 30 minutes for security.</p>
