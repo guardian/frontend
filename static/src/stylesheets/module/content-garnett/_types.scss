@@ -855,7 +855,7 @@ $quote-mark: 35px;
         margin-top: 8px;
 
         @include mq(leftCol) {
-            margin-top: -4px;
+            margin-top: -$gs-baseline/2;
         }
     }
 
@@ -865,19 +865,20 @@ $quote-mark: 35px;
         }
     }
 
-    .meta__twitter {
+    .meta__twitter,
+    .meta__email {
         display: block;
         padding-top: 8px;
+        // magic number used to align date stamp with Twitter handle
+        margin-top: -3px;
+        margin-bottom: -$gs-baseline;
         @include mq($from: leftCol) {
             padding-top: -8px;
             margin-top: -$gs-baseline;
+            margin-bottom: 0;
         }
     }
 
-    .meta__twitter + .content__dateline {
-        // magic number used to align date stamp with Twitter handle
-        margin-top: -3px;
-    }
 
     .content__header {
         @include multiline(8, $garnett-neutral-4);
