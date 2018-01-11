@@ -260,7 +260,8 @@
     .vjs-volume-level,
     .vjs-volume-level:before,
     .youtube-media-atom__bottom-bar__duration:before,
-    .youtube-media-atom__play-button:before {
+    .youtube-media-atom__play-button:before,
+    .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before {
         background: $mediaColor;
     }
 
@@ -277,6 +278,7 @@
     .vjs-playing .vjs-play-control {
         @include icon(pause-icon--#{$pillar});
     }
+
 }
 
 .paid-content,
