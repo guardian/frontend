@@ -485,16 +485,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val ProfileShowChangeContributionAmount = Switch(
-    SwitchGroup.Feature,
-    "profile-show-change-contribution-amount",
-    "When ON, the edit profile page will include the change (amount) button for recurring contributors",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 11),
-    exposeClientSide = true
-  )
-
   // Admin Audit Switches:
 
   val AdminRemovePressR2 = Switch(
@@ -614,6 +604,17 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("quarpt")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+  )
+
+  // When this switch is deleted, all the old navigation can be deleted as well
+  val NewDesktopNavigation = Switch(
+    SwitchGroup.Feature,
+    "new-desktop-navigation",
+    "When ON, the new desktop navigation will show to all the audience (this is the design with 5 pillars)",
+    owners = Seq(Owner.withGithub("NataliaLKB")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 1, 24),
     exposeClientSide = false
   )
 }

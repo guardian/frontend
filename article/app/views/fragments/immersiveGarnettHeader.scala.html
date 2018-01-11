@@ -1,7 +1,7 @@
 @()(implicit page: model.ContentPage, request: RequestHeader, applicationContext: model.ApplicationContext)
 
 <div class="@if(page.item.fields.main.nonEmpty) { immersive-header-container }">
-    @if(experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {
+    @if(conf.switches.Switches.NewDesktopNavigation.isSwitchedOn) {
         @fragments.header()
     }
     @fragments.immersiveGarnettMainMedia()

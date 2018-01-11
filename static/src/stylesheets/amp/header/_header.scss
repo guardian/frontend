@@ -24,14 +24,17 @@
 
 .header__logo__svg {
     display: block;
-    height: calc(3 / 16 * 170px);
-    width: 170px;
-    margin-bottom: $gs-baseline / 2;
-    margin-right: $gs-gutter / 2;
-    margin-top: $gs-baseline / 2;
+    height: 30px;
+    margin-bottom: $gs-baseline / 4;
+    margin-right: $veggie-burger-small + $gs-gutter / 4;
+    margin-top: 8px;
+    width: 161px;
 
     @include mq(mobileMedium) {
-        height: calc(3 / 16 * 225px);
+        height: 42px;
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
+        margin-top: $gs-baseline / 2;
         width: 225px;
     }
 
