@@ -13,7 +13,7 @@
     transition: background-color .3s;
 
     &:hover {
-        background-color: #595959;
+        background-color: #567681;
 
         & > svg {
             transform: translate(5px, -50%);
