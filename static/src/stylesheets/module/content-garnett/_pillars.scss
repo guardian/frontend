@@ -279,6 +279,10 @@
     @include colorPalatte($news-garnett-main-1, $news-garnett-feature, $news-garnett-media-main-1);
 }
 
+// #? There is a lot of :not(.paid-content) to avoid having to override
+// after the fact.
+// - should the pillar and type classes be added on the condition that isPaidContent is false?
+// - or is it easier to just override everything in a separate module scoped with .paid-content?
 .content--pillar-opinion:not(.paid-content),
 .content--type-comment:not(.paid-content),
 .content--type-guardianview:not(.paid-content) {
