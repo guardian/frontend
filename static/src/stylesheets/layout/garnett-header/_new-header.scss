@@ -220,10 +220,10 @@ from scrolling */
 }
 
 .new-header--slim {
-    border-bottom: 1px solid $rule;
-    height: 32px;
+    height: 0;
 
     @include mq(tablet) {
+        border-bottom: 1px solid $rule;
         height: $slim-nav-height;
     }
 }
