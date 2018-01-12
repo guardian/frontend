@@ -300,7 +300,7 @@ $quote-mark: 35px;
         a {
             color: $garnett-neutral-6;
 
-            .inline-tone-fill {
+            .inline-icon {
                 fill: $garnett-neutral-6;
             }
 
@@ -985,7 +985,7 @@ $quote-mark: 35px;
 // *************** Media Styles ***************
 
 .content--media:not(.paid-content) {
-    &.tonal--tone-media {
+    &.content--media {
         background-color: $garnett-neutral-1;
     }
 
@@ -1023,7 +1023,6 @@ $quote-mark: 35px;
     .content__standfirst,
     .from-content-api,
     .meta__numbers .sharecount__value,
-    .tone-colour,
     a {
         color: $garnett-neutral-4;
     }
@@ -1087,7 +1086,7 @@ $quote-mark: 35px;
         padding-top: 0;
     }
 
-    .inline-tone-fill,
+    .inline-icon,
     .meta__numbers .inline-share svg,
     .social-icon__svg {
         fill: $garnett-neutral-4;
