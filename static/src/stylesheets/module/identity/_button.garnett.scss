@@ -80,6 +80,11 @@
         }
     }
 
+    &.manage-account__button--center {
+        text-align: center;
+        justify-content: center;
+    }
+
     &-half--left {
         width: $gs-baseline*5;
         border-top-right-radius: 0;
