@@ -52,7 +52,7 @@ trait EmailsTab
   /** POST /privacy/edit-ajax */
   def saveConsentPreferencesAjax: Action[AnyContent] =
     csrfCheck {
-      consentAuthWithIdapiUserAction().async { implicit request =>
+      consentAuthWithIdapiUserAction.async { implicit request =>
         val userDO = request.user
         val marketingConsentForm: Form[PrivacyFormData] = Form(profileFormsMapping.privacyMapping.formMapping)
 
