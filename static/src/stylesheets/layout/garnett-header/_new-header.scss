@@ -124,7 +124,7 @@ from scrolling */
 .new-header__logo {
     float: right;
     margin-bottom: $gs-baseline + $gs-baseline / 4;
-    margin-right: $gs-gutter / 4;
+    margin-right: $gs-gutter / 4 + $veggie-burger-small;
     margin-top: $gs-baseline / 4;
 
     @include mq(mobileMedium) {
