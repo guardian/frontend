@@ -121,7 +121,8 @@
     }
 
     .comment-share-icon,
-    .d-show-more-replies__button.button--show-more svg {
+    .d-show-more-replies__button.button--show-more svg,
+    .inline-reply.blue {
         fill: $garnett-neutral-6;
         left: $gs-gutter/3;
     }
@@ -196,6 +197,13 @@
             border: 1px solid $kickerColor;
         }
     }
+
+    .d-comment__recommend--clicked,
+    .d-comment__recommend--recommended,
+    .d-comment__recommend-pulse,
+    .d-comment__recommend-pulse {
+        background-color: $kickerColor;
+    }
 }
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
@@ -249,12 +257,12 @@
         color: $mediaColor;
     }
 
+    .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before,
     .vjs-play-progress,
     .vjs-volume-level,
     .vjs-volume-level:before,
     .youtube-media-atom__bottom-bar__duration:before,
-    .youtube-media-atom__play-button:before,
-    .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before {
+    .youtube-media-atom__play-button:before {
         background: $mediaColor;
     }
 
@@ -271,44 +279,43 @@
     .vjs-playing .vjs-play-control {
         @include icon(pause-icon--#{$pillar});
     }
-
 }
 
-.paid-content,
-.content--pillar-news {
+.content--pillar-news,
+.paid-content {
     @include colorPalatte($news-garnett-main-1, $news-garnett-feature, $news-garnett-media-main-1);
 }
-
 // #? There is a lot of :not(.paid-content) to avoid having to override
 // after the fact.
 // - should the pillar and type classes be added on the condition that isPaidContent is false?
 // - or is it easier to just override everything in a separate module scoped with .paid-content?
+
 .content--pillar-opinion:not(.paid-content),
 .content--type-comment:not(.paid-content),
 .content--type-guardianview:not(.paid-content) {
     @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
 }
 
-.content--pillar-arts:not(.paid-content),
 .content--pillar-arts.content--type-comment:not(.paid-content),
-.content--pillar-arts.content--type-guardianview:not(.paid-content) {
+.content--pillar-arts.content--type-guardianview:not(.paid-content),
+.content--pillar-arts:not(.paid-content) {
     @include colorPalatte($culture-garnett-main-1, $culture-garnett-feature, $culture-garnett-media-main-1);
 }
 
-.content--pillar-lifestyle:not(.paid-content),
 .content--pillar-lifestyle.content--type-comment:not(.paid-content),
-.content--pillar-lifestyle.content--type-guardianview:not(.paid-content) {
+.content--pillar-lifestyle.content--type-guardianview:not(.paid-content),
+.content--pillar-lifestyle:not(.paid-content) {
     @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
 }
 
-.content--pillar-sport:not(.paid-content),
 .content--pillar-sport.content--type-comment:not(.paid-content),
-.content--pillar-sport.content--type-guardianview:not(.paid-content) {
+.content--pillar-sport.content--type-guardianview:not(.paid-content),
+.content--pillar-sport:not(.paid-content) {
     @include colorPalatte($sport-garnett-main-1, $sport-garnett-feature, $sport-garnett-media-main-1);
 }
 
-.paid-content,
-.content-footer--pillar-news {
+.content-footer--pillar-news,
+.paid-content {
     @include footerPalette($news-garnett-main-1);
 }
 
