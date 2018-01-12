@@ -513,6 +513,15 @@
         @include mq(wide) {
             margin-left: -(gs-span(3) + $gs-gutter * 2);
         }
+
+        //important overrides the hide on mobile class
+        .block-share {
+            display: none!important;
+        }
+    }
+
+    .element-image.element--showcase {
+        margin-bottom: $gs-gutter/2;
     }
 
     figure.element--showcase,
@@ -620,10 +629,11 @@
             z-index: 10;
             position: relative;
             padding-left: $gs-baseline;
+            padding-right: $gs-baseline;
             left: -$gs-baseline / 2;
             padding-top: 0;
             //This allows the headline block to be aligned to the left and not run full width
-            width: 94%;
+            width: 90%;
             padding-bottom: $gs-baseline;
             min-height: 112px;
 
