@@ -21,7 +21,7 @@
     }
 
     @include mq($from: desktop) {
-        &:nth-child(6):before {
+        &.headline-column__item:nth-child(6):before {
             display: none;
         }
     }
