@@ -171,26 +171,17 @@ $quote-mark: 35px;
 
     .meta__contact-wrap {
         float: left;
-        max-width: gs-span(3) + $gs-gutter/2;
-        @include mq(mobileMedium) {
-            max-width: gs-span(4) - $gs-column-width/2;
-        }
+        // magic numbers used for custom byline image
+        max-width: calc(100% - 90px);
         @include mq(mobileLandscape) {
-            max-width: 70%;
-        }
-        @include mq(phablet) {
-            padding-left: 0;
+            max-width: calc(100% - 110px);
         }
         @include mq(leftCol) {
             max-width: 100%;
         }
+
     }
 
-    .meta__image + .meta__contact-wrap {
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter/2;
-        }
-    }
     .content__main-column--article .badge--alt {
         padding-bottom: $gs-baseline;
     }
@@ -200,6 +191,7 @@ $quote-mark: 35px;
         border-top: 0;
         // magic numbers are correcting line heights so vertical alignment appears even
         margin-top: 2px;
+        margin-bottom: -4px;
 
         a {
             padding-bottom: 0;
@@ -217,18 +209,8 @@ $quote-mark: 35px;
         }
     }
 
-    .meta__image {
-        padding: 0;
-        margin: 0;
-        border: 0;
-        width: auto;
-        @include mq(leftCol) {
-            width: 100%;
-        }
-    }
-
     .byline-img {
-        max-width: gs-span(1)/2;
+        max-width: gs-span(1);
         float: left;
         border-top: 0;
         margin: 3px 0 $gs-baseline $gs-gutter/2;
@@ -258,7 +240,7 @@ $quote-mark: 35px;
         padding-top: 4px;
         font-weight: normal;
         width: 100%;
-        margin-bottom: -$gs-baseline;
+        margin-bottom: -14px;
 
         span[itemprop='author'] {
             font-weight: 700;
@@ -273,8 +255,8 @@ $quote-mark: 35px;
         margin-bottom: -4px;
         display: block;
         padding-bottom: $gs-baseline;
+        padding-top: 2px;
         margin-top: -$gs-baseline / 4;
-
     }
 
     .old-article-message {
@@ -300,7 +282,9 @@ $quote-mark: 35px;
         @include fs-textSans(1);
         margin: 0;
         margin-top: 0;
-        margin-right: 0px;
+        margin-right: 0;
+        // magic number correcting line height so vertical alignment with datestamp is correct
+        margin-bottom: -2px;
         display: inline-block;
         font-weight: bold;
         text-decoration: none;
@@ -812,6 +796,22 @@ $quote-mark: 35px;
     .content__headline {
         font-weight: 700;
     }
+
+    .meta__image {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        width: auto;
+        @include mq(mobileLandscape) {
+            margin-right: -$gs-gutter/2;
+        }
+        @include mq(phablet) {
+            margin-right: 0;
+        }
+        @include mq(leftCol) {
+            width: 100%;
+        }
+    }
 }
 // *************** Opinion Styles ***************
 
@@ -856,7 +856,7 @@ $quote-mark: 35px;
         margin-top: 8px;
 
         @include mq(leftCol) {
-            margin-top: -4px;
+            margin-top: -$gs-baseline/2;
         }
     }
 
@@ -866,19 +866,20 @@ $quote-mark: 35px;
         }
     }
 
-    .meta__twitter {
+    .meta__twitter,
+    .meta__email {
         display: block;
         padding-top: 8px;
+        // magic number used to align date stamp with Twitter handle
+        margin-top: -3px;
+        margin-bottom: -$gs-baseline;
         @include mq($from: leftCol) {
             padding-top: -8px;
             margin-top: -$gs-baseline;
+            margin-bottom: 0;
         }
     }
 
-    .meta__twitter + .content__dateline {
-        // magic number used to align date stamp with Twitter handle
-        margin-top: -3px;
-    }
 
     .content__header {
         @include multiline(8, $garnett-neutral-4);
@@ -932,6 +933,9 @@ $quote-mark: 35px;
             margin-bottom: $gs-baseline;
         }
 
+    }
+    .meta__image {
+        float: none;
     }
 
     .byline-img {
