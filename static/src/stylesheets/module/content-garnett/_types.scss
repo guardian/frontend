@@ -961,7 +961,7 @@ $quote-mark: 35px;
         p {
             margin-bottom: 0;
         }
-        @include mq(tablet) {
+        @include mq(leftCol) {
             margin-bottom: $gs-baseline;
         }
 
