@@ -12,9 +12,9 @@
     .content__section-label__link,
     .drop-cap,
     .element-pullquote p,
-    .tonal__head--tone-feature .content__headline,
-    .tonal__head--tone-review .content__headline,
-    .u-underline[href] {
+    &.content--type-feature .content__headline,
+    &.content--type-review .content__headline,
+    .u-underline {
         color: $pillarColor;
     }
 
@@ -26,8 +26,7 @@
     .content--media .content__headline,
     .old-article-message,
     .pullquote-cite,
-    .tone-colour,
-    a[href] {
+    a {
         color: $kickerColor;
     }
 
@@ -37,7 +36,7 @@
 
     .block-share__item .inline-icon,
     .inline-close svg,
-    .inline-tone-fill,
+    .commentcount2__heading span,
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
     .social-icon__svg {
@@ -107,7 +106,7 @@
 // we can get rid of it once we clean up the pre-garnett code
 @mixin footerPalette($kickerColor) {
     ._underline_1lj47_3,
-    .button--tone-news,
+    .d-show-more-replies__button,
     .d-comment__action,
     .d-comment__author a[href],
     .d-comment__reply-to-author,
@@ -180,7 +179,7 @@
 
     .block-share__item .inline-icon,
     .inline-close svg,
-    .inline-tone-fill,
+    .commentcount2__heading span,
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
     .social-icon__svg {
@@ -261,8 +260,12 @@
 
     .inline-camera,
     .inline-video-icon__svg,
-    .inline-volume-high {
+    .inline-volume-high.inline-icon {
         fill: $mediaColor;
+    }
+
+    .social-icon__svg {
+        fill: $garnett-neutral-4;
     }
 
     .vjs-paused .vjs-play-control {
@@ -387,7 +390,7 @@
         @include richLink($lifestyle-garnett-main-1, $garnett-neutral-3);
     }
 
-    &.tone-comment--item {
+    &.rich-link--pillar-opinion {
         .rich-link__image-container {
             display: none;
         }
@@ -425,7 +428,9 @@
         }
     }
 
-    &.tone-media--item {
+    &.rich-link--gallery,
+    &.rich-link--video,
+    &.rich-link--audio {
         background: $media-garnett-main-1;
 
         .u-faux-block-link--hover {
@@ -443,6 +448,6 @@
     }
 }
 
-.immersive-main-media__headline-container .content__series-label__link[href] {
+.immersive-main-media__headline-container .content__series-label__link {
     color: $garnett-neutral-3;
 }

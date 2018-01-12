@@ -17,7 +17,11 @@
     .monocol-wrapper {
         max-width: gs-span(10);
         margin: auto;
-        padding: ($gs-gutter/ 2) $gs-gutter;
+        padding: ($gs-gutter/ 4) ($gs-gutter / 2) ($gs-gutter/ 2);
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
         @include mq(desktop) {
             padding-bottom: $gs-gutter * 2;
         }
@@ -53,7 +57,7 @@
     margin-right: auto;
     max-width: gs-span(6);
     padding-bottom: $gs-gutter * 2;
-    padding-top: $gs-gutter / 2;
+    padding-top: $gs-gutter / 4;
 
     a.u-underline {
         color: $identity-main;

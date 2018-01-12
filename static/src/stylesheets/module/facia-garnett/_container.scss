@@ -103,7 +103,7 @@ $header-image-size-desktop: 100px;
 }
 
 .fc-container__header {
-    @include mq($until: tablet) {
+    @include mq($until: leftCol) {
         overflow: hidden;
 
         .fc-container__header__title {
@@ -112,7 +112,7 @@ $header-image-size-desktop: 100px;
         }
 
         .fc-container__header__description {
-            margin-top: 2px;
+            margin-top: 5px;
             text-align: left;
         }
 
@@ -137,12 +137,6 @@ $header-image-size-desktop: 100px;
     padding-bottom: $gs-baseline/3;
     line-height: get-line-height(header, 2);
     color: $garnett-neutral-1;
-
-    @include mq(tablet, leftCol) {
-        float: left;
-        width: gs-span(4);
-        margin-bottom: $gs-baseline;
-    }
 
     @include mq(leftCol, wide) {
         @include font-size(20px, 24px);

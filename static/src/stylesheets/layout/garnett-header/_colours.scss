@@ -22,25 +22,29 @@
             }
         }
     }
+
+    &.new-header--slim .veggie-burger {
+        background-color: $colourOne;
+    }
 }
 
-.new-header--News {
+.new-header--news {
     @include PillarColourOne($news-garnett-main-1);
 }
 
-.new-header--Opinion {
+.new-header--opinion {
     @include PillarColourOne($opinion-garnett-main-1);
 }
 
-.new-header--Sport {
+.new-header--sport {
     @include PillarColourOne($sport-garnett-main-1);
 }
 
-.new-header--Culture {
+.new-header--culture {
     @include PillarColourOne($culture-garnett-main-1);
 }
 
-.new-header--Lifestyle {
+.new-header--lifestyle {
     @include PillarColourOne($lifestyle-garnett-main-1);
 }
 

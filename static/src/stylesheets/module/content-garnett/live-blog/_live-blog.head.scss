@@ -802,6 +802,12 @@ $timeline-width: 15px;
     }
 }
 
+.ad-slot--liveblog-inline {
+    @include mq(tablet) {
+        margin: 0 0 $gs-baseline;
+    }
+}
+
 $pillars: (
     news: (
         pillarColor: $news-garnett-feature,

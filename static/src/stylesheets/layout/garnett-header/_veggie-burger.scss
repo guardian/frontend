@@ -1,6 +1,6 @@
 .veggie-burger {
     background-color: $nav-primary-colour;
-    color: $nav-background-colour;
+    color: #ffffff;
     cursor: pointer;
     display: block;
     height: $veggie-burger-small;
@@ -34,7 +34,6 @@
 
     .new-header--slim & {
         background-color: $nav-secondary-colour;
-        color: $nav-background-colour;
         height: $veggie-burger-large;
         width: $veggie-burger-large;
     }

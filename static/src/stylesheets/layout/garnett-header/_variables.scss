@@ -8,7 +8,7 @@ $menu-spacing-left-medium: $gs-gutter * 2 + $gs-gutter;
 
 $search-and-edition-height-desktop: 42px;
 
-$nav-background-colour: mix($sport-garnett-main-1, $neutral-7, 4%); // BG of the nav & menu
+$nav-background-colour: #e7edef; // BG of the nav & menu
 $nav-primary-colour: $garnett-neutral-1; // Colour of most non pillar text
 $nav-secondary-colour: darken($nav-background-colour, 50%); // Softer accent colour for text
 $nav-darker-colour: darken($nav-background-colour, 5%); // Colour for shaded areas on the BG
