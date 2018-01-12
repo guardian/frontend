@@ -121,7 +121,8 @@
     }
 
     .comment-share-icon,
-    .d-show-more-replies__button.button--show-more svg {
+    .d-show-more-replies__button.button--show-more svg,
+    .inline-reply.blue {
         fill: $garnett-neutral-6;
         left: $gs-gutter/3;
     }
@@ -195,6 +196,13 @@
             background-color: $kickerColor;
             border: 1px solid $kickerColor;
         }
+    }
+
+    .d-comment__recommend--clicked,
+    .d-comment__recommend--recommended,
+    .d-comment__recommend-pulse,
+    .d-comment__recommend-pulse {
+        background-color: $kickerColor;
     }
 }
 @mixin richLink($pillarColor, $cardBackground) {
