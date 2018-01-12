@@ -197,6 +197,13 @@
             border: 1px solid $kickerColor;
         }
     }
+
+    .d-comment__recommend--clicked,
+    .d-comment__recommend--recommended,
+    .d-comment__recommend-pulse,
+    .d-comment__recommend-pulse {
+        background-color: $kickerColor;
+    }
 }
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
@@ -245,7 +252,8 @@
     }
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
-    .content__section-label__link,
+    .content__section-label__link[href],
+    .content__series-label__link[href],
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
     }
@@ -263,6 +271,10 @@
     .inline-video-icon__svg,
     .inline-volume-high {
         fill: $mediaColor;
+    }
+
+    .social-icon__svg {
+        fill: $garnett-neutral-4;
     }
 
     .vjs-paused .vjs-play-control {
@@ -365,7 +377,7 @@
     }
 }
 
-.rich-link:not(.rich-link--paidfor) {
+.rich-link {
     &,
     &.rich-link--pillar-news {
         @include richLink($news-garnett-main-1, $garnett-neutral-3);

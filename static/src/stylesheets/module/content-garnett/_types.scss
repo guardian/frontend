@@ -1024,7 +1024,7 @@ $quote-mark: 35px;
     .from-content-api,
     .meta__numbers .sharecount__value,
     .tone-colour,
-    a {
+    a[href] {
         color: $garnett-neutral-4;
     }
 
