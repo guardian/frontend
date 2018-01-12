@@ -950,7 +950,7 @@ $quote-mark: 35px;
     .content__head--byline-pic .byline-img {
 
         @include mq(mobileLandscape) {
-            height: gs-span(2.5);
+            height: $gs-baseline*15;
         }
     }
 
