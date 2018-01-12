@@ -912,10 +912,21 @@ $quote-mark: 35px;
     }
 
     .content__headline {
+        @include fs-headlineGarnett(6);
         font-weight: 100;
         padding-bottom: 0;
+        @include mq(tablet) {
+            @include fs-headlineGarnett(7);
+        }
         @include mq(leftCol) {
             padding-bottom: 38px;
+        }
+    }
+
+    .content__head--byline-pic .content__header .content__headline__byline {
+        @include fs-headlineGarnett(6);
+        @include mq(tablet) {
+            @include fs-headlineGarnett(7);
         }
     }
 
@@ -948,7 +959,8 @@ $quote-mark: 35px;
     }
 
     .content__standfirst {
-        padding-top: $gs-baseline/2;
+        // magic numbers used for correct top spacing
+        padding-top: 2px;
         margin-bottom: 0;
         p {
             margin-bottom: 0;
@@ -1361,6 +1373,12 @@ $quote-mark: 35px;
     .element-pullquote.element--supporting .pullquote-cite,
     .element-pullquote.element--supporting .pullquote-paragraph {
         font-weight: 200;
+    }
+
+    .content__meta-container {
+        @include mq($from: tablet, $until: leftCol) {
+            order: initial;
+        }
     }
 }
 // *************** Opinion and Feature standfirst overrides ***************
