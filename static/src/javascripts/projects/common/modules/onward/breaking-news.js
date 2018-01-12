@@ -132,7 +132,6 @@ const pickNewest = (alerts: Array<Alert>): Alert =>
     alerts.sort((a, b) => b.frontPublicationDate - a.frontPublicationDate)[0];
 
 const renderAlert = (alert: Alert): bonzo => {
-    alert.marque36icon = inlineSvg('marque36icon');
     alert.closeIcon = inlineSvg('closeCentralIcon');
 
     const $alert = bonzo.create(template(alertHtml, alert));
