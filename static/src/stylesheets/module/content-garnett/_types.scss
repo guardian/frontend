@@ -816,8 +816,31 @@ $quote-mark: 35px;
 }
 // *************** Opinion Styles ***************
 
-.content--type-comment,
-.content--type-guardianview {
+
+.content--type-guardianview,
+.content--type-comment {
+    .content__main {
+        background-color: $opinion-garnett-background;
+
+        .rich-link {
+            background-color: $garnett-neutral-5;
+        }
+
+        .element-pullquote,
+        .element-pullquote:after
+        {
+            background-color: darken($opinion-garnett-background, 7%);
+        }
+
+        .element-pullquote blockquote p.pullquote-paragraph {
+            color: $garnett-neutral-1;
+        }
+
+        .caption {
+            background-color: $opinion-garnett-background;
+        }
+    }
+
     .content__head {
         overflow: hidden;
         @include mq(phablet) {
