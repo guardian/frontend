@@ -25,15 +25,17 @@ x x x x x x x x x x x x x x x x x x x x x x x x
         }
     }
 
-    :not(.fc-container--paid-content) .fc-item__media-wrapper {
-        display: none;
-    }
 
-    .fc-container--paid-content .fc-item__media-wrapper {
-        .fc-item__image-container,
-        .badge {
-            display: none;
+    &:not(.fc-container--paid-content) {
+        @include mq($until: tablet) {
+            &:not(.fc-item--list-media-mobile) .fc-item__media-wrapper {
+                display: none;
+            }
+        }
+        @include mq(tablet) {
+            &:not(.fc-item--list-media-tablet) .fc-item__media-wrapper {
+                display: none;
+            }
         }
     }
-
 }
