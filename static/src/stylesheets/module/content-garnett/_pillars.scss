@@ -197,13 +197,6 @@
             border: 1px solid $kickerColor;
         }
     }
-
-    .d-comment__recommend--clicked,
-    .d-comment__recommend--recommended,
-    .d-comment__recommend-pulse,
-    .d-comment__recommend-pulse {
-        background-color: $kickerColor;
-    }
 }
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
@@ -218,8 +211,8 @@
 
     .inline-garnett-quote__svg {
         height: get-font-size(headline, 3);
-        width: get-font-size(headline, 3) * .5;
-        margin-right: get-font-size(headline, 3) * .5;
+        width: get-font-size(headline, 3) * 0.5;
+        margin-right: get-font-size(headline, 3) * 0.5;
         fill: $pillarColor;
     }
 
@@ -248,7 +241,7 @@
 
     .rich-link__kicker {
         border-right: 1px solid $pillarColor;
-        padding-right: .375em;
+        padding-right: 0.375em;
     }
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
