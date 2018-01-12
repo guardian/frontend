@@ -25,12 +25,12 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
 
   "The Consent Journey Redirect Action" should {
     def failTest: AuthRequest[AnyContent] => Result = _ => fail("Block was invoked")
-    "redirect to /signin instead of /reauthenticate when requireRecentAuth is set to false" in new TestFixture {
+    "redirect to /reauthenticate when the user is not authenticated" in new TestFixture {
       val originalUrl = "https://profile.thegulocal.com/email-prefs"
       val request = Request(FakeRequest("GET", originalUrl), AnyContent())
       when(authService.consentAuthenticatedUser(request)).thenReturn(None)
-      val result = actions.consentJourneyRedirectAction(requireRecentAuth = false).apply(failTest)(request)
-      val expectedLocation = s"/signin?INTCMP=email&returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
+      val result = actions.consentJourneyRedirectAction.apply(failTest)(request)
+      val expectedLocation = s"/reauthenticate?INTCMP=email&returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
       whenReady(result) { res =>
         res.header.status shouldBe 303
         res.header.headers should contain("Location" -> expectedLocation)
