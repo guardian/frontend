@@ -8,9 +8,9 @@
     <time itemprop="datePublished" datetime='@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")'
         data-timestamp="@webPublicationDate.getMillis" class="content__dateline-wpd js-wpd">
         @if(isMinute) {
-            <span class="content__dateline-time">@Format(webPublicationDate, "E d MMM ‘yy")</span>
+            <span class="content__dateline-time">@Format(webPublicationDate, "E d MMM yyyy")</span>
         } else {
-            @Format(webPublicationDate, "E d MMM ‘yy") <span class="content__dateline-time">@AuFriendlyFormat(webPublicationDate)</span>
+            @Format(webPublicationDate, "E d MMM yyyy") <span class="content__dateline-time">@AuFriendlyFormat(webPublicationDate)</span>
         }
     </time>
     @if(isLiveBlog) {
@@ -22,7 +22,7 @@
         data-timestamp="@date.getMillis" class="content__dateline-lm js-lm u-h"
         @optItemProp.map { itemProp => itemprop="@itemProp" }
         >
-            @label @Format(date, "E d MMM ‘yy") <span class="content__dateline-time">@AuFriendlyFormat(date)</span>
+            @label @Format(date, "E d MMM yyyy") <span class="content__dateline-time">@AuFriendlyFormat(date)</span>
         </time>
     }
 
