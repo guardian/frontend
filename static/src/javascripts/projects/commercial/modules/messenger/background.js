@@ -146,17 +146,21 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
             // has been promoted to its own layer and is also
             // strictly self-contained. Also, without doing that
             // the animation is extremely jittery.
-            const rect = backgroundParent.getBoundingClientRect();
+            const rect = background.getBoundingClientRect();
             const backgroundHeight = rect.height;
             const windowHeight = window.innerHeight;
 
             // we should scroll at a rate such that we don't run out of background (when non-repeating)
-            const dy = rect.bottom / (windowHeight + backgroundHeight) * 130;
+            const parallaxBackgroundMovement = Math.floor(
+                rect.bottom / (windowHeight + backgroundHeight) * 130
+            );
 
             // #? Flow does not currently list backgroundPositionY in
             // CSSStyleDeclaration: https://github.com/facebook/flow/issues/396
             // ...So we have to use a more convoluted hack-around:
-            (background.style: any).backgroundPositionY = `${dy}%`;
+            (background.style: any).backgroundPositionY = `${
+                parallaxBackgroundMovement
+            }%`;
         });
     };
 
