@@ -12,7 +12,7 @@ export const ColourTestBannerHoldback: AcquisitionsABTest = {
     idealOutcome: 'No drop-off in conversions either way',
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     audienceCriteria: 'All',
-    audience: 0.2,
+    audience: 0.7,
     audienceOffset: 0,
     // Should always be true, because the banner shows regardless.
     showForSensitive: true,

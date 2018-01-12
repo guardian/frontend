@@ -18,7 +18,7 @@ export const colourTestEpicHoldback = makeABTest({
     successMeasure: 'Who knows',
     idealOutcome: 'No drop-off in conversions either way',
     audienceCriteria: 'All',
-    audience: 0.2,
+    audience: 0.5,
     audienceOffset: 0,
 
     variants: [
