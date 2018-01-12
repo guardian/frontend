@@ -99,6 +99,25 @@ Hence why a greater depth of selector specificity is needed.
     }
 }
 
+// reduce type size on q-q-q-q slice if it follows another slice in the same container
+.fc-slice-wrapper + .fc-slice-wrapper {
+    .fc-slice--q-q-q-q {
+        .fc-item--standard-tablet {
+            .fc-item__header {
+                @include mq(tablet) {
+                    @include fs-headline(2, true);
+                }
+            }
+
+            .inline-garnett-quote__svg {
+                height: 16px;
+                width: 8px;
+                margin-right: 8px;
+            }
+        }
+    }
+}
+
 .fc-slice--h14-q-q {
     .has-flex & {
         flex-direction: row-reverse;
@@ -160,12 +179,10 @@ Hence why a greater depth of selector specificity is needed.
     @include mq(tablet, desktop) {
         .fc-slice__item {
             width: 25%;
-
-            .fc-item__title {
-                @include fs-headline(2, true);
-            }
         }
-
+        .fc-item__title {
+            @include fs-headline(2, true);
+        }
         .fc-slice__item--mpu-candidate {
             width: 50%;
         }
