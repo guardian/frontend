@@ -25,7 +25,15 @@ x x x x x x x x x x x x x x x x x x x x x x x x
         }
     }
 
-    .fc-item__media-wrapper {
+    :not(.fc-container--paid-content) .fc-item__media-wrapper {
         display: none;
     }
+
+    .fc-container--paid-content .fc-item__media-wrapper {
+        .fc-item__image-container,
+        .badge {
+            display: none;
+        }
+    }
+
 }
