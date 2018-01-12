@@ -19,7 +19,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     consentHint: Option[String] = None): Action[AnyContent] = {
 
     csrfAddToken {
-      consentJourneyRedirectAction(requireRecentAuth = false).async { implicit request =>
+      consentJourneyRedirectAction.async { implicit request =>
         profileFormsView(
           page = page,
           forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),

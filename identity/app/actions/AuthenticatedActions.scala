@@ -91,7 +91,7 @@ class AuthenticatedActions(
         }
     }
 
-  private def consentAuthRefiner(requireRecentAuth: Boolean): ActionRefiner[Request, AuthRequest] =
+  private def consentAuthRefiner: ActionRefiner[Request, AuthRequest] =
     new ActionRefiner[Request, AuthRequest] {
       override val executionContext = ec
 
@@ -101,10 +101,7 @@ class AuthenticatedActions(
             Future.successful(Right(new AuthenticatedRequest(userFormCookie, request)))
 
           case _ =>
-            if (requireRecentAuth)
-              checkRecentAuthenticationAndRedirect(request)
-            else
-              Future.successful(Left(sendUserToSignin(request)))
+            checkRecentAuthenticationAndRedirect(request)
         }
     }
 
@@ -192,11 +189,11 @@ class AuthenticatedActions(
     fullAuthAction andThen recentlyAuthenticatedRefiner andThen retrieveUserFromIdapiRefiner
 
   /** Auth with at least SC_GU_RP, that is, auth with SC_GU_U or else SC_GU_RP, and user retrieved from IDAPI */
-  def consentAuthWithIdapiUserAction(requireRecentAuth: Boolean = true): ActionBuilder[AuthRequest, AnyContent] =
-    noOpActionBuilder andThen consentAuthRefiner(requireRecentAuth) andThen retrieveUserFromIdapiRefiner
+  def consentAuthWithIdapiUserAction: ActionBuilder[AuthRequest, AnyContent] =
+    noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
   /** Auth with at least SC_GU_RP and decide if user should be redirected to consent journey */
-  def consentJourneyRedirectAction(requireRecentAuth: Boolean = true): ActionBuilder[AuthRequest, AnyContent] =
-    consentAuthWithIdapiUserAction(requireRecentAuth) andThen apiUserShouldRepermissionFilter
+  def consentJourneyRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
+    consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionFilter
 
 }
