@@ -1339,6 +1339,12 @@ $quote-mark: 35px;
     .element-pullquote.element--supporting .pullquote-paragraph {
         font-weight: 200;
     }
+
+    .content__meta-container {
+        @include mq($from: tablet, $until: leftCol) {
+            order: initial;
+        }
+    }
 }
 // *************** Opinion and Feature standfirst overrides ***************
 
