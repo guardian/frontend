@@ -1,4 +1,4 @@
-$gutter: 6px;
+$gutter: 3px;
 $height: $identity-header-height - ($gutter * 2);
 
 .identity-header {
@@ -61,8 +61,8 @@ html body .identity-header__logo {
     order: -99;
     .inline-the-guardian-logo__svg {
         display: block;
-        height: 60px;
-        width: 183px;
+        height: 57px;
+        width: 175px;
     }
 }
 
