@@ -245,7 +245,6 @@
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
     .content__section-label__link,
-    .content__series-label__link,
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
     }
@@ -261,7 +260,7 @@
 
     .inline-camera,
     .inline-video-icon__svg,
-    .inline-volume-high {
+    .inline-volume-high.inline-icon {
         fill: $mediaColor;
     }
 
