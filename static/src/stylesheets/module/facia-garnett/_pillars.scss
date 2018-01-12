@@ -40,16 +40,16 @@ $pillars: (
     ),
     arts: (
         cardBackground: $garnett-neutral-3,
-        lines: $arts-garnett-main-1,
-        kicker: $arts-garnett-main-1,
+        lines: $culture-garnett-main-1,
+        kicker: $culture-garnett-main-1,
         headline: $garnett-neutral-1,
-        featureHeadline: $arts-garnett-feature,
-        byline: $arts-garnett-main-1,
+        featureHeadline: $culture-garnett-feature,
+        byline: $culture-garnett-main-1,
         commentCount: $garnett-neutral-2,
-        headlineIcon: $arts-garnett-main-1,
+        headlineIcon: $culture-garnett-main-1,
         metaText: $garnett-neutral-2,
-        cutoutBackground: $arts-garnett-main-1,
-        invertedKicker: $arts-garnett-media-main-1
+        cutoutBackground: $culture-garnett-main-1,
+        invertedKicker: $culture-garnett-media-main-1
     ),
     lifestyle: (
         cardBackground: $garnett-neutral-3,
@@ -76,17 +76,11 @@ $pillars: (
 
     &:hover {
         background-color: $darkerCardBackground;
+    }
 
-        &.fc-item--type-comment {
-            .fc-item__avatar {
-                background-color: darken(map-get($palette, cutoutBackground), 3%);
-            }
-
-            .fc-item__timestamp,
-            .fc-trail__count--commentcount {
-                background-color: $darkerCardBackground;
-            }
-        }
+    //overides the most popular list item
+    &.headline-list__item {
+        background-color: #ffffff;
     }
 
     .fc-item__headline {
@@ -109,6 +103,28 @@ $pillars: (
     &.fc-item--type-immersive .fc-item__kicker
     {
         color: map-get($palette, invertedKicker);
+    }
+
+
+    &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker,
+    &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker
+    {
+        color: map-get($palette, kicker);
+        @include mq($from: tablet) {
+            color: map-get($palette, invertedKicker);
+        }
+    }
+
+    &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker,
+    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker
+    {
+        color: map-get($palette, kicker);
+    }
+
+    &.fc-item--list-media-tablet.fc-item--type-immersive .inline-icon,
+    &.fc-item--list-tablet.fc-item--type-immersive .inline-icon
+    {
+        fill: map-get($palette, kicker);
     }
 
     .fc-item__standfirst {
@@ -150,12 +166,14 @@ $pillars: (
     }
 
 
-    &.fc-item--type-media {
+    &.fc-item--type-media,
+    &.fc-item--type-interview {
         .inline-video-icon,
         .inline-volume-high,
         .inline-camera {
             svg {
                 fill: map-get($palette, invertedKicker);
+                border: 1px solid map-get($palette, invertedKicker);
             }
 
             &::after {
@@ -195,6 +213,17 @@ $pillars: (
 
             .inline-icon {
                 fill: map-get($palette, commentCount);
+            }
+        }
+
+        &:hover {
+            .fc-item__avatar {
+                background-color: darken(map-get($palette, cutoutBackground), 3%);
+            }
+
+            .fc-item__timestamp,
+            .fc-trail__count--commentcount {
+                background-color: $darkerCardBackground;
             }
         }
     }

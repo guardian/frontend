@@ -606,4 +606,35 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = false
   )
+
+  // When this switch is deleted, all the old navigation can be deleted as well
+  val NewDesktopNavigation = Switch(
+    SwitchGroup.Feature,
+    "new-desktop-navigation",
+    "When ON, the new desktop navigation will show to all the audience (this is the design with 5 pillars)",
+    owners = Seq(Owner.withGithub("NataliaLKB")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 1, 24),
+    exposeClientSide = false
+  )
+
+  val GarnettLaunch = Switch(
+    SwitchGroup.Feature,
+    "garnett-launch",
+    "when ON, garnett styling will appear on Fronts and articles (this does not work on the navigation)",
+    owners = Seq(Owner.withGithub("NataliaLKB"), Owner.withGithub("blongden73")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 31),
+    exposeClientSide = false
+  )
+
+  val GarnettHeaderLaunch = Switch(
+    SwitchGroup.Feature,
+    "garnett-header-launch",
+    "when ON, garnett styling will appear on the navigation, assuming the new navigation is already live for everyone",
+    owners = Seq(Owner.withGithub("NataliaLKB"), Owner.withGithub("zeftilldeath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 31),
+    exposeClientSide = false
+  )
 }

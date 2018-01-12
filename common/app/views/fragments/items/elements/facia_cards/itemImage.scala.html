@@ -3,7 +3,7 @@
 @import views.support.ImgSrc
 @import views.html.fragments.items.elements.facia_cards.image
 
-<div class="fc-item__media-wrapper">
+
     <div class="fc-item__image-container u-responsive-ratio @if(inlineImage){inlined-image}">
         @widthsByBreakpoint match {
             case Some(widths) => {
@@ -20,4 +20,3 @@
             }
         }
     </div>
-</div>

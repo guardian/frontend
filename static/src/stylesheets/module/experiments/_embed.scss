@@ -8,7 +8,7 @@
 
 .contributions__epic {
     border-top: 1px solid $multimedia-main-2;
-    background-color: $comment-support-2;
+    background-color: $garnett-neutral-3;
     margin-top: $gs-baseline * 2;
     padding: ($gs-baseline / 3) ($gs-gutter / 4) $gs-baseline;
 
@@ -49,7 +49,7 @@
 }
 
 .contributions__highlight {
-    background-color: #ffe399;
+    background-color: $news-garnett-highlight;
     padding: 4px 2px;
     margin-left: -2px;
     margin-right: -2px;
@@ -158,13 +158,19 @@
     }
 }
 
-.contributions__contribute--epic {
+// Specificity needed to override an inline rule in _pillars.scss that's messing with the epic link colour.
+a[href].contributions__contribute.contributions__contribute--epic {
     margin-top: 0;
-    background-color: $multimedia-main-2;
-    color: $neutral-1;
+    background-color: $news-garnett-highlight;
+    color: $garnett-neutral-1;
+
+    svg path {
+        fill: $garnett-neutral-1; 
+    }
+
     &:hover {
-        color: $neutral-1;
-        background-color: darken($multimedia-main-2, 5%);
+        background-color: #b3a000;
+        color: $garnett-neutral-1;
     }
 
     &:after {

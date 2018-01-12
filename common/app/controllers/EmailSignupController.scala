@@ -8,7 +8,7 @@ import model._
 import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
 import play.api.data.Forms._
 import play.api.data._
-import play.api.data.format.Formats.stringFormat
+import play.api.data.format.Formats._
 import play.api.data.validation.Constraints.emailAddress
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -28,37 +28,31 @@ object emailLandingPage extends StandalonePage {
 
 case class EmailForm(
   email: String,
-  listId: Int,
+  listName: Option[String],
+  listId: Option[Int],
   referrer: Option[String],
   campaignCode: Option[String])
 
 class EmailFormService(wsClient: WSClient) {
 
-  val testListId = 3485
-  val testListTrigger = 2529
-
-  /**
-    * Associate lists with triggered send keys in ExactTarget. In our case these have a 1:1 relationship.
-    */
-  val listIdsWithTrigger: Map[Int, Int] = (for {
-    list <- EmailNewsletters.all.subscriptions
-    id <- list.allIds
-    triggerId <- list.triggerId
-  } yield id -> triggerId).toMap.updated(testListId, testListTrigger)
-
   def submit(form: EmailForm): Future[WSResponse] = {
-    val maybeTriggeredSendKey: Option[Int] = listIdsWithTrigger.get(form.listId)
 
-    wsClient.url(Configuration.emailSignup.url).post(
-      JsObject(Json.obj(
-      "email" -> form.email,
-      "listId" -> form.listId,
-      "triggeredSendKey" -> maybeTriggeredSendKey,
-      "emailGroup" -> "email-footer-test",
-      "referrer" -> form.referrer,
-      "campaignCode" -> form.campaignCode)
-      .fields
-      .filterNot{ case (_, v) => v == JsNull}))
+    val idAccessClientToken = Configuration.id.apiClientToken
+    val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
+
+    // FIXME: Cached widgets will continue to post listId so have to deal with both until cache clears
+    val listName = (form.listName, form.listId) match {
+      case (None, Some(id)) =>
+        EmailNewsletter(id) orElse EmailNewsletter.fromV1ListId(id) map { _.identityName }
+      case (name, _) => name
+    }
+
+    val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(listName)).fields)
+
+    wsClient
+      .url(consentMailerUrl)
+      .addHttpHeaders("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken")
+      .post(consentMailerPayload)
   }
 }
 
@@ -67,7 +61,8 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
-      "listId" -> number,
+      "listName" -> optional[String](of[String]),
+      "listId" -> optional[Int](of[Int]),
       "referrer" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String])
     )(EmailForm.apply)(EmailForm.unapply)
@@ -78,13 +73,21 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
   }
 
   def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
-    Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
+
+    val identityName = EmailNewsletter(listId)
+                        .orElse(EmailNewsletter.fromV1ListId(listId))
+                        .map(_.identityName)
+
+    identityName match {
+      case Some(listName) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
+      case _ => Cached(15.minute)(WithoutRevalidationResult(NotFound))
+    }
   }
 
   def renderFormFromName(emailType: String, listName: String): Action[AnyContent] = Action { implicit request =>
     val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
     id match {
-      case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))
+      case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
       case _            => Cached(15.minute)(WithoutRevalidationResult(NotFound))
     }
   }

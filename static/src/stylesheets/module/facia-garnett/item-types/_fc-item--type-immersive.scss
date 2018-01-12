@@ -9,10 +9,10 @@
 
     .fc-item__content {
         background-color: $immersive-garnett-main-1;
-        z-index: 1;
     }
 
     //Todo better way to get this immersive card type to set the height when sublinks. This is fixed height enough to fit two lines of sublink
+    &.fc-item--has-sublinks-3 .fc-item__content,
     &.fc-item--has-sublinks-2 .fc-item__content {
         @include mq($from: tablet) {
             padding-bottom: $gs-gutter * 3.6;
@@ -22,6 +22,14 @@
     .fc-item__content {
         position: absolute;
         left: 0;
+
+        @include mq($from: tablet) {
+            position: relative;
+        }
+    }
+
+    &.fc-item--standard-tablet .fc-item__content {
+        position: absolute;
     }
 
     .fc-item__headline {
@@ -29,6 +37,8 @@
     }
 
     .fc-item__media-wrapper {
+        position: static;
+
         img {
             object-fit: cover;
         }
@@ -37,6 +47,13 @@
     .fc-slice--h-q-q & .fc-item__standfirst,
     &.fc-item--three-quarters-tablet .fc-item__standfirst,
     &.fc-item--three-quarters-tall-tablet .fc-item__standfirst {
+        display: block;
+        @include mq($from: tablet) {
+            margin-top: $gs-baseline * 2;
+        }
+    }
+
+    &.fc-item--standard-tablet .fc-item__standfirst {
         display: none;
     }
 
@@ -116,6 +133,22 @@
     .fc-item__kicker:before,
     .fc-item__kicker:after {
         content: none;
+    }
+
+    &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker:after,
+    &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker:after
+    {
+        content: '/';
+
+        @include mq($from: tablet) {
+            content: none;
+        }
+    }
+
+    &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker:after,
+    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker:after
+    {
+        content: '/';
     }
 
     .fc-item__meta {
