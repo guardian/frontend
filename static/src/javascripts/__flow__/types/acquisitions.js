@@ -12,7 +12,7 @@ declare type EngagementBannerTemplateParams = {
     linkUrl: string,
     buttonCaption: string,
     buttonSvg: string,
-}
+};
 
 declare type EngagementBannerParams = {
     minArticles: number,
@@ -25,5 +25,6 @@ declare type EngagementBannerParams = {
     colourStrategy: () => string,
     products: OphanProduct[],
     paypalClass?: string,
-    template?: (templateParams: EngagementBannerTemplateParams) => string
+    template?: (templateParams: EngagementBannerTemplateParams) => string,
+    bannerModifierClass?: string,
 };
