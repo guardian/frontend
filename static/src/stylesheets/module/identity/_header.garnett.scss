@@ -1,12 +1,10 @@
-$gutter: 3px;
-$height: $identity-header-height - ($gutter * 2);
+$gutter: 5px;
 
 .identity-header {
     @include clearfix;
     background-color: $nav-background-colour;
     padding: $gutter 0 0;
     color: $nav-primary-colour;
-    min-height: $height;
     z-index: 999;
     &:after {
         @include multiline(4, $rule, top);
