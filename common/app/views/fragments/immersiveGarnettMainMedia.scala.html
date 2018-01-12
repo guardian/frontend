@@ -1,0 +1,79 @@
+@import common.{LinkTo, Localisation}
+@import conf.switches.Switches.{ ArticleBadgesSwitch, NewDesktopNavigation }
+@import layout.ContentWidths.MainMedia
+@import model.Badges.badgeFor
+@import model.ContentPage
+@import views.support.RenderClasses
+@import views.support.TrailCssClasses.toneClass
+@import views.support.ImmersiveMainCleaner
+
+@()(implicit page: ContentPage, request: RequestHeader, context: model.ApplicationContext)
+
+@defining((
+    page.item.tags.isTheMinuteArticle,
+    page.item.elements.hasMainEmbed,
+    page.item.fields.main.nonEmpty,
+    page.item.tags.series.headOption,
+    page.item.tags.isPaidContent
+)) { case (isTheMinuteArticle, hasEmbed, hasMainMedia, optSeries, isPaidContent) =>
+    <div class="@RenderClasses(Map(
+            "content--minute-article" -> isTheMinuteArticle,
+            "content--immersive-article-without-main-media" -> !hasMainMedia,
+            "immersive-main-media" -> hasMainMedia
+        ),
+        "content", "content--type-immersive", "content--immersive", "content--immersive-article", "tonal", s"tonal--${toneClass(page.item)}")
+    ">
+        <div class="gs-container immersive-main-media__logo">
+            @if((page.item.elements.hasMainMedia || page.item.fields.main.nonEmpty) & !NewDesktopNavigation.isSwitchedOn) {
+                <a href="@LinkTo {/}">
+                    <span class="u-h">The Guardian</span>
+                    @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))
+                </a>
+            }
+
+            @if(ArticleBadgesSwitch.isSwitchedOn && isTheMinuteArticle) {
+                @badgeFor(page.item).map { badge =>
+                    <div class="badge-slot">
+                        <a href="@LinkTo {/@badge.seriesTag}">
+                            <img class="badge-slot__img" src="@badge.imageUrl" alt=""/>
+                            <span class="u-h">View more @Localisation(page.item.content.sectionLabelName) articles</span>
+                        </a>
+                    </div>
+                }
+            }
+
+        </div>
+        <div class="immersive-main-media__media">
+            @if(page.item.elements.hasMainPicture) {
+                @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>
+                    @fragments.image(
+                        picture = picture,
+                        classes = Seq("immersive-main-media__media"),
+                        widths = MainMedia.immersive,
+                        imageAltText = "",
+                        isImmersiveMainMedia = true
+                    )
+                }
+            } else {
+                @if(hasMainMedia) {
+                    <div class="immersive-main-media__media__loading">
+                        <div class="immersive-main-media__loading-animation is-updating"></div>
+                        <span class="u-h">Loading header</span>
+                    </div>
+                    @page.item match {
+                        case article: model.Article => {
+                            @ImmersiveMainCleaner(article, article.fields.main, amp=false)
+                        }
+                        case content => {
+                            @Html(content.fields.main)
+                        }
+                    }
+                }
+            }
+        </div>
+
+        @if(isTheMinuteArticle) {
+            <div class="content--minute-article--overlay"></div>
+        }
+    </div>
+}

@@ -51,7 +51,7 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
   def findParent(currentNavLink: NavLink, edition: Edition): Option[NavLink] = {
     // Football is currently in the News Pillar and the Sport pillar, however we don't want the parent to be News.
     def isFootballInNews(parentTitle: String): Boolean = {
-      currentNavLink.title == "football" && parentTitle == "news"
+      currentNavLink.title == "Football" && parentTitle == "News"
     }
 
     @tailrec
@@ -80,10 +80,10 @@ case class NavRoot private(children: Seq[NavLink], otherLinks: Seq[NavLink], bra
 object NavRoot {
   def apply(edition: Edition): NavRoot = {
     edition match {
-      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukArtsPillar, ukLifestylePillar), ukOtherLinks, ukBrandExtensions)
-      case editions.Us => NavRoot(Seq(usNewsPillar, usOpinionPillar, usSportPillar, usArtsPillar, usLifestylePillar), usOtherLinks, usBrandExtensions)
-      case editions.Au => NavRoot(Seq(auNewsPillar, auOpinionPillar, auSportPillar, auArtsPillar, auLifestylePillar), auOtherLinks, auBrandExtensions)
-      case editions.International => NavRoot(Seq(intNewsPillar, intOpinionPillar, intSportPillar, intArtsPillar, intLifestylePillar), intOtherLinks, intBrandExtensions)
+      case editions.Uk => NavRoot(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar), ukOtherLinks, ukBrandExtensions)
+      case editions.Us => NavRoot(Seq(usNewsPillar, usOpinionPillar, usSportPillar, usCulturePillar, usLifestylePillar), usOtherLinks, usBrandExtensions)
+      case editions.Au => NavRoot(Seq(auNewsPillar, auOpinionPillar, auSportPillar, auCulturePillar, auLifestylePillar), auOtherLinks, auBrandExtensions)
+      case editions.International => NavRoot(Seq(intNewsPillar, intOpinionPillar, intSportPillar, intCulturePillar, intLifestylePillar), intOtherLinks, intBrandExtensions)
     }
   }
 }

@@ -30,7 +30,7 @@ const checkoutHandler = StripeCheckout.configure({
     locale: 'auto',
     name: 'The Guardian',
     allowRememberMe: false,
-    image: 'https://d24w1tjgih0o9s.cloudfront.net/gu.png',
+    image: 'https://uploads.guim.co.uk/2018/01/10/gu.png',
 });
 
 /* Renders the card details

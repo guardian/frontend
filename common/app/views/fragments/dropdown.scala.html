@@ -1,7 +1,7 @@
 @(name: String, modifier: Option[String] = None, isActive: Boolean = false, isClientSideTemplate: Boolean = false, isAnimated: Boolean = false)(content: Html)
 
 @defining("dropdown-"+content.hashCode){ hash =>
-<div class="dropdown dropdown-styled u-cf @modifier.map("dropdown--" + _) @if(isActive){dropdown--active} @if(isAnimated){dropdown--animated}">
+<div class="dropdown dropdown-styled u-cf @modifier.map("dropdown--" + _) @if(isActive){dropdown--active} @if(isAnimated){dropdown--animated}" data-dropdown-label="@if(isClientSideTemplate) {<%=name%>} else {@name}">
     <button class="dropdown__button u-button-reset js-dropdown-button"
             type="button"
             data-link-name="Show dropdown: @if(isClientSideTemplate) {<%=name%>} else {@name}"

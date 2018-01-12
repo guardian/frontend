@@ -8,13 +8,6 @@
         .fc-item__byline {
             color: $colour;
         }
-
-        .fc-item__kicker {
-            &:after {
-                background-color: $colour;
-            }
-        }
-
     }
 
     .fc-sublink--pillar-#{$tone} {
@@ -36,10 +29,13 @@
 
         & > span,
         span.fc-container__title__text {
-            background-color: yellow;
+            background: #fff132;
+            background: -moz-linear-gradient(top,  #ffe500 0%, #ffe500 50%, #ffe500 100%);
+            background: -webkit-linear-gradient(top,  #ffe500 0%,#ffe500 50%,#ffe500 100%);
+            background: linear-gradient(to bottom,  #ffe500 0%,#ffe500 50%,#ffe500 100%);
             display: inline;
-            box-shadow: 0px 1px 0 4px yellow;
-            line-height: 32px;
+            box-shadow: 0px 0 0 2px #ffe500;
+            line-height: 1;
         }
     }
 
@@ -47,16 +43,12 @@
         background-color: $story-package-garnett;
 
         &:hover {
-            background-color: darken($story-package-garnett, 10%);
-
-            .fc-item__kicker {
-                background-color: darken($story-package-garnett, 10%);
-            }
+            background-color: darken($story-package-garnett, 5%);
         }
     }
 
-    .fc-item__kicker {
-        background-color: $story-package-garnett;
+    .fc-item__container.u-faux-block-link--hover {
+        background-color: darken($story-package-garnett, 5%);
     }
 
     .fc-item__headline {
@@ -73,13 +65,12 @@
 
     //These need to exist for all kickers because of tone on tone action
     @include kicker-override(lifestyle, $lifestyle-garnett-media-main-1);
-    @include kicker-override(arts, $arts-garnett-media-main-1);
+    @include kicker-override(arts, $culture-garnett-media-main-1);
     @include kicker-override(sport, $sport-garnett-media-main-1);
     @include kicker-override(opinion, $opinion-garnett-media-main-1);
     @include kicker-override(news, $news-garnett-media-main-1);
 }
 
-//
 // .  {
 //     background-color: $neutral-4;
 //     margin-bottom: $gs-baseline;
@@ -205,7 +196,12 @@
 //         box-shadow: -5px 0 5px -2px lighten($story-package, 5%);
 //     }
 //
-
+//     //These need to exist for all kickers because of tone on tone action
+//     @include kicker-override(life, $lifestyle-garnett-main-media-1);
+//     @include kicker-override(arts, $culture-garnett-media-main-1);
+//     @include kicker-override(sports, $sport-garnett-media-main-1);
+//     @include kicker-override(opinion, $opinion-garnett-media-main-1);
+//     @include kicker-override(news, $news-garnett-media-main-1);
 //
 //
 //     // Item Level

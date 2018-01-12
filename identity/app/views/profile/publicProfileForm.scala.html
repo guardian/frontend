@@ -15,8 +15,8 @@
 <fieldset class="fieldset">
     <div class="form__note">
         These details will be publicly visible to everyone who sees your profile in the
-        <a href="https://www.theguardian.com/community-faqs">commenting</a> section
-        and the <a href="https://witness.theguardian.com/faq">GuardianWitness</a>.
+        <a class="u-underline" href="https://www.theguardian.com/community-faqs">commenting</a> section
+        and the <a class="u-underline" href="https://witness.theguardian.com/faq">GuardianWitness</a>.
     </div>
 </fieldset>
 
@@ -69,7 +69,12 @@
                 @textareaField(Input(publicProfileForm("interests"), ('_label, "Interests"), ('class, "textarea--mid"), ('maxlength, "255")))
 
                 <li>
-                    <button type="submit" class="manage-account__button" data-link-name="Create account">Save changes</button>
+                    <button type="submit" class="manage-account__button manage-account__button--icon" data-link-name="Create account">
+                        <div class="manage-account__button-flexwrap">
+                            <span>Save changes</span>
+                            @fragments.inlineSvg("tick-button", "icon")
+                        </div>
+                    </button>
                 </li>
             </ul>
         </div>

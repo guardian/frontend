@@ -1,0 +1,25 @@
+// Specific values for veggie-burger and menu
+$gutter-small: 5px;
+$gutter-medium: 46px;
+$gutter-large: 58px;
+
+$menu-spacing-left-small: $gs-gutter * 2 + $gs-gutter / 2;
+$menu-spacing-left-medium: $gs-gutter * 2 + $gs-gutter;
+
+$search-and-edition-height-desktop: 42px;
+
+$nav-background-colour: mix($sport-garnett-main-1, $neutral-7, 4%); // BG of the nav & menu
+$nav-primary-colour: $garnett-neutral-1; // Colour of most non pillar text
+$nav-secondary-colour: darken($nav-background-colour, 50%); // Softer accent colour for text
+$nav-darker-colour: darken($nav-background-colour, 5%); // Colour for shaded areas on the BG
+$rule: darken($nav-background-colour, 20%); // All borders on the nav
+
+$veggie-burger-small: 40px;
+$veggie-burger-medium: 48px;
+$veggie-burger-large: 56px;
+
+$slim-nav-height: $veggie-burger-large - $gs-baseline;
+
+$pillar-width--desktop: 118px;
+$pillar-width--leftCol: 140px;
+$pillar-padding: 5px;

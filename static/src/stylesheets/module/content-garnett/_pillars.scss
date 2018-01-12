@@ -18,6 +18,10 @@
         color: $pillarColor;
     }
 
+    .button--primary {
+        background: $pillarColor;
+    }
+
     .byline,
     .content--media .content__headline,
     .old-article-message,
@@ -62,7 +66,6 @@
     }
 
     .block-share__item,
-    .meta__twitter a,
     .social-icon,
     .social-icon.social-icon--more {
         &:focus,
@@ -98,12 +101,100 @@
         color: $mediaColor;
     }
 }
-@mixin footerPalette($pillarColor) {
-    .discussion a[href],
-    // #? temporary fix: this class is in the comment.js template (line 139)
-    // we can get rid of it once we clean up the pre-garnett code
-    .discussion .button--tone-news {
-        color: $pillarColor;
+//////** Discussion (comment) styling **//////////
+//d-comment__author a[href], ._underline_1lj47_3, .js-discussion-author-link
+// #? temporary fix: this class is in the comment.js template (line 139)
+// we can get rid of it once we clean up the pre-garnett code
+@mixin footerPalette($kickerColor) {
+    ._underline_1lj47_3,
+    .button--tone-news,
+    .d-comment__action,
+    .d-comment__author a[href],
+    .d-comment__reply-to-author,
+    .js-discussion-author-link {
+        color: $kickerColor;
+    }
+
+    ._underline_1lj47_3:focus,
+    ._underline_1lj47_3:hover {
+        border-color: $kickerColor;
+    }
+
+    .comment-share-icon,
+    .d-show-more-replies__button.button--show-more svg {
+        fill: $garnett-neutral-6;
+        left: $gs-gutter/3;
+    }
+
+    .discussion__top-border {
+        border-top: 1px solid $garnett-neutral-4;
+    }
+
+    .button--primary {
+        background-color: $kickerColor;
+        border-color: $kickerColor;
+    }
+
+    .button--primary:active,
+    .button--primary:focus,
+    .button--primary:hover {
+        background-color: darken($kickerColor, 10%);
+        border-color: darken($kickerColor, 10%);
+    }
+
+    .button--tertiary:active,
+    .button--tertiary:focus {
+        color: $kickerColor;
+    }
+
+    .d-show-more-replies__button {
+        border: 1px solid $garnett-neutral-4;
+        background: $garnett-neutral-5;
+
+        &:focus,
+        &:hover {
+            border: 1px solid darken($garnett-neutral-4, 20%);
+            background: $garnett-neutral-5;
+        }
+    }
+
+    .button--show-more svg {
+        left: $gs-gutter/2;
+    }
+
+    .block-share__item,
+    .inline-close,
+    .social-icon,
+    .social-icon.social-icon--more {
+        background-color: transparent;
+        border: 1px solid $neutral-4;
+
+        &:focus,
+        &:hover {
+            svg {
+                fill: $garnett-neutral-5;
+            }
+        }
+    }
+
+    .block-share__item .inline-icon,
+    .inline-close svg,
+    .inline-tone-fill,
+    .old-article-message .old-article-message--clock svg,
+    .social-icon svg,
+    .social-icon__svg {
+        fill: $kickerColor;
+    }
+
+    .block-share__item,
+    .meta__twitter a,
+    .social-icon,
+    .social-icon.social-icon--more {
+        &:focus,
+        &:hover {
+            background-color: $kickerColor;
+            border: 1px solid $kickerColor;
+        }
     }
 }
 @mixin richLink($pillarColor, $cardBackground) {
@@ -162,7 +253,8 @@
     .vjs-volume-level,
     .vjs-volume-level:before,
     .youtube-media-atom__bottom-bar__duration:before,
-    .youtube-media-atom__play-button:before {
+    .youtube-media-atom__play-button:before,
+    .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before {
         background: $mediaColor;
     }
 
@@ -179,6 +271,7 @@
     .vjs-playing .vjs-play-control {
         @include icon(pause-icon--#{$pillar});
     }
+
 }
 
 .content--pillar-news {
@@ -186,22 +279,26 @@
 }
 
 .content--pillar-opinion,
-.content--type-comment {
+.content--type-comment,
+.content--type-guardianview {
     @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
 }
 
 .content--pillar-arts,
-.content--pillar-arts.content--type-comment {
-    @include colorPalatte($arts-garnett-main-1, $arts-garnett-feature, $arts-garnett-media-main-1);
+.content--pillar-arts.content--type-comment,
+.content--pillar-arts.content--type-guardianview {
+    @include colorPalatte($culture-garnett-main-1, $culture-garnett-feature, $culture-garnett-media-main-1);
 }
 
 .content--pillar-lifestyle,
-.content--pillar-lifestyle.content--type-comment {
+.content--pillar-lifestyle.content--type-comment,
+.content--pillar-lifestyle.content--type-guardianview {
     @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
 }
 
 .content--pillar-sport,
-.content--pillar-sport.content--type-comment {
+.content--pillar-sport.content--type-comment,
+.content--pillar-sport.content--type-guardianview {
     @include colorPalatte($sport-garnett-main-1, $sport-garnett-feature, $sport-garnett-media-main-1);
 }
 
@@ -210,7 +307,7 @@
 }
 
 .content-footer--pillar-arts {
-    @include footerPalette($arts-garnett-main-1);
+    @include footerPalette($culture-garnett-feature);
 }
 
 .content-footer--pillar-lifestyle {
@@ -237,7 +334,7 @@
 
 .content--media:not(.paid-content).content--pillar-arts,
 .immersive-main-media__headline-container.content--pillar-arts {
-    @include mediaPalatte($arts-garnett-media-main-1, arts);
+    @include mediaPalatte($culture-garnett-media-main-1, culture);
 }
 
 .content--media:not(.paid-content).content--pillar-lifestyle,
@@ -263,6 +360,7 @@
 }
 
 .rich-link {
+    &,
     &.rich-link--pillar-news {
         @include richLink($news-garnett-main-1, $garnett-neutral-3);
     }
@@ -276,7 +374,7 @@
     }
 
     &.rich-link--pillar-arts {
-        @include richLink($arts-garnett-main-1, $garnett-neutral-3);
+        @include richLink($culture-garnett-main-1, $garnett-neutral-3);
     }
 
     &.rich-link--pillar-lifestyle {
@@ -308,7 +406,7 @@
         }
 
         &.rich-link--pillar-arts {
-            @include richLink(#ffffff, $arts-garnett-feature);
+            @include richLink(#ffffff, $culture-garnett-feature);
         }
 
         &.rich-link--pillar-lifestyle {

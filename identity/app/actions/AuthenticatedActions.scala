@@ -35,8 +35,8 @@ class AuthenticatedActions(
     SeeOther(identityUrlBuilder.buildUrl(redirectUrlWithParams))
   }
 
-  def sendUserToAllConsentsJourney(request: RequestHeader): Result =
-    redirectWithReturn(request, "/consents/all")
+  def sendUserToConsentsJourney(request: RequestHeader): Result =
+    redirectWithReturn(request, "/consents")
 
   def sendUserToNewslettersConsentsJourney(request: RequestHeader): Result =
     redirectWithReturn(request, "/consents/newsletters")
@@ -137,11 +137,14 @@ class AuthenticatedActions(
 
       private def decideConsentJourney[A](request: AuthRequest[A]) =
         (userEmailValidated(request), userHasRepermissioned(request)) match {
-          case (false, _) =>
+          case (false, false) =>
             Future.successful(Some(sendUserToValidateEmail(request)))
 
+          case (false, true) =>
+            Future.successful(None)
+
           case (true, false) =>
-            Future.successful(Some(sendUserToAllConsentsJourney(request)))
+            Future.successful(Some(sendUserToConsentsJourney(request)))
 
           case (true, true) =>
             newsletterService.subscriptions(

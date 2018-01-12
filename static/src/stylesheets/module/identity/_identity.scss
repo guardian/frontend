@@ -12,66 +12,6 @@ $identity-header-height: 48px;
     }
 }
 
-.identity-wrapper-for-bg {
-    @include clearfix();
-    background: $neutral-8;
-    .tabs__container {
-        margin: $gs-gutter * 2 auto 0;
-    }
-    .tabs__content {
-        margin: $gs-gutter * 3 auto;
-        border: 0;
-    }
-    .gs-container {
-        @include clearfix();
-        background: #ffffff;
-        overflow: hidden;
-    }
-    .monocol-wrapper {
-        max-width: gs-span(10);
-        margin: auto;
-        @include mq($until: desktop) {
-            padding: 0 $gs-gutter * 1;
-        }
-    }
-    &.identity-wrapper-for-bg--overflows {
-        .gs-container {
-            overflow: visible;
-        }
-    }
-    &.identity-wrapper-for-bg--header {
-        background: darken($neutral-8, 5%);
-        .monocol-wrapper {
-            padding-bottom: 0;
-            overflow: hidden;
-        }
-        .gs-container {
-            background: darken(#ffffff, 5%);
-            padding-top: $gs-gutter;
-        }
-
-    }
-}
-
-.identity-wrapper {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: gs-span(6);
-    padding-bottom: $gs-baseline*4;
-    padding-top: $gs-baseline * 2;
-
-    &.identity-wrapper--with-wizard {
-        padding-bottom: 0;
-    }
-
-    @include mq(desktop) {
-        max-width: gs-span(10);
-    }
-}
-
-.identity-wrapper--stretched {
-    max-width: gs-span(16);
-}
 
 .identity-layout__header {
     @include mq(tablet) {
@@ -131,7 +71,11 @@ $identity-header-height: 48px;
 
 .identity-title-explainer {
     @include fs-bodyCopy(1);
-    margin-top: $gs-baseline;
+    margin-bottom: $gs-baseline;
+    &.identity-title-explainer--small {
+        @include fs-textSans(1);
+        color: $neutral-2;
+    }
 }
 
 .identity-title--public-profile {
@@ -181,11 +125,14 @@ $identity-header-height: 48px;
         display: block;
         font-family: $f-sans-serif-text;
         font-size: 14px;
-        padding: 8px 0 9px;
-        text-indent: 24px;
+        padding: 4px 0;
+        line-height: 28px;
+        height: 28px;
+        text-indent: 40px;
         width: 240px;
         position: relative;
-        text-align: center;
+        text-align: left;
+        border-radius: 9999px;
     }
 
     .social-signin__action--fb {
@@ -208,13 +155,13 @@ $identity-header-height: 48px;
 
     .social-signin__icon {
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 3px;
+        left: 6px;
 
         svg {
             float: left;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
         }
     }
 }
@@ -317,16 +264,6 @@ $identity-header-height: 48px;
 }
 
 
-/* Account Edit page
-   ========================================================================== */
-
-.identity-wrapper .tabs {
-    .fieldset:first-of-type {
-        border-top: 0; // Included so as not to break tabs metaphor
-    }
-}
-
-
 /* Public Profile Page
    ========================================================================== */
 
@@ -343,11 +280,6 @@ $identity-header-height: 48px;
         @include mq($until: desktop) {
             margin-top: 5px;
         }
-    }
-
-    .tabs__tab--selected {
-        border-top-color: $news-accent;
-        color: $news-accent;
     }
 
     @include mq($until: tablet) {
@@ -380,13 +312,71 @@ $identity-header-height: 48px;
     margin-top: 3em;
 }
 
-.dropdown--email-subscription {
-    .dropdown__label {
-        @include fs-bodyHeading(3);
-        text-transform: lowercase;
-    }
-    .dropdown__content {
-        padding-bottom: 2em;
+.dropdown-styled.dropdown--email-subscription {
+    @supports (transform: rotate(45deg)) {
+        border-color: $neutral-6;
+        .dropdown__button {
+            padding: $gs-baseline / 4 0 $gs-baseline;
+            color: $identity-main;
+        }
+        @if($identity-main == $garnett-neutral-1) {
+            &[data-dropdown-label='News'] .dropdown__button {
+                color: $news-garnett-main-1;
+            }
+            &[data-dropdown-label='Sport'] .dropdown__button {
+                color: $sport-garnett-main-1;
+            }
+            &[data-dropdown-label='Culture'] .dropdown__button {
+                color: $culture-garnett-main-1;
+            }
+            &[data-dropdown-label='Lifestyle'] .dropdown__button {
+                color: $lifestyle-garnett-main-1;
+            }
+            &[data-dropdown-label='Comment'] .dropdown__button {
+                color: $opinion-garnett-main-1;
+            }
+        }
+        .dropdown__label {
+            @include fs-bodyHeading(3);
+            &:after {
+                content: '';
+                border: 2px solid currentColor;
+                border-left: transparent;
+                border-top: transparent;
+                display: inline-block;
+                height: 5px;
+                color: inherit;
+                transform: translateY(-2px) rotate(45deg);
+                transition: transform 250ms ease-out;
+                vertical-align: middle;
+                width: 5px;
+                margin-left: 4px;
+            }
+        }
+        .dropdown__content {
+            padding-bottom: 2em;
+        }
+        .inline-dropdown-mask {
+            display: none;
+        }
+        &:hover .dropdown__button,
+        .dropdown__button:focus {
+            color: darken($identity-main, 15%);
+            &:hover, &:focus {
+                text-decoration: underline;
+            }
+        }
+        &:hover .dropdown__label:after,
+        .dropdown__button:focus:after {
+            transform: translateY(-1px) rotate(45deg);
+        }
+        &.dropdown--active .dropdown__label:after {
+            transform: translateY(1px) rotate(-135deg);
+        }
+        &.dropdown--active:hover .dropdown__label:after,
+        &.dropdown--active .dropdown__button:focus .dropdown__label:after {
+            transform: translateY(0px) rotate(-135deg);
+        }
     }
 }
 
@@ -454,14 +444,21 @@ $identity-header-height: 48px;
 
     &.email-unsubscribe {
         float: none;
+        &.is-updating {
+            svg {
+                display: none;
+            }
+        }
     }
 
     &.email-unsubscribe--confirm,
     &.email-unsubscribe--confirm:hover,
     &.email-unsubscribe--confirm:focus {
-        color: $error;
-        font-weight: bold;
-        border: 2px solid $error;
+        color: $error!important;
+        background: #ffffff!important;
+        font-weight: bold!important;
+        border: 1px solid $error!important;
+        box-shadow: inset 0 0 0 01px $error;
     }
 
     .email-subscription__fieldset & {
@@ -491,7 +488,7 @@ $identity-header-height: 48px;
     display: inline;
 
     &.hide {
-        display: none;
+        display: none!important;
     }
 }
 

@@ -7,8 +7,9 @@ $fc-item-gutter: $gs-gutter / 4;
 @mixin fs-headline-quote($level) {
     .fc-item__title--quoted .inline-garnett-quote__svg {
         height: get-font-size(headline, $level);
-        width: get-font-size(headline, $level) * .5;
+        width: get-font-size(headline, $level) * .54;
         margin-right: get-font-size(headline, $level) * .5;
+        transform: translateY(-1px);
     }
 }
 
@@ -39,7 +40,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .fc-item__media-wrapper {
+    .fc-item__media-wrapper, .fc-item__video-fallback {
         flex-basis: $media-width;
     }
 
@@ -149,6 +150,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__header,
+.video-overlay__headline,
 .item__title,
 .rich-link__header {
     @include fs-headline(3);
@@ -190,6 +192,12 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__header {
     flex: 1 1 auto;
     font-weight: 400;
+
+    .fc-item--has-boosted-title & {
+        @include mq($from: tablet) {
+            font-weight: 900;
+        }
+    }
 }
 
 .fc-item__kicker {
@@ -227,6 +235,10 @@ $fc-item-gutter: $gs-gutter / 4;
 
         .fc-item__timestamp {
             flex: 1;
+        }
+
+        .fc-item__standfirst {
+            padding-bottom: $gs-gutter * .25;
         }
     }
 }
@@ -341,6 +353,26 @@ $block-height: 58px;
     }
 }
 
+// reserve space for comment count on commentable card
+.fc-item--is-commentable:not(.fc-item--type-comment) .fc-item__meta {
+    min-height: 17px; // 17px = 14px height + 3px margin-top of inline-icon
+    min-width: calc(3ch + 16px); // 16px = 14px height + 2px padding-right of inline-icon
+
+    .fc-trail__count--commentcount {
+        display: flex;
+        flex-direction: row;
+
+        &::before {
+            content: '';
+            display: block;
+            flex-grow: 1;
+            height: 100%;
+        }
+    }
+}
+
+
+
 .fc-item__container > .fc-item__meta {
     display: none;
 }
@@ -411,104 +443,158 @@ $block-height: 58px;
     white-space: nowrap;
 }
 
-// Common media card styles
-.fc-item--type-media {
-    background-color: $media-garnett-main-1;
-
-    .fc-item__content {
-        justify-content: space-between;
-    }
-
-    .fc-item__header,
-    .fc-item__standfirst {
-        flex: 0 1 auto;
-    }
-
-    .fc-item__headline {
-        color: #ffffff;
-    }
-
-    .fc-item__meta-wrapper {
-        flex: 0 1 auto;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding-top: $gs-baseline / 2;
-        padding-bottom: $gs-baseline / 2;
-
-    }
-
-    .fc-item__footer-meta-wrapper {
-        flex: 0 1 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-    }
-
-    .fc-item__media-meta,
-    .fc-item__meta {
-        flex: 0 0 auto;
-    }
-
-    .fc-item__standfirst {
-        color: #ffffff;
-    }
-
-    .fc-item__media-meta,
-    .fc-item__meta {
-        @include fs-textSans(1);
-        font-weight: 600;
-    }
-
-    .fc-trail__count--commentcount {
-        color: #ffffff;
-
-        svg {
-            fill: #ffffff;
-        }
-    }
-
-    // darken on hover
-    &:hover,
-    .u-faux-block-link--hover {
-        background-color: darken($media-garnett-main-1, 5%);
-
-        .fc-item__container::before {
-            background-color: darken($media-garnett-main-1, 5%);
-        }
-    }
-
-    .fc-sublink__link {
-        color: #ffffff;
-    }
-
-}
-
 .fc-item--type-review {
-    .fc-item__header {
-        .stars {
+    .fc-item__media-wrapper,
+    .fc-item__header
+    {
+        .fc-item__stars {
             background-color: $news-garnett-highlight;
             display: inline-block;
             line-height: 0;
-            padding: calc((#{$gs-baseline} / 2) - 2px);
-            margin-top: $gs-baseline / 2;
+            padding: $gs-baseline / 4;
+            margin-top: $gs-baseline / 6;
         }
 
         .inline-star {
-            display: inline;
+            display: inline-block;
+            width: .65em;
+
+            @include mq($from: desktop) {
+                width: 1em;
+            }
 
             svg {
                 stroke: $garnett-neutral-1;
                 fill: transparent;
-                height: .8em;
-                width: .8em;
+                height: .75em;
+                width: .75em;
+
+                @include mq($from: desktop) {
+                    height: 1em;
+                    width: 1em;
+                }
+            }
+
+            &.star__item--golden {
+                svg {
+                    fill: $garnett-neutral-1;
+                    stroke: none;
+                }
             }
         }
+    }
 
-        .inline-star.star__item--golden {
+    //Specific card type styling overides
+    .fc-item__media-wrapper {
+        position: relative;
+        .fc-item__stars {
+            position: absolute;
+            z-index: 10;
+            bottom: 0;
+        }
+    }
+
+    &.fc-item--list-media-tablet,
+    &.fc-item--list-mobile
+    {
+        .inline-star {
+            width: .65em;
+
             svg {
-                fill: $garnett-neutral-1;
-                stroke: none;
+                stroke: $garnett-neutral-1;
+                fill: transparent;
+                height: .75em;
+                width: .75em;
+            }
+        }
+    }
+
+    &.fc-item--has-image {
+        .fc-item__header {
+            .fc-item__stars {
+                display: none;
+            }
+        }
+    }
+
+    &.fc-item--list-mobile {
+        .fc-item__header {
+            .fc-item__stars {
+                display: inline-block;
+                @include mq($from: tablet) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+}
+
+//Removes the space caused by the comment count
+.fc-item--list-mobile.fc-item--is-commentable {
+    .fc-item__content--has-stars {
+        .fc-item__header {
+            margin-bottom: -$gs-gutter;
+
+            @include mq($from: tablet) {
+                margin-bottom: auto;
+
+            }
+        }
+    }
+}
+
+.fc-item__slideshow {
+    picture {
+        @include mq($until: tablet) {
+            &:nth-child(1n+2) img {
+                display: none;
+            }
+        }
+    }
+
+    img {
+        @include mq(tablet) {
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            opacity: 0;
+        }
+    }
+}
+
+
+@for $i from 2 through 5 {
+    $hangTime: 4;
+    $fadeTime: 1;
+    $totalLoopTime: $i * ($hangTime + $fadeTime);
+    @keyframes fc-item__slideshow--#{$i} {
+        0% {
+            opacity: 0;
+        }
+        #{(100% / $totalLoopTime) * $fadeTime} {
+            opacity: 1;
+        }
+        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime)} {
+            opacity: 1;
+        }
+        #{(100% / $totalLoopTime) * ($fadeTime + $hangTime + $fadeTime)} {
+            opacity: 0;
+        }
+    }
+    @include mq(tablet) {
+        .fc-item__slideshow--#{$i} {
+            img {
+                animation-duration: #{$totalLoopTime}s;
+                animation-name: fc-item__slideshow--#{$i};
+            }
+
+            @for $j from 2 through $i {
+                picture:nth-child(#{$j}) {
+                    img {
+                        animation-delay: #{($totalLoopTime / $i) * ($j - 1)}s;
+                    }
+                }
             }
         }
     }

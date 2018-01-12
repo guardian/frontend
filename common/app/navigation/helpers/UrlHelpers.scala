@@ -1,6 +1,5 @@
 package navigation
 
-import experiments._
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import common.Edition
@@ -18,56 +17,41 @@ object UrlHelpers {
   case object SideMenu extends Position
   case object AmpHeader extends Position
   case object Footer extends Position
+  case object ManageMyAccountUpsell extends Position
+  case object ManageMyAccountCancel extends Position
 
   def getCampaignCode(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): Option[String] = {
-    val isInHeaderTestControlGroup = ActiveExperiments.isControl(ABNewDesktopHeader)
     val editionId = Edition(request).id.toUpperCase()
 
-    (destination, position, isInHeaderTestControlGroup) match {
-      case (Membership, NewHeader | SideMenu, _) => Some(s"mem_${editionId.toLowerCase()}_web_newheader")
-      case (Membership, OldHeader, true) => Some(s"mem_${editionId.toLowerCase()}_web_newheader_control")
-      case (Membership, OldHeader, false) => Some(s"DOTCOM_HEADER_BECOMEMEMBER_${editionId}")
-      case (Membership, AmpHeader, _) => Some("AMP_HEADER_GU_SUPPORTER")
-      case (Membership, SlimHeaderDropdown, _) => Some(s"NGW_TOPNAV_${editionId}_GU_MEMBERSHIP")
-      case (Membership, Footer, _) => Some(s"NGW_FOOTER_${editionId}_GU_MEMBERSHIP")
+    (destination, position) match {
+      case (Membership, NewHeader | SideMenu) => Some(s"mem_${editionId.toLowerCase()}_web_newheader")
+      case (Membership, OldHeader) => Some(s"DOTCOM_HEADER_BECOMEMEMBER_${editionId}")
+      case (Membership, AmpHeader) => Some("AMP_HEADER_GU_SUPPORTER")
+      case (Membership, SlimHeaderDropdown) => Some(s"NGW_TOPNAV_${editionId}_GU_MEMBERSHIP")
+      case (Membership, Footer) => Some(s"NGW_FOOTER_${editionId}_GU_MEMBERSHIP")
 
-      case (Contribute, NewHeader | OldHeader, _) => Some("gdnwb_copts_co_dotcom_header")
-      case (Contribute, Footer, _) => Some("gdnwb_copts_memco_dotcom_footer")
+      case (Contribute, NewHeader | OldHeader) => Some("gdnwb_copts_co_dotcom_header")
+      case (Contribute, Footer) => Some("gdnwb_copts_memco_dotcom_footer")
 
       // this editionId is lowercase even though the rest of the campaign code is uppercase
       // this is for consistency with the existing campaign code
-      case (Subscribe, SideMenu, _) => Some(s"NGW_NEWHEADER_${editionId.toLowerCase()}_GU_SUBSCRIBE")
-      case (Subscribe, NewHeader, _) => Some(s"subs_${editionId.toLowerCase()}_web_newheader")
-      case (Subscribe, OldHeader, true) => Some(s"subs_${editionId}_web_newheader_control")
-      case (Subscribe, OldHeader, false) => Some(s"NGW_HEADER_${editionId}_GU_SUBSCRIBE")
-      case (Subscribe, SlimHeaderDropdown, _) => Some(s"NGW_TOPNAV_${editionId}_GU_SUBSCRIBE")
-      case (Subscribe, Footer, _) => Some(s"NGW_FOOTER_${editionId}_GU_SUBSCRIBE")
+      case (Subscribe, SideMenu) => Some(s"NGW_NEWHEADER_${editionId.toLowerCase()}_GU_SUBSCRIBE")
+      case (Subscribe, NewHeader) => Some(s"subs_${editionId.toLowerCase()}_web_newheader")
+      case (Subscribe, OldHeader) => Some(s"NGW_HEADER_${editionId}_GU_SUBSCRIBE")
+      case (Subscribe, SlimHeaderDropdown) => Some(s"NGW_TOPNAV_${editionId}_GU_SUBSCRIBE")
+      case (Subscribe, Footer) => Some(s"NGW_FOOTER_${editionId}_GU_SUBSCRIBE")
 
-      case (Support, Footer, _) => Some("gdnwb_copts_memco_dotcom_footer")
-      case (Support, AmpHeader, _) => Some("gdnwb_copts_memco_header_amp")
-      case (Support, _, _) => Some("gdnwb_copts_memco_header")
+      case (Support, Footer) => Some("gdnwb_copts_memco_dotcom_footer")
+      case (Support, AmpHeader) => Some("gdnwb_copts_memco_header_amp")
+      case (Support, ManageMyAccountUpsell) => Some(s"DOTCOM_MANAGE_JOIN")
+      case (Support, _) => Some("gdnwb_copts_memco_header")
 
-      case (_, _, _) => None
+      case (_, _) => None
     }
   }
 
-  case class ABTest(name: String, variant: String)
-
-  def getHeaderABTestInfo(implicit request: RequestHeader): Option[ABTest] =
-    if (ActiveExperiments.isControl(ABNewDesktopHeader)) {
-      Some(ABTest("NewDesktopHeader", "control"))
-    } else if (experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {
-      Some(ABTest("NewDesktopHeader", "variant"))
-    } else {
-      None
-    }
-
   def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): String = {
     val campaignCode = getCampaignCode(destination, position)
-    val abTest = position match {
-      case NewHeader | OldHeader => getHeaderABTestInfo
-      case _ => None
-    }
 
     val acquisitionData = Json.obj(
       // GUARDIAN_WEB corresponds to a value in the Thrift enum
@@ -77,6 +61,7 @@ object UrlHelpers {
       "source" -> "GUARDIAN_WEB",
       "componentType" -> (position match {
         case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
+        case ManageMyAccountUpsell | ManageMyAccountCancel => "ACQUISITIONS_MANAGE_MY_ACCOUNT"
         case Footer => "ACQUISITIONS_FOOTER"
       })
     ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
@@ -86,11 +71,6 @@ object UrlHelpers {
       // But for now, we're duplicating this value across both fields.
       "componentId" -> c,
       "campaignCode" -> c
-    )) ++ abTest.fold(Json.obj())(ab => Json.obj(
-      "abTest" -> Json.obj(
-        "name" -> ab.name,
-        "variant" -> ab.variant
-      )
     ))
 
     import com.netaporter.uri.dsl._
@@ -137,33 +117,15 @@ object UrlHelpers {
 
   object oldNav {
     def jobsUrl(edition: String)(implicit request: RequestHeader): String =
-      if(ActiveExperiments.isControl(ABNewDesktopHeader)) {
-        s"https://jobs.theguardian.com/?INTCMP=jobs_${edition}_web_newheader_control"
-      } else {
         s"https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_${edition.toUpperCase}_GU_JOBS"
-      }
 
     def soulmatesUrl(edition: String)(implicit request: RequestHeader): String =
-      if(ActiveExperiments.isControl(ABNewDesktopHeader)) {
-        s"https://soulmates.theguardian.com/?INTCMP=soulmates_${edition}_web_newheader_control"
-      } else {
         s"https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_${edition.toUpperCase}_GU_SOULMATES"
-      }
 
     def holidaysUrl(implicit request: RequestHeader): String =
-      if(ActiveExperiments.isControl(ABNewDesktopHeader)) {
-        "https://holidays.theguardian.com/?INTCMP=holidays_uk_web_newheader_control"
-      } else {
         "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"
-      }
 
     def masterclassesUrl(implicit request: RequestHeader): String =
-      if(ActiveExperiments.isControl(ABNewDesktopHeader)) {
-        "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader_control"
-      } else {
         "https://membership.theguardian.com/masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"
-      }
-
   }
-
 }

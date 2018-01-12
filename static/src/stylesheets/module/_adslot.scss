@@ -210,9 +210,6 @@
 }
 
 .ad-slot--liveblog-inline,
-.ad-slot--gallery-inline {
-    background-color: transparent;
-}
 
 .ad-slot--container-inline,
 .ad-slot--container-inline.ad-slot--fluid {
@@ -225,6 +222,7 @@
 }
 .ad-slot--gallery-inline {
     background-color: $media-background;
+    margin-left: 0;
 
     @include mq(mobileLandscape) {
         width: 300px;

@@ -136,6 +136,17 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
       previewUrl <- session.lineItemCreativeAssociations.getPreviewUrl(lineItemId, creativeId, url)
     } yield previewUrl
 
+  def getReportQuery(reportId: Long): Option[ReportQuery] =
+    for {
+      session <- SessionWrapper()
+      query <- session.getReportQuery(reportId)
+    } yield query
+
+  def runReportJob(report: ReportQuery): Seq[String] = {
+    withDfpSession { session =>
+      session.runReportJob(report)
+    }
+  }
 }
 
 object DfpApi {

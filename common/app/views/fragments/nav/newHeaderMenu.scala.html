@@ -10,7 +10,7 @@
         data-section-name="@pillar.title"
         role="menuitem">
 
-        <button class="menu-item__title hide-from-desktop js-navigation-toggle"
+        <button class="menu-item__title menu-item__title--@pillar.title hide-from-desktop js-navigation-toggle"
                 data-link-name="nav2 : secondary : @pillar.title"
                 aria-haspopup="true"
                 aria-expanded="true">
@@ -25,7 +25,7 @@
             role="menu">
             @pillar.children.map { sectionItem =>
                 <li class="@RenderClasses(Map(
-                            "menu-item--home" -> (sectionItem.iconName == "home")
+                            "menu-item--home hide-from-desktop" -> (sectionItem.iconName == "home")
                         ), "menu-item")"
                     role="menuitem">
                     <a class="menu-item__title"
@@ -78,7 +78,7 @@
                                name="q"
                                class="menu-search__search-box js-menu-search-term"
                                id="google-search"
-                               placeholder="search"
+                               placeholder="Search"
                                data-link-name="nav2 : search">
 
                        <label class="menu-search__glass"
@@ -143,8 +143,8 @@
 
                 @navMenu.otherLinks.map { item =>
                     <li class="@RenderClasses(Map(
-                            "hide-from-desktop" -> (item.title == "the guardian app"),
-                            "menu-item--no-border" -> (item.title == "video")
+                            "hide-from-desktop" -> (item.title == "The Guardian app"),
+                            "menu-item--no-border" -> (item.title == "Video")
                         ), "menu-item")"
                         role="menuitem">
 

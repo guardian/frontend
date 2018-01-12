@@ -77,7 +77,6 @@ class CommercialFeatures {
         this.carrotTrafficDriver =
             this.articleBodyAdverts &&
             config.get('switches.carrotTrafficDriver', false) &&
-            config.hasTone('Features') &&
             !config.page.isPaidContent;
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;

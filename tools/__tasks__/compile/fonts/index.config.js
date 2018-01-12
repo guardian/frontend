@@ -15,7 +15,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
+                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff2',
             },
         ],
     },
@@ -35,7 +35,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
+                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff',
             },
         ],
     },
@@ -55,7 +55,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
+                    'hinting-off/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.ttf',
             },
         ],
     },
@@ -144,6 +144,126 @@ module.exports = [
         ],
     },
     {
+        dest: 'GuardianHeadline.woff2.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.woff2',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.woff2',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.woff2',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.woff2',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.woff2',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.woff2',
+            },
+        ],
+    },
+    {
+        dest: 'GuardianHeadline.woff.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.woff',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.woff',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.woff',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.woff',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.woff',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-off/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.woff',
+            },
+        ],
+    },
+    {
+        dest: 'GuardianHeadline.ttf.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Light.ttf',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-LightItalic.ttf',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Semibold.ttf',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-off/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Bold.ttf',
+            },
+        ],
+    },
+    {
         dest: 'GuardianTextSansWeb.woff2.json',
         'font-family': '"Guardian Text Sans Web"',
         fonts: [
@@ -219,7 +339,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
+                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff2',
             },
         ],
     },
@@ -239,7 +359,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
+                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff',
             },
         ],
     },
@@ -259,7 +379,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
+                    'hinting-cleartype/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.ttf',
             },
         ],
     },
@@ -348,6 +468,126 @@ module.exports = [
         ],
     },
     {
+        dest: 'GuardianHeadlineCleartypeHinted.woff2.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.woff2',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.woff2',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.woff2',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.woff2',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.woff2',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.woff2',
+            },
+        ],
+    },
+    {
+        dest: 'GuardianHeadlineCleartypeHinted.woff.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.woff',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.woff',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.woff',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.woff',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.woff',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.woff',
+            },
+        ],
+    },
+    {
+        dest: 'GuardianHeadlineCleartypeHinted.ttf.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Light.ttf',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-LightItalic.ttf',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Semibold.ttf',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Bold.ttf',
+            },
+        ],
+    },
+    {
         dest: 'GuardianTextSansWebCleartypeHinted.woff2.json',
         'font-family': '"Guardian Text Sans Web"',
         fonts: [
@@ -423,7 +663,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
+                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff2',
             },
         ],
     },
@@ -443,7 +683,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
+                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.woff',
             },
         ],
     },
@@ -463,7 +703,7 @@ module.exports = [
             {
                 'font-weight': '700',
                 src:
-                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
+                    'hinting-auto/kerning-on/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.ttf',
             },
         ],
     },
@@ -548,6 +788,126 @@ module.exports = [
                 'font-weight': '900',
                 src:
                     'hinting-auto/kerning-on/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf',
+            },
+        ],
+    },
+    {
+        dest: 'GuardianHeadlineAutoHinted.woff2.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.woff2',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.woff2',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.woff2',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.woff2',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.woff2',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.woff2',
+            },
+        ],
+    },
+    {
+        dest: 'GuardianHeadlineAutoHinted.woff.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Light.woff',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-LightItalic.woff',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Medium.woff',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-MediumItalic.woff',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Semibold.woff',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-auto/kerning-on/noalts/GuardianHeadline/GHGuardianHeadline-Bold.woff',
+            },
+        ],
+    },
+    {
+        dest: 'GuardianHeadlineAutoHinted.ttf.json',
+        'font-family': '"Guardian Egyptian Web"',
+        fonts: [
+            {
+                'font-weight': '200',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Light.ttf',
+            },
+            {
+                'font-weight': '200',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-LightItalic.ttf',
+            },
+            {
+                'font-weight': '400',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Medium.ttf',
+            },
+            {
+                'font-weight': '400',
+                'font-style': 'italic',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-MediumItalic.ttf',
+            },
+            {
+                'font-weight': '500',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Semibold.ttf',
+            },
+            // This weight contains only a certain set of chars
+            // since it is used only in one place (section names)
+            {
+                'font-weight': '900',
+                src:
+                    'hinting-auto/kerning-on/latin1/GuardianHeadline/GHGuardianHeadline-Bold.ttf',
             },
         ],
     },

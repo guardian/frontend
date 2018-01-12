@@ -26,7 +26,12 @@
     <fieldset class="fieldset fieldset--manage-account-noborder">
         <div class="fieldset__heading">
             <h2 class="form__heading">Your newsletters</h2>
-            <p class="form__note">Our regular newsletters help you get closer to our quality, independent journalism. You can tailor your experience by picking the issues and topics that interest you below.</p>
+            <p class="form__note">
+                Our regular newsletters help you get closer to our quality, independent journalism. Pick the issues and topics that interest you below.
+            </p>
+            <p class="identity-title-explainer identity-title-explainer--small">
+                The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.
+            </p>
         </div>
         <div class="fieldset__fields">
             @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions)(request, messages)
@@ -44,14 +49,28 @@
             <div class="fieldset__fields email-subscription__options">
                 <ul class="u-unstyled">
                     <li>
-                        <a href="@buildIdentityUrl("account/edit")" class="manage-account__button manage-account__button--mini" data-link-name="identity : email : update">Update your email address</a>
+                        <a href="@buildIdentityUrl("account/edit")" class="manage-account__button manage-account__button--icon manage-account__button--mini" data-link-name="identity : email : update">
+                            Update your email address
+                            @fragments.inlineSvg("arrow-right", "icon")
+                        </a>
                     </li>
                     <li>
-                        <a href="#manage-account__modal--newsletterFormat" role="button" class="js-email-subscription__formatFieldsetToggle manage-account__button manage-account__button--mini" data-link-name="identity : email : format">Change format</a>
+                        <a href="#manage-account__modal--newsletterFormat" role="button" class="js-email-subscription__formatFieldsetToggle manage-account__button manage-account__button--mini manage-account__button--icon" data-link-name="identity : email : format">
+                            Change format
+                            @fragments.inlineSvg("arrow-right", "icon")
+                        </a>
                     </li>
                     <li>
                         <p class="label-like">No longer want to receive any of these emails?</p>
-                        <button type="button" class="manage-account__button--mini manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all"><span class="email-unsubscribe-all__label js-unsubscribe--basic">Unsubscribe from all emails</span><span class="email-unsubscribe-all__label js-unsubscribe--confirm hide" aria-hidden>Are you sure?</span></button>
+                        <button type="button" class="manage-account__button--mini manage-account__button--icon manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all">
+                            <span class="email-unsubscribe-all__label js-unsubscribe--basic manage-account__button-flexwrap">
+                                Unsubscribe from all emails
+                                @fragments.inlineSvg("cross", "icon")
+                            </span>
+                            <span class="email-unsubscribe-all__label js-unsubscribe--confirm hide" aria-hidden>
+                                Are you sure?
+                            </span>
+                        </button>
                     </li>
                 </ul>
             </div>

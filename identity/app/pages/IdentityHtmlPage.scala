@@ -11,12 +11,22 @@ import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import html.HtmlPageHelpers.ContentCSSFile
+import views.html.stacked
 
 object IdentityHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink("identity")
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
+    override def criticalCssLink: Html = stacked(
+      if(experiments.ActiveExperiments.isParticipating(experiments.GarnettIdentity)){
+        criticalStyleLink("identity.garnett")
+      } else {
+        criticalStyleLink("identity")
+      },
+      criticalStyleLink(InlineNavigationCSSFile))
+    override def criticalCssInline: Html = criticalStyleInline(
+      Html(common.Assets.css.inlineIdentity),
+      Html(common.Assets.css.inlineNavigation)
+    )
     override def linkCss: Html = HtmlFormat.fill(List(
       stylesheetLink(s"stylesheets/$ContentCSSFile.css"),
       stylesheetLink(s"stylesheets/membership-icons.css")
@@ -39,12 +49,20 @@ object IdentityHtmlPage {
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses())(
-        skipToMainContent(),
-        views.html.layout.identityHeader(),
-        content,
-        inlineJSNonBlocking(),
-        footer() when !page.isFlow,
-        analytics.base()
+        views.html.layout.identityFlexWrap()(
+          skipToMainContent(),
+          views.html.layout.identityHeader(hideNavigation=page.isFlow),
+        )(
+          content
+        )(
+          inlineJSNonBlocking(),
+          if(page.isFlow){
+            views.html.layout.identitySkinnyFooter()
+          } else {
+            footer()
+          },
+          analytics.base()
+        )
       ),
       devTakeShot()
     )
