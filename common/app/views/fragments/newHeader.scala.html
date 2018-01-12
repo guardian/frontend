@@ -11,7 +11,7 @@
 <header class="@RenderClasses(Map(
             "new-header--mvt-desktop" -> NewDesktopNavigation.isSwitchedOn,
             "new-header--slim" -> page.metadata.hasSlimHeader
-        ), s"new-header--${navMenu.currentPillar.map(_.title).getOrElse("")}", "new-header")"
+        ), s"new-header--${page.metadata.pillar.nameOrDefault}", "new-header")"
         role="banner">
 
         <nav class="new-header__inner gs-container"
