@@ -26,7 +26,7 @@ x x x x x x x x x x x x x x x x x x x x x x x x
     }
 
 
-    &:not(.fc-container--paid-content) {
+    &:not(.fc-item--paid-content) {
         @include mq($until: tablet) {
             &:not(.fc-item--list-media-mobile) .fc-item__media-wrapper {
                 display: none;

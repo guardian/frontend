@@ -140,8 +140,8 @@
             content: none;
         }
 
-        &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker:after,
-        &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker:after
+        &.fc-item--list-media-mobile .fc-item__kicker:after,
+        &.fc-item--list-mobile .fc-item__kicker:after
         {
             content: '/';
 
@@ -150,10 +150,14 @@
             }
         }
 
-        &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker:after,
-        &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker:after
+        &.fc-item--list-media-tablet .fc-item__kicker:after,
+        &.fc-item--list-tablet .fc-item__kicker:after
         {
             content: '/';
+        }
+
+        .fc-item__standfirst {
+            color: #ffffff;
         }
 
         .fc-item__meta {
