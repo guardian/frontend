@@ -314,6 +314,7 @@ $quote-mark: 35px;
         }
 
         .contact {
+            color: $garnett-neutral-6;
             display: inline-block!important;
         }
     }
@@ -934,8 +935,23 @@ $quote-mark: 35px;
         }
 
     }
+    .content__headline__byline {
+        overflow: visible;
+    }
+
     .meta__image {
         float: none;
+        margin-right: -$gs-gutter;
+        @include mq(phablet) {
+            margin-right: 0;
+        }
+    }
+
+    .content__head--byline-pic .byline-img {
+
+        @include mq(mobileLandscape) {
+            height: $gs-baseline*15;
+        }
     }
 
     .byline-img {
@@ -1447,7 +1463,7 @@ $quote-mark: 35px;
     .submeta__section-labels .submeta__link {
         @include f-textSans;
     }
-    
+
     .content__meta-container {
         @include multiline(3, $garnett-neutral-6, top);
     }
