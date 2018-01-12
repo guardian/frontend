@@ -4,16 +4,13 @@
     color: currentColor;
     cursor: pointer;
     display: block;
-    font-size: 15px;
+    // Weird number to get the most out of available space
+    font-size: 15.4px;
     height: $gs-baseline * 2 + $gs-baseline / 2;
     line-height: 1;
     padding: 0 4px;
     position: relative;
     overflow: hidden;
-
-    @include mq(mobileMedium) {
-        font-size: 16px;
-    }
 
     @include mq(tablet) {
         font-size: 22px;

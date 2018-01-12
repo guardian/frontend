@@ -66,11 +66,19 @@ from scrolling */
     transform: translateX(100%);
 
     @include mq(desktop) {
+        right: 107px;
+        width: 100px;
+    }
+
+    @include mq(leftCol) {
         right: 120px;
     }
 
-    @include mq(wide) {
-        right: 200px;
+    body:not(.has-page-skin) & {
+        @include mq(wide) {
+            right: 200px;
+            width: auto;
+        }
     }
 }
 
