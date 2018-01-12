@@ -478,15 +478,17 @@ $quote-mark: 35px;
         display: inline-block;
         line-height: 0;
         padding: calc((#{$gs-baseline} / 2) - 2px);
+        padding-left: $gs-gutter / 2;
         margin-top: -$gs-baseline / 2;
-        margin-left: $gs-gutter / 2;
         margin-bottom: $gs-baseline;
         transform: translatey(-$gs-baseline / 2);
         @include mq($from: mobileLandscape) {
-            margin-left: $gs-gutter;
+            padding-left: $gs-gutter;
         }
         @include mq($from: phablet) {
             margin-left: 0;
+            //magic number used for alignment
+            padding-left: 4px;
         }
         @include mq($from: tablet) {
             margin-bottom: 0;
