@@ -7,7 +7,7 @@
 }
 
 .manage-account__button {
-    $font-size: 3;
+    $font-size: 5;
     $height: $gs-baseline * 3;
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
     $padding-horizontal: $gs-gutter;

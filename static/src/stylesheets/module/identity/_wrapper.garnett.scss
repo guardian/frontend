@@ -31,7 +31,7 @@
     border-bottom: 1px solid $neutral-5;
     overflow: hidden;
     .tabs__container {
-        margin: $gs-gutter * 2 auto 0 -1px;
+        margin: $gs-gutter auto 0 -1px;
         .tabs__tab a {
             font-weight: 400!important;
             /*text can't fit otherwise*/
