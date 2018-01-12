@@ -29,7 +29,6 @@ object emailLandingPage extends StandalonePage {
 case class EmailForm(
   email: String,
   listName: Option[String],
-  listId: Option[Int],
   referrer: Option[String],
   campaignCode: Option[String])
 
@@ -40,14 +39,7 @@ class EmailFormService(wsClient: WSClient) {
     val idAccessClientToken = Configuration.id.apiClientToken
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
 
-    // FIXME: Cached widgets will continue to post listId so have to deal with both until cache clears
-    val listName = (form.listName, form.listId) match {
-      case (None, Some(id)) =>
-        EmailNewsletter(id) orElse EmailNewsletter.fromV1ListId(id) map { _.identityName }
-      case (name, _) => name
-    }
-
-    val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(listName)).fields)
+    val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
 
     wsClient
       .url(consentMailerUrl)
@@ -62,7 +54,6 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
-      "listId" -> optional[Int](of[Int]),
       "referrer" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String])
     )(EmailForm.apply)(EmailForm.unapply)
