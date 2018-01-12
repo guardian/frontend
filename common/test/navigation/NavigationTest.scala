@@ -32,7 +32,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
   }
 
   "Simple menu" should "just return the 5 primary links" in {
-    NavMenu(Uk).pillars should be(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukArtsPillar, ukLifestylePillar))
+    NavMenu(Uk).pillars should be(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar))
   }
 
   "the route `/cities`" should "return the NavLink for cities" in {
@@ -137,7 +137,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val subnav = NavMenu.getSubnav(fakePage(), maybeNavLink, parent, pillar)
 
     subnav.parent.isDefined should be(false)
-    subnav.children should be(auArtsPillar.children)
+    subnav.children should be(auCulturePillar.children)
   }
 
   "The section `Indigenous Australians`" should "still be in the pillar News in the Uk edition" in {
