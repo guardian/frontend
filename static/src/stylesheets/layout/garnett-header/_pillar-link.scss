@@ -23,13 +23,13 @@
     }
 
     @include mq(desktop) {
-        height: $gs-baseline * 3;
+        height: $gs-baseline * 3 + $gs-baseline / 2;
     }
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
             font-size: 24px;
-            height: $gs-baseline * 3 + $gs-baseline / 2;
+            height: $gs-baseline * 4;
         }
     }
 
