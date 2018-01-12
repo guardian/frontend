@@ -30,7 +30,7 @@
 
     @if(!(item.content.isGallery || item.content.isImmersive)) {
 
-        @if(!(item.content.hasTonalHeaderByline && item.metadata.designType.nameOrDefault != "analysis")) {
+        @if(!item.content.hasTonalHeaderByline || item.metadata.designType.nameOrDefault == "analysis") {
             <div class="meta__contact-wrap">
             @byline()
         }
@@ -50,7 +50,7 @@
             }
         }
 
-        @if(!(item.content.hasTonalHeaderByline && item.metadata.designType.nameOrDefault != "analysis")) {
+        @if(!item.content.hasTonalHeaderByline || item.metadata.designType.nameOrDefault == "analysis") {
         </div>
         }
     }
