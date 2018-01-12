@@ -34,7 +34,7 @@ trait ConsentsJourney
   /** POST /complete-consents */
   def submitRepermissionedFlag: Action[AnyContent] =
     csrfCheck {
-      consentAuthWithIdapiUserAction.async { implicit request =>
+      consentAuthWithIdapiUserAction().async { implicit request =>
         val returnUrlForm = Form(single("returnUrl" -> nonEmptyText))
         returnUrlForm.bindFromRequest.fold(
           formWithErrors => Future.successful(BadRequest(Json.toJson(formWithErrors.errors.toList))),
@@ -68,7 +68,7 @@ trait ConsentsJourney
       }
     } else {
       csrfAddToken {
-        consentAuthWithIdapiUserAction.async { implicit request =>
+        consentAuthWithIdapiUserAction().async { implicit request =>
           consentJourneyView(
             page = page,
             journey = page.journey,
