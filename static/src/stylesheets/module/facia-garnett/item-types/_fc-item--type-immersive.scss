@@ -130,63 +130,69 @@
 
 .fc-item--type-immersive {
 
-    .fc-item__kicker:before,
-    .fc-item__kicker:after {
-        content: none;
-    }
+    // ?# It is very easy to opt out as the below, but
+    // it increases the cyclomatic complexity of all selectors.
+    // Find a better solution!
+    :not(.paid-content) {
 
-    &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker:after,
-    &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker:after
-    {
-        content: '/';
-
-        @include mq($from: tablet) {
+        .fc-item__kicker:before,
+        .fc-item__kicker:after {
             content: none;
         }
-    }
 
-    &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker:after,
-    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker:after
-    {
-        content: '/';
-    }
+        &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker:after,
+        &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker:after
+        {
+            content: '/';
 
-    .fc-item__meta {
-        margin-left: auto;
-        color: #ffffff;
-    }
-
-    .inline-icon {
-        fill: #ffffff;
-    }
-
-    &.fc-item--standard-mobile {
-        @include mq($from: mobile, $until: tablet) {
-            @include immersiveBottom();
+            @include mq($from: tablet) {
+                content: none;
+            }
         }
-    }
 
-    &.fc-item--standard-tablet,
-    &.fc-item--third-tablet,
-    &.fc-item--half-tablet,
-    &.fc-item--full-media-100-tablet,
-    &.fc-item--three-quarters-tall-tablet {
-        @include mq($from: tablet) {
-            @include immersiveBottom();
+        &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker:after,
+        &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker:after
+        {
+            content: '/';
         }
-    }
 
-    &.fc-item--full-media-75-tablet,
-    &.fc-item--full-media-50-tablet,
-    &.fc-item--three-quarters-tablet {
-        @include mq($from: tablet) {
-            @include immersiveLeft();
+        .fc-item__meta {
+            margin-left: auto;
+            color: #ffffff;
         }
-    }
 
-    &.fc-item--three-quarters-right-tablet {
-        @include mq($from: tablet) {
-            @include immersiveRight();
+        .inline-icon {
+            fill: #ffffff;
+        }
+
+        &.fc-item--standard-mobile {
+            @include mq($from: mobile, $until: tablet) {
+                @include immersiveBottom();
+            }
+        }
+
+        &.fc-item--standard-tablet,
+        &.fc-item--third-tablet,
+        &.fc-item--half-tablet,
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--three-quarters-tall-tablet {
+            @include mq($from: tablet) {
+                @include immersiveBottom();
+            }
+        }
+
+        &.fc-item--full-media-75-tablet,
+        &.fc-item--full-media-50-tablet,
+        &.fc-item--three-quarters-tablet {
+            @include mq($from: tablet) {
+                @include immersiveLeft();
+            }
+        }
+
+        &.fc-item--three-quarters-right-tablet {
+            @include mq($from: tablet) {
+                @include immersiveRight();
+            }
         }
     }
 }
