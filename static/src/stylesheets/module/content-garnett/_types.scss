@@ -454,15 +454,14 @@ $quote-mark: 35px;
         display: block;
     }
 
-    .media-primary.media-primary--showcase {
+    &:not(.paid-content) .media-primary.media-primary--showcase {
         margin-left: 0;
         margin-right: 0;
     }
 
     .content__headline {
         @include fs-headlineGarnett(4);
-        font-weight: 400;
-        // magic number correcting line height so vertical alignment apprears even with labels
+        font-weight: 400; // magic number correcting line height so vertical alignment apprears even with labels
         padding-top: 3px;
         padding-bottom: $gs-baseline*2;
         @include mq(tablet) {
@@ -471,6 +470,7 @@ $quote-mark: 35px;
             padding-bottom: $gs-baseline*3;
         }
     }
+
     //Review stars
     .stars {
         background-color: $news-garnett-highlight;
@@ -1330,7 +1330,7 @@ $quote-mark: 35px;
 .content--type-feature,
 .content--type-guardianview,
 .content--type-review {
-    .content__standfirst {
+    &:not(.paid-content) .content__standfirst {
         @include fs-headlineGarnett(0);
         font-weight: 200;
         @include mq(tablet) {
@@ -1438,6 +1438,39 @@ $quote-mark: 35px;
         border-bottom: 1px solid $garnett-neutral-4;
     }
 }
+
+.paid-content {
+    .content__headline,
+    .content__standfirst,
+    .from-content-api,
+    .content__series-label,
+    .submeta__section-labels .submeta__link {
+        @include f-textSans;
+    }
+    
+    .content__meta-container {
+        @include multiline(3, $garnett-neutral-6, top);
+    }
+
+    .submeta {
+        @include multiline(4, $garnett-neutral-6, top);
+    }
+
+    .social-icon,
+    .block-share__item,
+    .submeta__keywords {
+        border-color: $garnett-neutral-6;
+    }
+
+    .content__article-body::before {
+        background: $garnett-neutral-6;
+    }
+
+    .element .caption {
+        background: transparent;
+    }
+}
+
 // *************** By line cutouts ****************
 
 .content__head--byline-pic .content__header {

@@ -274,55 +274,61 @@
 
 }
 
+.paid-content,
 .content--pillar-news {
     @include colorPalatte($news-garnett-main-1, $news-garnett-feature, $news-garnett-media-main-1);
 }
 
-.content--pillar-opinion,
-.content--type-comment,
-.content--type-guardianview {
+// #? There is a lot of :not(.paid-content) to avoid having to override
+// after the fact.
+// - should the pillar and type classes be added on the condition that isPaidContent is false?
+// - or is it easier to just override everything in a separate module scoped with .paid-content?
+.content--pillar-opinion:not(.paid-content),
+.content--type-comment:not(.paid-content),
+.content--type-guardianview:not(.paid-content) {
     @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
 }
 
-.content--pillar-arts,
-.content--pillar-arts.content--type-comment,
-.content--pillar-arts.content--type-guardianview {
+.content--pillar-arts:not(.paid-content),
+.content--pillar-arts.content--type-comment:not(.paid-content),
+.content--pillar-arts.content--type-guardianview:not(.paid-content) {
     @include colorPalatte($culture-garnett-main-1, $culture-garnett-feature, $culture-garnett-media-main-1);
 }
 
-.content--pillar-lifestyle,
-.content--pillar-lifestyle.content--type-comment,
-.content--pillar-lifestyle.content--type-guardianview {
+.content--pillar-lifestyle:not(.paid-content),
+.content--pillar-lifestyle.content--type-comment:not(.paid-content),
+.content--pillar-lifestyle.content--type-guardianview:not(.paid-content) {
     @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
 }
 
-.content--pillar-sport,
-.content--pillar-sport.content--type-comment,
-.content--pillar-sport.content--type-guardianview {
+.content--pillar-sport:not(.paid-content),
+.content--pillar-sport.content--type-comment:not(.paid-content),
+.content--pillar-sport.content--type-guardianview:not(.paid-content) {
     @include colorPalatte($sport-garnett-main-1, $sport-garnett-feature, $sport-garnett-media-main-1);
 }
 
+.paid-content,
 .content-footer--pillar-news {
     @include footerPalette($news-garnett-main-1);
 }
 
-.content-footer--pillar-arts {
+.content-footer--pillar-arts:not(.paid-content) {
     @include footerPalette($culture-garnett-feature);
 }
 
-.content-footer--pillar-lifestyle {
+.content-footer--pillar-lifestyle:not(.paid-content) {
     @include footerPalette($lifestyle-garnett-feature);
 }
 
-.content-footer--pillar-opinion {
+.content-footer--pillar-opinion:not(.paid-content) {
     @include footerPalette($opinion-garnett-main-1);
 }
 
-.content-footer--pillar-sport {
+.content-footer--pillar-sport:not(.paid-content) {
     @include footerPalette($sport-garnett-main-1);
 }
 
-.content--media:not(.paid-content).content--pillar-news,
+.content--media.content--pillar-news,
 .immersive-main-media__headline-container.content--pillar-news {
     @include mediaPalatte($news-garnett-media-main-1, news);
 }
