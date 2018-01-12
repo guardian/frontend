@@ -14,7 +14,7 @@
     .element-pullquote p,
     &.content--type-feature .content__headline,
     &.content--type-review .content__headline,
-    .u-underline[href] {
+    .u-underline {
         color: $pillarColor;
     }
 
@@ -26,7 +26,7 @@
     .content--media .content__headline,
     .old-article-message,
     .pullquote-cite,
-    a[href] {
+    a {
         color: $kickerColor;
     }
 
@@ -260,8 +260,12 @@
 
     .inline-camera,
     .inline-video-icon__svg,
-    .inline-volume-high {
+    .inline-volume-high.inline-icon {
         fill: $mediaColor;
+    }
+
+    .social-icon__svg {
+        fill: $garnett-neutral-4;
     }
 
     .vjs-paused .vjs-play-control {
@@ -444,6 +448,6 @@
     }
 }
 
-.immersive-main-media__headline-container .content__series-label__link[href] {
+.immersive-main-media__headline-container .content__series-label__link {
     color: $garnett-neutral-3;
 }
