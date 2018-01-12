@@ -31,8 +31,13 @@ $pillars: (
 
         @include garnett-underline($pillarColor, 20px);
 
+        @include mq(desktop) {
+            &.fc-item--standard-tablet {
+                @include garnett-underline($pillarColor, 24px);
+            }
+        }
+
         @include mq(tablet) {
-            &.fc-item--standard-tablet,
             &.fc-item--third-tablet,
             &.fc-item--full-media-50-tablet,
             &.fc-item--full-media-75-tablet, &.fc-item--half-tablet,
