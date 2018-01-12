@@ -1403,7 +1403,7 @@ $quote-mark: 35px;
 }
 // *************** Football ***************
 
-.content--article {
+.section-football {
     .team__info {
         @include fs-headlineGarnett(3);
         @include mq(mobileLandscape) {
