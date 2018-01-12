@@ -88,7 +88,7 @@
 }
 
 .content__head {
-    @include mq($from: tablet, $until: desktop) {
+    @include mq($from: tablet, $until: leftCol) {
         display: flex;
         flex-direction: column;
     }
