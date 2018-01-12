@@ -22,7 +22,7 @@ object GetClasses {
       ("js-fc-item", true),
       ("fc-item--pillar-" + item.pillar.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--type-" + item.designType.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-      ("fc-item--" + item.cardStyle.toneString, experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.cardStyle == SpecialReport),
+      ("fc-item--special-report", experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.cardStyle == SpecialReport),
       ("fc-item--paid-content", experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.branding.exists(_.isPaid)),
       ("fc-item--has-cutout", item.cutOut.isDefined),
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
