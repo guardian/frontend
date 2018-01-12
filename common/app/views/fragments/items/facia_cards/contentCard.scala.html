@@ -125,9 +125,7 @@ data-test-id="facia-card"
                 }
             }
 
-
-
-           case Some(svg@CrosswordSvg(_)) => {
+            case Some(svg@CrosswordSvg(_)) => {
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio inlined-image">
                         <object type="image/svg+xml" data="@svg.imageUrl" class="responsive-img" alt=""
@@ -152,11 +150,21 @@ data-test-id="facia-card"
             }
 
             case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
-                @itemImage(
-                    fallbackImage.imageMedia,
-                    inlineImage = containerIndex == 0 && index < 4,
-                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
-                )
+                @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+                    <div class="fc-item__media-wrapper">
+                        @itemImage(
+                            fallbackImage.imageMedia,
+                            inlineImage = containerIndex == 0 && index < 4,
+                            widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                        )
+                    </div>
+                } else {
+                    @itemImage(
+                        fallbackImage.imageMedia,
+                        inlineImage = containerIndex == 0 && index < 4,
+                        widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                    )
+                }
             }
 
             case Some(InlineImage(images)) => {
