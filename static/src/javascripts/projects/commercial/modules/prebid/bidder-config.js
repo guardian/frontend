@@ -38,7 +38,7 @@ export const bidderConfig: PrebidBidderCriteria = {
             slots: ['dfp-ad--top-above-nav'],
         },
     ],
-    trustX: [
+    trustx: [
         {
             edition: 'any',
             breakpoint: { min: 'mobile' },

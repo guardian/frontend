@@ -22,9 +22,8 @@
 @metaBody() = {
 
     @if(item.content.showCircularBylinePicAtSide && !item.content.isImmersive) {
-        <div class="media__img meta__image">
+
         @fragments.meta.bylineImage(item.tags)
-        </div>
     }
 
     @if(!(item.content.isGallery || item.content.isImmersive)) {

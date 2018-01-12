@@ -9,8 +9,6 @@ const adSpec = {
     backgroundImage: 'image',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'absolute',
-    backgroundSize: 'contain',
-    transform: 'translate3d(0,0,0)',
 };
 
 describe('Cross-frame messenger: setBackground', () => {
@@ -48,7 +46,5 @@ describe('Cross-frame messenger: getStylesFromSpec', () => {
         expect(specStyles.backgroundImage).toBe('image');
         expect(specStyles.backgroundRepeat).toBe('no-repeat');
         expect(specStyles.backgroundPosition).toBe('absolute');
-        expect(specStyles.backgroundSize).toBe('contain');
-        expect(specStyles.transform).toBe('translate3d(0,0,0)');
     });
 });
