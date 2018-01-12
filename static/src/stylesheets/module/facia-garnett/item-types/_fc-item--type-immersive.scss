@@ -133,7 +133,7 @@
     // ?# It is very easy to opt out as the below, but
     // it increases the cyclomatic complexity of all selectors.
     // Find a better solution!
-    &:not(.paid-content) {
+    &:not(.fc-item--paid-content) {
 
         .fc-item__kicker:before,
         .fc-item__kicker:after {
