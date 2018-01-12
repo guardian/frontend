@@ -26,7 +26,7 @@
     .content--media .content__headline,
     .old-article-message,
     .pullquote-cite,
-    a[href] {
+    a {
         color: $kickerColor;
     }
 
@@ -244,8 +244,8 @@
     }
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
-    .content__section-label__link[href],
-    .content__series-label__link[href],
+    .content__section-label__link,
+    .content__series-label__link,
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
     }
@@ -449,6 +449,6 @@
     }
 }
 
-.immersive-main-media__headline-container .content__series-label__link[href] {
+.immersive-main-media__headline-container .content__series-label__link {
     color: $garnett-neutral-3;
 }
