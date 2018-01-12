@@ -517,3 +517,18 @@ $identity-header-height: 48px;
     margin-top: 0;
     vertical-align: middle;
 }
+
+
+
+
+
+/* AS Overrides
+   ========================================================================== */
+
+.identity-wrapper .activity-stream__item {
+    a {
+        color: $identity-main;
+        @extend %u-underline;
+    }
+
+}
