@@ -1,8 +1,8 @@
 .cta {
-    background-color: #121212;
+    background-color: #ffe500;
     border-radius: 9999px;
     box-sizing: border-box;
-    color: #ffffff;
+    color: #121212;
     display: inline-block;
     font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 16px;
@@ -13,7 +13,7 @@
     transition: background-color .3s;
 
     &:hover {
-        background-color: #567681;
+        background-color: #edd600;
 
         & > svg {
             transform: translate(5px, -50%);
