@@ -123,6 +123,11 @@ $fc-item-gutter: $gs-gutter / 4;
     position: relative;
     width: 100%;
 
+    // fix longwords breaking layouts from tablet breakpoint
+    @include mq($from: tablet) {
+        width: 0;
+    }
+
     &:before {
         content: '';
         position: absolute;
