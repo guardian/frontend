@@ -1377,6 +1377,10 @@ $quote-mark: 35px;
             @include fs-headline(3);
         }
     }
+
+    .stars {
+        transform: none;
+    }
 }
 
 .rich-link__avatar {
