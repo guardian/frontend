@@ -7,7 +7,7 @@
 }
 
 .manage-account__button {
-    $font-size: 3;
+    $font-size: 5;
     $height: $gs-baseline * 3;
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
     $padding-horizontal: $gs-gutter;
@@ -80,6 +80,11 @@
         }
     }
 
+    &.manage-account__button--center {
+        text-align: center;
+        justify-content: center;
+    }
+
     &-half--left {
         width: $gs-baseline*5;
         border-top-right-radius: 0;
@@ -89,6 +94,8 @@
         text-align: center;
         justify-content: center;
         border-right: 1px solid #ffffff;
+        padding-left: $gs-baseline / 2;
+        padding-right: 0;
     }
 
     &-half--right {
@@ -99,6 +106,8 @@
         float: right;
         justify-content: center;
         text-align: center;
+        padding-left: 0;
+        padding-right: $gs-baseline / 2;
     }
 
     .disabled {
@@ -127,12 +136,17 @@
 }
 
 .manage-account__button--mini {
-    @extend %manage-account__button--light;
     @include fs-textSans(1);
     min-width: $gs-baseline * 20;
     display: inline-flex;
-    height: $gs-gutter * 1.5;
-    line-height: .8;
+    height: $gs-gutter * 1.2;
+    line-height: $gs-gutter * 1.2;
+    padding-left: $gs-gutter / 1.6;
+    padding-right: $gs-gutter / 1.6;
+    .inline-icon {
+        width: $gs-gutter * 1.2;
+        height: $gs-gutter * 1.2;
+    }
 }
 
 %manage-account__button--light {

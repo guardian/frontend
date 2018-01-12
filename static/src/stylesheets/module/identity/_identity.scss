@@ -88,17 +88,25 @@ $identity-header-height: 48px;
 .nav--registration {
     margin-top: ($gs-baseline/3)*8;
     font-size: 14px;
-    text-align: center;
+
+    .nav__item {
+        display: block;
+        margin-bottom: $gs-baseline / 4;
+    }
 
     @include mq(tablet) {
         font-size: 16px;
+        text-align: center;
+        .nav__item {
+            display: inline;
+            margin: 0;
+        }
+        .nav__item + .nav__item:before {
+            content: '\b7';
+            margin-left: 4px;
+            margin-right: 9px;
+        }
     }
-}
-
-.nav--registration .nav__item + .nav__item:before {
-    content: '\b7';
-    margin-left: 4px;
-    margin-right: 9px;
 }
 
 .social-signin {
@@ -312,6 +320,16 @@ $identity-header-height: 48px;
     margin-top: 3em;
 }
 
+@mixin pillar-dropdown ($pillar, $colour) {
+    &[data-dropdown-label=#{$pillar}] .dropdown__button {
+        color: $colour;
+    }
+    &[data-dropdown-label=#{$pillar}]:hover .dropdown__button,
+    &[data-dropdown-label=#{$pillar}] .dropdown__button:focus {
+        color: darken($colour, 15%);
+    }
+}
+
 .dropdown-styled.dropdown--email-subscription {
     @supports (transform: rotate(45deg)) {
         border-color: $neutral-6;
@@ -320,21 +338,11 @@ $identity-header-height: 48px;
             color: $identity-main;
         }
         @if($identity-main == $garnett-neutral-1) {
-            &[data-dropdown-label='News'] .dropdown__button {
-                color: $news-garnett-main-1;
-            }
-            &[data-dropdown-label='Sport'] .dropdown__button {
-                color: $sport-garnett-main-1;
-            }
-            &[data-dropdown-label='Culture'] .dropdown__button {
-                color: $culture-garnett-main-1;
-            }
-            &[data-dropdown-label='Lifestyle'] .dropdown__button {
-                color: $lifestyle-garnett-main-1;
-            }
-            &[data-dropdown-label='Comment'] .dropdown__button {
-                color: $opinion-garnett-main-1;
-            }
+            @include pillar-dropdown('News', $news-garnett-main-1);
+            @include pillar-dropdown('Sport', $sport-garnett-main-1);
+            @include pillar-dropdown('Culture', $culture-garnett-main-1);
+            @include pillar-dropdown('Lifestyle', $lifestyle-garnett-main-1);
+            @include pillar-dropdown('Comment', $opinion-garnett-main-1);
         }
         .dropdown__label {
             @include fs-bodyHeading(3);
@@ -470,7 +478,7 @@ $identity-header-height: 48px;
 .email-subscription__options {
 
     > ul > li:not(:last-child) {
-        margin-bottom: $gs-gutter / 2;
+        margin-bottom: $gs-gutter / 4;
     }
 
     .manage-account__button {
@@ -508,4 +516,20 @@ $identity-header-height: 48px;
     display: inline-block;
     margin-top: 0;
     vertical-align: middle;
+}
+
+
+
+
+
+/* AS Overrides
+   ========================================================================== */
+
+.identity-wrapper .activity-stream__item,
+.identity-wrapper .activity-stream__empty {
+    a {
+        @extend %u-underline;
+        color: $identity-main;
+    }
+
 }
