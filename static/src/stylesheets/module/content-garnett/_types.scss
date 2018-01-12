@@ -395,19 +395,6 @@ $quote-mark: 35px;
     // *************** Header and Body Styles ***************
     .content__article-body {
         line-height: 1.4;
-
-        &:before {
-            @include mq(leftCol) {
-                content: '';
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                height: 100%;
-                width: 1px;
-                background: $garnett-neutral-4;
-            }
-        }
         @include mq(tablet) {
             padding-left: 0;
             margin-left: 0;
@@ -419,13 +406,32 @@ $quote-mark: 35px;
             padding-bottom: $gs-baseline*6;
         }
         @include mq(leftCol) {
-            padding-left: $gs-gutter/2;
             margin-left: -$gs-gutter/2;
         }
     }
 
+    .content__article-body,
+    .content__headline-showcase-wrapper,
+    .content__headline-standfirst-wrapper,
+    .content__head > .media-primary {
+        @include mq(leftCol) {
+            position: relative;
+            padding-left: $gs-gutter/2;
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                height: 100%;
+                width: 1px;
+                background: $garnett-neutral-4;
+            }
+        }
+    }
+
     .content__secondary-column {
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline / 2;
     }
 
     .reveal-caption {
@@ -1261,17 +1267,6 @@ $quote-mark: 35px;
             max-width: unset;
             margin: 0;
             padding: 0;
-        }
-    }
-
-    .content__secondary-column {
-        @include mq($from: wide) {
-            padding-top: (aspect-ratio-height(5, 3, gs-span(13)) + gs-height(5));
-            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
-        }
-        @include mq($from: leftCol) {
-            padding-top: (aspect-ratio-height(5, 3, gs-span(12)) + gs-height(5));
-            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
         }
     }
 }
