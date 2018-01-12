@@ -300,7 +300,7 @@ $quote-mark: 35px;
         a {
             color: $garnett-neutral-6;
 
-            .inline-tone-fill {
+            .inline-icon {
                 fill: $garnett-neutral-6;
             }
 
@@ -816,8 +816,31 @@ $quote-mark: 35px;
 }
 // *************** Opinion Styles ***************
 
-.content--type-comment,
-.content--type-guardianview {
+
+.content--type-guardianview,
+.content--type-comment {
+    .content__main {
+        background-color: $opinion-garnett-background;
+
+        .rich-link {
+            background-color: $garnett-neutral-5;
+        }
+
+        .element-pullquote,
+        .element-pullquote:after
+        {
+            background-color: darken($opinion-garnett-background, 7%);
+        }
+
+        .element-pullquote blockquote p.pullquote-paragraph {
+            color: $garnett-neutral-1;
+        }
+
+        .caption {
+            background-color: $opinion-garnett-background;
+        }
+    }
+
     .content__head {
         overflow: hidden;
         @include mq(phablet) {
@@ -889,10 +912,21 @@ $quote-mark: 35px;
     }
 
     .content__headline {
+        @include fs-headlineGarnett(6);
         font-weight: 100;
         padding-bottom: 0;
+        @include mq(tablet) {
+            @include fs-headlineGarnett(7);
+        }
         @include mq(leftCol) {
             padding-bottom: 38px;
+        }
+    }
+
+    .content__head--byline-pic .content__header .content__headline__byline {
+        @include fs-headlineGarnett(6);
+        @include mq(tablet) {
+            @include fs-headlineGarnett(7);
         }
     }
 
@@ -925,7 +959,8 @@ $quote-mark: 35px;
     }
 
     .content__standfirst {
-        padding-top: $gs-baseline/2;
+        // magic numbers used for correct top spacing
+        padding-top: 2px;
         margin-bottom: 0;
         p {
             margin-bottom: 0;
@@ -985,7 +1020,7 @@ $quote-mark: 35px;
 // *************** Media Styles ***************
 
 .content--media:not(.paid-content) {
-    &.tonal--tone-media {
+    &.content--media {
         background-color: $garnett-neutral-1;
     }
 
@@ -1023,7 +1058,7 @@ $quote-mark: 35px;
     .content__standfirst,
     .from-content-api,
     .meta__numbers .sharecount__value,
-    .tone-colour,
+    .u-underline,
     a {
         color: $garnett-neutral-4;
     }
@@ -1087,7 +1122,7 @@ $quote-mark: 35px;
         padding-top: 0;
     }
 
-    .inline-tone-fill,
+    .inline-icon,
     .meta__numbers .inline-share svg,
     .social-icon__svg {
         fill: $garnett-neutral-4;
@@ -1339,6 +1374,12 @@ $quote-mark: 35px;
     .element-pullquote.element--supporting .pullquote-paragraph {
         font-weight: 200;
     }
+
+    .content__meta-container {
+        @include mq($from: tablet, $until: leftCol) {
+            order: initial;
+        }
+    }
 }
 // *************** Opinion and Feature standfirst overrides ***************
 
@@ -1403,7 +1444,7 @@ $quote-mark: 35px;
 }
 // *************** Football ***************
 
-.content--type-article {
+.section-football {
     .team__info {
         @include fs-headlineGarnett(3);
         @include mq(mobileLandscape) {

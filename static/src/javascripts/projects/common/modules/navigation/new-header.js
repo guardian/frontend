@@ -413,7 +413,7 @@ const toggleSubnavSections = (moreButton: HTMLElement): void => {
 
                     subnav.classList.toggle('subnav--expanded');
 
-                    moreButton.innerText = isOpen ? 'more' : 'less';
+                    moreButton.innerText = isOpen ? 'More' : 'Less';
                 });
             }
         });

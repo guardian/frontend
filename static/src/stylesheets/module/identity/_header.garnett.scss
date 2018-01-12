@@ -1,12 +1,10 @@
-$gutter: 6px;
-$height: $identity-header-height - ($gutter * 2);
+$gutter: 5px;
 
 .identity-header {
     @include clearfix;
     background-color: $nav-background-colour;
     padding: $gutter 0 0;
     color: $nav-primary-colour;
-    min-height: $height;
     z-index: 999;
     &:after {
         @include multiline(4, $rule, top);
@@ -61,8 +59,8 @@ html body .identity-header__logo {
     order: -99;
     .inline-the-guardian-logo__svg {
         display: block;
-        height: 60px;
-        width: 183px;
+        height: 57px;
+        width: 175px;
     }
 }
 
