@@ -11,6 +11,9 @@
         max-width: none;
         overflow: hidden;
     }
+    a.u-underline {
+        color: $identity-main;
+    }
     .monocol-wrapper {
         @include mq($until: desktop) {
             padding: 0 $gs-gutter;
@@ -31,7 +34,7 @@
     .tabs__container {
         margin: $gs-gutter * 2 auto 0 -1px;
         .tabs__tab a {
-            font-weight: 500!important;
+            font-weight: 400!important;
             /*text can't fit otherwise*/
         }
     }

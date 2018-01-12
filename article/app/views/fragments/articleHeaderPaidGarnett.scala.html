@@ -1,0 +1,32 @@
+@(article: model.Article, page: model.Page, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@import views.html.fragments.langAttributes
+@import model.Badges.badgeFor
+@import views.support.Commercial.isPaidContent
+@import views.support.ContributorLinks
+@import views.support.TrailCssClasses.toneClass
+
+<header class="content__head content__head--article">
+    <div class="content__header tonal__header">
+        <div class="gs-container">
+            <div class="content__main-column u-cf">
+                @fragments.meta.metaInline(article)
+                <h1 class="content__headline" articleprop="headline" @langAttributes(article.content)>
+                    @Html(article.trail.headline)
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="content__subhead">
+        <div class="gs-container">
+            <div class="content__main-column u-cf">
+                <div class="content__meta-container">
+                    @fragments.commercial.badge(article, page)
+                </div>
+                <div class="tonal__standfirst">
+                    @if(article.fields.standfirst.isDefined) { @fragments.standfirst(article) }
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

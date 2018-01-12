@@ -6,16 +6,18 @@
 @if(tags.contributors.length == 1) { @* Do not show byline if more than 1 contributor (or zero) *@
     @tags.contributors.headOption.map { profile =>
         @profile.properties.contributorLargeImagePath.map{ src =>
-            <div class="byline-img">
-                @if(request.isAmp) {
-                    @if(model.Tags(tags.tones.toList).isComment) {
-                        <amp-img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" width="180" height="150"></amp-img>
+            <div class="media__img meta__image">
+                <div class="byline-img">
+                    @if(request.isAmp) {
+                        @if(model.Tags(tags.tones.toList).isComment) {
+                            <amp-img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" width="180" height="150"></amp-img>
+                        } else {
+                            <amp-img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" width="79" height="66"></amp-img>
+                        }
                     } else {
-                        <amp-img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" width="79" height="66"></amp-img>
+                        <img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" />
                     }
-                } else {
-                    <img class="byline-img__img" src="@ImgSrc(src, Item300)" alt="@profile.name" />
-                }
+                </div>
             </div>
         }
     }

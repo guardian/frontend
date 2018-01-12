@@ -6,6 +6,7 @@ import type {
     PrebidBidder,
     PrebidIndexExchangeParams,
     PrebidSonobiParams,
+    PrebidTrustXParams,
 } from 'commercial/modules/prebid/types';
 
 export const bidderConfig: PrebidBidderCriteria = {
@@ -37,6 +38,20 @@ export const bidderConfig: PrebidBidderCriteria = {
             slots: ['dfp-ad--top-above-nav'],
         },
     ],
+    trustx: [
+        {
+            edition: 'any',
+            breakpoint: { min: 'mobile' },
+            sizes: [[300, 250]],
+            slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
+        },
+        {
+            edition: 'any',
+            breakpoint: { min: 'desktop' },
+            sizes: [[728, 90], [970, 250]],
+            slots: ['dfp-ad--top-above-nav'],
+        },
+    ],
 };
 
 export const sonobiBidder: PrebidBidder = {
@@ -53,5 +68,12 @@ export const indexExchangeBidder: PrebidBidder = {
     bidParams: (): PrebidIndexExchangeParams => ({
         id: config.page.adUnit,
         siteID: '208206',
+    }),
+};
+
+export const trustXBidder: PrebidBidder = {
+    name: 'trustx',
+    bidParams: (slotId: string): PrebidTrustXParams => ({
+        uid: slotId,
     }),
 };

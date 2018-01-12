@@ -44,14 +44,14 @@ data-test-id="facia-card"
                 case Some(InlineVideo(videoElement, _, _, _)) => {
                     <div class="fc-item__media-meta">
                         @inlineSvg("video-icon", "icon")
-                        @videoElement.videos.formattedDuration
+                        <span class="fc-item__video-duration">@videoElement.videos.formattedDuration</span>
                     </div>
                 }
 
                 case Some(media@InlineYouTubeMediaAtom(youTubeAtom, _)) => {
                     <div class="fc-item__media-meta">
                         @inlineSvg("video-icon", "icon")
-                        @youTubeAtom.formattedDuration
+                        <span class="fc-item__video-duration">@youTubeAtom.formattedDuration</span>
                     </div>
                 }
 
@@ -62,14 +62,14 @@ data-test-id="facia-card"
         @if(item.contentType.name.toLowerCase == "audio") {
             <div class="fc-item__media-meta">
                 @inlineSvg("volume-high", "icon")
-                Podcast
+                <span class="u-h">Podcast</span>
             </div>
         }
 
         @if(item.contentType.name.toLowerCase == "gallery") {
             <div class="fc-item__media-meta">
                 @inlineSvg("camera", "icon")
-                Gallery
+                <span class="u-h">Gallery</span>
             </div>
         }
 
@@ -160,11 +160,18 @@ data-test-id="facia-card"
             }
 
             case Some(InlineImage(images)) => {
+                <div class="fc-item__media-wrapper">
+                @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+                    @item.starRating.map { rating =>
+                        @starRating(rating)
+                    }
+                }
                 @itemImage(
                     images,
                     inlineImage = containerIndex == 0 && index < 4,
                     widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                 )
+                </div>
             }
 
             case Some(InlineSlideshow(imageElements)) => {
@@ -192,7 +199,7 @@ data-test-id="facia-card"
             case _ => {}
         }
 
-        <div class="fc-item__content">
+        <div class="fc-item__content @if(item.starRating.isDefined){fc-item__content--has-stars}">
             @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
                 @kicker(item.header, List("fc-item__kicker--dreamsnap"))
             }
@@ -205,7 +212,6 @@ data-test-id="facia-card"
                 @item.bylineText.map { byline =>
                     <div class="fc-item__byline">@byline</div>
                 }
-
                 @item.starRating.map { rating =>
                     @starRating(rating)
                 }

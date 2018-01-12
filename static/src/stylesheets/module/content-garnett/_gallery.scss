@@ -93,6 +93,7 @@
     position: relative;
     border: 0;
     width: inherit;
+    word-break: break-all;
 
     @include mq($until: desktop) {
         margin-bottom: $gs-baseline * 2;
@@ -300,4 +301,3 @@
         opacity: 1;
     }
 }
-

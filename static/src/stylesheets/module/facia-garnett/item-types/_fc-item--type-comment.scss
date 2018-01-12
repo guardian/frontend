@@ -7,6 +7,10 @@
         height: gs-height($size);
         width: gs-height($size);
 
+        // chrome bug means the border radius is disabled while
+        // main nav transitions on hover. this stops that.
+        contain: paint;
+
         @include mq($from: tablet) {
             top: auto;
             bottom: $gs-baseline / 2;
@@ -30,7 +34,7 @@
             display: none;
         }
 
-        .fc-item__standfirst {
+        .fc-item__standfirst-wrapper {
             padding-bottom: $gs-gutter * .25;
         }
     }
@@ -95,6 +99,11 @@
                 .fc-item__standfirst-wrapper {
                     .fc-item__meta {
                         display: flex;
+                    }
+
+                    .fc-item__timestamp,
+                    .fc-trail__count--commentcount {
+                        background-color: transparent;
                     }
                 }
             }

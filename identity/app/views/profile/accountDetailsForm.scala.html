@@ -199,7 +199,12 @@
     <fieldset class="fieldset">
         <div class="fieldset__heading"></div>
         <div class="fieldset__fields">
-            <button type="submit" class="manage-account__button" data-link-name="Create account" data-test-id="save-changes">Save changes</button>
+            <button type="submit" class="manage-account__button manage-account__button--icon" data-link-name="Create account" data-test-id="save-changes">
+                <div class="manage-account__button-flexwrap">
+                    <span>Save changes</span>
+                    @fragments.inlineSvg("tick-button", "icon")
+                </div>
+            </button>
         </div>
     </fieldset>
 

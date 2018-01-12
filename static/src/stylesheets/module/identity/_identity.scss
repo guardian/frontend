@@ -125,11 +125,14 @@ $identity-header-height: 48px;
         display: block;
         font-family: $f-sans-serif-text;
         font-size: 14px;
-        padding: 8px 0 9px;
-        text-indent: 24px;
+        padding: 4px 0;
+        line-height: 28px;
+        height: 28px;
+        text-indent: 40px;
         width: 240px;
         position: relative;
-        text-align: center;
+        text-align: left;
+        border-radius: 9999px;
     }
 
     .social-signin__action--fb {
@@ -152,13 +155,13 @@ $identity-header-height: 48px;
 
     .social-signin__icon {
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 3px;
+        left: 6px;
 
         svg {
             float: left;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
         }
     }
 }
@@ -279,11 +282,6 @@ $identity-header-height: 48px;
         }
     }
 
-    .tabs__tab--selected {
-        border-top-color: $news-accent;
-        color: $news-accent;
-    }
-
     @include mq($until: tablet) {
         a {
             padding-top: $gs-baseline/4;
@@ -320,7 +318,23 @@ $identity-header-height: 48px;
         .dropdown__button {
             padding: $gs-baseline / 4 0 $gs-baseline;
             color: $identity-main;
-            text-transform: lowercase;
+        }
+        @if($identity-main == $garnett-neutral-1) {
+            &[data-dropdown-label='News'] .dropdown__button {
+                color: $news-garnett-main-1;
+            }
+            &[data-dropdown-label='Sport'] .dropdown__button {
+                color: $sport-garnett-main-1;
+            }
+            &[data-dropdown-label='Culture'] .dropdown__button {
+                color: $culture-garnett-main-1;
+            }
+            &[data-dropdown-label='Lifestyle'] .dropdown__button {
+                color: $lifestyle-garnett-main-1;
+            }
+            &[data-dropdown-label='Comment'] .dropdown__button {
+                color: $opinion-garnett-main-1;
+            }
         }
         .dropdown__label {
             @include fs-bodyHeading(3);
@@ -430,6 +444,11 @@ $identity-header-height: 48px;
 
     &.email-unsubscribe {
         float: none;
+        &.is-updating {
+            svg {
+                display: none;
+            }
+        }
     }
 
     &.email-unsubscribe--confirm,
@@ -469,7 +488,7 @@ $identity-header-height: 48px;
     display: inline;
 
     &.hide {
-        display: none;
+        display: none!important;
     }
 }
 
