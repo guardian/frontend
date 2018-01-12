@@ -197,13 +197,6 @@
             border: 1px solid $kickerColor;
         }
     }
-
-    .d-comment__recommend--clicked,
-    .d-comment__recommend--recommended,
-    .d-comment__recommend-pulse,
-    .d-comment__recommend-pulse {
-        background-color: $kickerColor;
-    }
 }
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
