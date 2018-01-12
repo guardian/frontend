@@ -370,7 +370,7 @@ $quote-mark: 35px;
     }
 
     .meta__social {
-        @include mq($until: tablet) {
+        @include mq($until: leftCol) {
             border-bottom: 1px solid $garnett-neutral-4;
         }
     }
@@ -540,6 +540,9 @@ $quote-mark: 35px;
     .media-primary {
         margin-bottom: 0;
         @include mq(tablet) {
+            margin-bottom: $gs-baseline/4;
+        }
+        @include mq(leftCol) {
             margin-bottom: $gs-baseline/2;
         }
     }
@@ -1328,6 +1331,12 @@ $quote-mark: 35px;
 .content--type-analysis {
     .media-primary {
         margin-bottom: 0;
+        @include mq(tablet) {
+            margin-bottom: $gs-baseline/4;
+        }
+        @include mq(leftCol) {
+            margin-bottom: $gs-baseline/2;
+        }
     }
 
     .content__labels--not-immersive {
