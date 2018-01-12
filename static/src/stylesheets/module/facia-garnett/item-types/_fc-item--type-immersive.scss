@@ -181,17 +181,36 @@
             }
         }
 
+        @mixin immersiveSublinks() {
+            &[class*='fc-item--has-sublinks'] {
+                .fc-item__footer--horizontal {
+                    display: none;
+                }
+                .fc-sublinks,
+                .fc-sublink,
+                .fc-item__footer--vertical {
+                    display: block;
+                }
+                .fc-sublinks,
+                .fc-sublink {
+                    margin-left: 0; 
+                }
+            }
+        }
+
         &.fc-item--full-media-75-tablet,
         &.fc-item--full-media-50-tablet,
         &.fc-item--three-quarters-tablet {
             @include mq($from: tablet) {
                 @include immersiveLeft();
+                @include immersiveSublinks();
             }
         }
 
         &.fc-item--three-quarters-right-tablet {
             @include mq($from: tablet) {
                 @include immersiveRight();
+                @include immersiveSublinks();
             }
         }
     }
