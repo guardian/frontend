@@ -94,6 +94,8 @@
         text-align: center;
         justify-content: center;
         border-right: 1px solid #ffffff;
+        padding-left: $gs-baseline / 2;
+        padding-right: 0;
     }
 
     &-half--right {
@@ -104,6 +106,8 @@
         float: right;
         justify-content: center;
         text-align: center;
+        padding-left: 0;
+        padding-right: $gs-baseline / 2;
     }
 
     .disabled {
