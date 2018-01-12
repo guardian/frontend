@@ -1,26 +1,41 @@
 @(page: model.Page, popular: Seq[model.MostPopular])(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@import views.support.`package`._
+@import layout.FaciaCardHeader
+@import model.Pillar.RichPillar
+@import views.support._
+@import views.html.fragments.items.elements.facia_cards.title
+@import TrailCssClasses.toneClass
 
 @mainLegacy(page){
 }{
     <main itemprop="mainContentOfPage" role="main" class="monocolumn-wrapper content">
         <h1 class="u-h">Most viewed</h1>
-    @popular.zipWithRowInfo.map{ case (section, info) =>
-        <section class="zone-@section.section">
-            <h2 class="content__inline-section">Most viewed @Html(section.heading)</h2>
-            <div class="headline-list"
-                 data-link-name="@section.heading">
-                <ul class="u-unstyled">
+        @popular.map{ section =>
+            <section class="zone-@section.section">
+                <h2 class="content__inline-section">Most viewed @Html(section.heading)</h2>
+                <ul class="u-unstyled headline-list headline-list--large" data-link-name="@section.heading">
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
-                    <li class="headline-list__item">
-                        <span class="headline-list__count">@info.rowNum</span>
-                        <div class="headline-list__body">@fragments.linkText(trail, info)</div>
-                    </li>
+                        <li class="headline-list__item @toneClass(trail)--most-popular fc-item--pillar-@trail.maybePillar.nameOrDefault">
+                            <div class="headline-list__link" data-link-name="@info.rowNum | text">
+                                @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)){
+                                    <p class="headline-list__count">@info.rowNum</p>
+                                } @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)){
+                                    <span class="most-popular__number-@info.rowNum">
+                                        @fragments.inlineSvg(s"number-${info.rowNum}", "numbers")
+                                    </span>
+                                }
+                                <div class="headline-list__text">
+                                    @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body") @trail.properties.maybeContent.map { content => 
+                                        @if(content.tags.tags.exists(_.id == "tone/news")) { 
+                                            @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
+                                        } 
+                                    }
+                                </div>
+                            </div>
+                        </li>
                     }
                 </ul>
-            </div>
-        </section>
-    }
+            </section>
+        }
     </main>
 }
