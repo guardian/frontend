@@ -11,25 +11,16 @@ import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{Matchers, WordSpecLike}
 import play.api.libs.streams.Accumulator
 import play.api.mvc._
-import play.api.test.FakeRequest
+import play.api.test.{FakeRequest, Helpers}
 import services._
-import test.WithTestIdConfig
+import test.{WithTestExecutionContext, WithTestIdConfig}
 
-import scala.concurrent.ExecutionContext
-
-class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with ScalaFutures with Matchers with WithTestIdConfig {
-
-  implicit val ec = ExecutionContext.fromExecutor(MoreExecutors.directExecutor())
+class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with ScalaFutures with Matchers with WithTestIdConfig with WithTestExecutionContext {
 
   trait TestFixture {
     val authService = mock[AuthenticationService]
-    val components = mock[ControllerComponents]
-    when(components.executionContext).thenReturn(ec)
     val client: IdApiClient = mock[IdApiClient]
-    val actions = new AuthenticatedActions(authService, client, new IdentityUrlBuilder(testIdConfig), components, mock[NewsletterService], mock[IdRequestParser]) {
-      override protected def noOpActionBuilder: DefaultActionBuilder =
-        DefaultActionBuilder(BodyParser[AnyContent]("test")(_ => Accumulator.done[Either[Result, AnyContent]](Right(AnyContent()))))
-    }
+    val actions = new AuthenticatedActions(authService, client, new IdentityUrlBuilder(testIdConfig), Helpers.stubControllerComponents(), mock[NewsletterService], mock[IdRequestParser])
   }
 
   "The Consent Journey Redirect Action" should {
