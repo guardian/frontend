@@ -637,4 +637,15 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 1, 31),
     exposeClientSide = false
   )
+
+  val GarnettIdentityLaunch = Switch(
+    SwitchGroup.Feature,
+    "garnett-identity-launch",
+    "When ON, garnett styling will appear on identity pages",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 31),
+    exposeClientSide = false
+  )
+
 }

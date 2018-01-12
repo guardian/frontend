@@ -1,7 +1,7 @@
 package experiments
 
 import conf.switches.Owner
-import conf.switches.Switches.{ GarnettLaunch, GarnettHeaderLaunch }
+import conf.switches.Switches.{ GarnettLaunch, GarnettHeaderLaunch, GarnettIdentityLaunch }
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -54,7 +54,9 @@ object GarnettIdentity extends Experiment(
   owners = Seq(Owner.withGithub("walaura")),
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup = Perc0E
-)
+) {
+  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettIdentityLaunch.isSwitchedOn
+}
 
 object GarnettHeader extends Experiment(
   name = "garnett-header",
