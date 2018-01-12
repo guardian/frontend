@@ -1,0 +1,42 @@
+.pillars {
+    height: $gs-baseline * 2 + $gs-baseline / 2;
+    margin: 0;
+    padding: 0 $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+    }
+}
+
+.pillars__item {
+    display: block;
+    float: left;
+
+    &:first-child .pillar-link {
+        padding-left: 0;
+
+        &:before {
+            content: none;
+        }
+    }
+
+    &:nth-child(1) {
+        color: $news-garnett-main-1;
+    }
+
+    &:nth-child(2) {
+        color: $opinion-garnett-main-1;
+    }
+
+    &:nth-child(3) {
+        color: $sport-garnett-main-1;
+    }
+
+    &:nth-child(4) {
+        color: $culture-garnett-main-1;
+    }
+
+    &:nth-child(5) {
+        color: $lifestyle-garnett-main-1;
+    }
+}

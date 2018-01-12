@@ -91,7 +91,7 @@ from scrolling */
     @include mq($until: desktop) {
         position: absolute;
         right: $gutter-small;
-        top: 24px;
+        top: $gs-baseline * 2;
 
         @include mq(mobileMedium) {
             bottom: -$gs-baseline / 2;

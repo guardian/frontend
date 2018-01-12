@@ -66,6 +66,7 @@ object css {
   def inlinePhotoEssay(implicit context: ApplicationContext): String = inline("article-photo-essay")
   def inlinePhotoEssayGarnett(implicit context: ApplicationContext): String = inline("article-photo-essay-garnett")
   def amp(implicit context: ApplicationContext): String = inline("head.amp")
+  def ampNavigation(implicit request: RequestHeader, context: ApplicationContext): String = if (ActiveExperiments.isParticipating(GarnettHeader)) inline("head.amp-navigation.garnett") else inline("head.amp-navigation")
   def hostedAmp(implicit context: ApplicationContext): String = inline("head.hosted-amp")
   def liveblogAmp(implicit context: ApplicationContext): String = inline("head.amp-liveblog")
   def emailArticle(implicit context: ApplicationContext): String = inline("head.email-article")

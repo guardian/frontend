@@ -1,0 +1,43 @@
+.header {
+    background-color: $nav-background-colour;
+    border-bottom: 1px solid $rule;
+    color: $nav-primary-colour;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.header__cta-container {
+    left: -$gs-gutter / 2;
+    position: absolute;
+    top: 0;
+
+    @include mq(mobileLandscape) {
+        left: 0;
+    }
+}
+
+.header__logo {
+    display: flex;
+    float: none;
+    margin-left: auto;
+}
+
+.header__logo__svg {
+    display: block;
+    height: 52px;
+    width: 159px;
+    margin-bottom: $gs-baseline + $gs-baseline / 4;
+    margin-right: $gs-gutter / 4 + $veggie-burger-small;
+    margin-top: $gs-baseline / 4;
+
+    @include mq(mobileMedium) {
+        height: 57px;
+        margin-right: $gs-gutter / 2;
+        width: 175px;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-right: $gs-gutter
+    }
+}

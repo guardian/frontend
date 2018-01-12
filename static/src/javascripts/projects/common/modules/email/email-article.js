@@ -15,7 +15,6 @@ import {
     setEmailShown,
 } from 'common/modules/email/run-checks';
 import { session } from 'lib/storage';
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import { waitForCheck } from 'common/modules/check-mediator';
 
 import type { SpacefinderRules } from 'common/modules/spacefinder.js';
@@ -23,6 +22,7 @@ import type { SpacefinderRules } from 'common/modules/spacefinder.js';
 export type ListConfig = {
     listId: string,
     listName: string,
+    identityListName: string,
     campaignCode: string,
     displayName: {
         normalText: string,
@@ -30,7 +30,6 @@ export type ListConfig = {
     },
     headline: string,
     description: string,
-    successHeadline: string,
     successDescription: string,
     insertMethod: bonzo => void,
     successEventName?: string,
@@ -45,9 +44,12 @@ const insertBottomOfArticle = ($iframeEl: bonzo): void => {
 };
 
 const listConfigs: ListConfigs = {
+    /* The difference between listName and identityListName:
+     listName is a reference used in the javascript for legacy reasons where as the identityListName is is the name stored in the identity model and used in the backend. */
     theFilmToday: {
-        listId: '1950',
+        listId: '4144',
         listName: 'theFilmToday',
+        identityListName: 'film-today',
         campaignCode: 'film_article_signup',
         displayName: {
             normalText: 'film',
@@ -56,13 +58,14 @@ const listConfigs: ListConfigs = {
         headline: 'Film Today: now booking',
         description:
             'Sign up to the Guardian Film Today email and we’ll make sure you don’t miss a thing &ndash; the day’s insider news and our latest reviews, plus big name interviews and film festival coverage.',
-        successHeadline: 'Thank you for signing up to Film Today',
-        successDescription: 'You’ll receive an email every afternoon.',
+        successDescription:
+            'You’ll receive an email every afternoon after you have clicked the link in the confirmation mail.',
         insertMethod: insertBottomOfArticle,
     },
     theFiver: {
-        listId: '218',
+        listId: '4163',
         listName: 'theFiver',
+        identityListName: 'the-fiver',
         campaignCode: 'fiver_article_signup',
         displayName: {
             normalText: 'the',
@@ -71,13 +74,14 @@ const listConfigs: ListConfigs = {
         headline: 'Kick off your evenings with our football roundup',
         description:
             'Sign up to the Fiver, our daily email on the world of football. We’ll deliver the day’s news and gossip in our own belligerent, sometimes intelligent and &ndash; very occasionally &ndash; funny way.',
-        successHeadline: 'Thank you for signing up',
-        successDescription: 'You’ll receive the Fiver daily, around 5pm.',
+        successDescription:
+            'You’ll receive the Fiver daily around 5pm after you have clicked the link in the confirmation mail.',
         insertMethod: insertBottomOfArticle,
     },
     labNotes: {
-        listId: '3701',
+        listId: '4153',
         listName: 'labNotes',
+        identityListName: 'lab-notes',
         campaignCode: 'lab_notes_article_signup',
         displayName: {
             normalText: 'lab',
@@ -86,13 +90,14 @@ const listConfigs: ListConfigs = {
         headline: 'Science news you’ll want to read. Fact.',
         description:
             'Sign up to Lab Notes and we’ll email you the top stories in science, from medical breakthroughs to dinosaur discoveries &ndash; plus brainteasers, podcasts and more.',
-        successHeadline: 'Thank you for signing up for Lab notes',
-        successDescription: 'You’ll receive an email every week.',
+        successDescription:
+            'You’ll receive an email every week after you have clicked the link in the confirmation mail.',
         insertMethod: insertBottomOfArticle,
     },
     euRef: {
-        listId: '3698',
+        listId: '4142',
         listName: 'euRef',
+        identityListName: 'brexit-briefing',
         campaignCode: 'eu_ref_article_signup',
         displayName: {
             normalText: 'brexit',
@@ -101,14 +106,14 @@ const listConfigs: ListConfigs = {
         headline: 'Brexit: your weekly briefing',
         description:
             'Sign up and we’ll email you the key developments and most important debates as Britain takes its first steps on the long road to leaving the EU.',
-        successHeadline:
-            'Thank you for signing up for the Brexit weekly briefing',
-        successDescription: 'You’ll receive an email every morning.',
+        successDescription:
+            'You’ll receive an email every morning after you have clicked the link in the confirmation mail.',
         insertMethod: insertBottomOfArticle,
     },
     usBriefing: {
-        listId: '1493',
+        listId: '4152',
         listName: 'usBriefing',
+        identityListName: 'today-us',
         campaignCode: 'guardian_today_article_bottom',
         displayName: {
             normalText: 'us',
@@ -117,14 +122,14 @@ const listConfigs: ListConfigs = {
         headline: 'Want stories like this in your inbox?',
         description:
             'Sign up to the Guardian US briefing to get the top stories in your inbox every weekday.',
-        successHeadline: 'Thank you for signing up to the Guardian US briefing',
         successDescription:
-            'We will send you our pick of the most important stories.',
+            'We will send you our pick of the most important stories after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
     },
     sleevenotes: {
-        listId: '39',
+        listId: '4159',
         listName: 'sleevenotes',
+        identityListName: 'sleeve-notes',
         campaignCode: 'sleevenotes_article_bottom',
         displayName: {
             normalText: 'sleeve',
@@ -133,13 +138,14 @@ const listConfigs: ListConfigs = {
         headline: 'Sleeve notes: sounds good',
         description:
             'Get music news, bold reviews and unexpected extras emailed direct to you from the Guardian’s music desk every Friday.',
-        successHeadline: 'Thank you for signing up to sleeve notes',
-        successDescription: 'You’ll receive an email every Friday.',
+        successDescription:
+            'You’ll receive an email every Friday after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
     },
     longReads: {
-        listId: '3322',
+        listId: '4165',
         listName: 'longReads',
+        identityListName: 'the-long-read',
         campaignCode: 'long_reads_article_bottom',
         displayName: {
             normalText: 'long',
@@ -148,13 +154,14 @@ const listConfigs: ListConfigs = {
         headline: 'Here’s the real story',
         description:
             'Lose yourself in a great story. From politics to psychology, food to technology, culture to crime – the best stories, the biggest ideas, the arguments that matter.',
-        successHeadline: 'Thank you for signing up to The Long Read',
-        successDescription: 'You’ll receive an email every weekend.',
+        successDescription:
+            'You’ll receive an email every weekend after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
     },
     bookmarks: {
-        listId: '3039',
+        listId: '4137',
         listName: 'bookmarks',
+        identityListName: 'bookmarks',
         campaignCode: 'bookmarks_article_bottom',
         displayName: {
             normalText: 'book',
@@ -163,13 +170,14 @@ const listConfigs: ListConfigs = {
         headline: 'Bookmarks: read me first',
         description:
             'Sign up for our weekly email for book lovers and discover top 10s, expert book reviews, author interviews, and enjoy highlights from our columnists and community every weekend.',
-        successHeadline: 'Thank you for signing up to Bookmarks',
-        successDescription: 'You’ll receive an email every weekend.',
+        successDescription:
+            'You’ll receive an email every weekend after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
     },
     greenLight: {
-        listId: '38',
+        listId: '4147',
         listName: 'greenLight',
+        identityListName: 'green-light',
         campaignCode: 'green_light_article_bottom',
         displayName: {
             normalText: 'green',
@@ -178,24 +186,34 @@ const listConfigs: ListConfigs = {
         headline: 'The most important stories on the planet',
         description:
             'Sign up to Green Light for environment news emailed direct to you every Friday. And besides the week’s biggest stories and debates, you can expect beautifully curated wildlife galleries, absorbing podcasts and eco-living guides.',
-        successHeadline: 'Thank you for signing up to Green Light',
-        successDescription: 'You’ll receive an email every Friday.',
+        successDescription:
+            'You’ll receive an email every Friday after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
     },
     theGuardianToday: {
         listId: (() => {
             switch (config.get('page.edition')) {
                 default:
-                    return '37';
-
+                    return '4151';
                 case 'US':
-                    return '1493';
-
+                    return '4152';
                 case 'AU':
-                    return '1506';
+                    return '4150';
             }
         })(),
         listName: 'theGuardianToday',
+        identityListName: (() => {
+            switch (config.get('page.edition')) {
+                default:
+                    return 'today-uk';
+
+                case 'US':
+                    return 'today-us';
+
+                case 'AU':
+                    return 'today-au';
+            }
+        })(),
         campaignCode: 'guardian_today_article_bottom',
         displayName: {
             normalText: 'theguardian',
@@ -204,9 +222,8 @@ const listConfigs: ListConfigs = {
         headline: 'The headlines, the analysis, the debate',
         description:
             'Get the whole picture from a source you trust, emailed to you every morning. The biggest stories examined, and diverse, independent views &ndash; the Guardian Today delivers the best of our journalism.',
-        successHeadline: 'Thank you for signing up to the Guardian Today',
         successDescription:
-            'We will send you our picks of the most important headlines tomorrow morning.',
+            'We will send you our picks of the most important headlines tomorrow morning after you have clicked the link in the confirmation mail',
         insertMethod: insertBottomOfArticle,
     },
 };
@@ -259,21 +276,11 @@ const addListToPage = (
     if (listConfig.insertMethod) {
         fastdom.write(() => {
             listConfig.insertMethod($iframeEl);
-            trackNonClickInteraction(
-                `rtrt | email form inline | article | ${
-                    listConfig.listId
-                } | sign-up shown`
-            );
             onEmailAdded();
         });
     } else {
         spaceFiller.fillSpace(spacefinderRules, paras => {
             $iframeEl.insertBefore(paras[0]);
-            trackNonClickInteraction(
-                `rtrt | email form inline | article | ${
-                    listConfig.listId
-                } | sign-up shown`
-            );
             onEmailAdded();
         });
     }
