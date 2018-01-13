@@ -18,8 +18,20 @@ $cp-scott-width-tablet: 80px;
 }
 
 .fc-cp-scott__portrait {
-    float: right;
     width: $cp-scott-width-mobile;
+
+    @include mq(tablet) {
+        width: $cp-scott-width-tablet;
+    }
+}
+
+.fc-cp-scott__avatar {
+    float: right;
+    width: $cp-scott-width-mobile - 10;
+    height: $cp-scott-width-mobile - 10;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: darken($opinion-garnett-background, 5);
 
     @include mq($until: mobileLandscape) {
         position: absolute;
@@ -30,7 +42,9 @@ $cp-scott-width-tablet: 80px;
     @include mq(tablet) {
         margin-top: -$gs-baseline / 2;
         margin-bottom: $gs-baseline / 2;
-        width: $cp-scott-width-tablet;
+        width: $cp-scott-width-tablet - 10;
+        height: $cp-scott-width-tablet - 10;
+        margin-left: -1px;
     }
 
     @include mq(leftCol) {
