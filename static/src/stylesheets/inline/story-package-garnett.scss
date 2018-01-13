@@ -68,11 +68,11 @@
         }
     }
 
-    .fc-item.fc-item--pillar-news.fc-item--type-comment,
-    .fc-item.fc-item--pillar-opinion.fc-item--type-comment,
-    .fc-item.fc-item--pillar-sport.fc-item--type-comment,
-    .fc-item.fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item.fc-item--pillar-lifestyle.fc-item--type-comment
+    .fc-item--pillar-news.fc-item--type-comment,
+    .fc-item--pillar-opinion.fc-item--type-comment,
+    .fc-item--pillar-sport.fc-item--type-comment,
+    .fc-item--pillar-arts.fc-item--type-comment,
+    .fc-item--pillar-lifestyle.fc-item--type-comment
     {
         .fc-item__meta {
             @include multiline(4, $garnett-neutral-6, $position: bottom);
