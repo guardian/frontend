@@ -615,31 +615,32 @@
         }
 
         .content__series-label__link {
-            font-size: 36px;
-            line-height: 1;
+            @include fs-headlineGarnett(6);
+            font-weight: 700;
 
             @include mq(desktop) {
                 font-size: 50px;
-                line-height: 50px;
+                line-height: 54px;
             }
         }
-
         .content__main-column {
             background-color: $garnett-neutral-1;
             z-index: 10;
             position: relative;
-            padding-left: $gs-baseline;
+            padding-left: $gs-gutter;
             padding-right: $gs-baseline;
-            left: -$gs-baseline / 2;
+            left: -$gs-gutter;
             padding-top: 0;
             //This allows the headline block to be aligned to the left and not run full width
-            width: 90%;
+            width: calc(90vw - #{$gs-gutter});
             padding-bottom: $gs-baseline;
             min-height: 112px;
 
+
             @include mq($from: tablet) {
+                padding-left: $gs-gutter / 2;
                 width: 100%;
-                left: $gs-baseline / 2;
+                left: $gs-gutter / 2;
 
             }
             @include mq($from: desktop) {
@@ -649,7 +650,7 @@
     }
 
     .content__headline--immersive {
-        @include fs-headline(7, true);
+        @include fs-headline(6, true);
         line-height: 1.1;
         color: $garnett-neutral-1;
         padding: 0;
@@ -658,6 +659,7 @@
 
         @include mq(desktop) {
             font-size: 50px;
+            line-height: 54px;
         }
 
         //This is the line when there is no image that connetcs to the body
