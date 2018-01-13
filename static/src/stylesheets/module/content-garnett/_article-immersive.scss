@@ -636,12 +636,10 @@
             padding-bottom: $gs-baseline;
             min-height: 112px;
 
-
             @include mq($from: tablet) {
                 padding-left: $gs-gutter / 2;
                 width: 100%;
                 left: $gs-gutter / 2;
-
             }
             @include mq($from: desktop) {
                 left: $gs-gutter / 2;
