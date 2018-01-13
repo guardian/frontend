@@ -728,6 +728,46 @@
             }
         }
     }
+
+    .content__meta-container {
+        margin-left: -$gs-gutter/2;
+        margin-right: -$gs-gutter/2;
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+        @include mq(phablet) {
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        @include mq(leftCol) {
+            margin-left:-(gs-span(2) + $gs-gutter);
+        }
+        @include mq(wide) {
+            margin-left:-(gs-span(3) + $gs-gutter);
+        }
+    }
+    .meta__extras  {
+        margin-left: -$gs-gutter / 2;
+        margin-right: -$gs-gutter / 2;
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+        }
+        @include mq(phablet) {
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
     .content__meta-container {
         &:before {
             display: none;
@@ -736,10 +776,9 @@
         .content__dateline {
             display: block;
             margin-left: auto;
-            width: 28%;
+            // width: 28%;
 
             @include mq($from: leftCol) {
-                width: 100%;
                 margin: auto;
             }
         }
