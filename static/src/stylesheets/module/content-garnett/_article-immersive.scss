@@ -709,8 +709,12 @@
             padding-bottom: 1rem;
             margin-bottom: -$gs-baseline * 2;
             margin-top: $gs-baseline / 2;
+            margin-left: -$gs-gutter / 2;
         }
 
+        @include mq(leftCol) {
+            margin-left: 0px;
+        }
 
         //this is immersive specific to connect the vertical rule to the top of the page
         &:before {
@@ -745,6 +749,9 @@
             margin-right: 0;
             padding-left: 0;
             padding-right: 0;
+        }
+        @include mq(desktop) {
+            margin-left: -$gs-gutter / 2;
         }
         @include mq(leftCol) {
             margin-left: -(gs-span(2) + $gs-gutter);
