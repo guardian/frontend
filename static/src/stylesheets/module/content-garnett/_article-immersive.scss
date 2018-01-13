@@ -747,10 +747,10 @@
             padding-right: 0;
         }
         @include mq(leftCol) {
-            margin-left:-(gs-span(2) + $gs-gutter);
+            margin-left: -(gs-span(2) + $gs-gutter);
         }
         @include mq(wide) {
-            margin-left:-(gs-span(3) + $gs-gutter);
+            margin-left: -(gs-span(3) + $gs-gutter);
         }
     }
     .meta__extras  {
