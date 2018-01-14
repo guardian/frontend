@@ -45,7 +45,8 @@ Media list item. Looks a bit like this:
         display: block;
     }
 
-    .fc-item__media-wrapper {
+    .fc-item__media-wrapper,
+    .fc-item__video-fallback {
         position: absolute;
         margin-left: $mobile-media-padding;
         width: $image-width;
