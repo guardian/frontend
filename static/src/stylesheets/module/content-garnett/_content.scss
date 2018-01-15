@@ -87,6 +87,18 @@
     }
 }
 
+.fake-percentage-padding {
+    .content__main-column .media-primary .u-responsive-ratio {
+        @include mq(leftCol) {
+            padding-bottom: 0 !important;
+            min-height: gs-span(8) * .6;
+        }
+        @include mq(tablet, desktop) {
+            min-height: gs-span(9) * .6;
+        }
+    }
+}
+
 .content__head {
     @include mq($from: tablet, $until: leftCol) {
         display: flex;
