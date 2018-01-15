@@ -103,7 +103,7 @@ $checkbox-size: $gs-gutter / 1.25;
     &.is-just-updated {
         &:before {
             animation: manage-account__switch-anim-loaded .5s 1 both;
-            background-color: #bbce00;
+            background-color: $status-positive-garnett;
             opacity: 1;
         }
     }
