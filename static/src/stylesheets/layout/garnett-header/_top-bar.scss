@@ -2,7 +2,7 @@
     @include fs-textSans(2);
     color: $nav-primary-colour;
     float: left;
-    line-height: 1;
+    line-height: 1.2;
     position: relative;
     transition: color 80ms ease-out;
     padding: ($gs-baseline / 2) ($gs-gutter / 2);
