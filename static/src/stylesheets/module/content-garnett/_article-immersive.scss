@@ -615,32 +615,31 @@
         }
 
         .content__series-label__link {
-            font-size: 36px;
-            line-height: 1;
+            @include fs-headlineGarnett(6);
+            font-weight: 700;
 
             @include mq(desktop) {
                 font-size: 50px;
-                line-height: 50px;
+                line-height: 54px;
             }
         }
-
         .content__main-column {
             background-color: $garnett-neutral-1;
             z-index: 10;
             position: relative;
-            padding-left: $gs-baseline;
+            padding-left: $gs-gutter;
             padding-right: $gs-baseline;
-            left: -$gs-baseline / 2;
+            left: -$gs-gutter;
             padding-top: 0;
             //This allows the headline block to be aligned to the left and not run full width
-            width: 90%;
+            width: calc(90vw - #{$gs-gutter});
             padding-bottom: $gs-baseline;
             min-height: 112px;
 
             @include mq($from: tablet) {
+                padding-left: $gs-gutter / 2;
                 width: 100%;
-                left: $gs-baseline / 2;
-
+                left: $gs-gutter / 2;
             }
             @include mq($from: desktop) {
                 left: $gs-gutter / 2;
@@ -649,7 +648,7 @@
     }
 
     .content__headline--immersive {
-        @include fs-headline(7, true);
+        @include fs-headline(6, true);
         line-height: 1.1;
         color: $garnett-neutral-1;
         padding: 0;
@@ -658,6 +657,7 @@
 
         @include mq(desktop) {
             font-size: 50px;
+            line-height: 54px;
         }
 
         //This is the line when there is no image that connetcs to the body
@@ -709,8 +709,12 @@
             padding-bottom: 1rem;
             margin-bottom: -$gs-baseline * 2;
             margin-top: $gs-baseline / 2;
+            margin-left: -$gs-gutter / 2;
         }
 
+        @include mq(leftCol) {
+            margin-left: 0px;
+        }
 
         //this is immersive specific to connect the vertical rule to the top of the page
         &:before {
@@ -728,6 +732,49 @@
             }
         }
     }
+
+    .content__meta-container {
+        margin-left: -$gs-gutter/2;
+        margin-right: -$gs-gutter/2;
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+        @include mq(phablet) {
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        @include mq(desktop) {
+            margin-left: -$gs-gutter / 2;
+        }
+        @include mq(leftCol) {
+            margin-left: -(gs-span(2) + $gs-gutter);
+        }
+        @include mq(wide) {
+            margin-left: -(gs-span(3) + $gs-gutter);
+        }
+    }
+    .meta__extras  {
+        margin-left: -$gs-gutter / 2;
+        margin-right: -$gs-gutter / 2;
+        @include mq(mobileLandscape) {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
+        }
+        @include mq(phablet) {
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
     .content__meta-container {
         &:before {
             display: none;
@@ -736,10 +783,8 @@
         .content__dateline {
             display: block;
             margin-left: auto;
-            width: 28%;
 
             @include mq($from: leftCol) {
-                width: 100%;
                 margin: auto;
             }
         }
