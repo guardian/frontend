@@ -95,7 +95,7 @@
     function supportsPercentagePadding() {
         var firefoxMatch = navigator.userAgent.match(/Firefox\/([0-9]+)\./) || [];
 
-        if (firefoxMatch.length && parseInt(firefoxMatch[1], 10) < 54) {
+        if (firefoxMatch.length === 2 && parseInt(firefoxMatch[1], 10) < 54) {
             return false;
         }
 
