@@ -210,7 +210,7 @@
         }
 
         &:not(.fc-item--list-media-mobile):not(.fc-item--list-mobile) {
-            @include mq($from: mobile) {
+            @include mq($from: mobile, $until: tablet) {
                 .inline-icon {
                     fill: #ffffff;
                 }
