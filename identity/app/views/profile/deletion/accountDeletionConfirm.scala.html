@@ -1,5 +1,7 @@
 @(page: model.Page, isAutoDeletion: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
+@mainLegacy(page, projectName = Option("identity")){
+}{
     <div class="identity-wrapper monocolumn-wrapper">
         @if(isAutoDeletion) {
             <h1 class="identity-title">Your account has been successfully deleted.</h1>
@@ -18,3 +20,4 @@
             </div>
         }
     </div>
+}

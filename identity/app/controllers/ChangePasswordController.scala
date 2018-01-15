@@ -15,7 +15,6 @@ import play.api.i18n.{Messages, MessagesProvider}
 
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
-import pages.IdentityHtmlPage
 import play.api.http.HttpConfiguration
 
 class ChangePasswordController(
@@ -67,11 +66,7 @@ class ChangePasswordController(
         api.passwordExists(request.user.auth) map {
           result =>
             val pwdExists = result.right.toOption exists {_ == true}
-            NoCache(Ok(
-                IdentityHtmlPage.html(
-                  views.html.password.changePassword(page = page, idRequest = idRequest, idUrlBuilder = idUrlBuilder, passwordForm = form, passwordExists =  pwdExists)
-                )(page, request, context)
-            ))
+            NoCache(Ok(views.html.password.changePassword(page = page, idRequest = idRequest, idUrlBuilder = idUrlBuilder, passwordForm = form, passwordExists =  pwdExists)))
         }
     }
   }
@@ -79,11 +74,7 @@ class ChangePasswordController(
   def renderPasswordConfirmation: Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-    NoCache(Ok(
-      IdentityHtmlPage.html(
-        views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)
-      )(page, request, context)
-    ))
+    NoCache(Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
   }
 
   def submitForm(): Action[AnyContent] = csrfCheck {

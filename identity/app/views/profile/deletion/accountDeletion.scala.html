@@ -19,6 +19,8 @@
 
 @emailIsValidated = @{ user.statusFields.userEmailValidated.fold(false)(identity) }
 
+@mainLegacy(page, projectName = Option("identity")){
+}{
     <div class="identity-wrapper monocolumn-wrapper">
         <h1 class="identity-title">Are you sure you want to delete your account?</h1>
 
@@ -147,3 +149,4 @@
 
         @registrationFooter(idRequest, idUrlBuilder)
     </div>
+}
