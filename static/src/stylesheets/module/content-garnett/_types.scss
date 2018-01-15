@@ -1089,7 +1089,7 @@ $quote-mark: 35px;
     }
 
     .tonal__standfirst {
-        @include mq($until:tablet) {
+        @include mq($until: tablet) {
             max-width: gs-span(8);
             margin: 0 auto;
         }
