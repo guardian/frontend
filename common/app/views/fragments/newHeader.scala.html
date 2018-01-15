@@ -67,14 +67,17 @@
                             Subscribe
                         </a>
 
-                        <a class="top-bar__item hide-until-tablet"
+                        @if(editionId != "au") {
+                            <a class="top-bar__item hide-until-tablet"
                             data-link-name="nav2 : job-cta"
                             data-edition="@{editionId}"
                             href="@getJobUrl(editionId)">
 
-                            <span class="hide-until-tablet">Find a job</span>
-                            <span class="hide-from-tablet">Jobs</span>
-                        </a>
+                                <span class="hide-until-tablet">Find a job</span>
+                                <span class="hide-from-tablet">Jobs</span>
+                            </a>
+                        }
+
 
                         @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                             @fragments.nav.userAccountDropdown()
