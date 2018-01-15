@@ -37,7 +37,7 @@ trait JavascriptRendering extends Logging {
   }
 
   private implicit val scriptContext = createContext()
-  private val memoizedJs: AtomicReference[Option[EvalResult]] = new AtomicReference(None)
+  private val memoizedJs: AtomicReference[Option[EvalResult]] = new AtomicReference(loadJavascript().fold(_ => None, Some.apply))
 
   private def getProps(props: Option[JsValue] = None): JsValue =
     JavascriptProps.default.asJsValue.as[JsObject] ++ props.map(_.as[JsObject]).getOrElse(Json.obj())
