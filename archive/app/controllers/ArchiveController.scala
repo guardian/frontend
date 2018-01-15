@@ -10,6 +10,7 @@ import javax.ws.rs.core.UriBuilder
 
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
+import play.twirl.api.Html
 import rendering.core.Renderer
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
@@ -29,9 +30,8 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
 
   private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
 
-  private[this] lazy val notFoundResult: Future[Result] = renderer
+  private[this] lazy val notFoundHtml: Future[Html] = renderer
     .render(ui.NotFound)
-    .map(html => Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(html))))
 
   def lookup(path: String): Action[AnyContent] = Action.async{ implicit request =>
 
@@ -44,7 +44,8 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
         .map(Future.successful)
         .getOrElse {
           log404(request)
-          notFoundResult
+          notFoundHtml
+            .map(html => Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(html))))
         }
       }
 
