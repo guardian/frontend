@@ -87,6 +87,9 @@
     }
 }
 
+// % used for padding-bottom isn't supported on Grid items in FireFox <53.
+// This temporary fix sets media in articles to 5:3 aspect ratio.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=958714
 .fake-percentage-padding {
     .content__main-column .media-primary .u-responsive-ratio {
         @include mq(leftCol) {
