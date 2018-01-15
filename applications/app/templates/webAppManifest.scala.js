@@ -23,8 +23,8 @@
             "src": "@{JavaScript(Static("images/favicons-garnett/roundel-114x114.png"))}"
         }
     ],
-        "theme_color": "#005689",
-        "background_color": "#ffffff",
+        "theme_color": "#e7edef",
+        "background_color": "#121212",
         "start_url": "/uk?INTCMP=webapp",
         "display": "browser",
         "orientation": "portrait",
