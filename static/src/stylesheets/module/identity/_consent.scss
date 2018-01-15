@@ -3,7 +3,7 @@
         padding: $gs-gutter 0;
         background: #ffffff;
         margin-top: $gs-gutter * 2;
-        border-top: 1px solid $neutral-5;
+        border-top: 1px solid $garnett-neutral-4;
         justify-content: space-between;
         z-index: $zindex-sticky;
         @include mq($until: tablet) {
