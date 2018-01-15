@@ -9,7 +9,6 @@
     }
 
     .button--secondary,
-    .content__section-label__link,
     .drop-cap,
     .element-pullquote p,
     &.content--type-feature .content__headline,
@@ -26,6 +25,7 @@
     .content--media .content__headline,
     .old-article-message,
     .pullquote-cite,
+    .content__section-label__link,
     a {
         color: $kickerColor;
     }

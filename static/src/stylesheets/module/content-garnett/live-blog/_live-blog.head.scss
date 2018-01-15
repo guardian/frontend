@@ -873,10 +873,18 @@ $pillars: (
             color: $sport-garnett-feature;
         }
         .content__series-label__link {
-            color: $neutral-2;
+            color: $sport-garnett-main-1;
         }
         .content__headline {
-            color: #ffffff;
+            color: $garnett-neutral-1;
+            padding-left: 0;
+
+            @include mq(phablet) {
+                margin-left: -$gs-gutter;
+            }
+            @include mq(tablet) {
+                margin-left: 0;
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ $gutter: 5px;
     color: $nav-primary-colour;
     z-index: 999;
     &:after {
-        @include multiline(4, $rule, top);
+        @include multiline(4, $garnett-neutral-4, top);
         content: '';
         height: 4px * 4;
         background-color: #ffffff;

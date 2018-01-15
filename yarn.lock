@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@guardian/atom-renderer@0.9.1":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.9.1.tgz#28b615a5c22e1bdaaa892043995455e5a9cb1ad1"
+"@guardian/atom-renderer@0.9.5":
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.9.5.tgz#a8d53b394aab15fa971a02c51d3d0ef73c013dc6"
   dependencies:
     autoprefixer "^7.1.6"
     css-loader "^0.28.7"

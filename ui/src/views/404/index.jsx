@@ -1,5 +1,5 @@
 // @flow
-import Logo from 'assets/images/guardian-logo-320.svg';
+import Logo from 'assets/images/the-guardian-logo.svg';
 import ArrowRight from 'assets/images/arrow-right.svg';
 import NotFoundSvg from 'assets/images/404.svg';
 import Cta from './cta';
@@ -22,7 +22,7 @@ export default ({ config }: { config: Object }) => (
         <div style={mainContent}>
             <a href="https://www.theguardian.com/" style={logoWrapper}>
                 <Logo style={logo} />
-                <span style={visuallyHidden}>the Guardian</span>
+                <span style={visuallyHidden}>The Guardian</span>
             </a>
             <NotFoundSvg style={fourOhFour} />
             <div style={contentText}>
@@ -39,7 +39,7 @@ export default ({ config }: { config: Object }) => (
                     </a>.
                 </p>
                 <Cta href="https://www.theguardian.com/" icon={ArrowRight}>
-                    Go to the Guardian home page
+                    Go to The Guardian home page
                 </Cta>
             </div>
         </div>

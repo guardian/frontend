@@ -508,6 +508,10 @@
         margin: $gs-baseline/2 0;
         overflow: hidden;
         background-color: $neutral-7;
+        
+        // chrome bug means the border radius is disabled while
+        // main nav transitions on hover. this stops that.
+        contain: paint;
 
         @include mq(leftCol) {
             width: gs-span(2);
