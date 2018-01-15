@@ -35,10 +35,21 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
 
   private[this] def notFoundHtml(): Future[Html] = {
     memoisedNotFound.get() match {
-      case Some(html) => Future.successful(html)
+      case Some(html) => {
+        Future.successful(html)
+      }
       case None => {
+        log.warn("UI - unable to find memoised not found, attempting to render...")
         val rendered = renderer.render(ui.NotFound)
-        rendered.foreach(r => memoisedNotFound.set(Some(r)))
+        rendered.foreach { r =>
+          log.info("UI - ...succeeded in rendering 404 page")
+          memoisedNotFound.set(Some(r))
+        }
+
+        rendered.failed.foreach { e =>
+          log.warn("UI - ...rendering 404 page failed")
+        }
+
         rendered
       }
     }
