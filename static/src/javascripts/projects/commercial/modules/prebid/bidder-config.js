@@ -60,6 +60,7 @@ export const sonobiBidder: PrebidBidder = {
         ad_unit: config.page.adUnit,
         dom_id: slotId,
         floor: 0.5,
+        appNexusTargeting: config.page.appNexusPageTargeting,
     }),
 };
 
