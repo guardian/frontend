@@ -29,6 +29,10 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
 
   private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
 
+  private[this] lazy val notFoundResult: Future[Result] = renderer
+    .render(ui.NotFound)
+    .map(html => Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(html))))
+
   def lookup(path: String): Action[AnyContent] = Action.async{ implicit request =>
 
     lookupPath(path)
@@ -40,9 +44,7 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
         .map(Future.successful)
         .getOrElse {
           log404(request)
-          renderer
-            .render(ui.NotFound)
-            .map(html => Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(html))))
+          notFoundResult
         }
       }
 
