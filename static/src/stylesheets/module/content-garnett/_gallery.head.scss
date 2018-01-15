@@ -1,12 +1,29 @@
-.content__labels--gallery,
 .gallery__main-content .content__meta-container,
-.content__headline--gallery,
 .content__standfirst--gallery {
+    @include mq(desktop) {
+        margin-left: 10rem;
+        max-width: gs-span(8);
+
+    }
+    @include mq(leftCol) {
+        margin-left: gs-span(3) + $gs-baseline/2;
+
+    }
+}
+
+.content__labels--gallery,
+.content__headline--gallery {
     @include mq(desktop) {
         margin-left: gs-span(3) + $gs-gutter;
         max-width: gs-span(8);
+
     }
+    @include mq(leftCol) {
+        margin-left: gs-span(3) + $gs-baseline/2;
+    }
+
 }
+
 
 .gallery__main-content {
     .content__meta-container {
