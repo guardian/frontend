@@ -10,7 +10,6 @@ import idapiclient.{EmailPassword, IdApiClient}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import actions.AuthenticatedActions
 import conf.IdentityConfiguration
-import pages.IdentityHtmlPage
 import play.api.data.validation.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
@@ -54,11 +53,7 @@ class AccountDeletionController(
   def renderAccountDeletionForm: Action[AnyContent] = csrfAddToken {
     fullAuthWithIdapiUserAction.async { implicit request =>
       val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
-      Future(NoCache(Ok(
-        IdentityHtmlPage.html(
-          views.html.profile.deletion.accountDeletion(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user)
-        )(page, request, context)
-      )))
+      Future(NoCache(Ok(views.html.profile.deletion.accountDeletion(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user))))
     }
   }
 
@@ -74,9 +69,7 @@ class AccountDeletionController(
   }
 
   def renderAccountDeletionConfirmation(autoDeletion: Boolean): Action[AnyContent] = Action.async { implicit request =>
-    Future(NoCache(Ok(
-      IdentityHtmlPage.html(accountDeletionConfirm(pageConfirm, autoDeletion))(page, request, context)
-    )))
+    Future(NoCache(Ok(accountDeletionConfirm(pageConfirm, autoDeletion))))
   }
 
   private def deleteAccount[A](
