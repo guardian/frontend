@@ -632,7 +632,6 @@
             left: -$gs-gutter;
             padding-top: 0;
             //This allows the headline block to be aligned to the left and not run full width
-            width: 90%;
             width: calc(90vw - #{$gs-gutter});
             padding-bottom: $gs-baseline;
             min-height: 112px;
@@ -784,7 +783,6 @@
         .content__dateline {
             display: block;
             margin-left: auto;
-            // width: 28%;
 
             @include mq($from: leftCol) {
                 margin: auto;
