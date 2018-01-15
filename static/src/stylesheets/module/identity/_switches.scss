@@ -49,8 +49,8 @@ $checkbox-size: $gs-gutter / 1.25;
 
 .manage-account__switch {
     @include fs-bodyCopy(1, true);
-    background-color: $neutral-8;
-    border-top: 1px solid $neutral-4;
+    background-color: $garnett-neutral-3;
+    border-top: 1px solid $garnett-neutral-4;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -103,7 +103,7 @@ $checkbox-size: $gs-gutter / 1.25;
     &.is-just-updated {
         &:before {
             animation: manage-account__switch-anim-loaded .5s 1 both;
-            background-color: $status-positive;
+            background-color: #bbce00;
             opacity: 1;
         }
     }
