@@ -17,7 +17,7 @@ $gutter: 5px;
         &:after {
             @include multiline(4, $garnett-neutral-4, top);
             content: '';
-            height: 4px * 4;
+            height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
             background-color: #ffffff;
             margin-bottom: -1px;
             margin-top: $gutter;
