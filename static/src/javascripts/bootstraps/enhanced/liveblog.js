@@ -9,7 +9,6 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
-import { init as storyQuestions } from 'journalism/temporary/story-questions';
 import { initAtoms } from './atoms';
 
 const affixTimeline = (): void => {
@@ -46,21 +45,12 @@ const keepTimestampsCurrent = (): void => {
     window.setInterval(() => initRelativeDates(), 60000);
 };
 
-const initStoryquestions = (): void => {
-    if (document.getElementsByClassName('js-ask-question-link').length) {
-        storyQuestions();
-    } else {
-        mediator.once('modules:autoupdate:updates', initStoryquestions);
-    }
-};
-
 const init = (): void => {
     catchErrorsWithContext([
         ['lb-autoupdate', createAutoUpdate],
         ['lb-timeline', affixTimeline],
         ['lb-timestamp', keepTimestampsCurrent],
         ['lb-richlinks', upgradeRichLinks],
-        ['lb-storyquestions', initStoryquestions],
         ['lb-atoms', initAtoms],
     ]);
 
