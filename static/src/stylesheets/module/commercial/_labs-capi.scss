@@ -358,7 +358,7 @@
     }
 }
 
-.adverts--within-unbranded {
+.adverts--within-unbranded:not(.fc-item--paid-content) {
     .fc-item__container {
         background-color: $paid-article-card-bg;
         &:hover,
