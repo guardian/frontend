@@ -1,7 +1,7 @@
 .gallery__main-content .content__meta-container,
 .content__standfirst--gallery {
     @include mq(desktop) {
-        margin-left: 10rem;
+        margin-left: gs-span(2) + $gs-gutter;
         max-width: gs-span(8);
 
     }
