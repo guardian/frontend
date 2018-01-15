@@ -10,6 +10,7 @@ import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
 import { init as storyQuestions } from 'journalism/temporary/story-questions';
+import { initAtoms } from './atoms';
 
 const affixTimeline = (): void => {
     const keywordIds = config.get('page.keywordIds', '');
@@ -60,6 +61,7 @@ const init = (): void => {
         ['lb-timestamp', keepTimestampsCurrent],
         ['lb-richlinks', upgradeRichLinks],
         ['lb-storyquestions', initStoryquestions],
+        ['lb-atoms', initAtoms],
     ]);
 
     initTrails();
