@@ -15,10 +15,11 @@
     position: absolute;
 }
 
-.epic__testimonial-quote svg {
+.epic__testimonial-container .epic__testimonial-quote .inline-garnett-quote svg {
     fill: $multimedia-main-2;
-    width: 1.5 * $gs-gutter;
-    height: 1.5 * $gs-gutter;
+    width: $gs-gutter;
+    height: $gs-gutter;
+    padding-left: 10px;
 }
 
 .epic__testimonial-text {
@@ -42,7 +43,7 @@
 
 // Variant 3 - subtle
 
-.epic__testimonial-quote--subtle svg {
+.epic__testimonial-container--subtle .epic__testimonial-quote--subtle .inline-garnett-quote svg {
     fill: $neutral-3;
 }
 
