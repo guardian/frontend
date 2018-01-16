@@ -1,13 +1,15 @@
 package services
 
 import actions.AuthenticatedActions.AuthRequest
+import play.api.mvc.Security.AuthenticatedRequest
 import com.gu.identity.model.User
 import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
 import play.api.mvc.Security.AuthenticatedRequest
-import play.api.mvc.ControllerComponents
+import play.api.mvc.{ControllerComponents, RequestHeader}
 import services._
 import utils.Logging
+
 import scala.concurrent.{ExecutionContext, Future}
 
 
@@ -31,13 +33,13 @@ class UserRedirectDecider(
     url = "/consents/newsletters"
   )
 
-  def decide[A](request: AuthRequest[A]): Future[Option[Decision]] = {
+  def decide[A](user: User, request: RequestHeader): Future[Option[Decision]] = {
 
     def userHasRepermissioned: Boolean =
-      request.user.statusFields.hasRepermissioned.contains(true)
+      user.statusFields.hasRepermissioned.contains(true)
 
     def userEmailValidated: Boolean =
-      request.user.statusFields.isUserEmailValidated
+      user.statusFields.isUserEmailValidated
 
     (userEmailValidated, userHasRepermissioned) match {
       case (false, false) =>
@@ -51,7 +53,7 @@ class UserRedirectDecider(
 
       case (true, true) =>
         newsletterService.subscriptions(
-          request.user.getId,
+          user.getId,
           idRequestParser(request).trackingData
         ).map {
           emailFilledForm =>

@@ -127,7 +127,7 @@ class AuthenticatedActions(
 
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
-          userRedirectDecider.decide(request).map {
+          userRedirectDecider.decide(user, request).map {
             case Some(i: userRedirectDecider.Decision) => Some(sendUserToUserRedirectDecision(request, i))
             case _ => None
           }
