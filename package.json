@@ -11,7 +11,7 @@
     "yarn": "1.2.1"
   },
   "dependencies": {
-    "@guardian/atom-renderer": "0.9.5",
+    "@guardian/atom-renderer": "0.9.6",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
     "circular-dependency-plugin": "3.0.0",
