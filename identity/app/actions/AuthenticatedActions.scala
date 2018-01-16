@@ -4,9 +4,10 @@ import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.User
 import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
+import model.IdentityPage
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
-import services._
+import services.{RedirectDecision, _}
 import utils.Logging
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -121,17 +122,15 @@ class AuthenticatedActions(
         }
     }
 
-  private def apiUserShouldRepermissionFilter(enforceConsentsRedirection: Boolean = true): ActionFilter[AuthRequest] =
+  private def apiUserShouldRepermissionFilter(pageId: String): ActionFilter[AuthRequest] =
     new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
           redirectDecisionService.decideValidateAndConsentRedirect(request.user, request).map {
-            case Some(RedirectToEmailValidationStrictly) =>
-              Some(sendUserToUserRedirectDecision(request, RedirectToEmailValidationStrictly))
-            case Some(i: RedirectDecision) =>
-              if (enforceConsentsRedirection) Some(sendUserToUserRedirectDecision(request, i)) else None
+            case Some(decision: RedirectDecision) =>
+              if(decision.access.shouldRedirect(pageId)) Some(sendUserToUserRedirectDecision(request, decision)) else None
             case _ => None
           }
         else
@@ -166,7 +165,7 @@ class AuthenticatedActions(
     noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
   /** Auth with at least SC_GU_RP and decideValidateAndConsentRedirect if user should be redirected to consent journey */
-  def validationAndConsentJourneyRedirectAction(enforceConsentsRedirection: Boolean): ActionBuilder[AuthRequest, AnyContent] =
-    consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionFilter(enforceConsentsRedirection)
+  def validationAndConsentJourneyRedirectAction(pageId: String): ActionBuilder[AuthRequest, AnyContent] =
+    consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionFilter(pageId)
 
 }

@@ -15,7 +15,7 @@ trait EmailsTab
 
   /** GET /email-prefs */
   def displayEmailPrefsForm(consentsUpdated: Boolean, consentHint: Option[String]): Action[AnyContent] =
-    displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint, enforceConsentsRedirection = true)
+    displayForm(EmailPrefsProfilePage, consentsUpdated, consentHint)
 
   /** GET /privacy/edit */
   def displayPrivacyFormRedirect(

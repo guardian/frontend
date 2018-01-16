@@ -5,6 +5,7 @@ import play.api.mvc.Security.AuthenticatedRequest
 import com.gu.identity.model.User
 import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
+import model.{IdentityPage, Page}
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc.{ControllerComponents, RequestHeader}
 import services._
@@ -12,23 +13,36 @@ import utils.Logging
 
 import scala.concurrent.{ExecutionContext, Future}
 
+abstract case class RedirectAccess(){
+  def shouldRedirect(pageId: String):Boolean = true
+}
+object RedirectAccessEmailPrefs extends RedirectAccess {
+  override def shouldRedirect(pageId: String):Boolean = pageId contains "email-prefs"
+}
 
-abstract class RedirectDecision(val url: String)
+object RedirectAccessAllPages extends RedirectAccess
+
+
+abstract class RedirectDecision(val url: String, val access: RedirectAccess)
 
 case object RedirectToEmailValidation extends RedirectDecision(
-  url = "/verify-email?isRepermissioningRedirect=true"
+  url = "/verify-email?isRepermissioningRedirect=true",
+  access = RedirectAccessEmailPrefs
 )
 
 case object RedirectToEmailValidationStrictly extends RedirectDecision(
-  url = "/verify-email?isRepermissioningRedirect=true"
+  url = "/verify-email?isRepermissioningRedirect=true",
+  access = RedirectAccessAllPages
 )
 
 case object RedirectToConsents extends RedirectDecision(
-  url = "/consents"
+  url = "/consents",
+  access = RedirectAccessEmailPrefs
 )
 
 case object RedirectToNewsletterConsents extends RedirectDecision(
-  url = "/consents/newsletters"
+  url = "/consents/newsletters",
+  access = RedirectAccessEmailPrefs
 )
 
 class RedirectDecisionService(

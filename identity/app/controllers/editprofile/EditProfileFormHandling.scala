@@ -17,10 +17,10 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
                    page: IdentityPage,
                    consentsUpdated: Boolean = false,
                    consentHint: Option[String] = None,
-                   enforceConsentsRedirection: Boolean = false): Action[AnyContent] = {
+                   redirectAccessLevel: Boolean = false): Action[AnyContent] = {
 
     csrfAddToken {
-      validationAndConsentJourneyRedirectAction(enforceConsentsRedirection).async { implicit request =>
+      validationAndConsentJourneyRedirectAction(page.id).async { implicit request =>
         profileFormsView(
           page = page,
           forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
