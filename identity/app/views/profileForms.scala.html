@@ -3,6 +3,7 @@
 @import model.{ApplicationContext, IdentityPage}
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
+@import services.{RedirectDecision, RedirectToEmailValidation, RedirectToConsents, RedirectToNewsletterConsents}
 @import controllers.editprofile.ProfileForms
 
 @(
@@ -11,7 +12,7 @@
     forms: ProfileForms,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    redirectDecision: Option[services.RedirectDecision],
+    redirectDecision: Option[RedirectDecision],
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
@@ -39,15 +40,39 @@
     </div>
 }
 
-@validationRoadblock = {
+@redirectRoadBlockTemplate(decision: RedirectDecision, title: String = "", body: List[Html], linkText: Option[String] = None) = {
     <div class="identity-forms-message identity-forms-message--inline">
-        <h1 class="identity-title">You must verify your email to continue.</h1>
+        <h1 class="identity-title">@title</h1>
         <div class="identity-forms-message__body">
-            <p>Please validate your email (@user.primaryEmailAddress) to edit your preferences.</p>
-            <p>If your address seems wrong you can <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" class="u-underline" data-link-name="identity : email : reverify-email-change">change it</a>.</p>
-            <a class="manage-account__button identity-forms-message__button" href="@idUrlBuilder.buildUrl("/verify-email", idRequest)" data-link-name="identity : email : reverify-email-resend">Resend me a validation email</a>
+            @{body.map{p => Html(s"<p>$p</p>")}}
+            <a class="manage-account__button manage-account__button--icon identity-forms-message__button" href="@idUrlBuilder.buildUrl(decision.url, idRequest)" data-link-name="identity : email : error : @linkText.getOrElse("Continue")">
+                @linkText.getOrElse("Continue")
+                @fragments.inlineSvg("arrow-right", "icon")
+            </a>
         </div>
     </div>
+}
+
+@redirectRoadblock(decision: RedirectDecision) = @{
+
+    decision match {
+        case RedirectToConsents | RedirectToNewsletterConsents => redirectRoadBlockTemplate(
+            decision = decision,
+            title = "What can we tell you about?",
+            body = List(
+                Html(s"Update you contact preferences to continue. You only have to do this once"),
+            )
+        )
+        case RedirectToEmailValidation => redirectRoadBlockTemplate(
+            decision = decision,
+            title = "You must verify your email to continue",
+            body = List(
+                Html(s"Please validate your email (${user.primaryEmailAddress}) to edit your preferences"),
+                Html(s"If your address seems wrong you can <a href='${idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)}' class='u-underline' data-link-name='identity : email : reverify-email-change'>change it</a>")
+            ),
+            linkText = Some("Resend me a validation email")
+        )
+    }
 }
 
 <div class="tabs">
@@ -78,11 +103,6 @@
 
                 <div class=" u-cf identity-section">
 
-                    @{redirectDecision match {
-                        case Some(i) => Html(s"asdf${i}asdf")
-                        case None => Html("None")
-                    }}
-
                     <div class="tabs__content">
                         @content(1, "/public/edit")(profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm))
 
@@ -95,11 +115,9 @@
                         @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
                         @content(6, "/email-prefs")(
-
-                            if(user.statusFields.userEmailValidated.fold(false)(identity)) {
-                                profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint)
-                            } else {
-                                validationRoadblock
+                            redirectDecision match {
+                                case Some(i) => redirectRoadblock(i)
+                                case None => profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint)
                             }
                         )
                     </div>
