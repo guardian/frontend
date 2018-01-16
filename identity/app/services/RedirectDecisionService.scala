@@ -45,7 +45,7 @@ class RedirectDecisionService(
 
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
-  def decideValidateAndConsentRedirect[A](user: User, request: RequestHeader): Future[Option[RedirectDecision]] = {
+  def decideManageAccountRedirect[A](user: User, request: RequestHeader): Future[Option[RedirectDecision]] = {
 
     def userHasRepermissioned: Boolean =
       user.statusFields.hasRepermissioned.contains(true)

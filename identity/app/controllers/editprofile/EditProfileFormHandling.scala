@@ -20,7 +20,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
                    redirectAccessLevel: Boolean = false): Action[AnyContent] = {
 
     csrfAddToken {
-      validationAndConsentJourneyRedirectAction(page.id).async { implicit request =>
+      manageAccountRedirectAction(page.id).async { implicit request =>
         profileFormsView(
           page = page,
           forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
@@ -78,7 +78,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     val emailFilledFormFuture = newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData)
-    val redirectDecisionFuture = redirectDecisionService.decideValidateAndConsentRedirect(user, request)
+    val redirectDecisionFuture = redirectDecisionService.decideManageAccountRedirect(user, request)
 
     for {
       emailFilledForm <- emailFilledFormFuture
