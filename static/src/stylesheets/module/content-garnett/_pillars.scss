@@ -9,12 +9,11 @@
     }
 
     .button--secondary,
-    .content__section-label__link,
     .drop-cap,
     .element-pullquote p,
-    .tonal__head--tone-feature .content__headline,
-    .tonal__head--tone-review .content__headline,
-    .u-underline[href] {
+    &.content--type-feature .content__headline,
+    &.content--type-review .content__headline,
+    .u-underline {
         color: $pillarColor;
     }
 
@@ -26,8 +25,8 @@
     .content--media .content__headline,
     .old-article-message,
     .pullquote-cite,
-    .tone-colour,
-    a[href] {
+    .content__section-label__link,
+    a {
         color: $kickerColor;
     }
 
@@ -37,7 +36,7 @@
 
     .block-share__item .inline-icon,
     .inline-close svg,
-    .inline-tone-fill,
+    .commentcount2__heading span,
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
     .social-icon__svg {
@@ -100,13 +99,6 @@
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
     }
-
-    .fc-container__header__title a:hover,
-    a:focus {
-        color: $pillarColor;
-        text-decoration: none;
-        border-bottom: solid 1px $pillarColor;
-    }
 }
 //////** Discussion (comment) styling **//////////
 //d-comment__author a[href], ._underline_1lj47_3, .js-discussion-author-link
@@ -114,7 +106,7 @@
 // we can get rid of it once we clean up the pre-garnett code
 @mixin footerPalette($kickerColor) {
     ._underline_1lj47_3,
-    .button--tone-news,
+    .d-show-more-replies__button,
     .d-comment__action,
     .d-comment__author a[href],
     .d-comment__reply-to-author,
@@ -128,7 +120,8 @@
     }
 
     .comment-share-icon,
-    .d-show-more-replies__button.button--show-more svg {
+    .d-show-more-replies__button.button--show-more svg,
+    .inline-reply.blue {
         fill: $garnett-neutral-6;
         left: $gs-gutter/3;
     }
@@ -186,7 +179,7 @@
 
     .block-share__item .inline-icon,
     .inline-close svg,
-    .inline-tone-fill,
+    .commentcount2__heading span,
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
     .social-icon__svg {
@@ -256,19 +249,27 @@
         color: $mediaColor;
     }
 
+    .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before,
     .vjs-play-progress,
     .vjs-volume-level,
     .vjs-volume-level:before,
     .youtube-media-atom__bottom-bar__duration:before,
-    .youtube-media-atom__play-button:before,
-    .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before {
+    .youtube-media-atom__play-button:before {
         background: $mediaColor;
     }
 
     .inline-camera,
     .inline-video-icon__svg,
-    .inline-volume-high {
+    .inline-volume-high.inline-icon {
         fill: $mediaColor;
+    }
+
+    .social-icon__svg {
+        fill: $garnett-neutral-4;
+    }
+
+    a.content__series-label__link {
+        color: $garnett-neutral-3;
     }
 
     .vjs-paused .vjs-play-control {
@@ -278,58 +279,63 @@
     .vjs-playing .vjs-play-control {
         @include icon(pause-icon--#{$pillar});
     }
-
 }
 
-.content--pillar-news {
+.content--pillar-news,
+.paid-content {
     @include colorPalatte($news-garnett-main-1, $news-garnett-feature, $news-garnett-media-main-1);
 }
+// #? There is a lot of :not(.paid-content) to avoid having to override
+// after the fact.
+// - should the pillar and type classes be added on the condition that isPaidContent is false?
+// - or is it easier to just override everything in a separate module scoped with .paid-content?
 
-.content--pillar-opinion,
-.content--type-comment,
-.content--type-guardianview {
+.content--pillar-opinion:not(.paid-content),
+.content--type-comment:not(.paid-content),
+.content--type-guardianview:not(.paid-content) {
     @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
 }
 
-.content--pillar-arts,
-.content--pillar-arts.content--type-comment,
-.content--pillar-arts.content--type-guardianview {
-    @include colorPalatte($arts-garnett-main-1, $arts-garnett-feature, $arts-garnett-media-main-1);
+.content--pillar-arts.content--type-comment:not(.paid-content),
+.content--pillar-arts.content--type-guardianview:not(.paid-content),
+.content--pillar-arts:not(.paid-content) {
+    @include colorPalatte($culture-garnett-main-1, $culture-garnett-feature, $culture-garnett-media-main-1);
 }
 
-.content--pillar-lifestyle,
-.content--pillar-lifestyle.content--type-comment,
-.content--pillar-lifestyle.content--type-guardianview {
+.content--pillar-lifestyle.content--type-comment:not(.paid-content),
+.content--pillar-lifestyle.content--type-guardianview:not(.paid-content),
+.content--pillar-lifestyle:not(.paid-content) {
     @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
 }
 
-.content--pillar-sport,
-.content--pillar-sport.content--type-comment,
-.content--pillar-sport.content--type-guardianview {
+.content--pillar-sport.content--type-comment:not(.paid-content),
+.content--pillar-sport.content--type-guardianview:not(.paid-content),
+.content--pillar-sport:not(.paid-content) {
     @include colorPalatte($sport-garnett-main-1, $sport-garnett-feature, $sport-garnett-media-main-1);
 }
 
-.content-footer--pillar-news {
+.content-footer--pillar-news,
+.paid-content {
     @include footerPalette($news-garnett-main-1);
 }
 
-.content-footer--pillar-arts {
-    @include footerPalette($arts-garnett-feature);
+.content-footer--pillar-arts:not(.paid-content) {
+    @include footerPalette($culture-garnett-feature);
 }
 
-.content-footer--pillar-lifestyle {
+.content-footer--pillar-lifestyle:not(.paid-content) {
     @include footerPalette($lifestyle-garnett-feature);
 }
 
-.content-footer--pillar-opinion {
+.content-footer--pillar-opinion:not(.paid-content) {
     @include footerPalette($opinion-garnett-main-1);
 }
 
-.content-footer--pillar-sport {
+.content-footer--pillar-sport:not(.paid-content) {
     @include footerPalette($sport-garnett-main-1);
 }
 
-.content--media:not(.paid-content).content--pillar-news,
+.content--media.content--pillar-news,
 .immersive-main-media__headline-container.content--pillar-news {
     @include mediaPalatte($news-garnett-media-main-1, news);
 }
@@ -341,7 +347,7 @@
 
 .content--media:not(.paid-content).content--pillar-arts,
 .immersive-main-media__headline-container.content--pillar-arts {
-    @include mediaPalatte($arts-garnett-media-main-1, arts);
+    @include mediaPalatte($culture-garnett-media-main-1, culture);
 }
 
 .content--media:not(.paid-content).content--pillar-lifestyle,
@@ -366,7 +372,7 @@
     }
 }
 
-.rich-link {
+.rich-link:not(.rich-link--paidfor) {
     &,
     &.rich-link--pillar-news {
         @include richLink($news-garnett-main-1, $garnett-neutral-3);
@@ -381,14 +387,14 @@
     }
 
     &.rich-link--pillar-arts {
-        @include richLink($arts-garnett-main-1, $garnett-neutral-3);
+        @include richLink($culture-garnett-main-1, $garnett-neutral-3);
     }
 
     &.rich-link--pillar-lifestyle {
         @include richLink($lifestyle-garnett-main-1, $garnett-neutral-3);
     }
 
-    &.tone-comment--item {
+    &.rich-link--pillar-opinion {
         .rich-link__image-container {
             display: none;
         }
@@ -413,7 +419,7 @@
         }
 
         &.rich-link--pillar-arts {
-            @include richLink(#ffffff, $arts-garnett-feature);
+            @include richLink(#ffffff, $culture-garnett-feature);
         }
 
         &.rich-link--pillar-lifestyle {
@@ -426,7 +432,9 @@
         }
     }
 
-    &.tone-media--item {
+    &.rich-link--gallery,
+    &.rich-link--video,
+    &.rich-link--audio {
         background: $media-garnett-main-1;
 
         .u-faux-block-link--hover {
@@ -444,6 +452,6 @@
     }
 }
 
-.immersive-main-media__headline-container .content__series-label__link[href] {
+.immersive-main-media__headline-container .content__series-label__link {
     color: $garnett-neutral-3;
 }

@@ -1,6 +1,7 @@
 package experiments
 
-import conf.switches.{Owner, Switches}
+import conf.switches.Owner
+import conf.switches.Switches.{ GarnettLaunch, GarnettHeaderLaunch, GarnettIdentityLaunch }
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -10,7 +11,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline,
-    ABNewDesktopHeader,
     GarnettHeader,
     GarnettIdentity,
     Garnett,
@@ -59,21 +59,15 @@ object CommercialBaseline extends Experiment(
   participationGroup = Perc2A
 )
 
-object ABNewDesktopHeader extends Experiment(
-  name = "ab-new-desktop-header",
-  description = "Users in this experiment will see the new desktop design.",
-  owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("zeftilldeath")),
-  sellByDate = new LocalDate(2018, 2, 1),
-  participationGroup = Perc20A
-)
-
 object GarnettIdentity extends Experiment(
   name = "garnett-identity",
   description = "Users in this experiment will see garnett styling on identity pages",
   owners = Seq(Owner.withGithub("walaura")),
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup = Perc0E
-)
+) {
+  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettIdentityLaunch.isSwitchedOn
+}
 
 object GarnettHeader extends Experiment(
   name = "garnett-header",
@@ -81,7 +75,9 @@ object GarnettHeader extends Experiment(
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("zeftilldeath")),
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup = Perc0A
-)
+) {
+  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettHeaderLaunch.isSwitchedOn
+}
 
 object Garnett extends Experiment(
   name = "garnett",
@@ -89,7 +85,9 @@ object Garnett extends Experiment(
   owners = Seq(Owner.withName("dotcom.platform")),
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup= Perc0C
-)
+) {
+  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettLaunch.isSwitchedOn
+}
 
 object HideShowMoreButtonExperiment extends Experiment(
   name = "remove-show-more-ab",

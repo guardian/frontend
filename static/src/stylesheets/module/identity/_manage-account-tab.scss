@@ -18,7 +18,9 @@
     .manage-account-up-sell {
         padding: $gs-gutter*2;
         .manage-account__button {
+            margin-bottom: .25em;
             margin-right: 1em;
+            min-width: 0;
         }
     }
 
@@ -301,7 +303,7 @@
 
     .contribution-cancellation__keep-contributing {
         margin-left: $gs-gutter;
-        margin-top: 10px;
+        margin-top: 6px;
         display: inline-block;
     }
 
@@ -332,13 +334,10 @@
 .manage-account-divider {
     display: block;
     width: 100%;
-    border-top: 1px solid #d9d9d9;
+    border-top: 1px solid $garnett-neutral-4;
     border-bottom: 0;
-    margin-bottom: gs-span(.5);
     transform: scaleX(3);
-    @include mq(desktop) {
-        margin-top: gs-span(1);
-    }
+    margin-top: $gs-baseline;
 }
 
 /* Modals
@@ -387,7 +386,7 @@
     width: 100%;
     position: relative;
     z-index: 10;
-    border-top: 1px solid $news-main-2;
+    border-top: 1px solid $neutral-1;
     padding: ($gs-gutter * 3.75) ($gs-gutter * 1) ($gs-gutter * 1);
     margin: auto;
     float: none;

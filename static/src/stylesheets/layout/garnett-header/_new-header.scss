@@ -66,11 +66,19 @@ from scrolling */
     transform: translateX(100%);
 
     @include mq(desktop) {
+        right: 107px;
+        width: 100px;
+    }
+
+    @include mq(leftCol) {
         right: 120px;
     }
 
-    @include mq(wide) {
-        right: 200px;
+    body:not(.has-page-skin) & {
+        @include mq(wide) {
+            right: 200px;
+            width: auto;
+        }
     }
 }
 
@@ -89,13 +97,18 @@ from scrolling */
 
 .new-header__menu-toggle {
     @include mq($until: desktop) {
-        bottom: -$gs-baseline / 2;
         position: absolute;
         right: $gutter-small;
+        top: $gs-baseline * 2;
+
+        @include mq(mobileMedium) {
+            bottom: -$gs-baseline / 2;
+            top: auto;
+        }
 
         .new-header--slim & {
             right: $gs-gutter / 2;
-            top: -$gs-baseline / 2;
+            top: $gs-baseline / 4;
         }
 
         @include mq(mobileLandscape) {
@@ -119,22 +132,25 @@ from scrolling */
 .new-header__logo {
     float: right;
     margin-bottom: $gs-baseline + $gs-baseline / 4;
-    margin-right: 5px;
+    margin-right: $gs-gutter / 4 + $veggie-burger-small;
     margin-top: $gs-baseline / 4;
 
+    @include mq(mobileMedium) {
+        margin-right: $gs-gutter / 4;
+    }
+
     @include mq(mobileLandscape) {
-        margin-right: 17px;
+        margin-right: $gs-gutter - 3;
     }
 
     @include mq(desktop) {
-        margin-bottom: -30px;
-        margin-right: 17px;
+        margin-bottom: -34px;
         margin-top: 5px;
     }
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
-            margin-bottom: -34px;
+            margin-bottom: -40px;
         }
 
         @include mq(wide) {
@@ -146,7 +162,7 @@ from scrolling */
         position: absolute;
         margin: 0;
         right: $veggie-burger-large;
-        top: -$gs-baseline / 2;
+        top: $gs-baseline / 4;
         z-index: 3;
 
         @include mq(mobileLandscape) {
@@ -183,28 +199,14 @@ from scrolling */
     width: $veggie-burger-large;
 }
 
-.inline-the-guardian-logo { // TODO remove this in the future
-    display: block !important;
-}
-
-.new-header--slim {
-    .inline-the-guardian-roundel { // TODO remove/improve this in the future
-        display: block !important;
-    }
-
-    .inline-the-guardian-logo { // TODO remove this in the future
-        display: none !important;
-    }
-}
-
 .inline-the-guardian-logo__svg {
     display: block;
-    height: 57px;
-    width: 175px;
+    height: 52px;
+    width: 159px;
 
     @include mq(mobileMedium) {
-        height: 52px;
-        width: 164px;
+        height: 57px;
+        width: 175px;
     }
 
     @include mq(tablet) {
@@ -226,8 +228,12 @@ from scrolling */
 }
 
 .new-header--slim {
-    border-bottom: 1px solid $rule;
-    height: $slim-nav-height;
+    height: 0;
+
+    @include mq(tablet) {
+        border-bottom: 1px solid $rule;
+        height: $slim-nav-height;
+    }
 }
 
 

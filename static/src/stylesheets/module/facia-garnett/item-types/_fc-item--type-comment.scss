@@ -34,7 +34,7 @@
             display: none;
         }
 
-        .fc-item__standfirst {
+        .fc-item__standfirst-wrapper {
             padding-bottom: $gs-gutter * .25;
         }
     }
@@ -99,6 +99,11 @@
                 .fc-item__standfirst-wrapper {
                     .fc-item__meta {
                         display: flex;
+                    }
+
+                    .fc-item__timestamp,
+                    .fc-trail__count--commentcount {
+                        background-color: transparent;
                     }
                 }
             }

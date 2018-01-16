@@ -12,7 +12,7 @@
     overflow: hidden;
 
     @include mq(mobileMedium) {
-        font-size: 18px;
+        font-size: 17px;
     }
 
     @include mq(tablet) {

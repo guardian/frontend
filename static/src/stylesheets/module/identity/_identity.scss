@@ -88,17 +88,25 @@ $identity-header-height: 48px;
 .nav--registration {
     margin-top: ($gs-baseline/3)*8;
     font-size: 14px;
-    text-align: center;
+
+    .nav__item {
+        display: block;
+        margin-bottom: $gs-baseline / 4;
+    }
 
     @include mq(tablet) {
         font-size: 16px;
+        text-align: center;
+        .nav__item {
+            display: inline;
+            margin: 0;
+        }
+        .nav__item + .nav__item:before {
+            content: '\b7';
+            margin-left: 4px;
+            margin-right: 9px;
+        }
     }
-}
-
-.nav--registration .nav__item + .nav__item:before {
-    content: '\b7';
-    margin-left: 4px;
-    margin-right: 9px;
 }
 
 .social-signin {
@@ -125,11 +133,14 @@ $identity-header-height: 48px;
         display: block;
         font-family: $f-sans-serif-text;
         font-size: 14px;
-        padding: 8px 0 9px;
-        text-indent: 24px;
+        padding: 4px 0;
+        line-height: 28px;
+        height: 28px;
+        text-indent: 40px;
         width: 240px;
         position: relative;
-        text-align: center;
+        text-align: left;
+        border-radius: 9999px;
     }
 
     .social-signin__action--fb {
@@ -152,13 +163,13 @@ $identity-header-height: 48px;
 
     .social-signin__icon {
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 3px;
+        left: 6px;
 
         svg {
             float: left;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
         }
     }
 }
@@ -279,11 +290,6 @@ $identity-header-height: 48px;
         }
     }
 
-    .tabs__tab--selected {
-        border-top-color: $news-accent;
-        color: $news-accent;
-    }
-
     @include mq($until: tablet) {
         a {
             padding-top: $gs-baseline/4;
@@ -296,7 +302,7 @@ $identity-header-height: 48px;
 /* Email subscriptions
    ========================================================================== */
 .email-subscription {
-    border-top: 1px solid $neutral-5;
+    border-top: 1px solid $garnett-neutral-4;
     margin-bottom: $gs-baseline*2;
     padding-top: $gs-baseline/3;
 
@@ -314,13 +320,29 @@ $identity-header-height: 48px;
     margin-top: 3em;
 }
 
+@mixin pillar-dropdown ($pillar, $colour) {
+    &[data-dropdown-label=#{$pillar}] .dropdown__button {
+        color: $colour;
+    }
+    &[data-dropdown-label=#{$pillar}]:hover .dropdown__button,
+    &[data-dropdown-label=#{$pillar}] .dropdown__button:focus {
+        color: darken($colour, 15%);
+    }
+}
+
 .dropdown-styled.dropdown--email-subscription {
     @supports (transform: rotate(45deg)) {
         border-color: $neutral-6;
         .dropdown__button {
             padding: $gs-baseline / 4 0 $gs-baseline;
             color: $identity-main;
-            text-transform: lowercase;
+        }
+        @if($identity-main == $garnett-neutral-1) {
+            @include pillar-dropdown('News', $news-garnett-main-1);
+            @include pillar-dropdown('Sport', $sport-garnett-main-1);
+            @include pillar-dropdown('Culture', $culture-garnett-main-1);
+            @include pillar-dropdown('Lifestyle', $lifestyle-garnett-main-1);
+            @include pillar-dropdown('Comment', $opinion-garnett-main-1);
         }
         .dropdown__label {
             @include fs-bodyHeading(3);
@@ -418,7 +440,7 @@ $identity-header-height: 48px;
         display: inherit;
         margin-top: 0;
         font-size: 0;
-        background-color: $neutral-5;
+        background-color: $garnett-neutral-4;
         background-repeat: no-repeat;
         background-position: center;
         background-size: 40px;
@@ -430,6 +452,11 @@ $identity-header-height: 48px;
 
     &.email-unsubscribe {
         float: none;
+        &.is-updating {
+            svg {
+                display: none;
+            }
+        }
     }
 
     &.email-unsubscribe--confirm,
@@ -451,7 +478,7 @@ $identity-header-height: 48px;
 .email-subscription__options {
 
     > ul > li:not(:last-child) {
-        margin-bottom: $gs-gutter / 2;
+        margin-bottom: $gs-gutter / 4;
     }
 
     .manage-account__button {
@@ -469,7 +496,7 @@ $identity-header-height: 48px;
     display: inline;
 
     &.hide {
-        display: none;
+        display: none!important;
     }
 }
 
@@ -489,4 +516,20 @@ $identity-header-height: 48px;
     display: inline-block;
     margin-top: 0;
     vertical-align: middle;
+}
+
+
+
+
+
+/* AS Overrides
+   ========================================================================== */
+
+.identity-wrapper .activity-stream__item,
+.identity-wrapper .activity-stream__empty {
+    a {
+        @extend %u-underline;
+        color: $identity-main;
+    }
+
 }

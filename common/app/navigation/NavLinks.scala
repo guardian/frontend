@@ -97,7 +97,7 @@ object NavLinks {
   val NBA = NavLink("NBA", "/sport/nba")
   val NHL = NavLink("NHL", "/sport/nhl")
 
-  /* ARTS */
+  /* CULTURE */
   val film = NavLink("Film", "/film")
   val tvAndRadio = NavLink("TV & radio", "/tv-and-radio")
   val music = NavLink("Music", "/music")
@@ -322,8 +322,8 @@ object NavLinks {
     )
   )
 
-  // Arts Pillar
-  val ukArtsPillar = NavLink("Arts", "/culture", longTitle = "Culture home", iconName = "home",
+  // Culture Pillar
+  val ukCulturePillar = NavLink("Culture", "/culture", longTitle = "Culture home", iconName = "home",
     List(
       film,
       music,
@@ -335,7 +335,7 @@ object NavLinks {
       classical
     )
   )
-  val auArtsPillar = ukArtsPillar.copy(
+  val auCulturePillar = ukCulturePillar.copy(
     children = List(
       film, music,
       books,
@@ -346,7 +346,7 @@ object NavLinks {
       classical
     )
   )
-  val usArtsPillar = ukArtsPillar.copy(
+  val usCulturePillar = ukCulturePillar.copy(
     children = List(
       film,
       books,
@@ -358,7 +358,7 @@ object NavLinks {
       games
     )
   )
-  val intArtsPillar = ukArtsPillar.copy(
+  val intCulturePillar = ukCulturePillar.copy(
     children = List(
       books,
       music,
@@ -476,7 +476,6 @@ object NavLinks {
     ukMasterClasses
   )
   val auBrandExtensions = List(
-    jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
     auEvents
   )
   val usBrandExtensions= List(

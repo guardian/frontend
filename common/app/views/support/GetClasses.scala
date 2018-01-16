@@ -1,7 +1,7 @@
 package views.support
 
 import layout._
-import model.pressed.{Audio, Gallery, Video}
+import model.pressed.{Audio, Gallery, Video, SpecialReport}
 import slices.{Dynamic, DynamicSlowMPU}
 import play.api.mvc.RequestHeader
 import model.Pillar.RichPillar
@@ -22,6 +22,8 @@ object GetClasses {
       ("js-fc-item", true),
       ("fc-item--pillar-" + item.pillar.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--type-" + item.designType.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
+      ("fc-item--special-report", experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.cardStyle == SpecialReport),
+      ("fc-item--paid-content", experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.branding.exists(_.isPaid)),
       ("fc-item--has-cutout", item.cutOut.isDefined),
       (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--has-no-image", !item.hasImage),

@@ -126,14 +126,34 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  val CommercialBaseline =
-    Switch(
-      ABTests,
-      "ab-commercial-baseline",
-      "Serves the Commercial Stack as on Jan 1st, 2018",
-      owners = Seq(Owner.withName("commercial team")),
-      safeState = Off,
-      sellByDate = new LocalDate(2018, 4, 10),
-      exposeClientSide = true
-    )
+  Switch(
+    ABTests,
+    "ab-colour-test-epic-holdback",
+    "A holdback for the epic colour changes",
+    owners = Seq(Owner.withGithub("Ap0c")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 2, 15),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-colour-test-banner-holdback",
+    "A holdback for the banner colour changes",
+    owners = Seq(Owner.withGithub("Ap0c")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 2, 15),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-baseline",
+    "Serves the Commercial Stack as on Jan 1st, 2018",
+    owners = Seq(Owner.withName("commercial team")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 10),
+    exposeClientSide = true
+  )
+
 }

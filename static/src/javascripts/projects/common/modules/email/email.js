@@ -13,6 +13,8 @@ import { inlineSvg } from 'common/views/svgs';
 import { getUserFromApi, isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import uniq from 'lodash/arrays/uniq';
+import envelope from 'svgs/icon/envelope.svg';
+import crossIcon from 'svgs/icon/cross.svg';
 
 import type { IdentityUser } from 'common/modules/identity/api';
 import type { bonzo } from 'bonzo';
@@ -28,7 +30,7 @@ const state = {
 };
 
 const messages = {
-    defaultSuccessHeadline: 'Thank you for subscribing',
+    defaultSuccessHeadline: 'Check your Inbox to confirm subscription',
     defaultSuccessDesc: '',
 };
 
@@ -38,6 +40,7 @@ const classes = {
     inlineLabel: 'js-email-sub__inline-label',
     textInput: 'js-email-sub__text-input',
     listIdHiddenInput: 'js-email-sub__listid-input',
+    listNameHiddenInput: 'js-email-sub__listname-input',
 };
 
 const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
@@ -51,9 +54,7 @@ const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
     const submissionMessage = isSuccess
         ? formData.customSuccessDesc || messages.defaultSuccessDesc
         : 'Please try again.';
-    const submissionIcon = isSuccess
-        ? inlineSvg('tick')
-        : inlineSvg('crossIcon');
+    const submissionIcon = isSuccess ? envelope.markup : crossIcon.markup;
     const submissionHtml = `
         <div class="email-sub__message ${
             statusClass
@@ -252,22 +253,29 @@ const submitForm = (
 
     return event => {
         const emailAddress = $(`.${classes.textInput}`, $form).val();
-        const listId = $(`.${classes.listIdHiddenInput}`, $form).val();
+        // FIXME: Cached widgets will continue to post listId so have to deal with both until cache clears
+        const listName = $(`.${classes.listNameHiddenInput}`, $form);
+        const listId = $(`.${classes.listIdHiddenInput}`, $form);
+        const listParam =
+            listName && listName.val()
+                ? `&listName=${listName.val()}`
+                : `&listId=${listId.val()}`;
+
         let analyticsInfo;
 
         event.preventDefault();
 
         if (!state.submitting && validate(emailAddress)) {
             const formData = $form.data('formData');
-            const data = `email=${encodeURIComponent(emailAddress)}&listId=${
-                listId
-            }&campaignCode=${formData.campaignCode}&referrer=${
+            const data = `email=${encodeURIComponent(
+                emailAddress
+            )}&campaignCode=${formData.campaignCode}&referrer=${
                 formData.referrer
-            }`;
+            }${listParam}`;
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType
-            } | ${analytics.listId} | ${analytics.signedIn} | %action%`;
+            } | ${analytics.signedIn} | %action%`;
 
             state.submitting = true;
 

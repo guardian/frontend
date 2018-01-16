@@ -8,11 +8,12 @@
 @import navigation.UrlHelpers.{getReaderRevenueUrl, Footer, getSupportOrMembershipUrl, getSupportOrSubscriptionUrl, getSupportOrContributeUrl}
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
-@import conf.switches.Switches.EmailInlineInFooterSwitch
+@import conf.switches.Switches.{ EmailInlineInFooterSwitch, NewDesktopNavigation }
 @import com.gu.identity.model.EmailNewsletters
+@import model.NoCache
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
-    @if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader) && !isAmp) {
+    @if(!NewDesktopNavigation.isSwitchedOn && !isAmp) {
         <div class="l-footer__primary hide-on-mobile">
             <div id="footer-nav" class="gs-container">
                 <div class="brand-bar modern-visible u-cf">
@@ -40,7 +41,7 @@
         </div>
     }
 
-    <div class="footer__primary @if(!experiments.ActiveExperiments.isParticipating(experiments.ABNewDesktopHeader)) {mobile-only}">
+    <div class="footer__primary @if(!NewDesktopNavigation.isSwitchedOn) {mobile-only}">
 
         @if(!isAmp) {
             @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
@@ -70,16 +71,16 @@
                     <div class="footer__email-container js-footer__email-container">
                     @currentEdition match {
                         case Uk => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.listIdV1.toString, "footer-daily-email-uk")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.identityName, "footer-daily-email-uk")
                         }
                         case Us => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUs.listIdV1.toString, "footer-daily-email-us")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUs.identityName, "footer-daily-email-us")
                         }
                         case Au => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayAu.listIdV1.toString, "footer-daily-email-au")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayAu.identityName, "footer-daily-email-au")
                         }
                         case International => {
-                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.listIdV1.toString, "footer-daily-email-int")
+                            @fragments.email.signup.emailIframe(EmailNewsletters.guardianTodayUk.identityName, "footer-daily-email-int")
                         }
                     }
                     </div>
@@ -260,7 +261,7 @@
                                 vacancies</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : masterclasses" href="@LinkTo {/guardian-masterclasses/guardian-masterclasses-australia}">
-                                masterclasses</a>
+                                Events</a>
                             </li>
                         </ul>
 

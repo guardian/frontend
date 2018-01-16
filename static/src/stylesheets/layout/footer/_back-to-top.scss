@@ -1,6 +1,6 @@
 .footer__back-to-top-container {
     @include content-gutter();
-    background-color: $guardian-brand;
+    background-color: #e7edf1;
 }
 
 .footer__back-to-top {
@@ -12,7 +12,7 @@
 
 .back-to-top__text {
     display: inline-block;
-    color: $news-support-1;
+    color: $garnett-neutral-1;
     line-height: 42px;
     padding-right: $gs-gutter / 2;
 }
@@ -22,7 +22,7 @@
     float: right;
     margin-top: -($gs-baseline / 2);
     border-radius: 100%;
-    background-color: $news-main-2;
+    background-color: $garnett-neutral-1;
     cursor: pointer;
     height: $veggie-burger-medium;
     min-width: $veggie-burger-medium;
@@ -36,7 +36,7 @@
         left: 0;
         right: 0;
         margin: auto;
-        border: 2px solid $guardian-brand-dark;
+        border: 2px solid #ffffff;
         border-bottom: 0;
         border-right: 0;
         content: '';

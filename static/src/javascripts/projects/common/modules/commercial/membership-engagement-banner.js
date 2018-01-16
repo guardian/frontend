@@ -110,6 +110,17 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
 
+const messageModifierClass = (
+    colourClass: string,
+    modifierClass: ?string
+): string => {
+    if (modifierClass) {
+        return `${colourClass} ${modifierClass}`;
+    }
+
+    return colourClass;
+};
+
 const showBanner = (params: EngagementBannerParams): void => {
     if (isBlocked()) {
         return;
@@ -156,7 +167,10 @@ const showBanner = (params: EngagementBannerParams): void => {
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
         trackDisplay: true,
-        cssModifierClass: colourClass,
+        cssModifierClass: messageModifierClass(
+            colourClass,
+            params.bannerModifierClass
+        ),
     }).show(renderedBanner);
 
     if (messageShown) {

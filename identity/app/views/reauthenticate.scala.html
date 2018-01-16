@@ -41,7 +41,12 @@
                         <div class="form-field__note">
                             <a class="u-underline js-forgotten-password" href='@idUrlBuilder.buildUrl("/reset", idRequest)' data-link-name="Forgotten password">Forgotten your password?</a>
                         </div>
-                        <button type="submit" class="manage-account__button" data-link-name="Sign in" data-test-id="sign-in-button" tabindex="3">Confirm</button>
+                        <button type="submit" class="manage-account__button manage-account__button--icon" data-link-name="Sign in" data-test-id="sign-in-button" tabindex="3">
+                            <div class="manage-account__button-flexwrap">
+                                Confirm
+                                @fragments.inlineSvg("arrow-right", "icon")
+                            </div>
+                        </button>
                     </li>
                 </ul>
             </div>

@@ -1,5 +1,6 @@
 .pillar-link {
-    font-size: 16px;
+    // Weird number to get the most out of available space
+    font-size: 16.4px;
     display: block;
     height: $veggie-burger-medium - $gs-baseline;
     line-height: $veggie-burger-medium - $gs-baseline;
@@ -7,10 +8,6 @@
     position: relative;
     color: currentColor;
     cursor: pointer;
-
-    @include mq(mobileMedium) {
-        font-size: 18px;
-    }
 
     &:before {
         content: '';

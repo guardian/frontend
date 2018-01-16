@@ -4,18 +4,19 @@
 @import views.support.RenderClasses
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, getContributionOrSupporterUrl, NewHeader, getSupportOrSubscriptionUrl}
-@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
-@import experiments.{ ABNewDesktopHeader, ActiveExperiments, GarnettHeader}
+@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch, NewDesktopNavigation }
+@import experiments.{ActiveExperiments, GarnettHeader}
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
 <header class="@RenderClasses(Map(
-            "new-header--mvt-desktop" -> ActiveExperiments.isParticipating(ABNewDesktopHeader),
+            "new-header--mvt-desktop" -> NewDesktopNavigation.isSwitchedOn,
             "new-header--slim" -> page.metadata.hasSlimHeader
-        ), s"new-header--${navMenu.currentPillar.map(_.title).getOrElse("")}", "new-header")"
+        ), s"new-header--${page.metadata.pillar.nameOrDefault}", "new-header")"
         role="banner">
 
         <nav class="new-header__inner gs-container"
             data-component="nav2"
+            role="navigation"
             aria-label="Guardian sections">
 
             @if(!page.metadata.hasSlimHeader) {
@@ -52,7 +53,7 @@
                                 @if(editionId == "us") {
                                     Make a <br>contribution
                                 } else {
-                                    Become a <br>supporter
+                                    Support The <br>Guardian
                                 }
 
                             </span>
@@ -66,14 +67,17 @@
                             Subscribe
                         </a>
 
-                        <a class="top-bar__item hide-until-tablet"
+                        @if(editionId != "au") {
+                            <a class="top-bar__item hide-until-tablet"
                             data-link-name="nav2 : job-cta"
                             data-edition="@{editionId}"
                             href="@getJobUrl(editionId)">
 
-                            <span class="hide-until-tablet">Find a job</span>
-                            <span class="hide-from-tablet">Jobs</span>
-                        </a>
+                                <span class="hide-until-tablet">Find a job</span>
+                                <span class="hide-from-tablet">Jobs</span>
+                            </a>
+                        }
+
 
                         @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                             @fragments.nav.userAccountDropdown()
