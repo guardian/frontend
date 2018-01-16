@@ -22,7 +22,7 @@ class AuthenticatedActions(
     controllerComponents: ControllerComponents,
     newsletterService: NewsletterService,
     idRequestParser: IdRequestParser,
-    userRedirectDecider: UserRedirectDecider) extends Logging with Results {
+    redirectDecisionService: RedirectDecisionService) extends Logging with Results {
 
   private lazy val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
@@ -47,7 +47,7 @@ class AuthenticatedActions(
   def sendUserToRegister(request: RequestHeader): Result =
     redirectWithReturn(request, "/register")
 
-  def sendUserToUserRedirectDecision(request: RequestHeader, decision: userRedirectDecider.Decision): Result =
+  def sendUserToUserRedirectDecision(request: RequestHeader, decision: RedirectDecision): Result =
     redirectWithReturn(request, decision.url)
 
   private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
@@ -127,8 +127,8 @@ class AuthenticatedActions(
 
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
-          userRedirectDecider.decide(user, request).map {
-            case Some(i: userRedirectDecider.Decision) => Some(sendUserToUserRedirectDecision(request, i))
+          redirectDecisionService.decide(request.user, request).map {
+            case Some(i: RedirectDecision) => Some(sendUserToUserRedirectDecision(request, i))
             case _ => None
           }
         else

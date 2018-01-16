@@ -13,27 +13,29 @@ import utils.Logging
 import scala.concurrent.{ExecutionContext, Future}
 
 
-class UserRedirectDecider(
-  newsletterService: NewsletterService,
-  idRequestParser: IdRequestParser,
-  controllerComponents: ControllerComponents
-) {
+abstract class RedirectDecision(val url: String)
+
+case object RedirectToEmailValidation extends RedirectDecision(
+  url = "/verify-email?isRepermissioningRedirect=true"
+)
+
+case object RedirectToConsents extends RedirectDecision(
+  url = "/consents"
+)
+
+case object RedirectToNewsletterConsents extends RedirectDecision(
+  url = "/consents/newsletters"
+)
+
+class RedirectDecisionService(
+                           newsletterService: NewsletterService,
+                           idRequestParser: IdRequestParser,
+                           controllerComponents: ControllerComponents
+                         ) {
 
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
-  sealed abstract class Decision(val url: String)
-
-  case object RedirectToEmailValidation extends Decision(
-    url = "/verify-email?isRepermissioningRedirect=true"
-  )
-  case object RedirectToConsents extends Decision(
-    url = "/consents"
-  )
-  case object RedirectToNewsletterConsents extends Decision(
-    url = "/consents/newsletters"
-  )
-
-  def decide[A](user: User, request: RequestHeader): Future[Option[Decision]] = {
+  def decide[A](user: User, request: RequestHeader): Future[Option[RedirectDecision]] = {
 
     def userHasRepermissioned: Boolean =
       user.statusFields.hasRepermissioned.contains(true)
@@ -63,7 +65,6 @@ class UserRedirectDecider(
               Some(RedirectToNewsletterConsents)
         }
     }
-
   }
 
 }
