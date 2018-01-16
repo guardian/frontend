@@ -10,7 +10,7 @@ object Preload {
 
   def commercialBundleName(implicit request: RequestHeader): String =
     if (CommercialBaseline.isParticipating(request, ActiveExperiments.canCheckExperiment)) {
-    "graun.commercial-legacy.js"
+    "graun.commercial-control.js"
   } else {
     "graun.commercial.js"
   }
