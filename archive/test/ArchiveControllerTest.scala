@@ -59,6 +59,7 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
 
     val combinerPattern = archiveController.lookup("/foo+foo+foo")(TestRequest())
     status(combinerPattern) should be (404)
+    true should be (false)
   }
 
   it should "decode encoded spaces as + for tag combiners" in {
