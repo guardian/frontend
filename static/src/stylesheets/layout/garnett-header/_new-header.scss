@@ -163,7 +163,7 @@ from scrolling */
         margin: 0;
         right: $veggie-burger-large;
         top: $gs-baseline / 4;
-        z-index: 3;
+        z-index: $zindex-main-menu;
 
         @include mq(mobileLandscape) {
             right: $veggie-burger-large + $gs-gutter / 2;
