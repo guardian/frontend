@@ -4,7 +4,7 @@
 @(model: _root_.model.content.Atom, shouldFence: Boolean, amp: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import _root_.model.ShareLinkMeta
-@import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz, StoryQuestionsAtom, TimelineAtom, GuideAtom, ProfileAtom, QandaAtom}
+@import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz, StoryQuestionsAtom, TimelineAtom, GuideAtom, ProfileAtom, QandaAtom, ExplainerAtom}
 @{
     model match {
         case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, sharelinks = quiz.shareLinks)
@@ -20,6 +20,7 @@
         case guide: GuideAtom => views.html.fragments.atoms.snippets.guide(guide, isAmp = amp)
         case profile: ProfileAtom if !amp => Html(ArticleAtomRenderer.getHTML(profile.atom))
         case profile: ProfileAtom => views.html.fragments.atoms.snippets.profile(profile, isAmp = amp)
+        case explainer: ExplainerAtom if !amp => Html(ArticleAtomRenderer.getHTML(explainer.atom))
         case _ =>
     }
 }
