@@ -129,11 +129,9 @@ class AuthenticatedActions(
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
           redirectDecisionService.decideManageAccountRedirect(request.user, request).map { decision: Option[RedirectDecision] =>
-            decision.filter(
-              _.access.shouldRedirect(pageId)
-            ).map(
-              sendUserToUserRedirectDecision(request, _)
-            )
+            decision
+              .filter(_.access.shouldRedirect(pageId))
+              .map(sendUserToUserRedirectDecision(request, _))
           }
         else
           Future.successful(None)
