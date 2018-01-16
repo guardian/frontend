@@ -12,7 +12,7 @@
     forms: ProfileForms,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    redirectDecision: Option[RedirectDecision],
+    communicationRedirectDecision: Option[RedirectDecision],
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
@@ -20,10 +20,20 @@
     consentHint: Option[String]
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
+@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", redirect: Option[RedirectDecision] = None) = {
     <li class="tabs__tab @if(hidden){is-hidden} @if(activeUrl == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(activeUrl == url)" aria-controls="tabs-account-profile-@i">
-        <a href="@url" data-tabs-href="#tabs-account-profile-@i" data-link-name="@url edit profile tab" data-pushstate-url="@url"
-            @dataTestId.map{idValue => data-test-id="@idValue"}>@name</a>
+        <a
+            data-tabs-href="#tabs-account-profile-@i"
+            data-link-name="@url edit profile tab"
+            data-pushstate-url="@url"
+            @dataTestId.map{idValue => data-test-id="@idValue"}
+            @{redirect match {
+                case None => Html(s"href='$url'")
+                case Some(i) => Html(s"href='${i.url}' data-tabs-ignore='true'")
+            }}
+        >
+            @name
+        </a>
     </li>
 }
 
@@ -38,41 +48,6 @@
          data-link-context="Identity/profile">
         @body
     </div>
-}
-
-@redirectRoadBlockTemplate(decision: RedirectDecision, title: String = "", body: List[Html], linkText: Option[String] = None) = {
-    <div class="identity-forms-message identity-forms-message--inline">
-        <h1 class="identity-title">@title</h1>
-        <div class="identity-forms-message__body">
-            @{body.map{p => Html(s"<p>$p</p>")}}
-            <a class="manage-account__button manage-account__button--icon identity-forms-message__button" href="@idUrlBuilder.buildUrl(decision.url, idRequest)" data-link-name="identity : email : error : @linkText.getOrElse("Continue")">
-                @linkText.getOrElse("Continue")
-                @fragments.inlineSvg("arrow-right", "icon")
-            </a>
-        </div>
-    </div>
-}
-
-@redirectRoadblock(decision: RedirectDecision) = @{
-
-    decision match {
-        case RedirectToConsents | RedirectToNewsletterConsents => redirectRoadBlockTemplate(
-            decision = decision,
-            title = "What can we tell you about?",
-            body = List(
-                Html(s"Update you contact preferences to continue. You only have to do this once"),
-            )
-        )
-        case RedirectToEmailValidation => redirectRoadBlockTemplate(
-            decision = decision,
-            title = "You must verify your email to continue",
-            body = List(
-                Html(s"Please validate your email (${user.primaryEmailAddress}) to edit your preferences"),
-                Html(s"If your address seems wrong you can <a href='${idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)}' class='u-underline' data-link-name='identity : email : reverify-email-change'>change it</a>")
-            ),
-            linkText = Some("Resend me a validation email")
-        )
-    }
 }
 
 <div class="tabs">
@@ -92,7 +67,7 @@
 
                     @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab")
 
-                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab")
+                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab", redirect = communicationRedirectDecision)
                 </ol>
             </div>
         </div>
@@ -115,9 +90,9 @@
                         @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
                         @content(6, "/email-prefs")(
-                            redirectDecision match {
-                                case Some(i) => redirectRoadblock(i)
+                            communicationRedirectDecision match {
                                 case None => profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint)
+                                case Some(_) => Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
                             }
                         )
                     </div>

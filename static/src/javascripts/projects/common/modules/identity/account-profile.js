@@ -127,7 +127,9 @@ class AccountProfile {
 
             $(`${classes.tabs} .tabs__tab a`).each(function() {
                 // enhance tab urls to work with JS tabs module
-                this.href = this.getAttribute('data-tabs-href');
+                if (!this.dataset.tabsIgnore) {
+                    this.href = this.getAttribute('data-tabs-href');
+                }
             });
             if (tabs) {
                 bean.on(tabs, 'click', event => this.handleTabsClick(event));
@@ -145,7 +147,11 @@ class AccountProfile {
             event.target.nodeName.toLowerCase() === 'a'
         ) {
             const eventTarget: HTMLElement = event.target;
-            if (this.unsavedChangesForm) {
+            if (eventTarget.dataset.tabsIgnore) {
+                window.location.href = eventTarget.href;
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            } else if (this.unsavedChangesForm) {
                 // This aliasing needs to happen immediately after the null check or flow will be sad
                 const form = this.unsavedChangesForm;
                 event.preventDefault();
