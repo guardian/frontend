@@ -96,6 +96,19 @@
             }
         }
     }
+
+    &.fc-item--has-sublinks-1 {
+        .fc-item__footer--horizontal {
+            display: none;
+        }
+        .fc-item__footer--vertical {
+            display: block;
+
+            .fc-sublinks {
+                margin-left: 0; 
+            }
+        }
+    }
 }
 
 @mixin immersiveLeft() {
