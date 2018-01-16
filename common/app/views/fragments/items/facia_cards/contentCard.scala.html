@@ -86,7 +86,7 @@ data-test-id="facia-card"
 @container(item: layout.ContentCard) = {
     <div class="fc-item__container">
 
-        @if(item.snapStuff.map(_.snapType).contains(FrontendLatestSnap)) {
+        @if(item.snapStuff.map(_.snapType).contains(FrontendLatestSnap) && !experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
         }
 
@@ -208,7 +208,7 @@ data-test-id="facia-card"
         }
 
         <div class="fc-item__content @if(item.starRating.isDefined){fc-item__content--has-stars}">
-            @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap)) {
+            @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap) && !experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                 @kicker(item.header, List("fc-item__kicker--dreamsnap"))
             }
             <div class="@RenderClasses(Map(
