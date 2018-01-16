@@ -18,7 +18,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     consentsUpdated: Boolean = false,
     consentHint: Option[String] = None,
     enforceUserRedirections: Boolean = false): Action[AnyContent] = {
-    
+
     val redirectAction = if(enforceUserRedirections) consentJourneyRedirectAction else consentAuthWithIdapiUserAction
 
     csrfAddToken {
@@ -79,8 +79,13 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     consentHint: Option[String] = None)
     (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+    val emailFilledFormFuture = newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData)
+    val redirectDecisionFuture = redirectDecisionService.decide(user, request)
 
+    for {
+      emailFilledForm <- emailFilledFormFuture
+      redirectDecision <- redirectDecisionFuture
+    } yield {
       NoCache(Ok(
         IdentityHtmlPage.html(
           content = views.html.profileForms(
@@ -89,6 +94,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
             forms,
             idRequestParser(request),
             idUrlBuilder,
+            redirectDecision,
             emailFilledForm,
             newsletterService.getEmailSubscriptions(emailFilledForm),
             EmailNewsletters.all,
@@ -97,8 +103,8 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
           )
         )(page, request, context)
       ))
-
     }
+
   }
 
 }

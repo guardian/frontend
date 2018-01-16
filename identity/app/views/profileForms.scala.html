@@ -11,6 +11,7 @@
     forms: ProfileForms,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
+    redirectDecision: Option[services.RedirectDecision],
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
@@ -77,6 +78,11 @@
 
                 <div class=" u-cf identity-section">
 
+                    @{redirectDecision match {
+                        case Some(i) => Html(s"asdf${i}asdf")
+                        case None => Html("None")
+                    }}
+
                     <div class="tabs__content">
                         @content(1, "/public/edit")(profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm))
 
@@ -89,6 +95,7 @@
                         @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
                         @content(6, "/email-prefs")(
+
                             if(user.statusFields.userEmailValidated.fold(false)(identity)) {
                                 profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint)
                             } else {
