@@ -127,7 +127,7 @@ class AuthenticatedActions(
 
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
-          redirectDecisionService.decideCommunicationPrefsAccess(request.user, request).map {
+          redirectDecisionService.decideConsentRedirect(request.user, request).map {
             case Some(i: RedirectDecision) => Some(sendUserToUserRedirectDecision(request, i))
             case _ => None
           }
@@ -162,7 +162,7 @@ class AuthenticatedActions(
   def consentAuthWithIdapiUserAction: ActionBuilder[AuthRequest, AnyContent] =
     noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
-  /** Auth with at least SC_GU_RP and decideCommunicationPrefsAccess if user should be redirected to consent journey */
+  /** Auth with at least SC_GU_RP and decideConsentRedirect if user should be redirected to consent journey */
   def consentJourneyRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
     consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionFilter
 
