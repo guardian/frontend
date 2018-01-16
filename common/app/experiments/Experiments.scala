@@ -55,7 +55,7 @@ object CommercialBaseline extends Experiment(
   name = "commercial-baseline",
   description = "Users in this experiment will experience the commercial javascript stack as of 2018-01-01.",
   owners = Seq(Owner.withGithub("JonNorman"), Owner.withGithub("shtukas")),
-  sellByDate = new LocalDate(2018, 4, 8),
+  sellByDate = new LocalDate(2018, 4, 11),
   participationGroup = Perc2A
 )
 
