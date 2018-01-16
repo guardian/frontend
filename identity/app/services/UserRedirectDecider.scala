@@ -19,13 +19,19 @@ class UserRedirectDecider(
 
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
-  sealed trait UserRedirect
+  sealed abstract class Decision(val url: String)
 
-  case object RedirectToEmailValidation extends UserRedirect
-  case object RedirectToConsents extends UserRedirect
-  case object RedirectToNewsletterConsents extends UserRedirect
+  case object RedirectToEmailValidation extends Decision(
+    url = "/verify-email?isRepermissioningRedirect=true"
+  )
+  case object RedirectToConsents extends Decision(
+    url = "/consents"
+  )
+  case object RedirectToNewsletterConsents extends Decision(
+    url = "/consents/newsletters"
+  )
 
-  def decide[A](request: AuthRequest[A]): Future[Option[UserRedirect]] = {
+  def decide[A](request: AuthRequest[A]): Future[Option[Decision]] = {
 
     def userHasRepermissioned: Boolean =
       request.user.statusFields.hasRepermissioned.contains(true)

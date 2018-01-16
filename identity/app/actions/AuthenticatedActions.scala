@@ -38,12 +38,6 @@ class AuthenticatedActions(
     SeeOther(identityUrlBuilder.buildUrl(redirectUrlWithParams))
   }
 
-  def sendUserToConsentsJourney(request: RequestHeader): Result =
-    redirectWithReturn(request, "/consents")
-
-  def sendUserToNewslettersConsentsJourney(request: RequestHeader): Result =
-    redirectWithReturn(request, "/consents/newsletters")
-
   def sendUserToSignin(request: RequestHeader): Result =
     redirectWithReturn(request, "/signin")
 
@@ -53,8 +47,8 @@ class AuthenticatedActions(
   def sendUserToRegister(request: RequestHeader): Result =
     redirectWithReturn(request, "/register")
 
-  def sendUserToValidateEmail(request: RequestHeader): Result =
-    redirectWithReturn(request, "/verify-email?isRepermissioningRedirect=true")
+  def sendUserToUserRedirectDecision(request: RequestHeader, decision: userRedirectDecider.Decision): Result =
+    redirectWithReturn(request, decision.url)
 
   private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
     request.getQueryString("email") match {
@@ -134,9 +128,7 @@ class AuthenticatedActions(
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
           userRedirectDecider.decide(request).map {
-            case Some(userRedirectDecider.RedirectToEmailValidation) => Some(sendUserToValidateEmail(request))
-            case Some(userRedirectDecider.RedirectToConsents) => Some(sendUserToConsentsJourney(request))
-            case Some(userRedirectDecider.RedirectToNewsletterConsents) => Some(sendUserToNewslettersConsentsJourney(request))
+            case Some(i: userRedirectDecider.Decision) => Some(sendUserToUserRedirectDecision(request, i))
             case _ => None
           }
         else
