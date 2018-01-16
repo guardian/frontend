@@ -1,12 +1,14 @@
 package actions
 
 import actions.AuthenticatedActions.AuthRequest
+import com.gu.identity.model.User
 import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
 import services._
 import utils.Logging
+
 import scala.concurrent.{ExecutionContext, Future}
 
 object AuthenticatedActions {
@@ -124,46 +126,59 @@ class AuthenticatedActions(
         }
     }
 
+  sealed trait UserRedirect
+  case object RedirectToEmailValidation extends UserRedirect
+  case object RedirectToConsents extends UserRedirect
+  case object RedirectToNewsletterConsents extends UserRedirect
+
+  private def decideUserRedirect[A](request: AuthRequest[A]): Future[Option[UserRedirect]] = {
+
+    def userHasRepermissioned: Boolean =
+    request.user.statusFields.hasRepermissioned.contains(true)
+
+    def userEmailValidated: Boolean =
+    request.user.statusFields.isUserEmailValidated
+
+    (userEmailValidated, userHasRepermissioned) match {
+      case (false, false) =>
+        Future.successful(Some(RedirectToEmailValidation))
+
+      case (false, true) =>
+        Future.successful(None)
+
+      case (true, false) =>
+        Future.successful(Some(RedirectToConsents))
+
+      case (true, true) =>
+        newsletterService.subscriptions(
+          request.user.getId,
+          idRequestParser(request).trackingData
+        ).map {
+          emailFilledForm =>
+            if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
+              None
+            else
+              Some(RedirectToNewsletterConsents)
+        }
+    }
+
+  }
+
   private def apiUserShouldRepermissionFilter: ActionFilter[AuthRequest] =
     new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
-          decideConsentJourney(request)
+          decideUserRedirect(request).map {
+            case Some(RedirectToEmailValidation) => Some(sendUserToValidateEmail(request))
+            case Some(RedirectToConsents) => Some(sendUserToConsentsJourney(request))
+            case Some(RedirectToNewsletterConsents) => Some(sendUserToNewslettersConsentsJourney(request))
+            case _ => None
+          }
         else
           Future.successful(None)
       }
-
-      private def decideConsentJourney[A](request: AuthRequest[A]) =
-        (userEmailValidated(request), userHasRepermissioned(request)) match {
-          case (false, false) =>
-            Future.successful(Some(sendUserToValidateEmail(request)))
-
-          case (false, true) =>
-            Future.successful(None)
-
-          case (true, false) =>
-            Future.successful(Some(sendUserToConsentsJourney(request)))
-
-          case (true, true) =>
-            newsletterService.subscriptions(
-                request.user.getId,
-                idRequestParser(request).trackingData).map {
-
-              emailFilledForm =>
-                if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
-                  None
-                else
-                  Some(sendUserToNewslettersConsentsJourney(request))
-              }
-        }
-
-      private def userHasRepermissioned(request: AuthRequest[_]): Boolean =
-        request.user.statusFields.hasRepermissioned.contains(true)
-
-      private def userEmailValidated(request: AuthRequest[_]): Boolean =
-        request.user.statusFields.isUserEmailValidated
     }
 
   private def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] =
