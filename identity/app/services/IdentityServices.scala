@@ -5,12 +5,14 @@ import conf.IdentityConfigurationComponents
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import idapiclient.IdApiComponents
 import play.api.libs.ws.WSClient
+import play.api.mvc.ControllerComponents
 
 import scala.concurrent.ExecutionContext
 
 trait IdentityServices extends IdentityConfigurationComponents with IdApiComponents {
 
   def wsClient: WSClient
+  def controllerComponents: ControllerComponents
   implicit val executionContext: ExecutionContext
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
@@ -24,4 +26,5 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   lazy val userCreationService = wire[UserCreationService]
   lazy val torNodeLoggingIdRequestParser = wire[TorNodeLoggingIdRequestParser]
   lazy val emailService = wire[NewsletterService]
+  lazy val userRedirectDecider = wire[UserRedirectDecider]
 }

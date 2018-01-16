@@ -1,7 +1,6 @@
 package actions
 
 import actions.AuthenticatedActions.AuthRequest
-import services.UserRedirectDecider._
 import com.gu.identity.model.User
 import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
@@ -22,7 +21,8 @@ class AuthenticatedActions(
     identityUrlBuilder: IdentityUrlBuilder,
     controllerComponents: ControllerComponents,
     newsletterService: NewsletterService,
-    idRequestParser: IdRequestParser) extends Logging with Results {
+    idRequestParser: IdRequestParser,
+    userRedirectDecider: UserRedirectDecider) extends Logging with Results {
 
   private lazy val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
@@ -133,10 +133,10 @@ class AuthenticatedActions(
 
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
-          decideUserRedirect(request)(newsletterService, idRequestParser, executionContext).map {
-            case Some(RedirectToEmailValidation) => Some(sendUserToValidateEmail(request))
-            case Some(RedirectToConsents) => Some(sendUserToConsentsJourney(request))
-            case Some(RedirectToNewsletterConsents) => Some(sendUserToNewslettersConsentsJourney(request))
+          userRedirectDecider.decide(request).map {
+            case Some(userRedirectDecider.RedirectToEmailValidation) => Some(sendUserToValidateEmail(request))
+            case Some(userRedirectDecider.RedirectToConsents) => Some(sendUserToConsentsJourney(request))
+            case Some(userRedirectDecider.RedirectToNewsletterConsents) => Some(sendUserToNewslettersConsentsJourney(request))
             case _ => None
           }
         else

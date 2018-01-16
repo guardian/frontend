@@ -5,14 +5,19 @@ import com.gu.identity.model.User
 import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
 import play.api.mvc.Security.AuthenticatedRequest
-import play.api.mvc._
+import play.api.mvc.ControllerComponents
 import services._
 import utils.Logging
 import scala.concurrent.{ExecutionContext, Future}
 
 
-object UserRedirectDecider {
+class UserRedirectDecider(
+  newsletterService: NewsletterService,
+  idRequestParser: IdRequestParser,
+  controllerComponents: ControllerComponents
+) {
 
+  private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
   sealed trait UserRedirect
 
@@ -20,11 +25,7 @@ object UserRedirectDecider {
   case object RedirectToConsents extends UserRedirect
   case object RedirectToNewsletterConsents extends UserRedirect
 
-  def decideUserRedirect[A](
-                             request: AuthRequest[A]
-                           )(
-                             implicit newsletterService: NewsletterService, idRequestParser: IdRequestParser, ec: ExecutionContext
-                           ): Future[Option[UserRedirect]] = {
+  def decide[A](request: AuthRequest[A]): Future[Option[UserRedirect]] = {
 
     def userHasRepermissioned: Boolean =
       request.user.statusFields.hasRepermissioned.contains(true)
