@@ -3,26 +3,26 @@ import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
-import highMerch from 'commercial-legacy/modules/high-merch';
-import { articleAsideAdvertsInit } from 'commercial-legacy/modules/article-aside-adverts';
-import { articleBodyAdvertsInit } from 'commercial-legacy/modules/article-body-adverts';
-import { closeDisabledSlots } from 'commercial-legacy/modules/close-disabled-slots';
-import prepareGoogletag from 'commercial-legacy/modules/dfp/prepare-googletag';
-import prepareSonobiTag from 'commercial-legacy/modules/dfp/prepare-sonobi-tag';
-import { initLiveblogAdverts } from 'commercial-legacy/modules/liveblog-adverts';
-import { initStickyTopBanner } from 'commercial-legacy/modules/sticky-top-banner';
-import { initThirdPartyTags } from 'commercial-legacy/modules/third-party-tags';
-import { initPaidForBand } from 'commercial-legacy/modules/paidfor-band';
-import { paidContainers } from 'commercial-legacy/modules/paid-containers';
+import highMerch from 'commercial-control/modules/high-merch';
+import { articleAsideAdvertsInit } from 'commercial-control/modules/article-aside-adverts';
+import { articleBodyAdvertsInit } from 'commercial-control/modules/article-body-adverts';
+import { closeDisabledSlots } from 'commercial-control/modules/close-disabled-slots';
+import prepareGoogletag from 'commercial-control/modules/dfp/prepare-googletag';
+import prepareSonobiTag from 'commercial-control/modules/dfp/prepare-sonobi-tag';
+import { initLiveblogAdverts } from 'commercial-control/modules/liveblog-adverts';
+import { initStickyTopBanner } from 'commercial-control/modules/sticky-top-banner';
+import { initThirdPartyTags } from 'commercial-control/modules/third-party-tags';
+import { initPaidForBand } from 'commercial-control/modules/paidfor-band';
+import { paidContainers } from 'commercial-control/modules/paid-containers';
 import {
     defer,
     wrap,
     addStartTimeBaseline,
     addEndTimeBaseline,
     primaryBaseline,
-} from 'commercial-legacy/modules/dfp/performance-logging';
+} from 'commercial-control/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-highMerch', highMerch.init],
@@ -49,11 +49,11 @@ const loadHostedBundle = (): Promise<void> => {
             require.ensure(
                 [],
                 require => {
-                    const hostedAbout = require('commercial-legacy/modules/hosted/about');
-                    const initHostedVideo = require('commercial-legacy/modules/hosted/video');
-                    const hostedGallery = require('commercial-legacy/modules/hosted/gallery');
-                    const initHostedCarousel = require('commercial-legacy/modules/hosted/onward-journey-carousel');
-                    const loadOnwardComponent = require('commercial-legacy/modules/hosted/onward');
+                    const hostedAbout = require('commercial-control/modules/hosted/about');
+                    const initHostedVideo = require('commercial-control/modules/hosted/video');
+                    const hostedGallery = require('commercial-control/modules/hosted/gallery');
+                    const initHostedCarousel = require('commercial-control/modules/hosted/onward-journey-carousel');
+                    const loadOnwardComponent = require('commercial-control/modules/hosted/onward');
                     commercialModules.push(
                         ['cm-hostedAbout', hostedAbout.init],
                         [
