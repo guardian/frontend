@@ -52,14 +52,14 @@ const go = () => {
                             // eslint-disable-next-line no-shadow
                             require => {
                                 raven.context(
-                                    { tags: { feature: 'commercial-legacy' } },
+                                    { tags: { feature: 'commercial-control' } },
                                     () => {
                                         markTime('commercial boot');
-                                        require(`bootstraps/commercial-legacy`)();
+                                        require('bootstraps/commercial-control')();
                                     }
                                 );
                             },
-                            'commercial-legacy'
+                            'commercial-control'
                         );
                     } else {
                         require.ensure(
@@ -70,7 +70,7 @@ const go = () => {
                                     { tags: { feature: 'commercial' } },
                                     () => {
                                         markTime('commercial boot');
-                                        require(`bootstraps/commercial`)();
+                                        require('bootstraps/commercial')();
                                     }
                                 );
                             },
