@@ -93,7 +93,7 @@ case object AusBriefing extends ArticleEmailMetadata {
 
 case object EuReferendum extends ArticleEmailMetadata {
   val name = "EU Referendum Morning Briefing"
-  override val banner = Some("eu-referendum.png")
+  override val banner = Some("brexit-briefing.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "politics/series/eu-referendum-morning-briefing")
 }
 
@@ -134,7 +134,7 @@ case object KeepItInTheGround extends ArticleEmailMetadata {
 
 case object TheWeekInPatriarchy extends ArticleEmailMetadata {
   val name = "The Week In Patriarchy"
-  override val banner = Some("this-week-in-the-patriarchy.png")
+  override val banner = Some("the-week-in-patriarchy.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/the-week-in-patriarchy")
 }
 
@@ -152,7 +152,7 @@ case object TheResistanceNow extends ArticleEmailMetadata {
 
 case object BeyondTheBlade extends ArticleEmailMetadata {
   val name = "Beyond The Blade"
-  override val banner = Some("beyond-the-blade.jpg")
+  override val banner = Some("beyond-the-blade.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "membership/series/beyond-the-blade")
 }
 
@@ -172,6 +172,12 @@ case object VirtualRealityStudio extends ArticleEmailMetadata {
   val name = "Virtual Reality Studio"
   override val banner = Some("virtual-reality-studio.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "news/series/virtual-reality-studio")
+}
+
+case object WeekendReading extends ArticleEmailMetadata {
+  val name = "Weekend Reading"
+  override val banner = Some("weekend-reading.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "/membership/series/weekend-reading")
 }
 
 case object TheFlyer extends FrontEmailMetadata {
@@ -241,7 +247,7 @@ case object BusinessView extends FrontEmailMetadata {
 
 case object OpinionUs extends FrontEmailMetadata {
   val name = "Opinion Us"
-  override val banner = Some("opinion-us.png")
+  override val banner = Some("opinion.png")
 }
 
 object EmailAddons {
@@ -272,7 +278,8 @@ object EmailAddons {
     BeyondTheBlade,
     TheSnap,
     MorningMail,
-    VirtualRealityStudio)
+    VirtualRealityStudio,
+    WeekendReading)
   private val frontEmails = Seq(
     TheFlyer,
     CuratedMediaBriefing,
