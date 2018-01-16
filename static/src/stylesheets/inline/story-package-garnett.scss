@@ -8,6 +8,10 @@
         .fc-item__byline {
             color: $colour;
         }
+
+        .inline-garnett-quote {
+            fill: $colour;
+        }
     }
 
     .fc-sublink--pillar-#{$tone} {
@@ -17,8 +21,18 @@
     }
 }
 
+#headlines.fc-container {
+    .fc-container__toggle {
+        display: none;
+    }
+}
+
 .fc-container--story-package {
     background-color: $garnett-neutral-4;
+
+    .fc-container__toggle {
+        display: none;
+    }
 
     .fc-container__header__title {
         padding-left: calc((#{$gs-baseline} / 2) - 2px);
@@ -40,10 +54,15 @@
             top: 6px;
             position: relative;
             padding-right: 4px;
-            padding-bottom: 4px;
 
             @include mq($from: tablet) {
                 top: 0px;
+            }
+            @include mq($from: desktop) {
+                line-height: 25px;
+            }
+            @include mq($from: wide) {
+                line-height: 30px;
             }
         }
     }
@@ -55,12 +74,17 @@
     .fc-item.fc-item--pillar-sport.fc-item--type-comment,
     .fc-item.fc-item--pillar-lifestyle.fc-item--type-comment,
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item.fc-item--type-feature
+    .fc-item.fc-item--type-feature,
+    .fc-trail__count--commentcount
     {
         background-color: $story-package-garnett;
 
         &:hover {
             background-color: darken($story-package-garnett, 5%);
+
+            .fc-trail__count--commentcount {
+                background-color: darken($story-package-garnett, 5%);
+            }
         }
 
         .fc-item__headline {
@@ -76,6 +100,10 @@
     {
         .fc-item__meta {
             @include multiline(4, $garnett-neutral-6, $position: bottom);
+        }
+
+        .fc-item__standfirst-wrapper .fc-item__meta {
+            background-image: none;
         }
     }
 
