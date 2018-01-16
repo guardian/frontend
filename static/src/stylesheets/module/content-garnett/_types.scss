@@ -916,9 +916,12 @@ $quote-mark: 35px;
     }
 
     .content__headline {
-        @include fs-headlineGarnett(6);
+        @include fs-headlineGarnett(5);
         font-weight: 100;
         padding-bottom: 0;
+        @include mq(mobileMedium) {
+            @include fs-headlineGarnett(6);
+        }
         @include mq(tablet) {
             @include fs-headlineGarnett(7);
         }
@@ -928,7 +931,10 @@ $quote-mark: 35px;
     }
 
     .content__head--byline-pic .content__header .content__headline__byline {
-        @include fs-headlineGarnett(6);
+        @include fs-headlineGarnett(5);
+        @include mq(mobileMedium) {
+            @include fs-headlineGarnett(6);
+        }
         @include mq(tablet) {
             @include fs-headlineGarnett(7);
         }
