@@ -1,6 +1,7 @@
 package actions
 
 import actions.AuthenticatedActions.AuthRequest
+import services.UserRedirectDecider._
 import com.gu.identity.model.User
 import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
@@ -126,51 +127,13 @@ class AuthenticatedActions(
         }
     }
 
-  sealed trait UserRedirect
-  case object RedirectToEmailValidation extends UserRedirect
-  case object RedirectToConsents extends UserRedirect
-  case object RedirectToNewsletterConsents extends UserRedirect
-
-  private def decideUserRedirect[A](request: AuthRequest[A]): Future[Option[UserRedirect]] = {
-
-    def userHasRepermissioned: Boolean =
-    request.user.statusFields.hasRepermissioned.contains(true)
-
-    def userEmailValidated: Boolean =
-    request.user.statusFields.isUserEmailValidated
-
-    (userEmailValidated, userHasRepermissioned) match {
-      case (false, false) =>
-        Future.successful(Some(RedirectToEmailValidation))
-
-      case (false, true) =>
-        Future.successful(None)
-
-      case (true, false) =>
-        Future.successful(Some(RedirectToConsents))
-
-      case (true, true) =>
-        newsletterService.subscriptions(
-          request.user.getId,
-          idRequestParser(request).trackingData
-        ).map {
-          emailFilledForm =>
-            if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
-              None
-            else
-              Some(RedirectToNewsletterConsents)
-        }
-    }
-
-  }
-
   private def apiUserShouldRepermissionFilter: ActionFilter[AuthRequest] =
     new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
-          decideUserRedirect(request).map {
+          decideUserRedirect(request)(newsletterService, idRequestParser, executionContext).map {
             case Some(RedirectToEmailValidation) => Some(sendUserToValidateEmail(request))
             case Some(RedirectToConsents) => Some(sendUserToConsentsJourney(request))
             case Some(RedirectToNewsletterConsents) => Some(sendUserToNewslettersConsentsJourney(request))
