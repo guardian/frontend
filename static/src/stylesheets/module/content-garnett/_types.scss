@@ -1294,17 +1294,17 @@ $quote-mark: 35px;
                 grid-area: standfirst;
             }
         }
-    }
 
-    .stars {
-        position: absolute;
-        margin: 0;
-        transform: none;
-        z-index: 5;
-        bottom: 0;
-        @include mq(desktop) {
-            bottom: unset;
-            top: 0;
+        .stars {
+            position: absolute;
+            margin: 0;
+            transform: none;
+            z-index: 5;
+            bottom: 0;
+            @include mq(desktop) {
+                bottom: unset;
+                top: 0;
+            }
         }
     }
 
