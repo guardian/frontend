@@ -164,7 +164,7 @@ class AuthenticatedActions(
   def consentAuthWithIdapiUserAction: ActionBuilder[AuthRequest, AnyContent] =
     noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
-  /** Auth with at least SC_GU_RP and decideValidateAndConsentRedirect if user should be redirected to consent journey */
+  /** Auth with at least SC_GU_RP and decide if user should be redirected to consent journey */
   def validationAndConsentJourneyRedirectAction(pageId: String): ActionBuilder[AuthRequest, AnyContent] =
     consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionFilter(pageId)
 

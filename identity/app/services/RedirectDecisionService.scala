@@ -1,15 +1,7 @@
 package services
 
-import actions.AuthenticatedActions.AuthRequest
-import play.api.mvc.Security.AuthenticatedRequest
 import com.gu.identity.model.User
-import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
-import idapiclient.IdApiClient
-import model.{IdentityPage, Page}
-import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc.{ControllerComponents, RequestHeader}
-import services._
-import utils.Logging
 
 import scala.concurrent.{ExecutionContext, Future}
 
