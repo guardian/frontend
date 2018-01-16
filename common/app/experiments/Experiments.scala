@@ -1,7 +1,7 @@
 package experiments
 
 import conf.switches.Owner
-import conf.switches.Switches.{ GarnettLaunch, GarnettHeaderLaunch, GarnettIdentityLaunch }
+import conf.switches.Switches.{GarnettHeaderLaunch, GarnettIdentityLaunch, GarnettLaunch}
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -26,7 +26,7 @@ object CommercialClientLogging extends Experiment(
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup = Perc1A
 ) {
-  override def priorCondition(implicit request: RequestHeader): Boolean = Switches.CommercialBaseline.isSwitchedOn
+  override def priorCondition(implicit request: RequestHeader): Boolean = CommercialBaseline.switch.isSwitchedOn
 }
 
 object CommercialPaidContentTemplate extends Experiment(

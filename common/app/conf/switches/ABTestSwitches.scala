@@ -146,14 +146,4 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-commercial-baseline",
-    "Serves the Commercial Stack as on Jan 1st, 2018",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 10),
-    exposeClientSide = true
-  )
-
 }
