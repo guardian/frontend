@@ -1,5 +1,6 @@
 @(item: layout.ContentCard, omnitureId :String, containerIndex: Int, index: Int, isFirstContainer: Boolean)(implicit request: RequestHeader)
 
+@import com.gu.contentapi.client.utils.Media
 @import views.html.fragments.items.elements.facia_cards._
 @import views.support.GetClasses
 @import Function.const
@@ -26,7 +27,7 @@
             }
 
             @item.branding.map { branding =>
-                @cardLogo(branding, isStandardSizeCard = false)
+                @cardLogo(branding, isStandardSizeCard = false, onDarkBackground = item.designType.exists(_ == Media))
             }
 
         </div>
