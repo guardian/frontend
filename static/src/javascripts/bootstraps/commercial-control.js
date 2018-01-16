@@ -74,7 +74,7 @@ const loadHostedBundle = (): Promise<void> => {
                     );
                     resolve();
                 },
-                'commercial-hosted'
+                'commercial-hosted-control'
             );
         });
     }
