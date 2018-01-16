@@ -39,81 +39,53 @@ const go = () => {
             });
         }
 
-        markTime('commercial request');
-        let commercialBoot = Promise.resolve;
-
         if (config.switches.commercial) {
-            commercialBoot = () =>
-                new Promise(resolve => {
+            raven.context(
+                {tags: {feature: 'commercial'}},
+                () => {
+                    markTime('commercial boot');
                     if (config.tests.commercialBaseline === 'variant') {
                         require.ensure(
                             [],
-                            // webpack needs the require function to be called 'require'
-                            // eslint-disable-next-line no-shadow
                             require => {
-                                raven.context(
-                                    { tags: { feature: 'commercial-control' } },
-                                    () => {
-                                        markTime('commercial boot');
-                                        require('bootstraps/commercial-control')();
-                                    }
-                                );
+                                require('bootstraps/commercial-control')();
                             },
                             'commercial-control'
                         );
                     } else {
                         require.ensure(
                             [],
-                            // eslint-disable-next-line no-shadow
                             require => {
-                                raven.context(
-                                    { tags: { feature: 'commercial' } },
-                                    () => {
-                                        markTime('commercial boot');
-                                        require('bootstraps/commercial')();
-                                    }
-                                );
+                                require('bootstraps/commercial')();
                             },
                             'commercial'
                         );
                     }
-                    resolve();
-                });
+                }
+            );
         }
 
-        // 3. finally, try enhanced
-        // this is defined here so that webpack's code-splitting also
-        // excludes all the modules bundled in the commercial chunk from this one
-
-        let enhancedBoot = Promise.resolve;
         if (window.guardian.isEnhanced) {
-            enhancedBoot = () =>
-                new Promise(resolve => {
-                    markTime('enhanced request');
-                    require.ensure(
-                        [],
-                        // webpack needs the require function to be called 'require'
-                        // eslint-disable-next-line no-shadow
-                        require => {
-                            markTime('enhanced boot');
-                            require('bootstraps/enhanced/main').bootEnhanced();
+            require.ensure(
+                [],
+                // webpack needs the require function to be called 'require'
+                // eslint-disable-next-line no-shadow
+                require => {
+                    markTime('enhanced boot');
+                    require('bootstraps/enhanced/main').bootEnhanced();
 
-                            if (document.readyState === 'complete') {
-                                capturePerfTimings();
-                            } else {
-                                window.addEventListener(
-                                    'load',
-                                    capturePerfTimings
-                                );
-                            }
-                            resolve();
-                        },
-                        'enhanced'
-                    );
-                });
+                    if (document.readyState === 'complete') {
+                        capturePerfTimings();
+                    } else {
+                        window.addEventListener(
+                            'load',
+                            capturePerfTimings
+                        );
+                    }
+                },
+                'enhanced'
+            );
         }
-
-        commercialBoot().then(enhancedBoot);
     });
 };
 
