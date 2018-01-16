@@ -1097,6 +1097,13 @@ $quote-mark: 35px;
         }
     }
 
+    .tonal__standfirst {
+        @include mq($until: tablet) {
+            max-width: gs-span(8);
+            margin: 0 auto;
+        }
+    }
+
     .content__standfirst {
         @include mq(mobileMedium) {
             max-width: 100%;
@@ -1105,8 +1112,13 @@ $quote-mark: 35px;
 
     .content__standfirst--gallery {
         @include mq(desktop) {
-            margin-left: gs-span(3) + $gs-gutter;
+            margin-left: gs-span(2) + $gs-gutter;
             max-width: gs-span(8);
+
+        }
+        @include mq(leftCol) {
+            margin-left: gs-span(3) + $gs-baseline/2;
+
         }
     }
 
