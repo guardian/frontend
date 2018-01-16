@@ -426,7 +426,11 @@ $quote-mark: 35px;
     }
 
     .content__secondary-column {
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline + 4px;
+    }
+    // Added so Most Popular is pushed further down the page
+    .right-most-popular {
+        padding-top: 286px;
     }
 
     .reveal-caption {
