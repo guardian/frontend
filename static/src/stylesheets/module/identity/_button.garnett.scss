@@ -1,0 +1,165 @@
+/* Button styles
+========================================================================== */
+.manage-account__button-container {
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+}
+
+.manage-account__button {
+    $font-size: 5;
+    $height: $gs-baseline * 3;
+    $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
+    $padding-horizontal: $gs-gutter;
+    @include fs-textSans($font-size);
+    background-color: $identity-main;
+    height: $height;
+    border-radius: 100px;
+    border: 0;
+    color: #ffffff;
+    cursor: pointer;
+    float: left;
+    padding: $padding-vertical $padding-horizontal;
+    min-width: $gs-baseline * 14;
+    white-space: nowrap;
+    text-overflow: clip;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    box-sizing: border-box;
+    transition: .15s linear;
+    text-align: left;
+
+    &, & > .manage-account__button-flexwrap {
+        justify-content: space-between;
+        align-items: center;
+        display: inline-block;
+        display: inline-flex;
+    }
+
+    > .manage-account__button-flexwrap {
+        width: 100%;
+    }
+
+    &:hover, &:active, &:focus {
+        color: #ffffff;
+        text-decoration: none;
+        .inline-arrow-right.inline-icon {
+            transform: translateX(3px);
+        }
+        .inline-arrow-left-stem.inline-icon {
+            transform: translateX(-3px);
+        }
+    }
+
+    &:not(.is-updating, .is-disabled):hover {
+        background: lighten($identity-main, 30%);
+    }
+
+    &.is-updating {
+        border: 0;
+    }
+
+    .inline-icon {
+        transition: .125s;
+        display: inline-block;
+        height: 28px;
+        width: 28px;
+        vertical-align: middle;
+        margin: 0 ($gs-gutter / 2 * -1) 0 ($gs-gutter/2);
+        &, & * {
+            fill: currentColor;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        &.inline-cross {
+            transform: scale(.5);
+        }
+    }
+
+    &.manage-account__button--center {
+        text-align: center;
+        justify-content: center;
+    }
+
+    &-half--left {
+        width: $gs-baseline*5;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        min-width: $gs-baseline * 7;
+        float: left;
+        text-align: center;
+        justify-content: center;
+        border-right: 1px solid #ffffff;
+        padding-left: $gs-baseline / 2;
+        padding-right: 0;
+    }
+
+    &-half--right {
+        width: $gs-baseline*5;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        min-width: $gs-baseline * 7;
+        float: right;
+        justify-content: center;
+        text-align: center;
+        padding-left: 0;
+        padding-right: $gs-baseline / 2;
+    }
+
+    .disabled {
+        background-color: $garnett-neutral-4;
+    }
+}
+
+.manage-account__button--round {
+    min-width: $gs-baseline * 3;
+    max-width: $gs-baseline * 3;
+    padding: 0;
+    text-align: center;
+    justify-content: center;
+    .inline-icon {
+        margin: 0;
+    }
+}
+
+.manage-account__button--icon {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.manage-account__button--light {
+    @extend %manage-account__button--light;
+}
+
+.manage-account__button--mini {
+    @include fs-textSans(1);
+    min-width: $gs-baseline * 20;
+    display: inline-flex;
+    height: $gs-gutter * 1.2;
+    line-height: $gs-gutter * 1.2;
+    padding-left: $gs-gutter / 1.6;
+    padding-right: $gs-gutter / 1.6;
+    .inline-icon {
+        width: $gs-gutter * 1.2;
+        height: $gs-gutter * 1.2;
+    }
+}
+
+%manage-account__button--light {
+    color: $identity-main;
+    background-color: transparent;
+    text-decoration: underline;
+    @supports (box-shadow: 0 0 0 red) {
+        text-decoration: none;
+        box-shadow: inset 0 0 0 1px lighten($identity-main, 75%);
+    }
+    &:hover, &:focus, &:active {
+        background-color: transparent!important;
+        color: $identity-main;
+        box-shadow: inset 0 0 0 1px $identity-main;
+    }
+}

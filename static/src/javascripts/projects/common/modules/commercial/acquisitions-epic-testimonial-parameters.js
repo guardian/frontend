@@ -1,5 +1,5 @@
 // @flow
-import quoteSvg from 'svgs/icon/quote.svg';
+import quoteSvg from 'svgs/icon/garnett-quote.svg';
 
 // @flow
 

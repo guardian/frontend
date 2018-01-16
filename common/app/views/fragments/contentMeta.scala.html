@@ -2,6 +2,9 @@
 @import model._
 @import views.support.Commercial.isPaidContent
 @import views.support.ContentOldAgeDescriber
+@import experiments._
+@import _root_.model.ContentDesignType.RichContentDesignType
+
 
 @byline() = {
     @item match {
@@ -21,14 +24,13 @@
 @metaBody() = {
 
     @if(item.content.showCircularBylinePicAtSide && !item.content.isImmersive) {
-        <div class="media__img meta__image">
+
         @fragments.meta.bylineImage(item.tags)
-        </div>
     }
 
     @if(!(item.content.isGallery || item.content.isImmersive)) {
 
-        @if(!item.content.hasTonalHeaderByline) {
+        @if(!item.content.hasTonalHeaderByline || item.metadata.designType.nameOrDefault == "analysis") {
             <div class="meta__contact-wrap">
             @byline()
         }
@@ -41,13 +43,22 @@
             }
             @fragments.meta.contactAuthor(item.tags, amp)
         }
-        @if(!item.content.hasTonalHeaderByline) {
+
+        @if(ActiveExperiments.isParticipating(experiments.Garnett)) {
+          @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
+            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
+            }
+        }
+
+        @if(!item.content.hasTonalHeaderByline || item.metadata.designType.nameOrDefault == "analysis") {
         </div>
         }
     }
 
-    @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
-        @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
+    @if(!ActiveExperiments.isParticipating(experiments.Garnett) || ActiveExperiments.isParticipating(experiments.Garnett) && item.content.isImmersive) {
+        @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
+            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
+        }
     }
 
     @if(showExtras) {
@@ -76,7 +87,7 @@
     @if(item.trail.byline.isEmpty){ content__meta-container--no-byline}
     @if(item.tags.isLiveBlog) { content__meta-container--liveblog}
     @if(item.elements.hasShowcaseMainElement && !item.content.isImmersive){ content__meta-container--showcase}
-    @if(item.content.hasTonalHeaderByline){ content__meta-container--tonal-header}
+    @if(item.content.hasTonalHeaderByline && item.metadata.designType.nameOrDefault != "analysis"){ content__meta-container--tonal-header}
     @item.content.contributorBio.map { bio => content__meta-container--bio}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">

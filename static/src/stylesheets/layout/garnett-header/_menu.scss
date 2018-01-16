@@ -4,7 +4,7 @@
     font-size: 20px;
     left: 0;
     line-height: 1;
-    margin-right: $gutter-small + ($veggie-burger-medium / 2);
+    margin-right: $gutter-small + ($veggie-burger-small / 2);
     padding-bottom: $gs-baseline * 2;
     top: 0;
     z-index: $zindex-main-menu;
@@ -87,8 +87,12 @@
     }
 
     @include mq(desktop) {
-        margin-top: -$gs-baseline;
+        margin-top: -20px ;
         padding: 0 $gs-gutter;
+
+        .new-header--slim & {
+            margin-top: -10px;
+        }
     }
 }
 

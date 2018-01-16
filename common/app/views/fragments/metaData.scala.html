@@ -30,12 +30,21 @@
         <link rel="dns-prefetch" href="//sb.scorecardresearch.com" />
     }
 
-    <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />
-    <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons/144x144.png")" />
-    <link rel="apple-touch-icon" sizes="120x120" href="@Static("images/favicons/120x120.png")" />
-    <link rel="apple-touch-icon" sizes="114x114" href="@Static("images/favicons/114x114.png")" />
-    <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons/72x72.png")" />
-    <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
+    @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+        <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons-garnett/152x152.png")" />
+        <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons-garnett/144x144.png")" />
+        <link rel="apple-touch-icon" sizes="120x120" href="@Static("images/favicons-garnett/120x120.png")" />
+        <link rel="apple-touch-icon" sizes="114x114" href="@Static("images/favicons-garnett/114x114.png")" />
+        <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons-garnett/72x72.png")" />
+        <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons-garnett/57x57.png")" />
+    } else {
+        <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />
+        <link rel="apple-touch-icon" sizes="144x144" href="@Static("images/favicons/144x144.png")" />
+        <link rel="apple-touch-icon" sizes="120x120" href="@Static("images/favicons/120x120.png")" />
+        <link rel="apple-touch-icon" sizes="114x114" href="@Static("images/favicons/114x114.png")" />
+        <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons/72x72.png")" />
+        <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
+    }
 
     <link rel="manifest" href="/2015-06-24-manifest.json" crossorigin="use-credentials">
 
@@ -50,9 +59,17 @@
 @* Additional meta data that does not impact rendering speed (and can live at the end of the <head>) *@
 
 @if(context.environment.mode == Dev){
-    <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32-dev.ico")" />
+    @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+        <link rel="shortcut icon" type="image/png" href="@Static("images/favicons-garnett/32x32-dev.ico")" />
+    } else {
+        <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32-dev.ico")" />
+    }
 } else {
-    <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
+    @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+        <link rel="shortcut icon" type="image/png" href="@Static("images/favicons-garnett/32x32.ico")" />
+    } else {
+        <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
+    }
 }
 
 @*
@@ -72,9 +89,13 @@
 
 <meta name="apple-mobile-web-app-title" content="Guardian" />
 <meta name="application-name" content="The Guardian" />
-<meta name="msapplication-TileColor" content="#005689" />
-<meta name="theme-color" content="#005689">
-<meta name="msapplication-TileImage" content="@Static("images/favicons/windows_tile_144_b.png")" />
+<meta name="msapplication-TileColor" content="#e7edef" />
+<meta name="theme-color" content="#e7edef">
+@if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
+    <meta name="msapplication-TileImage" content="@Static("images/favicons-garnett/windows_tile_144_b.png")" />
+} else {
+    <meta name="msapplication-TileImage" content="@Static("images/favicons/windows_tile_144_b.png")" />
+}
 
 @if(SmartAppBanner.isSwitchedOn) {
     <meta name="apple-itunes-app" content="app-id=@Configuration.ios.ukAppId, app-argument=@page.metadata.webUrl, affiliate-data=ct=newsmartappbanner&pt=304191">

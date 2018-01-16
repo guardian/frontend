@@ -179,12 +179,10 @@ Hence why a greater depth of selector specificity is needed.
     @include mq(tablet, desktop) {
         .fc-slice__item {
             width: 25%;
-
-            .fc-item__title {
-                @include fs-headline(2, true);
-            }
         }
-
+        .fc-item__title {
+            @include fs-headline(2, true);
+        }
         .fc-slice__item--mpu-candidate {
             width: 50%;
         }
@@ -206,16 +204,16 @@ Hence why a greater depth of selector specificity is needed.
                     height: gs-height(2.5);
                     width: gs-height(2.5);
                 }
-            
+
                 .fc-item__avatar__media {
                     height: gs-height(2.5);
                     left: 0 - ($gs-gutter * (2.5 / 6));
                 }
-            
+
                 .fc-item__standfirst {
                     display: none;
                 }
-    
+
                 .fc-item__standfirst-wrapper {
                     padding-right: 0;
                 }

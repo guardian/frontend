@@ -9,10 +9,10 @@
 
     .fc-item__content {
         background-color: $immersive-garnett-main-1;
-        z-index: 1;
     }
 
     //Todo better way to get this immersive card type to set the height when sublinks. This is fixed height enough to fit two lines of sublink
+    &.fc-item--has-sublinks-3 .fc-item__content,
     &.fc-item--has-sublinks-2 .fc-item__content {
         @include mq($from: tablet) {
             padding-bottom: $gs-gutter * 3.6;
@@ -22,6 +22,14 @@
     .fc-item__content {
         position: absolute;
         left: 0;
+
+        @include mq($from: tablet) {
+            position: relative;
+        }
+    }
+
+    &.fc-item--standard-tablet .fc-item__content {
+        position: absolute;
     }
 
     .fc-item__headline {
@@ -29,6 +37,8 @@
     }
 
     .fc-item__media-wrapper {
+        position: static;
+
         img {
             object-fit: cover;
         }
@@ -37,6 +47,13 @@
     .fc-slice--h-q-q & .fc-item__standfirst,
     &.fc-item--three-quarters-tablet .fc-item__standfirst,
     &.fc-item--three-quarters-tall-tablet .fc-item__standfirst {
+        display: block;
+        @include mq($from: tablet) {
+            margin-top: $gs-baseline * 2;
+        }
+    }
+
+    &.fc-item--standard-tablet .fc-item__standfirst {
         display: none;
     }
 
@@ -113,47 +130,92 @@
 
 .fc-item--type-immersive {
 
-    .fc-item__kicker:before,
-    .fc-item__kicker:after {
-        content: none;
-    }
+    // ?# It is very easy to opt out as the below, but
+    // it increases the cyclomatic complexity of all selectors.
+    // Find a better solution!
+    &:not(.fc-item--paid-content) {
 
-    .fc-item__meta {
-        margin-left: auto;
-        color: #ffffff;
-    }
-
-    .inline-icon {
-        fill: #ffffff;
-    }
-
-    &.fc-item--standard-mobile {
-        @include mq($from: mobile, $until: tablet) {
-            @include immersiveBottom();
+        .fc-item__kicker:before,
+        .fc-item__kicker:after {
+            content: none;
         }
-    }
 
-    &.fc-item--standard-tablet,
-    &.fc-item--third-tablet,
-    &.fc-item--half-tablet,
-    &.fc-item--full-media-100-tablet,
-    &.fc-item--three-quarters-tall-tablet {
-        @include mq($from: tablet) {
-            @include immersiveBottom();
+        &.fc-item--list-media-mobile .fc-item__kicker:after,
+        &.fc-item--list-mobile .fc-item__kicker:after
+        {
+            content: '/';
+
+            @include mq($from: tablet) {
+                content: none;
+            }
         }
-    }
 
-    &.fc-item--full-media-75-tablet,
-    &.fc-item--full-media-50-tablet,
-    &.fc-item--three-quarters-tablet {
-        @include mq($from: tablet) {
-            @include immersiveLeft();
+        &.fc-item--list-media-tablet .fc-item__kicker:after,
+        &.fc-item--list-tablet .fc-item__kicker:after
+        {
+            content: '/';
         }
-    }
 
-    &.fc-item--three-quarters-right-tablet {
-        @include mq($from: tablet) {
-            @include immersiveRight();
+        .fc-item__standfirst {
+            color: #ffffff;
+        }
+
+        .fc-item__meta {
+            margin-left: auto;
+            color: #ffffff;
+        }
+
+        .inline-icon {
+            fill: #ffffff;
+        }
+
+        &.fc-item--standard-mobile {
+            @include mq($from: mobile, $until: tablet) {
+                @include immersiveBottom();
+            }
+        }
+
+        &.fc-item--standard-tablet,
+        &.fc-item--third-tablet,
+        &.fc-item--half-tablet,
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--three-quarters-tall-tablet {
+            @include mq($from: tablet) {
+                @include immersiveBottom();
+            }
+        }
+
+        @mixin immersiveSublinks() {
+            &[class*='fc-item--has-sublinks'] {
+                .fc-item__footer--horizontal {
+                    display: none;
+                }
+                .fc-sublinks,
+                .fc-sublink,
+                .fc-item__footer--vertical {
+                    display: block;
+                }
+                .fc-sublinks,
+                .fc-sublink {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        &.fc-item--full-media-75-tablet,
+        &.fc-item--full-media-50-tablet,
+        &.fc-item--three-quarters-tablet {
+            @include mq($from: tablet) {
+                @include immersiveLeft();
+                @include immersiveSublinks();
+            }
+        }
+
+        &.fc-item--three-quarters-right-tablet {
+            @include mq($from: tablet) {
+                @include immersiveRight();
+                @include immersiveSublinks();
+            }
         }
     }
 }

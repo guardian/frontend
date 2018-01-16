@@ -159,7 +159,7 @@ import collection.JavaConverters._
         import browser._
 
         Then("I should see the publication date of the article")
-        $(".content__dateline-wpd").text should be("Mon 6 Aug ‘12 20.30 BST")
+        $(".content__dateline-wpd").text should be("Mon 6 Aug 2012 20.30 BST")
         $("time").attribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
@@ -171,7 +171,7 @@ import collection.JavaConverters._
       goTo("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        $(".content__dateline time").text should be("Thu 8 Nov ‘12 00.01 GMT")
+        $(".content__dateline time").text should be("Thu 8 Nov 2012 00.01 GMT")
       }
 
       Given("I am on an article published on '2012-11-08'")
@@ -179,7 +179,7 @@ import collection.JavaConverters._
       US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        $(".content__dateline time").text should be("Wed 7 Nov ‘12 19.01 EST")
+        $(".content__dateline time").text should be("Wed 7 Nov 2012 19.01 EST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -187,7 +187,7 @@ import collection.JavaConverters._
       goTo("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        $(".content__dateline time").text should be("Sun 19 Aug ‘12 18.38 BST")
+        $(".content__dateline time").text should be("Sun 19 Aug 2012 18.38 BST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -195,7 +195,7 @@ import collection.JavaConverters._
       US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        $(".content__dateline time").text should be("Sun 19 Aug ‘12 13.38 EDT")
+        $(".content__dateline time").text should be("Sun 19 Aug 2012 13.38 EDT")
       }
 
     }
@@ -495,8 +495,7 @@ import collection.JavaConverters._
         $("header").attribute("role") should be("banner")
         $(".l-footer__secondary").attribute("role") should be("contentinfo")
         $("nav").attribute("aria-label") should not be empty
-        browser.find("nav").index(1).attribute("role") should be("navigation")
-        browser.find("nav").index(1).attribute("aria-label") should not be empty
+        browser.find("nav").attribute("role") should be("navigation")
         $("#article").attribute("role") should be("main")
         $(".related").attribute("aria-labelledby") should be("related-content-head")
       }
@@ -599,44 +598,5 @@ import collection.JavaConverters._
         $(".content").attribute("class") should include("tone-comment")
       }
     }
-
-    scenario("Display breadcrumbs correctly") {
-      Given("I am on a piece of content with a primary nav, secondary nav and a key woro")
-      goTo("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
-        import browser._
-        Then("I should see three breadcrumbs")
-        $(".breadcrumb .signposting__item").size() should be(3)
-
-        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Culture"))
-        link.asScala.length should be > 0
-        val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Books"))
-        link2.asScala.length should be > 0
-        val link3 = browser.find(".breadcrumb .signposting__item a", withText().contains("Orwell prize"))
-        link3.asScala.length should be > 0
-      }
-
-      Given("I am on a piece of content with a primary nav and a key woro")
-      goTo("/commentisfree/2013/jan/07/blue-plaque-english-heritage") { browser =>
-        import browser._
-        Then("I should see three breadcrumbs")
-        $(".breadcrumb .signposting__item").size() should be(2)
-
-        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Opinion"))
-        link.asScala.length should be > 0
-        val link2 = browser.find(".breadcrumb .signposting__item a", withText().contains("Heritage"))
-        link2.asScala.length should be > 0
-      }
-
-      Given("I am on a piece of content with no primary nav and a no key words")
-      goTo("/observer-ethical-awards/shortlist-2014") { browser =>
-        import browser._
-        Then("I should see one breadcrumbs")
-        $(".breadcrumb .signposting__item").size() should be(1)
-
-        val link = browser.find(".breadcrumb .signposting__item a", withText().contains("Observer Ethical Awards"))
-        link.asScala.length should be > 0
-      }
-    }
-
   }
 }

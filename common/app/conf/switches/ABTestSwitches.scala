@@ -66,4 +66,24 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-colour-test-epic-holdback",
+    "A holdback for the epic colour changes",
+    owners = Seq(Owner.withGithub("Ap0c")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 2, 15),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-colour-test-banner-holdback",
+    "A holdback for the banner colour changes",
+    owners = Seq(Owner.withGithub("Ap0c")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 2, 15),
+    exposeClientSide = true
+  )
+
 }

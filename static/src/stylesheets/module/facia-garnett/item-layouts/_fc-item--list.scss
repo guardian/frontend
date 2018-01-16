@@ -25,7 +25,17 @@ x x x x x x x x x x x x x x x x x x x x x x x x
         }
     }
 
-    .fc-item__media-wrapper {
-        display: none;
+
+    &:not(.fc-item--paid-content) {
+        @include mq($until: tablet) {
+            &:not(.fc-item--list-media-mobile) .fc-item__media-wrapper {
+                display: none;
+            }
+        }
+        @include mq(tablet) {
+            &:not(.fc-item--list-media-tablet) .fc-item__media-wrapper {
+                display: none;
+            }
+        }
     }
 }

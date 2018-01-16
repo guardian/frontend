@@ -11,16 +11,20 @@ export type PrebidSonobiParams = {
     floor: ?number,
 };
 
+export type PrebidTrustXParams = {
+    uid: string,
+};
+
 export type PrebidBid = {
     bidder: string,
-    params: PrebidSonobiParams | PrebidIndexExchangeParams,
+    params: PrebidSonobiParams | PrebidIndexExchangeParams | PrebidTrustXParams,
 };
 
 export type PrebidBidder = {
     name: string,
     bidParams: (
         slotId: string
-    ) => PrebidSonobiParams | PrebidIndexExchangeParams,
+    ) => PrebidSonobiParams | PrebidIndexExchangeParams | PrebidTrustXParams,
 };
 
 export type PrebidSize = [number, number];

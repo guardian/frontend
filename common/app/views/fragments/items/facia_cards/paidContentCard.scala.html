@@ -7,11 +7,15 @@
 
 <div class="adverts--within-unbranded @GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}">
     <div class="fc-item__container">
-        @item.paidImage.map(image => itemImage(
-            image,
-            inlineImage = containerIndex == 0 && index < 4,
-            widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
-        ))
+        @item.paidImage.map { image =>
+            <div class="fc-item__media-wrapper">
+                @itemImage(
+                    image,
+                    inlineImage = containerIndex == 0 && index < 4,
+                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                )
+            </div>
+        }
         <div class="fc-item__content">
             <div class="fc-item__header">
                 @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))

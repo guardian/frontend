@@ -2,7 +2,7 @@
     @include fs-textSans(2);
     color: $nav-primary-colour;
     float: left;
-    line-height: 1;
+    line-height: 1.2;
     position: relative;
     transition: color 80ms ease-out;
     padding: ($gs-baseline / 2) ($gs-gutter / 2);
@@ -124,10 +124,7 @@
 .top-bar__item--cta--text {
     box-sizing: border-box;
     display: block;
-    padding: ($gs-baseline / 2 + $gs-baseline / 4) ($gs-gutter) ($gs-baseline / 4);
+    padding: ($gs-baseline / 2) ($gs-gutter) ($gs-baseline / 4);
     position: relative;
-
-    @include mq($until: mobileMedium) {
-        padding-top: $gs-baseline / 2;
-    }
+    text-align: center;
 }

@@ -1,0 +1,25 @@
+.pillar-link {
+    font-size: 15px;
+    font-weight: 500;
+    display: block;
+    height: $gs-baseline * 2 + $gs-baseline / 2;
+    line-height: 1;
+    padding: 0 4px;
+    position: relative;
+    color: currentColor;
+    cursor: pointer;
+
+    @include mq(mobileMedium) {
+        font-size: 16px;
+    }
+
+    &:before {
+        content: '';
+        display: block;
+        left: 0;
+        bottom: 0;
+        position: absolute;
+        border-left: 1px solid $rule;
+        top: $gs-baseline / 4;
+    }
+}

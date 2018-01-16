@@ -18,7 +18,7 @@ class Renderer(implicit actorSystem: ActorSystem, executionContext: ExecutionCon
   val renderingActorCount = 3
   val actor = actorSystem.actorOf(Props(classOf[RenderingActor], ac).withRouter(RoundRobinPool(renderingActorCount)))
 
-  val timeoutValue: Int = if(ac.environment.mode == Mode.Prod) 1 else 30
+  val timeoutValue: Int = if(ac.environment.mode == Mode.Prod) 30 else 30
   implicit val timeout = Timeout(timeoutValue.seconds)
 
   def render[R <: Renderable](renderable: R): Future[Html] = {

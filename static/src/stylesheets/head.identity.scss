@@ -17,6 +17,8 @@
 @import 'module/identity/_identity';
 
 @import 'module/identity/_header';
+@import 'module/identity/_wrapper';
+@import 'module/identity/_button';
 @import 'module/identity/_forms';
 @import 'module/identity/_footer';
 @import 'module/identity/_manage-account-tab';
@@ -25,3 +27,22 @@
 @import 'module/identity/_switches';
 @import 'module/identity/_wizard';
 @import 'module/identity/_consent';
+
+
+
+/* ==========================================================================
+   Misc
+   ========================================================================== */
+
+.dropdown-styled.dropdown--email-subscription {
+    .dropdown__button {
+        text-transform: lowercase;
+    }
+}
+
+.tabs--identity {
+    .tabs__tab--selected {
+        border-top-color: $news-accent;
+        color: $news-accent;
+    }
+}

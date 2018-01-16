@@ -4,7 +4,7 @@ import java.nio.charset.Charset
 
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
-import experiments.{ActiveExperiments, GarnettHeader}
+import experiments.{ActiveExperiments, GarnettHeader, GarnettIdentity}
 import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
@@ -60,11 +60,13 @@ object css {
 
   def head(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
   def inlineNavigation(implicit request: RequestHeader, context: ApplicationContext): String = if (ActiveExperiments.isParticipating(GarnettHeader)) inline("head.navigation.garnett") else inline("head.navigation")
+  def inlineIdentity(implicit request: RequestHeader, context: ApplicationContext): String = if (ActiveExperiments.isParticipating(GarnettIdentity)) inline("head.identity.garnett") else inline("head.identity")
   def inlineStoryPackage(implicit context: ApplicationContext): String = inline("story-package")
   def inlineStoryPackageGarnett(implicit context: ApplicationContext): String = inline("story-package-garnett")
   def inlinePhotoEssay(implicit context: ApplicationContext): String = inline("article-photo-essay")
   def inlinePhotoEssayGarnett(implicit context: ApplicationContext): String = inline("article-photo-essay-garnett")
   def amp(implicit context: ApplicationContext): String = inline("head.amp")
+  def ampNavigation(implicit request: RequestHeader, context: ApplicationContext): String = if (ActiveExperiments.isParticipating(GarnettHeader)) inline("head.amp-navigation.garnett") else inline("head.amp-navigation")
   def hostedAmp(implicit context: ApplicationContext): String = inline("head.hosted-amp")
   def liveblogAmp(implicit context: ApplicationContext): String = inline("head.amp-liveblog")
   def emailArticle(implicit context: ApplicationContext): String = inline("head.email-article")
@@ -93,11 +95,11 @@ object css {
     }
   }
 
-  private def cssHead(project: String)(implicit request: RequestHeader): String =
+  private def cssHead(project: String)(implicit request: RequestHeader, context: ApplicationContext): String =
     project match {
       case "footballSnaps" => "head.footballSnaps"
       case "facia" => s"head.$FaciaCSSFile"
-      case "identity" => "head.identity"
+      case "identity" => if (ActiveExperiments.isParticipating(GarnettIdentity)) "head.identity.garnett" else "head.identity"
       case "football" => "head.football"
       case "index" => "head.index"
       case "rich-links" => s"head.$RichLinksCSSFile"

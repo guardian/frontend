@@ -10,11 +10,13 @@ import { askFourEarning } from 'common/modules/experiments/tests/contributions-e
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
+import { colourTestEpicHoldback } from 'common/modules/experiments/tests/circles-epic-holdback';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
+    colourTestEpicHoldback,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

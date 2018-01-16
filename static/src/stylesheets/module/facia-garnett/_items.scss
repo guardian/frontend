@@ -58,12 +58,12 @@
 @import 'item-layouts/fc-item--fluid';
 
 @import 'item-types/_fc-item--type-liveblog';
+@import 'item-types/_fc-item--type-interview';
 @import 'item-types/_fc-item--type-media';
 @import 'item-types/_fc-item--type-comment';
 @import 'item-types/_fc-item--type-immersive';
 @import 'item-types/_fc-item--type-analysis';
-@import 'item-types/_fc-item--type-interview';
-
+@import 'item-types/_fc-item--type-review';
 
 .fc-slice__item {
     width: 100%;

@@ -93,14 +93,15 @@ $news-garnett-highlight: #ffe500;
 $opinion-garnett-main-1: #ed6300;
 $opinion-garnett-feature: #f5be2c;
 $opinion-garnett-media-main-1: #ff7f0f;
+$opinion-garnett-background: #fef9f5;
 
 $sport-garnett-main-1: #0084c6;
 $sport-garnett-feature: #005689;
 $sport-garnett-media-main-1: #00b2ff;
 
-$arts-garnett-main-1: #ab8958;
-$arts-garnett-feature: #6b5840;
-$arts-garnett-media-main-1: #eacca0;
+$culture-garnett-main-1: #ab8958;
+$culture-garnett-feature: #6b5840;
+$culture-garnett-media-main-1: #eacca0;
 
 $lifestyle-garnett-main-1: #bb3b80;
 $lifestyle-garnett-feature: #7d0068;
@@ -108,11 +109,12 @@ $lifestyle-garnett-media-main-1: #ffabdb;
 
 $live-garnett-main-1: $news-garnett-feature;
 $live-garnett-main-2: #ffbac8;
+$live-garnett-dead-background: #eaeaea;
 $live-garnett-accent: #d65353;
 $live-garnett-sport1: $sport-garnett-feature;
 $live-garnett-sport2: #90dcff;
-$live-garnett-arts1: $arts-garnett-feature;
-$live-garnett-arts2: #e7d4b9;
+$live-garnett-culture1: $culture-garnett-feature;
+$live-garnett-culture2: #e7d4b9;
 $live-garnett-lifestyle1: $lifestyle-garnett-feature;
 $live-garnett-lifestyle2: $live-garnett-main-2;
 
@@ -163,7 +165,7 @@ $crosswordAccent1:       $news-main-1;
 $crosswordAccent2:       $news-main-2;
 
 $story-package:          $news-support-7;
-$story-package-garnett:  #3e4143;
+$story-package-garnett:  #3f464a;
 
 $paidfor-background:     $news-support-3;
 //temporary change from #fce800 whilst secret special report is running
@@ -185,9 +187,13 @@ $sport-away:             #003f64;
 // Stati
 // =============================================================================
 
-$status-positive:        $success;
-$status-neutral:         $neutral-2;
-$status-negative:        $error;
+$status-positive-garnett:   #bbce00;
+$status-neutral-garnett:    $garnett-neutral-6;
+$status-negative-garnett:   $error;
+
+$status-positive:           $success;
+$status-neutral:            $neutral-2;
+$status-negative:           $error;
 
 // Quiz colours
 // =============================================================================
