@@ -16,10 +16,13 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
   def displayForm(
     page: IdentityPage,
     consentsUpdated: Boolean = false,
-    consentHint: Option[String] = None): Action[AnyContent] = {
+    consentHint: Option[String] = None,
+    enforceUserRedirections: Boolean = false): Action[AnyContent] = {
+    
+    val redirectAction = if(enforceUserRedirections) consentJourneyRedirectAction else consentAuthWithIdapiUserAction
 
     csrfAddToken {
-      consentJourneyRedirectAction.async { implicit request =>
+      redirectAction.async { implicit request =>
         profileFormsView(
           page = page,
           forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
