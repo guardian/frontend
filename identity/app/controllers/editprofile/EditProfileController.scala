@@ -8,9 +8,7 @@ import model._
 import play.api.http.HttpConfiguration
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, _}
-
-import services.RedirectDecisionService
+import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier, RedirectDecisionService, _}
 
 class EditProfileController(
     override val idUrlBuilder: IdentityUrlBuilder,

@@ -1,15 +1,12 @@
 package actions
 
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.User
 import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
-import model.IdentityPage
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
 import services.{RedirectDecision, _}
 import utils.Logging
-
 import scala.concurrent.{ExecutionContext, Future}
 
 object AuthenticatedActions {

@@ -16,8 +16,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
   def displayForm(
                    page: IdentityPage,
                    consentsUpdated: Boolean = false,
-                   consentHint: Option[String] = None,
-                   redirectAccessLevel: Boolean = false): Action[AnyContent] = {
+                   consentHint: Option[String] = None): Action[AnyContent] = {
 
     csrfAddToken {
       manageAccountRedirectAction(page.id).async { implicit request =>
@@ -102,7 +101,6 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
         )(page, request, context)
       ))
     }
-
   }
 
 }
