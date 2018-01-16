@@ -3,26 +3,48 @@ package rendering.core
 import java.io._
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
+import java.util.concurrent.atomic.AtomicReference
 import javax.script.{CompiledScript, SimpleScriptContext}
 
 import common.Logging
-import play.api.libs.json.{JsValue, Json, JsObject}
+import play.api.libs.json.{JsObject, JsValue, Json}
 import rendering.core.JavascriptEngine.EvalResult
 
-import scala.util.{Failure, Try}
+import scala.util.{Failure, Success, Try}
 
 trait JavascriptRendering extends Logging {
   def javascriptFile: String
 
+  private def memoizeJs(): Try[EvalResult] = {
+    memoizedJs.get() match {
+      case Some(js) =>
+        Success(js)
+
+      case None =>
+        log.warn("UI - unable to find memoised parsed javascript, attempting to parse...")
+        val parsed = loadJavascript()
+        parsed.foreach { r =>
+          log.info("UI - ...succeeded in parsing javascript")
+          memoizedJs.set(Some(r))
+        }
+
+        parsed.failed.foreach { e =>
+          log.warn("UI - ...parsing javascript failed")
+        }
+
+        parsed
+    }
+  }
+
   private implicit val scriptContext = createContext()
-  private val memoizedJs: Try[EvalResult] = loadJavascript()
+  private val memoizedJs: AtomicReference[Option[EvalResult]] = new AtomicReference(loadJavascript().fold(_ => None, Some.apply))
 
   private def getProps(props: Option[JsValue] = None): JsValue =
     JavascriptProps.default.asJsValue.as[JsObject] ++ props.map(_.as[JsObject]).getOrElse(Json.obj())
 
   def render(props: Option[JsValue] = None, forceReload: Boolean = false): Try[String] = for {
       propsObject <- encodeProps(getProps(props))
-      js <- if(forceReload) loadJavascript() else memoizedJs
+      js <- if(forceReload) loadJavascript() else memoizeJs()
       rendering <- JavascriptEngine.invoke(js, "render", propsObject)
     } yield rendering
 

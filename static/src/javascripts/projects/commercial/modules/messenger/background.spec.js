@@ -9,9 +9,21 @@ const adSpec = {
     backgroundImage: 'image',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'absolute',
+    backgroundSize: 'contain',
+    transform: 'translate3d(0,0,0)',
 };
 
 describe('Cross-frame messenger: setBackground', () => {
+    class IntersectionObserver {
+        constructor() {
+            return Object.freeze({
+                observe: () => {},
+                unobserve: () => {},
+                disconnect: () => {},
+            });
+        }
+    }
+
     beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `
@@ -19,6 +31,12 @@ describe('Cross-frame messenger: setBackground', () => {
                   <div id="slot01"><div id="iframe01" class="iframe"></div></div>
               </div>`;
         }
+
+        Object.defineProperty(global, 'IntersectionObserver', {
+            value: IntersectionObserver,
+            writable: true,
+        });
+
         expect.hasAssertions();
     });
 
@@ -46,5 +64,7 @@ describe('Cross-frame messenger: getStylesFromSpec', () => {
         expect(specStyles.backgroundImage).toBe('image');
         expect(specStyles.backgroundRepeat).toBe('no-repeat');
         expect(specStyles.backgroundPosition).toBe('absolute');
+        expect(specStyles.backgroundSize).toBe('contain');
+        expect(specStyles.transform).toBe('translate3d(0,0,0)');
     });
 });

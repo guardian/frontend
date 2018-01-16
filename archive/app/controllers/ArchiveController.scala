@@ -6,6 +6,7 @@ import model.Cached.{CacheableResult, WithoutRevalidationResult}
 import play.api.mvc._
 import services.{GoogleBotMetric, RedirectService}
 import java.net.URLDecoder
+import java.util.concurrent.atomic.AtomicReference
 import javax.ws.rs.core.UriBuilder
 
 import model.{CacheTime, Cached}
@@ -30,8 +31,29 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
 
   private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
 
-  private[this] lazy val notFoundHtml: Future[Html] = renderer
-    .render(ui.NotFound)
+  private[this] val memoisedNotFound: AtomicReference[Option[Html]] = new AtomicReference(None)
+
+  private[this] def notFoundHtml(): Future[Html] = {
+    memoisedNotFound.get() match {
+      case Some(html) => {
+        Future.successful(html)
+      }
+      case None => {
+        log.warn("UI - unable to find memoised not found, attempting to render...")
+        val rendered = renderer.render(ui.NotFound)
+        rendered.foreach { r =>
+          log.info("UI - ...succeeded in rendering 404 page")
+          memoisedNotFound.set(Some(r))
+        }
+
+        rendered.failed.foreach { e =>
+          log.warn("UI - ...rendering 404 page failed")
+        }
+
+        rendered
+      }
+    }
+  }
 
   def lookup(path: String): Action[AnyContent] = Action.async{ implicit request =>
 
@@ -44,11 +66,10 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
         .map(Future.successful)
         .getOrElse {
           log404(request)
-          notFoundHtml
+          notFoundHtml()
             .map(html => Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(html))))
         }
       }
-
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html

@@ -1,5 +1,6 @@
 .contributions__epic--holdback {
     background-color: $comment-support-2;
+    border-color: $multimedia-main-2;
 
     .contributions__highlight {
         background-color: #ffe399;
@@ -11,6 +12,10 @@
         &:hover {
             background-color: darken($multimedia-main-2, 5%);
         }
+    }
+
+    .contributions__amount-field {
+        margin-top: 0;
     }
 }
 
