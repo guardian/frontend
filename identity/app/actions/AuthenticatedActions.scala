@@ -121,14 +121,17 @@ class AuthenticatedActions(
         }
     }
 
-  private def apiUserShouldRepermissionFilter: ActionFilter[AuthRequest] =
+  private def apiUserShouldRepermissionFilter(enforceConsentsRedirection: Boolean = true): ActionFilter[AuthRequest] =
     new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
-          redirectDecisionService.decideConsentRedirect(request.user, request).map {
-            case Some(i: RedirectDecision) => Some(sendUserToUserRedirectDecision(request, i))
+          redirectDecisionService.decideValidateAndConsentRedirect(request.user, request).map {
+            case Some(RedirectToEmailValidationStrictly) =>
+              Some(sendUserToUserRedirectDecision(request, RedirectToEmailValidationStrictly))
+            case Some(i: RedirectDecision) =>
+              if (enforceConsentsRedirection) Some(sendUserToUserRedirectDecision(request, i)) else None
             case _ => None
           }
         else
@@ -162,8 +165,8 @@ class AuthenticatedActions(
   def consentAuthWithIdapiUserAction: ActionBuilder[AuthRequest, AnyContent] =
     noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
-  /** Auth with at least SC_GU_RP and decideConsentRedirect if user should be redirected to consent journey */
-  def consentJourneyRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
-    consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionFilter
+  /** Auth with at least SC_GU_RP and decideValidateAndConsentRedirect if user should be redirected to consent journey */
+  def validationAndConsentJourneyRedirectAction(enforceConsentsRedirection: Boolean): ActionBuilder[AuthRequest, AnyContent] =
+    consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionFilter(enforceConsentsRedirection)
 
 }

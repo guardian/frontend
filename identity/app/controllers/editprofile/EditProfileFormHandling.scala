@@ -17,12 +17,10 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
                    page: IdentityPage,
                    consentsUpdated: Boolean = false,
                    consentHint: Option[String] = None,
-                   enforceConsentRedirection: Boolean = false): Action[AnyContent] = {
-
-    val redirectAction = if(enforceConsentRedirection) consentJourneyRedirectAction else consentAuthWithIdapiUserAction
+                   enforceConsentsRedirection: Boolean = false): Action[AnyContent] = {
 
     csrfAddToken {
-      redirectAction.async { implicit request =>
+      validationAndConsentJourneyRedirectAction(enforceConsentsRedirection).async { implicit request =>
         profileFormsView(
           page = page,
           forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
@@ -80,7 +78,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     val emailFilledFormFuture = newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData)
-    val redirectDecisionFuture = redirectDecisionService.decideConsentRedirect(user, request)
+    val redirectDecisionFuture = redirectDecisionService.decideValidateAndConsentRedirect(user, request)
 
     for {
       emailFilledForm <- emailFilledFormFuture

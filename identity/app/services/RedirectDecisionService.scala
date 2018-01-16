@@ -19,6 +19,10 @@ case object RedirectToEmailValidation extends RedirectDecision(
   url = "/verify-email?isRepermissioningRedirect=true"
 )
 
+case object RedirectToEmailValidationStrictly extends RedirectDecision(
+  url = "/verify-email?isRepermissioningRedirect=true"
+)
+
 case object RedirectToConsents extends RedirectDecision(
   url = "/consents"
 )
@@ -35,7 +39,7 @@ class RedirectDecisionService(
 
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
-  def decideConsentRedirect[A](user: User, request: RequestHeader): Future[Option[RedirectDecision]] = {
+  def decideValidateAndConsentRedirect[A](user: User, request: RequestHeader): Future[Option[RedirectDecision]] = {
 
     def userHasRepermissioned: Boolean =
       user.statusFields.hasRepermissioned.contains(true)
@@ -45,7 +49,7 @@ class RedirectDecisionService(
 
     (userEmailValidated, userHasRepermissioned) match {
       case (false, false) =>
-        Future.successful(Some(RedirectToEmailValidation))
+        Future.successful(Some(RedirectToEmailValidationStrictly))
 
       case (false, true) =>
         Future.successful(Some(RedirectToEmailValidation))
