@@ -3,7 +3,7 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { Sticky } from 'common/modules/ui/sticky';
-import { register, unregister } from 'commercial-legacy/modules/messenger';
+import { register, unregister } from 'commercial-control/modules/messenger';
 
 const noSticky: boolean = !!(
     document.documentElement &&

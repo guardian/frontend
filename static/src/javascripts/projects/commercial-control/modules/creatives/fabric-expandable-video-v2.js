@@ -3,12 +3,12 @@ import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import template from 'lodash/utilities/template';
-import fabricExpandableVideoHtml from 'raw-loader!commercial-legacy/views/creatives/fabric-expandable-video-v2.html';
-import fabricExpandableCtaHtml from 'raw-loader!commercial-legacy/views/creatives/fabric-expandable-video-v2-cta.html';
+import fabricExpandableVideoHtml from 'raw-loader!commercial-control/views/creatives/fabric-expandable-video-v2.html';
+import fabricExpandableCtaHtml from 'raw-loader!commercial-control/views/creatives/fabric-expandable-video-v2-cta.html';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
-import { addTrackingPixel } from 'commercial-legacy/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial-legacy/modules/creatives/add-viewability-tracker';
+import { addTrackingPixel } from 'commercial-control/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial-control/modules/creatives/add-viewability-tracker';
 
 const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
     let isClosed = true;

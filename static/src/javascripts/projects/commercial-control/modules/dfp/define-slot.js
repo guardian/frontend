@@ -5,7 +5,7 @@ import { breakpoints } from 'lib/detect';
 import uniq from 'lodash/arrays/uniq';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
-import { getOutbrainComplianceTargeting } from 'commercial-legacy/modules/third-party-tags/outbrain';
+import { getOutbrainComplianceTargeting } from 'commercial-control/modules/third-party-tags/outbrain';
 import { getTestVariantId } from 'common/modules/experiments/utils';
 
 const adUnit = once(() => {
@@ -109,7 +109,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
      */
     if (config.get('switches.iasAdTargeting', false)) {
         /* eslint-disable no-underscore-dangle */
-        // this should all have been instantiated by commercial-legacy/modules/third-party-tags/ias.js
+        // this should all have been instantiated by commercial-control/modules/third-party-tags/ias.js
         window.__iasPET = window.__iasPET || {};
         const iasPET = window.__iasPET;
         /* eslint-disable no-underscore-enable */

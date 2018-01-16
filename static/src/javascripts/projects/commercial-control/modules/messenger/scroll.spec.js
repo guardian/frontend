@@ -1,5 +1,5 @@
 // @flow
-import { _ as testExports } from 'commercial-legacy/modules/messenger/scroll';
+import { _ as testExports } from 'commercial-control/modules/messenger/scroll';
 import { getViewport as getViewport_ } from 'lib/detect';
 
 const getViewport: any = getViewport_;
@@ -7,7 +7,7 @@ const addScrollListener: any = testExports.addScrollListener;
 const removeScrollListener: any = testExports.removeScrollListener;
 const reset = testExports.reset;
 
-jest.mock('commercial-legacy/modules/messenger', () => ({
+jest.mock('commercial-control/modules/messenger', () => ({
     register: jest.fn(),
 }));
 

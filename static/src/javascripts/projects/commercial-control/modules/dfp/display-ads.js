@@ -1,8 +1,8 @@
 // @flow
 
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
-import loadAdvert from 'commercial-legacy/modules/dfp/load-advert';
-import { pageSkin } from 'commercial-legacy/modules/creatives/page-skin';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
+import loadAdvert from 'commercial-control/modules/dfp/load-advert';
+import { pageSkin } from 'commercial-control/modules/creatives/page-skin';
 
 const displayAds = (): void => {
     window.googletag.pubads().enableSingleRequest();

@@ -1,9 +1,9 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
-import popupTemplate from 'raw-loader!commercial-legacy/views/ad-feedback-popup.html';
+import popupTemplate from 'raw-loader!commercial-control/views/ad-feedback-popup.html';
 import tick from 'svgs/icon/tick.svg';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
 
 const shouldRenderLabel = adSlotNode =>
     !(

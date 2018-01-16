@@ -1,6 +1,6 @@
 // @flow
 
-import type { Advert } from 'commercial-legacy/modules/dfp/Advert';
+import type { Advert } from 'commercial-control/modules/dfp/Advert';
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
 import { determineExternalDemand } from 'common/modules/experiments/tests/prebid-integration';

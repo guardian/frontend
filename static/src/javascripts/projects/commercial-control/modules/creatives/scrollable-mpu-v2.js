@@ -3,8 +3,8 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
-import { addTrackingPixel } from 'commercial-legacy/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial-legacy/modules/creatives/add-viewability-tracker';
+import { addTrackingPixel } from 'commercial-control/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial-control/modules/creatives/add-viewability-tracker';
 import type { bonzo } from 'bonzo';
 
 /**

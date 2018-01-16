@@ -1,7 +1,7 @@
 // @flow
 
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
-import { getAdvertById } from 'commercial-legacy/modules/dfp/get-advert-by-id';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
+import { getAdvertById } from 'commercial-control/modules/dfp/get-advert-by-id';
 
 const getAdverts = (withEmpty: boolean): Object =>
     Object.keys(dfpEnv.advertIds).reduce((advertsById, id) => {

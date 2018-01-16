@@ -1,7 +1,7 @@
 // @flow
 import { getViewport } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import type { RegisterListeners } from 'commercial-legacy/modules/messenger';
+import type { RegisterListeners } from 'commercial-control/modules/messenger';
 
 let w = window;
 let iframes = {};

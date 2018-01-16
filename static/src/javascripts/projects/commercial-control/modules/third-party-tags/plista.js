@@ -4,8 +4,8 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
-import { trackAdRender } from 'commercial-legacy/modules/dfp/track-ad-render';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
+import { trackAdRender } from 'commercial-control/modules/dfp/track-ad-render';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
 import { loadScript } from 'lib/load-script';
 
 const adblockInUse: any = adblockInUse_;

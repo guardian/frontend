@@ -1,5 +1,5 @@
 // @flow
-import hostedAbout from 'commercial-legacy/modules/hosted/about';
+import hostedAbout from 'commercial-control/modules/hosted/about';
 
 describe('Hosted About Popup', () => {
     beforeEach(() => {

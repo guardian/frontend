@@ -4,10 +4,10 @@
 
 import { getViewport } from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
-import loadAdvert from 'commercial-legacy/modules/dfp/load-advert';
-import { updateAdvertMetric } from 'commercial-legacy/modules/dfp/performance-logging';
-import { getAdvertById } from 'commercial-legacy/modules/dfp/get-advert-by-id';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
+import loadAdvert from 'commercial-control/modules/dfp/load-advert';
+import { updateAdvertMetric } from 'commercial-control/modules/dfp/performance-logging';
+import { getAdvertById } from 'commercial-control/modules/dfp/get-advert-by-id';
 
 const IntersectionObserver = window.IntersectionObserver;
 const IntersectionObserverEntry = window.IntersectionObserverEntry;

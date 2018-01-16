@@ -1,11 +1,11 @@
 // @flow
-import type { AdSize, AdSizes } from 'commercial-legacy/types';
+import type { AdSize, AdSizes } from 'commercial-control/types';
 
 import { breakpoints } from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
-import { defineSlot } from 'commercial-legacy/modules/dfp/define-slot';
-import { updateAdvertMetric } from 'commercial-legacy/modules/dfp/performance-logging';
-import { breakpointNameToAttribute } from 'commercial-legacy/modules/dfp/breakpoint-name-to-attribute';
+import { defineSlot } from 'commercial-control/modules/dfp/define-slot';
+import { updateAdvertMetric } from 'commercial-control/modules/dfp/performance-logging';
+import { breakpointNameToAttribute } from 'commercial-control/modules/dfp/breakpoint-name-to-attribute';
 
 type Resolver = (x: boolean) => void;
 

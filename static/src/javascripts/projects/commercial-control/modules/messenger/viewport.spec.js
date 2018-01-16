@@ -1,6 +1,6 @@
 // @flow
 
-import { _ as testExports } from 'commercial-legacy/modules/messenger/viewport';
+import { _ as testExports } from 'commercial-control/modules/messenger/viewport';
 import { getViewport as getViewport_ } from 'lib/detect';
 
 const getViewport: any = getViewport_;
@@ -12,7 +12,7 @@ jest.mock('lib/detect', () => ({
     getViewport: jest.fn(),
 }));
 
-jest.mock('commercial-legacy/modules/messenger', () => ({
+jest.mock('commercial-control/modules/messenger', () => ({
     register: jest.fn(),
 }));
 

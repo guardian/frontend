@@ -4,9 +4,9 @@ import {
     register as register_,
     unregister as unregister_,
     _ as testExports,
-} from 'commercial-legacy/modules/messenger';
-import dfpOrigin from 'commercial-legacy/modules/messenger/dfp-origin';
-import { postMessage } from 'commercial-legacy/modules/messenger/post-message';
+} from 'commercial-control/modules/messenger';
+import dfpOrigin from 'commercial-control/modules/messenger/dfp-origin';
+import { postMessage } from 'commercial-control/modules/messenger/post-message';
 
 const onMessage: any = testExports.onMessage;
 const register: any = register_;
@@ -20,7 +20,7 @@ const removeEventListenerSpy = jest
     .mockImplementation(() => {});
 const jsonParseSpy = jest.spyOn(JSON, 'parse');
 
-jest.mock('commercial-legacy/modules/messenger/post-message', () => ({
+jest.mock('commercial-control/modules/messenger/post-message', () => ({
     postMessage: jest.fn(),
 }));
 

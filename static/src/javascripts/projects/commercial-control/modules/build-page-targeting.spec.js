@@ -1,7 +1,7 @@
 // @flow
 import { local } from 'lib/storage';
 
-import { buildPageTargeting } from 'commercial-legacy/modules/build-page-targeting';
+import { buildPageTargeting } from 'commercial-control/modules/build-page-targeting';
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
 import {
@@ -9,9 +9,9 @@ import {
     getBreakpoint as getBreakpoint_,
 } from 'lib/detect';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
-import { getUserSegments as getUserSegments_ } from 'commercial-legacy/modules/user-ad-targeting';
+import { getUserSegments as getUserSegments_ } from 'commercial-control/modules/user-ad-targeting';
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
-import { getKruxSegments as getKruxSegments_ } from 'commercial-legacy/modules/third-party-tags/krux';
+import { getKruxSegments as getKruxSegments_ } from 'commercial-control/modules/third-party-tags/krux';
 
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
@@ -34,13 +34,13 @@ jest.mock('lib/detect', () => ({
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
-jest.mock('commercial-legacy/modules/user-ad-targeting', () => ({
+jest.mock('commercial-control/modules/user-ad-targeting', () => ({
     getUserSegments: jest.fn(),
 }));
 jest.mock('common/modules/experiments/utils', () => ({
     getParticipations: jest.fn(),
 }));
-jest.mock('commercial-legacy/modules/third-party-tags/krux', () => ({
+jest.mock('commercial-control/modules/third-party-tags/krux', () => ({
     getKruxSegments: jest.fn(),
 }));
 jest.mock('lodash/functions/once', () => fn => fn);

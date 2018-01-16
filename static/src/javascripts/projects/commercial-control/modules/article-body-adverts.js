@@ -3,11 +3,11 @@ import config from 'lib/config';
 import { isBreakpoint, getBreakpoint, getViewport } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import { spaceFiller } from 'common/modules/article/space-filler';
-import adSizes from 'commercial-legacy/modules/ad-sizes';
-import { addSlot } from 'commercial-legacy/modules/dfp/add-slot';
-import { trackAdRender } from 'commercial-legacy/modules/dfp/track-ad-render';
-import createSlot from 'commercial-legacy/modules/dfp/create-slot';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
+import adSizes from 'commercial-control/modules/ad-sizes';
+import { addSlot } from 'commercial-control/modules/dfp/add-slot';
+import { trackAdRender } from 'commercial-control/modules/dfp/track-ad-render';
+import createSlot from 'commercial-control/modules/dfp/create-slot';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
 
 type AdSize = {
     width: number,

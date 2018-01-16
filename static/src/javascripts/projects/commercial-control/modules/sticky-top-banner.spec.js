@@ -9,26 +9,26 @@ const { resizeStickyBanner, update, onScroll } = _;
 jest.mock('lib/detect', () => ({
     isBreakpoint: jest.fn(() => true),
 }));
-jest.mock('commercial-legacy/modules/messenger', () => ({
+jest.mock('commercial-control/modules/messenger', () => ({
     register: jest.fn(),
 }));
-jest.mock('commercial-legacy/modules/dfp/track-ad-render', () => ({
+jest.mock('commercial-control/modules/dfp/track-ad-render', () => ({
     trackAdRender: () => Promise.resolve(true),
 }));
 jest.mock('lib/events', () => ({
     addEventListener: jest.fn(),
 }));
-jest.mock('commercial-legacy/modules/commercial-features', () => ({
+jest.mock('commercial-control/modules/commercial-features', () => ({
     commercialFeatures: {
         stickyTopBannerAd: true,
     },
 }));
-jest.mock('commercial-legacy/modules/dfp/get-advert-by-id', () => ({
+jest.mock('commercial-control/modules/dfp/get-advert-by-id', () => ({
     getAdvertById: jest.fn(() => ({
         size: [0, 1],
     })),
 }));
-const registerSpy: any = require('commercial-legacy/modules/messenger')
+const registerSpy: any = require('commercial-control/modules/messenger')
     .register;
 // $FlowFixMe we should not mutate native JS API prototypes
 Element.prototype.getBoundingClientRect = jest.fn(() => ({ height: 500 }));

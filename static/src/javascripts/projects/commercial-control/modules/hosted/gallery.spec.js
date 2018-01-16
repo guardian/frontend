@@ -15,7 +15,7 @@ jest.mock('common/modules/analytics/interaction-tracking', () => ({
 jest.mock('lib/load-css-promise', () => ({
     loadCssPromise: Promise.resolve(),
 }));
-jest.mock('commercial-legacy/modules/dfp/performance-logging', () => ({
+jest.mock('commercial-control/modules/dfp/performance-logging', () => ({
     moduleStart: jest.fn(),
     moduleEnd: jest.fn(),
 }));

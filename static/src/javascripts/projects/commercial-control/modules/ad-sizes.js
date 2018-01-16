@@ -1,10 +1,10 @@
 // @flow
-import type { GuAdSize, SwitchUnitId } from 'commercial-legacy/types';
+import type { GuAdSize, SwitchUnitId } from 'commercial-control/types';
 import {
     mpuUnitId,
     leaderboardUnitId,
     billboardUnitId,
-} from 'commercial-legacy/types';
+} from 'commercial-control/types';
 
 const getAdSize = (
     width: number,

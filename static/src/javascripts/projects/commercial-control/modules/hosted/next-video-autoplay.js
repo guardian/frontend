@@ -1,7 +1,7 @@
 // @flow
 import bean from 'bean';
 import fastdom from 'fastdom';
-import NextVideo from 'commercial-legacy/modules/hosted/next-video';
+import NextVideo from 'commercial-control/modules/hosted/next-video';
 import $ from 'lib/$';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 

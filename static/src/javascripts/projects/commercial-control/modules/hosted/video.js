@@ -5,8 +5,8 @@ import reportError from 'lib/report-error';
 import events from 'common/modules/video/events';
 import videojsOptions from 'common/modules/video/videojs-options';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
-import { initHostedYoutube } from 'commercial-legacy/modules/hosted/youtube';
-import nextVideoAutoplay from 'commercial-legacy/modules/hosted/next-video-autoplay';
+import { initHostedYoutube } from 'commercial-control/modules/hosted/youtube';
+import nextVideoAutoplay from 'commercial-control/modules/hosted/next-video-autoplay';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
 
 const initLoadingSpinner = (player: Object, loadingTemplate: string): void => {

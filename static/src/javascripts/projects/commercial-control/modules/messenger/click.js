@@ -1,6 +1,6 @@
 // @flow
 import { trackNativeAdLinkClick } from 'common/modules/analytics/google';
-import type { RegisterListeners } from 'commercial-legacy/modules/messenger';
+import type { RegisterListeners } from 'commercial-control/modules/messenger';
 
 const sendClick = (adSlot: Element, linkName: string): void => {
     trackNativeAdLinkClick(adSlot.id, linkName);

@@ -4,9 +4,9 @@ import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 import { isIOS, isAndroid, isBreakpoint, getViewport } from 'lib/detect';
 import template from 'lodash/utilities/template';
-import { addTrackingPixel } from 'commercial-legacy/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial-legacy/modules/creatives/add-viewability-tracker';
-import fabricVideoStr from 'raw-loader!commercial-legacy/views/creatives/fabric-video.html';
+import { addTrackingPixel } from 'commercial-control/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial-control/modules/creatives/add-viewability-tracker';
+import fabricVideoStr from 'raw-loader!commercial-control/views/creatives/fabric-video.html';
 import objectFitVideos from 'object-fit-videos';
 
 class FabricVideo {

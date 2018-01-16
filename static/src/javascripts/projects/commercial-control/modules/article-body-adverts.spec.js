@@ -2,10 +2,10 @@
 import {
     articleBodyAdvertsInit,
     _,
-} from 'commercial-legacy/modules/article-body-adverts';
+} from 'commercial-control/modules/article-body-adverts';
 import config from 'lib/config';
 import { spaceFiller } from 'common/modules/article/space-filler';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
 import {
     getViewport as getViewport_,
     getBreakpoint as getBreakpoint_,
@@ -17,7 +17,7 @@ const getBreakpoint: any = getBreakpoint_;
 const isBreakpoint: any = isBreakpoint_;
 
 jest.mock(
-    'commercial-legacy/modules/dfp/track-ad-render',
+    'commercial-control/modules/dfp/track-ad-render',
     () => (id: string) => {
         const ads = {
             'dfp-ad--im': true,
@@ -25,10 +25,10 @@ jest.mock(
         return Promise.resolve(ads[id]);
     }
 );
-jest.mock('commercial-legacy/modules/dfp/add-slot', () => ({
+jest.mock('commercial-control/modules/dfp/add-slot', () => ({
     addSlot: jest.fn(),
 }));
-jest.mock('commercial-legacy/modules/commercial-features', () => ({
+jest.mock('commercial-control/modules/commercial-features', () => ({
     commercialFeatures: {},
 }));
 jest.mock('common/modules/article/space-filler', () => ({
@@ -125,7 +125,7 @@ describe('Article Body Adverts', () => {
             getBreakpoint.mockReturnValue('tablet');
 
             jest.setMock(
-                'commercial-legacy/modules/dfp/track-ad-render',
+                'commercial-control/modules/dfp/track-ad-render',
                 (id: string) => {
                     const ads = {
                         'dfp-ad--im': false,

@@ -1,7 +1,7 @@
 // @flow
 import reportError from 'lib/report-error';
-import dfpOrigin from 'commercial-legacy/modules/messenger/dfp-origin';
-import { postMessage } from 'commercial-legacy/modules/messenger/post-message';
+import dfpOrigin from 'commercial-control/modules/messenger/dfp-origin';
+import { postMessage } from 'commercial-control/modules/messenger/post-message';
 
 const ALLOWED_HOSTS = [
     dfpOrigin,

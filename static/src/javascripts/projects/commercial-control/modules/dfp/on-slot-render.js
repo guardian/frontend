@@ -1,15 +1,15 @@
 // @flow
-import type { SlotRenderEndedEvent } from 'commercial-legacy/types';
+import type { SlotRenderEndedEvent } from 'commercial-control/types';
 
 import once from 'lodash/functions/once';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { fire } from 'common/modules/analytics/beacon';
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
-import { Advert } from 'commercial-legacy/modules/dfp/Advert';
-import renderAdvert from 'commercial-legacy/modules/dfp/render-advert';
-import { emptyAdvert } from 'commercial-legacy/modules/dfp/empty-advert';
-import { getAdvertById } from 'commercial-legacy/modules/dfp/get-advert-by-id';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
+import { Advert } from 'commercial-control/modules/dfp/Advert';
+import renderAdvert from 'commercial-control/modules/dfp/render-advert';
+import { emptyAdvert } from 'commercial-control/modules/dfp/empty-advert';
+import { getAdvertById } from 'commercial-control/modules/dfp/get-advert-by-id';
 
 const recordFirstAdRendered = once(() => {
     fire('/count/ad-render.gif');

@@ -6,13 +6,13 @@ import { getViewport, isBreakpoint, isIOS, isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import template from 'lodash/utilities/template';
-import fabricExpandingV1Html from 'raw-loader!commercial-legacy/views/creatives/fabric-expanding-v1.html';
-import fabricExpandingVideoHtml from 'raw-loader!commercial-legacy/views/creatives/fabric-expanding-video.html';
+import fabricExpandingV1Html from 'raw-loader!commercial-control/views/creatives/fabric-expanding-v1.html';
+import fabricExpandingVideoHtml from 'raw-loader!commercial-control/views/creatives/fabric-expanding-video.html';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
 import bindAll from 'lodash/functions/bindAll';
-import { addTrackingPixel } from 'commercial-legacy/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial-legacy/modules/creatives/add-viewability-tracker';
+import { addTrackingPixel } from 'commercial-control/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial-control/modules/creatives/add-viewability-tracker';
 
 // Forked from expandable-v3.js
 class FabricExpandingV1 {

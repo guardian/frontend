@@ -3,11 +3,11 @@ import fastdom from 'lib/fastdom-promise';
 import { isEnhanced, isAndroid, getUserAgent, getViewport } from 'lib/detect';
 import template from 'lodash/utilities/template';
 import mediator from 'lib/mediator';
-import { addTrackingPixel } from 'commercial-legacy/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial-legacy/modules/creatives/add-viewability-tracker';
-import fabricV1Html from 'raw-loader!commercial-legacy/views/creatives/fabric-v1.html';
-import iframeVideoStr from 'raw-loader!commercial-legacy/views/creatives/iframe-video.html';
-import scrollBgStr from 'raw-loader!commercial-legacy/views/creatives/scrollbg.html';
+import { addTrackingPixel } from 'commercial-control/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial-control/modules/creatives/add-viewability-tracker';
+import fabricV1Html from 'raw-loader!commercial-control/views/creatives/fabric-v1.html';
+import iframeVideoStr from 'raw-loader!commercial-control/views/creatives/iframe-video.html';
+import scrollBgStr from 'raw-loader!commercial-control/views/creatives/scrollbg.html';
 
 const hasBackgroundFixedSupport = !isAndroid();
 const isIE10OrLess =

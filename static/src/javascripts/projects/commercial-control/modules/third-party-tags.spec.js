@@ -1,5 +1,5 @@
 // @flow
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
 import { initThirdPartyTags, _ } from './third-party-tags';
 
 const { insertScripts, loadOther } = _;
@@ -18,21 +18,21 @@ afterEach(() => {
     }
 });
 
-jest.mock('commercial-legacy/modules/third-party-tags/outbrain', () => ({
+jest.mock('commercial-control/modules/third-party-tags/outbrain', () => ({
     initOutbrain: jest.fn(),
 }));
 
-jest.mock('commercial-legacy/modules/third-party-tags/plista', () => ({
+jest.mock('commercial-control/modules/third-party-tags/plista', () => ({
     plista: jest.fn(),
 }));
 
-jest.mock('commercial-legacy/modules/commercial-features', () => ({
+jest.mock('commercial-control/modules/commercial-features', () => ({
     commercialFeatures: {
         thirdPartyTags: true,
     },
 }));
 
-jest.mock('commercial-legacy/modules/third-party-tags/imr-worldwide', () => ({
+jest.mock('commercial-control/modules/third-party-tags/imr-worldwide', () => ({
     imrWorldwide: {
         shouldRun: true,
         url: '//fakeThirdPartyTag.js',

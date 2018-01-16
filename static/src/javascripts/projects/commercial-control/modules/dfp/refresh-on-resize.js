@@ -1,8 +1,8 @@
 // @flow
 import { hasCrossedBreakpoint, breakpoints } from 'lib/detect';
 import mediator from 'lib/mediator';
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
-import { breakpointNameToAttribute } from 'commercial-legacy/modules/dfp/breakpoint-name-to-attribute';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
+import { breakpointNameToAttribute } from 'commercial-control/modules/dfp/breakpoint-name-to-attribute';
 /* hasBreakpointChanged: ((string, string) -> undefined) -> undefined. Invokes the callback if a breakpoint has been crossed since last invocation */
 const hasBreakpointChanged = hasCrossedBreakpoint(true);
 

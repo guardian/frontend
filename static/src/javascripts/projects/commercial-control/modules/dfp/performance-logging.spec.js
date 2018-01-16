@@ -1,5 +1,5 @@
 // @flow
-import { defer, wrap } from 'commercial-legacy/modules/dfp/performance-logging';
+import { defer, wrap } from 'commercial-control/modules/dfp/performance-logging';
 
 jest.mock('common/modules/analytics/beacon', () => ({
     postJson: jest.fn(),

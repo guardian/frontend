@@ -3,12 +3,12 @@
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 
-import { Frame } from 'commercial-legacy/modules/creatives/frame';
-import { FabricV1 } from 'commercial-legacy/modules/creatives/fabric-v1';
-import fabricExpand from 'commercial-legacy/modules/creatives/fabric-expanding-v1';
-import { fabricExpandVideo } from 'commercial-legacy/modules/creatives/fabric-expandable-video-v2';
-import { FabricVideo } from 'commercial-legacy/modules/creatives/fabric-video';
-import { ScrollableMpu } from 'commercial-legacy/modules/creatives/scrollable-mpu-v2';
+import { Frame } from 'commercial-control/modules/creatives/frame';
+import { FabricV1 } from 'commercial-control/modules/creatives/fabric-v1';
+import fabricExpand from 'commercial-control/modules/creatives/fabric-expanding-v1';
+import { fabricExpandVideo } from 'commercial-control/modules/creatives/fabric-expandable-video-v2';
+import { FabricVideo } from 'commercial-control/modules/creatives/fabric-video';
+import { ScrollableMpu } from 'commercial-control/modules/creatives/scrollable-mpu-v2';
 
 const creativeLookup: Object = {
     frame: Frame,

@@ -1,5 +1,5 @@
 // @flow
-import dfpOrigin from 'commercial-legacy/modules/messenger/dfp-origin';
+import dfpOrigin from 'commercial-control/modules/messenger/dfp-origin';
 
 export const postMessage = (
     message: {},

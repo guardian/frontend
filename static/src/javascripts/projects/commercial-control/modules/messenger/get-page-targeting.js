@@ -1,5 +1,5 @@
 // @flow
-import type { RegisterListeners } from 'commercial-legacy/modules/messenger';
+import type { RegisterListeners } from 'commercial-control/modules/messenger';
 import config from 'lib/config';
 
 const init = (register: RegisterListeners) => {

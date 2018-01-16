@@ -4,14 +4,14 @@ import qwery from 'qwery';
 import raven from 'lib/raven';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
-import { Advert } from 'commercial-legacy/modules/dfp/Advert';
-import adSizes from 'commercial-legacy/modules/ad-sizes';
-import { stickyMpu } from 'commercial-legacy/modules/sticky-mpu';
-import { applyCreativeTemplate } from 'commercial-legacy/modules/dfp/apply-creative-template';
-import renderAdvertLabel from 'commercial-legacy/modules/dfp/render-advert-label';
+import { Advert } from 'commercial-control/modules/dfp/Advert';
+import adSizes from 'commercial-control/modules/ad-sizes';
+import { stickyMpu } from 'commercial-control/modules/sticky-mpu';
+import { applyCreativeTemplate } from 'commercial-control/modules/dfp/apply-creative-template';
+import renderAdvertLabel from 'commercial-control/modules/dfp/render-advert-label';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { Toggles } from 'common/modules/ui/toggles';
-import { recordUserAdFeedback } from 'commercial-legacy/modules/user-ad-feedback';
+import { recordUserAdFeedback } from 'commercial-control/modules/user-ad-feedback';
 /**
  * ADVERT RENDERING
  * ----------------
@@ -145,7 +145,7 @@ const addContentClass = adSlotNode => {
 };
 
 /**
- * @param advert - as defined in commercial-legacy/modules/dfp/Advert
+ * @param advert - as defined in commercial-control/modules/dfp/Advert
  * @param slotRenderEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
  */

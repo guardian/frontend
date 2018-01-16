@@ -1,6 +1,6 @@
 // @flow
 
-import { remarketing } from 'commercial-legacy/modules/third-party-tags/remarketing';
+import { remarketing } from 'commercial-control/modules/third-party-tags/remarketing';
 
 const { shouldRun, url } = remarketing;
 const onLoad: any = remarketing.onLoad;

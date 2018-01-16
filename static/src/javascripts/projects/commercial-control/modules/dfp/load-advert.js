@@ -1,6 +1,6 @@
 // @flow
-import { Advert } from 'commercial-legacy/modules/dfp/Advert';
-import { prebid } from 'commercial-legacy/modules/prebid/prebid';
+import { Advert } from 'commercial-control/modules/dfp/Advert';
+import { prebid } from 'commercial-control/modules/prebid/prebid';
 
 const loadAdvert = (advert: Advert): void => {
     advert.whenSlotReady

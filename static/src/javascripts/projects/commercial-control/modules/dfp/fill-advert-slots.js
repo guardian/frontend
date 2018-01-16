@@ -1,13 +1,13 @@
 // @flow
 
 import qwery from 'qwery';
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
-import { Advert } from 'commercial-legacy/modules/dfp/Advert';
-import queueAdvert from 'commercial-legacy/modules/dfp/queue-advert';
-import { displayLazyAds } from 'commercial-legacy/modules/dfp/display-lazy-ads';
-import { displayAds } from 'commercial-legacy/modules/dfp/display-ads';
-import { setupSonobi } from 'commercial-legacy/modules/dfp/prepare-sonobi-tag';
-import { closeDisabledSlots } from 'commercial-legacy/modules/close-disabled-slots';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
+import { Advert } from 'commercial-control/modules/dfp/Advert';
+import queueAdvert from 'commercial-control/modules/dfp/queue-advert';
+import { displayLazyAds } from 'commercial-control/modules/dfp/display-lazy-ads';
+import { displayAds } from 'commercial-control/modules/dfp/display-ads';
+import { setupSonobi } from 'commercial-control/modules/dfp/prepare-sonobi-tag';
+import { closeDisabledSlots } from 'commercial-control/modules/close-disabled-slots';
 
 // Pre-rendered ad slots that were rendered on the page by the server are collected here.
 // For dynamic ad slots that are created at js-runtime, see:

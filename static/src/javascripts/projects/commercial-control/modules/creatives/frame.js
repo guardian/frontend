@@ -3,10 +3,10 @@ import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import { Toggles } from 'common/modules/ui/toggles';
 import { addClassesAndTitle } from 'common/views/svg';
-import { addTrackingPixel } from 'commercial-legacy/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial-legacy/modules/creatives/add-viewability-tracker';
-import frameStr from 'raw-loader!commercial-legacy/views/creatives/frame.html';
-import labelStr from 'raw-loader!commercial-legacy/views/creatives/gustyle-label.html';
+import { addTrackingPixel } from 'commercial-control/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial-control/modules/creatives/add-viewability-tracker';
+import frameStr from 'raw-loader!commercial-control/views/creatives/frame.html';
+import labelStr from 'raw-loader!commercial-control/views/creatives/gustyle-label.html';
 import externalLink from 'svgs/icon/external-link.svg';
 import arrow from 'svgs/icon/arrow.svg';
 

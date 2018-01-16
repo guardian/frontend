@@ -1,9 +1,9 @@
 // @flow
-import type { SlotOnloadEvent } from 'commercial-legacy/types';
+import type { SlotOnloadEvent } from 'commercial-control/types';
 
-import { Advert } from 'commercial-legacy/modules/dfp/Advert';
-import { getAdvertById } from 'commercial-legacy/modules/dfp/get-advert-by-id';
-import { postMessage } from 'commercial-legacy/modules/messenger/post-message';
+import { Advert } from 'commercial-control/modules/dfp/Advert';
+import { getAdvertById } from 'commercial-control/modules/dfp/get-advert-by-id';
+import { postMessage } from 'commercial-control/modules/messenger/post-message';
 
 const host = `${window.location.protocol}//${window.location.host}`;
 

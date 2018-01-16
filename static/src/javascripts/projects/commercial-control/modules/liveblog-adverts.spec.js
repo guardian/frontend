@@ -13,13 +13,13 @@ jest.mock('common/modules/article/space-filler', () => ({
     fillSpace: jest.fn(),
 }));
 
-jest.mock('commercial-legacy/modules/commercial-features', () => ({
+jest.mock('commercial-control/modules/commercial-features', () => ({
     commercialFeatures: {
         liveblogAdverts: true,
     },
 }));
 
-jest.mock('commercial-legacy/modules/dfp/add-slot', () => ({
+jest.mock('commercial-control/modules/dfp/add-slot', () => ({
     addSlot: jest.fn(),
 }));
 

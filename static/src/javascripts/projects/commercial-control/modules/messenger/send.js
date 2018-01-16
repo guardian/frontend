@@ -1,5 +1,5 @@
 // @flow
-import { postMessage } from 'commercial-legacy/modules/messenger/post-message';
+import { postMessage } from 'commercial-control/modules/messenger/post-message';
 
 /* eslint no-bitwise: "off" */
 

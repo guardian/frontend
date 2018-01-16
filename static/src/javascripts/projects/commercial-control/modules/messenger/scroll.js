@@ -2,7 +2,7 @@
 import { addEventListener } from 'lib/events';
 import { getViewport } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import type { RegisterListeners } from 'commercial-legacy/modules/messenger';
+import type { RegisterListeners } from 'commercial-control/modules/messenger';
 
 // An intersection observer will allow us to efficiently send slot
 // coordinates for only those that are in the viewport.

@@ -6,7 +6,7 @@ import type {
     PrebidBidder,
     PrebidIndexExchangeParams,
     PrebidSonobiParams,
-} from 'commercial-legacy/modules/prebid/types';
+} from 'commercial-control/modules/prebid/types';
 
 export const bidderConfig: PrebidBidderCriteria = {
     sonobi: [

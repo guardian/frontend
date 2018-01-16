@@ -4,12 +4,12 @@ import { noop } from 'lib/noop';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
 
-import prepareGoogletag from 'commercial-legacy/modules/dfp/prepare-googletag';
-import getAdverts from 'commercial-legacy/modules/dfp/get-adverts';
-import getCreativeIDs from 'commercial-legacy/modules/dfp/get-creative-ids';
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
-import loadAdvert from 'commercial-legacy/modules/dfp/load-advert';
+import prepareGoogletag from 'commercial-control/modules/dfp/prepare-googletag';
+import getAdverts from 'commercial-control/modules/dfp/get-adverts';
+import getCreativeIDs from 'commercial-control/modules/dfp/get-creative-ids';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import loadAdvert from 'commercial-control/modules/dfp/load-advert';
 
 const getBreakpoint: any = getBreakpoint_;
 
@@ -18,7 +18,7 @@ jest.mock('common/modules/identity/api', () => ({
     getUserFromCookie: jest.fn(),
 }));
 jest.mock('common/modules/analytics/beacon', () => {});
-jest.mock('commercial-legacy/modules/dfp/refresh-on-resize', () => {});
+jest.mock('commercial-control/modules/dfp/refresh-on-resize', () => {});
 jest.mock('lib/detect', () => ({
     hasCrossedBreakpoint: jest.fn(),
     getBreakpoint: jest.fn(),
@@ -49,37 +49,37 @@ jest.mock('lib/detect', () => ({
     ],
 }));
 jest.mock('common/modules/analytics/google', () => () => {});
-jest.mock('commercial-legacy/modules/dfp/display-lazy-ads', () => ({
+jest.mock('commercial-control/modules/dfp/display-lazy-ads', () => ({
     displayLazyAds: jest.fn(),
 }));
 
-jest.mock('commercial-legacy/modules/commercial-features', () => ({
+jest.mock('commercial-control/modules/commercial-features', () => ({
     commercialFeatures: {
         dfpAdvertising: true,
     },
 }));
-jest.mock('commercial-legacy/modules/dfp/apply-creative-template', () => ({
+jest.mock('commercial-control/modules/dfp/apply-creative-template', () => ({
     applyCreativeTemplate: () => Promise.resolve(true),
 }));
 jest.mock('lib/load-script', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
 }));
 jest.mock('lodash/functions/once', () => fn => fn);
-jest.mock('commercial-legacy/modules/dfp/performance-logging', () => ({
+jest.mock('commercial-control/modules/dfp/performance-logging', () => ({
     setListeners: jest.fn(),
     addTag: jest.fn(),
     updateAdvertMetric: jest.fn(),
 }));
-jest.mock('commercial-legacy/modules/dfp/refresh-on-resize', () => jest.fn());
+jest.mock('commercial-control/modules/dfp/refresh-on-resize', () => jest.fn());
 jest.mock('common/modules/analytics/beacon', () => ({ fire: jest.fn() }));
-jest.mock('commercial-legacy/modules/sticky-mpu', () => jest.fn());
+jest.mock('commercial-control/modules/sticky-mpu', () => jest.fn());
 jest.mock('common/modules/onward/geo-most-popular', () => ({
     geoMostPopular: { render: jest.fn() },
 }));
-jest.mock('commercial-legacy/modules/third-party-tags/outbrain', () => ({
+jest.mock('commercial-control/modules/third-party-tags/outbrain', () => ({
     getOutbrainComplianceTargeting: () => Promise.resolve(),
 }));
-jest.mock('commercial-legacy/modules/dfp/load-advert', () => jest.fn());
+jest.mock('commercial-control/modules/dfp/load-advert', () => jest.fn());
 
 let $style;
 const makeFakeEvent = (creativeId, id) => ({

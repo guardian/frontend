@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import type { RegisterListeners } from 'commercial-legacy/modules/messenger';
+import type { RegisterListeners } from 'commercial-control/modules/messenger';
 
 const setType = (type: ?string, adSlot: any) =>
     fastdom.write(() => {

@@ -1,8 +1,8 @@
 // @flow
 
 import fastdom from 'fastdom';
-import { Advert } from 'commercial-legacy/modules/dfp/Advert';
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
+import { Advert } from 'commercial-control/modules/dfp/Advert';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
 
 const removeFromDfpEnv = advert => {
     const removeAdvert = (adverts: Array<Advert>): Array<Advert> =>

@@ -1,5 +1,5 @@
 // @flow
-import hostedNextVideo from 'commercial-legacy/modules/hosted/next-video';
+import hostedNextVideo from 'commercial-control/modules/hosted/next-video';
 import fetchJson from 'lib/fetch-json';
 
 jest.mock('lib/config', () => ({

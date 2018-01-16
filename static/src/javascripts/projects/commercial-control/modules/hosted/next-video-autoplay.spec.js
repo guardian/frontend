@@ -1,9 +1,9 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import nextVideoAutoplay from 'commercial-legacy/modules/hosted/next-video-autoplay';
+import nextVideoAutoplay from 'commercial-control/modules/hosted/next-video-autoplay';
 
 jest.mock('common/modules/analytics/google', () => {});
-jest.mock('commercial-legacy/modules/hosted/next-video', () => ({
+jest.mock('commercial-control/modules/hosted/next-video', () => ({
     load() {
         return Promise.resolve();
     },
@@ -20,7 +20,7 @@ describe('Next video autoplay', () => {
             </video>
         </div>
         <div class="js-hosted-next-autoplay">
-            <div class="js-autoplay-timer" data-next-page="/commercial-legacy/advertiser-content/renault-car-of-the-future/design-competition-episode2">10s</div>
+            <div class="js-autoplay-timer" data-next-page="/commercial-control/advertiser-content/renault-car-of-the-future/design-competition-episode2">10s</div>
         </div>
         <button class="js-autoplay-cancel"></button>;
     `;

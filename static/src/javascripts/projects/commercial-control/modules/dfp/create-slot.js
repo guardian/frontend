@@ -1,5 +1,5 @@
 // @flow
-import adSizes from 'commercial-legacy/modules/ad-sizes';
+import adSizes from 'commercial-control/modules/ad-sizes';
 
 const inlineDefinition = {
     sizeMappings: {

@@ -6,16 +6,16 @@ import {
     bidderConfig,
     sonobiBidder,
     indexExchangeBidder,
-} from 'commercial-legacy/modules/prebid/bidder-config';
+} from 'commercial-control/modules/prebid/bidder-config';
 import type {
     PrebidBidder,
     PrebidAdSlotCriteria,
     PrebidSize,
     PrebidBid,
-} from 'commercial-legacy/modules/prebid/types';
-import { Advert } from 'commercial-legacy/modules/dfp/Advert';
-import { breakpointNameToAttribute } from 'commercial-legacy/modules/dfp/breakpoint-name-to-attribute';
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
+} from 'commercial-control/modules/prebid/types';
+import { Advert } from 'commercial-control/modules/dfp/Advert';
+import { breakpointNameToAttribute } from 'commercial-control/modules/dfp/breakpoint-name-to-attribute';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
 
 const bidders = [sonobiBidder, indexExchangeBidder];
 const bidderTimeout = 1500;

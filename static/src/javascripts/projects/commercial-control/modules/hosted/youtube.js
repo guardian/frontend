@@ -1,5 +1,5 @@
 // @flow
-import nextVideoAutoplay from 'commercial-legacy/modules/hosted/next-video-autoplay';
+import nextVideoAutoplay from 'commercial-control/modules/hosted/next-video-autoplay';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,

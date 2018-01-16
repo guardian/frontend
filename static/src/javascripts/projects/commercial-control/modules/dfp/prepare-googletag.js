@@ -7,30 +7,30 @@ import fastdom from 'lib/fastdom-promise';
 import sha1 from 'lib/sha1';
 import { getUserFromCookie } from 'common/modules/identity/api';
 import { loadScript } from 'lib/load-script';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
-import { buildPageTargeting } from 'commercial-legacy/modules/build-page-targeting';
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
-import onSlotRender from 'commercial-legacy/modules/dfp/on-slot-render';
-import onSlotLoad from 'commercial-legacy/modules/dfp/on-slot-load';
-import { fillAdvertSlots } from 'commercial-legacy/modules/dfp/fill-advert-slots';
-import refreshOnResize from 'commercial-legacy/modules/dfp/refresh-on-resize';
-import { adFreeSlotRemove } from 'commercial-legacy/modules/close-disabled-slots';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import { buildPageTargeting } from 'commercial-control/modules/build-page-targeting';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
+import onSlotRender from 'commercial-control/modules/dfp/on-slot-render';
+import onSlotLoad from 'commercial-control/modules/dfp/on-slot-load';
+import { fillAdvertSlots } from 'commercial-control/modules/dfp/fill-advert-slots';
+import refreshOnResize from 'commercial-control/modules/dfp/refresh-on-resize';
+import { adFreeSlotRemove } from 'commercial-control/modules/close-disabled-slots';
 import {
     addTag,
     setListeners,
-} from 'commercial-legacy/modules/dfp/performance-logging';
+} from 'commercial-control/modules/dfp/performance-logging';
 
-import { init as initMessenger } from 'commercial-legacy/modules/messenger';
+import { init as initMessenger } from 'commercial-control/modules/messenger';
 
-import { init as type } from 'commercial-legacy/modules/messenger/type';
-import { init as getStyles } from 'commercial-legacy/modules/messenger/get-stylesheet';
-import { init as getPageTargeting } from 'commercial-legacy/modules/messenger/get-page-targeting';
-import { init as hide } from 'commercial-legacy/modules/messenger/hide';
-import { init as resize } from 'commercial-legacy/modules/messenger/resize';
-import { init as scroll } from 'commercial-legacy/modules/messenger/scroll';
-import { init as viewport } from 'commercial-legacy/modules/messenger/viewport';
-import { init as sendClick } from 'commercial-legacy/modules/messenger/click';
-import { init as background } from 'commercial-legacy/modules/messenger/background';
+import { init as type } from 'commercial-control/modules/messenger/type';
+import { init as getStyles } from 'commercial-control/modules/messenger/get-stylesheet';
+import { init as getPageTargeting } from 'commercial-control/modules/messenger/get-page-targeting';
+import { init as hide } from 'commercial-control/modules/messenger/hide';
+import { init as resize } from 'commercial-control/modules/messenger/resize';
+import { init as scroll } from 'commercial-control/modules/messenger/scroll';
+import { init as viewport } from 'commercial-control/modules/messenger/viewport';
+import { init as sendClick } from 'commercial-control/modules/messenger/click';
+import { init as background } from 'commercial-control/modules/messenger/background';
 
 initMessenger(
     type,

@@ -1,7 +1,7 @@
 // @flow
 import defaultConfig from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
-import { isAdFreeUser } from 'commercial-legacy/modules/user-features';
+import { isAdFreeUser } from 'commercial-control/modules/user-features';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 

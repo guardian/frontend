@@ -2,9 +2,9 @@
 import fastdom from 'lib/fastdom-promise';
 import { getBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
-import { addSlot } from 'commercial-legacy/modules/dfp/add-slot';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
-import createSlot from 'commercial-legacy/modules/dfp/create-slot';
+import { addSlot } from 'commercial-control/modules/dfp/add-slot';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import createSlot from 'commercial-control/modules/dfp/create-slot';
 import { spaceFiller } from 'common/modules/article/space-filler';
 
 const INTERVAL = 5; // number of posts between ads

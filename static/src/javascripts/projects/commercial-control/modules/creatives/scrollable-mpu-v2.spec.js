@@ -1,14 +1,14 @@
 // @flow
 import fastdom from 'fastdom';
-import { ScrollableMpu } from 'commercial-legacy/modules/creatives/scrollable-mpu-v2';
-import { addTrackingPixel } from 'commercial-legacy/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial-legacy/modules/creatives/add-viewability-tracker';
+import { ScrollableMpu } from 'commercial-control/modules/creatives/scrollable-mpu-v2';
+import { addTrackingPixel } from 'commercial-control/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial-control/modules/creatives/add-viewability-tracker';
 
-jest.mock('commercial-legacy/modules/creatives/add-tracking-pixel', () => ({
+jest.mock('commercial-control/modules/creatives/add-tracking-pixel', () => ({
     addTrackingPixel: jest.fn(),
 }));
 
-jest.mock('commercial-legacy/modules/creatives/add-viewability-tracker', () =>
+jest.mock('commercial-control/modules/creatives/add-viewability-tracker', () =>
     jest.fn()
 );
 

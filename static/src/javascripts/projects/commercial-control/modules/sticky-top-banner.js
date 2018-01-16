@@ -1,14 +1,14 @@
 // @flow
-import type { Advert } from 'commercial-legacy/modules/dfp/Advert';
+import type { Advert } from 'commercial-control/modules/dfp/Advert';
 
 import { addEventListener } from 'lib/events';
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import { trackAdRender } from 'commercial-legacy/modules/dfp/track-ad-render';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
-import { getAdvertById } from 'commercial-legacy/modules/dfp/get-advert-by-id';
-import { register, unregister } from 'commercial-legacy/modules/messenger';
+import { trackAdRender } from 'commercial-control/modules/dfp/track-ad-render';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import { getAdvertById } from 'commercial-control/modules/dfp/get-advert-by-id';
+import { register, unregister } from 'commercial-control/modules/messenger';
 
 const topSlotId = 'dfp-ad--top-above-nav';
 let updateQueued = false;

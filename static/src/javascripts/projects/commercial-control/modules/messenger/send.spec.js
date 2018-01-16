@@ -1,8 +1,8 @@
 // @flow
-import { postMessage } from 'commercial-legacy/modules/messenger/post-message';
+import { postMessage } from 'commercial-control/modules/messenger/post-message';
 import { send } from './send';
 
-jest.mock('commercial-legacy/modules/messenger/post-message', () => ({
+jest.mock('commercial-control/modules/messenger/post-message', () => ({
     postMessage: jest.fn(),
 }));
 

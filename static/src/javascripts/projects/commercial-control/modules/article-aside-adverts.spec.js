@@ -3,10 +3,10 @@
 import qwery from 'qwery';
 import mediator from 'lib/mediator';
 import { noop } from 'lib/noop';
-import { articleAsideAdvertsInit } from 'commercial-legacy/modules/article-aside-adverts';
+import { articleAsideAdvertsInit } from 'commercial-control/modules/article-aside-adverts';
 import fastdom from 'lib/fastdom-promise';
 
-jest.mock('commercial-legacy/modules/commercial-features', () => ({
+jest.mock('commercial-control/modules/commercial-features', () => ({
     commercialFeatures: {
         articleAsideAdverts: true,
     },

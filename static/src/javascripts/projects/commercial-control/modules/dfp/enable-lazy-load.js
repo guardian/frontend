@@ -1,9 +1,9 @@
 // @flow
 
-import { Advert } from 'commercial-legacy/modules/dfp/Advert';
+import { Advert } from 'commercial-control/modules/dfp/Advert';
 import mediator from 'lib/mediator';
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
-import { onIntersect, onScroll } from 'commercial-legacy/modules/dfp/lazy-load';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
+import { onIntersect, onScroll } from 'commercial-control/modules/dfp/lazy-load';
 
 /* observer: IntersectionObserver?. The observer used to detect when ad slots enter the viewport */
 let observer: window.IntersectionObserver = null;

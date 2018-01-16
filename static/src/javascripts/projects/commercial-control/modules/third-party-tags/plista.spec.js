@@ -1,17 +1,17 @@
 // @flow
 import config from 'lib/config';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
-import plista from 'commercial-legacy/modules/third-party-tags/plista';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
-import { trackAdRender } from 'commercial-legacy/modules/dfp/track-ad-render';
+import plista from 'commercial-control/modules/third-party-tags/plista';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import { trackAdRender } from 'commercial-control/modules/dfp/track-ad-render';
 
 const adblockInUse: any = adblockInUse_;
 
-jest.mock('commercial-legacy/modules/dfp/track-ad-render', () => ({
+jest.mock('commercial-control/modules/dfp/track-ad-render', () => ({
     trackAdRender: jest.fn(),
 }));
 
-jest.mock('commercial-legacy/modules/commercial-features', () => ({
+jest.mock('commercial-control/modules/commercial-features', () => ({
     commercialFeatures: {
         thirdPartyTags: true,
         outbrain: true,

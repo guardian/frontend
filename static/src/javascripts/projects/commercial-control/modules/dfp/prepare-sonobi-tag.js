@@ -1,11 +1,11 @@
 // @flow
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
-import { commercialFeatures } from 'commercial-legacy/modules/commercial-features';
-import { buildPageTargeting } from 'commercial-legacy/modules/build-page-targeting';
-import { dfpEnv } from 'commercial-legacy/modules/dfp/dfp-env';
+import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import { buildPageTargeting } from 'commercial-control/modules/build-page-targeting';
+import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
 import once from 'lodash/functions/once';
-import { prebid } from 'commercial-legacy/modules/prebid/prebid';
+import { prebid } from 'commercial-control/modules/prebid/prebid';
 
 // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts
 // to re-implement this function, and doesn't consider the "access permissions" issue that exists in IE11,
