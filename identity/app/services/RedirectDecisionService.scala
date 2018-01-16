@@ -5,36 +5,41 @@ import play.api.mvc.{ControllerComponents, RequestHeader}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-abstract case class RedirectAccess(){
-  def shouldRedirect(pageId: String):Boolean = true
-}
-object RedirectAccessEmailPrefs extends RedirectAccess {
-  override def shouldRedirect(pageId: String):Boolean = pageId contains "email-prefs"
+abstract class RedirectAccess {
+  private[services] def shouldRedirectOnUrl(pageId: String):Boolean = false
 }
 
-object RedirectAccessAllPages extends RedirectAccess
+case object RedirectAccessEmailPrefs extends RedirectAccess {
+  override def shouldRedirectOnUrl(pageId: String):Boolean = pageId contains "email-prefs"
+}
+
+case object RedirectAccessAllPages extends RedirectAccess {
+  override def shouldRedirectOnUrl(pageId: String):Boolean = true
+}
 
 
-abstract class RedirectDecision(val url: String, val access: RedirectAccess)
+abstract class RedirectDecision(val url: String, protected val redirectAccess: RedirectAccess = RedirectAccessAllPages){
+  def shouldRedirectOnUrl(pageId: String):Boolean = redirectAccess.shouldRedirectOnUrl(pageId)
+}
 
 case object RedirectToEmailValidation extends RedirectDecision(
   url = "/verify-email?isRepermissioningRedirect=true",
-  access = RedirectAccessEmailPrefs
+  redirectAccess = RedirectAccessEmailPrefs
 )
 
 case object RedirectToEmailValidationStrictly extends RedirectDecision(
   url = "/verify-email?isRepermissioningRedirect=true",
-  access = RedirectAccessAllPages
+  redirectAccess = RedirectAccessAllPages
 )
 
 case object RedirectToConsents extends RedirectDecision(
   url = "/consents",
-  access = RedirectAccessEmailPrefs
+  redirectAccess = RedirectAccessEmailPrefs
 )
 
 case object RedirectToNewsletterConsents extends RedirectDecision(
   url = "/consents/newsletters",
-  access = RedirectAccessEmailPrefs
+  redirectAccess = RedirectAccessEmailPrefs
 )
 
 class RedirectDecisionService(
