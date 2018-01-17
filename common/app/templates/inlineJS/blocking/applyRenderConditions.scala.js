@@ -153,8 +153,8 @@
      * This temporary fix sets media in articles to 5:3 aspect ratio.
      * https://bugzilla.mozilla.org/show_bug.cgi?id=958714
     **/
-    if(supportsPercentagePadding()) {
-        docClass += ' supports-percentage-padding';
+    if(!supportsPercentagePadding()) {
+        docClass += ' fake-percentage-padding';
     }
 
     documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
