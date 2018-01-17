@@ -1,7 +1,7 @@
 // @flow
 import { local } from 'lib/storage';
 
-import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
+import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
 import {
@@ -9,7 +9,7 @@ import {
     getBreakpoint as getBreakpoint_,
 } from 'lib/detect';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
-import { getUserSegments as getUserSegments_ } from 'commercial/modules/user-ad-targeting';
+import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
 import { getKruxSegments as getKruxSegments_ } from 'commercial/modules/third-party-tags/krux';
 
@@ -34,7 +34,7 @@ jest.mock('lib/detect', () => ({
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
-jest.mock('commercial/modules/user-ad-targeting', () => ({
+jest.mock('common/modules/commercial/user-ad-targeting', () => ({
     getUserSegments: jest.fn(),
 }));
 jest.mock('common/modules/experiments/utils', () => ({
