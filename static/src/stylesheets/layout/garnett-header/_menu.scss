@@ -79,7 +79,6 @@
 
 .menu__inner {
     box-sizing: border-box;
-    background-color: $nav-background-colour;
 
     @include mq($until: desktop) {
         &.gs-container {
@@ -88,6 +87,7 @@
     }
 
     @include mq(desktop) {
+        background-color: $nav-background-colour;
         margin-top: -20px ;
         padding: 0 $gs-gutter;
 
