@@ -85,12 +85,6 @@ case object USBriefing extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/guardian-us-briefing")
 }
 
-case object AusBriefing extends ArticleEmailMetadata {
-  val name = "Australian election briefing"
-  override val banner = Some("australian-election-briefing.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "australia-news/series/australian-election-briefing")
-}
-
 case object EuReferendum extends ArticleEmailMetadata {
   val name = "EU Referendum Morning Briefing"
   override val banner = Some("brexit-briefing.png")
@@ -253,7 +247,6 @@ object EmailAddons {
     MorningBriefing,
     TheUSMinute,
     USBriefing,
-    AusBriefing,
     EuReferendum,
     LabNotes,
     OlympicsDailyBriefing,
