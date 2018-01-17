@@ -1,6 +1,10 @@
 // @flow
 
 import config from 'lib/config';
+import {
+    buildPageTargeting,
+    buildAppNexusTargeting,
+} from 'commercial/modules/build-page-targeting';
 import type {
     PrebidBidderCriteria,
     PrebidBidder,
@@ -78,6 +82,7 @@ export const sonobiBidder: PrebidBidder = {
         ad_unit: config.page.adUnit,
         dom_id: slotId,
         floor: 0.5,
+        appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
     }),
 };
 
