@@ -228,7 +228,13 @@ from scrolling */
 }
 
 .new-header--slim {
-    height: 0;
+    border-bottom: 1px solid $rule;
+    height: $slim-nav-height + $gs-baseline + $gs-baseline / 2;
+
+    .immersive-header-container & {
+        border-bottom: 0;
+        height: 0;
+    }
 
     @include mq(tablet) {
         border-bottom: 1px solid $rule;
