@@ -40,6 +40,7 @@ const go = () => {
         }
 
         if (config.switches.commercial) {
+            markTime('commercial request');
             // It is called the variant by the server side test, but it actually represents the control behaviour,
             // because it is the baseline which will not include new changes made by the commercial team.
             const inCommercialControl = config.tests.commercialBaseline === 'variant';
@@ -70,6 +71,7 @@ const go = () => {
         }
 
         if (window.guardian.isEnhanced) {
+            markTime('enhanced request');
             require.ensure(
                 [],
                 // webpack needs the require function to be called 'require'
