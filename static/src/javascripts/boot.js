@@ -39,54 +39,96 @@ const go = () => {
             });
         }
 
-        if (config.switches.commercial) {
-            markTime('commercial request');
-            // It is called the variant by the server side test, but it actually represents the control behaviour,
-            // because it is the baseline which will not include new changes made by the commercial team.
-            const inCommercialControl =
+        markTime('commercial request');
+        // It is called the variant by the server side test, but it actually represents the control behaviour,
+        // because it is the baseline which will not include new changes made by the commercial team.
+        const inCommercialControl =
                 config.tests.commercialBaseline === 'variant';
-            const feature = inCommercialControl
-                ? 'commercial-control'
-                : 'commercial';
-            raven.context({ tags: { feature } }, () => {
-                markTime('commercial boot');
-                if (inCommercialControl) {
-                    require.ensure(
-                        [],
-                        require => {
-                            require('bootstraps/commercial-control')();
-                        },
-                        'commercial-control'
-                    );
-                } else {
-                    require.ensure(
-                        [],
-                        require => {
-                            require('bootstraps/commercial')();
-                        },
-                        'commercial'
-                    );
-                }
-            });
-        }
-
-        if (window.guardian.isEnhanced) {
-            markTime('enhanced request');
+        if (inCommercialControl) {
             require.ensure(
                 [],
                 // webpack needs the require function to be called 'require'
                 // eslint-disable-next-line no-shadow
                 require => {
-                    markTime('enhanced boot');
-                    require('bootstraps/enhanced/main').bootEnhanced();
+                    raven.context({tags: {feature: 'commercial-control'}}, () => {
+                        markTime('commercial boot');
+                        const commercialBoot = config.switches.commercial
+                            ? require('bootstraps/commercial-control')
+                            : Promise.resolve;
 
-                    if (document.readyState === 'complete') {
-                        capturePerfTimings();
-                    } else {
-                        window.addEventListener('load', capturePerfTimings);
-                    }
+                        commercialBoot().then(() => {
+                            // 3. finally, try enhanced
+                            // this is defined here so that webpack's code-splitting algo
+                            // excludes all the modules bundled in the commercial chunk from this one
+                            if (window.guardian.isEnhanced) {
+                                markTime('enhanced request');
+                                require.ensure(
+                                    [],
+                                    // webpack needs the require function to be called 'require'
+                                    // eslint-disable-next-line no-shadow
+                                    require => {
+                                        markTime('enhanced boot');
+                                        require('bootstraps/enhanced/main').bootEnhanced();
+
+                                        if (document.readyState === 'complete') {
+                                            capturePerfTimings();
+                                        } else {
+                                            window.addEventListener(
+                                                'load',
+                                                capturePerfTimings
+                                            );
+                                        }
+                                    },
+                                    'enhanced'
+                                );
+                            }
+                        });
+                    });
                 },
-                'enhanced'
+                'commercial-control'
+            );
+        } else {
+            require.ensure(
+                [],
+                // webpack needs the require function to be called 'require'
+                // eslint-disable-next-line no-shadow
+                require => {
+                    raven.context({ tags: { feature: 'commercial' } }, () => {
+                        markTime('commercial boot');
+                        const commercialBoot = config.switches.commercial
+                            ? require('bootstraps/commercial')
+                            : Promise.resolve;
+
+                        commercialBoot().then(() => {
+                            // 3. finally, try enhanced
+                            // this is defined here so that webpack's code-splitting algo
+                            // excludes all the modules bundled in the commercial chunk from this one
+                            if (window.guardian.isEnhanced) {
+                                markTime('enhanced request');
+                                require.ensure(
+                                    [],
+                                    // webpack needs the require function to be called 'require'
+                                    // eslint-disable-next-line no-shadow
+                                    require => {
+                                        markTime('enhanced boot');
+                                        require('bootstraps/enhanced/main').bootEnhanced();
+
+                                        if (document.readyState === 'complete') {
+                                            capturePerfTimings();
+                                        } else {
+                                            window.addEventListener(
+                                                'load',
+                                                capturePerfTimings
+                                            );
+                                        }
+                                    },
+                                    'enhanced'
+                                );
+                            }
+                        });
+                    });
+                },
+                'commercial'
             );
         }
     });
