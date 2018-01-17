@@ -11,7 +11,7 @@ import {
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
-import { getKruxSegments as getKruxSegments_ } from 'commercial/modules/third-party-tags/krux';
+import { getKruxSegments as getKruxSegments_ } from 'common/modules/commercial/krux';
 
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
@@ -40,7 +40,7 @@ jest.mock('common/modules/commercial/user-ad-targeting', () => ({
 jest.mock('common/modules/experiments/utils', () => ({
     getParticipations: jest.fn(),
 }));
-jest.mock('commercial/modules/third-party-tags/krux', () => ({
+jest.mock('common/modules/commercial/krux', () => ({
     getKruxSegments: jest.fn(),
 }));
 jest.mock('lodash/functions/once', () => fn => fn);

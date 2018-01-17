@@ -1,5 +1,5 @@
 // @flow
-import { krux } from 'commercial/modules/third-party-tags/krux';
+import { krux } from 'common/modules/commercial/krux';
 
 const { url, shouldRun } = krux;
 
