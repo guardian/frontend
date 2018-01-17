@@ -6,53 +6,49 @@ import play.api.mvc.{ControllerComponents, RequestHeader}
 import scala.concurrent.{ExecutionContext, Future}
 
 sealed abstract class RedirectAccess {
-  def shouldRedirectOnUrl(pageId: String): Boolean = false
+  def isAllowedFrom(url: String): Boolean = false
 }
 
 case object RedirectAccessEmailPrefs extends RedirectAccess {
-  override def shouldRedirectOnUrl(pageId: String): Boolean = pageId contains "email-prefs"
+  override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
 }
 
 case object RedirectAccessAllPages extends RedirectAccess {
-  override def shouldRedirectOnUrl(pageId: String): Boolean = true
+  override def isAllowedFrom(url: String): Boolean = true
 }
 
 case object RedirectAccessNone extends RedirectAccess {
-  override def shouldRedirectOnUrl(pageId: String): Boolean = false
+  override def isAllowedFrom(url: String): Boolean = false
 }
 
-
-
-
-
-sealed abstract class RedirectDecision(
+sealed abstract class ProfileRedirect(
     val url: String,
     val redirectAccess: RedirectAccess = RedirectAccessAllPages) {
 
-  def shouldRedirectOnUrl(pageId: String): Boolean = redirectAccess.shouldRedirectOnUrl(pageId)
+  def isAllowedFrom(url: String): Boolean = redirectAccess.isAllowedFrom(url)
 }
 
-case object RedirectToEmailValidation extends RedirectDecision(
+case object RedirectToEmailValidationFromEmailPrefs extends ProfileRedirect(
   "/verify-email?isRepermissioningRedirect=true",
   RedirectAccessEmailPrefs
 )
 
-case object RedirectToEmailValidationStrictly extends RedirectDecision(
+case object RedirectToEmailValidationFromAnywhere extends ProfileRedirect(
   "/verify-email?isRepermissioningRedirect=true",
   RedirectAccessAllPages
 )
 
-case object RedirectToConsents extends RedirectDecision(
+case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect(
   "/consents",
   RedirectAccessEmailPrefs
 )
 
-case object RedirectToNewsletterConsents extends RedirectDecision(
+case object RedirectToNewsletterConsentsFromEmailPrefs extends ProfileRedirect(
   "/consents/newsletters",
   RedirectAccessEmailPrefs
 )
 
-case object NoRedirect extends RedirectDecision(
+case object NoRedirect extends ProfileRedirect(
   "",
   RedirectAccessNone
 )
@@ -61,32 +57,28 @@ case object NoRedirect extends RedirectDecision(
   * Where users should be redirected to depends on two factors:
   *   1. has user validated the email address
   *   2. has user re-permissioned before
-  *
-  * @param newsletterService
-  * @param idRequestParser
-  * @param controllerComponents
   */
-class RedirectDecisionService(
+class ProfileRedirectService(
      newsletterService: NewsletterService,
      idRequestParser: IdRequestParser,
      controllerComponents: ControllerComponents) {
 
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
-  def decideManageAccountRedirect[A](user: User, request: RequestHeader): Future[RedirectDecision] = {
+  def toProfileRedirect[A](user: User, request: RequestHeader): Future[ProfileRedirect] = {
 
     def userHasRepermissioned: Boolean = user.statusFields.hasRepermissioned.contains(true)
     def userEmailValidated: Boolean = user.statusFields.isUserEmailValidated
 
     (userEmailValidated, userHasRepermissioned) match {
       case (false, false) =>
-        Future.successful(RedirectToEmailValidationStrictly)
+        Future.successful(RedirectToEmailValidationFromAnywhere)
 
       case (false, true) =>
-        Future.successful(RedirectToEmailValidation)
+        Future.successful(RedirectToEmailValidationFromEmailPrefs)
 
       case (true, false) =>
-        Future.successful(RedirectToConsents)
+        Future.successful(RedirectToConsentsFromEmailPrefs)
 
       case (true, true) =>
         newsletterService.subscriptions(
@@ -97,7 +89,7 @@ class RedirectDecisionService(
             if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
               NoRedirect
             else
-              RedirectToNewsletterConsents
+              RedirectToNewsletterConsentsFromEmailPrefs
         }
     }
   }
