@@ -87,6 +87,7 @@
     }
 
     @include mq(desktop) {
+        background-color: $nav-background-colour;
         margin-top: -20px ;
         padding: 0 $gs-gutter;
 

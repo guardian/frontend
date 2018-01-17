@@ -48,6 +48,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-us-gun-campaign-2017",
+    "Show a custom Epic for articles with the US gun campaign tag",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-unruly-performance-test",
     "Removes 5% of users from Unruly to measure performance impact",
     owners = Seq(Owner.withGithub("janua")),
@@ -83,16 +93,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("Ap0c")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 15),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-us-gun-campaign-2017",
-    "Show a custom Epic for articles with the US gun campaign tag",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = true
   )
 

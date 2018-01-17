@@ -359,7 +359,8 @@
 }
 
 .adverts--within-unbranded {
-    .fc-item__title {
+    .fc-item__title,
+    .fc-item__standfirst {
         @include f-textSans;
     }
 }
