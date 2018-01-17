@@ -9,8 +9,8 @@ import {
 } from 'common/modules/experiments/ab-test-clash';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { checks } from './check-mediator-checks';
-import { resolveCheck, waitForCheck } from './check-mediator';
+import { checks } from 'common/modules/check-mediator-checks';
+import { resolveCheck, waitForCheck } from 'common/modules/check-mediator';
 
 const someCheckPassed = (results): boolean => results.includes(true);
 
