@@ -232,8 +232,10 @@ from scrolling */
     height: $slim-nav-height + $gs-baseline + $gs-baseline / 2;
 
     .immersive-header-container & {
-        border-bottom: 0;
-        height: 0;
+        @include mq($until: tablet) {
+            border-bottom: 0;
+            height: 0;
+        }
     }
 
     @include mq(tablet) {
