@@ -17,6 +17,10 @@ case object RedirectAccessAllPages extends RedirectAccess {
   override def shouldRedirectOnUrl(pageId: String): Boolean = true
 }
 
+case object RedirectAccessNone extends RedirectAccess {
+  override def shouldRedirectOnUrl(pageId: String): Boolean = false
+}
+
 
 
 
@@ -48,6 +52,10 @@ case object RedirectToNewsletterConsents extends RedirectDecision(
   RedirectAccessEmailPrefs
 )
 
+case object NoRedirect extends RedirectDecision(
+  "",
+  RedirectAccessNone
+)
 
 /**
   * Where users should be redirected to depends on two factors:
@@ -65,20 +73,20 @@ class RedirectDecisionService(
 
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
-  def decideManageAccountRedirect[A](user: User, request: RequestHeader): Future[Option[RedirectDecision]] = {
+  def decideManageAccountRedirect[A](user: User, request: RequestHeader): Future[RedirectDecision] = {
 
     def userHasRepermissioned: Boolean = user.statusFields.hasRepermissioned.contains(true)
     def userEmailValidated: Boolean = user.statusFields.isUserEmailValidated
 
     (userEmailValidated, userHasRepermissioned) match {
       case (false, false) =>
-        Future.successful(Some(RedirectToEmailValidationStrictly))
+        Future.successful(RedirectToEmailValidationStrictly)
 
       case (false, true) =>
-        Future.successful(Some(RedirectToEmailValidation))
+        Future.successful(RedirectToEmailValidation)
 
       case (true, false) =>
-        Future.successful(Some(RedirectToConsents))
+        Future.successful(RedirectToConsents)
 
       case (true, true) =>
         newsletterService.subscriptions(
@@ -87,9 +95,9 @@ class RedirectDecisionService(
         ).map {
           emailFilledForm =>
             if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
-              None
+              NoRedirect
             else
-              Some(RedirectToNewsletterConsents)
+              RedirectToNewsletterConsents
         }
     }
   }
