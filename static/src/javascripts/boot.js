@@ -43,31 +43,31 @@ const go = () => {
             markTime('commercial request');
             // It is called the variant by the server side test, but it actually represents the control behaviour,
             // because it is the baseline which will not include new changes made by the commercial team.
-            const inCommercialControl = config.tests.commercialBaseline === 'variant';
-            const feature = inCommercialControl ? 'commercial-control' : 'commercial';
-            raven.context(
-                {tags: {feature}},
-                () => {
-                    markTime('commercial boot');
-                    if (inCommercialControl) {
-                        require.ensure(
-                            [],
-                            require => {
-                                require('bootstraps/commercial-control')();
-                            },
-                            'commercial-control'
-                        );
-                    } else {
-                        require.ensure(
-                            [],
-                            require => {
-                                require('bootstraps/commercial')();
-                            },
-                            'commercial'
-                        );
-                    }
+            const inCommercialControl =
+                config.tests.commercialBaseline === 'variant';
+            const feature = inCommercialControl
+                ? 'commercial-control'
+                : 'commercial';
+            raven.context({ tags: { feature } }, () => {
+                markTime('commercial boot');
+                if (inCommercialControl) {
+                    require.ensure(
+                        [],
+                        require => {
+                            require('bootstraps/commercial-control')();
+                        },
+                        'commercial-control'
+                    );
+                } else {
+                    require.ensure(
+                        [],
+                        require => {
+                            require('bootstraps/commercial')();
+                        },
+                        'commercial'
+                    );
                 }
-            );
+            });
         }
 
         if (window.guardian.isEnhanced) {
@@ -83,10 +83,7 @@ const go = () => {
                     if (document.readyState === 'complete') {
                         capturePerfTimings();
                     } else {
-                        window.addEventListener(
-                            'load',
-                            capturePerfTimings
-                        );
+                        window.addEventListener('load', capturePerfTimings);
                     }
                 },
                 'enhanced'

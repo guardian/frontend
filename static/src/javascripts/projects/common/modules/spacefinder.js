@@ -58,7 +58,7 @@ const LOADING_TIMEOUT = 5000;
 const defaultOptions: SpacefinderOptions = {
     waitForImages: true,
     waitForLinks: true,
-    waitForInteractives: false
+    waitForInteractives: false,
 };
 
 const isIframe = (node: Element): boolean => node instanceof HTMLIFrameElement;
