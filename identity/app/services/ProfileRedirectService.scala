@@ -5,53 +5,29 @@ import play.api.mvc.{ControllerComponents, RequestHeader}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-sealed abstract class RedirectAccess {
-  def isAllowedFrom(url: String): Boolean = false
+sealed abstract class ProfileRedirect(val url: String) {
+  def isAllowedFrom(url: String): Boolean
 }
 
-case object RedirectAccessEmailPrefs extends RedirectAccess {
+case object RedirectToEmailValidationFromEmailPrefs extends ProfileRedirect("/verify-email?isRepermissioningRedirect=true") {
   override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
 }
 
-case object RedirectAccessAllPages extends RedirectAccess {
+case object RedirectToEmailValidationFromAnywhere extends ProfileRedirect("/verify-email?isRepermissioningRedirect=true") {
   override def isAllowedFrom(url: String): Boolean = true
 }
 
-case object RedirectAccessNone extends RedirectAccess {
+case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents") {
+  override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
+}
+
+case object RedirectToNewsletterConsentsFromEmailPrefs extends ProfileRedirect("/consents/newsletters") {
+  override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
+}
+
+case object NoRedirect extends ProfileRedirect("") {
   override def isAllowedFrom(url: String): Boolean = false
 }
-
-sealed abstract class ProfileRedirect(
-    val url: String,
-    val redirectAccess: RedirectAccess = RedirectAccessAllPages) {
-
-  def isAllowedFrom(url: String): Boolean = redirectAccess.isAllowedFrom(url)
-}
-
-case object RedirectToEmailValidationFromEmailPrefs extends ProfileRedirect(
-  "/verify-email?isRepermissioningRedirect=true",
-  RedirectAccessEmailPrefs
-)
-
-case object RedirectToEmailValidationFromAnywhere extends ProfileRedirect(
-  "/verify-email?isRepermissioningRedirect=true",
-  RedirectAccessAllPages
-)
-
-case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect(
-  "/consents",
-  RedirectAccessEmailPrefs
-)
-
-case object RedirectToNewsletterConsentsFromEmailPrefs extends ProfileRedirect(
-  "/consents/newsletters",
-  RedirectAccessEmailPrefs
-)
-
-case object NoRedirect extends ProfileRedirect(
-  "",
-  RedirectAccessNone
-)
 
 /**
   * Where users should be redirected to depends on two factors:
