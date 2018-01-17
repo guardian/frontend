@@ -23,6 +23,8 @@ import {
 } from 'commercial-control/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { initCheckDispatcher } from 'commercial-control/modules/check-dispatcher';
+import commentAdverts from 'commercial-control/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-highMerch', highMerch.init],
@@ -31,6 +33,8 @@ const commercialModules: Array<Array<any>> = [
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', initPaidForBand],
+    ['cm-checkDispatcher', initCheckDispatcher],
+    ['cm-commentAdverts', commentAdverts],
 ];
 
 if (!commercialFeatures.adFree) {

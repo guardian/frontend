@@ -8,7 +8,6 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
 import { addProximityLoader } from 'lib/proximity-loader';
-import commentAdverts from 'commercial/modules/comment-adverts';
 import { Loader as DiscussionLoader } from 'common/modules/discussion/loader';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { OnwardContent } from 'common/modules/onward/onward-content';
@@ -168,7 +167,6 @@ const initTrails = () => {
         ['c-popular', initPopular],
         ['c-related', initRelated],
         ['c-onward', initOnwardContent],
-        ['c-comment-adverts', commentAdverts],
         ['c-more-in-section', initMoreInSection],
     ]);
 };
