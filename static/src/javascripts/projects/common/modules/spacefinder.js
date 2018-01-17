@@ -6,11 +6,9 @@ import qwery from 'qwery';
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
-import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import memoize from 'lodash/functions/memoize';
 
 type SpacefinderOptions = {
-    waitForAds?: boolean,
     waitForLinks?: boolean,
     waitForImages?: boolean,
     waitForInteractives?: boolean,
@@ -60,8 +58,7 @@ const LOADING_TIMEOUT = 5000;
 const defaultOptions: SpacefinderOptions = {
     waitForImages: true,
     waitForLinks: true,
-    waitForInteractives: false,
-    waitForAds: false,
+    waitForInteractives: false
 };
 
 const isIframe = (node: Element): boolean => node instanceof HTMLIFrameElement;
@@ -166,16 +163,6 @@ const onInteractivesLoaded = memoize((rules: SpacefinderRules): Promise<
           ).then(() => undefined);
 }, getFuncId);
 
-const onAdsLoaded = memoize(
-    (rules: SpacefinderRules): Promise<boolean[]> =>
-        Promise.all(
-            qwery('.js-ad-slot', rules.body)
-                .map(ad => ad.id)
-                .map(trackAdRender)
-        ),
-    getFuncId
-);
-
 // test one element vs another for the given rules
 const testCandidate = (
     rules: SpacefinderExclusion,
@@ -266,7 +253,6 @@ const getReady = (
             options.waitForImages ? onImagesLoaded(rules) : true,
             options.waitForLinks ? onRichLinksUpgraded(rules) : true,
             options.waitForInteractives ? onInteractivesLoaded(rules) : true,
-            options.waitForAds ? onAdsLoaded(rules) : true,
         ]),
     ]).then(() => rules);
 
