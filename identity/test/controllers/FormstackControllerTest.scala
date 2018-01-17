@@ -14,7 +14,7 @@ import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{Matchers, path}
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
-import services.{IdentityRequest, _}
+import services.{IdentityRequest, RedirectDecisionService, _}
 import test.{Fake, TestRequest, WithTestApplicationContext, WithTestExecutionContext}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -32,6 +32,7 @@ class FormstackControllerTest extends path.FreeSpec
   val requestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val formstackApi = mock[FormstackApi]
+  val redirectDecisionService = mock[RedirectDecisionService]
 
   val cookieDecoder = mock[FrontendIdentityCookieDecoder]
   val idRequest = mock[IdentityRequest]
@@ -42,7 +43,7 @@ class FormstackControllerTest extends path.FreeSpec
 
   val userId = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
-  val authenticatedActions = new AuthenticatedActions(authService, mock[IdApiClient], mock[IdentityUrlBuilder], controllerComponents, newsletterService, requestParser)
+  val authenticatedActions = new AuthenticatedActions(authService, mock[IdApiClient], mock[IdentityUrlBuilder], controllerComponents, newsletterService, requestParser, redirectDecisionService)
 
   when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, ScGuU("abc", GuUCookieData(user, 0, None))))
 

@@ -119,7 +119,7 @@ class AuthenticatedActions(
         }
     }
 
-  private def decideManageAccountRedirectFilter(pageId: String): ActionFilter[AuthRequest] =
+  private def decideManageAccountRedirectFilter(pageId: String = ""): ActionFilter[AuthRequest] =
     new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
@@ -162,7 +162,7 @@ class AuthenticatedActions(
     noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
   /** Auth with at least SC_GU_RP and decide if user should be redirected to consent journey */
-  def manageAccountRedirectAction(pageId: String): ActionBuilder[AuthRequest, AnyContent] =
+  def manageAccountRedirectAction(pageId: String = ""): ActionBuilder[AuthRequest, AnyContent] =
     consentAuthWithIdapiUserAction andThen decideManageAccountRedirectFilter(pageId)
 
 }
