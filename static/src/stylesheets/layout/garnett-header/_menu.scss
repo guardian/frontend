@@ -79,6 +79,7 @@
 
 .menu__inner {
     box-sizing: border-box;
+    background-color: $nav-background-colour;
 
     @include mq($until: desktop) {
         &.gs-container {

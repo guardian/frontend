@@ -146,6 +146,8 @@ from scrolling */
     @include mq(desktop) {
         margin-bottom: -34px;
         margin-top: 5px;
+        position: relative;
+        z-index: $zindex-main-menu + 1;
     }
 
     body:not(.has-page-skin) & {
