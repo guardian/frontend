@@ -146,7 +146,7 @@ case object TheNewArrivals extends ArticleEmailMetadata {
 case object FashionWeek extends ArticleEmailMetadata {
   val name = "Fashion Week"
   override val banner = Some("fashion-week.png")
-  def test(c: ContentPage): Boolean = {c.item.tags.series.exists(_.id == "fashion/series/fashion-week--image-of-the-day")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "fashion/series/fashion-week--image-of-the-day")
 }
 
 case object CrosswordEditorsUpdate extends ArticleEmailMetadata {
