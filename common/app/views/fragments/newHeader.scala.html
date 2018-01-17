@@ -100,12 +100,6 @@
 
             <div class="popup popup--default popup--search js-search-popup js-search-new is-off"><div class="js-search-placeholder"></div></div>
 
-            <input type="checkbox"
-                id="main-menu-toggle"
-                class="veggie-burger-fallback js-enhance-checkbox u-h"
-                data-link-name="nav2 : veggie-burger : show"
-                aria-controls="main-menu">
-
             <ul class="pillars">
                 @navMenu.pillars.map { link =>
                     <li class="pillars__item">
@@ -120,6 +114,13 @@
                     </li>
                 }
             </ul>
+
+            <input type="checkbox"
+                id="main-menu-toggle"
+                class="veggie-burger-fallback js-enhance-checkbox u-h"
+                data-link-name="nav2 : veggie-burger : show"
+                aria-controls="main-menu"
+            >
 
             <label for="main-menu-toggle"
                    class="js-change-link new-header__menu-toggle"

@@ -1141,6 +1141,7 @@
     .content__labels,
     .content__meta-container {
         @include deport-left;
+        @include reduce-left;
         float: left;
     }
     .content__standfirst,
