@@ -7,9 +7,8 @@ import jdk.nashorn.api.scripting.{JSObject, NashornScriptEngineFactory}
 
 import scala.util.Try
 
-object JavascriptEngine {
-
-  type EvalResult = JSObject
+class JavascriptEngine {
+  import JavascriptEngine.EvalResult
 
   private val shared: ScriptEngine = new NashornScriptEngineFactory().getScriptEngine()
 
@@ -34,4 +33,8 @@ object JavascriptEngine {
       .invokeMethod(obj, method, args:_*)
       .asInstanceOf[String]
   }
+}
+
+object JavascriptEngine {
+  type EvalResult = JSObject
 }
