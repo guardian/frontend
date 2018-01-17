@@ -22,7 +22,7 @@
                 srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia)" />
     }
     <!--[if IE 9]></video><![endif]-->
-    <img class="@RenderClasses(classes: _*)"
-         alt=""
-         @maybeSrc.map { src => src="@src" } />
+    @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath).map { src =>
+        <img class="@RenderClasses(classes: _*)" alt="" src="@src"/>
+    }
 </picture>

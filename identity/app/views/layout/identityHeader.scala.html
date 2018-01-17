@@ -17,8 +17,7 @@
                         aria-controls="my-account-dropdown"
                         data-link-name="identity-nav : menu : toggle"
                         >
-                            @fragments.inlineSvg("profile-36", "icon", List("mobile-only"))
-                            <span class="hide-on-mobile-inline">My account</span>
+                            <span>My account</span>
                         </span>
                     </label>
                     <input type="checkbox" value="open" id="identity-header-account-menu-fallback" class="identity-header__nav-fallback u-h" title="Open Menu" />
@@ -49,6 +48,7 @@
             <span class="u-h">The Guardian - Back to home</span>
             @if(experiments.ActiveExperiments.isParticipating(experiments.GarnettIdentity)){
                 @fragments.inlineSvg("the-guardian-logo", "logo")
+                @fragments.inlineSvg("the-guardian-roundel", "logo")
             } else {
                 @fragments.inlineSvg("guardian-logo-160", "logo")
             }
