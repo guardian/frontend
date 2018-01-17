@@ -7,7 +7,7 @@ import {
 import {
     getUserSegments,
     requestUserSegmentsFromId,
-} from 'commercial/modules/user-ad-targeting';
+} from 'common/modules/commercial/user-ad-targeting';
 
 const getUserFromApi: any = getUserFromApi_;
 const getUserFromCookie: any = getUserFromCookie_;

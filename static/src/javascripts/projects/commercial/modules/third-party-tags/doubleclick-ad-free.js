@@ -1,6 +1,6 @@
 // @flow
 
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import config from 'lib/config';
 
 const doubleClickRandom = (): string => {

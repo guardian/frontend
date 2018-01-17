@@ -13,7 +13,7 @@ jest.mock('common/modules/article/space-filler', () => ({
     fillSpace: jest.fn(),
 }));
 
-jest.mock('commercial-control/modules/commercial-features', () => ({
+jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         liveblogAdverts: true,
     },

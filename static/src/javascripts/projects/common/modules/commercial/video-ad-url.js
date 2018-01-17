@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { constructQuery } from 'lib/url';
-import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
+import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 
 const videoAdUrl = (): string => {
     const queryParams = {

@@ -5,7 +5,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
 import { trackAdRender } from 'commercial-control/modules/dfp/track-ad-render';
-import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { loadScript } from 'lib/load-script';
 
 const adblockInUse: any = adblockInUse_;

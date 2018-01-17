@@ -18,7 +18,7 @@ jest.mock('commercial-control/modules/dfp/track-ad-render', () => ({
 jest.mock('lib/events', () => ({
     addEventListener: jest.fn(),
 }));
-jest.mock('commercial-control/modules/commercial-features', () => ({
+jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         stickyTopBannerAd: true,
     },

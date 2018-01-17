@@ -3,7 +3,7 @@ import renderAdvertLabel from 'commercial-control/modules/dfp/render-advert-labe
 import bonzo from 'bonzo';
 
 jest.mock('lib/detect', () => {});
-jest.mock('commercial-control/modules/commercial-features', () => ({
+jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
 

@@ -1,6 +1,6 @@
 // @flow
 
-import { isPayingMember } from 'commercial/modules/user-features';
+import { isPayingMember } from 'common/modules/commercial/user-features';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
 import { local } from 'lib/storage';
@@ -8,7 +8,7 @@ import { showAdblockMsg } from './adblock-messages';
 
 const getBreakpoint: any = getBreakpoint_;
 
-jest.mock('commercial/modules/user-features', () => ({
+jest.mock('common/modules/commercial/user-features', () => ({
     isPayingMember: jest.fn(),
 }));
 

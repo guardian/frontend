@@ -4,7 +4,7 @@ import config from 'lib/config';
 import {
     buildPageTargeting,
     buildAppNexusTargeting,
-} from 'commercial/modules/build-page-targeting';
+} from 'common/modules/commercial/build-page-targeting';
 import type {
     PrebidBidderCriteria,
     PrebidBidder,

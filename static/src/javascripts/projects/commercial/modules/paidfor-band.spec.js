@@ -3,7 +3,7 @@
 import { Sticky } from 'common/modules/ui/sticky';
 import { initPaidForBand } from './paidfor-band';
 
-jest.mock('commercial/modules/commercial-features', () => ({
+jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         paidforBand: true,
     },

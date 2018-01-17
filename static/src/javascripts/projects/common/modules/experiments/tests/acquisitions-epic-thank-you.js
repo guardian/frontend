@@ -2,7 +2,7 @@
 import {
     isRecentContributor,
     isPayingMember,
-} from 'commercial/modules/user-features';
+} from 'common/modules/commercial/user-features';
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import config from 'lib/config';

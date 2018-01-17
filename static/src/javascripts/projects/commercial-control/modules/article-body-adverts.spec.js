@@ -5,7 +5,7 @@ import {
 } from 'commercial-control/modules/article-body-adverts';
 import config from 'lib/config';
 import { spaceFiller } from 'common/modules/article/space-filler';
-import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import {
     getViewport as getViewport_,
     getBreakpoint as getBreakpoint_,
@@ -28,7 +28,7 @@ jest.mock(
 jest.mock('commercial-control/modules/dfp/add-slot', () => ({
     addSlot: jest.fn(),
 }));
-jest.mock('commercial-control/modules/commercial-features', () => ({
+jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
 jest.mock('common/modules/article/space-filler', () => ({

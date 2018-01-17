@@ -1,7 +1,7 @@
 // @flow
 
 import { Sticky } from 'common/modules/ui/sticky';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 const initPaidForBand = (): Promise<boolean> => {
     if (!commercialFeatures.paidforBand) {

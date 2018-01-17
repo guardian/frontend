@@ -1,5 +1,5 @@
 // @flow
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
@@ -9,7 +9,7 @@ import {
     isRecentContributor as isRecentContributor_,
     shouldSeeReaderRevenue as shouldSeeReaderRevenue_,
     isAdFreeUser as isAdFreeUser_,
-} from 'commercial/modules/user-features';
+} from 'common/modules/commercial/user-features';
 
 const isPayingMember: JestMockFn<*, *> = (isPayingMember_: any);
 const isRecentContributor: JestMockFn<*, *> = (isRecentContributor_: any);
@@ -27,7 +27,7 @@ jest.mock('lib/config', () => ({
     get: jest.fn(() => ''),
 }));
 
-jest.mock('commercial/modules/user-features', () => ({
+jest.mock('common/modules/commercial/user-features', () => ({
     isPayingMember: jest.fn(),
     isRecentContributor: jest.fn(),
     shouldSeeReaderRevenue: jest.fn(),

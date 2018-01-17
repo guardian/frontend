@@ -4,7 +4,7 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial-control/modules/dfp/add-slot';
-import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import createSlot from 'commercial-control/modules/dfp/create-slot';
 import type bonzo from 'bonzo';
 

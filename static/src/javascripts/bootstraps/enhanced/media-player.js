@@ -21,12 +21,12 @@ import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
 import { loadScript } from 'lib/load-script';
 import { isOn as accessibilityisOn } from 'common/modules/accessibility/main';
 import { videoAdUrl } from 'common/modules/commercial/video-ad-url';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { Component } from 'common/modules/component';
 import { getVideoInfo, isGeoBlocked } from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { skipAd } from 'common/modules/media/videojs-plugins/skip-ad';
-import { isAdFreeUser } from 'commercial/modules/user-features';
+import { isAdFreeUser } from 'common/modules/commercial/user-features';
 
 const initLoadingSpinner = (player: any): void => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;

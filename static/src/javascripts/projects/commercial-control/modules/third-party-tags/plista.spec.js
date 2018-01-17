@@ -2,7 +2,7 @@
 import config from 'lib/config';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
 import plista from 'commercial-control/modules/third-party-tags/plista';
-import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { trackAdRender } from 'commercial-control/modules/dfp/track-ad-render';
 
 const adblockInUse: any = adblockInUse_;
@@ -11,7 +11,7 @@ jest.mock('commercial-control/modules/dfp/track-ad-render', () => ({
     trackAdRender: jest.fn(),
 }));
 
-jest.mock('commercial-control/modules/commercial-features', () => ({
+jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         thirdPartyTags: true,
         outbrain: true,

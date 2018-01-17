@@ -2,7 +2,7 @@
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import createSlot from 'commercial-control/modules/dfp/create-slot';
-import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 const init = (): Promise<void> => {
     if (commercialFeatures.highMerch) {

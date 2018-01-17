@@ -8,7 +8,7 @@ import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import getAdverts from 'commercial/modules/dfp/get-adverts';
 import getCreativeIDs from 'commercial/modules/dfp/get-creative-ids';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import loadAdvert from 'commercial/modules/dfp/load-advert';
 
 const getBreakpoint: any = getBreakpoint_;
@@ -53,7 +53,7 @@ jest.mock('commercial/modules/dfp/display-lazy-ads', () => ({
     displayLazyAds: jest.fn(),
 }));
 
-jest.mock('commercial/modules/commercial-features', () => ({
+jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         dfpAdvertising: true,
     },

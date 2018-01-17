@@ -23,7 +23,7 @@ import {
     primaryBaseline,
 } from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-highMerch', highMerch.init],

@@ -3,7 +3,7 @@ import qwery from 'qwery';
 import fastdom from 'lib/fastdom-promise';
 import once from 'lodash/functions/once';
 import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
-import { commercialFeatures } from 'commercial-control/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 const shouldDisableAdSlot = adSlot =>
     window.getComputedStyle(adSlot).display === 'none';

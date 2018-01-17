@@ -6,7 +6,7 @@ import { noop } from 'lib/noop';
 import { articleAsideAdvertsInit } from 'commercial-control/modules/article-aside-adverts';
 import fastdom from 'lib/fastdom-promise';
 
-jest.mock('commercial-control/modules/commercial-features', () => ({
+jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         articleAsideAdverts: true,
     },
