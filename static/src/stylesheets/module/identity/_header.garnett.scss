@@ -3,17 +3,26 @@ $gutter: 5px;
 .identity-header {
     @include clearfix;
     background-color: $nav-background-colour;
-    padding: $gutter 0 0;
+    padding: ($gutter/2) 0 0;
     color: $nav-primary-colour;
     z-index: 999;
-    &:after {
-        @include multiline(4, $garnett-neutral-4, top);
-        content: '';
-        height: 4px * 4;
-        background-color: #ffffff;
-        margin-bottom: -1px;
-        margin-top: $gutter;
-        width: 100%;
+    border-bottom: 1px solid $rule;
+    height: $slim-nav-height;
+    overflow: visible;
+
+    @include mq(tablet) {
+        border: 0;
+        padding: $gutter 0 0;
+        height: auto;
+        &:after {
+            @include multiline(4, $garnett-neutral-4, top);
+            content: '';
+            height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
+            background-color: #ffffff;
+            margin-bottom: -1px;
+            margin-top: $gutter;
+            width: 100%;
+        }
     }
     .identity-dropdown {
         position: absolute;
@@ -47,6 +56,11 @@ $gutter: 5px;
 
 .identity-header__links {
     float: left;
+    @include mq($until: tablet) {
+        height: $slim-nav-height - $gutter;
+        display: flex;
+        align-items: center;
+    }
 }
 
 .identity-header__link {
@@ -57,6 +71,22 @@ $gutter: 5px;
 html body .identity-header__logo {
     float: right;
     order: -99;
+
+    .inline-the-guardian-roundel {
+        display: block;
+    }
+    .inline-the-guardian-logo {
+        display: none;
+    }
+
+    @include mq(tablet) {
+        .inline-the-guardian-roundel {
+            display: none;
+        }
+        .inline-the-guardian-logo {
+            display: block;
+        }
+    }
     .inline-the-guardian-logo__svg {
         display: block;
         height: 57px;
