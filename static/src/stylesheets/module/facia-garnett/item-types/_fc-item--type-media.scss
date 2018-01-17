@@ -58,10 +58,6 @@
     &:hover,
     .u-faux-block-link--hover {
         background-color: darken($media-garnett-main-1, 5%);
-
-        .fc-item__container::before {
-            background-color: darken($media-garnett-main-1, 5%);
-        }
     }
 
     .fc-sublink__link {
@@ -108,10 +104,6 @@
     &:hover,
     .u-faux-block-link--hover {
         background-color: darken($media-garnett-main-1, 5%);
-
-        .fc-item__container::before {
-            background-color: darken($media-garnett-main-1, 5%);
-        }
     }
 
     .fc-sublink__link {

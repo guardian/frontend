@@ -565,7 +565,7 @@
 }
 
 //overides the immersive article — done like this to keep gallery's and photo eassy in ok shape
-.content--immersive:not(.immersive-main-media__gallery):not(.paid-content) {
+.content--immersive:not(.immersive-main-media__gallery):not(.paid-content):not(.content--gallery) {
     &.immersive-main-media {
         @include mq(wide) {
             min-height: 600px;

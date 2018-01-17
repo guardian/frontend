@@ -8,7 +8,8 @@
     padding: ($gs-baseline / 2 + $gs-baseline / 4) ($gs-gutter) ($gs-baseline / 4);
     position: relative;
     font-size: 13px;
-    line-height: 1;
+    line-height: 1.2;
+    text-align: center;
 
     .guardian-egyptian-loaded & {
         font-family: 'Guardian Egyptian Web', Georgia, serif;
