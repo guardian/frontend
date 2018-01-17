@@ -92,7 +92,8 @@
         border-radius: 100%;
     }
 
-    .youtube-media-atom__bottom-bar__icon .inline-video-icon__svg {
+    .youtube-media-atom__bottom-bar__icon .inline-video-icon__svg,
+    .fc-item--media .fc-item__title .inline-video-icon {
         fill: $mediaColor;
     }
 
