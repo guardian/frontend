@@ -87,6 +87,21 @@
     }
 }
 
+// % used for padding-bottom isn't supported on Grid items in FireFox <53.
+// This temporary fix sets media in articles to 5:3 aspect ratio.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=958714
+.fake-percentage-padding {
+    .content__main-column .media-primary .u-responsive-ratio {
+        @include mq(leftCol) {
+            padding-bottom: 0 !important;
+            min-height: gs-span(8) * .6;
+        }
+        @include mq(tablet, desktop) {
+            min-height: gs-span(9) * .6;
+        }
+    }
+}
+
 .content__head {
     @include mq($from: tablet, $until: leftCol) {
         display: flex;
@@ -1018,6 +1033,41 @@
         flex-direction: column;
     }
 
+    @include mq($from: leftCol) {
+        @supports (display: grid) {
+            margin-left: -($left-column + $gs-gutter);
+            display: grid;
+            grid-template-columns: ($left-column + $gs-gutter) 1fr;
+            grid-template-areas: 'labels headline-standfirst' 'meta main-media';
+
+            .content--type-guardianview &,
+            .content--type-comment & {
+                grid-template-areas: 'labels headline' 'meta standfirst' 'meta main-media';
+            }
+
+            .content--type-matchreport & {
+                grid-template-areas: 'labels headline-standfirst' '. report' 'meta main-media';
+            }
+        }
+    }
+
+    @include mq($from: wide) {
+        @supports (display: grid) {
+            margin-left: -($left-column-wide + $gs-gutter);
+            grid-template-columns: ($left-column-wide + $gs-gutter) 1fr;
+        }
+    }
+
+    .content__labels {
+        @include mq($from: leftCol) {
+            @supports (display: grid) {
+                grid-area: labels;
+                position: relative;
+                margin: 0;
+            }
+        }
+    }
+
     .content__headline-standfirst-wrapper {
         @include mq($until: tablet) {
             order: 1;
@@ -1026,6 +1076,28 @@
             .content--type-comment & {
                 order: 0;
             }
+        }
+
+        @include mq($from: leftCol) {
+            grid-area: headline-standfirst;
+        }
+    }
+
+    .media-primary {
+        @include mq($from: leftCol) {
+            grid-area: main-media;
+        }
+    }
+
+    .content__header {
+        @include mq($from: leftCol) {
+            grid-area: headline;
+        }
+    }
+
+    .tonal__standfirst {
+        @include mq($from: leftCol) {
+            grid-area: standfirst;
         }
     }
 
@@ -1043,89 +1115,23 @@
         @include mq($from: leftCol) {
             // adds enough space so that this doesn't clash with the content labels if css gris is not supported
             top: gs-height(3);
-        }
-    }
-}
 
-// Apply grid if supported and .supports-percentage-padding class present
-// % used for padding-bottom isn't supported on Grid items in FireFox <53.
-// This temporary fix sets media in articles to 5:3 aspect ratio.
-// https://bugzilla.mozilla.org/show_bug.cgi?id=958714
-@supports (display: grid) {
-    .supports-percentage-padding {
-        .content__head--article {
-            @include mq($from: leftCol) {
-                margin-left: -($left-column + $gs-gutter);
-                display: grid;
-                grid-template-columns: ($left-column + $gs-gutter) 1fr;
-                grid-template-areas: 'labels headline-standfirst' 'meta main-media';
-    
-                .content--type-guardianview &,
-                .content--type-comment & {
-                    grid-template-areas: 'labels headline' 'meta standfirst' 'meta main-media';
-                }
-    
-                .content--type-matchreport & {
-                    grid-template-areas: 'labels headline-standfirst' '. report' 'meta main-media';
-                }
-            }
-        
-            @include mq($from: wide) {
-                margin-left: -($left-column-wide + $gs-gutter);
-                grid-template-columns: ($left-column-wide + $gs-gutter) 1fr;
-            }
-        
-            .content__labels {
-                @include mq($from: leftCol) {
-                    grid-area: labels;
-                    position: relative;
-                    margin: 0;
-                }
-            }
-        
-            .content__headline-standfirst-wrapper {
-                @include mq($from: leftCol) {
-                    grid-area: headline-standfirst;
-                }
-            }
-        
-            .media-primary {
-                @include mq($from: leftCol) {
-                    grid-area: main-media;
-                }
-            }
-        
-            .content__header {
-                @include mq($from: leftCol) {
-                    grid-area: headline;
-                }
-            }
-        
-            .tonal__standfirst {
-                @include mq($from: leftCol) {
-                    grid-area: standfirst;
-                }
-            }
-        
-            .content__meta-container {
-                @include mq($from: leftCol) {
-                    grid-area: meta;
-                    position: relative !important;
-                    top: 0;
-                    margin: 0;
-                    align-self: start;
-                    height: 0;
-                }
-            }
-        
-            /*** position match stats ***/
-            .matchreport {
-                grid-area: report;
+            @supports (display: grid) {
+                grid-area: meta;
+                position: relative !important;
+                top: 0;
+                margin: 0;
+                align-self: start;
+                height: 0;
             }
         }
     }
-}
 
+    /*** position match stats ***/
+    .matchreport {
+        grid-area: report;
+    }
+}
 .paid-content {
     color: $neutral-1;
     .content__head {
