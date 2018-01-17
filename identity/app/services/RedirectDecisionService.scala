@@ -27,7 +27,7 @@ case object RedirectToEmailValidation extends RedirectDecision(
   redirectAccess = RedirectAccessEmailPrefs
 )
 
-case object RedirectToEmailValidationStrictly extends RedirectDecision(
+case object RedirectToEmailValidationStrict extends RedirectDecision(
   url = "/verify-email?isRepermissioningRedirect=true",
   redirectAccess = RedirectAccessAllPages
 )
@@ -60,7 +60,7 @@ class RedirectDecisionService(
 
     (userEmailValidated, userHasRepermissioned) match {
       case (false, false) =>
-        Future.successful(Some(RedirectToEmailValidationStrictly))
+        Future.successful(Some(RedirectToEmailValidationStrict))
 
       case (false, true) =>
         Future.successful(Some(RedirectToEmailValidation))
