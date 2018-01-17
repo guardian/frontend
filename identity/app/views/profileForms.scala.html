@@ -20,14 +20,22 @@
     consentHint: Option[String]
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", redirect: Option[RedirectDecision] = None) = {
+@tab(
+      i: Int,
+      name: String,
+      url: String,
+      dataTestId: Option[String],
+      hidden: Boolean = false,
+      optionalClass: String = "",
+      redirectOpt: Option[RedirectDecision] = None) = {
+
     <li class="tabs__tab @if(hidden){is-hidden} @if(activeUrl == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(activeUrl == url)" aria-controls="tabs-account-profile-@i">
         <a
             data-tabs-href="#tabs-account-profile-@i"
             data-link-name="@url edit profile tab"
             data-pushstate-url="@url"
             @dataTestId.map{idValue => data-test-id="@idValue"}
-            @{redirect match {
+            @{redirectOpt match {
                 case None => Html(s"href='$url'")
                 case Some(i) => Html(s"href='${i.url}' data-tabs-ignore='true'")
             }}
@@ -57,17 +65,17 @@
             <div class="monocol-wrapper">
                 <h1 class="identity-title" data-test-id="edit-profile-header">Edit your profile</h1>
                 <ol class="tabs__container tabs__container--multiple js-tabs js-account-profile-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
-                    @tab(1, "Public", "/public/edit", None, redirect = redirectDecision.filter(_.shouldRedirectOnUrl("/public/edit")))
+                    @tab(1, "Public", "/public/edit", None, redirectOpt = redirectDecision.filter(_.shouldRedirectOnUrl("/public/edit")))
 
-                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab", redirect = redirectDecision.filter(_.shouldRedirectOnUrl("/account/edit")))
+                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab", redirectOpt = redirectDecision.filter(_.shouldRedirectOnUrl("/account/edit")))
 
-                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision.filter(_.shouldRedirectOnUrl("/membership/edit")))
+                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", redirectOpt = redirectDecision.filter(_.shouldRedirectOnUrl("/membership/edit")))
 
-                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab", redirect = redirectDecision.filter(_.shouldRedirectOnUrl("/digitalpack/edit")))
+                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab", redirectOpt = redirectDecision.filter(_.shouldRedirectOnUrl("/digitalpack/edit")))
 
-                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision.filter(_.shouldRedirectOnUrl("/contribution/recurring/edit")))
+                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab", redirectOpt = redirectDecision.filter(_.shouldRedirectOnUrl("/contribution/recurring/edit")))
 
-                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab", redirect = redirectDecision.filter(_.shouldRedirectOnUrl("email-prefs")))
+                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab", redirectOpt = redirectDecision.filter(_.shouldRedirectOnUrl("email-prefs")))
                 </ol>
             </div>
         </div>
