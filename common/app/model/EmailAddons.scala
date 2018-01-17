@@ -146,7 +146,13 @@ case object TheNewArrivals extends ArticleEmailMetadata {
 case object FashionWeek extends ArticleEmailMetadata {
   val name = "Fashion Week"
   override val banner = Some("fashion-week.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "fashion/series/fashion-week--image-of-the-day")
+  def test(c: ContentPage): Boolean = {c.item.tags.series.exists(_.id == "fashion/series/fashion-week--image-of-the-day")
+}
+
+case object CrosswordEditorsUpdate extends ArticleEmailMetadata {
+  val name = "Crossword Editor's Update"
+  override val banner = Some("crosswords-editors-update.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "crosswords/series/crossword-editor-update")
 }
 
 case object HereHere extends ArticleEmailMetadata {
@@ -245,7 +251,8 @@ object EmailAddons {
     WeekendReading,
     TheNewArrivals,
     FashionWeek,
-    HereHere)
+    HereHere,
+    CrosswordEditorsUpdate)
   private val frontEmails = Seq(
     TheFlyer,
     CuratedMediaBriefing,
