@@ -40,11 +40,15 @@ const go = () => {
         }
 
         if (config.switches.commercial) {
+            // It is called the variant by the server side test, but it actually represents the control behaviour,
+            // because it is the baseline which will not include new changes made by the commercial team.
+            const inCommercialControl = config.tests.commercialBaseline === 'variant';
+            const feature = inCommercialControl ? 'commercial-control' : 'commercial';
             raven.context(
-                {tags: {feature: 'commercial'}},
+                {tags: {feature}},
                 () => {
                     markTime('commercial boot');
-                    if (config.tests.commercialBaseline === 'variant') {
+                    if (inCommercialControl) {
                         require.ensure(
                             [],
                             require => {
