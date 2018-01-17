@@ -131,6 +131,30 @@ case object VirtualRealityStudio extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "news/series/virtual-reality-studio")
 }
 
+case object WeekendReading extends ArticleEmailMetadata {
+  val name = "Weekend Reading"
+  override val banner = Some("weekend-reading.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "membership/series/weekend-reading")
+}
+
+case object TheNewArrivals extends ArticleEmailMetadata {
+  val name = "The New Arrivals"
+  override val banner = Some("the-new-arrivals.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/the-new-arrivals-email-update")
+}
+
+case object FashionWeek extends ArticleEmailMetadata {
+  val name = "Fashion Week"
+  override val banner = Some("fashion-week.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "fashion/series/fashion-week--image-of-the-day")
+}
+
+case object HereHere extends ArticleEmailMetadata {
+  val name = "Here Here"
+  override val banner = Some("here-here.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "tv-and-radio/series/hear-here")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
@@ -217,7 +241,11 @@ object EmailAddons {
     TheResistanceNow,
     BeyondTheBlade,
     MorningMail,
-    VirtualRealityStudio)
+    VirtualRealityStudio,
+    WeekendReading,
+    TheNewArrivals,
+    FashionWeek,
+    HereHere)
   private val frontEmails = Seq(
     TheFlyer,
     CuratedMediaBriefing,
