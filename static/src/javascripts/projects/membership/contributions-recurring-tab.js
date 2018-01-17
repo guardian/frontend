@@ -21,8 +21,6 @@ const PACKAGE_NEXT_PAYMENT_FORM_CONTAINER =
 const PACKAGE_NEXT_PAYMENT_DATE = '.js-contribution-next-payment-date';
 const PACKAGE_NEXT_PAYMENT_PRICE = '.js-contribution-next-payment-price';
 const PACKAGE_INTERVAL = '.js-contribution-plan-interval';
-const NOTIFICATION_CANCEL = '.js-contribution-cancel';
-const NOTIFICATION_CHANGE = '.js-contribution-change';
 const UP_SELL = '.js-contribution-up-sell';
 const CONTRIBUTION_INFO = '.js-contribution-info';
 const CONTRIBUTION_DETAILS = '.js-contribution-details';
@@ -501,7 +499,6 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     const isPayPal =
         contributorDetails.subscription.paymentMethod.toLowerCase() ===
         'paypal';
-    let notificationTypeSelector;
 
     $(PACKAGE_INTERVAL).text(intervalText);
 
@@ -590,28 +587,17 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         $(CONTRIBUTION_PERIOD_START_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
     }
 
-    // user has cancelled
-    if (contributorDetails.subscription.cancelledAt) {
-        // is this a tier change or a cancellation
-        notificationTypeSelector = contributorDetails.optIn
-            ? NOTIFICATION_CHANGE
-            : NOTIFICATION_CANCEL;
-        $(notificationTypeSelector).removeClass(IS_HIDDEN_CLASSNAME);
-    } else if (contributorDetails.subscription.card) {
+    if (contributorDetails.subscription.card) {
         display(
             CARD_DETAILS,
             contributorDetails.subscription.card,
             contributorDetails.subscription.card.stripePublicKeyForUpdate
         );
     } else if (isPayPal) {
-        if (contributorDetails.subscription.cancelledAt) {
-            hidePayPal();
-        } else {
-            displayPayPal();
-        }
+        displayPayPal();
     }
 
-    if (!contributorDetails.subscription.cancelledAt) {
+    if (contributorDetails.subscription.card || isPayPal) {
         setupCancelContribution();
     } else {
         hideCancelContribution();
