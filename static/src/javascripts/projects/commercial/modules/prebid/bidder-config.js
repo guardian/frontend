@@ -1,13 +1,14 @@
 // @flow
 
 import config from 'lib/config';
+import { getBreakpoint } from 'lib/detect';
 import {
-    buildPageTargeting,
     buildAppNexusTargeting,
+    buildPageTargeting,
 } from 'commercial/modules/build-page-targeting';
 import type {
-    PrebidBidderCriteria,
     PrebidBidder,
+    PrebidBidderCriteria,
     PrebidIndexExchangeParams,
     PrebidSonobiParams,
     PrebidTrustXParams,
@@ -28,6 +29,24 @@ const getTrustXAdUnitId = (slotId: string): string => {
                 `PREBID: Failed to get TrustX ad unit for slot ${slotId}.`
             );
             return '';
+    }
+};
+
+const getBreakpointKey = (): string => {
+    switch (getBreakpoint()) {
+        case 'mobile':
+        case 'mobileMedium':
+        case 'mobileLandscape':
+        case 'phablet':
+            return 'M';
+        case 'tablet':
+            return 'T';
+        case 'desktop':
+        case 'leftCol':
+        case 'wide':
+            return 'D';
+        default:
+            return 'D';
     }
 };
 
@@ -90,7 +109,9 @@ export const indexExchangeBidder: PrebidBidder = {
     name: 'indexExchange',
     bidParams: (): PrebidIndexExchangeParams => ({
         id: config.page.adUnit,
-        siteID: '208206',
+        siteID: config.page.pbIndexSites.find(
+            site => site.bp === getBreakpointKey()
+        ).id,
     }),
 };
 
