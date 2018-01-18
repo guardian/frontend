@@ -156,7 +156,7 @@ from scrolling */
         }
 
         @include mq(wide) {
-            margin-right: 97px;
+            margin-right: 96px;
         }
     }
 
@@ -203,27 +203,27 @@ from scrolling */
 
 .inline-the-guardian-logo__svg {
     display: block;
-    height: 52px;
+    height: 51px;
     width: 159px;
 
     @include mq(mobileMedium) {
-        height: 57px;
+        height: 56px;
         width: 175px;
     }
 
     @include mq(tablet) {
-        height: 74px;
+        height: 72px;
         width: 224px;
     }
 
     @include mq(desktop) {
-        height: 82px;
+        height: 80px;
         width: 249px;
     }
 
     body:not(.has-page-skin) & {
         @include mq(leftCol) {
-            height: 97px;
+            height: 95px;
             width: 295px;
         }
     }
