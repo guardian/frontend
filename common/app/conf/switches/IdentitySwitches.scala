@@ -55,4 +55,14 @@ trait IdentitySwitches {
     exposeClientSide = false
   )
 
+  val IdentityShowOptInEngagementBanner = Switch(
+    SwitchGroup.Identity,
+    "id-show-opt-in-engagement-banner",
+    "If switched on, users coming from newsletters will see UI to opt in to GDPR-compliant marketing",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 1),
+    exposeClientSide = true
+  )
+
 }
