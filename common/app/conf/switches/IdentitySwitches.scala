@@ -18,7 +18,7 @@ trait IdentitySwitches {
   val IdentityCollectGdprCompliantConsentsSwitch = Switch(
     SwitchGroup.Identity,
     "id-gdpr-marketing-consent",
-    "If switched on, GDPR Compliant V2 consents will be collected & users will be promtet to update their V1 consents",
+    "If switched on, GDPR Compliant V2 consents will be collected & users will be prompted to update their V1 consents",
     owners = Seq(Owner.withGithub("mario-galic"), Owner.withGithub("walaura")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),
