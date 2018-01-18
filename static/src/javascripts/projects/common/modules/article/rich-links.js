@@ -141,9 +141,6 @@ const insertTagRichLink = (): Promise<void> => {
                     paras[0].insertAdjacentHTML('beforebegin', html);
                     insertedEl = paras[0].previousElementSibling;
                     return insertedEl;
-                },
-                {
-                    waitForAds: true,
                 }
             )
             .then(didInsert => {

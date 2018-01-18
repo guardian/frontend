@@ -57,7 +57,6 @@ const carrotTrafficDriverInit = (): Promise<void> => {
         return spaceFiller.fillSpace(rules, insertSlot, {
             waitForImages: false,
             waitForLinks: true,
-            waitForAds: false,
             waitForInteractives: false,
         });
     }
