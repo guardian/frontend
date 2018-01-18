@@ -1045,6 +1045,7 @@
                 grid-template-areas: 'labels headline' 'meta standfirst' 'meta main-media';
             }
 
+            .content--type-article.section-football &,
             .content--type-matchreport & {
                 grid-template-areas: 'labels headline-standfirst' '. report' 'meta main-media';
             }
