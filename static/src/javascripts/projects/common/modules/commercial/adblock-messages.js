@@ -2,7 +2,7 @@
 import config from 'lib/config';
 import { adblockInUse, getBreakpoint } from 'lib/detect';
 import { local } from 'lib/storage';
-import { isPayingMember } from 'commercial/modules/user-features';
+import { isPayingMember } from 'common/modules/commercial/user-features';
 
 const notMobile = (): boolean => getBreakpoint() !== 'mobile';
 

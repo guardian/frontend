@@ -2,13 +2,11 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import { unrulyPerformanceTest } from 'common/modules/experiments/tests/unruly-performance';
 import { prebidIntegration } from 'common/modules/experiments/tests/prebid-integration';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
-    acquisitionsEpicElectionInteractiveEnd,
     unrulyPerformanceTest,
     prebidIntegration,
 ].filter(Boolean);

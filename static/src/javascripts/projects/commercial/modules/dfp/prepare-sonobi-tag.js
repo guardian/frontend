@@ -1,8 +1,8 @@
 // @flow
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
-import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/functions/once';
 import { prebid } from 'commercial/modules/prebid/prebid';

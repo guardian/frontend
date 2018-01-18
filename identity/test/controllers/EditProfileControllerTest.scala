@@ -14,6 +14,7 @@ import controllers.editprofile.EditProfileController
 import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
+import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
@@ -30,6 +31,7 @@ import scala.concurrent.Future
   with Matchers
   with MockitoSugar
   with OptionValues
+  with ScalaFutures
   with WithTestApplicationContext
   with WithTestCSRF
   with ConfiguredServer {
@@ -53,7 +55,8 @@ import scala.concurrent.Future
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
-    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
+    val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
+    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
 
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
@@ -73,6 +76,7 @@ import scala.concurrent.Future
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
+      redirectDecisionService,
       authenticatedActions,
       api,
       idRequestParser,
@@ -471,7 +475,18 @@ import scala.concurrent.Future
     }
 
     "displayEmailPrefsForm method" should {
-      "display Guardian Today UK newsletter as subscribed" in new EditProfileFixture {
+      "Redirect non repermissioned users" in new EditProfileFixture {
+        user.statusFields.setHasRepermissioned(false)
+        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
+        when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
+          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
+
+        val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
+        status(result) should be(200)
+        contentAsString(result) should not include (EmailNewsletters.guardianTodayUk.name)
+      }
+      "display Guardian Today UK newsletter" in new EditProfileFixture {
+        user.statusFields.setHasRepermissioned(true)
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
           .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))

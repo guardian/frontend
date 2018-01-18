@@ -14,12 +14,12 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
   import authenticatedActions._
 
   def displayForm(
-    page: IdentityPage,
-    consentsUpdated: Boolean = false,
-    consentHint: Option[String] = None): Action[AnyContent] = {
+                   page: IdentityPage,
+                   consentsUpdated: Boolean = false,
+                   consentHint: Option[String] = None): Action[AnyContent] = {
 
     csrfAddToken {
-      consentJourneyRedirectAction.async { implicit request =>
+      manageAccountRedirectAction(page.id).async { implicit request =>
         profileFormsView(
           page = page,
           forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
@@ -76,8 +76,13 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     consentHint: Option[String] = None)
     (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+    val emailFilledFormFuture = newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData)
+    val redirectDecisionFuture = redirectDecisionService.toProfileRedirect(user, request)
 
+    for {
+      emailFilledForm <- emailFilledFormFuture
+      redirectDecision <- redirectDecisionFuture
+    } yield {
       NoCache(Ok(
         IdentityHtmlPage.html(
           content = views.html.profileForms(
@@ -86,6 +91,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
             forms,
             idRequestParser(request),
             idUrlBuilder,
+            redirectDecision,
             emailFilledForm,
             newsletterService.getEmailSubscriptions(emailFilledForm),
             EmailNewsletters.all,
@@ -94,7 +100,6 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
           )
         )(page, request, context)
       ))
-
     }
   }
 

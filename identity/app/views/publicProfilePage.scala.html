@@ -6,8 +6,6 @@
 )(implicit request: RequestHeader, context: model.ApplicationContext)
 @import views.html.fragments.registrationFooter
 
-@mainLegacy(page, projectName = Option("identity")){
-}{
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--stretched">
     <div class="identity-layout__header">
         <div class="user-profile u-cf">
@@ -65,4 +63,3 @@
     <div class="js-activity-stream activity-stream-content" data-user-id="@user.id" data-stream-type="@activityType"></div>
     @registrationFooter(idRequest, idUrlBuilder)
 </div>
-}

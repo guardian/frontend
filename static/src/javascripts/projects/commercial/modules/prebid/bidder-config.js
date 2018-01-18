@@ -5,7 +5,7 @@ import { getBreakpoint } from 'lib/detect';
 import {
     buildAppNexusTargeting,
     buildPageTargeting,
-} from 'commercial/modules/build-page-targeting';
+} from 'common/modules/commercial/build-page-targeting';
 import type {
     PrebidBidder,
     PrebidBidderCriteria,
