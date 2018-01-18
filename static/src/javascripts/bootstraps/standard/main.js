@@ -36,6 +36,7 @@ import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
+import { initAtoms } from './atoms';
 
 const setAdTestCookie = (): void => {
     const queryParams = getUrlVars();
@@ -246,6 +247,8 @@ const bootStandard = (): void => {
     identityInit();
 
     newHeaderInit();
+
+    initAtoms();
 
     showHiringMessage();
 
