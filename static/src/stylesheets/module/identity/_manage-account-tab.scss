@@ -332,9 +332,9 @@
 }
 
 .manage-account-divider {
-    height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
     @include multiline(4, $garnett-neutral-4, top);
-    border: none;
+    height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
+    border: 0;
     margin: $gs-baseline auto ($gs-baseline / 2);
 }
 
