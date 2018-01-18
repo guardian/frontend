@@ -3,16 +3,17 @@
 @import model.{ApplicationContext, IdentityPage}
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
-@import services.{RedirectDecision}
+@import services.{ProfileRedirect}
 @import controllers.editprofile.ProfileForms
 
+@import services.NoRedirect
 @(
     activeUrl: String,
     user: com.gu.identity.model.User,
     forms: ProfileForms,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    redirectDecision: Option[RedirectDecision],
+    redirectDecision: ProfileRedirect,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
@@ -20,17 +21,20 @@
     consentHint: Option[String]
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", redirect: Option[RedirectDecision] = None) = {
+@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", redirect: ProfileRedirect = NoRedirect) = {
+
     <li class="tabs__tab @if(hidden){is-hidden} @if(activeUrl == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(activeUrl == url)" aria-controls="tabs-account-profile-@i">
         <a
             data-tabs-href="#tabs-account-profile-@i"
             data-link-name="@url edit profile tab"
             data-pushstate-url="@url"
             @dataTestId.map{idValue => data-test-id="@idValue"}
-            @{redirect match {
-                case None => Html(s"href='$url'")
-                case Some(i) => Html(s"href='${i.url}' data-tabs-ignore='true'")
-            }}
+            @{
+                if(redirect.isAllowedFrom(url))
+                    Html(s"href='${redirect.url}' data-tabs-ignore='true'")
+                else
+                    Html(s"href='$url'")
+            }
         >
             @name
         </a>
@@ -57,17 +61,17 @@
             <div class="monocol-wrapper">
                 <h1 class="identity-title" data-test-id="edit-profile-header">Edit your profile</h1>
                 <ol class="tabs__container tabs__container--multiple js-tabs js-account-profile-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
-                    @tab(1, "Public", "/public/edit", None, redirect = redirectDecision.filter(_.shouldRedirectOnUrl("/public/edit")))
+                    @tab(1, "Public", "/public/edit", None, redirect = redirectDecision)
 
-                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab", redirect = redirectDecision.filter(_.shouldRedirectOnUrl("/account/edit")))
+                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab", redirect = redirectDecision)
 
-                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision.filter(_.shouldRedirectOnUrl("/membership/edit")))
+                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision)
 
-                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab", redirect = redirectDecision.filter(_.shouldRedirectOnUrl("/digitalpack/edit")))
+                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab", redirect = redirectDecision)
 
-                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision.filter(_.shouldRedirectOnUrl("/contribution/recurring/edit")))
+                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision)
 
-                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab", redirect = redirectDecision.filter(_.shouldRedirectOnUrl("email-prefs")))
+                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab", redirect = redirectDecision)
                 </ol>
             </div>
         </div>
@@ -91,8 +95,8 @@
 
                         @content(6, "/email-prefs")(
                             redirectDecision match {
-                                case None => profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint)
-                                case Some(_) => Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
+                                case NoRedirect => profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint)
+                                case _: ProfileRedirect => Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
                             }
                         )
                     </div>

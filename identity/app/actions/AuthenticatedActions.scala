@@ -5,7 +5,7 @@ import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, Ident
 import idapiclient.IdApiClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
-import services.{RedirectDecision, _}
+import services.{ProfileRedirect, _}
 import utils.Logging
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -20,7 +20,7 @@ class AuthenticatedActions(
     controllerComponents: ControllerComponents,
     newsletterService: NewsletterService,
     idRequestParser: IdRequestParser,
-    redirectDecisionService: RedirectDecisionService) extends Logging with Results {
+    redirectService: ProfileRedirectService) extends Logging with Results {
 
   private lazy val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
@@ -45,7 +45,7 @@ class AuthenticatedActions(
   def sendUserToRegister(request: RequestHeader): Result =
     redirectWithReturn(request, "/register")
 
-  def sendUserToUserRedirectDecision(request: RequestHeader, decision: RedirectDecision): Result =
+  def sendUserToUserRedirectDecision(request: RequestHeader, decision: ProfileRedirect): Result =
     redirectWithReturn(request, decision.url)
 
   private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
@@ -125,10 +125,11 @@ class AuthenticatedActions(
 
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
-          redirectDecisionService.decideManageAccountRedirect(request.user, request).map { decision =>
-            decision
-              .filter(_.shouldRedirectOnUrl(pageId))
-              .map(sendUserToUserRedirectDecision(request, _))
+          redirectService.toProfileRedirect(request.user, request).map { redirect =>
+            if (redirect.isAllowedFrom(pageId))
+              Some(sendUserToUserRedirectDecision(request, redirect))
+            else
+              None
           }
         else
           Future.successful(None)

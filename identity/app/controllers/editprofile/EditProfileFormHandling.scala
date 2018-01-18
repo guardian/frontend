@@ -77,7 +77,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     val emailFilledFormFuture = newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData)
-    val redirectDecisionFuture = redirectDecisionService.decideManageAccountRedirect(user, request)
+    val redirectDecisionFuture = redirectDecisionService.toProfileRedirect(user, request)
 
     for {
       emailFilledForm <- emailFilledFormFuture
