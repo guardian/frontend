@@ -556,6 +556,12 @@ $quote-mark: 35px;
         font-size: 109px;
         line-height: 75px;
     }
+
+    //video embed styles
+    .from-content-api ul:not(.social)>li:before {
+        content: none;
+    }
+
     // *************** Quote Styles ***************
     .element-pullquote {
         background-color: $garnett-neutral-3;
@@ -916,9 +922,12 @@ $quote-mark: 35px;
     }
 
     .content__headline {
-        @include fs-headlineGarnett(6);
+        @include fs-headlineGarnett(5);
         font-weight: 100;
         padding-bottom: 0;
+        @include mq(mobileMedium) {
+            @include fs-headlineGarnett(6);
+        }
         @include mq(tablet) {
             @include fs-headlineGarnett(7);
         }
@@ -928,7 +937,10 @@ $quote-mark: 35px;
     }
 
     .content__head--byline-pic .content__header .content__headline__byline {
-        @include fs-headlineGarnett(6);
+        @include fs-headlineGarnett(5);
+        @include mq(mobileMedium) {
+            @include fs-headlineGarnett(6);
+        }
         @include mq(tablet) {
             @include fs-headlineGarnett(7);
         }
@@ -1091,6 +1103,13 @@ $quote-mark: 35px;
         }
     }
 
+    .tonal__standfirst {
+        @include mq($until: tablet) {
+            max-width: gs-span(8);
+            margin: 0 auto;
+        }
+    }
+
     .content__standfirst {
         @include mq(mobileMedium) {
             max-width: 100%;
@@ -1099,8 +1118,13 @@ $quote-mark: 35px;
 
     .content__standfirst--gallery {
         @include mq(desktop) {
-            margin-left: gs-span(3) + $gs-gutter;
+            margin-left: gs-span(2) + $gs-gutter;
             max-width: gs-span(8);
+
+        }
+        @include mq(leftCol) {
+            margin-left: gs-span(3) + $gs-baseline/2;
+
         }
     }
 
@@ -1294,17 +1318,17 @@ $quote-mark: 35px;
                 grid-area: standfirst;
             }
         }
-    }
 
-    .stars {
-        position: absolute;
-        margin: 0;
-        transform: none;
-        z-index: 5;
-        bottom: 0;
-        @include mq(desktop) {
-            bottom: unset;
-            top: 0;
+        .stars {
+            position: absolute;
+            margin: 0;
+            transform: none;
+            z-index: 5;
+            bottom: 0;
+            @include mq(desktop) {
+                bottom: unset;
+                top: 0;
+            }
         }
     }
 
@@ -1503,11 +1527,6 @@ $quote-mark: 35px;
 .interactive.element--showcase,
 .interactive.element--supporting {
     background: $garnett-neutral-5;
-    padding-top: $gs-baseline/4;
-    @include mq(leftCol) {
-        border-top: 1px solid $garnett-neutral-4;
-        border-bottom: 1px solid $garnett-neutral-4;
-    }
 }
 
 .paid-content {

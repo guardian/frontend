@@ -1,26 +1,17 @@
 // @flow
-import fastdom from 'lib/fastdom-promise';
+import { hideElement } from 'commercial/modules/hide-element';
 import type { RegisterListeners } from 'commercial/modules/messenger';
-
-const hide = (adSlot: HTMLElement): ?Promise<any> => {
-    if (!adSlot) {
-        return null;
-    }
-
-    return fastdom.write(() => {
-        adSlot.classList.add('u-h');
-    });
-};
 
 const init = (register: RegisterListeners) => {
     register('hide', (specs, ret, iframe) => {
         if (iframe) {
-            const adSlot = iframe && iframe.closest('.js-ad-slot');
-            return hide(adSlot);
+            const adSlot = iframe.closest('.js-ad-slot');
+
+            if (adSlot) {
+                return hideElement(adSlot);
+            }
         }
     });
 };
-
-export const _ = { hide };
 
 export { init };

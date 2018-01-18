@@ -1,22 +1,24 @@
 package conf.switches
 
 import conf.switches.Expiry.never
+import conf.switches.Owner.group
+import conf.switches.SwitchGroup.Commercial
 import org.joda.time.LocalDate
 
 trait CommercialSwitches {
 
   val CommercialSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "commercial",
     "If this switch is OFF, no calls will be made to the ad server. BEWARE!",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )
 
   val CarrotTrafficDriverSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "carrot-traffic-driver",
     "Enables the requesting and rendering of the carrot traffic driving component.",
     owners = Seq(Owner.withGithub("JonNorman")),
@@ -26,7 +28,7 @@ trait CommercialSwitches {
   )
 
   val IasTargetingSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "ias-ad-targeting",
     "Enables the IAS slot-targeting optimisation.",
     owners = Seq(Owner.withGithub("JonNorman")),
@@ -36,7 +38,7 @@ trait CommercialSwitches {
   )
 
   val SurveySwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "surveys",
     "For delivering surveys, enables the requesting of the out-of-page slot on non-fronts",
     owners = Seq(Owner.withGithub("JonNorman")),
@@ -46,7 +48,7 @@ trait CommercialSwitches {
   )
 
   val BlockIASSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "block-ias",
     "Controls whether the Service Worker can filter out IAS calls",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
@@ -56,7 +58,7 @@ trait CommercialSwitches {
   )
 
   val AdFreeTrialSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "ad-free-subscription-trial",
     "Master switch for trialling ad-free subscription",
     owners = Seq(Owner.withGithub("JustinPinner")),
@@ -66,7 +68,7 @@ trait CommercialSwitches {
   )
 
   val AdFreeStrictExpiryEnforcement = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "ad-free-strict-expiry-enforcement",
     "When ON, the ad-free cookie is valid for max. 48 hours. OFF doesn't enforce expiry check.",
     owners = Seq(Owner.withGithub("JustinPinner")),
@@ -76,70 +78,70 @@ trait CommercialSwitches {
   )
 
   val TourismAustraliaSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "tourism-australia",
     "If this switch is on, the Tourism Australia pixel is added to the Ashes Australia travel section.",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
 
   val ImrWorldwideSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "imr-worldwide",
     "Enable the IMR Worldwide audience segment tracking.",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
 
   val AdomikSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "adomik",
     "Enable Adomik traffic splitting.",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
 
   val KruxSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "krux",
     "Enable Krux Control Tag",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
 
   val DoubleClickYouTubeAdFree = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "doubleclick-youtube-ad-free",
     "Enable DoubleClick Segment for YouTube for Ad Free Users",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
 
   val RemarketingSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "remarketing",
     "Enable Remarketing tracking",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
 
   val SimpleReachSwitch = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "simple-reach",
     "Enable Simple Reach tracking and reporting.",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
@@ -149,7 +151,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-travel-feed-fetch",
     "If this switch is on, cached travel offers feed will be updated from external source.",
-    owners = Seq(Owner.withGithub("kelvin-chappell")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -159,7 +161,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-travel-feed-parse",
     "If this switch is on, commercial components will be fed by travel offers feed.",
-    owners = Seq(Owner.withGithub("kelvin-chappell")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -189,7 +191,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-events",
     "If this switch is on, commercial components will be fed by masterclass and live-events feeds.",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -199,7 +201,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-soulmates",
     "If this switch is on, commercial components will be fed by soulmates feed.",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -209,7 +211,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -219,14 +221,14 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "book-lookup",
     "If this switch is on, book data will be looked up using a third-party service.",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
   )
 
   val MembershipEngagementBanner = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "membership-engagement-banner",
     "Master switch for the membership engagement banner.",
     owners = Seq(Owner.withGithub("justinpinner")),
@@ -236,7 +238,7 @@ trait CommercialSwitches {
   )
 
   val MembershipEngagementBannerBlockUK = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "membership-engagement-banner-block-uk",
     "If this switch is turned on, the engagement banner will NOT show up on UK fronts for readers in the UK",
     owners = Seq(Owner.withGithub("desbo")),
@@ -246,7 +248,7 @@ trait CommercialSwitches {
   )
 
   val MembershipEngagementBannerBlockUS = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "membership-engagement-banner-block-us",
     "If this switch is turned on, the engagement banner will NOT show up on US fronts for readers in the US",
     owners = Seq(Owner.withGithub("desbo")),
@@ -256,7 +258,7 @@ trait CommercialSwitches {
   )
 
   val MembershipEngagementBannerBlockAU = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "membership-engagement-banner-block-au",
     "If this switch is turned on, the engagement banner will NOT show up on AU fronts for readers in AU",
     owners = Seq(Owner.withGithub("desbo")),
@@ -266,32 +268,42 @@ trait CommercialSwitches {
   )
 
   val AdBlockMessage = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "adblock",
     "Switch for the Adblock Message.",
-    owners = Seq(Owner.withName("commercial team")),
+    owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
 
   val KruxVideoTracking = Switch(
-    SwitchGroup.Commercial,
+    Commercial,
     "krux-video-tracking",
     "If this switch is ON, there will be a Krux pixel fired to track particular videos",
-    owners = Seq(Owner.withGithub("commercial team")),
+    owners = group(Commercial),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )
 
   val sonobiSwitch: Switch = Switch(
-    group = SwitchGroup.Commercial,
+    group = Commercial,
     name = "sonobi-header-bidding",
     description = "Turn on Sonobi header bidding",
     owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val TrustxBidder: Switch = Switch(
+    group = Commercial,
+    name = "trustx-bidder",
+    description = "Include TrustX adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 2, 21),
     exposeClientSide = true
   )
 }

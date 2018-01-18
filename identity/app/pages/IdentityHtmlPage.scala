@@ -51,16 +51,14 @@ object IdentityHtmlPage {
       bodyTag(classes = defaultBodyClasses())(
         views.html.layout.identityFlexWrap()(
           skipToMainContent(),
-          views.html.layout.identityHeader(hideNavigation=page.isFlow),
+          views.html.layout.identityHeader(hideNavigation=page.isFlow) when page.metadata.hasSlimHeader,
+          header() when !page.metadata.hasSlimHeader
         )(
           content
         )(
           inlineJSNonBlocking(),
-          if(page.isFlow){
-            views.html.layout.identitySkinnyFooter()
-          } else {
-            footer()
-          },
+          views.html.layout.identitySkinnyFooter() when page.isFlow,
+          footer() when !page.isFlow,
           analytics.base()
         )
       ),

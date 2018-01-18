@@ -8,16 +8,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-always-ask-strategy",
-    "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 7, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -38,38 +28,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-interactive-end",
-    "This places the epic underneath certain interactives",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 7, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-election-interactive-slice",
-    "This places the epic (slice design) in the middle of UK election-related interactives",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 7, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 7, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-always-ask-election",
-    "This will guarantee that the epic is always displayed on election stories",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
     sellByDate = new LocalDate(2018, 7, 19),
@@ -92,7 +52,7 @@ trait ABTestSwitches {
     "Show a custom Epic for articles with the US gun campaign tag",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 1, 16),
+    sellByDate = new LocalDate(2018, 3, 1),
     exposeClientSide = true
   )
 
@@ -113,16 +73,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 4, 2),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-testimonials-group",
-    "Test changing the epic testimonial each view",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 16),
     exposeClientSide = true
   )
 

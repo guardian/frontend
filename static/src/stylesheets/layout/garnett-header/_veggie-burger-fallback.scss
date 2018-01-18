@@ -42,3 +42,11 @@
         }
     }
 }
+
+.veggie-burger-fallback {
+    &:focus {
+        & ~ .new-header__menu-toggle .pillar-link {
+            color: $nav-primary-colour;
+        }
+    }
+}

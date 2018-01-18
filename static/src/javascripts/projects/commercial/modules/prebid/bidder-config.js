@@ -1,6 +1,10 @@
 // @flow
 
 import config from 'lib/config';
+import {
+    buildPageTargeting,
+    buildAppNexusTargeting,
+} from 'commercial/modules/build-page-targeting';
 import type {
     PrebidBidderCriteria,
     PrebidBidder,
@@ -8,6 +12,24 @@ import type {
     PrebidSonobiParams,
     PrebidTrustXParams,
 } from 'commercial/modules/prebid/types';
+
+const getTrustXAdUnitId = (slotId: string): string => {
+    switch (slotId) {
+        case 'dfp-ad--inline':
+            return '2960';
+        case 'dfp-ad--mostpop':
+            return '2961';
+        case 'dfp-ad--right':
+            return '2962';
+        case 'dfp-ad--top-above-nav':
+            return '2963';
+        default:
+            console.log(
+                `PREBID: Failed to get TrustX ad unit for slot ${slotId}.`
+            );
+            return '';
+    }
+};
 
 export const bidderConfig: PrebidBidderCriteria = {
     sonobi: [
@@ -60,6 +82,7 @@ export const sonobiBidder: PrebidBidder = {
         ad_unit: config.page.adUnit,
         dom_id: slotId,
         floor: 0.5,
+        appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
     }),
 };
 
@@ -74,6 +97,6 @@ export const indexExchangeBidder: PrebidBidder = {
 export const trustXBidder: PrebidBidder = {
     name: 'trustx',
     bidParams: (slotId: string): PrebidTrustXParams => ({
-        uid: slotId,
+        uid: getTrustXAdUnitId(slotId),
     }),
 };
