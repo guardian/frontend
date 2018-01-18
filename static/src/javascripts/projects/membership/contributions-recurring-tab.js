@@ -587,17 +587,16 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         $(CONTRIBUTION_PERIOD_START_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
     }
 
-    if (contributorDetails.subscription.card) {
-        display(
-            CARD_DETAILS,
-            contributorDetails.subscription.card,
-            contributorDetails.subscription.card.stripePublicKeyForUpdate
-        );
-    } else if (isPayPal) {
-        displayPayPal();
-    }
-
-    if (contributorDetails.subscription.card || isPayPal) {
+    if (!contributorDetails.subscription.cancelledAt) {
+        if (contributorDetails.subscription.card) {
+            display(
+                CARD_DETAILS,
+                contributorDetails.subscription.card,
+                contributorDetails.subscription.card.stripePublicKeyForUpdate
+            );
+        } else if (isPayPal) {
+            displayPayPal();
+        }
         setupCancelContribution();
     } else {
         hideCancelContribution();
