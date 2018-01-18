@@ -109,7 +109,6 @@ module.exports = {
             // add errors to webpack instead of warnings
             failOnError: true,
         }),
-
     ],
     externals: {
         xhr2: {},
