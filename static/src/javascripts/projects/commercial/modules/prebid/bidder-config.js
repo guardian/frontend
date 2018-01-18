@@ -50,6 +50,13 @@ const getBreakpointKey = (): string => {
     }
 };
 
+const getIndexSiteId = (): string => {
+    const site = config.page.pbIndexSites.find(
+        s => s.bp === getBreakpointKey()
+    );
+    return site ? site.id : '';
+};
+
 export const bidderConfig: PrebidBidderCriteria = {
     sonobi: [
         {
@@ -109,9 +116,7 @@ export const indexExchangeBidder: PrebidBidder = {
     name: 'indexExchange',
     bidParams: (): PrebidIndexExchangeParams => ({
         id: config.page.adUnit,
-        siteID: config.page.pbIndexSites.find(
-            site => site.bp === getBreakpointKey()
-        ).id,
+        siteID: getIndexSiteId(),
     }),
 };
 
