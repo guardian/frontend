@@ -179,6 +179,10 @@ $hosted-video-height: 551px;
     background-color: $garnett-neutral-1;
     text-align: right;
 
+    &:hover {
+        text-decoration: none;
+    }
+
     svg {
         fill: #ffffff;
     }
