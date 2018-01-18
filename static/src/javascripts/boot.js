@@ -43,7 +43,7 @@ const go = () => {
         // It is called the variant by the server side test, but it actually represents the control behaviour,
         // because it is the baseline which will not include new changes made by the commercial team.
         const inCommercialControl =
-            config.tests.commercialBaseline === 'variant';
+            config.tests.commercialBaselineVariant === 'variant';
         if (inCommercialControl) {
             require.ensure(
                 [],
