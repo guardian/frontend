@@ -1,0 +1,222 @@
+// @flow
+import { getUrlVars } from 'lib/url';
+import config from 'lib/config';
+import { breakpoints } from 'lib/detect';
+import uniq from 'lodash/arrays/uniq';
+import flatten from 'lodash/arrays/flatten';
+import once from 'lodash/functions/once';
+import { getOutbrainComplianceTargeting } from 'commercial-control/modules/third-party-tags/outbrain';
+import { getTestVariantId } from 'common/modules/experiments/utils';
+
+const adUnit = once(() => {
+    const urlVars = getUrlVars();
+    return urlVars['ad-unit']
+        ? `/${config.page.dfpAccountId}/${urlVars['ad-unit']}`
+        : config.page.adUnit;
+});
+
+type SizeMappingArray = Array<Object>;
+
+/**
+ * Builds and assigns the correct size map for a slot based on the breakpoints
+ * attached to the element via data attributes.
+ *
+ * A new size map is created for a given slot. We then loop through each breakpoint
+ * defined in the config, checking if that breakpoint has been set on the slot.
+ *
+ * If it has been defined, then we add that size to the size mapping.
+ *
+ */
+const buildSizeMapping = (sizes: Object): SizeMappingArray => {
+    const mapping = window.googletag.sizeMapping();
+
+    breakpoints.filter(_ => _.name in sizes).forEach(_ => {
+        mapping.addSize([_.width, 0], sizes[_.name]);
+    });
+
+    return mapping.build();
+};
+
+const getSizeOpts = (sizesByBreakpoint: Object): Object => {
+    const sizeMapping = buildSizeMapping(sizesByBreakpoint);
+    // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
+    const sizes = uniq(
+        flatten(sizeMapping, true, map => map[1]),
+        size => `${size[0]}-${size[1]}`
+    );
+
+    return {
+        sizeMapping,
+        sizes,
+    };
+};
+
+// The high-merch slot targeting requires Promise-based data about the page.
+const setHighMerchSlotTargeting = (slot, slotTarget): Promise<any> => {
+    if (!['merchandising-high', 'merchandising'].includes(slotTarget)) {
+        return Promise.resolve();
+    }
+
+    return getOutbrainComplianceTargeting().then(keyValues => {
+        keyValues.forEach((value, key) => {
+            slot.setTargeting(key, value);
+        });
+    });
+};
+
+const adomikClassify = (): string => {
+    const rand = Math.random();
+
+    switch (true) {
+        case rand < 0.09:
+            return `ad_ex${Math.floor(100 * rand)}`;
+        case rand < 0.1:
+            return 'ad_bc';
+        default:
+            return 'ad_opt';
+    }
+};
+
+const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
+    const slotTarget = adSlotNode.getAttribute('data-name');
+    const sizeOpts = getSizeOpts(sizes);
+    const id = adSlotNode.id;
+    let slot;
+    let slotReady;
+
+    if (adSlotNode.getAttribute('data-out-of-page')) {
+        slot = window.googletag
+            .defineOutOfPageSlot(adUnit(), id)
+            .defineSizeMapping(sizeOpts.sizeMapping);
+        slotReady = Promise.resolve();
+    } else {
+        slot = window.googletag
+            .defineSlot(adUnit(), sizeOpts.sizes, id)
+            .defineSizeMapping(sizeOpts.sizeMapping);
+        slotReady = setHighMerchSlotTargeting(slot, slotTarget);
+    }
+
+    /*
+        For each ad slot defined, we request information from IAS, based
+        on slot name, ad unit and sizes. We then add this targeting to the
+        slot prior to requesting it from DFP.
+
+        We race the request to IAS with a Timeout of 2 seconds. If the
+        timeout resolves before the request to IAS then the slot is defined
+        without the additional IAS data.
+
+        To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
+     */
+    if (config.get('switches.iasAdTargeting', false)) {
+        /* eslint-disable no-underscore-dangle */
+        // this should all have been instantiated by commercial-control/modules/third-party-tags/ias.js
+        window.__iasPET = window.__iasPET || {};
+        const iasPET = window.__iasPET;
+        /* eslint-disable no-underscore-enable */
+
+        iasPET.queue = iasPET.queue || [];
+        iasPET.pubId = '10249';
+
+        // IAS Optimization Targeting
+        const iasPETSlots = [
+            {
+                adSlotId: id,
+                size: slot
+                    .getSizes()
+                    .filter(size => size !== 'fluid')
+                    .map(size => [size.getWidth(), size.getHeight()]),
+                adUnitPath: adUnit(), // why do we have this method and not just slot.getAdUnitPath()?
+            },
+        ];
+
+        // this is stored so that the timeout can be cancelled in the event of IAS not timing out
+        let timeoutId;
+
+        // this is resolved by either the iasTimeout or iasDataCallback, defined below
+        let loadedResolve;
+        const iasDataPromise = new Promise(resolve => {
+            loadedResolve = resolve;
+        });
+
+        const iasDataCallback = targetingJSON => {
+            clearTimeout(timeoutId);
+
+            /*  There is a name-clash with the `fr` targeting returned by IAS
+                and the `fr` paramater we already use for frequency. Therefore
+                we apply the targeting to the slot ourselves and rename the IAS
+                fr parameter to `fra` (given that, here, it relates to fraud).
+            */
+            const targeting = JSON.parse(targetingJSON);
+
+            // brand safety is on a page level
+            Object.keys(targeting.brandSafety).forEach(key =>
+                slot.setTargeting(key, targeting.brandSafety[key])
+            );
+            if (targeting.fr) {
+                slot.setTargeting('fra', targeting.fr);
+            }
+
+            // viewability targeting is on a slot level
+            const ignoredKeys = ['id', 'pub'];
+            Object.keys(targeting.slots[id])
+                .filter(x => !ignoredKeys.includes(x))
+                .forEach(key =>
+                    slot.setTargeting(key, targeting.slots[id][key])
+                );
+
+            loadedResolve();
+        };
+
+        iasPET.queue.push({
+            adSlots: iasPETSlots,
+            dataHandler: iasDataCallback,
+        });
+
+        const iasTimeoutDuration = 1000;
+
+        const iasTimeout = () =>
+            new Promise(resolve => {
+                timeoutId = setTimeout(resolve, iasTimeoutDuration);
+            });
+
+        slotReady = slotReady.then(() =>
+            Promise.race([iasTimeout(), iasDataPromise])
+        );
+    }
+
+    if (slotTarget === 'im' && config.page.isbn) {
+        slot.setTargeting('isbn', config.page.isbn);
+    }
+
+    const fabricKeyValues = new Map([
+        ['top-above-nav', 'fabric1'],
+        ['merchandising-high', 'fabric2'],
+        ['merchandising', 'fabric3'],
+    ]);
+
+    if (fabricKeyValues.has(slotTarget)) {
+        slot.setTargeting('slot-fabric', fabricKeyValues.get(slotTarget));
+    }
+
+    if (config.switches.adomik) {
+        slot.setTargeting('ad_group', adomikClassify());
+        slot.setTargeting('ad_h', new Date().getUTCHours().toString());
+    }
+
+    if (
+        getTestVariantId('OutstreamFrequencyCap') === 'frequency-cap' &&
+        id === 'dfp-ad--inline1' &&
+        config.switches.abOutstreamFrequencyCap
+    ) {
+        slot.setTargeting('outstream', 'cap');
+    }
+
+    slot.addService(window.googletag.pubads()).setTargeting('slot', slotTarget);
+
+    return {
+        slot,
+        slotReady,
+    };
+};
+
+export { defineSlot };

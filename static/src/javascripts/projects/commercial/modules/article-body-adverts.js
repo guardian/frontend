@@ -7,7 +7,7 @@ import adSizes from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import createSlot from 'commercial/modules/dfp/create-slot';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 type AdSize = {
     width: number,

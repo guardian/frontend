@@ -1,7 +1,7 @@
 package experiments
 
 import conf.switches.Owner
-import conf.switches.Switches.{ GarnettLaunch, GarnettHeaderLaunch, GarnettIdentityLaunch }
+import conf.switches.Switches.{GarnettHeaderLaunch, GarnettIdentityLaunch, GarnettLaunch}
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -10,6 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
     CommercialPaidContentTemplate,
+    CommercialBaseline,
     GarnettHeader,
     GarnettIdentity,
     Garnett,
@@ -24,7 +25,9 @@ object CommercialClientLogging extends Experiment(
   owners = Seq(Owner.withGithub("rich-nguyen")),
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup = Perc1A
-)
+) {
+  override def priorCondition(implicit request: RequestHeader): Boolean = CommercialBaseline.switch.isSwitchedOn
+}
 
 object CommercialPaidContentTemplate extends Experiment(
   name = "commercial-paid-content",
@@ -47,6 +50,14 @@ object CommercialPaidContentTemplate extends Experiment(
     "/discover-canal-river-trust/2017/oct/20/top-10-waterside-places-to-enjoy-in-autumn"
   )
 }
+
+object CommercialBaseline extends Experiment(
+  name = "commercial-baseline",
+  description = "Users in this experiment will experience the commercial javascript stack as of 2018-01-01.",
+  owners = Seq(Owner.withGithub("JonNorman"), Owner.withGithub("shtukas")),
+  sellByDate = new LocalDate(2018, 4, 11),
+  participationGroup = Perc2A
+)
 
 object GarnettIdentity extends Experiment(
   name = "garnett-identity",

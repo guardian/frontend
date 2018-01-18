@@ -3,7 +3,7 @@ import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import popupTemplate from 'raw-loader!commercial/views/ad-feedback-popup.html';
 import tick from 'svgs/icon/tick.svg';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 /* creatives can explicitly request to have - or to not have - an 'Advertisment' label added to them
  by containing a div with the following class followed by true/false.
