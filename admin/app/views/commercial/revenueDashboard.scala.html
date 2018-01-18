@@ -1,12 +1,21 @@
 @import controllers.admin.commercial.KeyValueRevenueRow
+@import java.text.NumberFormat
 
-@(rowData: Seq[KeyValueRevenueRow])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(rowData: Seq[KeyValueRevenueRow],
+  integerFormatter: NumberFormat,
+  currencyFormatter: NumberFormat)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Commercial Team KPI", isAuthed = true) {
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
     <h2>Commercial Team Revenue KPI</h2>
 
+    @if(rowData.isEmpty) {
+        <p>There is currently no data, please wait, the query may still be running.</p>
+    }
+
     @rowData.map { row =>
-        <p>AB test: @{row.customCriteria} eCPM: @{row.adServerAverageECPM} impressions: @{row.adServerImpressions}</p>
+        <p>AB test: @{row.customCriteria}
+           eCPM: @{currencyFormatter.format(row.totalAverageECPM)}
+           impressions: @{integerFormatter.format(row.totalImpressions)}</p>
     }
 }
