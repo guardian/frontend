@@ -1,7 +1,7 @@
 package actions
 
 import actions.AuthenticatedActions.AuthRequest
-import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, IdentityPointToConsentJourneyPage}
+import conf.switches.Switches.{IdentityCollectGdprCompliantConsentsSwitch}
 import idapiclient.IdApiClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
@@ -124,7 +124,7 @@ class AuthenticatedActions(
       override val executionContext = ec
 
       def filter[A](request: AuthRequest[A]) = {
-        if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
+        if (IdentityCollectGdprCompliantConsentsSwitch.isSwitchedOn)
           redirectService.toProfileRedirect(request.user, request).map { redirect =>
             if (redirect.isAllowedFrom(pageId))
               Some(sendUserToUserRedirectDecision(request, redirect))
