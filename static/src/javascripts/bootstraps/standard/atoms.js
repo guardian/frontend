@@ -86,6 +86,17 @@ const initAtoms = () => {
             'storyquestions-atom'
         );
     }
-};
 
+    if (config.get('page.atomTypes.explainer')) {
+        require.ensure(
+            [],
+            require => {
+                require('@guardian/atom-renderer/dist/explainer/article/index.css');
+                const atomMaker = require('@guardian/atom-renderer/dist/explainer/article/index');
+                bootstrapAtom(atomMaker, 'explainer');
+            },
+            'explainer-atom'
+        );
+    }
+};
 export { initAtoms };
