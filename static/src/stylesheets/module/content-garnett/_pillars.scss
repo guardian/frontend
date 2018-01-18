@@ -30,6 +30,10 @@
         color: $kickerColor;
     }
 
+    .end-slate-container a {
+        color: $garnett-neutral-8;
+    }
+
     .byline-img {
         background: $mediaColor;
     }
@@ -92,7 +96,8 @@
         border-radius: 100%;
     }
 
-    .youtube-media-atom__bottom-bar__icon .inline-video-icon__svg {
+    .youtube-media-atom__bottom-bar__icon .inline-video-icon__svg,
+    .fc-item--media .fc-item__title .inline-video-icon {
         fill: $mediaColor;
     }
 
