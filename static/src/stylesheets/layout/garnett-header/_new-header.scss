@@ -146,6 +146,8 @@ from scrolling */
     @include mq(desktop) {
         margin-bottom: -34px;
         margin-top: 5px;
+        position: relative;
+        z-index: $zindex-main-menu + 1;
     }
 
     body:not(.has-page-skin) & {
@@ -163,7 +165,7 @@ from scrolling */
         margin: 0;
         right: $veggie-burger-large;
         top: $gs-baseline / 4;
-        z-index: 3;
+        z-index: $zindex-main-menu;
 
         @include mq(mobileLandscape) {
             right: $veggie-burger-large + $gs-gutter / 2;

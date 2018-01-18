@@ -28,8 +28,22 @@ describe('Rendering advert labels', () => {
             `)
         );
 
-        adverts.guStyle = bonzo(
-            bonzo.create('<div class="js-ad-slot gu-style"></div>')
+        // the override should work regardless of whether the other conditions are true, including an existing label
+        adverts.requiredOverride = bonzo(
+            bonzo.create(`
+                <div class="js-ad-slot">
+                    <div class="ad-slot__label">Advertisement</div>
+                    <div class="js-advertisement-label-required-true"></div>
+                </div>
+            `)
+        );
+
+        adverts.notRequiredOverride = bonzo(
+            bonzo.create(`
+                <div class="js-ad-slot">
+                    <div class="js-advertisement-label-required-false"></div>
+                </div>
+            `)
         );
 
         adverts.frame = bonzo(
@@ -37,25 +51,25 @@ describe('Rendering advert labels', () => {
         );
     });
 
-    it('Can add a label', () =>
+    it(`Can add a label`, () =>
         renderAdvertLabel(adverts.withLabel[0]).then(() => {
             const label = adverts.withLabel[0].querySelector(labelSelector);
             expect(label).not.toBeNull();
         }));
 
-    it('The label has a message', () =>
+    it(`The label has a message`, () =>
         renderAdvertLabel(adverts.withLabel[0]).then(() => {
             const label = adverts.withLabel[0].querySelector(labelSelector);
             expect(label.textContent).toBe('Advertisement');
         }));
 
-    it('Won`t add a label if it has an attribute data-label=`false`', () =>
+    it(`Won't add a label if it has an attribute data-label='false'`, () =>
         renderAdvertLabel(adverts.labelDisabled[0]).then(() => {
             const label = adverts.labelDisabled[0].querySelector(labelSelector);
             expect(label).toBeNull();
         }));
 
-    it('Won`t add a label if the adSlot already has one', () =>
+    it(`Won't add a label if the adSlot already has one`, () =>
         renderAdvertLabel(adverts.alreadyLabelled[0]).then(() => {
             const label = adverts.alreadyLabelled[0].querySelectorAll(
                 labelSelector
@@ -63,15 +77,25 @@ describe('Rendering advert labels', () => {
             expect(label.length).toBe(1);
         }));
 
-    it('Won`t add a label to guStyle ads', () =>
-        renderAdvertLabel(adverts.guStyle[0]).then(() => {
-            const label = adverts.guStyle[0].querySelector(labelSelector);
-            expect(label).toBeNull();
-        }));
-
-    it('Won`t add a label to frame ads', () =>
+    it(`Won't add a label to frame ads`, () =>
         renderAdvertLabel(adverts.frame[0]).then(() => {
             const label = adverts.frame[0].querySelector(labelSelector);
             expect(label).toBeNull();
+        }));
+
+    it(`Won't add a label to ads with explicit no-label override`, () =>
+        renderAdvertLabel(adverts.notRequiredOverride[0]).then(() => {
+            const label = adverts.notRequiredOverride[0].querySelector(
+                labelSelector
+            );
+            expect(label).toBeNull();
+        }));
+
+    it(`Will add a label to ads with explicit label override`, () =>
+        renderAdvertLabel(adverts.requiredOverride[0]).then(() => {
+            const labels = adverts.requiredOverride[0].querySelectorAll(
+                labelSelector
+            );
+            expect(labels.length).toBe(2);
         }));
 });

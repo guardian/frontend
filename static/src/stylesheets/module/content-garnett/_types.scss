@@ -1527,11 +1527,6 @@ $quote-mark: 35px;
 .interactive.element--showcase,
 .interactive.element--supporting {
     background: $garnett-neutral-5;
-    padding-top: $gs-baseline/4;
-    @include mq(leftCol) {
-        border-top: 1px solid $garnett-neutral-4;
-        border-bottom: 1px solid $garnett-neutral-4;
-    }
 }
 
 .paid-content {
