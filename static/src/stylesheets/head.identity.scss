@@ -13,16 +13,16 @@
 @import 'pasteup/forms/styles';
 @import 'module/tabs.head';
 
-@import 'module/identity/_identity';
+@import 'module/identity/identity';
 
 @import 'module/identity/header';
 @import 'module/identity/wrapper';
 @import 'module/identity/button';
-@import 'module/identity/_forms';
-@import 'module/identity/_footer';
-@import 'module/identity/_manage-account-tab';
-@import 'module/identity/_formstack';
+@import 'module/identity/forms';
+@import 'module/identity/footer';
+@import 'module/identity/manage-account-tab';
+@import 'module/identity/formstack';
 @import 'module/identity/dropdown';
-@import 'module/identity/_switches';
-@import 'module/identity/_wizard';
-@import 'module/identity/_consent';
+@import 'module/identity/switches';
+@import 'module/identity/wizard';
+@import 'module/identity/consent';
