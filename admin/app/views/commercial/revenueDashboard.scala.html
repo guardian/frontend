@@ -1,21 +1,33 @@
 @import controllers.admin.commercial.KeyValueRevenueRow
 @import java.text.NumberFormat
 
-@(rowData: Seq[KeyValueRevenueRow],
-  integerFormatter: NumberFormat,
-  currencyFormatter: NumberFormat)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(  controlRow: Option[KeyValueRevenueRow],
+    variantRow: Option[KeyValueRevenueRow],
+    integerFormatter: NumberFormat,
+    currencyFormatter: NumberFormat)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Commercial Team KPI", isAuthed = true) {
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
-    <h2>Commercial Team Revenue KPI</h2>
+    <h2 class="revenue-dashboard__title">Commercial Team Revenue KPI</h2>
 
-    @if(rowData.isEmpty) {
+    @if(controlRow.isEmpty && variantRow.isEmpty) {
         <p>There is currently no data, please wait, the query may still be running.</p>
     }
 
-    @rowData.map { row =>
-        <p>AB test: @{row.customCriteria}
-           eCPM: @{currencyFormatter.format(row.totalAverageECPM)}
-           impressions: @{integerFormatter.format(row.totalImpressions)}</p>
+    @controlRow.map { row =>
+        <div class="test test--control">
+            <h3 class="test__heading">Control</h3>
+            <p class="test__eCPM">eCPM: @{currencyFormatter.format(row.totalAverageECPM)}<p>
+            <p class="test__impressions">impressions: @{integerFormatter.format(row.totalImpressions)}<p>
+            <p class="test__criteria">key value: @{row.customCriteria}</p>
+        </div>
+    }
+    @variantRow.map { row =>
+        <div class="test test--variant">
+            <h3 class="test__heading">Variant</h3>
+            <p class="test__eCPM">eCPM: @{currencyFormatter.format(row.totalAverageECPM)}<p>
+            <p class="test__impressions">impressions: @{integerFormatter.format(row.totalImpressions)}<p>
+            <p class="test__criteria">key value: @{row.customCriteria}</p>
+        </div>
     }
 }

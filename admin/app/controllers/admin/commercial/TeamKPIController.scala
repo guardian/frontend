@@ -39,11 +39,16 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
       keyValueRows
     }
 
-    val abTestRows = maybeData.getOrElse(Seq.empty).filter(_.customCriteria.startsWith("ab=")).sortBy(_.customCriteria)
+    // The test variants for the team KPIs are commercialBaselineControl-control and commercialBaselineVariant-variant.
+    val abTestRows = maybeData.getOrElse(Seq.empty)
+
+    val controlDataRow = abTestRows.find(_.customCriteria.startsWith("ab=commercialBaselineControl"))
+    val variantDataRow = abTestRows.find(_.customCriteria.startsWith("ab=commercialBaselineVariant"))
+
     val integerFormatter = java.text.NumberFormat.getIntegerInstance
     val currencyFormatter = java.text.NumberFormat.getCurrencyInstance
 
-    NoCache(Ok(views.html.commercial.revenueDashboard(abTestRows, integerFormatter, currencyFormatter)))
+    NoCache(Ok(views.html.commercial.revenueDashboard(controlDataRow, variantDataRow, integerFormatter, currencyFormatter)))
   }
 
 }
