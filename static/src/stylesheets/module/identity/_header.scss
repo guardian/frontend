@@ -1,18 +1,36 @@
-$gutter: 9px;
-$height: $identity-header-height - ($gutter * 2);
+$gutter: 5px;
+
+@import '../../layout/garnett-header/_variables';
 
 .identity-header {
     @include clearfix;
-    background-color: $identity-main;
-    padding: $gutter 0;
-    color: #ffffff;
-    min-height: $height;
+    background-color: $nav-background-colour;
+    padding: ($gutter/2) 0 0;
+    color: $nav-primary-colour;
     z-index: 999;
+    border-bottom: 1px solid $rule;
+    height: $slim-nav-height;
+    overflow: visible;
+
+    @include mq(tablet) {
+        border: 0;
+        padding: $gutter 0 0;
+        height: auto;
+        &:after {
+            @include multiline(4, $garnett-neutral-4, top);
+            content: '';
+            height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
+            background-color: #ffffff;
+            margin-bottom: -1px;
+            margin-top: $gutter;
+            width: 100%;
+        }
+    }
     .identity-dropdown {
         position: absolute;
         display: none;
         left: 0;
-        top: $height;
+        top: get-line-height(textSans, 3)*1.25;
         z-index: 999;
         li {
             display: block;
@@ -28,7 +46,7 @@ $height: $identity-header-height - ($gutter * 2);
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         padding-left: $gs-gutter / 2;
         padding-right: $gs-gutter / 2;
         @include mq(mobileLandscape) {
@@ -36,11 +54,15 @@ $height: $identity-header-height - ($gutter * 2);
             padding-right: $gs-gutter;
         }
     }
-
 }
 
 .identity-header__links {
     float: left;
+    @include mq($until: tablet) {
+        height: $slim-nav-height - $gutter;
+        display: flex;
+        align-items: center;
+    }
 }
 
 .identity-header__link {
@@ -48,14 +70,39 @@ $height: $identity-header-height - ($gutter * 2);
     position: relative;
 }
 
-.identity-header__logo {
+html body .identity-header__logo {
     float: right;
     order: -99;
-    svg {
+
+    .inline-the-guardian-roundel {
         display: block;
-        width: 160px;
-        height: 30px;
     }
+    .inline-the-guardian-logo {
+        display: none;
+    }
+
+    @include mq(tablet) {
+        .inline-the-guardian-roundel {
+            display: none;
+        }
+        .inline-the-guardian-logo {
+            display: block;
+        }
+    }
+    .inline-the-guardian-logo__svg {
+        display: block;
+        height: 57px;
+        width: 175px;
+    }
+    .inline-the-guardian-roundel__svg {
+        display: block;
+        height: 56px;
+        width: 56px;
+    }
+}
+
+label[for=identity-header-account-menu-fallback]:focus {
+    outline: none;
 }
 
 .identity-header__nav {
@@ -63,28 +110,22 @@ $height: $identity-header-height - ($gutter * 2);
     background: none;
     border: 0;
     cursor: pointer;
-    color: #ffffff;
-    opacity: .8;
-    text-transform: lowercase;
     padding: 0;
-    height: $height;
-    line-height: $height;
     white-space: nowrap;
-    transition: .125s;
     display: block;
+    transition: .25s ease-out;
 
     .inline-icon {
         vertical-align: middle;
         display: inline-block;
         line-height: 0;
         &, & > svg {
-            height: $gs-baseline * 1.5;
-            width: $gs-baseline * 1.5;
+            height: $gs-baseline * 1.25;
+            width: $gs-baseline * 1.25;
+            * {
+                fill: currentColor;
+            }
         }
-    }
-
-    &:hover {
-        opacity: 1;
     }
 
     &:after {
@@ -98,16 +139,18 @@ $height: $identity-header-height - ($gutter * 2);
         border-top: transparent;
         margin-left: 2px;
         vertical-align: middle;
-        transition: transform 250ms ease-out;
+        transition: .25s ease-out;
     }
-}
 
-.identity-header-flex-wrap {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: stretch;
-    & > .identity-header-flex-wrap__content {
-        flex: 1 1 auto;
+
+    &:hover,
+    &:focus,
+    label[for=identity-header-account-menu-fallback]:focus & {
+        outline: 0;
+        color: $nav-secondary-colour;
+        &:after {
+            transform: translateY(0px) rotate(45deg);
+        }
     }
+
 }
