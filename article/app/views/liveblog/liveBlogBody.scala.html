@@ -31,11 +31,10 @@
         </div>
 
         <header class="content__head tonal__head tonal__head--@toneClass(article)
-            @if(ArticleBadgesSwitch.isSwitchedOn) {
-                @badgeFor(article).map { badge => content__head--is-badged
-                    @badge.classModifier.map(modifier => s"content__head--$modifier")
-                }
-            }">
+            @badgeFor(article).map { badge => content__head--is-badged
+                @badge.classModifier.map(modifier => s"content__head--$modifier")
+            }
+        ">
             @* UPPER HEADER *@
             <div class="content__header tonal__header u-cf">
                 <div class="gs-container">
