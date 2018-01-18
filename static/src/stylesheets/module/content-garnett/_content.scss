@@ -1142,7 +1142,9 @@
     .content__meta-container {
         @include deport-left;
         @include reduce-left;
-        float: left;
+        @include mq(leftCol) {
+            float: left;
+        }
     }
     .content__standfirst,
     .content__dateline,
