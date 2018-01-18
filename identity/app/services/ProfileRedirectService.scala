@@ -1,5 +1,18 @@
 package services
 
+/**
+  * Abstraction for the redirect behaviour in Profile pages
+  * This exists because once you are in any profile page it is possible
+  * to switch between them using javascript tabs, bypassing a normal
+  * redirection.
+  *
+  * Both AuthenticatedActions and the ProfileForms template can use
+  * this service to make redirects work:
+  * a) Normally via play routing
+  * b) Replacing the javascript tab links in the template
+  */
+
+
 import com.gu.identity.model.User
 import play.api.mvc.{ControllerComponents, RequestHeader}
 

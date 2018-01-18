@@ -21,6 +21,16 @@
     consentHint: Option[String]
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
+@*
+    This template always loads all profile forms and later lets
+    the tabs javascript on the frontend switch between them with
+    no page loads.
+
+    Due to this it's importing `ProfileRedirect` so it can block
+    any tabs linking to pages that should be using a redirect from
+    bypassing it.
+*@
+
 @tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", redirect: ProfileRedirect = NoRedirect) = {
 
     <li class="tabs__tab @if(hidden){is-hidden} @if(activeUrl == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(activeUrl == url)" aria-controls="tabs-account-profile-@i">
