@@ -49,6 +49,21 @@
 }
 
 
+
+/* Flex wrap around the whole page (to stick the footer at the end)
+   ========================================================================== */
+.identity-wrapper-page-flex {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: stretch;
+    & > .identity-wrapper-page-flex__content {
+        flex: 1 1 auto;
+    }
+}
+
+
+
 /* Account Edit page
    ========================================================================== */
 

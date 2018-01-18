@@ -149,13 +149,3 @@ label[for=identity-header-account-menu-fallback]:focus {
     }
 
 }
-
-.identity-header-flex-wrap {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: stretch;
-    & > .identity-header-flex-wrap__content {
-        flex: 1 1 auto;
-    }
-}

@@ -1,10 +1,10 @@
 @()(topFragments: Html*)(contentFragments: Html*)(bottomFragments: Html*)
 
-<div class="identity-header-flex-wrap">
+<div class="identity-wrapper-page-flex">
     @for(f <- topFragments){
         @f
     }
-    <div class="identity-header-flex-wrap__content">
+    <div class="identity-wrapper-page-flex__content">
         @for(f <- contentFragments){
             @f
         }
