@@ -3,14 +3,17 @@
 @import model.{ApplicationContext, IdentityPage}
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
+@import services.{ProfileRedirect}
 @import controllers.editprofile.ProfileForms
 
+@import services.NoRedirect
 @(
     activeUrl: String,
     user: com.gu.identity.model.User,
     forms: ProfileForms,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
+    redirectDecision: ProfileRedirect,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
@@ -18,10 +21,33 @@
     consentHint: Option[String]
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
+@*
+    This template always loads all profile forms and later lets
+    the tabs javascript on the frontend switch between them with
+    no page loads.
+
+    Due to this it's importing `ProfileRedirect` so it can block
+    any tabs linking to pages that should be using a redirect from
+    bypassing it.
+*@
+
+@tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "", redirect: ProfileRedirect = NoRedirect) = {
+
     <li class="tabs__tab @if(hidden){is-hidden} @if(activeUrl == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(activeUrl == url)" aria-controls="tabs-account-profile-@i">
-        <a href="@url" data-tabs-href="#tabs-account-profile-@i" data-link-name="@url edit profile tab" data-pushstate-url="@url"
-            @dataTestId.map{idValue => data-test-id="@idValue"}>@name</a>
+        <a
+            data-tabs-href="#tabs-account-profile-@i"
+            data-link-name="@url edit profile tab"
+            data-pushstate-url="@url"
+            @dataTestId.map{idValue => data-test-id="@idValue"}
+            @{
+                if(redirect.isAllowedFrom(url))
+                    Html(s"href='${redirect.url}' data-tabs-ignore='true'")
+                else
+                    Html(s"href='$url'")
+            }
+        >
+            @name
+        </a>
     </li>
 }
 
@@ -38,17 +64,6 @@
     </div>
 }
 
-@validationRoadblock = {
-    <div class="identity-forms-message identity-forms-message--inline">
-        <h1 class="identity-title">You must verify your email to continue.</h1>
-        <div class="identity-forms-message__body">
-            <p>Please validate your email (@user.primaryEmailAddress) to edit your preferences.</p>
-            <p>If your address seems wrong you can <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" class="u-underline" data-link-name="identity : email : reverify-email-change">change it</a>.</p>
-            <a class="manage-account__button identity-forms-message__button" href="@idUrlBuilder.buildUrl("/verify-email", idRequest)" data-link-name="identity : email : reverify-email-resend">Resend me a validation email</a>
-        </div>
-    </div>
-}
-
 <div class="tabs">
 
     <div class="identity-wrapper-for-bg identity-wrapper-for-bg--header">
@@ -56,17 +71,17 @@
             <div class="monocol-wrapper">
                 <h1 class="identity-title" data-test-id="edit-profile-header">Edit your profile</h1>
                 <ol class="tabs__container tabs__container--multiple js-tabs js-account-profile-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
-                    @tab(1, "Public", "/public/edit", None)
+                    @tab(1, "Public", "/public/edit", None, redirect = redirectDecision)
 
-                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab")
+                    @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab", redirect = redirectDecision)
 
-                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab")
+                    @tab(3, "Membership", "/membership/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision)
 
-                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
+                    @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab", redirect = redirectDecision)
 
-                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab")
+                    @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab", redirect = redirectDecision)
 
-                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab")
+                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab", redirect = redirectDecision)
                 </ol>
             </div>
         </div>
@@ -89,10 +104,9 @@
                         @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
                         @content(6, "/email-prefs")(
-                            if(user.statusFields.userEmailValidated.fold(false)(identity)) {
-                                profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint)
-                            } else {
-                                validationRoadblock
+                            redirectDecision match {
+                                case NoRedirect => profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint)
+                                case _: ProfileRedirect => Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
                             }
                         )
                     </div>

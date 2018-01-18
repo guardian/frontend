@@ -5,7 +5,7 @@ import conf.switches.Switches.{IdentityAllowAccessToGdprJourneyPageSwitch, Ident
 import idapiclient.IdApiClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
-import services._
+import services.{ProfileRedirect, _}
 import utils.Logging
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -19,7 +19,8 @@ class AuthenticatedActions(
     identityUrlBuilder: IdentityUrlBuilder,
     controllerComponents: ControllerComponents,
     newsletterService: NewsletterService,
-    idRequestParser: IdRequestParser) extends Logging with Results {
+    idRequestParser: IdRequestParser,
+    redirectService: ProfileRedirectService) extends Logging with Results {
 
   private lazy val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
@@ -35,12 +36,6 @@ class AuthenticatedActions(
     SeeOther(identityUrlBuilder.buildUrl(redirectUrlWithParams))
   }
 
-  def sendUserToConsentsJourney(request: RequestHeader): Result =
-    redirectWithReturn(request, "/consents")
-
-  def sendUserToNewslettersConsentsJourney(request: RequestHeader): Result =
-    redirectWithReturn(request, "/consents/newsletters")
-
   def sendUserToSignin(request: RequestHeader): Result =
     redirectWithReturn(request, "/signin")
 
@@ -50,8 +45,8 @@ class AuthenticatedActions(
   def sendUserToRegister(request: RequestHeader): Result =
     redirectWithReturn(request, "/register")
 
-  def sendUserToValidateEmail(request: RequestHeader): Result =
-    redirectWithReturn(request, "/verify-email?isRepermissioningRedirect=true")
+  def sendUserToUserRedirectDecision(request: RequestHeader, decision: ProfileRedirect): Result =
+    redirectWithReturn(request, decision.url)
 
   private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
     request.getQueryString("email") match {
@@ -124,46 +119,21 @@ class AuthenticatedActions(
         }
     }
 
-  private def apiUserShouldRepermissionFilter: ActionFilter[AuthRequest] =
+  private def decideManageAccountRedirectFilter(pageId: String = ""): ActionFilter[AuthRequest] =
     new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
       def filter[A](request: AuthRequest[A]) = {
         if (IdentityPointToConsentJourneyPage.isSwitchedOn && IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOn)
-          decideConsentJourney(request)
+          redirectService.toProfileRedirect(request.user, request).map { redirect =>
+            if (redirect.isAllowedFrom(pageId))
+              Some(sendUserToUserRedirectDecision(request, redirect))
+            else
+              None
+          }
         else
           Future.successful(None)
       }
-
-      private def decideConsentJourney[A](request: AuthRequest[A]) =
-        (userEmailValidated(request), userHasRepermissioned(request)) match {
-          case (false, false) =>
-            Future.successful(Some(sendUserToValidateEmail(request)))
-
-          case (false, true) =>
-            Future.successful(None)
-
-          case (true, false) =>
-            Future.successful(Some(sendUserToConsentsJourney(request)))
-
-          case (true, true) =>
-            newsletterService.subscriptions(
-                request.user.getId,
-                idRequestParser(request).trackingData).map {
-
-              emailFilledForm =>
-                if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
-                  None
-                else
-                  Some(sendUserToNewslettersConsentsJourney(request))
-              }
-        }
-
-      private def userHasRepermissioned(request: AuthRequest[_]): Boolean =
-        request.user.statusFields.hasRepermissioned.contains(true)
-
-      private def userEmailValidated(request: AuthRequest[_]): Boolean =
-        request.user.statusFields.isUserEmailValidated
     }
 
   private def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] =
@@ -193,7 +163,7 @@ class AuthenticatedActions(
     noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
   /** Auth with at least SC_GU_RP and decide if user should be redirected to consent journey */
-  def consentJourneyRedirectAction: ActionBuilder[AuthRequest, AnyContent] =
-    consentAuthWithIdapiUserAction andThen apiUserShouldRepermissionFilter
+  def manageAccountRedirectAction(pageId: String = ""): ActionBuilder[AuthRequest, AnyContent] =
+    consentAuthWithIdapiUserAction andThen decideManageAccountRedirectFilter(pageId)
 
 }
