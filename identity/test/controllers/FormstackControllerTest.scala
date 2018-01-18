@@ -32,7 +32,7 @@ class FormstackControllerTest extends path.FreeSpec
   val requestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val formstackApi = mock[FormstackApi]
-  val redirectDecisionService = mock[RedirectDecisionService]
+  val profileRedirectService = mock[ProfileRedirectService]
 
   val cookieDecoder = mock[FrontendIdentityCookieDecoder]
   val idRequest = mock[IdentityRequest]
@@ -43,7 +43,7 @@ class FormstackControllerTest extends path.FreeSpec
 
   val userId = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
-  val authenticatedActions = new AuthenticatedActions(authService, mock[IdApiClient], mock[IdentityUrlBuilder], controllerComponents, newsletterService, requestParser, redirectDecisionService)
+  val authenticatedActions = new AuthenticatedActions(authService, mock[IdApiClient], mock[IdentityUrlBuilder], controllerComponents, newsletterService, requestParser, profileRedirectService)
 
   when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, ScGuU("abc", GuUCookieData(user, 0, None))))
 

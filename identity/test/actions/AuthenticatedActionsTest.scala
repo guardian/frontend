@@ -20,7 +20,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
   trait TestFixture {
     val authService = mock[AuthenticationService]
     val client: IdApiClient = mock[IdApiClient]
-    val actions = new AuthenticatedActions(authService, client, new IdentityUrlBuilder(testIdConfig), Helpers.stubControllerComponents(), mock[NewsletterService], mock[IdRequestParser], mock[RedirectDecisionService])
+    val actions = new AuthenticatedActions(authService, client, new IdentityUrlBuilder(testIdConfig), Helpers.stubControllerComponents(), mock[NewsletterService], mock[IdRequestParser], mock[ProfileRedirectService])
   }
 
   "The Consent Journey Redirect Action" should {

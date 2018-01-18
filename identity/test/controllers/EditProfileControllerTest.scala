@@ -55,7 +55,7 @@ import scala.concurrent.Future
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
-    val redirectDecisionService = new RedirectDecisionService(newsletterService, idRequestParser, controllerComponent)
+    val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
     val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
 
     val profileFormsMapping = ProfileFormsMapping(
