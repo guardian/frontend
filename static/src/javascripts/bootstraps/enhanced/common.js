@@ -40,6 +40,7 @@ import { breakingNewsInit } from 'common/modules/onward/breaking-news';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { hiddenShareToggle } from 'common/modules/social/hidden-share-toggle';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
+import { optInEngagementBannerInit } from 'common/modules/identity/global/opt-in-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
@@ -252,6 +253,12 @@ const membershipEngagementBanner = (): void => {
     }
 };
 
+const optInEngagementBanner = (): void => {
+    if (config.switches.idShowOptInEngagementBanner) {
+        optInEngagementBannerInit();
+    }
+};
+
 const initialiseEmail = (): void => {
     // Initalise email embedded in page
     initEmail();
@@ -317,6 +324,7 @@ const init = (): void => {
         ['c-pinterest', startPinterest],
         ['c-hidden-share-toggle', hiddenShareToggle],
         ['c-show-membership-engagement-banner', membershipEngagementBanner],
+        ['c-show-opt-in-engagement-banner', optInEngagementBanner],
         ['c-email', initialiseEmail],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
