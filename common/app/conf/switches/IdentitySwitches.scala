@@ -61,7 +61,7 @@ trait IdentitySwitches {
     "If switched on, users coming from newsletters will see UI to opt in to GDPR-compliant marketing",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 1),
+    sellByDate = new LocalDate(2018, 6, 25), // GDPR goes into effect + 1 month
     exposeClientSide = true
   )
 
