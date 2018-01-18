@@ -258,3 +258,16 @@ $pillars: (
         }
     }
 }
+
+.fc-item--paid-content {
+    &,
+    &.fc-item--gallery,
+    &.fc-item--video,
+    &.fc-item--audio,
+    &.fc-item--pillar-news.video-playlist__item,
+    &.fc-item--pillar-news.fc-item--type-immersive {
+        .fc-item__kicker {
+            color: $paid-card-kicker;
+        }
+    }
+}
