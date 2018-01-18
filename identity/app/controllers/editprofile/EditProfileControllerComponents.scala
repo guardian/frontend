@@ -8,7 +8,7 @@ import model.ApplicationContext
 import play.api.i18n.I18nSupport
 import play.api.mvc.BaseController
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.{IdRequestParser, IdentityUrlBuilder, NewsletterService, ReturnUrlVerifier}
+import services.{IdRequestParser, IdentityUrlBuilder, NewsletterService, ReturnUrlVerifier, ProfileRedirectService}
 import utils.SafeLogging
 
 trait EditProfileControllerComponents
@@ -25,6 +25,7 @@ trait EditProfileControllerComponents
   val idRequestParser: IdRequestParser
   val returnUrlVerifier: ReturnUrlVerifier
   val idUrlBuilder: IdentityUrlBuilder
+  val redirectDecisionService: ProfileRedirectService
   val identityApiClient: IdApiClient
   implicit val context: ApplicationContext
   implicit val profileFormsMapping: ProfileFormsMapping

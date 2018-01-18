@@ -20,7 +20,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
   trait TestFixture {
     val authService = mock[AuthenticationService]
     val client: IdApiClient = mock[IdApiClient]
-    val actions = new AuthenticatedActions(authService, client, new IdentityUrlBuilder(testIdConfig), Helpers.stubControllerComponents(), mock[NewsletterService], mock[IdRequestParser])
+    val actions = new AuthenticatedActions(authService, client, new IdentityUrlBuilder(testIdConfig), Helpers.stubControllerComponents(), mock[NewsletterService], mock[IdRequestParser], mock[ProfileRedirectService])
   }
 
   "The Consent Journey Redirect Action" should {
@@ -29,7 +29,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       val originalUrl = "https://profile.thegulocal.com/email-prefs"
       val request = Request(FakeRequest("GET", originalUrl), AnyContent())
       when(authService.consentAuthenticatedUser(request)).thenReturn(None)
-      val result = actions.consentJourneyRedirectAction.apply(failTest)(request)
+      val result = actions.manageAccountRedirectAction(originalUrl).apply(failTest)(request)
       val expectedLocation = s"/reauthenticate?INTCMP=email&returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
       whenReady(result) { res =>
         res.header.status shouldBe 303
