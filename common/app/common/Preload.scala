@@ -1,15 +1,14 @@
 package common
 
 import model.ApplicationIdentity
-import conf.switches.Switches.PolyfillIO
 import html.HtmlPageHelpers.ContentCSSFile
 import play.api.mvc.RequestHeader
-import experiments.{ CommercialBaseline, ActiveExperiments}
+import experiments.{CommercialBaseline, ActiveExperiments}
 
 object Preload {
 
   def commercialBundleName(implicit request: RequestHeader): String =
-    if (CommercialBaseline.isParticipating(request, ActiveExperiments.canCheckExperiment)) {
+    if (ActiveExperiments.isParticipating(CommercialBaseline)) {
     "graun.commercial-control.js"
   } else {
     "graun.commercial.js"
