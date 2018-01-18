@@ -1,5 +1,7 @@
 $gutter: 5px;
 
+@import '../../layout/garnett-header/_variables';
+
 .identity-header {
     @include clearfix;
     background-color: $nav-background-colour;
