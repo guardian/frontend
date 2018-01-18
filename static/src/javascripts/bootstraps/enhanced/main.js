@@ -17,7 +17,6 @@ import { init as initCommon } from 'bootstraps/enhanced/common';
 import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
-import { initCheckDispatcher } from 'common/modules/check-dispatcher';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
 
 const bootEnhanced = (): void => {
@@ -346,9 +345,6 @@ const bootEnhanced = (): void => {
             'experiments'
         );
     }
-
-    // initialise email/outbrain check dispatcher
-    bootstrapContext('checkDispatcher', initCheckDispatcher);
 
     // Mark the end of synchronous execution.
     markTime('App End');

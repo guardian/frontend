@@ -556,6 +556,12 @@ $quote-mark: 35px;
         font-size: 109px;
         line-height: 75px;
     }
+
+    //video embed styles
+    .from-content-api ul:not(.social)>li:before {
+        content: none;
+    }
+
     // *************** Quote Styles ***************
     .element-pullquote {
         background-color: $garnett-neutral-3;
@@ -1521,11 +1527,6 @@ $quote-mark: 35px;
 .interactive.element--showcase,
 .interactive.element--supporting {
     background: $garnett-neutral-5;
-    padding-top: $gs-baseline/4;
-    @include mq(leftCol) {
-        border-top: 1px solid $garnett-neutral-4;
-        border-bottom: 1px solid $garnett-neutral-4;
-    }
 }
 
 .paid-content {

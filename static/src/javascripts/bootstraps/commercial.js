@@ -23,7 +23,9 @@ import {
     primaryBaseline,
 } from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
+import commentAdverts from 'commercial/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-highMerch', highMerch.init],
@@ -33,6 +35,8 @@ const commercialModules: Array<Array<any>> = [
     ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', initPaidForBand],
     ['cm-carrot', carrotTrafficDriverInit],
+    ['cm-checkDispatcher', initCheckDispatcher],
+    ['cm-commentAdverts', commentAdverts],
 ];
 
 if (!commercialFeatures.adFree) {

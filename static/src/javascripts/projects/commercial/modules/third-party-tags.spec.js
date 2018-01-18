@@ -1,5 +1,5 @@
 // @flow
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initThirdPartyTags, _ } from './third-party-tags';
 
 const { insertScripts, loadOther } = _;
@@ -26,7 +26,7 @@ jest.mock('commercial/modules/third-party-tags/plista', () => ({
     plista: jest.fn(),
 }));
 
-jest.mock('commercial/modules/commercial-features', () => ({
+jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         thirdPartyTags: true,
     },

@@ -2,7 +2,7 @@
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import createSlot from 'commercial/modules/dfp/create-slot';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { spaceFiller } from 'common/modules/article/space-filler';
 
 const rules = {
@@ -57,7 +57,6 @@ const carrotTrafficDriverInit = (): Promise<void> => {
         return spaceFiller.fillSpace(rules, insertSlot, {
             waitForImages: false,
             waitForLinks: true,
-            waitForAds: false,
             waitForInteractives: false,
         });
     }

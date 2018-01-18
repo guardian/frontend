@@ -42,12 +42,6 @@ case object MoneyTalks extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "money/series/money-talks")
 }
 
-case object PovertyMatters extends ArticleEmailMetadata {
-  val name = "Poverty Matters"
-  override val banner = Some("poverty-matters.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "global-development/series/poverty-matters")
-}
-
 case object TheBreakdown extends ArticleEmailMetadata {
   val name = "The Breakdown"
   override val banner = Some("the-breakdown.png")
@@ -74,26 +68,13 @@ case object MorningBriefing extends ArticleEmailMetadata {
 
 case object TheUSMinute extends ArticleEmailMetadata {
   val name = "The campaign minute 2016"
-  override val banner = Some("the-us-minute.png")
+  override val banner = Some("the-us-politics-minute.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/the-campaign-minute-2016")
-}
-
-case object USBriefing extends ArticleEmailMetadata {
-  val name = "Guardian US Briefing"
-  override val banner = Some("guardian-us-briefing.png")
-  override val address = Some("222 Broadway, 22nd and 23rd Floors, New York, New York, 10038")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/guardian-us-briefing")
-}
-
-case object AusBriefing extends ArticleEmailMetadata {
-  val name = "Australian election briefing"
-  override val banner = Some("australian-election-briefing.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "australia-news/series/australian-election-briefing")
 }
 
 case object EuReferendum extends ArticleEmailMetadata {
   val name = "EU Referendum Morning Briefing"
-  override val banner = Some("eu-referendum.png")
+  override val banner = Some("brexit-briefing.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "politics/series/eu-referendum-morning-briefing")
 }
 
@@ -101,12 +82,6 @@ case object LabNotes extends ArticleEmailMetadata {
   val name = "Lab Notes"
   override val banner = Some("lab-notes.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "science/series/lab-notes")
-}
-
-case object OlympicsDailyBriefing extends ArticleEmailMetadata {
-  val name = "Olympics Daily Briefing"
-  override val banner = Some("olympics-daily-briefing.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "sport/series/olympics-2016-daily-briefing")
 }
 
 case object HandwrittenMediaBriefing extends ArticleEmailMetadata {
@@ -120,21 +95,9 @@ case object CuratedMediaBriefing extends FrontEmailMetadata {
   override val banner = Some("media-briefing.png")
 }
 
-case object VaginaDispatches extends ArticleEmailMetadata {
-  val name = "Vagina Dispatches"
-  override val banner = Some("vagina-dispatches.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "lifeandstyle/series/vagina-dispatches-newsletter")
-}
-
-case object KeepItInTheGround extends ArticleEmailMetadata {
-  val name = "Keep It In The Ground"
-  override val banner = Some("keep-it-in-the-ground.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "environment/series/keep-it-in-the-ground-updates")
-}
-
 case object TheWeekInPatriarchy extends ArticleEmailMetadata {
   val name = "The Week In Patriarchy"
-  override val banner = Some("this-week-in-the-patriarchy.png")
+  override val banner = Some("the-week-in-patriarchy.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/the-week-in-patriarchy")
 }
 
@@ -152,14 +115,8 @@ case object TheResistanceNow extends ArticleEmailMetadata {
 
 case object BeyondTheBlade extends ArticleEmailMetadata {
   val name = "Beyond The Blade"
-  override val banner = Some("beyond-the-blade.jpg")
+  override val banner = Some("beyond-the-blade.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "membership/series/beyond-the-blade")
-}
-
-case object TheSnap extends ArticleEmailMetadata {
-  val name = "The Snap"
-  override val banner = Some("the-snap.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "politics/series/the-snap")
 }
 
 case object MorningMail extends ArticleEmailMetadata {
@@ -172,6 +129,36 @@ case object VirtualRealityStudio extends ArticleEmailMetadata {
   val name = "Virtual Reality Studio"
   override val banner = Some("virtual-reality-studio.png")
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "news/series/virtual-reality-studio")
+}
+
+case object WeekendReading extends ArticleEmailMetadata {
+  val name = "Weekend Reading"
+  override val banner = Some("weekend-reading.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "membership/series/weekend-reading")
+}
+
+case object TheNewArrivals extends ArticleEmailMetadata {
+  val name = "The New Arrivals"
+  override val banner = Some("the-new-arrivals.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/the-new-arrivals-email-update")
+}
+
+case object FashionWeek extends ArticleEmailMetadata {
+  val name = "Fashion Week"
+  override val banner = Some("fashion-week.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "fashion/series/fashion-week--image-of-the-day")
+}
+
+case object CrosswordEditorsUpdate extends ArticleEmailMetadata {
+  val name = "Crossword Editor's Update"
+  override val banner = Some("crosswords-editors-update.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "crosswords/series/crossword-editor-update")
+}
+
+case object HereHere extends ArticleEmailMetadata {
+  val name = "Here Here"
+  override val banner = Some("here-here.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "tv-and-radio/series/hear-here")
 }
 
 case object TheFlyer extends FrontEmailMetadata {
@@ -219,11 +206,6 @@ case object TheLongRead extends FrontEmailMetadata {
   override val banner = Some("the-long-read.png")
 }
 
-case object TheCityscape extends FrontEmailMetadata {
-  val name = "The Cityscape"
-  override val banner = Some("the-cityscape.png")
-}
-
 case object FashionStatement extends FrontEmailMetadata {
   val name = "Fashion Statement"
   override val banner = Some("fashion-statement.png")
@@ -241,7 +223,7 @@ case object BusinessView extends FrontEmailMetadata {
 
 case object OpinionUs extends FrontEmailMetadata {
   val name = "Opinion Us"
-  override val banner = Some("opinion-us.png")
+  override val banner = Some("opinion.png")
 }
 
 object EmailAddons {
@@ -252,27 +234,25 @@ object EmailAddons {
     DocumentariesUpdate,
     GreenLight,
     MoneyTalks,
-    PovertyMatters,
     TheBreakdown,
     TheFiver,
     TheSpin,
     MorningBriefing,
     TheUSMinute,
-    USBriefing,
-    AusBriefing,
     EuReferendum,
     LabNotes,
-    OlympicsDailyBriefing,
     HandwrittenMediaBriefing,
-    VaginaDispatches,
-    KeepItInTheGround,
     TheWeekInPatriarchy,
     OutsideInAmerica,
     TheResistanceNow,
     BeyondTheBlade,
-    TheSnap,
     MorningMail,
-    VirtualRealityStudio)
+    VirtualRealityStudio,
+    WeekendReading,
+    TheNewArrivals,
+    FashionWeek,
+    HereHere,
+    CrosswordEditorsUpdate)
   private val frontEmails = Seq(
     TheFlyer,
     CuratedMediaBriefing,
@@ -284,7 +264,6 @@ object EmailAddons {
     GlobalDispatch,
     Bookmarks,
     TheLongRead,
-    TheCityscape,
     FashionStatement,
     BusinessView,
     TheGuardianB2b,

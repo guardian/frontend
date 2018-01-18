@@ -10,6 +10,7 @@ import idapiclient.{IdApiClient, Response}
 
 import scala.concurrent.Future
 import com.gu.identity.model.User
+import pages.IdentityHtmlPage
 
 class PublicProfileController(
   idUrlBuilder: IdentityUrlBuilder,
@@ -41,8 +42,9 @@ class PublicProfileController(
         case Right(user) =>
           user.publicFields.displayName.map { displayName =>
             val idRequest = idRequestParser(request)
-            Cached(60)(RevalidatableResult.Ok(views.html.publicProfilePage(
-              page(url, displayName), idRequest, idUrlBuilder, user, activityType)))
+            Cached(60)(RevalidatableResult.Ok(
+              IdentityHtmlPage.html(views.html.publicProfilePage(page(url, displayName), idRequest, idUrlBuilder, user, activityType))(page(url, displayName), request, context)
+            ))
           } getOrElse NotFound(views.html.errors._404())
       }
   }

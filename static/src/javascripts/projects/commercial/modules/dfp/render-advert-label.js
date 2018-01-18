@@ -3,16 +3,32 @@ import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import popupTemplate from 'raw-loader!commercial/views/ad-feedback-popup.html';
 import tick from 'svgs/icon/tick.svg';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-const shouldRenderLabel = adSlotNode =>
-    !(
-        adSlotNode.classList.contains('ad-slot--fluid') ||
-        adSlotNode.classList.contains('ad-slot--frame') ||
-        adSlotNode.classList.contains('gu-style') ||
-        adSlotNode.getAttribute('data-label') === 'false' ||
-        adSlotNode.getElementsByClassName('ad-slot__label').length
+/* creatives can explicitly request to have - or to not have - an 'Advertisment' label added to them
+ by containing a div with the following class followed by true/false.
+ */
+const labelRequiredSuffix = 'js-advertisement-label-required';
+
+const shouldRenderLabel = adSlotNode => {
+    const explicitlyOptedOut =
+        adSlotNode.getElementsByClassName(`${labelRequiredSuffix}-false`)
+            .length > 0;
+    const explicitlyOptedIn =
+        adSlotNode.getElementsByClassName(`${labelRequiredSuffix}-true`)
+            .length > 0;
+
+    return (
+        explicitlyOptedIn ||
+        (!explicitlyOptedOut &&
+            !(
+                adSlotNode.classList.contains('ad-slot--fluid') ||
+                adSlotNode.classList.contains('ad-slot--frame') ||
+                adSlotNode.getAttribute('data-label') === 'false' ||
+                adSlotNode.getElementsByClassName('ad-slot__label').length
+            ))
     );
+};
 
 const renderAdvertLabel = (adSlotNode: any): Promise<null> => {
     if (shouldRenderLabel(adSlotNode)) {

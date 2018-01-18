@@ -132,20 +132,14 @@ const insertTagRichLink = (): Promise<void> => {
         !isDuplicate
     ) {
         return spaceFiller
-            .fillSpace(
-                getSpacefinderRules(),
-                (paras: Element[]) => {
-                    const html = richLinkTag({
-                        href: config.get('page.richLink'),
-                    });
-                    paras[0].insertAdjacentHTML('beforebegin', html);
-                    insertedEl = paras[0].previousElementSibling;
-                    return insertedEl;
-                },
-                {
-                    waitForAds: true,
-                }
-            )
+            .fillSpace(getSpacefinderRules(), (paras: Element[]) => {
+                const html = richLinkTag({
+                    href: config.get('page.richLink'),
+                });
+                paras[0].insertAdjacentHTML('beforebegin', html);
+                insertedEl = paras[0].previousElementSibling;
+                return insertedEl;
+            })
             .then(didInsert => {
                 if (didInsert && insertedEl) {
                     return upgradeRichLink(insertedEl);

@@ -1,6 +1,6 @@
 // @flow
 
-import { isPayingMember } from 'commercial/modules/user-features';
+import { isPayingMember } from 'common/modules/commercial/user-features';
 import fastdom from 'lib/fastdom-promise';
 
 const initMembership = (): void => {
