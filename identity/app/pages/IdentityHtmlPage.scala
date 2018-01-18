@@ -17,7 +17,7 @@ object IdentityHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
     override def criticalCssLink: Html = stacked(
-      criticalStyleLink("identity")
+      criticalStyleLink("identity"),
       criticalStyleLink(InlineNavigationCSSFile))
     override def criticalCssInline: Html = criticalStyleInline(
       Html(common.Assets.css.inlineIdentity),
