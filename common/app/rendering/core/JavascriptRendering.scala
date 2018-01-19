@@ -13,6 +13,8 @@ import rendering.core.JavascriptEngine.EvalResult
 import scala.util.{Failure, Success, Try}
 
 trait JavascriptRendering extends Logging {
+  private lazy val javascriptEngine: JavascriptEngine = new JavascriptEngine
+
   def javascriptFile: String
 
   private def memoizeJs(): Try[EvalResult] = {
@@ -45,12 +47,12 @@ trait JavascriptRendering extends Logging {
   def render(props: Option[JsValue] = None, forceReload: Boolean = false): Try[String] = for {
       propsObject <- encodeProps(getProps(props))
       js <- if(forceReload) loadJavascript() else memoizeJs()
-      rendering <- JavascriptEngine.invoke(js, "render", propsObject)
+      rendering <- javascriptEngine.invoke(js, "render", propsObject)
     } yield rendering
 
   private def createContext(): SimpleScriptContext = {
     val context = new SimpleScriptContext()
-    JavascriptEngine.put("__play_webpack_logger", log.logger)(context) // Binding webpack logger to scala logger
+    javascriptEngine.put("__play_webpack_logger", log.logger)(context) // Binding webpack logger to scala logger
     context
   }
 
@@ -58,20 +60,20 @@ trait JavascriptRendering extends Logging {
     val propsId = "props"
 
     for {
-      _ <- JavascriptEngine.put(propsId, props)
-      propsObject <- JavascriptEngine.eval(s"JSON.parse($propsId)")
+      _ <- javascriptEngine.put(propsId, props)
+      propsObject <- javascriptEngine.eval(s"JSON.parse($propsId)")
     } yield propsObject
   }
 
   private def compile(inputStream: InputStream): Try[CompiledScript] = {
     val fullScript = new InputStreamReader(new SequenceInputStream(prescript, inputStream))
-    JavascriptEngine.compile(fullScript)
+    javascriptEngine.compile(fullScript)
   }
 
   private def loadJavascript(): Try[EvalResult] = for {
     file <- loadFile(javascriptFile)
     cs <- compile(file)
-    js <- JavascriptEngine.eval(cs)
+    js <- javascriptEngine.eval(cs)
   } yield js
 
   // Nashorn is only a JavaScript engine, i.e. an implementation of the ECMAScript 5.1 language specification.
