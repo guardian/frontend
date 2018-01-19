@@ -1,5 +1,7 @@
 package controllers.admin.commercial
 
+import java.util.Locale
+
 import common.Logging
 import jobs.CommercialDfpReporting
 import jobs.CommercialDfpReporting.DfpReportRow
@@ -46,7 +48,7 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
     val variantDataRow = abTestRows.find(_.customCriteria.startsWith("ab=commercialBaselineVariant"))
 
     val integerFormatter = java.text.NumberFormat.getIntegerInstance
-    val currencyFormatter = java.text.NumberFormat.getCurrencyInstance
+    val currencyFormatter = java.text.NumberFormat.getCurrencyInstance(Locale.UK)
 
     NoCache(Ok(views.html.commercial.revenueDashboard(controlDataRow, variantDataRow, integerFormatter, currencyFormatter)))
   }

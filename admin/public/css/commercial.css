@@ -72,8 +72,14 @@ dl.error, dd.error {
     font-family: 'Open Sans', sans-serif;
 }
 
+.container--commercial-dashboard {
+    height: 80vh;
+}
+
 .test {
     width: 50%;
+    height: 100%;
+    padding: 20% 0 20% 0;
     display: inline-block;
     font-family: 'Open Sans', sans-serif;
     color: #374135;
@@ -88,15 +94,13 @@ dl.error, dd.error {
     background-color: deepskyblue;
 }
 
-.test__heading {
-    text-align: center;
-}
-
-.test__eCPM, .test__impressions {
+.test__eCPM, .test__impressions, .test__revenue, .test__heading {
     text-align: center;
 }
 
 .test__criteria {
-    padding: 30px;
+    padding-top: 60px;
+    text-align: center;
     font-size: 12px;
+    overflow-wrap: break-word
 }

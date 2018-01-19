@@ -6,7 +6,7 @@
     integerFormatter: NumberFormat,
     currencyFormatter: NumberFormat)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@admin_main("Commercial Team KPI", isAuthed = true) {
+@admin_main("Commercial Team KPI", isAuthed = true, container = Some("commercial-dashboard")) {
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
     <h2 class="revenue-dashboard__title">Commercial Team Revenue KPI</h2>
 
@@ -19,6 +19,9 @@
             <h3 class="test__heading">Control</h3>
             <p class="test__eCPM">eCPM: @{currencyFormatter.format(row.totalAverageECPM)}<p>
             <p class="test__impressions">impressions: @{integerFormatter.format(row.totalImpressions)}<p>
+            <p class="test__revenue">revenue: @{
+                currencyFormatter.format(row.totalImpressions * row.totalAverageECPM / 1000d)}
+            <p>
             <p class="test__criteria">key value: @{row.customCriteria}</p>
         </div>
     }
@@ -27,6 +30,9 @@
             <h3 class="test__heading">Variant</h3>
             <p class="test__eCPM">eCPM: @{currencyFormatter.format(row.totalAverageECPM)}<p>
             <p class="test__impressions">impressions: @{integerFormatter.format(row.totalImpressions)}<p>
+            <p class="test__revenue">revenue: @{
+                currencyFormatter.format(row.totalImpressions * row.totalAverageECPM / 1000d)}
+            <p>
             <p class="test__criteria">key value: @{row.customCriteria}</p>
         </div>
     }

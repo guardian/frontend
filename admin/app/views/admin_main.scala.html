@@ -1,4 +1,9 @@
-@(title: String, isAuthed: Boolean = false, hasCharts: Boolean = false, autoRefresh: Boolean = false, loadJquery: Boolean =  true)(content: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(title: String,
+  isAuthed: Boolean = false,
+  hasCharts: Boolean = false,
+  autoRefresh: Boolean = false,
+  loadJquery: Boolean =  true,
+  container: Option[String] = None )(content: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import controllers.admin.routes.UncachedAssets
 @import controllers.admin.routes.UncachedWebAssets
@@ -51,7 +56,7 @@
 
     </head>
     <body>
-        <div class="container-fluid container--global">
+        <div class="container-fluid container--global @{container.map{ cssContainer => s"container--$cssContainer"}} ">
 
             <div class="global-nav navbar navbar-default">
                 <div class="container-fluid">
