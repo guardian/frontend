@@ -61,6 +61,8 @@
         }
     }
 
+
+    //These need to be this specific as elsewhere in pillars.scss these are targeted using 3 selectors
     .fc-item,
     .fc-item.fc-item--pillar-opinion,
     .fc-item.fc-item--pillar-news.fc-item--type-comment,
@@ -69,7 +71,7 @@
     .fc-item.fc-item--pillar-lifestyle.fc-item--type-comment,
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
     .fc-item.fc-item--type-feature,
-    .fc-trail__count--commentcount
+    .fc-item.fc-item--pillar-opinion.fc-item--type-comment .fc-trail__count--commentcount
     {
         background-color: $story-package-garnett;
 
