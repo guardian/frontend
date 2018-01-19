@@ -835,9 +835,23 @@ $quote-mark: 35px;
 .content--type-comment {
     .content__main {
         background-color: $opinion-garnett-background;
+        padding-bottom: $gs-baseline/2;
 
         .rich-link {
             background-color: $garnett-neutral-5;
+        }
+
+        .social--top {
+            background-color: $opinion-garnett-background;
+        }
+
+        .social__item {
+            @include mq(tablet) {
+                padding-bottom: 0;
+            }
+            @include mq(leftCol) {
+                padding-bottom: $gs-baseline/2;
+            }
         }
 
         .element-pullquote,
