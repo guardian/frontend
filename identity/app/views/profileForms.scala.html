@@ -5,6 +5,7 @@
 @import services.EmailPrefsData
 @import services.{ProfileRedirect}
 @import controllers.editprofile.ProfileForms
+@import conf.switches.Switches.IdentityPointToConsentJourneyPage
 
 @import services.NoRedirect
 @(
@@ -40,7 +41,7 @@
             data-pushstate-url="@url"
             @dataTestId.map{idValue => data-test-id="@idValue"}
             @{
-                if(redirect.isAllowedFrom(url))
+                if(redirect.isAllowedFrom(url) && IdentityPointToConsentJourneyPage.isSwitchedOn)
                     Html(s"href='${redirect.url}' data-tabs-ignore='true'")
                 else
                     Html(s"href='$url'")

@@ -2,7 +2,6 @@
 @import common.LinkTo
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.Switch._
-@import conf.switches.Switches.IdentityCollectGdprCompliantConsentsSwitch
 
 @* Editorial Newsletter switch/checkbox *@
 
@@ -26,20 +25,14 @@
 }
 
 @newsletterListId = @{
-    if (IdentityCollectGdprCompliantConsentsSwitch.isSwitchedOn)
-        newsletter.listId.toString
-    else
-        newsletter.listIdV1.toString
+    newsletter.listId.toString
 }
 
 @checkboxValue = @{
     if (unchecked)
         None
     else {
-        if (IdentityCollectGdprCompliantConsentsSwitch.isSwitchedOn)
-            Some(newsletter.subscribedTo(emailSubscriptions).toString)
-        else
-            Some(newsletter.subscribedToV1(emailSubscriptions).toString)
+        Some(newsletter.subscribedTo(emailSubscriptions).toString)
     }
 }
 

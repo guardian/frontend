@@ -15,10 +15,10 @@ trait IdentitySwitches {
     exposeClientSide = true
   )
 
-  val IdentityCollectGdprCompliantConsentsSwitch = Switch(
+  val IdentityPointToConsentJourneyPage = Switch(
     SwitchGroup.Identity,
-    "id-gdpr-marketing-consent",
-    "If switched on, GDPR Compliant V2 consents will be collected & users will be prompted to update their V1 consents",
+    "id-point-to-consent-journey-page",
+    "If switched on, several endpoints will redirect qualifying users to the Journey page to repermission",
     owners = Seq(Owner.withGithub("mario-galic"), Owner.withGithub("walaura")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 3, 1),

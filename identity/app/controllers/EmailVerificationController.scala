@@ -9,7 +9,6 @@ import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
-import conf.switches.Switches.IdentityCollectGdprCompliantConsentsSwitch
 import pages.IdentityHtmlPage
 
 
@@ -49,7 +48,7 @@ class EmailVerificationController(api: IdApiClient,
           val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
           val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
 
-          if(validationState.isExpired || IdentityCollectGdprCompliantConsentsSwitch.isSwitchedOff) {
+          if(validationState.isExpired) {
             Ok(
               IdentityHtmlPage.html(views.html.emailVerified(validationState, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))(page, request, context)
             )

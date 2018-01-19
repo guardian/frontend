@@ -2,7 +2,6 @@
 @import _root_.form.IdFormHelpers.nonInputFields
 @import com.gu.identity.model.Consent
 @import com.gu.identity.model.Consent._
-@import conf.switches.Switches.IdentityCollectGdprCompliantConsentsSwitch
 @import model.IdentityPage
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
@@ -103,11 +102,7 @@
 }
 
 @* MARKETING CONSENT *@
-@if(IdentityCollectGdprCompliantConsentsSwitch.isSwitchedOn) {
-    @marketingConsentForm
-} else {
-    @profile.marketingConsentFormV1(idUrlBuilder, idRequest, privacyForm)
-}
+@marketingConsentForm
 
 @* NEWSLETTERS *@
 <hr class="manage-account-divider" />
