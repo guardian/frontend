@@ -20,13 +20,11 @@
                     "tone-colour" -> isContributor))">
                     @href.map { href =>
                     <a data-link-name="section heading" href="@LinkTo {/@href}">
-                    @if(ArticleBadgesSwitch.isSwitchedOn){
                         @badgeFor(containerDefinition).map { badge =>
                             <div class="badge-slot">
                                 <img class="badge-slot__img" src="@badge.imageUrl"/>
                             </div>
                         }
-                    }
                         <span class="fc-container__title__text">@Localisation(title)</span>
                     </a>
                     }.getOrElse {

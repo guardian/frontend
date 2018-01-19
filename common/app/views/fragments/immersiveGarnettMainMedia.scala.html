@@ -1,5 +1,5 @@
 @import common.{LinkTo, Localisation}
-@import conf.switches.Switches.{ ArticleBadgesSwitch, NewDesktopNavigation }
+@import conf.switches.Switches.{ NewDesktopNavigation }
 @import layout.ContentWidths.MainMedia
 @import model.Badges.badgeFor
 @import model.ContentPage
@@ -31,7 +31,7 @@
                 </a>
             }
 
-            @if(ArticleBadgesSwitch.isSwitchedOn && isTheMinuteArticle) {
+            @if(isTheMinuteArticle) {
                 @badgeFor(page.item).map { badge =>
                     <div class="badge-slot">
                         <a href="@LinkTo {/@badge.seriesTag}">

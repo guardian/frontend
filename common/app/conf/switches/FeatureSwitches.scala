@@ -335,17 +335,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-    // Owner: Frank Longden
-  val ArticleBadgesSwitch = Switch(
-    SwitchGroup.Feature,
-    "article-header-badge",
-    "When ON, articles specified in the badges file will have visual elements added",
-    owners = Seq(Owner.withGithub("superfrank")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 1, 24),
-    exposeClientSide = false
-  )
-
   // Owner: Dotcom loyalty
   val EmailInArticleGtodaySwitch = Switch(
     SwitchGroup.Feature,

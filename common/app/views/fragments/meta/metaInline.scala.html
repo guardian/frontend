@@ -1,7 +1,6 @@
 @(item: model.ContentType, amp: Boolean = false)(implicit request: RequestHeader)
 
 @import common.{LinkTo, Localisation}
-@import conf.switches.Switches.ArticleBadgesSwitch
 @import model.Badges.badgeFor
 @import views.support.RenderClasses
 
@@ -12,14 +11,12 @@
     ), "content__labels")
 ">
     @if(!amp) {
-        @if(ArticleBadgesSwitch.isSwitchedOn) {
-            @badgeFor(item).map { badge =>
-                <div class="badge-slot">
-                    <a href="@LinkTo {/@badge.seriesTag}">
-                        <img class="badge-slot__img" src="@badge.imageUrl" alt="@item.content.blogOrSeriesTag.map(_.name)"/>
-                    </a>
-                </div>
-            }
+        @badgeFor(item).map { badge =>
+            <div class="badge-slot">
+                <a href="@LinkTo {/@badge.seriesTag}">
+                    <img class="badge-slot__img" src="@badge.imageUrl" alt="@item.content.blogOrSeriesTag.map(_.name)"/>
+                </a>
+            </div>
         }
 
         @if(item.content.isPaidContent && item.content.isImmersive) {
