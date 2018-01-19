@@ -6,7 +6,7 @@
     integerFormatter: NumberFormat,
     currencyFormatter: NumberFormat)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@admin_main("Commercial Team KPI", isAuthed = true) {
+@admin_main("Commercial Team KPI", isAuthed = true, container = Some("commercial-dashboard")) {
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
     <h2 class="revenue-dashboard__title">Commercial Team Revenue KPI</h2>
 
