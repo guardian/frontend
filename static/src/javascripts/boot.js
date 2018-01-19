@@ -40,10 +40,8 @@ const go = () => {
         }
 
         markTime('commercial request');
-        // It is called the variant by the server side test, but it actually represents the control behaviour,
-        // because it is the baseline which will not include new changes made by the commercial team.
         const inCommercialControl =
-            config.tests.commercialBaselineVariant === 'variant';
+            config.tests.commercialBaselineControl === 'control';
         if (inCommercialControl) {
             require.ensure(
                 [],

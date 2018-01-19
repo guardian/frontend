@@ -342,7 +342,7 @@ trait FeatureSwitches {
     "When ON, articles specified in the badges file will have visual elements added",
     owners = Seq(Owner.withGithub("superfrank")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 1, 18),
+    sellByDate = new LocalDate(2018, 1, 24),
     exposeClientSide = false
   )
 
@@ -633,16 +633,6 @@ trait FeatureSwitches {
     "garnett-header-launch",
     "when ON, garnett styling will appear on the navigation, assuming the new navigation is already live for everyone",
     owners = Seq(Owner.withGithub("NataliaLKB"), Owner.withGithub("zeftilldeath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 31),
-    exposeClientSide = false
-  )
-
-  val GarnettIdentityLaunch = Switch(
-    SwitchGroup.Feature,
-    "garnett-identity-launch",
-    "When ON, garnett styling will appear on identity pages",
-    owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 1, 31),
     exposeClientSide = false

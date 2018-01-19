@@ -332,12 +332,10 @@
 }
 
 .manage-account-divider {
-    display: block;
-    width: 100%;
-    border-top: 1px solid $garnett-neutral-4;
-    border-bottom: 0;
-    transform: scaleX(3);
-    margin-top: $gs-baseline;
+    @include multiline(4, $garnett-neutral-4, top);
+    height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
+    border: 0;
+    margin: $gs-baseline auto ($gs-baseline / 2);
 }
 
 /* Modals
