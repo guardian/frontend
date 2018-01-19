@@ -557,6 +557,12 @@ $quote-mark: 35px;
         line-height: 75px;
     }
 
+    .element-atom--media {
+        .fc-item.fc-item--media::before {
+            content: none;
+        }
+    }
+
     // *************** Quote Styles ***************
     .element-pullquote {
         background-color: $garnett-neutral-3;
