@@ -3,7 +3,6 @@
 import domready from 'domready';
 import { comready } from 'lib/comready';
 import config from 'lib/config';
-import { init } from 'journalism/temporary/story-questions';
 import fastdom from 'lib/fastdom-promise';
 import { send } from 'commercial/modules/messenger/send';
 
@@ -34,7 +33,6 @@ Promise.all([
     new Promise(domready),
     new Promise(comready),
 ]).then(() => {
-    init();
     updateHeight();
 
     // Brittle but will work

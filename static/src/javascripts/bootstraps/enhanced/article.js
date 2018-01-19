@@ -14,7 +14,6 @@ import {
 import { upgradeMembershipEvents } from 'common/modules/article/membership-events';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { handleCompletion as handleQuizCompletion } from 'common/modules/atoms/quiz';
-import { init as initStoryQuestions } from 'journalism/temporary/story-questions';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import ophan from 'ophan/ng';
@@ -69,7 +68,6 @@ const init = () => {
         ['article-upgrade-membership-events', upgradeMembershipEvents],
         ['article-mediator-emit-event', modules.emitReadyEvent],
         ['article-handle-quiz-completion', handleQuizCompletion],
-        ['article-init-story-questions', initStoryQuestions],
     ]);
 };
 
