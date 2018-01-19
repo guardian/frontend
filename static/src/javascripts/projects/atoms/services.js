@@ -17,10 +17,12 @@ import { viewport } from './services/viewport';
 
 type FastdomAction = Function => void;
 
-const promisify = (f: FastdomAction) => (g: Function): Promise<any> =>
+const promisify = (fdaction: FastdomAction) => (
+    thunk: Function
+): Promise<any> =>
     new Promise(resolve => {
-        f.call(fastdom, () => {
-            resolve(g());
+        fdaction.call(fastdom, () => {
+            resolve(thunk());
         });
     });
 
