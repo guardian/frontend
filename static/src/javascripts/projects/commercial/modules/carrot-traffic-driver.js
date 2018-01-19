@@ -49,7 +49,7 @@ const insertSlot = (paras: Element[]): Promise<void> => {
     const slot = createSlot('carrot');
     return fastdom
         .write(() => {
-            if (paras[0].parentNode) {
+            if (paras[0] && paras[0].parentNode) {
                 paras[0].parentNode.insertBefore(slot, paras[0]);
             }
         })
