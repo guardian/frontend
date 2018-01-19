@@ -115,7 +115,7 @@ export const sonobiBidder: PrebidBidder = {
 export const indexExchangeBidder: PrebidBidder = {
     name: 'indexExchange',
     bidParams: (): PrebidIndexExchangeParams => ({
-        id: config.page.adUnit,
+        id: '185406',
         siteID: getIndexSiteId(),
     }),
 };
