@@ -9,7 +9,8 @@ import play.api.libs.json.Json
 
 case class CommercialProperties(
   editionBrandings: Set[EditionBranding],
-  editionAdTargetings: Set[EditionAdTargeting]
+  editionAdTargetings: Set[EditionAdTargeting],
+  prebidIndexSites: Option[Set[PrebidIndexSite]]
 ) {
   val isPaidContent: Boolean = branding(defaultEdition).exists(_.isPaid)
   val isFoundationFunded: Boolean = branding(defaultEdition).exists(_.isFoundationFunded)
@@ -31,21 +32,28 @@ object CommercialProperties {
 
   implicit val commercialPropertiesFormat = Json.format[CommercialProperties]
 
-  val empty = CommercialProperties(editionBrandings = Set.empty, editionAdTargetings = Set.empty)
+  val empty = CommercialProperties(
+    editionBrandings = Set.empty,
+    editionAdTargetings = Set.empty,
+    prebidIndexSites = None
+  )
 
   def fromContent(item: Content): CommercialProperties = CommercialProperties(
     editionBrandings = EditionBranding.fromContent(item),
-    editionAdTargetings = EditionAdTargeting.fromContent(item)
+    editionAdTargetings = EditionAdTargeting.fromContent(item),
+    prebidIndexSites = PrebidIndexSite.fromContent(item)
   )
 
   def fromSection(section: Section): CommercialProperties = CommercialProperties(
     editionBrandings = EditionBranding.fromSection(section),
-    editionAdTargetings = EditionAdTargeting.fromSection(section)
+    editionAdTargetings = EditionAdTargeting.fromSection(section),
+    prebidIndexSites = PrebidIndexSite.fromSection(section)
   )
 
   def fromTag(tag: Tag): CommercialProperties = CommercialProperties(
     editionBrandings = EditionBranding.fromTag(tag),
-    editionAdTargetings = EditionAdTargeting.fromTag(tag)
+    editionAdTargetings = EditionAdTargeting.fromTag(tag),
+    prebidIndexSites = PrebidIndexSite.fromTag(tag)
   )
 
   private def isNetworkFront(frontId: String): Boolean = Edition.all.map(_.networkFrontId).contains(frontId)
@@ -55,7 +63,8 @@ object CommercialProperties {
       Some(
         CommercialProperties(
           editionBrandings = Set.empty,
-          editionAdTargetings = EditionAdTargeting.forNetworkFront(frontId)
+          editionAdTargetings = EditionAdTargeting.forNetworkFront(frontId),
+          prebidIndexSites = PrebidIndexSite.forNetworkFront(frontId)
         )
       )
     } else None
@@ -63,6 +72,7 @@ object CommercialProperties {
 
   def forFrontUnknownToCapi(frontId: String): CommercialProperties = CommercialProperties(
     editionBrandings = Set.empty,
-    editionAdTargetings = EditionAdTargeting.forFrontUnknownToCapi(frontId)
+    editionAdTargetings = EditionAdTargeting.forFrontUnknownToCapi(frontId),
+    prebidIndexSites = PrebidIndexSite.forFrontUnknownToCapi(frontId)
   )
 }

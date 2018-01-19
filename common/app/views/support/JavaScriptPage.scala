@@ -42,7 +42,8 @@ object JavaScriptPage {
         case _: CommercialExpiryPage => true
         case _ => false
       }),
-      "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty))
+      "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
+      "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty))
     ) ++ sponsorshipType
 
     val javascriptConfig = page match {
