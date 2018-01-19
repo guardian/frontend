@@ -524,8 +524,9 @@ case class TagCombiner(
     commercial = Some(
       //We only use the left tag for CommercialProperties
       CommercialProperties(
-        leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Set.empty),
-        leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Set.empty)
+        editionBrandings = leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Set.empty),
+        editionAdTargetings = leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Set.empty),
+        prebidIndexSites = leftTag.properties.commercial.flatMap(_.prebidIndexSites)
       )
     )
   )

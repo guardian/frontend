@@ -1,13 +1,14 @@
 // @flow
 
 import config from 'lib/config';
+import { getBreakpoint } from 'lib/detect';
 import {
-    buildPageTargeting,
     buildAppNexusTargeting,
+    buildPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import type {
-    PrebidBidderCriteria,
     PrebidBidder,
+    PrebidBidderCriteria,
     PrebidIndexExchangeParams,
     PrebidSonobiParams,
     PrebidTrustXParams,
@@ -29,6 +30,31 @@ const getTrustXAdUnitId = (slotId: string): string => {
             );
             return '';
     }
+};
+
+const getBreakpointKey = (): string => {
+    switch (getBreakpoint()) {
+        case 'mobile':
+        case 'mobileMedium':
+        case 'mobileLandscape':
+        case 'phablet':
+            return 'M';
+        case 'tablet':
+            return 'T';
+        case 'desktop':
+        case 'leftCol':
+        case 'wide':
+            return 'D';
+        default:
+            return 'D';
+    }
+};
+
+const getIndexSiteId = (): string => {
+    const site = config.page.pbIndexSites.find(
+        s => s.bp === getBreakpointKey()
+    );
+    return site ? site.id : '';
 };
 
 export const bidderConfig: PrebidBidderCriteria = {
@@ -90,7 +116,7 @@ export const indexExchangeBidder: PrebidBidder = {
     name: 'indexExchange',
     bidParams: (): PrebidIndexExchangeParams => ({
         id: '185406',
-        siteID: '208206',
+        siteID: getIndexSiteId(),
     }),
 };
 
