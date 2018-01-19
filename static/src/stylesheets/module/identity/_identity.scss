@@ -337,13 +337,11 @@ $identity-header-height: 48px;
             padding: $gs-baseline / 4 0 $gs-baseline;
             color: $identity-main;
         }
-        @if($identity-main == $garnett-neutral-1) {
-            @include pillar-dropdown('News', $news-garnett-main-1);
-            @include pillar-dropdown('Sport', $sport-garnett-main-1);
-            @include pillar-dropdown('Culture', $culture-garnett-main-1);
-            @include pillar-dropdown('Lifestyle', $lifestyle-garnett-main-1);
-            @include pillar-dropdown('Comment', $opinion-garnett-main-1);
-        }
+        @include pillar-dropdown('News', $news-garnett-main-1);
+        @include pillar-dropdown('Sport', $sport-garnett-main-1);
+        @include pillar-dropdown('Culture', $culture-garnett-main-1);
+        @include pillar-dropdown('Lifestyle', $lifestyle-garnett-main-1);
+        @include pillar-dropdown('Comment', $opinion-garnett-main-1);
         .dropdown__label {
             @include fs-bodyHeading(3);
             &:after {
