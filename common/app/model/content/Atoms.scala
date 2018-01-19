@@ -2,6 +2,7 @@ package model.content
 
 import com.gu.contentapi.client.model.v1.TagType
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentatom.renderer.ArticleConfiguration
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
@@ -13,6 +14,7 @@ import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 import views.support.{GoogleStructuredData, ImgSrc}
 import conf.switches.Switches
+import conf.Configuration
 import org.joda.time.format.DateTimeFormat
 
 final case class Atoms(
@@ -208,6 +210,10 @@ final case class TimelineItem(
 )
 
 object Atoms extends common.Logging {
+
+  def articleConfig = ArticleConfiguration(
+    ajaxUrl = Configuration.ajax.url
+  )
 
   def extract[T](
     atoms: Option[Seq[AtomApiAtom]], 

@@ -688,7 +688,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
           atomContainer.attr("data-atom-id", atomId)
           atomContainer.attr("data-atom-type", atomType)
 
-          val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
+          val html = views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper).toString()
           bodyElement.remove()
           atomContainer.append(html)
         }
