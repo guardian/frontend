@@ -262,7 +262,13 @@ object PrebidIndexSite {
     ).groupBy { case (section, _) => section }
       .mapValues { _.map { case (_, site) => site }.toSet }
 
-  private def fromSectionId(sectionId: String): Option[Set[PrebidIndexSite]] = siteIds.get(sectionId)
+  private def fromSectionId(sectionId: String): Option[Set[PrebidIndexSite]] = {
+    val firstPart = {
+      val sepIndex = sectionId.indexOf('/')
+      if (sepIndex > 0) sectionId.substring(0, sepIndex) else sectionId
+    }
+    siteIds.get(firstPart)
+  }
 
   def fromContent(item: Content): Option[Set[PrebidIndexSite]] = item.sectionId.flatMap(fromSectionId)
 
