@@ -28,23 +28,23 @@
     }
 }
 
-.new-header--news {
+.pillar-scheme--News {
     @include PillarColourOne($news-garnett-main-1);
 }
 
-.new-header--opinion {
+.pillar-scheme--Opinion {
     @include PillarColourOne($opinion-garnett-main-1);
 }
 
-.new-header--sport {
+.pillar-scheme--Sport {
     @include PillarColourOne($sport-garnett-main-1);
 }
 
-.new-header--arts {
+.pillar-scheme--Culture {
     @include PillarColourOne($culture-garnett-main-1);
 }
 
-.new-header--lifestyle {
+.pillar-scheme--Lifestyle {
     @include PillarColourOne($lifestyle-garnett-main-1);
 }
 
