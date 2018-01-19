@@ -1,6 +1,8 @@
 package experiments
 
 import conf.switches.Owner
+import conf.switches.Owner.group
+import conf.switches.SwitchGroup.Commercial
 import conf.switches.Switches.{GarnettHeaderLaunch, GarnettLaunch}
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
@@ -13,7 +15,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialBaseline,
     GarnettHeader,
     Garnett,
-    HideShowMoreButtonExperiment
+    HideShowMoreButtonExperiment,
+    Prebid
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -85,4 +88,12 @@ object HideShowMoreButtonExperiment extends Experiment(
   owners = Seq(Owner.withGithub("Quarpt")),
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup = Perc5A
+)
+
+object Prebid extends Experiment(
+  name = "prebid",
+  description = "Users in this experiment will have a Prebid header-bidding experience.",
+  owners = group(Commercial),
+  sellByDate = new LocalDate(2018, 2, 21),
+  participationGroup = Perc2C
 )
