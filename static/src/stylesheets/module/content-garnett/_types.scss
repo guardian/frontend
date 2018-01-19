@@ -829,6 +829,19 @@ $quote-mark: 35px;
             background-color: $garnett-neutral-5;
         }
 
+        .social--top {
+            background-color: $opinion-garnett-background;
+        }
+
+        .social__item {
+            @include mq(tablet) {
+                padding-bottom: 0;
+            }
+            @include mq(leftCol) {
+                padding-bottom: $gs-baseline/2;
+            }
+        }
+
         .element-pullquote,
         .element-pullquote:after
         {
