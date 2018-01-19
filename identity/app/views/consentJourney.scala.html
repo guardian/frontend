@@ -8,7 +8,6 @@
 @import views.support.fragment.Switch._
 @import views.support.fragment.ConsentStep._
 @import views.support.fragment.ConsentChannel._
-@import conf.switches.Switches.IdentityShowCommunicationChannelConsents
 @import common.LinkTo
 @import controllers.editprofile.ProfileForms
 
@@ -112,7 +111,7 @@
             ConsentStepHelpText("Besides email, are there any other ways you would like us to get in touch with you?")
         ),
         content = channelStepContent,
-        show = IdentityShowCommunicationChannelConsents.isSwitchedOn && channelsProvidedBy(user).nonEmpty
+        show = channelsProvidedBy(user).nonEmpty
     )
 }
 

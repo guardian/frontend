@@ -25,16 +25,6 @@ trait IdentitySwitches {
     exposeClientSide = false
   )
 
-  val IdentityShowCommunicationChannelConsents = Switch(
-    SwitchGroup.Identity,
-    "id-show-communication-channel-consents",
-    "If switched on, users will see UI for opting in or out of different communication channels",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 1),
-    exposeClientSide = false
-  )
-
   val IdentityShowOptInEngagementBanner = Switch(
     SwitchGroup.Identity,
     "id-show-opt-in-engagement-banner",
