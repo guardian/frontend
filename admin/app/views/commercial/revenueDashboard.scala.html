@@ -19,6 +19,9 @@
             <h3 class="test__heading">Control</h3>
             <p class="test__eCPM">eCPM: @{currencyFormatter.format(row.totalAverageECPM)}<p>
             <p class="test__impressions">impressions: @{integerFormatter.format(row.totalImpressions)}<p>
+            <p class="test__revenue">revenue: @{
+                currencyFormatter.format(row.totalImpressions * row.totalAverageECPM / 1000d)}
+            <p>
             <p class="test__criteria">key value: @{row.customCriteria}</p>
         </div>
     }
@@ -27,6 +30,9 @@
             <h3 class="test__heading">Variant</h3>
             <p class="test__eCPM">eCPM: @{currencyFormatter.format(row.totalAverageECPM)}<p>
             <p class="test__impressions">impressions: @{integerFormatter.format(row.totalImpressions)}<p>
+            <p class="test__revenue">revenue: @{
+                currencyFormatter.format(row.totalImpressions * row.totalAverageECPM / 1000d)}
+            <p>
             <p class="test__criteria">key value: @{row.customCriteria}</p>
         </div>
     }
