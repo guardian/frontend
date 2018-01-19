@@ -3,6 +3,7 @@
 import config from 'lib/config';
 import qwery from 'qwery';
 import $ from 'lib/$';
+import { catchErrorsWithContext } from 'lib/robust';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
@@ -50,20 +51,26 @@ const modules = {
         // This event is for older-style quizzes implemented as interactives. See https://github.com/guardian/quiz-builder
         mediator.on('quiz/ophan-event', ophan.record);
     },
+
+    emitReadyEvent() {
+        mediator.emit('page:article:ready');
+    },
 };
 
 const init = () => {
-    initTrails();
-    initLiveblogCommon();
-    modules.initRightHandComponent();
-    modules.initCmpParam();
-    modules.initQuizListeners();
-    upgradeRichLinks();
-    insertTagRichLink();
-    upgradeMembershipEvents();
-    mediator.emit('page:article:ready');
-    handleQuizCompletion();
-    initStoryQuestions();
+    catchErrorsWithContext([
+        ['article-trails', initTrails],
+        ['article-liveblog-common', initLiveblogCommon],
+        ['article-righthand-component', modules.initRightHandComponent],
+        ['article-cmp-param', modules.initCmpParam],
+        ['article-quiz-listeners', modules.initQuizListeners],
+        ['article-rich-links', upgradeRichLinks],
+        ['article-tag-rich-link', insertTagRichLink],
+        ['article-upgrade-membership-events', upgradeMembershipEvents],
+        ['article-mediator-emit-event', modules.emitReadyEvent],
+        ['article-handle-quiz-completion', handleQuizCompletion],
+        ['article-init-story-questions', initStoryQuestions],
+    ]);
 };
 
 export { init };
