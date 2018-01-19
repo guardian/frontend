@@ -8,7 +8,7 @@ import experiments.{CommercialBaseline, ActiveExperiments}
 object Preload {
 
   def commercialBundleName(implicit request: RequestHeader): String =
-    if (ActiveExperiments.isParticipating(CommercialBaseline)) {
+    if (ActiveExperiments.isControl(CommercialBaseline)) {
     "graun.commercial-control.js"
   } else {
     "graun.commercial.js"
