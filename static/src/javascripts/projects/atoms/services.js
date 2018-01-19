@@ -4,7 +4,7 @@
 // managed by the atoms team
 
 import ophan from 'ophan/ng';
-import fastdom from 'lib/fastdom-promise';
+import fastdom from 'fastdom';
 import { viewport } from './services/viewport';
 
 // Need to pass in the API to native services, something that looks
@@ -15,11 +15,22 @@ import { viewport } from './services/viewport';
 //    ...
 // }
 
+type FastdomAction = Function => void;
+
+const promisify = (fdaction: FastdomAction) => (
+    thunk: Function
+): Promise<any> =>
+    new Promise(resolve => {
+        fdaction.call(fastdom, () => {
+            resolve(thunk());
+        });
+    });
+
 const services: Services = {
     ophan,
     dom: {
-        write: fastdom.write,
-        read: fastdom.read,
+        write: promisify(fastdom.write),
+        read: promisify(fastdom.read),
     },
     viewport,
 };

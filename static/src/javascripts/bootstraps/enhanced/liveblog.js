@@ -9,7 +9,6 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
-import { initAtoms } from './atoms';
 
 const affixTimeline = (): void => {
     const keywordIds = config.get('page.keywordIds', '');
@@ -51,7 +50,6 @@ const init = (): void => {
         ['lb-timeline', affixTimeline],
         ['lb-timestamp', keepTimestampsCurrent],
         ['lb-richlinks', upgradeRichLinks],
-        ['lb-atoms', initAtoms],
     ]);
 
     initTrails();
