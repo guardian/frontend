@@ -823,7 +823,7 @@ $quote-mark: 35px;
 .content--type-comment {
     .content__main {
         background-color: $opinion-garnett-background;
-        padding-bottom: 1px;
+        padding-bottom: $gs-baseline/2;
 
         .rich-link {
             background-color: $garnett-neutral-5;
