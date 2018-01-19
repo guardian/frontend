@@ -1,7 +1,7 @@
 package experiments
 
 import conf.switches.Owner
-import conf.switches.Switches.{GarnettHeaderLaunch, GarnettIdentityLaunch, GarnettLaunch}
+import conf.switches.Switches.{GarnettHeaderLaunch, GarnettLaunch}
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialPaidContentTemplate,
     CommercialBaseline,
     GarnettHeader,
-    GarnettIdentity,
     Garnett,
     HideShowMoreButtonExperiment
   )
@@ -56,18 +55,9 @@ object CommercialBaseline extends Experiment(
   description = "Users in this experiment will experience the commercial javascript stack as of 2018-01-01.",
   owners = Seq(Owner.withGithub("JonNorman"), Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2018, 4, 11),
-  participationGroup = Perc2A
+  participationGroup = Perc2B
 )
 
-object GarnettIdentity extends Experiment(
-  name = "garnett-identity",
-  description = "Users in this experiment will see garnett styling on identity pages",
-  owners = Seq(Owner.withGithub("walaura")),
-  sellByDate = new LocalDate(2018, 2, 1),
-  participationGroup = Perc0E
-) {
-  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettIdentityLaunch.isSwitchedOn
-}
 
 object GarnettHeader extends Experiment(
   name = "garnett-header",

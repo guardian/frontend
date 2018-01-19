@@ -35,7 +35,8 @@ final case class Atoms(
     "qanda" -> !qandas.isEmpty,
     "profile" -> !profiles.isEmpty,
     "timeline" -> !timelines.isEmpty,
-    "storyquestions" -> !storyquestions.isEmpty
+    "storyquestions" -> !storyquestions.isEmpty,
+    "explainer" -> !explainers.isEmpty
   )
 }
 
@@ -149,7 +150,8 @@ final case class ExplainerAtom(
   override val id: String,
   labels: Seq[String],
   title: String,
-  body: String
+  body: String,
+  atom: AtomApiAtom
 ) extends Atom
 
 final case class QandaAtom(
@@ -557,7 +559,7 @@ object StoryQuestionsAtom {
 object ExplainerAtom {
   def make(atom: AtomApiAtom): ExplainerAtom = {
     val explainer = atom.data.asInstanceOf[AtomData.Explainer].explainer
-    ExplainerAtom(atom.id, explainer.tags.getOrElse(Nil), explainer.title, explainer.body)
+    ExplainerAtom(atom.id, explainer.tags.getOrElse(Nil), explainer.title, explainer.body, atom)
   }
 }
 

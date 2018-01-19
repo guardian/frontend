@@ -66,3 +66,37 @@ dl.error, dd.error {
     color: darkred;
     font-weight: bold;
 }
+
+.revenue-dashboard__title {
+    font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.test {
+    width: 50%;
+    display: inline-block;
+    font-family: 'Open Sans', sans-serif;
+    color: #374135;
+}
+
+.test--control {
+    background-color: hotpink;
+}
+
+.test--variant {
+    float: right;
+    background-color: deepskyblue;
+}
+
+.test__heading {
+    text-align: center;
+}
+
+.test__eCPM, .test__impressions {
+    text-align: center;
+}
+
+.test__criteria {
+    padding: 30px;
+    font-size: 12px;
+}

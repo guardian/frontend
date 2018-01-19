@@ -76,9 +76,11 @@ object FrontProperties {
 
   def fromBranding(edition: Edition, branding: Branding): FrontProperties =
     empty.copy(
-      commercial = Some(CommercialProperties(
-        editionBrandings = Set(EditionBranding(edition, Some(branding))),
-        editionAdTargetings = Set.empty
-      ))
+      commercial = Some(
+        CommercialProperties(
+          editionBrandings = Set(EditionBranding(edition, Some(branding))),
+          editionAdTargetings = Set.empty,
+          prebidIndexSites = None
+        ))
     )
 }

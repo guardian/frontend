@@ -176,8 +176,12 @@ $hosted-video-height: 551px;
 .hosted__glogo {
     display: inline-block;
     padding: 4px $gs-gutter / 2;
-    background-color: $guardian-brand;
+    background-color: $garnett-neutral-1;
     text-align: right;
+
+    &:hover {
+        text-decoration: none;
+    }
 
     svg {
         fill: #ffffff;
@@ -185,27 +189,33 @@ $hosted-video-height: 551px;
 
     .inline-logo {
         display: inline-block;
-        margin-top: -5px;
+        margin-top: -10px;
+        margin-right: 0;
+        margin-left: 40px;
+        @include mq(tablet) {
+            margin-right: -30px;
+            margin-left: 30px;
+        }
     }
 
     @include mq(mobile) {
         svg {
             width: 115px;
-            height: 40px;
+            height: 30px;
         }
     }
 
     @include mq(tablet) {
         svg {
             width: 185px;
-            height: 50px;
+            height: 40px;
         }
     }
 }
 
 .hosted__glogotext {
     @include f-textSans;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: .5px;
     line-height: 16px;
@@ -213,6 +223,10 @@ $hosted-video-height: 551px;
     margin: 0;
     text-align: left;
     color: rgba(255, 255, 255, .5);
+
+    @include mq(tablet) {
+        font-size: 14px;
+    }
 }
 
 .hosted-page ~ .survey-overlay-simple {
