@@ -1,8 +1,7 @@
 package football.controllers
 
-import com.gu.commercial.branding._
-import common.commercial.{CommercialProperties, EditionAdTargeting, EditionBranding}
-import common.{Edition, Pagination}
+import common.Pagination
+import common.commercial.{CommercialProperties, EditionAdTargeting, PrebidIndexSite}
 import implicits.Football
 import model._
 import org.joda.time.LocalDate
@@ -32,17 +31,7 @@ class FootballPage(
   pagination: Option[Pagination] = None,
   description: Option[String] = None) extends StandalonePage {
 
-  /*
-   * This is a temporary solution:
-   * until football feed pages make a call to capi to get branding data,
-   * this has to be hardcoded here.
-   *
-   * Has to be 'def' to pick up current switch state.
-   */
-  private def brandings: Set[EditionBranding] = Set.empty
-
-  // Has to be 'def' to pick up current switch state
-  override def metadata: MetaData = MetaData
+  override val metadata: MetaData = MetaData
     .make(
       id = id,
       section = Some(SectionId.fromId(section)),
@@ -54,7 +43,8 @@ class FootballPage(
       commercial = Some(
         CommercialProperties(
           editionAdTargetings = EditionAdTargeting.forFrontUnknownToCapi(id),
-          editionBrandings = brandings
+          editionBrandings = Set.empty,
+          prebidIndexSites = PrebidIndexSite.forFrontUnknownToCapi(id)
         )
       )
     )
