@@ -48,7 +48,11 @@ const rules = {
 const insertSlot = (paras: Element[]): Promise<void> => {
     const slot = createSlot('carrot');
     return fastdom
-        .write(() => paras[0].insertAdjacentElement('beforebegin', slot))
+        .write(() => {
+            if (paras[0] && paras[0].parentNode) {
+                paras[0].parentNode.insertBefore(slot, paras[0]);
+            }
+        })
         .then(() => addSlot(slot, true));
 };
 
