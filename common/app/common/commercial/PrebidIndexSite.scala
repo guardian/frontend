@@ -26,6 +26,12 @@ object PrebidIndexSite {
   }
   implicit val format = Json.format[PrebidIndexSite]
 
+  private val defaultSiteIds = Set(
+    PrebidIndexSite(Desktop, 208283),
+    PrebidIndexSite(Mobile, 213553),
+    PrebidIndexSite(Tablet, 215488)
+  )
+
   private val siteIds: Map[String, Set[PrebidIndexSite]] =
     Seq(
       "artanddesign"                              -> PrebidIndexSite(Desktop, 208282),
@@ -267,7 +273,7 @@ object PrebidIndexSite {
       val sepIndex = sectionId.indexOf('/')
       if (sepIndex > 0) sectionId.substring(0, sepIndex) else sectionId
     }
-    siteIds.get(firstPart)
+    siteIds.get(firstPart).orElse(Some(defaultSiteIds))
   }
 
   def fromContent(item: Content): Option[Set[PrebidIndexSite]] = item.sectionId.flatMap(fromSectionId)
