@@ -264,9 +264,16 @@ object PrebidIndexSite {
 
   private def fromSectionId(sectionId: String): Option[Set[PrebidIndexSite]] = siteIds.get(sectionId)
 
-  def fromContent(item: Content): Option[Set[PrebidIndexSite]]             = item.sectionId.flatMap(fromSectionId)
-  def fromSection(section: Section): Option[Set[PrebidIndexSite]]          = fromSectionId(section.id)
-  def fromTag(tag: Tag): Option[Set[PrebidIndexSite]]                      = tag.sectionId.flatMap(fromSectionId)
-  def forNetworkFront(frontId: String): Option[Set[PrebidIndexSite]]       = fromSectionId(frontId)
+  def fromContent(item: Content): Option[Set[PrebidIndexSite]] = item.sectionId.flatMap(fromSectionId)
+
+  def fromSection(section: Section): Option[Set[PrebidIndexSite]] = {
+    val id = section.editions.find(_.code == "default").map(_.id).getOrElse(section.id)
+    fromSectionId(id)
+  }
+
+  def fromTag(tag: Tag): Option[Set[PrebidIndexSite]] = tag.sectionId.flatMap(fromSectionId)
+
+  def forNetworkFront(frontId: String): Option[Set[PrebidIndexSite]] = fromSectionId(frontId)
+
   def forFrontUnknownToCapi(frontId: String): Option[Set[PrebidIndexSite]] = fromSectionId(frontId)
 }
