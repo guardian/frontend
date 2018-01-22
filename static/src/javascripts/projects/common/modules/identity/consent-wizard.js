@@ -3,7 +3,6 @@
 import fastdom from 'lib/fastdom-promise';
 
 import loadEnhancers from './modules/loadEnhancers';
-import { newsletterCheckboxClassName } from './consents';
 import {
     wizardPageChangedEv,
     setPosition,
@@ -15,8 +14,8 @@ const ERR_IDENTITY_CONSENT_WIZARD_MISSING = 'Missing wizard element';
 const toggleBackButtonEl = (
     buttonBackEl: HTMLElement,
     displayButtonBack: boolean
-) => {
-    return fastdom.write(() => {
+) =>
+    fastdom.write(() => {
         buttonBackEl.setAttribute(
             'aria-hidden',
             (!displayButtonBack).toString()
@@ -31,10 +30,9 @@ const toggleBackButtonEl = (
             displayButtonBack
         );
     });
-};
 
 const toggleLegalDisclaimerEl = (
-    legalDisclaimerEl: HtmlElement,
+    legalDisclaimerEl: HTMLElement,
     showOrHide: boolean
 ) =>
     fastdom.write(() => {
@@ -107,7 +105,6 @@ const bindNextButton = (buttonEl: HTMLElement): void => {
         throw new Error(ERR_IDENTITY_CONSENT_WIZARD_MISSING);
     }
 };
-
 
 const enhanceConsentWizard = (): void => {
     const loaders = [
