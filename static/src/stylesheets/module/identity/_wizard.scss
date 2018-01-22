@@ -59,13 +59,15 @@
 }
 
 
-.identity-wizard__controls {
+.identity-wizard__controls, .identity-wizard__controls-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @include mq($until: tablet) {
-        justify-content: center;
-    }
+}
+
+.identity-wizard__controls.identity-wizard__controls--stacked {
+    flex-direction: column;
+    align-items: stretch;
 }
 
 .identity-wizard__controls-pager {

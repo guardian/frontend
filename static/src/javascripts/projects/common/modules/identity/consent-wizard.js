@@ -85,6 +85,14 @@ const showOrHideEmailCounter = (
     });
 };
 
+const toggleLegalDisclaimer = (
+    legalDisclaimerEl: HtmlElement,
+    showOrHide: Boolean
+) =>
+    fastdom.write(() => {
+        legalDisclaimerEl.classList.toggle('u-h', !showOrHide);
+    });
+
 const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
     window.addEventListener(wizardPageChangedEv, ev => {
         if (ev.target === wizardEl) {
@@ -100,18 +108,34 @@ const bindEmailConsentCounterToWizard = (wizardEl: HTMLElement): void => {
                             'identity-consent-wizard-button-back'
                         ),
                     ][0],
+                    [
+                        ...document.getElementsByClassName(
+                            'identity-consent-wizard-legalsese'
+                        ),
+                    ][0],
                 ])
-                .then(([counterEl: HTMLElement, buttonBackEl: HTMLElement]) =>
-                    Promise.all([
-                        showOrHideBackButtonEl(
-                            buttonBackEl,
-                            ev.detail.position
-                        ),
-                        showOrHideEmailCounter(
-                            counterEl,
-                            ev.detail.positionName
-                        ),
-                    ])
+                .then(
+                    (
+                        [
+                            counterEl: HTMLElement,
+                            buttonBackEl: HTMLElement,
+                            legalDisclaimerEl: HTMLElement,
+                        ]
+                    ) =>
+                        Promise.all([
+                            showOrHideBackButtonEl(
+                                buttonBackEl,
+                                ev.detail.position
+                            ),
+                            showOrHideEmailCounter(
+                                counterEl,
+                                ev.detail.positionName
+                            ),
+                            toggleLegalDisclaimer(
+                                legalDisclaimerEl,
+                                ev.detail.position === 0
+                            ),
+                        ])
                 );
         }
     });
