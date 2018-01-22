@@ -32,6 +32,9 @@
 
 @renderStep(step: ConsentStep, index: Option[Int] = None) = {
     @if(step.show) {
+        @(step.banner.map { title =>
+            Html(s"<p class='form__success'>$title</p>")
+        })
         <fieldset
             class="identity-wizard__step"
             data-wizard-step-name="@step.name"
@@ -126,12 +129,12 @@
 @marketingConsentThankYouStep = @{
     ConsentStep(
         name = "consent-thank-you",
-        title = "Thank you",
+        title = "Would you like to hear about any of these Guardian products?  ",
         help = List(
-            ConsentStepHelpText("Your email choices have now been recorded."),
             ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")
         ),
-        content = marketingStepContent
+        banner = Some("Thank you for confirming your email address"),
+        content = marketingStepContent,
     )
 }
 
