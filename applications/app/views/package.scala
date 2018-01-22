@@ -1,8 +1,10 @@
 package views
 
+import common.Edition
 import model.{ApplicationContext, Interactive}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
+import services.IndexPage
 import views.support._
 
 object InteractiveBodyCleaner {
@@ -13,5 +15,15 @@ object InteractiveBodyCleaner {
     ) ++ (if (interactive.content.isImmersive) List(InteractiveSrcdocCleaner) else Nil)
 
     withJsoup(html)(cleaners: _*)
+  }
+}
+
+object IndexCleaner {
+ def apply(page: IndexPage, html: Html)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+    val edition = Edition(request)
+    withJsoup(BulletCleaner(html.toString))(
+      CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.page.metadata.hasPageSkin(edition)),
+      CommercialMPUForFronts(isNetworkFront = false)
+    )
   }
 }

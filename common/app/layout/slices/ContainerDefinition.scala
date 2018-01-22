@@ -56,22 +56,6 @@ object ContainerDefinition {
     case 7 => ofSlices(TTT, QuarterQuarterQuarterQuarter)
     case _ => ofSlices(QuarterQuarterQuarterQuarter, QuarterQuarterQuarterQuarter)
   }
-
-  def fastContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
-    case 2 => Some(FixedContainers.fastIndexPageMpuII)
-    case 4 => Some(FixedContainers.fastIndexPageMpuIV)
-    case 6 => Some(FixedContainers.fastIndexPageMpuVI)
-    case n if n >= 9 => Some(FixedContainers.fastIndexPageMpuIX)
-    case _ => None
-  }
-
-  def slowContainerWithMpu(numberOfItems: Int): Option[ContainerDefinition] = numberOfItems match {
-    case 2 => Some(FixedContainers.slowIndexPageMpuII)
-    case 4 => Some(FixedContainers.slowIndexPageMpuIV)
-    case 5 => Some(FixedContainers.slowIndexPageMpuV)
-    case 7 => Some(FixedContainers.slowIndexPageMpuVII)
-    case _ => None
-  }
 }
 
 case class ContainerDefinition(

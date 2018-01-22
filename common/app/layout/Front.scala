@@ -4,11 +4,9 @@ import common.{Edition, LinkTo}
 import conf.switches.Switches
 import experiments.{ActiveExperiments, HideShowMoreButtonExperiment}
 import model.PressedPage
-import layout.DateHeadline.cardTimestampDisplay
-import model.{ApplicationContext, Page, PressedPage, Section, StandalonePage, Tag}
 import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
-import model.pressed._
+import model.pressed.{CollectionConfig, PressedContent}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
@@ -379,105 +377,6 @@ object Front extends implicits.Collections {
                       initialContext: ContainerLayoutContext = ContainerLayoutContext.empty,
                       adFree: Boolean)(implicit requestHeader: RequestHeader): Front =
     Front(fromPressedPageWithDeduped(pressedPage, edition, initialContext, adFree))
-
-  def fromSectionPage(frontPage: SectionPage, edition: Edition)(implicit context: ApplicationContext): Front = {
-
-    @tailrec
-    def containerDefinition(groupings: Seq[FrontPageGrouping],
-      mpuInjected: Boolean,
-      accumulation: Vector[((ContainerDisplayConfig, CollectionEssentials), Container)] = Vector.empty
-    ): Seq[((ContainerDisplayConfig, CollectionEssentials), Container)] = {
-      groupings.toList match {
-        case Nil => accumulation
-        case grouping :: remainingGroupings =>
-          val collection = CollectionEssentials.fromFaciaContent(
-            grouping.items.flatMap { item =>
-              frontPage.contents.find(_.item.metadata.id == item.metadata.id).map(_.faciaItem)
-            }
-          )
-
-          val mpuContainer = (if (frontPage.isSlow)
-            ContainerDefinition.slowContainerWithMpu(grouping.items.length)
-          else
-            ContainerDefinition.fastContainerWithMpu(grouping.items.length)).filter(const(!mpuInjected))
-
-          val (container, newMpuInjected) = mpuContainer.map { mpuContainer =>
-            (mpuContainer, true)
-          } getOrElse {
-            val definition = if (frontPage.isSlow) {
-              ContainerDefinition.slowForNumberOfItems(grouping.items.length)
-            } else {
-              ContainerDefinition.fastForNumberOfItems(grouping.items.length)
-            }
-
-            (definition, mpuInjected)
-          }
-
-          val containerConfig = ContainerDisplayConfig(
-            CollectionConfigWithId(grouping.dateHeadline.displayString, CollectionConfig.empty.copy(
-              displayName = Some(grouping.dateHeadline.displayString)
-            )),
-            showSeriesAndBlogKickers = true
-          )
-
-          containerDefinition(
-            remainingGroupings,
-            newMpuInjected,
-            accumulation :+ ((containerConfig, collection), Fixed(container))
-          )
-      }
-
-    }
-
-    val frontPageGrouping: Seq[FrontPageGrouping] = frontPage.grouping(edition)
-
-    val front: Front = Front.fromConfigsAndContainers(
-      containerDefinition(frontPageGrouping.toList, mpuInjected = false),
-      ContainerLayoutContext(Set.empty, frontPage.hideCutOuts)
-    )
-
-    val headers: Seq[FaciaContainerHeader] = frontPageGrouping.map(_.dateHeadline).zipWithIndex.map { case (headline, index) =>
-      if (index == 0) {
-        frontPage.page match {
-          case tag: Tag => FaciaContainerHeader.fromTagPage(tag, headline)
-          case section: Section => FaciaContainerHeader.fromSection(section, headline)
-          case page: Page => FaciaContainerHeader.fromPage(page, headline)
-          case _ =>
-            // should never happen
-            LoneDateHeadline(headline)
-        }
-      } else {
-        LoneDateHeadline(headline)
-      }
-    }
-
-    front.copy(containers = front.containers.zip(headers).map{ case (container, header) =>
-      val timeStampDisplay = header match {
-        case MetaDataHeader(_, _, _, dateHeadline, _) => Some(cardTimestampDisplay(dateHeadline))
-        case LoneDateHeadline(dateHeadline) => Some(cardTimestampDisplay(dateHeadline))
-        case DescriptionMetaHeader(_) => None
-      }
-      container.copy(
-        customHeader = Some(header),
-        customClasses = Some(Seq(
-          Some("fc-container--tag"),
-          if (container.index == 0 &&
-            frontPage.isFootballTeam &&
-            Switches.FixturesAndResultsContainerSwitch.isSwitchedOn)  Some("js-insert-team-stats-after") else None
-        ).flatten),
-        hideToggle = true,
-        showTimestamps = true,
-        useShowMore = false,
-        dateLinkPath = Some(s"/${frontPage.idWithoutEdition}")
-      ).transformCards({ card =>
-        card.copy(
-          timeStampDisplay = timeStampDisplay,
-          byline = frontPage.bylineTransformer(card.byline),
-          useShortByline = true
-        ).setKicker(card.header.kicker.flatMap(frontPage.kickerTransformer))
-      })
-    })
-  }
 
   def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
     ItemList(

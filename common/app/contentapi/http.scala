@@ -24,11 +24,6 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
   import java.lang.System.currentTimeMillis
 
   def GET(url: String, headers: Iterable[(String, String)]): Future[Response] = {
-
-    if (common.Environment.stage == "DEVINFRA") {
-      System.err.println("WARNING: in DEVINFRA mode RecorderHttpClient content api client client should be used (have you set up a TestAppLoader?).")
-    }
-
     //append with a & as there are always params in there already
     val urlWithDebugInfo = s"$url&${RequestDebugInfo.debugParams}"
 

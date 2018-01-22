@@ -1,0 +1,23 @@
+@import layout.{ContainerDisplayConfig, ContainerLayout}
+@import model.pressed.CollectionConfig
+@import services.IndexPage
+
+@(index: IndexPage)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+<div class="l-side-margins">
+    <div data-link-name="Front" role="main" class="fc-container">
+        @fragments.containers.index(
+            index.faciaTrails,
+            ContainerLayout.singletonFromContainerDefinition(
+                layout.slices.TagContainers.allTagPageSlices(index.trails.length),
+                ContainerDisplayConfig.empty,
+                index.faciaTrails
+            ),
+            0,
+            index.date,
+            index.page.metadata,
+            index.previousAndNext,
+            index.tzOverride
+        )(request, CollectionConfig.empty)
+    </div>
+</div>

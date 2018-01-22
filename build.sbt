@@ -132,10 +132,6 @@ val commercial = application("commercial").dependsOn(commonWithTests).aggregate(
 
 val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
-val tag = application("tag")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
-
 val dev = application("dev-build")
   .dependsOn(
     withTests(article)
@@ -149,8 +145,7 @@ val dev = application("dev-build")
     identity,
     admin,
     commercial,
-    onward,
-    tag
+    onward
   ).settings(
     RoutesKeys.routesImport += "bindables._",
     javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
@@ -163,10 +158,13 @@ val preview = application("preview").dependsOn(
   applications,
   sport,
   commercial,
-  onward,
-  tag
+  onward
 ).settings(
 )
+
+val rss = application("rss")
+  .dependsOn(commonWithTests)
+  .aggregate(common)
 
 val main = root().aggregate(
   common,
@@ -183,7 +181,7 @@ val main = root().aggregate(
   onward,
   archive,
   preview,
-  tag
+  rss
 ).settings(
   riffRaffBuildIdentifier := System.getenv().getOrDefault("BUILD_NUMBER", "0").replaceAll("\"",""),
   riffRaffUploadArtifactBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
@@ -202,7 +200,7 @@ val main = root().aggregate(
     (packageBin in Universal in faciaPress).value -> s"${(name in faciaPress).value}/${(packageBin in Universal in faciaPress).value.getName}",
     (packageBin in Universal in onward).value -> s"${(name in onward).value}/${(packageBin in Universal in onward).value.getName}",
     (packageBin in Universal in preview).value -> s"${(name in preview).value}/${(packageBin in Universal in preview).value.getName}",
-    (packageBin in Universal in tag).value -> s"${(name in tag).value}/${(packageBin in Universal in tag).value.getName}",
+    (packageBin in Universal in rss).value -> s"${(name in rss).value}/${(packageBin in Universal in rss).value.getName}",
     (packageBin in Universal in sport).value -> s"${(name in sport).value}/${(packageBin in Universal in sport).value.getName}",
     baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml"
   )

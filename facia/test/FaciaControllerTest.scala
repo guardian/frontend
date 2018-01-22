@@ -50,30 +50,33 @@ import scala.concurrent.Await
   }
 
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {
-    val result = faciaController.renderFront("does-not-exist")(TestRequest())
+    val result = faciaController.renderFront("does-not-exist")(TestRequest()) //Film is actually a facia front ON PROD
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/tag_service/does-not-exist"))
+    header("X-Accel-Redirect", result) should be (Some("/applications/does-not-exist"))
   }
 
   it should "serve an X-Accel-Redirect for /rss that it doesn't know about" in {
     val fakeRequest = FakeRequest("GET", "/does-not-exist/rss")
+
     val result = faciaController.renderFrontRss("does-not-exist")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/tag_service/does-not-exist/rss"))
+    header("X-Accel-Redirect", result) should be (Some("/rss_server/does-not-exist/rss"))
   }
 
-  it should "keep query params when using X-Accel-Redirect" in {
+  it should "keep query params for X-Accel-Redirect" in {
     val fakeRequest = FakeRequest("GET", "/does-not-exist?page=77")
+
     val result = faciaController.renderFront("does-not-exist")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/tag_service/does-not-exist?page=77"))
+    header("X-Accel-Redirect", result) should be (Some("/applications/does-not-exist?page=77"))
   }
 
-  it should "keep query params for /rss when using X-Accel-Redirect" in {
+  it should "keep query params for X-Accel-Redirect with RSS" in {
     val fakeRequest = FakeRequest("GET", "/does-not-exist/rss?page=77")
+
     val result = faciaController.renderFrontRss("does-not-exist")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/tag_service/does-not-exist/rss?page=77"))
+    header("X-Accel-Redirect", result) should be (Some("/rss_server/does-not-exist/rss?page=77"))
   }
 
   it should "not serve X-Accel for a path facia serves" in {
@@ -83,15 +86,17 @@ import scala.concurrent.Await
     header("X-Accel-Redirect", result) should be (None)
   }
 
-  it should "redirect to Tag app when 'page' query param" in {
+  it should "redirect to applications when 'page' query param" in {
     val fakeRequest = FakeRequest("GET", "/music?page=77")
+
     val result = faciaController.renderFront("music")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/tag_service/music?page=77"))
+    header("X-Accel-Redirect", result) should be (Some("/applications/music?page=77"))
   }
 
-  it should "not redirect to Tag app when any other query param" in {
+  it should "not redirect to applications when any other query param" in {
     val fakeRequest = FakeRequest("GET", "/music?id=77")
+
     val result = faciaController.renderFront("music")(fakeRequest)
     header("X-Accel-Redirect", result) should be (None)
   }
