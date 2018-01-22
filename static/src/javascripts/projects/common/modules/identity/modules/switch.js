@@ -14,9 +14,24 @@ const checkboxShouldUpdate = (
     return false;
 };
 
+const updateDataLink = (labelEl: HTMLElement, checked): Promise<any> =>
+    fastdom.write(() => {
+        labelEl.dataset.linkName = labelEl.dataset.linkNameTemplate.replace(
+            '[action]',
+            checked ? 'untick' : 'tick'
+        );
+    });
+
 export const getInfo = (labelEl: HTMLElement): Promise<any> =>
     fastdom
         .read((): ?HTMLElement => labelEl.querySelector('input'))
+        .then((checkboxEl: HTMLInputElement) => {
+            labelEl.addEventListener('change', () => {
+                updateDataLink(labelEl, checkboxEl.checked);
+            });
+            updateDataLink(labelEl, checkboxEl.checked);
+            return checkboxEl;
+        })
         .then((checkboxEl: HTMLInputElement) => ({
             checked: checkboxEl.checked,
             name: checkboxEl.name,
