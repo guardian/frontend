@@ -118,8 +118,8 @@
 @marketingConsentStep = @{
     ConsentStep(
         name = "consent",
-        title = "What would you like to hear about?",
-        help = List(ConsentStepHelpText("Just take a couple of minutes to tell us what you’re interested in, so we can send you emails that we think you’ll find useful.")),
+        title = "Would you like to hear about any of these Guardian products?                                                    ",
+        help = List(ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")),
         content = marketingStepContent
     )
 }
@@ -128,7 +128,8 @@
         name = "consent-thank-you",
         title = "Thank you",
         help = List(
-            ConsentStepHelpText("Your email choices have now been recorded. While you're here, feel free to have a look at other Guardian content that might interest you.")
+            ConsentStepHelpText("Your email choices have now been recorded."),
+            ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")
         ),
         content = marketingStepContent
     )
@@ -157,9 +158,8 @@
 @emailRepermissionStep() = @{
     ConsentStep(
         name = "email",
-        title = "Please resubscribe!",
+        title = "Please select the newsletters you wish to continue receiving.",
         help = List(
-            ConsentStepHelpText("You have been receiving the following newsletters. <strong>Tick their boxes again to keep receiving them</strong>."),
             ConsentStepHelpLegalText("The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.")
         ),
         content = emailRepermissionStepContent,
