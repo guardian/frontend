@@ -126,6 +126,15 @@ const hideLoading = (loadingEl: HTMLElement): Promise<void> =>
 const bindNextButton = (buttonEl: HTMLElement): void => {
     const wizardEl: ?Element = buttonEl.closest('.identity-wizard--consent');
     if (wizardEl && wizardEl instanceof HTMLElement) {
+        window.addEventListener(wizardPageChangedEv, ev => {
+            if (ev.target === wizardEl) {
+                buttonEl.dataset.linkName = buttonEl.dataset.linkNameTemplate.replace(
+                    '[depth]',
+                    `${ev.detail.positionName} : step #${ev.detail.position}`
+                );
+            }
+        });
+
         buttonEl.addEventListener('click', (ev: Event) => {
             ev.preventDefault();
             getWizardInfoObject(wizardEl).then(wizardInfo =>
