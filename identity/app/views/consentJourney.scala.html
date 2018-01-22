@@ -280,7 +280,7 @@
         <form class="identity-wizard__controls identity-wizard__controls--stacked" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
 
             <div class="identity-wizard__controls-row identity-consent-wizard-legalsese">
-                <p class="identity-title-explainer identity-title-explainer--small">By clicking the ‘Save & Continue’ button, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility.</p>
+                <p class="identity-title-explainer identity-title-explainer--small">By continuing, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility.</p>
             </div>
 
             <div class="identity-wizard__controls-row">
@@ -294,8 +294,6 @@
                         @fragments.inlineSvg("arrow-left-stem", "icon")
                     </button>
                 }
-                <div class="identity-consent-wizard__revealable identity-consent-wizard-counter">
-                </div>
                 @views.html.helper.CSRF.formField
                 <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
                 <button
