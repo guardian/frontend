@@ -34,8 +34,16 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     Edition.all.find(_.id.toLowerCase() == editionToFilterBy).getOrElse(Edition.all.head)
   }
 
-  def forwardToTag(path: String)(implicit request: RequestHeader): Future[Result] = {
-    successful(InternalRedirect.internalRedirect("tag_service", path, request.rawQueryStringOption.map("?" + _)))
+  def applicationsRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
+    successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
+  }
+
+  def rssRedirect(path: String)(implicit request: RequestHeader): Future[Result] = {
+    successful(InternalRedirect.internalRedirect(
+      "rss_server",
+      path,
+      request.rawQueryStringOption.map("?" + _)
+    ))
   }
 
   //Only used by dev-build for rending special urls such as lifeandstyle/home-and-garden
@@ -64,10 +72,11 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   // Needed as aliases for reverse routing
   def renderRootFrontRss(): Action[AnyContent] = renderFrontRss(path = "")
   def renderFrontRss(path: String): Action[AnyContent] = Action.async { implicit  request =>
+    log.info(s"Serving RSS Path: $path")
     if (shouldEditionRedirect(path))
       redirectTo(s"${Editionalise(path, Edition(request))}/rss")
     else if (!ConfigAgent.shouldServeFront(path))
-      forwardToTag(s"$path/rss")
+      rssRedirect(s"$path/rss")
     else
       renderFrontPressResult(path)
   }
@@ -78,7 +87,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     if (shouldEditionRedirect(path))
       redirectTo(Editionalise(path, Edition(request)))
     else if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
-      forwardToTag(path)
+      applicationsRedirect(path)
     else
       renderFrontPressResult(path)
   }

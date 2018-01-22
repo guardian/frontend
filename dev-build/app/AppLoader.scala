@@ -24,6 +24,7 @@ import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.routing.Router
+import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
@@ -48,8 +49,7 @@ trait Controllers
   with FootballControllers
   with RugbyControllers
   with FrontendComponents
-  with CricketControllers
-  with TagControllers {
+  with CricketControllers {
   self: BuiltInComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]

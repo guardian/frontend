@@ -51,15 +51,14 @@ trait PreviewLifecycleComponents extends SportServices with CommercialServices w
 }
 
 trait PreviewControllerComponents
-  extends FrontendComponents
-    with ApplicationsControllers
-    with TagControllers
+  extends ApplicationsControllers
     with ArticleControllers
     with CommercialControllers
     with FaciaControllers
     with OnwardControllers
     with FootballControllers
     with CricketControllers
+    with FrontendComponents
     with RugbyControllers {
   self: BuiltInComponents =>
 

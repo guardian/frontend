@@ -137,7 +137,7 @@ trait WithTestContentApiClient extends WithTestExecutionContext {
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/database")
   }
 
-  class RecorderHttpClient(originalHttpClient: HttpClient) extends HttpClient {
+  class recorderHttpClient(originalHttpClient: HttpClient) extends HttpClient {
     override def GET(url: String, headers: Iterable[(String, String)]): Future[Response] = {
       httpRecorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
         originalHttpClient.GET(url, headers)
@@ -145,7 +145,7 @@ trait WithTestContentApiClient extends WithTestExecutionContext {
     }
   }
 
-  lazy val recorderHttpClient = new RecorderHttpClient(new CapiHttpClient(wsClient))
+  lazy val recorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient))
   lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
 }
 

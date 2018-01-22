@@ -1,0 +1,89 @@
+package test
+
+import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
+import services.IndexPagePagination
+import collection.JavaConverters._
+import conf.switches.Switches
+import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
+
+@DoNotDiscover class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+
+  feature("Tag Series, Blogs and Contributors Pages trail size") {
+
+    scenario("Tag Series, Blogs and Contributors pages should show 50 trails (includes leadContent if present)") {
+
+      Given("I visit a tag page")
+
+      goTo("/technology/askjack") { browser =>
+        val trails = browser.$(".fc-item__container")
+        trails.asScala.length should be(IndexPagePagination.pageSize)
+      }
+    }
+  }
+
+  feature("Contributor pages") {
+
+    scenario("Should display the profile images") {
+
+      Given("I visit the 'Jemima Kiss' contributor page")
+      Switches.ImageServerSwitch.switchOn()
+
+      goTo("/profile/jemimakiss") { browser =>
+        Then("I should see her profile image")
+        val profileImage = browser.el("[data-test-id=header-image]")
+        profileImage.attribute("src") should include(s"42593747/Jemima-Kiss.jpg")
+      }
+    }
+
+    scenario("Should not not display profiles where they don't exist") {
+
+      Given("I visit the 'Sam Jones' contributor page")
+      goTo("/profile/samjones") { browser =>
+        Then("I should not see her profile image")
+        val profileImages = browser.find(".profile__img img")
+        profileImages.asScala.length should be(0)
+      }
+
+    }
+  }
+
+  feature("Tag Pages") {
+
+    scenario("Pagination") {
+
+      Given("I visit the 'Cycling' tag page")
+
+      goTo("/sport/cycling") { browser =>
+        import browser._
+
+        val cardsOnFirstPage = browser.find("[data-test-id=facia-card]")
+        val dataIdsOnFirstPage = cardsOnFirstPage.asScala.map(_.attribute("data-id")).toSet
+        cardsOnFirstPage.size should be > 10
+        findByRel($("link"), "next").head.attribute("href") should endWith ("/sport/cycling?page=2")
+        findByRel($("link"), "prev") should be (None)
+
+        Then("I should be able to navigate to the 'next' page")
+        el(".pagination").$("[rel=next]").click()
+        val cardsOnNextPage = browser.find("[data-test-id=facia-card]")
+        val dataIdsOnNextPage = cardsOnNextPage.asScala.map(_.attribute("data-id"))
+        cardsOnNextPage.size should be > 10
+
+        findByRel($("link"), "next").head.attribute("href") should endWith ("/sport/cycling?page=3")
+        findByRel($("link"), "prev").head.attribute("href") should endWith ("/sport/cycling")
+
+        dataIdsOnFirstPage intersect dataIdsOnNextPage.toSet should be(Set.empty)
+
+        And("The title should reflect the page number")
+        browser.window.title should include ("| Page 2 of")
+
+        And("I should be able to navigate to the 'previous' page")
+        el(".pagination").$("[rel=prev]").click()
+        val cardsOnPreviousPage = browser.find("[data-test-id=facia-card]")
+        cardsOnPreviousPage.asScala.map(_.attribute("data-id")).toSet should be(dataIdsOnFirstPage)
+      }
+    }
+  }
+
+  //I'm not having a happy time with the selectors on links...
+  private def findByRel(elements: FluentList[FluentWebElement], rel: String) = elements.asScala.find(_.attribute("rel") == rel)
+}
