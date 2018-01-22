@@ -3,7 +3,6 @@
 import type { Advert } from 'commercial-control/modules/dfp/Advert';
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
-import { determineExternalDemand } from 'common/modules/experiments/tests/prebid-integration';
 
 export type DfpEnv = {
     renderStartTime: number,
@@ -27,7 +26,7 @@ export const dfpEnv: DfpEnv = {
     adSlotSelector: '.js-ad-slot',
 
     /* externalDemand: string. Set to 'sonobi' for direct sonobi connection, 'none', or 'prebid' for header-bidding connections. */
-    externalDemand: determineExternalDemand(),
+    externalDemand: config.page.hbImpl,
 
     /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
     lazyLoadEnabled: false,

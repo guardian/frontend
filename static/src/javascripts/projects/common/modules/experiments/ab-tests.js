@@ -3,12 +3,10 @@ import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
 import { unrulyPerformanceTest } from 'common/modules/experiments/tests/unruly-performance';
-import { prebidIntegration } from 'common/modules/experiments/tests/prebid-integration';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
     unrulyPerformanceTest,
-    prebidIntegration,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>

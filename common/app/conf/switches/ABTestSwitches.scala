@@ -68,16 +68,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-prebid-integration",
-    "Test prebid as a header-bidding implementation",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 2),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-colour-test-epic-holdback",
     "A holdback for the epic colour changes",
     owners = Seq(Owner.withGithub("Ap0c")),
