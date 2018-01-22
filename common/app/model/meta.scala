@@ -244,9 +244,6 @@ final case class MetaData (
   def hasPageSkinOrAdTestPageSkin(edition: Edition): Boolean = if (isPressedPage){
     DfpAgent.hasPageSkinOrAdTestPageSkin(adUnitSuffix, edition)
   } else false
-  def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = if (isPressedPage) {
-    DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
-  } else Nil
   def omitMPUsFromContainers(edition: Edition): Boolean = if (isPressedPage) {
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
