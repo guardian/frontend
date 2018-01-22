@@ -26,6 +26,12 @@ object PrebidIndexSite {
   }
   implicit val format = Json.format[PrebidIndexSite]
 
+  private val defaultSiteIds = Set(
+    PrebidIndexSite(Desktop, 208283),
+    PrebidIndexSite(Mobile, 213553),
+    PrebidIndexSite(Tablet, 215488)
+  )
+
   private val siteIds: Map[String, Set[PrebidIndexSite]] =
     Seq(
       "artanddesign"                              -> PrebidIndexSite(Desktop, 208282),
@@ -262,11 +268,24 @@ object PrebidIndexSite {
     ).groupBy { case (section, _) => section }
       .mapValues { _.map { case (_, site) => site }.toSet }
 
-  private def fromSectionId(sectionId: String): Option[Set[PrebidIndexSite]] = siteIds.get(sectionId)
+  private def fromSectionId(sectionId: String): Option[Set[PrebidIndexSite]] = {
+    val firstPart = {
+      val sepIndex = sectionId.indexOf('/')
+      if (sepIndex > 0) sectionId.substring(0, sepIndex) else sectionId
+    }
+    siteIds.get(firstPart).orElse(Some(defaultSiteIds))
+  }
 
-  def fromContent(item: Content): Option[Set[PrebidIndexSite]]             = item.sectionId.flatMap(fromSectionId)
-  def fromSection(section: Section): Option[Set[PrebidIndexSite]]          = fromSectionId(section.id)
-  def fromTag(tag: Tag): Option[Set[PrebidIndexSite]]                      = tag.sectionId.flatMap(fromSectionId)
-  def forNetworkFront(frontId: String): Option[Set[PrebidIndexSite]]       = fromSectionId(frontId)
+  def fromContent(item: Content): Option[Set[PrebidIndexSite]] = item.sectionId.flatMap(fromSectionId)
+
+  def fromSection(section: Section): Option[Set[PrebidIndexSite]] = {
+    val id = section.editions.find(_.code == "default").map(_.id).getOrElse(section.id)
+    fromSectionId(id)
+  }
+
+  def fromTag(tag: Tag): Option[Set[PrebidIndexSite]] = tag.sectionId.flatMap(fromSectionId)
+
+  def forNetworkFront(frontId: String): Option[Set[PrebidIndexSite]] = fromSectionId(frontId)
+
   def forFrontUnknownToCapi(frontId: String): Option[Set[PrebidIndexSite]] = fromSectionId(frontId)
 }
