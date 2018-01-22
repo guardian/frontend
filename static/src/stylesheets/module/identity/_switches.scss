@@ -84,27 +84,13 @@ $checkbox-size: $gs-gutter / 1.25;
 
     &.is-updating {
         cursor: wait;
-        pointer-events: none;
         background-image: none;
         width: 100%;
         height: auto;
         margin-top: 0;
-
-        &:before {
-            animation: manage-account__switch-anim-loading 1s infinite both;
-            opacity: 1;
-        }
-
-        > * {
-            opacity: .5;
-        }
-    }
-
-    &.is-just-updated {
-        &:before {
-            animation: manage-account__switch-anim-loaded .5s 1 both;
-            background-color: $status-positive-garnett;
-            opacity: 1;
+        pointer-events: none;
+        .manage-account__switch-checkbox {
+            opacity: .25;
         }
     }
 
@@ -217,21 +203,18 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 }
 
-
-@keyframes manage-account__switch-anim-loading {
-    from {
-        transform: translateX(-50%) scaleX(.75);
-    }
-    to {
-        transform: translateX(100%) scaleX(1) ;
-    }
-}
-
 @keyframes manage-account__switch-anim-loaded {
-    from {
+    0% {
         transform: translateX(-50%) scaleX(.1);
     }
-    to {
+    33.33% {
         transform: translateX(0) scaleX(1);
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%) scaleX(.5);
+        opacity: 0;
     }
 }
