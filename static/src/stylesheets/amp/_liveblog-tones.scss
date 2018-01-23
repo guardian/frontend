@@ -22,7 +22,7 @@
 
 .tonal__header {
     .tonal--tone-live & {
-        background-color: $live-main-1;
+        background-color: $news-garnett-feature;
     }
 }
 
@@ -49,4 +49,9 @@
 .tonal--tone-live .tonal__standfirst .u-underline {
     color: #ffffff;
     border-bottom-color: rgba(255, 255, 255, .3);
+}
+
+.fc-item.tone-live {
+    // Temporary until we can improve logic of liveblog tones
+    background-color: $news-garnett-feature;
 }

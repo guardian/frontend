@@ -301,9 +301,10 @@ figure.element-table {
 /* Pullquotes */
 
 .element-pullquote {
+    background-color: $garnett-neutral-3;
     width: 100%;
     box-sizing: border-box;
-    padding: 0;
+    padding: ($gs-baseline / 2) ($gs-gutter / 2) $gs-baseline;
     margin-bottom: $gs-baseline;
 
     blockquote {
@@ -311,8 +312,8 @@ figure.element-table {
         font-style: normal;
 
         p {
-            font-size: 24px;
-            line-height: 28px;
+            font-size: 22px;
+            line-height: 26px;
             color: $neutral-2;
             margin-bottom: 0;
         }
@@ -336,4 +337,13 @@ figure.element-table {
             }
         }
     }
+
+    .inline-garnett-quote__svg {
+        float: left;
+        height: 8px;
+        width: 12px;
+        margin: 3px 14px 0 0;
+    }
 }
+
+inline-garnett-quote__svg {}
