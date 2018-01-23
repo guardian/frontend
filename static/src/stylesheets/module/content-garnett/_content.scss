@@ -99,7 +99,6 @@
             @include mq(leftCol) {
                 min-width: gs-span(8);
             }
-    
             @include mq(tablet, desktop) {
                 min-width: gs-span(9);
             }
