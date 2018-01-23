@@ -109,12 +109,6 @@
                 )
                 @inputField(Input(accountDetailsForm("firstName"), ('_label, "First name"), Symbol("data-test-id") -> "first-name"))
                 @inputField(Input(accountDetailsForm("secondName"), ('_label, "Last name"), Symbol("data-test-id") -> "last-name"))
-                @select(
-                    accountDetailsForm("gender"),
-                    List(("Male", "Male"), ("Female", "Female"), ("Transgender", "Transgender"), ("Other", "Other"), ("unknown", "Prefer not to say")),
-                    ('_label, "Gender"),
-                    ('_default, "")
-                )
 
                 <li class="form-field form-fields__inline form-fields--date-of-birth">
                     <span class="form-fields__heading">Date of birth</span>
