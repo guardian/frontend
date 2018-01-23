@@ -148,12 +148,11 @@
         docClass += ' is-recent-contributor';
     }
 
-    /**     
-     * % used for padding-bottom isn't supported on Grid items in FireFox <53.
-     * unless explicit width set on item with padding-bottom.
-     * this sets width of responsive media explicitly so padding-bottom works
-     * https://bugzilla.mozilla.org/show_bug.cgi?id=958714
-    **/
+    // % used for padding-bottom isn't supported on Grid items in FireFox <53
+    // unless explicit width is set on the element with padding-bottom.
+    // .force-percentage-padding ensures width is explicitly set so padding-bottom 
+    // works on responsive-ratio media.
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=958714
     if(forcePercentagePadding()) {
         docClass += ' force-percentage-padding';
     }
