@@ -51,30 +51,31 @@ export const flip = (labelEl: HTMLElement): Promise<any> =>
         });
 
 export const addSpinner = (labelEl: HTMLElement): Promise<any> =>
-    fastdom.write(() => {
-        if (document.body) {
-            document.body.classList.add('is-updating-cursor');
-        }
-        labelEl.classList.add('is-updating');
-    });
-
-export const removeSpinner = (labelEl: HTMLElement): Promise<any> =>
     fastdom
         .write(() => {
+            labelEl.classList.add('is-updating');
             if (document.body) {
-                document.body.classList.remove('is-updating-cursor');
+                document.body.classList.add('is-updating-js');
             }
-            labelEl.classList.add('is-just-updated');
-            labelEl.classList.remove('is-updating');
         })
-        .then(
-            () =>
-                new Promise((accept: () => void) => {
-                    setTimeout(() => accept(), 1000);
-                })
-        )
-        .then(() =>
-            fastdom.write(() => {
-                labelEl.classList.remove('is-just-updated');
-            })
-        );
+        .then(() => {
+            labelEl.dataset.slowLoadTimeout = setTimeout(() => {
+                fastdom.write(() => {
+                    if (document.body) {
+                        document.body.classList.add('is-updating-cursor');
+                    }
+                    labelEl.classList.add('is-taking-a-long-time');
+                });
+            }, 300);
+        });
+
+export const removeSpinner = (labelEl: HTMLElement): Promise<any> =>
+    fastdom.write(() => {
+        if (document.body) {
+            document.body.classList.remove('is-updating-cursor');
+            document.body.classList.remove('is-updating-js');
+        }
+        labelEl.classList.remove('is-updating');
+        labelEl.classList.remove('is-taking-a-long-time');
+        clearTimeout(labelEl.dataset.slowLoadTimeout);
+    });

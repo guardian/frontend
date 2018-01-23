@@ -83,14 +83,16 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 
     &.is-updating {
-        cursor: wait;
         background-image: none;
         width: 100%;
         height: auto;
         margin-top: 0;
         pointer-events: none;
-        .manage-account__switch-checkbox {
-            opacity: .25;
+        transition: .25s opacity;
+        will-change: opacity;
+        &.is-taking-a-long-time {
+            cursor: wait;
+            opacity: .5;
         }
     }
 
@@ -200,21 +202,5 @@ $checkbox-size: $gs-gutter / 1.25;
     svg {
         vertical-align: -10%;
         margin-right: .25em;
-    }
-}
-
-@keyframes manage-account__switch-anim-loaded {
-    0% {
-        transform: translateX(-50%) scaleX(.1);
-    }
-    33.33% {
-        transform: translateX(0) scaleX(1);
-    }
-    75% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(100%) scaleX(.5);
-        opacity: 0;
     }
 }

@@ -54,6 +54,12 @@
     cursor: wait;
 }
 
+body.is-updating-js {
+    .u-block-during-update {
+        pointer-events: none;
+    }
+}
+
 .is-updating--dark {
     width: 36px;
     height: 12px;
