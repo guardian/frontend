@@ -143,6 +143,20 @@ class AuthenticatedActions(
       def refine[A](request: AuthRequest[A]) = checkRecentAuthenticationAndRedirect(request)
     }
 
+  private def decideConsentsRedirectFilter: ActionFilter[AuthRequest] =
+    new ActionFilter[AuthRequest] {
+      override val executionContext = ec
+
+      def filter[A](request: AuthRequest[A]) = {
+        redirectService.toConsentsRedirect(request.user, request).map { redirect =>
+          if (redirect.isAllowedFrom(""))
+            Some(sendUserToUserRedirectDecision(request, redirect))
+          else
+            None
+        }
+      }
+    }
+
   // Play will not let you set up an ActionBuilder with a Refiner hence this empty actionBuilder to set up Auth
   private def noOpActionBuilder: DefaultActionBuilder = DefaultActionBuilder(anyContentParser)
 
@@ -162,7 +176,11 @@ class AuthenticatedActions(
   def consentAuthWithIdapiUserAction: ActionBuilder[AuthRequest, AnyContent] =
     noOpActionBuilder andThen consentAuthRefiner andThen retrieveUserFromIdapiRefiner
 
-  /** Auth with at least SC_GU_RP and decide if user should be redirected to consent journey */
+  /** Enforce a validated email */
+  def consentsRedirectAction(): ActionBuilder[AuthRequest, AnyContent] =
+    consentAuthWithIdapiUserAction andThen decideConsentsRedirectFilter
+
+  /** Redirects for the account page */
   def manageAccountRedirectAction(pageId: String = ""): ActionBuilder[AuthRequest, AnyContent] =
     consentAuthWithIdapiUserAction andThen decideManageAccountRedirectFilter(pageId)
 

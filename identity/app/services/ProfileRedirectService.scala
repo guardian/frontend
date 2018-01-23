@@ -50,6 +50,13 @@ class ProfileRedirectService(
 
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
+  def toConsentsRedirect[A](user: User, request: RequestHeader): Future[ProfileRedirect] = {
+    user.statusFields.isUserEmailValidated match {
+      case true => Future.successful(NoRedirect)
+      case false => Future.successful(RedirectToEmailValidationFromAnywhereButAccountDetails)
+    }
+  }
+
   def toProfileRedirect[A](user: User, request: RequestHeader): Future[ProfileRedirect] = {
 
     def userHasRepermissioned: Boolean = user.statusFields.hasRepermissioned.contains(true)

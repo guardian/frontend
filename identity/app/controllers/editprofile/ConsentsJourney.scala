@@ -1,6 +1,6 @@
 package controllers.editprofile
 
-import actions.AuthenticatedActions.AuthRequest
+import actions.AuthenticatedActions._
 import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
 import idapiclient.UserUpdateDTO
 import model.{IdentityPage, NoCache}
@@ -61,15 +61,17 @@ trait ConsentsJourney
     page: ConsentJourneyPage,
     consentHint: Option[String]): Action[AnyContent] =
 
-    csrfAddToken {
-      consentAuthWithIdapiUserAction.async { implicit request =>
-        consentJourneyView(
-          page = page,
-          journey = page.journey,
-          forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
-          request.user,
-          consentHint
-        )
+
+      csrfAddToken {
+        consentsRedirectAction.async { implicit request =>
+          consentJourneyView(
+            page = page,
+            journey = page.journey,
+            forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
+            request.user,
+            consentHint
+          )
+
       }
     }
 
