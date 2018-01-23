@@ -85,11 +85,6 @@ data-test-id="facia-card"
 
 @container(item: layout.ContentCard) = {
     <div class="fc-item__container">
-
-        @if(item.snapStuff.map(_.snapType).contains(FrontendLatestSnap) && !experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-            @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
-        }
-
         @item.displayElement.filter(const(item.showDisplayElement)) match {
             case Some(InlineVideo(videoElement, title, endSlatePath, fallback)) if item.cardTypes.showVideoPlayer => {
                 @defining(VideoPlayer(
@@ -198,9 +193,6 @@ data-test-id="facia-card"
         }
 
         <div class="fc-item__content @if(item.starRating.isDefined){fc-item__content--has-stars}">
-            @if(item.snapStuff.map(_.snapType) == Some(FrontendLatestSnap) && !experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                @kicker(item.header, List("fc-item__kicker--dreamsnap"))
-            }
             <div class="@RenderClasses(Map(
                 ("fc-item__header", true),
                 ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
