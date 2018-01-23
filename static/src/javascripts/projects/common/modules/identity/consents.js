@@ -10,6 +10,7 @@ import {
     removeSpinner,
     flip as flipCheckbox,
     getInfo as getCheckboxInfo,
+    bindAnalyticsEventsOnce as bindCheckboxAnalyticsEventsOnce,
 } from './modules/switch';
 import { addUpdatingState, removeUpdatingState } from './modules/button';
 import {
@@ -20,6 +21,12 @@ import {
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
+const checkAllCheckboxClassName = 'js-manage-account__check-allCheckbox';
+
+const LC_CHECK_ALL = 'Select all';
+const LC_UNCHECK_ALL = 'Deselect all';
+
+const ERR_MALFORMED_HTML = 'Something went wrong';
 
 const submitPartialConsentForm = (formData: FormData): Promise<void> =>
     reqwest({
@@ -273,8 +280,80 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
     );
 };
 
+const getCheckedAllStatus = (checkboxesEl: HTMLInputElement[]) =>
+    checkboxesEl.reduce((acc, checkboxEl) => checkboxEl.checked && acc, true);
+
+const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
+    const fetchElements = (): Promise<(HTMLInputElement | HTMLElement)[]> =>
+        fastdom.read(() => [
+            labelEl.querySelector('input'),
+            labelEl.querySelector('.manage-account__switch-title'),
+        ]);
+    const fetchWrappedCheckboxes = (): Promise<HTMLInputElement[]> =>
+        fastdom.read(() => {
+            const nearestSwitchesEl = labelEl.closest(
+                '.manage-account__switches'
+            );
+            if (!nearestSwitchesEl) throw new Error(ERR_MALFORMED_HTML);
+            return [
+                ...nearestSwitchesEl.querySelectorAll(
+                    'ul:not(.manage-account__switches-head) input[type=checkbox]'
+                ),
+            ];
+        });
+    Promise.all([
+        fetchElements(),
+        fetchWrappedCheckboxes(),
+        bindCheckboxAnalyticsEventsOnce(labelEl),
+    ]).then(([[checkboxEl, titleEl], wrappedCheckboxEls]) => {
+        const getTextForStatus = (status: boolean) =>
+            status ? LC_UNCHECK_ALL : LC_CHECK_ALL;
+        const revealCheckbox = () =>
+            fastdom.write(() => {
+                labelEl.classList.remove('u-h');
+            });
+        const updateCheckStatus = () =>
+            fastdom.write(() => {
+                if (!(checkboxEl instanceof HTMLInputElement)) {
+                    throw new Error(ERR_MALFORMED_HTML);
+                }
+                checkboxEl.checked = getCheckedAllStatus(wrappedCheckboxEls);
+                titleEl.innerHTML = getTextForStatus(checkboxEl.checked);
+            });
+
+        const handleChangeEvent = () => {
+            wrappedCheckboxEls.forEach(wrappedCheckboxEl => {
+                fastdom
+                    .write(() => {
+                        if (!(checkboxEl instanceof HTMLInputElement)) {
+                            throw new Error(ERR_MALFORMED_HTML);
+                        }
+                        wrappedCheckboxEl.checked = checkboxEl.checked;
+                    })
+                    .then(() => {
+                        wrappedCheckboxEl.dispatchEvent(
+                            new Event('change', { bubbles: true })
+                        );
+                    });
+            });
+        };
+
+        revealCheckbox();
+        updateCheckStatus();
+
+        wrappedCheckboxEls.forEach(wrappedCheckboxEl => {
+            wrappedCheckboxEl.addEventListener('change', () =>
+                updateCheckStatus()
+            );
+        });
+
+        labelEl.addEventListener('change', () => handleChangeEvent());
+    });
+};
+
 const enhanceConsents = (): void => {
     const loaders = [
+        [`.${checkAllCheckboxClassName}`, bindCheckAllSwitch],
         [`.${consentCheckboxClassName}`, bindConsentSwitch],
         [`.${newsletterCheckboxClassName}`, bindNewsletterSwitch],
         ['.js-unsubscribe', bindUnsubscribeFromAll],
