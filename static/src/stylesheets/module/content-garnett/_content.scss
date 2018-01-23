@@ -48,7 +48,6 @@
         }
     }
 
-    
     @include mq(desktop) {
         margin-left: 0;
         margin-right: $right-column + $gs-gutter;
