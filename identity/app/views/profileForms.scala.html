@@ -60,8 +60,12 @@
          role="tabpanel"
          aria-labelledby="tabs-account-profile-@i-tab"
          data-link-name="Public Profile"
-         data-link-context="Identity/profile">
-        @body
+         data-link-context="Identity/profile"
+    >
+        @(redirectDecision match {
+            case NoRedirect => body
+            case _: ProfileRedirect => Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
+        })
     </div>
 }
 
@@ -100,12 +104,7 @@
 
                         @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
-                        @content(6, "/email-prefs")(
-                            redirectDecision match {
-                                case NoRedirect => profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint)
-                                case _: ProfileRedirect => Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
-                            }
-                        )
+                        @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists, consentsUpdated, consentHint))
                     </div>
                 </div>
     </div>
