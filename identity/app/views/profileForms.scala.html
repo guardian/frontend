@@ -62,9 +62,10 @@
          data-link-name="Public Profile"
          data-link-context="Identity/profile"
     >
-        @(redirectDecision match {
-            case NoRedirect => body
-            case _: ProfileRedirect => Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
+        @(if(redirectDecision.isAllowedFrom(url)) {
+            Html("<div class='identity-forms-loading u-identity-forms-padded'><div class='identity-forms-loading__spinner is-updating'></div></div>")
+        } else {
+            body
         })
     </div>
 }
