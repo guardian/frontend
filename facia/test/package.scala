@@ -61,7 +61,6 @@ class FaciaTestSuite extends Suites (
   new layout.slices.DynamicFastTest,
   new layout.slices.DynamicSlowTest,
   new layout.slices.StoryTest,
-  new views.fragments.nav.NavigationTest,
   new FaciaControllerTest,
   new metadata.FaciaMetaDataTest
 ) with SingleServerSuite {
