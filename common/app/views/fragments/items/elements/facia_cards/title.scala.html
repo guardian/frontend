@@ -7,14 +7,7 @@
 
 @icon = {
     @if(header.isExternal) { @fragments.inlineSvg("external-link", "icon") }
-    @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-        @if(header.isVideo) { @fragments.inlineSvg("video-icon", "icon") }
-        @if(header.isGallery) { @fragments.inlineSvg("camera", "icon") }
-        @if(header.isAudio) { @fragments.inlineSvg("volume-high", "icon") }
-        @if(header.quoted) { @fragments.inlineSvg("quote", "icon") }
-    } else {
-        @if(header.quoted) { @fragments.inlineSvg("garnett-quote", "icon") }
-    }
+    @if(header.quoted) { @fragments.inlineSvg("garnett-quote", "icon") }
 }
 
 @headline() = {
@@ -25,7 +18,7 @@
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, header.quoted) {
     @header.kicker match {
-        case Some(kicker) if snapType != Some(FrontendLatestSnap) || experiments.ActiveExperiments.isParticipating(experiments.Garnett) => {
+        case Some(kicker) => {
             @articleLink{<span class="@kicker.linkClasses.mkString(" ")">@Html(kicker.kickerHtml)</span> @headline()}
         }
         case _ => {
