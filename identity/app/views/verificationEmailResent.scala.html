@@ -8,15 +8,24 @@
 @import views.html.fragments.registrationFooter
 
 <div class="identity-wrapper monocolumn-wrapper">
-    <div class="identity-forms-message">
-        <h1 class="identity-title">A new validation email has been sent to your account.</h1>
+    <section class="identity-forms-message">
+        <h1 class="identity-title">Confirm your email address</h1>
         <div class="identity-forms-message__body">
             @for(m <- customMessage) {
-                <p><strong>@m</strong></p>
+                <p>@m</p>
             }
-        <p>Please check your email (@user.getPrimaryEmailAddress) and follow the enclosed link.</p>
-        <p>Validation links are valid for 30 minutes before expiring.</p>
+            <div class="identity-forms-email-wrap">
+                <header>@user.getPrimaryEmailAddress</header>
+                <aside>
+                    Is the email not correct? <a  href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="identity : email : update-email-from-error">Change it here</a>
+                </aside>
+            </div>
+            <p><strong>We have sent a link to this email address. Please check your inbox and follow the instructions.</strong></p>
         </div>
-    </div>
-    @registrationFooter(idRequest, idUrlBuilder)
+        <aside class="identity-forms-message__body">
+            <p class="identity-forms-message__explainer">Validation links are valid for 30 minutes before expiring.</p>
+            <p>Haven’t received the email or the link has expired?</p>
+            <a class="manage-account__button manage-account__button--center js-id-send-validation-email" data-link-name="Resend confirmation email">Resend confirmation email</a>
+        </aside>
+    </section>
 </div>
