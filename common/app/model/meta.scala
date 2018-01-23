@@ -237,13 +237,11 @@ final case class MetaData (
   isNewRecipeDesign: Boolean = false
 ){
   val sectionId = section map (_.value) getOrElse ""
+  private val fullAdUnitPath = AdUnitMaker.make(id, adUnitSuffix)
 
-  def hasPageSkin(edition: Edition): Boolean = if (isPressedPage){
-    DfpAgent.hasPageSkin(adUnitSuffix, edition)
-  } else false
-  def hasPageSkinOrAdTestPageSkin(edition: Edition): Boolean = if (isPressedPage){
-    DfpAgent.hasPageSkinOrAdTestPageSkin(adUnitSuffix, edition)
-  } else false
+  def hasPageSkin(edition: Edition): Boolean = DfpAgent.hasPageSkin(fullAdUnitPath, this, edition)
+  def hasPageSkinOrAdTestPageSkin(edition: Edition): Boolean = DfpAgent.hasPageSkinOrAdTestPageSkin(fullAdUnitPath, this, edition)
+
   def omitMPUsFromContainers(edition: Edition): Boolean = if (isPressedPage) {
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
@@ -267,7 +265,7 @@ final case class MetaData (
     ("pageId", JsString(id)),
     ("section", JsString(sectionId)),
     ("webTitle", JsString(webTitle)),
-    ("adUnit", JsString(AdUnitMaker.make(id, adUnitSuffix))),
+    ("adUnit", JsString(fullAdUnitPath)),
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("isFront", JsBoolean(isFront)),
