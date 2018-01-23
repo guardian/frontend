@@ -26,7 +26,10 @@ object PageSkinSponsorshipReport {
 }
 
 object PageSkin {
-  def isValidAdUnit(adUnitPath: String): Boolean = (adUnitPath endsWith "/front/ng") || (adUnitPath endsWith "/front")
+  private val ngFrontSuffix = "/front/ng"
+  private val frontSuffix = "/front"
+
+  def isValidAdUnit(adUnitPath: String): Boolean = (adUnitPath endsWith ngFrontSuffix) || (adUnitPath endsWith frontSuffix)
 }
 
 object PageSkinSponsorshipReportParser extends Logging {
