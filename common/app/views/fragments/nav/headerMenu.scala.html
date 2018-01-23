@@ -1,0 +1,186 @@
+@import common.{ LinkTo, Edition }
+@import conf.switches.Switches.SearchSwitch
+@import navigation.{ NavMenu, NavigationHelpers, NavLink }
+@import views.support.RenderClasses
+
+@(navMenu: NavMenu)(implicit request: RequestHeader)
+
+@sectionList(pillar: NavLink, edition: Edition) = {
+    <li class="menu-item js-navigation-item"
+        data-section-name="@pillar.title"
+        role="menuitem">
+
+        <button class="menu-item__title menu-item__title--@pillar.title hide-from-desktop js-navigation-toggle"
+                data-link-name="nav2 : secondary : @pillar.title"
+                aria-haspopup="true"
+                aria-expanded="true">
+
+            <i class="menu-item__toggle"></i>
+            @pillar.title
+        </button>
+
+        <ul class="menu-group menu-group--secondary"
+            data-edition="@{edition.id.toLowerCase}"
+            aria-label="Submenu @{pillar.title}"
+            role="menu">
+            @pillar.children.map { sectionItem =>
+                <li class="@RenderClasses(Map(
+                            "menu-item--home hide-from-desktop" -> (sectionItem.iconName == "home")
+                        ), "menu-item")"
+                    role="menuitem">
+                    <a class="menu-item__title"
+                       href="@LinkTo { @sectionItem.url }"
+                       data-link-name="nav2 : secondary : @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }">
+                            @if(sectionItem.iconName.nonEmpty) {
+                                @fragments.inlineSvg(sectionItem.iconName, "icon", List("menu-item__icon"))
+                            }
+                            @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }
+                    </a>
+                </li>
+            }
+        </ul>
+    </li>
+}
+
+@brandExtensions(item: NavLink) = {
+    <li class="menu-item--brand-extension">
+        <a href="@LinkTo { @item.url }"
+           class="menu-item__title menu-item__title--brand-extension"
+           data-link-name="nav2 : brand extension : @item.title">
+            @{item.title}
+        </a>
+    </li>
+}
+
+<label for="main-menu-toggle"
+       class="menu__overlay"
+       aria-hidden="true"
+       data-link-name="nav2 : overlay"></label>
+
+@defining(Edition(request)) { edition =>
+    <div class="menu js-main-menu"
+         id="main-menu"
+         aria-hidden="true">
+        <div class="menu__inner gs-container">
+            <ul class="menu-group menu-group--primary"
+                role="menubar">
+                @navMenu.pillars.map { pillar =>
+                    @sectionList(pillar, edition)
+                }
+            </ul>
+
+            @if(SearchSwitch.isSwitchedOn) {
+                @* TODO: clean up search menu desktop styling *@
+                <div class="menu-group menu-group--search hide-from-desktop">
+                    <form class="menu-search js-menu-search"
+                          action="https://www.google.co.uk/search">
+                        <input type="text"
+                               name="q"
+                               class="menu-search__search-box js-menu-search-term"
+                               id="google-search"
+                               placeholder="Search"
+                               data-link-name="nav2 : search">
+
+                       <label class="menu-search__glass"
+                              for="google-search">
+                           @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
+                           <span class="u-h">What term do you want to search?</span>
+                       </label>
+
+                        @* Button that shows itself on form focus *@
+                        <button class="menu-search__submit"
+                                data-link-name="nav2 : search : submit"
+                                for="submit-google-search"
+                                type="submit">
+                            <i class="right-arrow__icon"></i>
+                            <span class="u-h">Search with google</span>
+                        </button>
+
+                        @* Google sitesearch fields *@
+                        <input type="hidden"
+                               name="as_sitesearch"
+                               value="www.theguardian.com">
+                    </form>
+                </div>
+            }
+
+            <ul class="menu-group menu-group--membership"
+                role="menubar">
+                @NavigationHelpers.getMembershipLinks(edition).map { item =>
+                    <li class="menu-item hide-from-desktop"
+                        data-edition="@{edition.id.toLowerCase}"
+                        role="menuitem">
+
+                        <a class="menu-item__title js-change-membership-item"
+                           href="@item.url"
+                           data-link-name="nav2 : @item.title">
+                            @item.title
+                        </a>
+                    </li>
+                }
+
+                @fragments.nav.userAccountLinks()
+            </ul>
+
+            <ul class="menu-group menu-group--editions hide-from-desktop">
+                @fragments.nav.editionPicker()
+            </ul>
+
+            <ul class="menu-group menu-group--footer"
+                data-edition="@{edition.id.toLowerCase}"
+                role="menubar">
+
+                @navMenu.brandExtensions.map { item =>
+                    <li class="menu-item hide-from-desktop"
+                        role="menuitem">
+                        <a class="menu-item__title"
+                           href="@LinkTo { @item.url }"
+                           data-link-name="nav2 : @item.title">
+                            @item.title
+                        </a>
+                    </li>
+                }
+
+                @navMenu.otherLinks.map { item =>
+                    <li class="@RenderClasses(Map(
+                            "hide-from-desktop" -> (item.title == "The Guardian app"),
+                            "menu-item--no-border" -> (item.title == "Video")
+                        ), "menu-item")"
+                        role="menuitem">
+
+                        <a class="menu-item__title"
+                            href="@LinkTo { @item.url }"
+                            data-link-name="nav2 : @item.title">
+                            @item.title
+                        </a>
+                    </li>
+                }
+
+                <li class="menu-item hide-from-desktop"
+                    role="menuitem">
+                    <a class="menu-item__title"
+                       href="https://www.facebook.com/theguardian"
+                       data-link-name="nav2 : facebook">
+                        @fragments.inlineSvg("share-facebook", "icon", List("menu-item__icon"))
+                        Facebook
+                    </a>
+                </li>
+
+                <li class="menu-item hide-from-desktop"
+                    role="menuitem">
+                    <a class="menu-item__title"
+                       href="https://twitter.com/guardian"
+                       data-link-name="nav2 : twitter">
+                        @fragments.inlineSvg("share-twitter", "icon", List("menu-item__icon"))
+                        Twitter
+                    </a>
+                </li>
+            </ul>
+            <ul class="menu-group menu-group--brand-extensions hide-until-desktop">
+                @navMenu.brandExtensions.map { item =>
+                    @brandExtensions(item)
+                }
+            </ul>
+        </div>
+    </div>
+}
