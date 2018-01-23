@@ -184,7 +184,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService)(implicit ex
         Future.failed(new RuntimeException(s"Invalid url: $urlIn"))
       }
     } catch {
-      case e: Exception => log.error(s"Cannot take down $urlIn: ${e.getMessage}")
+      case e: Exception => log.error(s"Cannot take down $urlIn: ${e.getMessage}", e)
         Future.failed(new RuntimeException(s"Cannot take down $urlIn", e))
     }
   }

@@ -29,13 +29,13 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
     }.getOrElse(Future.successful(Nil))
 
     latestContent.failed.foreach {
-      case NonFatal(e) => log.error(s"Looking up content by keyword failed: ${e.getMessage}")
+      case NonFatal(e) => log.error(s"Looking up content by keyword failed: ${e.getMessage}", e)
     }
 
     val specificContent: Future[Seq[model.ContentType]] = capiAgent.contentByShortUrls(specificIds)
 
     specificContent.failed.foreach {
-      case NonFatal(e) => log.error(s"Looking up content by short URL failed: ${e.getMessage}")
+      case NonFatal(e) => log.error(s"Looking up content by short URL failed: ${e.getMessage}", e)
     }
 
     val futureContents = for {

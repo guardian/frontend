@@ -23,7 +23,7 @@ class StocksData(wsClient: WSClient) extends AutoRefresh[Stocks](0 seconds, 1 mi
       }
     } catch {
       case e: RuntimeException =>
-        log.error(e.getMessage)
+        log.error(e.getMessage, e)
         Future.failed(e)
     }
   }

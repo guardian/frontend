@@ -142,7 +142,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
 
         }) recover {
           case e: Exception =>
-            log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+            log.error(s"Error posting to ExactTarget: ${e.getMessage}", e)
             APINetworkError.increment()
             respond(OtherError)
         })

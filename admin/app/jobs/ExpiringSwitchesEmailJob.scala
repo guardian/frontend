@@ -37,7 +37,7 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends Logging 
         }
 
         eventualResult.failed.foreach {
-          case NonFatal(e) => log.error(s"Message failed: ${e.getMessage}")
+          case NonFatal(e) => log.error(s"Message failed: ${e.getMessage}", e)
         }
 
         eventualResult.map(_ => ())

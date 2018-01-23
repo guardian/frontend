@@ -45,7 +45,7 @@ class FastlyStatisticService(wsClient: WSClient) extends Logging {
 
         val response: Future[Option[JsValue]] = request.get().map { resp => Some(resp.json) }.recover {
           case e: Throwable =>
-            log.error(s"Error with request to api.fastly.com: ${e.getMessage}")
+            log.error(s"Error with request to api.fastly.com: ${e.getMessage}", e)
             None
         }
         response

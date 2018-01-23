@@ -104,9 +104,9 @@ trait MonitoredContentApiClientLogic extends ContentApiClientLogic with ApiQuery
     val futureContent = _httpClient.GET(url, headers) map { response: Response =>
       HttpResponse(response.body, response.status, response.statusText)
     }
-    futureContent.failed.foreach { t =>
+    futureContent.failed.foreach { error =>
       val tryDecodedUrl: String = Try(java.net.URLDecoder.decode(url, "UTF-8")).getOrElse(url)
-      log.error(s"$t: $tryDecodedUrl")}
+      log.error(s"$error: $tryDecodedUrl", error)}
     futureContent
   }
 }

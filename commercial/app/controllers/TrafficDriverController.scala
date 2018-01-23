@@ -28,9 +28,7 @@ class TrafficDriverController(
       capiAgent.contentByShortUrls(specificIds).map(_.headOption)
 
     content.failed.foreach {
-      case NonFatal(e) => log.error(
-        s"Looking up content by short URL failed: ${e.getMessage}"
-      )
+      case NonFatal(e) => log.error(s"Looking up content by short URL failed: ${e.getMessage}", e)
     }
 
     content

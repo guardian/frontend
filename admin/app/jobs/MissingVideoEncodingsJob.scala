@@ -79,7 +79,7 @@ class VideoEncodingsJob(contentApiClient: ContentApiClient, wsClient: WSClient) 
      }
 
      apiVideoResponse.failed.foreach { error: Throwable =>
-       log.error(s"Unable to retrieve video content from api: ${error.getMessage}")
+       log.error(s"Unable to retrieve video content from api: ${error.getMessage}", error)
      }
   }
 }

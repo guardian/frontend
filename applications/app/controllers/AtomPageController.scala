@@ -69,7 +69,7 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
 
         }).recover {
           case e: Exception =>
-            log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+            log.error(s"Error posting to ExactTarget: ${e.getMessage}", e)
             Cors(NoCache(InternalServerError("Internal error")))
         }
       })

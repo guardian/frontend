@@ -17,7 +17,7 @@ trait Logging {
   lazy implicit val log = Logger(getClass)
 
   protected def logException(e: Exception): Unit = {
-    log.error(ExceptionUtils.getStackTrace(e))
+    log.error(ExceptionUtils.getStackTrace(e), e)
   }
 
   def logInfoWithCustomFields(message: String, customFields: List[LogField]): Unit = {

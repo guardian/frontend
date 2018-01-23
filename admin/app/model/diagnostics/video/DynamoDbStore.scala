@@ -24,7 +24,7 @@ object DynamoDbStore extends Logging {
 
     client.updateItemFuture(updateItemRequest).failed.foreach { error: Throwable =>
       val message = error.getMessage
-      log.error(s"Unable to record missing video encoding with Dynamo DB: $message")
+      log.error(s"Unable to record missing video encoding with Dynamo DB: $message", error)
     }
   }
 

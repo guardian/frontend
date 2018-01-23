@@ -67,7 +67,7 @@ class EmailService(akkaAsync: AkkaAsync) extends Logging {
     }
 
     futureResponse.failed.foreach {
-      case NonFatal(e) => log.error(s"Email send failed: ${e.getMessage}")
+      case NonFatal(e) => log.error(s"Email send failed: ${e.getMessage}", e)
     }
 
     futureResponse

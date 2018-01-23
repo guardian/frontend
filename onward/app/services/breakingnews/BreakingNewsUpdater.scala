@@ -19,7 +19,7 @@ class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with L
       origin ! breakingNewsApi.getBreakingNews
     } catch {
       case e: Throwable =>
-        log.error(s"Cannot fetching Breaking News (${e.getMessage})")
+        log.error(s"Cannot fetching Breaking News (${e.getMessage})", e)
         origin ! ActorFailure(e)
     }
 
@@ -48,7 +48,7 @@ class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with L
 
     } catch {
       case e: Throwable =>
-        log.error(s"Cannot update Breaking News (${e.getMessage})")
+        log.error(s"Cannot update Breaking News (${e.getMessage})", e)
         origin ! ActorFailure(e)
     }
 

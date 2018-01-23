@@ -51,7 +51,7 @@ class CapiAgent(contentApiClient: ContentApiClient) extends Logging {
         addToCache
       } recoverWith {
         case NonFatal(e) =>
-          log.error(s"Lookup failed: ${e.getMessage}")
+          log.error(s"Lookup failed: ${e.getMessage}", e)
           Future.successful(cache)
       }
     }

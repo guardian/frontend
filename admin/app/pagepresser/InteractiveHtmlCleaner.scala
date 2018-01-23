@@ -61,7 +61,7 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
       Some(source)
     } catch {
       case ex: Exception =>
-        log.error(ex.getMessage)
+        log.error(ex.getMessage, ex)
         None
     }
     swfScriptOpt.foreach { script =>

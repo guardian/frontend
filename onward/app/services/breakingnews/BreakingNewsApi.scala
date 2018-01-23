@@ -31,7 +31,7 @@ class BreakingNewsApi(s3: S3BreakingNews) extends Logging {
       }
     } catch {
       case e: Exception =>
-        log.error(s"Cannot fetch Breaking News json (${e.getMessage})")
+        log.error(s"Cannot fetch Breaking News json (${e.getMessage})", e)
         throw e
     }
   }
@@ -43,7 +43,7 @@ class BreakingNewsApi(s3: S3BreakingNews) extends Logging {
       true
     } catch {
       case e: Exception =>
-        log.error(s"Cannot write Breaking News json (${e.getMessage})")
+        log.error(s"Cannot write Breaking News json (${e.getMessage})", e)
         throw e
     }
   }
