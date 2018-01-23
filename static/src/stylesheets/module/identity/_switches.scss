@@ -83,28 +83,16 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 
     &.is-updating {
-        cursor: wait;
-        pointer-events: none;
         background-image: none;
         width: 100%;
         height: auto;
         margin-top: 0;
-
-        &:before {
-            animation: manage-account__switch-anim-loading 1s infinite both;
-            opacity: 1;
-        }
-
-        > * {
+        pointer-events: none;
+        transition: .25s opacity;
+        will-change: opacity;
+        &.is-taking-a-long-time {
+            cursor: wait;
             opacity: .5;
-        }
-    }
-
-    &.is-just-updated {
-        &:before {
-            animation: manage-account__switch-anim-loaded .5s 1 both;
-            background-color: $status-positive-garnett;
-            opacity: 1;
         }
     }
 
@@ -214,24 +202,5 @@ $checkbox-size: $gs-gutter / 1.25;
     svg {
         vertical-align: -10%;
         margin-right: .25em;
-    }
-}
-
-
-@keyframes manage-account__switch-anim-loading {
-    from {
-        transform: translateX(-50%) scaleX(.75);
-    }
-    to {
-        transform: translateX(100%) scaleX(1) ;
-    }
-}
-
-@keyframes manage-account__switch-anim-loaded {
-    from {
-        transform: translateX(-50%) scaleX(.1);
-    }
-    to {
-        transform: translateX(0) scaleX(1);
     }
 }

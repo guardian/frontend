@@ -1,6 +1,8 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 
+const timeouts: Array<number> = [];
+
 const checkboxShouldUpdate = (
     checkedValue: boolean,
     originallyCheckedValue: string
@@ -51,30 +53,35 @@ export const flip = (labelEl: HTMLElement): Promise<any> =>
         });
 
 export const addSpinner = (labelEl: HTMLElement): Promise<any> =>
-    fastdom.write(() => {
-        if (document.body) {
-            document.body.classList.add('is-updating-cursor');
-        }
-        labelEl.classList.add('is-updating');
-    });
-
-export const removeSpinner = (labelEl: HTMLElement): Promise<any> =>
     fastdom
         .write(() => {
-            if (document.body) {
-                document.body.classList.remove('is-updating-cursor');
-            }
-            labelEl.classList.add('is-just-updated');
-            labelEl.classList.remove('is-updating');
+            labelEl.classList.add('is-updating');
+            if (document.body) document.body.classList.add('is-updating-js');
         })
-        .then(
-            () =>
-                new Promise((accept: () => void) => {
-                    setTimeout(() => accept(), 1000);
-                })
-        )
-        .then(() =>
-            fastdom.write(() => {
-                labelEl.classList.remove('is-just-updated');
-            })
+        .then(() => {
+            labelEl.dataset.slowLoadTimeout = timeouts
+                .push(
+                    setTimeout(() => {
+                        fastdom.write(() => {
+                            if (document.body) {
+                                document.body.classList.add(
+                                    'is-updating-cursor'
+                                );
+                            }
+                            labelEl.classList.add('is-taking-a-long-time');
+                        });
+                    }, 300)
+                )
+                .toString();
+        });
+
+export const removeSpinner = (labelEl: HTMLElement): Promise<any> =>
+    fastdom.write(() => {
+        if (document.body) document.body.classList.remove('is-updating-cursor');
+        if (document.body) document.body.classList.remove('is-updating-js');
+        labelEl.classList.remove('is-updating');
+        labelEl.classList.remove('is-taking-a-long-time');
+        clearTimeout(
+            timeouts[parseInt(labelEl.dataset.slowLoadTimeout, 10) - 1]
         );
+    });

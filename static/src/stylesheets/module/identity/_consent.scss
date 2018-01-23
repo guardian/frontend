@@ -14,8 +14,8 @@
         .manage-account__button:not(.manage-account__button--round) {
             flex: 1 1 auto;
             min-width: 0;
-            width: $gs-baseline * 14;
-            max-width: $gs-baseline * 14;
+            width: $gs-baseline * 16;
+            max-width: $gs-baseline * 16;
         }
     }
     .identity-consent-wizard-counter {

@@ -13,11 +13,12 @@ object ConsentStep {
 
 
   case class ConsentStep(
-                          name: String,
-                          title: String,
-                          help: List[ConsentStepHelpTextTrait] = Nil,
-                          content: Html = Html(""),
-                          show: Boolean = true,
-                        )
+    name: String,
+    title: String,
+    help: List[ConsentStepHelpTextTrait] = Nil,
+    content: Html = Html(""),
+    banner: Option[String] = None,
+    show: Boolean = true
+  )
 
 }
