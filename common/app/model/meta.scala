@@ -222,7 +222,7 @@ final case class MetaData (
   openGraphImages: Seq[String] = Seq(),
   membershipAccess: Option[String] = None,
   isFront: Boolean = false,
-  isPressedPage: Boolean = true,
+  isPressedPage: Boolean = false,
   hideUi: Boolean = false,
   canonicalUrl: Option[String] = None,
   shouldGoogleIndex: Boolean = true,
