@@ -51,7 +51,6 @@ Messages
         border-top: 1px solid $garnett-neutral-4;
         margin-top: $gs-baseline * 2;
         padding-top: $gs-baseline / 2;
-        padding-right: $gs-baseline * 2;
     }
     .identity-forms-message__explainer {
         opacity: .75;
@@ -62,9 +61,6 @@ Messages
         display: flex;
     }
 
-    .identity-title {
-        padding-right: $gs-baseline * 2;
-    }
     .identity-forms-email-wrap {
         margin-bottom: ($gs-baseline/3)*2;
      }
