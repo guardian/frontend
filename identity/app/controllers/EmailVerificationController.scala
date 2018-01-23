@@ -62,7 +62,7 @@ class EmailVerificationController(api: IdApiClient,
   def resendEmailValidationEmail(isRepermissioningRedirect: Boolean): Action[AnyContent] = fullAuthWithIdapiUserAction.async {
     implicit request =>
       val idRequest = idRequestParser(request)
-      val customMessage = if (isRepermissioningRedirect) Some("You must verify your email to continue.") else None
+      val customMessage = if (isRepermissioningRedirect) Some("To access all your account features and join the Guardian community, we need you to confirm your email address below.") else None
       api.resendEmailValidationEmail(request.user.auth, idRequest.trackingData).map { _ =>
         Ok(
           IdentityHtmlPage.html(views.html.verificationEmailResent(request.user, idRequest, idUrlBuilder, customMessage))(page, request, context)
