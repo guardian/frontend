@@ -92,14 +92,14 @@
         return getCookieValue('gu_paying_member') === 'true';
     }
 
-    function supportsPercentagePadding() {
+    function forcePercentagePadding() {
         var firefoxMatch = navigator.userAgent.match(/Firefox\/([0-9]+)\./) || [];
 
         if (firefoxMatch.length === 2 && parseInt(firefoxMatch[1], 10) < 54) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     // http://modernizr.com/download/#-svg
@@ -148,13 +148,14 @@
         docClass += ' is-recent-contributor';
     }
 
-    /**
+    /**     
      * % used for padding-bottom isn't supported on Grid items in FireFox <53.
-     * This temporary fix sets media in articles to 5:3 aspect ratio.
+     * unless explicit width set on item with padding-bottom.
+     * this sets width of responsive media explicitly so padding-bottom works
      * https://bugzilla.mozilla.org/show_bug.cgi?id=958714
     **/
-    if(!supportsPercentagePadding()) {
-        docClass += ' fake-percentage-padding';
+    if(forcePercentagePadding()) {
+        docClass += ' force-percentage-padding';
     }
 
     documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
