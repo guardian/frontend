@@ -24,14 +24,32 @@ const updateDataLink = (labelEl: HTMLElement, checked): Promise<any> =>
         );
     });
 
-export const getInfo = (labelEl: HTMLElement): Promise<any> =>
+export const bindAnalyticsEventsOnce = (labelEl: HTMLElement): Promise<any> =>
     fastdom
         .read((): ?HTMLElement => labelEl.querySelector('input'))
         .then((checkboxEl: HTMLInputElement) => {
-            labelEl.addEventListener('change', () => {
+            if (!labelEl.dataset.updateDataLinkBound) {
+                labelEl.addEventListener('change', () => {
+                    updateDataLink(labelEl, checkboxEl.checked);
+                });
+                labelEl.dataset.updateDataLinkBound = 'true';
                 updateDataLink(labelEl, checkboxEl.checked);
-            });
-            updateDataLink(labelEl, checkboxEl.checked);
+            }
+        });
+
+export const getInfo = (labelEl: HTMLElement): Promise<any> =>
+    bindAnalyticsEventsOnce(labelEl)
+        .then(() =>
+            fastdom.read((): ?HTMLElement => labelEl.querySelector('input'))
+        )
+        .then((checkboxEl: HTMLInputElement) => {
+            if (!labelEl.dataset.updateDataLinkBound) {
+                labelEl.addEventListener('change', () => {
+                    updateDataLink(labelEl, checkboxEl.checked);
+                });
+                labelEl.dataset.updateDataLinkBound = 'true';
+                updateDataLink(labelEl, checkboxEl.checked);
+            }
             return checkboxEl;
         })
         .then((checkboxEl: HTMLInputElement) => ({

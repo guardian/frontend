@@ -28,6 +28,10 @@ $checkbox-size: $gs-gutter / 1.25;
         }
     }
 
+    .manage-account__switches-head {
+        margin-bottom: $gs-baseline;
+    }
+
     &.manage-account__switches--wide ul {
         grid-template-columns: repeat(1, 1fr);
     }
@@ -61,6 +65,14 @@ $checkbox-size: $gs-gutter / 1.25;
         background-color: $neutral-6;
         .manage-account__switch-checkbox {
             border-color: $identity-main;
+        }
+    }
+
+    &.manage-account__switch--no-box {
+        border-color: transparent;
+        background: transparent;
+        &:hover {
+            background: transparent;
         }
     }
 

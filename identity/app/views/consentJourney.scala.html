@@ -24,6 +24,16 @@
     availableLists: EmailNewsletters,
     consentHint: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
+@selectAllCheckbox(id: String) = @{
+        <label class="manage-account__switch manage-account__switch--no-box js-manage-account__check-allCheckbox u-h" data-link-name-template="mma switch : @id (all) : [action]">
+            <div class="manage-account__switch-content">
+                <input type="checkbox"/>
+                <div class="manage-account__switch-checkbox"></div>
+                <h3 class="manage-account__switch-title"></h3>
+            </div>
+        </label>
+}
+
 @onlySubscribedToV1Newsletters = @{
     EmailNewsletters.all.subscriptions.filter { newsletter =>
         emailSubscriptions.contains(newsletter.listIdV1.toString)
@@ -110,6 +120,11 @@
     <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
         <div class="manage-account__switches manage-account__switches--single-column">
+            <ul class="manage-account__switches-head">
+                <li>
+                    @selectAllCheckbox("marketing-consents")
+                </li>
+            </ul>
             <ul>
             @helper.repeatWithIndex(forms.privacyForm("consents"), min = 1) { (consentField, index) =>
                 <li>
@@ -128,7 +143,7 @@
 }
 @marketingConsentStep = @{
     ConsentStep(
-        name = "consent",
+        name = "marketing-consents",
         title = "Would you like to hear about any of these Guardian products?",
         help = List(ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")),
         content = marketingStepContent
@@ -151,6 +166,11 @@
         @views.html.helper.CSRF.formField
         @fragments.form.hidden(emailPrefsForm("htmlPreference"))
         <div class="manage-account__switches manage-account__switches--single-column">
+            <ul class="manage-account__switches-head">
+                <li>
+                    @selectAllCheckbox("marketing-consents")
+                </li>
+            </ul>
             <ul>
             @onlySubscribedToV1Newsletters.zipWithRowInfo.map { case (newsletter, row) =>
             <li>
