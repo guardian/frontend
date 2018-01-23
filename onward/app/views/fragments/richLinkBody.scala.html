@@ -21,12 +21,11 @@
 }
 
 <div class="rich-link @toneClass(content)--item @RenderClasses(Map(
-    "rich-link--pillar-" + content.metadata.pillar.nameOrDefault -> experiments.ActiveExperiments.isParticipating(experiments.Garnett),
+    "rich-link--pillar-" + content.metadata.pillar.nameOrDefault -> true,
     "rich-link--video" -> content.tags.isVideo,
     "rich-link--gallery" -> content.tags.isGallery,
     "rich-link--audio" -> content.tags.isAudio,
-    "rich-link--paidfor" -> content.tags.isPaidContent,
-    "rich-link--has-byline-pic" -> (!experiments.ActiveExperiments.isParticipating(experiments.Garnett) && content.content.hasTonalHeaderByline && content.tags.hasLargeContributorImage)
+    "rich-link--paidfor" -> content.tags.isPaidContent
     ))">
 
     <div class="rich-link__container">
@@ -43,23 +42,11 @@
 
         <div class="rich-link__header">
             <h1 class="rich-link__title">
-                @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                    @if(content.content.cardStyle == Comment ||
-                        (content.content.cardStyle == SpecialReport && content.content.hasTonalHeaderByline)
-                    ) {
-                        @fragments.inlineSvg("quote", "icon")
-                    }
-                } else {
-                    @if(content.content.cardStyle == Comment) {
-                        @fragments.inlineSvg("garnett-quote", "icon")
-                    }
+                @if(content.content.cardStyle == Comment) {
+                    @fragments.inlineSvg("garnett-quote", "icon")
                 }
                 <a class="rich-link__link">
-                    @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                        @Html(kicker.toString.replaceAll("^\\s+", "") + content.trail.headline)
-                    } else {
-                        @Html(content.trail.headline)
-                    }
+                    @Html(content.trail.headline)
                 </a>
             </h1>
             @if(!content.tags.isMedia && (
@@ -78,41 +65,19 @@
             </div>
         }
 
-        @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-            @if(!content.tags.isGallery && !content.tags.isVideo) {
-                <div class="rich-link__standfirst u-cf">
-                    @content.fields.trailText.map { trailText => @Html(BulletCleaner(trailText)) }
-                </div>
-                @if(content.content.hasTonalHeaderByline && content.tags.hasLargeContributorImage) {
-                    @content.tags.contributors.headOption.map { profile =>
-                        @profile.properties.contributorLargeImagePath.map{ image =>
-                            <div class="rich-link__byline-img">
-                                <img class="rich-link__byline-img__img" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
-                            </div>
-                        }
-                    }
+        @if(content.content.cardStyle == Comment) {
+            @content.tags.contributors.headOption.map { profile =>
+                @profile.properties.contributorLargeImagePath.map{ image =>
+                    <div class="rich-link__avatar">
+                        <img class="rich-link__avatar__media" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
+                    </div>
                 }
-                @*<div class="u-h meta__number" data-discussion-id="@content.discussionId"/>*@
-            }
-        } else { 
-            @if(content.content.cardStyle == Comment) {
-                @content.tags.contributors.headOption.map { profile => 
-                    @profile.properties.contributorLargeImagePath.map{ image =>
-                        <div class="rich-link__avatar">
-                            <img class="rich-link__avatar__media" src="@ImgSrc(image, RichLinkContributor)" alt="@profile.name" />
-                        </div>
-                    }
-                } 
             }
         }
 
         <div class="rich-link__read-more">
             <div class="rich-link__arrow">
-                @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                    @inlineSvg("arrow-in-circle", "icon")
-                } else {
-                    @inlineSvg("arrow-in-circle-garnett", "icon")
-                }
+                @inlineSvg("arrow-in-circle", "icon")
             </div>
             <div class="rich-link__read-more-text">
                 @{content.metadata.contentType match {
