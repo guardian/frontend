@@ -12,7 +12,8 @@ case class PageSkinSponsorship(lineItemName: String,
                                countries: Seq[String],
                                isR2Only: Boolean,
                                targetsAdTest: Boolean,
-                               adTestValue: Option[String])
+                               adTestValue: Option[String],
+                               keywords: Seq[String])
 
 object PageSkinSponsorship {
 
