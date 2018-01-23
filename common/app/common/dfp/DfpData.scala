@@ -148,6 +148,14 @@ case class GuTargeting(adUnitsIncluded: Seq[GuAdUnit],
                        geoTargetsExcluded: Seq[GeoTarget],
                        customTargetSets: Seq[CustomTargetSet]) {
 
+  val keyValues: Seq[String] = {
+    for {
+      targetSet <- customTargetSets
+      target <- targetSet.targets if target.isKeywordTag
+      targetValue <- target.values
+    } yield targetValue
+  }
+
   val adTestValue: Option[String] = {
     val testValues = for {
       targetSet <- customTargetSets
