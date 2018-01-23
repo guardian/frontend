@@ -32,7 +32,6 @@
    ========================================================================== */
 
 @include grid-system;
-@import 'layout/_header';
 @import 'layout/_ab-new-header-test-variant';
 // TODO: uncomment this line after garnett styling has been decided
 //@import 'layout/_new-header';
@@ -47,14 +46,9 @@
 // Popup "object" must appear above brand-bar "component"
 // Also included by global
 @import 'module/_popup';
-@import 'module/nav/_nav';
-@import 'module/nav/_brand-bar';
-@import 'module/nav/_control';
 @import 'module/_adslot';
 @import 'module/_media';
 @import 'module/_headers';
-@import 'module/nav/_has-localnav-overrides';
-@import 'module/nav/_navigation';
 @import 'module/_rounded-icon';
 @import 'module/_icons.head';
 @import 'module/onward/_rich-links-default.head';
