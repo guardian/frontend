@@ -1,11 +1,23 @@
 package common.dfp
 
+import com.gu.commercial.display.{AdTargetParam, KeywordParam}
 import common.Edition.defaultEdition
+import common.commercial.{CommercialProperties, EditionAdTargeting}
 import common.editions.{Au, Uk, Us}
 import conf.Configuration.commercial.dfpAdUnitGuRoot
+import model.MetaData
 import org.scalatest.{FlatSpec, Matchers}
 
 class PageskinAdAgentTest extends FlatSpec with Matchers {
+  val keywordParamSet: Set[AdTargetParam] = KeywordParam.fromItemId("sport-keyword").toSet
+  val commercialProperties = CommercialProperties(
+    editionBrandings = Set.empty,
+    editionAdTargetings = Set(EditionAdTargeting(defaultEdition, Some(keywordParamSet))),
+    prebidIndexSites = None
+  )
+  val pressedFrontMeta = MetaData.make("", None, "The title", None, isFront = true, isPressedPage = true)
+  val indexFrontMeta = MetaData.make("", None, "The title", None, isFront = true, commercial = Some(commercialProperties))
+  val articleMeta = MetaData.make("", None, "The title", None)
 
   val examplePageSponsorships = Seq(
     PageSkinSponsorship("lineItemName",
@@ -15,7 +27,8 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Seq("United Kingdom"),
       isR2Only = false,
       targetsAdTest = false,
-      None),
+      adTestValue = None,
+      keywords = Seq.empty),
     PageSkinSponsorship("lineItemName2",
       12345L,
       Seq(s"$dfpAdUnitGuRoot/music/front"),
@@ -23,7 +36,8 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Nil,
       isR2Only = false,
       targetsAdTest = false,
-      None),
+      adTestValue = None,
+      keywords = Seq.empty),
     PageSkinSponsorship("lineItemName3",
       123456L,
       Seq(s"$dfpAdUnitGuRoot/sport"),
@@ -31,7 +45,8 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Nil,
       isR2Only = false,
       targetsAdTest = false,
-      None),
+      adTestValue = None,
+      keywords = Seq.empty),
     PageSkinSponsorship("lineItemName4",
       1234567L,
       Seq(s"$dfpAdUnitGuRoot/testSport/front"),
@@ -39,7 +54,17 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       Seq("United Kingdom"),
       isR2Only = false,
       targetsAdTest = true,
-      Some("6"))
+      adTestValue = Some("6"),
+      keywords = Seq.empty),
+    PageSkinSponsorship("lineItemName5",
+      123458L,
+      Seq(s"$dfpAdUnitGuRoot/sport-index"),
+      Seq(Uk),
+      Nil,
+      isR2Only = false,
+      targetsAdTest = false,
+      adTestValue = None,
+      keywords = Seq("sport-keyword"))
   )
 
   private object TestPageskinAdAgent extends PageskinAdAgent {
@@ -53,33 +78,37 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
   }
 
   "isPageSkinned" should "be true for a front with a pageskin in given edition" in {
-    TestPageskinAdAgent.hasPageSkin("business/front", edition = defaultEdition) should be(true)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/business/front", pressedFrontMeta, Uk) should be(true)
   }
 
   it should "be false for a front with a pageskin in another edition" in {
-    TestPageskinAdAgent.hasPageSkin("business/front", edition = Au) should be(false)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/business/front", pressedFrontMeta, Au) should be(false)
   }
 
   it should "be false for a front without a pageskin" in {
-    TestPageskinAdAgent.hasPageSkin("culture/front", edition = defaultEdition) should be(false)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/culture/front", pressedFrontMeta, defaultEdition) should be(false)
   }
 
   it should "be false for a front with a pageskin in no edition" in {
-    TestPageskinAdAgent.hasPageSkin("music/front", edition = defaultEdition) should be(false)
-    TestPageskinAdAgent.hasPageSkin("music/front", edition = Us) should be(false)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/music/front", pressedFrontMeta, defaultEdition) should be(false)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/music/front", pressedFrontMeta, Us) should be(false)
   }
 
-  it should "be false for any content (non-front) page" in {
-    TestPageskinAdAgent.hasPageSkin("sport", edition = defaultEdition) should be(false)
+  it should "be false for a content (non-front) page" in {
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/sport", articleMeta, defaultEdition) should be(false)
+  }
+
+  it should "be true for an index front (tag page)" in {
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/sport-index", indexFrontMeta, defaultEdition) should be(true)
   }
 
   "production DfpAgent" should "not recognise adtest targetted line items" in {
-    TestPageskinAdAgent.hasPageSkin("testSport/front", edition = defaultEdition) should be(false)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta, defaultEdition) should be(false)
   }
 
   "non production DfpAgent" should "should recognise adtest targetted line items" in {
-    NotProductionTestPageskinAdAgent.hasPageSkin("testSport/front",
-      edition = defaultEdition) should be(
+    NotProductionTestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta,
+      defaultEdition) should be(
       true)
   }
 }
