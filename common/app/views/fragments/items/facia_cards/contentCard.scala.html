@@ -150,35 +150,25 @@ data-test-id="facia-card"
             }
 
             case Some(InlineVideo(_, _, _, Some(fallbackImage))) => {
-                @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                    <div class="fc-item__media-wrapper">
-                        @itemImage(
-                            fallbackImage.imageMedia,
-                            inlineImage = containerIndex == 0 && index < 4,
-                            widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
-                        )
-                    </div>
-                } else {
+                <div class="fc-item__media-wrapper">
                     @itemImage(
                         fallbackImage.imageMedia,
                         inlineImage = containerIndex == 0 && index < 4,
                         widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
                     )
-                }
+                </div>
             }
 
             case Some(InlineImage(images)) => {
                 <div class="fc-item__media-wrapper">
-                @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
                     @item.starRating.map { rating =>
                         @starRating(rating)
                     }
-                }
-                @itemImage(
-                    images,
-                    inlineImage = containerIndex == 0 && index < 4,
-                    widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
-                )
+                    @itemImage(
+                        images,
+                        inlineImage = containerIndex == 0 && index < 4,
+                        widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
+                    )
                 </div>
             }
 
@@ -225,74 +215,51 @@ data-test-id="facia-card"
                 }
             </div>
 
-            @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                @if(item.isMediaLink) {
+            @if(item.isMediaLink) {
+                @standfirst(item)
+            } else {
+                <div class="@RenderClasses(Map(
+                    ("fc-item__standfirst-wrapper", true),
+                    ("fc-item__standfirst-wrapper--timestamp", !item.timeStampDisplay.isEmpty)
+                ))">
                     @standfirst(item)
-                } else {
-                    <div class="@RenderClasses(Map(
-                        ("fc-item__standfirst-wrapper", true),
-                        ("fc-item__standfirst-wrapper--timestamp", !item.timeStampDisplay.isEmpty)
-                    ))">
-                        @standfirst(item)
-                        @meta(item)
+                    @meta(item)
+                </div>
+                @if(item.cardTypes.showCutOut) {
+                    @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
+                    <div class="fc-item__avatar">
+                        @image(
+                            classes = Seq("fc-item__avatar__media", cutOut.cssClass),
+                            widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
+                            maybePath = Some(imageUrl)
+                        )
                     </div>
-                    @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.cardTypes.showCutOut) {
-                        @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
-                        <div class="fc-item__avatar">
-                            @image(
-                                classes = Seq("fc-item__avatar__media", cutOut.cssClass),
-                                widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
-                                maybePath = Some(imageUrl)
-                            )
-                        </div>
-                        }
                     }
                 }
-            } else {
-                @standfirst(item)
             }
 
             @if(item.isLive && item.displaySettings.showLivePlayable && !isList) {
                 <div class="js-liveblog-blocks fc-item__liveblog-blocks" data-article-id="@item.id"></div>
             }
-            @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-                @if(item.isMediaLink) {
-                    <div class="fc-item__footer-meta-wrapper">
-                        @mediaMeta(item)
-                        @if(item.sublinks.nonEmpty) {
-                            <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
-                        }
-                    </div>
-                } else {
+            @if(item.isMediaLink) {
+                <div class="fc-item__footer-meta-wrapper">
+                    @mediaMeta(item)
                     @if(item.sublinks.nonEmpty) {
                         <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
                     }
-                }
+                </div>
             } else {
                 @if(item.sublinks.nonEmpty) {
                     <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
                 }
-                @meta(item)
             }
         </div>
-
-        @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.cardTypes.showCutOut) {
-            @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
-            <div class="fc-item__avatar">
-                @image(
-                    classes = Seq("fc-item__avatar__media", cutOut.cssClass),
-                    widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
-                    maybePath = Some(imageUrl)
-                )
-            </div>
-            }
-        }
 
         @if(item.sublinks.nonEmpty) {
             <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
         }
 
-        @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.designType.nameOrDefault == "comment") {
+        @if(item.designType.nameOrDefault == "comment") {
             @meta(item)
         }
 
