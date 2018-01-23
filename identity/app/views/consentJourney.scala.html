@@ -30,6 +30,14 @@
     }
 }
 
+@showAgeStep(index: Option[Int]) = @{
+    if(index.contains(0)){
+        List(ConsentStepHelpLegalText("By clicking the button, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
+    } else {
+        Nil
+    }
+}
+
 @renderStep(step: ConsentStep, index: Option[Int] = None) = {
     @if(step.show) {
         @(step.banner.map { title =>
@@ -43,9 +51,9 @@
         >
             <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
             <div class="identity-forms-wrapper">
-                @if(step.help) {
+                @if(step.help || showAgeStep(index)) {
                     <div class="identity-forms-wrapper__title">
-                        @(step.help.map(paragraph =>
+                        @((step.help ++ showAgeStep(index)).map(paragraph =>
                             paragraph match {
                                 case m: ConsentStepHelpLegalText => {
                                     Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
@@ -280,48 +288,41 @@
 
         @renderSteps(getStepsForJourney(journey))
 
-        <form class="identity-wizard__controls identity-wizard__controls--stacked" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
+        <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
 
-            <div class="identity-wizard__controls-row identity-consent-wizard-legalsese">
-                <p class="identity-title-explainer identity-title-explainer--small">By continuing, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility.</p>
-            </div>
-
-            <div class="identity-wizard__controls-row">
-                @if(getStepsForJourney(journey).size > 1){
-                    <button
-                        type="button"
-                        data-link-name="consents : navigation : prev"
-                        class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
-                    >
-                        <span class="u-h">Previous</span>
-                        @fragments.inlineSvg("arrow-left-stem", "icon")
-                    </button>
-                }
-                @views.html.helper.CSRF.formField
-                <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
+            @if(getStepsForJourney(journey).size > 1){
                 <button
                     type="button"
-                    data-link-name-template="consents : navigation : next : [depth]"
-                    class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next"
+                    data-link-name="consents : navigation : prev"
+                    class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
                 >
-                    <div class="manage-account__button-flexwrap">
-                        <span>Save & Continue</span>
-                        @fragments.inlineSvg("arrow-right", "icon")
-                    </div>
+                    <span class="u-h">Previous</span>
+                    @fragments.inlineSvg("arrow-left-stem", "icon")
                 </button>
-                <button
-                    type="submit"
-                    class="manage-account__button--icon manage-account__button js-identity-consent-wizard__complete u-block-during-update"
-                    data-link-name="consents : navigation : submit"
-                >
-                    <div class="manage-account__button-flexwrap">
-                        <span>Submit</span>
-                        @fragments.inlineSvg("arrow-right", "icon")
-                    </div>
-                </button>
-            </div>
+            }
+            @views.html.helper.CSRF.formField
+            <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
+            <button
+                type="button"
+                data-link-name-template="consents : navigation : next : [depth]"
+                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next"
+            >
+                <div class="manage-account__button-flexwrap">
+                    <span>Next</span>
+                    @fragments.inlineSvg("arrow-right", "icon")
+                </div>
+            </button>
+            <button
+                type="submit"
+                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__complete"
+                data-link-name="consents : navigation : submit"
+            >
+                <div class="manage-account__button-flexwrap">
+                    <span>Finish</span>
+                    @fragments.inlineSvg("tick-button", "icon")
+                </div>
+            </button>
         </form>
-
     </div>
 
 </div>

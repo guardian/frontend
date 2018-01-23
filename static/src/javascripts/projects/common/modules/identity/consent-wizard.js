@@ -31,14 +31,6 @@ const toggleBackButtonEl = (
         );
     });
 
-const toggleLegalDisclaimerEl = (
-    legalDisclaimerEl: HTMLElement,
-    showOrHide: boolean
-) =>
-    fastdom.write(() => {
-        legalDisclaimerEl.classList.toggle('u-h', !showOrHide);
-    });
-
 const bindWizardBlocks = (wizardEl: HTMLElement): void => {
     window.addEventListener(wizardPageChangedEv, ev => {
         if (ev.target === wizardEl) {
@@ -49,29 +41,14 @@ const bindWizardBlocks = (wizardEl: HTMLElement): void => {
                             'identity-consent-wizard-button-back'
                         ),
                     ][0],
-                    [
-                        ...document.getElementsByClassName(
-                            'identity-consent-wizard-legalsese'
-                        ),
-                    ][0],
                 ])
-                .then(
-                    (
-                        [
-                            BackButtonEl: HTMLElement,
-                            legalDisclaimerEl: HTMLElement,
-                        ]
-                    ) =>
-                        Promise.all([
-                            toggleBackButtonEl(
-                                BackButtonEl,
-                                ev.detail.position > 0
-                            ),
-                            toggleLegalDisclaimerEl(
-                                legalDisclaimerEl,
-                                ev.detail.position === 0
-                            ),
-                        ])
+                .then(([BackButtonEl: HTMLElement]) =>
+                    Promise.all([
+                        toggleBackButtonEl(
+                            BackButtonEl,
+                            ev.detail.position > 0
+                        ),
+                    ])
                 );
         }
     });
