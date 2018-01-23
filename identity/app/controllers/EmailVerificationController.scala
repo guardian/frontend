@@ -9,7 +9,6 @@ import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
-import conf.switches.Switches.IdentityPointToConsentJourneyPage
 import pages.IdentityHtmlPage
 
 
@@ -42,19 +41,17 @@ class EmailVerificationController(api: IdApiClient,
                 case error => logger.warn("Error validating email: " + error); invalid
               }
 
-            case Right(ok) => validated
+            case Right(_) => validated
           }
           val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
           val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
           val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
           val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
 
-          if(validationState.isExpired || IdentityPointToConsentJourneyPage.isSwitchedOff) {
-            Ok(
-              IdentityHtmlPage.html(views.html.emailVerified(validationState, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))(page, request, context)
-            )
+          if(validationState.isValidated) {
+            SeeOther(idUrlBuilder.buildUrl(s"/consents?returnUrl=$encodedReturnUrl"))
           } else {
-            SeeOther(idUrlBuilder.buildUrl(s"/consents?returnUrl=${encodedReturnUrl}"))
+            Ok(IdentityHtmlPage.html(views.html.emailVerified(validationState, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))(page, request, context))
           }
       }
   }

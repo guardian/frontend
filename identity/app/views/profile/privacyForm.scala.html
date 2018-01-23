@@ -2,13 +2,11 @@
 @import _root_.form.IdFormHelpers.nonInputFields
 @import com.gu.identity.model.Consent
 @import com.gu.identity.model.Consent._
-@import conf.switches.Switches.IdentityGdprMarketingConsentSwitch
 @import model.IdentityPage
 @import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
 @import views.support.fragment.Switch._
 @import views.support.fragment.ConsentChannel._
-@import conf.switches.Switches.IdentityShowCommunicationChannelConsents
 
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
@@ -103,33 +101,28 @@
 }
 
 @* MARKETING CONSENT *@
-@if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
-    @marketingConsentForm
-} else {
-    @profile.marketingConsentFormV1(idUrlBuilder, idRequest, privacyForm)
-}
+@marketingConsentForm
 
 @* NEWSLETTERS *@
 <hr class="manage-account-divider" />
 @profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
 
 @* CHANNELS *@
-@if(IdentityShowCommunicationChannelConsents.isSwitchedOn) {
-    <hr class="manage-account-divider" />
+<hr class="manage-account-divider" />
 
-    <fieldset class="fieldset fieldset--manage-account-noborder">
-        <div class="fieldset__heading">
-            <h2 class="form__heading">How else can we get in touch with you?</h2>
-        </div>
-        <div class="fieldset__fields">
-            @if(channelsProvidedBy(user).nonEmpty) {
-                @channelConsentForm
-            } else {
-                <p class="identity-title-explainer">
-                    Update your <a class="u-underline" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="identity : email : add-channel-info">account details</a> with your phone number or home address to be able to opt in to receiving phone, SMS, and post communications from the Guardian.
-                </p>
-            }
-        </div>
-    </fieldset>
-}
+<fieldset class="fieldset fieldset--manage-account-noborder">
+    <div class="fieldset__heading">
+        <h2 class="form__heading">How else can we get in touch with you?</h2>
+    </div>
+    <div class="fieldset__fields">
+        @if(channelsProvidedBy(user).nonEmpty) {
+            @channelConsentForm
+        } else {
+            <p class="identity-title-explainer">
+                Update your <a class="u-underline" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="identity : email : add-channel-info">account details</a> with your phone number or home address to be able to opt in to receiving phone, SMS, and post communications from the Guardian.
+            </p>
+        }
+    </div>
+</fieldset>
+
 @registrationFooter(idRequest, idUrlBuilder)

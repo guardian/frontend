@@ -2,7 +2,6 @@ package controllers.editprofile
 
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.{Consent, EmailNewsletters, StatusFields, User}
-import conf.switches.Switches.IdentityAllowAccessToGdprJourneyPageSwitch
 import idapiclient.UserUpdateDTO
 import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
@@ -62,23 +61,18 @@ trait ConsentsJourney
     page: ConsentJourneyPage,
     consentHint: Option[String]): Action[AnyContent] =
 
-    if (IdentityAllowAccessToGdprJourneyPageSwitch.isSwitchedOff) {
-      recentFullAuthWithIdapiUserAction { implicit request =>
-        NotFound(views.html.errors._404())
-      }
-    } else {
-      csrfAddToken {
-        consentAuthWithIdapiUserAction.async { implicit request =>
-          consentJourneyView(
-            page = page,
-            journey = page.journey,
-            forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
-            request.user,
-            consentHint
-          )
-        }
+    csrfAddToken {
+      consentAuthWithIdapiUserAction.async { implicit request =>
+        consentJourneyView(
+          page = page,
+          journey = page.journey,
+          forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
+          request.user,
+          consentHint
+        )
       }
     }
+
 
   private def consentJourneyView(
     page: IdentityPage,
