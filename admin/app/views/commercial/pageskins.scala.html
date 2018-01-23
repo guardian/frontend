@@ -29,6 +29,14 @@
           </li>
       }
     </ul>
+    @if(sponsorship.keywords.nonEmpty) {
+        <small>Keywords:</small>
+        <ul>
+            @for(keyword <- sponsorship.keywords) {
+                <li>@keyword</li>
+            }
+        </ul>
+    }
   </li>
 }
 
