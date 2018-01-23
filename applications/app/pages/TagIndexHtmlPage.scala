@@ -14,7 +14,6 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.preferences.index
-import html.HtmlPageHelpers.ContentCSSFile
 import views.html.stacked
 
 object TagIndexHtmlPage extends HtmlPage[StandalonePage] {

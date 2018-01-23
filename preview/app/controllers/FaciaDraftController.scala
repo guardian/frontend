@@ -17,18 +17,18 @@ class FaciaDraftController(
 )(implicit val context: ApplicationContext)
   extends FaciaController with RendersItemResponse {
 
-  private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents)
+  private val tagController = new TagController(contentApiClient, sectionsLookUp, controllerComponents)
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     log.info(s"Serving Path: $path")
 
     if (!ConfigAgent.getPathIds.contains(path))
-      indexController.renderItem(path)
+      tagController.renderItem(path)
     else
       renderFrontPressResult(path)
   }
 
   override def canRender(path: String): Boolean = ConfigAgent.getPathIds.contains(path)
 
-  override def canRender(item: ItemResponse): Boolean = indexController.canRender(item)
+  override def canRender(item: ItemResponse): Boolean = tagController.canRender(item)
 }
