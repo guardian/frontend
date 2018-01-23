@@ -1,9 +1,7 @@
 package common.dfp
 
 import common.{Edition, Logging}
-import play.api.libs.functional.syntax._
 import play.api.libs.json._
-
 
 case class PageSkinSponsorship(lineItemName: String,
                                lineItemId: Long,
@@ -16,17 +14,7 @@ case class PageSkinSponsorship(lineItemName: String,
                                keywords: Seq[String])
 
 object PageSkinSponsorship {
-
-  implicit val pageskinSponsorShipFormat: Format[PageSkinSponsorship] = (
-      (JsPath \ "lineItem").format[String] and
-      (JsPath \ "lineItemId").format[Long] and
-      (JsPath \ "adUnits").format[Seq[String]] and
-      (JsPath \ "editions").format[Seq[Edition]] and
-      (JsPath \ "countries").format[Seq[String]] and
-      (JsPath \ "isR2Only").format[Boolean] and
-      (JsPath \ "isAdTest").format[Boolean] and
-      (JsPath \ "adTestValue").formatNullable[String]
-    )(PageSkinSponsorship.apply, unlift(PageSkinSponsorship.unapply))
+  implicit val pageskinSponsorShipFormat: Format[PageSkinSponsorship] = Json.format[PageSkinSponsorship]
 }
 
 case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[PageSkinSponsorship]) {
@@ -34,23 +22,14 @@ case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq
 }
 
 object PageSkinSponsorshipReport {
-
-  implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
-    def writes(report: PageSkinSponsorshipReport): JsValue = {
-      Json.obj(
-        "updatedTimeStamp" -> report.updatedTimeStamp,
-        "sponsorships" -> report.sponsorships
-      )
-    }
-  }
-
+  implicit val pageSkinSponsorshipReportFormat: Format[PageSkinSponsorshipReport] = Json.format[PageSkinSponsorshipReport]
 }
 
 object PageSkin {
 
   def isValidAdUnit(adUnitPath: String): Boolean = getRelativePath(adUnitPath).isDefined
 
-  def getRelativePath(adUnitPath: String): Option[String] = {
+  private def getRelativePath(adUnitPath: String): Option[String] = {
 
     def trimPath(dropFromRight: Int) = adUnitPath.split("/").drop(1).dropRight(dropFromRight).mkString("/")
 
@@ -61,18 +40,11 @@ object PageSkin {
     else
       None
   }
-
-
 }
 
 object PageSkinSponsorshipReportParser extends Logging {
 
   def apply(jsonString: String): Option[PageSkinSponsorshipReport] = {
-
-    implicit val reportReads: Reads[PageSkinSponsorshipReport] = (
-      (JsPath \ "updatedTimeStamp").read[String] and
-        (JsPath \ "sponsorships").read[Seq[PageSkinSponsorship]]
-      )(PageSkinSponsorshipReport.apply _)
 
     val result: JsResult[PageSkinSponsorshipReport] = Json.parse(jsonString).validate[PageSkinSponsorshipReport]
     result match {
