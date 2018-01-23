@@ -121,7 +121,7 @@
 @marketingConsentStep = @{
     ConsentStep(
         name = "consent",
-        title = "Would you like to hear about any of these Guardian products?                                                    ",
+        title = "Would you like to hear about any of these Guardian products?",
         help = List(ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")),
         content = marketingStepContent
     )
@@ -129,11 +129,11 @@
 @marketingConsentThankYouStep = @{
     ConsentStep(
         name = "consent-thank-you",
-        title = "Would you like to hear about any of these Guardian products?  ",
+        title = "Would you like to hear about any of these Guardian products?",
         help = List(
             ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")
         ),
-        banner = Some("Thank you for confirming your email address"),
+        banner = Some("Thank you for signing up"),
         content = marketingStepContent,
     )
 }
