@@ -22,12 +22,8 @@ sealed abstract class ProfileRedirect(val url: String) {
   def isAllowedFrom(url: String): Boolean
 }
 
-case object RedirectToEmailValidationFromEmailPrefs extends ProfileRedirect("/verify-email?isRepermissioningRedirect=true") {
-  override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
-}
-
-case object RedirectToEmailValidationFromAnywhere extends ProfileRedirect("/verify-email?isRepermissioningRedirect=true") {
-  override def isAllowedFrom(url: String): Boolean = true
+case object RedirectToEmailValidationFromAnywhereButAccountDetails extends ProfileRedirect("/verify-email?isRepermissioningRedirect=true") {
+  override def isAllowedFrom(url: String): Boolean = !(url contains "account/edit")
 }
 
 case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents") {
@@ -60,11 +56,8 @@ class ProfileRedirectService(
     def userEmailValidated: Boolean = user.statusFields.isUserEmailValidated
 
     (userEmailValidated, userHasRepermissioned) match {
-      case (false, false) =>
-        Future.successful(RedirectToEmailValidationFromAnywhere)
-
-      case (false, true) =>
-        Future.successful(RedirectToEmailValidationFromEmailPrefs)
+      case (false, _) =>
+        Future.successful(RedirectToEmailValidationFromAnywhereButAccountDetails)
 
       case (true, false) =>
         Future.successful(RedirectToConsentsFromEmailPrefs)
