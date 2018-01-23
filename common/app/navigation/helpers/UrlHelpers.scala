@@ -8,8 +8,7 @@ import navigation.ReaderRevenueSite._
 object UrlHelpers {
 
   sealed trait Position
-  case object NewHeader extends Position
-  case object OldHeader extends Position
+  case object Header extends Position
   // SlimHeaderDropdown can only be seen on slim header content, e.g. interactives
   // It's the icon with the three dots in the top left
   case object SlimHeaderDropdown extends Position
@@ -24,20 +23,18 @@ object UrlHelpers {
     val editionId = Edition(request).id.toUpperCase()
 
     (destination, position) match {
-      case (Membership, NewHeader | SideMenu) => Some(s"mem_${editionId.toLowerCase()}_web_newheader")
-      case (Membership, OldHeader) => Some(s"DOTCOM_HEADER_BECOMEMEMBER_${editionId}")
+      case (Membership, Header | SideMenu) => Some(s"mem_${editionId.toLowerCase()}_web_newheader")
       case (Membership, AmpHeader) => Some("AMP_HEADER_GU_SUPPORTER")
       case (Membership, SlimHeaderDropdown) => Some(s"NGW_TOPNAV_${editionId}_GU_MEMBERSHIP")
       case (Membership, Footer) => Some(s"NGW_FOOTER_${editionId}_GU_MEMBERSHIP")
 
-      case (Contribute, NewHeader | OldHeader) => Some("gdnwb_copts_co_dotcom_header")
+      case (Contribute, Header) => Some("gdnwb_copts_co_dotcom_header")
       case (Contribute, Footer) => Some("gdnwb_copts_memco_dotcom_footer")
 
       // this editionId is lowercase even though the rest of the campaign code is uppercase
       // this is for consistency with the existing campaign code
       case (Subscribe, SideMenu) => Some(s"NGW_NEWHEADER_${editionId.toLowerCase()}_GU_SUBSCRIBE")
-      case (Subscribe, NewHeader) => Some(s"subs_${editionId.toLowerCase()}_web_newheader")
-      case (Subscribe, OldHeader) => Some(s"NGW_HEADER_${editionId}_GU_SUBSCRIBE")
+      case (Subscribe, Header) => Some(s"subs_${editionId.toLowerCase()}_web_newheader")
       case (Subscribe, SlimHeaderDropdown) => Some(s"NGW_TOPNAV_${editionId}_GU_SUBSCRIBE")
       case (Subscribe, Footer) => Some(s"NGW_FOOTER_${editionId}_GU_SUBSCRIBE")
 
@@ -60,7 +57,7 @@ object UrlHelpers {
       // https://dashboard.ophan.co.uk/docs/thrift/componentevent.html#Enum_ComponentType
       "source" -> "GUARDIAN_WEB",
       "componentType" -> (position match {
-        case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
+        case Header | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
         case ManageMyAccountUpsell | ManageMyAccountCancel => "ACQUISITIONS_MANAGE_MY_ACCOUNT"
         case Footer => "ACQUISITIONS_FOOTER"
       })
@@ -93,7 +90,7 @@ object UrlHelpers {
     }
 
   def getContributionOrSupporterUrl(editionId: String)(implicit request: RequestHeader): String =
-    countryUrlLogic(editionId, NewHeader, Membership)
+    countryUrlLogic(editionId, Header, Membership)
 
   // This methods can be reverted once we decide to deploy the new support site to the rest of the world.
   def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
@@ -113,19 +110,5 @@ object UrlHelpers {
     } else {
       getReaderRevenueUrl(Subscribe, position)
     }
-  }
-
-  object oldNav {
-    def jobsUrl(edition: String)(implicit request: RequestHeader): String =
-        s"https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_${edition.toUpperCase}_GU_JOBS"
-
-    def soulmatesUrl(edition: String)(implicit request: RequestHeader): String =
-        s"https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_${edition.toUpperCase}_GU_SOULMATES"
-
-    def holidaysUrl(implicit request: RequestHeader): String =
-        "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"
-
-    def masterclassesUrl(implicit request: RequestHeader): String =
-        "https://membership.theguardian.com/masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"
   }
 }

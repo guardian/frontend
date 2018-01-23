@@ -30,20 +30,12 @@ from scrolling */
 
     @include mq(tablet) {
         display: block;
-
-        @include mq(desktop) {
-            display: none;
-        }
     }
 
     @include mq(desktop) {
+
         &.new-header--open {
             background-color: $nav-background-colour;
-        }
-
-        // Switch: ABNewDesktopHeader
-        &.new-header--mvt-desktop {
-            display: block;
         }
     }
 
