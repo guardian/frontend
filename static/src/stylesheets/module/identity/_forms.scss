@@ -48,6 +48,7 @@ Messages
         @include identity-forms-padded;
     }
     .identity-forms-message__body {
+        @include clearfix;
         border-top: 1px solid $garnett-neutral-4;
         margin-top: $gs-baseline * 2;
         padding-top: $gs-baseline / 2;

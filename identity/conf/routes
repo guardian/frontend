@@ -22,7 +22,7 @@ GET         /user/id/:id/:activityType              controllers.PublicProfileCon
 GET         /user/:vanityUrl                        controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType = "discussions")
 GET         /user/:vanityUrl/:activityType          controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType: String)
 GET         /verify-email/:token                    controllers.EmailVerificationController.verify(token: String)
-GET         /verify-email                           controllers.EmailVerificationController.resendEmailValidationEmail(isRepermissioningRedirect: Boolean ?= false)
+GET         /verify-email                           controllers.EmailVerificationController.resendEmailValidationEmail(isRepermissioningRedirect: Boolean ?= false, isSignupFlow: Boolean ?= false)
 
 GET         /form/complete                          controllers.FormstackController.complete
 GET         /form/:formReference                    controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)
