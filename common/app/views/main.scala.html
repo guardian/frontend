@@ -1,5 +1,5 @@
 @(projectName: Option[String] = None)(head: Html)(body: Html)(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
-@import common.{Edition, Navigation, commercial}
+@import common.{Edition, commercial}
 @import conf.switches.Switches.{BreakingNewsSwitch, SurveySwitch}
 @import model.Page.getContent
 @import views.support.{Commercial, RenderClasses}

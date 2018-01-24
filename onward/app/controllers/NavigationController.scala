@@ -1,43 +1,15 @@
 package controllers
 
-import common.{Edition, JsonComponent, LinkTo, NavItem, SectionLink}
+import common.{Edition, JsonComponent, LinkTo}
 import navigation.{NavLink, NavigationHelpers, NavMenu}
 import model.Cached
-import model.Cached.RevalidatableResult
 import play.api.libs.json.{Json, Writes}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 class NavigationController(val controllerComponents: ControllerComponents) extends BaseController {
 
-  private case class SectionLinkAndEdition(link: SectionLink, edition: Edition)
-  private case class NavItemAndEdition(link: NavItem, edition: Edition)
-
   private case class topLevelNavItems(navLink: NavLink)
   private case class navSectionLink(navLink: NavLink)
-
-//    TODO: check uses of this first, before deleting common.Navigation
-  def nav(): Action[AnyContent] = Action { implicit request =>
-    Cached(500) {
-
-      implicit val sectionLinkWrites = new Writes[SectionLinkAndEdition] {
-        def writes(item: SectionLinkAndEdition) = Json.obj(
-          "title" -> item.link.title,
-          "href" -> LinkTo(item.link.href, item.edition)
-        )
-      }
-
-      implicit val navItemWrites = new Writes[NavItemAndEdition] {
-        def writes(item: NavItemAndEdition) = Json.obj(
-          "section" -> SectionLinkAndEdition(item.link.name, item.edition),
-          "subSections" -> item.link.links.map(link => SectionLinkAndEdition(link, item.edition))
-        )
-      }
-
-      RevalidatableResult.Ok(Json.arr(Edition.all.map { edition =>
-        Json.obj(edition.id -> Json.arr(edition.navigation.map(item => NavItemAndEdition(item, edition))))
-      }))
-    }
-  }
 
   //  This is to editionalise the menu on AMP
   def renderAmpNav: Action[AnyContent] = Action { implicit request =>

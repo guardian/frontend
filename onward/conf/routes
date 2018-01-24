@@ -7,8 +7,6 @@ GET        /assets/*path                              dev.DevAssetsController.at
 
 GET        /_healthcheck                              controllers.HealthCheck.healthCheck()
 
-GET        /nav.json                                  controllers.NavigationController.nav()
-
 # Onward public endpoints
 
 #Weather

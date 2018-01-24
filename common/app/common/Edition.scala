@@ -31,15 +31,11 @@ abstract class Edition(
       "tv-and-radio"
     )
 
-  ) extends Navigation {
+  ) {
   val homePagePath: String = s"/$networkFrontId"
-  def navigation: Seq[NavItem]
-  def briefNav: Seq[NavItem]
 
   def isEditionalised(id: String): Boolean = editionalisedSections.contains(id)
-
   def matchesCookie(cookieValue: String): Boolean = id.equalsIgnoreCase(cookieValue)
-
 }
 
 object Edition {
