@@ -18,11 +18,7 @@ object DiscussionApiHttpRecorder extends DefaultHttpRecorder {
 class DiscussionApiStub(val wsClient: WSClient) extends DiscussionApiLike {
   protected val clientHeaderValue: String =""
 
-  protected val apiRoot =
-    if (Configuration.environment.isProd)
-      Configuration.discussion.apiRoot
-    else
-      Configuration.discussion.apiRoot.replaceFirst("https://", "http://") // CODE SSL cert is defective and expensive to fix
+  protected val apiRoot = Configuration.discussion.apiRoot
 
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
 

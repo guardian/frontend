@@ -33,7 +33,7 @@ object SiteLink {
 
 object CapiLink {
 
-  private def tagPage(tagType: String, tagName: String): String = s"http://content.guardianapis.com/tags?type=$tagType&q=$tagName"
+  private def tagPage(tagType: String, tagName: String): String = s"https://content.guardianapis.com/tags?type=$tagType&q=$tagName"
 
   def keywordPage(keyword: String): String = tagPage("keyword", keyword)
 
