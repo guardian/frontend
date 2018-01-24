@@ -8,7 +8,7 @@ import implicits.Dates.CapiRichDateTime
 import commercial.campaigns.PersonalInvestmentsCampaign
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
-import common.{Edition, ManifestData, NavItem, Pagination}
+import common.{Edition, ManifestData, Pagination}
 import conf.Configuration
 import conf.cricketPa.CricketTeams
 import model.content._

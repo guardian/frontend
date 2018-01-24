@@ -1,7 +1,9 @@
 package model
 
-import common.{NavItem, SectionLink}
 import services.{KeywordAlphaIndexAutoRefresh, ContributorAlphaIndexAutoRefresh}
+
+case class SectionLink(zone: String, title: String, breadcrumbTitle: String, href: String)
+case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil)
 
 object IndexNav {
   private def tagIndexSignposting(tagType: String, navTitle: String)(get: => Option[TagIndexListings]) = {

@@ -1,7 +1,8 @@
 package navigation
 
-import common.{Edition, NavItem, Navigation, editions}
-import _root_.model.Page
+import common.{Edition, editions}
+import model.NavItem
+import _root_.model.{Page, Tags}
 import NavLinks._
 
 import scala.annotation.tailrec
@@ -111,6 +112,10 @@ object NavMenu {
   def apply(page: Page, edition: Edition): NavMenu = NavMenu(page, NavRoot(edition), edition)
   def apply(edition: Edition): SimpleMenu = SimpleMenu(NavRoot(edition))
 
+  private def getTagsFromPage(page: Page): Tags = {
+    Page.getContent(page).map(_.tags).getOrElse(Tags(Nil))
+  }
+
   private[navigation] def getSectionOrPageUrl(page: Page, edition: Edition): String = {
     val frontLikePages = List(
       "theguardian",
@@ -124,7 +129,7 @@ object NavMenu {
       "cartoons/archive"
     )
     val networkFronts = Seq("uk", "us", "au", "international")
-    val tags = Navigation.getTagsFromPage(page)
+    val tags = getTagsFromPage(page)
     val commonKeywords = tags.keywordIds.intersect(tagPages).sortWith(tags.keywordIds.indexOf(_) < tags.keywordIds.indexOf(_))
     val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
     val isArticleInTagPageSection = commonKeywords.nonEmpty

@@ -1,6 +1,6 @@
 package html
 
-import common.{Edition, Navigation}
+import common.Edition
 import model.ApplicationContext
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
