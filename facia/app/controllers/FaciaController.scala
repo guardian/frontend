@@ -72,6 +72,10 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
       renderFrontPressResult(path)
   }
 
+  def redirectToApplications(path: String): Action[AnyContent] = Action.async { implicit request =>
+    successful(InternalRedirect.internalRedirect("applications", path, request.rawQueryStringOption.map("?" + _)))
+  }
+
   def rootEditionRedirect(): Action[AnyContent] = renderFront(path = "")
   def renderFront(path: String): Action[AnyContent] = Action.async { implicit request =>
     log.info(s"Serving Path: $path")

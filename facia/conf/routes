@@ -25,6 +25,9 @@ GET        /container/use-layout/*id.json                                       
 GET        /container/*id.json                                                      controllers.FaciaController.renderContainerJson(id)
 GET        /most-relevant-container/*path.json                                      controllers.FaciaController.renderMostRelevantContainerJson(path)
 
+# Newspaper pages
+GET        /$path<(theguardian|theobserver)(/.*)?>                                  controllers.FaciaController.redirectToApplications(path)
+
 # Editionalised pages
 GET        /*path/show-more/*id.json                                                controllers.FaciaController.renderShowMore(path, id)
 GET        /rss                                                                     controllers.FaciaController.renderRootFrontRss()
