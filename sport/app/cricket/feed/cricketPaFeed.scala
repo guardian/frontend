@@ -19,7 +19,7 @@ object PaFeed {
 
 class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends Logging {
 
-  private val paEndpoint = "http://cricket.api.press.net/v1"
+  private val paEndpoint = "https://cricket.api.press.net/v1"
   private val credentials = conf.SportConfiguration.pa.cricketKey.map { ("Apikey", _) }
   private val xmlContentType = ("Accept","application/xml")
   private implicit val throttler = new CricketThrottler(actorSystem, materializer)

@@ -343,7 +343,6 @@ class GuardianConfiguration extends Logging {
 
   object oas {
     lazy val siteIdHost = configuration.getStringProperty("oas.siteId.host").getOrElse(".guardian.co.uk")
-    lazy val url = configuration.getStringProperty("oas.url").getOrElse("http://oas.theguardian.com/RealMedia/ads/")
   }
 
   object facebook {
@@ -379,7 +378,7 @@ class GuardianConfiguration extends Logging {
   object commercial {
 
     lazy val testDomain =
-      if (environment.isProd) "http://m.code.dev-theguardian.com"
+      if (environment.isProd) "https://m.code.dev-theguardian.com"
       else configuration.getStringProperty("guardian.page.host") getOrElse ""
 
     lazy val dfpAdUnitGuRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
@@ -387,14 +386,8 @@ class GuardianConfiguration extends Logging {
     lazy val dfpMobileAppsAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfp.mobileAppsAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
 
-    lazy val books_url = configuration.getMandatoryStringProperty("commercial.books_url")
-    lazy val masterclasses_url =
-      configuration.getMandatoryStringProperty("commercial.masterclasses_url")
-    lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val soulmatesApiUrl = configuration.getStringProperty("soulmates.api.url")
     lazy val travelFeedUrl = configuration.getStringProperty("travel.feed.url")
-    lazy val guMerchandisingAdvertiserId =
-      configuration.getMandatoryStringProperty("commercial.dfp.guMerchandising.advertiserId")
 
     // root dir relative to S3 bucket
     lazy val commercialRoot = {

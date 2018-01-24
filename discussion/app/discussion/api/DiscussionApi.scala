@@ -212,11 +212,7 @@ trait DiscussionApiLike extends Http with Logging {
 }
 
 class DiscussionApi(val wsClient: WSClient) extends DiscussionApiLike {
-  override protected val apiRoot =
-    if (Configuration.environment.isProd)
-      Configuration.discussion.apiRoot
-    else
-      Configuration.discussion.apiRoot.replaceFirst("https://", "http://") // CODE SSL cert is defective and expensive to fix
+  override protected val apiRoot = Configuration.discussion.apiRoot
 
   override protected lazy val clientHeaderValue: String = Configuration.discussion.apiClientHeader
 }

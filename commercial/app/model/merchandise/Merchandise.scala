@@ -114,7 +114,7 @@ case class Job(id: Int,
 
   val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
 
-  def listingUrl: String = s"http://jobs.theguardian.com/job/$id"
+  def listingUrl: String = s"https://jobs.theguardian.com/job/$id"
 
   val industries: Seq[String] =
     Industries.sectorIdIndustryMap.filter { case (sectorId, name) => sectorIds.contains(sectorId)}.values.toSeq
