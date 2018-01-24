@@ -53,6 +53,9 @@ Messages
         padding-top: $gs-baseline / 2;
         &.identity-forms-message__body--aside {
             @include fs-textSans(4);
+            .manage-account__button {
+                @include fs-textSans(4);
+            }
         }
     }
     .identity-forms-message__explainer {
@@ -81,7 +84,7 @@ Messages
     }
 
     aside {
-        @include fs-textSans(2);
+        @include fs-textSans(4);
         opacity: .75;
         margin-top: $gs-gutter / 4;
     }
