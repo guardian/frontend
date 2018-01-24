@@ -466,7 +466,7 @@ $quote-mark: 35px;
         margin-right: 0;
     }
 
-    &:not(.content__headline--minute).content__headline {
+    .content__headline:not(.content__headline--minute) {
         @include fs-headlineGarnett(4);
         font-weight: 400; // magic number correcting line height so vertical alignment apprears even with labels
         padding-top: 3px;
@@ -524,7 +524,7 @@ $quote-mark: 35px;
         }
     }
 
-    &:not(.content__standfirst--immersive-minute-article).content__standfirst {
+    .content__standfirst:not(.content__standfirst--immersive-minute-article) {
         @include fs-bodyCopy(2);
         font-weight: 700;
         line-height: 20px;
