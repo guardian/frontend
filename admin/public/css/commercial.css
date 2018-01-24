@@ -85,15 +85,6 @@ dl.error, dd.error {
     color: #374135;
 }
 
-.test--control {
-    background-color: hotpink;
-}
-
-.test--variant {
-    float: right;
-    background-color: deepskyblue;
-}
-
 .test__eCPM, .test__impressions, .test__revenue, .test__heading {
     text-align: center;
 }

@@ -9,8 +9,9 @@ import play.api.mvc._
 
 object DashboardRenderer extends Results {
 
-  def renderDashboard(testName: String, dashboardTitle: String)(implicit request: RequestHeader,
-                                                                context: ApplicationContext): Result = {
+  def renderDashboard(testName: String, dashboardTitle: String, controlColour: String, variantColour: String)(
+    implicit request: RequestHeader,
+    context: ApplicationContext): Result = {
     val maybeData = for {
       reportId                  <- CommercialDfpReporting.reportMappings.get(CommercialDfpReporting.teamKPIReport)
       report: Seq[DfpReportRow] <- CommercialDfpReporting.getReport(reportId)
@@ -43,7 +44,9 @@ object DashboardRenderer extends Results {
           variantDataRow,
           integerFormatter,
           currencyFormatter,
-          dashboardTitle
+          dashboardTitle,
+          controlColour,
+          variantColour
         )))
   }
 }

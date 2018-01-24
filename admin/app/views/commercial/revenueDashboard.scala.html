@@ -5,9 +5,20 @@
     variantRow: Option[KeyValueRevenueRow],
     integerFormatter: NumberFormat,
     currencyFormatter: NumberFormat,
-    title: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+    title: String,
+    controlColour: String,
+    variantColour: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main(title, isAuthed = true, container = Some("commercial-dashboard")) {
+    <style type="text/css">
+        .test--control {
+            background-color: @controlColour;
+        }
+        .test--variant {
+            float: right;
+            background-color: @variantColour;
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
     <h2 class="revenue-dashboard__title">@title</h2>
 
