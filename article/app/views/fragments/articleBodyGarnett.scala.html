@@ -64,12 +64,15 @@
 
 
                             @if(isPaidContent){
+                                @fragments.contentMeta(article, model, amp = amp)
                                 @fragments.mainMedia(article, amp)
+
                             }
 
                             @fragments.witnessCallToAction(article.content)
                             @BodyCleaner(article, article.fields.body, amp = amp)
                             @fragments.witnessCallToAction(article.content)
+
 
                             @fragments.submeta(article, amp)
 
