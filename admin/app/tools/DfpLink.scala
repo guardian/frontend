@@ -1,8 +1,7 @@
 package tools
 
-import common.dfp.PageSkin
 import conf.Configuration.commercial.dfpAccountId
-import conf.Configuration.{commercial, site}
+import conf.Configuration.site
 
 import scala.language.postfixOps
 
@@ -26,20 +25,6 @@ object DfpLink {
 }
 
 object SiteLink {
-
-  def adUnit(path: String, adTest: Option[String]): Option[String] = {
-
-    lazy val domain = if (adTest.isDefined) commercial.testDomain else site.host
-    val relativePath = PageSkin.getRelativePath(path)
-    val domainAndPath = relativePath map { path => s"$domain/$path" }
-    val domainAndPathWithAdTest =
-      for {
-        id <- adTest
-        baseUrl <- domainAndPath
-      } yield s"$baseUrl?adtest=$id"
-
-    domainAndPathWithAdTest orElse domainAndPath
-  }
 
   def contributorTagPage(contributor: String): String = s"${site.host}/profile/$contributor"
 

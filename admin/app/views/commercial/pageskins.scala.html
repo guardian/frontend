@@ -1,6 +1,6 @@
 @(pageSkinnedAdUnits: common.dfp.PageSkinSponsorshipReport)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.dfp._
-@import tools.{DfpLink, SiteLink}
+@import tools.DfpLink
 
 @flaggableProperty(label: String, values: Seq[String], textWhenEmpty: String, flagErrors: Boolean) = {
     @if(values.isEmpty) {
@@ -24,11 +24,17 @@
     <ul>
       @if(sponsorship.adUnits.isEmpty) { <li>Run of network</li> }
       @for(adUnit <- sponsorship.adUnits) {
-          <li>
-              <a href="@SiteLink.adUnit(adUnit, sponsorship.adTestValue)">@adUnit</a>
-          </li>
+          <li>@adUnit</li>
       }
     </ul>
+    @if(sponsorship.keywords.nonEmpty) {
+        <small>Keywords:</small>
+        <ul>
+            @for(keyword <- sponsorship.keywords) {
+                <li>@keyword</li>
+            }
+        </ul>
+    }
   </li>
 }
 

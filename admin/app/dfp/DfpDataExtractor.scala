@@ -46,7 +46,8 @@ case class DfpDataExtractor(
         countries = countriesTargeted(lineItem),
         isR2Only = lineItem.targeting.targetsR2Only,
         targetsAdTest = lineItem.targeting.hasAdTestTargetting,
-        adTestValue = lineItem.targeting.adTestValue
+        adTestValue = lineItem.targeting.adTestValue,
+        keywords = lineItem.targeting.keyValues
       )
     }
   }
