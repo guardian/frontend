@@ -308,10 +308,12 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
     ]).then(([[checkboxEl, titleEl], wrappedCheckboxEls]) => {
         const getTextForStatus = (status: boolean) =>
             status ? LC_UNCHECK_ALL : LC_CHECK_ALL;
+
         const revealCheckbox = () =>
             fastdom.write(() => {
                 labelEl.classList.remove('u-h');
             });
+
         const updateCheckStatus = () =>
             fastdom.write(() => {
                 if (!(checkboxEl instanceof HTMLInputElement)) {
@@ -322,6 +324,9 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
             });
 
         const handleChangeEvent = () => {
+            addSpinner(labelEl, 9999)
+                .then(() => new Promise(accept => setTimeout(accept, 300)))
+                .then(() => removeSpinner(labelEl));
             wrappedCheckboxEls.forEach(wrappedCheckboxEl => {
                 fastdom
                     .write(() => {

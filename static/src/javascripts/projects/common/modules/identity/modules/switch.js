@@ -70,7 +70,10 @@ export const flip = (labelEl: HTMLElement): Promise<any> =>
             });
         });
 
-export const addSpinner = (labelEl: HTMLElement): Promise<any> =>
+export const addSpinner = (
+    labelEl: HTMLElement,
+    latencyTimeout: number = 500
+): Promise<any> =>
     fastdom
         .write(() => {
             labelEl.classList.add('is-updating');
@@ -88,7 +91,7 @@ export const addSpinner = (labelEl: HTMLElement): Promise<any> =>
                             }
                             labelEl.classList.add('is-taking-a-long-time');
                         });
-                    }, 300)
+                    }, latencyTimeout)
                 )
                 .toString();
         });
