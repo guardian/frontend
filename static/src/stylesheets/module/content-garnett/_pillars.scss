@@ -205,7 +205,7 @@
 @mixin richLink($pillarColor, $cardBackground) {
     background-color: $cardBackground;
 
-    .u-faux-block-link--hover {
+    &:hover {
         background-color: darken($cardBackground, 5%);
     }
 
@@ -440,7 +440,7 @@
     &.rich-link--audio {
         background: $media-garnett-main-1;
 
-        .u-faux-block-link--hover {
+        &:hover {
             background-color: darken($media-garnett-main-1, 5%);
         }
 
