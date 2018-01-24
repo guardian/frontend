@@ -64,6 +64,7 @@
 
 
                             @if(isPaidContent){
+                                @fragments.contentMeta(article, model, amp = amp)
                                 @fragments.mainMedia(article, amp)
                             }
 

@@ -286,8 +286,7 @@
     }
 }
 
-.content--pillar-news,
-.paid-content {
+.content--pillar-news:not(.paid-content) {
     @include colorPalatte($news-garnett-main-1, $news-garnett-feature, $news-garnett-media-main-1);
 }
 // #? There is a lot of :not(.paid-content) to avoid having to override
@@ -319,8 +318,7 @@
     @include colorPalatte($sport-garnett-main-1, $sport-garnett-feature, $sport-garnett-media-main-1);
 }
 
-.content-footer--pillar-news,
-.paid-content {
+.content-footer--pillar-news:not(.paid-content) {
     @include footerPalette($news-garnett-main-1);
 }
 
