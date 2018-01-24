@@ -16,7 +16,6 @@ object FixtureBuilder {
       maybeContentId = Some(id.toString),
       isLiveBlog = false,
       isCrossword = false,
-      headline = "",
       byline = None,
       image = None,
       webTitle = "",
