@@ -122,13 +122,13 @@ object ContentApiMetrics {
   )
 
   val ContentApi404Metric = CountMetric(
-    "content-api-requests",
-    "Number of times the Content API has been called"
+    "content-api-404",
+    "Number of times the Content API has responded with a 404"
   )
 
   val ContentApiRequestsMetric = CountMetric(
-    "content-api-404",
-    "Number of times the Content API has responded with a 404"
+    "content-api-requests",
+    "Number of times the Content API has been called"
   )
 
 }
