@@ -709,6 +709,10 @@ $quote-mark: 35px;
             }
         }
     }
+    // A fixed height is being added as a hotfix until final design decisions made for ad placement, important overrides current JS
+    .ad-slot-container {
+        height: 710px!important;
+    }
     // Quote showcase
     .element-pullquote.element--showcase {
         @include mq(mobileLandscape) {
