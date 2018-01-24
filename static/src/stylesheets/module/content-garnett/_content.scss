@@ -523,7 +523,7 @@
         margin: $gs-baseline/2 0;
         overflow: hidden;
         background-color: $neutral-7;
-        
+
         // chrome bug means the border radius is disabled while
         // main nav transitions on hover. this stops that.
         contain: paint;
@@ -1193,10 +1193,6 @@
         color: $neutral-1;
         .rich-link__container:before {
             background-color: $news-support-3
-        }
-        .rich-link__standfirst {
-            color: $neutral-1;
-            font-family: $f-sans-serif-text;
         }
         .rich-link__kicker,
         .rich-link__read-more-text {

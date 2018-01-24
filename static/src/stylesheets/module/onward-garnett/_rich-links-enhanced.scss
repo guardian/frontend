@@ -45,18 +45,6 @@
     padding-right: $gs-gutter;
 }
 
-.rich-link__standfirst {
-    @include fs-headline(1);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: $gs-baseline / 3 0 $gs-baseline;
-    padding: 0  $gs-gutter / 2 0 $gs-gutter / 4;
-    ul {
-        list-style: none;
-        margin-bottom: $gs-baseline / 1.5;
-    }
-}
-
 @include mq(tablet) {
     .rich-link--has-byline-pic .rich-link__read-more {
         position: absolute;
@@ -88,64 +76,10 @@
     }
 }
 
-.rich-link__byline-img {
-    height: $gs-baseline * 12;
-    position: absolute;
-    bottom: 0;
-    margin: 0;
-    right: -$gs-gutter * 1.5;
-
-    @include mq(leftCol) {
-        .element--supporting & {
-            height: $gs-baseline * 14;
-        }
-    }
-}
-
-.rich-link--has-byline-pic {
-
-    .rich-link__byline-img__img {
-        height: 100%;
-    }
-
-    .rich-link__standfirst {
-        padding-right: $gs-gutter * 7;
-        min-height: $gs-baseline * 5;
-    }
-}
-
 // In-article styles
 //-----------------------
 
 .element-rich-link {
-    .tone-comment--item,
-    .rich-link--has-byline-pic {
-        .rich-link__standfirst {
-            display: none;
-        }
-        .rich-link__byline-img {
-            @include mq($until: tablet) {
-                display: none;
-            }
-        }
-    }
-
-    .tone-feature--item,
-    .tone-news--item {
-        .rich-link__standfirst {
-            display: none;
-        }
-    }
-
-    @include mq($until: mobileLandscape) {
-        .rich-link__standfirst {
-            display: none;
-        }
-        .rich-link__byline-img {
-            display: none;
-        }
-    }
-
     @include mq(tablet) {
         .rich-link--has-byline-pic .rich-link__container {
             padding-bottom: $gs-baseline * 10;
@@ -158,38 +92,15 @@
         }
     }
 
-    @include mq(leftCol) {
-        &.element--supporting {
-            .tone-comment--item,
-            .rich-link--has-byline-pic {
-                .rich-link__standfirst {
-                    display: block;
-                }
-            }
-        }
-    }
-
-    @include mq(wide) {
-        &.element--supporting .rich-link__byline-img {
-            height: $gs-baseline * 12;
-        }
-    }
-
     .blog & {
         .rich-link__image-container {
             display: none;
-        }
-        .rich-link__standfirst {
-            display: block;
         }
         .rich-link--gallery,
         .tone-feature--item {
             max-width: gs-span(6) + (2 * $gs-gutter);
             .rich-link__image-container {
                 display: block;
-            }
-            .rich-link__standfirst {
-                display: none;
             }
         }
     }
