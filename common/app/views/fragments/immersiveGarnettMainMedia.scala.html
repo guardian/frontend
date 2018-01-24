@@ -75,5 +75,63 @@
         @if(isTheMinuteArticle) {
             <div class="content--minute-article--overlay"></div>
         }
+        <div class="@RenderClasses(Map(
+            "immersive-main-media__headline-container--dark" -> (!isTheMinuteArticle && hasMainMedia),
+            "immersive-main-media__headline-container" -> hasMainMedia
+        ))
+        ">
+            <div class="gs-container">
+                @if(!isTheMinuteArticle) {
+                    <div class="content__main-column">
+                        @fragments.meta.metaInline(page.item)
+                    }
+
+            <h1 class="@RenderClasses(Map(
+                "content__headline--minute" -> isTheMinuteArticle,
+                "content__headline--immersive--with-main-media" -> hasMainMedia,
+                "content__headline--advertisement" -> isPaidContent
+            ), "content__headline", "content__headline--immersive", "content__headline--immersive-article")
+            ">
+                @if(isTheMinuteArticle) {
+                    @optSeries.map { series =>
+                    <a href="@LinkTo { /@series.id }" class="logo--minute-article">
+                        <span class="u-h">The Minute - </span>
+                        @fragments.inlineSvg("minute-logo", "logo")
+                    </a>
+                    }.getOrElse {
+                        <div class="logo--minute-article">
+                            <span class="u-h">The Minute - </span>
+                            @fragments.inlineSvg("minute-logo", "logo")
+                        </div>
+                    }
+                }
+                @Html(page.item.trail.headline)
+            </h1>
+
+                @if(isTheMinuteArticle) {
+
+                    @if(page.item.trail.shouldHidePublicationDate) {
+                        @fragments.meta.dateline(page.item.trail.webPublicationDate, page.item.fields.lastModified, page.item.content.hasBeenModified, page.item.fields.firstPublicationDate, page.item.tags.isLiveBlog, page.item.fields.isLive, isTheMinuteArticle)
+                    }
+
+                    @if(page.item.fields.standfirst.isDefined) {
+                        @fragments.standfirst(page.item)
+                    }
+                }
+
+                @if(!isTheMinuteArticle && page.item.fields.standfirst.isDefined) {
+                    <div class="hide-on-mobile">
+                    @fragments.standfirst(page.item)
+                    </div>
+                }
+
+                @if(!isTheMinuteArticle) { </div> }
+            </div>
+        </div>
     </div>
+    @if(page.item.fields.standfirst.isDefined && !isTheMinuteArticle) {
+        <div class="content__wrapper--standfirst mobile-only">
+            @fragments.standfirst(page.item)
+        </div>
+    }
 }
