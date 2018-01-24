@@ -22,12 +22,8 @@ sealed abstract class ProfileRedirect(val url: String) {
   def isAllowedFrom(url: String): Boolean
 }
 
-case object RedirectToEmailValidationFromEmailPrefs extends ProfileRedirect("/verify-email?isRepermissioningRedirect=true") {
-  override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
-}
-
-case object RedirectToEmailValidationFromAnywhere extends ProfileRedirect("/verify-email?isRepermissioningRedirect=true") {
-  override def isAllowedFrom(url: String): Boolean = true
+case object RedirectToEmailValidationFromAnywhereButAccountDetails extends ProfileRedirect("/verify-email?isRepermissioningRedirect=true") {
+  override def isAllowedFrom(url: String): Boolean = !(url contains "account/edit")
 }
 
 case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents") {
@@ -54,17 +50,21 @@ class ProfileRedirectService(
 
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
+  def toConsentsRedirect[A](user: User, request: RequestHeader): Future[ProfileRedirect] = {
+    user.statusFields.isUserEmailValidated match {
+      case true => Future.successful(NoRedirect)
+      case false => Future.successful(RedirectToEmailValidationFromAnywhereButAccountDetails)
+    }
+  }
+
   def toProfileRedirect[A](user: User, request: RequestHeader): Future[ProfileRedirect] = {
 
     def userHasRepermissioned: Boolean = user.statusFields.hasRepermissioned.contains(true)
     def userEmailValidated: Boolean = user.statusFields.isUserEmailValidated
 
     (userEmailValidated, userHasRepermissioned) match {
-      case (false, false) =>
-        Future.successful(RedirectToEmailValidationFromAnywhere)
-
-      case (false, true) =>
-        Future.successful(RedirectToEmailValidationFromEmailPrefs)
+      case (false, _) =>
+        Future.successful(RedirectToEmailValidationFromAnywhereButAccountDetails)
 
       case (true, false) =>
         Future.successful(RedirectToConsentsFromEmailPrefs)
