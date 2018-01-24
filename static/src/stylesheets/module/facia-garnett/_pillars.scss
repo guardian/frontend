@@ -217,7 +217,7 @@ $pillars: (
             background-color: $opinion-garnett-background;
         }
 
-        .fc-item__container.u-faux-block-link--hover {
+        &:hover {
             background-color: darken($opinion-garnett-background, 2%);
         }
 
