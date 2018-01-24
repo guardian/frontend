@@ -9,7 +9,8 @@ import play.api.mvc._
 
 object DashboardRenderer extends Results {
 
-  def renderDashboard(testName: String)(implicit request: RequestHeader, context: ApplicationContext): Result = {
+  def renderDashboard(testName: String, dashboardTitle: String)(implicit request: RequestHeader,
+                                                                context: ApplicationContext): Result = {
     val maybeData = for {
       reportId                  <- CommercialDfpReporting.reportMappings.get(CommercialDfpReporting.teamKPIReport)
       report: Seq[DfpReportRow] <- CommercialDfpReporting.getReport(reportId)
@@ -36,6 +37,13 @@ object DashboardRenderer extends Results {
     val currencyFormatter = java.text.NumberFormat.getCurrencyInstance(Locale.UK)
 
     NoCache(
-      Ok(views.html.commercial.revenueDashboard(controlDataRow, variantDataRow, integerFormatter, currencyFormatter)))
+      Ok(
+        views.html.commercial.revenueDashboard(
+          controlDataRow,
+          variantDataRow,
+          integerFormatter,
+          currencyFormatter,
+          dashboardTitle
+        )))
   }
 }

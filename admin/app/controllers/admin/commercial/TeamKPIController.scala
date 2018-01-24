@@ -12,6 +12,10 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
 
   def renderBaselineDashboard(): Action[AnyContent] = Action { implicit request =>
     // The test variants for the team KPIs are commercialBaselineControl-control and commercialBaselineVariant-variant.
-    DashboardRenderer.renderDashboard("commercialBaseline")
+    DashboardRenderer.renderDashboard("commercialBaseline", "Commercial Team Revenue KPI")
+  }
+
+  def renderPrebidDashboard(): Action[AnyContent] = Action { implicit request =>
+    DashboardRenderer.renderDashboard("prebid", "Sonobi wrapper -> Prebid")
   }
 }

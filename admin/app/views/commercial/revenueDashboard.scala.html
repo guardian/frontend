@@ -4,11 +4,12 @@
 @(  controlRow: Option[KeyValueRevenueRow],
     variantRow: Option[KeyValueRevenueRow],
     integerFormatter: NumberFormat,
-    currencyFormatter: NumberFormat)(implicit request: RequestHeader, context: model.ApplicationContext)
+    currencyFormatter: NumberFormat,
+    title: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@admin_main("Commercial Team KPI", isAuthed = true, container = Some("commercial-dashboard")) {
+@admin_main(title, isAuthed = true, container = Some("commercial-dashboard")) {
     <link rel="stylesheet" type="text/css" href="@controllers.admin.routes.UncachedAssets.at("css/commercial.css")">
-    <h2 class="revenue-dashboard__title">Commercial Team Revenue KPI</h2>
+    <h2 class="revenue-dashboard__title">@title</h2>
 
     @if(controlRow.isEmpty && variantRow.isEmpty) {
         <p>There is currently no data, please wait, the query may still be running.</p>
