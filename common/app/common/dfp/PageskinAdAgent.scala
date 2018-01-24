@@ -21,7 +21,7 @@ trait PageskinAdAgent {
 
     if (metaData.isPressedPage) {
       if (PageSkin.isValidAdUnit(adUnitPath)) {
-        candidates filter { sponsorship => sponsorship.adUnits.contains(adUnitPath) }
+        candidates filter { sponsorship => sponsorship.adUnits.exists(adUnitPath.endsWith) }
       } else Seq.empty
     } else {
       val targetingMap = toMap(metaData.commercial.map(_.adTargeting(edition)).getOrElse(Set.empty))
