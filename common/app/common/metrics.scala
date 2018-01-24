@@ -122,9 +122,15 @@ object ContentApiMetrics {
   )
 
   val ContentApi404Metric = CountMetric(
+    "content-api-requests",
+    "Number of times the Content API has been called"
+  )
+
+  val ContentApiRequestsMetric = CountMetric(
     "content-api-404",
     "Number of times the Content API has responded with a 404"
   )
+
 }
 
 object FaciaPressMetrics {

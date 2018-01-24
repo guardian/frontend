@@ -70,6 +70,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.ContentApiErrorMetric,
+    ContentApiMetrics.ContentApiRequestsMetric,
     EmailSubsciptionMetrics.EmailSubmission,
     EmailSubsciptionMetrics.EmailFormError,
     EmailSubsciptionMetrics.NotAccepted,
