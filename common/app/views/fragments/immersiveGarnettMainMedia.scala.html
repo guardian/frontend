@@ -1,5 +1,4 @@
 @import common.{LinkTo, Localisation}
-@import conf.switches.Switches.{ NewDesktopNavigation }
 @import layout.ContentWidths.MainMedia
 @import model.Badges.badgeFor
 @import model.ContentPage
@@ -24,12 +23,6 @@
         "content", "content--type-immersive", "content--immersive", "content--immersive-article", "tonal", s"tonal--${toneClass(page.item)}")
     ">
         <div class="gs-container immersive-main-media__logo">
-            @if((page.item.elements.hasMainMedia || page.item.fields.main.nonEmpty) & !NewDesktopNavigation.isSwitchedOn) {
-                <a href="@LinkTo {/}">
-                    <span class="u-h">The Guardian</span>
-                    @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))
-                </a>
-            }
 
             @if(isTheMinuteArticle) {
                 @badgeFor(page.item).map { badge =>

@@ -6,9 +6,6 @@
     ("immersive-header-container", page.item.fields.main.nonEmpty),
     ("immersive-header-container--photo-essay", page.item.content.isPhotoEssay)))">
 
-    @if(conf.switches.Switches.NewDesktopNavigation.isSwitchedOn) {
-        @fragments.header()
-    }
-
+    @fragments.header()
     @fragments.photoEssay()
 </div>

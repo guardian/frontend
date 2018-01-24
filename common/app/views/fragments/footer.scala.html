@@ -8,40 +8,13 @@
 @import navigation.UrlHelpers.{getReaderRevenueUrl, Footer, getSupportOrMembershipUrl, getSupportOrSubscriptionUrl, getSupportOrContributeUrl}
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
-@import conf.switches.Switches.{ EmailInlineInFooterSwitch, NewDesktopNavigation }
+@import conf.switches.Switches.{ EmailInlineInFooterSwitch }
 @import com.gu.identity.model.EmailNewsletters
 @import model.NoCache
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
-    @if(!NewDesktopNavigation.isSwitchedOn && !isAmp) {
-        <div class="l-footer__primary hide-on-mobile">
-            <div id="footer-nav" class="gs-container">
-                <div class="brand-bar modern-visible u-cf">
-                    <a href="@LinkTo {/}" data-link-name="site logo" class="guardian-logo-footer hide-on-mobile">
-                        <span class="u-h">The Guardian</span>
-                        <i class="i i-guardian-logo-160"></i>
-                    </a>
 
-                    <a class="brand-bar__item brand-bar__item--action" data-link-name="back to top" href="#top">
-                        <span class="rounded-icon control__icon-wrapper">
-                            @fragments.inlineSvg("arrow-up", "icon")
-                        </span>
-                        <span class="control__info">back to top</span>
-                    </a>
-                </div>
-
-                @if(showNav) {
-                    <div class="l-footer__navigation-wrapper u-cf">
-                        @fragments.nav.navigationFooter(page)
-                    </div>
-                }
-
-                @Page.getContentPage(page).map(fragments.breadcrumb(_))
-            </div>
-        </div>
-    }
-
-    <div class="footer__primary @if(!NewDesktopNavigation.isSwitchedOn) {mobile-only}">
+    <div class="footer__primary">
 
         @if(!isAmp) {
             @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>

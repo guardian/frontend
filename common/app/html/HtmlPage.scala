@@ -35,7 +35,6 @@ object HtmlPageHelpers {
     val edition = Edition(request)
     Map(
       ("has-page-skin", page.metadata.hasPageSkin(edition)),
-      ("has-localnav", Navigation.topLevelItem(edition.navigation, page).filter(_.links.nonEmpty).nonEmpty),
       ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
       ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
       ("has-super-sticky-banner", model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)))

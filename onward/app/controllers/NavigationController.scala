@@ -15,6 +15,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
   private case class topLevelNavItems(navLink: NavLink)
   private case class navSectionLink(navLink: NavLink)
 
+//    TODO: check uses of this first, before deleting common.Navigation
   def nav(): Action[AnyContent] = Action { implicit request =>
     Cached(500) {
 
