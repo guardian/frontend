@@ -46,7 +46,8 @@ const stickyMpu = (adSlot: HTMLElement) => {
         )
         .then(newHeight =>
             fastdom.write(() => {
-                (adSlot.parentNode: any).style.height = `${newHeight}px`;
+                //a fixed height is being added as a hotfix until final design deccisons made
+                (adSlot.parentNode: any).style.height = `710px`;
             })
         )
         .then(() => {
