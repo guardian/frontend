@@ -3,7 +3,7 @@ package contentapi
 import java.net.InetAddress
 import java.util.concurrent.TimeoutException
 
-import common.ContentApiMetrics.{ContentApi404Metric, ContentApiErrorMetric}
+import common.ContentApiMetrics.{ContentApi404Metric, ContentApiErrorMetric, ContentApiRequestsMetric}
 import common.{ContentApiMetrics, Logging}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
@@ -36,6 +36,9 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
     val response = request.withHttpHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
 
     // record metrics
+
+    response.foreach((f)=>{ ContentApiRequestsMetric.increment() })
+
     response.foreach {
       case r if r.status == 404 => ContentApi404Metric.increment()
       case r if r.status == 200 => ContentApiMetrics.HttpLatencyTimingMetric.recordDuration(currentTimeMillis - start)
