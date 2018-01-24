@@ -16,6 +16,6 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
   }
 
   def renderPrebidDashboard(): Action[AnyContent] = Action { implicit request =>
-    DashboardRenderer.renderDashboard("prebid", "Sonobi wrapper -> Prebid")
+    DashboardRenderer.renderDashboard("prebid", "Sonobi wrapper vs Prebid")
   }
 }
