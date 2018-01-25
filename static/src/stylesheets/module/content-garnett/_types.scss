@@ -709,6 +709,9 @@ $quote-mark: 35px;
             }
         }
     }
+    .ad-slot-container {
+        height: 710px;
+    }
     // Quote showcase
     .element-pullquote.element--showcase {
         @include mq(mobileLandscape) {
