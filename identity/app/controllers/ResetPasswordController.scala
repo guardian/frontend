@@ -11,6 +11,7 @@ import play.api.data.validation._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import form.Mappings
+import pages.IdentityHtmlPage
 import play.api.http.HttpConfiguration
 import utils.SafeLogging
 
@@ -64,18 +65,26 @@ class ResetPasswordController(
 
   def requestNewToken: Action[AnyContent] = Action { implicit request =>
     val idRequest = idRequestParser(request)
-    Ok(views.html.password.resetPasswordRequestNewToken(page, idRequest, idUrlBuilder, requestPasswordResetForm))
+    Ok(IdentityHtmlPage.html(
+      views.html.password.resetPasswordRequestNewToken(page, idRequest, idUrlBuilder, requestPasswordResetForm)
+    )(page, request, context))
   }
 
   def renderEmailSentConfirmation: Action[AnyContent] = Action { implicit request =>
     val idRequest = idRequestParser(request)
-    Ok(views.html.password.emailSent(page, idRequest, idUrlBuilder))
+    Ok(IdentityHtmlPage.html(
+      views.html.password.emailSent(page, idRequest, idUrlBuilder)
+    )(page, request, context))
   }
 
   def renderResetPassword(token: String): Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromFlash.getOrElse(passwordResetForm)
-    NoCache(Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token)))
+    NoCache(Ok(
+      IdentityHtmlPage.html(
+        views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token)
+      )(page, request, context)
+    ))
   }
 
   def resetPassword(token : String): Action[AnyContent] = Action.async { implicit request =>
@@ -120,7 +129,9 @@ class ResetPasswordController(
   def renderPasswordResetConfirmation: Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-    Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn))
+    Ok(IdentityHtmlPage.html(
+      views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)
+    )(page, request, context))
   }
 
   def processUpdatePasswordToken( token : String): Action[AnyContent] = Action.async { implicit request =>
