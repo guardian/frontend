@@ -51,7 +51,8 @@ trait AppComponents extends FrontendComponents {
   override lazy val appMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.HttpLatencyTimingMetric,
-    ContentApiMetrics.ContentApiErrorMetric
+    ContentApiMetrics.ContentApiErrorMetric,
+    ContentApiMetrics.ContentApiRequestsMetric
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
