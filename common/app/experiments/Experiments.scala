@@ -95,5 +95,5 @@ object Prebid extends Experiment(
   description = "Users in this experiment will have a Prebid header-bidding experience.",
   owners = group(Commercial),
   sellByDate = new LocalDate(2018, 2, 21),
-  participationGroup = Perc5A
+  participationGroup = Perc10A
 )
