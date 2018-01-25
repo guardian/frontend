@@ -44,11 +44,11 @@ const stickyMpu = (adSlot: HTMLElement) => {
                         : 'offsetTop'
                 ] + adSlot.offsetHeight
         )
-        .then(newHeight =>
-            fastdom.write(() => {
-                (adSlot.parentNode: any).style.height = `${newHeight}px`;
-            })
-        )
+        // .then(newHeight =>
+        //     fastdom.write(() => {
+        //         (adSlot.parentNode: any).style.height = `${newHeight}px`;
+        //     })
+        // )
         .then(() => {
             if (noSticky) {
                 // if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
