@@ -76,7 +76,8 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
 
   val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
-    ContentApiMetrics.ContentApiErrorMetric
+    ContentApiMetrics.ContentApiErrorMetric,
+    ContentApiMetrics.ContentApiRequestsMetric
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
