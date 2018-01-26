@@ -56,15 +56,49 @@ var isRequestForAsset = (function () {
 var handleAssetRequest = function (event) {
     // Default fetch behaviour
     // Cache first for all other requests
+
     event.respondWith(
-        caches.match(event.request)
-            .then(function (response) {
-                // Workaround Firefox bug which drops cookies
-                // https://github.com/guardian/frontend/issues/12012
-                return response || fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
-                    credentials: 'include'
-                } : {});
-            })
+        caches.match(event.request.url).then(function (cachedResponse) {
+            if (cachedResponse) {
+                console.log('*** cachedResponse ***', cachedResponse);
+                return cachedResponse;
+            } else {
+                return fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
+                    credentials: 'include',
+                    mode: 'no-cors'
+                } : {
+                    mode: 'no-cors'
+                }).then(function(fetchedResponse) {
+                    console.log('*** fetchedResponse ***', fetchedResponse);
+                    var responseToCache = fetchedResponse.clone();
+                    
+                    // get filename of request we're going to cached
+                    var responseUrl = responseToCache.url;
+                    var responseFileName = responseUrl.substring(responseUrl.lastIndexOf("/") + 1, responseUrl.length);
+
+                    caches.open('graun').then(function(cache) {
+                        // check cache for matching filename, if match found then delete old cached item
+                        cache.keys().then(function(keys) {
+                            keys.forEach(function(request, index, array) {
+                                var requestUrl = request.url;
+                                var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
+
+                                console.log('*** request to compare ***', requestUrl, responseUrl);
+                                if (requestUrl === responseUrl) {
+                                    console.log('*** delete old cache ***', request);
+                                    cache.delete(request);
+                                }
+                            });
+                        });
+
+                        console.log('*** response saved ***', responseToCache);
+                        cache.put(event.request, responseToCache);
+                    });
+        
+                    return fetchedResponse;
+                });
+            }
+        })
     );
 };
 
@@ -91,4 +125,9 @@ this.addEventListener('fetch', function (event) {
     } else if (blockIAS && isIASRequest(event.request)) {
         event.respondWith(forbidden);
     }
+});
+
+this.addEventListener('activate', function() {
+    console.log('*** graun cache deleted ***');
+    caches.delete('graun');
 });
