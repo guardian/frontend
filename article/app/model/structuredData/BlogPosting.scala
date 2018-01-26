@@ -20,11 +20,18 @@ object BlogPosting {
     }
 
     def blockBody(block: BodyBlock): String = {
-      if(block.bodyTextSummary.length < 1000){
+
+      if(block.bodyTextSummary.length == 0) {
+        // in case of no text summary, fall back to the block title
+        block.title.getOrElse[String](blog.trail.headline)
+      } else if(block.bodyTextSummary.length < 1000){
+        // short text summary? Return it
         block.bodyTextSummary
       } else {
+        // long text summary? Truncate it
         block.bodyTextSummary.substring(0, 1000)
       }
+
     }
 
     def blockAuthor(blog: Article, block: BodyBlock): JsValue = {

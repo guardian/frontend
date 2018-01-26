@@ -1,5 +1,6 @@
 package test
 
+import model.structuredData.BlogPostingTest
 import org.scalatest.{Suites, Tag}
 import play.api.test.Helpers
 
@@ -15,7 +16,8 @@ class ArticleTestSuite extends Suites (
   new CdnHealthCheckTest,
   new SectionsNavigationFeatureTest,
   new MembershipAccessTest,
-  new PublicationControllerTest
+  new PublicationControllerTest,
+  new BlogPostingTest
 ) with SingleServerSuite {
   override lazy val port: Int = 19005
 }
