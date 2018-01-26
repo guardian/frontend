@@ -56,7 +56,6 @@ module.exports = {
             journalism: 'projects/journalism',
 
             // #wp-rjs weird old aliasing from requirejs
-            lodash: 'lodash-amd/compat',
             picturefill: 'lib/picturefill',
             raven: 'raven-js',
             EventEmitter: 'wolfy87-eventemitter',
