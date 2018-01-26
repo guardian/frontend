@@ -116,7 +116,7 @@ const loadModules = (): Promise<void> => {
     });
 };
 
-export default (): Promise<void> => {
+export const bootCommercial = (): Promise<void> => {
     markTime('commercial start');
     catchErrorsWithContext([
         [
