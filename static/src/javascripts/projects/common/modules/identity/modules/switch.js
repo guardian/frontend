@@ -1,7 +1,7 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 
-const timeouts: Array<number> = [];
+const timeouts: Array<TimeoutID> = [];
 
 const checkboxShouldUpdate = (
     checkedValue: boolean,
