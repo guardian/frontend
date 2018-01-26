@@ -90,7 +90,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                         );
                     }, 1000);
                 } else {
-                    clearInterval(playTimer);
+                    window.clearInterval(playTimer);
                 }
             },
             onPlayerReady(event: Object) {
