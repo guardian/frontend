@@ -8,15 +8,12 @@ import play.api.i18n.MessagesProvider
 
 class AccountDetailsMapping extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping with TelephoneNumberMapping {
 
-  private val genders = List("Male", "Female", "Transgender", "Other", "unknown", "")
-
   def formMapping(implicit messagesProvider: MessagesProvider) = {
     mapping(
       ("primaryEmailAddress", idEmail),
       ("title", comboList("" :: Titles.titles)),
       ("firstName",  nonEmptyText),
       ("secondName", nonEmptyText),
-      ("gender", comboList(genders)),
       "birthDate" -> dateMapping,
       "address" -> idAddress,
       "billingAddress" -> optional(idAddress),
@@ -31,7 +28,6 @@ class AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addres
     ("privateFields.title", "title"),
     ("privateFields.firstName", "firstName"),
     ("privateFields.secondName", "secondName"),
-    ("privateFields.gender", "gender"),
     ("dates.birthDate", "birthDate"),
     ("privateFields.address1", "address.line1"),
     ("privateFields.address2", "address.line2"),
@@ -54,7 +50,6 @@ case class AccountFormData(
   title: String,
   firstName: String,
   secondName: String,
-  gender: String,
   birthDate: DateFormData,
   address: AddressFormData,
   billingAddress: Option[AddressFormData],
@@ -69,7 +64,6 @@ case class AccountFormData(
       title = toUpdate(title, currentUser.privateFields.title),
       firstName = toUpdate(firstName, currentUser.privateFields.firstName),
       secondName = toUpdate(secondName, currentUser.privateFields.secondName),
-      gender = toUpdate(gender, currentUser.privateFields.gender),
       address1 = toUpdate(address.address1, currentUser.privateFields.address1),
       address2 = toUpdate(address.address2, currentUser.privateFields.address2),
       address3 = toUpdate(address.address3, currentUser.privateFields.address3),
@@ -94,7 +88,6 @@ object AccountFormData {
     title = user.privateFields.title getOrElse "",
     firstName = user.privateFields.firstName getOrElse "",
     secondName = user.privateFields.secondName getOrElse "",
-    gender = user.privateFields.gender getOrElse "unknown",
     birthDate = DateFormData(user.dates.birthDate),
     address = AddressFormData(
       address1 = user.privateFields.address1 getOrElse "",

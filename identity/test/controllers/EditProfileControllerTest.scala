@@ -172,7 +172,6 @@ import scala.concurrent.Future
         val testTitle = "Mr"
         val firstName = "John"
         val secondName = "Smith"
-        val gender = "Male"
         val address1 = "10 Downing Street"
         val address2 = "London"
         val address3 = ""
@@ -201,7 +200,6 @@ import scala.concurrent.Future
             ("title", testTitle),
             ("firstName", firstName),
             ("secondName", secondName),
-            ("gender", gender),
             ("address.line1", address1),
             ("address.line2", address2),
             ("address.line3", address3),
@@ -224,7 +222,6 @@ import scala.concurrent.Future
             ("title", testTitle),
             ("firstName", firstName),
             ("secondName", secondName),
-            ("gender", gender),
             ("address.line1", address1),
             ("address.line2", address2),
             ("address.line3", address3),
@@ -245,7 +242,6 @@ import scala.concurrent.Future
             ("title", testTitle),
             ("firstName", firstName),
             ("secondName", secondName),
-            ("gender", gender),
             ("address.line1", address1),
             ("address.line2", address2),
             ("address.line3", address3),
@@ -267,7 +263,6 @@ import scala.concurrent.Future
             ("title", testTitle),
             ("firstName", firstName),
             ("secondName", secondName),
-            ("gender", gender),
             ("address.line1", address1),
             ("address.line2", address2),
             ("address.line3", address3),
@@ -305,7 +300,6 @@ import scala.concurrent.Future
             title = Some(testTitle),
             firstName = Some(firstName),
             secondName = Some(secondName),
-            gender = Some(gender),
             address1 = Some(address1),
             address2 = Some(address2),
             address3 = Some(address3),
@@ -328,7 +322,6 @@ import scala.concurrent.Future
         userUpdate.primaryEmailAddress.value should equal(primaryEmailAddress)
         userUpdate.privateFields.value.firstName.value should equal(firstName)
         userUpdate.privateFields.value.secondName.value should equal(secondName)
-        userUpdate.privateFields.value.gender.value should equal(gender)
         userUpdate.privateFields.value.address1.value should equal(address1)
         userUpdate.privateFields.value.address2.value should equal(address2)
         userUpdate.privateFields.value.address3 should equal(None)
@@ -359,7 +352,6 @@ import scala.concurrent.Future
             title = Some(testTitle),
             firstName = Some(firstName),
             secondName = Some(secondName),
-            gender = Some(gender),
             address1 = Some(address1),
             address2 = Some(address2),
             address3 = Some(address3),
@@ -383,7 +375,6 @@ import scala.concurrent.Future
         userUpdate.privateFields.value.title.value should equal(testTitle)
         userUpdate.privateFields.value.firstName.value should equal(firstName)
         userUpdate.privateFields.value.secondName.value should equal(secondName)
-        userUpdate.privateFields.value.gender.value should equal(gender)
         userUpdate.privateFields.value.address1.value should equal(address1)
         userUpdate.privateFields.value.address2.value should equal(address2)
         userUpdate.privateFields.value.address3 should equal(None)
@@ -401,7 +392,6 @@ import scala.concurrent.Future
             title = Some(testTitle),
             firstName = Some(firstName),
             secondName = Some(secondName),
-            gender = Some(gender),
             address1 = Some(address1),
             address2 = Some(address2),
             address3 = Some(address3),
@@ -432,7 +422,6 @@ import scala.concurrent.Future
         userUpdate.privateFields.value.title.value should equal(testTitle)
         userUpdate.privateFields.value.firstName.value should equal(firstName)
         userUpdate.privateFields.value.secondName.value should equal(secondName)
-        userUpdate.privateFields.value.gender.value should equal(gender)
         userUpdate.privateFields.value.address1.value should equal(address1)
         userUpdate.privateFields.value.address2.value should equal(address2)
         userUpdate.privateFields.value.address3 should equal(None)
