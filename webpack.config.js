@@ -111,6 +111,7 @@ module.exports = {
         }),
 
         new webpack.optimize.CommonsChunkPlugin({
+            name: 'standard',
             chunks: ["commercial", "commercial-control", "enhanced"],
             async: true,
           })
