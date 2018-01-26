@@ -109,6 +109,13 @@ module.exports = {
             // add errors to webpack instead of warnings
             failOnError: true,
         }),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'standard',
+            chunks: ["commercial", "commercial-control", "enhanced"],
+            async: 'post-standard-commons',
+          })
+
     ],
     externals: {
         xhr2: {},
