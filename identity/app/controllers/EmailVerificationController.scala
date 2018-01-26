@@ -11,6 +11,8 @@ import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
 import pages.IdentityHtmlPage
 
+import scala.concurrent.Future
+
 
 class EmailVerificationController(api: IdApiClient,
   authenticatedActions: AuthenticatedActions,
@@ -60,7 +62,10 @@ class EmailVerificationController(api: IdApiClient,
     implicit request =>
       val idRequest = idRequestParser(request)
       val customMessage = if (isRepermissioningRedirect) Some("To access all your account features and join the Guardian community, we need you to confirm your email address below.") else None
-      api.resendEmailValidationEmail(request.user.auth, idRequest.trackingData).map { _ =>
+
+      val future = if(isSignupFlow) Future.successful((): Unit) else api.resendEmailValidationEmail(request.user.auth, idRequest.trackingData)
+
+      future.map { _ =>
         Ok(
           IdentityHtmlPage.html(views.html.verificationEmailResent(request.user, idRequest, idUrlBuilder, customMessage, isSignupFlow))(page, request, context)
         )
