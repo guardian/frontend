@@ -17,7 +17,23 @@ import { capturePerfTimings } from 'lib/capture-perf-timings';
 // __webpack_public_path__ is a special webpack variable
 // https://webpack.js.org/guides/public-path/#set-value-on-the-fly
 // eslint-disable-next-line camelcase,no-undef
-__webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
+__webpack_public_path__ = `${config.get('page.assetsPath')}javascripts/`;
+
+// Start downloading these ASAP
+const commercialBaselineControl =
+    config.get('tests.commercialBaselineControl') === 'control';
+
+// eslint-disable-next-line no-nested-ternary
+const fetchCommercial: Promise<*> = config.get('switches.commercial')
+    ? (markTime('commercial request'), commercialBaselineControl)
+      ? import(/* webpackChunkName: "commercial-control" */ 'bootstraps/commercial-control')
+      : import(/* webpackChunkName: "commercial" */ 'bootstraps/commercial')
+    : Promise.resolve(() => {});
+
+const fetchEnhanced = window.guardian.isEnhanced
+    ? (markTime('enhanced request'),
+      import(/* webpackChunkName: "enhanced" */ 'bootstraps/enhanced/main'))
+    : Promise.resolve({ bootEnhanced: () => {} });
 
 // kick off the app
 const go = () => {
@@ -27,7 +43,7 @@ const go = () => {
         bootStandard();
 
         // 2. once standard is done, next is commercial
-        if (config.page.isDev) {
+        if (config.get('page.isDev')) {
             window.guardian.adBlockers.onDetect.push(isInUse => {
                 const needsMessage =
                     isInUse && window.console && window.console.warn;
@@ -39,104 +55,33 @@ const go = () => {
             });
         }
 
-        markTime('commercial request');
-        const inCommercialControl =
-            config.tests.commercialBaselineControl === 'control';
-        if (inCommercialControl) {
-            require.ensure(
-                [],
-                // webpack needs the require function to be called 'require'
-                // eslint-disable-next-line no-shadow
-                require => {
-                    raven.context(
-                        { tags: { feature: 'commercial-control' } },
-                        () => {
-                            markTime('commercial boot');
-                            const commercialBoot = config.switches.commercial
-                                ? require('bootstraps/commercial-control')
-                                : Promise.resolve;
-
-                            commercialBoot().then(() => {
-                                // 3. finally, try enhanced
-                                // this is defined here so that webpack's code-splitting algo
-                                // excludes all the modules bundled in the commercial chunk from this one
-                                if (window.guardian.isEnhanced) {
-                                    markTime('enhanced request');
-                                    require.ensure(
-                                        [],
-                                        // webpack needs the require function to be called 'require'
-                                        // eslint-disable-next-line no-shadow
-                                        require => {
-                                            markTime('enhanced boot');
-                                            require('bootstraps/enhanced/main').bootEnhanced();
-
-                                            if (
-                                                document.readyState ===
-                                                'complete'
-                                            ) {
-                                                capturePerfTimings();
-                                            } else {
-                                                window.addEventListener(
-                                                    'load',
-                                                    capturePerfTimings
-                                                );
-                                            }
-                                        },
-                                        'enhanced'
-                                    );
-                                }
-                            });
-                        }
-                    );
+        raven.context(
+            {
+                tags: {
+                    feature: commercialBaselineControl
+                        ? 'commercial-control'
+                        : 'commercial',
                 },
-                'commercial-control'
-            );
-        } else {
-            require.ensure(
-                [],
-                // webpack needs the require function to be called 'require'
-                // eslint-disable-next-line no-shadow
-                require => {
-                    raven.context({ tags: { feature: 'commercial' } }, () => {
+            },
+            () => {
+                Promise.all([
+                    fetchCommercial.then(bootCommercial => {
                         markTime('commercial boot');
-                        const commercialBoot = config.switches.commercial
-                            ? require('bootstraps/commercial')
-                            : Promise.resolve;
-
-                        commercialBoot().then(() => {
-                            // 3. finally, try enhanced
-                            // this is defined here so that webpack's code-splitting algo
-                            // excludes all the modules bundled in the commercial chunk from this one
-                            if (window.guardian.isEnhanced) {
-                                markTime('enhanced request');
-                                require.ensure(
-                                    [],
-                                    // webpack needs the require function to be called 'require'
-                                    // eslint-disable-next-line no-shadow
-                                    require => {
-                                        markTime('enhanced boot');
-                                        require('bootstraps/enhanced/main').bootEnhanced();
-
-                                        if (
-                                            document.readyState === 'complete'
-                                        ) {
-                                            capturePerfTimings();
-                                        } else {
-                                            window.addEventListener(
-                                                'load',
-                                                capturePerfTimings
-                                            );
-                                        }
-                                    },
-                                    'enhanced'
-                                );
-                            }
-                        });
-                    });
-                },
-                'commercial'
-            );
-        }
+                        return bootCommercial();
+                    }),
+                    fetchEnhanced.then(({ bootEnhanced }) => {
+                        markTime('enhanced boot');
+                        return bootEnhanced();
+                    }),
+                ]).then(() => {
+                    if (document.readyState === 'complete') {
+                        capturePerfTimings();
+                    } else {
+                        window.addEventListener('load', capturePerfTimings);
+                    }
+                });
+            }
+        );
     });
 };
 
