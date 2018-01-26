@@ -351,7 +351,7 @@ class Component {
         if (this.t) {
             clearTimeout(this.t);
         }
-        
+
         this.t = null;
         this.autoupdated = false;
 
