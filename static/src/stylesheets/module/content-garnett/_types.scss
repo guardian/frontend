@@ -524,7 +524,7 @@ $quote-mark: 35px;
         }
     }
 
-    .content__standfirst:not(.content__standfirst--immersive-minute-article) {
+    .content__standfirst {
         @include fs-bodyCopy(2);
         font-weight: 700;
         line-height: 20px;
