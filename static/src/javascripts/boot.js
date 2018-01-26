@@ -24,11 +24,11 @@ const commercialBaselineControl =
     config.get('tests.commercialBaselineControl') === 'control';
 
 // eslint-disable-next-line no-nested-ternary
-const fetchCommercial: Promise<*> = config.get('switches.commercial')
+const fetchCommercial = config.get('switches.commercial')
     ? (markTime('commercial request'), commercialBaselineControl)
       ? import(/* webpackChunkName: "commercial-control" */ 'bootstraps/commercial-control')
       : import(/* webpackChunkName: "commercial" */ 'bootstraps/commercial')
-    : Promise.resolve(() => {});
+    : Promise.resolve({ bootCommercial: () => {} });
 
 const fetchEnhanced = window.guardian.isEnhanced
     ? (markTime('enhanced request'),
@@ -65,7 +65,7 @@ const go = () => {
             },
             () => {
                 Promise.all([
-                    fetchCommercial.then(bootCommercial => {
+                    fetchCommercial.then(({ bootCommercial }) => {
                         markTime('commercial boot');
                         return bootCommercial();
                     }),
