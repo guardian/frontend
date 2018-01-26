@@ -37,7 +37,8 @@
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
     "videojs-playlist": "guardian/videojs-playlist#0.1.4",
     "webshot": "^0.18.0",
-    "wolfy87-eventemitter": "~4.2.6"
+    "wolfy87-eventemitter": "~4.2.6",
+    "snyk": "^1.41.1"
   },
   "devDependencies": {
     "amphtml-validator": "^1.0.20",
@@ -171,6 +172,9 @@
     "lebab": "lebab --transform arrow,let,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,class,default-param --replace",
     "eslint-fix": "eslint --color --fix",
     "flow": "flow",
-    "test": "jest"
-  }
+    "test": "jest",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
