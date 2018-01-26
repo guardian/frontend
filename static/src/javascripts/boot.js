@@ -27,7 +27,7 @@ const go = () => {
         bootStandard();
 
         // 2. once standard is done, next is commercial
-        if (config.page.isDev) {
+        if (process.env.NODE_ENV === 'production') {
             window.guardian.adBlockers.onDetect.push(isInUse => {
                 const needsMessage =
                     isInUse && window.console && window.console.warn;
