@@ -12,12 +12,13 @@ import org.scalatest.{Matchers, path}
 import play.api.mvc.{ControllerComponents, Request}
 import play.api.test.Helpers._
 import services._
-import test.{Fake, TestRequest, WithTestApplicationContext, WithTestIdConfig}
+import test._
 
 import scala.concurrent.Future
 
 class EmailVerificationControllerTest extends path.FreeSpec
   with Matchers
+  with WithTestExecutionContext
   with WithTestApplicationContext
   with MockitoSugar
   with WithTestIdConfig {
