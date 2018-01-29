@@ -35,14 +35,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
   val testRequest = TestRequest()
   val authService = mock[AuthenticationService]
   val trackingData = mock[TrackingData]
-  val idRequest = IdentityRequest(
-    trackingData,
-    None,
-    None,
-    None,
-    None,
-    false
-  )
+  val idRequest = mock[IdentityRequest]
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
