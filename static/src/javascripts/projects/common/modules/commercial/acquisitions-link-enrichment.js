@@ -2,6 +2,19 @@
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
 import fastdom from 'lib/fastdom-promise';
 
+// Currently the only acquisition components on the site are
+// from the Mother Load campaign and the Wide Brown Land campaign.
+// Work needs to be done so we don't have to hard code what campaigns are running.
+const validIframeUrls: string[] = [
+    'https://interactive.guim.co.uk/embed/2017/12/the-mother-load/',
+    'https://interactive.guim.co.uk/embed/2018/this-wide-brown-land/',
+];
+
+const isCurrentCampaign = (iframeSrc: string): boolean =>
+    validIframeUrls.some(validIframeUrl =>
+        iframeSrc.startsWith(validIframeUrl)
+    );
+
 const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
     const acquisitionDataField = 'acquisitionData';
 
@@ -77,14 +90,7 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
         if (data.type === 'acquisition-data-request') {
             [...document.getElementsByTagName('iframe')].forEach(el => {
                 const iframeSrc = el.getAttribute('src');
-                if (
-                    iframeSrc &&
-                    // Currently the only acquisition components on the site are from the Mother Load campaign.
-                    // Work needs to be done so we don't have to hard code what campaigns are running.
-                    iframeSrc.startsWith(
-                        'https://interactive.guim.co.uk/embed/2017/12/the-mother-load/'
-                    )
-                ) {
+                if (iframeSrc && isCurrentCampaign(iframeSrc)) {
                     el.contentWindow.postMessage(
                         JSON.stringify({
                             type: 'acquisition-data-response',
