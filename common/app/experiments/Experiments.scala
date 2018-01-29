@@ -3,7 +3,7 @@ package experiments
 import conf.switches.Owner
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.Commercial
-import conf.switches.Switches.{GarnettHeaderLaunch, GarnettLaunch}
+import conf.switches.Switches.GarnettLaunch
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -69,7 +69,7 @@ object GarnettHeader extends Experiment(
   sellByDate = new LocalDate(2018, 2, 1),
   participationGroup = Perc0A
 ) {
-  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettHeaderLaunch.isSwitchedOn
+  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = true
 }
 
 object Garnett extends Experiment(
