@@ -19,7 +19,8 @@ class ReturnUrlVerifier(conf: IdConfig) extends SafeLogging {
     request
       .getQueryString("returnUrl")
       .orElse(request.headers.get("Referer")
-    )
+        .filterNot(_.startsWith(conf.url))
+      )
   )
 
   def getVerifiedReturnUrl(returnUrl: Option[String]): Option[String] = {
@@ -35,7 +36,7 @@ class ReturnUrlVerifier(conf: IdConfig) extends SafeLogging {
 
   def hasVerifiedReturnUrl(returnUrl: String): Boolean = Try(new URI(returnUrl).getHost)
     .map(uri =>
-      uri.startsWith(conf.url) || validUris.contains(uri) || isValidDomain(uri)
+      validUris.contains(uri) || isValidDomain(uri)
     ).getOrElse(false)
 
   private def isValidDomain(domain: String) = returnUrlDomains.exists(validDomain =>
