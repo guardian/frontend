@@ -9,7 +9,7 @@ import org.mockito.Mockito._
 import org.mockito.{Matchers => MockitoMatchers}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{Matchers, path}
-import play.api.mvc.Request
+import play.api.mvc.{ControllerComponents, Request}
 import play.api.test.Helpers._
 import services._
 import test.{Fake, TestRequest, WithTestApplicationContext, WithTestIdConfig}
@@ -22,15 +22,21 @@ class EmailVerificationControllerTest extends path.FreeSpec
   with MockitoSugar
   with WithTestIdConfig {
 
+  val controllerComponent: ControllerComponents = play.api.test.Helpers.stubControllerComponents()
   val api = mock[IdApiClient]
+  val idUrlBuilder = mock[IdentityUrlBuilder]
   val idRequestParser = mock[IdRequestParser]
-  val authenticatedActions = mock[AuthenticatedActions]
   val authenticationService = mock[AuthenticationService]
   val identityUrlBuilder = mock[IdentityUrlBuilder]
   val testRequest = TestRequest()
+  val authService = mock[AuthenticationService]
   val trackingData = mock[TrackingData]
   val idRequest = mock[IdentityRequest]
   val returnUrlVerifier = mock[ReturnUrlVerifier]
+  val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
+
+  val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
+  val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
 
   val EmailValidatedMessage = "Your email address has been validated."
   when(identityUrlBuilder.buildUrl(anyString(), anyVararg[(String, String)]())) thenAnswer returnsFirstArg()
@@ -50,19 +56,19 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
   "Given the plain verify method is called" - Fake {
 
-    "should not render a link if it's not signup" in {
+    "should not render a link if it's not a sign up" in {
       val result = controller.resendEmailValidationEmail(true, false, None)(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should not include("Exit and go to The Guardian home page")
     }
 
-    "should render a link if it's a signup" in {
+    "should render a link if it's a sign up" in {
       val result = controller.resendEmailValidationEmail(true, true, None)(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("Exit and go to The Guardian home page")
     }
 
-    "should link to the returnurl" in {
+    "should link to the return url" in {
       val result = controller.resendEmailValidationEmail(true, true, Some("https://jobs.theguardian.com/test-string-test"))(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("test-string-test")
