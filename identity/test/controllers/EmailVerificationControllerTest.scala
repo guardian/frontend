@@ -1,15 +1,18 @@
 package controllers
 
 import actions.AuthenticatedActions
+import com.gu.identity.cookie.GuUCookieData
+import com.gu.identity.model.{StatusFields, User}
 import idapiclient.responses.Error
-import idapiclient.{IdApiClient, TrackingData}
+import idapiclient.{IdApiClient, ScGuU, TrackingData}
+import model.PhoneNumbers
 import org.mockito.AdditionalAnswers.returnsFirstArg
 import org.mockito.Matchers.{any, anyString, anyVararg, eq => eql}
 import org.mockito.Mockito._
 import org.mockito.{Matchers => MockitoMatchers}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{Matchers, path}
-import play.api.mvc.{ControllerComponents, Request}
+import play.api.mvc.{ControllerComponents, Request, RequestHeader}
 import play.api.test.Helpers._
 import services._
 import test._
@@ -36,6 +39,16 @@ class EmailVerificationControllerTest extends path.FreeSpec
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
+  val userId: String = "123"
+  val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
+  val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
+  val authenticatedUser = AuthenticatedUser(user, testAuth, true)
+  val phoneNumbers = PhoneNumbers
+
+  when(idRequest.trackingData) thenReturn trackingData
+  when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
+  when(api.me(testAuth)) thenReturn Future.successful(Right(user))
+
   val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
   val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser, redirectDecisionService)
 
@@ -57,22 +70,23 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
   "Given the plain verify method is called" - Fake {
 
-    when(idRequestParser.apply(testRequest)) thenReturn idRequest
-
     "should not render a link if it's not a sign up" in {
-      val result = controller.resendEmailValidationEmail(true, false, None)(idRequest)
+      when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
+      val result = controller.resendEmailValidationEmail(true, false)(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should not include("Exit and go to The Guardian home page")
     }
 
     "should render a link if it's a sign up" in {
-      val result = controller.resendEmailValidationEmail(true, true, None)(idRequest)
+      when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
+      val result = controller.resendEmailValidationEmail(true, true)(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("Exit and go to The Guardian home page")
     }
 
     "should link to the return url" in {
-      val result = controller.resendEmailValidationEmail(true, true, Some("https://jobs.theguardian.com/test-string-test"))(idRequest)
+      when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
+      val result = controller.resendEmailValidationEmail(true, true)(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("test-string-test")
       contentAsString(result) should include("Exit and continue")
