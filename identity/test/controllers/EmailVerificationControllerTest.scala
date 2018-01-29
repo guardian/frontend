@@ -46,7 +46,29 @@ class EmailVerificationControllerTest extends path.FreeSpec
     identityUrlBuilder,
     returnUrlVerifier,
     play.api.test.Helpers.stubControllerComponents()
-  )
+  )(testApplicationContext)
+
+  "Given the plain verify method is called" - Fake {
+
+    "should not render a link if it's not signup" in {
+      val result = controller.resendEmailValidationEmail(true, false, None)(testRequest)
+      contentAsString(result) should include("Confirm your email address")
+      contentAsString(result) should not include("Exit and go to The Guardian home page")
+    }
+
+    "should render a link if it's a signup" in {
+      val result = controller.resendEmailValidationEmail(true, true, None)(testRequest)
+      contentAsString(result) should include("Confirm your email address")
+      contentAsString(result) should include("Exit and go to The Guardian home page")
+    }
+
+    "should link to the returnurl" in {
+      val result = controller.resendEmailValidationEmail(true, true, Some("https://jobs.theguardian.com/test-string-test"))(testRequest)
+      contentAsString(result) should include("Confirm your email address")
+      contentAsString(result) should include("test-string-test")
+      contentAsString(result) should include("Exit and continue")
+    }
+  }
 
   "Given the verify method is called" - Fake {
     val token = "myToken"
