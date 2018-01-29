@@ -57,20 +57,22 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
   "Given the plain verify method is called" - Fake {
 
+    when(idRequestParser.apply(testRequest)) thenReturn idRequest
+
     "should not render a link if it's not a sign up" in {
-      val result = controller.resendEmailValidationEmail(true, false, None)(testRequest)
+      val result = controller.resendEmailValidationEmail(true, false, None)(idRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should not include("Exit and go to The Guardian home page")
     }
 
     "should render a link if it's a sign up" in {
-      val result = controller.resendEmailValidationEmail(true, true, None)(testRequest)
+      val result = controller.resendEmailValidationEmail(true, true, None)(idRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("Exit and go to The Guardian home page")
     }
 
     "should link to the return url" in {
-      val result = controller.resendEmailValidationEmail(true, true, Some("https://jobs.theguardian.com/test-string-test"))(testRequest)
+      val result = controller.resendEmailValidationEmail(true, true, Some("https://jobs.theguardian.com/test-string-test"))(idRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("test-string-test")
       contentAsString(result) should include("Exit and continue")
