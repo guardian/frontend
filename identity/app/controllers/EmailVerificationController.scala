@@ -71,7 +71,12 @@ class EmailVerificationController(api: IdApiClient,
       if (isSignupFlow)
         Future.successful(verificationEmailResentPage)
       else
-        api.resendEmailValidationEmail(request.user.auth, idRequest.trackingData).map(_ => verificationEmailResentPage)
+        api.resendEmailValidationEmail(
+          request.user.auth,
+          idRequest.trackingData
+        ).map(_ =>
+          verificationEmailResentPage
+        )
   }
 }
 

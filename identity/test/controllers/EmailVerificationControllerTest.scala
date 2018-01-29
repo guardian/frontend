@@ -35,9 +35,18 @@ class EmailVerificationControllerTest extends path.FreeSpec
   val testRequest = TestRequest()
   val authService = mock[AuthenticationService]
   val trackingData = mock[TrackingData]
-  val idRequest = mock[IdentityRequest]
+  val idRequest = IdentityRequest(
+    trackingData,
+    None,
+    None,
+    None,
+    None,
+    false
+  )
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
+
+  when(api.resendEmailValidationEmail(MockitoMatchers.any[idapiclient.Auth], MockitoMatchers.any[idapiclient.TrackingData])) thenReturn Future.successful(Right((): Unit))
 
   val userId: String = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
@@ -45,7 +54,6 @@ class EmailVerificationControllerTest extends path.FreeSpec
   val authenticatedUser = AuthenticatedUser(user, testAuth, true)
   val phoneNumbers = PhoneNumbers
 
-  when(idRequest.trackingData) thenReturn trackingData
   when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
   when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
@@ -54,7 +62,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
   val EmailValidatedMessage = "Your email address has been validated."
   when(identityUrlBuilder.buildUrl(anyString(), anyVararg[(String, String)]())) thenAnswer returnsFirstArg()
-  when(idRequestParser.apply(testRequest)) thenReturn idRequest
+  when(idRequestParser.apply(MockitoMatchers.any[Request[_]])) thenReturn idRequest
   when(authenticationService.userIsFullyAuthenticated(MockitoMatchers.any[Request[_]])) thenReturn true
   when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
 
