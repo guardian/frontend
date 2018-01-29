@@ -10,7 +10,8 @@ import scala.util.Try
 
 class ReturnUrlVerifier(conf: IdConfig) extends SafeLogging {
 
-  private val returnUrlDomains = List(conf.domain)
+  private val returnUrlDomains = List(conf.domain, "theguardian.com", "code.dev-theguardian.com", "thegulocal.com")
+  private val validUris = List(new URI("sso.com.theguardian.jobs://ssologoutsuccess"))
 
   val defaultReturnUrl = "http://www." + conf.domain
 
@@ -18,7 +19,6 @@ class ReturnUrlVerifier(conf: IdConfig) extends SafeLogging {
     request
       .getQueryString("returnUrl")
       .orElse(request.headers.get("Referer")
-      .filterNot(_.startsWith(conf.url))
     )
   )
 
@@ -34,7 +34,9 @@ class ReturnUrlVerifier(conf: IdConfig) extends SafeLogging {
   }
 
   def hasVerifiedReturnUrl(returnUrl: String): Boolean = Try(new URI(returnUrl).getHost)
-    .map(isValidDomain).getOrElse(false)
+    .map(uri =>
+      uri.startsWith(conf.url) || validUris.contains(uri) || isValidDomain(uri)
+    ).getOrElse(false)
 
   private def isValidDomain(domain: String) = returnUrlDomains.exists(validDomain =>
     domain == validDomain || domain.endsWith("." + validDomain)
