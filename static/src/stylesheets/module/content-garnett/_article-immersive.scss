@@ -204,10 +204,6 @@
     }
 }
 
-.content--liveblog .content__standfirst--immersive-article {
-    color: #ffffff !important; // override value in content/types.scss
-}
-
 .content__wrapper--standfirst {
     @include content-gutter();
     background-color: rgba(0, 0, 0, .5);
