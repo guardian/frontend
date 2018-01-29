@@ -13,7 +13,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline,
-    GarnettHeader,
     Garnett,
     HideShowMoreButtonExperiment,
     Prebid
@@ -60,17 +59,6 @@ object CommercialBaseline extends Experiment(
   sellByDate = new LocalDate(2018, 4, 11),
   participationGroup = Perc2B
 )
-
-
-object GarnettHeader extends Experiment(
-  name = "garnett-header",
-  description = "Users in this experiment will see the new desktop design, but with garnett styling",
-  owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("zeftilldeath")),
-  sellByDate = new LocalDate(2018, 2, 1),
-  participationGroup = Perc0A
-) {
-  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = true
-}
 
 object Garnett extends Experiment(
   name = "garnett",
