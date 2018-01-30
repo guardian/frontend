@@ -3,6 +3,8 @@
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
     customMessage: Option[String] = None,
+    verifiedReturnUrl: Option[String],
+    defaultReturnUrl: String,
     isSignupFlow: Boolean = false
 )(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -30,8 +32,12 @@
         </aside>
         @if(isSignupFlow) {
             <footer class="identity-forms-message__body">
-                <a class="u-underline" href="@LinkTo {/}" data-link-name="mma : verify-email : exit-to-gu">
-                    Exit and go to The Guardian home page</a>
+                <a class="u-underline" href="@LinkTo {@verifiedReturnUrl.getOrElse(defaultReturnUrl)}" data-link-name="mma : verify-email : exit-to-gu">
+                    @(verifiedReturnUrl match {
+                        case Some(_) => "Exit and continue"
+                        case None => "Exit and go to The Guardian home page"
+                    })
+                </a>
             </footer>
         }
     </section>
