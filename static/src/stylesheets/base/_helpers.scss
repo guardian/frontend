@@ -268,3 +268,21 @@
         vertical-align: middle;
     }
 }
+
+/**
+ * Nested links
+ *
+ * Support nested links by wrapping inner links in <object> element
+ * We need to hide the object element to prevent layout thrashing
+ * http://kizu.ru/en/fun/nested-links/
+ */
+
+[type='nested/link'] {
+    width: 0;
+    height: 0;
+}
+
+.u-nested-link--icon {
+    width: 16px;
+    height: 16px;
+}

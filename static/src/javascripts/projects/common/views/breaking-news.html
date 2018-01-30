@@ -1,14 +1,15 @@
-<div class="js-breaking-news__item breaking-news__item" data-breaking-article-id="<%=id%>">
+<a href="/<%=id%>" class="js-breaking-news__item breaking-news__item" data-breaking-article-id="<%=id%>">
     <div class="breaking-news__item-content">
         <div class="breaking-news__item-header">
             <em class="breaking-news__item-kicker">Breaking news</em>
             <div class="breaking-news__item-headline"><%=headline%></div>
         </div>
         <div class="breaking-news__item-options">
-            <button class="js-breaking-news__item__close button button--tertiary u-faux-block-link__promote"
-                    aria-label="Dismiss"
-                    data-link-name="close button"><%=closeIcon%></button>
+            <object type="nested/link">
+                <button class="js-breaking-news__item__close button button--tertiary"
+                        aria-label="Dismiss"
+                        data-link-name="close button"><%=closeIcon%></button>
+            </object>
         </div>
     </div>
-    <a class="u-faux-block-link__overlay" href="/<%=id%>"></a>
-</div>
+</a>

@@ -54,9 +54,7 @@
         color: #ffffff;
     }
 
-    // darken on hover
-    &:hover,
-    .u-faux-block-link--hover {
+    &:hover {
         background-color: darken($media-garnett-main-1, 5%);
     }
 
@@ -100,9 +98,7 @@
         }
     }
 
-    // darken on hover
-    &:hover,
-    .u-faux-block-link--hover {
+    &:hover {
         background-color: darken($media-garnett-main-1, 5%);
     }
 
