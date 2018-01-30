@@ -3,7 +3,7 @@ package experiments
 import conf.switches.Owner
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.Commercial
-import conf.switches.Switches.GarnettLaunch
+import conf.switches.Switches.{GarnettHeaderLaunch, GarnettLaunch}
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline,
+    GarnettHeader,
     Garnett,
     HideShowMoreButtonExperiment,
     Prebid
@@ -59,6 +60,17 @@ object CommercialBaseline extends Experiment(
   sellByDate = new LocalDate(2018, 4, 11),
   participationGroup = Perc2B
 )
+
+
+object GarnettHeader extends Experiment(
+  name = "garnett-header",
+  description = "Users in this experiment will see the new desktop design, but with garnett styling",
+  owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("zeftilldeath")),
+  sellByDate = new LocalDate(2018, 2, 1),
+  participationGroup = Perc0A
+) {
+  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettHeaderLaunch.isSwitchedOn
+}
 
 object Garnett extends Experiment(
   name = "garnett",

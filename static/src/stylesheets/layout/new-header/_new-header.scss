@@ -1,0 +1,208 @@
+/* When the menu is open this class is added to the html to prevent users
+from scrolling */
+.nav-is-open {
+    @include mq($until: desktop) {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    // Prevents horizontal scrollbar https://codepen.io/tigt/post/bust-elements-out-of-containers-with-one-line-of-css#oh-no-a-horizontal-scrollbar-6
+    @include mq(desktop) {
+        overflow-x: hidden;
+    }
+}
+
+.new-header {
+    background-color: $guardian-brand;
+    position: relative;
+    text-transform: lowercase;
+
+    @include mq(tablet) {
+        display: block;
+
+        @include mq(desktop) {
+            display: none;
+        }
+    }
+
+    @include mq(desktop) {
+        &.new-header--open {
+            background-color: $guardian-brand-dark;
+        }
+
+        // Switch: ABNewDesktopHeader
+        &.new-header--mvt-desktop {
+            display: block;
+        }
+    }
+
+    .has-page-skin & .gs-container {
+        @include mq(wide) {
+            width: gs-span(12) + ($gs-gutter * 2);
+        }
+    }
+}
+
+.new-header__inner {
+    @include clearfix();
+}
+
+.new-header__edition-container {
+    position: absolute;
+    text-transform: none;
+    top: 0;
+    transform: translateX(100%);
+    // Needs to sit above the menu, and the veggie burger
+    z-index: $zindex-main-menu + 2;
+
+    .new-header--open & {
+        display: none;
+    }
+
+    @include mq(desktop) {
+        right: gs-span(4) + $gs-gutter + $gs-gutter / 2;
+    }
+}
+
+.new-header__user-account-container {
+    float: left;
+    position: relative;
+    // Needs to sit above the menu, and the veggie burger
+    z-index: $zindex-main-menu + 2;
+}
+
+.new-header__top-bar {
+    left: 0;
+    position: absolute;
+    top: 0;
+
+    .new-header--open & {
+        display: none;
+    }
+}
+
+.new-header__logo {
+    display: block;
+    float: right;
+}
+
+.new-header__menu-toggle {
+    @include mq($until: desktop) {
+        top: $gs-baseline / 4;
+        position: absolute;
+        right: $gutter-small;
+
+        @include mq(mobileMedium) {
+            bottom: -$gs-baseline / 2;
+            top: auto;
+        }
+
+        .new-header--slim & {
+            right: $gs-gutter / 2;
+            margin-bottom: -$gs-baseline;
+            top: -$gs-baseline / 2;
+        }
+    }
+
+    @include mq(mobileLandscape) {
+        right: $gutter-medium;
+
+        .new-header--slim & {
+            right: $gs-gutter;
+        }
+    }
+
+    @include mq($from: tablet, $until: desktop) {
+        right: $gutter-large;
+    }
+
+    @include mq(desktop) {
+        .new-header--open & {
+            position: absolute;
+            left: $gs-gutter - $gs-gutter / 4;
+            right: auto;
+            top: $gs-baseline;
+        }
+
+        .new-header--slim.new-header--open & {
+            top: $gs-baseline / 2;
+        }
+    }
+
+    &:focus {
+        // Prevents distracting focus state on click
+        outline: 0;
+    }
+}
+
+.new-header__logo__svg {
+    display: block;
+    height: 30px;
+    margin-bottom: $gs-baseline / 4;
+    margin-right: $veggie-burger-small + $gs-gutter / 4;
+    margin-top: 8px;
+    width: 161px;
+
+    @include mq(mobileMedium) {
+        height: 42px;
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
+        margin-top: $gs-baseline / 2;
+        width: 225px;
+    }
+
+    @include mq(mobileLandscape) {
+        margin-bottom: 0;
+        margin-right: $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        height: 65px;
+        width: 345px;
+        margin-top: $gs-baseline + $gs-baseline / 4;
+    }
+
+    @include mq(desktop) {
+        height: 77px;
+        width: 411px;
+        margin-bottom: $gs-baseline / 2;
+    }
+
+    body:not(.has-page-skin) & {
+        @include mq(leftCol) {
+            margin-bottom: -$gs-baseline;
+        }
+    }
+
+    .new-header--slim & {
+        height: 34px;
+        width: 180px;
+        margin: 5px ($veggie-burger-large + $gs-gutter) 0 0;
+
+        @include mq(mobileLandscape) {
+            margin-right: $veggie-burger-large + $gs-gutter + ($gs-gutter / 2);
+        }
+
+        @include mq(desktop) {
+            margin-right: $gs-gutter;
+        }
+    }
+}
+
+.new-header--slim {
+    height: $slim-nav-height;
+}
+
+
+.new-header .popup--search {
+    background-color: #ffffff;
+    border-radius: $gs-baseline / 4;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
+    padding: $gs-baseline 0;
+    top: $gs-baseline * 2 + $gs-baseline / 2;
+}
+
+// Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
+x:-o-prefocus, .new-header__cta-container  {
+    display: none;
+}

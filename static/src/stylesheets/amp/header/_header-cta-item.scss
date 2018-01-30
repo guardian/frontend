@@ -1,0 +1,40 @@
+.header-cta-item {
+    color: $guardian-brand-dark;
+}
+
+.header-cta-item--text {
+    box-sizing: border-box;
+    display: block;
+    padding: ($gs-baseline / 2 + $gs-baseline / 4) ($gs-gutter) ($gs-baseline / 4);
+    position: relative;
+    font-size: 13px;
+    line-height: 1;
+
+    .guardian-egyptian-loaded & {
+        font-family: 'Guardian Egyptian Web', Georgia, serif;
+        font-weight: 500;
+    }
+}
+
+.header-cta-item--circle {
+    bottom: -$gs-baseline;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: transform 250ms ease-out;
+    transform-origin: top center;
+
+    &:before {
+        background: $news-main-2;
+        border-radius: 50%;
+        bottom: 0;
+        content: '';
+        display: block;
+        left: 0;
+        padding-top: 100%;
+        position: absolute;
+        right: 0;
+    }
+}

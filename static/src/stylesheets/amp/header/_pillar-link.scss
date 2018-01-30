@@ -1,0 +1,25 @@
+.pillar-link {
+    // Weird number to get the most out of available space
+    font-size: 16.4px;
+    display: block;
+    height: $veggie-burger-medium - $gs-baseline;
+    line-height: $veggie-burger-medium - $gs-baseline;
+    padding: 0 ($gs-gutter / 4);
+    position: relative;
+    color: currentColor;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        display: block;
+        left: 0;
+        bottom: 0;
+        position: absolute;
+        border-left: 1px solid $news-support-2;
+        top: $gs-baseline + 1;
+    }
+
+    .guardian-text-sans-loaded & {
+        font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    }
+}

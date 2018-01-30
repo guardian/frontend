@@ -33,7 +33,8 @@
 
 @include grid-system;
 @import 'layout/_ab-new-header-test-variant';
-@import 'layout/_navigation';
+// TODO: uncomment this line after garnett styling has been decided
+//@import 'layout/_new-header';
 @import 'layout/_helpers';
 @import 'layout/_side-margins';
 @import 'pasteup/layout/styles';
