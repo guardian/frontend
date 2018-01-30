@@ -116,6 +116,9 @@ $pillars: (
         color: map-get($palette, invertedKicker);
     }
 
+    &.fc-item--type-immersive .fc-item__headline .inline-garnett-quote {
+        fill: map-get($palette, invertedKicker);
+    }
 
     &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker,
     &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker
@@ -133,9 +136,12 @@ $pillars: (
     }
 
     &.fc-item--list-media-tablet.fc-item--type-immersive .inline-icon,
-    &.fc-item--list-tablet.fc-item--type-immersive .inline-icon
+    &.fc-item--list-tablet.fc-item--type-immersive .inline-icon,
+    &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__meta,
+    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__meta
     {
-        fill: map-get($palette, kicker);
+        fill: $garnett-neutral-6;
+        color: $garnett-neutral-6;
     }
 
     .fc-item__standfirst {
