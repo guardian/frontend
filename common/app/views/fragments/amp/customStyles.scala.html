@@ -2,6 +2,7 @@
 
 @import conf.Static
 @import play.api.Mode.Dev
+@import experiments.{ActiveExperiments, GarnettHeader}
 
 <style amp-custom>
     @* TODO: these two stylesheets should be refactored into SCSS *@
@@ -12,6 +13,8 @@
             @fragments.amp.stylesheets.glabs()
         }
     }
+
+    @Html(common.Assets.css.ampNavigation)
 
     @* proper inlined AMP styles *@
     @if(page.metadata.isHosted) {
@@ -31,13 +34,19 @@
  * It won't affect prod but please comment out this line when running tests in DEV
  *@
 @if(context.environment.mode == Dev) {
+    @if(ActiveExperiments.isParticipating(GarnettHeader)) {
+        <link rel="stylesheet" id="head-css" data-reload="head.amp-navigation" type="text/css" href="@Static("stylesheets/amp/head.amp-navigation.garnett.css")" />
+    } else {
+        <link rel="stylesheet" id="head-css" data-reload="head.amp-navigation" type="text/css" href="@Static("stylesheets/amp/head.amp-navigation.css")" />
+    }
+
     @if(page.metadata.isHosted) {
         <link rel="stylesheet" id="head-css" data-reload="head.hosted-amp" type="text/css" href="@Static("stylesheets/head.hosted-amp.css")" />
     } else {
         @if(page.metadata.contentType.contains(model.DotcomContentType.LiveBlog)){
-            <link rel="stylesheet" id="head-css" data-reload="head.amp-liveblog" type="text/css" href="@Static("stylesheets/head.amp-liveblog.css")" />
+            <link rel="stylesheet" id="head-css" data-reload="head.amp-liveblog" type="text/css" href="@Static("stylesheets/amp/head.amp-liveblog.css")" />
         } else {
-            <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/head.amp.css")" />
+            <link rel="stylesheet" id="head-css" data-reload="head.amp" type="text/css" href="@Static("stylesheets/amp/head.amp.css")" />
         }
     }
 }

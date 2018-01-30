@@ -5,9 +5,10 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, getContributionOrSupporterUrl, Header, getSupportOrSubscriptionUrl}
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
+@import experiments.{ActiveExperiments, GarnettHeader}
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
-    <header class="@RenderClasses(Map(
+<header class="@RenderClasses(Map(
             "new-header--slim" -> page.metadata.hasSlimHeader
         ), s"pillar-scheme--${navMenu.currentPillar.map(_.title).getOrElse("")}", "new-header")"
         role="banner">
@@ -26,11 +27,14 @@
                 data-link-name="nav2 : logo">
 
                 <span class="u-h">The Guardian - Back to home</span>
-
-                @if(page.metadata.hasSlimHeader) {
+                @if(ActiveExperiments.isParticipating(GarnettHeader) && !page.metadata.hasSlimHeader) {
+                    @fragments.inlineSvg("the-guardian-logo", "logo")
+                } else if(ActiveExperiments.isParticipating(GarnettHeader) && page.metadata.hasSlimHeader) {
                     @fragments.inlineSvg("the-guardian-roundel", "logo")
                 } else {
-                    @fragments.inlineSvg("the-guardian-logo", "logo")
+                    @fragments.inlineSvg("guardian-logo-160", "logo", List(
+                        "new-header__logo"
+                    ))
                 }
             </a>
 
@@ -131,6 +135,13 @@
                     More
                     <i class="pillar-link--dropdown__icon"></i>
                 </span>
+
+                @if(!ActiveExperiments.isParticipating(GarnettHeader)) {
+                    <span class="menu-close hide-until-desktop">
+                        <span class="u-h">Close</span>
+                        @fragments.inlineSvg("close", "icon", List("menu-close__icon", "centered-icon"))
+                    </span>
+                }
             </label>
 
             @fragments.nav.headerMenu(navMenu)

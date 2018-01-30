@@ -1,0 +1,155 @@
+.menu-search {
+    box-sizing: border-box;
+    display: block;
+    margin-left: 13px;
+    max-width: gs-span(5);
+    position: relative;
+    width: 100%;
+
+    @include mq($until: desktop) {
+        margin-bottom: $gs-baseline * 2;
+        margin-right: $veggie-burger-medium / 2 + $gs-gutter;
+    }
+
+    @include mq(tablet) {
+        margin-left: 22px;
+    }
+
+    @include mq(desktop) {
+        margin-bottom: $gs-baseline * 2;
+        margin-left: 0;
+        margin-top: $gs-baseline * 2;
+        max-width: none;
+        padding-right: 0;
+    }
+}
+
+.menu-search__search-box {
+    background-color: $guardian-brand;
+    border: 0;
+    border-radius: 1000px;
+    box-sizing: border-box;
+    font-size: 20px;
+    height: $gs-row-height;
+    padding-left: 38px;
+    vertical-align: middle;
+    width: 100%;
+
+    @include mq(desktop) {
+        height: $search-and-edition-height-desktop;
+        padding-left: 48px;
+        font-size: 24px;
+
+        &:hover {
+            background: lighten($guardian-brand, 4%);
+        }
+    }
+
+    &::placeholder {
+        color: $news-support-1;
+    }
+
+    &:focus {
+        background-color: #ffffff;
+        color: $neutral-1;
+        outline: none;
+        padding-right: $gs-gutter * 2;
+        transition: background-color 500ms;
+
+        &::placeholder {
+            color: $neutral-3;
+        }
+    }
+}
+
+.menu-search__glass {
+    position: absolute;
+    left: 10px;
+    top: 7px;
+
+    @include mq(desktop) {
+        left: 12px;
+        top: 10px;
+    }
+
+    .inline-search-36__svg {
+        fill: $news-main-2;
+        height: 22px;
+        width: 22px;
+
+        .menu-search__search-box:focus ~ & {
+            fill: $neutral-2;
+        }
+    }
+}
+
+.menu-search__submit {
+    background: transparent;
+    border: 0;
+    bottom: 0;
+    cursor: pointer;
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: $gs-gutter * 2.5;
+
+    &:before,
+    &:after {
+        border: 2px solid $guardian-brand;
+        border-left: 0;
+        border-top: 0;
+        content: '';
+        display: block;
+        position: absolute;
+        right: 14px;
+
+        @include mq(desktop) {
+            right: 16px;
+        }
+    }
+
+    &:before {
+        height: $gs-baseline;
+        top: $gs-baseline - 1;
+        transform: rotate(-45deg);
+        width: $gs-baseline;
+
+        @include mq(desktop) {
+            top: $gs-baseline + 2;
+        }
+    }
+
+    &:after {
+        border-right: 0;
+        top: 17px;
+        width: 20px;
+
+        @include mq(desktop) {
+            top: 20px;
+        }
+    }
+
+    &:hover,
+    &:active {
+        border-color: $guardian-brand;
+    }
+
+    &:focus {
+        &:before,
+        &:after {
+            border-color: #ffffff;
+        }
+    }
+
+    // Reveals search button & retains visibility of search button when form loses focus
+    .menu-search__search-box:focus ~ &,
+    &:focus,
+    &:active {
+        opacity: 1;
+        outline: none;
+        pointer-events: all;
+    }
+}
