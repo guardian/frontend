@@ -31,7 +31,7 @@ object CommercialPaidContentTemplate extends Experiment(
   name = "commercial-paid-content",
   description = "A slice of the audience who will see labs content with a background colour variant",
   owners = Seq(Owner.withGithub("rich-nguyen")),
-  sellByDate = new LocalDate(2018, 2, 1),
+  sellByDate = new LocalDate(2018, 2, 28),
   participationGroup = Perc50
 ) {
 
