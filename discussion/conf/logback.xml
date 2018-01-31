@@ -15,8 +15,14 @@
         </encoder>
     </appender>
 
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="LOGFILE" />
+        <neverBlock>true</neverBlock>
+    </appender>
+
+
     <root level="INFO">
-        <appender-ref ref="LOGFILE"/>
+        <appender-ref ref="ASYNC"/>
     </root>
 
 </configuration>
