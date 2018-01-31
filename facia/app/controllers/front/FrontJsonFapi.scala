@@ -32,6 +32,7 @@ trait FrontJsonFapi extends Logging {
     blockingOperations.executeBlocking {
       jsonStringOpt.map { jsonString =>
         DurationMetric.withMetrics(FaciaPressMetrics.FrontDecodingLatency) {
+          // This operation is run in the thread pool since it is very CPU intensive
           Json.parse(jsonString).as[PressedPage]
         }
       }
