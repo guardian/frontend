@@ -110,7 +110,6 @@ describe('DFP', () => {
     beforeEach(() => {
         config.switches = {
             commercial: true,
-            sonobiHeaderBidding: false,
         };
         config.page = {
             adUnit: '/123456/theguardian.com/front',
