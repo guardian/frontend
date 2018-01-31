@@ -28,7 +28,7 @@ trait FrontJsonFapi extends Logging {
     pressedPageFromS3(getAddressForPath(path, LiteType.suffix))
   }
 
-  private def parsePressedPage(jsonStringOpt: Option[String]): Future[Option[PressedPage]] = futureSemaphore.execute {
+  private def parsePressedPage(jsonStringOpt: Option[String])(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = futureSemaphore.execute {
     blockingOperations.executeBlocking {
       jsonStringOpt.map { jsonString =>
         DurationMetric.withMetrics(FaciaPressMetrics.FrontDecodingLatency) {
