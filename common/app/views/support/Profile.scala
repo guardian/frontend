@@ -125,39 +125,13 @@ class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends
 
 // Despite the base64 codes looking similar, the twitter overlay is a different size to the facebook overlay.
     object TwitterImage {
-        private val defaultImage = if(GarnettHeaderLaunch.isSwitchedOn) {
-            "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC90d2l0dGVyX2RlZmF1bHQucG5n"
-        } else {
-            "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNi8wNy9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
-        }
-
-        val default = new ShareImage(defaultImage, TwitterShareImageLogoOverlay.isSwitchedOn)
-
-        private val opinionsImage = if(GarnettHeaderLaunch.isSwitchedOn) {
-            "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC90d2l0dGVyX29waW5pb25zLnBuZw"
-        } else {
-            "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8xMC8wNi9vcGluaW9uc19vdmVybGF5LXR3aXR0ZXIucG5n"
-        }
-
-        val opinions = new ShareImage(opinionsImage, TwitterShareImageLogoOverlay.isSwitchedOn)
+        val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC90d2l0dGVyX2RlZmF1bHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
+        val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC90d2l0dGVyX29waW5pb25zLnBuZw", TwitterShareImageLogoOverlay.isSwitchedOn)
     }
 
     object FacebookOpenGraphImage {
-        private val defaultImage = if(GarnettHeaderLaunch.isSwitchedOn) {
-            "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC9mYWNlYm9va19kZWZhdWx0LnBuZw"
-        } else {
-            "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
-        }
-
-        val default = new ShareImage(defaultImage, FacebookShareImageLogoOverlay.isSwitchedOn)
-
-        private val opinionsImage = if(GarnettHeaderLaunch.isSwitchedOn) {
-            "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC9mYWNlYm9va19vcGluaW9ucy5wbmc"
-        } else {
-            "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8xMC8wNi9vcGluaW9uc19vdmVybGF5LWZhY2Vib29rLnBuZz90ZXN0"
-        }
-
-        val opinions = new ShareImage(opinionsImage, FacebookShareImageLogoOverlay.isSwitchedOn)
+        val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC9mYWNlYm9va19kZWZhdWx0LnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
+        val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC9mYWNlYm9va19vcGluaW9ucy5wbmc", FacebookShareImageLogoOverlay.isSwitchedOn)
     }
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {
