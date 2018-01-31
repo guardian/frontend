@@ -605,15 +605,4 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 1, 31),
     exposeClientSide = false
   )
-
-  val GarnettHeaderLaunch = Switch(
-    SwitchGroup.Feature,
-    "garnett-header-launch",
-    "when ON, garnett styling will appear on the navigation, assuming the new navigation is already live for everyone",
-    owners = Seq(Owner.withGithub("NataliaLKB"), Owner.withGithub("zeftilldeath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 31),
-    exposeClientSide = false
-  )
-
 }

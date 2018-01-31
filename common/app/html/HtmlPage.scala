@@ -43,5 +43,4 @@ object HtmlPageHelpers {
   def FaciaCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "facia.garnett" else "facia"
   def ContentCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "content.garnett" else "content"
   def RichLinksCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "rich-links.garnett" else "rich-links"
-  def InlineNavigationCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(GarnettHeader)) "navigation.garnett" else "navigation"
 }
