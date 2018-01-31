@@ -124,21 +124,15 @@ class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends
 }
 
 // Despite the base64 codes looking similar, the twitter overlay is a different size to the facebook overlay.
-    object TwitterImage {
-      private val defaultImage = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC90d2l0dGVyX2RlZmF1bHQucG5n"
-      private val opinionsImage = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC90d2l0dGVyX29waW5pb25zLnBuZw"
+object TwitterImage {
+    val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX2RlZmF1bHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX29waW5pb25zLnBuZw", TwitterShareImageLogoOverlay.isSwitchedOn)
+}
 
-      val default = new ShareImage(defaultImage, TwitterShareImageLogoOverlay.isSwitchedOn)
-      val opinions = new ShareImage(opinionsImage, TwitterShareImageLogoOverlay.isSwitchedOn)
-    }
-
-    object FacebookOpenGraphImage {
-      private val defaultImage = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC9mYWNlYm9va19kZWZhdWx0LnBuZw"
-      private val opinionsImage = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8xOC9mYWNlYm9va19vcGluaW9ucy5wbmc"
-
-      val default = new ShareImage(defaultImage, FacebookShareImageLogoOverlay.isSwitchedOn)
-      val opinions = new ShareImage(opinionsImage, FacebookShareImageLogoOverlay.isSwitchedOn)
-    }
+object FacebookOpenGraphImage {
+    val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19kZWZhdWx0LnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19vcGluaW9ucy5wbmc", FacebookShareImageLogoOverlay.isSwitchedOn)
+}
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {
   override val qualityparam = "q=40"
