@@ -139,7 +139,7 @@ object DurationMetric {
   def withMetrics[A](metric: DurationMetric)(block: => A): A = {
     val stopWatch: StopWatch = new StopWatch
     val result = block
-    FaciaPressMetrics.FrontDownloadLatency.recordDuration(stopWatch.elapsed)
+    metric.recordDuration(stopWatch.elapsed)
     result
   }
 }
