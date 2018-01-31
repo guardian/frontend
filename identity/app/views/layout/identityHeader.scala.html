@@ -1,7 +1,10 @@
 @import common.LinkTo
 @import views.support.DropdownMenus.accountDropdownMenu
+@import com.gu.identity.model.User
+@import conf.Configuration
 
-@(hideNavigation: Boolean = false)(implicit page: model.Page, request: RequestHeader)
+@(hideNavigation: Boolean = false, showAutoSigninBanner: Boolean = false)(implicit page: model.Page, request: RequestHeader, user: Option[User] = None)
+
 
 <header class="identity-header" data-component="identity-nav">
     <div class="gs-container identity-header__container">
@@ -51,3 +54,18 @@
         </a>
     </div>
 </header>
+@if(showAutoSigninBanner) {
+    <div class="identity-header-auto-signin">
+        <div class="identity-wrapper monocolumn-wrapper">
+            <div class="form__success">
+                <p>
+                    Thank you. We have signed you in automatically.
+                </p>
+                <p>
+                    On a shared computer?
+                    <a class="u-underline" href="@(Configuration.id.url)/signout">Log out</a>
+                </p>
+            </div>
+        </div>
+    </div>
+}

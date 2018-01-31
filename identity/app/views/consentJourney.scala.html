@@ -49,9 +49,6 @@
 
 @renderStep(step: ConsentStep, index: Option[Int] = None) = {
     @if(step.show) {
-        @(step.banner.map { title =>
-            Html(s"<p class='form__success'>$title</p>")
-        })
         <fieldset
             class="identity-wizard__step"
             data-wizard-step-name="@step.name"
@@ -155,7 +152,6 @@
         help = List(
             ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")
         ),
-        banner = Some("Thank you for signing up"),
         content = marketingStepContent,
     )
 }

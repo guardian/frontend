@@ -154,3 +154,22 @@ label[for=identity-header-account-menu-fallback]:focus {
     }
 
 }
+
+
+.identity-header-auto-signin {
+    .identity-wrapper {
+        padding-bottom: $gs-gutter / 2;
+    }
+    .form__success {
+        margin-top: 0;
+        @include mq(desktop) {
+            display: flex;
+            justify-content: space-between;
+            @supports (display: flex) {
+                p {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
