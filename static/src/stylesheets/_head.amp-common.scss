@@ -12,6 +12,8 @@
 @import 'amp/_helpers';
 
 @include grid-system;
+@import 'amp/_navigation';
+@import 'amp/_footer';
 @import 'amp/_submeta';
 
 @import 'amp/_rich-link';

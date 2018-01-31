@@ -15,17 +15,12 @@ import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, 
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.signup.newsletterContent
 import html.HtmlPageHelpers.ContentCSSFile
-import views.html.stacked
 
 object NewsletterHtmlPage extends HtmlPage[SimplePage] {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = stacked(
-      criticalStyleLink(ContentCSSFile),
-      criticalStyleLink(InlineNavigationCSSFile))
-    override def criticalCssInline: Html = criticalStyleInline(
-      Html(common.Assets.css.head(Some("signup"))),
-      Html(common.Assets.css.inlineNavigation))
+    override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
+    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("signup"))))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")

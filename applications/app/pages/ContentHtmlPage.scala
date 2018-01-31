@@ -16,17 +16,12 @@ import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.{newspaperContent, quizAnswerContent}
 import html.HtmlPageHelpers.ContentCSSFile
 import conf.switches.Switches.WeAreHiring
-import views.html.stacked
 
 object ContentHtmlPage extends HtmlPage[Page] {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = stacked(
-      criticalStyleLink(ContentCSSFile),
-      criticalStyleLink(InlineNavigationCSSFile))
-    override def criticalCssInline: Html = criticalStyleInline(
-      Html(common.Assets.css.head(None)),
-      Html(common.Assets.css.inlineNavigation))
+    override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
+    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
