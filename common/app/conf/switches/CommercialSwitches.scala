@@ -287,6 +287,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val prebidSwitch: Switch = Switch(
+    group = Commercial,
+    name = "prebid-header-bidding",
+    description = "Turn on Prebid header bidding (takes priority over Sonobi)",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val sonobiSwitch: Switch = Switch(
     group = Commercial,
     name = "sonobi-header-bidding",
@@ -294,7 +304,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = false
   )
 
   val TrustxBidder: Switch = Switch(

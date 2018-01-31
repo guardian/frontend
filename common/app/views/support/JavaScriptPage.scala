@@ -5,10 +5,8 @@ import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
-import conf.switches.Switches.sonobiSwitch
+import conf.switches.Switches.{sonobiSwitch, prebidSwitch}
 import conf.{Configuration, DiscussionAsset}
-import experiments.ActiveExperiments.isParticipating
-import experiments.Prebid
 import model._
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
@@ -48,7 +46,7 @@ object JavaScriptPage {
       "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
       "hbImpl" -> {
-        if (isParticipating(Prebid)) JsString("prebid")
+        if (prebidSwitch.isSwitchedOn) JsString("prebid")
         else if (sonobiSwitch.isSwitchedOn) JsString("sonobi")
         else JsString("none")
       }
