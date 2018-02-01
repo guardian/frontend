@@ -803,6 +803,13 @@ $quote-mark: 35px;
         }
     }
 }
+
+// *************** Analysis overides *************
+.content--type-analysis {
+    .content__labels.content__labels--not-immersive {
+        display: block;
+    }
+}
 // *************** Feature overides *************
 
 .content--type-feature {
