@@ -18,8 +18,8 @@ $quote-mark: 35px;
 .content--type-live,
 .content--type-matchreport,
 .content--type-media,
-.content--type-quiz,
-.content--type-review {
+.content--type-review,
+.content--type-quiz {
     // *************** Meta and Social ***************
     .submeta {
         @include multiline(4, $garnett-neutral-4, top);
@@ -134,9 +134,9 @@ $quote-mark: 35px;
     .content__headline,
     .content__labels,
     .content__standfirst,
-    .meta__contact-wrap,
     .old-article-message,
-    .social--top {
+    .social--top,
+    .meta__contact-wrap {
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
         @include mq(mobileLandscape) {
@@ -179,6 +179,7 @@ $quote-mark: 35px;
         @include mq(leftCol) {
             max-width: 100%;
         }
+
     }
 
     .content__main-column--article .badge--alt {
@@ -286,6 +287,8 @@ $quote-mark: 35px;
     .meta__twitter {
         @include fs-textSans(1);
         margin: 0;
+        margin-top: 0;
+        margin-right: 0;
         // magic number correcting line height so vertical alignment with datestamp is correct
         margin-bottom: -2px;
         display: inline-block;
@@ -293,10 +296,11 @@ $quote-mark: 35px;
         text-decoration: none;
         padding-right: $gs-gutter / 2;
 
+
         svg {
             height: 10px;
             max-width: 12px;
-            margin-right: 0;
+            margin-right: 0px;
         }
 
         a {
@@ -309,7 +313,6 @@ $quote-mark: 35px;
             &:focus,
             &:hover {
                 text-decoration: none;
-
                 .contact {
                     text-decoration: underline;
                 }
@@ -474,6 +477,7 @@ $quote-mark: 35px;
             padding-bottom: $gs-baseline*3;
         }
     }
+
     //Review stars
     .stars {
         background-color: $news-garnett-highlight;
@@ -570,6 +574,7 @@ $quote-mark: 35px;
         padding: $gs-baseline/2 0 0;
         line-height: 1;
     }
+
     // *************** Quote Styles ***************
     .element-pullquote {
         background-color: $garnett-neutral-3;
@@ -710,7 +715,6 @@ $quote-mark: 35px;
             }
         }
     }
-
     .ad-slot-container {
         height: 710px;
     }
@@ -835,8 +839,9 @@ $quote-mark: 35px;
 }
 // *************** Opinion Styles ***************
 
-.content--type-comment,
-.content--type-guardianview {
+
+.content--type-guardianview,
+.content--type-comment {
     .content__main {
         background-color: $opinion-garnett-background;
         padding-bottom: $gs-baseline/2;
@@ -859,7 +864,8 @@ $quote-mark: 35px;
         }
 
         .element-pullquote,
-        .element-pullquote:after {
+        .element-pullquote:after
+        {
             background-color: darken($opinion-garnett-background, 7%);
         }
 
@@ -870,7 +876,6 @@ $quote-mark: 35px;
         .caption {
             background-color: $opinion-garnett-background;
         }
-
         .caption--main {
             background-color: $garnett-neutral-1;
         }
@@ -895,9 +900,9 @@ $quote-mark: 35px;
         }
     }
 
-    .content__dateline,
+    .meta__twitter,
     .meta__email,
-    .meta__twitter {
+    .content__dateline {
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
         @include mq(mobileLandscape) {
@@ -913,6 +918,7 @@ $quote-mark: 35px;
     .content__dateline {
         // magic number used to align date stamp with standfirst baseline in opinion pieces per design
         margin-top: 8px;
+
         @include mq(leftCol) {
             margin-top: -$gs-baseline/2;
         }
@@ -924,8 +930,8 @@ $quote-mark: 35px;
         }
     }
 
-    .meta__email,
-    .meta__twitter {
+    .meta__twitter,
+    .meta__email {
         display: block;
         padding-top: 8px;
         // magic number used to align date stamp with Twitter handle
@@ -937,6 +943,7 @@ $quote-mark: 35px;
             margin-bottom: 0;
         }
     }
+
 
     .content__header {
         @include multiline(8, $garnett-neutral-4);
@@ -1001,15 +1008,14 @@ $quote-mark: 35px;
         // magic numbers used for correct top spacing
         padding-top: 2px;
         margin-bottom: 0;
-
         p {
             margin-bottom: 0;
         }
         @include mq(leftCol) {
             margin-bottom: $gs-baseline;
         }
-    }
 
+    }
     .content__headline__byline {
         overflow: visible;
     }
@@ -1023,6 +1029,7 @@ $quote-mark: 35px;
     }
 
     .content__head--byline-pic .byline-img {
+
         @include mq(mobileLandscape) {
             height: $gs-baseline*15;
         }
@@ -1143,9 +1150,11 @@ $quote-mark: 35px;
         @include mq(desktop) {
             margin-left: gs-span(2) + $gs-gutter;
             max-width: gs-span(8);
+
         }
         @include mq(leftCol) {
             margin-left: gs-span(3) + $gs-baseline/2;
+
         }
     }
 
@@ -1227,7 +1236,7 @@ $quote-mark: 35px;
                 padding-bottom: $gs-baseline*6;
             }
             @include mq(leftCol) {
-                margin-left: gs-span(3) - $gs-gutter/2;
+                margin-left: gs-span(3) - $gs-gutter/2;;
                 padding-left: $gs-gutter/2;
             }
         }
@@ -1376,7 +1385,6 @@ $quote-mark: 35px;
     }
 }
 // *************** Analysis ***************
-
 .content--type-analysis {
     .media-primary {
         margin-bottom: 0;
@@ -1546,7 +1554,6 @@ $quote-mark: 35px;
     box-sizing: content-box;
 }
 // *************** Interactive elements ***************
-
 .interactive.element--showcase,
 .interactive.element--supporting {
     background: $garnett-neutral-5;
@@ -1554,9 +1561,9 @@ $quote-mark: 35px;
 
 .paid-content {
     .content__headline,
-    .content__series-label,
     .content__standfirst,
     .from-content-api,
+    .content__series-label,
     .submeta__section-labels .submeta__link {
         @include f-textSans;
     }
@@ -1569,8 +1576,8 @@ $quote-mark: 35px;
         @include multiline(4, $garnett-neutral-6, top);
     }
 
-    .block-share__item,
     .social-icon,
+    .block-share__item,
     .submeta__keywords {
         border-color: $garnett-neutral-6;
     }
@@ -1583,7 +1590,9 @@ $quote-mark: 35px;
         background: transparent;
     }
 }
+
 // *************** By line cutouts ****************
+
 .content__head--byline-pic .content__header {
     padding-bottom: 0;
 
@@ -1626,12 +1635,13 @@ $quote-mark: 35px;
         float: none;
     }
 }
+
 // *************** Commercial overrides ****************
+
 .paid-content {
     a {
         color: $garnett-neutral-6;
     }
-
     .social-icon__svg {
         fill: $garnett-neutral-1;
     }
