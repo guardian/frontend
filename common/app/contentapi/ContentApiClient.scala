@@ -1,5 +1,7 @@
 package contentapi
 
+import java.util.concurrent.TimeUnit
+
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import com.gu.contentapi.client.ContentApiClientLogic
@@ -13,6 +15,7 @@ import conf.switches.Switches.CircuitBreakerSwitch
 import model.{Content, Trail}
 import org.joda.time.DateTime
 import com.github.nscala_time.time.Implicits._
+import okhttp3.{ConnectionPool, OkHttpClient}
 
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
@@ -127,6 +130,13 @@ final case class CircuitBreakingContentApiClient(
     callTimeout = contentApi.timeout,
     resetTimeout = contentApi.circuitBreakerResetTimeout
   )
+
+  override lazy val http: OkHttpClient = new OkHttpClient.Builder()
+    .connectTimeout(2, TimeUnit.SECONDS)
+    .readTimeout(2, TimeUnit.SECONDS)
+    .followRedirects(true)
+    .connectionPool(new ConnectionPool(10, 60, TimeUnit.SECONDS))
+    .build()
 
   circuitBreaker.onOpen(
     log.error(s"CAPI circuit breaker: reached error threshold (${contentApi.circuitBreakerErrorThreshold}). Breaker is OPEN!")

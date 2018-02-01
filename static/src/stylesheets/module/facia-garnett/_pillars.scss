@@ -111,7 +111,8 @@ $pillars: (
     &.fc-item--gallery .fc-item__kicker,
     &.fc-item--video .fc-item__kicker,
     &.video-playlist__item .fc-item__kicker,
-    &.fc-item--type-immersive .fc-item__kicker
+    &.fc-item--type-immersive .fc-item__kicker,
+    &.fc-item--type-immersive .fc-item__byline
     {
         color: map-get($palette, invertedKicker);
     }

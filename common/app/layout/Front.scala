@@ -2,7 +2,6 @@ package layout
 
 import common.{Edition, LinkTo}
 import conf.switches.Switches
-import experiments.{ActiveExperiments, HideShowMoreButtonExperiment}
 import model.PressedPage
 import model.facia.PressedCollection
 import model.meta.{ItemList, ListItem}
@@ -319,7 +318,7 @@ object Front extends implicits.Collections {
   def fromPressedPageWithDeduped(pressedPage: PressedPage,
                                  edition: Edition,
                                  initialContext: ContainerLayoutContext = ContainerLayoutContext.empty,
-                                 adFree: Boolean)(implicit requestHeader: RequestHeader): Seq[FaciaContainer] = {
+                                 adFree: Boolean): Seq[FaciaContainer] = {
 
     @tailrec
     def faciaContainers(collections: List[PressedCollection],
@@ -350,13 +349,12 @@ object Front extends implicits.Collections {
             omitMPU = if (containerLayoutMaybe.isDefined) false else omitMPU,
             adFree = adFree
           )
-          val containerWithExperiment = applyShowMoreExperiment(faciaContainer)
 
           faciaContainers(
             remainingPressedCollections,
             newContext,
             index + 1,
-            accumulation :+ containerWithExperiment
+            accumulation :+ faciaContainer
           )
       }
     }
@@ -367,15 +365,10 @@ object Front extends implicits.Collections {
     )
   }
 
-  private def applyShowMoreExperiment(faciaContainer: FaciaContainer)(implicit request: RequestHeader): FaciaContainer = {
-    val showMoreEnabled = faciaContainer.hasShowMoreEnabled && !ActiveExperiments.isParticipating(HideShowMoreButtonExperiment)
-    faciaContainer.copy(hasShowMoreEnabled = showMoreEnabled)
-  }
-
   def fromPressedPage(pressedPage: PressedPage,
                       edition: Edition,
                       initialContext: ContainerLayoutContext = ContainerLayoutContext.empty,
-                      adFree: Boolean)(implicit requestHeader: RequestHeader): Front =
+                      adFree: Boolean): Front =
     Front(fromPressedPageWithDeduped(pressedPage, edition, initialContext, adFree))
 
   def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
