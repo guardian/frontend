@@ -40,7 +40,7 @@
     "wolfy87-eventemitter": "~4.2.6"
   },
   "devDependencies": {
-    "amphtml-validator": "^1.0.20",
+    "amphtml-validator": "^1.0.21",
     "any-observable": "^0.2.0",
     "autoprefixer": "^7.1.6",
     "aws-sdk": "^2.107.0",
