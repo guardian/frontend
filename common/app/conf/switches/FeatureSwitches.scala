@@ -602,7 +602,7 @@ trait FeatureSwitches {
     "when ON, garnett styling will appear on Fronts and articles (this does not work on the navigation)",
     owners = Seq(Owner.withGithub("NataliaLKB"), Owner.withGithub("blongden73")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 1, 31),
+    sellByDate = new LocalDate(2018, 2, 8),
     exposeClientSide = false
   )
 }
