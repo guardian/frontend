@@ -569,6 +569,12 @@ $quote-mark: 35px;
         }
     }
 
+    .block-time.published-time {
+        position: relative;
+        padding: $gs-baseline/2 0 0;
+        line-height: 1;
+    }
+
     // *************** Quote Styles ***************
     .element-pullquote {
         background-color: $garnett-neutral-3;
