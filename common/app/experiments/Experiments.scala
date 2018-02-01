@@ -11,8 +11,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline,
-    Garnett,
-    HideShowMoreButtonExperiment
+    Garnett
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -66,11 +65,3 @@ object Garnett extends Experiment(
 ) {
   override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettLaunch.isSwitchedOn
 }
-
-object HideShowMoreButtonExperiment extends Experiment(
-  name = "remove-show-more-ab",
-  description = "Users in this experiment will not see the show more button on front collections",
-  owners = Seq(Owner.withGithub("Quarpt")),
-  sellByDate = new LocalDate(2018, 2, 1),
-  participationGroup = Perc5A
-)
