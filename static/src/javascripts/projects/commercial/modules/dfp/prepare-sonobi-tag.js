@@ -47,7 +47,7 @@ const setupSonobi: () => Promise<void> = once(() => {
         );
     } else if (dfpEnv.externalDemand === 'prebid') {
         buildPageTargeting();
-        return prebid.initialise();
+        prebid.initialise();
     }
 
     return Promise.resolve();
