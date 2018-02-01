@@ -121,7 +121,7 @@ class PrebidAdUnit {
 }
 
 class PrebidService {
-    static initialise(): Promise<any> {
+    static initialise(): void {
         window.pbjs.bidderSettings = {
             standard: {
                 alwaysUseBid: false,
