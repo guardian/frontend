@@ -42,7 +42,7 @@
   "devDependencies": {
     "amphtml-validator": "^1.0.20",
     "any-observable": "^0.2.0",
-    "autoprefixer": "^7.1.6",
+    "autoprefixer": "^7.2.5",
     "aws-sdk": "^2.107.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
