@@ -58,7 +58,6 @@ GET            /weatherapi/forecast/:id.json                                    
 # Analytics
 GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abtests()
 GET            /analytics/confidence                                                                                             controllers.admin.AnalyticsConfidenceController.renderConfidence()
-GET            /analytics/content/video                                                                                          controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 
 # Commercial admin
 
