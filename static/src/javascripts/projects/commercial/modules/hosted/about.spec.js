@@ -1,5 +1,5 @@
 // @flow
-import hostedAbout from 'commercial/modules/hosted/about';
+import { init } from 'commercial/modules/hosted/about';
 
 describe('Hosted About Popup', () => {
     beforeEach(() => {
@@ -17,13 +17,11 @@ describe('Hosted About Popup', () => {
     });
 
     it('should exist', () => {
-        expect(hostedAbout).toBeDefined();
-        expect(hostedAbout.init).toBeDefined();
+        expect(init).toBeDefined();
     });
 
     it('should hide popup after initialization', done => {
-        hostedAbout
-            .init()
+        init()
             .then(() => {
                 expect(
                     (document.querySelector(
@@ -36,8 +34,7 @@ describe('Hosted About Popup', () => {
     });
 
     it('should show popup after clicking on the button', done => {
-        hostedAbout
-            .init()
+        init()
             .then(() => {
                 (document.querySelector('.js-hosted-about'): any).click();
                 expect(

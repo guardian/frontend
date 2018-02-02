@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicLong
 
 import com.gu.Box
 import com.amazonaws.services.cloudwatch.model.StandardUnit
+import common.{FaciaPressMetrics, StopWatch}
 import model.diagnostics.CloudWatch
 import org.joda.time.DateTime
 import scala.concurrent.Future
@@ -132,6 +133,15 @@ final case class DurationMetric(override val name: String, override val metricUn
   def recordDuration(timeInMillis: Double): Unit = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
 
   override def isEmpty: Boolean = dataPoints.get().isEmpty
+}
+
+object DurationMetric {
+  def withMetrics[A](metric: DurationMetric)(block: => A): A = {
+    val stopWatch: StopWatch = new StopWatch
+    val result = block
+    metric.recordDuration(stopWatch.elapsed)
+    result
+  }
 }
 
 case class SampledDataPoint(value: Double, sampleTime: DateTime) extends DataPoint {
