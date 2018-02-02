@@ -69,7 +69,8 @@ $cp-scott-width-tablet: 80px;
     line-height: $gs-baseline * 4 / 3;
 
     .inline-quote svg {
-        height: $gs-gutter / 2;
+        width: $gs-gutter/2 + $gs-baseline/2;
+        height: auto;
         fill: $neutral-2;
     }
 

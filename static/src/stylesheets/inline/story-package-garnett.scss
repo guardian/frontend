@@ -70,8 +70,7 @@
     .fc-item.fc-item--pillar-sport.fc-item--type-comment,
     .fc-item.fc-item--pillar-lifestyle.fc-item--type-comment,
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item.fc-item--type-feature,
-    .fc-item.fc-item--pillar-opinion.fc-item--type-comment .fc-trail__count--commentcount
+    .fc-item.fc-item--type-feature
     {
         background-color: $story-package-garnett;
 
@@ -81,6 +80,9 @@
             .fc-trail__count--commentcount {
                 background-color: darken($story-package-garnett, 5%);
             }
+        }
+        .fc-trail__count--commentcount {
+            background-color: $story-package-garnett;
         }
 
         .fc-item__headline {
