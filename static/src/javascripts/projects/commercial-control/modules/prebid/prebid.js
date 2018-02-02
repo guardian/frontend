@@ -126,6 +126,9 @@ class PrebidService {
                             alwaysUseBid: false,
                         },
                     };
+                    window.pbjs.setConfig({
+                        priceGranularity: 'auto',
+                    });
                     resolve();
                 },
                 'commercial-prebid'
