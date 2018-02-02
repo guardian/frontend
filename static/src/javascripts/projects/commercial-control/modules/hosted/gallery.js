@@ -556,7 +556,7 @@ HostedGallery.prototype.states = {
     },
 };
 
-const init = (): Promise<any> => {
+export const init = (): Promise<any> => {
     if (qwery('.js-hosted-gallery-container').length) {
         return loadCssPromise.then(() => {
             let res;
@@ -578,9 +578,4 @@ const init = (): Promise<any> => {
     }
 
     return Promise.resolve();
-};
-
-export default {
-    init,
-    HostedGallery,
 };
