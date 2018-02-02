@@ -804,12 +804,6 @@ $quote-mark: 35px;
     }
 }
 
-// *************** Analysis overides *************
-.content--type-analysis {
-    .content__labels.content__labels--not-immersive {
-        display: block;
-    }
-}
 // *************** Feature overides *************
 
 .content--type-feature {
@@ -1401,10 +1395,6 @@ $quote-mark: 35px;
         @include mq(leftCol) {
             margin-bottom: $gs-baseline/2;
         }
-    }
-
-    .content__labels--not-immersive {
-        display: none;
     }
 
     .content__headline {
