@@ -127,6 +127,9 @@ class PrebidService {
                 alwaysUseBid: false,
             },
         };
+        window.pbjs.setConfig({
+            priceGranularity: 'auto',
+        });
     }
 
     // Prebid 1.0 supports concurrent bid requests, but for 0.34, each request
