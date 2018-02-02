@@ -545,7 +545,6 @@ object NavLinks {
     "music/classicalmusicandopera",
     "lifeandstyle/food-and-drink",
     "tone/recipes",
-    "lifeandstyle/women",
     "lifeandstyle/health-and-wellbeing",
     "lifeandstyle/family",
     "lifeandstyle/home-and-garden",
