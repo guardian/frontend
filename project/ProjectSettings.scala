@@ -46,7 +46,6 @@ object ProjectSettings {
     resolvers ++= Seq(
       Resolver.typesafeRepo("releases"),
       Resolver.sonatypeRepo("releases"),
-      "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
       "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
       Resolver.bintrayRepo("guardian", "ophan"),
