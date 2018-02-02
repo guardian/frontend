@@ -40,8 +40,7 @@ object ProjectSettings {
   val frontendDependencyManagementSettings = Seq(
     ivyXML :=
       <dependencies>
-        <exclude org="commons-logging"><!-- Conflicts with jcl-over-slf4j in Play. --></exclude>
-        <exclude org="org.specs2"><!-- because someone thinks it is acceptable to have this as a prod dependency --></exclude>
+        <exclude org="commons-logging" module="commons-logging"><!-- Conflicts with jcl-over-slf4j in Play. --></exclude>
       </dependencies>,
 
     resolvers ++= Seq(
