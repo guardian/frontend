@@ -11,9 +11,9 @@ const bootstrapAtom = <A>(atomMaker: AtomMaker<A>, atomType: AtomType) => {
             if (typeof atom === 'string') {
                 // eslint-disable-next-line no-console
                 console.log(
-                    `Failed to initialise atom [${atomType}/${atomDom.getAttribute(
-                        'data-atom-id'
-                    ) || ''}]: ${atom}`
+                    `Failed to initialise atom [${
+                        atomType
+                    }/${atomDom.getAttribute('data-atom-id') || ''}]: ${atom}`
                 );
             } else if ('requestIdleCallback' in window) {
                 requestIdleCallback(() => {
