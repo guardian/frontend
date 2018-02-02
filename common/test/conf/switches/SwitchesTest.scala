@@ -1,7 +1,7 @@
 package conf.switches
 
-import org.joda.time.{DateTimeConstants, LocalDate}
-import org.scalatest.concurrent.ScalaFutures._
+import org.joda.time.DateTimeConstants.{SATURDAY, SUNDAY}
+import org.joda.time.LocalDate
 import org.scalatest.{AppendedClues, FlatSpec, Matchers}
 
 class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
@@ -14,13 +14,20 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
 
   private val testSwitchGroup = new SwitchGroup("category")
 
+  private val switchExpiryDate = {
+    val today = new LocalDate()
+    if (today.getDayOfWeek == SATURDAY) today.plusDays(2)
+    else if (today.getDayOfWeek == SUNDAY) today.plusDays(1)
+    else today
+  }
+
   def testSwitch: Switch = Switch(
     testSwitchGroup,
     "test-switch",
     "exciting switch",
     owners = Seq(Owner.withGithub("FakeOwner")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 1),
+    sellByDate = switchExpiryDate,
     exposeClientSide = true
   )
 
@@ -35,23 +42,23 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
   )
 
   "Switches" should "not be near expiry over a week in advance" in {
-    Switch.expiry(testSwitch, new LocalDate(2018, 1, 24)) should be(Switch.Expiry(Some(8), false, false))
+    Switch.expiry(testSwitch, switchExpiryDate.minusDays(9)) should be(Switch.Expiry(Some(9), false, false))
   }
 
   "Switches" should "be near expiry a week ahead of the last day" in {
-    Switch.expiry(testSwitch, new LocalDate(2018, 1, 25)) should be(Switch.Expiry(Some(7), true, false))
+    Switch.expiry(testSwitch, switchExpiryDate.minusDays(7)) should be(Switch.Expiry(Some(7), true, false))
   }
 
   "Switches" should "still be good on their sell by date" in {
-    Switch.expiry(testSwitch, new LocalDate(2018, 2, 1)) should be(Switch.Expiry(Some(0), true, false))
+    Switch.expiry(testSwitch, switchExpiryDate) should be(Switch.Expiry(Some(0), true, false))
   }
 
   they should "be bad after their sell by date" in {
-    Switch.expiry(testSwitch, new LocalDate(2018, 2, 2)) should be(Switch.Expiry(Some(-1), true, true))
+    Switch.expiry(testSwitch, switchExpiryDate.plusDays(1)) should be(Switch.Expiry(Some(-1), true, true))
   }
 
   they should "never expire if they don't have an expiry" in {
-    Switch.expiry(foreverSwitch, new LocalDate(2016, 2, 2)) should be(Switch.Expiry(None, false, false))
+    Switch.expiry(foreverSwitch, switchExpiryDate) should be(Switch.Expiry(None, false, false))
   }
 
   "Switches" should "have names consisting only of lowercase letters, numbers and hyphens" in {
@@ -74,7 +81,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
   they should "have weekday expiry dates" in {
     def isWeekend(date: LocalDate): Boolean = {
       val day = date.getDayOfWeek
-      day == DateTimeConstants.SATURDAY || day == DateTimeConstants.SUNDAY
+      day == SATURDAY || day == SUNDAY
     }
     forAllSwitches(switch => switch.sellByDate.exists(isWeekend) shouldBe false)
   }
