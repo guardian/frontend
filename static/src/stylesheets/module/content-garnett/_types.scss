@@ -850,6 +850,14 @@ $quote-mark: 35px;
             background-color: $opinion-garnett-background;
         }
 
+        .rich-link {
+            background-color: $garnett-neutral-5;
+        }
+
+        .rich-link.tone-media--item {
+            background-color: $neutral-1;
+        }
+
         .social__item {
             @include mq(tablet) {
                 padding-bottom: 0;
