@@ -9,8 +9,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
     CommercialPaidContentTemplate,
-    CommercialBaseline,
-    Garnett
+    CommercialBaseline
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -54,13 +53,3 @@ object CommercialBaseline extends Experiment(
   sellByDate = new LocalDate(2018, 4, 11),
   participationGroup = Perc2B
 )
-
-object Garnett extends Experiment(
-  name = "garnett",
-  description = "Users in this experiment will see garnet styling.",
-  owners = Seq(Owner.withName("dotcom.platform")),
-  sellByDate = new LocalDate(2018, 2, 8),
-  participationGroup= Perc0C
-) {
-  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || true
-}

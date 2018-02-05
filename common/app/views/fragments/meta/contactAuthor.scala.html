@@ -1,21 +1,20 @@
 @(tags: model.Tags, amp: Boolean = false)(implicit header: RequestHeader)
 @import views.support.RenderClasses
-@import experiments._
 
 @tags.contributors.headOption.map { profile =>
     @profile.properties.twitterHandle.map{ twitter =>
         <div class="meta__twitter meta__contact-method">
             <a href="https://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle">
-                    @fragments.inlineSvg("twitter-bird", "icon", Seq("i-left"))
-                    @@@twitter
+                @fragments.inlineSvg("twitter-bird", "icon", Seq("i-left"))
+                @@@twitter
             </a>
         </div>
     }
     @profile.properties.emailAddress.map { email =>
         <div class="meta__email meta__contact-method">
             <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address">
-                    @fragments.inlineSvg("mail", "icon", Seq("i-left"))
-                    Email
+                @fragments.inlineSvg("mail", "icon", Seq("i-left"))
+                Email
             </a>
         </div>
     }
