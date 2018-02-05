@@ -79,7 +79,9 @@ jest.mock('common/modules/onward/geo-most-popular', () => ({
 jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
     getOutbrainComplianceTargeting: () => Promise.resolve(),
 }));
-jest.mock('commercial/modules/dfp/load-advert', () => jest.fn());
+jest.mock('commercial/modules/dfp/load-advert', () => ({
+    loadAdvert: jest.fn(),
+}));
 
 let $style;
 const makeFakeEvent = (creativeId, id) => ({

@@ -74,11 +74,10 @@ const removeAdSlots = (): Promise<void> => {
 };
 
 const setPublisherProvidedId = (): void => {
-    const pubads = window.googletag.pubads();
     const user: ?Object = getUserFromCookie();
     if (user) {
         const hashedId = sha1.hash(user.id);
-        pubads.setPublisherProvidedId(hashedId);
+        window.googletag.pubads().setPublisherProvidedId(hashedId);
     }
 };
 
@@ -122,8 +121,9 @@ export const initPrepareGoogletag = (
         // A promise error here, from a failed module load,
         // could be a network problem or an intercepted request.
         // Abandon the init sequence.
-        setupAdvertising().catch(removeAdSlots);
-        return Promise.resolve();
+        return setupAdvertising()
+            .catch(removeAdSlots)
+            .then(stop);
     }
     return removeAdSlots().then(stop);
 };
