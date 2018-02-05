@@ -106,6 +106,20 @@
     }
 }
 
+// Opinion article specific styles
+//-----------------------
+
+.content--type-guardianview,
+.content--type-comment {
+    .rich-link {
+        background-color: $garnett-neutral-5;
+    }
+
+    .rich-link.tone-media--item {
+        background-color: $neutral-1;
+    }
+}
+
 .blog .element-rich-link {
     float: none;
     width: auto;
