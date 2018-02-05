@@ -316,4 +316,14 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2018, 2, 21),
     exposeClientSide = true
   )
+
+  val OrielAnalyticsSwitch: Switch = Switch(
+    group = Commercial,
+    name = "oriel-analytics",
+    description = "Include TrustX adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 2, 21),
+    exposeClientSide = true
+  )
 }
