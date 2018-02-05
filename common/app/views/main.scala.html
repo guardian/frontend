@@ -1,6 +1,6 @@
 @(projectName: Option[String] = None)(head: Html)(body: Html)(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, commercial}
-@import conf.switches.Switches.{BreakingNewsSwitch, SurveySwitch}
+@import conf.switches.Switches.{BreakingNewsSwitch, SurveySwitch, OrielAnalyticsSwitch}
 @import model.Page.getContent
 @import views.support.{Commercial, RenderClasses}
 @import play.api.Mode.Dev
@@ -94,7 +94,9 @@
 
         @fragments.analytics.base()
 
-        @fragments.commercial.orielAnalytics()
+        @if(OrielAnalyticsSwitch.isSwitchedOn) {
+            @fragments.commercial.orielAnalytics()
+        }
     </body>
         @if(context.environment.mode == Dev) {
             <script>
