@@ -13,7 +13,7 @@ $quote-mark: 35px;
 .content--type-comment,
 .content--type-feature,
 .content--type-guardianview,
-.content--type-immersive,
+.content--type-immersive:not(.content--minute-article),
 .content--type-interview,
 .content--type-live,
 .content--type-matchreport,
@@ -567,6 +567,12 @@ $quote-mark: 35px;
         .fc-item.fc-item--media::before {
             content: none;
         }
+    }
+
+    .block-time.published-time {
+        position: relative;
+        padding: $gs-baseline/2 0 0;
+        line-height: 1;
     }
 
     // *************** Quote Styles ***************
@@ -1388,10 +1394,6 @@ $quote-mark: 35px;
         @include mq(leftCol) {
             margin-bottom: $gs-baseline/2;
         }
-    }
-
-    .content__labels--not-immersive {
-        display: none;
     }
 
     .content__headline {

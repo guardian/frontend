@@ -1,7 +1,7 @@
 // @flow
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { noop } from 'lib/noop';
-import HostedGallery from './gallery';
+import { init } from './gallery';
 import { galleryHtml } from './gallery-html';
 
 jest.mock('lib/detect', () => ({
@@ -27,7 +27,7 @@ describe('Hosted Gallery', () => {
         if (document.body) {
             document.body.innerHTML = galleryHtml;
         }
-        HostedGallery.init().then(galleryInstance => {
+        init().then(galleryInstance => {
             gallery = galleryInstance;
             done();
         });

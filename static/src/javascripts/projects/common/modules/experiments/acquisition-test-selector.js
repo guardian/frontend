@@ -12,11 +12,13 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { colourTestEpicHoldback } from 'common/modules/experiments/tests/circles-epic-holdback';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
+import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
+    acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
     colourTestEpicHoldback,
     askFourEarning,

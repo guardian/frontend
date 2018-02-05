@@ -4,7 +4,6 @@
 @import navigation.NavMenu
 @import navigation.ReaderRevenueSite.Membership
 @import navigation.UrlHelpers.{getReaderRevenueUrl, AmpHeader}
-@import experiments.{ActiveExperiments, GarnettHeader}
 
 <header class="header"
         role="banner">
@@ -25,15 +24,10 @@
         class="header__logo"
         data-link-name="nav2 : logo">
             <span class="u-h">The Guardian - Back to home</span>
-            @if(ActiveExperiments.isParticipating(GarnettHeader)) {
-                @fragments.inlineSvg("the-guardian-logo", "logo", List(
-                    "header__logo"
-                ))
-            } else {
-                @fragments.inlineSvg("guardian-logo-160", "logo", List(
-                    "header__logo"
-                ))
-            }
+
+            @fragments.inlineSvg("the-guardian-logo", "logo", List(
+                "header__logo"
+            ))
         </a>
 
         <ul class="pillars">

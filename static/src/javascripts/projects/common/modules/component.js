@@ -30,7 +30,7 @@ class Component {
     updateEvery: number;
     fetchData: ?string;
     manipulationType: string;
-    t: ?number;
+    t: ?TimeoutID;
 
     constructor(): void {
         this.useBem = false;
@@ -348,7 +348,10 @@ class Component {
             delete this.elem;
         }
 
-        clearTimeout(this.t);
+        if (this.t) {
+            window.clearTimeout(this.t);
+        }
+
         this.t = null;
         this.autoupdated = false;
 

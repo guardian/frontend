@@ -37,7 +37,7 @@ const template = (): string => `
         </div>
     `;
 
-const init = () =>
+export const init = () =>
     fastdom
         .write(() => {
             $(document.body).append(template());
@@ -56,7 +56,3 @@ const init = () =>
                 fastdom.write(() => overlay.classList.add('u-h'));
             });
         });
-
-export default {
-    init,
-};

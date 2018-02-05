@@ -2,10 +2,13 @@
     user: com.gu.identity.model.User,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    customMessage: Option[String] = None
+    customMessage: Option[String] = None,
+    verifiedReturnUrl: Option[String],
+    defaultReturnUrl: String,
+    isSignupFlow: Boolean = false
 )(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@import views.html.fragments.registrationFooter
+@import common.LinkTo
 
 <div class="identity-wrapper monocolumn-wrapper">
     <section class="identity-forms-message">
@@ -17,15 +20,25 @@
             <div class="identity-forms-email-wrap">
                 <header>@user.getPrimaryEmailAddress</header>
                 <aside>
-                    Is the email not correct? <a  href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="identity : email : update-email-from-error">Change it here</a>
+                    Is the email not correct? <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="mma : verify-email : update-email-from-error">Change it here</a>
                 </aside>
             </div>
-            <p><strong>We have sent a link to this email address. Please check your inbox and follow the instructions.</strong></p>
+            <p>We have sent a link to this email address. Please check your inbox and follow the instructions.</p>
         </div>
         <aside class="identity-forms-message__body">
             <p class="identity-forms-message__explainer">Validation links are valid for 30 minutes before expiring.</p>
             <p>Haven’t received the email or the link has expired?</p>
-            <a class="manage-account__button manage-account__button--center js-id-send-validation-email" data-link-name="Resend confirmation email">Resend confirmation email</a>
+            <a class="manage-account__button manage-account__button--center js-id-send-validation-email" data-link-name="mma : verify-email : resent">Resend confirmation email</a>
         </aside>
+        @if(isSignupFlow) {
+            <footer class="identity-forms-message__body">
+                <a class="u-underline" href="@LinkTo {@verifiedReturnUrl.getOrElse(defaultReturnUrl)}" data-link-name="mma : verify-email : exit-to-gu">
+                    @(verifiedReturnUrl match {
+                        case Some(_) => "Exit and continue"
+                        case None => "Exit and go to The Guardian home page"
+                    })
+                </a>
+            </footer>
+        }
     </section>
 </div>

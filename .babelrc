@@ -10,28 +10,26 @@
         "production": {
             "presets": [
                 ["babel-preset-env", {
-                    "modules": "amd"
+                    "modules": false
                 }]
             ],
             "plugins": [
                 ["babel-plugin-transform-runtime", {
                     "polyfill": false
                 }],
-                "babel-plugin-add-module-exports",
                 "babel-plugin-transform-class-properties",
             ],
         },
         "development": {
             "presets": [
                 ["babel-preset-env", {
-                    "modules": "amd"
+                    "modules": false
                 }]
             ],
             "plugins": [
                 ["babel-plugin-transform-runtime", {
                     "polyfill": false
                 }],
-                "babel-plugin-add-module-exports",
                 "babel-plugin-transform-class-properties",
             ],
         },

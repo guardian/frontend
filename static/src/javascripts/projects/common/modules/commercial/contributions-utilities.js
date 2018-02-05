@@ -174,18 +174,18 @@ const makeABTestVariant = (
     parentTest: EpicABTest
 ): Variant => {
     const trackingCampaignId = `epic_${parentTest.campaignId}`;
-    const campaignCode = getCampaignCode(
-        parentTest.campaignPrefix,
-        parentTest.campaignId,
-        id,
-        parentTest.campaignSuffix
-    );
     const iframeId = `${parentTest.campaignId}_iframe`;
 
     // defaults for options
     const {
         maxViews = defaultMaxViews,
         isUnlimited = false,
+        campaignCode = getCampaignCode(
+            parentTest.campaignPrefix,
+            parentTest.campaignId,
+            id,
+            parentTest.campaignSuffix
+        ),
         contributeURL = addTrackingCodesToUrl({
             base: contributionsBaseURL,
             componentType: parentTest.componentType,

@@ -1,9 +1,7 @@
 package experiments
 
 import conf.switches.Owner
-import conf.switches.Owner.group
-import conf.switches.SwitchGroup.Commercial
-import conf.switches.Switches.{GarnettHeaderLaunch, GarnettLaunch}
+import conf.switches.Switches.GarnettLaunch
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -13,10 +11,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline,
-    GarnettHeader,
-    Garnett,
-    HideShowMoreButtonExperiment,
-    Prebid
+    Garnett
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -25,7 +20,7 @@ object CommercialClientLogging extends Experiment(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Seq(Owner.withGithub("rich-nguyen")),
-  sellByDate = new LocalDate(2018, 2, 1),
+  sellByDate = new LocalDate(2018, 2, 28),
   participationGroup = Perc1A
 ) {
   override def priorCondition(implicit request: RequestHeader): Boolean = CommercialBaseline.switch.isSwitchedOn
@@ -35,7 +30,7 @@ object CommercialPaidContentTemplate extends Experiment(
   name = "commercial-paid-content",
   description = "A slice of the audience who will see labs content with a background colour variant",
   owners = Seq(Owner.withGithub("rich-nguyen")),
-  sellByDate = new LocalDate(2018, 2, 1),
+  sellByDate = new LocalDate(2018, 2, 28),
   participationGroup = Perc50
 ) {
 
@@ -61,39 +56,12 @@ object CommercialBaseline extends Experiment(
   participationGroup = Perc2B
 )
 
-
-object GarnettHeader extends Experiment(
-  name = "garnett-header",
-  description = "Users in this experiment will see the new desktop design, but with garnett styling",
-  owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("zeftilldeath")),
-  sellByDate = new LocalDate(2018, 2, 1),
-  participationGroup = Perc0A
-) {
-  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettHeaderLaunch.isSwitchedOn
-}
-
 object Garnett extends Experiment(
   name = "garnett",
   description = "Users in this experiment will see garnet styling.",
   owners = Seq(Owner.withName("dotcom.platform")),
-  sellByDate = new LocalDate(2018, 2, 1),
+  sellByDate = new LocalDate(2018, 2, 8),
   participationGroup= Perc0C
 ) {
   override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettLaunch.isSwitchedOn
 }
-
-object HideShowMoreButtonExperiment extends Experiment(
-  name = "remove-show-more-ab",
-  description = "Users in this experiment will not see the show more button on front collections",
-  owners = Seq(Owner.withGithub("Quarpt")),
-  sellByDate = new LocalDate(2018, 2, 1),
-  participationGroup = Perc5A
-)
-
-object Prebid extends Experiment(
-  name = "prebid",
-  description = "Users in this experiment will have a Prebid header-bidding experience.",
-  owners = group(Commercial),
-  sellByDate = new LocalDate(2018, 2, 21),
-  participationGroup = Perc2C
-)

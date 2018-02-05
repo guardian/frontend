@@ -86,4 +86,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-australia-environment-campaign-2018",
+    "Show a custom Epic for articles with the Australia environment campaign tag",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 15),
+    exposeClientSide = true
+  )
+
 }

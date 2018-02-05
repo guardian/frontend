@@ -146,6 +146,7 @@ object FaciaPressMetrics {
   val FrontPressContentSize = SamplerMetric("front-press-content-size", StandardUnit.Bytes)
   val FrontPressContentSizeLite = SamplerMetric("front-press-content-size-lite", StandardUnit.Bytes)
   val FrontDecodingLatency = DurationMetric("front-decoding-latency", StandardUnit.Milliseconds)
+  val FrontDownloadLatency = DurationMetric("front-download-latency", StandardUnit.Milliseconds)
 }
 
 object EmailSubsciptionMetrics {

@@ -11,8 +11,8 @@ object Organisation {
     "name" -> "The Guardian",
     "logo" -> Json.obj(
       "@type" -> "ImageObject",
-      "url" -> "https://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2015/10/1/1443713974413/Guardiantitlepiecedigitalon.png",
-      "width" -> 300,
+      "url" -> "https://uploads.guim.co.uk/2018/01/31/TheGuardian_AMP.png",
+      "width" -> 190,
       "height" -> 60
     )
   )

@@ -54,7 +54,7 @@ const killProgressTracker = (atomId: string): void => {
     }
 };
 
-const setProgressTracker = (atomId: string): number => {
+const setProgressTracker = (atomId: string): IntervalID => {
     players[atomId].progressTracker = setInterval(
         recordPlayerProgress.bind(null, atomId),
         1000
