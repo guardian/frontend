@@ -571,7 +571,6 @@ $quote-mark: 35px;
 
     .block-time.published-time {
         position: relative;
-        padding: $gs-baseline/2 0 0;
         line-height: 1;
     }
 
@@ -803,6 +802,33 @@ $quote-mark: 35px;
         }
     }
 }
+
+// **************** Liveblog overides ***********
+    .content--liveblog .content__header {
+        @include mq(phablet, tablet) {
+            max-width: 100%;
+        }
+    }
+
+    .content--liveblog .content__headline {
+        padding-left: 0;
+    }
+
+    .content--liveblog .content__standfirst {
+        padding-right: 0;
+        max-width: 100%;
+    }
+
+    .content--liveblog .media-primary {
+        margin-left: -$gs-gutter / 2;
+        margin-right: -$gs-gutter / 2;
+
+        @include mq($from: tablet) {
+            margin: 0;
+        }
+    }
+
+
 // *************** Feature overides *************
 
 .content--type-feature {
