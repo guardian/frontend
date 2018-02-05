@@ -16,8 +16,19 @@
     @include stars();
 
     .stars {
-        padding-top: $gs-baseline / 4;
+        padding: $gs-baseline / 6;
+        display: inline-block;
+        margin-top: $gs-baseline / 2;
+        margin-left: 0;
     }
+
+    .content--article & {
+        .star__item__svg {
+            width: 1em;
+            height: 1em;
+        }
+    }
+
 }
 
 .rich-link__image-container {
