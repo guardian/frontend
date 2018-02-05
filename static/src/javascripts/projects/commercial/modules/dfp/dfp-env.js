@@ -8,8 +8,6 @@ export type DfpEnv = {
     renderStartTime: number,
     adSlotSelector: string,
     externalDemand: string,
-    lazyLoadEnabled: boolean,
-    lazyLoadObserve: boolean,
     creativeIDs: Array<number>,
     advertIds: { [k: string]: number },
     advertsToLoad: Array<Advert>,
@@ -27,12 +25,6 @@ export const dfpEnv: DfpEnv = {
 
     /* externalDemand: string. Set to 'sonobi' for direct sonobi connection, 'none', or 'prebid' for header-bidding connections. */
     externalDemand: config.page.hbImpl,
-
-    /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
-    lazyLoadEnabled: false,
-
-    /* lazyLoadObserve: boolean. Use IntersectionObserver in supporting browsers */
-    lazyLoadObserve: 'IntersectionObserver' in window,
 
     /* creativeIDs: array<string>. List of loaded creative IDs */
     creativeIDs: [],
