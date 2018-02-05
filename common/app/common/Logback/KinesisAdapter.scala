@@ -42,7 +42,7 @@ class SafeBlockingKinesisAppender(logbackOperations: LogbackOperationsPool) exte
     breaker.withCircuitBreaker {
       Future {
         super.putMessage(message)
-      }(logbackOperations.logbackOperations) // the logbackOperations thread pool is passed explicitly here so blocking on log doesn't affect the logging thread.
+      }(logbackOperations.logbackOperations) // the logbackOperations thread pool is passed explicitly here so blocking on putMessage doesn't affect the logging thread.
     }
     ()
   }
