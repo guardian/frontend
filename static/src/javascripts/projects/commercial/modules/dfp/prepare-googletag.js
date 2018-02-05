@@ -74,14 +74,18 @@ const removeAdSlots = (): Promise<void> => {
 };
 
 const setPublisherProvidedId = (): void => {
+    const pubads = window.googletag.pubads();
     const user: ?Object = getUserFromCookie();
     if (user) {
         const hashedId = sha1.hash(user.id);
-        window.googletag.pubads().setPublisherProvidedId(hashedId);
+        pubads.setPublisherProvidedId(hashedId);
     }
 };
 
-const init = (start: () => void, stop: () => void): Promise<void> => {
+export const initPrepareGoogletag = (
+    start: () => void,
+    stop: () => void
+): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
         addTag(
             dfpEnv.externalDemand === 'none'
@@ -122,8 +126,4 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
         return Promise.resolve();
     }
     return removeAdSlots().then(stop);
-};
-
-export default {
-    init,
 };

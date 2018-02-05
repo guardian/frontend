@@ -1,10 +1,10 @@
 // @flow
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import createSlot from 'commercial/modules/dfp/create-slot';
+import { createSlot } from 'commercial/modules/dfp/create-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-const init = (): Promise<void> => {
+export const initHighMerch = (): Promise<void> => {
     if (commercialFeatures.highMerch) {
         const anchorSelector = config.page.commentable
             ? '#comments + *'
@@ -27,8 +27,4 @@ const init = (): Promise<void> => {
     }
 
     return Promise.resolve();
-};
-
-export default {
-    init,
 };
