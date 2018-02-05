@@ -3,8 +3,9 @@ import app.{FrontendApplicationLoader, FrontendComponents}
 import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
 import common._
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import _root_.commercial.targeting.TargetingLifecycle
+import akka.actor.ActorSystem
 import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
@@ -33,6 +34,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -60,4 +62,6 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
+
+  def actorSystem: ActorSystem
 }

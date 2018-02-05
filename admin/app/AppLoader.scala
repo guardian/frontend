@@ -1,6 +1,6 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import dfp._
 import common.dfp._
 import common._
@@ -78,7 +78,7 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
   override lazy val lifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
     wire[AdminLifecycle],
@@ -96,6 +96,8 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
   lazy val router: Router = wire[Routes]
 
   lazy val appIdentity = ApplicationIdentity("admin")
+
+  def actorSystem: ActorSystem
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[AdminHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonGzipFilter].filters ++ wire[AdminFilters].filters

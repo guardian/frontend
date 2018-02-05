@@ -3,7 +3,7 @@ import assets.DiscussionExternalAssetsLifecycle
 import business.StocksDataLifecycle
 import com.softwaremill.macwire._
 import common.DiagnosticsLifecycle
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.FootballLifecycle
 import conf.switches.SwitchboardLifecycle
@@ -75,6 +75,7 @@ trait AppComponents
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
   override lazy val blockingOperations = wire[BlockingOperations]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   def actorSystem: ActorSystem
   override def router: Router = wire[Routes]
