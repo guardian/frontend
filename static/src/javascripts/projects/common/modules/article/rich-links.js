@@ -49,7 +49,7 @@ const upgradeRichLink = (el: Element): Promise<void> => {
     if (!link) return Promise.resolve();
 
     const href: string = link.href;
-    const host: string = config.get('page.host');
+    const host: string = config.get('page.host') || 'http://localhost:3000';
     const matches: ?(string[]) = href.split(host);
     const isOnMobile: boolean = isBreakpoint({
         max: 'mobileLandscape',

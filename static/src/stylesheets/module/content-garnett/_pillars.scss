@@ -381,7 +381,8 @@
         @include richLink($news-garnett-main-1, $garnett-neutral-3);
     }
 
-    &.rich-link--pillar-opinion {
+    &.rich-link--pillar-opinion,
+    &.tone-comment--item {
         @include richLink($opinion-garnett-main-1, $garnett-neutral-3);
     }
 
