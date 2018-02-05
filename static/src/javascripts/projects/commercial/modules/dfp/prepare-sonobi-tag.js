@@ -53,15 +53,14 @@ const setupSonobi: () => Promise<void> = once(() => {
     return Promise.resolve();
 });
 
-const init = (start: () => void, stop: () => void): Promise<void> => {
+const prepareSonobiTag = (
+    start: () => void,
+    stop: () => void
+): Promise<void> => {
     start();
     setupSonobi().then(stop);
 
     return Promise.resolve();
 };
 
-export { setupSonobi };
-
-export default {
-    init,
-};
+export { setupSonobi, prepareSonobiTag };

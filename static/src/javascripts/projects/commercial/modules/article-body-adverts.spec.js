@@ -1,6 +1,6 @@
 // @flow
 import {
-    articleBodyAdvertsInit,
+    initArticleBodyAdverts,
     _,
 } from 'commercial/modules/article-body-adverts';
 import config from 'lib/config';
@@ -42,7 +42,7 @@ jest.mock('lib/config', () => ({ page: {} }));
 
 const spaceFillerStub: JestMockFn<*, *> = (spaceFiller.fillSpace: any);
 const getFirstRulesUsed = () =>
-    articleBodyAdvertsInit().then(() => {
+    initArticleBodyAdverts().then(() => {
         const firstCall = spaceFillerStub.mock.calls[0];
         return firstCall[0];
     });
@@ -57,19 +57,19 @@ describe('Article Body Adverts', () => {
     });
 
     it('should exist', () => {
-        expect(articleBodyAdvertsInit).toBeDefined();
+        expect(initArticleBodyAdverts).toBeDefined();
     });
 
     it('should exit if commercial feature disabled', () => {
         commercialFeatures.articleBodyAdverts = false;
-        return articleBodyAdvertsInit().then(executionResult => {
+        return initArticleBodyAdverts().then(executionResult => {
             expect(executionResult).toBe(false);
             expect(spaceFillerStub).not.toHaveBeenCalled();
         });
     });
 
     it('should call space-filler`s insertion method with the correct arguments', () =>
-        articleBodyAdvertsInit().then(() => {
+        initArticleBodyAdverts().then(() => {
             expect(spaceFillerStub).toHaveBeenCalled();
             const firstCallArgs = spaceFillerStub.mock.calls[0];
             const rulesArg = firstCallArgs[0];
@@ -90,7 +90,7 @@ describe('Article Body Adverts', () => {
         });
 
         it('its first call to space-filler uses the inline-merch rules', () =>
-            articleBodyAdvertsInit().then(() => {
+            initArticleBodyAdverts().then(() => {
                 const firstCallArgs = spaceFillerStub.mock.calls[0];
                 const rules = firstCallArgs[0];
 
@@ -103,7 +103,7 @@ describe('Article Body Adverts', () => {
             const paragraph = document.createElement('p');
             fixture.appendChild(paragraph);
 
-            return articleBodyAdvertsInit().then(() => {
+            return initArticleBodyAdverts().then(() => {
                 const firstCall = spaceFillerStub.mock.calls[0];
                 const writer = firstCall[1];
                 writer([paragraph]);
@@ -157,7 +157,7 @@ describe('Article Body Adverts', () => {
             it('inserts the third+ adverts with greater vertical spacing', () =>
                 // We do not want the same ad-density on long-read
                 // articles that we have on shorter pieces
-                articleBodyAdvertsInit().then(() => {
+                initArticleBodyAdverts().then(() => {
                     expect(spaceFillerStub).toHaveBeenCalledTimes(2);
                     const longArticleInsertCalls = spaceFillerStub.mock.calls.slice(
                         2

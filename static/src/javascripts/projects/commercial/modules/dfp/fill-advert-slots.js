@@ -3,7 +3,7 @@
 import qwery from 'qwery';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { Advert } from 'commercial/modules/dfp/Advert';
-import queueAdvert from 'commercial/modules/dfp/queue-advert';
+import { queueAdvert } from 'commercial/modules/dfp/queue-advert';
 import { displayLazyAds } from 'commercial/modules/dfp/display-lazy-ads';
 import { displayAds } from 'commercial/modules/dfp/display-ads';
 import { setupSonobi } from 'commercial/modules/dfp/prepare-sonobi-tag';

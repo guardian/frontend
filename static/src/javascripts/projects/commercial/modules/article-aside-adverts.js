@@ -12,7 +12,7 @@ const minImmersiveArticleHeight: number = 600;
 const minContentHeight = (): number =>
     config.page.isImmersive ? minImmersiveArticleHeight : minArticleHeight;
 
-const articleAsideAdvertsInit = (
+export const initArticleAsideAdverts = (
     start: () => void,
     stop: () => void
 ): Promise<boolean> => {
@@ -56,5 +56,3 @@ const articleAsideAdvertsInit = (
             return true;
         });
 };
-
-export { articleAsideAdvertsInit };

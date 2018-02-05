@@ -1,6 +1,6 @@
 // @flow
-import createSlot from 'commercial/modules/dfp/create-slot';
-import adSizes from 'commercial/modules/ad-sizes';
+import { createSlot } from 'commercial/modules/dfp/create-slot';
+import { adSizes } from 'commercial/modules/ad-sizes';
 import bonzo from 'bonzo';
 
 const imHtml = `

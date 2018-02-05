@@ -1,15 +1,16 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
+import {
+    init,
+    canAutoplay,
+    triggerEndSlate,
+    addCancelListener,
+} from 'commercial/modules/hosted/next-video-autoplay';
 
 jest.mock('common/modules/analytics/google', () => {});
 jest.mock('commercial/modules/hosted/next-video', () => ({
-    load() {
-        return Promise.resolve();
-    },
-    init() {
-        return Promise.resolve();
-    },
+    init: () => Promise.resolve(),
+    load: () => Promise.resolve(),
 }));
 
 describe('Next video autoplay', () => {
@@ -33,7 +34,7 @@ describe('Next video autoplay', () => {
             document.body.innerHTML = domSnippet;
         }
 
-        nextVideoAutoplay.init().then(done);
+        init().then(done);
     });
 
     afterEach(() => {
@@ -43,17 +44,17 @@ describe('Next video autoplay', () => {
     });
 
     it('should exist', done => {
-        expect(nextVideoAutoplay).toBeDefined();
+        expect(init).toBeDefined();
         done();
     });
 
     it('should trigger autoplay when there is a next video', done => {
-        expect(nextVideoAutoplay.canAutoplay()).toBeTruthy();
+        expect(canAutoplay()).toBeTruthy();
         done();
     });
 
     it('should show end slate information', done => {
-        nextVideoAutoplay.triggerEndSlate();
+        triggerEndSlate();
         fastdom.read(() => {
             expect(
                 (document.querySelector(
@@ -65,7 +66,7 @@ describe('Next video autoplay', () => {
     });
 
     it('should hide end slate information when cancel button is clicked', done => {
-        nextVideoAutoplay.addCancelListener();
+        addCancelListener();
         (document.querySelector('.js-autoplay-cancel'): any).click();
         fastdom.read(() => {
             expect(
@@ -82,8 +83,8 @@ describe('Next video autoplay', () => {
             document.body.innerHTML = domSnippetNoVideo;
         }
 
-        nextVideoAutoplay.init().then(() => {
-            expect(nextVideoAutoplay.canAutoplay()).toBeFalsy();
+        init().then(() => {
+            expect(canAutoplay()).toBeFalsy();
             done();
         });
     });

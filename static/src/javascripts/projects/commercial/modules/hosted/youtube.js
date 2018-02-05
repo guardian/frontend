@@ -1,5 +1,11 @@
 // @flow
-import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
+import {
+    init,
+    canAutoplay,
+    addCancelListener,
+    triggerAutoplay,
+    triggerEndSlate,
+} from 'commercial/modules/hosted/next-video-autoplay';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,
@@ -64,10 +70,10 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                 if (event.data === window.YT.PlayerState.ENDED) {
                     trackYoutubeEvent('end', atomId);
                     youtubeTimer.textContent = '0:00';
-                    if (nextVideoAutoplay.canAutoplay()) {
+                    if (canAutoplay()) {
                         // on mobile show the next video link in the end of the currently watching video
                         if (!isDesktop()) {
-                            nextVideoAutoplay.triggerEndSlate();
+                            triggerEndSlate();
                         }
                     }
                 } else {
@@ -94,10 +100,10 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                 }
             },
             onPlayerReady(event: Object) {
-                nextVideoAutoplay.init().then(() => {
-                    if (nextVideoAutoplay.canAutoplay() && isDesktop()) {
-                        nextVideoAutoplay.addCancelListener();
-                        nextVideoAutoplay.triggerAutoplay(
+                init().then(() => {
+                    if (canAutoplay() && isDesktop()) {
+                        addCancelListener();
+                        triggerAutoplay(
                             event.target.getCurrentTime.bind(event.target),
                             duration
                         );
