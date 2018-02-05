@@ -81,7 +81,10 @@ const setPublisherProvidedId = (): void => {
     }
 };
 
-const init = (start: () => void, stop: () => void): Promise<void> => {
+export const initPrepareGoogletag = (
+    start: () => void,
+    stop: () => void
+): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
         addTag(
             dfpEnv.externalDemand === 'none'
@@ -118,12 +121,9 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
         // A promise error here, from a failed module load,
         // could be a network problem or an intercepted request.
         // Abandon the init sequence.
-        setupAdvertising().catch(removeAdSlots);
-        return Promise.resolve();
+        return setupAdvertising()
+            .catch(removeAdSlots)
+            .then(stop);
     }
     return removeAdSlots().then(stop);
-};
-
-export default {
-    init,
 };

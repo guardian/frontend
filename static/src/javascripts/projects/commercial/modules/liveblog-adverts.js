@@ -4,7 +4,7 @@ import { getBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import createSlot from 'commercial/modules/dfp/create-slot';
+import { createSlot } from 'commercial/modules/dfp/create-slot';
 import { spaceFiller } from 'common/modules/article/space-filler';
 
 const INTERVAL = 5; // number of posts between ads

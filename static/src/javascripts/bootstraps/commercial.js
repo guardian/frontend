@@ -3,13 +3,13 @@ import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
-import highMerch from 'commercial/modules/high-merch';
-import { articleAsideAdvertsInit } from 'commercial/modules/article-aside-adverts';
-import { articleBodyAdvertsInit } from 'commercial/modules/article-body-adverts';
+import { initHighMerch } from 'commercial/modules/high-merch';
+import { initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
+import { initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
-import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
-import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
-import { carrotTrafficDriverInit } from 'commercial/modules/carrot-traffic-driver';
+import { initPrepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
+import { initPrepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
+import { initCarrotTrafficDriver } from 'commercial/modules/carrot-traffic-driver';
 import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { initThirdPartyTags } from 'commercial/modules/third-party-tags';
@@ -25,25 +25,25 @@ import {
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
-import commentAdverts from 'commercial/modules/comment-adverts';
+import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
-    ['cm-highMerch', highMerch.init],
+    ['cm-highMerch', initHighMerch],
     ['cm-thirdPartyTags', initThirdPartyTags],
-    ['cm-prepare-googletag', prepareGoogletag.init, true],
+    ['cm-prepare-googletag', initPrepareGoogletag, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', initPaidForBand],
-    ['cm-carrot', carrotTrafficDriverInit],
+    ['cm-carrot', initCarrotTrafficDriver],
     ['cm-checkDispatcher', initCheckDispatcher],
-    ['cm-commentAdverts', commentAdverts],
+    ['cm-commentAdverts', initCommentAdverts],
 ];
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
-        ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
-        ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
-        ['cm-articleBodyAdverts', articleBodyAdvertsInit],
+        ['cm-prepare-sonobi-tag', initPrepareSonobiTag, true],
+        ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
+        ['cm-articleBodyAdverts', initArticleBodyAdverts],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
         ['cm-stickyTopBanner', initStickyTopBanner]
     );

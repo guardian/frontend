@@ -4,12 +4,12 @@ import { noop } from 'lib/noop';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
 
-import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
+import { initPrepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import getAdverts from 'commercial/modules/dfp/get-adverts';
 import getCreativeIDs from 'commercial/modules/dfp/get-creative-ids';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import loadAdvert from 'commercial/modules/dfp/load-advert';
+import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 
 const getBreakpoint: any = getBreakpoint_;
 
@@ -79,7 +79,9 @@ jest.mock('common/modules/onward/geo-most-popular', () => ({
 jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
     getOutbrainComplianceTargeting: () => Promise.resolve(),
 }));
-jest.mock('commercial/modules/dfp/load-advert', () => jest.fn());
+jest.mock('commercial/modules/dfp/load-advert', () => ({
+    loadAdvert: jest.fn(),
+}));
 
 let $style;
 const makeFakeEvent = (creativeId, id) => ({
@@ -200,7 +202,7 @@ describe('DFP', () => {
     });
 
     it('should exist', () => {
-        expect(prepareGoogletag).toBeDefined();
+        expect(initPrepareGoogletag).toBeDefined();
         expect(getAdverts).toBeDefined();
         expect(getCreativeIDs).toBeDefined();
     });
@@ -208,7 +210,7 @@ describe('DFP', () => {
     it('hides all ad slots when all DFP advertising is disabled', () => {
         commercialFeatures.dfpAdvertising = false;
         return new Promise(resolve => {
-            prepareGoogletag.init(noop, resolve);
+            initPrepareGoogletag(noop, resolve);
         }).then(() => {
             const remainingAdSlots = document.querySelectorAll('.js-ad-slot');
             expect(remainingAdSlots.length).toBe(0);
@@ -218,7 +220,7 @@ describe('DFP', () => {
     it('should get the slots', () => {
         config.page.hasPageSkin = true;
         return new Promise(resolve => {
-            prepareGoogletag.init(noop, resolve);
+            initPrepareGoogletag(noop, resolve);
         }).then(() => {
             expect(Object.keys(getAdverts(true)).length).toBe(4);
         });
@@ -229,7 +231,7 @@ describe('DFP', () => {
             .first()
             .css('display', 'none');
         return new Promise(resolve => {
-            prepareGoogletag.init(noop, resolve);
+            initPrepareGoogletag(noop, resolve);
         }).then(() => {
             const slots = getAdverts(true);
             expect(Object.keys(slots).length).toBe(3);
@@ -242,7 +244,7 @@ describe('DFP', () => {
 
     it('should set listeners', () =>
         new Promise(resolve => {
-            prepareGoogletag.init(noop, resolve);
+            initPrepareGoogletag(noop, resolve);
         }).then(() => {
             expect(
                 window.googletag.pubads().addEventListener
@@ -251,7 +253,7 @@ describe('DFP', () => {
 
     it('should define slots', () =>
         new Promise(resolve => {
-            prepareGoogletag.init(noop, resolve);
+            initPrepareGoogletag(noop, resolve);
         }).then(() => {
             [
                 [
@@ -310,7 +312,7 @@ describe('DFP', () => {
         config.page.hasPageSkin = true;
         getBreakpoint.mockReturnValue('wide');
         return new Promise(resolve => {
-            prepareGoogletag.init(noop, resolve);
+            initPrepareGoogletag(noop, resolve);
         }).then(() => {
             expect(
                 window.googletag.pubads().enableSingleRequest
@@ -328,7 +330,7 @@ describe('DFP', () => {
             .first()
             .attr('data-out-of-page', true);
         return new Promise(resolve => {
-            prepareGoogletag.init(noop, resolve);
+            initPrepareGoogletag(noop, resolve);
         }).then(() => {
             expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
         });
@@ -339,7 +341,7 @@ describe('DFP', () => {
         const fakeEventTwo = makeFakeEvent('2', 'dfp-ad-script-slot');
 
         return new Promise(resolve => {
-            prepareGoogletag.init(noop, resolve);
+            initPrepareGoogletag(noop, resolve);
         }).then(() => {
             window.googletag.pubads().listeners.slotRenderEnded(fakeEventOne);
             window.googletag.pubads().listeners.slotRenderEnded(fakeEventTwo);
@@ -367,7 +369,7 @@ describe('DFP', () => {
     describe('keyword targeting', () => {
         it('should send page level keywords', () =>
             new Promise(resolve => {
-                prepareGoogletag.init(noop, resolve);
+                initPrepareGoogletag(noop, resolve);
             }).then(() => {
                 expect(
                     window.googletag.pubads().setTargeting

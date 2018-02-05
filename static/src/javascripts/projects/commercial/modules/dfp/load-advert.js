@@ -16,4 +16,4 @@ const loadAdvert = (advert: Advert): void => {
         });
 };
 
-export default loadAdvert;
+export { loadAdvert };

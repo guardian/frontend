@@ -102,7 +102,7 @@ const createAdSlotElement = (
     return adSlot;
 };
 
-const createSlot = (type: string, options: Object = {}) => {
+export const createSlot = (type: string, options: Object = {}) => {
     const attributes = {};
     const definition: Object = adSlotDefinitions[type];
     const slotName = options.name || definition.name || type;
@@ -148,5 +148,3 @@ const createSlot = (type: string, options: Object = {}) => {
         classes
     );
 };
-
-export default createSlot;
