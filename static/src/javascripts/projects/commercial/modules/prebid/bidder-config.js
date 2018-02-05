@@ -88,12 +88,14 @@ export const bidderConfig: PrebidBidderCriteria = {
     ],
     trustx: [
         {
+            geoContinent: 'NA', // North America
             edition: 'any',
             breakpoint: { min: 'mobile' },
             sizes: [[300, 250]],
             slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
         },
         {
+            geoContinent: 'NA', // North America
             edition: 'any',
             breakpoint: { min: 'desktop' },
             sizes: [[728, 90], [970, 250]],
