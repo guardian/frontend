@@ -1,4 +1,4 @@
-                        package common.Logback
+package common.Logback
 
 import java.util.concurrent.ThreadPoolExecutor
 
@@ -19,6 +19,8 @@ class LogbackOperationsPool(val actorSystem: ActorSystem)  {
   val logbackOperations: MessageDispatcher = actorSystem.dispatchers.lookup("akka.logback-operations")
 }
 
+// The KinesisAppender[ILoggingEvent] blocks logging operations on putMessage. This overrides the KinesisAppender api, executing putMessage in an
+// independent threadpool
 class SafeBlockingKinesisAppender(logbackOperations: LogbackOperationsPool) extends KinesisAppender[ILoggingEvent] {
 
   private val breaker = new CircuitBreaker(
@@ -40,7 +42,7 @@ class SafeBlockingKinesisAppender(logbackOperations: LogbackOperationsPool) exte
     breaker.withCircuitBreaker {
       Future {
         super.putMessage(message)
-      }(logbackOperations.logbackOperations)
+      }(logbackOperations.logbackOperations) // the logbackOperations thread pool is passed explicitly here so blocking on log doesn't affect the logging thread.
     }
     ()
   }
