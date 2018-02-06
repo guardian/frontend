@@ -1,8 +1,9 @@
+import akka.actor.ActorSystem
 import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{ArchiveController, DevComponentController, HealthCheck}
@@ -30,6 +31,7 @@ trait AppComponents extends FrontendComponents {
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
   lazy val archiveController = wire[ArchiveController]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -46,4 +48,6 @@ trait AppComponents extends FrontendComponents {
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
+
+  def actorSystem: ActorSystem
 }

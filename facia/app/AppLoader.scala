@@ -2,7 +2,7 @@ import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
 import concurrent.BlockingOperations
 import conf.switches.SwitchboardLifecycle
@@ -39,6 +39,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val ophanApi = wire[OphanApi]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -62,4 +63,6 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
+
+  def actorSystem: ActorSystem
 }

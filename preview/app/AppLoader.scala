@@ -1,9 +1,10 @@
+import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
 import commercial.controllers.CommercialControllers
 import commercial.targeting.TargetingLifecycle
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
 import conf.switches.SwitchboardLifecycle
@@ -35,6 +36,7 @@ trait PreviewLifecycleComponents extends SportServices with CommercialServices w
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
   override lazy val ophanApi = wire[OphanApi]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   def standaloneLifecycleComponents: List[LifecycleComponent] = List(
     wire[LogstashLifecycle],
@@ -48,6 +50,8 @@ trait PreviewLifecycleComponents extends SportServices with CommercialServices w
     wire[RugbyLifecycle],
     wire[TargetingLifecycle]
   )
+
+  def actorSystem: ActorSystem
 }
 
 trait PreviewControllerComponents
