@@ -70,5 +70,6 @@ object MoonLambda extends Experiment(
   participationGroup = Perc1B
 ) {
 
+  //TODO: remove this and dummy switch when ready to merge!
   override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || MoonLambdaSwitch.isSwitchedOn
 }
