@@ -7,7 +7,7 @@ import play.api.libs.json.{JsError, JsSuccess, Json}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-case class RiffRaffDeployTags(vcsRevision: String)
+case class RiffRaffDeployTags(vcsRevision: Option[String])
 object RiffRaffDeployTags { implicit val format = Json.format[RiffRaffDeployTags] }
 
 case class RiffRaffDeploy(uuid: String,
@@ -43,7 +43,7 @@ class RiffRaffService(httpClient: HttpLike) {
         case 200 =>
           (response.json \ "response" \ "results").validate[List[RiffRaffDeploy]] match {
             case JsSuccess(listOfDeploys, _) => Right(listOfDeploys)
-            case JsError(error) => Left(ApiErrors(List(ApiError("Invalid JSON from RiffRaff API", 500))))
+            case JsError(error) => Left(ApiErrors(List(ApiError(s"Invalid JSON from RiffRaff API: $error", 500))))
           }
         case statusCode => Left(ApiErrors(List(ApiError(s"Invalid status code from RiffRaff: $statusCode", 500 ))))
       }
