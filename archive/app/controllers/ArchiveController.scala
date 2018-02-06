@@ -9,15 +9,19 @@ import java.net.URLDecoder
 import java.util.concurrent.atomic.AtomicReference
 import javax.ws.rs.core.UriBuilder
 
+import conf.Configuration
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
+import play.api.libs.json.Json
+import play.api.libs.ws.WSClient
 import play.twirl.api.Html
 import rendering.core.Renderer
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
-import scala.concurrent.Future
+import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
 
-class ArchiveController(redirects: RedirectService, renderer: Renderer, val controllerComponents: ControllerComponents) extends BaseController with Logging with ImplicitControllerExecutionContext {
+class ArchiveController(redirects: RedirectService, renderer: Renderer, val controllerComponents: ControllerComponents, ws: WSClient) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   private val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(/p/[\w\d]+).*$""".r
@@ -31,6 +35,19 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
 
   private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
 
+  // todo: refactor out since this is going to be used in many places
+  def get404Page: String = {
+    val response = ws.url(Configuration.moon.moonEndpoint)
+      .withRequestTimeout(6000.millis)
+      .get()
+      .map((response) => {
+        response.body
+      })
+
+    Await.result(response, 5000.millis)
+
+  }
+
   def lookup(path: String): Action[AnyContent] = Action.async{ implicit request =>
     lookupPath(path)
       .map { _
@@ -39,7 +56,7 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
       }
       .map(_.getOrElse {
         log404(request)
-        Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+        Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(get404Page))))
       })
   }
 
