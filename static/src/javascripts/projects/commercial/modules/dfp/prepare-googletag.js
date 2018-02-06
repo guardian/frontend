@@ -51,7 +51,10 @@ const setDfpListeners = (): void => {
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
-    pubads.addEventListener('impressionViewable', onSlotViewable);
+
+    if (config.get('tests.commercialAdRefresh') === 'variant') {
+        pubads.addEventListener('impressionViewable', onSlotViewable);
+    }
 };
 
 const setPageTargeting = (): void => {
