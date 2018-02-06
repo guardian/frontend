@@ -54,9 +54,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@guardian/atom-renderer@0.12.2":
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.12.2.tgz#65645eda8a6b84878d82592657504345d76d0a5a"
+"@guardian/atom-renderer@0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.13.0.tgz#ce562adcec02ad0b1a498901a9c1079a2f6213a8"
   dependencies:
     autoprefixer "^7.1.6"
     css-loader "^0.28.7"
