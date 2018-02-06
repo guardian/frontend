@@ -1,7 +1,7 @@
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{Application, HealthCheck}
@@ -16,6 +16,7 @@ import play.api.mvc.EssentialFilter
 import services.ConfigAgentLifecycle
 import router.Routes
 import _root_.commercial.targeting.TargetingLifecycle
+import akka.actor.ActorSystem
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -33,6 +34,7 @@ trait AppComponents extends FrontendComponents {
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val applicationController: Application = wire[Application]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -62,4 +64,5 @@ trait AppComponents extends FrontendComponents {
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = Nil
+  def actorSystem: ActorSystem
 }

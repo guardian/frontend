@@ -1,7 +1,8 @@
+import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{Assets, AssetsComponents, DiagnosticsControllers, HealthCheck}
@@ -27,6 +28,8 @@ trait Controllers extends DiagnosticsControllers {
 trait AppLifecycleComponents {
   self: FrontendComponents with Controllers =>
 
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
+
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
     wire[DiagnosticsLifecycle],
@@ -34,6 +37,8 @@ trait AppLifecycleComponents {
     wire[CloudWatchMetricsLifecycle],
     wire[CachedHealthCheckLifeCycle]
   )
+
+  def actorSystem: ActorSystem
 }
 
 trait AppComponents extends FrontendComponents with AppLifecycleComponents with Controllers {

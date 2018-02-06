@@ -4,7 +4,7 @@ import app.{FrontendApplicationLoader, FrontendComponents}
 import business.{StocksData, StocksDataLifecycle}
 import com.softwaremill.macwire._
 import common._
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -58,6 +58,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val feedbackController = wire[TechFeedbackController]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -83,4 +84,6 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
+
+  def actorSystem: ActorSystem
 }

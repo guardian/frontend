@@ -1,9 +1,10 @@
+import akka.actor.ActorSystem
 import app.{FrontendApplicationLoader, FrontendComponents}
 import assets.DiscussionExternalAssetsLifecycle
 import com.softwaremill.macwire._
 import common.dfp.DfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, EmailSubsciptionMetrics}
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
@@ -47,6 +48,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val surveyPageController = wire[SurveyPageController]
   lazy val signupPageController = wire[SignupPageController]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -84,5 +86,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
+
+  def actorSystem: ActorSystem
 }
 
