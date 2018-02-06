@@ -13,8 +13,6 @@ import conf.Configuration
 import scala.concurrent.Future
 import pa._
 import concurrent.FutureOpt
-import conf.switches.Switches
-import controllers.AdminAudit
 import org.joda.time.LocalDate
 import football.model.SnapFields
 import pa.Season
@@ -31,10 +29,8 @@ class FrontsController(
   val SNAP_CSS = "football"
 
   def index: Action[AnyContent] = Action.async { implicit request =>
-    AdminAudit.endpointAuditF(Switches.AdminRemoveAdminFootballFronts) {
-      fetchCompetitionsAndTeams.map {
-        case (competitions, teams) => Cached(3600)(RevalidatableResult.Ok(views.html.football.fronts.index(competitions, teams)))
-      }
+    fetchCompetitionsAndTeams.map {
+      case (competitions, teams) => Cached(3600)(RevalidatableResult.Ok(views.html.football.fronts.index(competitions, teams)))
     }
   }
 

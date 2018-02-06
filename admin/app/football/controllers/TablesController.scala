@@ -1,8 +1,6 @@
 package controllers.admin
 
 import common.{ImplicitControllerExecutionContext, Logging}
-import conf.switches.Switches
-import controllers.AdminAudit
 import football.model.PA
 import football.services.PaFootballClient
 import model.Cached.RevalidatableResult
@@ -17,13 +15,11 @@ import scala.concurrent.Future
 class TablesController(val wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit val context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with PaFootballClient with Logging {
 
   def tablesIndex: Action[AnyContent] = Action.async { implicit request =>
-    AdminAudit.endpointAuditF(Switches.AdminRemoveAdminFootballTables) {
-      for {
-        allCompetitions <- client.competitions
-      } yield {
-        val filteredCompetitions = PA.filterCompetitions(allCompetitions)
-        Cached(60)(RevalidatableResult.Ok(views.html.football.leagueTables.tablesIndex(filteredCompetitions, PA.teams.all)))
-      }
+    for {
+      allCompetitions <- client.competitions
+    } yield {
+      val filteredCompetitions = PA.filterCompetitions(allCompetitions)
+      Cached(60)(RevalidatableResult.Ok(views.html.football.leagueTables.tablesIndex(filteredCompetitions, PA.teams.all)))
     }
   }
 
