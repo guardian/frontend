@@ -395,10 +395,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         }
 
         > .element-audio,
-         > .element-comment,
-         > .element-embed,
-         > .element-interactive,
-         > .element-table .table--football,
+        > .element-comment,
+        > .element-embed,
+        > .element-interactive,
+        > .element-table .table--football,
         > .element-atom:not(.element-atom--media) {
             width: auto;
             margin: $gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4;
