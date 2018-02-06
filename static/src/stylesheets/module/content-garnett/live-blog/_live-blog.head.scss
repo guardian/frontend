@@ -1,15 +1,12 @@
 $block-padding-left: gs-span(1) + $gs-gutter;
-
 /* Layout
    ========================================================================== */
-
 .content__main-column--liveblog {
     @include mq(desktop) {
         margin-left: gs-span(4) + $gs-gutter;
         margin-right: 0;
         max-width: none;
     }
-
     @include mq(wide) {
         margin-right: gs-span(4) + $gs-gutter;
     }
@@ -27,15 +24,12 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         padding-bottom: 0;
     }
 }
-
 /* Header
    ========================================================================== */
-
 .content--liveblog .content__meta-container--liveblog {
     border-bottom: 0;
     margin-left: -$gs-gutter / 2;
     margin-right: -$gs-gutter / 2;
-
     @include mq(mobileLandscape) {
         margin-left: -$gs-gutter;
         margin-right: -$gs-gutter;
@@ -46,7 +40,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         margin-left: 0;
         margin-right: 0;
     }
-
     @include mq(desktop) {
         border-top: 0;
         margin-top: 0;
@@ -66,7 +59,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
     .byline {
         padding-right: 0;
-
         @include mq(desktop) {
             padding-top: $gs-baseline/6;
         }
@@ -100,7 +92,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     .commentcount {
         display: block;
         position: static;
-
         @include mq(mobileLandscape, desktop) {
             position: absolute;
             right: 0;
@@ -117,7 +108,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     position: absolute;
     top: 0;
 }
-
 @include mq(desktop) {
     .blog__left-col {
         position: absolute;
@@ -132,22 +122,18 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 .content--liveblog .content__main {
     background-color: $neutral-8;
 }
-
 /* Main Media =============================================================== */
-
 .content--liveblog .media-primary {
     margin-left: -$gs-gutter / 2;
     margin-right: -$gs-gutter / 2;
-
     @include mq($from: tablet) {
         margin: 0;
     }
 }
-
 /* Timestamps
    ========================================================================== */
-.timestamp,
-.published-time {
+.published-time,
+.timestamp {
     @include font($f-sans-serif-text, bold, 13, 20);
     display: block;
     padding: $gs-baseline/3 0;
@@ -161,11 +147,9 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 .published-time {
-
     @include mq($from: tablet) {
         width: gs-span(1);
     }
-
 }
 
 .block-time {
@@ -203,9 +187,9 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     .timezone {
         display: none;
     }
-
     @include mq(tablet) {
         position: absolute;
+
         .block-time__absolute {
             display: block;
             margin-left: 0;
@@ -225,7 +209,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     bottom: $gs-baseline / 3;
     margin: 0;
 }
-
 /* Blocks
    ========================================================================== */
 .blocks {
@@ -234,7 +217,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
 .block {
     @include clearfix;
-
     margin-bottom: $gs-baseline;
     position: relative;
 }
@@ -250,8 +232,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 .truncated-block {
     display: none;
 }
-
-
 /* Autoupdate
    ========================================================================== */
 .autoupdate--hidden,
@@ -279,12 +259,17 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         animation: new-block-animation 5s ease-out;
     }
 }
-
 @keyframes new-block-animation {
-    0% { opacity: 0; border-top-color: $live-accent; }
-    100% { opacity: 1; border-top-color: $neutral-3; }
-}
+    0% {
+        opacity: 0;
+        border-top-color: $live-accent;
+    }
 
+    100% {
+        opacity: 1;
+        border-top-color: $neutral-3;
+    }
+}
 /* Above/Below content
    ========================================================= */
 .blog {
@@ -293,11 +278,9 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         line-height: 20px;
     }
 }
-
 /* Content styling
    ========================================================================== */
 .blog .from-content-api {
-
     .block-title {
         @include fs-header(2);
         @include mq(tablet) {
@@ -312,12 +295,12 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         }
     }
 
-    .block-title,
     .block-elements > *,
-    .block-elements > .element.element-tweet,
-    .block-elements > .element.element-rich-link,
-    .block-elements > .element.element-witness,
     .block-elements > .element.element--thumbnail,
+    .block-elements > .element.element-rich-link,
+    .block-elements > .element.element-tweet,
+    .block-elements > .element.element-witness,
+    .block-title,
     .liveblog-block-byline {
         margin-left: $gs-gutter/2;
         margin-right: $gs-gutter/2;
@@ -326,7 +309,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
             margin-left: $block-padding-left;
         }
     }
-
     /* Bylines
        ========================================================= */
     .liveblog-block-byline {
@@ -357,10 +339,12 @@ $block-padding-left: gs-span(1) + $gs-gutter;
             @include mq($until: mobileLandscape) {
                 margin-left: $gs-gutter / 2;
                 margin-right: $gs-gutter / 2;
+
                 &:before {
                     display: none;
                 }
             }
+
             &:first-child {
                 margin-top: 0;
                 @include mq(tablet) {
@@ -372,7 +356,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         > blockquote {
             color: $neutral-2;
         }
-
         /* Media
            ========================================================= */
         > .element {
@@ -387,35 +370,38 @@ $block-padding-left: gs-span(1) + $gs-gutter;
                 background: none;
                 border: 0;
             }
+
             td {
                 background: none;
             }
+
             tr {
                 border-bottom: 1px solid darken($neutral-8, 4%);
 
-                th:first-child,
-                td:first-child {
+                td:first-child,
+                th:first-child {
                     padding-left: 0;
                 }
-                th:last-child,
-                td:last-child {
+
+                td:last-child,
+                th:last-child {
                     padding-right: 0;
                 }
             }
+
             thead {
                 border-top: 1px solid darken($neutral-8, 4%);
             }
         }
 
-        > .element-table .table--football,
+        > .element-audio,
         > .element-comment,
         > .element-embed,
-        > .element-audio,
         > .element-interactive,
+        > .element-table .table--football,
         > .element-atom:not(.element-atom--media) {
             width: auto;
             margin: $gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4;
-
             @include mq(tablet) {
                 margin-left: $block-padding-left;
                 margin-right: $gs-gutter;
@@ -452,7 +438,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
             margin-left: $gs-gutter/2;
             margin-right: $gs-gutter/2;
             padding-bottom: $gs-baseline/2;
-
             @include mq(mobileLandscape) {
                 margin-left: $block-padding-left;
                 margin-right: $gs-gutter;
@@ -479,19 +464,15 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         }
     }
 }
-
 /* Dropdowns
    ========================================================================== */
 .dropdown--key-events,
 .dropdown--live-feed {
     border-top: 0;
     margin-top: $gs-baseline;
-
     $content-gutter: $gs-gutter / 2;
-
     margin-right: $content-gutter * -1;
     margin-left: $content-gutter * -1;
-
     @include mq(mobileLandscape) {
         margin-right: $content-gutter * -2;
         margin-left: $content-gutter * -2;
@@ -513,12 +494,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         background-color: #ffffff;
         padding-right: $gs-gutter / 2;
         padding-left: $gs-gutter / 2;
-
         @include mq(mobileLandscape) {
             padding-right: $gs-gutter;
             padding-left: $gs-gutter;
         }
-
         @include mq(desktop) {
             display: none;
         }
@@ -541,12 +520,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     .dropdown__content {
         position: relative;
         margin: 0;
-
         @include mq($until: desktop) {
             background-color: $neutral-8;
             padding: $gs-baseline $content-gutter;
         }
-
         @include mq(desktop) {
             display: block !important; //Overrides JS active state
         }
@@ -556,19 +533,17 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         border-top: 0;
     }
 }
-
 // .dropdown-styled button.dropdown__button {
 //     padding: 40px;
 // }
-
 /* Timeline
    ========================================================================== */
 $timeline-width: 15px;
 
 .blog__timeline {
     @include mq(desktop) {
-        &:before,
         &:after,
+        &:before,
         .control {
             display: none;
         }
@@ -604,17 +579,16 @@ $timeline-width: 15px;
 
 .timeline {
     position: relative;
-
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter / 2;
         padding-right: $gs-gutter / 2;
     }
-
     @include mq(desktop) {
         margin-left: $timeline-width/2;
         margin-top: $gs-baseline / 2;
     }
 }
+
 .timeline__item {
     display: table;
     width: 100%;
@@ -625,25 +599,24 @@ $timeline-width: 15px;
     &:last-child {
         border-bottom: 0;
     }
-
     @include mq(desktop) {
         display: block;
         overflow: visible;
         border-bottom: 0;
     }
 }
+
 .timeline__link {
     display: block;
     padding: $gs-baseline/6 0 $gs-baseline/2;
 
     &,
+    &:active,
     &:hover,
-    &:visited,
-    &:active {
+    &:visited {
         color: $garnett-neutral-1;
         text-decoration: none;
     }
-
     @include mq(desktop) {
         position: relative;
         padding: 0 $gs-gutter $gs-baseline*2;
@@ -664,6 +637,7 @@ $timeline-width: 15px;
         &:hover:before {
             background-color: $neutral-2;
         }
+
         &.live-blog__key-event--selected:before {
             background-color: $garnett-neutral-1;
         }
@@ -680,6 +654,7 @@ $timeline-width: 15px;
         }
     }
 }
+
 .timeline__date {
     @include fs-textSans(2);
     display: table-cell;
@@ -694,7 +669,6 @@ $timeline-width: 15px;
     .timezone {
         display: none;
     }
-
     @include mq(desktop) {
         display: block;
         position: relative;
@@ -702,12 +676,12 @@ $timeline-width: 15px;
         line-height: $timeline-width;
     }
 }
+
 .timeline__title {
     @include fs-textSans(3);
     display: table-cell;
     border-color: $neutral-8;
     color: $garnett-neutral-1;
-
     @include mq(desktop) {
         display: inline;
 
@@ -716,7 +690,6 @@ $timeline-width: 15px;
         }
     }
 }
-
 /* Related content
    ========================================================================== */
 .blog__related {
@@ -742,7 +715,6 @@ $timeline-width: 15px;
     margin-bottom: ($gs-baseline/3)*4;
     border-top: 1px solid $neutral-4;
 }
-
 /* Football components
    ========================================================================== */
 .blog {
@@ -764,7 +736,6 @@ $timeline-width: 15px;
             background: none;
             border: 0;
             margin: $gs-baseline/2 $gs-gutter/2 0;
-
             @include mq(mobileLandscape) {
                 border-left: 1px solid darken($neutral-8, 4%);
                 margin-left: $gs-gutter;
@@ -772,6 +743,7 @@ $timeline-width: 15px;
                 padding-left: $gs-gutter;
             }
         }
+
         .player-card__position {
             @include fs-textSans(2);
             color: $garnett-neutral-1;
@@ -782,7 +754,6 @@ $timeline-width: 15px;
     .dropdown .match-stats__container {
         margin-bottom: $gs-baseline;
     }
-
     @include mq(desktop) {
         .tabs__container--multiple {
             background-color: $neutral-8;
@@ -800,11 +771,11 @@ $timeline-width: 15px;
 
 .blog {
     .content__headline {
-        @include fs-headline(5);
-
+        @include fs-headlineGarnett(4);
         @include mq(tablet) {
-            @include fs-headline(7, true);
+            @include fs-headlineGarnett(6, true);
         }
+        font-weight: 400;
     }
 
     .content__section-label {
@@ -833,38 +804,15 @@ $timeline-width: 15px;
         margin: 0 0 $gs-baseline;
     }
 }
-
 $pillars: (
-    news: (
-        pillarColor: $news-garnett-main-1,
-        kickerColor: $live-garnett-main-2,
-        altKickerColor: $news-garnett-main-1
-    ),
-    opinion: (
-        pillarColor: $opinion-garnett-main-1,
-        kickerColor: $opinion-garnett-feature,
-        altKickerColor: $opinion-garnett-main-1
-    ),
-    sport: (
-        pillarColor: $sport-garnett-feature,
-        kickerColor:  $live-garnett-sport2,
-        altKickerColor: $sport-garnett-main-1
-    ),
-    arts: (
-        pillarColor: $culture-garnett-feature,
-        kickerColor: $live-garnett-culture2,
-        altKickerColor: $culture-garnett-main-1
-    ),
-    lifestyle: (
-        pillarColor: $lifestyle-garnett-feature,
-        kickerColor: $live-garnett-lifestyle2,
-        altKickerColor: $lifestyle-garnett-main-1
-    )
+    news: (pillarColor: $news-garnett-main-1, kickerColor: $live-garnett-main-2, altKickerColor: $news-garnett-main-1),
+    opinion: (pillarColor: $opinion-garnett-main-1, kickerColor: $opinion-garnett-feature, altKickerColor: $opinion-garnett-main-1),
+    sport: (pillarColor: $sport-garnett-feature, kickerColor: $live-garnett-sport2, altKickerColor: $sport-garnett-main-1),
+    arts: (pillarColor: $culture-garnett-feature, kickerColor: $live-garnett-culture2, altKickerColor: $culture-garnett-main-1),
+    lifestyle: (pillarColor: $lifestyle-garnett-feature, kickerColor: $live-garnett-lifestyle2, altKickerColor: $lifestyle-garnett-main-1)
 );
-
 @each $pillar, $palette in $pillars {
     .content--liveblog.content--pillar-#{$pillar} {
-
         .content__header {
             background: map-get($palette, pillarColor);
         }
@@ -888,23 +836,27 @@ $pillars: (
     }
 }
 
-.content--liveblog.section-football, .content--liveblog--rugby { // Football & rugby overrides
+.content--liveblog--rugby,
+.content--liveblog.section-football {
+    // Football & rugby overrides
     .tonal__header {
         background-color: #ffffff;
 
         .content__labels {
             border-bottom-color: $neutral-5;
         }
+
         .content__section-label__link {
             color: $sport-garnett-feature;
         }
+
         .content__series-label__link {
             color: $sport-garnett-main-1;
         }
+
         .content__headline {
             color: $garnett-neutral-1;
             padding-left: 0;
-
             @include mq(phablet) {
                 margin-left: -$gs-gutter;
             }
@@ -917,15 +869,16 @@ $pillars: (
 
 .content--liveblog {
     .content__head,
+    .content__series-label__link[href],
     .content__standfirst,
-    .content__standfirst a[href],
-    .content__series-label__link[href] {
+    .content__standfirst a[href] {
         color: #ffffff;
     }
 
-    .tonal__standfirst ul>li::before {
+    .tonal__standfirst ul > li::before {
         background: rgba(255, 255, 255, .4);
     }
+
     .content__standfirst {
         margin-left: -$gs-gutter / 2;
         @include mq(mobileLandscape) {
@@ -953,7 +906,6 @@ $pillars: (
         padding-left: $gs-gutter / 2;
     }
 }
-
 // Dead blog overrides
 @each $pillar, $palette in $pillars {
     .content--liveblog.tonal--tone-dead.content--pillar-#{$pillar} {
