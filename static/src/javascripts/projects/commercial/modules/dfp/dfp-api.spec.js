@@ -4,7 +4,7 @@ import { noop } from 'lib/noop';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
 
-import { prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
+import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { getAdverts } from 'commercial/modules/dfp/get-adverts';
 import { getCreativeIDs } from 'commercial/modules/dfp/get-creative-ids';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';

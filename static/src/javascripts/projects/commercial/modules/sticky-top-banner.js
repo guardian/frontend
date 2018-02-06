@@ -174,7 +174,7 @@ const initState = (): Promise<any> =>
             Promise.all([resizeStickyBanner(currentHeight), onScroll()])
         );
 
-const initStickyTopBanner = (): Promise<void> => {
+const init = (): Promise<void> => {
     if (!commercialFeatures.stickyTopBannerAd) {
         return Promise.resolve();
     }
@@ -202,5 +202,10 @@ const initStickyTopBanner = (): Promise<void> => {
     return Promise.resolve();
 };
 
-const _ = { update, resizeStickyBanner, onScroll, whenFirstRendered: null };
-export { initStickyTopBanner, _ };
+export const _ = {
+    update,
+    resizeStickyBanner,
+    onScroll,
+    whenFirstRendered: null,
+};
+export { init };

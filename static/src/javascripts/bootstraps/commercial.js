@@ -3,17 +3,17 @@ import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
-import { initHighMerch } from 'commercial/modules/high-merch';
-import { initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
-import { initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
+import { init as initHighMerch } from 'commercial/modules/high-merch';
+import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
+import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
-import { prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
-import { prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
-import { initCarrotTrafficDriver } from 'commercial/modules/carrot-traffic-driver';
-import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
-import { initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
-import { initThirdPartyTags } from 'commercial/modules/third-party-tags';
-import { initPaidForBand } from 'commercial/modules/paidfor-band';
+import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
+import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
+import { init as initCarrotTrafficDriver } from 'commercial/modules/carrot-traffic-driver';
+import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
+import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
+import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
+import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import {
     defer,

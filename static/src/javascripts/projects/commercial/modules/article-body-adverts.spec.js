@@ -1,8 +1,5 @@
 // @flow
-import {
-    initArticleBodyAdverts,
-    _,
-} from 'commercial/modules/article-body-adverts';
+import { init, _ } from 'commercial/modules/article-body-adverts';
 import config from 'lib/config';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -42,7 +39,7 @@ jest.mock('lib/config', () => ({ page: {} }));
 
 const spaceFillerStub: JestMockFn<*, *> = (spaceFiller.fillSpace: any);
 const getFirstRulesUsed = () =>
-    initArticleBodyAdverts().then(() => {
+    init().then(() => {
         const firstCall = spaceFillerStub.mock.calls[0];
         return firstCall[0];
     });
@@ -57,19 +54,19 @@ describe('Article Body Adverts', () => {
     });
 
     it('should exist', () => {
-        expect(initArticleBodyAdverts).toBeDefined();
+        expect(init).toBeDefined();
     });
 
     it('should exit if commercial feature disabled', () => {
         commercialFeatures.articleBodyAdverts = false;
-        return initArticleBodyAdverts().then(executionResult => {
+        return init().then(executionResult => {
             expect(executionResult).toBe(false);
             expect(spaceFillerStub).not.toHaveBeenCalled();
         });
     });
 
     it('should call space-filler`s insertion method with the correct arguments', () =>
-        initArticleBodyAdverts().then(() => {
+        init().then(() => {
             expect(spaceFillerStub).toHaveBeenCalled();
             const firstCallArgs = spaceFillerStub.mock.calls[0];
             const rulesArg = firstCallArgs[0];
@@ -90,7 +87,7 @@ describe('Article Body Adverts', () => {
         });
 
         it('its first call to space-filler uses the inline-merch rules', () =>
-            initArticleBodyAdverts().then(() => {
+            init().then(() => {
                 const firstCallArgs = spaceFillerStub.mock.calls[0];
                 const rules = firstCallArgs[0];
 
@@ -103,7 +100,7 @@ describe('Article Body Adverts', () => {
             const paragraph = document.createElement('p');
             fixture.appendChild(paragraph);
 
-            return initArticleBodyAdverts().then(() => {
+            return init().then(() => {
                 const firstCall = spaceFillerStub.mock.calls[0];
                 const writer = firstCall[1];
                 writer([paragraph]);
@@ -157,7 +154,7 @@ describe('Article Body Adverts', () => {
             it('inserts the third+ adverts with greater vertical spacing', () =>
                 // We do not want the same ad-density on long-read
                 // articles that we have on shorter pieces
-                initArticleBodyAdverts().then(() => {
+                init().then(() => {
                     expect(spaceFillerStub).toHaveBeenCalledTimes(2);
                     const longArticleInsertCalls = spaceFillerStub.mock.calls.slice(
                         2

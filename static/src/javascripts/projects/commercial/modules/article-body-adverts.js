@@ -174,7 +174,7 @@ const addInlineMerchAd = (): Promise<any> =>
 const waitForMerch = (countAdded: number): Promise<void> =>
     countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
 
-export const initArticleBodyAdverts = (): Promise<boolean> => {
+export const init = (): Promise<boolean> => {
     if (!commercialFeatures.articleBodyAdverts) {
         return Promise.resolve(false);
     }

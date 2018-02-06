@@ -81,10 +81,7 @@ const setPublisherProvidedId = (): void => {
     }
 };
 
-export const prepareGoogletag = (
-    start: () => void,
-    stop: () => void
-): Promise<void> => {
+export const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
         addTag(
             dfpEnv.externalDemand === 'none'

@@ -56,7 +56,7 @@ const insertSlot = (paras: Element[]): Promise<void> => {
         .then(() => addSlot(slot, true));
 };
 
-export const initCarrotTrafficDriver = (): Promise<void> => {
+export const init = (): Promise<void> => {
     if (commercialFeatures.carrotTrafficDriver) {
         return spaceFiller.fillSpace(rules, insertSlot, {
             waitForImages: false,

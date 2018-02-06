@@ -89,7 +89,7 @@ const loadOther = (): void => {
     }
 };
 
-export const initThirdPartyTags = (): Promise<any> => {
+const init = (): Promise<any> => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
     }
@@ -103,4 +103,5 @@ export const initThirdPartyTags = (): Promise<any> => {
     return Promise.resolve(true);
 };
 
+export { init };
 export const _ = { insertScripts, loadOther };

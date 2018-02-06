@@ -4,7 +4,7 @@ import fastdom from 'lib/fastdom-promise';
 import { createSlot } from 'commercial/modules/dfp/create-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-export const initHighMerch = (): Promise<void> => {
+export const init = (): Promise<void> => {
     if (commercialFeatures.highMerch) {
         const anchorSelector = config.page.commentable
             ? '#comments + *'

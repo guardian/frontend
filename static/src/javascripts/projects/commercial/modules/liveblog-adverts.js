@@ -124,10 +124,7 @@ const onUpdate = () => {
     Promise.resolve(getSpaceFillerRules(WINDOWHEIGHT, true)).then(fill);
 };
 
-export const initLiveblogAdverts = (
-    start: () => void,
-    stop: () => void
-): Promise<void> => {
+export const init = (start: () => void, stop: () => void): Promise<void> => {
     start();
 
     if (!commercialFeatures.liveblogAdverts) {

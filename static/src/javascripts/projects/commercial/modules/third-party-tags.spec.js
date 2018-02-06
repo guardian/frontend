@@ -1,6 +1,6 @@
 // @flow
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { initThirdPartyTags, _ } from './third-party-tags';
+import { init, _ } from './third-party-tags';
 
 const { insertScripts, loadOther } = _;
 
@@ -42,14 +42,14 @@ jest.mock('commercial/modules/third-party-tags/imr-worldwide', () => ({
 
 describe('third party tags', () => {
     it('should exist', () => {
-        expect(initThirdPartyTags).toBeDefined();
+        expect(init).toBeDefined();
         expect(loadOther).toBeDefined();
         expect(insertScripts).toBeDefined();
     });
 
     it('should not run if disabled in commercial features', done => {
         commercialFeatures.thirdPartyTags = false;
-        initThirdPartyTags()
+        init()
             .then((enabled: boolean) => {
                 expect(enabled).toBe(false);
                 done();
