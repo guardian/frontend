@@ -17,13 +17,15 @@ case class LogStashConf(enabled: Boolean,
                         awsCredentialsProvider: AWSCredentialsProvider,
                         customFields: Map[String, String])
 
-class LogstashLifecycle(playConfig: PlayConfiguration)(implicit executionContext: ExecutionContext) extends LifecycleComponent {
+class LogstashLifecycle(playConfig: PlayConfiguration,
+                        logbackOperationsPool: LogbackOperationsPool)
+                       (implicit executionContext: ExecutionContext) extends LifecycleComponent {
   override def start(): Unit = {
-    Logstash.init(playConfig)
+    new Logstash(logbackOperationsPool).init(playConfig)
   }
 }
 
-object Logstash {
+class Logstash(logbackOperationsPool: LogbackOperationsPool) {
 
   def customFields(playConfig: PlayConfiguration): Map[String, String] = Map(
     "stack" -> "frontend",
@@ -51,7 +53,7 @@ object Logstash {
     Switches.LogstashLogging.isGuaranteedSwitchedOn.onComplete {
       case Success(isOn) =>
         if(isOn) {
-          config(playConfig).fold(PlayLogger.info("Logstash config is missing"))(LogbackConfig.init)
+          config(playConfig).fold(PlayLogger.info("Logstash config is missing"))(new LogbackConfig(logbackOperationsPool).init)
         } else {
           PlayLogger.info("Logstash logging switch is Off")
         }

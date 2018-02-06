@@ -54,9 +54,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@guardian/atom-renderer@0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.11.1.tgz#e5a88d76155bf02096fa378f2c4c633c85c1e46b"
+"@guardian/atom-renderer@0.12.2":
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.12.2.tgz#65645eda8a6b84878d82592657504345d76d0a5a"
   dependencies:
     autoprefixer "^7.1.6"
     css-loader "^0.28.7"
@@ -911,6 +911,10 @@ babel-plugin-syntax-async-functions@^6.8.0:
 babel-plugin-syntax-class-properties@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-class-properties/-/babel-plugin-syntax-class-properties-6.13.0.tgz#d7eb23b79a317f8543962c505b827c7d6cac27de"
+
+babel-plugin-syntax-dynamic-import@^6.18.0:
+  version "6.18.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-dynamic-import/-/babel-plugin-syntax-dynamic-import-6.18.0.tgz#8d6a26229c83745a9982a441051572caa179b1da"
 
 babel-plugin-syntax-exponentiation-operator@^6.8.0:
   version "6.13.0"
@@ -8282,9 +8286,9 @@ preact@^8.2.5:
   version "8.2.5"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.2.5.tgz#cbfa3962a8012768159f6d01d46f9c1eb3213c0a"
 
-"prebid.js@https://github.com/guardian/Prebid.js.git#f8d19fd":
+"prebid.js@https://github.com/guardian/Prebid.js.git#ad97abe":
   version "0.34.1"
-  resolved "https://github.com/guardian/Prebid.js.git#f8d19fdf09cb6895f5c99672f349ba8ace99a3ec"
+  resolved "https://github.com/guardian/Prebid.js.git#ad97abe8ae384173e2141ba4df383387dc58bfe4"
   dependencies:
     babel-plugin-transform-object-assign "^6.22.0"
     core-js "^2.4.1"

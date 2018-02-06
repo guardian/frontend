@@ -10,7 +10,7 @@ import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.{Industries, JobsAgent}
 import commercial.model.merchandise.travel.TravelOffersAgent
 import common.CloudWatchMetricsLifecycle
-import common.Logback.LogstashLifecycle
+import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
@@ -57,6 +57,7 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
 
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
+  lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],
@@ -73,4 +74,6 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
+
+  def actorSystem: ActorSystem
 }

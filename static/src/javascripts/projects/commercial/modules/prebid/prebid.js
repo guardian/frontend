@@ -1,23 +1,24 @@
 // @flow
 
+import 'prebid.js/build/dist/prebid';
+import { getCookie } from 'lib/cookies';
 import config from 'lib/config';
-import { isBreakpoint, breakpoints, type Breakpoint } from 'lib/detect';
-import {
-    bidderConfig,
-    sonobiBidder,
-    indexExchangeBidder,
-    trustXBidder,
-} from 'commercial/modules/prebid/bidder-config';
-import type {
-    PrebidBidder,
-    PrebidAdSlotCriteria,
-    PrebidSize,
-    PrebidBid,
-} from 'commercial/modules/prebid/types';
+import { type Breakpoint, breakpoints, isBreakpoint } from 'lib/detect';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import 'prebid.js/build/dist/prebid';
+import {
+    bidderConfig,
+    indexExchangeBidder,
+    sonobiBidder,
+    trustXBidder,
+} from 'commercial/modules/prebid/bidder-config';
+import type {
+    PrebidAdSlotCriteria,
+    PrebidBid,
+    PrebidBidder,
+    PrebidSize,
+} from 'commercial/modules/prebid/types';
 
 const bidders = [sonobiBidder, indexExchangeBidder];
 if (config.switches.trustxBidder) {
@@ -38,6 +39,11 @@ const filterConfigEntries = (
 
     bidConfigEntries = bidConfigEntries.filter(bid =>
         bid.slots.some(slotName => slotId.startsWith(slotName))
+    );
+    bidConfigEntries = bidConfigEntries.filter(
+        bid =>
+            !bid.geoContinent ||
+            bid.geoContinent === getCookie('GU_geo_continent')
     );
     bidConfigEntries = bidConfigEntries.filter(
         bid => bid.edition === config.page.edition || bid.edition === 'any'

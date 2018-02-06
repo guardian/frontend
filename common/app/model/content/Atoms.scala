@@ -28,9 +28,10 @@ final case class Atoms(
   qandas: Seq[QandaAtom],
   guides: Seq[GuideAtom],
   profiles: Seq[ProfileAtom],
-  timelines: Seq[TimelineAtom]
+  timelines: Seq[TimelineAtom],
+  commonsdivisions: Seq[CommonsDivisionAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines
+  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions
 
   def atomTypes: Map[String, Boolean] = Map(
     "guide" -> !guides.isEmpty,
@@ -38,7 +39,8 @@ final case class Atoms(
     "profile" -> !profiles.isEmpty,
     "timeline" -> !timelines.isEmpty,
     "storyquestions" -> !storyquestions.isEmpty,
-    "explainer" -> !explainers.isEmpty
+    "explainer" -> !explainers.isEmpty,
+    "commonsdivision" -> !commonsdivisions.isEmpty
   )
 }
 
@@ -209,6 +211,12 @@ final case class TimelineItem(
   toDate: Option[Long]
 )
 
+final case class CommonsDivisionAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.commonsdivision.CommonsDivision
+) extends Atom
+
 object Atoms extends common.Logging {
 
   def articleConfig = ArticleConfiguration(
@@ -216,7 +224,7 @@ object Atoms extends common.Logging {
   )
 
   def extract[T](
-    atoms: Option[Seq[AtomApiAtom]], 
+    atoms: Option[Seq[AtomApiAtom]],
     extractFn: AtomApiAtom => T
   ): Seq[T] = {
     try {
@@ -259,6 +267,8 @@ object Atoms extends common.Logging {
 
       val timelines = extract(atoms.timelines, atom => {TimelineAtom.make(atom)})
 
+      val commonsdivisions = extract(atoms.commonsdivisions, atom => {CommonsDivisionAtom.make(atom)})
+
       Atoms(
         quizzes = quizzes,
         media = media,
@@ -270,7 +280,8 @@ object Atoms extends common.Logging {
         qandas = qandas,
         guides = guides,
         profiles = profiles,
-        timelines = timelines
+        timelines = timelines,
+        commonsdivisions = commonsdivisions
       )
     }
   }
@@ -615,4 +626,11 @@ object TimelineItem {
     item.body,
     item.toDate
   )
+}
+
+object CommonsDivisionAtom {
+  def make(atom: AtomApiAtom): CommonsDivisionAtom = {
+    val commonsdivision = atom.data.asInstanceOf[AtomData.CommonsDivision].commonsDivision
+    CommonsDivisionAtom(atom.id, atom, commonsdivision)
+  }
 }

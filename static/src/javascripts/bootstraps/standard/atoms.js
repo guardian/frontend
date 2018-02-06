@@ -98,5 +98,17 @@ const initAtoms = () => {
             'explainer-atom'
         );
     }
+
+    if (config.get('page.atomTypes.commonsdivision')) {
+        require.ensure(
+            [],
+            require => {
+                require('@guardian/atom-renderer/dist/commonsdivision/article/index.css');
+                const atomMaker = require('@guardian/atom-renderer/dist/commonsdivision/article/index');
+                bootstrapAtom(atomMaker, 'commonsdivision');
+            },
+            'commonsdivision-atom'
+        );
+    }
 };
 export { initAtoms };
