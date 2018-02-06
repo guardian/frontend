@@ -93,10 +93,6 @@
         @fragments.inlineJSNonBlocking()
 
         @fragments.analytics.base()
-
-        @if(OrielAnalyticsSwitch.isSwitchedOn) {
-            @fragments.commercial.orielAnalytics()
-        }
     </body>
         @if(context.environment.mode == Dev) {
             <script>
