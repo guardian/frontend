@@ -79,6 +79,21 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     }
 }
 
+.content--liveblog .content__header {
+    @include mq(phablet, tablet) {
+        max-width: 100%;
+    }
+}
+
+.content--liveblog .content__headline {
+    padding-left: 0;
+}
+
+.content--liveblog .content__standfirst {
+    padding-right: 0;
+    max-width: 100%;
+}
+
 .content__head__comment-count--liveblog {
     display: block;
 
@@ -116,6 +131,17 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
 .content--liveblog .content__main {
     background-color: $neutral-8;
+}
+
+/* Main Media =============================================================== */
+
+.content--liveblog .media-primary {
+    margin-left: -$gs-gutter / 2;
+    margin-right: -$gs-gutter / 2;
+
+    @include mq($from: tablet) {
+        margin: 0;
+    }
 }
 
 /* Timestamps
