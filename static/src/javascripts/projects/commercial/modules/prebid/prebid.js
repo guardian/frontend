@@ -132,6 +132,9 @@ class PrebidService {
             standard: {
                 alwaysUseBid: false,
             },
+            sonobi: {
+                alwaysUseBid: true, // for Jetstream
+            },
         };
         window.pbjs.setConfig({
             priceGranularity: 'auto',
