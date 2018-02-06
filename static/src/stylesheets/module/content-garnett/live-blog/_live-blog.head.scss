@@ -800,11 +800,12 @@ $timeline-width: 15px;
 
 .blog {
     .content__headline {
-        @include fs-headline(5);
+        @include fs-headlineGarnett(4);
 
         @include mq(tablet) {
-            @include fs-headline(7, true);
+            @include fs-headlineGarnett(6, true);
         }
+        font-weight: 400;
     }
 
     .content__section-label {
