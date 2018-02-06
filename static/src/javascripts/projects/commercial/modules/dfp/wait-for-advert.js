@@ -2,7 +2,7 @@
 import memoize from 'lodash/functions/memoize';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 
-const waitForAdvert = memoize(
+export const waitForAdvert = memoize(
     id =>
         new Promise(resolve => {
             const checkAdvert = () => {
@@ -16,5 +16,3 @@ const waitForAdvert = memoize(
             checkAdvert();
         })
 );
-
-export default waitForAdvert;

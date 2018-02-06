@@ -3,7 +3,7 @@
 import qwery from 'qwery';
 import mediator from 'lib/mediator';
 import { noop } from 'lib/noop';
-import { articleAsideAdvertsInit } from 'commercial/modules/article-aside-adverts';
+import { init } from 'commercial/modules/article-aside-adverts';
 import fastdom from 'lib/fastdom-promise';
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
@@ -86,7 +86,7 @@ describe('Article Aside Adverts', () => {
     });
 
     it('should exist', () => {
-        expect(articleAsideAdvertsInit).toBeDefined();
+        expect(init).toBeDefined();
         expect(qwery('.ad-slot').length).toBe(1);
     });
 
@@ -99,7 +99,7 @@ describe('Article Aside Adverts', () => {
             );
             done();
         });
-        articleAsideAdvertsInit(noop, noop);
+        init(noop, noop);
     });
 
     it('should mutate the ad slot in short articles', done => {
@@ -111,6 +111,6 @@ describe('Article Aside Adverts', () => {
             );
             done();
         });
-        articleAsideAdvertsInit(noop, noop);
+        init(noop, noop);
     });
 });

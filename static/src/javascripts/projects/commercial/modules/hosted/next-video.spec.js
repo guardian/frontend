@@ -1,5 +1,5 @@
 // @flow
-import hostedNextVideo from 'commercial/modules/hosted/next-video';
+import { load } from 'commercial/modules/hosted/next-video';
 import fetchJson from 'lib/fetch-json';
 
 jest.mock('lib/config', () => ({
@@ -28,12 +28,11 @@ describe('Hosted Next Video', () => {
     });
 
     it('should exist', () => {
-        expect(hostedNextVideo).toBeDefined();
+        expect(load).toBeDefined();
     });
 
     it('should make an ajax call and insert html', done => {
-        hostedNextVideo
-            .load()
+        load()
             .then(() => {
                 expect(fetchJson).toHaveBeenCalledWith(
                     'some.url/pageId/autoplay.json',

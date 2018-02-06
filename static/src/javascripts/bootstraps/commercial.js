@@ -3,17 +3,17 @@ import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
-import highMerch from 'commercial/modules/high-merch';
-import { articleAsideAdvertsInit } from 'commercial/modules/article-aside-adverts';
-import { articleBodyAdvertsInit } from 'commercial/modules/article-body-adverts';
+import { init as initHighMerch } from 'commercial/modules/high-merch';
+import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
+import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
-import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
-import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
-import { carrotTrafficDriverInit } from 'commercial/modules/carrot-traffic-driver';
-import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
-import { initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
-import { initThirdPartyTags } from 'commercial/modules/third-party-tags';
-import { initPaidForBand } from 'commercial/modules/paidfor-band';
+import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
+import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
+import { init as initCarrotTrafficDriver } from 'commercial/modules/carrot-traffic-driver';
+import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
+import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
+import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
+import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import {
     defer,
@@ -28,22 +28,22 @@ import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import commentAdverts from 'commercial/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
-    ['cm-highMerch', highMerch.init],
+    ['cm-highMerch', initHighMerch],
     ['cm-thirdPartyTags', initThirdPartyTags],
-    ['cm-prepare-googletag', prepareGoogletag.init, true],
+    ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', initPaidForBand],
-    ['cm-carrot', carrotTrafficDriverInit],
+    ['cm-carrot', initCarrotTrafficDriver],
     ['cm-checkDispatcher', initCheckDispatcher],
     ['cm-commentAdverts', commentAdverts],
 ];
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
-        ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
-        ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
-        ['cm-articleBodyAdverts', articleBodyAdvertsInit],
+        ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
+        ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
+        ['cm-articleBodyAdverts', initArticleBodyAdverts],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
         ['cm-stickyTopBanner', initStickyTopBanner]
     );

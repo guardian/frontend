@@ -5,7 +5,7 @@ import fastdom from 'lib/fastdom-promise';
 import { isIOS, isAndroid, isBreakpoint, getViewport } from 'lib/detect';
 import template from 'lodash/utilities/template';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
+import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
 import fabricVideoStr from 'raw-loader!commercial/views/creatives/fabric-video.html';
 import objectFitVideos from 'object-fit-videos';
 

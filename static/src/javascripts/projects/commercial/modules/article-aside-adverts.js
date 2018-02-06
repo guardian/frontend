@@ -12,10 +12,7 @@ const minImmersiveArticleHeight: number = 600;
 const minContentHeight = (): number =>
     config.page.isImmersive ? minImmersiveArticleHeight : minArticleHeight;
 
-const articleAsideAdvertsInit = (
-    start: () => void,
-    stop: () => void
-): Promise<boolean> => {
+export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     start();
 
     const $col: bonzo = $('.js-secondary-column');
@@ -56,5 +53,3 @@ const articleAsideAdvertsInit = (
             return true;
         });
 };
-
-export { articleAsideAdvertsInit };

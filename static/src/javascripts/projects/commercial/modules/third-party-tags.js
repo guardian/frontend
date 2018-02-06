@@ -16,7 +16,7 @@ import { krux } from 'common/modules/commercial/krux';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
 import { doubleClickAdFree } from 'commercial/modules/third-party-tags/doubleclick-ad-free';
-import plista from 'commercial/modules/third-party-tags/plista';
+import { plista } from 'commercial/modules/third-party-tags/plista';
 
 const loadExternalContentWidget = (): void => {
     const externalTpl = template(externalContentContainerStr);
@@ -89,7 +89,7 @@ const loadOther = (): void => {
     }
 };
 
-export const initThirdPartyTags = (): Promise<any> => {
+const init = (): Promise<any> => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
     }
@@ -103,4 +103,5 @@ export const initThirdPartyTags = (): Promise<any> => {
     return Promise.resolve(true);
 };
 
+export { init };
 export const _ = { insertScripts, loadOther };

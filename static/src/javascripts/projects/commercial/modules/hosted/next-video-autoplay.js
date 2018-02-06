@@ -1,7 +1,7 @@
 // @flow
 import bean from 'bean';
 import fastdom from 'fastdom';
-import NextVideo from 'commercial/modules/hosted/next-video';
+import { load } from 'commercial/modules/hosted/next-video';
 import $ from 'lib/$';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 
@@ -59,13 +59,13 @@ const addCancelListener = () => {
 const canAutoplay = () => $hostedNext.length && nextVideoPage;
 
 const init = () =>
-    NextVideo.load().then(() => {
+    load().then(() => {
         $hostedNext = $('.js-hosted-next-autoplay');
         $timer = $('.js-autoplay-timer');
         nextVideoPage = $timer.length && $timer.data('next-page');
     });
 
-export default {
+export {
     init,
     canAutoplay,
     triggerEndSlate,

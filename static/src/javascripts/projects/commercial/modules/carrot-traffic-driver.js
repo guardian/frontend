@@ -1,7 +1,7 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
-import createSlot from 'commercial/modules/dfp/create-slot';
+import { createSlot } from 'commercial/modules/dfp/create-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { spaceFiller } from 'common/modules/article/space-filler';
 
@@ -56,7 +56,7 @@ const insertSlot = (paras: Element[]): Promise<void> => {
         .then(() => addSlot(slot, true));
 };
 
-const carrotTrafficDriverInit = (): Promise<void> => {
+export const init = (): Promise<void> => {
     if (commercialFeatures.carrotTrafficDriver) {
         return spaceFiller.fillSpace(rules, insertSlot, {
             waitForImages: false,
@@ -66,5 +66,3 @@ const carrotTrafficDriverInit = (): Promise<void> => {
     }
     return Promise.resolve();
 };
-
-export { carrotTrafficDriverInit };

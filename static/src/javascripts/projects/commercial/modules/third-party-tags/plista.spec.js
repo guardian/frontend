@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
-import plista from 'commercial/modules/third-party-tags/plista';
+import { plista } from 'commercial/modules/third-party-tags/plista';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 

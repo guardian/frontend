@@ -4,7 +4,7 @@ import template from 'lodash/utilities/template';
 import { Toggles } from 'common/modules/ui/toggles';
 import { addClassesAndTitle } from 'common/views/svg';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
+import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
 import frameStr from 'raw-loader!commercial/views/creatives/frame.html';
 import labelStr from 'raw-loader!commercial/views/creatives/gustyle-label.html';
 import externalLink from 'svgs/icon/external-link.svg';

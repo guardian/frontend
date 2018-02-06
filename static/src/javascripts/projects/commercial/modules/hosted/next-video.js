@@ -25,7 +25,4 @@ const loadNextVideo = (): Promise<void> => {
     return Promise.resolve();
 };
 
-export default {
-    init: loadNextVideo,
-    load: loadNextVideo,
-};
+export { loadNextVideo as init, loadNextVideo as load };

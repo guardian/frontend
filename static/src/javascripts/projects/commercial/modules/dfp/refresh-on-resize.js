@@ -51,8 +51,6 @@ const windowResize = () => {
     hasBreakpointChanged(refresh);
 };
 
-const refreshOnResize = () => {
+export const refreshOnResize = () => {
     mediator.on('window:throttledResize', windowResize);
 };
-
-export default refreshOnResize;

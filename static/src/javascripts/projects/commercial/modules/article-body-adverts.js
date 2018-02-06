@@ -3,10 +3,10 @@ import config from 'lib/config';
 import { isBreakpoint, getBreakpoint, getViewport } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import { spaceFiller } from 'common/modules/article/space-filler';
-import adSizes from 'commercial/modules/ad-sizes';
+import { adSizes } from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
-import createSlot from 'commercial/modules/dfp/create-slot';
+import { createSlot } from 'commercial/modules/dfp/create-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 type AdSize = {
@@ -174,7 +174,7 @@ const addInlineMerchAd = (): Promise<any> =>
 const waitForMerch = (countAdded: number): Promise<void> =>
     countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
 
-const articleBodyAdvertsInit = (): Promise<boolean> => {
+export const init = (): Promise<boolean> => {
     if (!commercialFeatures.articleBodyAdverts) {
         return Promise.resolve(false);
     }
@@ -200,8 +200,6 @@ const articleBodyAdvertsInit = (): Promise<boolean> => {
     addInlineAds();
     return Promise.resolve(true);
 };
-
-export { articleBodyAdvertsInit };
 
 export const _ = {
     waitForMerch,
