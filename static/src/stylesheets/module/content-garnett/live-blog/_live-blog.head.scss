@@ -79,6 +79,21 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     }
 }
 
+.content--liveblog .content__header {
+    @include mq(phablet, tablet) {
+        max-width: 100%;
+    }
+}
+
+.content--liveblog .content__headline {
+    padding-left: 0;
+}
+
+.content--liveblog .content__standfirst {
+    padding-right: 0;
+    max-width: 100%;
+}
+
 .content__head__comment-count--liveblog {
     display: block;
 
@@ -116,6 +131,17 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
 .content--liveblog .content__main {
     background-color: $neutral-8;
+}
+
+/* Main Media =============================================================== */
+
+.content--liveblog .media-primary {
+    margin-left: -$gs-gutter / 2;
+    margin-right: -$gs-gutter / 2;
+
+    @include mq($from: tablet) {
+        margin: 0;
+    }
 }
 
 /* Timestamps
@@ -810,7 +836,7 @@ $timeline-width: 15px;
 
 $pillars: (
     news: (
-        pillarColor: $news-garnett-feature,
+        pillarColor: $news-garnett-main-1,
         kickerColor: $live-garnett-main-2,
         altKickerColor: $news-garnett-main-1
     ),
@@ -844,7 +870,7 @@ $pillars: (
         }
 
         .tonal__standfirst {
-            background: lighten(map-get($palette, pillarColor), 5);
+            background: darken(map-get($palette, pillarColor), 5);
         }
 
         .content__section-label__link[href] {
