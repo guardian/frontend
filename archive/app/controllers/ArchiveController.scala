@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicReference
 import javax.ws.rs.core.UriBuilder
 
 import conf.Configuration
+import experiments.MoonLambda
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
 import play.api.libs.json.Json
@@ -56,7 +57,11 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
       }
       .map(_.getOrElse {
         log404(request)
-        Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(get404Page))))
+        if (experiments.ActiveExperiments.isParticipating(experiments.MoonLambda)) {
+          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(get404Page))))
+        } else {
+          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+        }
       })
   }
 

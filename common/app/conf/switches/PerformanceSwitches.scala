@@ -156,4 +156,14 @@ trait PerformanceSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
+
+  val MoonLambdaSwitch = Switch(
+    SwitchGroup.Performance,
+    "moon-lambda",
+    "If this switch is on, 404 page will be rendered by a lambda",
+    owners = Seq(Owner.withGithub("siadcock")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
 }

@@ -1,6 +1,7 @@
 package experiments
 
 import conf.switches.Owner
+import conf.switches.Switches.MoonLambdaSwitch
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -60,3 +61,14 @@ object CommercialAdRefresh extends Experiment(
   sellByDate = new LocalDate(2018, 4, 11),
   participationGroup = Perc5A
 )
+
+object MoonLambda extends Experiment(
+  name = "moon-lambda",
+  description = "Users in this experiment will see 404 page rendered by a lambda",
+  owners = Seq(Owner.withGithub("siadcock")),
+  sellByDate = new LocalDate(2018, 2, 28),
+  participationGroup = Perc1B
+) {
+
+  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || MoonLambdaSwitch.isSwitchedOn
+}
