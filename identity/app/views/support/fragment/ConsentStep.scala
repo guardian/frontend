@@ -17,7 +17,6 @@ object ConsentStep {
     title: String,
     help: List[ConsentStepHelpTextTrait] = Nil,
     content: Html = Html(""),
-    banner: Option[String] = None,
     show: Boolean = true
   )
 

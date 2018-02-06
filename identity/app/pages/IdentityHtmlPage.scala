@@ -41,7 +41,10 @@ object IdentityHtmlPage {
       bodyTag(classes = defaultBodyClasses())(
         views.html.layout.identityFlexWrap()(
           skipToMainContent(),
-          views.html.layout.identityHeader(hideNavigation=page.isFlow) when page.metadata.hasSlimHeader,
+          views.html.layout.identityHeader(
+            hideNavigation = page.isFlow,
+            showAutoSigninBanner = request.target.getQueryParameter("isAutoSignIn").getOrElse("false").toBoolean
+          ) when page.metadata.hasSlimHeader,
           header() when !page.metadata.hasSlimHeader
         )(
           content
