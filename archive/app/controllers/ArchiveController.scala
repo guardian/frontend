@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReference
 import javax.ws.rs.core.UriBuilder
 
 import conf.Configuration
-import experiments.MoonLambda
+import experiments.{ActiveExperiments, MoonLambda}
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
 import play.api.libs.json.Json
@@ -57,8 +57,12 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
       }
       .map(_.getOrElse {
         log404(request)
-        if (experiments.ActiveExperiments.isParticipating(experiments.MoonLambda)) {
+        if (ActiveExperiments.isParticipating(MoonLambda)) {
+          // TODO: capture variant performance metrics here
           Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(get404Page))))
+        } else if (ActiveExperiments.isControl(MoonLambda)) {
+          // TODO: capture control performance metrics here
+          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
         } else {
           Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
         }
