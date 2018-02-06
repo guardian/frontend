@@ -79,21 +79,19 @@
         color: $neutral-2;
         margin-left: initial;
         overflow: auto;
+
+        .inline-garnett-quote__svg {
+            width: 14px;
+            height: 10px;
+            float: left;
+            margin-top: -$gs-baseline / 2;
+        }
+
+        p {
+            margin-left: 36px;
+        }
     }
 }
-
-.is-breuer-mode .from-content-api {
-    p {
-        margin-bottom: 0;
-    }
-
-    p + p,
-    .element--thumbnail + p,
-    .element--supporting + p {
-        text-indent: $gs-gutter * 1.5;
-    }
-}
-
 
 /* Code */
 

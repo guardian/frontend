@@ -12,7 +12,7 @@
 @import 'amp/_helpers';
 
 @include grid-system;
-@import 'amp/_header';
+@import 'amp/_navigation';
 @import 'amp/_footer';
 @import 'amp/_submeta';
 
@@ -20,6 +20,7 @@
 @import 'amp/_content';
 @import 'amp/_social';
 @import 'amp/_onward-tones';
+@import 'amp/_article-tones';
 @import 'amp/_ads';
 @import 'amp/_facia';
 @import 'amp/_match-report';
