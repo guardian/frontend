@@ -39,52 +39,51 @@
     }
 }
 
-@showAgeStep(index: Option[Int]) = @{
-    if(index.contains(0)){
+@showAgeStep(display: Boolean = false) = @{
+    if(display){
         List(ConsentStepHelpLegalText("By clicking the button, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
     } else {
         Nil
     }
 }
 
-@renderStep(step: ConsentStep, index: Option[Int] = None) = {
-    @if(step.show) {
-        @if(index.getOrElse(1) != 0) {
-            <hr class="manage-account-divider">
-        }
-        @(step.banner.map { title =>
-            Html(s"<p class='form__success'>$title</p>")
-        })
-        <fieldset
-            role="dialog"
-            aria-labelledby="consentWizard@{step.name.capitalize}Title"
-        >
-            <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
-            <div class="identity-forms-wrapper">
-                @if(step.help || showAgeStep(index)) {
-                    <div class="identity-forms-wrapper__title">
-                        @((step.help ++ showAgeStep(index)).map(paragraph =>
-                            paragraph match {
-                                case m: ConsentStepHelpLegalText => {
-                                    Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
-                                }
-                                case m: ConsentStepHelpText => {
-                                    Html(s"<p class='identity-title-explainer'>${m.text}</p>")
-                                }
-                            }
-                        ))
-                    </div>
-                }
-                <div class="identity-forms-wrapper__fields">
-                    @step.content
-                </div>
-            </div>
-
-        </fieldset>
+@renderStep(step: ConsentStep, isFirst: Boolean = false, isLast: Boolean = false) = {
+    @if(!isFirst) {
+        <hr class="manage-account-divider">
     }
+    @(step.banner.map { title =>
+        Html(s"<p class='form__success'>$title</p>")
+    })
+    <fieldset
+        role="dialog"
+        aria-labelledby="consentWizard@{step.name.capitalize}Title"
+    >
+        <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
+        <div class="identity-forms-wrapper">
+            @if(step.help || showAgeStep(isLast)) {
+                <div class="identity-forms-wrapper__title">
+                    @((step.help ++ showAgeStep(isLast)).map(paragraph =>
+                        paragraph match {
+                            case m: ConsentStepHelpLegalText => {
+                                Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
+                            }
+                            case m: ConsentStepHelpText => {
+                                Html(s"<p class='identity-title-explainer'>${m.text}</p>")
+                            }
+                        }
+                    ))
+                </div>
+            }
+            <div class="identity-forms-wrapper__fields">
+                @step.content
+            </div>
+        </div>
+
+    </fieldset>
 }
 @renderSteps(steps:List[ConsentStep]) = @{
-    steps.zipWithIndex.map{ case (element, index) => renderStep(element, Some(index)) }
+    val displaySteps = steps.filter(_.show)
+    displaySteps.zipWithIndex.map{ case (element, index) => renderStep(element, index == 0, index == (displaySteps.size - 1)) }
 }
 
 @channelStepContent = {
