@@ -1301,10 +1301,6 @@ $quote-mark: 35px;
 
         .caption--main {
             max-width: gs-span(8);
-            // @include mq($from:leftCol) {
-            //     width: gs-span(4);
-            //     float: right;
-            // }
         }
     }
 
