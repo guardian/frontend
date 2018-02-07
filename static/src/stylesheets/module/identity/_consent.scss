@@ -1,4 +1,9 @@
 .identity-wizard--consent {
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
     .identity-wizard__controls {
         padding: $gs-gutter 0;
         background: #ffffff;
