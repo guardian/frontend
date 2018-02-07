@@ -1,8 +1,8 @@
 .submeta {
-    border-top: 1px solid $garnett-neutral-6;
+    @include multiline(4, $garnett-neutral-4, top);
     font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     margin-top: $gs-baseline;
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline + $gs-baseline / 2;
 }
 
 .submeta--borderless-bottom .submeta__keywords {
@@ -20,7 +20,7 @@
 .submeta__keywords {
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
-    border-bottom: 1px solid $garnett-neutral-6;
+    border-bottom: 1px solid $garnett-neutral-4;
     margin-bottom: $gs-baseline / 2;
 }
 

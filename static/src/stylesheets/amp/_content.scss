@@ -57,6 +57,10 @@
     margin-right: -2.5rem;
 }
 
+.content__head--byline-pic .content__header {
+    @include multiline(8, $garnett-neutral-4, bottom);
+}
+
 .content__standfirst {
     line-height: 1.25rem;
     margin-bottom: $gs-baseline/2;
