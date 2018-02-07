@@ -41,16 +41,13 @@
 
 @showAgeStep(display: Boolean = false) = @{
     if(display){
-        List(ConsentStepHelpLegalText("By clicking the button, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
+        List(ConsentStepHelpLegalText("By continuing, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
     } else {
         Nil
     }
 }
 
 @renderStep(step: ConsentStep, isFirst: Boolean = false, isLast: Boolean = false) = {
-    @if(!isFirst) {
-        <hr class="manage-account-divider">
-    }
     @(step.banner.map { title =>
         Html(s"<p class='form__success'>$title</p>")
     })
@@ -60,9 +57,9 @@
     >
         <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
         <div class="identity-forms-wrapper">
-            @if(step.help || showAgeStep(isLast)) {
+            @if(step.help || showAgeStep(isFirst)) {
                 <div class="identity-forms-wrapper__title">
-                    @((step.help ++ showAgeStep(isLast)).map(paragraph =>
+                    @((step.help ++ showAgeStep(isFirst)).map(paragraph =>
                         paragraph match {
                             case m: ConsentStepHelpLegalText => {
                                 Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
@@ -245,15 +242,15 @@
         }
         case "thank-you" => {
             List(
-                marketingConsentThankYouStep,
                 emailRepermissionStep,
+                marketingConsentThankYouStep,
                 channelStep
             )
         }
         case "default" => {
             List(
-                marketingConsentStep,
                 emailRepermissionStep,
+                marketingConsentStep,
                 channelStep
             )
         }
