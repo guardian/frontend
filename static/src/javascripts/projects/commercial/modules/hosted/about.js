@@ -22,15 +22,9 @@ const template = (): string => `
                 </div>
                 <div class="survey-text">
                     <p class="survey-text__paragraph">
-                        Advertiser content is used to describe advertisement features that are paid for,
-                        produced and controlled by the advertiser rather than the publisher.
-                    </p>
-                    <p class="survey-text__paragraph">
-                        They are subject to regulation by the Advertising Standards Authority in the UK,
-                        the Federal Trade Commission in the US and the Advertising Standards Bureau in Australia.
-                    </p>
-                    <p class="survey-text__paragraph">
-                        This content is produced by the advertiser and does not involve Guardian News and Media staff.
+                        Advertiser content. This article was paid for, produced and controlled by the advertiser rather 
+                        than the publisher. It is subject to regulation by the Advertising Standards Authority. This 
+                        content is produced by the advertiser with no involvement from Guardian News and Media staff.
                     </p>
                 </div>
             </div>
@@ -43,14 +37,16 @@ export const init = () =>
             $(document.body).append(template());
         })
         .then(() => {
-            const aboutBtn = document.querySelector('.js-hosted-about');
+            const aboutBtns = document.querySelectorAll('.js-hosted-about');
             const closeBtn = document.querySelector('.js-survey-close');
             const overlay = document.querySelector('.js-survey-overlay');
-            if (!overlay || !aboutBtn || !closeBtn) return;
+            if (!overlay || !aboutBtns || !closeBtn) return;
 
-            aboutBtn.addEventListener('click', (e: Event): mixed => {
-                e.preventDefault();
-                fastdom.write(() => overlay.classList.remove('u-h'));
+            aboutBtns.forEach(btn => {
+                btn.addEventListener('click', (e: Event): mixed => {
+                    e.preventDefault();
+                    fastdom.write(() => overlay.classList.remove('u-h'));
+                });
             });
             closeBtn.addEventListener('click', () => {
                 fastdom.write(() => overlay.classList.add('u-h'));
