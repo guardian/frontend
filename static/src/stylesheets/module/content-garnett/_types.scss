@@ -446,7 +446,7 @@ $quote-mark: 35px;
         }
     }
     .caption--main.caption--img {
-        @include mq($until:leftCol) {
+        @include mq($until: leftCol) {
             padding-bottom: $gs-baseline/2;
         }
     }
