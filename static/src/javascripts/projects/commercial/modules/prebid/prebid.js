@@ -133,7 +133,16 @@ class PrebidService {
                 alwaysUseBid: false,
             },
             sonobi: {
-                alwaysUseBid: true, // for Jetstream
+                // for Jetstream
+                alwaysUseBid: true,
+                adserverTargeting: [
+                    {
+                        key: 'hb_deal_sonobi',
+                        val(bidResponse) {
+                            return bidResponse.dealId;
+                        },
+                    },
+                ],
             },
         };
         window.pbjs.setConfig({
