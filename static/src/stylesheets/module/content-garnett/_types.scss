@@ -435,30 +435,40 @@ $quote-mark: 35px;
         padding-top: $gs-baseline/2;
     }
 
-    .reveal-caption {
-        display: block!important;
-        right: $gs-gutter/2;
-        bottom: $gs-gutter/2;
+    // .reveal-caption {
+    //     display: block!important;
+    //     right: $gs-gutter/2;
+    //     bottom: $gs-gutter/2;
+    //
+    //     &:hover {
+    //         cursor: pointer;
+    //     }
+    // }
 
-        &:hover {
-            cursor: pointer;
-        }
-    }
+    // .caption--main.caption--img {
+    //     position: absolute;
+    //     left: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     background: rgba(22, 22, 22, .8);
+    //     color: #ffffff;
+    //     padding: 6px 40px 12px 10px;
+    //     max-width: 100%;
+    //     display: none;
+    // }
+    //
+    // .reveal-caption__checkbox:checked ~ .caption--main {
+    //     display: block;
+    // }
 
     .caption--main.caption--img {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(22, 22, 22, .8);
-        color: #ffffff;
-        padding: 6px 40px 12px 10px;
-        max-width: 100%;
-        display: none;
-    }
+        min-height: 0;
+        padding-bottom: $gs-baseline/2;
+        svg {
+            position: relative;
+        }
 
-    .reveal-caption__checkbox:checked ~ .caption--main {
-        display: block;
+
     }
 
     &:not(.paid-content) .media-primary.media-primary--showcase {
