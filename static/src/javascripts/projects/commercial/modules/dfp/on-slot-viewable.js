@@ -3,7 +3,7 @@ import type { ImpressionViewableEvent } from 'commercial/types';
 
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
-import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
+import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
 const viweabilityThresholdMs = 30000;
 
@@ -16,7 +16,7 @@ export const onSlotViewable = (event: ImpressionViewableEvent): void => {
                     'visibilitychange',
                     onDocumentVisible
                 );
-                refreshAdvert(advert);
+                enableLazyLoad(advert);
             }
         };
 
@@ -27,7 +27,7 @@ export const onSlotViewable = (event: ImpressionViewableEvent): void => {
                     onDocumentVisible
                 );
             } else {
-                refreshAdvert(advert);
+                enableLazyLoad(advert);
             }
         }, viweabilityThresholdMs);
     }
