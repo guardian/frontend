@@ -68,8 +68,4 @@ object MoonLambda extends Experiment(
   owners = Seq(Owner.withGithub("siadcock")),
   sellByDate = new LocalDate(2018, 2, 28),
   participationGroup = Perc1B
-) {
-
-  //TODO: remove this and dummy switch when ready to merge!
-  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || MoonLambdaSwitch.isSwitchedOn
-}
+)
