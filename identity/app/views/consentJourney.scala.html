@@ -57,9 +57,9 @@
     >
         <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
         <div class="identity-forms-wrapper">
-            @if(step.help || showAgeStep(isFirst)) {
+            @if(step.help || showAgeStep(display = isFirst)) {
                 <div class="identity-forms-wrapper__title">
-                    @((step.help ++ showAgeStep(isFirst)).map(paragraph =>
+                    @((step.help ++ showAgeStep(display = isFirst)).map(paragraph =>
                         paragraph match {
                             case m: ConsentStepHelpLegalText => {
                                 Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
