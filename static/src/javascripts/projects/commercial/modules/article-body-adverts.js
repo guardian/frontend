@@ -101,7 +101,7 @@ const getRules = (): Object => {
     return {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: 300,  // a nominal value, the ' > header' rule is expected to separate insertions from the top.
+        minAbove: 300, // a nominal value, the ' > header' rule is expected to separate insertions from the top.
         minBelow: 300,
         selectors: {
             ' > header': {
