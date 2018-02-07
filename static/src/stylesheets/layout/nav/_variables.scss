@@ -10,7 +10,7 @@ $search-and-edition-height-desktop: 42px;
 
 $nav-background-colour: #e9eff1; // BG of the nav & menu
 $nav-primary-colour: $garnett-neutral-1; // Colour of most non pillar text
-$nav-secondary-colour: darken($nav-background-colour, 50%); // Softer accent colour for text
+$nav-secondary-colour: #5D5F5F; // Softer accent colour for text (65% opacity of neural-1)
 $nav-darker-colour: darken($nav-background-colour, 5%); // Colour for shaded areas on the BG
 $rule: darken($nav-background-colour, 20%); // All borders on the nav
 
