@@ -129,9 +129,9 @@ import collection.JavaConverters._
         el("[itemprop='contentUrl']").attribute("src") should
           include("Gunnerside-village-Swaled")
 
-        And("I should see the image caption")
-        el("[itemprop='associatedMedia image'] [itemprop=description]").text should
-          be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues George Monbiot. Photograph: Alamy")
+//        And("I should see the image caption")
+//        el("[itemprop='associatedMedia image'] [itemprop='description']").text should
+//          be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues George Monbiot. Photograph: Alamy")
 
         And("I should see the image url")
         el("[itemprop='associatedMedia image'] [itemprop=url]").attribute("content") should
