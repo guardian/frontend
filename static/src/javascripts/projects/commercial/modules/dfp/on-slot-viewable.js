@@ -10,8 +10,25 @@ const viweabilityThresholdMs = 30000;
 export const onSlotViewable = (event: ImpressionViewableEvent): void => {
     const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
     if (advert) {
+        const onDocumentVisible = () => {
+            if (!document.hidden) {
+                document.removeEventListener(
+                    'visibilitychange',
+                    onDocumentVisible
+                );
+                refreshAdvert(advert);
+            }
+        };
+
         setTimeout(() => {
-            refreshAdvert(advert);
+            if (document.hidden) {
+                document.addEventListener(
+                    'visibilitychange',
+                    onDocumentVisible
+                );
+            } else {
+                refreshAdvert(advert);
+            }
         }, viweabilityThresholdMs);
     }
 };
