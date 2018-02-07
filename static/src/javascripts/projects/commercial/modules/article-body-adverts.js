@@ -101,13 +101,17 @@ const getRules = (): Object => {
     return {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: isBreakpoint({
-            max: 'tablet',
-        })
-            ? 300
-            : 700,
+        minAbove: 300, // a nominal value, the ' > header' rule is expected to separate insertions from the top.
         minBelow: 300,
         selectors: {
+            ' > header': {
+                minAbove: isBreakpoint({
+                    max: 'tablet',
+                })
+                    ? 300
+                    : 700,
+                minBelow: 0,
+            },
             ' > h2': {
                 minAbove: getBreakpoint() === 'mobile' ? 100 : 0,
                 minBelow: 250,

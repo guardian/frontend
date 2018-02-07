@@ -230,7 +230,7 @@ describe('Article Body Adverts', () => {
 
                 return getFirstRulesUsed().then(rules => {
                     // adverts give the top of the page more clearance
-                    expect(rules.minAbove).toEqual(700);
+                    expect(rules.selectors[' > header'].minAbove).toEqual(700);
 
                     // give headings no vertical clearance
                     expect(rules.selectors[' > h2'].minAbove).toEqual(0);
