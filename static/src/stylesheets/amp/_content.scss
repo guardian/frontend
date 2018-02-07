@@ -234,8 +234,24 @@
     margin-right: 5px;
 }
 
-.reveal-caption {
-    @include mq($from: tablet) {
-        display: none;
+.stars {
+    background-color: $news-garnett-highlight;
+    display: inline-block;
+    padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
+    margin: 0 0 ($gs-baseline / 2) (-$gs-gutter / 2);
+}
+
+.star__item {
+    stroke: #121212;
+    fill: transparent;
+
+    svg {
+        width: 20px;
+        height: 20px;
     }
+}
+
+.star__item--golden {
+    stroke: none;
+    fill: $garnett-neutral-1;
 }

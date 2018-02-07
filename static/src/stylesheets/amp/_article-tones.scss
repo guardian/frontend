@@ -5,8 +5,17 @@
     a.u-underline,
     .tone-colour,
     a.tone-colour,
-    .submeta a {
+    .submeta a,
+    .content__series-label__link {
         color: $dark;
+    }
+
+    .tonal__head--tone-live {
+        background-color: $dark;
+
+        .tonal__standfirst {
+            background-color: darken($dark, 5%);
+        }
     }
 
     .bullet:before,
@@ -26,8 +35,17 @@
     .tone-colour,
     a.tone-colour,
     .submeta a,
-    a.u-underline {
+    a.u-underline,
+    .content__series-label__link {
         color: $bright;
+    }
+
+    .tonal__head--tone-live {
+        background-color: $dark;
+
+        .tonal__standfirst {
+            background-color: darken($dark, 5%);
+        }
     }
 
     .element-pullquote blockquote p {
