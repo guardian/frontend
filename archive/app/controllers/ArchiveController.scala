@@ -21,6 +21,9 @@ import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import java.lang.System.currentTimeMillis
+
+import metrics.TimingMetric
 
 class ArchiveController(redirects: RedirectService, renderer: Renderer, val controllerComponents: ControllerComponents, ws: WSClient) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
@@ -49,24 +52,38 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
 
   }
 
-  def lookup(path: String): Action[AnyContent] = Action.async{ implicit request =>
+  def lookup(path: String): Action[AnyContent] = Action.async { implicit request =>
+
     lookupPath(path)
       .map { _
         .map(Cached(CacheTime.ArchiveRedirect))
         .orElse(redirectForPath(path))
       }
       .map(_.getOrElse {
+
         log404(request)
+
         if (ActiveExperiments.isParticipating(MoonLambda)) {
-          // TODO: capture variant performance metrics here
-          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(get404Page))))
+          Cached(CacheTime.NotFound)(WithoutRevalidationResult(
+            lookupRecordTimings(() => NotFound(Html(get404Page)), MoonMetrics.MoonRenderingMetric)
+          ))
         } else if (ActiveExperiments.isControl(MoonLambda)) {
-          // TODO: capture control performance metrics here
-          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+          Cached(CacheTime.NotFound)(WithoutRevalidationResult(
+            lookupRecordTimings(() => NotFound(views.html.notFound()), MoonMetrics.NonMoonRenderingMetric)
+          ))
         } else {
           Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
         }
+
       })
+
+  }
+
+  def lookupRecordTimings(timedFunction: () => play.api.mvc.Result, metric: TimingMetric): play.api.mvc.Result = {
+    val start = currentTimeMillis
+    val page = timedFunction()
+    metric.recordDuration(currentTimeMillis - start)
+    page
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html

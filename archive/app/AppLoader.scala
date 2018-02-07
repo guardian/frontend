@@ -43,6 +43,11 @@ trait AppComponents extends FrontendComponents {
     wire[CachedHealthCheckLifeCycle]
   )
 
+  override lazy val appMetrics = ApplicationMetrics(
+    MoonMetrics.MoonRenderingMetric,
+    MoonMetrics.NonMoonRenderingMetric
+  )
+
   lazy val router: Router = wire[Routes]
 
   lazy val appIdentity = ApplicationIdentity("archive")
