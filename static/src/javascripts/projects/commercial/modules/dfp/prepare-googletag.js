@@ -52,7 +52,7 @@ const setDfpListeners = (): void => {
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
 
-    if (config.get('tests.commercialAdRefresh') === 'variant') {
+    if (config.get('tests.commercialAdRefreshVariant')) {
         pubads.addEventListener('impressionViewable', onSlotViewable);
     }
 };
