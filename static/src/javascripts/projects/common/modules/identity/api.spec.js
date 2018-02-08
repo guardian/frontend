@@ -1,4 +1,5 @@
 // @flow
+/* global jsdom */
 
 import {
     getUserFromApi,
@@ -49,7 +50,7 @@ describe('Identity API', () => {
 
         window.location.assign = (url: string) => {
             jsdom.reconfigure({
-                url
+                url,
             });
         };
     });
@@ -121,7 +122,9 @@ describe('Identity API', () => {
         getUserOrSignIn();
 
         expect(window.location.href).toBe(
-            `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(returnUrl)}`
+            `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
+                returnUrl
+            )}`
         );
 
         window.location.assign(origHref);

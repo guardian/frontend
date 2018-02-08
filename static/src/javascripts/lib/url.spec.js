@@ -1,4 +1,5 @@
 // @flow
+/* global jsdom */
 
 import {
     getUrlVars,
@@ -22,7 +23,7 @@ describe('url', () => {
     beforeEach(() => {
         window.location.assign = (url: string) => {
             jsdom.reconfigure({
-                url
+                url,
             });
         };
     });
