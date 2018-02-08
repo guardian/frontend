@@ -9,7 +9,9 @@ import {
 import type {
     PrebidBidder,
     PrebidBidderCriteria,
+    PrebidImproveDigitalParams,
     PrebidIndexExchangeParams,
+    PrebidSize,
     PrebidSonobiParams,
     PrebidTrustXParams,
 } from 'commercial/modules/prebid/types';
@@ -57,16 +59,106 @@ const getIndexSiteId = (): string => {
     return site ? site.id : '';
 };
 
+const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
+    Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
+
+const getImprovePlacementId = (sizes: PrebidSize[]): number => {
+    switch (config.page.edition) {
+        case 'UK':
+            switch (getBreakpointKey()) {
+                case 'D':
+                    if (
+                        contains(sizes, [300, 250]) ||
+                        contains(sizes, [300, 600])
+                    ) {
+                        return 1116396;
+                    }
+                    if (
+                        contains(sizes, [728, 90]) ||
+                        contains(sizes, [970, 250])
+                    ) {
+                        return 1116397;
+                    }
+                    return -1;
+                case 'M':
+                    if (
+                        contains(sizes, [300, 250]) ||
+                        contains(sizes, [300, 600])
+                    ) {
+                        return 1116400;
+                    }
+                    return -1;
+                case 'T':
+                    if (
+                        contains(sizes, [300, 250]) ||
+                        contains(sizes, [300, 600])
+                    ) {
+                        return 1116398;
+                    }
+                    if (
+                        contains(sizes, [728, 90]) ||
+                        contains(sizes, [970, 250])
+                    ) {
+                        return 1116399;
+                    }
+                    return -1;
+                default:
+                    return -1;
+            }
+        case 'INT':
+            switch (getBreakpointKey()) {
+                case 'D':
+                    if (
+                        contains(sizes, [300, 250]) ||
+                        contains(sizes, [300, 600])
+                    ) {
+                        return 1116420;
+                    }
+                    if (
+                        contains(sizes, [728, 90]) ||
+                        contains(sizes, [970, 250])
+                    ) {
+                        return 1116421;
+                    }
+                    return -1;
+                case 'M':
+                    if (
+                        contains(sizes, [300, 250]) ||
+                        contains(sizes, [300, 600])
+                    ) {
+                        return 1116424;
+                    }
+                    return -1;
+                case 'T':
+                    if (
+                        contains(sizes, [300, 250]) ||
+                        contains(sizes, [300, 600])
+                    ) {
+                        return 1116422;
+                    }
+                    if (
+                        contains(sizes, [728, 90]) ||
+                        contains(sizes, [970, 250])
+                    ) {
+                        return 1116423;
+                    }
+                    return -1;
+                default:
+                    return -1;
+            }
+        default:
+            return -1;
+    }
+};
+
 export const bidderConfig: PrebidBidderCriteria = {
     sonobi: [
         {
-            edition: 'any',
             breakpoint: { min: 'mobile' },
             sizes: [[300, 250]],
             slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
         },
         {
-            edition: 'any',
             breakpoint: { min: 'desktop' },
             sizes: [[728, 90], [970, 250]],
             slots: ['dfp-ad--top-above-nav'],
@@ -74,13 +166,11 @@ export const bidderConfig: PrebidBidderCriteria = {
     ],
     indexExchange: [
         {
-            edition: 'any',
             breakpoint: { min: 'mobile' },
             sizes: [[300, 250]],
             slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
         },
         {
-            edition: 'any',
             breakpoint: { min: 'desktop' },
             sizes: [[728, 90], [970, 250]],
             slots: ['dfp-ad--top-above-nav'],
@@ -89,14 +179,26 @@ export const bidderConfig: PrebidBidderCriteria = {
     trustx: [
         {
             geoContinent: 'NA', // North America
-            edition: 'any',
             breakpoint: { min: 'mobile' },
             sizes: [[300, 250]],
             slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
         },
         {
             geoContinent: 'NA', // North America
-            edition: 'any',
+            breakpoint: { min: 'desktop' },
+            sizes: [[728, 90], [970, 250]],
+            slots: ['dfp-ad--top-above-nav'],
+        },
+    ],
+    improvedigital: [
+        {
+            editions: ['UK', 'INT'],
+            breakpoint: { min: 'mobile' },
+            sizes: [[300, 250], [300, 600]],
+            slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
+        },
+        {
+            editions: ['UK', 'INT'],
             breakpoint: { min: 'desktop' },
             sizes: [[728, 90], [970, 250]],
             slots: ['dfp-ad--top-above-nav'],
@@ -127,5 +229,15 @@ export const trustXBidder: PrebidBidder = {
     name: 'trustx',
     bidParams: (slotId: string): PrebidTrustXParams => ({
         uid: getTrustXAdUnitId(slotId),
+    }),
+};
+
+export const improveDigitalBidder: PrebidBidder = {
+    name: 'improvedigital',
+    bidParams: (
+        slotId: string,
+        sizes: PrebidSize[]
+    ): PrebidImproveDigitalParams => ({
+        placementId: getImprovePlacementId(sizes),
     }),
 };

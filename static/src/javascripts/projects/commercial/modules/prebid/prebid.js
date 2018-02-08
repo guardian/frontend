@@ -9,6 +9,7 @@ import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-nam
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import {
     bidderConfig,
+    improveDigitalBidder,
     indexExchangeBidder,
     sonobiBidder,
     trustXBidder,
@@ -23,6 +24,9 @@ import type {
 const bidders = [sonobiBidder, indexExchangeBidder];
 if (config.switches.trustxBidder) {
     bidders.push(trustXBidder);
+}
+if (config.switches.improveDigitalBidder) {
+    bidders.push(improveDigitalBidder);
 }
 
 const bidderTimeout = 1500;
@@ -46,7 +50,7 @@ const filterConfigEntries = (
             bid.geoContinent === getCookie('GU_geo_continent')
     );
     bidConfigEntries = bidConfigEntries.filter(
-        bid => bid.edition === config.page.edition || bid.edition === 'any'
+        bid => !bid.editions || bid.editions.includes(config.page.edition)
     );
     bidConfigEntries = bidConfigEntries.filter(bid =>
         isBreakpoint(bid.breakpoint)
@@ -119,7 +123,7 @@ class PrebidAdUnit {
 
                 this.bids.push({
                     bidder: bidder.name,
-                    params: bidder.bidParams(this.code),
+                    params: bidder.bidParams(this.code, availableSizes),
                 });
             }
         });
