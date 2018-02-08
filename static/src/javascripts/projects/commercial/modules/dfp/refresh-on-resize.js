@@ -3,6 +3,8 @@ import { hasCrossedBreakpoint, breakpoints } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
+import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
+
 /* hasBreakpointChanged: ((string, string) -> undefined) -> undefined. Invokes the callback if a breakpoint has been crossed since last invocation */
 const hasBreakpointChanged = hasCrossedBreakpoint(true);
 
@@ -41,9 +43,7 @@ const refresh = (currentBreakpoint, previousBreakpoint) => {
 
     // only refresh if the slot needs to
     const advertsToRefresh = dfpEnv.advertsToRefresh.filter(shouldRefresh);
-    if (advertsToRefresh.length) {
-        window.googletag.pubads().refresh(advertsToRefresh.map(_ => _.slot));
-    }
+    advertsToRefresh.forEach(refreshAdvert);
 };
 
 const windowResize = () => {

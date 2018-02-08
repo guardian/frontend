@@ -9,7 +9,8 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
     CommercialPaidContentTemplate,
-    CommercialBaseline
+    CommercialBaseline,
+    CommercialAdRefresh
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -50,4 +51,12 @@ object CommercialBaseline extends Experiment(
   owners = Seq(Owner.withGithub("JonNorman"), Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2018, 4, 11),
   participationGroup = Perc2B
+)
+
+object CommercialAdRefresh extends Experiment(
+  name = "commercial-ad-refresh",
+  description = "Users in this experiment will have their ad slots refreshed after 30 seconds",
+  owners = Seq(Owner.withGithub("JonNorman")),
+  sellByDate = new LocalDate(2018, 4, 11),
+  participationGroup = Perc5A
 )
