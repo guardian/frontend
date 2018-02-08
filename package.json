@@ -69,7 +69,7 @@
     "cp-file": "^4.2.0",
     "cpy": "^5.1.0",
     "cssstats": "^3.1.0",
-    "eslint": "^4.9.0",
+    "eslint": "^4.17.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.6.0",
     "eslint-import-resolver-webpack": "^0.8.3",
