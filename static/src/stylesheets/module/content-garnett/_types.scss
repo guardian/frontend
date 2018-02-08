@@ -436,8 +436,11 @@ $quote-mark: 35px;
     }
 
     .caption--img {
-        min-height: 0;
+        min-height: $gs-baseline*3;
         padding-bottom: 0;
+        @include mq(tablet) {
+            min-height: 0;
+        }
         @include mq(leftCol) {
             padding-bottom: $gs-baseline/2;
         }
