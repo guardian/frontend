@@ -73,7 +73,7 @@ class FootballLifecycle(
 class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends PaClient with Http with Logging {
 
   // Runs the API calls via a CDN
-  override lazy val base: String = "http://football-api.gu-web.net/v1.5"
+  override lazy val base: String = "https://football-api.guardianapis.com/v1.5"
 
   override def GET(urlString: String): Future[pa.Response] = {
 
