@@ -259,15 +259,15 @@ $video-width-desktop: 700px;
     background-color: $garnett-neutral-1;
     border-radius: 50%;
     color: transparent;
-    padding: $gs-baseline / 2;
+    //padding: $gs-baseline / 2;
 }
 
-.l-row__item--span-1 .youtube-media-atom__play-button {
-    padding: 0;
-}
+//.l-row__item--span-1 .youtube-media-atom__play-button {
+//    padding: 0;
+//}
 
-.l-row__item--span-1 .youtube-media-atom__play-button.vjs-control-text{
-    @include mq($until: desktop) { // this change the circle and arrow size in from mobile to tablet
+.l-row__item--span-1 .youtube-media-atom__play-button.vjs-control-text {
+    @include mq($until: desktop) { // Small card video player button size change from mobile to tablet
         top: 25%;
         left: 34%;
         transform: scale(.8);
@@ -276,21 +276,42 @@ $video-width-desktop: 700px;
     @include mq($until: tablet) {
     top: 21%;
     left: 32%;
-    transform: scale(.8);
+    transform: scale(.7);
+
     }
 }
 
 .video-playlist__item--active .youtube-media-atom__play-button.vjs-control-text{
-    @include mq($until: desktop) { // this change the circle and arrow size in from mobile to tablet
-        top: 25%;
-        left: 34%;
-        transform: scale(.8);
+
+    @include mq(desktop) {
+    width: 50px;
+    height: 50px;
+
+    }
+
+    @include mq(tablet) {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+
     }
 
     @include mq($until: tablet) {
-    top: 36%;
-    left: 32%;
-    transform: scale(.8);
+    padding: 0;
+    width: 30px;
+    height: 30px;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
+            border-style: solid;
+            border-width: .9em 0 .9em 2em;
+            border-color: transparent transparent transparent #ffffff;
+
+        }
     }
 }
 
