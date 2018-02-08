@@ -11,6 +11,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline,
+    CommercialAdRefresh,
     Garnett
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
