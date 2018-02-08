@@ -105,18 +105,6 @@ $quote-mark: 35px;
         overflow-y: visible;
     }
 
-    .content__labels--not-immersive {
-        @include mq(tablet, leftCol) {
-            border-bottom: solid 1px $garnett-neutral-4;
-        }
-    }
-
-    .content__series-label {
-        @include mq($until: tablet) {
-            display: none;
-        }
-    }
-
     .content__header,
     .content__headline,
     .content__meta-container,
