@@ -90,6 +90,12 @@ case object HandwrittenMediaBriefing extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "media/series/mediaguardian-briefing")
 }
 
+case object TheUpsideWeeklyReport extends ArticleEmailMetadata {
+  val name = "The Upside Weekly Report"
+  override val banner = Some("the-upside.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "/world/series/the-upside-weekly-report")
+}
+
 case object CuratedMediaBriefing extends FrontEmailMetadata {
   val name = "Media Briefing"
   override val banner = Some("media-briefing.png")
@@ -234,11 +240,6 @@ case object ThisLandIsYourLand extends FrontEmailMetadata {
 case object WinterOlympics2018 extends FrontEmailMetadata {
   val name = "Winter Olympics 2018"
   override val banner = Some("winter-olympics-2018.png")
-}
-
-case object TheUpsideWeeklyReport extends FrontEmailMetadata {
-  val name = "The Upside Weekly Report"
-  override val banner = Some("the-upside.png")
 }
 
 object EmailAddons {
