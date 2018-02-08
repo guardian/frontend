@@ -37,22 +37,11 @@ POST        /press/r2                                                           
 GET         /press/r2/batchupload                                                                   controllers.admin.R2PressController.pressForm()
 POST        /press/r2/batchupload                                                                   controllers.admin.R2PressController.batchUpload()
 
-# API endpoint proxying for https
-GET         /api/proxy/*path                                                                        controllers.admin.Api.proxy(path, callback)
-GET         /api/tag                                                                                controllers.admin.Api.tag(q, callback)
-GET         /api/item/*path                                                                         controllers.admin.Api.item(path, callback)
-GET         /json/proxy/*absUrl                                                                     controllers.admin.Api.json(absUrl)
-
 GET         /images/clear                                                                           controllers.cache.ImageDecacheController.renderImageDecacheForm()
 POST        /images/clear                                                                           controllers.cache.ImageDecacheController.decache()
 
 GET         /page/clear                                                                             controllers.cache.PageDecacheController.renderPageDecache()
 POST        /page/clear                                                                             controllers.cache.PageDecacheController.decache()
-
-# Ophan proxying for https
-GET         /ophan/pageviews/*path                                                                  controllers.admin.OphanApiController.pageViews(path)
-GET         /ophan/pageviews                                                                        controllers.admin.OphanApiController.platformPageViews()
-GET         /ophan/ads/render-time                                                                  controllers.admin.OphanApiController.adsRenderTime()
 
 # Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()
@@ -111,9 +100,6 @@ GET         /metrics/googlebot/404                                              
 GET         /metrics/afg                                                                            controllers.admin.MetricsController.renderAfg()
 GET         /metrics/webpack-bundle-visualization                                                   controllers.admin.MetricsController.renderBundleVisualization()
 GET         /metrics/webpack-bundle-analyzer                                                        controllers.admin.MetricsController.renderBundleAnalyzer()
-# Radiator
-GET         /radiator                                                                               controllers.admin.RadiatorController.renderRadiator()
-GET         /radiator/commit/*hash                                                                  controllers.admin.RadiatorController.commitDetail(hash)
 
 # Used by Prout to know which builds/commits have been deployed in PROD
 GET         /deploys                                                                                controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])

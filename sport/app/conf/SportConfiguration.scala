@@ -8,7 +8,7 @@ object SportConfiguration {
   import GuardianConfiguration._
 
   object pa {
-    lazy val footballHost = "http://football-api.gu-web.net/v1.5"
+    lazy val footballHost = "https://football-api.guardianapis.com/v1.5"
     lazy val footballKey = configuration.getMandatoryStringProperty("pa.api.key")
     lazy val cricketKey = configuration.getStringProperty("pa.cricket.api.key")
   }

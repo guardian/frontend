@@ -435,30 +435,23 @@ $quote-mark: 35px;
         padding-top: $gs-baseline/2;
     }
 
-    .reveal-caption {
-        display: block!important;
-        right: $gs-gutter/2;
-        bottom: $gs-gutter/2;
-
-        &:hover {
-            cursor: pointer;
+    .caption--img {
+        min-height: $gs-baseline*3;
+        padding-bottom: 0;
+        @include mq(tablet) {
+            min-height: 0;
+        }
+        @include mq(leftCol) {
+            padding-bottom: $gs-baseline/2;
+        }
+        svg {
+            position: relative;
         }
     }
-
     .caption--main.caption--img {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(22, 22, 22, .8);
-        color: #ffffff;
-        padding: 6px 40px 12px 10px;
-        max-width: 100%;
-        display: none;
-    }
-
-    .reveal-caption__checkbox:checked ~ .caption--main {
-        display: block;
+        @include mq($until: leftCol) {
+            padding-bottom: $gs-baseline/2;
+        }
     }
 
     &:not(.paid-content) .media-primary.media-primary--showcase {
@@ -567,11 +560,6 @@ $quote-mark: 35px;
         .fc-item.fc-item--media::before {
             content: none;
         }
-    }
-
-    .block-time.published-time {
-        position: relative;
-        line-height: 1;
     }
 
     // *************** Quote Styles ***************
@@ -785,10 +773,6 @@ $quote-mark: 35px;
         }
     }
 
-    .element .caption {
-        background: #ffffff;
-    }
-
     .quoted {
         .inline-garnett-quote {
             position: absolute;
@@ -885,12 +869,6 @@ $quote-mark: 35px;
             color: $garnett-neutral-1;
         }
 
-        .caption {
-            background-color: $opinion-garnett-background;
-        }
-        .caption--main {
-            background-color: $garnett-neutral-1;
-        }
     }
 
     .content__head {
@@ -1317,7 +1295,6 @@ $quote-mark: 35px;
     }
 }
 // *************** Feature showcase overrides ***************
-
 .has-feature-showcase-element {
     .media-primary.media-primary--showcase {
         @include mq(wide) {
@@ -1325,7 +1302,7 @@ $quote-mark: 35px;
         }
 
         .caption--main {
-            padding-left: $gs-gutter / 2;
+            max-width: gs-span(8);
         }
     }
 

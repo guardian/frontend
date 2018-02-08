@@ -60,7 +60,7 @@
 }
 
 .block-time__link {
-    color: $neutral-1;
+    color: $garnett-neutral-1;
 }
 
 .liveblog-block-byline {
@@ -78,7 +78,6 @@
     font-size: 1rem;
     line-height: 1.5rem;
     display: inline;
-    color: $neutral-1;
 }
 
 
@@ -119,7 +118,6 @@
 }
 
 .timeline__date {
-    color: $neutral-1;
     font-size: 13px;
     line-height: 18px;
     display: table-cell;
@@ -128,7 +126,6 @@
 }
 
 .timeline__title {
-    color: $neutral-1;
     font-size: 14px;
     line-height: $gs-gutter;
     display: table-cell;
@@ -153,6 +150,10 @@
 .block-share--liveblog {
     margin-top: $gs-baseline;
     clear: both;
+}
+
+.block-share__item {
+    border: 1px solid $garnett-neutral-4;
 }
 
 /* Ads
@@ -270,8 +271,8 @@
 .liveblog-navigation__link {
     display: inline-block;
     position: relative;
-    color: $neutral-1;
-    border: 1px solid $neutral-4;
+    color: $garnett-neutral-1;
+    border: 1px solid $garnett-neutral-4;
     height: $gs-row-height;
     line-height: $gs-row-height;
     font-weight: bold;

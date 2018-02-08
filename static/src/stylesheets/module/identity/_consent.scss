@@ -1,4 +1,29 @@
 .identity-wizard--consent {
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+        legend {
+            display: block;
+        }
+    }
+    .identity-wizard__step > fieldset:not(:first-child) {
+        margin-top: $gs-gutter * 2;
+        position: relative;
+        legend {
+            padding-top: $gs-gutter * .5
+        }
+        &:before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: block;
+            content: '';
+            height: 1px;
+            background: $garnett-neutral-4;
+        }
+    }
     .identity-wizard__controls {
         padding: $gs-gutter 0;
         background: #ffffff;

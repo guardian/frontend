@@ -25,7 +25,6 @@
 }
 
 .guardian-egyptian-loaded {
-    .content__headline,
     .content__labels,
     .element-pullquote,
     .tonal__standfirst,
@@ -41,7 +40,8 @@
     .d2-username,
     .liveblog-block-byline__name,
     .header,
-    .menu {
+    .menu,
+    .content__headline {
         font-family: 'Guardian Egyptian Web', Georgia, serif;
     }
 }
@@ -71,7 +71,7 @@
     .ad-slot--paid-for-badge__header,
     .element-rich-link--not-upgraded a:before,
     .l-footer__secondary,
-    .contact,
+    .meta__contact-method,
     .cta,
     .element-interactive a,
     .updated-time,

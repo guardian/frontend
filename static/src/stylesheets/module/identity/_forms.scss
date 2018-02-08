@@ -95,13 +95,8 @@ Messages
 /*
 Wrapper
 */
-.identity-forms-wrapper {
-    border-top: 1px solid $garnett-neutral-4;
-    padding-top: $gs-baseline;
-}
-
 .identity-forms-wrapper__title {
-    margin-bottom: $gs-baseline * 2;
+    margin-bottom: $gs-baseline;
 }
 
 @supports (display: flex) {

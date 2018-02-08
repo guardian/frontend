@@ -62,7 +62,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
         }
 
         if (figcaption.asScala.nonEmpty) {
-            val informationIcon = views.html.fragments.inlineSvg("information", "icon", List("centered-icon", "rounded-icon")).toString()
+            val informationIcon = views.html.fragments.inlineSvg("triangle", "icon").toString()
             figcaption.prepend(informationIcon)
         }
 

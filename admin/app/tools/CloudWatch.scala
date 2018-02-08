@@ -121,7 +121,6 @@ object CloudWatch extends Logging {
     }
   }
 
-  def shortStackLatency()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = latency(primaryLoadBalancers)
   def fullStackLatency()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = latency(primaryLoadBalancers ++ secondaryLoadBalancers)
 
   def fetchOkMetric(loadBalancer: LoadBalancer)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
@@ -172,18 +171,6 @@ object CloudWatch extends Logging {
         new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat(Colour.`tone-features-2`), metricsResult)
       }
     }
-
-  def cost()(implicit executionContext: ExecutionContext): Future[MaximumMetric] =
-    withErrorLogging(
-      defaultClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-        .withNamespace("AWS/Billing")
-        .withMetricName("EstimatedCharges")
-        .withStartTime(new DateTime().toLocalDate.toDate)
-        .withEndTime(new DateTime().toDate)
-        .withStatistics("Maximum")
-        .withPeriod(60 * 60 * 24)
-        .withDimensions(new Dimension().withName("Currency").withValue("USD")))
-    ).map(MaximumMetric.apply)
 
   def fastlyHitMissStatistics()(implicit executionContext: ExecutionContext): Future[List[AwsLineChart]] =
     Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region) =>

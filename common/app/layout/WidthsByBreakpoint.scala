@@ -95,6 +95,8 @@ object FaciaWidths {
   }
 }
 
+
+//TODO: We should only have one facia widths object. Consolidate this garnett one with the one above.
 object GarnettFaciaWidths {
   private val MediaMobile = Map[CardType, BrowserWidth](
     (MediaList, 127.px),

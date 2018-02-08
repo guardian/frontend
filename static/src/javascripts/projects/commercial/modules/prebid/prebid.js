@@ -132,6 +132,18 @@ class PrebidService {
             standard: {
                 alwaysUseBid: false,
             },
+            sonobi: {
+                // for Jetstream
+                alwaysUseBid: true,
+                adserverTargeting: [
+                    {
+                        key: 'hb_deal_sonobi',
+                        val(bidResponse) {
+                            return bidResponse.dealId;
+                        },
+                    },
+                ],
+            },
         };
         window.pbjs.setConfig({
             priceGranularity: 'auto',

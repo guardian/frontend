@@ -6,8 +6,6 @@ import football.services.PaFootballClient
 import pa.{PlayerAppearances, PlayerProfile, StatsSummary}
 import implicits.Requests
 import common.{ImplicitControllerExecutionContext, JsonComponent, Logging}
-import conf.switches.Switches
-import controllers.AdminAudit
 import org.joda.time.LocalDate
 import football.model.PA
 
@@ -21,10 +19,8 @@ import play.api.libs.ws.WSClient
 class PlayerController(val wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit val context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with PaFootballClient with Requests with Logging {
 
   def playerIndex: Action[AnyContent] = Action.async { implicit request =>
-    AdminAudit.endpointAuditF(Switches.AdminRemoveAdminFootballPlayer) {
-      fetchCompetitionsAndTeams.map {
-        case (competitions, teams) => Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, teams)))
-      }
+    fetchCompetitionsAndTeams.map {
+      case (competitions, teams) => Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, teams)))
     }
   }
 
