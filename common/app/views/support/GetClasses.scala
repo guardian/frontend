@@ -20,12 +20,11 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--pillar-" + item.pillar.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-      ("fc-item--type-" + item.designType.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-      ("fc-item--special-report", experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.cardStyle == SpecialReport),
-      ("fc-item--paid-content", experiments.ActiveExperiments.isParticipating(experiments.Garnett) && item.branding.exists(_.isPaid)),
+      ("fc-item--pillar-" + item.pillar.nameOrDefault, true),
+      ("fc-item--type-" + item.designType.nameOrDefault, true),
+      ("fc-item--special-report", item.cardStyle == SpecialReport),
+      ("fc-item--paid-content", item.branding.exists(_.isPaid)),
       ("fc-item--has-cutout", item.cutOut.isDefined),
-      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
       ("fc-item--force-image-upgrade", isFirstContainer),
@@ -45,10 +44,9 @@ object GetClasses {
 
   def forSubLink(sublink: Sublink)(implicit request: RequestHeader): String = RenderClasses(Map(
     ("fc-sublink", true),
-    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", !experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
     (sublinkMediaTypeClass(sublink).getOrElse(""), true),
-    ("fc-sublink--pillar-" + sublink.pillar.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett)),
-    ("fc-sublink--type-" + sublink.designType.nameOrDefault, experiments.ActiveExperiments.isParticipating(experiments.Garnett))
+    ("fc-sublink--pillar-" + sublink.pillar.nameOrDefault, true),
+    ("fc-sublink--type-" + sublink.designType.nameOrDefault, true)
   ))
 
   def mediaTypeClass(faciaCard: ContentCard): Option[String] = faciaCard.mediaType map {

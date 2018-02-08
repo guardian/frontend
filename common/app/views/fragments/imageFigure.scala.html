@@ -75,17 +75,7 @@
 }
 
 @showcaseFeature(captionHtml: => Html) =  {
-
-    @if(isFeature && isShowcase && !experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-        <div class="gs-container">
-            <div class="content__main-column">
-                @captionHtml
-            </div>
-        </div>
-    } else {
-        @captionHtml
-    }
-
+    @captionHtml
 }
 
 @lightbox(imageHtml: => Html) =  {

@@ -59,9 +59,7 @@ object css {
 
   def head(projectOverride: Option[String])(implicit context: ApplicationContext, request: RequestHeader): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
   def inlineIdentity(implicit request: RequestHeader, context: ApplicationContext): String = inline("head.identity")
-  def inlineStoryPackage(implicit context: ApplicationContext): String = inline("story-package")
   def inlineStoryPackageGarnett(implicit context: ApplicationContext): String = inline("story-package-garnett")
-  def inlinePhotoEssay(implicit context: ApplicationContext): String = inline("article-photo-essay")
   def inlinePhotoEssayGarnett(implicit context: ApplicationContext): String = inline("article-photo-essay-garnett")
   def amp(implicit context: ApplicationContext): String = inline("head.amp")
   def hostedAmp(implicit context: ApplicationContext): String = inline("head.hosted-amp")
