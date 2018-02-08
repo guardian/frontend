@@ -1,0 +1,17 @@
+.site-message--membership-action-required {
+    color: $garnett-neutral-5;
+    background: $garnett-neutral-1;
+    &:after {
+        @include multiline(3, $garnett-neutral-7, top);
+        content: '';
+        display: block;
+        height: 4px * 3; /*height of multiline (4px) times the number of lines (4)*/
+        margin-bottom: -1px;
+        width: 100%;
+    }
+    a {
+        color: $garnett-neutral-5;
+        font-weight: 900;
+    }
+
+}

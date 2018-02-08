@@ -10,6 +10,7 @@ const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
 const AD_FREE_USER_COOKIE = 'GU_AF1';
+const ACCOUNT_DATA_UPDATE_LINK_COOKIE = 'gu_account_link';
 
 const userHasData = (): boolean => {
     const cookie =
@@ -19,6 +20,9 @@ const userHasData = (): boolean => {
         getCookie(AD_FREE_USER_COOKIE);
     return !!cookie;
 };
+
+const accountDataUpdateWarning = (): ?string =>
+    getCookie(ACCOUNT_DATA_UPDATE_LINK_COOKIE);
 
 const adFreeDataIsPresent = (): boolean => {
     const cookieVal = getCookie(AD_FREE_USER_COOKIE);
@@ -40,10 +44,16 @@ const persistResponse = (JsonResponse: () => void) => {
         JsonResponse.contentAccess.recurringContributor
     );
 
+    if ('alertAvailableFor' in JsonResponse) {
+        addCookie(
+            ACCOUNT_DATA_UPDATE_LINK_COOKIE,
+            JsonResponse.alertAvailableFor
+        );
+    }
+
     if (adFreeDataIsPresent() && !JsonResponse.adFree) {
         removeCookie(AD_FREE_USER_COOKIE);
     }
-
     if (switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
         addCookie(AD_FREE_USER_COOKIE, timeInDaysFromNow(2));
     }
@@ -96,9 +106,7 @@ const userHasDataAfterSignout = (): boolean =>
 
 /**
  * Updates the user's data in a lazy fashion
- */
-
-const refresh = (): Promise<void> => {
+ */ const refresh = (): Promise<void> => {
     if (isUserLoggedIn() && userNeedsNewFeatureData()) {
         return requestNewData();
     } else if (userHasDataAfterSignout()) {
@@ -112,8 +120,7 @@ const refresh = (): Promise<void> => {
  * This data may be stale; we do not wait for userFeatures.refresh()
  * @returns {boolean}
  * @returns {boolean}
- */
-const isPayingMember = (): boolean =>
+ */ const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
@@ -134,13 +141,13 @@ const isRecurringContributor = (): boolean =>
     Whenever the checks are updated, please make sure to update
     applyRenderConditions.scala.js too, where the global CSS class, indicating
     the user should not see the revenue messages, is added to the body
-*/
-const shouldSeeReaderRevenue = (): boolean =>
+*/ const shouldSeeReaderRevenue = (): boolean =>
     !isPayingMember() && !isRecentContributor() && !isRecurringContributor();
 
 const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
 
 export {
+    accountDataUpdateWarning,
     isAdFreeUser,
     isPayingMember,
     isContributor,
