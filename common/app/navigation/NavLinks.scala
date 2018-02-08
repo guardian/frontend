@@ -96,6 +96,7 @@ object NavLinks {
   val MLB = NavLink("MLB", "/sport/mlb")
   val NBA = NavLink("NBA", "/sport/nba")
   val NHL = NavLink("NHL", "/sport/nhl")
+  val winterOlympics = NavLink("Winter Olympics", "/sport/winter-olympics")
 
   /* CULTURE */
   val film = NavLink("Film", "/film")
@@ -275,6 +276,7 @@ object NavLinks {
   //Sport Pillar
   val ukSportPillar = NavLink("Sport", "/sport", longTitle = "Sport home", iconName = "home",
     List(
+      winterOlympics,
       football,
       rugbyUnion,
       cricket,
@@ -283,12 +285,12 @@ object NavLinks {
       formulaOne,
       rugbyLeague,
       racing,
-      usSports,
       golf
     )
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
+      winterOlympics,
       football,
       AFL,
       NRL,
@@ -300,6 +302,7 @@ object NavLinks {
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
+      winterOlympics,
       soccer,
       NFL,
       tennis,
@@ -311,6 +314,7 @@ object NavLinks {
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
+      winterOlympics,
       football,
       rugbyUnion,
       cricket,
