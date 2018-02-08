@@ -6,7 +6,7 @@ import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 
 object ActiveExperiments extends ExperimentsDefinition {
-  val allExperiments: Set[Experiment] = Set(
+  override val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline
@@ -20,9 +20,7 @@ object CommercialClientLogging extends Experiment(
   owners = Seq(Owner.withGithub("rich-nguyen")),
   sellByDate = new LocalDate(2018, 2, 28),
   participationGroup = Perc1A
-) {
-  override def priorCondition(implicit request: RequestHeader): Boolean = CommercialBaseline.switch.isSwitchedOn
-}
+)
 
 object CommercialPaidContentTemplate extends Experiment(
   name = "commercial-paid-content",
