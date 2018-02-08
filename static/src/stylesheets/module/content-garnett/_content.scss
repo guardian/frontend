@@ -150,13 +150,13 @@
 
 .content__labels {
     box-sizing: border-box;
-    padding: $gs-baseline/2 0;
+    padding: $gs-baseline/2 0 0;
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
 
     @include mq($until: tablet) {
-        padding: 0;
+        order: 1;
 
         .tonal__head--tone-comment &,
         .tonal__head--tone-editorial & {
@@ -170,16 +170,9 @@
 }
 
 .content__labels--not-immersive {
-    border-bottom: 1px dotted $neutral-5;
-
-    @include mq($until: tablet) {
-        border: 0;
-    }
-
     @include mq(leftCol) {
         position: absolute;
         top: 0;
-        border-bottom: 0;
         width: $left-column;
         margin-left: -($left-column + $gs-gutter);
         margin-bottom: $gs-baseline;
@@ -213,12 +206,11 @@
 }
 
 .content__series-label {
-    @include fs-headline(2);
+    font-size: 15px;
     float: left;
 
     @include mq($until: tablet) {
-        @include fs-header(1);
-        padding-top: $gs-baseline / 3;
+        font-weight: 800;
     }
 
     @include mq(leftCol) {
