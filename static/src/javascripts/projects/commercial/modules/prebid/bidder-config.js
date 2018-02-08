@@ -62,43 +62,34 @@ const getIndexSiteId = (): string => {
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
     Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
 
+const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
+    contains(sizes, [300, 250]) || contains(sizes, [300, 600]);
+
+const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
+    contains(sizes, [728, 90]) || contains(sizes, [970, 250]);
+
 const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     switch (config.page.edition) {
         case 'UK':
             switch (getBreakpointKey()) {
                 case 'D':
-                    if (
-                        contains(sizes, [300, 250]) ||
-                        contains(sizes, [300, 600])
-                    ) {
+                    if (containsMpuOrDmpu(sizes)) {
                         return 1116396;
                     }
-                    if (
-                        contains(sizes, [728, 90]) ||
-                        contains(sizes, [970, 250])
-                    ) {
+                    if (containsLeaderboardOrBillboard(sizes)) {
                         return 1116397;
                     }
                     return -1;
                 case 'M':
-                    if (
-                        contains(sizes, [300, 250]) ||
-                        contains(sizes, [300, 600])
-                    ) {
+                    if (containsMpuOrDmpu(sizes)) {
                         return 1116400;
                     }
                     return -1;
                 case 'T':
-                    if (
-                        contains(sizes, [300, 250]) ||
-                        contains(sizes, [300, 600])
-                    ) {
+                    if (containsMpuOrDmpu(sizes)) {
                         return 1116398;
                     }
-                    if (
-                        contains(sizes, [728, 90]) ||
-                        contains(sizes, [970, 250])
-                    ) {
+                    if (containsLeaderboardOrBillboard(sizes)) {
                         return 1116399;
                     }
                     return -1;
@@ -108,38 +99,23 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
         case 'INT':
             switch (getBreakpointKey()) {
                 case 'D':
-                    if (
-                        contains(sizes, [300, 250]) ||
-                        contains(sizes, [300, 600])
-                    ) {
+                    if (containsMpuOrDmpu(sizes)) {
                         return 1116420;
                     }
-                    if (
-                        contains(sizes, [728, 90]) ||
-                        contains(sizes, [970, 250])
-                    ) {
+                    if (containsLeaderboardOrBillboard(sizes)) {
                         return 1116421;
                     }
                     return -1;
                 case 'M':
-                    if (
-                        contains(sizes, [300, 250]) ||
-                        contains(sizes, [300, 600])
-                    ) {
+                    if (containsMpuOrDmpu(sizes)) {
                         return 1116424;
                     }
                     return -1;
                 case 'T':
-                    if (
-                        contains(sizes, [300, 250]) ||
-                        contains(sizes, [300, 600])
-                    ) {
+                    if (containsMpuOrDmpu(sizes)) {
                         return 1116422;
                     }
-                    if (
-                        contains(sizes, [728, 90]) ||
-                        contains(sizes, [970, 250])
-                    ) {
+                    if (containsLeaderboardOrBillboard(sizes)) {
                         return 1116423;
                     }
                     return -1;
