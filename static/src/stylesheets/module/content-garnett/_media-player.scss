@@ -132,8 +132,10 @@ $ima-controls-height: 70px;
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
                 border-radius: .2em;
             }
+
         }
     }
+
 
     .gu-media--audio &,
     .vjs-has-ended &,
