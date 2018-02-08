@@ -158,6 +158,11 @@
     @include mq($until: tablet) {
         padding: 0;
 
+        .tonal__head--tone-comment &,
+        .tonal__head--tone-editorial & {
+            order: 0;
+        }
+
         & > div:not(.content__series-label) {
             display: none;
         }
