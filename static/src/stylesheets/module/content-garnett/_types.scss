@@ -1053,6 +1053,35 @@ $quote-mark: 35px;
         }
     }
 }
+
+// *************** Opinion Showcase Styles ***************
+
+.content--type-guardianview.has-feature-showcase-element,
+.content--type-comment.has-feature-showcase-element {
+    .content__head--article {
+        @include mq($from: leftCol) {
+            @supports (display: grid) {
+                grid-template-areas: 'labels headline' '. standfirst' 'meta main-media';
+            }
+        }
+    }
+    .content__header {
+        max-width: gs-span(8);
+    }
+
+    .content__secondary-column {
+        @include mq($from: wide) {
+            padding-top: (aspect-ratio-height(5, 3, gs-span(13)) + gs-height(10));
+            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
+        }
+        @include mq($from: leftCol) {
+            padding-top: (aspect-ratio-height(5, 3, gs-span(12)) + gs-height(10));
+            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
+        }
+    }
+}
+
+
 // *************** Media Styles ***************
 
 .content--media:not(.paid-content) {
