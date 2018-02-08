@@ -7,7 +7,7 @@ import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 
 object ActiveExperiments extends ExperimentsDefinition {
-  val allExperiments: Set[Experiment] = Set(
+  override val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline,
