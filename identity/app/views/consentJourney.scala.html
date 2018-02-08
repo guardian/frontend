@@ -39,51 +39,48 @@
     }
 }
 
-@showAgeStep(index: Option[Int]) = @{
-    if(index.contains(0)){
-        List(ConsentStepHelpLegalText("By clicking the button, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
+@showAgeStep(display: Boolean = false) = @{
+    if(display){
+        List(ConsentStepHelpLegalText("By continuing, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
     } else {
         Nil
     }
 }
 
-@renderStep(step: ConsentStep, index: Option[Int] = None) = {
-    @if(step.show) {
-        @(step.banner.map { title =>
-            Html(s"<p class='form__success'>$title</p>")
-        })
-        <fieldset
-            class="identity-wizard__step"
-            data-wizard-step-name="@step.name"
-            role="dialog"
-            aria-labelledby="consentWizard@{step.name.capitalize}Title"
-        >
-            <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
-            <div class="identity-forms-wrapper">
-                @if(step.help || showAgeStep(index)) {
-                    <div class="identity-forms-wrapper__title">
-                        @((step.help ++ showAgeStep(index)).map(paragraph =>
-                            paragraph match {
-                                case m: ConsentStepHelpLegalText => {
-                                    Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
-                                }
-                                case m: ConsentStepHelpText => {
-                                    Html(s"<p class='identity-title-explainer'>${m.text}</p>")
-                                }
+@renderStep(step: ConsentStep, isFirst: Boolean = false, isLast: Boolean = false) = {
+    @(step.banner.map { title =>
+        Html(s"<p class='form__success'>$title</p>")
+    })
+    <fieldset
+        role="dialog"
+        aria-labelledby="consentWizard@{step.name.capitalize}Title"
+    >
+        <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
+        <div class="identity-forms-wrapper">
+            @if(step.help || showAgeStep(display = isFirst)) {
+                <div class="identity-forms-wrapper__title">
+                    @((step.help ++ showAgeStep(display = isFirst)).map(paragraph =>
+                        paragraph match {
+                            case m: ConsentStepHelpLegalText => {
+                                Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
                             }
-                        ))
-                    </div>
-                }
-                <div class="identity-forms-wrapper__fields">
-                    @step.content
+                            case m: ConsentStepHelpText => {
+                                Html(s"<p class='identity-title-explainer'>${m.text}</p>")
+                            }
+                        }
+                    ))
                 </div>
+            }
+            <div class="identity-forms-wrapper__fields">
+                @step.content
             </div>
+        </div>
 
-        </fieldset>
-    }
+    </fieldset>
 }
 @renderSteps(steps:List[ConsentStep]) = @{
-    steps.zipWithIndex.map{ case (element, index) => renderStep(element, Some(index)) }
+    val displaySteps = steps.filter(_.show)
+    displaySteps.zipWithIndex.map{ case (element, index) => renderStep(element, index == 0, index == (displaySteps.size - 1)) }
 }
 
 @channelStepContent = {
@@ -245,15 +242,15 @@
         }
         case "thank-you" => {
             List(
-                marketingConsentThankYouStep,
                 emailRepermissionStep,
+                marketingConsentThankYouStep,
                 channelStep
             )
         }
         case "default" => {
             List(
-                marketingConsentStep,
                 emailRepermissionStep,
+                marketingConsentStep,
                 channelStep
             )
         }
@@ -305,7 +302,14 @@
 
     <div class="identity-wizard identity-wizard--consent u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
 
+        <div
+            class="identity-wizard__step"
+            data-wizard-step-name="single-test"
+        >
+
         @renderSteps(getStepsForJourney(journey))
+
+        </div>
 
         <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
 
