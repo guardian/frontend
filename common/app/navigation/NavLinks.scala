@@ -285,6 +285,7 @@ object NavLinks {
       formulaOne,
       rugbyLeague,
       racing,
+      usSports,
       golf
     )
   )
