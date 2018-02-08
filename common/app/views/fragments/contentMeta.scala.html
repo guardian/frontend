@@ -38,7 +38,7 @@
         @item.content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
 
         @if(item.content.tags.contributors.length == 1) {
-            @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
+            @if(!amp && item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
                 <p class="meta__contact-header">Contact author</p>
             }
             @fragments.meta.contactAuthor(item.tags, amp)
