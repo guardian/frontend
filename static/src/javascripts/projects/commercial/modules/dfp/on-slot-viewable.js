@@ -5,7 +5,7 @@ import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
-const viweabilityThresholdMs = 30000;
+const viewabilityThresholdMs = 30000;
 
 export const onSlotViewable = (event: ImpressionViewableEvent): void => {
     const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
@@ -29,6 +29,6 @@ export const onSlotViewable = (event: ImpressionViewableEvent): void => {
             } else {
                 enableLazyLoad(advert);
             }
-        }, viweabilityThresholdMs);
+        }, viewabilityThresholdMs);
     }
 };
