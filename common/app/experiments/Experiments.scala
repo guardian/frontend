@@ -1,7 +1,6 @@
 package experiments
 
 import conf.switches.Owner
-import conf.switches.Switches.MoonLambdaSwitch
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
@@ -11,7 +10,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline,
-    CommercialAdRefresh
+    CommercialAdRefresh,
+    MoonLambda
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
