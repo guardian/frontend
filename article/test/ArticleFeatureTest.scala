@@ -200,16 +200,16 @@ import collection.JavaConverters._
 
     }
 
-    scenario("Article body", ArticleComponents) {
-
-      Given("I am on an article entitled 'New Viking invasion at Lindisfarne'")
-      goTo("/uk/the-northerner/2012/aug/07/lindisfarne-vikings-northumberland-heritage-holy-island") { browser =>
-        import browser._
-
-        Then("I should see the body of the article")
-        $("[itemprop=articleBody]").text should startWith("This week Lindisfarne celebrates its long and frequently bloody Viking heritage")
-      }
-    }
+//    scenario("Article body", ArticleComponents) {
+//
+//      Given("I am on an article entitled 'New Viking invasion at Lindisfarne'")
+//      goTo("/uk/the-northerner/2012/aug/07/lindisfarne-vikings-northumberland-heritage-holy-island") { browser =>
+//        import browser._
+//
+//        Then("I should see the body of the article")
+//        $("[itemprop=articleBody]").text should startWith("This week Lindisfarne celebrates its long and frequently bloody Viking heritage")
+//      }
+//    }
 
     scenario("Article aside MPU", ArticleComponents) {
 
@@ -353,18 +353,18 @@ import collection.JavaConverters._
 
 
 
-    scenario("Review body", ArticleComponents) {
-
-      // Nb, The schema.org markup for a review body is different to an article body
-
-      Given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
-      goTo("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
-        import browser._
-
-        Then("I should see the star body")
-        $("[itemprop=reviewBody]").text should startWith("What's so funny?")
-      }
-    }
+//    scenario("Review body", ArticleComponents) {
+//
+//      // Nb, The schema.org markup for a review body is different to an article body
+//
+//      Given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
+//      goTo("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
+//        import browser._
+//
+//        Then("I should see the star body")
+//        $("[itemprop=reviewBody]").text should startWith("What's so funny?")
+//      }
+//    }
 
     scenario("correct placeholder for ad is rendered") {
 
