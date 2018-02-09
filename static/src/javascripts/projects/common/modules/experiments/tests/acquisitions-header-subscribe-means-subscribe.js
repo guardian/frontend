@@ -1,29 +1,38 @@
 // @flow
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { addAcquisitionDataToURL } from 'common/modules/commercial/acquisitions-ophan';
+import { updateAcquisitionData } from 'common/modules/commercial/acquisitions-ophan';
 
 const componentType = 'ACQUISITIONS_HEADER';
 const abTestName = 'AcquisitionsHeaderSubscribeMeansSubscribe';
 const controlVariantName = 'control';
 const subscribeOnlyVariantName = 'subscribe_only';
 
-const modifySubscribeLink = (variant: string) => {
+const addTestData = (url: URL, name: string, variant: string): URL =>
+    updateAcquisitionData(url, {
+        abTest: {
+            name,
+            variant,
+        },
+    });
+
+const modifySubscribeLink = (
+    variant: string,
+    subscribeOnlyBundle: boolean = false
+) => {
     const subscribeLink = document.querySelector('.js-change-subscribe-link');
     if (subscribeLink instanceof HTMLAnchorElement) {
         const subscribeUrl: URL = new URL(subscribeLink.href);
 
-        if (variant === subscribeOnlyVariantName) {
+        if (subscribeOnlyBundle) {
             subscribeUrl.searchParams.set('bundle', 'subscribe');
         }
 
-        const newSubscribeUrl = addAcquisitionDataToURL(subscribeUrl, {
-            abTest: {
-                name: abTestName,
-                variant,
-            },
-        });
-
-        subscribeLink.setAttribute('href', newSubscribeUrl.toString());
+        const subscribeUrlWithTestData = addTestData(
+            subscribeUrl,
+            abTestName,
+            variant
+        );
+        subscribeLink.setAttribute('href', subscribeUrlWithTestData.toString());
     }
 };
 
@@ -53,7 +62,7 @@ export const acquisitionsHeaderSubscribeMeansSubscribe: AcquisitionsABTest = {
         {
             id: subscribeOnlyVariantName,
             test: () => {
-                modifySubscribeLink(subscribeOnlyVariantName);
+                modifySubscribeLink(subscribeOnlyVariantName, true);
             },
         },
     ],

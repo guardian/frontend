@@ -48,12 +48,15 @@ export const submitViewEvent = (componentEvent: ComponentEventWithoutAction) =>
         action: 'VIEW',
     });
 
-// treats url as immutable, i.e. returns a new object
-// rather than modifying the existing one in place
-export const addAcquisitionDataToURL = (
+// Treats url as immutable, i.e. returns a new object
+// rather than modifying the existing one in place.
+// If the url already has an acquisitionData JSON parameter,
+// it will add or overwrite individual properties rather than
+// replacing the entire param.
+export const updateAcquisitionData = (
     url: URL,
     acquisitionData: AcquisitionData
-) => {
+): URL => {
     let existingAcquisitionData;
 
     try {
@@ -64,7 +67,7 @@ export const addAcquisitionDataToURL = (
         return url;
     }
 
-    // make a copy!
+    // make a copy
     const newUrl = new URL(url.toString());
 
     newUrl.searchParams.set(
@@ -76,22 +79,6 @@ export const addAcquisitionDataToURL = (
     );
 
     return newUrl;
-};
-
-export const addAcquisitionDataToRawURL = (
-    rawUrl: string,
-    acquisitionData: AcquisitionData
-): string => {
-    let url;
-    try {
-        url = new URL(rawUrl);
-    } catch (e) {
-        return rawUrl;
-    }
-
-    const newUrl: URL = addAcquisitionDataToURL(url, acquisitionData);
-
-    return newUrl.toString();
 };
 
 export const addReferrerData = (acquisitionData: {}): {} =>
