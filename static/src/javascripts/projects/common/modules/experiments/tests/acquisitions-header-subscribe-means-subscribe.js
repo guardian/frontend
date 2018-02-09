@@ -11,23 +11,24 @@ const modifySubscribeLink = (
     variant: string,
     subscribeOnlyBundle: boolean = false
 ) => {
-    const subscribeLink = document.querySelector('.js-change-subscribe-link');
-    if (subscribeLink instanceof HTMLAnchorElement) {
-        const subscribeUrl: URL = new URL(subscribeLink.href);
+    [...document.querySelectorAll('.js-subscribe')].forEach(subscribeLink => {
+        if (subscribeLink instanceof HTMLAnchorElement) {
+            const subscribeUrl: URL = new URL(subscribeLink.href);
 
-        if (subscribeOnlyBundle) {
-            subscribeUrl.searchParams.set('bundle', 'subscribe');
+            if (subscribeOnlyBundle) {
+                subscribeUrl.searchParams.set('bundle', 'subscribe');
+            }
+
+            const subscribeUrlWithTestData = updateAcquisitionData(subscribeUrl, {
+                abTest: {
+                    name: abTestName,
+                    variant,
+                },
+            });
+
+            subscribeLink.setAttribute('href', subscribeUrlWithTestData.toString());
         }
-
-        const subscribeUrlWithTestData = updateAcquisitionData(subscribeUrl, {
-            abTest: {
-                name: abTestName,
-                variant,
-            },
-        });
-
-        subscribeLink.setAttribute('href', subscribeUrlWithTestData.toString());
-    }
+    });
 };
 
 export const acquisitionsHeaderSubscribeMeansSubscribe: AcquisitionsABTest = {
