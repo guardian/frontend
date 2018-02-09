@@ -111,7 +111,7 @@
                         data-edition="@{edition.id.toLowerCase}"
                         role="menuitem">
 
-                        <a class="menu-item__title js-subscribe"
+                        <a class="menu-item__title @item.classList.mkString(" ")"
                            href="@item.url"
                            data-link-name="nav2 : @item.title">
                             @item.title

@@ -19,14 +19,20 @@ const modifySubscribeLink = (
                 subscribeUrl.searchParams.set('bundle', 'subscribe');
             }
 
-            const subscribeUrlWithTestData = updateAcquisitionData(subscribeUrl, {
-                abTest: {
-                    name: abTestName,
-                    variant,
-                },
-            });
+            const subscribeUrlWithTestData = updateAcquisitionData(
+                subscribeUrl,
+                {
+                    abTest: {
+                        name: abTestName,
+                        variant,
+                    },
+                }
+            );
 
-            subscribeLink.setAttribute('href', subscribeUrlWithTestData.toString());
+            subscribeLink.setAttribute(
+                'href',
+                subscribeUrlWithTestData.toString()
+            );
         }
     });
 };
@@ -43,7 +49,7 @@ export const acquisitionsHeaderSubscribeMeansSubscribe: AcquisitionsABTest = {
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV 2.0',
-    audienceCriteria: 'All web traffic',
+    audienceCriteria: 'All UK web traffic',
     dataLinkNames: '',
     idealOutcome: 'We get more money when we tailor the destination to the CTA',
     canRun: () => geolocationGetSync() === 'GB',
