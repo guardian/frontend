@@ -21,12 +21,12 @@ type AcquisitionLinkParams = {
     abTest?: { name: string, variant: string },
 };
 
-type AcquisitionData = {
+type AcquisitionData = {|
     componentType?: OphanComponentType,
     componentId?: string,
     campaignCode?: string,
     abTest?: { name: string, variant: string },
-};
+|};
 
 const ACQUISITION_DATA_FIELD = 'acquisitionData';
 
