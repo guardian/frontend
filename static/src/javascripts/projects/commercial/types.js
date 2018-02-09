@@ -81,6 +81,11 @@ export type SlotRenderEndedEvent = {
     sourceAgnosticLineItemId?: number,
 };
 
+export type ImpressionViewableEvent = {
+    serviceName: string,
+    slot: Slot,
+};
+
 type MPUUnitId = 228;
 type LeaderboardUnitId = 229;
 type BillboardUnitId = 229;

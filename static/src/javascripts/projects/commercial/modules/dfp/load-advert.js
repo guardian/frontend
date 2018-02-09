@@ -11,7 +11,12 @@ export const loadAdvert = (advert: Advert): void => {
             advert.startLoading();
             return prebid.requestBids(advert);
         })
-        .then(() => {
-            window.googletag.display(advert.id);
-        });
+        .then(() => window.googletag.display(advert.id));
+};
+
+export const refreshAdvert = (advert: Advert): void => {
+    advert.whenSlotReady.then(() => prebid.requestBids(advert)).then(() => {
+        advert.slot.setTargeting('refreshed', 'true');
+        window.googletag.pubads().refresh([advert.slot]);
+    });
 };

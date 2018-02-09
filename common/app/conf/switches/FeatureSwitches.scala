@@ -473,14 +473,4 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 2, 15),
     exposeClientSide = true
   )
-
-  val GarnettLaunch = Switch(
-    SwitchGroup.Feature,
-    "garnett-launch",
-    "when ON, garnett styling will appear on Fronts and articles (this does not work on the navigation)",
-    owners = Seq(Owner.withGithub("NataliaLKB"), Owner.withGithub("blongden73")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 8),
-    exposeClientSide = false
-  )
 }

@@ -50,7 +50,7 @@
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
-                        <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
+                        <div class="content__article-body from-content-api js-article__body"
                             data-test-id="article-review-body" @langAttributes(article.content)>
 
                             @if(!isPaidContent) {
@@ -69,7 +69,10 @@
                             }
 
                             @fragments.witnessCallToAction(article.content)
-                            @BodyCleaner(article, article.fields.body, amp = amp)
+
+                            <div itemprop="@bodyType(model)">
+                                @BodyCleaner(article, article.fields.body, amp = amp)
+                            </div>
                             @fragments.witnessCallToAction(article.content)
 
                             @fragments.submeta(article, amp)
