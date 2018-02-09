@@ -29,10 +29,7 @@ const modifySubscribeLink = (
                 }
             );
 
-            subscribeLink.setAttribute(
-                'href',
-                subscribeUrlWithTestData.toString()
-            );
+            subscribeLink.href = subscribeUrlWithTestData.toString();
         }
     });
 };
