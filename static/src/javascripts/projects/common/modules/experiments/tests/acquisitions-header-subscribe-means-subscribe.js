@@ -7,14 +7,6 @@ const abTestName = 'AcquisitionsHeaderSubscribeMeansSubscribe';
 const controlVariantName = 'control';
 const subscribeOnlyVariantName = 'subscribe_only';
 
-const addTestData = (url: URL, name: string, variant: string): URL =>
-    updateAcquisitionData(url, {
-        abTest: {
-            name,
-            variant,
-        },
-    });
-
 const modifySubscribeLink = (
     variant: string,
     subscribeOnlyBundle: boolean = false
@@ -27,11 +19,13 @@ const modifySubscribeLink = (
             subscribeUrl.searchParams.set('bundle', 'subscribe');
         }
 
-        const subscribeUrlWithTestData = addTestData(
-            subscribeUrl,
-            abTestName,
-            variant
-        );
+        const subscribeUrlWithTestData = updateAcquisitionData(subscribeUrl, {
+            abTest: {
+                name: abTestName,
+                variant,
+            },
+        });
+
         subscribeLink.setAttribute('href', subscribeUrlWithTestData.toString());
     }
 };
