@@ -1,4 +1,6 @@
 .content {
+    color: $garnett-neutral-1;
+    font-size: 19px;
     padding-top: 0;
     padding-bottom: $gs-baseline*3;
 
@@ -55,11 +57,14 @@
     margin-right: -2.5rem;
 }
 
+.content__head--byline-pic .content__header {
+    @include multiline(8, $garnett-neutral-4, bottom);
+}
+
 .content__standfirst {
-    font-size: 1rem;
     line-height: 1.25rem;
     margin-bottom: $gs-baseline/2;
-    color: $neutral-2;
+    max-width: 80%;
 
     > ul,
     > ol {
@@ -97,7 +102,7 @@
     font-size: 12px;
     line-height: 16px;
     position: relative;
-    color: $neutral-2;
+    color: $garnett-neutral-6;
     box-sizing: border-box;
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
@@ -115,8 +120,8 @@
 
 .meta__extras {
     clear: both;
-    border-top: 1px dotted $neutral-5;
-    border-bottom: 1px dotted $neutral-5;
+    border-top: 1px solid $garnett-neutral-4;
+    border-bottom: 1px solid $garnett-neutral-4;
 }
 
 .content__meta-container {
@@ -151,54 +156,56 @@
     float: left;
     text-transform: uppercase;
     box-sizing: border-box;
-    height: 2*get-line-height(bodyCopy, 2);
+    height: 4*get-line-height(bodyCopy, 2);
     padding-top: 1px;
     margin-right: 4px;
 
     .drop-cap__inner {
-        font-size: 52px;
-        line-height: 46px;
+        font-size: 120px;
+        line-height: 102px;
         vertical-align: text-top;
     }
 }
 
-.meta__social {
-    border-top: 1px dotted $neutral-5;
-}
-
-.meta__contact-header {
-    font-size: 12px;
-    padding-top: $gs-baseline / 2;
-    margin: 0;
-    color: $neutral-2;
-    float: left;
-}
-
 .byline {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 18px;
-    font-weight: 600;
+    font-style: italic;
     margin-bottom: 0;
     padding-top: $gs-baseline/3;
-    color: $neutral-2;
+}
+
+.meta__contact-method {
     display: inline-block;
+    font-size: 12px;
+    margin-right: $gs-gutter / 2;
+}
+
+.meta__twitter,
+.meta__email {
+    a {
+        color: $garnett-neutral-6;;
+    }
+
+    svg {
+        fill: $garnett-neutral-6;
+        height: 12px;
+        margin-bottom: -2px;
+        width: 12px;
+    }
 }
 
 .old-article-message {
     font-size: 12px;
     line-height: 1;
     display: inline-block;
-    color: $neutral-2;
+    color: $garnett-neutral-6;
     margin-bottom: $gs-baseline;
 
     .old-article-message--clock svg {
-        fill: $neutral-2;
+        fill: $garnett-neutral-6;
         margin-bottom: -1px;
     }
-}
-
-.meta__twitter {
-    display: inline-block;
 }
 
 .control__icon-wrapper {
@@ -223,7 +230,6 @@
     font-size: 12px;
     line-height: 1;
     margin: $gs-baseline / 4 0 0;
-    color: $neutral-2;
 }
 
 .badge-slot {
@@ -232,8 +238,24 @@
     margin-right: 5px;
 }
 
-.reveal-caption {
-    @include mq($from: tablet) {
-        display: none;
+.stars {
+    background-color: $news-garnett-highlight;
+    display: inline-block;
+    padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
+    margin: 0 0 ($gs-baseline / 2) (-$gs-gutter / 2);
+}
+
+.star__item {
+    stroke: #121212;
+    fill: transparent;
+
+    svg {
+        width: 20px;
+        height: 20px;
     }
+}
+
+.star__item--golden {
+    stroke: none;
+    fill: $garnett-neutral-1;
 }

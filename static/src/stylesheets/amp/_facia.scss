@@ -1,5 +1,5 @@
 .fc-container__inner {
-    border-top: 1px solid $news-main-2;
+    border-top: 1px solid $garnett-neutral-4;
 }
 
 .fc-container__inner,
@@ -15,18 +15,16 @@
     padding-bottom: $gs-baseline;
     font-size: 22px;
     line-height: 28px;
-    color: $guardian-brand-dark;
 }
 
 .fc-container__header__description {
     line-height: 1.25rem;
     padding-bottom: 1rem;
-    color: $neutral-2;
 }
 
 .fc-item {
-    background-color: $neutral-5;
-    border-top: 1px solid $news-main-2;
+    background-color: $garnett-neutral-8;
+    border-top: 1px solid $garnett-neutral-4;
     // the same width as the images are
     padding-left: 126px;
     position: relative;
@@ -68,7 +66,6 @@
     word-wrap: break-word;
     font-size: 14px;
     line-height: 18px;
-    color: $neutral-1;
 }
 
 .fc-item__meta {

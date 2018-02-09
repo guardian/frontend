@@ -8,12 +8,6 @@
     @include mq(tablet) {
         height: 42px;
     }
-
-    .l-footer & {
-        &:after {
-            content: none;
-        }
-    }
 }
 
 .subnav--expanded {

@@ -1,27 +1,20 @@
 @(tags: model.Tags, amp: Boolean = false)(implicit header: RequestHeader)
 @import views.support.RenderClasses
-@import experiments._
 
 @tags.contributors.headOption.map { profile =>
     @profile.properties.twitterHandle.map{ twitter =>
-        <div class="meta__twitter">
-            <a href="https://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="@RenderClasses(Map(
-                    "button button--small button--secondary" -> (!amp && !ActiveExperiments.isParticipating(experiments.Garnett)),
-                    "rounded-icon social-icon centered-icon" -> amp
-                ), "tone-colour") ">
-                    @fragments.inlineSvg("twitter-bird", "icon", Seq("inline-tone-fill", "i-left"))
-                    <div class="contact hide-until-leftcol @if(amp) {u-h}">@@@twitter</div>
+        <div class="meta__twitter meta__contact-method">
+            <a href="https://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle">
+                @fragments.inlineSvg("twitter-bird", "icon", Seq("i-left"))
+                @@@twitter
             </a>
         </div>
     }
     @profile.properties.emailAddress.map { email =>
-        <div class="meta__email">
-            <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="@RenderClasses(Map(
-                    "button button--small button--secondary" -> (!amp && !ActiveExperiments.isParticipating(experiments.Garnett)),
-                    "rounded-icon social-icon centered-icon" -> amp
-                ), "tone-colour") ">
-                    @fragments.inlineSvg("mail", "icon", Seq("inline-tone-fill", "i-left"))
-                    <div class="contact hide-until-leftcol @if(amp) {u-h}">Email</div>
+        <div class="meta__email meta__contact-method">
+            <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address">
+                @fragments.inlineSvg("mail", "icon", Seq("i-left"))
+                Email
             </a>
         </div>
     }

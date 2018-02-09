@@ -105,7 +105,7 @@ const addEndTimeBaseline = (baselineName: string): void => {
 // This posts the performance log to the beacon endpoint. It is expected that this be called
 // multiple times in a page view, so that partial data is captured, and then topped up as adverts load in.
 const reportTrackingData = (): void => {
-    if (config.tests.commercialClientLogging) {
+    if (config.get('tests.commercialClientLoggingVariant')) {
         const performanceReport = {
             viewId: ophan.viewId,
             tags: performanceLog.tags,
