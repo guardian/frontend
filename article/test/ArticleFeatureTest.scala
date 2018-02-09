@@ -37,7 +37,7 @@ import collection.JavaConverters._
         And("The article is marked up with the correct schema")
         val article = el("article[itemtype='http://schema.org/NewsArticle']")
 
-        article.el("[articleprop=headline]").text should
+        article.el("[itemprop=headline]").text should
           be("Liu Xiang pulls up in opening race at second consecutive Olympics")
       }
     }
@@ -299,7 +299,7 @@ import collection.JavaConverters._
         import browser._
 
         Then("It should be rendered as an article")
-        $("[articleprop=headline]").text should be("Birds of Britain | video")
+        $("[itemprop=headline]").text should be("Birds of Britain | video")
       }
     }
 
