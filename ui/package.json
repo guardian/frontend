@@ -54,7 +54,7 @@
         "flow-bin": "^0.57.3",
         "gzip-size-cli": "^2.0.0",
         "htmltojsx": "^0.2.6",
-        "jest": "^20.0.4",
+        "jest": "^22.2.2",
         "nodemon": "^1.12.1",
         "postcss": "^6.0.13",
         "postcss-apply": "^0.8.0",
