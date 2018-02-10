@@ -5828,14 +5828,6 @@ jest-environment-jsdom-global@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/jest-environment-jsdom-global/-/jest-environment-jsdom-global-1.0.3.tgz#e0616c235709e6919f33f9b5e5c3854cd8edba39"
 
-jest-environment-jsdom@22.2.0, jest-environment-jsdom@^22.2.0:
-  version "22.2.0"
-  resolved "https://registry.yarnpkg.com/jest-environment-jsdom/-/jest-environment-jsdom-22.2.0.tgz#e9537400cbdef2d1e61d7196f8afa40e826fe9d8"
-  dependencies:
-    jest-mock "^22.2.0"
-    jest-util "^22.2.0"
-    jsdom "^11.5.1"
-
 jest-environment-jsdom@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/jest-environment-jsdom/-/jest-environment-jsdom-20.0.3.tgz#048a8ac12ee225f7190417713834bb999787de99"
@@ -5843,6 +5835,14 @@ jest-environment-jsdom@^20.0.3:
     jest-mock "^20.0.3"
     jest-util "^20.0.3"
     jsdom "^9.12.0"
+
+jest-environment-jsdom@^22.2.0:
+  version "22.2.0"
+  resolved "https://registry.yarnpkg.com/jest-environment-jsdom/-/jest-environment-jsdom-22.2.0.tgz#e9537400cbdef2d1e61d7196f8afa40e826fe9d8"
+  dependencies:
+    jest-mock "^22.2.0"
+    jest-util "^22.2.0"
+    jsdom "^11.5.1"
 
 jest-environment-node@^20.0.3:
   version "20.0.3"
