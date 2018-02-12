@@ -19,7 +19,8 @@ case class NavLink(
   longTitle: String = "",
   // TODO: Shouldn't need iconName. Remove, and just make the first NavLink on mobile
   iconName: String = "",
-  children: Seq[NavLink] = Nil
+  children: Seq[NavLink] = Nil,
+  classList: Seq[String] = Nil
 ) extends NavNode
 
 

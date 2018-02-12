@@ -11,7 +11,7 @@ object NavigationHelpers {
 
     List(
       NavLink("Become a supporter", getSupportOrMembershipUrl(SideMenu)),
-      NavLink("Subscribe", getSupportOrSubscriptionUrl(SideMenu))
+      NavLink("Subscribe", getSupportOrSubscriptionUrl(SideMenu), classList = Seq("js-subscribe"))
     )
   }
 }
