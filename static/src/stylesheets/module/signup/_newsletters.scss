@@ -7,7 +7,7 @@
     @include mq($from: tablet) {
         font-size: 60px;
         padding-top: $gs-baseline * 2;
-  }
+    }
 }
 
 .newsletter-card__signup {
