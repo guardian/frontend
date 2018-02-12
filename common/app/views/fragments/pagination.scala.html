@@ -62,7 +62,6 @@
         }
 
         @pagination.pages.map{ pageNum =>
-
             @if(pageNum == pagination.currentPage) {
                 <span class="button button--small button--tertiary pagination__action is-active" aria-label="Current page" tabindex="0">@pageNum</span>
             } else {
@@ -75,10 +74,6 @@
         }
 
         @if(pagination.lastPage > 5) {
-            @if(pagination.currentPage + 2 < pagination.lastPage) {
-                @paginationExtreme(Some(pagination.lastPage), "last")
-            }
-
             @paginationPointer(pagination.next, "next")
         }
         </div>
