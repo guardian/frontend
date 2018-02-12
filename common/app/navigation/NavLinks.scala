@@ -283,10 +283,10 @@ object NavLinks {
       tennis,
       cycling,
       formulaOne,
+      golf,
       rugbyLeague,
       racing,
-      usSports,
-      golf
+      usSports
     )
   )
   val auSportPillar = ukSportPillar.copy(
