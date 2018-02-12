@@ -1,4 +1,4 @@
-@(charts: Seq[tools.Chart], title: Option[String] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(charts: Seq[tools.Chart], title: Option[String] = None, legendPosition: String = "in")(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Dashboard", isAuthed = true, hasCharts = true) {
 
@@ -13,5 +13,5 @@
         }
     }
 
-    @charts.filter(_.hasData).map{ chart => @fragments.lineChart(chart) }
+    @charts.filter(_.hasData).map{ chart => @fragments.lineChart(chart, legendPosition) }
 }

@@ -1,4 +1,4 @@
-@(chart: tools.Chart)
+@(chart: tools.Chart, legendPosition: String = "in")
 
 @* placeholder for chart *@
 <div id="@chart.id" class="chart @chart.format.cssClass"></div>
@@ -9,10 +9,10 @@
             title: '@chart.name',
             colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
             @if(chart.labels.size == 2){
-                legend: "none",
+                legend: 'none',
                 vAxis: {title: '@chart.labels(1)'},
             } else {
-                legend: { position: "in" },
+                legend: { position: '@legendPosition' },
                 @if(chart.dualY){
                     series: {
                         0: {targetAxisIndex: 0},
@@ -20,7 +20,7 @@
                     },
                 }
             }
-            chartArea: { width: "85%" },
+            chartArea: { width: '85%' },
             titleTextStyle: {color: '#999'},
             axisTitlesPosition: 'in',
             fontName : 'Georgia',

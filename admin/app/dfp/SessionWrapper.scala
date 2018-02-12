@@ -113,7 +113,16 @@ private[dfp] class SessionWrapper(dfpSession: DfpSession) {
     val page: SavedQueryPage = services.reportService.getSavedQueriesByStatement(stmtBuilder.toStatement)
     // page.getResults() may return null.
     val savedQuery: Option[SavedQuery] = Option(page.getResults()).flatMap(_.toList.headOption)
-    savedQuery.map(_.getReportQuery)
+
+    /*
+     * if this is null it means that the report is incompatible with the API version we're using.
+     * Eg. check this for supported date-range types:
+     * https://developers.google.com/doubleclick-publishers/docs/reference/v201711/ReportService.ReportQuery#daterangetype
+     * And supported filter types:
+     * https://developers.google.com/doubleclick-publishers/docs/reference/v201711/ReportService.ReportQuery#statement`
+     * Also see https://developers.google.com/doubleclick-publishers/docs/reporting
+     */
+    savedQuery.flatMap(qry => Option(qry.getReportQuery))
   }
 
   def runReportJob(report: ReportQuery): Seq[String] = {
