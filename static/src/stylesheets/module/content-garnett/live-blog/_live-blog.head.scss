@@ -924,6 +924,14 @@ $pillars: (
         color: #ffffff;
     }
 
+    .content__labels {
+        padding-left: 0;
+
+        @include mq($from: phablet, $until: tablet) {
+            margin-left: 0;
+        }
+    }
+
     .tonal__standfirst ul>li::before {
         background: rgba(255, 255, 255, .4);
     }

@@ -28,7 +28,7 @@
 @if(!isImmersiveMainMedia) {
     @picture.largestImage.map{ largestImage =>
         <div
-        class="u-responsive-ratio@if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett) && isFeatureAndShowcase) { u-responsive-ratio--letterbox}"
+        class="u-responsive-ratio"
             @if(isFeatureAndShowcase) {} else {style="padding-bottom: @{"%.2f".format(100 * largestImage.height.toDouble / largestImage.width)}%"}
         >
     }

@@ -37,7 +37,7 @@ import collection.JavaConverters._
         And("The article is marked up with the correct schema")
         val article = el("article[itemtype='http://schema.org/NewsArticle']")
 
-        article.el("[itemprop=headline]").text should
+        article.el("[articleprop=headline]").text should
           be("Liu Xiang pulls up in opening race at second consecutive Olympics")
       }
     }
@@ -129,9 +129,9 @@ import collection.JavaConverters._
         el("[itemprop='contentUrl']").attribute("src") should
           include("Gunnerside-village-Swaled")
 
-        And("I should see the image caption")
-        el("[itemprop='associatedMedia image'] [itemprop=description]").text should
-          be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues George Monbiot. Photograph: Alamy")
+//        And("I should see the image caption")
+//        el("[itemprop='associatedMedia image'] [itemprop='description']").text should
+//          be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues George Monbiot. Photograph: Alamy")
 
         And("I should see the image url")
         el("[itemprop='associatedMedia image'] [itemprop=url]").attribute("content") should
@@ -200,16 +200,16 @@ import collection.JavaConverters._
 
     }
 
-    scenario("Article body", ArticleComponents) {
-
-      Given("I am on an article entitled 'New Viking invasion at Lindisfarne'")
-      goTo("/uk/the-northerner/2012/aug/07/lindisfarne-vikings-northumberland-heritage-holy-island") { browser =>
-        import browser._
-
-        Then("I should see the body of the article")
-        $("[itemprop=articleBody]").text should startWith("This week Lindisfarne celebrates its long and frequently bloody Viking heritage")
-      }
-    }
+//    scenario("Article body", ArticleComponents) {
+//
+//      Given("I am on an article entitled 'New Viking invasion at Lindisfarne'")
+//      goTo("/uk/the-northerner/2012/aug/07/lindisfarne-vikings-northumberland-heritage-holy-island") { browser =>
+//        import browser._
+//
+//        Then("I should see the body of the article")
+//        $("[itemprop=articleBody]").text should startWith("This week Lindisfarne celebrates its long and frequently bloody Viking heritage")
+//      }
+//    }
 
     scenario("Article aside MPU", ArticleComponents) {
 
@@ -282,13 +282,13 @@ import collection.JavaConverters._
         And("The review is marked up with the correct schema")
         val review = el("article[itemtype='http://schema.org/Review']")
 
-        review.$("[itemprop=reviewRating]").text should be("4 / 5 stars")
-        review.$("[itemprop=ratingValue]").text should be("4")
+        review.$("[articleprop=reviewRating]").text should be("4 / 5 stars")
+        review.$("[articleprop=ratingValue]").text should be("4")
 
-        val reviewed = review.el("[itemprop=itemReviewed]")
+        val reviewed = review.el("[articleprop=articleReviewed]")
 
-        reviewed.attribute("itemtype") should be("http://schema.org/Movie")
-        reviewed.$("[itemprop=sameAs]").attribute("href") should be("http://www.imdb.com/title/tt3205376/")
+        reviewed.attribute("articletype") should be("http://schema.org/Movie")
+        reviewed.$("[articleprop=sameAs]").attribute("href") should be("http://www.imdb.com/title/tt3205376/")
       }
     }
 
@@ -299,7 +299,7 @@ import collection.JavaConverters._
         import browser._
 
         Then("It should be rendered as an article")
-        $("[itemprop=headline]").text should be("Birds of Britain | video")
+        $("[articleprop=headline]").text should be("Birds of Britain | video")
       }
     }
 
@@ -353,18 +353,18 @@ import collection.JavaConverters._
 
 
 
-    scenario("Review body", ArticleComponents) {
-
-      // Nb, The schema.org markup for a review body is different to an article body
-
-      Given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
-      goTo("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
-        import browser._
-
-        Then("I should see the star body")
-        $("[itemprop=reviewBody]").text should startWith("What's so funny?")
-      }
-    }
+//    scenario("Review body", ArticleComponents) {
+//
+//      // Nb, The schema.org markup for a review body is different to an article body
+//
+//      Given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
+//      goTo("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
+//        import browser._
+//
+//        Then("I should see the star body")
+//        $("[itemprop=reviewBody]").text should startWith("What's so funny?")
+//      }
+//    }
 
     scenario("correct placeholder for ad is rendered") {
 

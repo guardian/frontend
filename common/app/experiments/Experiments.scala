@@ -1,17 +1,16 @@
 package experiments
 
 import conf.switches.Owner
-import conf.switches.Switches.GarnettLaunch
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 
 object ActiveExperiments extends ExperimentsDefinition {
-  val allExperiments: Set[Experiment] = Set(
+  override val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline,
-    Garnett
+    CommercialAdRefresh
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -22,9 +21,7 @@ object CommercialClientLogging extends Experiment(
   owners = Seq(Owner.withGithub("rich-nguyen")),
   sellByDate = new LocalDate(2018, 2, 28),
   participationGroup = Perc1A
-) {
-  override def priorCondition(implicit request: RequestHeader): Boolean = CommercialBaseline.switch.isSwitchedOn
-}
+)
 
 object CommercialPaidContentTemplate extends Experiment(
   name = "commercial-paid-content",
@@ -56,12 +53,10 @@ object CommercialBaseline extends Experiment(
   participationGroup = Perc2B
 )
 
-object Garnett extends Experiment(
-  name = "garnett",
-  description = "Users in this experiment will see garnet styling.",
-  owners = Seq(Owner.withName("dotcom.platform")),
-  sellByDate = new LocalDate(2018, 2, 8),
-  participationGroup= Perc0C
-) {
-  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettLaunch.isSwitchedOn
-}
+object CommercialAdRefresh extends Experiment(
+  name = "commercial-ad-refresh",
+  description = "Users in this experiment will have their ad slots refreshed after 30 seconds",
+  owners = Seq(Owner.withGithub("JonNorman")),
+  sellByDate = new LocalDate(2018, 4, 11),
+  participationGroup = Perc5A
+)

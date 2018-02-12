@@ -12,6 +12,7 @@ import { buildPageTargeting } from 'common/modules/commercial/build-page-targeti
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { onSlotRender } from 'commercial/modules/dfp/on-slot-render';
 import { onSlotLoad } from 'commercial/modules/dfp/on-slot-load';
+import { onSlotViewable } from 'commercial/modules/dfp/on-slot-viewable';
 import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import { refreshOnResize } from 'commercial/modules/dfp/refresh-on-resize';
 import { adFreeSlotRemove } from 'commercial/modules/close-disabled-slots';
@@ -50,6 +51,10 @@ const setDfpListeners = (): void => {
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
+
+    if (config.get('tests.commercialAdRefreshVariant')) {
+        pubads.addEventListener('impressionViewable', onSlotViewable);
+    }
 };
 
 const setPageTargeting = (): void => {

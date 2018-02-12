@@ -326,4 +326,14 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2018, 2, 21),
     exposeClientSide = false
   )
+
+  val improveDigitalBidder: Switch = Switch(
+    group = Commercial,
+    name = "improve-digital-bidder",
+    description = "Include Improve Digital adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 14),
+    exposeClientSide = true
+  )
 }
