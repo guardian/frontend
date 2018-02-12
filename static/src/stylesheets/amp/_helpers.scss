@@ -78,3 +78,9 @@
     margin: 0;
     padding: 0;
 }
+
+.mobile-only {
+    @include mq(tablet) {
+        display: none !important;
+    }
+}

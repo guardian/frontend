@@ -61,6 +61,13 @@
     @include multiline(8, $garnett-neutral-4, bottom);
 }
 
+.caption--main {
+    @include mq(tablet) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+}
+
 .content__standfirst {
     line-height: 1.25rem;
     margin-bottom: $gs-baseline/2;

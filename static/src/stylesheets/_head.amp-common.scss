@@ -7,6 +7,11 @@
 @import 'base/_links';
 @import 'base/_lists';
 @import 'base/_inline-svgs';
+
+@import 'module/_icons.head';
+@import 'module/_rounded-icon';
+@import 'module/_main-media-captions';
+
 @import 'amp/_type';
 @import 'amp/_fonts';
 @import 'amp/_helpers';
@@ -28,6 +33,3 @@
 
 @import 'amp/_d2-comments';
 @import 'amp/_from-content-api';
-@import 'module/_icons.head';
-@import 'module/_rounded-icon';
-@import 'module/_main-media-captions';
