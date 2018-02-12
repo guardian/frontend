@@ -388,9 +388,8 @@ $quote-mark: 35px;
         border-color: $garnett-neutral-4;
     }
     // *************** Header and Body Styles ***************
-    .content__article-body {
-        line-height: 1.4;
 
+    .content__main-column {
         &:before {
             @include mq(leftCol) {
                 content: '';
@@ -403,18 +402,27 @@ $quote-mark: 35px;
                 background: $garnett-neutral-4;
             }
         }
+
         @include mq(tablet) {
             padding-left: 0;
+        }
+        @include mq(leftCol) {
+            padding-left: $gs-gutter/2;
+        }
+    }
+
+    .content__article-body {
+        line-height: 1.4;
+
+        @include mq(tablet) {
             margin-left: 0;
             padding-bottom: $gs-baseline*4;
         }
         @include mq(desktop) {
-            padding-left: 0;
             margin-left: 0;
             padding-bottom: $gs-baseline*6;
         }
         @include mq(leftCol) {
-            padding-left: $gs-gutter/2;
             margin-left: -$gs-gutter/2;
         }
     }
