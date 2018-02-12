@@ -284,6 +284,7 @@ object NavLinks {
       cycling,
       formulaOne,
       golf,
+      boxing,
       rugbyLeague,
       racing,
       usSports
