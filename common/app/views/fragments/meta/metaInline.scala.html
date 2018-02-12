@@ -47,7 +47,7 @@
         <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
     </div>
     }.getOrElse {
-        @if(item.content.isFromTheObserver) {
+        @if(item.content.isFromTheObserver && !item.content.isImmersive) {
             <div class="content__series-label">
                 <a class="content__series-label__link" href="https://www.theguardian.com/observer">The Observer</a>
             </div>
