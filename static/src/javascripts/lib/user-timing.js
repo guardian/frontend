@@ -26,7 +26,7 @@ const getMarkTime = (label: string): ?number => {
     if (performanceAPI && 'getEntriesByName' in performanceAPI) {
         const perfMark = performanceAPI.getEntriesByName(label, 'mark');
 
-        if (perfMark && 'startTime' in perfMark[0]) {
+        if (perfMark && perfMark[0] && 'startTime' in perfMark[0]) {
             return perfMark[0].startTime;
         }
     } else if (label in timings) {
