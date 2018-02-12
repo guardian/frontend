@@ -1,5 +1,7 @@
 package controllers.admin.commercial
 
+import java.time.LocalDate
+
 import common.Logging
 import jobs.CommercialDfpReporting
 import model.{ApplicationContext, NoCache}
@@ -18,7 +20,7 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
   }
 
   def renderPrebidDashboard(): Action[AnyContent] = Action { implicit request =>
-    case class DataPoint(date: String, bidderName: String, impressionCount: Int, eCpm: Double)
+    case class DataPoint(date: LocalDate, bidderName: String, impressionCount: Int, eCpm: Double)
 
     val dataPoints = (
       for {
@@ -27,7 +29,7 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
         report.flatMap { row =>
           val fields = row.fields
           for {
-            date            <- fields.lift(0)
+            date            <- fields.lift(0).map(LocalDate.parse(_))
             customCriteria  <- fields.lift(1)
             impressionCount <- fields.lift(3).map(_.toInt)
             eCpm            <- fields.lift(4).map(_.toDouble / 1000000.0d) // convert DFP micropounds to pounds
@@ -42,7 +44,9 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
       }
     ).getOrElse(Nil)
 
-    trait BidPerformanceChart extends Chart {
+    trait BidPerformanceChart extends Chart[LocalDate] {
+      def formatRowKey(key: LocalDate): String =
+        s"new Date(${key.getYear}, ${key.getMonthValue - 1}, ${key.getDayOfMonth})"
       val bidderNames = dataPoints.map(_.bidderName).distinct.sorted
       def labels      = "Date" +: bidderNames
       def format      = ChartFormat.MultiLine
@@ -52,35 +56,35 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
       val name = "Number of winning bids"
       val dataset = dataPoints
         .groupBy(_.date)
-        .foldLeft(Seq.empty[ChartRow]) {
+        .foldLeft(Seq.empty[ChartRow[LocalDate]]) {
           case (acc, (date, points)) =>
             val impressionCounts = bidderNames.foldLeft(Seq.empty[Double]) { (soFar, label) =>
               soFar :+ points.find(_.bidderName == label).map(_.impressionCount.toDouble).getOrElse(0d)
             }
             acc :+ ChartRow(date, impressionCounts)
         }
-        .sortBy(_.rowKey)
+        .sortBy(_.rowKey.toEpochDay)
     }
 
     val cpmChart = new BidPerformanceChart {
       val name = "CPM"
       val dataset = dataPoints
         .groupBy(_.date)
-        .foldLeft(Seq.empty[ChartRow]) {
+        .foldLeft(Seq.empty[ChartRow[LocalDate]]) {
           case (acc, (date, points)) =>
             val cpms = bidderNames.foldLeft(Seq.empty[Double]) { (soFar, label) =>
               soFar :+ points.find(_.bidderName == label).map(_.eCpm).getOrElse(0d)
             }
             acc :+ ChartRow(date, cpms)
         }
-        .sortBy(_.rowKey)
+        .sortBy(_.rowKey.toEpochDay)
     }
 
     val revenueChart = new BidPerformanceChart {
       val name = "Indicative revenue"
       val dataset = dataPoints
         .groupBy(_.date)
-        .foldLeft(Seq.empty[ChartRow]) {
+        .foldLeft(Seq.empty[ChartRow[LocalDate]]) {
           case (acc, (date, points)) =>
             val revenues = bidderNames.foldLeft(Seq.empty[Double]) { (soFar, label) =>
               soFar :+ points
@@ -92,15 +96,14 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
             }
             acc :+ ChartRow(date, revenues)
         }
-        .sortBy(_.rowKey)
+        .sortBy(_.rowKey.toEpochDay)
     }
 
     NoCache(
       Ok(
-        views.html.lineCharts(
+        views.html.dateLineCharts(
           charts = Seq(impressionChart, cpmChart, revenueChart),
-          title = Some("Prebid Bidder Performance"),
-          legendPosition = "bottom"
+          title = Some("Prebid Bidder Performance")
         )))
   }
 }

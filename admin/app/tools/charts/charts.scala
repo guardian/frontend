@@ -10,13 +10,7 @@ import play.api.libs.json._
 import scala.collection.JavaConverters._
 import scala.collection.mutable.{Map => MutableMap}
 
-case class ChartRow(rowKey: String, values: Seq[Double]) {
-
-  def this(date: Date, values: Seq[Double]) =
-  {
-    this(new DateTime(date.getTime).toString("HH:mm"), values)
-  }
-}
+case class ChartRow[K](rowKey: K, values: Seq[Double])
 
 case class ChartColumn(values: Seq[Datapoint])
 
@@ -33,7 +27,7 @@ class ChartTable(private val labels: Seq[String]) {
     datapoints += ((label, data))
   }
 
-  def asChartRow(dateFormat: DateTime => String, toValue: Datapoint => Double): Seq[ChartRow] = {
+  def asChartRow(dateFormat: DateTime => String, toValue: Datapoint => Double): Seq[ChartRow[String]] = {
     // Remove any holes in the data; some columns may have more data than others.
     val rows = MutableMap.empty[Date, List[Double]].withDefaultValue(Nil)
 
@@ -56,24 +50,26 @@ class ChartTable(private val labels: Seq[String]) {
   }
 }
 
-trait Chart {
+trait Chart[K] {
 
   //used in html as element id
   lazy val id = UUID.randomUUID().toString
 
   def name: String
   def labels: Seq[String]
-  def dataset: Seq[ChartRow]
+  def dataset: Seq[ChartRow[K]]
   def hasData: Boolean = dataset.nonEmpty
   def format: ChartFormat
   def dualY: Boolean = false
 
+  def formatRowKey(key: K): String
+
   def asDataset: String = s"[[$labelString], $dataString]"
 
   private def labelString = labels.map(l => s"'$l'").mkString(",")
-  private def datapointString(point: ChartRow) = {
+  private def datapointString(point: ChartRow[K]) = {
     val data = point.values.mkString(",")
-    s"['${point.rowKey}', $data]"
+    s"[${formatRowKey(point.rowKey)}, $data]"
   }
   private def dataString = dataset.map { datapointString }.mkString(",")
 }
@@ -112,9 +108,9 @@ class AwsLineChart(
   override val name: String,
   override val labels: Seq[String],
   override val format: ChartFormat,
-  val charts: GetMetricStatisticsResult*) extends Chart {
+  val charts: GetMetricStatisticsResult*) extends Chart[String] {
 
-  override def dataset: Seq[ChartRow] = {
+  override def dataset: Seq[ChartRow[String]] = {
     val dataColumns = labels.tail
     val table = new ChartTable(dataColumns)
 
@@ -131,6 +127,8 @@ class AwsLineChart(
   protected def toLabel(date: DateTime): String = date.withZone(format.timezone).toString("HH:mm")
 
   lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
+
+  def formatRowKey(key: String): String = s"'$key'"
 }
 
 class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, labels, format, charts:_*) {
@@ -151,7 +149,7 @@ class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, char
     ).filter{ case (label, column)  => column.values.length > 3 }
   }
 
-  override def dataset: Seq[ChartRow] = {
+  override def dataset: Seq[ChartRow[String]] = {
 
     val filteredTable = new ChartTable(dataColumns.map(_._1))
 

@@ -1,4 +1,4 @@
-@(chart: tools.Chart[String])
+@(chart: tools.Chart[java.time.LocalDate])
 
 @* placeholder for chart *@
 <div id="@chart.id" class="chart @chart.format.cssClass"></div>
@@ -8,19 +8,8 @@
         .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
             title: '@chart.name',
             colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
-            @if(chart.labels.size == 2){
-                legend: "none",
-                vAxis: {title: '@chart.labels(1)'},
-            } else {
-                legend: { position: "in" },
-                @if(chart.dualY){
-                    series: {
-                        0: {targetAxisIndex: 0},
-                        1: {targetAxisIndex: 1}
-                    },
-                }
-            }
-            chartArea: { width: "85%" },
+            legend: { position: 'bottom' },
+            chartArea: { width: '85%' },
             titleTextStyle: {color: '#999'},
             axisTitlesPosition: 'in',
             fontName : 'Georgia',
