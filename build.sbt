@@ -124,7 +124,8 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
     liftJson,
     slf4jExt,
     exactTargetClient,
-    libPhoneNumber
+    libPhoneNumber,
+    supportInternationalisation
   )
 )
 
