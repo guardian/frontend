@@ -1042,34 +1042,6 @@ $quote-mark: 35px;
     }
 }
 
-// *************** Opinion Showcase Styles ***************
-
-.content--type-guardianview.has-feature-showcase-element,
-.content--type-comment.has-feature-showcase-element {
-    .content__head--article {
-        @include mq($from: leftCol) {
-            @supports (display: grid) {
-                grid-template-areas: 'labels headline' '. standfirst' 'meta main-media';
-            }
-        }
-    }
-    .content__header {
-        max-width: gs-span(8);
-    }
-
-    .content__secondary-column {
-        @include mq($from: wide) {
-            padding-top: (aspect-ratio-height(5, 3, gs-span(13)) + gs-height(10));
-            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
-        }
-        @include mq($from: leftCol) {
-            padding-top: (aspect-ratio-height(5, 3, gs-span(12)) + gs-height(10));
-            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
-        }
-    }
-}
-
-
 // *************** Media Styles ***************
 
 .content--media:not(.paid-content) {
@@ -1312,7 +1284,8 @@ $quote-mark: 35px;
     }
 }
 // *************** Feature showcase overrides ***************
-.has-feature-showcase-element {
+.has-feature-showcase-element,
+.has-feature-showcase-opinion {
     .media-primary.media-primary--showcase {
         @include mq(wide) {
             margin: 0 auto;
@@ -1324,12 +1297,6 @@ $quote-mark: 35px;
     }
 
     .content__head--article {
-        @include mq($from: leftCol) {
-            @supports (display: grid) {
-                grid-template-areas: 'labels headline' 'meta main-media' '. standfirst';
-            }
-        }
-
         .content__headline-showcase-wrapper {
             display: none;
             @include mq($from: leftCol) {
@@ -1378,15 +1345,46 @@ $quote-mark: 35px;
             padding: 0;
         }
     }
+}
+
+.has-feature-showcase-element {
+    .content__head--article {
+        @include mq($from: leftCol) {
+            @supports (display: grid) {
+                grid-template-areas: 'labels headline' 'meta main-media' '. standfirst';
+            }
+        }
+    }
 
     .content__secondary-column {
         @include mq($from: wide) {
-            padding-top: (aspect-ratio-height(5, 3, gs-span(13)) + gs-height(5));
-            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
+            @include showcaseAdPadding(13, 5);
         }
         @include mq($from: leftCol) {
-            padding-top: (aspect-ratio-height(5, 3, gs-span(12)) + gs-height(5));
-            //The image spills into the right column, so we assume it's 5:3 and gs-span(13) wide and use that to set the padding-top.
+            @include showcaseAdPadding(12, 5);
+        }
+    }
+}
+// *************** Opinion specific styles ***************
+.has-feature-showcase-opinion {
+    .content__header {
+            max-width: gs-span(8);
+    }
+
+    .content__head--article {
+        @include mq($from: leftCol) {
+            @supports (display: grid) {
+                grid-template-areas: 'labels headline' 'meta' '. standfirst' 'main-media' ;
+            }
+        }
+    }
+
+    .content__secondary-column {
+        @include mq($from: wide) {
+            @include showcaseAdPadding(13, 10);
+        }
+        @include mq($from: leftCol) {
+            @include showcaseAdPadding(12, 10);
         }
     }
 }

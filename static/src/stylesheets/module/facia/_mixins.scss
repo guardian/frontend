@@ -87,3 +87,8 @@ $breakpoints: (
         .i { display: none; }
     }
 }
+
+@mixin showcaseAdPadding($span, $height) {
+    padding-top: (aspect-ratio-height(5, 3, gs-span($span)) + gs-height($height));
+    //The image spills into the right column, so we assume it's 5:3 and gs-span(13)/gs-span(12) wide and use that to set the padding-top.
+}
