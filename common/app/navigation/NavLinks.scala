@@ -70,9 +70,9 @@ object NavLinks {
     children = List(
       NavLink("Live scores", "/football/live", "football/live"),
       NavLink("Tables", "/football/tables", "football/tables"),
-      NavLink("Competitions", "/football/competitions", "football/competitions"),
-      NavLink("Results", "/football/results", "football/results"),
       NavLink("Fixtures", "/football/fixtures", "football/fixtures"),
+      NavLink("Results", "/football/results", "football/results"),
+      NavLink("Competitions", "/football/competitions", "football/competitions"),
       NavLink("Clubs", "/football/teams", "football/teams")
     )
   )
