@@ -66,6 +66,15 @@
           }
         }
         @defining(posterImageOverride.filter(_ => !playable || YouTubePosterOverride.isSwitchedOn) orElse media.posterImage) { bestPosterImage =>
+            @if(bestPosterImage.isDefined && expired) {
+                <div class="youtube-media-atom__overlay">
+                    <div class="vjs-error-display vjs-modal-dialog">
+                        <div class="vjs-modal-dialog-content">
+                            This video has been removed. This could be because it launched early, our rights have expired, there was a legal issue, or for another reason.
+                        </div>
+                    </div>
+                </div>
+            }
             @bestPosterImage.map { image =>
                 <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestSrcFor(image))">
 
@@ -104,7 +113,7 @@
             }
         }
         </div>
-}
+    }
 }
 
 @if(displayCaption & !mediaWrapper.contains(ImmersiveMainMedia)) {
