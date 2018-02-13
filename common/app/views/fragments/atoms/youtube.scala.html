@@ -14,6 +14,14 @@
 
 @(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None, faciaHeaderProperties: Option[VideoFaciaProperties] = None)(implicit request: RequestHeader)
 
+@videoJsError() = @{
+    <div class="vjs-error-display vjs-modal-dialog">
+        <div class="vjs-modal-dialog-content">
+        This video has been removed. This could be because it launched early, our rights have expired, there was a legal issue, or for another reason.
+        </div>
+    </div>
+}
+
 @defining(media.activeAssets.headOption) { activeAsset: Option[MediaAsset] =>
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
 @defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
@@ -66,6 +74,11 @@
           }
         }
         @defining(posterImageOverride.filter(_ => !playable || YouTubePosterOverride.isSwitchedOn) orElse media.posterImage) { bestPosterImage =>
+            @if(!bestPosterImage.isDefined && expired) {
+                <div class="youtube-media-atom__overlay">
+                    @videoJsError()
+                </div>
+            }
             @bestPosterImage.map { image =>
                 <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestSrcFor(image))">
 
@@ -94,17 +107,13 @@
                         }
                     }
                 } else {
-                    <div class="vjs-error-display vjs-modal-dialog">
-                        <div class="vjs-modal-dialog-content">
-                            This video has been removed. This could be because it launched early, our rights have expired, there was a legal issue, or for another reason.
-                        </div>
-                    </div>
+                    @videoJsError()
                 }
                 </div>
             }
         }
         </div>
-}
+    }
 }
 
 @if(displayCaption & !mediaWrapper.contains(ImmersiveMainMedia)) {
