@@ -1,5 +1,5 @@
 // @flow
-import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
+import { isInVariant } from 'common/modules/experiments/segment-util';
 import { abTestClashData as acquisitionsAbTestClashData } from 'common/modules/experiments/acquisition-test-selector';
 
 const emailTests: $ReadOnlyArray<ABTest> = [];
@@ -34,8 +34,7 @@ export const userIsInAClashingAbTest = (
     tests: $ReadOnlyArray<ABTest> = potentiallyClashingTests
 ) => {
     const inClashing = testABClash(
-        (test: ABTest, variant: Variant) =>
-            isInTest(test) && variantFor(test) === variant,
+        isInVariant,
         tests
     );
     console.log('inClashing', inClashing);

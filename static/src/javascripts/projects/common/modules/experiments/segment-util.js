@@ -4,6 +4,8 @@ import {
     getMvtNumValues,
     getMvtValue,
 } from 'common/modules/analytics/mvt-cookie';
+import {getParticipations} from "common/modules/experiments/utils";
+import {testCanBeRun} from "common/modules/experiments/test-can-run-checks";
 
 const NOT_IN_TEST = 'notintest';
 
@@ -39,10 +41,13 @@ const computeVariantIdFor = (test: ABTest): string => {
 
 export const variantIdFor = memoize(computeVariantIdFor, getId);
 
-export const isInTest = (test: ABTest): boolean =>
-    variantIdFor(test) !== NOT_IN_TEST;
-
 export const variantFor = (test: ABTest): ?Variant => {
     const variantId = variantIdFor(test);
     return test.variants.find(variant => variant.id === variantId);
 };
+
+export const isInTest = (test: ABTest): boolean =>
+    variantIdFor(test) !== NOT_IN_TEST;
+
+export const isInVariant = (test: ABTest, variant: Variant): boolean =>
+    isInTest(test) && variantFor(test) === variant;

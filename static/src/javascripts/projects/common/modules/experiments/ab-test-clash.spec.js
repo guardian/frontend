@@ -1,6 +1,6 @@
 // @flow
 
-import { isInVariant as isInVariant_ } from './utils';
+import { isInVariant as isInVariant_ } from './segment-util';
 import { userIsInAClashingAbTest } from './ab-test-clash';
 
 const isInVariant: JestMockFn<*, *> = (isInVariant_: any);
@@ -32,7 +32,7 @@ const createVariant = (data: Object): Variant =>
         data
     );
 
-jest.mock('common/modules/experiments/utils', () => ({
+jest.mock('common/modules/experiments/segment-util', () => ({
     isInVariant: jest.fn(() => true),
 }));
 
