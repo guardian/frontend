@@ -311,6 +311,40 @@ $video-width-desktop: 700px;
     }
 }
 
+.video-playlist__item--active .youtube-media-atom__play-button.vjs-control-text {
+    width: 42px;
+    height: 42px;
+
+    @include mq(mobileLandscape) { // 0 border radius on mobile because stock android has a render bug with it here
+        width: 50px;
+        height: 50px;
+    }
+    @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
+        width: 60px;
+        height: 60px;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-40%, -50%);
+        border-style: solid;
+        border-width: 1em 0 1em 2.4em;
+        border-color: transparent transparent transparent #ffffff;
+
+        @include mq(mobileLandscape) {
+            border-width: 1.2em 0 1.2em 3em;
+        }
+
+        @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
+            border-radius: .2em;
+            border-width: 1.4em 0 1.4em 3.3em;
+        }
+    }
+}
+
 .video-title--leftcol {
     display: none;
 
