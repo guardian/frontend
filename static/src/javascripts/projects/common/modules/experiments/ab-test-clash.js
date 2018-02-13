@@ -13,20 +13,29 @@ const testABClash = (
     f: (test: ABTest, variant: Variant) => boolean,
     tests: $ReadOnlyArray<ABTest>
 ): boolean =>
-    tests.some(test =>
-        test.variants
-            .filter(variant => {
-                const compliant =
-                    variant &&
-                    variant.options &&
-                    variant.options.isOutbrainCompliant;
-                return !compliant;
-            })
-            .some(variant => f(test, variant))
-    );
+    tests.some(test => {
+        const nonCompliantVariants = test.variants.filter(variant => {
+            const compliant =
+                variant &&
+                variant.options &&
+                variant.options.isOutbrainCompliant;
+            return !compliant;
+        });
+
+        console.log('nonCompliantVariants', nonCompliantVariants);
+        const inVariant = nonCompliantVariants.some(variant =>
+            f(test, variant)
+        );
+        console.log('any inVariant?', inVariant);
+        return inVariant;
+    });
 
 export const userIsInAClashingAbTest = (
     tests: $ReadOnlyArray<ABTest> = potentiallyClashingTests
-) => testABClash(isInVariant, tests);
+) => {
+    const inClashing = testABClash(isInVariant, tests);
+    console.log('inClashing', inClashing);
+    return inClashing;
+};
 
 export { emailTests, contributionsTests };

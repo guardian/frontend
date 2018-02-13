@@ -30,6 +30,8 @@ const checksToDispatch = {
     },
 
     isUserInContributionsAbTest(): Promise<boolean> {
+        const a = userIsInAClashingAbTest(contributionsTests);
+        console.log('userIsInAClashingAbTest(contributionsTests)', a);
         return Promise.resolve(userIsInAClashingAbTest(contributionsTests));
     },
 
