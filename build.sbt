@@ -123,7 +123,6 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
     identityCookie,
     liftJson,
     slf4jExt,
-    exactTargetClient,
     libPhoneNumber,
     supportInternationalisation
   )
