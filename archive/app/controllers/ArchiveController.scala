@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReference
 import javax.ws.rs.core.UriBuilder
 
 import conf.Configuration
-import experiments.{ActiveExperiments, MoonLambda}
+import experiments._
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
 import play.api.libs.json.Json
@@ -39,17 +39,22 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
 
   private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
 
-  // todo: refactor out since this is going to be used in many places
-  def get404Page: String = {
-    val response = ws.url(Configuration.moon.moonEndpoint)
+  def remoteRender404: Future[String] = ws.url(Configuration.moon.moonEndpoint)
       .withRequestTimeout(6000.millis)
       .get()
       .map((response) => {
         response.body
       })
 
-    Await.result(response, 5000.millis)
+  def getRemote404Page(implicit request: RequestHeader): Future[Result] = remoteRender404.map((s) => {
+    Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(s))))
+  }).recover {
+    case e: Throwable =>
+      Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+  }
 
+  def getLocal404Page(implicit request: RequestHeader): Future[Result] = Future {
+    Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
   }
 
   def lookup(path: String): Action[AnyContent] = Action.async { implicit request =>
@@ -59,31 +64,20 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
         .map(Cached(CacheTime.ArchiveRedirect))
         .orElse(redirectForPath(path))
       }
-      .map(_.getOrElse {
-
-        log404(request)
-
-        if (ActiveExperiments.isParticipating(MoonLambda)) {
-          Cached(CacheTime.NotFound)(WithoutRevalidationResult(
-            lookupRecordTimings(() => NotFound(Html(get404Page)), MoonMetrics.MoonRenderingMetric)
-          ))
-        } else if (ActiveExperiments.isControl(MoonLambda)) {
-          Cached(CacheTime.NotFound)(WithoutRevalidationResult(
-            lookupRecordTimings(() => NotFound(views.html.notFound()), MoonMetrics.NonMoonRenderingMetric)
-          ))
-        } else {
-          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+      .flatMap(_.map(Future.successful).getOrElse {
+        ActiveExperiments.groupFor(MoonLambda) match {
+          case Participant => timedPage(getRemote404Page, MoonMetrics.MoonRenderingMetric)
+          case Control => timedPage(getLocal404Page, MoonMetrics.NonMoonRenderingMetric)
+          case Excluded => getLocal404Page
         }
-
       })
 
   }
 
-  def lookupRecordTimings(timedFunction: () => play.api.mvc.Result, metric: TimingMetric): play.api.mvc.Result = {
+  def timedPage[T](future: Future[T], metric: TimingMetric): Future[T] = {
     val start = currentTimeMillis
-    val page = timedFunction()
-    metric.recordDuration(currentTimeMillis - start)
-    page
+    future.onComplete(_ => metric.recordDuration(currentTimeMillis - start))
+    future
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
