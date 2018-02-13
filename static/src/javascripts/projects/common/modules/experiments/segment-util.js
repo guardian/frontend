@@ -4,8 +4,6 @@ import {
     getMvtNumValues,
     getMvtValue,
 } from 'common/modules/analytics/mvt-cookie';
-import {getParticipations} from "common/modules/experiments/utils";
-import {testCanBeRun} from "common/modules/experiments/test-can-run-checks";
 
 const NOT_IN_TEST = 'notintest';
 

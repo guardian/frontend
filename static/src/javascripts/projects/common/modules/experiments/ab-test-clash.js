@@ -33,10 +33,7 @@ const testABClash = (
 export const userIsInAClashingAbTest = (
     tests: $ReadOnlyArray<ABTest> = potentiallyClashingTests
 ) => {
-    const inClashing = testABClash(
-        isInVariant,
-        tests
-    );
+    const inClashing = testABClash(isInVariant, tests);
     console.log('inClashing', inClashing);
     return inClashing;
 };
