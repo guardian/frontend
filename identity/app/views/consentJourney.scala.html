@@ -10,11 +10,12 @@
 @import views.support.fragment.ConsentChannel._
 @import common.LinkTo
 @import controllers.editprofile.ProfileForms
+@import _root_.utils.ConsentsJourneyType._
 
 @(
     user: com.gu.identity.model.User,
     forms: ProfileForms,
-    journey: String,
+    journey: AnyConsentsJourney,
     verifiedReturnUrl: String,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
@@ -178,7 +179,7 @@
 
         @renderBlocks(
             journey match {
-                case "newsletters" => {
+                case NewsletterConsentsJourney => {
                     List(
                         if(emailRepermissionStep.show) {
                             emailRepermissionStep
@@ -191,7 +192,7 @@
                         }
                     )
                 }
-                case "thank-you" => {
+                case ThankYouConsentsJourney => {
                     List(
                         ConsentBanner(
                             "Thank you for signing up"
@@ -201,7 +202,7 @@
                         channelStep
                     )
                 }
-                case "default" => {
+                case DefaultConsentsJourney => {
                     List(
                         emailRepermissionStep,
                         marketingConsentStep,

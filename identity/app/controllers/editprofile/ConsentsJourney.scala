@@ -10,6 +10,8 @@ import play.api.data.Forms.{nonEmptyText, single}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Result}
 import utils.ConsentOrder.userWithOrderedConsents
+import utils.ConsentsJourneyType.AnyConsentsJourney
+
 import scala.concurrent.Future
 
 trait ConsentsJourney
@@ -78,7 +80,7 @@ trait ConsentsJourney
 
   private def consentJourneyView(
     page: IdentityPage,
-    journey: String,
+    journey: AnyConsentsJourney,
     forms: ProfileForms,
     user: User,
     consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
