@@ -100,6 +100,7 @@ $ima-controls-height: 70px;
 
     &:hover .vjs-control-text {
         transform: translate(-50%, -50%) scale(1.15);
+
     }
 
     .vjs-control-text {
@@ -127,7 +128,7 @@ $ima-controls-height: 70px;
             left: 50%;
             transform: translate(-40%, -50%);
             border-style: solid;
-            border-width: 1em 0 1em 2.4em;
+            border-width: .9em 0 .9em 2.1em;
             border-color: transparent transparent transparent #ffffff;
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
@@ -135,6 +136,7 @@ $ima-controls-height: 70px;
             }
         }
     }
+
 
     .gu-media--audio &,
     .vjs-has-ended &,
