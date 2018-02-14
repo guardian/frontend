@@ -1,6 +1,7 @@
 // @flow
 import { isInVariant } from 'common/modules/experiments/segment-util';
 import { abTestClashData as acquisitionsAbTestClashData } from 'common/modules/experiments/acquisition-test-selector';
+import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 
 const emailTests: $ReadOnlyArray<ABTest> = [];
 const contributionsTests: $ReadOnlyArray<ABTest> = acquisitionsAbTestClashData;
@@ -9,11 +10,10 @@ const potentiallyClashingTests: $ReadOnlyArray<
     ABTest
 > = contributionsTests.concat(emailTests);
 
-const testABClash = (
-    f: (test: ABTest, variant: Variant) => boolean,
-    tests: $ReadOnlyArray<ABTest>
-): boolean =>
-    tests.some(test => {
+export const userIsInAClashingAbTest = (
+    tests: $ReadOnlyArray<ABTest> = potentiallyClashingTests
+) => {
+    const inClashing = tests.some(test => {
         const nonCompliantVariants = test.variants.filter(variant => {
             const compliant =
                 variant &&
@@ -23,17 +23,16 @@ const testABClash = (
         });
 
         console.log('nonCompliantVariants', nonCompliantVariants);
-        const inVariant = nonCompliantVariants.some(variant =>
-            f(test, variant)
+        const willNonCompliantVariantRun = nonCompliantVariants.some(
+            variant => isInVariant(test, variant) && testCanBeRun(test)
         );
-        console.log('any inVariant?', inVariant);
-        return inVariant;
+        console.log(
+            'will a non-compliant variant run?',
+            willNonCompliantVariantRun
+        );
+        return willNonCompliantVariantRun;
     });
 
-export const userIsInAClashingAbTest = (
-    tests: $ReadOnlyArray<ABTest> = potentiallyClashingTests
-) => {
-    const inClashing = testABClash(isInVariant, tests);
     console.log('inClashing', inClashing);
     return inClashing;
 };

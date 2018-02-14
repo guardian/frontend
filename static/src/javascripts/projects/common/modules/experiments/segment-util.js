@@ -48,4 +48,4 @@ export const isInTest = (test: ABTest): boolean =>
     variantIdFor(test) !== NOT_IN_TEST;
 
 export const isInVariant = (test: ABTest, variant: Variant): boolean =>
-    isInTest(test) && variantFor(test) === variant;
+    variantFor(test) === variant;
