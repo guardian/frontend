@@ -1,6 +1,6 @@
 // @flow
 
-// total_hours_spent_maintaining_this = 65
+// total_hours_spent_maintaining_this = 70
 
 import qwery from 'qwery';
 import bean from 'bean';
@@ -14,15 +14,27 @@ type SpacefinderOptions = {
     waitForInteractives?: boolean,
 };
 
-type SpacefinderItem = {
+export type SpacefinderItem = {
     top: number,
     bottom: number,
     element: Element,
 };
 
-type SpacefinderExclusion = {
+type RuleSpacing = {
     minAbove: number,
     minBelow: number,
+};
+
+type ElementDimensionMap = {
+    [name: string]: SpacefinderItem[]
+};
+
+type Measurements = {
+    bodyTop: number,
+    bodyHeight: number,
+    candidates: SpacefinderItem[],
+    contentMeta: ?SpacefinderItem,
+    opponents: ?ElementDimensionMap,
 };
 
 export type SpacefinderRules = {
@@ -39,16 +51,20 @@ export type SpacefinderRules = {
     clearContentMeta: number,
     // custom rules using selectors.
     selectors: {
-        [k: string]: SpacefinderExclusion,
+        [k: string]: RuleSpacing,
     },
     // will run each slot through this fn to check if it must be counted in
-    filter?: (x: Element, y: number, z: Element[]) => boolean,
+    filter?: (x: SpacefinderItem, y: number, z: SpacefinderItem[]) => boolean,
     // will remove slots before this one
     startAt?: Element,
     // will remove slots from this one on
     stopAt?: Element,
     // will reverse the order of slots (this is useful for lazy loaded content)
     fromBottom?: boolean,
+};
+
+export type SpacefinderExclusions =  {
+    [ruleName: string]: Element[]
 };
 
 // maximum time (in ms) to wait for images to be loaded and rich links
@@ -165,35 +181,34 @@ const onInteractivesLoaded = memoize((rules: SpacefinderRules): Promise<
 
 // test one element vs another for the given rules
 const testCandidate = (
-    rules: SpacefinderExclusion,
+    rule: RuleSpacing,
     challenger: SpacefinderItem,
     opponent: SpacefinderItem
 ): boolean => {
-    const isMinAbove = challenger.top - opponent.bottom >= rules.minAbove;
-    const isMinBelow = opponent.top - challenger.top >= rules.minBelow;
+    const isMinAbove = challenger.top - opponent.bottom >= rule.minAbove;
+    const isMinBelow = opponent.top - challenger.top >= rule.minBelow;
 
     return isMinAbove || isMinBelow;
 };
 
 // test one element vs an array of other elements for the given rules
 const testCandidates = (
-    rules: SpacefinderExclusion,
+    rules: RuleSpacing,
     challenger: SpacefinderItem,
     opponents: SpacefinderItem[]
 ): boolean => opponents.every(testCandidate.bind(undefined, rules, challenger));
 
 const enforceRules = (
-    data: Object,
-    rules: SpacefinderRules
+    data: Measurements,
+    rules: SpacefinderRules,
+    exclusions: SpacefinderExclusions
 ): SpacefinderItem[] => {
     let { candidates } = data;
 
     // enforce absoluteMinAbove rule
-    if (rules.absoluteMinAbove) {
-        candidates = candidates.filter(
-            candidate => candidate.top + data.bodyTop >= rules.absoluteMinAbove
-        );
-    }
+    candidates = candidates.filter(
+        candidate => rules.absoluteMinAbove && candidate.top + data.bodyTop >= rules.absoluteMinAbove
+    );
 
     // enforce minAbove and minBelow rules
     candidates = candidates.filter(candidate => {
@@ -206,7 +221,7 @@ const enforceRules = (
     // enforce content meta rule
     if (rules.clearContentMeta) {
         candidates = candidates.filter(
-            c => c.top > data.contentMeta.bottom + rules.clearContentMeta
+            c => data.contentMeta && c.top > data.contentMeta.bottom + rules.clearContentMeta
         );
     }
 
@@ -217,7 +232,7 @@ const enforceRules = (
                 testCandidates(
                     rules.selectors[selector],
                     candidate,
-                    data.opponents[selector]
+                    data.opponents ? data.opponents[selector] : []
                 )
             );
         });
@@ -256,8 +271,8 @@ const getReady = (
         ]),
     ]).then(() => rules);
 
-const getCandidates = (rules: SpacefinderRules): Element[] => {
-    let candidates: Element[] = qwery(rules.bodySelector + rules.slotSelector);
+const getCandidates = (rules: SpacefinderRules, exclusions: SpacefinderExclusions): HTMLElement[] => {
+    let candidates: HTMLElement[] = qwery(rules.bodySelector + rules.slotSelector);
     if (rules.fromBottom) {
         candidates.reverse();
     }
@@ -289,8 +304,8 @@ const getDimensions = (el: HTMLElement): SpacefinderItem =>
         element: el,
     });
 
-const getMeasurements = (rules, candidates: Element[]): Promise<Object> => {
-    const contentMeta: ?Element = rules.clearContentMeta
+const getMeasurements = (rules, candidates: HTMLElement[]): Promise<Measurements> => {
+    const contentMeta: ?HTMLElement = rules.clearContentMeta
         ? document.querySelector('.js-content-meta')
         : null;
     const opponents = rules.selectors
@@ -303,11 +318,11 @@ const getMeasurements = (rules, candidates: Element[]): Promise<Object> => {
     return fastdom.read(() => {
         const bodyDims =
             rules.body instanceof Element && rules.body.getBoundingClientRect();
-        const candidatesWithDims = (candidates: any[]).map(getDimensions);
-        const contentMetaWithDims = rules.clearContentMeta
-            ? getDimensions((contentMeta: any))
+        const candidatesWithDims: SpacefinderItem[] = candidates.map(getDimensions);
+        const contentMetaWithDims: ?SpacefinderItem = rules.clearContentMeta && contentMeta
+            ? getDimensions(contentMeta)
             : null;
-        const opponentsWithDims = opponents
+        const opponentsWithDims: ?ElementDimensionMap = opponents
             ? opponents.reduce((result, selectorAndElements) => {
                   result[selectorAndElements[0]] = selectorAndElements[1].map(
                       getDimensions
@@ -346,10 +361,12 @@ const findSpace = (
         (rules.bodySelector && document.querySelector(rules.bodySelector)) ||
         document;
 
+    const exclusions: SpacefinderExclusions = {};
+
     return getReady(rules, options || defaultOptions)
-        .then(getCandidates)
+        .then(rules => getCandidates(rules, exclusions))
         .then(candidates => getMeasurements(rules, candidates))
-        .then(data => enforceRules(data, rules))
+        .then(data => enforceRules(data, rules, exclusions))
         .then(winners => returnCandidates(rules, winners));
 };
 
