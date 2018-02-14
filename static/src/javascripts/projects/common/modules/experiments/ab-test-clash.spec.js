@@ -1,9 +1,11 @@
 // @flow
 
 import { isInVariant as isInVariant_ } from './segment-util';
+import { testCanBeRun as testCanBeRun_ } from './test-can-run-checks';
 import { userIsInAClashingAbTest } from './ab-test-clash';
 
 const isInVariant: JestMockFn<*, *> = (isInVariant_: any);
+const testCanBeRun: JestMockFn<*, *> = (testCanBeRun_: any);
 
 const createTest = (data: Object): ABTest =>
     Object.assign(
@@ -36,6 +38,10 @@ jest.mock('common/modules/experiments/segment-util', () => ({
     isInVariant: jest.fn(() => true),
 }));
 
+jest.mock('common/modules/experiments/test-can-run-checks', () => ({
+    testCanBeRun: jest.fn(() => true),
+}));
+
 jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
     abTestClashData: [],
 }));
@@ -47,6 +53,7 @@ describe('Clash', () => {
 
     test('test clash should return false if test has only outbrain compliant variant', () => {
         isInVariant.mockReturnValueOnce(undefined);
+        testCanBeRun.mockReturnValueOnce(undefined);
 
         const variant = createVariant({
             id: 'control',
@@ -67,6 +74,7 @@ describe('Clash', () => {
 
     test('test clash should return true if test has outbrain non compliant variant and f returns true', () => {
         isInVariant.mockReturnValueOnce(true);
+        testCanBeRun.mockReturnValueOnce(true);
 
         const variant1 = createVariant({
             id: 'control',
@@ -93,6 +101,7 @@ describe('Clash', () => {
 
     test('test clash should return false if test has outbrain non compliant variant and f returns true', () => {
         isInVariant.mockReturnValueOnce(false);
+        testCanBeRun.mockReturnValueOnce(false);
 
         const variant1 = createVariant({
             id: 'control',
