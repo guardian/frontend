@@ -139,21 +139,6 @@ describe('Outbrain', () => {
             });
         });
 
-        it('should load a non compliant component if user in Email AB test and Email can run', () => {
-            // isOutbrainDisabled check
-            resolveCheck('isOutbrainDisabled', false);
-            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            resolveCheck('isOutbrainBlockedByAds', false);
-            resolveCheck('isOutbrainMerchandiseCompliant', false);
-            // editorial tests
-            resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isStoryQuestionsOnPage', false);
-
-            return initOutbrain().then(() => {
-                expect(load).toHaveBeenCalledWith('nonCompliant');
-            });
-        });
-
         it('should load a non compliant component if story questions on page', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
