@@ -54,7 +54,7 @@ export type SpacefinderRules = {
         [k: string]: RuleSpacing,
     },
     // will run each slot through this fn to check if it must be counted in
-    filter?: (x: SpacefinderItem, y: number, z: SpacefinderItem[]) => boolean,
+    filter?: (x: SpacefinderItem) => boolean,
     // will remove slots before this one
     startAt?: HTMLElement,
     // will remove slots from this one on
@@ -63,8 +63,10 @@ export type SpacefinderRules = {
     fromBottom?: boolean,
 };
 
+type ExcludedItem = SpacefinderItem | HTMLElement;
+
 export type SpacefinderExclusions = {
-    [ruleName: string]: HTMLElement[],
+    [ruleName: string]: ExcludedItem[]
 };
 
 // maximum time (in ms) to wait for images to be loaded and rich links
@@ -203,47 +205,53 @@ const enforceRules = (
     rules: SpacefinderRules,
     exclusions: SpacefinderExclusions
 ): SpacefinderItem[] => {
-    let { candidates } = data;
+    let candidates: SpacefinderItem[] = data.candidates;
 
     // enforce absoluteMinAbove rule
-    candidates = candidates.filter(
-        candidate =>
-            rules.absoluteMinAbove &&
-            candidate.top + data.bodyTop >= rules.absoluteMinAbove
+    exclusions['absoluteMinAbove'] = [];
+    candidates = filter(candidates, candidate =>
+        !!rules.absoluteMinAbove &&
+        candidate.top + data.bodyTop >= rules.absoluteMinAbove,
+        exclusions.absoluteMinAbove
     );
 
     // enforce minAbove and minBelow rules
-    candidates = candidates.filter(candidate => {
+    exclusions['aboveAndBelow'] = [];
+    candidates = filter(candidates, candidate => {
         const farEnoughFromTopOfBody = candidate.top >= rules.minAbove;
         const farEnoughFromBottomOfBody =
             candidate.top + rules.minBelow <= data.bodyHeight;
         return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
-    });
+    }, exclusions.aboveAndBelow);
 
     // enforce content meta rule
     if (rules.clearContentMeta) {
-        candidates = candidates.filter(
-            c =>
-                data.contentMeta &&
-                c.top > data.contentMeta.bottom + rules.clearContentMeta
+        exclusions['contentMeta'] = [];
+        candidates = filter(candidates, c =>
+            !!data.contentMeta &&
+            c.top > data.contentMeta.bottom + rules.clearContentMeta,
+            exclusions.contentMeta
         );
     }
 
     // enforce selector rules
     if (rules.selectors) {
         Object.keys(rules.selectors).forEach(selector => {
-            candidates = candidates.filter(candidate =>
+            exclusions[selector] = [];
+            candidates = filter(candidates, candidate =>
                 testCandidates(
                     rules.selectors[selector],
                     candidate,
                     data.opponents ? data.opponents[selector] : []
-                )
+                ),
+                exclusions[selector]
             );
         });
     }
 
     if (rules.filter) {
-        candidates = candidates.filter(rules.filter, rules);
+        exclusions.custom = [];
+        candidates = filter(candidates, rules.filter, exclusions.custom);
     }
 
     return candidates;
@@ -261,6 +269,19 @@ class SpaceError extends Error {
         }`;
     }
 }
+
+
+const filter = <T>(list: T[], filter: (el: T) => boolean, exclusions: any[]): T[] => {
+    let filtered = [];
+    list.forEach( element => {
+        if (filter(element)) {
+            filtered.push(element);
+        } else {
+            exclusions.push(element);
+        }
+    });
+    return filtered;
+};
 
 const getReady = (
     rules: SpacefinderRules,
@@ -287,21 +308,23 @@ const getCandidates = (
     }
     if (rules.startAt) {
         let drop = true;
-        candidates = candidates.filter(candidate => {
+        exclusions['startAt'] = [];
+        candidates = filter(candidates, candidate => {
             if (candidate === rules.startAt) {
                 drop = false;
             }
             return !drop;
-        });
+        }, exclusions.startAt);
     }
     if (rules.stopAt) {
         let keep = true;
-        candidates = candidates.filter(candidate => {
+        exclusions['stopAt'] = [];
+        candidates = filter(candidates, candidate => {
             if (candidate === rules.stopAt) {
                 keep = false;
             }
             return keep;
-        });
+        }, exclusions.stopAt);
     }
     return candidates;
 };
