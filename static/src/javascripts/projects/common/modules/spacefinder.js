@@ -17,7 +17,7 @@ type SpacefinderOptions = {
 export type SpacefinderItem = {
     top: number,
     bottom: number,
-    element: Element,
+    element: HTMLElement,
 };
 
 type RuleSpacing = {
@@ -56,15 +56,15 @@ export type SpacefinderRules = {
     // will run each slot through this fn to check if it must be counted in
     filter?: (x: SpacefinderItem, y: number, z: SpacefinderItem[]) => boolean,
     // will remove slots before this one
-    startAt?: Element,
+    startAt?: HTMLElement,
     // will remove slots from this one on
-    stopAt?: Element,
+    stopAt?: HTMLElement,
     // will reverse the order of slots (this is useful for lazy loaded content)
     fromBottom?: boolean,
 };
 
 export type SpacefinderExclusions = {
-    [ruleName: string]: Element[],
+    [ruleName: string]: HTMLElement[],
 };
 
 // maximum time (in ms) to wait for images to be loaded and rich links
@@ -359,7 +359,7 @@ const getMeasurements = (
 const returnCandidates = (
     rules: SpacefinderRules,
     candidates: SpacefinderItem[]
-): Element[] => {
+): HTMLElement[] => {
     if (!candidates.length) {
         throw new SpaceError(rules);
     }
@@ -371,7 +371,7 @@ const returnCandidates = (
 const findSpace = (
     rules: SpacefinderRules,
     options: ?SpacefinderOptions
-): Promise<Element[]> => {
+): Promise<HTMLElement[]> => {
     rules.body =
         (rules.bodySelector && document.querySelector(rules.bodySelector)) ||
         document;

@@ -62,7 +62,7 @@ const insertAdAtPara = (
 
 // Add new ads while there is still space
 const addArticleAds = (count: number, rules: Object): Promise<number> => {
-    const insertInlineAds = (paras: Element[]): Promise<number> => {
+    const insertInlineAds = (paras: HTMLElement[]): Promise<number> => {
         const slots: Array<Promise<void>> = paras
             .slice(0, Math.min(paras.length, count))
             .map((para: Node) => {
