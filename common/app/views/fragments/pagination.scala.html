@@ -32,7 +32,7 @@
        href="@paginated(pageNo)"
        data-page="@pageNo"
        data-link-name="Pagination view page @pageNo"
-       aria-label="@ariaContext @dir page">@pageNo</a>
+       aria-label="@ariaContext @if(pageNo == 1){ first } page">@pageNo</a>
 }
 
 @* don't show pagination if this is the only page *@
