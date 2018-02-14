@@ -1,6 +1,9 @@
 // @flow
 import { spaceFiller } from 'common/modules/article/space-filler';
-import { findSpace, SpaceError } from 'common/modules/spacefinder';
+import {
+    findSpace as findSpace_,
+    SpaceError,
+} from 'common/modules/spacefinder';
 import raven from 'lib/raven';
 import { noop } from 'lib/noop';
 
@@ -15,6 +18,8 @@ jest.mock('common/modules/spacefinder', () => ({
 jest.mock('lib/raven', () => ({
     captureException: jest.fn(),
 }));
+
+const findSpace: JestMockFn<*, *> = (findSpace_: any);
 
 describe('spacefiller', () => {
     const writeError = new Error('Mock writer exception');
@@ -59,9 +64,17 @@ describe('spacefiller', () => {
     });
 
     it('If there are no spaces, it rejects the promise and does not call the writer', () => {
-        findSpace.mockReturnValueOnce(Promise.reject(new SpaceError({})));
+        const rules = {
+            bodySelector: '',
+            slotSelector: '',
+            minAbove: 0,
+            minBelow: 0,
+            clearContentMeta: 0,
+            selectors: {},
+        };
 
-        const rules = {};
+        findSpace.mockReturnValueOnce(Promise.reject(new SpaceError(rules)));
+
         const writer = jest.fn();
         const insertion = spaceFiller.fillSpace(rules, writer);
 
@@ -73,9 +86,17 @@ describe('spacefiller', () => {
 
     it('If there are no spaces, the spacefinder exception is not recorded by Raven', () => {
         // These exceptions are 'expected' and therefore shouldn't go into logging
-        findSpace.mockReturnValueOnce(Promise.reject(new SpaceError()));
+        const rules = {
+            bodySelector: '',
+            slotSelector: '',
+            minAbove: 0,
+            minBelow: 0,
+            clearContentMeta: 0,
+            selectors: {},
+        };
 
-        const rules = {};
+        findSpace.mockReturnValueOnce(Promise.reject(new SpaceError(rules)));
+
         const insertion = spaceFiller.fillSpace(rules, noop);
 
         return insertion.then(() => {
