@@ -26,20 +26,6 @@
     <span class="pagination__text">…</span>
 }
 
-@paginationExtreme(pageNo: Option[Int], dir: String) = {
-    @pageNo.map { p =>
-       <a class="button button--small button--tertiary pagination__action pagination__action--@dir @actionClass"
-        href="@paginated(p)"
-        data-page="@p"
-        data-link-name="Pagination view page @p"
-        aria-label="@ariaContext @dir page">@p</a>
-
-      @if(dir == "first") {
-          @paginationDivider
-      }
-    }
-}
-
 @* don't show pagination if this is the only page *@
 @if(pagination.lastPage > 1) {
     @if(showFull) {
@@ -53,7 +39,15 @@
             @paginationPointer(pagination.previous, "prev")
 
             @if(pagination.currentPage - 2 > 1) {
-                @paginationExtreme(pagination.previous.map(_ => 1), "first")
+                pagination.previous.map(_ => 1).map { p =>
+                    <a class="button button--small button--tertiary pagination__action pagination__action--@dir @actionClass"
+                    href="@paginated(p)"
+                    data-page="@p"
+                    data-link-name="Pagination view page @p"
+                    aria-label="@ariaContext @dir page">@p</a>
+            
+                    @paginationDivider
+                }
             }
         }
 
