@@ -61,8 +61,8 @@ $video-width-desktop: 700px;
     .fc-item__video-fallback,
     .gu-media {
         @include mq(desktop) {
-            opacity: 0.3;
-            transition: opacity 0.4s ease-out;
+            opacity: .3;
+            transition: opacity .4s ease-out;
         }
     }
 
@@ -142,7 +142,7 @@ $video-width-desktop: 700px;
     }
     @include mq(desktop) {
         padding-right: 0;
-        transition: transform 0.4s ease-out;
+        transition: transform .4s ease-out;
     }
 
     &::-webkit-scrollbar {
@@ -322,7 +322,7 @@ $video-width-desktop: 700px;
             border-width: $youtube-garnett-large-button-border-width;
         }
         @include mq(tablet) {
-            border-radius: 0.2em;
+            border-radius: .2em;
             border-width: $youtube-garnett-x-large-button-border-width;
         }
     }
@@ -375,7 +375,7 @@ $video-width-desktop: 700px;
         height: $youtube-garnett-x-large-button-size;
 
         &:after {
-            border-radius: 0.2em;
+            border-radius: .2em;
             border-width: $youtube-garnett-x-large-button-border-width;
         }
     }
@@ -417,7 +417,7 @@ $video-width-desktop: 700px;
         }
         @include mq(tablet) {
             // 0 border radius on mobile because stock android has a render bug with it here
-            border-radius: 0.2em;
+            border-radius: .2em;
             border-width: $youtube-garnett-x-large-button-border-width;
         }
     }
@@ -484,7 +484,7 @@ $video-width-desktop: 700px;
     pointer-events: auto;
     @include mq(desktop, leftCol) {
         opacity: 0;
-        transition: opacity 0.4s ease-out;
+        transition: opacity .4s ease-out;
     }
     @include mq(desktop) {
         position: absolute;
@@ -519,7 +519,7 @@ $video-width-desktop: 700px;
 
     .inline-icon svg {
         position: relative;
-        height: 0.7em;
+        height: .7em;
         width: auto;
     }
 
