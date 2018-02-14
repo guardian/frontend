@@ -1,6 +1,12 @@
 package jobs
 
+import java.time.LocalDate
+
 import app.LifecycleComponent
+import com.google.api.ads.dfp.axis.v201705.Column.{AD_SERVER_IMPRESSIONS, AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM}
+import com.google.api.ads.dfp.axis.v201705.DateRangeType.CUSTOM_DATE
+import com.google.api.ads.dfp.axis.v201705.Dimension.{CUSTOM_CRITERIA, DATE}
+import com.google.api.ads.dfp.axis.v201705._
 import com.gu.Box
 import common.{AkkaAsync, JobScheduler, Logging}
 import dfp.DfpApi
@@ -10,20 +16,36 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object CommercialDfpReporting {
 
-  case class DfpReportRow(value: String)
+  case class DfpReportRow(value: String) {
+    val fields = value.split(",").toSeq
+  }
 
   private val dfpReports = Box[Map[Long, Seq[DfpReportRow]]](Map.empty)
+  private val dfpCustomReports = Box[Map[String, Seq[DfpReportRow]]](Map.empty)
 
   val teamKPIReport = "All ab-test impressions and CPM"
+  val prebidBidderPerformance = "Prebid Bidder Performance"
+
   // These IDs correspond to queries saved in DFP's web console.
   val reportMappings = Map(
     teamKPIReport -> 10060521970L // This report is accessible by the DFP user: "NGW DFP Production"
   )
 
+  private val prebidBidderPerformanceQry = {
+    def toGoogleDate(date: LocalDate) = new Date(date.getYear, date.getMonthValue, date.getDayOfMonth)
+    val prebidBegan = LocalDate.of(2018, 1, 22)
+    val qry = new ReportQuery()
+    qry.setDateRangeType(CUSTOM_DATE)
+    qry.setStartDate(toGoogleDate(prebidBegan.minusDays(1)))
+    qry.setEndDate(toGoogleDate(LocalDate.now))
+    qry.setDimensions(Array(DATE, CUSTOM_CRITERIA))
+    qry.setColumns(Array(AD_SERVER_IMPRESSIONS, AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM))
+    qry
+  }
 
   def update(dfpApi: DfpApi)(implicit executionContext: ExecutionContext): Future[Unit] = Future {
     for {
-      (reportName, reportId) <- reportMappings.toSeq
+      (_, reportId) <- reportMappings.toSeq
     } {
       val maybeReport: Option[Seq[DfpReportRow]] = dfpApi.getReportQuery(reportId)
         .map(reportId => {
@@ -37,9 +59,16 @@ object CommercialDfpReporting {
         })
       }
     }
+
+    dfpCustomReports.send(curr =>
+      curr + {
+        prebidBidderPerformance ->
+          dfpApi.runReportJob(prebidBidderPerformanceQry).filter(_.contains("hb_bidder=")).map(DfpReportRow)
+    })
   }
 
   def getReport(reportId: Long): Option[Seq[DfpReportRow]] = dfpReports.get().get(reportId)
+  def getCustomReport(reportName: String): Option[Seq[DfpReportRow]] = dfpCustomReports.get().get(reportName)
 }
 
 class CommercialDfpReportingLifecycle(
