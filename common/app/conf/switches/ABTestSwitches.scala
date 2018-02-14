@@ -88,6 +88,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-banner-cta-contribute",
+    "Test a new CTA for the banner",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 14),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-australia-environment-campaign-2018",
     "Show a custom Epic for articles with the Australia environment campaign tag",
     owners = Seq(Owner.withGithub("joelochlann")),
