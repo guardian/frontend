@@ -28,11 +28,7 @@
 
 @paginationExtreme(pageNo: Option[Int], dir: String) = {
     @pageNo.map { p =>
-        @if(dir == "last") {
-            @paginationDivider
-        }
-
-        <a class="button button--small button--tertiary pagination__action pagination__action--@dir @actionClass"
+       <a class="button button--small button--tertiary pagination__action pagination__action--@dir @actionClass"
         href="@paginated(p)"
         data-page="@p"
         data-link-name="Pagination view page @p"
@@ -74,6 +70,8 @@
         }
 
         @if(pagination.lastPage > 5) {
+            @paginationDivider
+
             @paginationPointer(pagination.next, "next")
         }
         </div>
