@@ -6,6 +6,7 @@ import {
 } from 'common/modules/spacefinder';
 import raven from 'lib/raven';
 import { noop } from 'lib/noop';
+import type { SpacefinderRules } from 'common/modules/spacefinder';
 
 jest.mock('lib/fastdom-promise');
 jest.mock('common/modules/spacefinder', () => ({
@@ -65,14 +66,14 @@ describe('spacefiller', () => {
     });
 
     it('If there are no spaces, it rejects the promise and does not call the writer', () => {
-        const rules = {
+        const rules = ({
             bodySelector: '',
             slotSelector: '',
             minAbove: 0,
             minBelow: 0,
             clearContentMeta: 0,
             selectors: {},
-        };
+        }: SpacefinderRules);
 
         findSpace.mockReturnValueOnce(Promise.reject(new SpaceError(rules)));
 
@@ -87,14 +88,14 @@ describe('spacefiller', () => {
 
     it('If there are no spaces, the spacefinder exception is not recorded by Raven', () => {
         // These exceptions are 'expected' and therefore shouldn't go into logging
-        const rules = {
+        const rules = ({
             bodySelector: '',
             slotSelector: '',
             minAbove: 0,
             minBelow: 0,
             clearContentMeta: 0,
             selectors: {},
-        };
+        }: SpacefinderRules);
 
         findSpace.mockReturnValueOnce(Promise.reject(new SpaceError(rules)));
 
