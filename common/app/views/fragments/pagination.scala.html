@@ -9,6 +9,7 @@
   ariaContext: Option[String] = None)(implicit request: RequestHeader)
 
 @paginated(pageNum: Int) = {@common.LinkTo(pagePaths.pathFor(pageNum))}
+
 @paginationPointer(pageNo: Option[Int], dir: String) = {
     @pageNo.map { p =>
         <a class="button button--small button--tertiary pagination__action--static @actionClass"
@@ -26,6 +27,14 @@
     <span class="pagination__text">…</span>
 }
 
+@paginationLink(pageNo: Int, paginationActionClass: Option[String]) = {
+    <a class="button button--small button--tertiary pagination__action @actionClass @if(pageNo == 1){ pagination__action--first }"
+       href="@paginated(pageNo)"
+       data-page="@pageNo"
+       data-link-name="Pagination view page @pageNo"
+       aria-label="@ariaContext @dir page">@pageNo</a>
+}
+
 @* don't show pagination if this is the only page *@
 @if(pagination.lastPage > 1) {
     @if(showFull) {
@@ -39,15 +48,8 @@
             @paginationPointer(pagination.previous, "prev")
 
             @if(pagination.currentPage - 2 > 1) {
-                pagination.previous.map(_ => 1).map { p =>
-                    <a class="button button--small button--tertiary pagination__action pagination__action--@dir @actionClass"
-                    href="@paginated(p)"
-                    data-page="@p"
-                    data-link-name="Pagination view page @p"
-                    aria-label="@ariaContext @dir page">@p</a>
-            
-                    @paginationDivider
-                }
+                @paginationLink(1)
+                @paginationDivider
             }
         }
 
@@ -55,11 +57,7 @@
             @if(pageNum == pagination.currentPage) {
                 <span class="button button--small button--tertiary pagination__action is-active" aria-label="Current page" tabindex="0">@pageNum</span>
             } else {
-                <a class="button button--small button--tertiary pagination__action @actionClass"
-                data-page="@pageNum"
-                href="@paginated(pageNum)"
-                data-link-name="Pagination view page @pageNum"
-                aria-label="@ariaContext page @pageNum">@pageNum</a>
+                @paginationLink(pageNum)
             }
         }
 
