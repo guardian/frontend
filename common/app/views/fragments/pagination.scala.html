@@ -27,7 +27,7 @@
     <span class="pagination__text">…</span>
 }
 
-@paginationLink(pageNo: Int, paginationActionClass: Option[String]) = {
+@paginationLink(pageNo: Int) = {
     <a class="button button--small button--tertiary pagination__action @actionClass @if(pageNo == 1){ pagination__action--first }"
        href="@paginated(pageNo)"
        data-page="@pageNo"
