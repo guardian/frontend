@@ -86,10 +86,7 @@ module.exports = {
                 getChangedFiles().then(files => {
                     const jsFiles = files.filter(
                         file =>
-                            (file.endsWith('.js') &&
-                                file.startsWith('static')) ||
-                            ((file.endsWith('.js') || file.endsWith('.jsx')) &&
-                                file.startsWith('ui'))
+                            file.endsWith('.js') && file.startsWith('static')
                     );
 
                     if (jsFiles.length) {
