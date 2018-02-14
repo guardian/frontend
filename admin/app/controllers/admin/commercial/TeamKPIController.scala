@@ -68,6 +68,7 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
 
     val cpmChart = new BidPerformanceChart {
       val name = "CPM"
+      override val vAxisTitle = Some("GBP")
       val dataset = dataPoints
         .groupBy(_.date)
         .foldLeft(Seq.empty[ChartRow[LocalDate]]) {
@@ -82,6 +83,7 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
 
     val revenueChart = new BidPerformanceChart {
       val name = "Indicative revenue"
+      override val vAxisTitle = Some("GBP")
       val dataset = dataPoints
         .groupBy(_.date)
         .foldLeft(Seq.empty[ChartRow[LocalDate]]) {

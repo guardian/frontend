@@ -11,8 +11,8 @@
             legend: { position: 'bottom' },
             chartArea: { width: '85%' },
             titleTextStyle: {color: '#999'},
-            axisTitlesPosition: 'in',
             fontName : 'Georgia',
-            smoothLine: true
-    });
+            smoothLine: true,
+            vAxis: {@chart.vAxisTitle.map{ vAxisTitle => title: '@vAxisTitle', } viewWindow: {min: 0}}
+        });
 </script>

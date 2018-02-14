@@ -61,6 +61,7 @@ trait Chart[K] {
   def hasData: Boolean = dataset.nonEmpty
   def format: ChartFormat
   def dualY: Boolean = false
+  def vAxisTitle: Option[String] = None
 
   def formatRowKey(key: K): String
 
