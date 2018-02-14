@@ -36,6 +36,7 @@ $video-width-desktop: 700px;
         @include mq(desktop) {
             display: none;
         }
+
     }
 
     .media__container--hidden {
