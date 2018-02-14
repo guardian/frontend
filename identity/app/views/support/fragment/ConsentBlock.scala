@@ -2,7 +2,7 @@ package views.support.fragment
 
 import play.twirl.api.Html
 
-object ConsentJourney {
+object ConsentBlock {
 
   sealed abstract class ConsentBlock(
     val show: Boolean
