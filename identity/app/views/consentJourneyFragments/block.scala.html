@@ -32,10 +32,10 @@
     class="identity-consent-journey__step"
     aria-labelledby="consents@{step.name.capitalize}Title"
     >
-        <legend id="consents@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
+        <legend id="consents@{step.name.capitalize}Title" class="identity-forms-wrapper-title identity-forms-wrapper-title__large">@step.title</legend>
         <div class="identity-forms-wrapper">
             @if(step.help || showAgeStep(display = isFirst)){
-                <div class="identity-forms-wrapper__title">
+                <div class="identity-forms-wrapper__info">
                     @renderHelpText(step.help ++ showAgeStep(display = isFirst))
                 </div>
             }
@@ -51,10 +51,10 @@
     <div
     class="identity-consent-journey__step"
     >
-        <h1 class="identity-title identity-title--page-title">@info.title</h1>
+        <h1 class="identity-forms-wrapper-title identity-forms-wrapper-title__large">@info.title</h1>
         <div class="identity-forms-wrapper identity-forms-wrapper__monocol">
             @if(info.help || showAgeStep(display = isFirst)){
-                <div class="identity-forms-wrapper__title">
+                <div class="identity-forms-wrapper__info">
                     @renderHelpText(info.help ++ showAgeStep(display = isFirst))
                 </div>
             }
