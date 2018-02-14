@@ -26,7 +26,7 @@ type RuleSpacing = {
 };
 
 type ElementDimensionMap = {
-    [name: string]: SpacefinderItem[]
+    [name: string]: SpacefinderItem[],
 };
 
 type Measurements = {
@@ -63,8 +63,8 @@ export type SpacefinderRules = {
     fromBottom?: boolean,
 };
 
-export type SpacefinderExclusions =  {
-    [ruleName: string]: Element[]
+export type SpacefinderExclusions = {
+    [ruleName: string]: Element[],
 };
 
 // maximum time (in ms) to wait for images to be loaded and rich links
@@ -207,7 +207,9 @@ const enforceRules = (
 
     // enforce absoluteMinAbove rule
     candidates = candidates.filter(
-        candidate => rules.absoluteMinAbove && candidate.top + data.bodyTop >= rules.absoluteMinAbove
+        candidate =>
+            rules.absoluteMinAbove &&
+            candidate.top + data.bodyTop >= rules.absoluteMinAbove
     );
 
     // enforce minAbove and minBelow rules
@@ -221,7 +223,9 @@ const enforceRules = (
     // enforce content meta rule
     if (rules.clearContentMeta) {
         candidates = candidates.filter(
-            c => data.contentMeta && c.top > data.contentMeta.bottom + rules.clearContentMeta
+            c =>
+                data.contentMeta &&
+                c.top > data.contentMeta.bottom + rules.clearContentMeta
         );
     }
 
@@ -271,8 +275,13 @@ const getReady = (
         ]),
     ]).then(() => rules);
 
-const getCandidates = (rules: SpacefinderRules, exclusions: SpacefinderExclusions): HTMLElement[] => {
-    let candidates: HTMLElement[] = qwery(rules.bodySelector + rules.slotSelector);
+const getCandidates = (
+    rules: SpacefinderRules,
+    exclusions: SpacefinderExclusions
+): HTMLElement[] => {
+    let candidates: HTMLElement[] = qwery(
+        rules.bodySelector + rules.slotSelector
+    );
     if (rules.fromBottom) {
         candidates.reverse();
     }
@@ -304,7 +313,10 @@ const getDimensions = (el: HTMLElement): SpacefinderItem =>
         element: el,
     });
 
-const getMeasurements = (rules, candidates: HTMLElement[]): Promise<Measurements> => {
+const getMeasurements = (
+    rules,
+    candidates: HTMLElement[]
+): Promise<Measurements> => {
     const contentMeta: ?HTMLElement = rules.clearContentMeta
         ? document.querySelector('.js-content-meta')
         : null;
@@ -318,10 +330,13 @@ const getMeasurements = (rules, candidates: HTMLElement[]): Promise<Measurements
     return fastdom.read(() => {
         const bodyDims =
             rules.body instanceof Element && rules.body.getBoundingClientRect();
-        const candidatesWithDims: SpacefinderItem[] = candidates.map(getDimensions);
-        const contentMetaWithDims: ?SpacefinderItem = rules.clearContentMeta && contentMeta
-            ? getDimensions(contentMeta)
-            : null;
+        const candidatesWithDims: SpacefinderItem[] = candidates.map(
+            getDimensions
+        );
+        const contentMetaWithDims: ?SpacefinderItem =
+            rules.clearContentMeta && contentMeta
+                ? getDimensions(contentMeta)
+                : null;
         const opponentsWithDims: ?ElementDimensionMap = opponents
             ? opponents.reduce((result, selectorAndElements) => {
                   result[selectorAndElements[0]] = selectorAndElements[1].map(
@@ -364,7 +379,7 @@ const findSpace = (
     const exclusions: SpacefinderExclusions = {};
 
     return getReady(rules, options || defaultOptions)
-        .then(rules => getCandidates(rules, exclusions))
+        .then(_ => getCandidates(rules, exclusions))
         .then(candidates => getMeasurements(rules, candidates))
         .then(data => enforceRules(data, rules, exclusions))
         .then(winners => returnCandidates(rules, winners));
