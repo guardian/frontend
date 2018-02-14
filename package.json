@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "ui",
     "dev/eslint-plugin-guardian-frontend",
     "tools/amp-validation"
   ],
