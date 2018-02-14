@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.124"
+  val identityLibVersion = "3.125"
   val awsVersion = "1.11.240"
   val faciaVersion = "2.5.0"
   val capiVersion = "11.46"
@@ -31,7 +31,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.5"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "3.7.0"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "3.11.0"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.26"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion

@@ -181,7 +181,8 @@ object RenderOtherStatus {
       id = request.path,
       section = Some(SectionId.fromId("news")),
       webTitle = "This page has been removed",
-      canonicalUrl
+      canonicalUrl,
+      contentType = Some(model.DotcomContentType.Unknown)
     ))
   }
 
