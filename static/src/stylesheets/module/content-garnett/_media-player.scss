@@ -105,6 +105,7 @@ $ima-controls-height: 70px;
     .vjs-control-text {
         // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
         @include video-play-button-size($vjs-garnett-small-button-size);
+        border-radius: 50%;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -142,6 +143,16 @@ $ima-controls-height: 70px;
     .vjs-has-started.vjs-using-native-controls &,
     .vjs-ad-loading & {
         display: none !important;
+    }
+}
+
+.fc-item--list-media-mobile .vjs-control-text {
+    @include mq($until: tablet) {
+        width: $vjs-garnett-small-button-size;
+        height: $vjs-garnett-small-button-size;
+        &:after {
+            border-width: $youtube-garnett-small-button-border-width;
+        }
     }
 }
 
