@@ -210,7 +210,7 @@ const enforceRules = (
     // enforce absoluteMinAbove rule
     exclusions['absoluteMinAbove'] = [];
     candidates = filter(candidates, candidate =>
-        !!rules.absoluteMinAbove &&
+        !rules.absoluteMinAbove ||
         candidate.top + data.bodyTop >= rules.absoluteMinAbove,
         exclusions.absoluteMinAbove
     );
