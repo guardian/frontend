@@ -66,7 +66,7 @@ export type SpacefinderRules = {
 type ExcludedItem = SpacefinderItem | HTMLElement;
 
 export type SpacefinderExclusions = {
-    [ruleName: string]: ExcludedItem[]
+    [ruleName: string]: ExcludedItem[],
 };
 
 // maximum time (in ms) to wait for images to be loaded and rich links
@@ -181,6 +181,22 @@ const onInteractivesLoaded = memoize((rules: SpacefinderRules): Promise<
           ).then(() => undefined);
 }, getFuncId);
 
+const filter = <T>(
+    list: T[],
+    filter: (el: T) => boolean,
+    exclusions: any[]
+): T[] => {
+    const filtered = [];
+    list.forEach(element => {
+        if (filter(element)) {
+            filtered.push(element);
+        } else {
+            exclusions.push(element);
+        }
+    });
+    return filtered;
+};
+
 // test one element vs another for the given rules
 const testCandidate = (
     rule: RuleSpacing,
@@ -208,28 +224,36 @@ const enforceRules = (
     let candidates: SpacefinderItem[] = data.candidates;
 
     // enforce absoluteMinAbove rule
-    exclusions['absoluteMinAbove'] = [];
-    candidates = filter(candidates, candidate =>
-        !rules.absoluteMinAbove ||
-        candidate.top + data.bodyTop >= rules.absoluteMinAbove,
+    exclusions.absoluteMinAbove = [];
+    candidates = filter(
+        candidates,
+        candidate =>
+            !rules.absoluteMinAbove ||
+            candidate.top + data.bodyTop >= rules.absoluteMinAbove,
         exclusions.absoluteMinAbove
     );
 
     // enforce minAbove and minBelow rules
-    exclusions['aboveAndBelow'] = [];
-    candidates = filter(candidates, candidate => {
-        const farEnoughFromTopOfBody = candidate.top >= rules.minAbove;
-        const farEnoughFromBottomOfBody =
-            candidate.top + rules.minBelow <= data.bodyHeight;
-        return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
-    }, exclusions.aboveAndBelow);
+    exclusions.aboveAndBelow = [];
+    candidates = filter(
+        candidates,
+        candidate => {
+            const farEnoughFromTopOfBody = candidate.top >= rules.minAbove;
+            const farEnoughFromBottomOfBody =
+                candidate.top + rules.minBelow <= data.bodyHeight;
+            return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
+        },
+        exclusions.aboveAndBelow
+    );
 
     // enforce content meta rule
     if (rules.clearContentMeta) {
-        exclusions['contentMeta'] = [];
-        candidates = filter(candidates, c =>
-            !!data.contentMeta &&
-            c.top > data.contentMeta.bottom + rules.clearContentMeta,
+        exclusions.contentMeta = [];
+        candidates = filter(
+            candidates,
+            c =>
+                !!data.contentMeta &&
+                c.top > data.contentMeta.bottom + rules.clearContentMeta,
             exclusions.contentMeta
         );
     }
@@ -238,12 +262,14 @@ const enforceRules = (
     if (rules.selectors) {
         Object.keys(rules.selectors).forEach(selector => {
             exclusions[selector] = [];
-            candidates = filter(candidates, candidate =>
-                testCandidates(
-                    rules.selectors[selector],
-                    candidate,
-                    data.opponents ? data.opponents[selector] : []
-                ),
+            candidates = filter(
+                candidates,
+                candidate =>
+                    testCandidates(
+                        rules.selectors[selector],
+                        candidate,
+                        data.opponents ? data.opponents[selector] : []
+                    ),
                 exclusions[selector]
             );
         });
@@ -270,19 +296,6 @@ class SpaceError extends Error {
     }
 }
 
-
-const filter = <T>(list: T[], filter: (el: T) => boolean, exclusions: any[]): T[] => {
-    let filtered = [];
-    list.forEach( element => {
-        if (filter(element)) {
-            filtered.push(element);
-        } else {
-            exclusions.push(element);
-        }
-    });
-    return filtered;
-};
-
 const getReady = (
     rules: SpacefinderRules,
     options: SpacefinderOptions
@@ -308,23 +321,31 @@ const getCandidates = (
     }
     if (rules.startAt) {
         let drop = true;
-        exclusions['startAt'] = [];
-        candidates = filter(candidates, candidate => {
-            if (candidate === rules.startAt) {
-                drop = false;
-            }
-            return !drop;
-        }, exclusions.startAt);
+        exclusions.startAt = [];
+        candidates = filter(
+            candidates,
+            candidate => {
+                if (candidate === rules.startAt) {
+                    drop = false;
+                }
+                return !drop;
+            },
+            exclusions.startAt
+        );
     }
     if (rules.stopAt) {
         let keep = true;
-        exclusions['stopAt'] = [];
-        candidates = filter(candidates, candidate => {
-            if (candidate === rules.stopAt) {
-                keep = false;
-            }
-            return keep;
-        }, exclusions.stopAt);
+        exclusions.stopAt = [];
+        candidates = filter(
+            candidates,
+            candidate => {
+                if (candidate === rules.stopAt) {
+                    keep = false;
+                }
+                return keep;
+            },
+            exclusions.stopAt
+        );
     }
     return candidates;
 };
@@ -393,16 +414,17 @@ const returnCandidates = (
 // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
 const findSpace = (
     rules: SpacefinderRules,
-    options: ?SpacefinderOptions
+    options: ?SpacefinderOptions,
+    exclusions: ?SpacefinderExclusions
 ): Promise<HTMLElement[]> => {
     rules.body =
         (rules.bodySelector && document.querySelector(rules.bodySelector)) ||
         document;
 
-    const exclusions: SpacefinderExclusions = {};
+    exclusions = exclusions ? exclusions : {};
 
     return getReady(rules, options || defaultOptions)
-        .then(_ => getCandidates(rules, exclusions))
+        .then(() => getCandidates(rules, exclusions))
         .then(candidates => getMeasurements(rules, candidates))
         .then(data => enforceRules(data, rules, exclusions))
         .then(winners => returnCandidates(rules, winners));
