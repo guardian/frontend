@@ -1,7 +1,5 @@
 // @flow
 
-import fastdom from 'lib/fastdom-promise';
-
 import { catchErrorsWithContext } from 'lib/robust';
 import { forgottenEmail, passwordToggle } from 'common/modules/identity/forms';
 import { Formstack } from 'common/modules/identity/formstack';

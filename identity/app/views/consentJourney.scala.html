@@ -6,7 +6,7 @@
 @import form.IdFormHelpers.nonInputFields
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.fragment.Switch._
-@import views.support.fragment.ConsentStep._
+@import views.support.fragment.ConsentJourney._
 @import views.support.fragment.ConsentChannel._
 @import common.LinkTo
 @import controllers.editprofile.ProfileForms
@@ -49,9 +49,6 @@
 }
 
 @renderStep(step: ConsentStep, isFirst: Boolean = false, isLast: Boolean = false) = {
-    @(step.banner.map { title =>
-        Html(s"<p class='form__success'>$title</p>")
-    })
     <fieldset
         role="dialog"
         class="identity-consent-journey__step"
@@ -80,9 +77,15 @@
 
     </fieldset>
 }
-@renderSteps(steps:List[ConsentStep]) = @{
+@renderBlocks(steps:List[ConsentBlock]) = @{
     val displaySteps = steps.filter(_.show)
-    displaySteps.zipWithIndex.map{ case (element, index) => renderStep(element, index == 0, index == (displaySteps.size - 1)) }
+    displaySteps.zipWithIndex.map{ case (block, index) =>
+        block match {
+            case m: ConsentStep => renderStep(m, index == 0, index == (displaySteps.size - 1))
+            case m: ConsentBanner => Html(s"<p class='form__success'>${m.title}</p>")
+        }
+
+    }
 }
 
 @channelStepContent = {
@@ -154,7 +157,6 @@
         help = List(
             ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")
         ),
-        banner = Some("Thank you for signing up"),
         content = marketingStepContent,
     )
 }
@@ -244,6 +246,9 @@
         }
         case "thank-you" => {
             List(
+                ConsentBanner(
+                    "Thank you for signing up"
+                ),
                 emailRepermissionStep,
                 marketingConsentThankYouStep,
                 channelStep
@@ -304,7 +309,7 @@
 
     <div class="identity-consent-journey @{skin.map(s => s"identity-consent-journey--$s" )}  u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
 
-        @renderSteps(getStepsForJourney(journey))
+        @renderBlocks(getStepsForJourney(journey))
 
         <form class="identity-consent-journey__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
             @views.html.helper.CSRF.formField
