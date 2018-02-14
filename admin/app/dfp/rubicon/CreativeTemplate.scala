@@ -1,6 +1,6 @@
 package dfp.rubicon
 
-import com.google.api.ads.dfp.axis.v201705._
+import com.google.api.ads.dfp.axis.v201802._
 import common.Logging
 import conf.Configuration
 import play.api.libs.json.{JsValue, Json}
