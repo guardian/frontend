@@ -70,7 +70,9 @@
         }
 
         @if(pagination.lastPage > 5) {
-            @paginationDivider
+            @if(pagination.next.isDefined) {
+                @paginationDivider
+            }
 
             @paginationPointer(pagination.next, "next")
         }
