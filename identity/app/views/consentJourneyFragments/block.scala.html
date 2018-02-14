@@ -1,0 +1,70 @@
+@import conf.Static
+@import views.support.fragment.ConsentBlock._
+@import views.support.fragment.ConsentBlock._
+
+@(
+    block: ConsentBlock,
+    isFirst: Boolean = false,
+    isLast: Boolean = false
+)
+
+@showAgeStep(display: Boolean = false) = @{
+    if(display){
+        List(ConsentStepHelpLegalText("By continuing, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
+    } else {
+        Nil
+    }
+}
+
+@renderHelpText(help: List[ConsentStepHelpTextTrait]) = @{
+    help.map {
+        case m: ConsentStepHelpLegalText => {
+            Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
+        }
+        case m: ConsentStepHelpText => {
+            Html(s"<p class='identity-title-explainer'>${m.text}</p>")
+        }
+    }
+}
+
+@showConsentStep(step: ConsentStep) = {
+    <fieldset
+    role="dialog"
+    class="identity-consent-journey__step"
+    aria-labelledby="consents@{step.name.capitalize}Title"
+    >
+        <legend id="consents@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
+        <div class="identity-forms-wrapper">
+            @if(step.help || showAgeStep(display = isFirst)){
+                <div class="identity-forms-wrapper__title">
+                    @renderHelpText(step.help ++ showAgeStep(display = isFirst))
+                </div>
+            }
+            <div class="identity-forms-wrapper__fields">
+            @step.content
+            </div>
+        </div>
+
+    </fieldset>
+}
+
+@showConsentInfo(info: ConsentInfo) = {
+    <div
+    class="identity-consent-journey__step"
+    >
+        <h1 class="identity-title identity-title--page-title">@info.title</h1>
+        <div class="identity-forms-wrapper identity-forms-wrapper__monocol">
+            @if(info.help || showAgeStep(display = isFirst)){
+                <div class="identity-forms-wrapper__title">
+                    @renderHelpText(info.help ++ showAgeStep(display = isFirst))
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@{block match {
+    case m: ConsentStep => showConsentStep(m)
+    case m: ConsentInfo => showConsentInfo(m)
+    case m: ConsentBanner => Html(s"<p class='form__success'>${m.title}</p>")
+}}
