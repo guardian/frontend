@@ -3,6 +3,9 @@ package jobs
 import java.time.LocalDate
 
 import app.LifecycleComponent
+import com.google.api.ads.dfp.axis.v201705.Column.{AD_SERVER_IMPRESSIONS, AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM}
+import com.google.api.ads.dfp.axis.v201705.DateRangeType.CUSTOM_DATE
+import com.google.api.ads.dfp.axis.v201705.Dimension.{CUSTOM_CRITERIA, DATE}
 import com.google.api.ads.dfp.axis.v201705._
 import com.gu.Box
 import common.{AkkaAsync, JobScheduler, Logging}
@@ -32,11 +35,11 @@ object CommercialDfpReporting {
     def toGoogleDate(date: LocalDate) = new Date(date.getYear, date.getMonthValue, date.getDayOfMonth)
     val prebidBegan = LocalDate.of(2018, 1, 22)
     val qry = new ReportQuery()
-    qry.setDateRangeType(DateRangeType.CUSTOM_DATE)
+    qry.setDateRangeType(CUSTOM_DATE)
     qry.setStartDate(toGoogleDate(prebidBegan.minusDays(1)))
     qry.setEndDate(toGoogleDate(LocalDate.now))
-    qry.setDimensions(Array(Dimension.DATE, Dimension.CUSTOM_CRITERIA))
-    qry.setColumns(Array(Column.AD_SERVER_IMPRESSIONS, Column.AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM))
+    qry.setDimensions(Array(DATE, CUSTOM_CRITERIA))
+    qry.setColumns(Array(AD_SERVER_IMPRESSIONS, AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM))
     qry
   }
 
@@ -60,7 +63,7 @@ object CommercialDfpReporting {
     dfpCustomReports.send(curr =>
       curr + {
         prebidBidderPerformance ->
-          dfpApi.runReportJob(prebidBidderPerformanceQry).tail.filter(_.contains("hb_bidder=")).map(DfpReportRow)
+          dfpApi.runReportJob(prebidBidderPerformanceQry).filter(_.contains("hb_bidder=")).map(DfpReportRow)
     })
   }
 
