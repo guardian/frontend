@@ -2,15 +2,11 @@
 import config from 'lib/config';
 import { allEmailCanRun, listCanRun } from 'common/modules/email/run-checks';
 import { getListConfigs } from 'common/modules/email/email-article';
-import {
-    emailTests,
-    contributionsTests,
-    userIsInAClashingAbTest,
-} from 'common/modules/experiments/ab-test-clash';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { checks } from 'common/modules/check-mediator-checks';
 import { resolveCheck, waitForCheck } from 'common/modules/check-mediator';
+import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
 
 const someCheckPassed = (results): boolean => results.includes(true);
 
@@ -30,19 +26,15 @@ const checksToDispatch = {
     },
 
     isUserInContributionsAbTest(): Promise<boolean> {
-        const a = userIsInAClashingAbTest(contributionsTests);
-        console.log('userIsInAClashingAbTest(contributionsTests)', a);
-        return Promise.resolve(userIsInAClashingAbTest(contributionsTests));
+        const acquisitionTest = getAcquisitionTest();
+        console.log('acquisitionTest: ', acquisitionTest);
+        return Promise.resolve(acquisitionTest !== null);
     },
 
     isUserNotInContributionsAbTest(): Promise<boolean> {
         return waitForCheck('isUserInContributionsAbTest').then(
             userInContributionsAbTest => !userInContributionsAbTest
         );
-    },
-
-    isUserInEmailAbTest(): Promise<boolean> {
-        return Promise.resolve(userIsInAClashingAbTest(emailTests));
     },
 
     emailCanRunPreCheck(): Promise<boolean> {
@@ -138,17 +130,6 @@ const checksToDispatch = {
             waitForCheck('listCanRun'),
             waitForCheck('emailInArticleOutbrainEnabled'),
             waitForCheck('isUserNotInContributionsAbTest'),
-        ];
-
-        return Promise.all(dependentChecks).then(results =>
-            everyCheckPassed(results)
-        );
-    },
-
-    isUserInEmailAbTestAndEmailCanRun(): Promise<boolean> {
-        const dependentChecks = [
-            waitForCheck('isUserInEmailAbTest'),
-            waitForCheck('emailCanRun'),
         ];
 
         return Promise.all(dependentChecks).then(results =>

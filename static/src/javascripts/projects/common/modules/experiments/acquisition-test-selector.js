@@ -46,8 +46,6 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
     return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
 };
 
-export const abTestClashData = tests;
-
 export const getTest = (): ?ABTest => {
     const forcedTests = getForcedTests()
         .map(({ testId }) => tests.find(t => t.id === testId))

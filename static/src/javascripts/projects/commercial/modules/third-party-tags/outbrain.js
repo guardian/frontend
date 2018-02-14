@@ -32,7 +32,6 @@ const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
         waitForCheck('isOutbrainDisabled'),
         noMerchSlotsExpected(),
         waitForCheck('isUserInContributionsAbTest'),
-        waitForCheck('isUserInEmailAbTestAndEmailCanRun'),
         waitForCheck('isStoryQuestionsOnPage'),
     ]).then(([outbrainDisabled, noMerchSlots, contributions, email, story]) => {
         console.log('contributions', contributions);
