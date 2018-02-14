@@ -36,19 +36,35 @@ const stickyMpu = (adSlot: HTMLElement) => {
     }
 
     fastdom
-        .read(
-            () =>
-                referenceElement[
-                    config.page.hasShowcaseMainElement
-                        ? 'offsetHeight'
-                        : 'offsetTop'
-                ] + adSlot.offsetHeight
+        .read(() => {
+            if (config.page.hasShowcaseMainElement) {
+                return referenceElement.offsetHeight + adSlot.offsetHeight;
+            }
+            const mediaPrimaryElement = document.querySelector(
+                '.media-primary'
+            );
+
+            const primaryMediaHeight =
+                (mediaPrimaryElement &&
+                    mediaPrimaryElement.getBoundingClientRect() &&
+                    mediaPrimaryElement.getBoundingClientRect().height) ||
+                0;
+
+            const primaryMediaOffsetTop =
+                (mediaPrimaryElement && mediaPrimaryElement.offsetTop) || 0;
+
+            return (
+                referenceElement.offsetTop +
+                adSlot.offsetHeight +
+                primaryMediaHeight +
+                primaryMediaOffsetTop
+            );
+        })
+        .then(newHeight =>
+            fastdom.write(() => {
+                (adSlot.parentNode: any).style.height = `${newHeight}px`;
+            })
         )
-        // .then(newHeight =>
-        //     fastdom.write(() => {
-        //         (adSlot.parentNode: any).style.height = `${newHeight}px`;
-        //     })
-        // )
         .then(() => {
             if (noSticky) {
                 // if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
