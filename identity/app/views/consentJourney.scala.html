@@ -25,13 +25,13 @@
     skin: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @selectAllCheckbox(id: String) = {
-        <label class="manage-account__switch manage-account__switch--no-box js-manage-account__check-allCheckbox u-h" data-link-name-template="mma switch : @{id} (all) : [action]">
-            <div class="manage-account__switch-content">
-                <input type="checkbox"/>
-                <div class="manage-account__switch-checkbox"></div>
-                <h3 class="manage-account__switch-title"></h3>
-            </div>
-        </label>
+    <label class="manage-account__switch manage-account__switch--no-box js-manage-account__check-allCheckbox u-h" data-link-name-template="mma switch : @{id} (all) : [action]">
+        <div class="manage-account__switch-content">
+            <input type="checkbox"/>
+            <div class="manage-account__switch-checkbox"></div>
+            <h3 class="manage-account__switch-title"></h3>
+        </div>
+    </label>
 }
 
 @onlySubscribedToV1Newsletters = @{
@@ -54,9 +54,10 @@
     })
     <fieldset
         role="dialog"
-        aria-labelledby="consentWizard@{step.name.capitalize}Title"
+        class="identity-consent-journey__step"
+        aria-labelledby="consents@{step.name.capitalize}Title"
     >
-        <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
+        <legend id="consents@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
         <div class="identity-forms-wrapper">
             @if(step.help || showAgeStep(display = isFirst)) {
                 <div class="identity-forms-wrapper__title">
@@ -272,7 +273,7 @@
     </form>
 }
 
-<div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-wizard">
+<div class="identity-wrapper monocolumn-wrapper">
 
     <div class="js-errorHolder manage-account__errors"></div>
 
@@ -288,7 +289,7 @@
         @forceSubmitFallback
     </noscript>
 
-    <div id="identityWizardloadingError" class="identity-forms-loading identity-forms-loading--hide-text u-identity-forms-padded">
+    <div id="identityConsentsLoadingError" class="identity-forms-loading identity-forms-loading--hide-text u-identity-forms-padded">
         <div class="identity-forms-loading__spinner is-updating"></div>
         <div class="identity-forms-loading__text">
             Loading seems to be taking a while. If you are in a hurry you can skip this and edit your consents later from your email preferences.
@@ -297,48 +298,20 @@
     </div>
     <script>
         setTimeout(function(){
-            if(window.identityWizardloadingError) window.identityWizardloadingError.className = window.identityWizardloadingError.className.replace('identity-forms-loading--hide-text','')
+            if(window.identityConsentsLoadingError) window.identityConsentsLoadingError.className = window.identityConsentsLoadingError.className.replace('identity-forms-loading--hide-text','')
         },5000);
     </script>
 
-    <div class="identity-wizard identity-wizard--consent @{skin.map(s => s"identity-wizard--consent--$s" )} u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
-
-        <div
-            class="identity-wizard__step"
-            data-wizard-step-name="single-test"
-        >
+    <div class="identity-consent-journey @{skin.map(s => s"identity-consent-journey--$s" )}  u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
 
         @renderSteps(getStepsForJourney(journey))
 
-        </div>
-
-        <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
-
-            @if(getStepsForJourney(journey).size > 1){
-                <button
-                    type="button"
-                    data-link-name="consents : navigation : prev"
-                    class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev @{skin.map(s => s"manage-account__button--$s" )}"
-                >
-                    <span class="u-h">Previous</span>
-                    @fragments.inlineSvg("arrow-left-stem", "icon")
-                </button>
-            }
+        <form class="identity-consent-journey__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
             @views.html.helper.CSRF.formField
             <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
             <button
-                type="button"
-                data-link-name-template="consents : navigation : next : [depth]"
-                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next @{skin.map(s => s"manage-account__button--$s" )}"
-            >
-                <div class="manage-account__button-flexwrap">
-                    <span>Next</span>
-                    @fragments.inlineSvg("arrow-right", "icon")
-                </div>
-            </button>
-            <button
                 type="submit"
-                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__complete @{skin.map(s => s"manage-account__button--$s" )}"
+                class="manage-account__button--icon manage-account__button @{skin.map(s => s"manage-account__button--$s" )}"
                 data-link-name="consents : navigation : submit"
             >
                 <div class="manage-account__button-flexwrap">

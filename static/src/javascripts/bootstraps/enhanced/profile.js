@@ -5,10 +5,6 @@ import fastdom from 'lib/fastdom-promise';
 import { catchErrorsWithContext } from 'lib/robust';
 import { forgottenEmail, passwordToggle } from 'common/modules/identity/forms';
 import { Formstack } from 'common/modules/identity/formstack';
-import {
-    enhance as enhanceWizard,
-    containerClassname as wizardContainerClassname,
-} from 'common/modules/identity/wizard';
 import { FormstackIframe } from 'common/modules/identity/formstack-iframe';
 import { FormstackEmbedIframe } from 'common/modules/identity/formstack-iframe-embed';
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
@@ -17,7 +13,7 @@ import { init as initPublicProfile } from 'common/modules/identity/public-profil
 import { enhanceEmailPrefs } from 'common/modules/identity/email-prefs';
 import { enhanceFormAjax } from 'common/modules/identity/form-ajax';
 import { enhanceConsents } from 'common/modules/identity/consents';
-import { enhanceConsentWizard } from 'common/modules/identity/consent-wizard';
+import { enhanceConsentJourney } from 'common/modules/identity/consent-journey';
 import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
 import { initHeader } from 'common/modules/identity/header';
 import { initUserAvatars } from 'common/modules/discussion/user-avatars';
@@ -47,18 +43,6 @@ const initFormstack = (): void => {
     });
 };
 
-const initWizards = (): void => {
-    fastdom
-        .read(() => [
-            ...document.getElementsByClassName(wizardContainerClassname),
-        ])
-        .then(wizards => {
-            wizards.forEach(wizardEl => {
-                enhanceWizard(wizardEl);
-            });
-        });
-};
-
 const initAccountProfile = (): void => {
     // eslint-disable-next-line no-new
     new AccountProfile();
@@ -76,10 +60,9 @@ const initProfile = (): void => {
         ['enhance-email-prefs', enhanceEmailPrefs],
         ['setup-loading-animation', setupLoadingAnimation],
         ['init-public-profile', initPublicProfile],
-        ['init-wizards', initWizards],
         ['enhance-consents', enhanceConsents],
         ['enhance-form-ajax', enhanceFormAjax],
-        ['enhance-consent-wizard', enhanceConsentWizard],
+        ['enhance-consent-journey', enhanceConsentJourney],
         ['init-header', initHeader],
     ];
     catchErrorsWithContext(modules);
