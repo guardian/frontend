@@ -128,7 +128,7 @@ $ima-controls-height: 70px;
             left: 50%;
             transform: translate(-40%, -50%);
             border-style: solid;
-            border-width: .9em 0 .9em 2.1em;
+            border-width: 1em 0 1em 2.4em;
             border-color: transparent transparent transparent #ffffff;
 
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
@@ -150,8 +150,8 @@ $ima-controls-height: 70px;
 
 .fc-item--list-media-mobile .vjs-control-text {
     @include mq($until: tablet) {
-        width: $vjs-garnett-small-button-size;
-        height: $vjs-garnett-small-button-size;
+        width: $youtube-garnett-small-button-size;
+        height: $youtube-garnett-small-button-size;
         &:after {
             border-width: $youtube-garnett-small-button-border-width;
         }
