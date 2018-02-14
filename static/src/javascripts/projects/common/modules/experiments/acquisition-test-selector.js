@@ -10,7 +10,6 @@ import { askFourEarning } from 'common/modules/experiments/tests/contributions-e
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
-import { colourTestEpicHoldback } from 'common/modules/experiments/tests/circles-epic-holdback';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
 
@@ -20,7 +19,6 @@ import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
-    colourTestEpicHoldback,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,
