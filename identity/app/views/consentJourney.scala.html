@@ -301,7 +301,7 @@
         },5000);
     </script>
 
-    <div class="identity-wizard identity-wizard--consent @{skin.map(s=>s"identity-wizard--consent--$s")} u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
+    <div class="identity-wizard identity-wizard--consent @{skin.map(s => s"identity-wizard--consent--$s" )} u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
 
         <div
             class="identity-wizard__step"
@@ -318,7 +318,7 @@
                 <button
                     type="button"
                     data-link-name="consents : navigation : prev"
-                    class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev @{skin.map(s=>s"manage-account__button--$s")}"
+                    class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev @{skin.map(s => s"manage-account__button--$s" )}"
                 >
                     <span class="u-h">Previous</span>
                     @fragments.inlineSvg("arrow-left-stem", "icon")
@@ -329,7 +329,7 @@
             <button
                 type="button"
                 data-link-name-template="consents : navigation : next : [depth]"
-                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next @{skin.map(s=>s"manage-account__button--$s")}"
+                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next @{skin.map(s => s"manage-account__button--$s" )}"
             >
                 <div class="manage-account__button-flexwrap">
                     <span>Next</span>
@@ -338,7 +338,7 @@
             </button>
             <button
                 type="submit"
-                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__complete @{skin.map(s=>s"manage-account__button--$s")}"
+                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__complete @{skin.map(s => s"manage-account__button--$s" )}"
                 data-link-name="consents : navigation : submit"
             >
                 <div class="manage-account__button-flexwrap">
