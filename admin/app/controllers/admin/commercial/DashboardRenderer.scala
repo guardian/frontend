@@ -17,7 +17,7 @@ object DashboardRenderer extends Results {
       report: Seq[DfpReportRow] <- CommercialDfpReporting.getReport(reportId)
     } yield {
       val keyValueRows: Seq[KeyValueRevenueRow] = report.flatMap { row =>
-        val fields = row.value.split(",").toSeq
+        val fields = row.fields
         for {
           customCriteria: String    <- fields.lift(0)
           customTargetingId: String <- fields.lift(1)

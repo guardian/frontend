@@ -108,7 +108,9 @@
                 </label>
 
                 <figcaption class="caption caption--main caption--img" itemprop="description">
-                    @fragments.inlineSvg("triangle", "icon", List("hide-until-tablet"))
+                    @if(!amp) {
+                        @fragments.inlineSvg("triangle", "icon", List("hide-until-tablet"))
+                    }
                     @img.caption.map(Html(_))
                     @if(img.displayCredit && !img.creditEndsWithCaption) {
                         @img.credit.map(Html(_))

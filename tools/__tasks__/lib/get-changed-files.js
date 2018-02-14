@@ -3,8 +3,13 @@ const execa = require('execa');
 const getCurrentBranchName = () =>
     execa.stdout('git', ['symbolic-ref', '--short', 'HEAD']);
 
-const getRemoteBranches = () => execa.stdout('git', ['branch', '-r']);
+const hasRemoteBranch = branch =>
+    execa
+        .stdout('git', ['status', '--porcelain', '-b'])
+        .then(status => status.includes(`...origin/${branch}`));
 
+// return files that have changed locally
+// compared to remote feature branch
 const diffAgainstRemote = branch =>
     execa
         .stdout('git', [
@@ -16,22 +21,20 @@ const diffAgainstRemote = branch =>
         ])
         .then(diffs => diffs.split('\n'));
 
+// return files that have changed
+// compared to local master branch
 const diffAgainstMaster = () =>
     execa
         .stdout('git', ['diff', '--name-only', 'HEAD', 'origin/master'])
         .then(diffs => diffs.split('\n'));
 
 const getChangedFiles = () =>
-    getCurrentBranchName().then(branch =>
-        getRemoteBranches().then(branches => {
-            if (branches.includes(branch)) {
-                // remote branch exists, return files that have changed locally
-                // compared to remote feature branch
-                return diffAgainstRemote(branch);
+    getCurrentBranchName().then(localBranch =>
+        hasRemoteBranch(localBranch).then(remoteBranchExists => {
+            if (remoteBranchExists) {
+                return diffAgainstRemote(localBranch);
             }
 
-            // remote branch doesn't exist, return files that have changed
-            // compared to local master branch
             return diffAgainstMaster();
         })
     );
