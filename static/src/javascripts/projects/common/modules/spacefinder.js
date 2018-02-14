@@ -183,12 +183,12 @@ const onInteractivesLoaded = memoize((rules: SpacefinderRules): Promise<
 
 const filter = <T>(
     list: T[],
-    filter: (el: T) => boolean,
+    filterElement: (el: T) => boolean,
     exclusions: any[]
 ): T[] => {
     const filtered = [];
     list.forEach(element => {
-        if (filter(element)) {
+        if (filterElement(element)) {
             filtered.push(element);
         } else {
             exclusions.push(element);
@@ -421,7 +421,7 @@ const findSpace = (
         (rules.bodySelector && document.querySelector(rules.bodySelector)) ||
         document;
 
-    const exclusions: SpacefinderExclusions = excluded ? excluded : {};
+    const exclusions: SpacefinderExclusions = excluded || {};
 
     return getReady(rules, options || defaultOptions)
         .then(() => getCandidates(rules, exclusions))
