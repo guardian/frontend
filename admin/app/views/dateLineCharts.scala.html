@@ -1,6 +1,6 @@
 @(charts: Seq[tools.Chart[java.time.LocalDate]], title: Option[String] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@admin_main("Dashboard", isAuthed = true, hasCharts = true) {
+@admin_main(title.getOrElse("Dashboard"), isAuthed = true, hasCharts = true) {
 
     @title.map{ title =>
         <h3>@title</h3>
