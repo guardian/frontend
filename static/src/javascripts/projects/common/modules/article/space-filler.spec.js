@@ -10,7 +10,8 @@ import { noop } from 'lib/noop';
 jest.mock('lib/fastdom-promise');
 jest.mock('common/modules/spacefinder', () => ({
     findSpace: jest.fn(),
-    SpaceError() {
+    // eslint-disable-next-line object-shorthand
+    SpaceError: function() {
         this.name = 'SpaceError';
     },
 }));
