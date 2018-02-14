@@ -415,13 +415,13 @@ const returnCandidates = (
 const findSpace = (
     rules: SpacefinderRules,
     options: ?SpacefinderOptions,
-    exclusions: ?SpacefinderExclusions
+    excluded: ?SpacefinderExclusions
 ): Promise<HTMLElement[]> => {
     rules.body =
         (rules.bodySelector && document.querySelector(rules.bodySelector)) ||
         document;
 
-    exclusions = exclusions ? exclusions : {};
+    const exclusions: SpacefinderExclusions = excluded ? excluded : {};
 
     return getReady(rules, options || defaultOptions)
         .then(() => getCandidates(rules, exclusions))
