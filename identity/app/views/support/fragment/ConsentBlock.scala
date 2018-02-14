@@ -28,4 +28,15 @@ object ConsentBlock {
     override val show: Boolean = true
   ) extends ConsentBlock(show)
 
+
+  def renderBlocks(steps:List[ConsentBlock]): List[Html] = {
+    val displaySteps = steps.filter(_.show)
+    displaySteps.zipWithIndex.map{ case (block, index) =>
+      block match {
+        case m: ConsentStep => views.html.consentJourneyFragments.step(m, index == 0, index == (displaySteps.size - 1))
+        case m: ConsentBanner => Html(s"<p class='form__success'>${m.title}</p>")
+      }
+    }
+  }
+
 }

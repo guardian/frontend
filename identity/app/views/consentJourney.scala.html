@@ -40,17 +40,6 @@
     }
 }
 
-@renderBlocks(steps:List[ConsentBlock]) = @{
-    val displaySteps = steps.filter(_.show)
-    displaySteps.zipWithIndex.map{ case (block, index) =>
-        block match {
-            case m: ConsentStep => consentJourneyFragments.step(m, index == 0, index == (displaySteps.size - 1))
-            case m: ConsentBanner => Html(s"<p class='form__success'>${m.title}</p>")
-        }
-
-    }
-}
-
 @channelStepContent = {
     <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
@@ -111,16 +100,6 @@
         title = "Would you like to hear about any of these Guardian products?",
         help = List(ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")),
         content = marketingStepContent
-    )
-}
-@marketingConsentThankYouStep = @{
-    ConsentStep(
-        name = "consent-thank-you",
-        title = "Would you like to hear about any of these Guardian products?",
-        help = List(
-            ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")
-        ),
-        content = marketingStepContent,
     )
 }
 
@@ -192,91 +171,45 @@
     }
 }
 
-@getStepsForJourney(journey: String) = @{
-    journey match {
-        case "newsletters" => {
-            List(
-                if(emailRepermissionStep.show) {
-                    emailRepermissionStep
-                } else {
-                    ConsentStep(
-                        name = "error",
-                        title = "Sorry",
-                        content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
+<div class="identity-wrapper monocolumn-wrapper">
+    <div class="js-errorHolder manage-account__errors"></div>
+    @consentJourneyFragments.jsFallback(verifiedReturnUrl, idRequest, idUrlBuilder)
+    <div class="identity-consent-journey @{skin.map(s => s"identity-consent-journey--$s" )} u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
+
+        @renderBlocks(
+            journey match {
+                case "newsletters" => {
+                    List(
+                        if(emailRepermissionStep.show) {
+                            emailRepermissionStep
+                        } else {
+                            ConsentStep(
+                                name = "error",
+                                title = "Sorry",
+                                content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
+                            )
+                        }
                     )
                 }
-            )
-        }
-        case "thank-you" => {
-            List(
-                ConsentBanner(
-                    "Thank you for signing up"
-                ),
-                emailRepermissionStep,
-                marketingConsentThankYouStep,
-                channelStep
-            )
-        }
-        case "default" => {
-            List(
-                emailRepermissionStep,
-                marketingConsentStep,
-                channelStep
-            )
-        }
-    }
-}
-
-@forceSubmitFallback = {
-    <form method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
-        @views.html.helper.CSRF.formField
-        <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
-        <button
-        type="submit"
-        class="manage-account__button"
-        data-link-name="consents : navigation : submit-force"
-        >
-            <span>Continue</span>
-        </button>
-    </form>
-}
-
-@jsFallbackLoaders = {
-
-}
-
-<div class="identity-wrapper monocolumn-wrapper">
-
-    <div class="js-errorHolder manage-account__errors"></div>
-
-    <noscript>
-        <div class="form__error">
-            <p>
-                Setting your communication preferences requires a browser with Javascript enabled.
-            </p>
-            <p>
-                Please consider upgrading to one of our <a class="u-underline" href="@LinkTo{/help/recommended-browsers}">recommended browsers</a>. If you need more help please <a href="@LinkTo{/info/tech-feedback}">contact us</a>.
-            </p>
-        </div>
-        @forceSubmitFallback
-    </noscript>
-
-    <div id="identityConsentsLoadingError" class="identity-forms-loading identity-forms-loading--hide-text u-identity-forms-padded">
-        <div class="identity-forms-loading__spinner is-updating"></div>
-        <div class="identity-forms-loading__text">
-            Loading seems to be taking a while. If you are in a hurry you can skip this and edit your consents later from your email preferences.
-            @forceSubmitFallback
-        </div>
-    </div>
-    <script>
-        setTimeout(function(){
-            if(window.identityConsentsLoadingError) window.identityConsentsLoadingError.className = window.identityConsentsLoadingError.className.replace('identity-forms-loading--hide-text','')
-        },5000);
-    </script>
-
-    <div class="identity-consent-journey @{skin.map(s => s"identity-consent-journey--$s" )}  u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
-
-        @renderBlocks(getStepsForJourney(journey))
+                case "thank-you" => {
+                    List(
+                        ConsentBanner(
+                            "Thank you for signing up"
+                        ),
+                        emailRepermissionStep,
+                        marketingConsentStep,
+                        channelStep
+                    )
+                }
+                case "default" => {
+                    List(
+                        emailRepermissionStep,
+                        marketingConsentStep,
+                        channelStep
+                    )
+                }
+            }
+        )
 
         <form class="identity-consent-journey__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
             @views.html.helper.CSRF.formField
