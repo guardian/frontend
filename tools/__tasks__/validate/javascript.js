@@ -48,7 +48,7 @@ module.exports = {
         },
         {
             description: 'Tools etc.',
-            task: `eslint --ignore-pattern /static/test/javascripts-legacy --ignore-pattern /static/src --ignore-pattern /ui . ${
+            task: `eslint --ignore-pattern /static/test/javascripts-legacy --ignore-pattern /static/src --ignore-pattern . ${
                 config
             }`,
             onError: error,
