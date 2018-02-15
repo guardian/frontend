@@ -39,13 +39,10 @@ const computeVariantIdFor = (test: ABTest): string => {
 
 export const variantIdFor = memoize(computeVariantIdFor, getId);
 
+export const isInTest = (test: ABTest): boolean =>
+    variantIdFor(test) !== NOT_IN_TEST;
+
 export const variantFor = (test: ABTest): ?Variant => {
     const variantId = variantIdFor(test);
     return test.variants.find(variant => variant.id === variantId);
 };
-
-export const isInTest = (test: ABTest): boolean =>
-    variantIdFor(test) !== NOT_IN_TEST;
-
-export const isInVariant = (test: ABTest, variant: Variant): boolean =>
-    variantFor(test) === variant;

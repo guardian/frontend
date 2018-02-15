@@ -1,6 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { local } from 'lib/storage';
+import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 
 export const participationsKey = 'gu.ab.participations';
 
@@ -63,6 +64,23 @@ export const getAssignedVariant = (test: ABTest): ?Variant => {
     const variantId = getTestVariantId(test.id);
     return variantId ? getVariant(test, variantId) : null;
 };
+
+export const setTestVariant = (testId: string, variant: string): void => {
+    const participations = getParticipations();
+
+    if (testId in participations) {
+        participations[testId].variant = variant;
+        setParticipations(participations);
+    }
+};
+
+/**
+ * returns whether the caller should treat the user as being in that variant.
+ */
+export const isInVariant = (test: ABTest, variant: Variant): boolean =>
+    getParticipations()[test.id] &&
+    getParticipations()[test.id].variant === variant.id &&
+    testCanBeRun(test);
 
 export const getForcedTests = (): Array<{
     testId: string,

@@ -17,6 +17,7 @@ import {
     getParticipations,
     getVariant,
     addParticipation,
+    getTestVariantId,
     cleanParticipations,
     getForcedTests,
 } from 'common/modules/experiments/utils';
@@ -41,6 +42,17 @@ const allocateUserToTest = test => {
     if (testCanBeRun(test) && !isParticipating(test)) {
         addParticipation(test, variantIdFor(test));
     }
+};
+
+export const shouldRunTest = (testId: string, variantName: string) => {
+    const test = getTest(testId);
+
+    return (
+        test &&
+        isParticipating(test) &&
+        getTestVariantId(testId) === variantName &&
+        testCanBeRun(test)
+    );
 };
 
 export const segment = (tests: $ReadOnlyArray<ABTest>) =>
