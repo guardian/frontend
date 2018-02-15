@@ -7,22 +7,16 @@
             display: block;
         }
     }
-    > .identity-consent-journey__step:not(:first-child) {
-        margin-top: $gs-gutter * 2;
+    > .identity-consent-journey__step:not(:first-of-type) {
+        margin-top: $gs-gutter * 3;
+        padding-top: $gs-gutter * .5;
         position: relative;
-        legend {
-            padding-top: $gs-gutter * .5
-        }
-        &:before {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            display: block;
-            content: '';
-            height: 1px;
-            background: $garnett-neutral-4;
-        }
+        border-top: 1px solid $garnett-neutral-4;
+    }
+    > .identity-consent-journey__step[data-title='select-all'] {
+        margin-bottom: $gs-gutter * 2 * -1;
+        margin-top: $gs-gutter * 2;
+        border-top: none;
     }
     .identity-consent-journey__controls {
         padding: $gs-gutter 0;

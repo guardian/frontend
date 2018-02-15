@@ -27,12 +27,12 @@
 }
 
 @showConsentStep(step: ConsentStep) = {
-    <fieldset
-    role="dialog"
-    class="identity-consent-journey__step"
-    aria-labelledby="consents@{step.name.capitalize}Title"
+    <div
+        role="group"
+        class="identity-consent-journey__step"
+        aria-labelledby="consents@{step.name.capitalize}Title"
     >
-        <legend id="consents@{step.name.capitalize}Title" class="identity-forms-wrapper-title identity-forms-wrapper-title__large">@step.title</legend>
+        <h2 id="consents@{step.name.capitalize}Title" class="identity-forms-wrapper-title">@step.title</h2>
         <div class="identity-forms-wrapper">
             @if(step.help || showAgeStep(display = isFirst)){
                 <div class="identity-forms-wrapper__info">
@@ -44,7 +44,7 @@
             </div>
         </div>
 
-    </fieldset>
+    </div>
 }
 
 @showConsentInfo(info: ConsentInfo) = {
@@ -52,7 +52,7 @@
     class="identity-consent-journey__step"
     >
         <h1 class="identity-forms-wrapper-title identity-forms-wrapper-title__large">@info.title</h1>
-        <div class="identity-forms-wrapper identity-forms-wrapper__monocol">
+        <div class="identity-forms-wrapper">
             @if(info.help || showAgeStep(display = isFirst)){
                 <div class="identity-forms-wrapper__info">
                     @renderHelpText(info.help ++ showAgeStep(display = isFirst))
@@ -62,8 +62,18 @@
     </div>
 }
 
+@showConsentCustomHtml(info: ConsentCustomHtml) = {
+    <div
+        class="identity-consent-journey__step"
+        data-title="@info.title"
+    >
+        @info.content
+    </div>
+}
+
 @{block match {
     case m: ConsentStep => showConsentStep(m)
+    case m: ConsentCustomHtml => showConsentCustomHtml(m)
     case m: ConsentInfo => showConsentInfo(m)
     case m: ConsentBanner => Html(s"<p class='form__success'>${m.title}</p>")
 }}
