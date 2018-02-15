@@ -1,4 +1,5 @@
 // @flow
+/* global jsdom */
 
 import {
     getUserFromApi,
@@ -33,6 +34,8 @@ jest.mock('common/modules/async-call-merger', () => ({
 const getCookieStub: any = getCookie_;
 const ajax: any = ajax_;
 
+const originalAssign = window.location.assign;
+
 describe('Identity API', () => {
     beforeEach(() => {
         config.page = {
@@ -44,11 +47,19 @@ describe('Identity API', () => {
                 'WyIyMzEwOTU5IiwiamdvcnJpZUBnbWFpbC5jb20iLCJBbSVDMyVBOWxpZSBKJUMzJUI0c2UiLCI1MzQiLDEzODI5NTMwMzE1OTEsMV0' +
                 '.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
         );
+
+        window.location.assign = (url: string) => {
+            jsdom.reconfigure({
+                url,
+            });
+        };
     });
 
     afterEach(() => {
         reset();
         jest.resetAllMocks();
+
+        window.location.assign = originalAssign;
     });
 
     it('gets user from cookie', () => {
@@ -104,19 +115,19 @@ describe('Identity API', () => {
     it('should redirect to sign in when user is not signed in', () => {
         const origHref = window.location.href;
 
-        getCookieStub.mockImplementationOnce(() => null);
-        Object.defineProperty(window.location, 'href', {
-            writable: true,
-            value: '',
-        });
+        const returnUrl = 'https://theguardian.com/uk';
+        window.location.assign(returnUrl);
 
+        getCookieStub.mockImplementationOnce(() => null);
         getUserOrSignIn();
 
         expect(window.location.href).toBe(
-            `${config.page.idUrl}/signin?returnUrl=`
+            `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
+                returnUrl
+            )}`
         );
 
-        window.location.href = origHref;
+        window.location.assign(origHref);
     });
 
     it('should not redirect to sign in when user is already signed in', () => {
@@ -131,11 +142,6 @@ describe('Identity API', () => {
         const returnUrl = 'http://www.theguardian.com/foo';
 
         getCookieStub.mockImplementationOnce(() => null);
-        Object.defineProperty(window.location, 'href', {
-            writable: true,
-            value: '',
-        });
-
         getUserOrSignIn(returnUrl);
 
         expect(window.location.href).toBe(
@@ -144,7 +150,7 @@ describe('Identity API', () => {
             )}`
         );
 
-        window.location.href = origHref;
+        window.location.assign(origHref);
     });
 
     it('should attempt to autosigin an user who is not currently signed in and has not previously signed out', () => {
