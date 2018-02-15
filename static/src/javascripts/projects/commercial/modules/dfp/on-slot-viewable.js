@@ -5,29 +5,19 @@ import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
-const getViewabilityThreshold = (advert: Advert): ?number => {
-    const refreshThresholdMsDefault = 30000;
-    const refreshThresholdMsVideo = 90000;
-
-    const fluidSize = '0,0';
-
+const shouldRefresh = (advert: Advert): ?boolean => {
     const sizeString = advert.size && advert.size.toString();
-    const videoSizes = ['620,1', '620,350'];
+    const isFluid = sizeString === '0,0';
+    const couldBeVideo = advert.id === 'dfp-ad--inline1';
 
-    if (sizeString === fluidSize) {
-        return;
-    } else if (videoSizes.includes(sizeString)) {
-        return refreshThresholdMsVideo;
-    }
-
-    return refreshThresholdMsDefault;
+    return !isFluid && !couldBeVideo;
 };
 
 export const onSlotViewable = (event: ImpressionViewableEvent): void => {
     const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
-    const viewabilityThresholdMs = advert && getViewabilityThreshold(advert);
+    const viewabilityThresholdMs = 30000;
 
-    if (advert && viewabilityThresholdMs) {
+    if (advert && shouldRefresh(advert)) {
         const onDocumentVisible = () => {
             if (!document.hidden) {
                 document.removeEventListener(
@@ -37,10 +27,6 @@ export const onSlotViewable = (event: ImpressionViewableEvent): void => {
                 enableLazyLoad(advert);
             }
         };
-
-        if (viewabilityThresholdMs === -1) {
-            return;
-        }
 
         setTimeout(() => {
             if (document.hidden) {
