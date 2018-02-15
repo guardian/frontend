@@ -140,7 +140,7 @@ import scala.concurrent.Future
         status(result) should be(303)
 
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
-        verify(api).saveUser(eq(userId), userUpdateCapture.capture(), eq(testAuth))
+        verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
         val userUpdate = userUpdateCapture.getValue
         userUpdate.statusFields.get.hasRepermissioned should equal(Some(true))
       }
