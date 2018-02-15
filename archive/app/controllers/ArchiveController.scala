@@ -40,7 +40,7 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
   private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
 
   def remoteRender404: Future[String] = ws.url(Configuration.moon.moonEndpoint)
-      .withRequestTimeout(6000.millis)
+      .withRequestTimeout(2000.millis)
       .get()
       .map((response) => {
         response.body
