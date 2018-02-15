@@ -7,6 +7,7 @@ import jobs.CommercialDfpReporting
 import model.{ApplicationContext, NoCache}
 import play.api.i18n.I18nSupport
 import play.api.mvc._
+import play.twirl.api.Html
 import tools.{Chart, ChartFormat, ChartRow}
 
 class TeamKPIController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
@@ -53,7 +54,7 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
     }
 
     val impressionChart = new BidPerformanceChart {
-      val name = "Number of winning bids"
+      val name = "Number of winning bids per day"
       val dataset = dataPoints
         .groupBy(_.date)
         .foldLeft(Seq.empty[ChartRow[LocalDate]]) {
@@ -67,7 +68,7 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
     }
 
     val cpmChart = new BidPerformanceChart {
-      val name = "CPM"
+      val name                = "Average CPM per day"
       override val vAxisTitle = Some("GBP")
       val dataset = dataPoints
         .groupBy(_.date)
@@ -82,7 +83,7 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
     }
 
     val revenueChart = new BidPerformanceChart {
-      val name = "Indicative revenue"
+      val name                = "Indicative revenue per day"
       override val vAxisTitle = Some("GBP")
       val dataset = dataPoints
         .groupBy(_.date)
@@ -102,10 +103,13 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
     }
 
     NoCache(
-      Ok(
-        views.html.dateLineCharts(
-          charts = Seq(impressionChart, cpmChart, revenueChart),
-          title = Some("Prebid Bidder Performance")
-        )))
+      Ok(views.html.dateLineCharts(
+        charts = Seq(impressionChart, cpmChart, revenueChart),
+        title = Some("Prebid Bidder Performance"),
+        description = Some(Html(
+          """NB: Today's figures update every 30 minutes.<br \>
+             So <b>the cumulative figures for today</b> may initially appear to be falling off a cliff, but they <b>will increase</b> as the day goes on."""
+        ))
+      )))
   }
 }

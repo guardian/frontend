@@ -1,9 +1,13 @@
-@(charts: Seq[tools.Chart[java.time.LocalDate]], title: Option[String] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(charts: Seq[tools.Chart[java.time.LocalDate]], title: Option[String] = None, description: Option[Html] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main(title.getOrElse("Dashboard"), isAuthed = true, hasCharts = true) {
 
-    @title.map{ title =>
-        <h3>@title</h3>
+    @title.map{ t =>
+        <h3>@t</h3>
+    }
+
+    @description.map{ d =>
+        <p>@d</p>
     }
 
     @* some servers have no data *@
