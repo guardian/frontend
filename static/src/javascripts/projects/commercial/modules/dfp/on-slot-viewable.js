@@ -5,12 +5,12 @@ import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
-const shouldRefresh = (advert: Advert): boolean => {
+const shouldRefresh = (advert: Advert): ?boolean => {
     const sizeString = advert.size && advert.size.toString();
     const isFluid = sizeString === '0,0';
-    const isVideo = ['620,1', '620,350'].includes(sizeString);
+    const couldBeVideo = advert.id === 'dfp-ad--inline1';
 
-    return !isFluid && !isVideo;
+    return !isFluid && !couldBeVideo;
 };
 
 export const onSlotViewable = (event: ImpressionViewableEvent): void => {
