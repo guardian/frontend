@@ -24,7 +24,6 @@
         class="@RenderClasses(Map(
             "has-feature-showcase-element" -> (article.tags.isFeature && !article.tags.isComment && article.elements.hasShowcaseMainElement),
             "has-feature-showcase-opinion" -> (article.tags.isComment && article.elements.hasShowcaseMainElement),
-            "content--column" -> (article.isColumn),
             "paid-content" -> isPaidContent,
             "paid-content--white" -> (isPaidContent && ActiveExperiments.isParticipating(CommercialPaidContentTemplate))
         ),
