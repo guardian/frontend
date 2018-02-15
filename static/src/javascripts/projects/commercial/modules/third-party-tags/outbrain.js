@@ -33,16 +33,15 @@ const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
         noMerchSlotsExpected(),
         waitForCheck('isUserInContributionsAbTest'),
         waitForCheck('isStoryQuestionsOnPage'),
-    ]).then(([outbrainDisabled, noMerchSlots, contributions, email, story]) => {
-        console.log('contributions', contributions);
-        return {
+    ]).then(
+        ([outbrainDisabled, noMerchSlots, contributions, email, story]) => ({
             outbrainEnabled: !outbrainDisabled,
             noMerchSlotsExpected: noMerchSlots,
             contributionsTestVisible: contributions,
             emailTestVisible: email,
             storyQuestionsVisible: story,
-        };
-    });
+        })
+    );
 
 const getOutbrainDfpConditions = (): Promise<OutbrainDfpConditions> =>
     Promise.all([
@@ -99,8 +98,6 @@ export const initOutbrain = (): Promise<void> =>
             pageConditions.contributionsTestVisible ||
             pageConditions.emailTestVisible ||
             pageConditions.storyQuestionsVisible;
-
-        console.log('editorialTests', editorialTests);
 
         if (pageConditions.noMerchSlotsExpected) {
             if (editorialTests) {

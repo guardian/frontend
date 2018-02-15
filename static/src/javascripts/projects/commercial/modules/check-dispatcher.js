@@ -26,10 +26,7 @@ const checksToDispatch = {
     },
 
     isUserInContributionsAbTest(): Promise<boolean> {
-        const acquisitionTest = getAcquisitionTest();
-        console.log('acquisitionTest: ', acquisitionTest);
-        console.log('!!acquisitionTest: ', !!acquisitionTest);
-        return Promise.resolve(!!acquisitionTest);
+        return Promise.resolve(!!getAcquisitionTest());
     },
 
     isUserNotInContributionsAbTest(): Promise<boolean> {
