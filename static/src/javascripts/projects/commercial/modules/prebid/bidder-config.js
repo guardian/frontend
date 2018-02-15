@@ -170,7 +170,7 @@ export const bidderConfig: PrebidBidderCriteria = {
         {
             editions: ['UK', 'INT'],
             breakpoint: { min: 'mobile' },
-            sizes: [[300, 250], [300, 600]],
+            sizes: [[300, 250]],
             slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
         },
         {
