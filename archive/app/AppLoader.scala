@@ -6,7 +6,7 @@ import common._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
-import controllers.{ArchiveController, DevComponentController, HealthCheck}
+import controllers.{ArchiveController, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
@@ -17,7 +17,6 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services.{ArchiveMetrics, RedirectService}
 import router.Routes
-import rendering.core.Renderer
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -26,9 +25,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait AppComponents extends FrontendComponents {
 
   def wsClient: WSClient
-  lazy val renderer: Renderer = wire[Renderer]
   lazy val redirects = wire[RedirectService]
-  lazy val devComponentController = wire[DevComponentController]
 
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]

@@ -16,7 +16,6 @@ import org.apache.http.HttpStatus
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.twirl.api.Html
-import rendering.core.Renderer
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
 import scala.concurrent.duration._
@@ -25,7 +24,7 @@ import java.lang.System.currentTimeMillis
 
 import metrics.TimingMetric
 
-class ArchiveController(redirects: RedirectService, renderer: Renderer, val controllerComponents: ControllerComponents, ws: WSClient) extends BaseController with Logging with ImplicitControllerExecutionContext {
+class ArchiveController(redirects: RedirectService, val controllerComponents: ControllerComponents, ws: WSClient) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   private val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(/p/[\w\d]+).*$""".r
