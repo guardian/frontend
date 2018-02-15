@@ -100,6 +100,13 @@ import scala.concurrent.Future
         contentAsString(result) should include ("identity-forms-loading--hide-text")
       }
 
+      "send a csrf token and a return url" in new ConsentsJourneyFixture {
+        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
+        status(result) should be(200)
+        contentAsString(result) should include ("name=\"csrfToken\"")
+        contentAsString(result) should include ("name=\"returnUrl\"")
+      }
+
       "have a normal submit button" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
@@ -110,6 +117,30 @@ import scala.concurrent.Future
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should include ("older than 13 years")
+      }
+
+      "set a repermission flag on submit" in new ConsentsJourneyFixture {
+        user.statusFields.setHasRepermissioned(false)
+
+        val updatedUser = user.copy(
+          statusFields = StatusFields(hasRepermissioned = Some(true))
+        )
+
+        val fakeRequest = FakeCSRFRequest(csrfAddToken)
+          .withFormUrlEncodedBody(
+            "returnUrl" -> returnUrlVerifier.defaultReturnUrl
+          )
+
+        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
+          .thenReturn(Future.successful(Right(updatedUser)))
+
+        val result = controller.submitRepermissionedFlag.apply(fakeRequest)
+        status(result) should be(303)
+
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
+        verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
+        val userUpdate = userUpdateCapture.getValue
+        userUpdate.statusFields.get.hasRepermissioned should equal(Some(true))
       }
 
     }
