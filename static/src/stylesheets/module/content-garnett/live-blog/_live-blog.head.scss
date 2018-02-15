@@ -4,6 +4,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
    ========================================================================== */
 
 .content__main-column--liveblog {
+    &::before {
+        display: none;
+    }
+
     @include mq(desktop) {
         margin-left: gs-span(4) + $gs-gutter;
         margin-right: 0;
