@@ -50,6 +50,7 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
     Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(s))))
   }).recover {
     case e: Throwable =>
+      log.warn(s"Archive failed to remotely render 404 and fell back to the local template")
       Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
   }
 
