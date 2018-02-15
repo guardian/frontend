@@ -77,6 +77,7 @@ final case class Content(
   lazy val discussionId = Some(shortUrlId)
   lazy val isGallery = metadata.contentType.contains(DotcomContentType.Gallery)
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
+  lazy val isColumn = fields.displayHint.contains("column")
   lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
@@ -227,6 +228,7 @@ final case class Content(
     ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else showInRelated && !legallySensitive)),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
+    ("isColumn", JsBoolean(isColumn)),
     ("isPaidContent", JsBoolean(isPaidContent)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
 
@@ -437,6 +439,7 @@ object Article {
       ("isImmersive", JsBoolean(content.isImmersive)),
       ("isHosted", JsBoolean(false)),
       ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
+      ("isColumn", JsBoolean(content.isColumn)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
       ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
       "videoDuration" -> videoDuration
@@ -503,6 +506,7 @@ final case class Article (
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
   val isPhotoEssay: Boolean = content.isPhotoEssay
+  val isColumn: Boolean = content.isColumn
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().asScala.headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
