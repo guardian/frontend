@@ -9,7 +9,8 @@ import {
 import type {
     PrebidBidder,
     PrebidBidderCriteria,
-    PrebidImproveDigitalParams,
+    PrebidImproveParams,
+    PrebidImproveSizeParam,
     PrebidIndexExchangeParams,
     PrebidSize,
     PrebidSonobiParams,
@@ -67,6 +68,16 @@ const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
 
 const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [728, 90]) || contains(sizes, [970, 250]);
+
+const getTestImprovePlacementId = (sizes: PrebidSize[]): number => {
+    if (containsMpuOrDmpu(sizes)) {
+        return 1116414;
+    }
+    if (containsLeaderboardOrBillboard(sizes)) {
+        return 1116415;
+    }
+    return -1;
+};
 
 const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     switch (config.page.edition) {
@@ -127,6 +138,13 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     }
 };
 
+// Improve has to have single size as parameter if slot doesn't accept multiple sizes,
+// because it uses same placement ID for multiple slot sizes and has no other size information
+const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam =>
+    slotId === 'dfp-ad--mostpop' || slotId.startsWith('dfp-ad--inline')
+        ? { w: 300, h: 250 }
+        : {};
+
 export const bidderConfig: PrebidBidderCriteria = {
     sonobi: [
         {
@@ -171,7 +189,13 @@ export const bidderConfig: PrebidBidderCriteria = {
             editions: ['UK', 'INT'],
             breakpoint: { min: 'mobile' },
             sizes: [[300, 250]],
-            slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
+            slots: ['dfp-ad--inline', 'dfp-ad--mostpop'],
+        },
+        {
+            editions: ['UK', 'INT'],
+            breakpoint: { min: 'mobile' },
+            sizes: [[300, 250], [300, 600]],
+            slots: ['dfp-ad--right'],
         },
         {
             editions: ['UK', 'INT'],
@@ -210,10 +234,10 @@ export const trustXBidder: PrebidBidder = {
 
 export const improveDigitalBidder: PrebidBidder = {
     name: 'improvedigital',
-    bidParams: (
-        slotId: string,
-        sizes: PrebidSize[]
-    ): PrebidImproveDigitalParams => ({
-        placementId: getImprovePlacementId(sizes),
+    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidImproveParams => ({
+        placementId: config.switches.testImproveBidder
+            ? getTestImprovePlacementId(sizes)
+            : getImprovePlacementId(sizes),
+        size: getImproveSizeParam(slotId),
     }),
 };
