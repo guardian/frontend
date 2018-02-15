@@ -144,7 +144,7 @@ object NavMenu {
     } else if (isArticleInTagPageSection) {
       commonKeywords.head
     } else if(edition.isEditionalised(page.metadata.sectionId) || page.metadata.isFront) {
-       page.metadata.sectionId
+      page.metadata.id
     } else {
       page.metadata.sectionId
     }
