@@ -16,7 +16,7 @@
     > .identity-consent-journey__step[data-title='select-all'] {
         margin-bottom: $gs-gutter * 2 * -1;
         margin-top: $gs-gutter * 2;
-        border-top: none;
+        border-top: 0;
     }
     .identity-consent-journey__controls {
         padding: $gs-gutter 0;
