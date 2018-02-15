@@ -6,10 +6,8 @@ import com.gu.identity.model.Consent.Supporter
 import com.gu.identity.model.{EmailNewsletters, _}
 import controllers.editprofile.EditProfileController
 import form._
-import idapiclient.responses.Error
 import idapiclient.{Auth, TrackingData, _}
 import model.{Countries, PhoneNumbers}
-import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
 import org.scalatest.concurrent.ScalaFutures
@@ -18,7 +16,6 @@ import org.scalatest._
 import org.scalatestplus.play.ConfiguredServer
 import play.api.http.HttpConfiguration
 import play.api.mvc._
-import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services._
 import test._
@@ -123,7 +120,7 @@ import scala.concurrent.Future
       "have consent checkboxes" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(com.gu.identity.model.Consent.Events.latestWording.wording))
+        contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
       }
 
       "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
@@ -151,7 +148,7 @@ import scala.concurrent.Future
       "have consent checkboxes" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourneyThankYou().apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(com.gu.identity.model.Consent.Events.latestWording.wording))
+        contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
       }
 
       "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
@@ -172,7 +169,7 @@ import scala.concurrent.Future
       "not have consent checkboxes" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourneyNewsletters().apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should not include xml.Utility.escape(com.gu.identity.model.Consent.Events.latestWording.wording)
+        contentAsString(result) should not include xml.Utility.escape(Supporter.latestWording.wording)
       }
 
       "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
