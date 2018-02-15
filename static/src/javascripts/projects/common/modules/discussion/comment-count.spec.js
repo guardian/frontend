@@ -20,9 +20,6 @@ jest.mock('lib/fetch-json', () =>
 
 const fetchJsonSpy: any = fetchJson;
 
-// Not yet implemented, see https://github.com/tmpvar/jsdom/issues/961
-HTMLElement.prototype.dataset = {};
-
 describe('Comment Count', () => {
     beforeEach(() => {
         if (document.body) {
@@ -41,8 +38,6 @@ describe('Comment Count', () => {
         const trails = document.getElementsByClassName('trail');
 
         [...trails].forEach(trail => {
-            trail.dataset = {};
-
             const data = {
                 discussionClosed: trail.getAttribute('data-discussion-closed'),
                 discussionId: trail.getAttribute('data-discussion-id'),

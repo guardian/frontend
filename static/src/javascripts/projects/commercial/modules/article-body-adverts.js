@@ -2,6 +2,7 @@
 import config from 'lib/config';
 import { isBreakpoint, getBreakpoint, getViewport } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
+import type { SpacefinderItem } from 'common/modules/spacefinder';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
@@ -61,7 +62,7 @@ const insertAdAtPara = (
 
 // Add new ads while there is still space
 const addArticleAds = (count: number, rules: Object): Promise<number> => {
-    const insertInlineAds = (paras: Element[]): Promise<number> => {
+    const insertInlineAds = (paras: HTMLElement[]): Promise<number> => {
         const slots: Array<Promise<void>> = paras
             .slice(0, Math.min(paras.length, count))
             .map((para: Node) => {
@@ -87,11 +88,7 @@ const addArticleAds = (count: number, rules: Object): Promise<number> => {
 };
 
 const getRules = (): Object => {
-    let prevSlot: ?{
-        top: number,
-        bottom: number,
-        element: Node,
-    };
+    let prevSlot: SpacefinderItem;
 
     const adSlotClassSelectorSizes = {
         minAbove: 500,
@@ -122,7 +119,7 @@ const getRules = (): Object => {
                 minBelow: 400,
             },
         },
-        filter: (slot: Object) => {
+        filter: (slot: SpacefinderItem) => {
             if (
                 !prevSlot ||
                 Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >=

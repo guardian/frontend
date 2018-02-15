@@ -35,10 +35,6 @@
         color: $identity-main;
     }
 
-    &.identity-wrapper--with-wizard {
-        padding-bottom: 0;
-    }
-
     @include mq(desktop) {
         max-width: gs-span(10);
     }

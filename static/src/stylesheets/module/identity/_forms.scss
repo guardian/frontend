@@ -95,7 +95,22 @@ Messages
 /*
 Wrapper
 */
-.identity-forms-wrapper__title {
+.identity-forms-wrapper-title {
+    @include fs-headline(4);
+    @include mq(desktop) {
+        @include fs-headline(5, $size-only: true);
+        &.identity-forms-wrapper-title__large {
+            @include fs-headline(6);
+        }
+    }
+    & + .identity-forms-wrapper {
+        margin-top: $gs-baseline * 2;
+    }
+}
+
+
+
+.identity-forms-wrapper__info {
     margin-bottom: $gs-baseline;
 }
 
@@ -104,7 +119,7 @@ Wrapper
         .identity-forms-wrapper {
             display: flex;
         }
-        .identity-forms-wrapper__title {
+        .identity-forms-wrapper__info {
             width: gs-span(3.5);
             flex: 0 0 1;
             margin-bottom: 0;
@@ -112,7 +127,7 @@ Wrapper
         .identity-forms-wrapper__fields {
             flex: 1 1 0;
         }
-        .identity-forms-wrapper__title + .identity-forms-wrapper__fields {
+        .identity-forms-wrapper__info + .identity-forms-wrapper__fields {
             margin-left: gs-span(1);
         }
     }

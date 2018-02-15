@@ -15,8 +15,14 @@ export type PrebidTrustXParams = {
     uid: string,
 };
 
-export type PrebidImproveDigitalParams = {
+export type PrebidImproveSizeParam = {
+    w?: number,
+    h?: number,
+};
+
+export type PrebidImproveParams = {
     placementId: number,
+    size: PrebidImproveSizeParam,
 };
 
 export type PrebidBid = {
@@ -25,7 +31,7 @@ export type PrebidBid = {
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
-        | PrebidImproveDigitalParams,
+        | PrebidImproveParams,
 };
 
 export type PrebidEdition = 'UK' | 'US' | 'AUS' | 'INT';
@@ -41,7 +47,7 @@ export type PrebidBidder = {
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
-        | PrebidImproveDigitalParams,
+        | PrebidImproveParams,
 };
 
 export type PrebidAdSlotCriteria = {

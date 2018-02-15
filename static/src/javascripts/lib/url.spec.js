@@ -1,4 +1,5 @@
 // @flow
+/* global jsdom */
 
 import {
     getUrlVars,
@@ -16,9 +17,23 @@ jest.mock('lib/detect', () => ({
     },
 }));
 
+const originalAssign = window.location.assign;
+
 describe('url', () => {
+    beforeEach(() => {
+        window.location.assign = (url: string) => {
+            jsdom.reconfigure({
+                url,
+            });
+        };
+    });
+
+    afterEach(() => {
+        window.location.assign = originalAssign;
+    });
+
     test('getUrlVars() - should get url vars', () => {
-        const origWindowSearch = window.location.search;
+        const origWindowLocation = window.location.href;
         const QUERIES = [
             ['foo', { foo: true }],
             ['foo=bar', { foo: 'bar' }],
@@ -35,15 +50,13 @@ describe('url', () => {
 
         // get the query from window.location.search
         QUERIES.forEach(([query, expected]) => {
-            Object.defineProperty(window.location, 'search', {
-                writable: true,
-                value: `?${query}`,
-            });
+            const preQuery = window.location.href.split('?')[0];
+            window.location.assign(`${preQuery}?${query}`);
 
             expect(getUrlVars()).toEqual(expected);
         });
 
-        window.location.search = origWindowSearch;
+        window.location.assign(origWindowLocation);
     });
 
     test('constructQuery() - should be able to construct query', () => {
@@ -118,7 +131,8 @@ describe('url', () => {
     });
 
     const testQueryString = (historyMethod, moduleMethod) => {
-        const origWindowSearch = window.location.search;
+        const origWindowLocation = window.location.href;
+
         const origMethod = window.history[historyMethod];
         const title = 'new-state-title';
         const querystring = '/foo/bar';
@@ -142,17 +156,8 @@ describe('url', () => {
             querystring
         );
 
-        Object.defineProperty(window.location, 'search', {
-            writable: true,
-            value: `?${querystring}`,
-        });
-
-        window.history[historyMethod].mockClear();
-        moduleMethod({ querystring });
-        expect(window.history[historyMethod]).not.toHaveBeenCalled();
-
         window.history[historyMethod] = origMethod;
-        window.location.search = origWindowSearch;
+        window.location.assign(origWindowLocation);
     };
 
     test('pushQueryString()', () => {

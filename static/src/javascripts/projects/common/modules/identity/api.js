@@ -110,7 +110,7 @@ export const getUserFromApiWithRefreshedCookie = () => {
 };
 
 export const redirectTo = (url: string): void => {
-    window.location.href = url;
+    window.location.assign(url);
 };
 
 export const getUserOrSignIn = (paramUrl: ?string): ?Object => {

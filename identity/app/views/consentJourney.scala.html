@@ -6,81 +6,39 @@
 @import form.IdFormHelpers.nonInputFields
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.fragment.Switch._
-@import views.support.fragment.ConsentStep._
+@import views.support.fragment.ConsentBlock._
 @import views.support.fragment.ConsentChannel._
 @import common.LinkTo
 @import controllers.editprofile.ProfileForms
+@import _root_.utils.ConsentsJourneyType._
 
 @(
     user: com.gu.identity.model.User,
     forms: ProfileForms,
-    journey: String,
+    journey: AnyConsentsJourney,
     verifiedReturnUrl: String,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
-    consentHint: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+    consentHint: Option[String] = None,
+    skin: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @selectAllCheckbox(id: String) = {
-        <label class="manage-account__switch manage-account__switch--no-box js-manage-account__check-allCheckbox u-h" data-link-name-template="mma switch : @{id} (all) : [action]">
-            <div class="manage-account__switch-content">
-                <input type="checkbox"/>
-                <div class="manage-account__switch-checkbox"></div>
-                <h3 class="manage-account__switch-title"></h3>
-            </div>
-        </label>
+    <label class="manage-account__switch manage-account__switch--no-box js-manage-account__check-allCheckbox u-h" data-link-name-template="mma switch : @{id} (all) : [action]">
+        <div class="manage-account__switch-content">
+            <input type="checkbox"/>
+            <div class="manage-account__switch-checkbox"></div>
+            <h3 class="manage-account__switch-title"></h3>
+        </div>
+    </label>
 }
 
 @onlySubscribedToV1Newsletters = @{
     EmailNewsletters.all.subscriptions.filter { newsletter =>
         emailSubscriptions.contains(newsletter.listIdV1.toString)
     }
-}
-
-@showAgeStep(display: Boolean = false) = @{
-    if(display){
-        List(ConsentStepHelpLegalText("By continuing, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
-    } else {
-        Nil
-    }
-}
-
-@renderStep(step: ConsentStep, isFirst: Boolean = false, isLast: Boolean = false) = {
-    @(step.banner.map { title =>
-        Html(s"<p class='form__success'>$title</p>")
-    })
-    <fieldset
-        role="dialog"
-        aria-labelledby="consentWizard@{step.name.capitalize}Title"
-    >
-        <legend id="consentWizard@{step.name.capitalize}Title" class="identity-title identity-title--page-title">@step.title</legend>
-        <div class="identity-forms-wrapper">
-            @if(step.help || showAgeStep(display = isFirst)) {
-                <div class="identity-forms-wrapper__title">
-                    @((step.help ++ showAgeStep(display = isFirst)).map(paragraph =>
-                        paragraph match {
-                            case m: ConsentStepHelpLegalText => {
-                                Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
-                            }
-                            case m: ConsentStepHelpText => {
-                                Html(s"<p class='identity-title-explainer'>${m.text}</p>")
-                            }
-                        }
-                    ))
-                </div>
-            }
-            <div class="identity-forms-wrapper__fields">
-                @step.content
-            </div>
-        </div>
-
-    </fieldset>
-}
-@renderSteps(steps:List[ConsentStep]) = @{
-    val displaySteps = steps.filter(_.show)
-    displaySteps.zipWithIndex.map{ case (element, index) => renderStep(element, index == 0, index == (displaySteps.size - 1)) }
 }
 
 @channelStepContent = {
@@ -143,17 +101,6 @@
         title = "Would you like to hear about any of these Guardian products?",
         help = List(ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")),
         content = marketingStepContent
-    )
-}
-@marketingConsentThankYouStep = @{
-    ConsentStep(
-        name = "consent-thank-you",
-        title = "Would you like to hear about any of these Guardian products?",
-        help = List(
-            ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")
-        ),
-        banner = Some("Thank you for signing up"),
-        content = marketingStepContent,
     )
 }
 
@@ -225,119 +172,52 @@
     }
 }
 
-@getStepsForJourney(journey: String) = @{
-    journey match {
-        case "newsletters" => {
-            List(
-                if(emailRepermissionStep.show) {
-                    emailRepermissionStep
-                } else {
-                    ConsentStep(
-                        name = "error",
-                        title = "Sorry",
-                        content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
+<div class="identity-wrapper monocolumn-wrapper">
+    <div class="js-errorHolder manage-account__errors"></div>
+    @consentJourneyFragments.jsFallback(verifiedReturnUrl, idRequest, idUrlBuilder)
+    <div class="identity-consent-journey @{skin.map(s => s"identity-consent-journey--$s" )} u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
+
+        @renderBlocks(
+            journey match {
+                case NewsletterConsentsJourney => {
+                    List(
+                        if(emailRepermissionStep.show) {
+                            emailRepermissionStep
+                        } else {
+                            ConsentStep(
+                                name = "error",
+                                title = "Sorry",
+                                content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
+                            )
+                        }
                     )
                 }
-            )
-        }
-        case "thank-you" => {
-            List(
-                emailRepermissionStep,
-                marketingConsentThankYouStep,
-                channelStep
-            )
-        }
-        case "default" => {
-            List(
-                emailRepermissionStep,
-                marketingConsentStep,
-                channelStep
-            )
-        }
-    }
-}
-
-@forceSubmitFallback = {
-    <form method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
-        @views.html.helper.CSRF.formField
-        <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
-        <button
-        type="submit"
-        class="manage-account__button"
-        data-link-name="consents : navigation : submit-force"
-        >
-            <span>Continue</span>
-        </button>
-    </form>
-}
-
-<div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-wizard">
-
-    <div class="js-errorHolder manage-account__errors"></div>
-
-    <noscript>
-        <div class="form__error">
-            <p>
-                Setting your communication preferences requires a browser with Javascript enabled.
-            </p>
-            <p>
-                Please consider upgrading to one of our <a class="u-underline" href="@LinkTo{/help/recommended-browsers}">recommended browsers</a>. If you need more help please <a href="@LinkTo{/info/tech-feedback}">contact us</a>.
-            </p>
-        </div>
-        @forceSubmitFallback
-    </noscript>
-
-    <div id="identityWizardloadingError" class="identity-forms-loading identity-forms-loading--hide-text u-identity-forms-padded">
-        <div class="identity-forms-loading__spinner is-updating"></div>
-        <div class="identity-forms-loading__text">
-            Loading seems to be taking a while. If you are in a hurry you can skip this and edit your consents later from your email preferences.
-            @forceSubmitFallback
-        </div>
-    </div>
-    <script>
-        setTimeout(function(){
-            if(window.identityWizardloadingError) window.identityWizardloadingError.className = window.identityWizardloadingError.className.replace('identity-forms-loading--hide-text','')
-        },5000);
-    </script>
-
-    <div class="identity-wizard identity-wizard--consent u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
-
-        <div
-            class="identity-wizard__step"
-            data-wizard-step-name="single-test"
-        >
-
-        @renderSteps(getStepsForJourney(journey))
-
-        </div>
-
-        <form class="identity-wizard__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
-
-            @if(getStepsForJourney(journey).size > 1){
-                <button
-                    type="button"
-                    data-link-name="consents : navigation : prev"
-                    class="identity-consent-wizard-button-back identity-consent-wizard__revealable manage-account__button--round manage-account__button js-identity-wizard__prev"
-                >
-                    <span class="u-h">Previous</span>
-                    @fragments.inlineSvg("arrow-left-stem", "icon")
-                </button>
+                case ThankYouConsentsJourney => {
+                    List(
+                        ConsentBanner(
+                            "Thank you for signing up"
+                        ),
+                        emailRepermissionStep,
+                        marketingConsentStep,
+                        channelStep
+                    )
+                }
+                case DefaultConsentsJourney => {
+                    List(
+                        emailRepermissionStep,
+                        marketingConsentStep,
+                        channelStep
+                    )
+                }
             }
-            @views.html.helper.CSRF.formField
+        )
+
+        <form class="identity-consent-journey__controls" method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
             <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
-            <button
-                type="button"
-                data-link-name-template="consents : navigation : next : [depth]"
-                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__next"
-            >
-                <div class="manage-account__button-flexwrap">
-                    <span>Next</span>
-                    @fragments.inlineSvg("arrow-right", "icon")
-                </div>
-            </button>
+            @views.html.helper.CSRF.formField
             <button
                 type="submit"
-                class="manage-account__button--icon manage-account__button js-identity-consent-wizard__complete"
+                class="manage-account__button--icon manage-account__button @{skin.map(s => s"manage-account__button--$s" )}"
                 data-link-name="consents : navigation : submit"
             >
                 <div class="manage-account__button-flexwrap">

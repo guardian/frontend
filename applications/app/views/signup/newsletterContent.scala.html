@@ -7,18 +7,6 @@
 
 @(signupPage: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@newsletterSignup(route: String, listId: String, emailName: String) = {
-    <iframe src="/email/form/@route/@listId"
-        data-form-title="Sign up for @emailName"
-        data-form-description=""
-        data-form-campaign-code="newsletters-page"
-        scrolling="no"
-        seamless frameborder="0"
-        class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe"
-        data-form-success-desc="">
-    </iframe>
-}
-
 @emailListCategoryList(theme: String, emailListings: List[EmailNewsletter]) = {
     <div class="newsletters-category__heading">
         @theme
@@ -50,9 +38,9 @@
 
 
                     <div class="signup-confirmation is-hidden js-signup-confirmation">
-                        @fragments.inlineSvg("tick", "icon")
+                        @fragments.inlineSvg("envelope", "icon")
                         <div class="signup-confirmation__message">
-                            <h3 class="signup-confirmation--success">You've subscribed!</h3>
+                            <h3 class="signup-confirmation--success">Check your Inbox!</h3>
                         </div>
                     </div>
 
