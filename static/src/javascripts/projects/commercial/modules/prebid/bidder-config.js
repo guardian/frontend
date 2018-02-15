@@ -150,7 +150,12 @@ export const bidderConfig: PrebidBidderCriteria = {
         {
             breakpoint: { min: 'mobile' },
             sizes: [[300, 250]],
-            slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
+            slots: ['dfp-ad--inline', 'dfp-ad--mostpop'],
+        },
+        {
+            breakpoint: { min: 'mobile' },
+            sizes: [[300, 250], [300, 600]],
+            slots: ['dfp-ad--right'],
         },
         {
             breakpoint: { min: 'desktop' },
@@ -162,7 +167,12 @@ export const bidderConfig: PrebidBidderCriteria = {
         {
             breakpoint: { min: 'mobile' },
             sizes: [[300, 250]],
-            slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
+            slots: ['dfp-ad--inline', 'dfp-ad--mostpop'],
+        },
+        {
+            breakpoint: { min: 'mobile' },
+            sizes: [[300, 250], [300, 600]],
+            slots: ['dfp-ad--right'],
         },
         {
             breakpoint: { min: 'desktop' },
@@ -175,7 +185,13 @@ export const bidderConfig: PrebidBidderCriteria = {
             geoContinent: 'NA', // North America
             breakpoint: { min: 'mobile' },
             sizes: [[300, 250]],
-            slots: ['dfp-ad--inline', 'dfp-ad--mostpop', 'dfp-ad--right'],
+            slots: ['dfp-ad--inline', 'dfp-ad--mostpop'],
+        },
+        {
+            geoContinent: 'NA', // North America
+            breakpoint: { min: 'mobile' },
+            sizes: [[300, 250], [300, 600]],
+            slots: ['dfp-ad--right'],
         },
         {
             geoContinent: 'NA', // North America
