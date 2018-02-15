@@ -24,10 +24,10 @@ class SpaceFiller {
      */
     fillSpace(
         rules: Object,
-        writer: (Element[]) => any,
+        writer: (HTMLElement[]) => any,
         options: ?Object
     ): Promise<any> {
-        const onSpacesFound = (paragraphs: Element[]): Promise<any> =>
+        const onSpacesFound = (paragraphs: HTMLElement[]): Promise<any> =>
             fastdom.write(() => writer(paragraphs));
 
         const onNoSpacesFound = (ex: Error): boolean => {

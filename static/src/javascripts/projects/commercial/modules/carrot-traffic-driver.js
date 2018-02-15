@@ -45,7 +45,7 @@ const rules = {
     fromBottom: true,
 };
 
-const insertSlot = (paras: Element[]): Promise<void> => {
+const insertSlot = (paras: HTMLElement[]): Promise<void> => {
     const slot = createSlot('carrot');
     return fastdom
         .write(() => {

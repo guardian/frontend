@@ -132,7 +132,7 @@ const insertTagRichLink = (): Promise<void> => {
         !isDuplicate
     ) {
         return spaceFiller
-            .fillSpace(getSpacefinderRules(), (paras: Element[]) => {
+            .fillSpace(getSpacefinderRules(), (paras: HTMLElement[]) => {
                 const html = richLinkTag({
                     href: config.get('page.richLink'),
                 });
