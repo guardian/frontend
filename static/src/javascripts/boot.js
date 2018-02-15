@@ -1,10 +1,7 @@
 // @flow
 
 // es7 polyfills not provided by pollyfill.io
-import 'core-js/modules/es7.object.values';
 import 'core-js/modules/es7.object.get-own-property-descriptors';
-import 'core-js/modules/es7.string.pad-start';
-import 'core-js/modules/es7.string.pad-end';
 
 import domready from 'domready';
 import raven from 'lib/raven';

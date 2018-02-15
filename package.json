@@ -16,6 +16,7 @@
     "bonzo": "~2.0.0",
     "circular-dependency-plugin": "3.0.0",
     "classnames": "~2.2.0",
+    "core-js": "^2.5.3",
     "curl": "cujojs/curl#0.8.9",
     "domready": "^1.0.8",
     "fastdom": "0.8.5",
