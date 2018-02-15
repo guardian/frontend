@@ -422,9 +422,6 @@ $quote-mark: 35px;
             margin-left: 0;
             padding-bottom: $gs-baseline*6;
         }
-        @include mq(leftCol) {
-            margin-left: -$gs-gutter/2;
-        }
     }
 
     .content__secondary-column {
