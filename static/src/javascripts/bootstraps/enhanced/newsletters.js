@@ -61,7 +61,8 @@ const submitForm = (
 };
 
 const subscribeToEmail = (buttonEl: HTMLButtonElement): void => {
-    bean.on(buttonEl, 'click', () => {
+    bean.on(buttonEl, 'click', event => {
+        event.preventDefault();
         const form = buttonEl.form;
         if (validate(form)) {
             submitForm(form, buttonEl);
