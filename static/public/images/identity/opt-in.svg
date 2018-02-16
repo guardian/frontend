@@ -1,403 +1,151 @@
-<svg width="138" height="125" viewBox="0 0 138 125" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<title>Mask Group</title>
-<desc>Created using Figma</desc>
-<g id="Canvas" transform="translate(-1822 369)">
-<g id="Mask Group">
-<mask id="mask0_alpha" mask-type="alpha">
-<g id="Mask">
-<use xlink:href="#path0_fill" transform="translate(1822 -369)" fill="#AAAAAA"/>
-</g>
-</mask>
-<g id="IMAGE" mask="url(#mask0_alpha)">
-<g id="TICKS">
-<g id="Blue Tick">
-<g id="Orange Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1936.38 -358.45)" fill="#005689"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path2_fill" transform="translate(1940.02 -354.188)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Orange Tick">
-<g id="Oval 5">
-<use xlink:href="#path3_fill" transform="translate(1946.14 -332.403)" fill="#FF4E36"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path4_fill" transform="translate(1949.79 -328.141)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path3_fill" transform="translate(1919.62 -286.031)" fill="#FF4E36"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path4_fill" transform="translate(1923.26 -281.769)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Orange Tick">
-<g id="Oval 5">
-<use xlink:href="#path3_fill" transform="translate(1892.38 -280.829)" fill="#FF4E36"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path4_fill" transform="translate(1896.02 -276.567)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Orange Tick Copy 4">
-<g id="Oval 5">
-<use xlink:href="#path3_fill" transform="translate(1863.19 -365.171)" fill="#FF4E36"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path4_fill" transform="translate(1866.83 -360.908)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Orange Tick Copy 5">
-<g id="Oval 5">
-<use xlink:href="#path3_fill" transform="translate(1902.81 -378.814)" fill="#FF4E36"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path4_fill" transform="translate(1906.45 -374.552)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Blue Tick">
-<g id="Orange Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1866.76 -290.512)" fill="#005689"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path2_fill" transform="translate(1870.4 -286.25)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Blue Tick Copy 8">
-<g id="Orange Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1888.57 -378.194)" fill="#005689"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path2_fill" transform="translate(1892.21 -373.932)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Blue Tick Copy 23" opacity="0.6">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1848.95 -367.031)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1852.6 -362.769)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Turquoise Tick">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1879.14 -283.69)" fill="#57BBD4"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1882.79 -279.428)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Turquoise Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1873.71 -257.884)" fill="#57BBD4"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1877.36 -253.622)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Green Tick" opacity="0.6">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1844 -301)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1847.64 -296.738)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy 4" opacity="0.6">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1837 -374)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1840.64 -369.738)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy 2" opacity="0.2">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1830 -283)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1833.64 -278.738)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy 3">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1874.33 -373.853)" fill="#57BBD4"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1877.98 -369.591)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Green Tick Copy 11" opacity="0.6">
-<g id="Orange Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1861.95 -380.674)" fill="#005689"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy 5">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1917.05 -376.953)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1920.69 -372.691)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy 18" opacity="0.6">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1939.33 -375.093)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1942.98 -370.831)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Blue Tick">
-<g id="Orange Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1851 -313)" fill="#005689"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path2_fill" transform="translate(1854.64 -308.738)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Blue Tick Copy" opacity="0.4">
-<g id="Orange Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1838 -318)" fill="#005689"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path2_fill" transform="translate(1841.64 -313.738)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Blue Tick Copy 3" opacity="0.2">
-<g id="Orange Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1827 -306)" fill="#005689"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path2_fill" transform="translate(1830.64 -301.738)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Blue Tick Copy 14" opacity="0.6">
-<g id="Orange Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1904.67 -265.326)" fill="#005689"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path2_fill" transform="translate(1908.31 -261.063)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1906.62 -281.45)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1910.26 -277.188)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Blue Tick Copy 2">
-<g id="Orange Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1945.52 -318.14)" fill="#005689"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path2_fill" transform="translate(1949.17 -313.877)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1931.14 -294.333)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1934.79 -290.071)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Orange Tick Copy 7" opacity="0.6">
-<g id="Oval 5">
-<use xlink:href="#path3_fill" transform="translate(1887.33 -268.426)" fill="#FF4E36"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path4_fill" transform="translate(1890.98 -264.164)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Orange Tick Copy 12" opacity="0.6">
-<g id="Oval 5">
-<use xlink:href="#path3_fill" transform="translate(1853.14 -287.791)" fill="#FF4E36"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path4_fill" transform="translate(1856.79 -283.529)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Orange Tick Copy 13">
-<g id="Oval 5">
-<use xlink:href="#path3_fill" transform="translate(1849 -341)" fill="#FF4E36"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path4_fill" transform="translate(1852.64 -336.738)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Orange Tick Copy 14" opacity="0.2">
-<g id="Oval 5">
-<use xlink:href="#path3_fill" transform="translate(1822 -351)" fill="#FF4E36"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path4_fill" transform="translate(1825.64 -346.738)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Blue Tick Copy 12" opacity="0.6">
-<g id="Orange Tick Copy">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1936.24 -282.07)" fill="#005689"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path2_fill" transform="translate(1939.88 -277.808)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy 20">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1848 -327)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1851.64 -322.738)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy 21" opacity="0.6">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1836 -333)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1839.64 -328.738)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy 7" opacity="0.6">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1869.38 -274.628)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1873.02 -270.366)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy 9" opacity="0.6">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1924.48 -273.388)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1928.12 -269.125)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Green Tick Copy 8" opacity="0.6">
-<g id="Orange Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1851.43 -257.884)" fill="#008E89"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1855.07 -253.622)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="Turquoise Tick Copy 2">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1855 -354)" fill="#57BBD4"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1858.64 -349.738)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Turquoise Tick Copy 3">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1837 -347)" fill="#57BBD4"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1840.64 -342.738)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Orange Tick Copy 4" opacity="0.6">
-<g id="Oval 5">
-<use xlink:href="#path3_fill" transform="translate(1848.33 -381.295)" fill="#FF4E36"/>
-</g>
-</g>
-<g id="Turquoise Tick">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1942.81 -346.047)" fill="#57BBD4"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1946.45 -341.784)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Turquoise Tick">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1939.81 -305.496)" fill="#57BBD4"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1943.45 -301.234)" fill="#F5F5F5"/>
-</g>
-</g>
-<g id="Turquoise Tick">
-<g id="Oval 5">
-<use xlink:href="#path1_fill" transform="translate(1857.24 -300.434)" fill="#57BBD4"/>
-</g>
-<g id="Checkmark">
-<use xlink:href="#path5_fill" transform="translate(1860.88 -296.172)" fill="#F5F5F5"/>
-</g>
-</g>
-</g>
-<g id="BLUE">
-<g id="Oval 3">
-<use xlink:href="#path6_fill" transform="translate(1862 -365)" fill="#008FD7"/>
-</g>
-<g id="Stay with us">
-<use xlink:href="#path7_fill" transform="translate(1870.46 -348.166)" fill="#FFFFFF"/>
-</g>
-</g>
-</g>
-</g>
-</g>
-<defs>
-<path id="path0_fill" fill-rule="evenodd" d="M 0 0L 138 0L 138 125L 0 125L 0 0Z"/>
-<path id="path1_fill" fill-rule="evenodd" d="M 7.13365 14.3086C 11.0735 14.3086 14.2673 11.1055 14.2673 7.15428C 14.2673 3.20308 11.0735 0 7.13365 0C 3.19384 0 0 3.20308 0 7.15428C 0 11.1055 3.19384 14.3086 7.13365 14.3086Z"/>
-<path id="path2_fill" fill-rule="evenodd" d="M 0.360741 2.8209L 0 3.18371L 1.8037 5.72342L 1.97506 5.72342L 7.13365 0.353746L 6.77291 0L 1.97506 4.37193L 0.360741 2.8209Z"/>
-<path id="path3_fill" fill-rule="evenodd" d="M 7.13365 14.3086C 11.0735 14.3086 14.2673 11.1055 14.2673 7.15428C 14.2673 3.20308 11.0735 0 7.13365 0C 3.19384 0 0 3.20308 0 7.15428C 0 11.1055 3.19384 14.3086 7.13365 14.3086Z"/>
-<path id="path4_fill" fill-rule="evenodd" d="M 0.360741 2.82089L 0 3.18371L 1.8037 5.72342L 1.97506 5.72342L 7.13365 0.353746L 6.77291 0L 1.97506 4.37193L 0.360741 2.82089Z"/>
-<path id="path5_fill" fill-rule="evenodd" d="M 0.360741 2.8209L 0 3.18371L 1.8037 5.72342L 1.97506 5.72342L 7.13365 0.353746L 6.77291 0L 1.97506 4.37193L 0.360741 2.8209Z"/>
-<path id="path6_fill" fill-rule="evenodd" d="M 41.8807 84.6094C 65.0108 84.6094 83.7614 65.6689 83.7614 42.3047C 83.7614 18.9405 65.0108 0 41.8807 0C 18.7506 0 0 18.9405 0 42.3047C 0 65.6689 18.7506 84.6094 41.8807 84.6094Z"/>
-<path id="path7_fill" d="M 16.6301 14.2261C 20.0025 14.2261 22.0184 12.6058 22.0184 9.70448C 22.0184 7.06688 20.6242 6.2756 18.2504 5.37128L 17.4968 5.06984C 16.0084 4.50464 15.4244 4.03364 15.4244 3.09164C 15.4244 2.05544 16.0838 1.39604 17.3649 1.39604C 18.1185 1.39604 18.6649 1.49024 19.0228 1.64096L 19.7011 4.0148L 21.2459 4.0148L 21.0575 0.7178C 20.3416 0.45404 19.2677 0.171439 17.4026 0.171439C 13.8607 0.171439 12.41 1.99892 12.41 4.3916C 12.41 6.5582 13.5027 7.72628 15.6316 8.61176L 16.3664 8.9132C 18.0243 9.59144 18.7779 10.0624 18.7779 11.1552C 18.7779 12.3044 18.0431 12.9638 16.4606 12.9638C 15.7635 12.9638 15.1229 12.8508 14.6519 12.6247L 13.9172 10.119L 12.2969 10.119L 12.4853 13.5478C 13.465 13.9812 15.0853 14.2261 16.6301 14.2261ZM 24.0146 5.06984L 24.0146 11.0798C 24.0146 13.3029 25.0131 14.2072 27.0667 14.2072C 28.2347 14.2072 29.2333 13.9058 29.8361 13.5478L 29.8361 12.5682C 29.6101 12.6058 29.2144 12.6247 28.8753 12.6247C 27.7449 12.6247 27.4435 12.1914 27.4435 11.1363L 27.4435 5.06984L 29.7231 5.06984L 29.7231 3.67568L 27.4435 3.67568L 27.4435 1.283L 24.0146 1.82936L 24.0146 3.67568L 22.5451 4.18436L 22.5451 5.06984L 24.0146 5.06984ZM 33.7121 8.40452C 31.5078 8.78132 30.4528 9.74216 30.4528 11.4754C 30.4528 13.2464 31.6208 14.2826 33.373 14.2826C 34.6918 14.2826 35.5207 13.8116 36.1236 13.0392L 36.2366 13.0392C 36.5192 13.7739 37.141 14.2449 38.4409 14.2449C 39.2699 14.2449 40.0423 14.0188 40.4003 13.7739L 40.4003 13.0957L 39.4206 12.6058L 39.4206 6.53936C 39.4206 4.2032 37.8192 3.43076 35.0309 3.43076C 33.4106 3.43076 32.186 3.78872 31.2064 4.09016L 31.2064 6.935L 32.7136 6.935L 33.4106 4.6742C 33.6932 4.59884 33.957 4.56116 34.315 4.56116C 35.5207 4.56116 35.9729 5.1452 35.9729 6.5582L 35.9729 7.9712L 33.7121 8.40452ZM 35.0686 12.5493C 34.315 12.5493 33.7874 12.229 33.7874 10.9102C 33.7874 9.761 34.2208 9.23348 35.1439 9.13928L 35.9729 9.04508L 35.9729 12.2479C 35.7845 12.4363 35.4642 12.5493 35.0686 12.5493ZM 42.259 16.6188C 41.8822 16.6188 41.5054 16.5622 41.1286 16.4869L 41.1286 17.6926C 41.6561 18.0506 42.2402 18.2013 42.8619 18.2013C 44.4445 18.2013 45.4618 17.3724 46.385 14.942L 50.1907 4.97564L 51.0573 4.52348L 51.0573 3.67568L 47.5531 3.67568L 47.5531 4.52348L 48.7023 5.01332L 46.7429 10.4016L 46.6676 10.4016L 44.8024 4.99448L 45.914 4.52348L 45.914 3.67568L 40.3373 3.67568L 40.3373 4.52348L 41.1098 4.97564L 44.9908 14.3203L 44.8024 14.829C 44.3126 16.1666 43.4083 16.6188 42.259 16.6188ZM 10.158 23.6757L 7.89723 23.6757L 6.25815 29.874L 6.12627 29.874L 4.95819 25.0133L 5.88135 24.5235L 5.88135 23.6757L 0.361233 23.6757L 0.361233 24.5235L 1.26555 25.0133L 3.86547 34L 6.50307 34L 8.06679 28.4799L 8.14215 28.4799L 9.83775 34L 12.4942 34L 14.9999 25.0133L 15.8854 24.5235L 15.8854 23.6757L 12.513 23.6757L 12.513 24.5235L 13.4362 25.0133L 12.2493 29.9117L 12.1174 29.9117L 10.158 23.6757ZM 18.9134 19.2671C 17.896 19.2671 17.1047 20.0396 17.1047 21.0381C 17.1047 22.0366 17.896 22.7902 18.9134 22.7902C 19.8931 22.7902 20.7409 22.0366 20.7409 21.0381C 20.7409 20.0396 19.8931 19.2671 18.9134 19.2671ZM 16.1251 24.0902L 16.1251 24.9003L 17.2743 25.3524L 17.2743 32.7189L 16.2004 33.1899L 16.2004 34L 21.7771 34L 21.7771 33.1899L 20.722 32.7189L 20.722 23.525L 20.3641 23.4873L 16.1251 24.0902ZM 23.2694 25.0698L 23.2694 31.0798C 23.2694 33.3029 24.268 34.2072 26.3215 34.2072C 27.4896 34.2072 28.4881 33.9058 29.091 33.5478L 29.091 32.5682C 28.8649 32.6058 28.4693 32.6247 28.1302 32.6247C 26.9998 32.6247 26.6983 32.1914 26.6983 31.1363L 26.6983 25.0698L 28.978 25.0698L 28.978 23.6757L 26.6983 23.6757L 26.6983 21.283L 23.2694 21.8294L 23.2694 23.6757L 21.7999 24.1844L 21.7999 25.0698L 23.2694 25.0698ZM 29.7076 33.1899L 29.7076 34L 35.1712 34L 35.1712 33.1899L 34.2292 32.7566L 34.2292 25.5785C 34.6249 25.409 35.077 25.2771 35.6422 25.2771C 36.49 25.2771 36.9422 25.6916 36.9422 26.7278L 36.9422 32.7566L 35.9813 33.1899L 35.9813 34L 41.4449 34L 41.4449 33.1899L 40.3711 32.7L 40.3711 26.1626C 40.3711 24.2786 39.5798 23.4308 37.79 23.4308C 36.49 23.4308 35.1901 23.9394 34.2857 24.7307L 34.1727 24.7307L 34.1727 19.1729L 33.7394 19.1164L 29.6511 19.7193L 29.6511 20.5482L 30.7815 21.0004L 30.7815 32.7L 29.7076 33.1899ZM 46.0155 25.3713L 46.0155 31.3247C 46.0155 33.0957 46.9198 34.2638 48.898 34.2638C 50.1792 34.2638 51.2342 33.6609 51.9878 32.9638L 52.1008 32.9638L 52.1008 34.1884L 52.5153 34.2261L 56.5848 33.7551L 56.5848 32.9826L 55.4732 32.4174L 55.4732 23.525L 55.0587 23.4873L 50.9328 24.0525L 50.9328 24.8814L 52.0632 25.3713L 52.0632 32.116C 51.6675 32.2856 51.2342 32.4174 50.7255 32.4174C 49.9342 32.4174 49.4632 32.116 49.4632 31.1363L 49.4632 23.525L 49.0111 23.4873L 44.8851 24.0525L 44.8851 24.8814L 46.0155 25.3713ZM 62.2979 27.2176L 61.6008 27.048C 60.4516 26.7466 60.0936 26.4075 60.0936 25.7292C 60.0936 24.9756 60.6023 24.5235 61.6196 24.5235C 62.1848 24.5235 62.6182 24.5988 62.9196 24.7496L 63.466 26.3698L 64.7094 26.3698L 64.7094 23.8452C 63.9181 23.5438 62.75 23.4119 61.5443 23.4119C 58.6052 23.4119 57.2676 24.8438 57.2676 26.8596C 57.2676 28.7813 58.285 29.8364 60.4892 30.3827L 61.1863 30.5523C 62.2414 30.7972 62.5993 31.1552 62.5993 31.8334C 62.5993 32.6247 62.0718 33.1334 60.9037 33.1334C 60.2632 33.1334 59.7168 33.0015 59.3023 32.7754L 58.511 30.9856L 57.2676 30.9856L 57.3806 33.6797C 58.4168 34.0565 59.7356 34.2449 60.9414 34.2449C 64.0123 34.2449 65.3876 32.945 65.3876 30.6465C 65.3876 28.706 64.4645 27.7451 62.2979 27.2176Z"/>
-</defs>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="138" height="125" version="1.1" viewBox="0 0 138 125">
+  <g transform="translate(-1822 369)">
+    <mask id="a" mask-type="alpha">
+      <use fill="#AAA" transform="translate(1822 -369)" xlink:href="#path0_fill"/>
+    </mask>
+    <g mask="url(#a)">
+      <use fill="#005689" transform="translate(1936.38 -358.45)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1940.02 -354.19)" xlink:href="#path2_fill"/>
+      <use fill="#FF4E36" transform="translate(1946.14 -332.4)" xlink:href="#path3_fill"/>
+      <use fill="#F5F5F5" transform="translate(1949.79 -328.14)" xlink:href="#path4_fill"/>
+      <use fill="#FF4E36" transform="translate(1919.62 -286.03)" xlink:href="#path3_fill"/>
+      <use fill="#F5F5F5" transform="translate(1923.26 -281.77)" xlink:href="#path4_fill"/>
+      <use fill="#FF4E36" transform="translate(1892.38 -280.83)" xlink:href="#path3_fill"/>
+      <use fill="#F5F5F5" transform="translate(1896.02 -276.57)" xlink:href="#path4_fill"/>
+      <use fill="#FF4E36" transform="translate(1863.19 -365.17)" xlink:href="#path3_fill"/>
+      <use fill="#F5F5F5" transform="translate(1866.83 -360.9)" xlink:href="#path4_fill"/>
+      <use fill="#FF4E36" transform="translate(1902.81 -378.81)" xlink:href="#path3_fill"/>
+      <use fill="#F5F5F5" transform="translate(1906.45 -374.55)" xlink:href="#path4_fill"/>
+      <use fill="#005689" transform="translate(1866.76 -290.51)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1870.4 -286.25)" xlink:href="#path2_fill"/>
+      <use fill="#005689" transform="translate(1888.57 -378.2)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1892.21 -373.93)" xlink:href="#path2_fill"/>
+      <g opacity="0.6">
+        <use fill="#008E89" transform="translate(1848.95 -367.03)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1852.6 -362.77)" xlink:href="#path5_fill"/>
+      </g>
+      <use fill="#57BBD4" transform="translate(1879.14 -283.69)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1882.79 -279.43)" xlink:href="#path5_fill"/>
+      <use fill="#57BBD4" transform="translate(1873.71 -257.88)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1877.36 -253.62)" xlink:href="#path5_fill"/>
+      <g opacity="0.6">
+        <use fill="#008E89" transform="translate(1844 -301)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1847.64 -296.74)" xlink:href="#path5_fill"/>
+      </g>
+      <g opacity="0.6">
+        <use fill="#008E89" transform="translate(1837 -374)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1840.64 -369.74)" xlink:href="#path5_fill"/>
+      </g>
+      <g opacity="0.2">
+        <use fill="#008E89" transform="translate(1830 -283)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1833.64 -278.74)" xlink:href="#path5_fill"/>
+      </g>
+      <use fill="#57BBD4" transform="translate(1874.33 -373.85)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1877.98 -369.6)" xlink:href="#path5_fill"/>
+      <use fill="#005689" opacity="0.6" transform="translate(1861.95 -380.67)" xlink:href="#path1_fill"/>
+      <use fill="#008E89" transform="translate(1917.05 -376.95)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1920.69 -372.7)" xlink:href="#path5_fill"/>
+      <g opacity="0.6">
+        <use fill="#008E89" transform="translate(1939.33 -375.1)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1942.98 -370.83)" xlink:href="#path5_fill"/>
+      </g>
+      <use fill="#005689" transform="translate(1851 -313)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1854.64 -308.74)" xlink:href="#path2_fill"/>
+      <g opacity="0.4">
+        <use fill="#005689" transform="translate(1838 -318)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1841.64 -313.74)" xlink:href="#path2_fill"/>
+      </g>
+      <g opacity="0.2">
+        <use fill="#005689" transform="translate(1827 -306)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1830.64 -301.74)" xlink:href="#path2_fill"/>
+      </g>
+      <g opacity="0.6">
+        <use fill="#005689" transform="translate(1904.67 -265.33)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1908.31 -261.06)" xlink:href="#path2_fill"/>
+      </g>
+      <use fill="#008E89" transform="translate(1906.62 -281.45)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1910.26 -277.19)" xlink:href="#path5_fill"/>
+      <use fill="#005689" transform="translate(1945.52 -318.14)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1949.17 -313.88)" xlink:href="#path2_fill"/>
+      <use fill="#008E89" transform="translate(1931.14 -294.33)" xlink:href="#path1_fill"/>
+      <use fill="#F5F5F5" transform="translate(1934.79 -290.07)" xlink:href="#path5_fill"/>
+      <g opacity="0.6">
+        <use fill="#FF4E36" transform="translate(1887.33 -268.43)" xlink:href="#path3_fill"/>
+        <use fill="#F5F5F5" transform="translate(1890.98 -264.16)" xlink:href="#path4_fill"/>
+      </g>
+      <g opacity="0.6">
+        <use fill="#FF4E36" transform="translate(1853.14 -287.8)" xlink:href="#path3_fill"/>
+        <use fill="#F5F5F5" transform="translate(1856.79 -283.53)" xlink:href="#path4_fill"/>
+      </g>
+      <g>
+        <use fill="#FF4E36" transform="translate(1849 -341)" xlink:href="#path3_fill"/>
+        <use fill="#F5F5F5" transform="translate(1852.64 -336.74)" xlink:href="#path4_fill"/>
+      </g>
+      <g opacity="0.2">
+        <use fill="#FF4E36" transform="translate(1822 -351)" xlink:href="#path3_fill"/>
+        <use fill="#F5F5F5" transform="translate(1825.64 -346.74)" xlink:href="#path4_fill"/>
+      </g>
+      <g opacity="0.6">
+        <use fill="#005689" transform="translate(1936.24 -282.07)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1939.88 -277.8)" xlink:href="#path2_fill"/>
+      </g>
+      <g>
+        <use fill="#008E89" transform="translate(1848 -327)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1851.64 -322.74)" xlink:href="#path5_fill"/>
+      </g>
+      <g opacity="0.6">
+        <use fill="#008E89" transform="translate(1836 -333)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1839.64 -328.74)" xlink:href="#path5_fill"/>
+      </g>
+      <g opacity="0.6">
+        <use fill="#008E89" transform="translate(1869.38 -274.63)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1873.02 -270.37)" xlink:href="#path5_fill"/>
+      </g>
+      <g opacity="0.6">
+        <use fill="#008E89" transform="translate(1924.48 -273.39)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1928.12 -269.13)" xlink:href="#path5_fill"/>
+      </g>
+      <g opacity="0.6">
+        <use fill="#008E89" transform="translate(1851.43 -257.88)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1855.07 -253.62)" xlink:href="#path5_fill"/>
+      </g>
+      <g>
+        <use fill="#57BBD4" transform="translate(1855 -354)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1858.64 -349.74)" xlink:href="#path5_fill"/>
+      </g>
+      <g>
+        <use fill="#57BBD4" transform="translate(1837 -347)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1840.64 -342.74)" xlink:href="#path5_fill"/>
+      </g>
+      <g opacity="0.6">
+        <use fill="#FF4E36" transform="translate(1848.33 -381.3)" xlink:href="#path3_fill"/>
+      </g>
+      <g>
+        <use fill="#57BBD4" transform="translate(1942.81 -346.05)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1946.45 -341.78)" xlink:href="#path5_fill"/>
+      </g>
+      <g>
+        <use fill="#57BBD4" transform="translate(1939.81 -305.5)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1943.45 -301.23)" xlink:href="#path5_fill"/>
+      </g>
+      <g>
+        <use fill="#57BBD4" transform="translate(1857.24 -300.43)" xlink:href="#path1_fill"/>
+        <use fill="#F5F5F5" transform="translate(1860.88 -296.17)" xlink:href="#path5_fill"/>
+      </g>
+      <g>
+        <use fill="#008FD7" transform="translate(1862 -365)" xlink:href="#path6_fill"/>
+        <use fill="#FFF" transform="translate(1870.46 -348.17)" xlink:href="#path7_fill"/>
+      </g>
+    </g>
+  </g>
+  <defs>
+    <path id="path0_fill" fill-rule="evenodd" d="M0 0h138v125H0V0z"/>
+    <path id="path1_fill" fill-rule="evenodd" d="M7.13 14.3A7.14 7.14 0 1 0 7.11.03a7.14 7.14 0 0 0 .02 14.29z"/>
+    <path id="path2_fill" fill-rule="evenodd" d="M.36 2.82L0 3.18l1.8 2.54h.18L7.13.35 6.77 0l-4.8 4.37-1.6-1.55z"/>
+    <path id="path3_fill" fill-rule="evenodd" d="M7.13 14.3A7.14 7.14 0 1 0 7.11.03a7.14 7.14 0 0 0 .02 14.29z"/>
+    <path id="path4_fill" fill-rule="evenodd" d="M.36 2.82L0 3.18l1.8 2.54h.18L7.13.35 6.77 0l-4.8 4.37-1.6-1.55z"/>
+    <path id="path5_fill" fill-rule="evenodd" d="M.36 2.82L0 3.18l1.8 2.54h.18L7.13.35 6.77 0l-4.8 4.37-1.6-1.55z"/>
+    <path id="path6_fill" fill-rule="evenodd" d="M41.88 84.6c23.13 0 41.88-18.93 41.88-42.3C83.76 18.94 65.01 0 41.88 0 18.75 0 0 18.94 0 42.3c0 23.37 18.75 42.3 41.88 42.3z"/>
+    <path id="path7_fill" d="M16.63 14.23c3.37 0 5.39-1.62 5.39-4.53 0-2.63-1.4-3.42-3.77-4.33l-.75-.3c-1.5-.57-2.08-1.04-2.08-1.98 0-1.03.66-1.7 1.94-1.7.76 0 1.3.1 1.66.25l.68 2.37h1.55l-.2-3.3c-.7-.26-1.78-.54-3.65-.54-3.54 0-4.99 1.83-4.99 4.22 0 2.17 1.1 3.34 3.22 4.22l.74.3c1.65.68 2.4 1.15 2.4 2.25 0 1.14-.73 1.8-2.3 1.8a4.3 4.3 0 0 1-1.82-.34l-.73-2.5H12.3l.19 3.43c.97.43 2.6.68 4.14.68zm7.38-9.16v6.01c0 2.22 1 3.13 3.06 3.13 1.16 0 2.16-.3 2.77-.66v-.98c-.23.04-.63.05-.96.05-1.14 0-1.44-.43-1.44-1.48V5.07h2.28v-1.4h-2.28V1.29l-3.43.55v1.85l-1.46.5v.89H24zm9.7 3.33c-2.2.38-3.26 1.34-3.26 3.08 0 1.77 1.17 2.8 2.92 2.8 1.32 0 2.15-.47 2.75-1.24h.12c.28.73.9 1.2 2.2 1.2.83 0 1.6-.22 1.96-.47v-.67l-.98-.5V6.55c0-2.34-1.6-3.1-4.39-3.1-1.62 0-2.84.35-3.82.65v2.84h1.5l.7-2.26c.28-.07.55-.1.9-.1 1.21 0 1.66.58 1.66 1.99v1.41l-2.26.43zm1.36 4.15c-.76 0-1.28-.32-1.28-1.64 0-1.15.43-1.68 1.35-1.77l.83-.1v3.2c-.19.2-.5.3-.9.3zm7.19 4.07c-.38 0-.75-.06-1.13-.13v1.2a3 3 0 0 0 1.73.51c1.58 0 2.6-.83 3.52-3.26l3.81-9.96.87-.46v-.84h-3.5v.84l1.14.5-1.96 5.38h-.07L44.8 5l1.11-.48v-.84h-5.57v.84l.77.46 3.88 9.34-.19.5c-.49 1.35-1.4 1.8-2.54 1.8zm-32.1 7.06H7.9l-1.64 6.2h-.13L4.96 25l.92-.49v-.84H.36v.84l.9.5L3.87 34H6.5l1.57-5.52h.07L9.84 34h2.65L15 25.01l.89-.49v-.84H12.5v.84l.93.5-1.2 4.9h-.12l-1.96-6.24zm8.75-4.41c-1.01 0-1.8.77-1.8 1.77s.79 1.75 1.8 1.75c.98 0 1.83-.75 1.83-1.75s-.85-1.77-1.83-1.77zm-2.78 4.82v.81l1.14.45v7.37l-1.07.47V34h5.58v-.81l-1.06-.47v-9.2l-.36-.03-4.23.6zm7.14.98v6.01c0 2.22 1 3.13 3.05 3.13 1.17 0 2.17-.3 2.77-.66v-.98c-.23.04-.62.05-.96.05-1.13 0-1.43-.43-1.43-1.48v-6.07h2.28v-1.4H26.7v-2.39l-3.43.55v1.85l-1.47.5v.89h1.47zm6.44 8.12V34h5.46v-.81l-.94-.43v-7.18c.4-.17.85-.3 1.41-.3.85 0 1.3.41 1.3 1.45v6.03l-.96.43V34h5.46v-.81l-1.07-.49v-6.54c0-1.88-.79-2.73-2.58-2.73-1.3 0-2.6.5-3.5 1.3h-.12v-5.56l-.43-.05-4.09.6v.83l1.13.45v11.7l-1.07.49zM46 25.37v5.95c0 1.78.91 2.94 2.89 2.94 1.28 0 2.33-.6 3.09-1.3h.11v1.23l.42.04 4.06-.47v-.78l-1.1-.56v-8.9l-.42-.03-4.13.56v.83l1.13.5v6.74c-.4.17-.83.3-1.33.3-.8 0-1.27-.3-1.27-1.28v-7.62l-.45-.03-4.12.56v.83l1.13.5zm16.29 1.85l-.7-.17c-1.15-.3-1.5-.64-1.5-1.32 0-.75.5-1.2 1.52-1.2.56 0 1 .07 1.3.22l.55 1.62h1.24v-2.52c-.8-.3-1.96-.44-3.17-.44-2.93 0-4.27 1.43-4.27 3.45 0 1.92 1.01 2.98 3.22 3.52l.7.17c1.05.25 1.4.6 1.4 1.28 0 .8-.52 1.3-1.69 1.3-.64 0-1.18-.13-1.6-.35l-.79-1.8h-1.24l.11 2.7c1.04.38 2.36.56 3.56.56 3.07 0 4.45-1.3 4.45-3.6 0-1.93-.93-2.9-3.1-3.42z"/>
+  </defs>
 </svg>
