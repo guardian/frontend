@@ -35,8 +35,10 @@ class GeoMostPopular extends Component {
 }
 
 // we don't want to show most popular on short articles as the sticky right mpu slot will push most popular behind other containers at the bottom.
+const showMostPopularThreshold = 1500;
+
 const fetchMostPopular = (articleBodyHeight: number): void => {
-    if (articleBodyHeight > 1500) {
+    if (articleBodyHeight > showMostPopularThreshold) {
         new GeoMostPopular().fetch(
             qwery('.js-components-container'),
             'rightHtml'
