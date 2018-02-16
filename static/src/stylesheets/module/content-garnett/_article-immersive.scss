@@ -336,6 +336,10 @@
 
     .content__article-body {
         clear: both;
+
+        @include mq(leftCol) {
+            padding-left: $gs-gutter * .5;
+        }
     }
 
     /* Header
@@ -624,6 +628,10 @@
             }
         }
         .content__main-column {
+            &::before {
+                display: none;
+            }
+
             background-color: $garnett-neutral-1;
             z-index: 10;
             position: relative;
@@ -643,6 +651,12 @@
             }
             @include mq($from: desktop) {
                 left: $gs-gutter / 2;
+            }
+            @include mq(leftCol) {
+                margin-left: $left-column + $gs-gutter;
+            }
+            @include mq(wide) {
+                margin-left: $left-column-wide + $gs-gutter;
             }
         }
     }
