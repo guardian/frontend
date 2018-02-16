@@ -1,7 +1,5 @@
 // @flow
 
-/* eslint no-use-before-define: "off" */
-
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getCurrentTime } from 'lib/user-timing';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
