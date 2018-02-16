@@ -64,6 +64,16 @@ trait ABTestSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 28),
     exposeClientSide = true
+  ),
+
+  Switch(
+    ABTests,
+    "ab-commercial-lazy-loading",
+    "Varies the strategy for lazyloading of adverts",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 2),
+    exposeClientSide = true
   )
 
   Switch(
