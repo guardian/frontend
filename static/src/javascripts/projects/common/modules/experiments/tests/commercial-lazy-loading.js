@@ -23,7 +23,7 @@ export const commercialLazyLoading: ABTest = {
             test: () => {},
         },
         {
-            id: '400',
+            id: '400px',
             test: () => {},
         },
         {

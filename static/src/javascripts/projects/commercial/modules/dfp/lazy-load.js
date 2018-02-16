@@ -30,7 +30,7 @@ const displayAd = (advertId: string): void => {
 const calculateLazyLoadingDistance = () => {
     const variant = getTestVariantId('CommercialLazyLoading');
 
-    if (variant === '400') {
+    if (variant === '400px') {
         return 400;
     }
 
