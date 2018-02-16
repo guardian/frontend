@@ -10,10 +10,12 @@ export const commercialLazyLoading: ABTest = {
         'This test alters the threshold for when lazy loaded adverts are displayed',
     audience: 0.1,
     audienceOffset: 0.5,
-    successMeasure: 'No negative impact on viewability, positive impact in number of impressions rendered.',
+    successMeasure:
+        'No negative impact on viewability, positive impact in number of impressions rendered.',
     audienceCriteria: 'All web traffic.',
     dataLinkNames: '',
-    idealOutcome: 'We find an optimised method for determining when ad slots should be rendered',
+    idealOutcome:
+        'We find an optimised method for determining when ad slots should be rendered',
     canRun: () => !config.get('tests.commercialBaselineControl'),
     variants: [
         {

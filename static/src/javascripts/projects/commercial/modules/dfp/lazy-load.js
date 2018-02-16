@@ -8,7 +8,9 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { loadAdvert, refreshAdvert } from 'commercial/modules/dfp/load-advert';
 import { updateAdvertMetric } from 'commercial/modules/dfp/performance-logging';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
+import { getTestVariantId } from 'common/modules/experiments/utils.js';
 import once from 'lodash/functions/once';
+import fastdom from 'lib/fastdom-promise';
 
 const IntersectionObserver = window.IntersectionObserver;
 const IntersectionObserverEntry = window.IntersectionObserverEntry;
@@ -25,13 +27,28 @@ const displayAd = (advertId: string): void => {
     }
 };
 
-// load the ads when the top or bottom of the ad is within 200px of the viewport
-const lazyLoadDistancePx = 200;
+const calculateLazyLoadingDistance = () => {
+    const variant = getTestVariantId('CommercialLazyLoading');
+
+    if (variant === '400') {
+        return 400;
+    }
+
+    if (variant === '1vh') {
+        return window.innerHeight;
+    }
+
+    if (variant === '0.5vh') {
+        return window.innerHeight / 2;
+    }
+
+    return 200;
+};
 
 const getObserver = once(
     () =>
         new window.IntersectionObserver(onIntersect, {
-            rootMargin: `${lazyLoadDistancePx}px 0%`,
+            rootMargin: `${calculateLazyLoadingDistance()}px 0%`,
         })
 );
 
