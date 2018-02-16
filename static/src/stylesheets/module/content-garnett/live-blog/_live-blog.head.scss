@@ -32,6 +32,15 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     }
 }
 
+/*
+    have to do this to override specifity from _types.scss
+*/
+.content__main-column.content__main-column--liveblog {
+    @include mq(leftCol) {
+        padding-left: 0;
+    }
+}
+
 /* Header
    ========================================================================== */
 
