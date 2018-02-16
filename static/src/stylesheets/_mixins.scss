@@ -284,17 +284,14 @@
     background-size: 1px #{$bgSize}px;
 }
 //Video button sizes
-@mixin video-icon-size($buttonSize, $iconSize) {
+@mixin video-icon-size($buttonSize) {
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+    user-select: none;
     width: $buttonSize;
     height: $buttonSize;
-    &:after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-40%, -50%);
-        border-style: solid;
-        border-width: $iconSize;
-        border-color: transparent transparent transparent #ffffff;
-    }
 }

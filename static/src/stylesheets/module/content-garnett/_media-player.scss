@@ -104,39 +104,8 @@ $ima-controls-height: 70px;
     }
 
     .vjs-control-text {
-        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
-        @include video-play-button-size($vjs-small-button-size);
-        border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-        user-select: none;
-
-        &:before {
-            @include circular;
-            @include video-play-button-size($vjs-small-button-size);
-            content: '';
-            display: block;
-        }
-
-        &:after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-40%, -50%);
-            border-style: solid;
-            border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent #ffffff;
-
-            @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
-                border-radius: .2em;
-            }
-        }
+        @include video-icon-size($vjs-large-button-size);
     }
-
 
     .gu-media--audio &,
     .vjs-has-ended &,
@@ -148,11 +117,11 @@ $ima-controls-height: 70px;
     }
 }
 
-.fc-item--list-media-mobile .vjs-control-text {
-    @include mq($until: tablet) {
-        @include video-icon-size($vjs-small-button-size, $vjs-small-button-border-width);
-    }
-}
+// .fc-item--list-media-mobile .vjs-control-text {
+//     @include mq($until: tablet) {
+//         @include video-icon-size($vjs-small-button-size, $vjs-small-button-border-width);
+//     }
+// }
 
 .vjs-fullscreen-clickbox {
     box-sizing: border-box;

@@ -127,10 +127,10 @@ $vjs-medium-button-size: 42px;
 $vjs-large-button-size: 50px;
 $vjs-x-large-button-size: 60px;
 
-$vjs-small-button-border-width: .7em 0 .7em 1.4em;
-$vjs-medium-button-border-width: 1em 0 1em 2.4em;
-$vjs-large-button-border-width: 1.2em 0 1.2em 3em;
-$vjs-x-large-button-border-width: 1.4em 0 1.4em 3.3em;
+$vjs-small-button: 20px;
+$vjs-medium-button: 22px;
+$vjs-large-button: 24px;
+$vjs-x-large-button: 26px;
 
 $immersive-garnett-main-1: rgba(0, 0, 0, .65);
 $analysis-garnett-underline: #ffbac8;
@@ -272,13 +272,6 @@ $gustyle-tone: #fedd79;
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
 $content-top-padding: $gs-baseline / 1.5;
-
-
-// Video.JS player
-// =============================================================================
-
-$vjs-small-button-size: 50px;
-$vjs-large-button-size: 70px;
 
 // Available image widths
 // these should match the ones in common/modules/ui/images.js
