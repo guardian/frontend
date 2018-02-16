@@ -29,8 +29,6 @@ const template = {
     cta: `Opt in again`,
 };
 
-console.log(template);
-
 const templateHtml: string = `
     <div id="site-message__message">
         <div class="site-message__message identity-gdpr-oi-alert">
