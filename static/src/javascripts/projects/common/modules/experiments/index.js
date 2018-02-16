@@ -7,7 +7,7 @@ import config from 'lib/config';
 import overlay from 'raw-loader!common/views/experiments/overlay.html';
 import styles from 'raw-loader!common/views/experiments/styles.css';
 import { TESTS } from 'common/modules/experiments/ab-tests';
-import { abTestClashData } from 'common/modules/experiments/acquisition-test-selector';
+import { acquisitionsTests } from 'common/modules/experiments/acquisition-test-selector';
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 
 const getSelectedAbTests = () =>
@@ -82,7 +82,7 @@ const appendOverlay = () => {
     });
     const data = {
         tests: TESTS.map(extractData),
-        acquisitionsTests: abTestClashData.map(extractData),
+        acquisitionsTests: acquisitionsTests.map(extractData),
     };
 
     $('body').prepend(template(overlay, data));
