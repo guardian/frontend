@@ -36,7 +36,6 @@ $video-width-desktop: 700px;
         @include mq(desktop) {
             display: none;
         }
-
     }
 
     .media__container--hidden {
@@ -297,53 +296,55 @@ $video-width-desktop: 700px;
     }
 }
 
-.youtube-media-atom__play-button.vjs-control-text,
-.vjs-big-play-button .vjs-control-text {
-  .fc-container--video &,
-  .media-primary & {
-      @include video-icon-size($vjs-medium-button-size);
-      @include mq(mobileLandscape) {
-          @include video-icon-size($vjs-large-button-size);
-      }
-      @include mq(tablet) {
-          @include video-icon-size($vjs-x-large-button-size);
-      }
-  }
-  // .fc-item--list-media-mobile & {
-  //     @include mq($until: tablet) {
-  //         @include video-icon-size($vjs-small-button-size, $vjs-small-button-border-width);
-  //     }
-  // }
-  .fc-item--standard-tablet & {
-      @include video-icon-size($vjs-medium-button-size);
-      @include mq($from:tablet) {
-          @include video-icon-size($vjs-medium-button-size);
-      }
-  }
-  .fc-item--half-tablet &,
-  .fc-item--third-tablet &,
-  .fc-item--full-media-75-tablet & {
-      @include video-icon-size($vjs-medium-button-size);
-      @include mq($from:tablet) {
-          @include video-icon-size($vjs-large-button-size);
-      }
-  }
-  .fc-item--full-media-50-tablet &,
-  .fc-item--three-quarters-tablet & {
-      @include video-icon-size($vjs-medium-button-size);
-      @include mq(tablet) {
-          @include video-icon-size($vjs-x-large-button-size);
-      }
-  }
-  .inline-play svg {
-      position: absolute;
-      top: 50%;
-      left: 49%;
-      transform: translate(-40%, -50%);
-      fill: #ffffff;
-      width: $vjs-small-button;
-  }
+.vjs-big-play-button .vjs-control-text,
+.youtube-media-atom__play-button.vjs-control-text {
+    .fc-container--video &,
+    .media-primary & {
+        @include video-icon-size($vjs-medium-button-size);
+        @include mq(mobileLandscape) {
+            @include video-icon-size($vjs-large-button-size);
+        }
+        @include mq(tablet) {
+            @include video-icon-size($vjs-x-large-button-size);
+        }
+    }
+    // .fc-item--list-media-mobile & {
+    //     @include mq($until: tablet) {
+    //         @include video-icon-size($vjs-small-button-size, $vjs-small-button-border-width);
+    //     }
+    // }
+    .fc-item--standard-tablet & {
+        @include video-icon-size($vjs-medium-button-size);
+        @include mq($from: tablet) {
+            @include video-icon-size($vjs-medium-button-size);
+        }
+    }
 
+    .fc-item--full-media-75-tablet &,
+    .fc-item--half-tablet &,
+    .fc-item--third-tablet & {
+        @include video-icon-size($vjs-medium-button-size);
+        @include mq($from: tablet) {
+            @include video-icon-size($vjs-large-button-size);
+        }
+    }
+
+    .fc-item--full-media-50-tablet &,
+    .fc-item--three-quarters-tablet & {
+        @include video-icon-size($vjs-medium-button-size);
+        @include mq(tablet) {
+            @include video-icon-size($vjs-x-large-button-size);
+        }
+    }
+
+    .inline-play svg {
+        position: absolute;
+        top: 50%;
+        left: 49%;
+        transform: translate(-40%, -50%);
+        fill: #ffffff;
+        width: $vjs-small-button;
+    }
 }
 
 .video-title--leftcol {
