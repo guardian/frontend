@@ -6,7 +6,8 @@ import rendering.Renderable
 import akka.pattern.ask
 import akka.routing.RoundRobinPool
 import akka.util.Timeout
-import common.Logging
+import common.LoggingField.LogFieldLong
+import common.{Logging, StopWatch}
 import play.api.Mode
 import play.twirl.api.Html
 import scala.concurrent.{ExecutionContext, Future}
@@ -22,10 +23,19 @@ class Renderer(implicit actorSystem: ActorSystem, executionContext: ExecutionCon
   implicit val timeout = Timeout(timeoutValue.seconds)
 
   def render[R <: Renderable](renderable: R): Future[Html] = {
+    val watch = new StopWatch
+
     val htmlF = (actor ? Rendering(renderable))
       .mapTo[Try[String]]
       .flatMap(Future.fromTry)
       .map(Html(_))
+
+    htmlF.onComplete { _ =>
+      logInfoWithCustomFields(
+        s"Rendering $renderable took ${watch.toString()}",
+        List("rendering.time" -> watch.elapsed)
+      )
+    }
 
     htmlF.failed.foreach { t =>
       val errorMessage = Option(t.getLocalizedMessage).map(_.replaceAll("\u001B\\[[0-9]*m", "")).getOrElse("RendererError") // stripping terminal colors
