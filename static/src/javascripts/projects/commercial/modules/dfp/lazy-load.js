@@ -33,21 +33,23 @@ const calculateLazyLoadingDistance = () => {
     }
 
     if (variant === '1vh') {
-        return window.innerHeight;
+        return fastdom.read(() => window.innerHeight);
     }
 
     if (variant === '0.5vh') {
-        return window.innerHeight / 2;
+        return fastdom.read(() => window.innerHeight / 2);
     }
 
     return 200;
 };
 
-const getObserver = once(
-    () =>
-        new window.IntersectionObserver(onIntersect, {
-            rootMargin: `${calculateLazyLoadingDistance()}px 0%`,
-        })
+const getObserver = once(() =>
+    calculateLazyLoadingDistance().then(
+        distance =>
+            new window.IntersectionObserver(onIntersect, {
+                rootMargin: `${distance}px 0%`,
+            })
+    )
 );
 
 const onIntersect = (
@@ -70,4 +72,4 @@ const onIntersect = (
 };
 
 export const enableLazyLoad = (advert: Advert): void =>
-    getObserver().observe(advert.node);
+    getObserver().then(observer => observer.observe(advert.node));
