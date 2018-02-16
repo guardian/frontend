@@ -2,6 +2,7 @@
 
 import { getUserFromApi } from 'common/modules/identity/api';
 import { Message } from 'common/modules/ui/message';
+import { inlineSvg } from 'common/views/svgs';
 import config from 'lib/config';
 
 const messageCode: string = 'gdpr-opt-in-jan-18';
@@ -15,23 +16,38 @@ type ApiUser = {
     },
 };
 
-const template = {
-    title: 'You have to update your email settings',
-    cta: `Update them now »`,
-    link: `${config.page.idUrl}/consents`,
+const targets = {
+    landing: 'https://gu.com/staywithus',
+    journey: `${config.page.idUrl}/consents/staywithus`,
 };
+
+const template = {
+    image: config.get('images.identity.opt-in'),
+    title: `We’re changing how we communicate with&nbsp;readers. Let&nbsp;us&nbsp;know what emails you want to receive before 30 April, or <a data-link-name="gdrp-opt-in-alert : landing-click" href="${
+        targets.landing
+    }">find out more</a>.`,
+    cta: `Opt in again`,
+};
+
+console.log(template);
 
 const templateHtml: string = `
     <div id="site-message__message">
-        <div class="site-message__message site-message__message--gdpr-opt-in">
-            <div class="gdpr-opt-in__message-text">
-                ${template.title}
+        <div class="site-message__message identity-gdpr-oi-alert">
+            <div class="identity-gdpr-oi-alert__logo">
+                <img src="${template.image}" alt="Stay with us" />
             </div>
-            <a target="_blank" href="${
-                template.link
-            }" data-link-name="gdrp-opt-in : banner-click">
-                ${template.cta}
-            </a>
+            <div class="identity-gdpr-oi-alert__body">
+                <div class="identity-gdpr-oi-alert__text">
+                    ${template.title}
+                </div>
+                <a class="identity-gdpr-oi-alert__cta" target="_blank" href="${
+                    targets.journey
+                }" data-link-name="gdrp-opt-in-alert : banner-click">
+                    ${template.cta}
+                    ${inlineSvg('arrowWhiteRight')}
+                </a>
+            </div>
         </div>
     </div>`;
 
@@ -51,6 +67,7 @@ const optInEngagementBannerInit = (): void => {
         if (shouldIt) {
             new Message(messageCode, {
                 important: true,
+                cssModifierClass: 'gdpr-opt-in',
             }).show(templateHtml);
         }
     });
