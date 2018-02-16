@@ -1,14 +1,12 @@
 // @flow
 
 import config from 'lib/config';
-import { getBreakpoint } from 'lib/detect';
 import {
     buildAppNexusTargeting,
     buildPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import type {
     PrebidBidder,
-    PrebidBidderCriteria,
     PrebidImproveParams,
     PrebidImproveSizeParam,
     PrebidIndexExchangeParams,
@@ -16,10 +14,13 @@ import type {
     PrebidSonobiParams,
     PrebidTrustXParams,
 } from 'commercial/modules/prebid/types';
+import {
+    getBreakpointKey,
+    stripTrailingNumbers,
+} from 'commercial/modules/prebid/utils';
 
 const getTrustXAdUnitId = (slotId: string): string => {
-    const slotIdStripTrailingNumbers = slotId.replace(/\d+$/, '');
-    switch (slotIdStripTrailingNumbers) {
+    switch (stripTrailingNumbers(slotId)) {
         case 'dfp-ad--inline':
             return '2960';
         case 'dfp-ad--mostpop':
@@ -33,24 +34,6 @@ const getTrustXAdUnitId = (slotId: string): string => {
                 `PREBID: Failed to get TrustX ad unit for slot ${slotId}.`
             );
             return '';
-    }
-};
-
-const getBreakpointKey = (): string => {
-    switch (getBreakpoint()) {
-        case 'mobile':
-        case 'mobileMedium':
-        case 'mobileLandscape':
-        case 'phablet':
-            return 'M';
-        case 'tablet':
-            return 'T';
-        case 'desktop':
-        case 'leftCol':
-        case 'wide':
-            return 'D';
-        default:
-            return 'D';
     }
 };
 
@@ -146,84 +129,7 @@ const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam =>
         ? { w: 300, h: 250 }
         : {};
 
-export const bidderConfig: PrebidBidderCriteria = {
-    sonobi: [
-        {
-            breakpoint: { min: 'mobile' },
-            sizes: [[300, 250]],
-            slots: ['dfp-ad--inline', 'dfp-ad--mostpop'],
-        },
-        {
-            breakpoint: { min: 'mobile' },
-            sizes: [[300, 250], [300, 600]],
-            slots: ['dfp-ad--right'],
-        },
-        {
-            breakpoint: { min: 'desktop' },
-            sizes: [[728, 90], [970, 250]],
-            slots: ['dfp-ad--top-above-nav'],
-        },
-    ],
-    indexExchange: [
-        {
-            breakpoint: { min: 'mobile' },
-            sizes: [[300, 250]],
-            slots: ['dfp-ad--inline', 'dfp-ad--mostpop'],
-        },
-        {
-            breakpoint: { min: 'mobile' },
-            sizes: [[300, 250], [300, 600]],
-            slots: ['dfp-ad--right'],
-        },
-        {
-            breakpoint: { min: 'desktop' },
-            sizes: [[728, 90], [970, 250]],
-            slots: ['dfp-ad--top-above-nav'],
-        },
-    ],
-    trustx: [
-        {
-            geoContinent: 'NA', // North America
-            breakpoint: { min: 'mobile' },
-            sizes: [[300, 250]],
-            slots: ['dfp-ad--inline', 'dfp-ad--mostpop'],
-        },
-        {
-            geoContinent: 'NA', // North America
-            breakpoint: { min: 'mobile' },
-            sizes: [[300, 250], [300, 600]],
-            slots: ['dfp-ad--right'],
-        },
-        {
-            geoContinent: 'NA', // North America
-            breakpoint: { min: 'desktop' },
-            sizes: [[728, 90], [970, 250]],
-            slots: ['dfp-ad--top-above-nav'],
-        },
-    ],
-    improvedigital: [
-        {
-            editions: ['UK', 'INT'],
-            breakpoint: { min: 'mobile' },
-            sizes: [[300, 250]],
-            slots: ['dfp-ad--inline', 'dfp-ad--mostpop'],
-        },
-        {
-            editions: ['UK', 'INT'],
-            breakpoint: { min: 'mobile' },
-            sizes: [[300, 250], [300, 600]],
-            slots: ['dfp-ad--right'],
-        },
-        {
-            editions: ['UK', 'INT'],
-            breakpoint: { min: 'desktop' },
-            sizes: [[728, 90], [970, 250]],
-            slots: ['dfp-ad--top-above-nav'],
-        },
-    ],
-};
-
-export const sonobiBidder: PrebidBidder = {
+const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
     bidParams: (slotId: string): PrebidSonobiParams => ({
         ad_unit: config.page.adUnit,
@@ -234,7 +140,7 @@ export const sonobiBidder: PrebidBidder = {
     }),
 };
 
-export const indexExchangeBidder: PrebidBidder = {
+const indexExchangeBidder: PrebidBidder = {
     name: 'indexExchange',
     bidParams: (): PrebidIndexExchangeParams => ({
         id: '185406',
@@ -242,14 +148,15 @@ export const indexExchangeBidder: PrebidBidder = {
     }),
 };
 
-export const trustXBidder: PrebidBidder = {
+const trustXBidder: PrebidBidder = {
     name: 'trustx',
     bidParams: (slotId: string): PrebidTrustXParams => ({
         uid: getTrustXAdUnitId(slotId),
     }),
+    labelAll: ['geo-NA'],
 };
 
-export const improveDigitalBidder: PrebidBidder = {
+const improveDigitalBidder: PrebidBidder = {
     name: 'improvedigital',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidImproveParams => ({
         placementId: config.switches.testImproveBidder
@@ -257,4 +164,21 @@ export const improveDigitalBidder: PrebidBidder = {
             : getImprovePlacementId(sizes),
         size: getImproveSizeParam(slotId),
     }),
+    labelAny: ['edn-UK', 'edn-INT'],
 };
+
+const bidders: PrebidBidder[] = [];
+if (config.switches.prebidSonobi) {
+    bidders.push(sonobiBidder);
+}
+if (config.switches.prebidIndexExchange) {
+    bidders.push(indexExchangeBidder);
+}
+if (config.switches.prebidTrustx) {
+    bidders.push(trustXBidder);
+}
+if (config.switches.prebidImproveDigital) {
+    bidders.push(improveDigitalBidder);
+}
+
+export { bidders };
