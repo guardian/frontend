@@ -336,9 +336,8 @@ class CommentBox extends Component {
                         updateUsernameSuccess,
                         updateUsernameFailure
                     );
-                } else {
-                    return postCommentToDAPI();
                 }
+                return postCommentToDAPI();
             }
         };
 
@@ -352,13 +351,11 @@ class CommentBox extends Component {
                         response.user.statusFields.userEmailValidated === true
                     ) {
                         return validEmailCommentSubmission();
-                    } else {
-                        this.invalidEmailError();
                     }
+                    this.invalidEmailError();
                 });
-            } else {
-                validEmailCommentSubmission();
             }
+            validEmailCommentSubmission();
         } else {
             validEmailCommentSubmission();
         }

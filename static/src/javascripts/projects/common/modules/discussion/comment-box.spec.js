@@ -1,3 +1,4 @@
+// @flow
 import { CommentBox } from 'common/modules/discussion/comment-box';
 import { getUserFromApiWithRefreshedCookie } from 'common/modules/identity/api';
 import { postComment } from 'common/modules/discussion/api';
@@ -14,38 +15,35 @@ jest.mock('common/modules/identity/api', () => ({
         Promise.resolve({
             user: {
                 statusFields: {
-                    userEmailValidated: true
-                }
-            }
+                    userEmailValidated: true,
+                },
+            },
         })
     ),
     reset: jest.fn(),
 }));
 jest.mock('common/modules/discussion/api', () => ({
-    postComment: jest.fn()
+    postComment: jest.fn(),
 }));
 
 describe('Comment box', () => {
     const discussionId = '/p/3ht42';
     const maxCommentLength = 2500;
-    const idConfig = {
-        'page' : {
-            'idApiUrl' : 'https://idapi.theguardian.com',
-            'idUrl' : 'https://profile.theguardian.com',
-            ajaxUrl: '',
-            edition: 'UK'
-        }
-    };
-    const validCommentText = "'I don't know what you mean,' said Alice.\n\n" +
+    const validCommentText =
+        "'I don't know what you mean,' said Alice.\n\n" +
         "'Of course you don't!' the Hatter said, tossing his head contemptuously. 'I dare say you never even spoke to Time!'\n\n" +
         "'Perhaps not,' Alice cautiously replied: 'but I know I have to beat time when I learn music.'";
-    const apiPostValidCommentResp = '{"status": "ok", "message": "27388163", "statusCode": 200}';
-    const apiPostValidCommentButDiscussionClosed = '{"status":"error", "statusCode": 409, "message":"Discussion closed", "errorCode": "DISCUSSION_CLOSED"}';
-    const apiPostValidCommentButReadOnlyMode = '{"status":"error", "statusCode": 503, "message":"Commenting is undergoing maintenance but will be back again shortly.", "errorCode": "READ-ONLY-MODE"}';
+    const apiPostValidCommentResp =
+        '{"status": "ok", "message": "27388163", "statusCode": 200}';
+    const apiPostValidCommentButDiscussionClosed =
+        '{"status":"error", "statusCode": 409, "message":"Discussion closed", "errorCode": "DISCUSSION_CLOSED"}';
+    const apiPostValidCommentButReadOnlyMode =
+        '{"status":"error", "statusCode": 503, "message":"Commenting is undergoing maintenance but will be back again shortly.", "errorCode": "READ-ONLY-MODE"}';
     let commentBox;
 
-    beforeEach (() => {
-        document.body.innerHTML = '<form class="component js-comment-box d-comment-box">' +
+    beforeEach(() => {
+        document.body.innerHTML =
+            '<form class="component js-comment-box d-comment-box">' +
             '<label for="body" class="d-comment-box__add-comment cta">Add your comment</label>' +
             '<div class="d-comment-box__meta">' +
             '<span class="d-comment-box__avatar-wrapper">' +
@@ -79,9 +77,9 @@ describe('Comment box', () => {
             '</form>';
 
         commentBox = new CommentBox({
-            discussionId: discussionId,
+            discussionId,
             maxLength: maxCommentLength,
-            switches: {}
+            switches: {},
         });
 
         commentBox.attachTo(document.querySelector('.d-comment-box'));
@@ -114,13 +112,15 @@ describe('Comment box', () => {
             });
         });
 
-        it('should error on comments over ' + maxCommentLength + ' characters', () => {
+        it(`should error on comments over ${
+            maxCommentLength
+        } characters`, () => {
             const commentBody = commentBox.getElem('body');
 
             expect(commentBox.getElem('error')).toBeUndefined();
 
-            for (let i = 0, len = maxCommentLength; i <= len; i++) {
-                commentBody.value = commentBody.value + 'j';
+            for (let i = 0, len = maxCommentLength; i <= len; i += 1) {
+                commentBody.value = `${commentBody.value}j`;
             }
             return commentBox.postComment().then(() => {
                 expect(commentBox.getElem('error')).not.toBeUndefined();
@@ -135,9 +135,9 @@ describe('Comment box', () => {
                 Promise.resolve({
                     user: {
                         statusFields: {
-                            userEmailValidated: false
-                        }
-                    }
+                            userEmailValidated: false,
+                        },
+                    },
                 })
             );
 
@@ -152,6 +152,7 @@ describe('Comment box', () => {
             commentBox.getElem('body').value = validCommentText;
 
             postComment.mockReturnValueOnce(
+                // eslint-disable-next-line prefer-promise-reject-errors
                 Promise.reject({
                     responseText: apiPostValidCommentButDiscussionClosed,
                     status: 409,
@@ -168,6 +169,7 @@ describe('Comment box', () => {
             commentBox.getElem('body').value = validCommentText;
 
             postComment.mockReturnValueOnce(
+                // eslint-disable-next-line prefer-promise-reject-errors
                 Promise.reject({
                     responseText: apiPostValidCommentButReadOnlyMode,
                     status: 503,
@@ -187,9 +189,10 @@ describe('Comment box', () => {
             );
 
             return commentBox.postComment().then(comment => {
-                expect(JSON.stringify(comment.id)).toEqual(JSON.parse(apiPostValidCommentResp).message);
+                expect(JSON.stringify(comment.id)).toEqual(
+                    JSON.parse(apiPostValidCommentResp).message
+                );
             });
         });
-
     });
 });
