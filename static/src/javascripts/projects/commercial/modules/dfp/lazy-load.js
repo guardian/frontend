@@ -27,22 +27,28 @@ const displayAd = (advertId: string): void => {
     }
 };
 
-const optimisedRootMargin = (viewport: { width: number, height: number }): Object => ({
-    'front' : {
-        'mobile': viewport.height * 2,
-        'tablet': viewport.height * 2,
-        'desktop': viewport.height * 3 / 2,
-        'wide': viewport.height * 3 / 2,
+const optimisedRootMargin = (viewport: {
+    width: number,
+    height: number,
+}): Object => ({
+    front: {
+        mobile: viewport.height * 2,
+        tablet: viewport.height * 2,
+        desktop: viewport.height * 3 / 2,
+        wide: viewport.height * 3 / 2,
     },
-    'non-front' : {
-        'mobile': viewport.height * 3 / 2,
-        'tablet': viewport.height * 3 / 2,
-        'desktop': viewport.height,
-        'wide': viewport.height,
-    }
+    'non-front': {
+        mobile: viewport.height * 3 / 2,
+        tablet: viewport.height * 3 / 2,
+        desktop: viewport.height,
+        wide: viewport.height,
+    },
 });
 
-const calculateLazyLoadingDistance = (viewport: { width: number, height: number }) => {
+const calculateLazyLoadingDistance = (viewport: {
+    width: number,
+    height: number,
+}) => {
     const variant = getTestVariantId('CommercialLazyLoading');
 
     if (variant === '400px') {
@@ -85,15 +91,17 @@ const onIntersect = (
     );
 };
 
-const readViewport = (): Promise<{ width: number, height: number }> => fastdom.read(() => getViewport());
+const readViewport = (): Promise<{ width: number, height: number }> =>
+    fastdom.read(() => getViewport());
 
 const getObserver = once(() =>
     readViewport()
         .then(calculateLazyLoadingDistance)
-        .then( distance =>
-            new window.IntersectionObserver(onIntersect, {
-                rootMargin: `${distance}px 0px`,
-            })
+        .then(
+            distance =>
+                new window.IntersectionObserver(onIntersect, {
+                    rootMargin: `${distance}px 0px`,
+                })
         )
 );
 
