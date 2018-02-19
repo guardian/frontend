@@ -4,13 +4,14 @@ import type { ImpressionViewableEvent } from 'commercial/types';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
+import config from 'lib/config';
 
 const shouldRefresh = (advert: Advert): ?boolean => {
     const sizeString = advert.size && advert.size.toString();
     const isFluid = sizeString === '0,0';
     const couldBeVideo = advert.id === 'dfp-ad--inline1';
 
-    return !isFluid && !couldBeVideo;
+    return !isFluid && !couldBeVideo && !config.page.hasPageSkin;
 };
 
 export const onSlotViewable = (event: ImpressionViewableEvent): void => {
