@@ -12,6 +12,7 @@ import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
+import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services.{ArchiveMetrics, RedirectService}
@@ -24,6 +25,7 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait AppComponents extends FrontendComponents {
 
+  def wsClient: WSClient
   lazy val renderer: Renderer = wire[Renderer]
   lazy val redirects = wire[RedirectService]
   lazy val devComponentController = wire[DevComponentController]
@@ -39,6 +41,11 @@ trait AppComponents extends FrontendComponents {
     wire[ArchiveMetrics],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle]
+  )
+
+  override lazy val appMetrics = ApplicationMetrics(
+    MoonMetrics.MoonRenderingMetric,
+    MoonMetrics.NonMoonRenderingMetric
   )
 
   lazy val router: Router = wire[Routes]

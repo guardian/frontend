@@ -18,7 +18,8 @@ import type {
 } from 'commercial/modules/prebid/types';
 
 const getTrustXAdUnitId = (slotId: string): string => {
-    switch (slotId) {
+    const slotIdStripTrailingNumbers = slotId.replace(/\d+$/, '');
+    switch (slotIdStripTrailingNumbers) {
         case 'dfp-ad--inline':
             return '2960';
         case 'dfp-ad--mostpop':

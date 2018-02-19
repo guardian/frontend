@@ -21,11 +21,17 @@ import type {
     PrebidSize,
 } from 'commercial/modules/prebid/types';
 
-const bidders = [sonobiBidder, indexExchangeBidder];
-if (config.switches.trustxBidder) {
+const bidders = [];
+if (config.switches.prebidSonobi) {
+    bidders.push(sonobiBidder);
+}
+if (config.switches.prebidIndexExchange) {
+    bidders.push(indexExchangeBidder);
+}
+if (config.switches.prebidTrustx) {
     bidders.push(trustXBidder);
 }
-if (config.switches.improveDigitalBidder) {
+if (config.switches.prebidImproveDigital) {
     bidders.push(improveDigitalBidder);
 }
 
