@@ -34,5 +34,9 @@ export const commercialLazyLoading: ABTest = {
             id: '0.5vh',
             test: () => {},
         },
+        {
+            id: 'richard',
+            test: () => {},
+        }
     ],
 };
