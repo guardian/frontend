@@ -44,6 +44,7 @@ const persistResponse = (JsonResponse: () => void) => {
         JsonResponse.contentAccess.recurringContributor
     );
 
+    removeCookie(ACCOUNT_DATA_UPDATE_LINK_COOKIE);
     if ('alertAvailableFor' in JsonResponse) {
         addCookie(
             ACCOUNT_DATA_UPDATE_LINK_COOKIE,
@@ -65,6 +66,7 @@ const deleteOldData = (): void => {
     removeCookie(PAYING_MEMBER_COOKIE);
     removeCookie(RECURRING_CONTRIBUTOR_COOKIE);
     removeCookie(AD_FREE_USER_COOKIE);
+    removeCookie(ACCOUNT_DATA_UPDATE_LINK_COOKIE);
 };
 
 const requestNewData = (): Promise<void> =>
@@ -155,4 +157,5 @@ export {
     isRecurringContributor,
     shouldSeeReaderRevenue,
     refresh,
+    deleteOldData
 };
