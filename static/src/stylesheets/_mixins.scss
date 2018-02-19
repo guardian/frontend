@@ -154,18 +154,6 @@
     }
 }
 
-@mixin video-play-button-size($size) {
-    width: $size;
-    height: $size;
-
-    // Specify font-size to influence the em-based triangle for the play button.
-    @if ($size <= $vjs-small-button-size) {
-        font-size: 9px;
-    } @else {
-        font-size: 12px;
-    }
-}
-
 // note that if using this in a media query, the fallback needs to
 // be windowed between breakpoints, because the nth-child is not reset
 @mixin columns($cols: 1, $gap: 0, $rule: false) {
@@ -283,8 +271,8 @@
     background-position: $position;
     background-size: 1px #{$bgSize}px;
 }
-//Video button sizes
-@mixin video-icon-size($buttonSize) {
+//Generates a play button and icon for fronts
+@mixin video-icon-size($buttonSize, $iconSize) {
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -294,4 +282,14 @@
     user-select: none;
     width: $buttonSize;
     height: $buttonSize;
+    & .inline-play svg {
+        position: absolute;
+        top: 50%;
+        left: 49%;
+        padding: 0;
+        margin: 0;
+        transform: translate(-40%, -50%);
+        fill: #ffffff;
+        width: $iconSize;
+    }
 }

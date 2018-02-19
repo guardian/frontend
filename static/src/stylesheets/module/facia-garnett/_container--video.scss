@@ -298,52 +298,37 @@ $video-width-desktop: 700px;
 
 .vjs-big-play-button .vjs-control-text,
 .youtube-media-atom__play-button.vjs-control-text {
-    .fc-container--video &,
-    .media-primary & {
-        @include video-icon-size($vjs-medium-button-size);
-        @include mq(mobileLandscape) {
-            @include video-icon-size($vjs-large-button-size);
-        }
-        @include mq(tablet) {
-            @include video-icon-size($vjs-x-large-button-size);
-        }
-    }
-    // .fc-item--list-media-mobile & {
-    //     @include mq($until: tablet) {
-    //         @include video-icon-size($vjs-small-button-size, $vjs-small-button-border-width);
-    //     }
-    // }
-    .fc-item--standard-tablet & {
-        @include video-icon-size($vjs-medium-button-size);
-        @include mq($from: tablet) {
-            @include video-icon-size($vjs-medium-button-size);
-        }
-    }
+    // Sets a base play button/icon size for all video players
+    @include video-icon-size($vjs-x-large-button-size, $vjs-x-large-button-icon);
 
+    // Sets specific play button/icon size for fronts depending on layout
     .fc-item--full-media-75-tablet &,
-    .fc-item--half-tablet &,
-    .fc-item--third-tablet & {
-        @include video-icon-size($vjs-medium-button-size);
-        @include mq($from: tablet) {
-            @include video-icon-size($vjs-large-button-size);
-        }
-    }
-
     .fc-item--full-media-50-tablet &,
-    .fc-item--three-quarters-tablet & {
-        @include video-icon-size($vjs-medium-button-size);
-        @include mq(tablet) {
-            @include video-icon-size($vjs-x-large-button-size);
+    .fc-item--three-quarters-tablet &,
+    .fc-item--half-tablet & {
+        @include video-icon-size($vjs-large-button-size, $vjs-large-button-icon);
+        @include mq($from: mobileLandscape) {
+            @include video-icon-size($vjs-x-large-button-size, $vjs-x-large-button-icon);
         }
     }
 
-    .inline-play svg {
-        position: absolute;
-        top: 50%;
-        left: 49%;
-        transform: translate(-40%, -50%);
-        fill: #ffffff;
-        width: $vjs-small-button;
+    .fc-item--third-tablet & {
+        @include video-icon-size($vjs-large-button-size, $vjs-large-button-icon);
+        @include mq($from: mobileLandscape, $until: tablet) {
+            @include video-icon-size($vjs-x-large-button-size, $vjs-x-large-button-icon);
+        }
+    }
+
+    .fc-item--standard-tablet & {
+        @include mq($from: tablet) {
+            @include video-icon-size($vjs-medium-button-size, $vjs-medium-button-icon);
+        }
+    }
+
+    .fc-item--list-media-mobile & {
+        @include mq($until: tablet) {
+            @include video-icon-size($vjs-small-button-size, $vjs-small-button-icon);
+        }
     }
 }
 

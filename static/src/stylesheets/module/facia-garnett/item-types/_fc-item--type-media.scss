@@ -143,31 +143,5 @@
                 padding: 0px $gs-gutter/4;
             }
         }
-
-        &.fc-item--full-media-75-tablet,
-        &.fc-item--half-tablet {
-            @include mq(tablet) {
-                .vjs-control-text {
-                    @include video-play-button-size($vjs-large-button-size);
-
-                    &:before {
-                        @include video-play-button-size($vjs-large-button-size);
-                    }
-                }
-            }
-        }
-
-        &.fc-item--third-tablet,
-        &.fc-item--standard-tablet {
-            @include mq(tablet) {
-                .vjs-control-text {
-                    @include video-play-button-size($vjs-medium-button-size);
-
-                    &:before {
-                        @include video-play-button-size($vjs-medium-button-size);
-                    }
-                }
-            }
-        }
     }
 }

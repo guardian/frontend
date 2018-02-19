@@ -103,10 +103,6 @@ $ima-controls-height: 70px;
 
     }
 
-    .vjs-control-text {
-        @include video-icon-size($vjs-large-button-size);
-    }
-
     .gu-media--audio &,
     .vjs-has-ended &,
     .vjs-ad-playing &,
@@ -116,12 +112,6 @@ $ima-controls-height: 70px;
         display: none !important;
     }
 }
-
-// .fc-item--list-media-mobile .vjs-control-text {
-//     @include mq($until: tablet) {
-//         @include video-icon-size($vjs-small-button-size, $vjs-small-button-border-width);
-//     }
-// }
 
 .vjs-fullscreen-clickbox {
     box-sizing: border-box;
