@@ -21,9 +21,11 @@
         <article id="article" data-test-id="article-root"
 
         class="@RenderClasses(Map(
-            "has-feature-showcase-element" -> (article.tags.isFeature && !article.tags.isComment && article.elements.hasShowcaseMainElement),
-            "has-feature-showcase-opinion" -> (article.tags.isComment && article.elements.hasShowcaseMainElement),
-            "paid-content" -> isPaidContent
+            "has-feature-showcase-element" -> (article.tags.isFeature && !article.tags.isComment && article.elements.hasShowcaseMainElement && !article.content.isColumn),
+            "has-feature-showcase-opinion" -> (article.tags.isComment && article.elements.hasShowcaseMainElement && !article.content.isColumn),
+            "content--type-column" -> article.content.isColumn,
+            "paid-content" -> isPaidContent,
+            "paid-content--white" -> (isPaidContent && ActiveExperiments.isParticipating(CommercialPaidContentTemplate))
         ),
             "content",
             "content--article",

@@ -7,7 +7,8 @@
 <div class="@RenderClasses(Map(
         "content__labels--gallery" -> item.content.isGallery,
         "content__labels--paidgallery" -> (item.content.isGallery && item.content.isPaidContent),
-        "content__labels--not-immersive" -> !item.content.isImmersive
+        "content__labels--not-immersive" -> !item.content.isImmersive,
+        "content__labels--column" -> item.content.isColumn
     ), "content__labels")
 ">
     @if(!amp) {
@@ -26,7 +27,7 @@
               </a>
           </div>
         } else {
-            @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
+            @if(!(item.content.isImmersive && item.content.tags.isArticle || item.content.isColumn)) {
               <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
                   <a class="content__section-label__link"
                       data-link-name="article section"

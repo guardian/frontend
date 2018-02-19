@@ -7,6 +7,7 @@
     lightboxIndex: Option[Int] = None,
     isShowcase: Boolean = false,
     isFeature: Boolean = false,
+    isColumn: Boolean = false,
     widthsByBreakpoint: layout.WidthsByBreakpoint = MainMedia.inline,
     image_figureClasses: Option[(model.ImageAsset, String)] = None,
     shareInfo: Option[(Seq[model.ShareLink], DotcomContentType)] = None,
@@ -17,7 +18,7 @@
 
 @defining(image_figureClasses match {
     case Some((image, figureClasses)) => (Some(image), s"element element-image $figureClasses", false)
-    case None => (ImgSrc.getFallbackAsset(picture), s"media-primary media-content ${if(isShowcase) " media-primary--showcase"}", true)
+    case None => (ImgSrc.getFallbackAsset(picture), s"media-primary media-content ${if(isShowcase && !isColumn) "media-primary--showcase"}", true)
 } ) { case (imageOption, figureClasses, isMain) =>
 
     <figure
@@ -100,7 +101,7 @@
 @caption(picture: model.ImageMedia, imageOption: Option[ImageAsset], isMain: Boolean) = {
     @imageOption.map { img =>
         @if(img.showCaption) {
-            @if(isMain) {
+            @if(isMain && !isColumn) {
                 <input type="checkbox" id="show-caption" class="mobile-only u-h reveal-caption__checkbox">
 
                 <label class="mobile-only reveal-caption reveal-caption--img" for="show-caption">

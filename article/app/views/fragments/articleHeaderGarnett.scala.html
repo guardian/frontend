@@ -37,13 +37,17 @@
                 }
             </div>
         </div>
-    </div>
-}
+    }
 
     @fragments.meta.metaInline(article, amp)
 
-    <div class="content__headline-standfirst-wrapper">
-        <div class="content__header tonal__header">
+    @if(!article.content.isColumn) {
+        <div class="content__headline-standfirst-wrapper">
+            <div class="content__header tonal__header">
+                <div class="u-cf">
+                    <h1 class="content__headline" articleprop="headline" @langAttributes(article.content)>
+                        @Html(article.trail.headline)
+                    </h1>
 
             <div class="u-cf">
 
@@ -69,50 +73,52 @@
                 }
                 @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
 
-                    @article.content.starRating.map { rating =>
-                        <span class="u-h" articleprop="reviewRating" articlescope articletype="http://schema.org/Rating">
-                            <meta articleprop="worstRating" content="1" />
-                            <span articleprop="ratingValue">@rating</span> /
-                            <span articleprop="bestRating">5</span> stars
-                        </span>
+                        @article.content.starRating.map { rating =>
+                            <span class="u-h" articleprop="reviewRating" articlescope articletype="http://schema.org/Rating">
+                                <meta articleprop="worstRating" content="1" />
+                                <span articleprop="ratingValue">@rating</span> /
+                                <span articleprop="bestRating">5</span> stars
+                            </span>
 
-                    @fragments.items.elements.starRating(rating)
-                    }
-                }
-
-                @article.content.imdb.map { imdbId =>
-                    <div articleprop="articleReviewed" articlescope articletype="http://schema.org/Movie">
-                        <link articleprop="sameAs" href="http://www.imdb.com/title/@imdbId/">
-                        @defining(article.content.primaryKeyWordTag.map(_.name).getOrElse(".")) { tag =>
-                            @* we're not the authority on the film name, but just to keep google validator happy
-                            *@<meta articleprop="name" content="@tag"/>
+                        @fragments.items.elements.starRating(rating)
                         }
-                    </div>
-                }
+                    }
 
-                @article.content.isbn.map { isbn =>
-                    <div articleprop="articleReviewed" articlescope articletype="http://schema.org/Book">
-                        <meta articleprop="isbn" content="@isbn">
-                        <div articleprop="author" articlescope articletype="http://schema.org/Person">
-                            <meta articleprop="sameAs" content="http://schema.org/Person@* we can't know *@">
+                    @article.content.imdb.map { imdbId =>
+                        <div articleprop="articleReviewed" articlescope articletype="http://schema.org/Movie">
+                            <link articleprop="sameAs" href="http://www.imdb.com/title/@imdbId/">
+                            @defining(article.content.primaryKeyWordTag.map(_.name).getOrElse(".")) { tag =>
+                                @* we're not the authority on the film name, but just to keep google validator happy
+                                *@<meta articleprop="name" content="@tag"/>
+                            }
+                        </div>
+                    }
+
+                    @article.content.isbn.map { isbn =>
+                        <div articleprop="articleReviewed" articlescope articletype="http://schema.org/Book">
+                            <meta articleprop="isbn" content="@isbn">
+                            <div articleprop="author" articlescope articletype="http://schema.org/Person">
+                                <meta articleprop="sameAs" content="http://schema.org/Person@* we can't know *@">
+                                <meta articleprop="name" content=".@* we can't know *@">
+                            </div>
                             <meta articleprop="name" content=".@* we can't know *@">
                         </div>
-                        <meta articleprop="name" content=".@* we can't know *@">
-                    </div>
-                }
+                    }
+                </div>
+            </div>
 
+            <div class="tonal__standfirst u-cf">
+                @if(article.fields.standfirst.isDefined) {
+                    @fragments.standfirst(article)
+                }
             </div>
         </div>
+    }
 
-        <div class="tonal__standfirst u-cf">
-            @if(article.fields.standfirst.isDefined) {
-                @fragments.standfirst(article)
-            }
-        </div>
-    </div>
     @fragments.contentMeta(article, page, amp = amp)
-    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
-    <div class="media-primary media-content  media-primary--showcase  ">
+
+    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement && article.content.starRating.isDefined && !article.content.isColumn) {
+        <div class="media-primary media-content  media-primary--showcase  ">
         @article.content.starRating.map { rating =>
             <span class="u-h" articleprop="reviewRating" articlescope articletype="http://schema.org/Rating">
                 <meta articleprop="worstRating" content="1" />
