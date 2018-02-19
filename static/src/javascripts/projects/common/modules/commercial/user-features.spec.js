@@ -56,7 +56,7 @@ const setAllFeaturesData = opts => {
         PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
         expiryDate.getTime().toString()
     );
-    addCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE, 'test');
+    addCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE, 'test');
 };
 
 const setExpiredAdFreeData = () => {
@@ -74,7 +74,7 @@ const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE);
     removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
-    removeCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE);
+    removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
 };
 
 describe('Refreshing the features data', () => {
@@ -186,14 +186,14 @@ describe('The account data update warning getter', () => {
 
         it('Is the same when the user has an account data update link cookie', () => {
             addCookie(
-                PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE,
+                PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE,
                 'the same'
             );
             expect(accountDataUpdateWarning()).toBe('the same');
         });
 
         it('Is null when the user does not have an account data update link cookie', () => {
-            removeCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE);
+            removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
             expect(accountDataUpdateWarning()).toBe(null);
         });
     });
