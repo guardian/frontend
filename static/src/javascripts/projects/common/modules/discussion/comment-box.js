@@ -247,8 +247,13 @@ class CommentBox extends Component {
         this.errors.push(type);
     }
 
-    postComment(): ?Promise<any> {
-        const value = this.getElem('body').value;
+    postComment(): Promise<any> {
+        const commentBody = this.getElem('body');
+        const { value } =
+            (commentBody &&
+                commentBody instanceof HTMLTextAreaElement &&
+                commentBody) ||
+            {};
 
         const comment: commentType = {
             body: value,
@@ -307,7 +312,7 @@ class CommentBox extends Component {
             }
         };
 
-        const validEmailCommentSubmission = (): ?Promise<any> => {
+        const validEmailCommentSubmission = (): Promise<any> => {
             if (comment.body === '') {
                 this.error('EMPTY_COMMENT_BODY');
             }
@@ -339,6 +344,8 @@ class CommentBox extends Component {
                 }
                 return postCommentToDAPI();
             }
+
+            return Promise.resolve();
         };
 
         if (!this.getUserData().emailVerified) {
@@ -355,10 +362,9 @@ class CommentBox extends Component {
                     this.invalidEmailError();
                 });
             }
-            validEmailCommentSubmission();
-        } else {
-            validEmailCommentSubmission();
+            return validEmailCommentSubmission();
         }
+        return validEmailCommentSubmission();
     }
 
     invalidEmailError(): void {

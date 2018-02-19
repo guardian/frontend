@@ -1,7 +1,7 @@
 // @flow
 import { CommentBox } from 'common/modules/discussion/comment-box';
-import { getUserFromApiWithRefreshedCookie } from 'common/modules/identity/api';
-import { postComment } from 'common/modules/discussion/api';
+import { getUserFromApiWithRefreshedCookie as getUserFromApiWithRefreshedCookie_ } from 'common/modules/identity/api';
+import { postComment as postComment_ } from 'common/modules/discussion/api';
 import config from 'lib/config';
 
 jest.mock('lib/mediator');
@@ -26,6 +26,12 @@ jest.mock('common/modules/discussion/api', () => ({
     postComment: jest.fn(),
 }));
 
+const getUserFromApiWithRefreshedCookie: JestMockFn<
+    *,
+    *
+> = (getUserFromApiWithRefreshedCookie_: any);
+const postComment: JestMockFn<*, *> = (postComment_: any);
+
 describe('Comment box', () => {
     const discussionId = '/p/3ht42';
     const maxCommentLength = 2500;
@@ -40,41 +46,44 @@ describe('Comment box', () => {
     const apiPostValidCommentButReadOnlyMode =
         '{"status":"error", "statusCode": 503, "message":"Commenting is undergoing maintenance but will be back again shortly.", "errorCode": "READ-ONLY-MODE"}';
     let commentBox;
+    let commentBoxEl;
 
     beforeEach(() => {
-        document.body.innerHTML =
-            '<form class="component js-comment-box d-comment-box">' +
-            '<label for="body" class="d-comment-box__add-comment cta">Add your comment</label>' +
-            '<div class="d-comment-box__meta">' +
-            '<span class="d-comment-box__avatar-wrapper">' +
-            '</span>' +
-            '<div class="d-comment-box__meta-text">' +
-            '<span class="d-comment-box__author"></span>' +
-            '<span class="i i-reply-grey"></span>' +
-            '<span class="d-comment-box__reply-to-author"></span>' +
-            '<span class="u-fauxlink d-comment-box__show-parent" role="button">Show comment</span>' +
-            '<span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>' +
-            '</div>' +
-            '</div>' +
-            '<div class="d-comment-box__parent-comment-wrapper">' +
-            '<div class="d-comment-box__parent-comment-spout"></div>' +
-            '<div class="d-comment-box__parent-comment">' +
-            '<span class="d-comment-box__parent-comment-author"></span>' +
-            '<div class="d-comment-box__parent-comment-body"></div>' +
-            '<span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>' +
-            '</div>' +
-            '</div>' +
-            '<div class="d-comment-box__content">' +
-            '<div class="d-comment-box__messages"></div>' +
-            '<div class="d-comment-box__error d-comment-box__premod">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</div>' +
-            '<textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>' +
-            '<button type="submit" class="submit-input d-comment-box__submit">Post comment</button>' +
-            '</div>' +
-            '<div class="d-comment-box__preview-wrapper">' +
-            '<div class="d-comment-box__preview-body"></div>' +
-            '<button type="submit" class="submit-input d-comment-box__submit d-comment-box__preview-submit">Post your comment</button>' +
-            '</div>' +
-            '</form>';
+        if (document.body) {
+            document.body.innerHTML =
+                '<form class="component js-comment-box d-comment-box">' +
+                '<label for="body" class="d-comment-box__add-comment cta">Add your comment</label>' +
+                '<div class="d-comment-box__meta">' +
+                '<span class="d-comment-box__avatar-wrapper">' +
+                '</span>' +
+                '<div class="d-comment-box__meta-text">' +
+                '<span class="d-comment-box__author"></span>' +
+                '<span class="i i-reply-grey"></span>' +
+                '<span class="d-comment-box__reply-to-author"></span>' +
+                '<span class="u-fauxlink d-comment-box__show-parent" role="button">Show comment</span>' +
+                '<span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="d-comment-box__parent-comment-wrapper">' +
+                '<div class="d-comment-box__parent-comment-spout"></div>' +
+                '<div class="d-comment-box__parent-comment">' +
+                '<span class="d-comment-box__parent-comment-author"></span>' +
+                '<div class="d-comment-box__parent-comment-body"></div>' +
+                '<span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="d-comment-box__content">' +
+                '<div class="d-comment-box__messages"></div>' +
+                '<div class="d-comment-box__error d-comment-box__premod">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</div>' +
+                '<textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>' +
+                '<button type="submit" class="submit-input d-comment-box__submit">Post comment</button>' +
+                '</div>' +
+                '<div class="d-comment-box__preview-wrapper">' +
+                '<div class="d-comment-box__preview-body"></div>' +
+                '<button type="submit" class="submit-input d-comment-box__submit d-comment-box__preview-submit">Post your comment</button>' +
+                '</div>' +
+                '</form>';
+        }
 
         commentBox = new CommentBox({
             discussionId,
@@ -82,7 +91,11 @@ describe('Comment box', () => {
             switches: {},
         });
 
-        commentBox.attachTo(document.querySelector('.d-comment-box'));
+        commentBoxEl = document.querySelector('.d-comment-box');
+
+        if (commentBoxEl) {
+            commentBox.attachTo(commentBoxEl);
+        }
     });
 
     describe('Post comment', () => {
@@ -90,26 +103,37 @@ describe('Comment box', () => {
             const button = commentBox.getElem('submit');
             const commentBody = commentBox.getElem('body');
 
-            commentBody.value = '';
-            commentBox.setFormState();
-            expect(button.getAttribute('disabled')).toBe('disabled');
+            if (
+                commentBody &&
+                commentBody instanceof HTMLTextAreaElement &&
+                button
+            ) {
+                commentBody.value = '';
+                commentBox.setFormState();
+                expect(button.getAttribute('disabled')).toBe('disabled');
 
-            commentBody.value = 'Hello';
-            commentBox.setFormState();
-            expect(button.getAttribute('disabled')).toBeNull();
+                commentBody.value = 'Hello';
+                commentBox.setFormState();
+                expect(button.getAttribute('disabled')).toBeNull();
 
-            commentBody.value = '';
-            commentBox.setFormState();
-            expect(button.getAttribute('disabled')).toBe('disabled');
+                commentBody.value = '';
+                commentBox.setFormState();
+                expect(button.getAttribute('disabled')).toBe('disabled');
+            }
         });
 
         it('should error on empty comments', () => {
-            expect(commentBox.getElem('error')).toBeUndefined();
-            commentBox.getElem('body').value = '';
+            const commentBody = commentBox.getElem('body');
 
-            return commentBox.postComment().then(() => {
-                expect(commentBox.getElem('error')).not.toBeUndefined();
-            });
+            expect(commentBox.getElem('error')).toBeUndefined();
+
+            if (commentBody && commentBody instanceof HTMLTextAreaElement) {
+                commentBody.value = '';
+
+                return commentBox.postComment().then(() => {
+                    expect(commentBox.getElem('error')).not.toBeUndefined();
+                });
+            }
         });
 
         it(`should error on comments over ${
@@ -119,80 +143,102 @@ describe('Comment box', () => {
 
             expect(commentBox.getElem('error')).toBeUndefined();
 
-            for (let i = 0, len = maxCommentLength; i <= len; i += 1) {
-                commentBody.value = `${commentBody.value}j`;
+            if (commentBody && commentBody instanceof HTMLTextAreaElement) {
+                for (let i = 0, len = maxCommentLength; i <= len; i += 1) {
+                    commentBody.value = `${commentBody.value}j`;
+                }
+                return commentBox.postComment().then(() => {
+                    expect(commentBox.getElem('error')).not.toBeUndefined();
+                });
             }
-            return commentBox.postComment().then(() => {
-                expect(commentBox.getElem('error')).not.toBeUndefined();
-            });
         });
 
         it('should error on invalid email address', () => {
+            const commentBody = commentBox.getElem('body');
+
             expect(commentBox.getElem('error')).toBeUndefined();
-            commentBox.getElem('body').value = validCommentText;
 
-            getUserFromApiWithRefreshedCookie.mockReturnValueOnce(
-                Promise.resolve({
-                    user: {
-                        statusFields: {
-                            userEmailValidated: false,
+            if (commentBody && commentBody instanceof HTMLTextAreaElement) {
+                commentBody.value = validCommentText;
+
+                getUserFromApiWithRefreshedCookie.mockReturnValueOnce(
+                    Promise.resolve({
+                        user: {
+                            statusFields: {
+                                userEmailValidated: false,
+                            },
                         },
-                    },
-                })
-            );
+                    })
+                );
 
-            return commentBox.postComment().then(() => {
-                expect(commentBox.getElem('error')).not.toBeUndefined();
-            });
+                return commentBox.postComment().then(() => {
+                    expect(commentBox.getElem('error')).not.toBeUndefined();
+                });
+            }
         });
 
         it('should error on discussion closed', () => {
+            const commentBody = commentBox.getElem('body');
+
             expect(commentBox.getElem('error')).toBeUndefined();
+
             config.switches.enableDiscussionSwitch = true;
-            commentBox.getElem('body').value = validCommentText;
 
-            postComment.mockReturnValueOnce(
-                // eslint-disable-next-line prefer-promise-reject-errors
-                Promise.reject({
-                    responseText: apiPostValidCommentButDiscussionClosed,
-                    status: 409,
-                })
-            );
+            if (commentBody && commentBody instanceof HTMLTextAreaElement) {
+                commentBody.value = validCommentText;
 
-            return commentBox.postComment().then(() => {
-                expect(commentBox.getElem('error')).not.toBeUndefined();
-            });
+                postComment.mockReturnValueOnce(
+                    // eslint-disable-next-line prefer-promise-reject-errors
+                    Promise.reject({
+                        responseText: apiPostValidCommentButDiscussionClosed,
+                        status: 409,
+                    })
+                );
+
+                return commentBox.postComment().then(() => {
+                    expect(commentBox.getElem('error')).not.toBeUndefined();
+                });
+            }
         });
 
         it('should error on read only mode', () => {
+            const commentBody = commentBox.getElem('body');
+
             expect(commentBox.getElem('error')).toBeUndefined();
-            commentBox.getElem('body').value = validCommentText;
 
-            postComment.mockReturnValueOnce(
-                // eslint-disable-next-line prefer-promise-reject-errors
-                Promise.reject({
-                    responseText: apiPostValidCommentButReadOnlyMode,
-                    status: 503,
-                })
-            );
+            if (commentBody && commentBody instanceof HTMLTextAreaElement) {
+                commentBody.value = validCommentText;
 
-            return commentBox.postComment().then(() => {
-                expect(commentBox.getElem('error')).not.toBeUndefined();
-            });
+                postComment.mockReturnValueOnce(
+                    // eslint-disable-next-line prefer-promise-reject-errors
+                    Promise.reject({
+                        responseText: apiPostValidCommentButReadOnlyMode,
+                        status: 503,
+                    })
+                );
+
+                return commentBox.postComment().then(() => {
+                    expect(commentBox.getElem('error')).not.toBeUndefined();
+                });
+            }
         });
 
         it('should send a success message to the user when comment is valid', () => {
-            commentBox.getElem('body').value = validCommentText;
+            const commentBody = commentBox.getElem('body');
 
-            postComment.mockReturnValueOnce(
-                Promise.resolve(JSON.parse(apiPostValidCommentResp))
-            );
+            if (commentBody && commentBody instanceof HTMLTextAreaElement) {
+                commentBody.value = validCommentText;
 
-            return commentBox.postComment().then(comment => {
-                expect(JSON.stringify(comment.id)).toEqual(
-                    JSON.parse(apiPostValidCommentResp).message
+                postComment.mockReturnValueOnce(
+                    Promise.resolve(JSON.parse(apiPostValidCommentResp))
                 );
-            });
+
+                return commentBox.postComment().then(comment => {
+                    expect(JSON.stringify(comment.id)).toEqual(
+                        JSON.parse(apiPostValidCommentResp).message
+                    );
+                });
+            }
         });
     });
 });
