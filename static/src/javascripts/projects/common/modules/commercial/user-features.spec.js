@@ -34,7 +34,7 @@ const PERSISTENCE_KEYS = {
     PAYING_MEMBER_COOKIE: 'gu_paying_member',
     RECURRING_CONTRIBUTOR_COOKIE: 'gu_recurring_contributor',
     AD_FREE_USER_COOKIE: 'GU_AF1',
-    ACCOUNT_DATA_UPDATE_LINK_COOKIE : 'gu_account_link',
+    ACCOUNT_DATA_UPDATE_LINK_COOKIE: 'gu_account_link',
 };
 
 const setAllFeaturesData = opts => {
@@ -56,7 +56,7 @@ const setAllFeaturesData = opts => {
         PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
         expiryDate.getTime().toString()
     );
-    addCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE,'test');
+    addCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE, 'test');
 };
 
 const setExpiredAdFreeData = () => {
@@ -185,7 +185,10 @@ describe('The account data update warning getter', () => {
         });
 
         it('Is the same when the user has an account data update link cookie', () => {
-            addCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE, 'the same');
+            addCookie(
+                PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE,
+                'the same'
+            );
             expect(accountDataUpdateWarning()).toBe('the same');
         });
 
@@ -193,8 +196,6 @@ describe('The account data update warning getter', () => {
             removeCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE);
             expect(accountDataUpdateWarning()).toBe(null);
         });
-
-
     });
 });
 

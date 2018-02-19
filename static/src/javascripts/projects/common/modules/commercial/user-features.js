@@ -157,5 +157,5 @@ export {
     isRecurringContributor,
     shouldSeeReaderRevenue,
     refresh,
-    deleteOldData
+    deleteOldData,
 };
