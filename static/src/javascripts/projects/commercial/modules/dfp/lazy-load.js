@@ -66,7 +66,7 @@ const getObserver = once(() =>
     calculateLazyLoadingDistance().then(
         distance =>
             new window.IntersectionObserver(onIntersect, {
-                rootMargin: `${distance}px 0%`,
+                rootMargin: `${distance}px 0px`,
             })
     )
 );
