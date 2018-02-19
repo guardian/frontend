@@ -122,6 +122,7 @@ final case class Content(
   private lazy val openGraphImageProfile: ElementProfile =
     if(isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) Item700
     else if(tags.isComment) FacebookOpenGraphImage.opinions
+    else if(tags.isLiveBlog) FacebookOpenGraphImage.live
     else FacebookOpenGraphImage.default
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
@@ -137,6 +138,7 @@ final case class Content(
   lazy val twitterCardImage: String = {
     val image = if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) Item700
     else if(tags.isComment) TwitterImage.opinions
+    else if(tags.isLiveBlog) TwitterImage.live
     else TwitterImage.default
     ImgSrc(openGraphImageOrFallbackUrl, image)
   }
@@ -739,7 +741,7 @@ case class GalleryLightbox(
 ){
   def imageContainer(index: Int): ImageElement = galleryImages(index)
 
-  private val facebookImage: ShareImage = if(tags.isComment) FacebookOpenGraphImage.opinions else FacebookOpenGraphImage.default
+  private val facebookImage: ShareImage = if(tags.isComment) FacebookOpenGraphImage.opinions else if(tags.isLiveBlog) FacebookOpenGraphImage.live else FacebookOpenGraphImage.default
   val galleryImages: Seq[ImageElement] = elements.images.filter(_.properties.isGallery)
   val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.images.largestImage)
   val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, facebookImage))
