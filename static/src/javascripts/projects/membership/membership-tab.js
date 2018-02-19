@@ -75,8 +75,8 @@ const populateUserDetails = (userDetails: UserDetails): void => {
     const intervalText = isMonthly ? 'Monthly' : 'Annual';
     const glyph = userDetails.subscription.plan.currency;
     let notificationTypeSelector;
-    console.log(userDetails);
-    if (userDetails.alertText != null) {
+
+    if (userDetails.alertText != null || userDetails.alertText !== '') {
         showWarning(userDetails.alertText);
     }
 
