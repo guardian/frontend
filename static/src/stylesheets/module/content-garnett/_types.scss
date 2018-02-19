@@ -1292,6 +1292,32 @@ $quote-mark: 35px;
         background-color: $garnett-neutral-7;
     }
 }
+
+// For legacy videos, shows play circle and icon
+.gu-media-wrapper--video .vjs-big-play-button .vjs-control-text {
+    &:before {
+        content: '';
+        -webkit-border-radius: 62.5rem;
+        border-radius: 62.5rem;
+        width: 3.75rem;
+        height: 3.75rem;
+        font-size: 0;
+        display: block;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-40%, -50%);
+        border-style: solid;
+        border-width: .7em 0 .7em 1.4em;
+        border-color: transparent transparent transparent #ffffff;
+        @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
+            border-radius: .2em
+        }
+    }
+}
 // *************** Feature showcase overrides ***************
 .has-feature-showcase-element,
 .has-feature-showcase-opinion {

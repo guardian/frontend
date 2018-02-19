@@ -34,7 +34,8 @@
         color: $garnett-neutral-8;
     }
 
-    .byline-img {
+    .byline-img,
+    .gu-media-wrapper--video .vjs-big-play-button .vjs-control-text {
         background: $mediaColor;
     }
 
