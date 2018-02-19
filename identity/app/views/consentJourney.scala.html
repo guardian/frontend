@@ -185,6 +185,16 @@
                     ) ++ defaultJourney
 
                 }
+                case GdprCampaignConsentsJourney => {
+                    List(
+                        ConsentBanner(
+                            "Stay with us"
+                        ),
+                        emailRepermissionStep,
+                        marketingConsentStep,
+                        channelStep
+                    )
+                }
                 case DefaultConsentsJourney => {
                     List(
                         introStep
