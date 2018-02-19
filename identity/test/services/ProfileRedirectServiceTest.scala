@@ -44,7 +44,7 @@ class ProfileRedirectServiceTest extends path.FreeSpec with MockitoSugar with Sc
 
     val userWithValidEmailAndHasRepermed = new User(statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
     val userWithoutValidEmail = new User(statusFields = new StatusFields(userEmailValidated = Some(false)))
-    val profileRedirectService = new ProfileRedirectService(newsletterService,idRequestParser, controllerComponents)
+    val profileRedirectService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponents)
 
     val originalUrl = "https://profile.thegulocal.com/email-prefs"
     val request = Request(FakeRequest("GET", originalUrl), AnyContent())
