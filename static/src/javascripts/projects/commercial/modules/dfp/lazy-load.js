@@ -7,6 +7,7 @@ import { loadAdvert, refreshAdvert } from 'commercial/modules/dfp/load-advert';
 import { updateAdvertMetric } from 'commercial/modules/dfp/performance-logging';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { getTestVariantId } from 'common/modules/experiments/utils.js';
+import { getViewport } from 'lib/detect';
 import once from 'lodash/functions/once';
 import fastdom from 'lib/fastdom-promise';
 
@@ -25,7 +26,7 @@ const displayAd = (advertId: string): void => {
     }
 };
 
-const calculateLazyLoadingDistance = () => {
+const calculateLazyLoadingDistance = (viewport: { width: number, height: number }) => {
     const variant = getTestVariantId('CommercialLazyLoading');
 
     if (variant === '400px') {
@@ -33,11 +34,11 @@ const calculateLazyLoadingDistance = () => {
     }
 
     if (variant === '1vh') {
-        return fastdom.read(() => window.innerHeight);
+        return viewport.height;
     }
 
     if (variant === '0.5vh') {
-        return fastdom.read(() => window.innerHeight / 2);
+        return viewport.height / 2;
     }
 
     return 200;
@@ -62,13 +63,16 @@ const onIntersect = (
     );
 };
 
+const readViewport = (): Promise<{ width: number, height: number }> => fastdom.read(() => getViewport());
+
 const getObserver = once(() =>
-    calculateLazyLoadingDistance().then(
-        distance =>
+    readViewport()
+        .then(calculateLazyLoadingDistance)
+        .then( distance =>
             new window.IntersectionObserver(onIntersect, {
                 rootMargin: `${distance}px 0px`,
             })
-    )
+        )
 );
 
 export const enableLazyLoad = (advert: Advert): void =>
