@@ -19,9 +19,23 @@
 
             <div class="u-cf">
 
+                @if((article.tags.isInterview)){
+                    <div class="content__label-interview">Interview</div>
+                }
+
                 <h1 class="content__headline" articleprop="headline" @langAttributes(article.content)>
-                @Html(article.trail.headline)
+                    @if(article.tags.isInterview) {
+                        <span class="content__headline--interview-wrapper">@Html(article.trail.headline)</span>
+                    } else {
+                        @Html(article.trail.headline)
+                    }
                 </h1>
+
+                @if(article.tags.isInterview) {
+                    @article.trail.byline.map { text =>
+                        <span class="content__headline--byline-interview">By @ContributorLinks(text, article.tags.contributors)</span>
+                    }
+                }
             </div>
         </div>
     </div>
@@ -34,9 +48,23 @@
 
             <div class="u-cf">
 
+                @if((article.tags.isInterview)){
+                    <div class="content__label-interview">Interview</div>
+                }
+
                 <h1 class="content__headline" articleprop="headline" @langAttributes(article.content)>
-                    @Html(article.trail.headline)
+                    @if(article.tags.isInterview) {
+                        <span class="content__headline--interview-wrapper">@Html(article.trail.headline)</span>
+                    } else {
+                        @Html(article.trail.headline)
+                    }
                 </h1>
+
+                @if(article.tags.isInterview) {
+                    @article.trail.byline.map { text =>
+                        <span class="content__headline--byline-interview">By @ContributorLinks(text, article.tags.contributors)</span>
+                    }
+                }
 
                 @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage && article.metadata.designType.nameOrDefault != "analysis") {
                     @fragments.meta.bylineImage(article.tags)

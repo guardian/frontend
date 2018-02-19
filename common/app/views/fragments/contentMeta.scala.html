@@ -28,9 +28,8 @@
     }
 
     @if(!(item.content.isGallery || item.content.isImmersive)) {
-
-        @if(!item.content.hasTonalHeaderByline || item.metadata.designType.nameOrDefault == "analysis") {
-            <div class="meta__contact-wrap">
+    <div class="meta__contact-wrap">
+        @if(!item.content.hasTonalHeaderByline && item.metadata.designType.nameOrDefault != "interview" || item.metadata.designType.nameOrDefault == "analysis") {
             @byline()
         }
 
@@ -46,10 +45,7 @@
         @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
             @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
         }
-
-        @if(!item.content.hasTonalHeaderByline || item.metadata.designType.nameOrDefault == "analysis") {
-        </div>
-        }
+    </div>
     }
 
     @if(item.content.isImmersive) {
