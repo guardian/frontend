@@ -76,8 +76,9 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
 
       val result = actions.manageAccountRedirectAction(originalUrl).apply(callMock)(request)
 
+      // We get a mock result back so we just want to ensure the mockFunc has been run rather than check its content
       whenReady(result)(res => {
-        verify(mockFunc).apply(2)
+        verify(mockFunc).apply(1)
       })
     }
   }
