@@ -185,10 +185,7 @@ describe('The account data update warning getter', () => {
         });
 
         it('Is the same when the user has an account data update link cookie', () => {
-            addCookie(
-                PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE,
-                'the same'
-            );
+            addCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE, 'the same');
             expect(accountDataUpdateWarning()).toBe('the same');
         });
 

@@ -46,10 +46,7 @@ const persistResponse = (JsonResponse: () => void) => {
 
     removeCookie(ACTION_REQUIRED_FOR_COOKIE);
     if ('alertAvailableFor' in JsonResponse) {
-        addCookie(
-            ACTION_REQUIRED_FOR_COOKIE,
-            JsonResponse.alertAvailableFor
-        );
+        addCookie(ACTION_REQUIRED_FOR_COOKIE, JsonResponse.alertAvailableFor);
     }
 
     if (adFreeDataIsPresent() && !JsonResponse.adFree) {
