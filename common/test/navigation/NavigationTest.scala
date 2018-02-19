@@ -219,7 +219,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
   "On an au immigration article, the pillar" should "be News, and immigration should be highlighted" in {
     val edition = Au
-    val url = "/world/2017/dec/04/this-is-hell-behrouz-boochani-diaries-expose-australia-refugee-shame"
+    val url = "world/2017/dec/04/this-is-hell-behrouz-boochani-diaries-expose-australia-refugee-shame"
     val response = testContentApiClient.getResponse(
       testContentApiClient.item(url, edition)
     )

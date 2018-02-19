@@ -6,8 +6,8 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
-import common.{Lazy}
-import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, Response}
+import common.Lazy
+import contentapi._
 import model.{ApplicationContext, ApplicationIdentity}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.{BeforeAndAfterAll, TestSuite}
@@ -146,7 +146,12 @@ trait WithTestContentApiClient extends WithTestExecutionContext {
   }
 
   lazy val recorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient))
+  lazy val previewRecorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient) {
+    override val signer = Some(PreviewSigner()) }
+  )
+
   lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
+  lazy val testPreviewContentApiClient = new PreviewContentApi(previewRecorderHttpClient)
 }
 
 trait WithTestCSRF {

@@ -1,6 +1,6 @@
 package controllers.admin
 
-import contentapi.{CapiHttpClient, ContentApiClient, PreviewContentApi}
+import contentapi.{CapiHttpClient, ContentApiClient, PreviewContentApi, PreviewSigner}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{ImplicitControllerExecutionContext, Logging}
 import model.{ApplicationContext, NoCache}
@@ -29,9 +29,10 @@ object TestFailed{
 
 class TroubleshooterController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit appContext: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
-  private val capiHttpClient = new CapiHttpClient(wsClient)
-  val contentApi = new ContentApiClient(capiHttpClient)
-  val previewContentApi = new PreviewContentApi(capiHttpClient)
+  private val capiLiveHttpClient = new CapiHttpClient(wsClient)
+  private val capiPreviewHttpClient = new CapiHttpClient(wsClient) { override val signer = Some(PreviewSigner()) }
+  val contentApi = new ContentApiClient(capiLiveHttpClient)
+  val previewContentApi = new PreviewContentApi(capiPreviewHttpClient)
 
   private lazy val awsEc2Client: Option[AmazonEC2] = credentials.map { credentials =>
     AmazonEC2ClientBuilder
