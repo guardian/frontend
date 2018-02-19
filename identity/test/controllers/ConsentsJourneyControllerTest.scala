@@ -169,6 +169,33 @@ import scala.concurrent.Future
     }
 
 
+    "using displayConsentsJourneyGdprCampaign" should {
+
+      "reference the GDPR campaign" in new ConsentsJourneyFixture {
+        val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
+        status(result) should be(200)
+        contentAsString(result) should include (xml.Utility.escape("Stay with us"))
+      }
+
+      "have consent checkboxes" in new ConsentsJourneyFixture {
+        val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
+        status(result) should be(200)
+        contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
+      }
+
+      "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
+        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listIdV1.toString))
+        when(api.userEmails(anyString(), any[TrackingData]))
+          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
+
+        val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
+        status(result) should be(200)
+        contentAsString(result) should include (xml.Utility.escape(EmailNewsletters.guardianTodayUk.name))
+      }
+
+    }
+
+
     "using displayConsentsJourneyThankYou" should {
 
       "thank you" in new ConsentsJourneyFixture {
