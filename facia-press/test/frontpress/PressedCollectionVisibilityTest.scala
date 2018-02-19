@@ -4,6 +4,7 @@ import helpers.FaciaTestData
 import model.PressedCollectionVersions
 import model.facia.PressedCollection
 import org.scalatest.{FlatSpec, Matchers}
+import com.gu.facia.client.models.{CollectionPlatform, AppCollection, WebCollection, AnyPlatform}
 
 class PressedCollectionVisibilityTest extends FlatSpec with Matchers with FaciaTestData {
 
@@ -43,5 +44,16 @@ class PressedCollectionVisibilityTest extends FlatSpec with Matchers with FaciaT
     val liteCollection = pressedCollection.copy(curated = pressedCollection.curated.take(3), hasMore = true)
     val fullCollection = pressedCollection.copy(hasMore = true)
     collectionVisibility.pressedCollectionVersions shouldBe PressedCollectionVersions(liteCollection, fullCollection)
+  }
+
+  it should "identify web collections" in new PressedCollectionVisibilityScope {
+    def withPlatform(platform: CollectionPlatform): PressedCollectionVisibility = PressedCollectionVisibility(
+      pressedCollection = pressedCollection.copy(config = pressedCollection.config.copy(platform = Some(platform))),
+      3
+    )
+
+    PressedCollectionVisibility.isWebCollection(withPlatform(AppCollection)) should be(false)
+    PressedCollectionVisibility.isWebCollection(withPlatform(WebCollection)) should be(true)
+    PressedCollectionVisibility.isWebCollection(withPlatform(AnyPlatform)) should be(true)
   }
 }

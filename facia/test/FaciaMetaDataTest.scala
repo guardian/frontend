@@ -60,12 +60,13 @@ import test._
     val itemList: JsValue = Json.parse(script.first().html())
 
     val containers = (itemList \ "itemListElement").as[JsArray].value
-    containers.size should be(15)
+    containers.size should be(12)
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
-    topContainer.size should be (7)
+    println(topContainer)
+    topContainer.size should be (15)
 
-    (topContainer(0) \ "url").as[JsString].value should be ("/music/2017/dec/06/from-bush-doof-to-clowncore-your-favourite-underground-music-scenes")
+    (topContainer(0) \ "url").as[JsString].value should be ("/music/ng-interactive/2017/oct/30/how-the-north-stayed-underground-grime-makina-psychedelia")
 
   }
 

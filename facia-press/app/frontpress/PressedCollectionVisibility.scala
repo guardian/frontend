@@ -4,7 +4,7 @@ import layout.slices.Container
 import model.PressedCollectionVersions
 import model.facia.PressedCollection
 import model.pressed.PressedContent
-
+import com.gu.facia.client.models.{AnyPlatform, WebCollection}
 
 case class PressedCollectionVisibility(pressedCollection: PressedCollection, visible: Int) extends implicits.Collections {
   import PressedCollectionVisibility._
@@ -61,4 +61,9 @@ object PressedCollectionVisibility {
       accum :+ collection.deduplicate(deduplicateAgainst)
     }
   }
+
+  def isWebCollection(c: PressedCollectionVisibility): Boolean =
+    c.pressedCollection.config.platform.isEmpty ||
+      c.pressedCollection.config.platform.contains(AnyPlatform) ||
+      c.pressedCollection.config.platform.contains(WebCollection)
 }
