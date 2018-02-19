@@ -1,18 +1,30 @@
 package contentapi
 
-import java.net.InetAddress
+import java.net.{InetAddress, URI}
 import java.util.concurrent.TimeoutException
 
+import com.amazonaws.DefaultRequest
+import com.amazonaws.auth.{AWS4Signer, AWSCredentials}
+import com.amazonaws.http.HttpMethodName
 import common.ContentApiMetrics.{ContentApi404Metric, ContentApiErrorMetric, ContentApiRequestsMetric}
 import common.{ContentApiMetrics, Logging}
 import conf.Configuration
-import conf.Configuration.contentApi.previewAuth
-import play.api.libs.ws.{WSAuthScheme, WSClient}
+import conf.Configuration.contentApi.capiPreviewCredentials
+import play.api.libs.ws.WSClient
+import com.gu.contentapi.client.IAMSigner
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
 case class Response(body: Array[Byte], status: Int, statusText: String)
+
+/**
+  * CAPI preview uses IAM authorization.
+  * The signer generates AWS sig4v signed headers based on the request and the capi credentials
+  */
+object PreviewSigner {
+  def apply() = new IAMSigner(capiPreviewCredentials, common.Environment.awsRegion)
+}
 
 trait HttpClient {
   def GET(url: String, headers: Iterable[(String, String)]): Future[Response]
@@ -23,6 +35,11 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
 
   import java.lang.System.currentTimeMillis
 
+  val signer: Option[IAMSigner] = None
+
+  private def addAuthHeaders(headers: Iterable[(String, String)], url: String): Iterable[(String, String)] =
+    signer.fold(headers)(_.addIAMHeaders(headers.toMap, URI.create(url)))
+
   def GET(url: String, headers: Iterable[(String, String)]): Future[Response] = {
     //append with a & as there are always params in there already
     val urlWithDebugInfo = s"$url&${RequestDebugInfo.debugParams}"
@@ -32,8 +49,10 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
     val start = currentTimeMillis
 
     val baseRequest = wsClient.url(urlWithDebugInfo)
-    val request = previewAuth.fold(baseRequest)(auth => baseRequest.withAuth(auth.user, auth.password, WSAuthScheme.BASIC))
-    val response = request.withHttpHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
+
+    val headersWithAuth = addAuthHeaders(headers, urlWithDebugInfo)
+
+    val response = baseRequest.withHttpHeaders(headersWithAuth.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
 
     // record metrics
 

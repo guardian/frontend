@@ -152,7 +152,7 @@ trait Index extends ConciergeRepository with Collections {
     IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial)
   }
 
-  private def tag(response: ItemResponse, page: Int) = {
+  private def tag(response: ItemResponse, page: Int): Option[IndexPage] = {
     val tag = response.tag map { Tag.make(_, pagination(response)) }
     val leadContentCutOff = DateTime.now - QueryDefaults.leadContentMaxAge
     val editorsPicks = response.editorsPicks.getOrElse(Nil).map(IndexPageItem(_))

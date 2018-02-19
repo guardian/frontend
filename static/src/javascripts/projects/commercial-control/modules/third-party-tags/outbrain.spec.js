@@ -73,7 +73,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainDisabled', true);
             // make outbrain compliant
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
@@ -87,7 +86,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainDisabled', false);
             // make outbrain compliant
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
@@ -101,7 +99,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainDisabled', false);
             // make outbrain compliant
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
             // isOutbrainBlockedByAds checks
             resolveCheck('isOutbrainBlockedByAds', true);
@@ -117,7 +114,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainDisabled', false);
             // make outbrain compliant
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
             resolveCheck('isOutbrainBlockedByAds', false);
@@ -136,23 +132,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainMerchandiseCompliant', false);
             // editorial tests
             resolveCheck('isUserInContributionsAbTest', true);
-            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
-            resolveCheck('isStoryQuestionsOnPage', false);
-
-            return initOutbrain().then(() => {
-                expect(load).toHaveBeenCalledWith('nonCompliant');
-            });
-        });
-
-        it('should load a non compliant component if user in Email AB test and Email can run', () => {
-            // isOutbrainDisabled check
-            resolveCheck('isOutbrainDisabled', false);
-            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            resolveCheck('isOutbrainBlockedByAds', false);
-            resolveCheck('isOutbrainMerchandiseCompliant', false);
-            // editorial tests
-            resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isUserInEmailAbTestAndEmailCanRun', true);
             resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
@@ -168,7 +147,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainMerchandiseCompliant', false);
             // editorial tests
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', true);
 
             return initOutbrain().then(() => {
@@ -184,7 +162,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainMerchandiseCompliant', false);
             // editorial tests
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {

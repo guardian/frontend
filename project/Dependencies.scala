@@ -6,7 +6,7 @@ object Dependencies {
   val identityLibVersion = "3.125"
   val awsVersion = "1.11.240"
   val faciaVersion = "2.5.0"
-  val capiVersion = "11.46"
+  val capiVersion = "11.51"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -32,7 +32,6 @@ object Dependencies {
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "3.11.0"
-  val exactTargetClient = "com.gu" %% "exact-target-client" % "2.26"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
@@ -73,6 +72,7 @@ object Dependencies {
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
   val atomRenderer = "com.gu" %% "atom-renderer" % "0.12.2"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
+  val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
 
   // Fixing transient dependency issue
   // AWS SDK (1.11.181), which kinesis-logback-appender depends on, brings com.fasterxml.jackson.core and com.fasterxml.jackson.dataformat libs in version 2.6.9

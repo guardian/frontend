@@ -6,17 +6,17 @@ import common._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
-import controllers.{ArchiveController, DevComponentController, HealthCheck}
+import controllers.{ArchiveController, HealthCheck}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
+import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services.{ArchiveMetrics, RedirectService}
 import router.Routes
-import rendering.core.Renderer
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -24,9 +24,8 @@ class AppLoader extends FrontendApplicationLoader {
 
 trait AppComponents extends FrontendComponents {
 
-  lazy val renderer: Renderer = wire[Renderer]
+  def wsClient: WSClient
   lazy val redirects = wire[RedirectService]
-  lazy val devComponentController = wire[DevComponentController]
 
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
@@ -39,6 +38,11 @@ trait AppComponents extends FrontendComponents {
     wire[ArchiveMetrics],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle]
+  )
+
+  override lazy val appMetrics = ApplicationMetrics(
+    MoonMetrics.MoonRenderingMetric,
+    MoonMetrics.NonMoonRenderingMetric
   )
 
   lazy val router: Router = wire[Routes]

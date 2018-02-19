@@ -289,18 +289,26 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
             labelEl.querySelector('input'),
             labelEl.querySelector('.manage-account__switch-title'),
         ]);
+
     const fetchWrappedCheckboxes = (): Promise<HTMLInputElement[]> =>
-        fastdom.read(() => {
-            const nearestSwitchesEl = labelEl.closest(
-                '.manage-account__switches'
+        fastdom
+            .read(() => [
+                labelEl.dataset.wrapper
+                    ? labelEl.dataset.wrapper
+                    : '.manage-account__switches',
+            ])
+            .then(selector =>
+                fastdom.read(() => {
+                    const nearestWrapperEl = labelEl.closest(selector);
+                    if (!nearestWrapperEl) throw new Error(ERR_MALFORMED_HTML);
+                    return [
+                        ...nearestWrapperEl.querySelectorAll(
+                            'ul:not(.manage-account__switches-head) input[type=checkbox]'
+                        ),
+                    ];
+                })
             );
-            if (!nearestSwitchesEl) throw new Error(ERR_MALFORMED_HTML);
-            return [
-                ...nearestSwitchesEl.querySelectorAll(
-                    'ul:not(.manage-account__switches-head) input[type=checkbox]'
-                ),
-            ];
-        });
+
     Promise.all([
         fetchElements(),
         fetchWrappedCheckboxes(),

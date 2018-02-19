@@ -6,8 +6,8 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
-import common.{Lazy}
-import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, Response}
+import common.Lazy
+import contentapi._
 import model.{ApplicationContext, ApplicationIdentity}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.{BeforeAndAfterAll, TestSuite}
@@ -21,7 +21,6 @@ import play.api.libs.ws.ahc.AhcWSClient
 import play.api.test._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import recorder.ContentApiHttpRecorder
-import rendering.core.Renderer
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
@@ -146,7 +145,12 @@ trait WithTestContentApiClient extends WithTestExecutionContext {
   }
 
   lazy val recorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient))
+  lazy val previewRecorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient) {
+    override val signer = Some(PreviewSigner()) }
+  )
+
   lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
+  lazy val testPreviewContentApiClient = new PreviewContentApi(previewRecorderHttpClient)
 }
 
 trait WithTestCSRF {
@@ -157,16 +161,4 @@ trait WithTestCSRF {
   lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
   lazy val csrfAddToken = new CSRFAddToken(csrfConfig, csrfTokenSigner, httpConfiguration.session)
   lazy val csrfCheck = new CSRFCheck(csrfConfig, csrfTokenSigner, httpConfiguration.session)
-}
-
-trait WithTestRenderer {
-  def testExecutionContext: ExecutionContext
-
-  val testRenderer: Renderer = {
-    new Renderer()(
-      ActorSystem("TestRenderer"),
-      testExecutionContext,
-      ApplicationContext(Environment.simple(), ApplicationIdentity("TestRenderer"))
-    )
-  }
 }

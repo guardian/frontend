@@ -75,8 +75,9 @@ trait ApiQueryDefaults extends Logging {
 
   def item(id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
-  //common fields that we use across most queries.
-  def item(id: String, edition: String): ItemQuery = item(id)
+  //Strip unnecessary leading slash in path, as this affects signing of IAM requests
+  def item(id: String, edition: String): ItemQuery = item(id.stripPrefix("/"))
+    //common fields that we use across most queries.
     .edition(edition)
     .showSection(true)
     .showTags("all")
@@ -101,10 +102,9 @@ trait ApiQueryDefaults extends Logging {
 trait MonitoredContentApiClientLogic extends ContentApiClientLogic with ApiQueryDefaults with Logging {
 
   val httpClient: HttpClient
-  val _httpClient = httpClient //TODO: to delete once ContentApiClient fully uses DI
 
   override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {
-    val futureContent = _httpClient.GET(url, headers) map { response: Response =>
+    val futureContent = httpClient.GET(url, headers) map { response: Response =>
       HttpResponse(response.body, response.status, response.statusText)
     }
     futureContent.failed.foreach { t =>
@@ -194,7 +194,7 @@ class ContentApiClient(httpClient: HttpClient)(implicit executionContext: Execut
 class PreviewContentApi(httpClient: HttpClient)(implicit executionContext: ExecutionContext) extends ContentApiClient(httpClient) {
   override val thriftClient = CircuitBreakingContentApiClient(
     httpClient = httpClient,
-    targetUrl = Configuration.contentApi.previewHost,
+    targetUrl = Configuration.contentApi.previewHost.getOrElse(Configuration.contentApi.contentApiHost),
     apiKey = contentApi.key.getOrElse("")
   )
 }
