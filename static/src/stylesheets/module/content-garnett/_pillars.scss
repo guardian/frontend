@@ -105,6 +105,11 @@
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
     }
+
+    .content__label-interview {
+        background-color: $pillarColor;
+        box-shadow: $gs-baseline / 3 0 0 $pillarColor, -$gs-baseline / 2 0 0 $pillarColor;
+    }
 }
 //////** Discussion (comment) styling **//////////
 //d-comment__author a[href], ._underline_1lj47_3, .js-discussion-author-link

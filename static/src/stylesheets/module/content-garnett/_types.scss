@@ -826,8 +826,123 @@ $quote-mark: 35px;
         }
     }
 }
-// *************** Opinion Styles ***************
 
+//**************** Interview style **************
+
+.content--type-interview {
+
+    .content__headline-showcase-wrapper {
+        .content__header {
+            @include mq($from: desktop) {
+                margin-bottom: calc(-#{$gs-baseline} * 7 - 2px);
+            }
+        }
+    }
+
+    .content__headline-standfirst-wrapper {
+        .content__header .content__headline {
+            margin-right: $gs-gutter / 2;
+            padding-bottom: $gs-baseline / 2;
+
+            @include mq($from: tablet) {
+                margin: 0;
+            }
+        }
+    }
+
+    .content__header  {
+        margin-left: $gs-baseline + 4px;
+
+        @include mq($from: mobileLandscape) {
+            margin-left: $gs-baseline * 2;
+        }
+
+        @include mq($from: phablet) {
+            margin-top: $gs-baseline / 2;
+        }
+
+        @include mq($from: tablet) {
+            margin-left: $gs-baseline / 2;
+        }
+    }
+
+    .content__label-interview {
+        @include fs-headlineGarnett(2);
+        padding-bottom: $gs-baseline / 4;
+        font-weight: 900;
+        display: inline-block;
+        box-decoration-break: clone;
+        position: relative;
+        color: #ffffff;
+
+        @include mq($from: desktop) {
+            padding-bottom: 0px;
+        }
+    }
+
+    .content__head--article .content__headline {
+        padding: 0;
+        line-height: 35px;
+
+        @include mq($from: desktop) {
+            line-height: 42px;
+        }
+
+        .content__headline--interview-wrapper {
+            background-color: $garnett-neutral-1;
+            display: inline;
+            position: relative;
+            z-index: 10;
+            color: #ffffff;
+            box-shadow: $gs-baseline / 2 0 0 $garnett-neutral-1, -$gs-baseline / 2 0 0 $garnett-neutral-1;
+            box-decoration-break: clone;
+            padding-bottom: $gs-baseline / 2;
+        }
+    }
+
+    .content__headline--byline-interview {
+        @include fs-headlineGarnett(2);
+        display: inline-block;
+        font-style: italic;
+        font-weight: 500;
+        background-color: $news-garnett-highlight;
+        box-shadow: $gs-baseline / 2 0 0 $news-garnett-highlight, -$gs-baseline / 2 0 0 $news-garnett-highlight;
+        color: $garnett-neutral-1;
+        margin-bottom:$gs-baseline;
+        padding-bottom: $gs-baseline / 4;
+        position: relative;
+        z-index: 10;
+
+        @include mq($from: tablet) {
+            margin-top: $gs-baseline / 3
+        }
+
+        @include mq($from: desktop) {
+            margin-top: 0px;
+        }
+
+        a {
+            color: inherit;
+            font-weight: inherit;
+        }
+    }
+
+    &.has-feature-showcase-element {
+        .content__head--article .content__headline-showcase-wrapper {
+            .content__headline {
+                padding-bottom: $gs-baseline / 2;
+            }
+        }
+    }
+
+    .content__meta-container {
+        @include mq($from: desktop){
+            margin-top: $gs-baseline * 3;
+        }
+    }
+}
+
+// *************** Opinion Styles ***************
 
 .content--type-guardianview,
 .content--type-comment {
@@ -1319,7 +1434,10 @@ $quote-mark: 35px;
             }
         }
 
-        .content__headline-standfirst-wrapper .content__headline {
+        .content__headline-standfirst-wrapper .content__headline,
+        .content__headline-standfirst-wrapper .content__label-interview,
+        .content__headline-standfirst-wrapper .content__headline--byline-interview
+        {
             @include mq(leftCol) {
                 display: none;
             }
