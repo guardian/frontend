@@ -35,3 +35,14 @@
         }
     }
 }
+
+.identity-consent-hero {
+    height: 13em;
+    border-bottom: 1px solid $garnett-neutral-4;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    &.identity-consent-hero--gdpr-oi-campaign {
+        background-image: url(https://s3-eu-west-1.amazonaws.com/identity-public-email-assets/gdpr-oi-hero.svg);
+    }
+}

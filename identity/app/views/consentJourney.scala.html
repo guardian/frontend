@@ -146,6 +146,12 @@
     )
 }
 
+@if(skin == Some("gdpr-oi-campaign")) {
+    <div class="identity-consent-hero identity-consent-hero--gdpr-oi-campaign">
+        <h1 class="u-h">Stay with us</h1>
+    </div>
+}
+
 <div class="identity-wrapper monocolumn-wrapper">
     <div class="js-errorHolder manage-account__errors"></div>
     @consentJourneyFragments.jsFallback(verifiedReturnUrl, idRequest, idUrlBuilder)
