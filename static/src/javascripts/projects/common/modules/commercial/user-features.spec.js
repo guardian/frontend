@@ -34,7 +34,7 @@ const PERSISTENCE_KEYS = {
     PAYING_MEMBER_COOKIE: 'gu_paying_member',
     RECURRING_CONTRIBUTOR_COOKIE: 'gu_recurring_contributor',
     AD_FREE_USER_COOKIE: 'GU_AF1',
-    ACCOUNT_DATA_UPDATE_LINK_COOKIE: 'gu_account_link',
+    ACTION_REQUIRED_FOR_COOKIE: 'gu_action_required_for',
 };
 
 const setAllFeaturesData = opts => {

@@ -10,7 +10,7 @@ const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
 const AD_FREE_USER_COOKIE = 'GU_AF1';
-const ACCOUNT_DATA_UPDATE_LINK_COOKIE = 'gu_account_link';
+const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 
 const userHasData = (): boolean => {
     const cookie =
@@ -22,7 +22,7 @@ const userHasData = (): boolean => {
 };
 
 const accountDataUpdateWarning = (): ?string =>
-    getCookie(ACCOUNT_DATA_UPDATE_LINK_COOKIE);
+    getCookie(ACTION_REQUIRED_FOR_COOKIE);
 
 const adFreeDataIsPresent = (): boolean => {
     const cookieVal = getCookie(AD_FREE_USER_COOKIE);
@@ -44,10 +44,10 @@ const persistResponse = (JsonResponse: () => void) => {
         JsonResponse.contentAccess.recurringContributor
     );
 
-    removeCookie(ACCOUNT_DATA_UPDATE_LINK_COOKIE);
+    removeCookie(ACTION_REQUIRED_FOR_COOKIE);
     if ('alertAvailableFor' in JsonResponse) {
         addCookie(
-            ACCOUNT_DATA_UPDATE_LINK_COOKIE,
+            ACTION_REQUIRED_FOR_COOKIE,
             JsonResponse.alertAvailableFor
         );
     }
@@ -66,7 +66,7 @@ const deleteOldData = (): void => {
     removeCookie(PAYING_MEMBER_COOKIE);
     removeCookie(RECURRING_CONTRIBUTOR_COOKIE);
     removeCookie(AD_FREE_USER_COOKIE);
-    removeCookie(ACCOUNT_DATA_UPDATE_LINK_COOKIE);
+    removeCookie(ACTION_REQUIRED_FOR_COOKIE);
 };
 
 const requestNewData = (): Promise<void> =>
