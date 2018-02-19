@@ -50,7 +50,7 @@
 @channelStepContent = {
     <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
-        <div class="manage-account__switches">
+        <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
             @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
                 @if(isUsersChannel(consentField, user)) {
@@ -76,7 +76,7 @@
 @marketingStepContent = {
     <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
-        <div class="manage-account__switches">
+        <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
             @helper.repeatWithIndex(forms.privacyForm("consents"), min = 1) { (consentField, index) =>
                 @if(!isChannel(consentField)) {
@@ -107,7 +107,7 @@
     <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
         @fragments.form.hidden(emailPrefsForm("htmlPreference"))
-        <div class="manage-account__switches">
+        <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
             @onlySubscribedToV1Newsletters.zipWithRowInfo.map { case (newsletter, row) =>
             <li>
