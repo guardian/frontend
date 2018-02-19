@@ -8,6 +8,7 @@ import {
     isAdFreeUser,
     isPayingMember,
     isRecurringContributor,
+    accountDataUpdateWarning,
 } from './user-features.js';
 
 jest.mock('projects/common/modules/identity/api', () => ({
@@ -33,6 +34,7 @@ const PERSISTENCE_KEYS = {
     PAYING_MEMBER_COOKIE: 'gu_paying_member',
     RECURRING_CONTRIBUTOR_COOKIE: 'gu_recurring_contributor',
     AD_FREE_USER_COOKIE: 'GU_AF1',
+    ACCOUNT_DATA_UPDATE_LINK_COOKIE : 'gu_account_link',
 };
 
 const setAllFeaturesData = opts => {
@@ -54,6 +56,7 @@ const setAllFeaturesData = opts => {
         PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
         expiryDate.getTime().toString()
     );
+    addCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE,'test');
 };
 
 const setExpiredAdFreeData = () => {
@@ -71,6 +74,7 @@ const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE);
     removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
+    removeCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE);
 };
 
 describe('Refreshing the features data', () => {
@@ -164,6 +168,33 @@ describe('Refreshing the features data', () => {
                 getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
             ).toBeNull();
         });
+    });
+});
+
+describe('The account data update warning getter', () => {
+    it('Is not set when the user is logged out', () => {
+        jest.resetAllMocks();
+        isUserLoggedIn.mockReturnValue(false);
+        expect(accountDataUpdateWarning()).toBe(null);
+    });
+
+    describe('When the user is logged in', () => {
+        beforeEach(() => {
+            jest.resetAllMocks();
+            isUserLoggedIn.mockReturnValue(true);
+        });
+
+        it('Is the same when the user has an account data update link cookie', () => {
+            addCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE, 'the same');
+            expect(accountDataUpdateWarning()).toBe('the same');
+        });
+
+        it('Is null when the user does not have an account data update link cookie', () => {
+            removeCookie(PERSISTENCE_KEYS.ACCOUNT_DATA_UPDATE_LINK_COOKIE);
+            expect(accountDataUpdateWarning()).toBe(null);
+        });
+
+
     });
 });
 
