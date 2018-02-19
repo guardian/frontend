@@ -2,9 +2,12 @@
 import { CommentBox } from 'common/modules/discussion/comment-box';
 import { getUserFromApiWithRefreshedCookie as getUserFromApiWithRefreshedCookie_ } from 'common/modules/identity/api';
 import { postComment as postComment_ } from 'common/modules/discussion/api';
-import config from 'lib/config';
 
+jest.mock('lib/config');
 jest.mock('lib/mediator');
+jest.mock('common/modules/discussion/user-avatars', () => ({
+    avatarify() {},
+}));
 jest.mock('common/modules/identity/api', () => ({
     getUserFromCookie: jest.fn().mockReturnValue({
         displayName: 'testy',
@@ -181,8 +184,6 @@ describe('Comment box', () => {
             const commentBody = commentBox.getElem('body');
 
             expect(commentBox.getElem('error')).toBeUndefined();
-
-            config.switches.enableDiscussionSwitch = true;
 
             if (commentBody && commentBody instanceof HTMLTextAreaElement) {
                 commentBody.value = validCommentText;
