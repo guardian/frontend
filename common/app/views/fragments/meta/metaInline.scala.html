@@ -40,13 +40,27 @@
     }
 
     @item.content.blogOrSeriesTag.map { series =>
-    <div class="@RenderClasses(Map(
-            "content__series-label--immersive-article" -> (item.content.isImmersive && item.content.tags.isArticle),
-            "content__series-label--photo-essay" -> item.content.isPhotoEssay
-        ), "content__series-label")
-      ">
-        <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
-    </div>
+        <div class="@RenderClasses(Map(
+                "content__series-label--immersive-article" -> (item.content.isImmersive && item.content.tags.isArticle),
+                "content__series-label--photo-essay" -> item.content.isPhotoEssay,
+                "content__series-label--column" -> item.content.isColumn
+            ), "content__series-label")
+          ">
+            <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
+        </div>
+
+        @if((item.content.isColumn)) {
+            <div class="content__series-cta">
+                    @fragments.inlineSvg("arrow-right", "icon", List("content__series-cta__icon", "rounded-icon centered-icon"))
+                    <span class="content__series-cta__text">
+                        More from this series
+                    </span>
+            </div>
+
+            <a class="content__series-cta__link u-faux-block-link__overlay" href="@LinkTo {/@series.id}">
+                More from this series
+            </a>
+        }
     }.getOrElse {
         @if(item.content.isFromTheObserver && !item.content.isImmersive) {
             <div class="content__series-label">

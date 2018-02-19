@@ -163,7 +163,7 @@
             order: 0;
         }
 
-        & > div:not(.content__series-label) {
+        & > .content__section-label  {
             display: none;
         }
     }
@@ -980,6 +980,7 @@
 
 // This section below makes the meta align with the image on leftCol, and has the main media first on mobile.
 .content__head--article {
+
     @include mq($until: tablet) {
         display: flex;
         flex-direction: column;

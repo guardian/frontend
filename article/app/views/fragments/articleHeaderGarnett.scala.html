@@ -129,8 +129,29 @@
         @fragments.items.elements.starRating(rating)
         }
     }
+
     @fragments.mainMedia(article, amp)
-    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement && article.content.starRating.isDefined) {
-    </div>
+
+    @if(article.content.isColumn) {
+        <div class="content__headline-column-wrapper content__headline-column-wrapper--column">
+            <div class="content__header tonal__header">
+                <div class="u-cf">
+                    <h1 class="content__headline content__headline--column" articleprop="headline" @langAttributes(article.content)>
+                    @Html(article.trail.headline)
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <div class="content__headline-standfirst-wrapper">
+            <div class="tonal__standfirst u-cf">
+                @if(article.fields.standfirst.isDefined) {
+                    @fragments.standfirst(article)
+                }
+            </div>
+        </div>
+    }
+
+    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement && article.content.starRating.isDefined && !article.content.isColumn ) {
+        </div>
     }
 </header>
