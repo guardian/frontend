@@ -908,7 +908,7 @@ $quote-mark: 35px;
         background-color: $news-garnett-highlight;
         box-shadow: $gs-baseline / 2 0 0 $news-garnett-highlight, -$gs-baseline / 2 0 0 $news-garnett-highlight;
         color: $garnett-neutral-1;
-        margin-bottom:$gs-baseline;
+        margin-bottom: $gs-baseline;
         padding-bottom: $gs-baseline / 4;
         position: relative;
         z-index: 10;
@@ -936,7 +936,7 @@ $quote-mark: 35px;
     }
 
     .content__meta-container {
-        @include mq($from: desktop){
+        @include mq($from: desktop) {
             margin-top: $gs-baseline * 3;
         }
     }
