@@ -207,7 +207,7 @@ $pillars: (
         color: map-get($palette, invertedKicker);
     }
 
-    .vjs-big-play-button .vjs-control-text:before {
+    .vjs-big-play-button .vjs-control-text {
         background-color: map-get($palette, kicker);
     }
 
