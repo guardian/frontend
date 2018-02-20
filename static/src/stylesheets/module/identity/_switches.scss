@@ -70,7 +70,7 @@ $checkbox-size: $gs-gutter / 1.25;
     position: relative;
     display: flex;
     width: 100%;
-    padding: $local-gutter;
+    padding: 0;
 
     &:hover {
         .manage-account__switch-checkbox {

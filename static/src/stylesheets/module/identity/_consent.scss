@@ -1,5 +1,4 @@
 .identity-consent-journey {
-    max-width: gs-span(8);
     margin: auto;
     fieldset {
         border: 0;
@@ -32,6 +31,18 @@
         }
         .manage-account__button:not(.manage-account__button--round) {
             float: right;
+        }
+    }
+}
+
+.identity-consent-journey__step {
+    @include mq(tablet) {
+        display: grid;
+        grid-column-gap: $gs-gutter;
+        grid-template-columns: gs-span(4) 1fr;
+        .identity-forms-wrapper {
+            grid-column-start: 2;
+            margin-top: $gs-gutter / 4;
         }
     }
 }
