@@ -1043,7 +1043,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .identity-gdpr-oi-alert {
-    @include fs-textSans(3);
     display: flex;
     align-items: stretch;
     max-width: 100%;
@@ -1051,27 +1050,32 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .identity-gdpr-oi-alert__body {
-    margin-top: $gs-gutter/4;
-    margin-left: $gs-gutter;
-    flex: 1 1 0;
-    @include mq(desktop) {
-        display: flex;
-        .identity-gdpr-oi-alert__text {
-            margin-right: $gs-gutter * 2;
+    margin: $gs-gutter / 1.5 0 $gs-gutter / 1.5 $gs-gutter;
+    max-width: gs-span(6);
+    @include mq($until: tablet) {
+        flex: 1 1 0;
+        .identity-gdpr-oi-alert__cta {
+            margin-left: -$gs-gutter;
+            margin-right: -$gs-gutter;
         }
     }
 }
 
 .identity-gdpr-oi-alert__text {
-    margin-bottom: $gs-gutter;
-    max-width: gs-span(5);
+    @include f-headlineGarnett;
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: $gs-gutter / 2;
+    @include mq(tablet) {
+        font-size: 18px;
+    }
 }
 
 .identity-gdpr-oi-alert__logo {
     margin-left: $gs-gutter * 2 * -1;
     overflow: hidden;
     position: relative;
-    width: 160px;
+    width: 180px;
     min-height: 100px;
     > img {
         position: absolute;
@@ -1080,15 +1084,16 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         width: 100%;
     }
     @include mq(desktop) {
-        width: 200px;
+        width: 300px;
         img {
-            top: -10px;
+            top: -20px;
         }
     }
 }
 
 a.identity-gdpr-oi-alert__cta {
     @include circular;
+    @include fs-textSans(3)
     display: inline-flex;
     color: #ffffff;
     text-decoration: none;
@@ -1101,10 +1106,6 @@ a.identity-gdpr-oi-alert__cta {
     justify-content: space-between;
     width: 100%;
     transition: .125s;
-    margin-bottom: $gs-gutter/2;
-    @include mq(mobileLandscape) {
-        max-width: $gs-gutter * 8;
-    }
     &:hover {
         background-color: darken($news-garnett-media-main-1, 5%);
         span {
