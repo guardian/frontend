@@ -11,7 +11,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialPaidContentTemplate,
     CommercialBaseline,
     CommercialAdRefresh,
-    MoonLambda
+    MoonLambda,
+    OrielParticipation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -68,4 +69,12 @@ object MoonLambda extends Experiment(
   owners = Seq(Owner.withGithub("siadcock")),
   sellByDate = new LocalDate(2018, 2, 28),
   participationGroup = Perc1B
+)
+
+object OrielParticipation extends Experiment(
+  name = "oriel-participation",
+  description = "A slice of the audience who will participate in Oriel ad-blocking technology",
+  owners = Seq(Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2018, 6, 28),
+  participationGroup = Perc1C
 )
