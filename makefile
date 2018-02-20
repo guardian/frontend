@@ -122,15 +122,3 @@ validate-a11y: install # PRIVATE
 # Take screenshots for a visual check.
 screenshots: install
 	@./tools/task-runner/runner screenshot
-
-
-# *********************** UI ***********************
-
-ui-compile: install
-	@cd ui && yarn -s compile
-
-ui-watch-nashorn: install
-	@cd ui && yarn -s watch:nashorn
-
-ui-watch: install
-	@cd ui && yarn -s watch

@@ -22,7 +22,7 @@ $checkbox-size: $gs-gutter / 1.25;
         grid-column-gap: $row-gutter;
         grid-template-columns: repeat(1, 1fr);
         grid-auto-rows: min-content;
-        @include mq(tablet) {
+        @include mq(desktop) {
             grid-template-columns: repeat(2, 1fr);
             grid-auto-rows: 1fr;
         }
@@ -55,7 +55,7 @@ $checkbox-size: $gs-gutter / 1.25;
     @include fs-bodyCopy(1, true);
     background-color: $garnett-neutral-3;
     border-top: 1px solid $garnett-neutral-4;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
     display: flex;
     width: 100%;
@@ -74,6 +74,10 @@ $checkbox-size: $gs-gutter / 1.25;
         &:hover {
             background: transparent;
         }
+    }
+
+    &.manage-account__switch--no-padding {
+        padding: 0;
     }
 
     &.manage-account__switch--hinted {

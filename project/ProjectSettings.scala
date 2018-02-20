@@ -123,9 +123,6 @@ object ProjectSettings {
       .settings(VersionInfo.projectSettings)
       .settings(libraryDependencies ++= Seq(macwire, commonsIo))
       .settings(packageName in Universal := applicationName)
-      .settings(
-        mappings in Universal ++= (file("ui/dist") ** "*").get.map { f => f.getAbsoluteFile -> f.toString }
-      )
   }
 
   def library(applicationName: String): Project = {

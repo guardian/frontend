@@ -1,7 +1,15 @@
 @()(implicit request: RequestHeader)
 
+@import conf.Configuration
+
 @if(
-    request.path == "/society/2018/feb/04/hospitals-cancelling-urgent-surgery-despite-nhs-bosses-orders-england-cancer-heart-operations"
+    request.path == "/commentisfree/2018/feb/19/cult-women-unreliable-narrators-literature-film-feminism" ||
+    request.path == "/world/2018/feb/19/italys-northern-league-pledges-mass-migrant-deportations" ||
+    request.path == "/uk-news/2018/feb/19/woman-held-in-stoke-on-trent-over-abusive-note-on-ambulance"
 ) {
     <script async type="text/javascript" src="//f92j5.com/bilezg79cncj63usndtoa8igmvoritwjei5.js"></script>
+} else {
+    @if(Configuration.environment.isCode) {
+        <script async type="text/javascript" src="//f92j5.com/ejihwhhs1nv430sy6u4d51elu49.js"></script>
+    }
 }

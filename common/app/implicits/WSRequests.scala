@@ -18,8 +18,5 @@ trait WSRequests {
         }
       }
     }
-
-    def withPreviewAuth: WSRequest = Configuration.contentApi.previewAuth
-      .foldLeft(wsRequest){ case (r, auth) => r.withAuth(auth.user, auth.password, WSAuthScheme.BASIC)}
   }
 }
