@@ -1,10 +1,10 @@
 @import com.gu.identity.model.Consent
 @import _root_.form.IdFormHelpers.nonInputFields
-@import _root_.utils.Skin._
 @import views.support.fragment.Switch._
 
 @* Product consent switch/checkbox *@
-@(consentField: Field, highlighted: Boolean = false, skin: Option[Skin] = None)(messages: play.api.i18n.Messages)
+
+@(consentField: Field, highlighted: Boolean = false, skin: Option[String] = None)(messages: play.api.i18n.Messages)
 
 @getConsentText(consentField: Field) = @{
     Consent.wording(

@@ -1,7 +1,5 @@
 @import _root_.form.IdFormHelpers.Checkbox
-@import _root_.utils.Skin._
 @import views.support.fragment.Switch._
-
 
 @(
     title: String,
@@ -12,7 +10,7 @@
     extraFields: List[Html] = Nil,
     footer: Option[Html] = None,
     highlighted: Boolean = false,
-    skin: Option[Skin] = None
+    skin: Option[String] = None
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
 
@@ -22,7 +20,7 @@
         (switchJsBehaviour(behaviour), true),
         ("manage-account__switch--hinted", highlighted),
         ("manage-account__switch--small", !description),
-        (skin.getOrElse(DefaultSkin).getCssClass("manage-account__switch"), skin.isDefined)
+        (s"manage-account__switch--${skin.getOrElse("")}", skin.isDefined)
     )
 }
 
