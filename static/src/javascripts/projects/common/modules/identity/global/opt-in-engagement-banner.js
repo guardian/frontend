@@ -4,6 +4,7 @@ import { getUserFromApi } from 'common/modules/identity/api';
 import { Message } from 'common/modules/ui/message';
 import { inlineSvg } from 'common/views/svgs';
 import config from 'lib/config';
+import ophan from 'ophan/ng';
 
 const messageCode: string = 'gdpr-opt-in-jan-18';
 const medium: string = new URL(window.location.href).searchParams.get(
@@ -66,8 +67,11 @@ const shouldDisplayOptInBanner = (): Promise<boolean> =>
 const optInEngagementBannerInit = (): void => {
     shouldDisplayOptInBanner().then((shouldIt: boolean) => {
         if (shouldIt) {
+            ophan.record({
+                component: 'gdpr-oi-campaign-alert',
+                action: 'gdpr-oi-campaign : alert : show',
+            })
             new Message(messageCode, {
-                important: true,
                 cssModifierClass: 'gdpr-opt-in',
             }).show(templateHtml);
         }

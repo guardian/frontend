@@ -1050,7 +1050,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .identity-gdpr-oi-alert__body {
-    margin: $gs-gutter / 1.5 0 $gs-gutter / 1.5 $gs-gutter;
+    margin: $gs-gutter / 1.5 0 $gs-gutter / 1.25 $gs-gutter;
     max-width: gs-span(6);
     @include mq($until: tablet) {
         flex: 1 1 0;
@@ -1079,14 +1079,14 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     min-height: 100px;
     > img {
         position: absolute;
-        top: 0;
+        top: -15px;
         left: 0;
         width: 100%;
     }
     @include mq(desktop) {
-        width: 300px;
+        width: 280px;
         img {
-            top: -20px;
+            top: -40px;
         }
     }
 }
