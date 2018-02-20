@@ -312,6 +312,9 @@ class GuardianConfiguration extends Logging {
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
     lazy val accountDeletionApiKey = configuration.getStringProperty("id.accountDeletion.apiKey").getOrElse("")
     lazy val accountDeletionApiRoot = configuration.getStringProperty("id.accountDeletion.apiRoot").getOrElse("")
+    lazy val optinCampaignLandingUrl = configuration.getStringProperty("id.opt-in-campaign-landing-url.url").getOrElse("https://gu.com/staywithus")
+    lazy val optinCampaignJourneyUrl = configuration.getStringProperty("id.opt-in-campaign-landing-url.url").getOrElse("https://profile.theguardian.com/consents/staywithus")
+
   }
 
   object images {
@@ -452,6 +455,8 @@ class GuardianConfiguration extends Logging {
     lazy val config: Map[String, String] = Map(
       ("googleSearchUrl", "//www.google.co.uk/cse/cse.js"),
       ("idApiUrl", id.apiRoot),
+      ("idOptinCampaignLandingUrl", id.optinCampaignLandingUrl),
+      ("idOptinCampaignJourneyUrl", id.optinCampaignJourneyUrl),
       ("idOAuthUrl", id.oauthUrl),
       ("discussionApiClientHeader", discussion.apiClientHeader),
       ("discussionD2Uid", discussion.d2Uid),

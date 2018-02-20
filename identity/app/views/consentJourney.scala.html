@@ -1,4 +1,5 @@
 @import conf.Static
+@import conf.Configuration
 @import views.support.RenderClasses
 @import model.{ApplicationContext, IdentityPage}
 @import com.gu.identity.model.EmailNewsletters
@@ -136,9 +137,23 @@
     )
 }
 
-@introStep = @{
+@introGdprCampaignStep= @{
     ConsentInfo(
         title = "Please select the emails you wish to receive",
+        help = List(
+            ConsentStepHelpText(
+                s"Why are we asking you to re-subscribe? <a href='${Configuration.id.optinCampaignLandingUrl}'>Find out here</a>"
+            ),
+            ConsentStepHelpLegalText(
+                "You can change your preferences anytime by signing in, clicking My Account, then selecting Email Preferences."
+            )
+        )
+    )
+}
+
+@introStep = @{
+    ConsentInfo(
+        title = "Please select the emails you wish to continue receiving",
         help = List(
             ConsentStepHelpLegalText(
                 "You can change your preferences anytime by signing in, clicking My Account, then selecting Email Preferences."
@@ -147,7 +162,7 @@
     )
 }
 
-@if(skin == Some("gdpr-oi-campaign")) {
+@if(skin.contains("gdpr-oi-campaign")) {
     <div class="identity-consent-hero identity-consent-hero--gdpr-oi-campaign">
         <h1 class="u-h">Stay with us</h1>
     </div>
@@ -193,7 +208,9 @@
 
                 }
                 case GdprCampaignConsentsJourney => {
-                    defaultJourney
+                    List(
+                        introGdprCampaignStep
+                    ) ++ defaultJourney
                 }
                 case DefaultConsentsJourney => {
                     List(
