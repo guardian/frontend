@@ -11,7 +11,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialPaidContentTemplate,
     CommercialBaseline,
     CommercialAdRefresh,
-    MoonLambda
+    MoonLambda,
+    OrielParticipation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
