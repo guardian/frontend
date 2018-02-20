@@ -66,8 +66,6 @@ $checkbox-size: $gs-gutter / 1.25;
 .manage-account__switch {
     @include fs-bodyCopy(1, true);
     @include identity-switch($identity-main)
-    background-color: $garnett-neutral-3;
-    border-top: 1px solid $garnett-neutral-4;
     overflow: visible;
     position: relative;
     display: flex;
@@ -75,22 +73,9 @@ $checkbox-size: $gs-gutter / 1.25;
     padding: $local-gutter;
 
     &:hover {
-        background-color: $neutral-6;
         .manage-account__switch-checkbox {
             border-color: $identity-main;
         }
-    }
-
-    &.manage-account__switch--no-box {
-        border-color: transparent;
-        background: transparent;
-        &:hover {
-            background: transparent;
-        }
-    }
-
-    &.manage-account__switch--no-padding {
-        padding: 0;
     }
 
     &.manage-account__switch--hinted {
