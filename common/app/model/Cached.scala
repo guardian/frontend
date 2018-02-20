@@ -36,7 +36,7 @@ object CacheTime {
 
 object Cached extends implicits.Dates {
 
-  private val cacheableStatusCodes = Seq(200, 404)
+  private val cacheableStatusCodes = Seq(200, 404, 304)
 
   private val tenDaysInSeconds = 864000
 
@@ -105,7 +105,7 @@ object Cached extends implicits.Dates {
     TLDR Surrogate-Control is used by the CDN, Cache-Control by the browser - do *not* add `private` to Cache-Control
     https://docs.fastly.com/guides/tutorials/cache-control-tutorial
   */
-  private def cacheHeaders(maxAge: Int, result: Result, maybeHash: Option[(Hash, Option[String])]) = {
+  private def cacheHeaders(maxAge: Int, result: Result, maybeHash: Option[(Hash, Option[String])]): Result = {
     val now = DateTime.now
     val staleWhileRevalidateSeconds = max(maxAge / 10, 1)
     val surrogateCacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"

@@ -4,12 +4,14 @@ import javax.inject.Inject
 
 import akka.stream.Materializer
 import cache.SurrogateKey
+import conf.switches.Switches
 import implicits.Responses._
-import model.ApplicationContext
+import model.{ApplicationContext, Cached}
 import play.api.http.HttpFilters
 import play.api.mvc._
 import play.filters.gzip.{GzipFilter, GzipFilterConfig}
 import experiments.LookedAtExperiments
+import model.Cached.WithoutRevalidationResult
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -101,6 +103,15 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
       .groupBy(_._1).map { case (k,v) => k -> v.map(_._2).mkString(",") }
 }
 
+class PanicSheddingFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    if (Switches.PanicShedding.isSwitchedOn && request.headers.hasHeader("If-None-Match")) {
+      Future.successful(Cached(900)(WithoutRevalidationResult(Results.NotModified.withHeaders()))(request))
+    } else {
+      nextFilter(request)
+    }
+  }
+}
 
 object Filters {
   // NOTE - order is important here, Gzipper AFTER JsonVaryHeaders
@@ -110,6 +121,7 @@ object Filters {
     applicationContext: ApplicationContext,
     executionContext: ExecutionContext
   ): List[EssentialFilter] = List(
+    new PanicSheddingFilter,
     new RequestLoggingFilter,
     new JsonVaryHeadersFilter,
     new ExperimentsFilter,
