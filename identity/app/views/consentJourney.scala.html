@@ -12,6 +12,7 @@
 @import common.LinkTo
 @import controllers.editprofile.ProfileForms
 @import _root_.utils.ConsentsJourneyType._
+@import _root_.utils.Skin._
 
 @(
     user: com.gu.identity.model.User,
@@ -24,13 +25,13 @@
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
     consentHint: Option[String] = None,
-    skin: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+    skin: Option[Skin] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @selectAllCheckboxContent = {
     <div class="manage-account__switches">
         <ul class="manage-account__switches-head">
             <li>
-                <label class="manage-account__switch manage-account__switch--@skin.getOrElse("default") manage-account__switch--no-box manage-account__switch--no-padding js-manage-account__check-allCheckbox u-h" data-link-name="mma switch : (consents - all)" data-wrapper="body">
+                <label class="manage-account__switch @skin.map(_.getCssClass("manage-account__switch")) manage-account__switch--no-box manage-account__switch--no-padding js-manage-account__check-allCheckbox u-h" data-link-name="mma switch : (consents - all)" data-wrapper="body">
                     <div class="manage-account__switch-content">
                         <input type="checkbox"/>
                         <div class="manage-account__switch-checkbox"></div>
@@ -162,7 +163,7 @@
     )
 }
 
-@if(skin.contains("gdpr-oi-campaign")) {
+@if(skin.contains(GdprOptinCampaignSkin)) {
     <div class="identity-consent-hero identity-consent-hero--gdpr-oi-campaign">
         <h1 class="u-h">Stay with us</h1>
     </div>
@@ -171,7 +172,7 @@
 <div class="identity-wrapper monocolumn-wrapper">
     <div class="js-errorHolder manage-account__errors"></div>
     @consentJourneyFragments.jsFallback(verifiedReturnUrl, idRequest, idUrlBuilder)
-    <div class="identity-consent-journey @{skin.map(s => s"identity-consent-journey--$s" )} u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
+    <div class="identity-consent-journey @skin.map(_.getCssClass("identity-consent-journey")) u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
 
         @defaultJourney = @{List(
             ConsentCustomHtml(
@@ -225,7 +226,7 @@
             @views.html.helper.CSRF.formField
             <button
                 type="submit"
-                class="manage-account__button--icon manage-account__button @{skin.map(s => s"manage-account__button--$s" )}"
+                class="manage-account__button--icon manage-account__button @skin.map(_.getCssClass("manage-account__button"))"
                 data-link-name="consents : navigation : submit"
             >
                 <div class="manage-account__button-flexwrap">

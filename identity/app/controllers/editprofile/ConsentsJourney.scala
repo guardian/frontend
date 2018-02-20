@@ -11,6 +11,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Result}
 import utils.ConsentOrder.userWithOrderedConsents
 import utils.ConsentsJourneyType.AnyConsentsJourney
+import utils.Skin.GdprOptinCampaignSkin
 
 import scala.concurrent.Future
 
@@ -103,7 +104,7 @@ trait ConsentsJourney
           newsletterService.getEmailSubscriptions(emailFilledForm),
           EmailNewsletters.all,
           consentHint,
-          skin = if(page == ConsentJourneyPageGdprCampaign) Some("gdpr-oi-campaign") else None
+          skin = if(page == ConsentJourneyPageGdprCampaign) Some(GdprOptinCampaignSkin) else None
         ))(page, request, context)
       ))
 

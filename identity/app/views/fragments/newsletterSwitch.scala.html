@@ -2,6 +2,7 @@
 @import common.LinkTo
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.Switch._
+@import _root_.utils.Skin._
 
 @* Editorial Newsletter switch/checkbox *@
 
@@ -10,7 +11,7 @@
     emailSubscriptions: List[String],
     newsletter: EmailNewsletter,
     unchecked: Boolean = false,
-    skin: Option[String] = None
+    skin: Option[Skin] = None
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages, request: RequestHeader)
 
 @buildFooter(newsletter: EmailNewsletter) = {
