@@ -1050,24 +1050,26 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .identity-gdpr-oi-alert__body {
-    margin: $gs-gutter / 1.5 0 $gs-gutter / 1.25 $gs-gutter;
+    margin: $gs-gutter / 4 0 $gs-gutter / 1.25 $gs-gutter;
     max-width: gs-span(6);
+    .identity-gdpr-oi-alert__cta {
+        margin-left: -.1em;
+        margin-right: -.1em;
+    }
     @include mq($until: tablet) {
         flex: 1 1 0;
         .identity-gdpr-oi-alert__cta {
-            margin-left: -$gs-gutter;
-            margin-right: -$gs-gutter;
+            margin-left: $gs-gutter * -.9;
+            margin-right: -$gs-gutter * -.9;
         }
     }
 }
 
 .identity-gdpr-oi-alert__text {
-    @include f-headlineGarnett;
-    font-size: 14px;
-    line-height: 1.4;
-    margin-bottom: $gs-gutter / 2;
+    @include fs-bodyCopy(1);
+    margin-bottom: $gs-gutter;
     @include mq(tablet) {
-        font-size: 18px;
+        @include fs-bodyCopy(2, true);
     }
 }
 
@@ -1084,9 +1086,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         width: 100%;
     }
     @include mq(desktop) {
-        width: 280px;
+        width: 210px;
         img {
-            top: -40px;
+            top: -25px;
         }
     }
 }
@@ -1099,7 +1101,7 @@ a.identity-gdpr-oi-alert__cta {
     text-decoration: none;
     background: $news-garnett-media-main-1;
     font-weight: 800;
-    height: $gs-baseline*3.5;
+    height: $gs-baseline*3.8;
     padding: 0 $gs-gutter;
     flex-direction: row;
     align-items: center;
