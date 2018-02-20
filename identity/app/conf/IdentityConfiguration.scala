@@ -11,7 +11,6 @@ class IdentityConfiguration(conf: GuardianConfiguration) extends IdConfig with S
   val domain: String = conf.id.domain
   val oauthUrl: String = conf.id.oauthUrl
   val url: String = conf.id.url
-  val optinCampaignLandingUrl: String = conf.id.optinCampaignLandingUrl
 }
 
 trait IdConfig {
@@ -22,5 +21,4 @@ trait IdConfig {
   val url: String
   val oauthUrl: String
   val domain: String
-  val optinCampaignLandingUrl: String
 }

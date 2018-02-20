@@ -51,7 +51,6 @@ trait WithTestIdConfig {
     val url: String = ""
     val oauthUrl: String = ""
     val domain: String = "test.domain.com"
-    val optinCampaignLandingUrl: String = ""
   }
 
   val testIdConfig = new IdentityConfigurationStub
