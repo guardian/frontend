@@ -15,6 +15,7 @@ import { init as initSnaps } from 'facia/modules/ui/snaps';
 import { Weather } from 'facia/modules/onwards/weather';
 import partial from 'lodash/functions/partial';
 import { videoContainerInit } from 'common/modules/video/video-container';
+import { optInEngagementBannerInit } from 'common/modules/identity/global/opt-in-engagement-banner';
 
 const showSnaps = (): void => {
     initSnaps();
@@ -95,6 +96,7 @@ const init = (): void => {
         ['f-live-blog-updates', showLiveblogUpdates],
         ['f-video-playlists', upgradeVideoPlaylists],
         ['f-finished', finished],
+        ['f-opt-in-engagement-banner', optInEngagementBannerInit],
     ]);
 };
 

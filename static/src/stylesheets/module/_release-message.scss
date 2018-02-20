@@ -1021,3 +1021,102 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 
 
+
+/* GDPR Opt-in alert
+   ========================================================================== */
+.site-message--gdpr-opt-in {
+    background: $garnett-neutral-3;
+    color: #333333;
+    box-shadow: inset 0 1px 0 0 hsla(0, 0%, 0%, .1);
+    .site-message__copy {
+        padding: 0;
+    }
+    .site-message__media {
+        display: none;
+    }
+    .site-message__close-btn {
+        border-color: #333333;
+    }
+    .site-message__close-btn path {
+        fill: #333333;
+    }
+}
+
+.identity-gdpr-oi-alert {
+    display: flex;
+    align-items: stretch;
+    max-width: 100%;
+    margin-right: $gs-gutter/2;
+}
+
+.identity-gdpr-oi-alert__body {
+    margin: $gs-gutter / 4 0 $gs-gutter / 1.25 $gs-gutter;
+    max-width: gs-span(6);
+    .identity-gdpr-oi-alert__cta {
+        margin-left: -.1em;
+        margin-right: -.1em;
+    }
+    @include mq($until: tablet) {
+        flex: 1 1 0;
+        .identity-gdpr-oi-alert__cta {
+            margin-left: $gs-gutter * -.9;
+            margin-right: -$gs-gutter * -.9;
+        }
+    }
+}
+
+.identity-gdpr-oi-alert__text {
+    @include fs-bodyCopy(1);
+    margin-bottom: $gs-gutter;
+    @include mq(tablet) {
+        @include fs-bodyCopy(2, true);
+    }
+}
+
+.identity-gdpr-oi-alert__logo {
+    margin-left: $gs-gutter * 2 * -1;
+    overflow: hidden;
+    position: relative;
+    width: 180px;
+    min-height: 100px;
+    > img {
+        position: absolute;
+        top: -15px;
+        left: 0;
+        width: 100%;
+    }
+    @include mq(desktop) {
+        width: 210px;
+        img {
+            top: -25px;
+        }
+    }
+}
+
+a.identity-gdpr-oi-alert__cta {
+    @include circular;
+    @include fs-textSans(3)
+    display: inline-flex;
+    color: #ffffff;
+    text-decoration: none;
+    background: $news-garnett-media-main-1;
+    font-weight: 800;
+    height: $gs-baseline*3.8;
+    padding: 0 $gs-gutter;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    transition: .125s;
+    &:hover {
+        background-color: darken($news-garnett-media-main-1, 5%);
+        span {
+            transform: translateX(5%);
+        }
+    }
+    span {
+        height: 30px;
+        margin-right: -10px;
+        transition: .125s;
+    }
+}
