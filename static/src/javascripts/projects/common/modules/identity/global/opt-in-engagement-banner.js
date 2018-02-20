@@ -23,7 +23,7 @@ const targets = {
 
 const template = {
     image: config.get('images.identity.opt-in'),
-    title: `We’re changing how we communicate with&nbsp;readers. Let&nbsp;us&nbsp;know what emails you want to receive before 30 April, or <a data-link-name="gdrp-opt-in-alert : landing-click" href="${
+    title: `We’re changing how we communicate with&nbsp;readers. Let&nbsp;us&nbsp;know what emails you want to receive before 30 April, or <a data-link-name="gdpr-oi-campaign : alert : to-landing" href="${
         targets.landing
     }">find out more</a>.`,
     cta: `Opt in again`,
@@ -41,7 +41,7 @@ const templateHtml: string = `
                 </div>
                 <a class="identity-gdpr-oi-alert__cta" target="_blank" href="${
                     targets.journey
-                }" data-link-name="gdrp-opt-in-alert : banner-click">
+                }" data-link-name="gdpr-oi-campaign : alert : to-consents">
                     ${template.cta}
                     ${inlineSvg('arrowWhiteRight')}
                 </a>
