@@ -207,7 +207,7 @@ class CommentBox extends Component {
         }
     }
 
-    postCommentSuccess(comment: commentType, resp: Object): void {
+    postCommentSuccess(comment: commentType, resp: Object): commentType {
         this.refreshUsernameHtml();
 
         if (this.options.newCommenter) {
@@ -223,6 +223,8 @@ class CommentBox extends Component {
 
         this.emit('post:success', comment);
         mediator.emit('discussion:commentbox:post:success', comment);
+
+        return comment;
     }
 
     error(type: string, message?: string): void {
@@ -245,12 +247,12 @@ class CommentBox extends Component {
         this.errors.push(type);
     }
 
-    postComment(): void {
+    postComment(): Promise<any> {
+        const commentBody = this.getElem('body');
         const { value } =
-            (this.elem &&
-                this.elem instanceof HTMLFormElement &&
-                this.elem.body instanceof HTMLTextAreaElement &&
-                this.elem.body) ||
+            (commentBody &&
+                commentBody instanceof HTMLTextAreaElement &&
+                commentBody) ||
             {};
 
         const comment: commentType = {
@@ -259,11 +261,12 @@ class CommentBox extends Component {
 
         this.clearErrors();
 
-        const postCommentToDAPI = (): void => {
+        const postCommentToDAPI = (): Promise<any> => {
             this.removeState('onboarding-visible');
             comment.body = urlify(comment.body);
             this.setFormState(true);
-            postComment(this.getDiscussionId(), comment)
+
+            return postComment(this.getDiscussionId(), comment)
                 .then((resp: Object) => this.postCommentSuccess(comment, resp))
                 .catch((err: Object) => this.fail(err));
         };
@@ -309,7 +312,7 @@ class CommentBox extends Component {
             }
         };
 
-        const validEmailCommentSubmission = (): void => {
+        const validEmailCommentSubmission = (): Promise<any> => {
             if (comment.body === '') {
                 this.error('EMPTY_COMMENT_BODY');
             }
@@ -334,15 +337,15 @@ class CommentBox extends Component {
                     const userNameInput = ((this.getElem(
                         'onboarding-username-input'
                     ): any): HTMLInputElement);
-
-                    updateUsername(userNameInput.value).then(
+                    return updateUsername(userNameInput.value).then(
                         updateUsernameSuccess,
                         updateUsernameFailure
                     );
-                } else {
-                    postCommentToDAPI();
                 }
+                return postCommentToDAPI();
             }
+
+            return Promise.resolve();
         };
 
         if (!this.getUserData().emailVerified) {
@@ -350,21 +353,18 @@ class CommentBox extends Component {
             const createdDate = new Date(this.getUserData().accountCreatedDate);
 
             if (createdDate > this.options.priorToVerificationDate) {
-                getUserFromApiWithRefreshedCookie().then(response => {
+                return getUserFromApiWithRefreshedCookie().then(response => {
                     if (
                         response.user.statusFields.userEmailValidated === true
                     ) {
-                        validEmailCommentSubmission();
-                    } else {
-                        this.invalidEmailError();
+                        return validEmailCommentSubmission();
                     }
+                    this.invalidEmailError();
                 });
-            } else {
-                validEmailCommentSubmission();
             }
-        } else {
-            validEmailCommentSubmission();
+            return validEmailCommentSubmission();
         }
+        return validEmailCommentSubmission();
     }
 
     invalidEmailError(): void {
