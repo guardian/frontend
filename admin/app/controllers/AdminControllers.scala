@@ -5,7 +5,6 @@ import controllers.admin._
 import controllers.admin.commercial._
 import controllers.cache.{ImageDecacheController, PageDecacheController}
 import dfp._
-import jobs.VideoEncodingsJob
 import model.ApplicationContext
 import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
@@ -15,7 +14,6 @@ import services.{OphanApi, ParameterStoreService, RedirectService}
 trait AdminControllers {
   def akkaAsync: AkkaAsync
   def wsClient: WSClient
-  def videoEncodingsJob: VideoEncodingsJob
   def ophanApi: OphanApi
   implicit def appContext: ApplicationContext
   def redirects: RedirectService
@@ -53,7 +51,6 @@ trait AdminControllers {
   lazy val switchboardPlistaController = wire[SwitchboardPlistaController]
   lazy val analyticsController = wire[AnalyticsController]
   lazy val analyticsConfidenceController = wire[AnalyticsConfidenceController]
-  lazy val contentPerformanceController = wire[ContentPerformanceController]
   lazy val metricsController = wire[MetricsController]
   lazy val commercialController = wire[CommercialController]
   lazy val dfpDataController = wire[DfpDataController]
