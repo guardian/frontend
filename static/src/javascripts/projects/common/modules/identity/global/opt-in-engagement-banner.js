@@ -18,7 +18,7 @@ type ApiUser = {
 
 const targets = {
     landing: 'https://gu.com/staywithus',
-    journey: `${config.page.idUrl}/consents/staywithus`,
+    journey: `${config.get('page.idUrl')}/consents/staywithus`,
 };
 
 const template = {
