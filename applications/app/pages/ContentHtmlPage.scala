@@ -46,6 +46,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
+        orielEsiHeader() when OrielFullIntegration.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(allStyles),
