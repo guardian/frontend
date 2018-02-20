@@ -10,6 +10,7 @@ const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
 const AD_FREE_USER_COOKIE = 'GU_AF1';
+const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 
 const userHasData = (): boolean => {
     const cookie =
@@ -19,6 +20,9 @@ const userHasData = (): boolean => {
         getCookie(AD_FREE_USER_COOKIE);
     return !!cookie;
 };
+
+const accountDataUpdateWarning = (): ?string =>
+    getCookie(ACTION_REQUIRED_FOR_COOKIE);
 
 const adFreeDataIsPresent = (): boolean => {
     const cookieVal = getCookie(AD_FREE_USER_COOKIE);
@@ -40,10 +44,14 @@ const persistResponse = (JsonResponse: () => void) => {
         JsonResponse.contentAccess.recurringContributor
     );
 
+    removeCookie(ACTION_REQUIRED_FOR_COOKIE);
+    if ('alertAvailableFor' in JsonResponse) {
+        addCookie(ACTION_REQUIRED_FOR_COOKIE, JsonResponse.alertAvailableFor);
+    }
+
     if (adFreeDataIsPresent() && !JsonResponse.adFree) {
         removeCookie(AD_FREE_USER_COOKIE);
     }
-
     if (switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
         addCookie(AD_FREE_USER_COOKIE, timeInDaysFromNow(2));
     }
@@ -55,6 +63,7 @@ const deleteOldData = (): void => {
     removeCookie(PAYING_MEMBER_COOKIE);
     removeCookie(RECURRING_CONTRIBUTOR_COOKIE);
     removeCookie(AD_FREE_USER_COOKIE);
+    removeCookie(ACTION_REQUIRED_FOR_COOKIE);
 };
 
 const requestNewData = (): Promise<void> =>
@@ -97,7 +106,6 @@ const userHasDataAfterSignout = (): boolean =>
 /**
  * Updates the user's data in a lazy fashion
  */
-
 const refresh = (): Promise<void> => {
     if (isUserLoggedIn() && userNeedsNewFeatureData()) {
         return requestNewData();
@@ -110,8 +118,6 @@ const refresh = (): Promise<void> => {
 /**
  * Does our _existing_ data say the user is a paying member?
  * This data may be stale; we do not wait for userFeatures.refresh()
- * @returns {boolean}
- * @returns {boolean}
  */
 const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
@@ -141,6 +147,7 @@ const shouldSeeReaderRevenue = (): boolean =>
 const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
 
 export {
+    accountDataUpdateWarning,
     isAdFreeUser,
     isPayingMember,
     isContributor,
@@ -148,4 +155,5 @@ export {
     isRecurringContributor,
     shouldSeeReaderRevenue,
     refresh,
+    deleteOldData,
 };
