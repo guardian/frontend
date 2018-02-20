@@ -51,6 +51,9 @@ const templateHtml: string = `
 
 const shouldDisplayOptInBanner = (): Promise<boolean> =>
     new Promise(decision => {
+        if (!config.get('switches.idShowOptInEngagementBanner')) {
+            return decision(false);
+        }
         if (medium === null || medium.toLowerCase() !== 'email')
             return decision(false);
         getUserFromApi((user: ApiUser) => {
