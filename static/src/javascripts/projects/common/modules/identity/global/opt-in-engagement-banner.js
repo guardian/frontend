@@ -70,7 +70,7 @@ const optInEngagementBannerInit = (): void => {
             ophan.record({
                 component: 'gdpr-oi-campaign-alert',
                 action: 'gdpr-oi-campaign : alert : show',
-            })
+            });
             new Message(messageCode, {
                 cssModifierClass: 'gdpr-opt-in',
             }).show(templateHtml);
