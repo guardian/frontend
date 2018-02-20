@@ -1,0 +1,11 @@
+@()(implicit request: RequestHeader)
+
+@import conf.Configuration
+@import experiments.{ ActiveExperiments, OrielParticipation }
+
+@if(
+    ActiveExperiments.isParticipating(OrielParticipation)
+) {
+    <script><esi:include src="​ https://gw.oriel.io/api/proxy/​@{Configuration.oriel.orielApiKey}.js" /></script>
+}
+
