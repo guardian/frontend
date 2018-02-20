@@ -3,7 +3,11 @@
 @mixin identity-button($bgcolor, $dim: 10%) {
     background-color: $bgcolor;
     &:not(.is-updating, .is-disabled):hover {
-        background-color: lighten($bgcolor, $dim);
+        @if (lightness($bgcolor) < 50) {
+            background-color: lighten($bgcolor, $dim);
+        } @else {
+            background-color: darken($bgcolor, $dim);
+        }
     }
 }
 
