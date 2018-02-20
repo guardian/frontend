@@ -39,7 +39,6 @@ const classes = {
     form: 'js-email-sub__form',
     inlineLabel: 'js-email-sub__inline-label',
     textInput: 'js-email-sub__text-input',
-    listIdHiddenInput: 'js-email-sub__listid-input',
     listNameHiddenInput: 'js-email-sub__listname-input',
 };
 
@@ -253,13 +252,7 @@ const submitForm = (
 
     return event => {
         const emailAddress = $(`.${classes.textInput}`, $form).val();
-        // FIXME: Cached widgets will continue to post listId so have to deal with both until cache clears
         const listName = $(`.${classes.listNameHiddenInput}`, $form);
-        const listId = $(`.${classes.listIdHiddenInput}`, $form);
-        const listParam =
-            listName && listName.val()
-                ? `&listName=${listName.val()}`
-                : `&listId=${listId.val()}`;
 
         let analyticsInfo;
 
@@ -271,7 +264,7 @@ const submitForm = (
                 emailAddress
             )}&campaignCode=${formData.campaignCode}&referrer=${
                 formData.referrer
-            }${listParam}`;
+            }&listName=${listName.val()}`;
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType
