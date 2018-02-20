@@ -23,7 +23,7 @@
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
     $padding-horizontal: $gs-gutter;
     @include fs-textSans($font-size);
-    @include identity-button($identity-main,30%)
+    @include identity-button($identity-main, 30%)
     height: $height;
     border-radius: 100px;
     border: 0;
