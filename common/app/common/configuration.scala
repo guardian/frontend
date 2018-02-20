@@ -313,7 +313,7 @@ class GuardianConfiguration extends Logging {
     lazy val accountDeletionApiKey = configuration.getStringProperty("id.accountDeletion.apiKey").getOrElse("")
     lazy val accountDeletionApiRoot = configuration.getStringProperty("id.accountDeletion.apiRoot").getOrElse("")
     lazy val optinCampaignLandingUrl = configuration.getStringProperty("id.opt-in-campaign-landing-url.url").getOrElse("https://gu.com/staywithus")
-    lazy val optinCampaignJourneyUrl = configuration.getStringProperty("id.opt-in-campaign-landing-url.url").getOrElse("https://profile.theguardian.com/consents/staywithus")
+    lazy val optinCampaignJourneyUrl = configuration.getStringProperty("id.opt-in-campaign-landing-url.url").getOrElse(s"$url/consents/staywithus")
 
   }
 
