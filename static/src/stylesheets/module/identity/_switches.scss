@@ -64,13 +64,13 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch {
-    @include fs-bodyCopy(1, true);
+    @include fs-textSans(5);
     @include identity-switch($identity-main)
     overflow: visible;
     position: relative;
     display: flex;
     width: 100%;
-    padding: 0;
+    padding-bottom: $gs-gutter / 2;
 
     &:hover {
         .manage-account__switch-checkbox {
@@ -176,8 +176,8 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch-title {
-    @include fs-headline(2);
-    font-weight: 500;
+    @include fs-textSans(5);
+    font-weight: 800;
     margin: -1px 0 ($local-gutter / 2);
     cursor: pointer;
     display: block;
@@ -192,7 +192,6 @@ $checkbox-size: $gs-gutter / 1.25;
 
 .manage-account__switch-copy {
     cursor: pointer;
-    opacity: .8;
     flex: 1 1 auto;
     margin: 0;
 }
