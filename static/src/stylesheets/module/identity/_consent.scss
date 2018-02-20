@@ -35,3 +35,21 @@
         }
     }
 }
+
+.identity-consent-journey--gdpr-oi-campaign {
+    .identity-consent-journey__step {
+        border-top-color: #ed6300!important;
+    }
+}
+
+.identity-consent-hero {
+    height: $gs-row-height * 4;
+    background-size: cover;
+    border-bottom: 1px solid $garnett-neutral-4;
+    background-position: center;
+    background-repeat: no-repeat;
+    @include mq(tablet) {
+        height: $gs-row-height * 6;
+        background-size: contain;
+    }
+}

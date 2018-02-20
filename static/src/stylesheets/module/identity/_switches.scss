@@ -2,6 +2,18 @@
 /* Switchboard
    ========================================================================== */
 
+@mixin identity-switch($color) {
+    .manage-account__switch-title {
+        color: $color;
+    }
+    @supports (transform: scale(1)) {
+        input:checked + .manage-account__switch-checkbox {
+            background-color: $color;
+            border-color: lighten($color, 10%);
+        }
+    }
+}
+
 $local-gutter: $gs-gutter / 3;
 $row-gutter: $gs-gutter / 2;
 
@@ -53,6 +65,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
 .manage-account__switch {
     @include fs-bodyCopy(1, true);
+    @include identity-switch($identity-main)
     background-color: $garnett-neutral-3;
     border-top: 1px solid $garnett-neutral-4;
     overflow: visible;
@@ -148,8 +161,6 @@ $checkbox-size: $gs-gutter / 1.25;
         }
 
         input:checked + .manage-account__switch-checkbox {
-            background-color: $identity-main;
-            border-color: lighten($identity-main, 10%);
             background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M3%206.58l7.23-6.58.55.53-7.78%208.07h-.27l-2.73-3.8.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')
         }
 
