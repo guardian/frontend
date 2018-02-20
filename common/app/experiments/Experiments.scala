@@ -69,3 +69,11 @@ object MoonLambda extends Experiment(
   sellByDate = new LocalDate(2018, 2, 28),
   participationGroup = Perc1B
 )
+
+object OrielParticipation extends Experiment(
+  name = "oriel-participation",
+  description = "A slice of the audience who will participate in Oriel ad-blocking technology",
+  owners = Seq(Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2018, 6, 30),
+  participationGroup = Perc1A
+)
