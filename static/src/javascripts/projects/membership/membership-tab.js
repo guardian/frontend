@@ -76,7 +76,7 @@ const populateUserDetails = (userDetails: UserDetails): void => {
     const glyph = userDetails.subscription.plan.currency;
     let notificationTypeSelector;
 
-    if (userDetails.alertText != null && userDetails.alertText !== '') {
+    if (userDetails.alertText) {
         showWarning(userDetails.alertText);
     }
 
