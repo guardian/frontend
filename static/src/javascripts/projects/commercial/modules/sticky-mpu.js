@@ -29,7 +29,7 @@ const stickyMpu = (adSlot: HTMLElement) => {
     const referenceElement: any = document.querySelector(
         config.page.hasShowcaseMainElement
             ? '.media-primary'
-            : '.content__article-body,.js-liveblog-body-content'
+            : '.js-article__body,.js-liveblog-body-content'
     );
     if (!referenceElement || !adSlot) {
         return;
@@ -40,25 +40,8 @@ const stickyMpu = (adSlot: HTMLElement) => {
             if (config.page.hasShowcaseMainElement) {
                 return referenceElement.offsetHeight + adSlot.offsetHeight;
             }
-            const mediaPrimaryElement = document.querySelector(
-                '.media-primary'
-            );
 
-            const primaryMediaHeight =
-                (mediaPrimaryElement &&
-                    mediaPrimaryElement.getBoundingClientRect() &&
-                    mediaPrimaryElement.getBoundingClientRect().height) ||
-                0;
-
-            const primaryMediaOffsetTop =
-                (mediaPrimaryElement && mediaPrimaryElement.offsetTop) || 0;
-
-            return (
-                referenceElement.offsetTop +
-                adSlot.offsetHeight +
-                primaryMediaHeight +
-                primaryMediaOffsetTop
-            );
+            return referenceElement.offsetTop + adSlot.offsetHeight;
         })
         .then(newHeight =>
             fastdom.write(() => {
