@@ -1285,7 +1285,6 @@ $quote-mark: 35px;
 .gu-media-wrapper--video .vjs-big-play-button .vjs-control-text {
     &:before {
         content: '';
-        -webkit-border-radius: 62.5rem;
         border-radius: 62.5rem;
         width: 3.75rem;
         height: 3.75rem;
