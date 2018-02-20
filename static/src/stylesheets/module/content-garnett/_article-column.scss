@@ -162,10 +162,6 @@
     color: #ffffff;
     font-size: 16px;
     font-style: italic;
-
-    @include mq($until: tablet) {
-        display: none;
-    }
 }
 
 .content__series-cta__icon {
