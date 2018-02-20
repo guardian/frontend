@@ -168,11 +168,6 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 
-.manage-account__switch.manage-account__switch--gdpr-oi-campaign {
-    @include identity-switch(#008fd7)
-}
-
-
 .manage-account__switch-checkbox {
     display: none;
     contain: strict;

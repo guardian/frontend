@@ -36,6 +36,12 @@
     }
 }
 
+.identity-consent-journey--gdpr-oi-campaign {
+    .identity-consent-journey__step {
+        border-top-color: #ed6300!important;
+    }
+}
+
 .identity-consent-hero {
     height: $gs-row-height * 4;
     background-size: cover;
