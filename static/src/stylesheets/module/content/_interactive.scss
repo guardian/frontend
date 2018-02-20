@@ -16,8 +16,8 @@
         @include mq(desktop) {
             max-width: none;
             margin: 0;
+            margin-left: -($gs-gutter / 2);
         }
-
     }
 
     .meta__extras {
