@@ -105,7 +105,8 @@ const userHasDataAfterSignout = (): boolean =>
 
 /**
  * Updates the user's data in a lazy fashion
- */ const refresh = (): Promise<void> => {
+ */
+const refresh = (): Promise<void> => {
     if (isUserLoggedIn() && userNeedsNewFeatureData()) {
         return requestNewData();
     } else if (userHasDataAfterSignout()) {
@@ -140,7 +141,8 @@ const isRecurringContributor = (): boolean =>
     Whenever the checks are updated, please make sure to update
     applyRenderConditions.scala.js too, where the global CSS class, indicating
     the user should not see the revenue messages, is added to the body
-*/ const shouldSeeReaderRevenue = (): boolean =>
+*/
+const shouldSeeReaderRevenue = (): boolean =>
     !isPayingMember() && !isRecentContributor() && !isRecurringContributor();
 
 const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
