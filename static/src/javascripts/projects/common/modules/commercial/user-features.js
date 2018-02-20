@@ -118,9 +118,8 @@ const refresh = (): Promise<void> => {
 /**
  * Does our _existing_ data say the user is a paying member?
  * This data may be stale; we do not wait for userFeatures.refresh()
- * @returns {boolean}
- * @returns {boolean}
- */ const isPayingMember = (): boolean =>
+ */
+const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
