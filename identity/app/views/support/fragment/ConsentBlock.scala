@@ -30,16 +30,12 @@ object ConsentBlock {
     content: Html = Html(""),
   ) extends ConsentBlock(show=true, name=title)
 
-  case class ConsentInfo(
-    title: String,
-    help: List[ConsentStepHelpTextTrait] = List(),
-  ) extends ConsentBlockWithHelp(show=true, name=title, help)
-
   case class ConsentStep(
     override val name: String,
     title: String,
     help: List[ConsentStepHelpTextTrait] = List(),
     content: Html = Html(""),
+    extraClassNames: List[String] = Nil,
     override val show: Boolean = true
   ) extends ConsentBlockWithHelp(show, name, help)
 
