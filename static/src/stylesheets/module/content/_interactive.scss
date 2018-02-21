@@ -13,13 +13,18 @@
     }
 
     .content__main-column {
-        padding-left: $gs-gutter / 2;
+        @include mq(leftCol) {
+            padding-left: $gs-gutter / 2;
+        }
     }
 
     .content__main-column--interactive {
         @include mq(desktop) {
             max-width: none;
             margin: 0;
+        }
+
+        @include mq(leftCol) {
             padding-left: 0;
         }
     }
