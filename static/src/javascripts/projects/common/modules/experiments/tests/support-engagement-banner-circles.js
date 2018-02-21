@@ -11,6 +11,8 @@ export const SupportEngagementBannerCircles: AcquisitionsABTest = {
     successMeasure: 'N/A',
     idealOutcome:
         'We channel the audience from dotcom to support frontend correctly',
+    componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+    audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
     showForSensitive: true,
