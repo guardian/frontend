@@ -9,7 +9,8 @@ import config from 'lib/config';
 const shouldRefresh = (advert: Advert): boolean => {
     const sizeString = advert.size && advert.size.toString();
     const isFluid = sizeString === '0,0';
-    const couldBeVideo = advert.id === 'dfp-ad--inline1' && !config.get('page.isFront');
+    const couldBeVideo =
+        advert.id === 'dfp-ad--inline1' && !config.get('page.isFront');
 
     return !isFluid && !couldBeVideo && !config.page.hasPageSkin;
 };
