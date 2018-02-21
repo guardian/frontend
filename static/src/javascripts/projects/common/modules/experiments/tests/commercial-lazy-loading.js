@@ -16,7 +16,9 @@ export const commercialLazyLoading: ABTest = {
     dataLinkNames: '',
     idealOutcome:
         'We find an optimised method for determining when ad slots should be rendered',
-    canRun: () => !config.get('tests.commercialBaselineControl') && !config.get('tests.commercialBaselineVariant'),
+    canRun: () =>
+        !config.get('tests.commercialBaselineControl') &&
+        !config.get('tests.commercialBaselineVariant'),
     variants: [
         {
             id: 'control',
