@@ -4,11 +4,13 @@ import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
 import { unrulyPerformanceTest } from 'common/modules/experiments/tests/unruly-performance';
 import { acquisitionsHeaderSubscribeMeansSubscribe } from 'common/modules/experiments/tests/acquisitions-header-subscribe-means-subscribe';
+import { acquisitionsHeaderSupportAU } from 'common/modules/experiments/tests/acquisitions-header-support-au';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
     unrulyPerformanceTest,
     acquisitionsHeaderSubscribeMeansSubscribe,
+    acquisitionsHeaderSupportAU,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
