@@ -9,9 +9,11 @@ export const supportEpicCircles = makeABTest({
     expiry: '2018-03-29',
 
     author: 'Justin Pinner',
-    description: 'Use the Epic to partition the audience for the support circles test',
+    description:
+        'Use the Epic to partition the audience for the support circles test',
     successMeasure: 'TBC',
-    idealOutcome: 'We channel an even split of frontend traffic into the circles version of support',
+    idealOutcome:
+        'We channel an even split of frontend traffic into the circles version of support',
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,

@@ -1,5 +1,5 @@
 // @flow
-import { makeBannerABTestVariants } from "common/modules/commercial/contributions-utilities";
+import { makeBannerABTestVariants } from 'common/modules/commercial/contributions-utilities';
 
 export const SupportEngagementBannerCircles: AcquisitionsABTest = {
     id: 'SupportEngagementBannerCircles',
@@ -9,7 +9,8 @@ export const SupportEngagementBannerCircles: AcquisitionsABTest = {
     author: 'JustinPinner',
     description: 'Partition the audience for support frontend circles test',
     successMeasure: 'N/A',
-    idealOutcome: 'We channel the audience from dotcom to support frontend correctly',
+    idealOutcome:
+        'We channel the audience from dotcom to support frontend correctly',
     audience: 1,
     audienceOffset: 0,
     showForSensitive: true,
@@ -29,7 +30,7 @@ export const SupportEngagementBannerCircles: AcquisitionsABTest = {
             options: {
                 engagementBannerParams: {
                     campaignCode: 'gdnwb_copts_memco_sandc_circles_control',
-                }
+                },
             },
         },
     ]),
