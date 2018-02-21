@@ -14,7 +14,7 @@ const MAX_ADS = 8; // maximum number of ads to display
 
 let SLOTCOUNTER = 0;
 let WINDOWHEIGHT;
-let firstSlot;
+let firstSlot: ?HTMLElement;
 
 const startListening = () => {
     // eslint-disable-next-line no-use-before-define
@@ -59,6 +59,8 @@ const getSpaceFillerRules = (
         absoluteMinAbove: shouldUpdate ? 0 : WINDOWHEIGHT * OFFSET,
         minAbove: 0,
         minBelow: 0,
+        clearContentMeta: 0,
+        selectors: {},
         filter: filterSlot,
     };
 };
@@ -90,13 +92,17 @@ const insertAds = (slots: HTMLElement[]): void => {
     }
 };
 
-const fill = (rules: spaceFillerRules): Promise<void> =>
+const fill = (rules: SpacefinderRules): Promise<void> =>
     spaceFiller.fillSpace(rules, insertAds).then(result => {
         if (result && SLOTCOUNTER < MAX_ADS) {
             const el = document.querySelector(
                 `${rules.bodySelector} > .ad-slot`
             );
-            firstSlot = el ? el.previousSibling : null;
+            if (el && el.previousSibling instanceof HTMLElement) {
+                firstSlot = el.previousSibling;
+            } else {
+                firstSlot = null;
+            }
             startListening();
         } else {
             firstSlot = null;

@@ -56,9 +56,9 @@ export type SpacefinderRules = {
     // will run each slot through this fn to check if it must be counted in
     filter?: (x: SpacefinderItem) => boolean,
     // will remove slots before this one
-    startAt?: HTMLElement,
+    startAt?: ?HTMLElement,
     // will remove slots from this one on
-    stopAt?: HTMLElement,
+    stopAt?: ?HTMLElement,
     // will reverse the order of slots (this is useful for lazy loaded content)
     fromBottom?: boolean,
 };
