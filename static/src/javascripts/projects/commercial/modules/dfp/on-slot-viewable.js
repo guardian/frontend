@@ -6,10 +6,11 @@ import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 import config from 'lib/config';
 
-const shouldRefresh = (advert: Advert): ?boolean => {
+const shouldRefresh = (advert: Advert): boolean => {
     const sizeString = advert.size && advert.size.toString();
     const isFluid = sizeString === '0,0';
-    const couldBeVideo = advert.id === 'dfp-ad--inline1';
+    const couldBeVideo =
+        advert.id === 'dfp-ad--inline1' && !config.get('page.isFront');
 
     return !isFluid && !couldBeVideo && !config.page.hasPageSkin;
 };
