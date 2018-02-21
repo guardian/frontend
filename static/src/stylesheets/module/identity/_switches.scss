@@ -15,7 +15,7 @@
 }
 
 $local-gutter: $gs-gutter / 3.5;
-$row-gutter: $gs-gutter / 1.5;
+$row-gutter: $gs-gutter / 2;
 
 $checkbox-size: $gs-gutter / 1.25;
 
@@ -63,8 +63,9 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch {
-    @include fs-textSans(5);
+    @include fs-textSans(4);
     @include identity-switch($identity-main)
+    line-height: 1.333;
     overflow: visible;
     position: relative;
     display: flex;
@@ -174,14 +175,13 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch-title {
-    @include fs-textSans(5);
+    @include fs-textSans(4);
     font-weight: 800;
     margin: -1px 0 0;
     cursor: pointer;
     display: block;
     em {
         font-style: normal;
-        font-weight: 400;
     }
 }
 
@@ -193,7 +193,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
 .manage-account__switch-footer {
     @include fs-textSans(1);
-    margin-top: $local-gutter * 2;
+    margin-top: $local-gutter * .5;
     display: flex;
     justify-content: space-between;
     width: 100%;

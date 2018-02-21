@@ -40,6 +40,7 @@
 
 .identity-consent-journey-step {
     @include clearfix;
+    padding-top: $gs-gutter / 6;
     &.identity-consent-journey-step--controls {
         padding-top: $gs-gutter;
         border: 0!important;
@@ -64,6 +65,8 @@
         }
         .identity-consent-journey-step__content {
             grid-column-start: 2;
+        }
+        .identity-consent-journey-step__fields {
             margin-top: $gs-gutter / 4;
         }
     }
@@ -81,13 +84,33 @@
 }
 
 .identity-consent-hero {
+    $multiline-height: 4px * 3 + 1px; /*height of multiline (4px) times the number of lines (3)*/
     height: $gs-row-height * 4;
     background-size: cover;
     border-bottom: 1px solid $garnett-neutral-4;
     background-position: center;
     background-repeat: no-repeat;
+    overflow: visible;
+    margin-bottom: $multiline-height;
+    position: relative;
+    &:after {
+        @include multiline(4, $garnett-neutral-4, top);
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: ($multiline-height - 1) * -1;
+        height: $multiline-height;
+        margin-bottom: -1px;
+        margin-top: $gutter;
+        width: 100%;
+        position: absolute;
+    }
     @include mq(tablet) {
         height: $gs-row-height * 6;
         background-size: contain;
+    }
+    @include mq(desktop) {
+        height: $gs-row-height * 8;
     }
 }
