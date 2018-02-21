@@ -1,26 +1,21 @@
 // @flow
 
-import { noop } from 'lib/noop';
+import {noop} from 'lib/noop';
+import {getActiveTests, getTest, TESTS,} from 'common/modules/experiments/ab-tests';
+import {buildOphanSubmitter} from 'common/modules/experiments/ab-ophan';
+import {isInTest, variantIdFor,} from 'common/modules/experiments/segment-util';
+import {testCanBeRun} from 'common/modules/experiments/test-can-run-checks';
 import {
-    getActiveTests,
-    getTest,
-    TESTS,
-} from 'common/modules/experiments/ab-tests';
-import { buildOphanSubmitter } from 'common/modules/experiments/ab-ophan';
-import {
-    isInTest,
-    variantIdFor,
-} from 'common/modules/experiments/segment-util';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import {
-    isParticipating,
-    getParticipations,
-    getVariant,
     addParticipation,
-    getTestVariantId,
     cleanParticipations,
-    getForcedTests,
+    getParticipations,
+    getTestVariantId,
+    getVariant,
+    isParticipating,
 } from 'common/modules/experiments/utils';
+import {local} from "../../../../lib/storage";
+
+
 
 // Finds variant in specific tests and runs it
 const runTest = (test: ABTest): void => {
@@ -81,6 +76,29 @@ export const forceVariantCompleteFunctions = (
         impression(buildOphanSubmitter(test, variantId, false));
         complete(buildOphanSubmitter(test, variantId, true));
     }
+};
+
+export const getForcedTests = (): Array<{
+    testId: string,
+    variantId: string,
+}> => {
+    if (window.location.hash.startsWith('#ab')) {
+        const tokens = window.location.hash.replace('#ab-', '').split(',');
+
+        return tokens.map(token => {
+            const [testId, variantId] = token.split('=');
+            return {testId, variantId};
+        });
+    }
+
+    return JSON.parse(local.get('gu.experiments.ab') || '[]') || [];
+};
+
+export const getForcedVariant = (test: ABTest): ?Variant => {
+    const forcedVariantIds: Array<string> = getForcedTests().map(
+        t => t.variantId
+    );
+    return test.variants.find(v => forcedVariantIds.includes(v.id));
 };
 
 export const segmentUser = () => {

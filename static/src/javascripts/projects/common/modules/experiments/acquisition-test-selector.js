@@ -1,9 +1,8 @@
 // @flow
 import { variantFor, isInTest } from 'common/modules/experiments/segment-util';
 import {
-    getForcedTests,
     getForcedVariant,
-} from 'common/modules/experiments/utils';
+} from 'common/modules/experiments/ab';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
@@ -12,6 +11,7 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
+import {getForcedTests} from "common/modules/experiments/ab";
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
