@@ -96,4 +96,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-header-banner-epic-support-au",
+    "Point the support header link, the support buttom in epic and support button in engagement banner to the support site in Australia.",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 1),
+    exposeClientSide = true
+  )
+
 }
