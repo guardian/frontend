@@ -9,8 +9,10 @@
         }
     }
     > .identity-consent-journey-step {
-        margin-top: $gs-gutter * 2;
         position: relative;
+        &:not(:first-child) {
+            margin-top: $gs-gutter * 2;
+        }
         &:not(:first-of-type) {
             border-top: 1px solid $garnett-neutral-4;
         }
