@@ -96,4 +96,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-header-support-au",
+    "Point the support header link to the support site in Australia.",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 1),
+    exposeClientSide = true
+  )
+
 }
