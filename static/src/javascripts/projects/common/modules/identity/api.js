@@ -164,11 +164,11 @@ export const getUserEmailSignUps = (): Promise<any> => {
 };
 
 export const sendValidationEmail = (): any => {
-    const returnEndpoint = '/email-prefs';
+    const defaultReturnEndpoint = '/email-prefs';
     const endpoint = '/user/send-validation-email';
     const returnUrl = getUrlVars().returnUrl
         ? decodeURIComponent(getUrlVars().returnUrl)
-        : (idApiRoot || '') + returnEndpoint;
+        : (idApiRoot || '') + defaultReturnEndpoint;
 
     const request = ajax({
         url: (idApiRoot || '') + endpoint,
