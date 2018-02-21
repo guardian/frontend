@@ -68,6 +68,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-commercial-lazy-loading",
+    "Varies the strategy for lazyloading of adverts",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-banner-cta-contribute",
     "Test a new CTA for the banner",
     owners = Seq(Owner.withGithub("jranks123")),
