@@ -37,8 +37,8 @@ trait PerformanceSwitches {
 
   val PanicShedding = Switch(
     SwitchGroup.Performance,
-    "always-serve-stale",
-    "If this switch is on then all apps will return 304 Not Modified to all requests which are already cached in fastly",
+    "panic-shedding",
+    "If this switch is on then all apps will return 304 Not Modified to all requests with an If-None-Match header (aka 'serve stale whenever possible')",
     owners = Owner.group(SwitchGroup.Performance),
     safeState = Off,
     sellByDate = never,
