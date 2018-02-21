@@ -17,7 +17,7 @@ export const supportEpicCircles = makeABTest({
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
-    canRun: true,
+    canRun: () => true,
 
     variants: [
         {
