@@ -27,7 +27,7 @@ const canDisplayMembershipEngagementBanner = (): Promise<boolean> =>
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
-        test => testCanBeRun(test) && isInTest(test)
+        test => isInTest(test)
     );
 
 const getUserVariant = (test: ?ABTest): ?Variant =>

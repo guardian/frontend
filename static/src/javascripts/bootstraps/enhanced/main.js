@@ -6,8 +6,8 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { catchErrorsWithContext } from 'lib/robust';
-import { segmentUser, run as abRun } from 'common/modules/experiments/ab';
-import { getActiveTests } from 'common/modules/experiments/ab-tests';
+import { run as abRun } from 'common/modules/experiments/ab';
+import { tests as abTests } from 'common/modules/experiments/ab-tests';
 import {
     registerImpressionEvents,
     registerCompleteEvents,
@@ -53,26 +53,23 @@ const bootEnhanced = (): void => {
         [
             'ab-tests',
             () => {
-                const tests = getActiveTests();
-                segmentUser();
-
                 catchErrorsWithContext([
                     [
                         'ab-tests-run',
                         () => {
-                            abRun(tests);
+                            abRun(abTests);
                         },
                     ],
                     [
                         'ab-tests-registerImpressionEvents',
                         () => {
-                            registerImpressionEvents(tests);
+                            registerImpressionEvents(abTests);
                         },
                     ],
                     [
                         'ab-tests-registerCompleteEvents',
                         () => {
-                            registerCompleteEvents(tests);
+                            registerCompleteEvents(abTests);
                         },
                     ],
                 ]);

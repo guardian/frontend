@@ -1,9 +1,5 @@
 // @flow
-import { variantFor, isInTest } from 'common/modules/experiments/segment-util';
-import {
-    getForcedVariant,
-} from 'common/modules/experiments/ab';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
+import { variantFor } from 'common/modules/experiments/segment-util';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
@@ -11,7 +7,6 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
-import {getForcedTests} from "common/modules/experiments/ab";
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
@@ -44,21 +39,10 @@ export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicThankYou,
 ];
 
-export const getTest = (): ?ABTest => {
-    const forcedTests = getForcedTests()
-        .map(({ testId }) => acquisitionsTests.find(t => t.id === testId))
-        .filter(Boolean);
-
-    if (forcedTests.length)
-        return forcedTests.find(t => {
-            const variant: ?Variant = getForcedVariant(t);
-            return variant && testCanBeRun(t) && isViewable(variant, t);
-        });
-
-    return acquisitionsTests.find(t => {
+export const getTest = (): ?ABTest =>
+    acquisitionsTests.find(t => {
         const variant: ?Variant = variantFor(t);
         return (
-            variant && testCanBeRun(t) && isInTest(t) && isViewable(variant, t)
+            variant && isViewable(variant, t)
         );
     });
-};

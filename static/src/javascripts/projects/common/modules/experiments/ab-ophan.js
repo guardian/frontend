@@ -1,21 +1,11 @@
 // @flow
 
 import { noop } from 'lib/noop';
-import { getActiveTests } from 'common/modules/experiments/ab-tests';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import { isInTest } from 'common/modules/experiments/segment-util';
-import {
-    getVariant,
-    getTestVariantId,
-    isParticipating,
-    getAssignedVariant,
-} from 'common/modules/experiments/utils';
+import { tests as clientSideTests } from 'common/modules/experiments/ab-tests';
+import { variantFor } from 'common/modules/experiments/segment-util';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import ophan from 'ophan/ng';
-
-const not = f => (...args: any[]): boolean => !f(...args);
-const and = (f, g) => (...args: any[]): boolean => f(...args) && g(...args);
 
 const submit = (payload: OphanABPayload): void =>
     ophan.record({
@@ -55,11 +45,10 @@ const defersImpression = (test: ABTest): boolean =>
  */
 const buildOphanSubmitter = (
     test: ABTest,
-    variantId: string,
+    variant: Variant,
     complete: boolean
 ): (() => void) => {
     const data = {};
-    const variant = getVariant(test, variantId);
 
     if (variant) data[test.id] = makeABEvent(variant, String(complete));
 
@@ -73,20 +62,16 @@ const buildOphanSubmitter = (
  * @see {@link defersImpression}
  */
 const registerCompleteEvent = (complete: boolean) => (test: ABTest): void => {
-    const variantId = getTestVariantId(test.id);
+    const variant = variantFor(test);
 
-    if (variantId && variantId !== 'notintest') {
-        const variant = getVariant(test, variantId);
+    if (variant) {
+        const listener =
+            (complete ? variant.success : variant.impression) || noop;
 
-        if (variant != null) {
-            const listener =
-                (complete ? variant.success : variant.impression) || noop;
-
-            try {
-                listener(buildOphanSubmitter(test, variantId, complete));
-            } catch (err) {
-                reportError(err, {}, false);
-            }
+        try {
+            listener(buildOphanSubmitter(test, variant, complete));
+        } catch (err) {
+            reportError(err, {}, false);
         }
     }
 };
@@ -104,16 +89,12 @@ export const buildOphanPayload = (): OphanABPayload => {
             test => !!config.tests[test]
         );
 
-        getActiveTests()
-            .filter(
-                and(not(defersImpression), and(isParticipating, testCanBeRun))
-            )
-            .forEach(test => {
-                const variant = getAssignedVariant(test);
-
-                if (variant && isInTest(test)) {
-                    log[test.id] = makeABEvent(variant, 'false');
-                }
+        clientSideTests
+            .filter(!defersImpression)
+            .map(test => ({test, variant: variantFor(test)}))
+            .filter(t => !!t.variant)
+            .forEach(({test, variant}) => {
+                log[test.id] = makeABEvent(variant, 'false');
             });
 
         serverSideTests.forEach(test => {
@@ -134,5 +115,3 @@ export const buildOphanPayload = (): OphanABPayload => {
 };
 
 export const trackABTests = () => submit(buildOphanPayload());
-
-export { buildOphanSubmitter };
