@@ -7,6 +7,7 @@ import { getCookie as getCookieByName } from 'lib/cookies';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import { mergeCalls } from 'common/modules/async-call-merger';
+import { getUrlVars } from 'lib/url';
 
 let userFromCookieCache = null;
 
@@ -163,13 +164,19 @@ export const getUserEmailSignUps = (): Promise<any> => {
 };
 
 export const sendValidationEmail = (): any => {
+    const returnEndpoint = '/email-prefs';
     const endpoint = '/user/send-validation-email';
+    const returnUrl = getUrlVars().returnUrl
+        ? decodeURIComponent(getUrlVars().returnUrl)
+        : idApiRoot + returnEndpoint;
+
     const request = ajax({
         url: (idApiRoot || '') + endpoint,
         type: 'jsonp',
         crossOrigin: true,
         data: {
             method: 'post',
+            trackingReturnUrl: returnUrl,
         },
     });
 
