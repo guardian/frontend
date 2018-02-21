@@ -1,6 +1,9 @@
-@()(topFragments: Html*)(contentFragments: Html*)(bottomFragments: Html*)
+@(isFlow: Boolean)(topFragments: Html*)(contentFragments: Html*)(bottomFragments: Html*)
 
-<div class="identity-wrapper-page-flex">
+<div class="@views.support.RenderClasses(Map(
+    ("identity-wrapper-page-flex", true),
+    ("identity-wrapper-page-flex--flow", isFlow)
+))">
     @for(f <- topFragments){
         @f
     }

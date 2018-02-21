@@ -19,7 +19,7 @@ $gutter: 5px;
         &:after {
             @include multiline(4, $garnett-neutral-4, top);
             content: '';
-            height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
+            height: 4px * 3 + 1px; /*height of multiline (4px) times the number of lines (3)*/
             background-color: #ffffff;
             margin-bottom: -1px;
             margin-top: $gutter;
@@ -53,6 +53,12 @@ $gutter: 5px;
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
         }
+    }
+}
+
+.identity-wrapper-page-flex.identity-wrapper-page-flex--flow {
+    .identity-header, .identity-header:after {
+        background-color: transparent;
     }
 }
 

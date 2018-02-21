@@ -14,8 +14,8 @@
     }
 }
 
-$local-gutter: $gs-gutter / 3;
-$row-gutter: $gs-gutter / 2;
+$local-gutter: $gs-gutter / 3.5;
+$row-gutter: $gs-gutter / 1.5;
 
 $checkbox-size: $gs-gutter / 1.25;
 
@@ -54,6 +54,9 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 
     li {
+        &:not(:last-child) {
+            margin-bottom: $row-gutter;
+        }
         display: flex;
         margin-bottom: $local-gutter;
         @supports(display: grid) {
@@ -70,7 +73,6 @@ $checkbox-size: $gs-gutter / 1.25;
     position: relative;
     display: flex;
     width: 100%;
-    padding-bottom: $gs-gutter / 2;
 
     &:hover {
         .manage-account__switch-checkbox {
@@ -178,12 +180,9 @@ $checkbox-size: $gs-gutter / 1.25;
 .manage-account__switch-title {
     @include fs-textSans(5);
     font-weight: 800;
-    margin: -1px 0 ($local-gutter / 2);
+    margin: -1px 0 0;
     cursor: pointer;
     display: block;
-    .manage-account__switch--small & {
-        font-weight: 400;
-    }
     em {
         font-style: normal;
         font-weight: 400;
