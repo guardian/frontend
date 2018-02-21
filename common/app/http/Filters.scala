@@ -121,8 +121,8 @@ object Filters {
     applicationContext: ApplicationContext,
     executionContext: ExecutionContext
   ): List[EssentialFilter] = List(
-    new PanicSheddingFilter,
     new RequestLoggingFilter,
+    new PanicSheddingFilter,
     new JsonVaryHeadersFilter,
     new ExperimentsFilter,
     new Gzipper,
