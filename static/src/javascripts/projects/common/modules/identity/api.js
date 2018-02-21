@@ -7,6 +7,7 @@ import { getCookie as getCookieByName } from 'lib/cookies';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import { mergeCalls } from 'common/modules/async-call-merger';
+import { getUrlVars } from 'lib/url';
 
 let userFromCookieCache = null;
 
@@ -14,6 +15,7 @@ const cookieName = 'GU_U';
 const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 let idApiRoot = null;
+let profileRoot = null;
 
 export type IdentityUser = {
     id: number,
@@ -27,6 +29,7 @@ export type IdentityUser = {
 export const init = (): void => {
     idApiRoot = config.get('page.idApiUrl');
     mediator.emit('module:identity:api:loaded');
+    profileRoot = config.page.idUrl;
 };
 
 export const decodeBase64 = (str: string): string =>
@@ -163,13 +166,19 @@ export const getUserEmailSignUps = (): Promise<any> => {
 };
 
 export const sendValidationEmail = (): any => {
+    const defaultReturnEndpoint = '/email-prefs';
     const endpoint = '/user/send-validation-email';
+    const returnUrl = getUrlVars().returnUrl
+        ? decodeURIComponent(getUrlVars().returnUrl)
+        : (profileRoot || '') + defaultReturnEndpoint;
+
     const request = ajax({
         url: (idApiRoot || '') + endpoint,
         type: 'jsonp',
         crossOrigin: true,
         data: {
             method: 'post',
+            returnUrl,
         },
     });
 
