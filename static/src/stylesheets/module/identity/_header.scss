@@ -68,9 +68,6 @@ html body .identity-header__logo {
 
     .inline-the-guardian-roundel {
         display: block;
-        @include mq(desktop) {
-            margin-right: gs-span(1);
-        }
         @include mq(wide) {
             margin-right: gs-span(2);
         }

@@ -147,6 +147,10 @@
     @include identity-button($news-garnett-highlight)
 }
 
+.manage-account__button--gdpr-oi-campaign {
+    @include identity-button($news-garnett-highlight)
+}
+
 .manage-account__button--light {
     @extend %manage-account__button--light;
 }

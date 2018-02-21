@@ -74,12 +74,18 @@
 
 .identity-consent-journey-step__title {
     @include fs-headlineGarnett(2);
-    font-weight: 600;
+    font-weight: 500;
+    .identity-consent-journey-step--intro & {
+        @include fs-headlineGarnett(4, true);
+    }
 }
 
 .identity-consent-journey--gdpr-oi-campaign {
     .identity-consent-journey-step {
         border-top-color: #ed6300!important;
+    }
+    .identity-consent-journey-step__title {
+        font-weight: 600;
     }
 }
 
@@ -109,8 +115,5 @@
     @include mq(tablet) {
         height: $gs-row-height * 6;
         background-size: contain;
-    }
-    @include mq(desktop) {
-        height: $gs-row-height * 8;
     }
 }

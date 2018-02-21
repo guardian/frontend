@@ -29,7 +29,10 @@
 @showConsentStep(step: ConsentStep) = {
     <div
         role="group"
-        class="identity-consent-journey-step"
+        class="
+            identity-consent-journey-step
+            @step.extraClassNames.map(s => s"identity-consent-journey-step--${s}")
+        "
         aria-labelledby="consents@{step.name.capitalize}Title"
     >
         <h2 id="consents@{step.name.capitalize}Title" class="identity-consent-journey-step__title">@step.title</h2>
@@ -47,21 +50,6 @@
     </div>
 }
 
-@showConsentInfo(info: ConsentInfo) = {
-    <div
-    class="identity-consent-journey-step"
-    >
-        <h1 class="identity-consent-journey-step__title">@info.title</h1>
-        <div class="identity-consent-journey-step__content">
-            @if(info.help || showAgeStep(display = isFirst)){
-                <div class="identity-consent-journey-step__info">
-                    @renderHelpText(info.help ++ showAgeStep(display = isFirst))
-                </div>
-            }
-        </div>
-    </div>
-}
-
 @showConsentCustomHtml(info: ConsentCustomHtml) = {
     <div
         class="identity-consent-journey-step"
@@ -76,6 +64,5 @@
 @{block match {
     case m: ConsentStep => showConsentStep(m)
     case m: ConsentCustomHtml => showConsentCustomHtml(m)
-    case m: ConsentInfo => showConsentInfo(m)
     case m: ConsentBanner => Html(s"<p class='form__success'>${m.title}</p>")
 }}
