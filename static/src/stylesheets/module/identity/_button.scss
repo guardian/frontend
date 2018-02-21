@@ -1,5 +1,16 @@
 /* Button styles
 ========================================================================== */
+@mixin identity-button($bgcolor, $dim: 10%) {
+    background-color: $bgcolor;
+    &:not(.is-updating, .is-disabled):hover {
+        @if (lightness($bgcolor) < 50) {
+            background-color: lighten($bgcolor, $dim);
+        } @else {
+            background-color: darken($bgcolor, $dim);
+        }
+    }
+}
+
 .manage-account__button-container {
     display: inline-block;
     vertical-align: middle;
@@ -12,7 +23,7 @@
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
     $padding-horizontal: $gs-gutter;
     @include fs-textSans($font-size);
-    background-color: $identity-main;
+    @include identity-button($identity-main, 30%)
     height: $height;
     border-radius: 100px;
     border: 0;
@@ -51,10 +62,6 @@
         .inline-arrow-left-stem.inline-icon {
             transform: translateX(-3px);
         }
-    }
-
-    &:not(.is-updating, .is-disabled):hover {
-        background: lighten($identity-main, 30%);
     }
 
     &.is-updating {
@@ -133,6 +140,10 @@
 
 .manage-account__button--light {
     @extend %manage-account__button--light;
+}
+
+.manage-account__button.manage-account__button--gdpr-oi-campaign {
+    @include identity-button($news-garnett-media-main-1)
 }
 
 .manage-account__button--mini {

@@ -1,4 +1,6 @@
 .identity-consent-journey {
+    max-width: gs-span(8);
+    margin: auto;
     fieldset {
         border: 0;
         margin: 0;
@@ -7,22 +9,16 @@
             display: block;
         }
     }
-    > .identity-consent-journey__step:not(:first-child) {
-        margin-top: $gs-gutter * 2;
+    > .identity-consent-journey__step:not(:first-of-type) {
+        margin-top: $gs-gutter * 3;
+        padding-top: $gs-gutter * .5;
         position: relative;
-        legend {
-            padding-top: $gs-gutter * .5
-        }
-        &:before {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            display: block;
-            content: '';
-            height: 1px;
-            background: $garnett-neutral-4;
-        }
+        border-top: 1px solid $garnett-neutral-4;
+    }
+    > .identity-consent-journey__step[data-title='select-all'] {
+        margin-bottom: $gs-gutter * 2 * -1;
+        margin-top: $gs-gutter * 2;
+        border-top: 0;
     }
     .identity-consent-journey__controls {
         padding: $gs-gutter 0;
@@ -37,5 +33,23 @@
         .manage-account__button:not(.manage-account__button--round) {
             float: right;
         }
+    }
+}
+
+.identity-consent-journey--gdpr-oi-campaign {
+    .identity-consent-journey__step {
+        border-top-color: #ed6300!important;
+    }
+}
+
+.identity-consent-hero {
+    height: $gs-row-height * 4;
+    background-size: cover;
+    border-bottom: 1px solid $garnett-neutral-4;
+    background-position: center;
+    background-repeat: no-repeat;
+    @include mq(tablet) {
+        height: $gs-row-height * 6;
+        background-size: contain;
     }
 }

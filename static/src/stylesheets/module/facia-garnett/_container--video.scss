@@ -11,7 +11,6 @@ $video-width-desktop: 700px;
 
     .fc-container__inner {
         border-top: 0;
-
         @include mq(leftCol) {
             display: none;
 
@@ -76,7 +75,6 @@ $video-width-desktop: 700px;
             color: $media-background;
         }
     }
-
     @include mq($until: desktop) {
         .u-responsive-ratio video {
             top: inherit;
@@ -112,7 +110,6 @@ $video-width-desktop: 700px;
 .video-playlist {
     position: relative;
     overflow: hidden;
-
     @include mq(desktop, leftCol) {
         background-color: darken($media-background, 5%);
 
@@ -122,8 +119,8 @@ $video-width-desktop: 700px;
     }
 }
 
-.video-playlist--start .video-playlist__control--prev,
-.video-playlist--end .video-playlist__control--next {
+.video-playlist--end .video-playlist__control--next,
+.video-playlist--start .video-playlist__control--prev {
     opacity: 0;
     pointer-events: none;
 }
@@ -133,18 +130,15 @@ $video-width-desktop: 700px;
     font-size: 0; // to remove spacing between inline-blocked children
     white-space: nowrap;
     padding-right: $gs-gutter / 2;
-
     @include mq(mobileLandscape) {
         padding-right: $gs-gutter;
     }
-
     @include mq($until: desktop) {
         overflow-x: scroll;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         transform: none !important;
     }
-
     @include mq(desktop) {
         padding-right: 0;
         transition: transform .4s ease-out;
@@ -161,7 +155,6 @@ $video-width-desktop: 700px;
 
 .video-playlist__control {
     display: none;
-
     @include mq(desktop) {
         width: gs-span(2);
         position: absolute;
@@ -183,7 +176,6 @@ $video-width-desktop: 700px;
 
 .video-playlist__control--prev {
     left: 0;
-
     @include mq(leftCol) {
         width: gs-span(2) + $gs-gutter * 2;
 
@@ -191,7 +183,6 @@ $video-width-desktop: 700px;
             width: gs-span(2);
         }
     }
-
     @include mq(wide) {
         width: gs-span(3) + $gs-gutter * 2;
 
@@ -211,7 +202,6 @@ $video-width-desktop: 700px;
 
 .video-playlist__control--next {
     right: 0;
-
     @include mq(leftCol) {
         width: gs-span(3) + $gs-gutter * 2;
 
@@ -219,7 +209,6 @@ $video-width-desktop: 700px;
             width: gs-span(2);
         }
     }
-
     @include mq(wide) {
         width: gs-span(4) + $gs-gutter * 2;
 
@@ -258,7 +247,6 @@ $video-width-desktop: 700px;
 .youtube-media-atom__play-button {
     background-color: $garnett-neutral-1;
     border-radius: 50%;
-    padding: $gs-baseline / 2;
     color: transparent;
 }
 
@@ -270,11 +258,9 @@ $video-width-desktop: 700px;
     background-color: $media-background;
     margin-left: $gs-gutter / 2;
     margin-bottom: $gs-baseline;
-
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter;
     }
-
     @include mq(desktop) {
         width: $video-width-desktop;
         margin: 0;
@@ -289,7 +275,6 @@ $video-width-desktop: 700px;
             margin-left: 0;
         }
     }
-
     @include mq(leftCol) {
         margin-left: 0;
 
@@ -305,15 +290,50 @@ $video-width-desktop: 700px;
     }
 
     .fc-item__video-fallback,
-    .video-overlay,
-    .gu-media {
+    .gu-media,
+    .video-overlay {
         opacity: 1;
+    }
+}
+
+.vjs-big-play-button .vjs-control-text,
+.youtube-media-atom__play-button.vjs-control-text {
+    // Sets a base play button/icon size for all video players
+    @include video-icon-size($garnett-x-large-button-size, $garnett-x-large-button-icon);
+
+    // Sets specific play button/icon size for fronts depending on layout
+    .fc-item--full-media-75-tablet &,
+    .fc-item--full-media-50-tablet &,
+    .fc-item--three-quarters-tablet &,
+    .fc-item--half-tablet & {
+        @include video-icon-size($garnett-large-button-size, $garnett-large-button-icon);
+        @include mq($from: mobileLandscape) {
+            @include video-icon-size($garnett-x-large-button-size, $garnett-x-large-button-icon);
+        }
+    }
+
+    .fc-item--third-tablet & {
+        @include video-icon-size($garnett-large-button-size, $garnett-large-button-icon);
+        @include mq($from: mobileLandscape, $until: tablet) {
+            @include video-icon-size($garnett-x-large-button-size, $garnett-x-large-button-icon);
+        }
+    }
+
+    .fc-item--standard-tablet & {
+        @include mq($from: tablet) {
+            @include video-icon-size($garnett-medium-button-size, $garnett-medium-button-icon);
+        }
+    }
+
+    .fc-item--list-media-mobile & {
+        @include mq($until: tablet) {
+            @include video-icon-size($garnett-small-button-size, $garnett-small-button-icon);
+        }
     }
 }
 
 .video-title--leftcol {
     display: none;
-
     @include mq(leftCol) {
         position: relative;
         height: $video-width-desktop / 16 * 9;
@@ -324,7 +344,6 @@ $video-width-desktop: 700px;
         margin-bottom: 0;
         white-space: normal;
     }
-
     @include mq(wide) {
         width: gs-span(3) + $gs-gutter * 2;
 
@@ -351,7 +370,6 @@ $video-width-desktop: 700px;
     @include mq(desktop) {
         margin-left: gs-span(2);
     }
-
     @include mq(leftCol) {
         margin-left: 0;
 
@@ -373,12 +391,10 @@ $video-width-desktop: 700px;
     min-height: gs-height(3);
     margin-bottom: -(get-line-height(textSans, 3) + 4px);
     pointer-events: auto;
-
     @include mq(desktop, leftCol) {
         opacity: 0;
         transition: opacity .4s ease-out;
     }
-
     @include mq(desktop) {
         position: absolute;
         top: $gs-baseline;
@@ -396,12 +412,10 @@ $video-width-desktop: 700px;
     .video-overlay__headline {
         @include fs-headline(2);
         font-weight: 400;
-
         @include mq(mobileLandscape) {
             @include fs-headline(3);
             font-weight: 400;
         }
-
         @include mq(desktop) {
             min-height: get-line-height(headline, 3) * 4;
             overflow: hidden;
@@ -449,7 +463,6 @@ $video-width-desktop: 700px;
 }
 
 .fc-item__video-container {
-
     .youtube-media-atom {
         z-index: 1;
     }

@@ -127,11 +127,13 @@ class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends
 object TwitterImage {
     val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX2RlZmF1bHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
     val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX29waW5pb25zLnBuZw", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val live = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8xNi90d2l0dGVyX2xpdmUucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
 }
 
 object FacebookOpenGraphImage {
     val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19kZWZhdWx0LnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
     val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19vcGluaW9ucy5wbmc", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val live = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8xNi9mYWNlYm9va19saXZlLnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
 }
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {

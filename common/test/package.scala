@@ -21,7 +21,6 @@ import play.api.libs.ws.ahc.AhcWSClient
 import play.api.test._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import recorder.ContentApiHttpRecorder
-import rendering.core.Renderer
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
@@ -162,16 +161,4 @@ trait WithTestCSRF {
   lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
   lazy val csrfAddToken = new CSRFAddToken(csrfConfig, csrfTokenSigner, httpConfiguration.session)
   lazy val csrfCheck = new CSRFCheck(csrfConfig, csrfTokenSigner, httpConfiguration.session)
-}
-
-trait WithTestRenderer {
-  def testExecutionContext: ExecutionContext
-
-  val testRenderer: Renderer = {
-    new Renderer()(
-      ActorSystem("TestRenderer"),
-      testExecutionContext,
-      ApplicationContext(Environment.simple(), ApplicationIdentity("TestRenderer"))
-    )
-  }
 }

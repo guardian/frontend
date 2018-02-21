@@ -388,9 +388,8 @@ $quote-mark: 35px;
         border-color: $garnett-neutral-4;
     }
     // *************** Header and Body Styles ***************
-    .content__article-body {
-        line-height: 1.4;
 
+    .content__main-column {
         &:before {
             @include mq(leftCol) {
                 content: '';
@@ -403,19 +402,25 @@ $quote-mark: 35px;
                 background: $garnett-neutral-4;
             }
         }
+
         @include mq(tablet) {
             padding-left: 0;
+        }
+        @include mq(leftCol) {
+            padding-left: $gs-gutter/2;
+        }
+    }
+
+    .content__article-body {
+        line-height: 1.4;
+
+        @include mq(tablet) {
             margin-left: 0;
             padding-bottom: $gs-baseline*4;
         }
         @include mq(desktop) {
-            padding-left: 0;
             margin-left: 0;
             padding-bottom: $gs-baseline*6;
-        }
-        @include mq(leftCol) {
-            padding-left: $gs-gutter/2;
-            margin-left: -$gs-gutter/2;
         }
     }
 
@@ -1290,6 +1295,31 @@ $quote-mark: 35px;
     .fc-container__header__title--sticky:after,
     .fc-container__header__title:after {
         background-color: $garnett-neutral-7;
+    }
+}
+
+// For legacy videos, shows play circle and icon
+.gu-media-wrapper--video .vjs-big-play-button .vjs-control-text {
+    &:before {
+        content: '';
+        border-radius: 62.5rem;
+        width: 3.75rem;
+        height: 3.75rem;
+        font-size: 0;
+        display: block;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-40%, -50%);
+        border-style: solid;
+        border-width: .7em 0 .7em 1.4em;
+        border-color: transparent transparent transparent #ffffff;
+        @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
+            border-radius: .2em
+        }
     }
 }
 // *************** Feature showcase overrides ***************

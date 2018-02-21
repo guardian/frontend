@@ -25,13 +25,6 @@ module.exports = {
                 ),
         },
         {
-            description: 'Fix ui',
-            task: ctx =>
-                execa
-                    .shell('cd ui && yarn lint:js:fix')
-                    .then(handleSuccess.bind(null, ctx)),
-        },
-        {
             description: 'Fix everything else',
             task: ctx =>
                 execa(

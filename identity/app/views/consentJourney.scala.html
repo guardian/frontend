@@ -1,4 +1,5 @@
 @import conf.Static
+@import conf.Configuration
 @import views.support.RenderClasses
 @import model.{ApplicationContext, IdentityPage}
 @import com.gu.identity.model.EmailNewsletters
@@ -25,14 +26,20 @@
     consentHint: Option[String] = None,
     skin: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
-@selectAllCheckbox(id: String) = {
-    <label class="manage-account__switch manage-account__switch--no-box js-manage-account__check-allCheckbox u-h" data-link-name-template="mma switch : @{id} (all) : [action]">
-        <div class="manage-account__switch-content">
-            <input type="checkbox"/>
-            <div class="manage-account__switch-checkbox"></div>
-            <h3 class="manage-account__switch-title"></h3>
-        </div>
-    </label>
+@selectAllCheckboxContent = {
+    <div class="manage-account__switches">
+        <ul class="manage-account__switches-head">
+            <li>
+                <label class="manage-account__switch @skin.map(s => s"manage-account__switch--$s") manage-account__switch--no-box manage-account__switch--no-padding js-manage-account__check-allCheckbox u-h" data-link-name="mma switch : (consents - all)" data-wrapper="body">
+                    <div class="manage-account__switch-content">
+                        <input type="checkbox"/>
+                        <div class="manage-account__switch-checkbox"></div>
+                        <h3 class="manage-account__switch-title"></h3>
+                    </div>
+                </label>
+            </li>
+        </ul>
+    </div>
 }
 
 @onlySubscribedToV1Newsletters = @{
@@ -49,7 +56,7 @@
             @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
                 @if(isUsersChannel(consentField, user)) {
                     <li>
-                        @fragments.consentSwitch(consentField)(messages)
+                        @fragments.consentSwitch(consentField = consentField, skin = skin)(messages)
                     </li>
                 }
             }
@@ -62,9 +69,6 @@
     ConsentStep(
         name = "channels",
         title = "How else can we get in touch with you?",
-        help = List(
-            ConsentStepHelpText("Besides email, are there any other ways you would like us to get in touch with you?")
-        ),
         content = channelStepContent,
         show = channelsProvidedBy(user).nonEmpty
     )
@@ -74,22 +78,19 @@
     <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
         <div class="manage-account__switches manage-account__switches--single-column">
-            <ul class="manage-account__switches-head">
-                <li>
-                    @selectAllCheckbox("marketing-consents")
-                </li>
-            </ul>
             <ul>
             @helper.repeatWithIndex(forms.privacyForm("consents"), min = 1) { (consentField, index) =>
-                <li>
-                    @if(!isChannel(consentField)) {
-                        @if(index == 0) {
-                            @fragments.consentSwitch(consentField, consentHint)(messages)
-                        } else {
-                            @fragments.consentSwitch(consentField)(messages)
-                        }
+                @if(!isChannel(consentField)) {
+                    @if(index == 0) {
+                        <li>
+                            @fragments.consentSwitch(consentField, consentHint, skin = skin)(messages)
+                        </li>
+                    } else {
+                        <li>
+                            @fragments.consentSwitch(consentField, skin = skin)(messages)
+                        </li>
                     }
-                </li>
+                }
             }
             </ul>
         </div>
@@ -98,8 +99,7 @@
 @marketingConsentStep = @{
     ConsentStep(
         name = "marketing-consents",
-        title = "Would you like to hear about any of these Guardian products?",
-        help = List(ConsentStepHelpText("Set your preferences: Please let us know if you are interested in any of these products or services.")),
+        title = "Guardian products and services",
         content = marketingStepContent
     )
 }
@@ -109,11 +109,6 @@
         @views.html.helper.CSRF.formField
         @fragments.form.hidden(emailPrefsForm("htmlPreference"))
         <div class="manage-account__switches manage-account__switches--single-column">
-            <ul class="manage-account__switches-head">
-                <li>
-                    @selectAllCheckbox("email-repermission")
-                </li>
-            </ul>
             <ul>
             @onlySubscribedToV1Newsletters.zipWithRowInfo.map { case (newsletter, row) =>
             <li>
@@ -121,7 +116,8 @@
                     emailPrefsForm,
                     emailSubscriptions,
                     newsletter = newsletter,
-                    unchecked = true
+                    unchecked = true,
+                    skin = skin
                 )(nonInputFields, messages, request)
             </li>
             }
@@ -132,7 +128,7 @@
 @emailRepermissionStep() = @{
     ConsentStep(
         name = "email",
-        title = "Please select the newsletters you wish to continue receiving.",
+        title = "Newsletters",
         help = List(
             ConsentStepHelpLegalText("The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.")
         ),
@@ -141,41 +137,51 @@
     )
 }
 
-@emailSignupStepContent = {
-    <form novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
-        @views.html.helper.CSRF.formField
-        @fragments.form.hidden(emailPrefsForm("htmlPreference"))
-
-        <div class="manage-account__switches">
-            @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions)(request, messages)
-        </div>
-    </form>
-}
-@emailSignupStep() = @{
-    ConsentStep(
-        name = "email-signup",
-        title = "Your newsletters",
+@introGdprCampaignStep= @{
+    ConsentInfo(
+        title = "Please select the emails you wish to continue receiving",
         help = List(
-            ConsentStepHelpText("Our regular newsletters help you get closer to our quality, independent journalism. Pick the issues and topics that interest you below."),
-            ConsentStepHelpLegalText("The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.")
-        ),
-        content = emailSignupStepContent,
-        show = true
+            ConsentStepHelpText(
+                s"Why are we asking you to re-subscribe? <a class='u-underline' data-link-name='gdpr-oi-campaign : consents : to-landing' href='${LinkTo("https://www.theguardian.com/staywithus")}'>Find out here</a>"
+            ),
+            ConsentStepHelpLegalText(
+                "You can change your preferences anytime by signing in, clicking My Account, then selecting Email Preferences."
+            )
+        )
     )
 }
 
-@emailRepermissionOrSignupStep = @{
-    if(emailRepermissionStep.show) {
-        emailRepermissionStep()
-    } else {
-        emailSignupStep()
-    }
+@introStep = @{
+    ConsentInfo(
+        title = "Please select the emails you wish to receive",
+        help = List(
+            ConsentStepHelpLegalText(
+                "You can change your preferences anytime by signing in, clicking My Account, then selecting Email Preferences."
+            )
+        )
+    )
+}
+
+@if(skin.contains("gdpr-oi-campaign")) {
+    <div style="background-image: url(@Static("images/identity/gdpr-oi-hero.svg"))" class="identity-consent-hero identity-consent-hero--gdpr-oi-campaign">
+        <h1 class="u-h">Stay with us</h1>
+    </div>
 }
 
 <div class="identity-wrapper monocolumn-wrapper">
     <div class="js-errorHolder manage-account__errors"></div>
     @consentJourneyFragments.jsFallback(verifiedReturnUrl, idRequest, idUrlBuilder)
     <div class="identity-consent-journey @{skin.map(s => s"identity-consent-journey--$s" )} u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
+
+        @defaultJourney = @{List(
+            ConsentCustomHtml(
+                title="select-all",
+                content=selectAllCheckboxContent
+            ),
+            emailRepermissionStep,
+            marketingConsentStep,
+            channelStep
+        )}
 
         @renderBlocks(
             journey match {
@@ -195,19 +201,21 @@
                 case ThankYouConsentsJourney => {
                     List(
                         ConsentBanner(
-                            "Thank you for signing up"
+                            "Thank you"
                         ),
-                        emailRepermissionStep,
-                        marketingConsentStep,
-                        channelStep
-                    )
+                        introStep
+                    ) ++ defaultJourney
+
+                }
+                case GdprCampaignConsentsJourney => {
+                    List(
+                        introGdprCampaignStep
+                    ) ++ defaultJourney
                 }
                 case DefaultConsentsJourney => {
                     List(
-                        emailRepermissionStep,
-                        marketingConsentStep,
-                        channelStep
-                    )
+                        introStep
+                    ) ++ defaultJourney
                 }
             }
         )

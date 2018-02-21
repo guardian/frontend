@@ -37,18 +37,13 @@ module.exports = {
                 onError: error,
             })),
         {
-            description: 'UI',
-            task: () => execa.shell('cd ui && yarn lint:js'),
-            onError: error,
-        },
-        {
             description: `Tests ${chalk.dim('legacy')}`,
             task: `eslint static/test/javascripts-legacy ${config}`,
             onError: error,
         },
         {
             description: 'Tools etc.',
-            task: `eslint --ignore-pattern /static/test/javascripts-legacy --ignore-pattern /static/src --ignore-pattern /ui . ${
+            task: `eslint --ignore-pattern /static/test/javascripts-legacy --ignore-pattern /static/src --ignore-pattern . ${
                 config
             }`,
             onError: error,

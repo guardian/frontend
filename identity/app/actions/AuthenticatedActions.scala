@@ -182,6 +182,5 @@ class AuthenticatedActions(
 
   /** Redirects for the account page */
   def manageAccountRedirectAction(pageId: String = ""): ActionBuilder[AuthRequest, AnyContent] =
-    consentAuthWithIdapiUserAction andThen decideManageAccountRedirectFilter(pageId)
-
+    recentFullAuthWithIdapiUserAction andThen decideManageAccountRedirectFilter(pageId)
 }

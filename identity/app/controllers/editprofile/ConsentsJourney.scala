@@ -28,6 +28,10 @@ trait ConsentsJourney
   def displayConsentsJourneyThankYou: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageThankYou, None)
 
+  /** GET /consents/staywithus */
+  def displayConsentsJourneyGdprCampaign: Action[AnyContent] =
+    displayConsentJourneyForm(ConsentJourneyPageGdprCampaign, None)
+
   /** GET /consents */
   def displayConsentsJourney(consentHint: Option[String] = None): Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint)
@@ -99,6 +103,7 @@ trait ConsentsJourney
           newsletterService.getEmailSubscriptions(emailFilledForm),
           EmailNewsletters.all,
           consentHint,
+          skin = if(page == ConsentJourneyPageGdprCampaign) Some("gdpr-oi-campaign") else None
         ))(page, request, context)
       ))
 

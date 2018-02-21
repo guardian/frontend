@@ -50,15 +50,15 @@
 
     @include mq(desktop) {
         margin-left: 0;
-        margin-right: $right-column + $gs-gutter;
+        margin-right: $right-column + ($gs-gutter * .5);
     }
 
     @include mq(leftCol) {
-        margin-left: $left-column + $gs-gutter;
+        margin-left: $left-column + ($gs-gutter * .5);
     }
 
     @include mq(wide) {
-        margin-left: $left-column-wide + $gs-gutter;
+        margin-left: $left-column-wide + ($gs-gutter * .5);
     }
 
     &.content__main-column--single-column {

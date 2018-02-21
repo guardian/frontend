@@ -38,6 +38,13 @@ const MEMBER_INFO = '.js-mem-info';
 const LOADER = '.js-mem-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
 const ERROR = '.js-mem-error';
+const WARNING = '.js-mem-warning';
+const WARNING_TEXT = '.js-mem-warning-text';
+
+const showWarning = (message: string): void => {
+    $(WARNING_TEXT).text(message);
+    $(WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+};
 
 const hideLoader = (): void => {
     $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
@@ -68,6 +75,10 @@ const populateUserDetails = (userDetails: UserDetails): void => {
     const intervalText = isMonthly ? 'Monthly' : 'Annual';
     const glyph = userDetails.subscription.plan.currency;
     let notificationTypeSelector;
+
+    if (userDetails.alertText) {
+        showWarning(userDetails.alertText);
+    }
 
     $(MEMBERSHIP_TIER).text(userDetails.tier);
     $(PACKAGE_COST).text(

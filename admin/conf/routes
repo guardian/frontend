@@ -53,7 +53,6 @@ POST        /dev/switchboard-plista                                             
 # Analytics
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                                                                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
-GET         /analytics/content/video                                                                controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()
