@@ -115,4 +115,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 3, 29),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-support-epic-circles",
+    "When ON, epic messaging will direct a share of the audience to the circles version of the support site",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = On, //TODO: CAUTION: ALERT: VORSICHT: Turn OFF prior to merge!!
+    sellByDate = new LocalDate(2018, 3, 29),
+    exposeClientSide = true
+  )
 }
