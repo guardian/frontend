@@ -11,16 +11,11 @@
     > .identity-consent-journey-step {
         position: relative;
         &:not(:first-child) {
-            margin-top: $gs-gutter * 2;
+            margin-top: $gs-gutter * 1.5;
         }
         &:not(:first-of-type) {
             border-top: 1px solid $garnett-neutral-4;
         }
-    }
-    > .identity-consent-journey-step[data-title='select-all'] {
-        margin-bottom: $gs-gutter * 2 * -1;
-        margin-top: $gs-gutter * 2;
-        border-top: 0;
     }
     .identity-consent-journey__controls {
         padding: $gs-gutter 0;
@@ -41,6 +36,9 @@
 .identity-consent-journey-step {
     @include clearfix;
     padding-top: $gs-gutter / 6;
+    &.identity-consent-journey-step--intro {
+        margin-top: $gs-gutter * 2;
+    }
     &.identity-consent-journey-step--controls {
         padding-top: $gs-gutter;
         border: 0!important;
@@ -77,6 +75,7 @@
     font-weight: 500;
     .identity-consent-journey-step--intro & {
         @include fs-headlineGarnett(4, true);
+        margin-top: ($gs-gutter /4) * -1;
     }
 }
 
