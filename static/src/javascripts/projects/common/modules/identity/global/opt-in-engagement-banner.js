@@ -11,7 +11,7 @@ const medium: string = new URL(window.location.href).searchParams.get(
     'utm_medium'
 );
 
-type ApiUser = {Nicer opt-in engagement alert
+type ApiUser = {
     statusFields: {
         hasRepermissioned: Boolean,
     },
