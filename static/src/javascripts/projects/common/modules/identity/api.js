@@ -168,7 +168,7 @@ export const sendValidationEmail = (): any => {
     const endpoint = '/user/send-validation-email';
     const returnUrl = getUrlVars().returnUrl
         ? decodeURIComponent(getUrlVars().returnUrl)
-        : idApiRoot + returnEndpoint;
+        : (idApiRoot || '') + returnEndpoint;
 
     const request = ajax({
         url: (idApiRoot || '') + endpoint,
