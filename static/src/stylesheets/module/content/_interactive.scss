@@ -12,11 +12,15 @@
         z-index: 2;
     }
 
+    .content__main-column {
+        padding-left: $gs-gutter / 2;
+    }
+
     .content__main-column--interactive {
         @include mq(desktop) {
             max-width: none;
             margin: 0;
-            margin-left: -($gs-gutter / 2);
+            padding-left: 0;
         }
     }
 
