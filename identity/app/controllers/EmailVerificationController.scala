@@ -73,7 +73,8 @@ class EmailVerificationController(api: IdApiClient,
       else
         api.resendEmailValidationEmail(
           request.user.auth,
-          idRequest.trackingData
+          idRequest.trackingData,
+          verifiedReturnUrlAsOpt
         ).map(_ =>
           verificationEmailResentPage
         )
