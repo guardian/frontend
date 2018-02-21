@@ -26,7 +26,7 @@ case object RedirectToEmailValidationFromAnywhereButAccountDetails extends Profi
   override def isAllowedFrom(url: String): Boolean = !(url contains "account/edit")
 }
 
-case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents") {
+case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents/staywithus") {
   override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
 }
 
