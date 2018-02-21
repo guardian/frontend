@@ -1,5 +1,8 @@
 // @flow
-import type { SpacefinderRules, SpacefinderItem } from 'common/modules/spacefinder';
+import type {
+    SpacefinderRules,
+    SpacefinderItem,
+} from 'common/modules/spacefinder';
 
 import fastdom from 'lib/fastdom-promise';
 import { getBreakpoint } from 'lib/detect';
