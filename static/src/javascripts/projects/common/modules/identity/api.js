@@ -15,6 +15,7 @@ const cookieName = 'GU_U';
 const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 let idApiRoot = null;
+let profileRoot = null;
 
 export type IdentityUser = {
     id: number,
@@ -28,6 +29,7 @@ export type IdentityUser = {
 export const init = (): void => {
     idApiRoot = config.get('page.idApiUrl');
     mediator.emit('module:identity:api:loaded');
+    profileRoot = config.page.idUrl;
 };
 
 export const decodeBase64 = (str: string): string =>
@@ -168,7 +170,7 @@ export const sendValidationEmail = (): any => {
     const endpoint = '/user/send-validation-email';
     const returnUrl = getUrlVars().returnUrl
         ? decodeURIComponent(getUrlVars().returnUrl)
-        : (idApiRoot || '') + defaultReturnEndpoint;
+        : (profileRoot || '') + defaultReturnEndpoint;
 
     const request = ajax({
         url: (idApiRoot || '') + endpoint,
@@ -176,7 +178,7 @@ export const sendValidationEmail = (): any => {
         crossOrigin: true,
         data: {
             method: 'post',
-            trackingReturnUrl: returnUrl,
+            returnUrl,
         },
     });
 
