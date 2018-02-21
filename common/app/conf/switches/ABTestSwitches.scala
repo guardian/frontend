@@ -72,7 +72,7 @@ trait ABTestSwitches {
     "Varies the strategy for lazyloading of adverts",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 2),
+    sellByDate = new LocalDate(2018, 3, 30),
     exposeClientSide = true
   )
 
