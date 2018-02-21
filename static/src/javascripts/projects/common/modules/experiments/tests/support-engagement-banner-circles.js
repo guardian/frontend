@@ -17,7 +17,7 @@ export const SupportEngagementBannerCircles: AcquisitionsABTest = {
 
     variants: makeBannerABTestVariants([
         {
-            id: 'circles',
+            id: 'variant',
             options: {
                 engagementBannerParams: {
                     campaignCode: 'gdnwb_copts_memco_sandc_circles_variant',
@@ -25,7 +25,7 @@ export const SupportEngagementBannerCircles: AcquisitionsABTest = {
             },
         },
         {
-            id: 'garnett',
+            id: 'control',
             options: {
                 engagementBannerParams: {
                     campaignCode: 'gdnwb_copts_memco_sandc_circles_control',
