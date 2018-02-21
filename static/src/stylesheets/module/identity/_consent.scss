@@ -110,7 +110,6 @@
         margin-bottom: -1px;
         margin-top: $gutter;
         width: 100%;
-        position: absolute;
     }
     @include mq(tablet) {
         height: $gs-row-height * 6;
