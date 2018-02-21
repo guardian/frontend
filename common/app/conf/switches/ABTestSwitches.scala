@@ -106,4 +106,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-support-engagement-banner-circles",
+    "When ON, the circles design test for the support engagement banner is ACTIVE",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = On, //TODO: CAUTION: ALERT: VORSICHT: Turn OFF prior to merge!!
+    sellByDate = new LocalDate(2018, 3, 29),
+    exposeClientSide = true
+  )
 }
