@@ -8,10 +8,12 @@
             display: block;
         }
     }
-    > .identity-consent-journey-step:not(:first-of-type) {
+    > .identity-consent-journey-step {
         margin-top: $gs-gutter * 2;
         position: relative;
-        border-top: 1px solid $garnett-neutral-4;
+        &:not(:first-of-type) {
+            border-top: 1px solid $garnett-neutral-4;
+        }
     }
     > .identity-consent-journey-step[data-title='select-all'] {
         margin-bottom: $gs-gutter * 2 * -1;

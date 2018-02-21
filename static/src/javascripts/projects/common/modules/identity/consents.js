@@ -303,7 +303,7 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                     if (!nearestWrapperEl) throw new Error(ERR_MALFORMED_HTML);
                     return [
                         ...nearestWrapperEl.querySelectorAll(
-                            'ul:not(.manage-account__switches-head) input[type=checkbox]'
+                            '*:not(.js-manage-account__check-allCheckbox) input[type=checkbox]'
                         ),
                     ];
                 })
