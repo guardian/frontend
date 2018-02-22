@@ -101,22 +101,24 @@
 @caption(picture: model.ImageMedia, imageOption: Option[ImageAsset], isMain: Boolean) = {
     @imageOption.map { img =>
         @if(img.showCaption) {
-            @if(isMain && !isColumn) {
-                <input type="checkbox" id="show-caption" class="mobile-only u-h reveal-caption__checkbox">
+            @if(isMain) {
+                @if(!isColumn) {
+                    <input type="checkbox" id="show-caption" class="mobile-only u-h reveal-caption__checkbox">
 
-                <label class="mobile-only reveal-caption reveal-caption--img" for="show-caption">
-                    @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon"))
-                </label>
+                    <label class="mobile-only reveal-caption reveal-caption--img" for="show-caption">
+                        @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon"))
+                    </label>
 
-                <figcaption class="caption caption--main caption--img" itemprop="description">
-                    @if(!amp) {
-                        @fragments.inlineSvg("triangle", "icon", List("hide-until-tablet"))
-                    }
-                    @img.caption.map(Html(_))
-                    @if(img.displayCredit && !img.creditEndsWithCaption) {
-                        @img.credit.map(Html(_))
-                    }
-                </figcaption>
+                    <figcaption class="caption caption--main caption--img" itemprop="description">
+                        @if(!amp) {
+                            @fragments.inlineSvg("triangle", "icon", List("hide-until-tablet"))
+                        }
+                        @img.caption.map(Html(_))
+                        @if(img.displayCredit && !img.creditEndsWithCaption) {
+                            @img.credit.map(Html(_))
+                        }
+                    </figcaption>
+                }
             } else {
                 <figcaption class="caption caption--img @if(isMain) {caption--main}" itemprop="description">
                     @fragments.inlineSvg("triangle", "icon")

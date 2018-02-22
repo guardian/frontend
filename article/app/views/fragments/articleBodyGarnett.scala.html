@@ -76,6 +76,10 @@
 
                             @fragments.witnessCallToAction(article.content)
 
+                            @if(article.content.isColumn){
+                                @fragments.contentMeta(article, model, amp = amp)
+                            }
+
                             @BodyCleaner(article, article.fields.body, amp = amp)
                             @fragments.witnessCallToAction(article.content)
 

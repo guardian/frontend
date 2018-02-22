@@ -52,12 +52,12 @@
         @if((item.content.isColumn)) {
             <div class="content__series-cta">
                     @fragments.inlineSvg("arrow-right", "icon", List("content__series-cta__icon", "rounded-icon centered-icon"))
-                    <span class="content__series-cta__text">
-                        More from this series
+                    <span class="content__series-cta__text hide-until-leftcol">
+                        More <span class="hide-until-wide">from this series</span>
                     </span>
             </div>
 
-            <a class="content__series-cta__link u-faux-block-link__overlay hide-until-wide" href="@LinkTo {/@series.id}">
+            <a class="content__series-cta__link u-faux-block-link__overlay" href="@LinkTo {/@series.id}">
                 More from this series
             </a>
         }

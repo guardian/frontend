@@ -934,7 +934,7 @@ $quote-mark: 35px;
 
 // *************** Opinion Styles ***************
 
-.content--type-guardianview,
+.content--type-guardianview:not(.content--type-column),
 .content--type-comment {
     .content__main {
         background-color: $opinion-garnett-background;
