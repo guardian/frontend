@@ -54,7 +54,7 @@
         <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
             @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
-                @if(isUsersChannel(consentField, user)) {
+                @if(isUsersSmsChannel(consentField, user)) {
                     <li>
                         @fragments.consentSwitch(consentField = consentField, skin = skin)(messages)
                     </li>
@@ -70,7 +70,7 @@
         name = "channels",
         title = "How else can we get in touch with you?",
         content = channelStepContent,
-        show = channelsProvidedBy(user).nonEmpty
+        show = true
     )
 }
 
