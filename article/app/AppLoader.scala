@@ -45,7 +45,8 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
     wire[TargetingLifecycle],
-    wire[DiscussionExternalAssetsLifecycle]
+    wire[DiscussionExternalAssetsLifecycle],
+    wire[OrielCacheLifecycle]
   )
 
   lazy val router: Router = wire[Routes]
