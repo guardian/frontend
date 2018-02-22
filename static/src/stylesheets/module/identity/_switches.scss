@@ -14,7 +14,7 @@
     }
 }
 
-$local-gutter: $gs-gutter / 3;
+$local-gutter: $gs-gutter / 3.5;
 $row-gutter: $gs-gutter / 2;
 
 $checkbox-size: $gs-gutter / 1.25;
@@ -40,10 +40,6 @@ $checkbox-size: $gs-gutter / 1.25;
         }
     }
 
-    .manage-account__switches-head {
-        margin-bottom: $gs-baseline;
-    }
-
     &.manage-account__switches--wide ul {
         grid-template-columns: repeat(1, 1fr);
     }
@@ -54,6 +50,9 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 
     li {
+        &:not(:last-child) {
+            margin-bottom: $row-gutter;
+        }
         display: flex;
         margin-bottom: $local-gutter;
         @supports(display: grid) {
@@ -64,33 +63,18 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch {
-    @include fs-bodyCopy(1, true);
+    @include fs-textSans(4);
     @include identity-switch($identity-main)
-    background-color: $garnett-neutral-3;
-    border-top: 1px solid $garnett-neutral-4;
+    line-height: 1.333;
     overflow: visible;
     position: relative;
     display: flex;
     width: 100%;
-    padding: $local-gutter;
 
     &:hover {
-        background-color: $neutral-6;
         .manage-account__switch-checkbox {
             border-color: $identity-main;
         }
-    }
-
-    &.manage-account__switch--no-box {
-        border-color: transparent;
-        background: transparent;
-        &:hover {
-            background: transparent;
-        }
-    }
-
-    &.manage-account__switch--no-padding {
-        padding: 0;
     }
 
     &.manage-account__switch--hinted {
@@ -191,30 +175,25 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .manage-account__switch-title {
-    @include fs-headline(2);
-    font-weight: 500;
-    margin: -1px 0 ($local-gutter / 2);
+    @include fs-textSans(4);
+    font-weight: 800;
+    margin: -1px 0 0;
     cursor: pointer;
     display: block;
-    .manage-account__switch--small & {
-        font-weight: 400;
-    }
     em {
         font-style: normal;
-        font-weight: 400;
     }
 }
 
 .manage-account__switch-copy {
     cursor: pointer;
-    opacity: .8;
     flex: 1 1 auto;
     margin: 0;
 }
 
 .manage-account__switch-footer {
     @include fs-textSans(1);
-    margin-top: $local-gutter * 2;
+    margin-top: $local-gutter * .5;
     display: flex;
     justify-content: space-between;
     width: 100%;

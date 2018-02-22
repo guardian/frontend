@@ -313,7 +313,7 @@ trait CommercialSwitches {
     description = "Include the analytics script for Oriel to monitor ad-blocking",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 21),
+    sellByDate = new LocalDate(2018, 6, 28),
     exposeClientSide = false
   )
 
