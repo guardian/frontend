@@ -1,7 +1,7 @@
 package pages
 
 import common.Edition
-import conf.switches.Switches.{SurveySwitch, WeAreHiring}
+import conf.switches.Switches.{OrielFullIntegration, SurveySwitch, WeAreHiring}
 import html.HtmlPageHelpers._
 import html.Styles
 import model.{ApplicationContext, Page}
@@ -12,7 +12,7 @@ import views.html.fragments.commercial.{pageSkin, survey}
 import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
+import views.html.fragments.page.head.{orielScriptTag, _}
 import html.HtmlPageHelpers.ContentCSSFile
 
 object StoryHtmlPage {
@@ -41,6 +41,7 @@ object StoryHtmlPage {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
+        orielScriptTag() when OrielFullIntegration.isSwitchedOn,
         titleTag(),
         metaData(),
         head,
