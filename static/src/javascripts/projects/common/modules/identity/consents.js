@@ -337,23 +337,28 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
             });
 
         const handleChangeEvent = () => {
-            addSpinner(labelEl, 9999)
-                .then(() => new Promise(accept => setTimeout(accept, 300)))
-                .then(() => removeSpinner(labelEl));
-            wrappedCheckboxEls.forEach(wrappedCheckboxEl => {
-                fastdom
-                    .write(() => {
-                        if (!(checkboxEl instanceof HTMLInputElement)) {
-                            throw new Error(ERR_MALFORMED_HTML);
-                        }
-                        wrappedCheckboxEl.checked = checkboxEl.checked;
-                    })
-                    .then(() => {
-                        wrappedCheckboxEl.dispatchEvent(
-                            new Event('change', { bubbles: true })
-                        );
-                    });
-            });
+            addSpinner(labelEl, 200);
+            Promise.all(
+                wrappedCheckboxEls
+                    .map(($el, i) => [$el, i * 100])
+                    .map(([wrappedCheckboxEl, timeout]) =>
+                        fastdom
+                            .write(() => {
+                                if (!(checkboxEl instanceof HTMLInputElement)) {
+                                    throw new Error(ERR_MALFORMED_HTML);
+                                }
+                                wrappedCheckboxEl.checked = checkboxEl.checked;
+                            })
+                            .then(() => {
+                                setTimeout(() => {
+                                    wrappedCheckboxEl.dispatchEvent(
+                                        new Event('change', { bubbles: true })
+                                    );
+                                    return Promise.resolve();
+                                }, timeout);
+                            })
+                    )
+            ).then(() => removeSpinner(labelEl));
         };
 
         revealCheckbox();
