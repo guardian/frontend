@@ -67,7 +67,7 @@ class OrielCacheLifecycle(
 
   override def start(): Unit = {
     jobs.deschedule("OrielCacheRefreshJob")
-    jobs.scheduleEveryNMinutes("OrielCacheRefreshJob", 1) {
+    jobs.scheduleEveryNMinutes("OrielCacheRefreshJob", 60) {
       refreshOrielCache()
       Future.successful(())
     }
