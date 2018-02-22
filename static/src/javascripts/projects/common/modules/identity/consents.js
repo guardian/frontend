@@ -335,7 +335,12 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                 checkboxEl.checked = getCheckedAllStatus(wrappedCheckboxEls);
                 titleEl.innerHTML = getTextForStatus(checkboxEl.checked);
             });
-
+        
+        /* TODO:these events get fired as a linear 
+        timeout to avoid sending the requests 
+        to the server at once as that creates a 
+        race condition on its end. should be changed 
+        to a single call that handles checking/unchecking*/
         const handleChangeEvent = () => {
             addSpinner(labelEl, 200);
             Promise.all(
