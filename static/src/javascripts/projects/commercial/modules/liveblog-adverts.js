@@ -43,11 +43,12 @@ const getSpaceFillerRules = (
     let prevSlot;
     const shouldUpdate: boolean = !!update;
 
+    // Only use a slot if it is double the window height from the previous slot.
     const filterSlot = (slot: SpacefinderItem): boolean => {
         if (!prevSlot) {
             prevSlot = slot;
             return !shouldUpdate;
-        } else if (Math.abs(slot.top - prevSlot.top) >= windowHeight) {
+        } else if (Math.abs(slot.top - prevSlot.top) > windowHeight * 2) {
             prevSlot = slot;
             return true;
         }
