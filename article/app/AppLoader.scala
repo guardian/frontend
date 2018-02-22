@@ -6,6 +6,7 @@ import common._
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
+import common.commercial.OrielCacheLifecycle
 import common.dfp.DfpAgentLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
