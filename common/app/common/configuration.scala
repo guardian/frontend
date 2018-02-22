@@ -239,7 +239,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object oriel {
-    lazy val orielApiKey = configuration.getMandatoryStringProperty("oriel.esi.api.key")
+    lazy val orielApiKey = configuration.getMandatoryStringProperty("oriel.api.key")
   }
 
   object frontend {
