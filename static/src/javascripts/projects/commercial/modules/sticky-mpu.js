@@ -26,26 +26,16 @@ const stickyMpu = (adSlot: HTMLElement) => {
 
     rightSlot = adSlot;
 
-    const referenceElement: any = document.querySelector(
-        config.page.hasShowcaseMainElement
-            ? '.media-primary'
-            : '.js-article__body,.js-liveblog-body-content'
-    );
+    const referenceElement: any = document.querySelector('.js-article__body,.js-liveblog-body-content');
 
     const stickyPixelBoundary: number = 300;
 
-    if (!referenceElement || !adSlot) {
+    if (!referenceElement || !adSlot || config.get('page.hasShowcaseMainElement')) {
         return;
     }
 
     fastdom
-        .read(() => {
-            if (config.page.hasShowcaseMainElement) {
-                return referenceElement.offsetHeight + stickyPixelBoundary;
-            }
-
-            return referenceElement.offsetTop + stickyPixelBoundary;
-        })
+        .read(() => referenceElement.offsetTop + stickyPixelBoundary)
         .then(newHeight =>
             fastdom.write(() => {
                 (adSlot.parentNode: any).style.height = `${newHeight}px`;
