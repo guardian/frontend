@@ -26,11 +26,17 @@ const stickyMpu = (adSlot: HTMLElement) => {
 
     rightSlot = adSlot;
 
-    const referenceElement: any = document.querySelector('.js-article__body,.js-liveblog-body-content');
+    const referenceElement: any = document.querySelector(
+        '.js-article__body,.js-liveblog-body-content'
+    );
 
     const stickyPixelBoundary: number = 300;
 
-    if (!referenceElement || !adSlot || config.get('page.hasShowcaseMainElement')) {
+    if (
+        !referenceElement ||
+        !adSlot ||
+        config.get('page.hasShowcaseMainElement')
+    ) {
         return;
     }
 
