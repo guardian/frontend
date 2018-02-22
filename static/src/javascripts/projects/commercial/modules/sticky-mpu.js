@@ -31,6 +31,9 @@ const stickyMpu = (adSlot: HTMLElement) => {
             ? '.media-primary'
             : '.js-article__body,.js-liveblog-body-content'
     );
+
+    const stickyPixelBoundary: number = 300;
+
     if (!referenceElement || !adSlot) {
         return;
     }
@@ -38,10 +41,10 @@ const stickyMpu = (adSlot: HTMLElement) => {
     fastdom
         .read(() => {
             if (config.page.hasShowcaseMainElement) {
-                return referenceElement.offsetHeight + adSlot.offsetHeight;
+                return referenceElement.offsetHeight + stickyPixelBoundary;
             }
 
-            return referenceElement.offsetTop + adSlot.offsetHeight;
+            return referenceElement.offsetTop + stickyPixelBoundary;
         })
         .then(newHeight =>
             fastdom.write(() => {
