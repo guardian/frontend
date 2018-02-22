@@ -6,6 +6,6 @@
 @if(
     ActiveExperiments.isParticipating(OrielParticipation)
 ) {
-    @OrielCache.cache.get().getLoaderScript.map { loaderScript => <script>@JavaScript(loaderScript)</script> }
+    @OrielCache.cache.get().getLoaderScript.map { loaderScript => <script>@HtmlFormat.raw(loaderScript)</script> }
 }
 
