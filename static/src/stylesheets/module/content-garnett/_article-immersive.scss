@@ -556,16 +556,6 @@
     .element--halfWidth {
         float: none;
     }
-
-    .ad-slot--inline {
-        @include mq(desktop) {
-            margin-right: -(gs-span(4) + $gs-gutter);
-        }
-
-        @include mq(wide) {
-            margin-right: -(gs-span(5) + $gs-gutter);
-        }
-    }
 }
 
 //overides the immersive article — done like this to keep gallery's and photo eassy in ok shape

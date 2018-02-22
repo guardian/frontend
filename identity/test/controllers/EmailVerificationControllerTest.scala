@@ -39,7 +39,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
-  when(api.resendEmailValidationEmail(MockitoMatchers.any[idapiclient.Auth], MockitoMatchers.any[idapiclient.TrackingData])) thenReturn Future.successful(Right((): Unit))
+  when(api.resendEmailValidationEmail(MockitoMatchers.any[idapiclient.Auth], MockitoMatchers.any[idapiclient.TrackingData], MockitoMatchers.any[Option[String]])) thenReturn Future.successful(Right((): Unit))
 
   val userId: String = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
