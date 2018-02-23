@@ -1,8 +1,7 @@
 // @flow
-import $ from 'lib/$';
-import { push } from './show-errors';
+import { push, reset } from './show-errors';
 
-beforeEach(() => {
+beforeAll(() => {
     if (document.body) {
         document.body.innerHTML = `
             <div class="js-errorHolder"></div>
@@ -10,25 +9,51 @@ beforeEach(() => {
     }
 });
 
-test('renders an error with a custom name', () => {
+beforeEach(() => {
+    reset();
+});
+
+test('renders an error with a custom name', () =>
     push(Error('Test String')).then(() => {
-        expect($(`.js-errorHolder > div > p`).text()).toEqual('Test String. ');
-    });
-});
+        expect(
+            (document.querySelector(`.js-errorHolder > div > p`) || {})
+                .innerHTML
+        ).toEqual('Test String.');
+    }));
 
-test('renders an undefined error', () => {
+test('renders an undefined error', () =>
     push(true).then(() => {
-        expect($(`.js-errorHolder > div > p`).text()).toEqual(
-            'Sorry, something went wrong. '
-        );
-    });
-});
+        expect(
+            (document.querySelector(`.js-errorHolder > div > p`) || {})
+                .innerHTML
+        ).toEqual('Sorry, something went wrong.');
+    }));
 
-test('renders 3 errors', () => {
-    push(true)
-        .then(() => push(true))
-        .then(() => push(true))
+test('renders 3 errors', () =>
+    push(Error('Test 1'))
+        .then(() => push(Error('Test 2')))
+        .then(() => push(Error('Test 3')))
         .then(() => {
-            expect($(`.js-errorHolder`).children().length).toEqual(3);
-        });
-});
+            expect(
+                (document.querySelector(`.js-errorHolder`) || {}).childNodes
+                    .length
+            ).toEqual(3);
+        }));
+
+test('stacks repeated errors', () =>
+    push(Error('Test 1'))
+        .then(() => push(Error('Test 2')))
+        .then(() => push(Error('Test 2')))
+        .then(() => {
+            expect(
+                (document.querySelector(`.js-errorHolder`) || {}).childNodes
+                    .length
+            ).toEqual(2);
+            expect(
+                (
+                    document.querySelector(
+                        `.js-errorHolder > div:nth-child(2) > p`
+                    ) || {}
+                ).innerHTML
+            ).toContain('(2 times)');
+        }));
