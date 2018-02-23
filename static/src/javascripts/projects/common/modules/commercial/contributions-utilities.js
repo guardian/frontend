@@ -187,7 +187,7 @@ const makeABTestVariant = (
             parentTest.campaignSuffix
         ),
         contributeURL = addTrackingCodesToUrl({
-            base: contributionsBaseURL,
+            base: options.contributionsBaseURL ||contributionsBaseURL,
             componentType: parentTest.componentType,
             componentId: campaignCode,
             campaignCode,
@@ -197,7 +197,7 @@ const makeABTestVariant = (
             },
         }),
         supportURL = addTrackingCodesToUrl({
-            base: `${supportBaseURL}${
+            base: `${options.supportBaseURL || supportBaseURL}${
                 geolocationGetSync() === 'GB' ? '?bundle=contribute' : ''
             }`,
             componentType: parentTest.componentType,
