@@ -73,7 +73,7 @@ class ProfileRedirectServiceTest extends path.FreeSpec with MockitoSugar with Sc
     "redirect to email validation if user has not validated their email" in new TestFixture {
       val result : Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithoutValidEmail, request)
 
-      whenReady(result)( _ shouldBe RedirectToEmailValidationFromAnywhereButAccountDetails)
+      whenReady(result)( _ shouldBe RedirectToEmailValidationFromEmailPrefs)
     }
 
      "don't redirect from account details page even without validated email" in new TestFixture {
