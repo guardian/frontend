@@ -52,13 +52,20 @@ object JavaScriptPage {
       }
     ) ++ sponsorshipType
 
+    val readerRevenueMetaData = Map(
+      "shouldHideReaderRevenue" -> JsBoolean(page match {
+        case c: ContentPage if c.item.content.shouldHideReaderRevenue => true
+        case _ => false
+      })
+    )
+
     val javascriptConfig = page match {
       case c: ContentPage => c.getJavascriptConfig
       case s: StandalonePage => s.getJavascriptConfig
       case _ => Map()
     }
 
-    javascriptConfig ++ config ++ commercialMetaData ++ Map(
+    javascriptConfig ++ config ++ commercialMetaData ++ readerRevenueMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
       ("isDev", JsBoolean(!environment.isProd)),
