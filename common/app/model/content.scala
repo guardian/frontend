@@ -82,7 +82,6 @@ final case class Content(
   lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
-  lazy val hasStarRating: Boolean = starRating.isDefined
 
   lazy val isAmpSupportedArticleType: Boolean = (tags.isArticle && !tags.isLiveBlog) && !isImmersive && !tags.isQuiz
 
@@ -125,8 +124,11 @@ final case class Content(
     if(isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) Item700
     else if(tags.isComment) FacebookOpenGraphImage.opinions
     else if(tags.isLiveBlog) FacebookOpenGraphImage.live
-    else if(hasStarRating) FacebookOpenGraphImage.starRating(starRating.get)
-    else FacebookOpenGraphImage.default
+    else starRating.map(rating =>
+        FacebookOpenGraphImage.starRating(rating)
+    ).getOrElse(
+        FacebookOpenGraphImage.default
+    )
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
   // These dimensions are just an educated guess (e.g. we don't take into account image-resizer being turned off)
@@ -142,7 +144,11 @@ final case class Content(
     val image = if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) Item700
     else if(tags.isComment) TwitterImage.opinions
     else if(tags.isLiveBlog) TwitterImage.live
-    else TwitterImage.default
+    else starRating.map(rating =>
+        TwitterImage.starRating(rating)
+    ).getOrElse(
+        TwitterImage.default
+    )
     ImgSrc(openGraphImageOrFallbackUrl, image)
   }
 
