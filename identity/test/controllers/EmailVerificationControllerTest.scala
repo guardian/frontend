@@ -9,7 +9,6 @@ import model.PhoneNumbers
 import org.mockito.AdditionalAnswers.returnsFirstArg
 import org.mockito.Matchers.{any, anyString, anyVararg, eq => eql}
 import org.mockito.Mockito._
-import org.mockito.{Matchers => MockitoMatchers}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{Matchers, path}
 import play.api.mvc.{ControllerComponents, Request, RequestHeader}
@@ -39,7 +38,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
-  when(api.resendEmailValidationEmail(MockitoMatchers.any[idapiclient.Auth], MockitoMatchers.any[idapiclient.TrackingData], MockitoMatchers.any[Option[String]])) thenReturn Future.successful(Right((): Unit))
+  when(api.resendEmailValidationEmail(any[Auth], any[TrackingData], any[Option[String]])) thenReturn Future.successful(Right({}))
 
   val userId: String = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
@@ -47,7 +46,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
   val authenticatedUser = AuthenticatedUser(user, testAuth, true)
   val phoneNumbers = PhoneNumbers
 
-  when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
+  when(authService.fullyAuthenticatedUser(any[RequestHeader])) thenReturn Some(authenticatedUser)
   when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
   val redirectDecisionService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponent)
@@ -55,9 +54,9 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
   val EmailValidatedMessage = "Your email address has been validated."
   when(identityUrlBuilder.buildUrl(anyString(), anyVararg[(String, String)]())) thenAnswer returnsFirstArg()
-  when(idRequestParser.apply(MockitoMatchers.any[Request[_]])) thenReturn idRequest
-  when(authenticationService.userIsFullyAuthenticated(MockitoMatchers.any[Request[_]])) thenReturn true
-  when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
+  when(idRequestParser.apply(any[Request[_]])) thenReturn idRequest
+  when(authenticationService.userIsFullyAuthenticated(any[Request[_]])) thenReturn true
+  when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
 
   val controller = new EmailVerificationController(
     api,
@@ -72,7 +71,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
   "Given resendEmailValidationEmail is called" - Fake {
 
     "should render the proper view" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
+      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
       val result = controller.resendEmailValidationEmail()(testRequest)
       contentAsString(result) should include("you must confirm this is your email address")
       contentAsString(result) should not include ("Exit and go to The Guardian home page")
@@ -80,9 +79,9 @@ class EmailVerificationControllerTest extends path.FreeSpec
     }
 
     "should resend an email" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
+      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
       controller.resendEmailValidationEmail()(testRequest)
-      verify(api).resendEmailValidationEmail(MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData], MockitoMatchers.any[Option[String]])
+      verify(api).resendEmailValidationEmail(any[Auth], any[TrackingData], any[Option[String]])
     }
 
   }
@@ -90,7 +89,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
   "Given completeRegistration is called" - Fake {
 
     "should render the proper view" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
+      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
       val result = controller.completeRegistration()(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("join the Guardian community")
@@ -98,15 +97,15 @@ class EmailVerificationControllerTest extends path.FreeSpec
     }
 
     "should not resend an email" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
+      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
       val result = controller.completeRegistration()(testRequest)
       status(result) should be(200)
-      verify(api, times(0)).resendEmailValidationEmail(MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData], MockitoMatchers.any[Option[String]])
+      verify(api, times(0)).resendEmailValidationEmail(any[Auth], any[TrackingData], any[Option[String]])
     }
 
 
     "should link to the return url" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
+      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
       val result = controller.completeRegistration()(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("test-string-test")
