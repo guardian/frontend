@@ -2,7 +2,6 @@
     user: com.gu.identity.model.User,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    customMessage: Option[String] = None,
     verifiedReturnUrl: Option[String],
     defaultReturnUrl: String,
     isSignupFlow: Boolean = false
@@ -10,19 +9,27 @@
 
 @import common.LinkTo
 
+@emailBlock = {
+    <div class="identity-forms-email-wrap">
+        <header>@user.getPrimaryEmailAddress</header>
+        <aside>
+            Is the email not correct? <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="mma : verify-email : update-email-from-error">Change it here</a>
+        </aside>
+    </div>
+}
+
 <div class="identity-wrapper monocolumn-wrapper">
     <section class="identity-forms-message">
-        <h1 class="identity-title">Confirm your email address</h1>
+        @if(isSignupFlow) {
+            <h1 class="identity-title">Confirm your email address</h1>
+        } else {
+            <h1 class="identity-title">To edit your preferences, you must confirm this is your email address</h1>
+        }
         <div class="identity-forms-message__body">
-            @for(m <- customMessage) {
-                <p>@m</p>
+            @if(isSignupFlow) {
+                <p>To access all your account features and join the Guardian community, we need you to confirm your email address below.</p>
             }
-            <div class="identity-forms-email-wrap">
-                <header>@user.getPrimaryEmailAddress</header>
-                <aside>
-                    Is the email not correct? <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="mma : verify-email : update-email-from-error">Change it here</a>
-                </aside>
-            </div>
+            @emailBlock
             <p>We have sent a link to this email address. Please check your inbox and follow the instructions.</p>
         </div>
         <aside class="identity-forms-message__body">
