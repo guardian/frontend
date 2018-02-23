@@ -4,7 +4,7 @@ import actions.AuthenticatedActions
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.{StatusFields, User}
 import idapiclient.responses.Error
-import idapiclient.{IdApiClient, ScGuU, TrackingData}
+import idapiclient.{Auth, IdApiClient, ScGuU, TrackingData}
 import model.PhoneNumbers
 import org.mockito.AdditionalAnswers.returnsFirstArg
 import org.mockito.Matchers.{any, anyString, anyVararg, eq => eql}
@@ -71,23 +71,36 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
   "Given the plain verify method is called" - Fake {
 
-    "should not render a link if it's not a sign up" in {
+    "should not render a link using resendEmailValidationEmail" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
-      val result = controller.resendEmailValidationEmail(true, false)(testRequest)
+      val result = controller.resendEmailValidationEmail()(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should not include("Exit and go to The Guardian home page")
     }
 
-    "should render a link if it's a sign up" in {
+    "should resend an email using resendEmailValidationEmail" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
-      val result = controller.resendEmailValidationEmail(true, true)(testRequest)
+      controller.resendEmailValidationEmail()(testRequest)
+      verify(api).resendEmailValidationEmail(MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData], MockitoMatchers.any[Option[String]])
+    }
+
+    "should render a link using completeRegistration" in {
+      when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
+      val result = controller.completeRegistration()(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("Exit and go to The Guardian home page")
     }
 
+    "should not resend an email using completeRegistration" in {
+      when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
+      controller.completeRegistration()(testRequest)
+      verify(api, times(0)).resendEmailValidationEmail(MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData], MockitoMatchers.any[Option[String]])
+    }
+
+
     "should link to the return url" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
-      val result = controller.resendEmailValidationEmail(true, true)(testRequest)
+      val result = controller.completeRegistration()(testRequest)
       contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("test-string-test")
       contentAsString(result) should include("Exit and continue")
