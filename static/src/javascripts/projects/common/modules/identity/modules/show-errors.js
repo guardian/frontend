@@ -22,7 +22,7 @@ const renderError = (error: IdentityRenderableError): Promise<void> =>
         .then((errorHolderEl: HTMLElement) =>
             fastdom.write(() => {
                 const errorEl = document.createElement('div');
-                errorEl.innerHTML = `<p>${error.message}${
+                errorEl.innerHTML = `<p>${error.message}.${
                     error.times > 1 ? ` (${error.times} times)` : ``
                 }</p>`;
                 errorEl.className = formErrorClassName;
