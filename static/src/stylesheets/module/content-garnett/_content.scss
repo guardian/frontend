@@ -262,10 +262,12 @@
     @include fs-headlineGarnett(4);
     display: block;
     font-weight: 400;
+    padding-bottom: $gs-baseline * 2;
     padding-top: $gs-baseline / 4;
 
     @include mq(tablet) {
         @include fs-headlineGarnett(6);
+        font-weight: 400;
         padding-bottom: $gs-baseline * 3;
     }
 
@@ -283,7 +285,7 @@
     padding-bottom: $gs-baseline * 6;
 }
 
-.content__headline--has-byline {
+.content__headline--no-margin-bottom {
     padding-bottom: 0;
 }
 
