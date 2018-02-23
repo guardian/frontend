@@ -73,7 +73,7 @@ const optInEngagementBannerInit = (): void => {
             });
             new Message(messageCode, {
                 cssModifierClass: 'gdpr-opt-in',
-                siteMessageComponentName: messageCode
+                siteMessageComponentName: messageCode,
             }).show(templateHtml);
         }
     });
