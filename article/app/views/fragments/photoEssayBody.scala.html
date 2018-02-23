@@ -34,7 +34,7 @@
                         }
 
                         <div class="content__article-body from-content-api js-article__body"
-                             itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
+                             itemprop="articleBody"
                              data-test-id="article-review-body" @langAttributes(article.content)>
                             @BodyCleaner(article, article.fields.body, amp = false)
                         </div>
