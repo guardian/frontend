@@ -52,7 +52,7 @@ const templateHtml: string = `
 
 const shouldDisplayOptInBanner = (): Promise<boolean> =>
     new Promise(decision => {
-        if (config.get('gdprOptinAlertVariant') !== 'variant') {
+        if (config.get('tests.gdprOptinAlertVariant') !== 'variant') {
             return decision(false);
         }
         if (medium === null || medium.toLowerCase() !== 'email')
