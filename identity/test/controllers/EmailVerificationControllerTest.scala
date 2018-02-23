@@ -75,13 +75,6 @@ class EmailVerificationControllerTest extends path.FreeSpec
       val result = controller.resendEmailValidationEmail()(testRequest)
       contentAsString(result) should include("you must confirm this is your email address")
       contentAsString(result) should not include ("Exit and go to The Guardian home page")
-      contentAsString(result) should not include ("join the Guardian community")
-    }
-
-    "should resend an email" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
-      controller.resendEmailValidationEmail()(testRequest)
-      verify(api).resendEmailValidationEmail(any[Auth], any[TrackingData], any[Option[String]])
     }
 
   }
@@ -91,18 +84,9 @@ class EmailVerificationControllerTest extends path.FreeSpec
     "should render the proper view" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
       val result = controller.completeRegistration()(testRequest)
-      contentAsString(result) should include("Confirm your email address")
-      contentAsString(result) should include("join the Guardian community")
+      contentAsString(result) should include("Please look in your email inbox")
       contentAsString(result) should include("Exit and go to The Guardian home page")
     }
-
-    "should not resend an email" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
-      val result = controller.completeRegistration()(testRequest)
-      status(result) should be(200)
-      verify(api, times(0)).resendEmailValidationEmail(any[Auth], any[TrackingData], any[Option[String]])
-    }
-
 
     "should link to the return url" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
