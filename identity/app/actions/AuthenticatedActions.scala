@@ -28,10 +28,11 @@ class AuthenticatedActions(
   private def redirectWithReturn(request: RequestHeader, path: String): Result = {
     val returnUrl = identityUrlBuilder.buildUrl(request.uri)
 
-    val redirectUrlWithParams = identityUrlBuilder.appendQueryParams(path, List(
-      "INTCMP" -> "email",
-      "returnUrl" -> returnUrl
-    ))
+    val params = List("returnUrl" -> returnUrl) ++
+      List("INTCMP", "email") //only forward these if they exist in original query string
+        .flatMap(name => request.getQueryString(name).map(value => name -> value))
+
+    val redirectUrlWithParams = identityUrlBuilder.appendQueryParams(path, params)
 
     SeeOther(identityUrlBuilder.buildUrl(redirectUrlWithParams))
   }

@@ -6,8 +6,7 @@
 @import _root_.model.ContentDesignType.RichContentDesignType
 
 
-    <header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)
-    @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage && article.metadata.designType.nameOrDefault != "analysis") { content__head--byline-pic}">
+    <header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)">
     <div class="matchreport">
         <div class="js-score"></div>
         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
@@ -52,7 +51,7 @@
                     <div class="content__label-interview">Interview</div>
                 }
 
-                <h1 class="content__headline" articleprop="headline" @langAttributes(article.content)>
+                <h1 class="content__headline @if(article.content.starRating && !article.elements.hasShowcaseMainElement) {content__headline--no-margin-bottom}" articleprop="headline" @langAttributes(article.content)>
                     @if(article.tags.isInterview) {
                         <span class="content__headline--interview-wrapper">@Html(article.trail.headline)</span>
                     } else {
@@ -65,17 +64,6 @@
                         <span class="content__headline--byline-interview">By @ContributorLinks(text, article.tags.contributors)</span>
                     }
                 }
-
-                @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage && article.metadata.designType.nameOrDefault != "analysis") {
-                    @fragments.meta.bylineImage(article.tags)
-                }
-
-                @if(article.content.hasTonalHeaderByline && article.metadata.designType.nameOrDefault != "analysis") {
-                    @article.trail.byline.map { text =>
-                        <span class="content__headline content__headline--byline">@ContributorLinks(text, article.tags.contributors)</span>
-                    }
-                }
-
                 @if(article.content.hasTonalHeaderIllustration) {
                     <span class="content__head__illustration hide-on-mobile">@fragments.inlineSvg("illustration-letters", "icon")</span>
                 }

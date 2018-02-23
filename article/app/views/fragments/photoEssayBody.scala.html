@@ -1,4 +1,4 @@
-@(amp: Boolean = false)(implicit model: ArticlePage, request: RequestHeader, context: _root_.model.ApplicationContext)
+@()(implicit model: ArticlePage, request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import views.html.fragments.langAttributes
 @import common.LinkTo
@@ -25,18 +25,18 @@
             @fragments.headerImmersive(article)
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
                 <div class="gs-container">
-                    <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
+                    <div class="content__main-column content__main-column--article js-content-main-column">
 
-                        @fragments.contentMeta(article, model, amp = amp)
+                        @fragments.contentMeta(article, model)
 
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
                         }
 
                         <div class="content__article-body from-content-api js-article__body"
-                             itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
+                             itemprop="articleBody"
                              data-test-id="article-review-body" @langAttributes(article.content)>
-                            @BodyCleaner(article, article.fields.body, amp = amp)
+                            @BodyCleaner(article, article.fields.body, amp = false)
                         </div>
 
                         @fragments.witnessCallToAction(article.content)

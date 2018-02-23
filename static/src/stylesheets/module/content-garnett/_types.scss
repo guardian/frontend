@@ -197,7 +197,7 @@ $quote-mark: 35px;
         }
     }
 
-    .byline-img {
+    .content__meta-container .byline-img {
         max-width: gs-span(1);
         float: left;
         border-top: 0;
@@ -452,18 +452,6 @@ $quote-mark: 35px;
         margin-right: 0;
     }
 
-    .content__headline {
-        @include fs-headlineGarnett(4);
-        font-weight: 400; // magic number correcting line height so vertical alignment apprears even with labels
-        padding-top: 3px;
-        padding-bottom: $gs-baseline*2;
-        @include mq(tablet) {
-            @include fs-headlineGarnett(6);
-            font-weight: 400;
-            padding-bottom: $gs-baseline*3;
-        }
-    }
-
     //Review stars
     .stars {
         background-color: $news-garnett-highlight;
@@ -471,9 +459,8 @@ $quote-mark: 35px;
         line-height: 0;
         padding: calc((#{$gs-baseline} / 2) - 2px);
         padding-left: $gs-gutter / 2;
-        margin-top: -$gs-baseline / 2;
-        margin-bottom: $gs-baseline;
-        transform: translatey(-$gs-baseline / 2);
+        margin-top: $gs-baseline / 2;
+        margin-bottom: $gs-baseline + $gs-baseline / 2;
         @include mq($from: mobileLandscape) {
             padding-left: $gs-gutter;
         }
@@ -482,10 +469,7 @@ $quote-mark: 35px;
             //magic number used for alignment
             padding-left: 4px;
         }
-        @include mq($from: tablet) {
-            margin-bottom: 0;
-            transform: translatey(-$gs-gutter);
-        }
+
         @include mq($from: leftCol) {
             margin-left: -$gs-gutter / 2;
             padding-left: $gs-gutter / 2;
@@ -1051,64 +1035,20 @@ $quote-mark: 35px;
         }
     }
 
-
     .content__header {
         @include multiline(8, $garnett-neutral-4);
         position: relative;
-        padding-bottom: $gs-baseline*6;
     }
 
     .content__headline {
         @include fs-headlineGarnett(5);
         font-weight: 100;
-        padding-bottom: 0;
         @include mq(mobileMedium) {
             @include fs-headlineGarnett(6);
         }
         @include mq(tablet) {
             @include fs-headlineGarnett(7);
         }
-        @include mq(leftCol) {
-            padding-bottom: 38px;
-        }
-    }
-
-    .content__head--byline-pic .content__header .content__headline__byline {
-        @include fs-headlineGarnett(5);
-        @include mq(mobileMedium) {
-            @include fs-headlineGarnett(6);
-        }
-        @include mq(tablet) {
-            @include fs-headlineGarnett(7);
-        }
-    }
-
-    .content__headline--byline {
-        font-style: italic;
-        margin-left: 0;
-        padding-top: $gs-baseline*2;
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-        }
-        @include mq(phablet) {
-            padding-top: 0;
-            padding-left: 0;
-        }
-        @include mq(tablet) {
-            padding-top: 28px;
-        }
-        @include mq(leftCol) {
-            padding-top: 0;
-        }
-    }
-
-    .content__headline--byline a {
-        text-decoration: none;
-        border-bottom: 0;
-    }
-
-    .content__headline--byline span:hover {
-        color: $neutral-3;
     }
 
     .content__standfirst {
@@ -1123,35 +1063,12 @@ $quote-mark: 35px;
         }
 
     }
-    .content__headline__byline {
-        overflow: visible;
-    }
 
     .meta__image {
         float: none;
         margin-right: -$gs-gutter;
         @include mq(phablet) {
             margin-right: 0;
-        }
-    }
-
-    .content__head--byline-pic .byline-img {
-
-        @include mq(mobileLandscape) {
-            height: $gs-baseline*15;
-        }
-    }
-
-    .byline-img {
-        position: absolute;
-        bottom: 0;
-        right: -$gs-gutter*2;
-        background: none!important;
-        margin: 0;
-        background-image: none;
-        max-width: none;
-        @include mq(mobileLandscape) {
-            right: gs-span(3) - $gs-gutter;
         }
     }
 
@@ -1485,7 +1402,7 @@ $quote-mark: 35px;
             transform: none;
             z-index: 5;
             bottom: 0;
-            @include mq(desktop) {
+            @include mq(tablet) {
                 bottom: unset;
                 top: 0;
             }
@@ -1745,51 +1662,6 @@ $quote-mark: 35px;
 
     .element .caption {
         background: transparent;
-    }
-}
-
-// *************** By line cutouts ****************
-
-.content__head--byline-pic .content__header {
-    padding-bottom: 0;
-
-    .content__headline {
-        padding-right: 0;
-        padding-bottom: 0;
-        width: auto;
-        float: none;
-    }
-
-    .content__headline__byline {
-        @include fs-headline(5);
-        @include mq(mobileLandscape) {
-            @include fs-headline(7, true);
-        }
-        overflow: hidden;
-        font-style: italic;
-        font-weight: 100;
-        padding: 0 $gs-gutter / 2;
-        @include mq(mobileLandscape) {
-            padding: 0 $gs-gutter;
-        }
-        @include mq(phablet) {
-            padding: 0;
-        }
-    }
-
-    .byline-img {
-        position: static;
-        float: right;
-        width: auto;
-        margin-right: -$gs-gutter;
-        shape-outside: polygon(0 130px, 0 150px, 180px 150px, 180px 0, 20px 0, 20px 96px);
-        @include mq(desktop) {
-            shape-outside: polygon(0 160px, 0 180px, 216px 180px, 216px 0, 36px 0, 24px 121px, 0 128px);
-        }
-    }
-
-    .byline-img__img {
-        float: none;
     }
 }
 
