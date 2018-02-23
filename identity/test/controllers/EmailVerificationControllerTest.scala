@@ -91,7 +91,6 @@ class EmailVerificationControllerTest extends path.FreeSpec
     "should link to the return url" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
       val result = controller.completeRegistration()(testRequest)
-      contentAsString(result) should include("Confirm your email address")
       contentAsString(result) should include("test-string-test")
       contentAsString(result) should include("Exit and continue")
     }
