@@ -23,12 +23,12 @@ abstract class RedirectDecision(val url: String, protected val redirectAccess: R
 }
 
 case object RedirectToEmailValidation extends RedirectDecision(
-  url = "/verify-email?isRepermissioningRedirect=true",
+  url = "/verify-email",
   redirectAccess = RedirectAccessEmailPrefs
 )
 
 case object RedirectToEmailValidationStrict extends RedirectDecision(
-  url = "/verify-email?isRepermissioningRedirect=true",
+  url = "/verify-email",
   redirectAccess = RedirectAccessAllPages
 )
 
