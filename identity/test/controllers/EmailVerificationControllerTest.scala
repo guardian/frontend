@@ -71,11 +71,12 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
   "Given the plain verify method is called" - Fake {
 
-    "should not render a link using resendEmailValidationEmail" in {
+    "should render the proper view using resendEmailValidationEmail" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
       val result = controller.resendEmailValidationEmail()(testRequest)
-      contentAsString(result) should include("Confirm your email address")
+      contentAsString(result) should include("you must confirm this is your email address")
       contentAsString(result) should not include("Exit and go to The Guardian home page")
+      contentAsString(result) should not include("join the Guardian community")
     }
 
     "should resend an email using resendEmailValidationEmail" in {
@@ -84,10 +85,11 @@ class EmailVerificationControllerTest extends path.FreeSpec
       verify(api).resendEmailValidationEmail(MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData], MockitoMatchers.any[Option[String]])
     }
 
-    "should render a link using completeRegistration" in {
+    "should render the proper view using completeRegistration" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
       val result = controller.completeRegistration()(testRequest)
       contentAsString(result) should include("Confirm your email address")
+      contentAsString(result) should include("join the Guardian community")
       contentAsString(result) should include("Exit and go to The Guardian home page")
     }
 
