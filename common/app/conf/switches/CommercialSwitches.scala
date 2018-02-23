@@ -313,9 +313,19 @@ trait CommercialSwitches {
     description = "Include the analytics script for Oriel to monitor ad-blocking",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 21),
+    sellByDate = new LocalDate(2018, 6, 28),
     exposeClientSide = false
   )
+
+  val BlockthroughSwitch: Switch = Switch(
+    group = Commercial,
+    name = "blockthrough",
+    description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+   )
 
   val prebidSonobi: Switch = Switch(
     group = Commercial,

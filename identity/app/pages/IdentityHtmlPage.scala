@@ -39,7 +39,7 @@ object IdentityHtmlPage {
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses())(
-        views.html.layout.identityFlexWrap()(
+        views.html.layout.identityFlexWrap(page.isFlow)(
           skipToMainContent(),
           views.html.layout.identityHeader(hideNavigation=page.isFlow) when page.metadata.hasSlimHeader,
           header() when !page.metadata.hasSlimHeader

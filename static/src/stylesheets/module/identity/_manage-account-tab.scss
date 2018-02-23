@@ -12,6 +12,23 @@
         min-height: 200px;
         margin-top: $gs-baseline*4;
     }
+    /* Warning
+    ========================================================================== */
+    .manage-account-warning {
+        border: 0;
+        padding: $gutter 0 0;
+        height: auto;
+        &:after {
+            @include multiline(4, $garnett-neutral-4, top);
+            content: '';
+            display: block;
+            height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
+            background-color: #ffffff;
+            margin-bottom: -1px;
+            margin-top: $gutter;
+            width: 100%;
+        }
+    }
 
     /* Up sell
     ========================================================================== */

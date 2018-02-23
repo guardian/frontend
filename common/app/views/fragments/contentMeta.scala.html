@@ -29,8 +29,10 @@
 
     @if(!(item.content.isGallery || item.content.isImmersive)) {
     <div class="meta__contact-wrap">
-        @if(!item.content.hasTonalHeaderByline && item.metadata.designType.nameOrDefault != "interview" || item.metadata.designType.nameOrDefault == "analysis") {
-            @byline()
+        @if(!item.content.hasTonalHeaderByline || item.metadata.designType.nameOrDefault == "analysis") {
+            @if(item.metadata.designType.nameOrDefault != "interview"){
+                @byline()
+            }
         }
 
         @item.content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }

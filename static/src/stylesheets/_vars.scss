@@ -88,7 +88,7 @@ $garnett-neutral-8: #ededed;
 
 
 $news-garnett-main-1: #c70000; //used for kicker
-$news-garnett-feature: #880105; //used for feature head 
+$news-garnett-feature: #880105; //used for feature head
 $news-garnett-media-main-1: #ff4e36; // used for kicker on media
 $news-garnett-highlight: #ffe500;
 
@@ -122,9 +122,15 @@ $live-garnett-lifestyle2: $live-garnett-main-2;
 
 $media-garnett-main-1: $multimedia-main-1;
 
-$vjs-garnett-small-button-size: 42px;
-$vjs-garnett-medium-button-size: 50px;
-$vjs-garnett-large-button-size: 60px;
+$garnett-small-button-size: 30px;
+$garnett-medium-button-size: 42px;
+$garnett-large-button-size: 50px;
+$garnett-x-large-button-size: 60px;
+
+$garnett-small-button-icon: 14px;
+$garnett-medium-button-icon: 16px;
+$garnett-large-button-icon: 20px;
+$garnett-x-large-button-icon: 24px;
 
 $immersive-garnett-main-1: rgba(0, 0, 0, .65);
 $analysis-garnett-underline: #ffbac8;
@@ -266,13 +272,6 @@ $gustyle-tone: #fedd79;
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
 $content-top-padding: $gs-baseline / 1.5;
-
-
-// Video.JS player
-// =============================================================================
-
-$vjs-small-button-size: 50px;
-$vjs-large-button-size: 70px;
 
 // Available image widths
 // these should match the ones in common/modules/ui/images.js

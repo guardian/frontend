@@ -103,6 +103,7 @@ trait ConsentsJourney
           newsletterService.getEmailSubscriptions(emailFilledForm),
           EmailNewsletters.all,
           consentHint,
+          skin = if(page == ConsentJourneyPageGdprCampaign) Some("gdpr-oi-campaign") else None
         ))(page, request, context)
       ))
 

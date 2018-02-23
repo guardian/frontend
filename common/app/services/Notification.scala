@@ -85,24 +85,3 @@ object R2PressNotification extends Notification {
 object R2PressedPageTakedownNotification extends Notification {
   lazy val topic: String = Configuration.aws.r2PressTakedownSns.getOrElse("")
 }
-
-object MissingVideoEncodings extends Notification {
-  lazy val topic: String = "arn:aws:sns:eu-west-1:642631414762:frontend-missingVideoEncodingsNotificationTopic"
-
-  def sendMessage(akkaAsync: AkkaAsync)
-    (encoding: String, url: String, webTitle: String)
-    (implicit executionContext: ExecutionContext): Unit = {
-    val subject = "Missing video encoding found"
-    val message =
-        s"""
-           |There was a video encoding missing for for page: $webTitle url: $url
-           |
-           |Its location is supposed to be: $encoding
-         """.stripMargin
-
-    super.send(akkaAsync)(subject, message)
-  }
-
-}
-
-
