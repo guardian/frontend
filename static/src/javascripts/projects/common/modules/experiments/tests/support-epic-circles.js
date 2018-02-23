@@ -4,8 +4,10 @@ import { getSync as getGeoLocation } from 'lib/geolocation';
 
 const targetUrl = () => {
     const fromGeo = getGeoLocation();
-    if (fromGeo === 'US') return 'https://support.theguardian.com/us/contribute';
-    if (fromGeo === 'GB') return 'https://support.theguardian.com/uk/contribute';
+    if (fromGeo === 'US')
+        return 'https://support.theguardian.com/us/contribute';
+    if (fromGeo === 'GB')
+        return 'https://support.theguardian.com/uk/contribute';
     return 'https://support.theguardian.com/';
 };
 export const supportEpicCircles = makeABTest({
