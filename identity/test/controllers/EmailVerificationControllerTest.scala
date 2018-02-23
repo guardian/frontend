@@ -99,7 +99,8 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
     "should not resend an email" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
-      controller.completeRegistration()(testRequest)
+      val result = controller.completeRegistration()(testRequest)
+      status(result) should be(200)
       verify(api, times(0)).resendEmailValidationEmail(MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData], MockitoMatchers.any[Option[String]])
     }
 
