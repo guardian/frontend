@@ -60,6 +60,10 @@ const renderList = (): Promise<void> =>
         .then(() => Promise.all(errors.map(error => renderError(error))))
         .then(() => Promise.resolve());
 
+export const reset = (): void => {
+    errors.length = 0;
+};
+
 export const push = (error: mixed, action: string = 'none'): Promise<void> => {
     const message =
         error instanceof Error && error.message
