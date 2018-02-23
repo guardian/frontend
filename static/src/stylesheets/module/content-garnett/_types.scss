@@ -1284,7 +1284,7 @@ $quote-mark: 35px;
             transform: none;
             z-index: 5;
             bottom: 0;
-            @include mq(desktop) {
+            @include mq(tablet) {
                 bottom: unset;
                 top: 0;
             }
