@@ -10,6 +10,7 @@ import { Advert } from 'commercial/modules/dfp/Advert';
 import { renderAdvert } from 'commercial/modules/dfp/render-advert';
 import { emptyAdvert } from 'commercial/modules/dfp/empty-advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
+import config from 'lib/config';
 
 const recordFirstAdRendered = once(() => {
     fire('/count/ad-render.gif');
@@ -71,6 +72,16 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         if (event.creativeId !== undefined) {
             dfpEnv.creativeIDs.push(event.creativeId);
         }
+        // Set refresh field based on the outcome of the slot render.
+        const sizeString = advert.size && advert.size.toString();
+        const isNotFluid = sizeString !== '0,0';
+        const neverHasVideo =
+            advert.id !== 'dfp-ad--inline1' ||
+            config.get('page.isFront') ||
+            config.get('page.contentType') === 'LiveBlog';
+
+        advert.shouldRefresh = isNotFluid && neverHasVideo && !config.page.hasPageSkin;
+
         renderAdvert(advert, event).then(emitRenderEvents);
     }
 };

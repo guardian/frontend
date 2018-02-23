@@ -83,6 +83,7 @@ class Advert {
             loadingMethod: null,
             lazyWaitComplete: null,
         };
+        this.shouldRefresh = false;
 
         this.whenLoaded = new Promise(resolve => {
             this.whenLoadedResolver = resolve;
