@@ -69,23 +69,27 @@ class EmailVerificationControllerTest extends path.FreeSpec
     play.api.test.Helpers.stubControllerComponents()
   )(testApplicationContext)
 
-  "Given the plain verify method is called" - Fake {
+  "Given resendEmailValidationEmail is called" - Fake {
 
-    "should render the proper view using resendEmailValidationEmail" in {
+    "should render the proper view" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
       val result = controller.resendEmailValidationEmail()(testRequest)
       contentAsString(result) should include("you must confirm this is your email address")
-      contentAsString(result) should not include("Exit and go to The Guardian home page")
-      contentAsString(result) should not include("join the Guardian community")
+      contentAsString(result) should not include ("Exit and go to The Guardian home page")
+      contentAsString(result) should not include ("join the Guardian community")
     }
 
-    "should resend an email using resendEmailValidationEmail" in {
+    "should resend an email" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
       controller.resendEmailValidationEmail()(testRequest)
       verify(api).resendEmailValidationEmail(MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData], MockitoMatchers.any[Option[String]])
     }
 
-    "should render the proper view using completeRegistration" in {
+  }
+
+  "Given completeRegistration is called" - Fake {
+
+    "should render the proper view" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
       val result = controller.completeRegistration()(testRequest)
       contentAsString(result) should include("Confirm your email address")
@@ -93,7 +97,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
       contentAsString(result) should include("Exit and go to The Guardian home page")
     }
 
-    "should not resend an email using completeRegistration" in {
+    "should not resend an email" in {
       when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(None)
       controller.completeRegistration()(testRequest)
       verify(api, times(0)).resendEmailValidationEmail(MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData], MockitoMatchers.any[Option[String]])
