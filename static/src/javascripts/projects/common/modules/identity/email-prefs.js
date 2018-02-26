@@ -50,9 +50,9 @@ const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
 
 const modalCloserBind = (buttonEl: HTMLElement): void => {
     buttonEl.addEventListener('click', () => {
-        const modalEl: ?Element = buttonEl.closest('.manage-account__modal');
+        const modalEl: ?Element = buttonEl.closest('.identity-modal');
         if (modalEl) {
-            modalEl.classList.remove('manage-account__modal--active');
+            modalEl.classList.remove('identity-modal--active');
         }
     });
 };
@@ -63,12 +63,12 @@ const modalFormatToggle = (buttonEl: HTMLElement): void => {
             .read(
                 () =>
                     document.getElementsByClassName(
-                        'manage-account__modal--newsletterFormat'
+                        'identity-modal--newsletterFormat'
                     )[0]
             )
             .then(modalEl => {
                 fastdom.write(() => {
-                    modalEl.classList.add('manage-account__modal--active');
+                    modalEl.classList.add('identity-modal--active');
                 });
             });
     });
@@ -77,7 +77,7 @@ const modalFormatToggle = (buttonEl: HTMLElement): void => {
 const enhanceEmailPrefs = (): void => {
     const loaders = [
         ['.js-save-button', bindHtmlPreferenceChange],
-        ['.js-manage-account__modalCloser', modalCloserBind],
+        ['.js-identity-modal__closer', modalCloserBind],
         ['.js-email-subscription__formatFieldsetToggle', modalFormatToggle],
     ];
     loadEnhancers(loaders);

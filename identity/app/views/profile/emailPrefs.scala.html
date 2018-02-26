@@ -55,7 +55,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#manage-account__modal--newsletterFormat" role="button" class="js-email-subscription__formatFieldsetToggle manage-account__button manage-account__button--mini manage-account__button--icon" data-link-name="identity : email : format">
+                        <a href="#identity-modal--newsletterFormat" role="button" class="js-email-subscription__formatFieldsetToggle manage-account__button manage-account__button--mini manage-account__button--icon" data-link-name="identity : email : format">
                             Change format
                             @fragments.inlineSvg("arrow-right", "icon")
                         </a>
@@ -90,41 +90,37 @@
         </div>
     </fieldset>
 
-    <div id="manage-account__modal--newsletterFormat" class="manage-account__modal manage-account__modal--newsletterFormat" role="dialog">
-        <div class="manage-account__modalContent">
-            <button class="manage-account__modalCloser js-manage-account__modalCloser">
-                <span class="u-h">Close this window</span>
-                @fragments.inlineSvg("cross", "icon")
-            </button>
-            <fieldset class="fieldset">
-                <div class="fieldset__heading">
-                    <h2 class="form__heading">Formatting</h2>
-                </div>
+    @newsletterModalContents = {
+        <fieldset class="fieldset">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">Formatting</h2>
+            </div>
 
-                <div class="fieldset__fields">
-                    <ul class="u-unstyled">
+            <div class="fieldset__fields">
+                <ul class="u-unstyled">
 
-                        <li class="form-field @if(emailPrefsForm("htmlPreference").errors.nonEmpty) {form-field--error}">
-                            <label class="label" for="htmlPreference">In which format would you like to receive email?</label>
-                            <div class="form-field__note">
-                                HTML emails have formatted text, images and look better. Text emails are quicker to download, but don't contain images or any formatting.
-                                <br />
-                                We recommend HTML emails.
-                            </div>
+                    <li class="form-field @if(emailPrefsForm("htmlPreference").errors.nonEmpty) {form-field--error}">
+                        <label class="label" for="htmlPreference">In which format would you like to receive email?</label>
+                        <div class="form-field__note">
+                            HTML emails have formatted text, images and look better. Text emails are quicker to download, but don't contain images or any formatting.
+                            <br />
+                            We recommend HTML emails.
+                        </div>
 
-                            @radioField(emailPrefsForm("htmlPreference"), List("HTML" -> "HTML (images and text)", "Text" -> "Text"))(nonInputFields, messages)
+                        @radioField(emailPrefsForm("htmlPreference"), List("HTML" -> "HTML (images and text)", "Text" -> "Text"))(nonInputFields, messages)
 
-                        </li>
+                    </li>
 
-                        <li>
-                            <button type="submit" class="manage-account__button save__button js-save-button" data-link-name="Save email preferences">Save</button>
-                        </li>
-                    </ul>
-                </div>
+                    <li>
+                        <button type="submit" class="manage-account__button save__button js-save-button" data-link-name="Save email preferences">Save</button>
+                    </li>
+                </ul>
+            </div>
 
-            </fieldset>
-        </div>
-        <div class="manage-account__modalBg js-manage-account__modalCloser"></div>
-    </div>
+        </fieldset>
+    }
+
+    @fragments.modal("newsletterFormat",newsletterModalContents)
+
 
 </form>

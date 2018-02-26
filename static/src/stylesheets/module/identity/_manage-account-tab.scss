@@ -358,13 +358,13 @@
 /* Modals
    ========================================================================== */
 
-.manage-account__modal {
+.identity-modal {
     border: 1px solid $neutral-8;
     padding: $gs-gutter;
     margin: $gs-gutter;
 }
 
-.js-on .manage-account__modal {
+.js-on .identity-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -379,12 +379,12 @@
     border: 0;
 }
 
-.js-on .manage-account__modal--active {
+.js-on .identity-modal--active {
     display: block;
     display: flex;
 }
 
-.js-on .manage-account__modalBg {
+.js-on .identity-modal__bg {
     position: fixed;
     top: 0;
     left: 0;
@@ -395,7 +395,7 @@
     z-index: 9;
 }
 
-.js-on .manage-account__modalContent {
+.js-on .identity-modal__wrap {
     max-width: gs-span(10);
     background: #ffffff;
     width: 100%;
@@ -407,11 +407,11 @@
     float: none;
 }
 
-.manage-account__modalCloser {
+.identity-modal__closer {
     display: none;
 }
 
-.js-on .manage-account__modalCloser {
+.js-on .identity-modal__closer {
     width: $gs-gutter * 1.75;
     height: $gs-gutter * 1.75;
     color: $identity-main;
