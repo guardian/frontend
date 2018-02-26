@@ -49,7 +49,7 @@
 }
 
 @channelStepContent = {
-    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" class="js-manage-account__check-allCheckbox__ignore" role="main" method="post">
         @views.html.helper.CSRF.formField
         <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
