@@ -3,6 +3,7 @@ package model.content
 import com.gu.contentapi.client.model.v1.TagType
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.renderer.ArticleConfiguration
+import com.gu.contentatom.renderer.ArticleConfiguration.CommonsdivisionConfiguration
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
@@ -220,7 +221,8 @@ final case class CommonsDivisionAtom(
 object Atoms extends common.Logging {
 
   def articleConfig = ArticleConfiguration(
-    ajaxUrl = Configuration.ajax.url
+    ajaxUrl = Configuration.ajax.url,
+    commonsdivisionConfiguration = CommonsdivisionConfiguration(showMps = true)
   )
 
   def extract[T](
