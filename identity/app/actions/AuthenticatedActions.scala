@@ -67,9 +67,10 @@ class AuthenticatedActions(
       authService.fullyAuthenticatedUser(request) match {
         case Some(user) if user.hasRecentlyAuthenticated =>
           Right(new AuthenticatedRequest(user, request))
-
-        case _ =>
+        case Some(user) =>
           Left(sendUserToReauthenticate(request))
+        case None =>
+          Left(sendUserToSignin(request))
       }
     }
 
@@ -92,7 +93,7 @@ class AuthenticatedActions(
       override val executionContext = ec
 
       def refine[A](request: Request[A]) =
-        authService.consentAuthenticatedUser(request) match {
+        authService.consentCookieAuthenticatedUser(request) match {
           case Some(userFormCookie) =>
             Future.successful(Right(new AuthenticatedRequest(userFormCookie, request)))
 
