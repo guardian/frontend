@@ -1,7 +1,8 @@
 @()(implicit request: RequestHeader)
 
 @if(
-    request.path == "/society/2018/feb/04/hospitals-cancelling-urgent-surgery-despite-nhs-bosses-orders-england-cancer-heart-operations"
+    Seq("/society/2018/feb/04/hospitals-cancelling-urgent-surgery-despite-nhs-bosses-orders-england-cancer-heart-operations",
+    "/uk-news/2018/feb/26/trains-cancelled-snow-arrives-in-uk-temperatures-plummet").contains(request.path)
 ) {
     <script async type="text/javascript" src="https://cdn-theguardian-com.videoplayerhub.com/gallery.js"></script>
 }
