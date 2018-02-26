@@ -18,7 +18,7 @@ const supportTestURL = (testName: string): string => {
         if (fromGeo === 'GB')
             return 'https://support.theguardian.com/uk/contribute';
     }
-    return supportBaseURL();
+    return supportBaseURL;
 };
 
 export { useSupportDomain, supportBaseURL, supportTestURL };
