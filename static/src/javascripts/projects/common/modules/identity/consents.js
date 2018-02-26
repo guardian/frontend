@@ -281,7 +281,7 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
     );
 };
 
-const getCheckedAllStatus = (checkboxesEl: HTMLInputElement[]) =>
+const getCheckedAllStatus = (checkboxesEl: HTMLInputElement[]): boolean =>
     checkboxesEl.reduce((acc, checkboxEl) => checkboxEl.checked && acc, true);
 
 const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
@@ -325,11 +325,6 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
         const getTextForStatus = (status: boolean) =>
             status ? LC_UNCHECK_ALL : LC_CHECK_ALL;
 
-        const revealCheckbox = () =>
-            fastdom.write(() => {
-                labelEl.classList.remove('u-h');
-            });
-
         const updateCheckStatus = () =>
             fastdom.write(() => {
                 if (!(checkboxEl instanceof HTMLInputElement)) {
@@ -337,6 +332,8 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                 }
                 checkboxEl.checked = getCheckedAllStatus(wrappedCheckboxEls);
                 titleEl.innerHTML = getTextForStatus(checkboxEl.checked);
+                labelEl.style.visibility = 'visible';
+                labelEl.style.pointerEvents = 'all';
             });
 
         /* TODO:these events get fired as a linear
@@ -369,8 +366,9 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
             ).then(() => removeSpinner(labelEl));
         };
 
-        revealCheckbox();
-        updateCheckStatus();
+        if (getCheckedAllStatus(wrappedCheckboxEls) === false) {
+            updateCheckStatus();
+        }
 
         wrappedCheckboxEls.forEach(wrappedCheckboxEl => {
             wrappedCheckboxEl.addEventListener('change', () =>
