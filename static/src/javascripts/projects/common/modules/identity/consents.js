@@ -22,6 +22,7 @@ import {
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
 const checkAllCheckboxClassName = 'js-manage-account__check-allCheckbox';
+const checkAllIgnoreClassName = 'js-manage-account__check-allCheckbox__ignore';
 
 const LC_CHECK_ALL = 'Select all';
 const LC_UNCHECK_ALL = 'Deselect all';
@@ -280,7 +281,7 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
     );
 };
 
-const getCheckedAllStatus = (checkboxesEl: HTMLInputElement[]) =>
+const getCheckedAllStatus = (checkboxesEl: HTMLInputElement[]): boolean =>
     checkboxesEl.reduce((acc, checkboxEl) => checkboxEl.checked && acc, true);
 
 const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
@@ -309,7 +310,9 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                         $checkbox =>
                             $checkbox.closest(
                                 `.${checkAllCheckboxClassName}`
-                            ) === null
+                            ) === null &&
+                            $checkbox.closest(`.${checkAllIgnoreClassName}`) ===
+                                null
                     );
                 })
             );
@@ -322,11 +325,6 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
         const getTextForStatus = (status: boolean) =>
             status ? LC_UNCHECK_ALL : LC_CHECK_ALL;
 
-        const revealCheckbox = () =>
-            fastdom.write(() => {
-                labelEl.classList.remove('u-h');
-            });
-
         const updateCheckStatus = () =>
             fastdom.write(() => {
                 if (!(checkboxEl instanceof HTMLInputElement)) {
@@ -334,12 +332,14 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                 }
                 checkboxEl.checked = getCheckedAllStatus(wrappedCheckboxEls);
                 titleEl.innerHTML = getTextForStatus(checkboxEl.checked);
+                labelEl.style.visibility = 'visible';
+                labelEl.style.pointerEvents = 'all';
             });
 
-        /* TODO:these events get fired as a linear 
-        timeout to avoid sending the requests 
-        to the server at once as that creates a 
-        race condition on its end. should be changed 
+        /* TODO:these events get fired as a linear
+        timeout to avoid sending the requests
+        to the server at once as that creates a
+        race condition on its end. should be changed
         to a single call that handles checking/unchecking */
         const handleChangeEvent = () => {
             addSpinner(labelEl, 200);
@@ -366,8 +366,9 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
             ).then(() => removeSpinner(labelEl));
         };
 
-        revealCheckbox();
-        updateCheckStatus();
+        if (getCheckedAllStatus(wrappedCheckboxEls) === false) {
+            updateCheckStatus();
+        }
 
         wrappedCheckboxEls.forEach(wrappedCheckboxEl => {
             wrappedCheckboxEl.addEventListener('change', () =>
