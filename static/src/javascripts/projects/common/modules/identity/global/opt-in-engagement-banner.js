@@ -52,7 +52,7 @@ const templateHtml: string = `
 
 const shouldDisplayOptInBanner = (): Promise<boolean> =>
     new Promise(decision => {
-        if (!config.get('switches.idShowOptInEngagementBanner')) {
+        if (config.get('tests.gdprOptinAlertVariant') !== 'variant') {
             return decision(false);
         }
         if (medium === null || medium.toLowerCase() !== 'email')
@@ -73,6 +73,7 @@ const optInEngagementBannerInit = (): void => {
             });
             new Message(messageCode, {
                 cssModifierClass: 'gdpr-opt-in',
+                siteMessageComponentName: messageCode,
             }).show(templateHtml);
         }
     });
