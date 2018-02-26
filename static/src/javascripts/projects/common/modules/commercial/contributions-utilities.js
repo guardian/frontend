@@ -187,7 +187,7 @@ const makeABTestVariant = (
             parentTest.campaignSuffix
         ),
         contributeURL = addTrackingCodesToUrl({
-            base: options.contributionsBaseURL || contributionsBaseURL,
+            base: contributionsBaseURL,
             componentType: parentTest.componentType,
             componentId: campaignCode,
             campaignCode,
