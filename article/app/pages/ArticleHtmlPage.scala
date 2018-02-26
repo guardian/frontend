@@ -13,7 +13,7 @@ object ArticleHtmlPage extends HtmlPage[ArticlePage] {
     implicit val p: ArticlePage = page
 
     val (header, content): (Html, Html) = page.article match {
-      case article if article.isPhotoEssay => (photoEssayHeader(), immersiveBody())
+      case article if article.isPhotoEssay => (photoEssayHeader(), photoEssayBody())
       case article if article.isImmersive => (immersiveGarnettHeader(), immersiveGarnettBody())
       case _ => (guardianHeaderHtml(), articleBodyGarnett(page))
     }

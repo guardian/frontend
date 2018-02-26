@@ -24,10 +24,10 @@ const targets = {
 
 const template = {
     image: config.get('images.identity.opt-in'),
-    title: `We’re changing how we communicate with readers. Let us know what emails you want to receive <strong>before 30 April</strong>, or <a data-link-name="gdpr-oi-campaign : alert : to-landing" href="${
+    title: `We’re changing how we communicate with readers. Let us know what emails you want to receive <strong>before 30 April</strong>, or&nbsp;<a data-link-name="gdpr-oi-campaign : alert : to-landing" href="${
         targets.landing
-    }">find out more</a>.`,
-    cta: `Opt in again`,
+    }">find&nbsp;out&nbsp;more</a>.`,
+    cta: `Opt in now`,
 };
 
 const templateHtml: string = `
@@ -52,7 +52,7 @@ const templateHtml: string = `
 
 const shouldDisplayOptInBanner = (): Promise<boolean> =>
     new Promise(decision => {
-        if (!config.get('switches.idShowOptInEngagementBanner')) {
+        if (config.get('tests.gdprOptinAlertVariant') !== 'variant') {
             return decision(false);
         }
         if (medium === null || medium.toLowerCase() !== 'email')
@@ -73,6 +73,7 @@ const optInEngagementBannerInit = (): void => {
             });
             new Message(messageCode, {
                 cssModifierClass: 'gdpr-opt-in',
+                siteMessageComponentName: messageCode,
             }).show(templateHtml);
         }
     });

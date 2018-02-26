@@ -27,22 +27,21 @@ const stickyMpu = (adSlot: HTMLElement) => {
     rightSlot = adSlot;
 
     const referenceElement: any = document.querySelector(
-        config.page.hasShowcaseMainElement
-            ? '.media-primary'
-            : '.js-article__body,.js-liveblog-body-content'
+        '.js-article__body,.js-liveblog-body-content'
     );
-    if (!referenceElement || !adSlot) {
+
+    const stickyPixelBoundary: number = 300;
+
+    if (
+        !referenceElement ||
+        !adSlot ||
+        config.get('page.hasShowcaseMainElement')
+    ) {
         return;
     }
 
     fastdom
-        .read(() => {
-            if (config.page.hasShowcaseMainElement) {
-                return referenceElement.offsetHeight + adSlot.offsetHeight;
-            }
-
-            return referenceElement.offsetTop + adSlot.offsetHeight;
-        })
+        .read(() => referenceElement.offsetTop + stickyPixelBoundary)
         .then(newHeight =>
             fastdom.write(() => {
                 (adSlot.parentNode: any).style.height = `${newHeight}px`;

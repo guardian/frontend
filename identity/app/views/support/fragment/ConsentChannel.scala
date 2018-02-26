@@ -35,6 +35,9 @@ object ConsentChannel {
       }
   }
 
+  def isSmsChannel(consentField: Field, user: User): Boolean =
+    consentField("id").value.exists(_ == TextConsentChannel.id)
+
   def isChannel(consentField: Field): Boolean = {
     consentField("id").value.exists { id => channelsIds.contains(id) }
   }
