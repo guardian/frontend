@@ -1,15 +1,7 @@
 // @flow
 import { makeBannerABTestVariants } from 'common/modules/commercial/contributions-utilities';
 import { getSync as getGeoLocation } from 'lib/geolocation';
-
-const targetUrl = () => {
-    const fromGeo = getGeoLocation();
-    if (fromGeo === 'US')
-        return 'https://support.theguardian.com/us/contribute';
-    if (fromGeo === 'GB')
-        return 'https://support.theguardian.com/uk/contribute';
-    return 'https://support.theguardian.com/';
-};
+import { supportTestURL } from 'common/modules/commercial/support-utilities';
 
 export const SupportEngagementBannerCircles: AcquisitionsABTest = {
     id: 'SupportEngagementBannerCircles',
@@ -33,7 +25,7 @@ export const SupportEngagementBannerCircles: AcquisitionsABTest = {
             id: 'variant',
             options: {
                 engagementBannerParams: {
-                    linkUrl: targetUrl(),
+                    linkUrl: supportTestURL('sandc_circles'),
                 },
             },
         },

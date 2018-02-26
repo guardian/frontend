@@ -37,9 +37,9 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    supportEpicCircles, // TODO: check priority placement
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
+    supportEpicCircles,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

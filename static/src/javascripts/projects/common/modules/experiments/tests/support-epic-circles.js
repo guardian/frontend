@@ -1,15 +1,8 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { getSync as getGeoLocation } from 'lib/geolocation';
+import { supportTestURL } from 'common/modules/commercial/support-utilities';
 
-const targetUrl = () => {
-    const fromGeo = getGeoLocation();
-    if (fromGeo === 'US')
-        return 'https://support.theguardian.com/us/contribute';
-    if (fromGeo === 'GB')
-        return 'https://support.theguardian.com/uk/contribute';
-    return 'https://support.theguardian.com/';
-};
 export const supportEpicCircles = makeABTest({
     id: 'SupportEpicCircles',
     campaignId: 'sandc_circles',
@@ -33,16 +26,12 @@ export const supportEpicCircles = makeABTest({
             id: 'variant',
             products: [],
             options: {
-                isUnlimited: true,
-                supportBaseURL: targetUrl(),
+                supportBaseURL: supportTestURL('sandc_circles'),
             },
         },
         {
             id: 'control',
             products: [],
-            options: {
-                isUnlimited: true,
-            },
         },
     ],
 });
