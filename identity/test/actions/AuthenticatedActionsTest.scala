@@ -145,9 +145,10 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
 
       val result = actions.consentsRedirectAction().apply(failTest)(request)
-      val expectedLocation = s"/reauthenticate?INTCMP=email&returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
+      val expectedLocation = s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
       whenReady(result) { res =>
         res.header.status shouldBe 303
+        res.header.headers should contain("Location" -> expectedLocation)
       }
     }
   }
