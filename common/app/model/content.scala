@@ -232,6 +232,7 @@ final case class Content(
     ("isImmersive", JsBoolean(isImmersive)),
     ("isColumn", JsBoolean(isColumn)),
     ("isPaidContent", JsBoolean(isPaidContent)),
+    ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
 
   )
@@ -443,7 +444,6 @@ object Article {
       ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
       ("isColumn", JsBoolean(content.isColumn)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
-      ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
       "videoDuration" -> videoDuration
     ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
 
