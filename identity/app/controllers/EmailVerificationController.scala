@@ -27,12 +27,11 @@ class EmailVerificationController(api: IdApiClient,
   import ValidationState._
   import authenticatedActions.fullAuthWithIdapiUserAction
 
-  val page = IdentityPage("/verify-email", "Verify Email")
 
   def verify(token: String): Action[AnyContent] = Action.async {
     implicit request =>
       val idRequest = idRequestParser(request)
-
+      val page = IdentityPage("/verify-email", "Verify Email")
       api.validateEmail(token, idRequest.trackingData) map {
         response =>
           val validationState = response match {
@@ -58,26 +57,31 @@ class EmailVerificationController(api: IdApiClient,
       }
   }
 
-  def resendEmailValidationEmail(isRepermissioningRedirect: Boolean, isSignupFlow: Boolean): Action[AnyContent] = fullAuthWithIdapiUserAction.async {
+  def completeRegistration(): Action[AnyContent] = fullAuthWithIdapiUserAction.async {
     implicit request =>
       val idRequest = idRequestParser(request)
-      val customMessage = if (isRepermissioningRedirect) Some("To access all your account features and join the Guardian community, we need you to confirm your email address below.") else None
-
+      val page = IdentityPage("/complete-registration", "Complete Signup", isFlow = true)
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
 
-      val verificationEmailResentPage =
-        Ok(IdentityHtmlPage.html(views.html.verificationEmailResent(request.user, idRequest, idUrlBuilder, customMessage, verifiedReturnUrlAsOpt, returnUrlVerifier.defaultReturnUrl, isSignupFlow))(page, request, context))
+      Future.successful(Ok(IdentityHtmlPage.html(
+          views.html.verificationEmailResent(request.user, idRequest, idUrlBuilder, verifiedReturnUrlAsOpt, returnUrlVerifier.defaultReturnUrl, isSignupFlow = true)
+      )(page, request, context)))
+  }
 
-      if (isSignupFlow)
-        Future.successful(verificationEmailResentPage)
-      else
-        api.resendEmailValidationEmail(
-          request.user.auth,
-          idRequest.trackingData,
-          verifiedReturnUrlAsOpt
-        ).map(_ =>
-          verificationEmailResentPage
-        )
+  def resendEmailValidationEmail(): Action[AnyContent] = fullAuthWithIdapiUserAction.async {
+    implicit request =>
+      val idRequest = idRequestParser(request)
+      val page = IdentityPage("/verify-email", "Verify Email")
+      val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
+
+      api.resendEmailValidationEmail(
+        request.user.auth,
+        idRequest.trackingData,
+        verifiedReturnUrlAsOpt
+      ).map(_ =>
+        Ok(IdentityHtmlPage.html(views.html.verificationEmailResent(request.user, idRequest, idUrlBuilder, verifiedReturnUrlAsOpt, returnUrlVerifier.defaultReturnUrl))(page, request, context))
+      )
+
   }
 }
 

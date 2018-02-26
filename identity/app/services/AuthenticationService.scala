@@ -36,11 +36,11 @@ class AuthenticationService(
         hasRecentlyAuthenticated = hasRecentlyAuthenticated(dataFromGuU.getUser, request.cookies.get("SC_GU_LA")))
     }
 
-  /** User has SC_GU_RP or SC_GU_U */
-  def consentAuthenticatedUser(request: RequestHeader): Option[AuthenticatedUser] = {
-    fullyAuthenticatedUser(request)
-      .orElse(consentCookieAuthenticatedUser(request))
-  }
+  def consentCookieAuthenticatedUser(request: RequestHeader): Option[AuthenticatedUser] =
+    for {
+      scGuRp          <- request.cookies.get("SC_GU_RP")
+      userFromScGuRp  <- cookieDecoder.getUserDataForGuRp(scGuRp.value)
+    } yield AuthenticatedUser(userFromScGuRp, ScGuRp(scGuRp.value))
 
   def userIsFullyAuthenticated(request: RequestHeader): Boolean =
     fullyAuthenticatedUser(request).isDefined
@@ -52,12 +52,4 @@ class AuthenticationService(
         scGuLa.value,
         Minutes.minutes(20).toStandardDuration))
   }
-
-  private def consentCookieAuthenticatedUser(request: RequestHeader): Option[AuthenticatedUser] = {
-    for {
-      scGuRp          <- request.cookies.get("SC_GU_RP")
-      userFromScGuRp  <- cookieDecoder.getUserDataForGuRp(scGuRp.value)
-    } yield AuthenticatedUser(userFromScGuRp, ScGuRp(scGuRp.value))
-  }
-
 }

@@ -34,7 +34,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
     val guUCookie = mock[ScGuU]
     val recentlyAuthedUser = AuthenticatedUser(user, guUCookie, true)
     val notRecentlyAuthedUser = AuthenticatedUser(user, guUCookie, false)
-    val mockRepsonse = mock[Response[User]]
+    val mockResponse = mock[Response[User]]
 
     val profileRedirectService = mock[ProfileRedirectService]
     val actions = new AuthenticatedActions(authService, client, new IdentityUrlBuilder(testIdConfig), Helpers.stubControllerComponents(), mock[NewsletterService], mock[IdRequestParser], profileRedirectService)
@@ -42,7 +42,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
 
   }
 
-  "The Consent Journey Redirect Action" should {
+  "The manage my account action" should {
     def failTest: AuthRequest[AnyContent] => Result = _ => fail("Block was invoked")
 
     "redirect to /reauthenticate when the user is not recently authenticated" in new TestFixture {
@@ -52,15 +52,13 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(notRecentlyAuthedUser))
 
       val result = actions.manageAccountRedirectAction(originalUrl).apply(failTest)(request)
-      val expectedLocation = s"/reauthenticate?INTCMP=email&returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
+      val expectedLocation = s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
       whenReady(result) { res =>
         res.header.status shouldBe 303
         res.header.headers should contain("Location" -> expectedLocation)
       }
     }
-  }
 
-  "The Consent Journey Redirect Action" should {
     "go straight to /email-prefs when a user is recently authenticated and has repermissioned and has valid email" in new TestFixture {
       val originalUrl = "https://profile.thegulocal.com/email-prefs"
       val request = Request(FakeRequest("GET", originalUrl), AnyContent())
@@ -80,6 +78,78 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       whenReady(result)(res => {
         verify(mockFunc).apply(1)
       })
+    }
+  }
+
+  "The consent journey redirect action" should {
+    def failTest: AuthRequest[AnyContent] => Result = _ => fail("Block was invoked")
+
+    "redirect to /signin when the user is not authenticated" in new TestFixture {
+      val originalUrl = "https://profile.thegulocal.com/consents"
+      val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+
+      when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
+      when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
+
+      val result = actions.consentsRedirectAction().apply(failTest)(request)
+      val expectedLocation = s"/signin?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
+      whenReady(result) { res =>
+        res.header.status shouldBe 303
+        res.header.headers should contain("Location" -> expectedLocation)
+      }
+    }
+
+    "not redirect and return 200 when a user is authenticated via an RP cookie" in new TestFixture {
+      val originalUrl = "https://profile.thegulocal.com/consents"
+      val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+
+      when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
+      when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(Some(userWithRpCookie))
+      when(client.me(any[Auth])).thenReturn(Future(Right(user)))
+      when(profileRedirectService.toConsentsRedirect(any[User], any[RequestHeader])).thenReturn(Future(NoRedirect))
+
+      val mockFunc = mock[Int => Result]
+      when(mockFunc.apply(1)) thenReturn mock[Result]
+      def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
+
+      val result = actions.consentsRedirectAction().apply(callMock)(request)
+      whenReady(result) { res =>
+        verify(mockFunc).apply(1)
+      }
+    }
+
+    "not redirect and return 200 when a user is authenticated via a GU_U cookie" in new TestFixture {
+      val originalUrl = "https://profile.thegulocal.com/consents"
+      val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+
+      when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
+      when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
+      when(client.me(any[Auth])).thenReturn(Future(Right(user)))
+      when(profileRedirectService.toConsentsRedirect(any[User], any[RequestHeader])).thenReturn(Future(NoRedirect))
+
+      val mockFunc = mock[Int => Result]
+      when(mockFunc.apply(1)) thenReturn mock[Result]
+      def callMock: AuthRequest[AnyContent] => Result = _ => mockFunc.apply(1)
+
+      val result = actions.consentsRedirectAction().apply(callMock)(request)
+      whenReady(result) { res =>
+        verify(mockFunc).apply(1)
+      }
+    }
+
+    "redirect to reauth when a user is authenticated via a GU_U cookie but not recently" in new TestFixture {
+      val originalUrl = "https://profile.thegulocal.com/consents"
+      val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+
+      when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(notRecentlyAuthedUser))
+      when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
+
+      val result = actions.consentsRedirectAction().apply(failTest)(request)
+      val expectedLocation = s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
+      whenReady(result) { res =>
+        res.header.status shouldBe 303
+        res.header.headers should contain("Location" -> expectedLocation)
+      }
     }
   }
 }
