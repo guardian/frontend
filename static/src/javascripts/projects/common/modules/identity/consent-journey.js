@@ -71,9 +71,10 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
 };
 
 const submitJourneyAnyway = (buttonEl: HTMLElement): void => {
-    const journeyEl =
-        buttonEl.closest('.identity-consent-journey') ||
-        new Error(ERR_MALFORMED_HTML);
+    const journeyEl = ((buttonEl.closest(
+        '.identity-consent-journey'
+    ): any): HTMLElement);
+    if (!journeyEl) throw new Error(ERR_MALFORMED_HTML);
     buttonEl.addEventListener('click', () => {
         getForm(journeyEl).then(formEl => {
             formEl.submit();

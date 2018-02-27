@@ -4,7 +4,7 @@ import fastdom from 'lib/fastdom-promise';
 const ERR_MODAL_NOT_FOUND = 'Modal not found';
 const ERR_MODAL_MALFORMED = 'Modal is malformed';
 
-const bindCloserOnce = (modalEl: HTMLElement, name: string): Promise<void[]> =>
+const bindCloserOnce = (modalEl: HTMLElement): Promise<void[]> =>
     fastdom
         .read(() => [...modalEl.querySelectorAll('.js-identity-modal__closer')])
         .then(buttonEls =>
@@ -24,18 +24,18 @@ const bindCloserOnce = (modalEl: HTMLElement, name: string): Promise<void[]> =>
 const getModal = (name: string): Promise<HTMLElement> =>
     fastdom
         .read(() => {
-            const modalEl: HTMLElement = document.querySelector(
+            const modalEl: ?HTMLElement = document.querySelector(
                 `.identity-modal.identity-modal--${name}`
             );
             if (!modalEl) throw new Error(ERR_MODAL_NOT_FOUND);
             return modalEl;
         })
-        .then(modalEl => bindCloserOnce(modalEl, name).then(() => modalEl));
+        .then(modalEl => bindCloserOnce(modalEl).then(() => modalEl));
 
 const getContents = (name: string): Promise<HTMLElement> =>
     getModal(name).then(modalEl =>
         fastdom.read(() => {
-            const contentsEl: HTMLElement = modalEl.querySelector(
+            const contentsEl: ?HTMLElement = modalEl.querySelector(
                 `.identity-modal__content`
             );
             if (!contentsEl) throw new Error(ERR_MODAL_MALFORMED);
@@ -57,4 +57,4 @@ const hide = (name: string): Promise<void> =>
         })
     );
 
-export {hide, show, getContents}
+export { hide, show, getContents };

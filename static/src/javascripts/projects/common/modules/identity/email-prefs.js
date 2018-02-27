@@ -1,12 +1,9 @@
 // @flow
 
 import reqwest from 'reqwest';
-import fastdom from 'lib/fastdom-promise';
 import loadEnhancers from './modules/loadEnhancers';
 
-import {
-    show as showModal
-} from './modules/modal';
+import { show as showModal } from './modules/modal';
 import { push as pushError } from './modules/show-errors';
 import { addUpdatingState, removeUpdatingState } from './modules/button';
 import {
@@ -52,11 +49,7 @@ const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
 };
 
 const modalFormatToggle = (buttonEl: HTMLElement): void => {
-    buttonEl.addEventListener('click', () =>
-        showModal(
-            'newsletterFormat'
-        )
-    );
+    buttonEl.addEventListener('click', () => showModal('newsletterFormat'));
 };
 
 const enhanceEmailPrefs = (): void => {

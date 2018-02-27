@@ -358,6 +358,8 @@
 /* Modals
    ========================================================================== */
 
+$modal-close-size: $gs-gutter * 1.75;
+
 .identity-modal {
     position: fixed;
     top: 0;
@@ -394,9 +396,12 @@
     width: 100%;
     position: relative;
     z-index: 10;
-    padding: $gs-gutter;
     margin: auto;
     float: none;
+    padding: ($gs-gutter + $modal-close-size) $gs-gutter/2 $gs-gutter;
+    @include mq(tablet) {
+        padding: $gs-gutter ($gs-gutter*2 + $modal-close-size);
+    }
 }
 
 .identity-modal__content {
@@ -405,16 +410,19 @@
 }
 
 .identity-modal__closer {
-    width: $gs-gutter * 1.75;
-    height: $gs-gutter * 1.75;
+    width: $modal-close-size;
+    height: $modal-close-size;
     color: $identity-main;
     border: 1px solid currentColor;
     border-radius: 100%;
     display: block;
     position: absolute;
     top: $gs-gutter / 2;
-    right: $gs-gutter;
+    right: $gs-gutter / 2;
     background: transparent;
+    @include mq(tablet) {
+        right: $gs-gutter;
+    }
 
     svg {
         position: absolute;
