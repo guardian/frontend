@@ -21,7 +21,7 @@ export const priceGranularity: PrebidPriceGranularity = {
         },
         {
             min: 20,
-            max: 30,
+            max: 40,
             increment: 10,
         },
     ],
