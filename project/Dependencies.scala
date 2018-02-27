@@ -70,7 +70,7 @@ object Dependencies {
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
-  val atomRenderer = "com.gu" %% "atom-renderer" % "0.13.6"
+  val atomRenderer = "com.gu" %% "atom-renderer" % "0.14.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
 
