@@ -908,7 +908,7 @@ $quote-mark: 35px;
         }
 
         @include mq($from: desktop) {
-            margin-top: 0px;
+            margin-top: 0;
         }
 
         a {
