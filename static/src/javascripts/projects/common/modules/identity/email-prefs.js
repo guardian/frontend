@@ -1,9 +1,9 @@
 // @flow
 
 import reqwest from 'reqwest';
-import fastdom from 'lib/fastdom-promise';
 import loadEnhancers from './modules/loadEnhancers';
 
+import { show as showModal } from './modules/modal';
 import { push as pushError } from './modules/show-errors';
 import { addUpdatingState, removeUpdatingState } from './modules/button';
 import {
@@ -48,36 +48,13 @@ const bindHtmlPreferenceChange = (buttonEl: HTMLButtonElement): void => {
     );
 };
 
-const modalCloserBind = (buttonEl: HTMLElement): void => {
-    buttonEl.addEventListener('click', () => {
-        const modalEl: ?Element = buttonEl.closest('.manage-account__modal');
-        if (modalEl) {
-            modalEl.classList.remove('manage-account__modal--active');
-        }
-    });
-};
-
 const modalFormatToggle = (buttonEl: HTMLElement): void => {
-    buttonEl.addEventListener('click', () => {
-        fastdom
-            .read(
-                () =>
-                    document.getElementsByClassName(
-                        'manage-account__modal--newsletterFormat'
-                    )[0]
-            )
-            .then(modalEl => {
-                fastdom.write(() => {
-                    modalEl.classList.add('manage-account__modal--active');
-                });
-            });
-    });
+    buttonEl.addEventListener('click', () => showModal('newsletterFormat'));
 };
 
 const enhanceEmailPrefs = (): void => {
     const loaders = [
         ['.js-save-button', bindHtmlPreferenceChange],
-        ['.js-manage-account__modalCloser', modalCloserBind],
         ['.js-email-subscription__formatFieldsetToggle', modalFormatToggle],
     ];
     loadEnhancers(loaders);

@@ -31,6 +31,7 @@
         role="group"
         class="
             identity-consent-journey-step
+            identity-consent-journey-step--@{step.name}
             @step.extraClassNames.map(s => s"identity-consent-journey-step--${s}")
         "
         aria-labelledby="consents@{step.name.capitalize}Title"

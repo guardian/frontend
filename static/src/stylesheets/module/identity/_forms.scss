@@ -44,11 +44,26 @@ Messages
 .identity-forms-message {
     max-width: gs-span(6);
     margin: 0 auto;
+    .identity-forms-message__options {
+        display: flex;
+        margin-top: $gs-baseline * 2;
+        flex-direction: column;
+        align-items: stretch;
+        > * {
+            margin-top: $gs-gutter/2;
+        }
+        @include mq(tablet) {
+            justify-content: space-between;
+            flex-direction: row;
+        }
+    }
     .identity-forms-message__body {
         @include clearfix;
-        border-top: 1px solid $garnett-neutral-4;
-        margin-top: $gs-baseline * 2;
-        padding-top: $gs-baseline / 3;
+
+        &:not(:first-child) {
+            margin-top: $gs-baseline * 2;
+        }
+
         &.identity-forms-message__body--aside {
             @include fs-textSans(4);
             .manage-account__button {
