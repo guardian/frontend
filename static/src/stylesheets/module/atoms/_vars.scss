@@ -7,14 +7,14 @@
 @import '../../pasteup/typography/src';
 
 :root {
-    --f-serif-text: $f-serif-text;
-    --f-serif-headline: $f-serif-headline;
-    --f-sans-serif-text: $f-sans-serif-text;
-    --c-pillar--main: $news-garnett-main-1;
+    #{--f-serif-text}: $f-serif-text;
+    #{--f-serif-headline}: $f-serif-headline;
+    #{--f-sans-serif-text}: $f-sans-serif-text;
+    #{--c-pillar--main}: $news-garnett-main-1;
 }
 
-.content--pillar-arts      { --c-pillar--main: $culture-garnett-main-1; }
-.content--pillar-lifestyle { --c-pillar--main: $lifestyle-garnett-main-1; }
-.content--pillar-news      { --c-pillar--main: $news-garnett-main-1; }
-.content--pillar-opinion   { --c-pillar--main: $opinion-garnett-main-1; }
-.content--pillar-sport     { --c-pillar--main: $sport-garnett-main-1; }
+.content--pillar-arts      { #{--c-pillar--main}: $culture-garnett-main-1; }
+.content--pillar-lifestyle { #{--c-pillar--main}: $lifestyle-garnett-main-1; }
+.content--pillar-news      { #{--c-pillar--main}: $news-garnett-main-1; }
+.content--pillar-opinion   { #{--c-pillar--main}: $opinion-garnett-main-1; }
+.content--pillar-sport     { #{--c-pillar--main}: $sport-garnett-main-1; }
