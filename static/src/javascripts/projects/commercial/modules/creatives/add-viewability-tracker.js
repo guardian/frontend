@@ -1,5 +1,5 @@
 // @flow
-const addViewabilityTracker = (
+export const addViewabilityTracker = (
     adSlot: Node,
     creativeId: string,
     viewabilityTracker: string
@@ -17,5 +17,3 @@ const addViewabilityTracker = (
         )
     );
 };
-
-export default addViewabilityTracker;

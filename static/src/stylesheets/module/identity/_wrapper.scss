@@ -35,10 +35,6 @@
         color: $identity-main;
     }
 
-    &.identity-wrapper--with-wizard {
-        padding-bottom: 0;
-    }
-
     @include mq(desktop) {
         max-width: gs-span(10);
     }
@@ -57,6 +53,9 @@
     flex-direction: column;
     min-height: 100vh;
     align-items: stretch;
+    &.identity-wrapper-page-flex--flow {
+        background: $garnett-neutral-3;
+    }
     & > .identity-wrapper-page-flex__content {
         flex: 1 1 auto;
     }

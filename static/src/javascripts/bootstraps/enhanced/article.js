@@ -52,12 +52,6 @@ const modules = {
         mediator.on('quiz/ophan-event', ophan.record);
     },
 
-    optInEngagementBanner() {
-        if (config.switches.idShowOptInEngagementBanner) {
-            optInEngagementBannerInit();
-        }
-    },
-
     emitReadyEvent() {
         mediator.emit('page:article:ready');
     },
@@ -75,7 +69,7 @@ const init = () => {
         ['article-upgrade-membership-events', upgradeMembershipEvents],
         ['article-mediator-emit-event', modules.emitReadyEvent],
         ['article-handle-quiz-completion', handleQuizCompletion],
-        ['article-opt-in-engagement-banner', modules.optInEngagementBanner],
+        ['article-opt-in-engagement-banner', optInEngagementBannerInit],
     ]);
 };
 

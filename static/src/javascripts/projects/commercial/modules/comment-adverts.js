@@ -5,7 +5,7 @@ import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import createSlot from 'commercial/modules/dfp/create-slot';
+import { createSlot } from 'commercial/modules/dfp/create-slot';
 import type bonzo from 'bonzo';
 
 const init = (): ?boolean => {

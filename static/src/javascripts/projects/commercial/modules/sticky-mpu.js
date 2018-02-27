@@ -27,28 +27,26 @@ const stickyMpu = (adSlot: HTMLElement) => {
     rightSlot = adSlot;
 
     const referenceElement: any = document.querySelector(
-        config.page.hasShowcaseMainElement
-            ? '.media-primary'
-            : '.content__article-body,.js-liveblog-body-content'
+        '.js-article__body,.js-liveblog-body-content'
     );
-    if (!referenceElement || !adSlot) {
+
+    const stickyPixelBoundary: number = 300;
+
+    if (
+        !referenceElement ||
+        !adSlot ||
+        config.get('page.hasShowcaseMainElement')
+    ) {
         return;
     }
 
     fastdom
-        .read(
-            () =>
-                referenceElement[
-                    config.page.hasShowcaseMainElement
-                        ? 'offsetHeight'
-                        : 'offsetTop'
-                ] + adSlot.offsetHeight
+        .read(() => referenceElement.offsetTop + stickyPixelBoundary)
+        .then(newHeight =>
+            fastdom.write(() => {
+                (adSlot.parentNode: any).style.height = `${newHeight}px`;
+            })
         )
-        // .then(newHeight =>
-        //     fastdom.write(() => {
-        //         (adSlot.parentNode: any).style.height = `${newHeight}px`;
-        //     })
-        // )
         .then(() => {
             if (noSticky) {
                 // if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible

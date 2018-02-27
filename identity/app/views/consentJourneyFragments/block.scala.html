@@ -1,0 +1,68 @@
+@import conf.Static
+@import views.support.fragment.ConsentBlock._
+
+@(
+    block: ConsentBlock,
+    isFirst: Boolean = false,
+    isLast: Boolean = false
+)
+
+@showAgeStep(display: Boolean = false) = @{
+    if(display){
+        List(ConsentStepHelpText("By continuing, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
+    } else {
+        Nil
+    }
+}
+
+@renderHelpText(help: List[ConsentStepHelpTextTrait]) = @{
+    help.map {
+        case m: ConsentStepHelpLegalText => {
+            Html(s"<p class='identity-title-explainer identity-title-explainer--small'>${m.text}</p>")
+        }
+        case m: ConsentStepHelpText => {
+            Html(s"<p class='identity-title-explainer'>${m.text}</p>")
+        }
+    }
+}
+
+@showConsentStep(step: ConsentStep) = {
+    <div
+        role="group"
+        class="
+            identity-consent-journey-step
+            @step.extraClassNames.map(s => s"identity-consent-journey-step--${s}")
+        "
+        aria-labelledby="consents@{step.name.capitalize}Title"
+    >
+        <h2 id="consents@{step.name.capitalize}Title" class="identity-consent-journey-step__title">@step.title</h2>
+        <div class="identity-consent-journey-step__content">
+            @if(step.help || showAgeStep(display = isFirst)){
+                <div class="identity-consent-journey-step__info">
+                    @renderHelpText(step.help ++ showAgeStep(display = isFirst))
+                </div>
+            }
+            <div class="identity-consent-journey-step__fields">
+                @step.content
+            </div>
+        </div>
+
+    </div>
+}
+
+@showConsentCustomHtml(info: ConsentCustomHtml) = {
+    <div
+        class="identity-consent-journey-step"
+        data-title="@info.title"
+    >
+        <div class="identity-consent-journey-step__content">
+            @info.content
+        </div>
+    </div>
+}
+
+@{block match {
+    case m: ConsentStep => showConsentStep(m)
+    case m: ConsentCustomHtml => showConsentCustomHtml(m)
+    case m: ConsentBanner => Html(s"<p class='form__success'>${m.title}</p>")
+}}

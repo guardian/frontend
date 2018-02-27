@@ -17,7 +17,13 @@ import { Advert } from 'commercial-control/modules/dfp/Advert';
 import { breakpointNameToAttribute } from 'commercial-control/modules/dfp/breakpoint-name-to-attribute';
 import { dfpEnv } from 'commercial-control/modules/dfp/dfp-env';
 
-const bidders = [sonobiBidder, indexExchangeBidder];
+const bidders = [];
+if (config.switches.prebidSonobi) {
+    bidders.push(sonobiBidder);
+}
+if (config.switches.prebidIndexExchange) {
+    bidders.push(indexExchangeBidder);
+}
 const bidderTimeout = 1500;
 
 const isEqualAdSize = (a: PrebidSize, b: PrebidSize): boolean =>

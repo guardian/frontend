@@ -37,7 +37,7 @@
 
             <div class="fieldset__heading">
                 <h2 class="form__heading">What can we tell you about?</h2>
-                <p class="form__note">The Guardian and their partners would like to occasionally send you information about their products, services and events</p>
+                <p class="form__note">The Guardian would like to occasionally send you information about their products, services and events</p>
             </div>
 
             <div class="fieldset__fields">
@@ -82,7 +82,7 @@
         <div class="manage-account__switches">
             <ul>
             @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
-                @if(isUsersChannel(consentField, user)) {
+                @if(isSmsChannel(consentField, user)) {
                   <li>
                       @fragments.consentSwitch(consentField)(messages)
                   </li>
@@ -119,7 +119,7 @@
             @channelConsentForm
         } else {
             <p class="identity-title-explainer">
-                Update your <a class="u-underline" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="identity : email : add-channel-info">account details</a> with your phone number or home address to be able to opt in to receiving phone, SMS, and post communications from the Guardian.
+                Update your <a class="u-underline" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="identity : email : add-channel-info">account details</a> with your phone number to be able to opt in to receiving SMS communications from the Guardian.
             </p>
         }
     </div>

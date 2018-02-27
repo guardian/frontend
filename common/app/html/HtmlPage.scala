@@ -8,7 +8,6 @@ import views.html.stacked
 import views.html.fragments._
 import views.html.fragments.page.body._
 import views.support.Commercial
-import experiments._
 
 trait HtmlPage[P <: model.Page] {
   def html(page: P)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html
@@ -40,7 +39,8 @@ object HtmlPageHelpers {
       ("has-super-sticky-banner", model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)))
   }
 
-  def FaciaCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "facia.garnett" else "facia"
-  def ContentCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "content.garnett" else "content"
-  def RichLinksCSSFile(implicit request: RequestHeader): String = if (ActiveExperiments.isParticipating(Garnett)) "rich-links.garnett" else "rich-links"
+  def FaciaCSSFile(implicit request: RequestHeader): String = "facia.garnett"
+  def ContentCSSFile(implicit request: RequestHeader): String = "content.garnett"
+  def RichLinksCSSFile(implicit request: RequestHeader): String = "rich-links.garnett"
+  def SignUpCSSFile(implicit request: RequestHeader): String = "signup"
 }

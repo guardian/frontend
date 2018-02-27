@@ -60,8 +60,4 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
     return Promise.resolve();
 };
 
-export { setupSonobi };
-
-export default {
-    init,
-};
+export { setupSonobi, init };

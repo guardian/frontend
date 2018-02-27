@@ -1,0 +1,21 @@
+@(charts: Seq[tools.Chart[java.time.LocalDate]], title: Option[String] = None, description: Option[Html] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@admin_main(title.getOrElse("Dashboard"), isAuthed = true, hasCharts = true) {
+
+    @title.map{ t =>
+        <h3>@t</h3>
+    }
+
+    @description.map { d =>
+        <div class="alert alert-info">@d</div>
+    }
+
+    @* some servers have no data *@
+    @defining(charts.filterNot(_.hasData).map(_.name).mkString(", ")){ noData =>
+        @if(noData.nonEmpty){
+            <p>No data for: <strong>@noData</strong></p>
+        }
+    }
+
+    @charts.filter(_.hasData).map{ chart => @fragments.dateLineChart(chart) }
+}

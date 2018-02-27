@@ -9,15 +9,22 @@ import java.net.URLDecoder
 import java.util.concurrent.atomic.AtomicReference
 import javax.ws.rs.core.UriBuilder
 
+import conf.Configuration
+import experiments._
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
+import play.api.libs.json.Json
+import play.api.libs.ws.WSClient
 import play.twirl.api.Html
-import rendering.core.Renderer
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
-import scala.concurrent.Future
+import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
+import java.lang.System.currentTimeMillis
 
-class ArchiveController(redirects: RedirectService, renderer: Renderer, val controllerComponents: ControllerComponents) extends BaseController with Logging with ImplicitControllerExecutionContext {
+import metrics.TimingMetric
+
+class ArchiveController(redirects: RedirectService, val controllerComponents: ControllerComponents, ws: WSClient) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   private val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(/p/[\w\d]+).*$""".r
@@ -31,16 +38,46 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
 
   private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
 
-  def lookup(path: String): Action[AnyContent] = Action.async{ implicit request =>
+  def remoteRender404: Future[String] = ws.url(Configuration.moon.moonEndpoint)
+      .withRequestTimeout(2000.millis)
+      .get()
+      .map((response) => {
+        response.body
+      })
+
+  def getRemote404Page(implicit request: RequestHeader): Future[Result] = remoteRender404.map((s) => {
+    Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(s))))
+  }).recover {
+    case e: Throwable =>
+      log.warn(s"Archive failed to remotely render 404 and fell back to the local template")
+      Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+  }
+
+  def getLocal404Page(implicit request: RequestHeader): Future[Result] = Future {
+    Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+  }
+
+  def lookup(path: String): Action[AnyContent] = Action.async { implicit request =>
+
     lookupPath(path)
       .map { _
         .map(Cached(CacheTime.ArchiveRedirect))
         .orElse(redirectForPath(path))
       }
-      .map(_.getOrElse {
-        log404(request)
-        Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+      .flatMap(_.map(Future.successful).getOrElse {
+        ActiveExperiments.groupFor(MoonLambda) match {
+          case Participant => timedPage(getRemote404Page, MoonMetrics.MoonRenderingMetric)
+          case Control => timedPage(getLocal404Page, MoonMetrics.NonMoonRenderingMetric)
+          case Excluded => getLocal404Page
+        }
       })
+
+  }
+
+  def timedPage[T](future: Future[T], metric: TimingMetric): Future[T] = {
+    val start = currentTimeMillis
+    future.onComplete(_ => metric.recordDuration(currentTimeMillis - start))
+    future
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html

@@ -76,6 +76,7 @@ export const sonobiBidder: PrebidBidder = {
         dom_id: slotId,
         floor: 0.5,
         appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
+        pageViewId: config.ophan.pageViewId,
     }),
 };
 

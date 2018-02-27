@@ -12,7 +12,7 @@ import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
 import bindAll from 'lodash/functions/bindAll';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
+import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
 
 // Forked from expandable-v3.js
 class FabricExpandingV1 {
@@ -340,4 +340,4 @@ class FabricExpandingV1 {
 
 FabricExpandingV1.hasScrollEnabled = !isIOS() && !isAndroid();
 
-export default FabricExpandingV1;
+export { FabricExpandingV1 };

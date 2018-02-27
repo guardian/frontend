@@ -27,3 +27,7 @@ declare type ThirdPartyTag = {
     onLoad?: () => any,
     useImage?: boolean,
 };
+
+declare var jsdom: {
+    reconfigure: (settings: {}) => any
+};

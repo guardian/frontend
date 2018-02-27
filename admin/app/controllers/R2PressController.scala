@@ -3,8 +3,6 @@ package controllers.admin
 import java.io.File
 
 import common.{AkkaAsync, ImplicitControllerExecutionContext, Logging}
-import conf.switches.Switches
-import controllers.AdminAudit
 import model.{ApplicationContext, R2PressMessage}
 import play.api.mvc._
 import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier}
@@ -16,9 +14,7 @@ class R2PressController(
   extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty): Action[AnyContent] = Action { implicit request =>
-    AdminAudit.endpointAudit(Switches.AdminRemovePressR2) {
-      Ok(views.html.pressR2(urlMsgs, fileMsgs))
-    }
+    Ok(views.html.pressR2(urlMsgs, fileMsgs))
   }
 
   def batchUpload(): Action[AnyContent] = Action { implicit request =>

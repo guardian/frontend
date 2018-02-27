@@ -1,12 +1,14 @@
 package controllers.editprofile
 
 import actions.AuthenticatedActions.AuthRequest
+import com.gu.i18n.CountryGroup
 import com.gu.identity.model.{EmailNewsletters, User}
 import form.{AccountFormData, UserFormData}
 import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
 import play.api.mvc.{Action, AnyContent, Result}
 import utils.ConsentOrder.userWithOrderedConsents
+
 import scala.concurrent.Future
 
 trait EditProfileFormHandling extends EditProfileControllerComponents {
@@ -20,10 +22,34 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
 
     csrfAddToken {
       manageAccountRedirectAction(page.id).async { implicit request =>
+        val user = {
+          val originalUser = request.user
+          val originalUserUser = originalUser.user
+          val originalPrivateFields = originalUserUser.privateFields
+
+          val country = (for {
+            s <- originalPrivateFields.country
+            c <- CountryGroup.byOptimisticCountryNameOrCode(s)
+          } yield c.name) orElse originalPrivateFields.country
+
+          val billingCountry = (for {
+            s <- originalPrivateFields.billingCountry
+            c <- CountryGroup.byOptimisticCountryNameOrCode(s)
+          } yield c.name) orElse originalPrivateFields.billingCountry
+
+          val privateFields = originalPrivateFields.copy(
+            country = country, billingCountry = billingCountry
+          )
+
+          val userUser = originalUserUser.copy(privateFields = privateFields)
+          originalUser.copy(user = userUser)
+
+        }
+        
         profileFormsView(
           page = page,
-          forms = ProfileForms(userWithOrderedConsents(request.user, consentHint), PublicEditProfilePage),
-          request.user,
+          forms = ProfileForms(userWithOrderedConsents(user, consentHint), PublicEditProfilePage),
+          user,
           consentsUpdated,
           consentHint
         )

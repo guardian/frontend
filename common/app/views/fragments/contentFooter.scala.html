@@ -2,13 +2,12 @@
   related: model.RelatedContent,
   cssClass: String = "",
   isPaidContent: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
-@import common.Edition
 @import views.support.{ContentFooterContainersLayout, RenderClasses}
 
 <div class="@RenderClasses(Map(
     "content-footer" -> true,
     s"content-footer--$cssClass" -> (cssClass != ""),
-    s"content-footer--pillar-${content.metadata.pillar.nameOrDefault}" -> experiments.ActiveExperiments.isParticipating(experiments.Garnett)
+    s"content-footer--pillar-${content.metadata.pillar.nameOrDefault}" -> true
     ))">
     @fragments.discussionFooter(content.content, content.trail.isCommentable, content.trail.isClosedForComments, content.content.shortUrlId)
 

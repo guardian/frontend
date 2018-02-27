@@ -56,6 +56,7 @@ final case class Content(
   showInRelated: Boolean,
   cardStyle: CardStyle,
   shouldHideAdverts: Boolean,
+  shouldHideReaderRevenue: Boolean,
   witnessAssignment: Option[String],
   isbn: Option[String],
   imdb: Option[String],
@@ -77,6 +78,7 @@ final case class Content(
   lazy val discussionId = Some(shortUrlId)
   lazy val isGallery = metadata.contentType.contains(DotcomContentType.Gallery)
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
+  lazy val isColumn = fields.displayHint.contains("column")
   lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
@@ -121,7 +123,12 @@ final case class Content(
   private lazy val openGraphImageProfile: ElementProfile =
     if(isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) Item700
     else if(tags.isComment) FacebookOpenGraphImage.opinions
-    else FacebookOpenGraphImage.default
+    else if(tags.isLiveBlog) FacebookOpenGraphImage.live
+    else starRating.map(rating =>
+        FacebookOpenGraphImage.starRating(rating)
+    ).getOrElse(
+        FacebookOpenGraphImage.default
+    )
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
   // These dimensions are just an educated guess (e.g. we don't take into account image-resizer being turned off)
@@ -136,7 +143,12 @@ final case class Content(
   lazy val twitterCardImage: String = {
     val image = if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) Item700
     else if(tags.isComment) TwitterImage.opinions
-    else TwitterImage.default
+    else if(tags.isLiveBlog) TwitterImage.live
+    else starRating.map(rating =>
+        TwitterImage.starRating(rating)
+    ).getOrElse(
+        TwitterImage.default
+    )
     ImgSrc(openGraphImageOrFallbackUrl, image)
   }
 
@@ -227,7 +239,9 @@ final case class Content(
     ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else showInRelated && !legallySensitive)),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
+    ("isColumn", JsBoolean(isColumn)),
     ("isPaidContent", JsBoolean(isPaidContent)),
+    ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
 
   )
@@ -375,6 +389,7 @@ object Content {
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
       cardStyle = CardStyle.make(cardStyle),
       shouldHideAdverts = apifields.flatMap(_.shouldHideAdverts).getOrElse(false),
+      shouldHideReaderRevenue = apifields.flatMap(_.shouldHideReaderRevenue).getOrElse(false),
       witnessAssignment = references.get("witness-assignment"),
       isbn = references.get("isbn"),
       imdb = references.get("imdb"),
@@ -437,8 +452,8 @@ object Article {
       ("isImmersive", JsBoolean(content.isImmersive)),
       ("isHosted", JsBoolean(false)),
       ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
+      ("isColumn", JsBoolean(content.isColumn)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
-      ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
       "videoDuration" -> videoDuration
     ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
 
@@ -503,6 +518,7 @@ final case class Article (
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
   val isPhotoEssay: Boolean = content.isPhotoEssay
+  val isColumn: Boolean = content.isColumn
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().asScala.headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
@@ -735,7 +751,7 @@ case class GalleryLightbox(
 ){
   def imageContainer(index: Int): ImageElement = galleryImages(index)
 
-  private val facebookImage: ShareImage = if(tags.isComment) FacebookOpenGraphImage.opinions else FacebookOpenGraphImage.default
+  private val facebookImage: ShareImage = if(tags.isComment) FacebookOpenGraphImage.opinions else if(tags.isLiveBlog) FacebookOpenGraphImage.live else FacebookOpenGraphImage.default
   val galleryImages: Seq[ImageElement] = elements.images.filter(_.properties.isGallery)
   val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.images.largestImage)
   val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, facebookImage))

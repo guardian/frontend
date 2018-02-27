@@ -45,7 +45,7 @@ const reportEmptyResponse = (
     }
 };
 
-const onSlotRender = (event: SlotRenderEndedEvent): void => {
+export const onSlotRender = (event: SlotRenderEndedEvent): void => {
     recordFirstAdRendered();
 
     const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
@@ -74,5 +74,3 @@ const onSlotRender = (event: SlotRenderEndedEvent): void => {
         renderAdvert(advert, event).then(emitRenderEvents);
     }
 };
-
-export default onSlotRender;

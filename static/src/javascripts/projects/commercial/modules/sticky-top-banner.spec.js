@@ -2,7 +2,7 @@
 
 import Chance from 'chance';
 import { addEventListener as addEventListenerSpy } from 'lib/events';
-import { initStickyTopBanner, _ } from './sticky-top-banner';
+import { init, _ } from './sticky-top-banner';
 
 const { resizeStickyBanner, update, onScroll } = _;
 
@@ -58,7 +58,7 @@ describe('Sticky ad banner', () => {
     });
 
     it('should add listeners and classes', () =>
-        initStickyTopBanner().then(() => {
+        init().then(() => {
             if (!header || !stickyBanner) {
                 throw Error('missing header or sticky banner element');
             } else {
@@ -78,7 +78,7 @@ describe('Sticky ad banner', () => {
     it('should not add classes when scrolled past the header', () => {
         window.pageYOffset = 501;
 
-        return initStickyTopBanner().then(() => {
+        return init().then(() => {
             if (!header || !stickyBanner) {
                 throw Error('missing header or sticky banner element');
             } else {
@@ -100,7 +100,7 @@ describe('Sticky ad banner', () => {
             max: 500,
         });
 
-        return initStickyTopBanner()
+        return init()
             .then(() => _.whenFirstRendered)
             .then(() => resizeStickyBanner(randomHeight))
             .then(() => {
@@ -119,7 +119,7 @@ describe('Sticky ad banner', () => {
         });
         window.pageYOffset = 501;
 
-        return initStickyTopBanner()
+        return init()
             .then(() => resizeStickyBanner(randomHeight))
             .then(() => {
                 window.pageYOffset = 0;
@@ -144,7 +144,7 @@ describe('Sticky ad banner', () => {
             topSlot.style.paddingBottom = `${paddingBottom}px`;
         }
 
-        return initStickyTopBanner()
+        return init()
             .then(() => update(height))
             .then(() => {
                 if (!stickyBanner) {
@@ -170,7 +170,7 @@ describe('Sticky ad banner', () => {
     it('should position the banner absolutely past the header', () => {
         window.pageYOffset = 501;
 
-        return initStickyTopBanner()
+        return init()
             .then(onScroll)
             .then(() => {
                 if (!stickyBanner) {

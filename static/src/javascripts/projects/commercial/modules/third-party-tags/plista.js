@@ -89,4 +89,4 @@ module.init = function(): Promise<false> {
     return Promise.resolve(false);
 };
 
-export default module;
+export { module as plista };

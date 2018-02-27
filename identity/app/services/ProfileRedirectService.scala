@@ -22,11 +22,11 @@ sealed abstract class ProfileRedirect(val url: String) {
   def isAllowedFrom(url: String): Boolean
 }
 
-case object RedirectToEmailValidationFromAnywhereButAccountDetails extends ProfileRedirect("/verify-email?isRepermissioningRedirect=true") {
+case object RedirectToEmailValidationFromAnywhereButAccountDetails extends ProfileRedirect("/verify-email") {
   override def isAllowedFrom(url: String): Boolean = !(url contains "account/edit")
 }
 
-case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents") {
+case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents/staywithus") {
   override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
 }
 

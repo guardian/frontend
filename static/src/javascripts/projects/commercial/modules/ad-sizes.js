@@ -51,4 +51,4 @@ adSizes['300x250'] = adSizes.mpu;
 adSizes['300x600'] = adSizes.halfPage;
 adSizes['300x1050'] = adSizes.portrait;
 
-export default adSizes;
+export { adSizes };

@@ -34,6 +34,7 @@ declare type UserDetails = {
         card?: StripeCard,
         account?: {
             accountName: string
-        }
-    }
+        },
+    },
+    alertText?: string
 }

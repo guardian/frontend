@@ -1,22 +1,11 @@
 @import model.Page
-@import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
+@import com.gu.identity.model.EmailNewsletter
+@import com.gu.identity.model.EmailNewsletters._
 @import views.support.`package`.Seq2zipWithRowInfo
 
 @import common.LinkTo
 
 @(signupPage: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@newsletterSignup(route: String, listId: String, emailName: String) = {
-    <iframe src="/email/form/@route/@listId"
-        data-form-title="Sign up for @emailName"
-        data-form-description=""
-        data-form-campaign-code="newsletters-page"
-        scrolling="no"
-        seamless frameborder="0"
-        class="iframed--overflow-hidden newsletter-card__iframe js-email-sub__iframe"
-        data-form-success-desc="">
-    </iframe>
-}
 
 @emailListCategoryList(theme: String, emailListings: List[EmailNewsletter]) = {
     <div class="newsletters-category__heading">
@@ -49,9 +38,9 @@
 
 
                     <div class="signup-confirmation is-hidden js-signup-confirmation">
-                        @fragments.inlineSvg("tick", "icon")
+                        @fragments.inlineSvg("envelope", "icon")
                         <div class="signup-confirmation__message">
-                            <h3 class="signup-confirmation--success">You've subscribed!</h3>
+                            <h3 class="signup-confirmation--success">Check your Inbox!</h3>
                         </div>
                     </div>
 
@@ -89,34 +78,28 @@
     </div>
 }
 
+@displayNewslettersByTheme = {
+    @List(
+        "news round ups" -> newsRoundUpEmails,
+        "news by topic"  -> newsEmails,
+        "features"       -> featureEmails,
+        "sport"          -> sportEmails,
+        "culture"        -> cultureEmails,
+        "lifestyle"      -> lifestyleEmails,
+        "commentEmails"  -> commentEmails,
+        "work"           -> workEmails
+    ).map { case (theme, newsletters) =>
+        <div class="newsletters-category" name="@theme">
+            @emailListCategoryList(theme, newsletters)
+        </div>
+    }
+}
+
 <div class="l-side-margins">
 <div class="content">
     <div class="gs-container">
         <div class="newsletters-heading">newsletters</div>
-
-        <div class="newsletters-category" name="news round ups">
-            @emailListCategoryList("news round ups", EmailNewsletters.newsRoundUpEmails)
-        </div>
-
-        <div class="newsletters-category" name="news by topic">
-            @emailListCategoryList("news by topic", EmailNewsletters.newsEmails)
-        </div>
-        <div class="newsletters-category" name="features">
-            @emailListCategoryList("features", EmailNewsletters.featureEmails)
-        </div>
-        <div class="newsletters-category" name="sport">
-            @emailListCategoryList("sport", EmailNewsletters.sportEmails)
-        </div>
-        <div class="newsletters-category" name="culture">
-            @emailListCategoryList("culture", EmailNewsletters.cultureEmails)
-        </div>
-        <div class="newsletters-category" name="lifestyle">
-            @emailListCategoryList("lifestyle", EmailNewsletters.lifestyleEmails)
-        </div>
-        <div class="newsletters-category" name="comment">
-            @emailListCategoryList("comment", EmailNewsletters.commentEmails)
-        </div>
-
+        @displayNewslettersByTheme
     </div>
 </div>
 </div>

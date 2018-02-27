@@ -83,7 +83,6 @@ figure.element.element--showcase {
         @include deport-left;
         position: relative;
         margin-bottom: ($gs-baseline/3)*4;
-        clear: both;
     }
 }
 
@@ -150,7 +149,8 @@ figure {
 }
 
 // Articles can have the feature tone applied, but it's not always primary tone
-.has-feature-showcase-element .media-primary.media-primary--showcase {
+.has-feature-showcase-element .media-primary.media-primary--showcase,
+.has-feature-showcase-opinion .media-primary.media-primary--showcase {
     margin-left: 0;
     margin-right: 0;
     z-index: 2; // Put the showcase element on top of the left and right layout borders

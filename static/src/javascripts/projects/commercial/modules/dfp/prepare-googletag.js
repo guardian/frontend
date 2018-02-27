@@ -10,10 +10,11 @@ import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import onSlotRender from 'commercial/modules/dfp/on-slot-render';
-import onSlotLoad from 'commercial/modules/dfp/on-slot-load';
+import { onSlotRender } from 'commercial/modules/dfp/on-slot-render';
+import { onSlotLoad } from 'commercial/modules/dfp/on-slot-load';
+import { onSlotViewable } from 'commercial/modules/dfp/on-slot-viewable';
 import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
-import refreshOnResize from 'commercial/modules/dfp/refresh-on-resize';
+import { refreshOnResize } from 'commercial/modules/dfp/refresh-on-resize';
 import { adFreeSlotRemove } from 'commercial/modules/close-disabled-slots';
 import {
     addTag,
@@ -50,6 +51,10 @@ const setDfpListeners = (): void => {
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
+
+    if (config.get('tests.commercialAdRefreshVariant')) {
+        pubads.addEventListener('impressionViewable', onSlotViewable);
+    }
 };
 
 const setPageTargeting = (): void => {
@@ -81,7 +86,7 @@ const setPublisherProvidedId = (): void => {
     }
 };
 
-const init = (start: () => void, stop: () => void): Promise<void> => {
+export const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
         addTag(
             dfpEnv.externalDemand === 'none'
@@ -122,8 +127,4 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
         return Promise.resolve();
     }
     return removeAdSlots().then(stop);
-};
-
-export default {
-    init,
 };

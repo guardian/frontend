@@ -17,12 +17,13 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   with ConfiguredTestSuite
   with WithTestExecutionContext
   with BeforeAndAfterAll
-  with WithTestRenderer {
+  with WithMaterializer
+  with WithTestWsClient {
 
   lazy val mockRedirects = new RedirectService {
     override def destinationFor(source: String) = Future.successful(None)
   }
-  lazy val archiveController = new ArchiveController(mockRedirects, testRenderer, play.api.test.Helpers.stubControllerComponents())
+  lazy val archiveController = new ArchiveController(mockRedirects, play.api.test.Helpers.stubControllerComponents(), wsClient)
 
   it should "return a normalised r1 path" in {
     val tests = List(

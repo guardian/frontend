@@ -44,8 +44,8 @@ const submitForm = (
     buttonEl: HTMLButtonElement
 ): Promise<void> => {
     const email = $('input[name="email"]', form).val();
-    const listId = $('input[name="listId"]', form).val();
-    const formQueryString = `email=${email}&listId=${listId}`;
+    const listName = $('input[name="listName"]', form).val();
+    const formQueryString = `email=${email}&listName=${listName}`;
 
     return fetch(`${config.page.ajaxUrl}/email`, {
         method: 'post',
@@ -61,7 +61,8 @@ const submitForm = (
 };
 
 const subscribeToEmail = (buttonEl: HTMLButtonElement): void => {
-    bean.on(buttonEl, 'click', () => {
+    bean.on(buttonEl, 'click', event => {
+        event.preventDefault();
         const form = buttonEl.form;
         if (validate(form)) {
             submitForm(form, buttonEl);

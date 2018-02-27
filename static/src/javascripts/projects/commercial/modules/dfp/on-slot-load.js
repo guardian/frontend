@@ -15,7 +15,7 @@ const host = `${window.location.protocol}//${window.location.host}`;
      But, this information is necessary in the window.postMessage call, and so
      we resort to sending it as a token of welcome :)
 */
-const onLoad = (event: SlotOnloadEvent) => {
+export const onSlotLoad = (event: SlotOnloadEvent) => {
     const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
     if (!advert) {
         return;
@@ -30,5 +30,3 @@ const onLoad = (event: SlotOnloadEvent) => {
         iframe.contentWindow
     );
 };
-
-export default onLoad;

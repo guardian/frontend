@@ -15,22 +15,44 @@ export type PrebidTrustXParams = {
     uid: string,
 };
 
+export type PrebidImproveSizeParam = {
+    w?: number,
+    h?: number,
+};
+
+export type PrebidImproveParams = {
+    placementId: number,
+    size: PrebidImproveSizeParam,
+};
+
 export type PrebidBid = {
     bidder: string,
-    params: PrebidSonobiParams | PrebidIndexExchangeParams | PrebidTrustXParams,
+    params:
+        | PrebidSonobiParams
+        | PrebidIndexExchangeParams
+        | PrebidTrustXParams
+        | PrebidImproveParams,
 };
+
+export type PrebidEdition = 'UK' | 'US' | 'AUS' | 'INT';
+
+export type PrebidSize = [number, number];
 
 export type PrebidBidder = {
     name: string,
     bidParams: (
-        slotId: string
-    ) => PrebidSonobiParams | PrebidIndexExchangeParams | PrebidTrustXParams,
+        slotId: string,
+        sizes: PrebidSize[]
+    ) =>
+        | PrebidSonobiParams
+        | PrebidIndexExchangeParams
+        | PrebidTrustXParams
+        | PrebidImproveParams,
 };
 
-export type PrebidSize = [number, number];
-
 export type PrebidAdSlotCriteria = {
-    edition: 'UK' | 'US' | 'AUS' | 'INT' | 'any',
+    geoContinent?: string,
+    editions?: PrebidEdition[],
     breakpoint: Object,
     sizes: PrebidSize[],
     slots: string[],

@@ -34,7 +34,8 @@
         color: $garnett-neutral-8;
     }
 
-    .byline-img {
+    .content__meta-container .byline-img,
+    .gu-media-wrapper--video .vjs-big-play-button .vjs-control-text {
         background: $mediaColor;
     }
 
@@ -43,7 +44,8 @@
     .commentcount2__heading span,
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
-    .social-icon__svg {
+    .social-icon__svg,
+    .inline-triangle {
         fill: $kickerColor;
     }
 
@@ -213,7 +215,7 @@
         color: inherit;
     }
 
-    .inline-garnett-quote__svg {
+    .inline-garnett-quote svg {
         height: get-font-size(headline, 3);
         width: get-font-size(headline, 3) * .5;
         margin-right: get-font-size(headline, 3) * .5;
@@ -381,7 +383,8 @@
         @include richLink($news-garnett-main-1, $garnett-neutral-3);
     }
 
-    &.rich-link--pillar-opinion {
+    &.rich-link--pillar-opinion,
+    &.tone-comment--item {
         @include richLink($opinion-garnett-main-1, $garnett-neutral-3);
     }
 

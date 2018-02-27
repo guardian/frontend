@@ -78,6 +78,19 @@
     @include f-textSans;
     color: #ffffff;
     font-size: get-font-size(headline, 3);
+
+    @include mq(mobile) {
+        max-width: $gs-gutter*10;
+    }
+
+    @include mq(mobileMedium) {
+        max-width: $gs-gutter*13;
+    }
+
+    @include mq(phablet) {
+        max-width: $gs-gutter*30;
+    }
+
 }
 
 .dumathoin__blurb {

@@ -4,7 +4,6 @@ import controllers.ArticlePage
 import html.HtmlPage
 import html.HtmlPageHelpers._
 import model.ApplicationContext
-import common.RichRequestHeader
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._
@@ -14,15 +13,9 @@ object ArticleHtmlPage extends HtmlPage[ArticlePage] {
     implicit val p: ArticlePage = page
 
     val (header, content): (Html, Html) = page.article match {
-      case article if article.isPhotoEssay => (photoEssayHeader(), immersiveBody())
-      case article if article.isImmersive && experiments.ActiveExperiments.isParticipating(experiments.Garnett) => (
-          immersiveGarnettHeader(), immersiveGarnettBody()
-      )
-      case article if article.isImmersive => (immersiveHeader(), immersiveBody())
-      case _ if !request.isAmp && experiments.ActiveExperiments.isParticipating(experiments.Garnett) => (
-        guardianHeaderHtml(), articleBodyGarnett(page)
-      )
-      case _ => (guardianHeaderHtml(), articleBody(page))
+      case article if article.isPhotoEssay => (photoEssayHeader(), photoEssayBody())
+      case article if article.isImmersive => (immersiveGarnettHeader(), immersiveGarnettBody())
+      case _ => (guardianHeaderHtml(), articleBodyGarnett(page))
     }
 
     StoryHtmlPage.html(

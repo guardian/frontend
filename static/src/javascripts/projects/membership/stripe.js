@@ -51,6 +51,7 @@ export const display = (
     const $button = $('.js-manage-account-change-card', $parent);
     const $updating = $('.js-updating', $parent);
     const stripePublicKey = maybeKey || config.get('page.stripePublicToken');
+    const gaTracker = config.get('googleAnalytics.trackers.editorial');
 
     /*  show/hide
      *   once we've sent the token, we don't want to change the state of the dots until we redisplay
@@ -125,6 +126,12 @@ export const display = (
             .then(json => {
                 const newCard = json;
                 display($parent, newCard);
+                window.ga(
+                    `${gaTracker}.send`,
+                    'action required',
+                    'change details',
+                    'membership action required | change successful'
+                );
             })
             .catch(() => {
                 $parent.text(
@@ -167,6 +174,13 @@ export const display = (
             window.addEventListener('popstate', () => {
                 checkoutHandler.close();
             });
+
+            window.ga(
+                `${gaTracker}.send`,
+                'action required',
+                'change details',
+                'membership action required | change start'
+            );
         };
     };
 

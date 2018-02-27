@@ -83,27 +83,6 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
     contentAsString(result) should startWith("{\"html\"")
   }
 
-  it should "redirect tag to first page if pagination goes beyond last page" in {
-
-    val request = FakeRequest(GET, "/sport/cycling?page=10000")
-    val result = indexController.render("/sport/cycling")(request)
-
-    // temporary as this page may well exist tomorrow
-    status(result) should be (302)
-    header("Location", result).get should endWith ("/sport/cycling")
-
-  }
-
-  it should "redirect tag combiner to first page if pagination goes beyond last page" in {
-
-    val request = FakeRequest(GET, "/books+tone/reviews?page=10000")
-    val result = indexController.renderCombiner("books", "tone/reviews")(request)
-
-    // temporary as this page may well exist tomorrow
-    status(result) should be (302)
-    header("Location", result).get should endWith ("/books+tone/reviews")
-  }
-
   it should "remove editions from section tags on all pages" in {
     val request = FakeRequest(GET, "/uk/culture/all")
     val result = indexController.render("uk/culture")(request)

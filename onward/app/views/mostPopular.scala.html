@@ -17,18 +17,16 @@
                     @section.trails.zipWithRowInfo.map{ case (trail, info) =>
                         <li class="headline-list__item @toneClass(trail)--most-popular fc-item--pillar-@trail.maybePillar.nameOrDefault">
                             <div class="headline-list__link" data-link-name="@info.rowNum | text">
-                                @if(!experiments.ActiveExperiments.isParticipating(experiments.Garnett)){
-                                    <p class="headline-list__count">@info.rowNum</p>
-                                } @if(experiments.ActiveExperiments.isParticipating(experiments.Garnett)){
-                                    <span class="most-popular__number-@info.rowNum">
-                                        @fragments.inlineSvg(s"number-${info.rowNum}", "numbers")
-                                    </span>
-                                }
+                                <span class="most-popular__number-@info.rowNum">
+                                    @fragments.inlineSvg(s"number-${info.rowNum}", "numbers")
+                                </span>
+
+
                                 <div class="headline-list__text">
-                                    @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body") @trail.properties.maybeContent.map { content => 
-                                        @if(content.tags.tags.exists(_.id == "tone/news")) { 
+                                    @title(FaciaCardHeader.fromTrail(trail, None), 2, 2, "headline-list__body") @trail.properties.maybeContent.map { content =>
+                                        @if(content.tags.tags.exists(_.id == "tone/news")) {
                                             @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
-                                        } 
+                                        }
                                     }
                                 </div>
                             </div>

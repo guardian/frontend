@@ -52,7 +52,8 @@ val common = library("common").settings(
     jodaForms,
     jacksonDataFormat,
     atomRenderer,
-    identityModel
+    identityModel,
+    capiAws
   )
 ).settings(
     mappings in TestAssets ~= filterAssets
@@ -123,8 +124,8 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
     identityCookie,
     liftJson,
     slf4jExt,
-    exactTargetClient,
-    libPhoneNumber
+    libPhoneNumber,
+    supportInternationalisation
   )
 )
 

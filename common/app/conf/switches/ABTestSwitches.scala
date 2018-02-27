@@ -68,21 +68,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-colour-test-epic-holdback",
-    "A holdback for the epic colour changes",
-    owners = Seq(Owner.withGithub("Ap0c")),
+    "ab-commercial-lazy-loading",
+    "Varies the strategy for lazyloading of adverts",
+    owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 15),
+    sellByDate = new LocalDate(2018, 3, 30),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-colour-test-banner-holdback",
-    "A holdback for the banner colour changes",
-    owners = Seq(Owner.withGithub("Ap0c")),
+    "ab-acquisitions-banner-cta-contribute",
+    "Test a new CTA for the banner",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 15),
+    sellByDate = new LocalDate(2018, 3, 14),
     exposeClientSide = true
   )
 
@@ -96,4 +96,33 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-header-subscribe-means-subscribe",
+    "Point the subscribe link in the header to a subscriptions-only version of the support site",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-support-engagement-banner-circles",
+    "When ON, the circles design test for the support engagement banner is ACTIVE",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 13), // Tues 13th March (but should be complete by the 8th)
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-support-epic-circles",
+    "When ON, epic messaging will direct a share of the audience to the circles version of the support site",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 13), // Tues 13th March (but should be complete by the 8th)
+    exposeClientSide = true
+  )
 }

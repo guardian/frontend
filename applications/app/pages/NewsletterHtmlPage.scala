@@ -14,12 +14,12 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.signup.newsletterContent
-import html.HtmlPageHelpers.ContentCSSFile
+import html.HtmlPageHelpers.{ContentCSSFile, SignUpCSSFile}
 
 object NewsletterHtmlPage extends HtmlPage[SimplePage] {
 
   def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
+    override def criticalCssLink: Html = criticalStyleLink(SignUpCSSFile)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("signup"))))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
@@ -44,6 +44,7 @@ object NewsletterHtmlPage extends HtmlPage[SimplePage] {
         message(),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
+        guardianHeaderHtml(),
         breakingNewsDiv(),
         newsletterContent(page),
         footer(),

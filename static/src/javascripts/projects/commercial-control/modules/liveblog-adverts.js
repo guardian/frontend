@@ -88,7 +88,7 @@ const getSlotName = (isMobile: boolean, slotCounter: number): string => {
     return `inline${slotCounter + 1}`;
 };
 
-const insertAds = (slots: Element[]): void => {
+const insertAds = (slots: HTMLElement[]): void => {
     const isMobile = getBreakpoint() === 'mobile';
 
     for (let i = 0; i < slots.length && SLOTCOUNTER < MAX_ADS; i += 1) {

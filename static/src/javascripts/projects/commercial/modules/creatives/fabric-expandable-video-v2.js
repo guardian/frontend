@@ -8,7 +8,7 @@ import fabricExpandableCtaHtml from 'raw-loader!commercial/views/creatives/fabri
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
+import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
 
 const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
     let isClosed = true;
@@ -166,4 +166,4 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
     });
 };
 
-export { FabricExpandableVideoV2 as fabricExpandVideo };
+export { FabricExpandableVideoV2 };

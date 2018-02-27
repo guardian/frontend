@@ -2,15 +2,15 @@
 import fastdom from 'fastdom';
 import { ScrollableMpu } from 'commercial/modules/creatives/scrollable-mpu-v2';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
+import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
 
 jest.mock('commercial/modules/creatives/add-tracking-pixel', () => ({
     addTrackingPixel: jest.fn(),
 }));
 
-jest.mock('commercial/modules/creatives/add-viewability-tracker', () =>
-    jest.fn()
-);
+jest.mock('commercial/modules/creatives/add-viewability-tracker', () => ({
+    addViewabilityTracker: jest.fn(),
+}));
 
 jest.mock('lib/detect', () => ({
     isAndroid: jest.fn(),

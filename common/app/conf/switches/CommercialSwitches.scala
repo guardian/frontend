@@ -307,23 +307,83 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val TrustxBidder: Switch = Switch(
-    group = Commercial,
-    name = "trustx-bidder",
-    description = "Include TrustX adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 21),
-    exposeClientSide = true
-  )
-
   val OrielAnalyticsSwitch: Switch = Switch(
     group = Commercial,
     name = "oriel-analytics",
     description = "Include the analytics script for Oriel to monitor ad-blocking",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 21),
+    sellByDate = new LocalDate(2018, 6, 28),
     exposeClientSide = false
+  )
+
+  val OrielFullIntegration: Switch = Switch(
+    group = Commercial,
+    name = "oriel-full-integration",
+    description = "Include the ESI tag dropped at the start of <head> for full Oriel integration",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 6, 28),
+    exposeClientSide = false
+  )
+
+  val BlockthroughSwitch: Switch = Switch(
+    group = Commercial,
+    name = "blockthrough",
+    description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 1),
+    exposeClientSide = false
+   )
+
+  val prebidSonobi: Switch = Switch(
+    group = Commercial,
+    name = "prebid-sonobi",
+    description = "Include Sonobi adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidIndexExchange: Switch = Switch(
+    group = Commercial,
+    name = "prebid-index-exchange",
+    description = "Include Index Exchange adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidTrustx: Switch = Switch(
+    group = Commercial,
+    name = "prebid-trustx",
+    description = "Include TrustX adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidImproveDigital: Switch = Switch(
+    group = Commercial,
+    name = "prebid-improve-digital",
+    description = "Include Improve Digital adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val testImproveBidder: Switch = Switch(
+    group = Commercial,
+    name = "test-improve-bidder",
+    description = "Test multi-size slots in Improve Digital Prebid adapter",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 14),
+    exposeClientSide = true
   )
 }

@@ -58,7 +58,6 @@ GET            /weatherapi/forecast/:id.json                                    
 # Analytics
 GET            /analytics/abtests                                                                                                controllers.admin.AnalyticsController.abtests()
 GET            /analytics/confidence                                                                                             controllers.admin.AnalyticsConfidenceController.renderConfidence()
-GET            /analytics/content/video                                                                                          controllers.admin.ContentPerformanceController.renderVideoEncodingsDashboard()
 
 # Commercial admin
 
@@ -198,12 +197,6 @@ GET            /logout                                                          
 GET            /admin                                                                                                            controllers.admin.AdminIndexController.admin()
 GET            /config                                                                                                           controllers.AppConfigController.renderAppConfig()
 GET            /config/parameter/*key                                                                                            controllers.AppConfigController.findParameter(key: String)
-GET            /api/proxy/*path                                                                                                  controllers.admin.Api.proxy(path, callback)
-GET            /api/tag                                                                                                          controllers.admin.Api.tag(q, callback)
-GET            /api/item/*path                                                                                                   controllers.admin.Api.item(path, callback)
-GET            /json/proxy/*absUrl                                                                                               controllers.admin.Api.json(absUrl)
-GET            /ophan/pageviews/*path                                                                                            controllers.admin.OphanApiController.pageViews(path)
-GET            /ophan/pageviews                                                                                                  controllers.admin.OphanApiController.platformPageViews()
 GET            /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.renderSwitchboard()
 POST           /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.save()
 GET            /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.renderSwitchboard()
@@ -217,8 +210,6 @@ GET            /metrics/errors/5xx                                              
 GET            /metrics/afg                                                                                                      controllers.admin.MetricsController.renderAfg()
 GET            /metrics/webpack-bundle-visualization                                                                             controllers.admin.MetricsController.renderBundleVisualization()
 GET            /metrics/webpack-bundle-analyzer                                                                                  controllers.admin.MetricsController.renderBundleAnalyzer()
-GET            /radiator                                                                                                         controllers.admin.RadiatorController.renderRadiator()
-GET            /radiator/commit/*hash                                                                                            controllers.admin.RadiatorController.commitDetail(hash)
 GET            /deploys                                                                                                          controllers.admin.DeploysController.getDeploys(stage: Option[String], pageSize: Option[Int])
 GET            /troubleshoot/football                                                                                            controllers.admin.SportTroubleshooterController.renderFootballTroubleshooter()
 GET            /troubleshoot/cricket                                                                                             controllers.admin.SportTroubleshooterController.renderCricketTroubleshooter()

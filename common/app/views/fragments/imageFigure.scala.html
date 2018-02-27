@@ -75,17 +75,7 @@
 }
 
 @showcaseFeature(captionHtml: => Html) =  {
-
-    @if(isFeature && isShowcase && !experiments.ActiveExperiments.isParticipating(experiments.Garnett)) {
-        <div class="gs-container">
-            <div class="content__main-column">
-                @captionHtml
-            </div>
-        </div>
-    } else {
-        @captionHtml
-    }
-
+    @captionHtml
 }
 
 @lightbox(imageHtml: => Html) =  {
@@ -118,7 +108,9 @@
                 </label>
 
                 <figcaption class="caption caption--main caption--img" itemprop="description">
-                    @fragments.inlineSvg("information", "icon", List("rounded-icon", "centered-icon", "hide-until-tablet"))
+                    @if(!amp) {
+                        @fragments.inlineSvg("triangle", "icon", List("hide-until-tablet"))
+                    }
                     @img.caption.map(Html(_))
                     @if(img.displayCredit && !img.creditEndsWithCaption) {
                         @img.credit.map(Html(_))
@@ -126,7 +118,7 @@
                 </figcaption>
             } else {
                 <figcaption class="caption caption--img @if(isMain) {caption--main}" itemprop="description">
-                    @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon", "rounded-icon"))
+                    @fragments.inlineSvg("triangle", "icon")
                     @img.caption.map(Html(_))
                     @if(img.displayCredit && !img.creditEndsWithCaption) {
                         @img.credit.map(Html(_))

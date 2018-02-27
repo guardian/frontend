@@ -40,14 +40,12 @@ object ProjectSettings {
   val frontendDependencyManagementSettings = Seq(
     ivyXML :=
       <dependencies>
-        <exclude org="commons-logging"><!-- Conflicts with jcl-over-slf4j in Play. --></exclude>
-        <exclude org="org.specs2"><!-- because someone thinks it is acceptable to have this as a prod dependency --></exclude>
+        <exclude org="commons-logging" module="commons-logging"><!-- Conflicts with jcl-over-slf4j in Play. --></exclude>
       </dependencies>,
 
     resolvers ++= Seq(
       Resolver.typesafeRepo("releases"),
       Resolver.sonatypeRepo("releases"),
-      "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
       "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
       Resolver.bintrayRepo("guardian", "ophan"),
@@ -125,9 +123,6 @@ object ProjectSettings {
       .settings(VersionInfo.projectSettings)
       .settings(libraryDependencies ++= Seq(macwire, commonsIo))
       .settings(packageName in Universal := applicationName)
-      .settings(
-        mappings in Universal ++= (file("ui/dist") ** "*").get.map { f => f.getAbsoluteFile -> f.toString }
-      )
   }
 
   def library(applicationName: String): Project = {

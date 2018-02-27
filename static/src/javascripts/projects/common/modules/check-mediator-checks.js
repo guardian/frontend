@@ -16,6 +16,5 @@ export const checks = [
     'isOutbrainMerchandiseCompliant',
     'isOutbrainMerchandiseCompliantOrBlockedByAds',
     'emailCanRun',
-    'isUserInEmailAbTestAndEmailCanRun',
     'emailCanRunPostCheck',
 ];

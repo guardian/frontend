@@ -1,7 +1,7 @@
 // @flow
 
 import { Sticky } from 'common/modules/ui/sticky';
-import { initPaidForBand } from './paidfor-band';
+import { init } from './paidfor-band';
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
@@ -15,7 +15,7 @@ jest.mock('common/modules/ui/sticky', () => ({
 
 describe('Paid for band', () => {
     it('should exist', () => {
-        expect(initPaidForBand).toBeDefined();
+        expect(init).toBeDefined();
     });
 
     it('should create a Sticky element', () => {
@@ -24,7 +24,7 @@ describe('Paid for band', () => {
         }
         (Sticky.prototype: any).init = jest.fn();
 
-        return initPaidForBand().then(() => {
+        return init().then(() => {
             expect(Sticky.prototype.init).toHaveBeenCalled();
         });
     });

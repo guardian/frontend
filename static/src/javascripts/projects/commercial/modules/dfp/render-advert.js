@@ -3,12 +3,11 @@
 import qwery from 'qwery';
 import raven from 'lib/raven';
 import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
 import { Advert } from 'commercial/modules/dfp/Advert';
-import adSizes from 'commercial/modules/ad-sizes';
+import { adSizes } from 'commercial/modules/ad-sizes';
 import { stickyMpu } from 'commercial/modules/sticky-mpu';
 import { applyCreativeTemplate } from 'commercial/modules/dfp/apply-creative-template';
-import renderAdvertLabel from 'commercial/modules/dfp/render-advert-label';
+import { renderAdvertLabel } from 'commercial/modules/dfp/render-advert-label';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { Toggles } from 'common/modules/ui/toggles';
 import { recordUserAdFeedback } from 'commercial/modules/user-ad-feedback';
@@ -69,7 +68,7 @@ sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
 /**
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
-sizeCallbacks[adSizes.mpu] = (slotRenderEndedEvent, advert) => {
+sizeCallbacks[adSizes.mpu] = (_, advert) => {
     if (advert.node.classList.contains('js-sticky-mpu')) {
         stickyMpu(advert.node);
     }
@@ -78,8 +77,10 @@ sizeCallbacks[adSizes.mpu] = (slotRenderEndedEvent, advert) => {
 /**
  * Resolve the stickyMpu.whenRendered promise
  */
-sizeCallbacks[adSizes.halfPage] = () => {
-    mediator.emit('page:commercial:sticky-mpu');
+sizeCallbacks[adSizes.halfPage] = (_, advert) => {
+    if (advert.node.classList.contains('js-sticky-mpu')) {
+        stickyMpu(advert.node);
+    }
 };
 
 sizeCallbacks[adSizes.video] = (_, advert) => {

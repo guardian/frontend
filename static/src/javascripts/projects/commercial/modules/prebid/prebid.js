@@ -9,6 +9,7 @@ import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-nam
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import {
     bidderConfig,
+    improveDigitalBidder,
     indexExchangeBidder,
     sonobiBidder,
     trustXBidder,
@@ -20,9 +21,18 @@ import type {
     PrebidSize,
 } from 'commercial/modules/prebid/types';
 
-const bidders = [sonobiBidder, indexExchangeBidder];
-if (config.switches.trustxBidder) {
+const bidders = [];
+if (config.switches.prebidSonobi) {
+    bidders.push(sonobiBidder);
+}
+if (config.switches.prebidIndexExchange) {
+    bidders.push(indexExchangeBidder);
+}
+if (config.switches.prebidTrustx) {
     bidders.push(trustXBidder);
+}
+if (config.switches.prebidImproveDigital) {
+    bidders.push(improveDigitalBidder);
 }
 
 const bidderTimeout = 1500;
@@ -46,7 +56,7 @@ const filterConfigEntries = (
             bid.geoContinent === getCookie('GU_geo_continent')
     );
     bidConfigEntries = bidConfigEntries.filter(
-        bid => bid.edition === config.page.edition || bid.edition === 'any'
+        bid => !bid.editions || bid.editions.includes(config.page.edition)
     );
     bidConfigEntries = bidConfigEntries.filter(bid =>
         isBreakpoint(bid.breakpoint)
@@ -119,7 +129,7 @@ class PrebidAdUnit {
 
                 this.bids.push({
                     bidder: bidder.name,
-                    params: bidder.bidParams(this.code),
+                    params: bidder.bidParams(this.code, availableSizes),
                 });
             }
         });
@@ -131,6 +141,18 @@ class PrebidService {
         window.pbjs.bidderSettings = {
             standard: {
                 alwaysUseBid: false,
+            },
+            sonobi: {
+                // for Jetstream
+                alwaysUseBid: true,
+                adserverTargeting: [
+                    {
+                        key: 'hb_deal_sonobi',
+                        val(bidResponse) {
+                            return bidResponse.dealId;
+                        },
+                    },
+                ],
             },
         };
         window.pbjs.setConfig({

@@ -21,6 +21,15 @@ type AcquisitionLinkParams = {
     abTest?: { name: string, variant: string },
 };
 
+type AcquisitionData = {|
+    componentType?: OphanComponentType,
+    componentId?: string,
+    campaignCode?: string,
+    abTest?: { name: string, variant: string },
+|};
+
+const ACQUISITION_DATA_FIELD = 'acquisitionData';
+
 export const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
     ophan.record({ componentEvent });
 };
@@ -38,6 +47,39 @@ export const submitViewEvent = (componentEvent: ComponentEventWithoutAction) =>
         ...componentEvent,
         action: 'VIEW',
     });
+
+// Treats url as immutable, i.e. returns a new object
+// rather than modifying the existing one in place.
+// If the url already has an acquisitionData JSON parameter,
+// it will add or overwrite individual properties rather than
+// replacing the entire param.
+export const updateAcquisitionData = (
+    url: URL,
+    acquisitionData: AcquisitionData
+): URL => {
+    let existingAcquisitionData;
+
+    try {
+        existingAcquisitionData = JSON.parse(
+            url.searchParams.get(ACQUISITION_DATA_FIELD)
+        );
+    } catch (e) {
+        return url;
+    }
+
+    // make a copy
+    const newUrl = new URL(url.toString());
+
+    newUrl.searchParams.set(
+        ACQUISITION_DATA_FIELD,
+        JSON.stringify({
+            ...existingAcquisitionData,
+            ...acquisitionData,
+        })
+    );
+
+    return newUrl;
+};
 
 export const addReferrerData = (acquisitionData: {}): {} =>
     // Note: the current page is the referrer data in the context of the acquisition.

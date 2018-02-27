@@ -13,11 +13,6 @@
                     <ul>
                         <li><a href="@controllers.admin.routes.AnalyticsController.abtests()">A/B Tests</a></li>
                         <li><a href="@controllers.admin.routes.AnalyticsConfidenceController.renderConfidence()">Confidence</a></li>
-                        <li>Content Performance Dashboards:
-                            <ul>
-                                <li><a href="@controllers.admin.routes.ContentPerformanceController.renderVideoEncodingsDashboard()">Video</a></li>
-                            </ul>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -31,7 +26,6 @@
                     <ul>
                         <li><a href="/dev/switchboard">Switchboard</a></li>
                         <li><a href="@Configuration.Elk.kibanaUrl/goto/643979153f817c4bb1b64f7d56a395a7">Deploy dashboard</a></li>
-                        <li><a href="@controllers.admin.routes.RadiatorController.renderRadiator()">Radiator</a></li>
                         @if(R2PagePressServiceSwitch.isSwitchedOn) {
                             <li><a href="@controllers.admin.routes.R2PressController.pressForm()">Press-a-page</a></li>
                         }

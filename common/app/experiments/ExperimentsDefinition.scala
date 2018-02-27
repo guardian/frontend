@@ -5,13 +5,19 @@ import views.support.CamelCase
 
 class CanCheckExperiment(e: ExperimentsDefinition)
 
+sealed trait Participation
+case object Participant extends Participation
+case object Control extends Participation
+case object Excluded extends Participation
+
 trait ExperimentsDefinition {
+
   val allExperiments: Set[Experiment]
   implicit val canCheckExperiment: CanCheckExperiment
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     allExperiments
-      .filter(e => e.isParticipating || e.isControl)
+      .filter(e => isParticipating(e) || isControl(e))
       .toSeq.sortBy(_.name)
       .map { e =>
         val value = e.value
@@ -31,6 +37,16 @@ trait ExperimentsDefinition {
 
   def isControl(experiment: Experiment)(implicit request: RequestHeader): Boolean =
     isIn(experiment)(_.isControl)
+
+  def groupFor(experiment: Experiment)(implicit request: RequestHeader): Participation = {
+    if(isParticipating(experiment)){
+      Participant
+    } else if(isControl(experiment)){
+      Control
+    } else {
+      Excluded
+    }
+  }
 }
 
 

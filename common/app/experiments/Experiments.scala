@@ -1,17 +1,20 @@
 package experiments
 
 import conf.switches.Owner
-import conf.switches.Switches.GarnettLaunch
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
+import conf.switches.Switches.IdentityShowOptInEngagementBanner
 
 object ActiveExperiments extends ExperimentsDefinition {
-  val allExperiments: Set[Experiment] = Set(
+  override val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
     CommercialPaidContentTemplate,
     CommercialBaseline,
-    Garnett
+    CommercialAdRefresh,
+    MoonLambda,
+    OrielParticipation,
+    GdprOptinAlert
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -22,9 +25,7 @@ object CommercialClientLogging extends Experiment(
   owners = Seq(Owner.withGithub("rich-nguyen")),
   sellByDate = new LocalDate(2018, 2, 28),
   participationGroup = Perc1A
-) {
-  override def priorCondition(implicit request: RequestHeader): Boolean = CommercialBaseline.switch.isSwitchedOn
-}
+)
 
 object CommercialPaidContentTemplate extends Experiment(
   name = "commercial-paid-content",
@@ -56,12 +57,36 @@ object CommercialBaseline extends Experiment(
   participationGroup = Perc2B
 )
 
-object Garnett extends Experiment(
-  name = "garnett",
-  description = "Users in this experiment will see garnet styling.",
-  owners = Seq(Owner.withName("dotcom.platform")),
-  sellByDate = new LocalDate(2018, 2, 8),
-  participationGroup= Perc0C
+object CommercialAdRefresh extends Experiment(
+  name = "commercial-ad-refresh",
+  description = "Users in this experiment will have their ad slots refreshed after 30 seconds",
+  owners = Seq(Owner.withGithub("JonNorman")),
+  sellByDate = new LocalDate(2018, 4, 11),
+  participationGroup = Perc5A
+)
+
+object MoonLambda extends Experiment(
+  name = "moon-lambda",
+  description = "Users in this experiment will see 404 page rendered by a lambda",
+  owners = Seq(Owner.withGithub("siadcock")),
+  sellByDate = new LocalDate(2018, 2, 28),
+  participationGroup = Perc1B
+)
+
+object OrielParticipation extends Experiment(
+  name = "oriel-participation",
+  description = "A slice of the audience who will participate in Oriel ad-blocking technology",
+  owners = Seq(Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2018, 6, 28),
+  participationGroup = Perc1C
+)
+
+object GdprOptinAlert extends Experiment(
+  name = "gdpr-optin-alert",
+  description = "Audience who will see the Stay with us alert",
+  owners = Seq(Owner.withGithub("walaura")),
+  sellByDate = new LocalDate(2018, 6, 25), // GDPR goes into effect + 1 month
+  participationGroup = Perc0E
 ) {
-  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || GarnettLaunch.isSwitchedOn
+  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || IdentityShowOptInEngagementBanner.isSwitchedOn
 }

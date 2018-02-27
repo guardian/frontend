@@ -1,130 +1,117 @@
-.identity-wizard--consent {
-    .identity-wizard__controls {
+.identity-consent-journey {
+    margin: auto;
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+        legend {
+            display: block;
+        }
+    }
+    > .identity-consent-journey-step {
+        position: relative;
+        &:not(:first-child) {
+            margin-top: $gs-gutter * 1.5;
+        }
+        &:not(:first-of-type) {
+            border-top: 1px solid $garnett-neutral-4;
+        }
+    }
+    .identity-consent-journey__controls {
         padding: $gs-gutter 0;
         background: #ffffff;
         margin-top: $gs-gutter * 2;
         border-top: 1px solid $garnett-neutral-4;
-        justify-content: space-between;
-        z-index: $zindex-sticky;
         @include mq($until: tablet) {
             padding: $gs-gutter * .5;
             margin-left: $gs-gutter * -.5;
             margin-right: $gs-gutter * -.5;
         }
         .manage-account__button:not(.manage-account__button--round) {
-            flex: 1 1 auto;
-            min-width: 0;
-            width: $gs-baseline * 16;
-            max-width: $gs-baseline * 16;
-        }
-    }
-    .identity-consent-wizard-counter {
-        flex: 1 0 auto;
-        padding: 0 $gs-gutter / 2;
-        &:first-child {
-            padding-left: 0;
-        }
-    }
-    .identity-wizard__step[data-wizard-step-name=email] .manage-account__switch-footer-email-preview {
-        display: none;
-    }
-    .js-identity-consent-wizard__complete {
-        display: none;
-    }
-    &.identity-wizard--completed {
-        .js-identity-consent-wizard__complete {
-            display: block;
-            display: inline-flex;
-        }
-        .js-identity-consent-wizard__next {
-            display: none;
+            float: right;
         }
     }
 }
 
-.identity-consent-wizard__revealable {
-    will-change: transform, opacity;
-    transform: translateX($gs-gutter/4);
-    opacity: 0;
-    transition: .2s linear;
-}
-.identity-consent-wizard__revealable--visible {
-    transform: translateX(0);
-    opacity: 1;
-}
-
-.identity-consent-wizard-counter {
-    @include fs-textSans(2);
-    color: $identity-main;
-}
-
-.identity-consent-wizard-counter__indicator {
-    display: inline;
-    font-weight: 800;
-    @supports(display: flex) {
-        height: $gs-gutter * 2;
-        width: $gs-gutter * 2;
-        vertical-align: middle;
-        display: inline-flex;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        border-radius: 100%;
-        box-shadow: inset 0 0 0 1px $identity-main;
-
+.identity-consent-journey-step {
+    @include clearfix;
+    padding-top: $gs-gutter / 6;
+    &.identity-consent-journey-step--intro {
+        margin-top: $gs-gutter * 2;
     }
-}
-
-.identity-consent-wizard-counter__text {
-    display: inline;
-    vertical-align: middle;
-    margin-left: $gs-gutter/4;
-}
-
-
-.identity-consent-thanks__wrap {
-    @supports(display: flex) and (min-height: 1vh) {
-        min-height: 60vh;
-        display: flex;
-        align-items: center;
+    &.identity-consent-journey-step--controls {
+        padding-top: $gs-gutter;
+        border: 0!important;
+        .manage-account__button {
+            max-width: gs-span(5);
+            width: 100%;
+        }
     }
-}
-
-
-.identity-consent-thanks {
+    .identity-consent-journey-step__info {
+        margin-bottom: $gs-gutter * 2;
+    }
+    .identity-consent-journey-step__title {
+        margin-bottom: $gs-gutter;
+    }
     @include mq(desktop) {
         display: grid;
-        grid-column-gap: $gs-gutter * 4;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        margin: 0 $gs-gutter * 2;
-        align-items: center;
-    }
-}
-
-.identity-consent-thanks__title {
-    @include fs-headline(8);
-    color: $identity-main;
-    font-weight: 800;
-    @include mq(desktop) {
-        grid-column: 1 / 3;
-        grid-row: 1 / 3;
-        @supports (display: grid) {
-            font-size: 9em;
-            text-align: right;
-            line-height: .9em;
+        grid-column-gap: $gs-gutter;
+        grid-template-columns: gs-span(4) 1fr;
+        .identity-consent-journey-step__title {
+            grid-column-start: 1;
+            padding-right: gs-span(1);
+        }
+        .identity-consent-journey-step__content {
+            grid-column-start: 2;
+        }
+        .identity-consent-journey-step__fields {
+            margin-top: $gs-gutter / 4;
         }
     }
 }
 
-.identity-consent-thanks__content {
-
-    @include mq(desktop) {
-        grid-column: 3;
-        grid-row: 2;
+.identity-consent-journey-step__title {
+    @include fs-headlineGarnett(2);
+    font-weight: 500;
+    .identity-consent-journey-step--intro & {
+        @include fs-headlineGarnett(4, true);
+        margin-top: ($gs-gutter /4) * -1;
     }
+}
 
-    p {
-        @include fs-textSans(3);
+.identity-consent-journey--gdpr-oi-campaign {
+    .identity-consent-journey-step {
+        border-top-color: #ed6300!important;
+    }
+    .identity-consent-journey-step__title {
+        font-weight: 600;
+    }
+}
+
+.identity-consent-hero {
+    $multiline-height: 4px * 3 + 1px; /*height of multiline (4px) times the number of lines (3)*/
+    height: $gs-row-height * 4;
+    background-size: cover;
+    border-bottom: 1px solid $garnett-neutral-4;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: visible;
+    margin-bottom: $multiline-height;
+    position: relative;
+    &:after {
+        @include multiline(4, $garnett-neutral-4, top);
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: ($multiline-height - 1) * -1;
+        height: $multiline-height;
+        margin-bottom: -1px;
+        margin-top: $gutter;
+        width: 100%;
+    }
+    @include mq(tablet) {
+        height: $gs-row-height * 6;
+        background-size: contain;
     }
 }

@@ -127,11 +127,37 @@ class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends
 object TwitterImage {
     val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX2RlZmF1bHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
     val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX29waW5pb25zLnBuZw", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val live = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8xNi90d2l0dGVyX2xpdmUucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
+    def starRating(rating: Int) = {
+        val image = rating match {
+            case 0 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS0wLnBuZw"
+            case 1 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS0xLnBuZw"
+            case 2 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS0yLnBuZw"
+            case 3 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS0zLnBuZw"
+            case 4 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS00LnBuZw"
+            case 5 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS01LnBuZw"
+            case _ => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX2RlZmF1bHQucG5n"
+        }
+        new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
+    }
 }
 
 object FacebookOpenGraphImage {
     val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19kZWZhdWx0LnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
     val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19vcGluaW9ucy5wbmc", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val live = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8xNi9mYWNlYm9va19saXZlLnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
+    def starRating(rating: Int) = {
+        val image = rating match {
+            case 0 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tMC5wbmc"
+            case 1 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tMS5wbmc"
+            case 2 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tMi5wbmc"
+            case 3 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tMy5wbmc"
+            case 4 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tNC5wbmc"
+            case 5 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tNS5wbmc"
+            case _ => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19kZWZhdWx0LnBuZw"
+        }
+        new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
+    }
 }
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {

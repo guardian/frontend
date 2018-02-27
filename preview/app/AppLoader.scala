@@ -8,7 +8,7 @@ import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
 import conf.switches.SwitchboardLifecycle
-import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
+import contentapi._
 import controllers._
 import controllers.front.FrontJsonFapiDraft
 import cricket.conf.CricketLifecycle
@@ -84,8 +84,8 @@ trait AppComponents
   with OnwardServices
   with ApplicationsServices {
 
-  override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
-  override lazy val contentApiClient = wire[ContentApiClient]
+  override lazy val capiHttpClient: HttpClient = new CapiHttpClient(wsClient) { override val signer = Some(PreviewSigner()) }
+  override lazy val contentApiClient = wire[PreviewContentApi]
   override lazy val ophanApi = wire[OphanApi]
 
   lazy val healthCheck = wire[HealthCheck]

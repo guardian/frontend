@@ -2,7 +2,6 @@
 @import model._
 @import views.support.Commercial.isPaidContent
 @import views.support.ContentOldAgeDescriber
-@import experiments._
 @import _root_.model.ContentDesignType.RichContentDesignType
 
 
@@ -38,16 +37,14 @@
         @item.content.contributorBio.map { bio => <p class="meta__bio" data-link-name="byline" data-component="meta-byline">@bio</p> }
 
         @if(item.content.tags.contributors.length == 1) {
-            @if(item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
+            @if(!amp && item.content.hasTonalHeaderByline && (item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty) || item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty))) {
                 <p class="meta__contact-header">Contact author</p>
             }
             @fragments.meta.contactAuthor(item.tags, amp)
         }
 
-        @if(ActiveExperiments.isParticipating(experiments.Garnett)) {
-          @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
+        @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
             @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
-            }
         }
 
         @if(!item.content.hasTonalHeaderByline || item.metadata.designType.nameOrDefault == "analysis") {
@@ -55,7 +52,7 @@
         }
     }
 
-    @if(!ActiveExperiments.isParticipating(experiments.Garnett) || ActiveExperiments.isParticipating(experiments.Garnett) && item.content.isImmersive) {
+    @if(item.content.isImmersive) {
         @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
             @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
         }

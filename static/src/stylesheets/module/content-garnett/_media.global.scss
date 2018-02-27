@@ -1,6 +1,12 @@
 @import '../social-icons';
 
 .content--media {
+    .content__main-column {
+        &::before {
+            display: none;
+        }
+    }
+    
     .content__head__comment-count {
         display: none;
     }

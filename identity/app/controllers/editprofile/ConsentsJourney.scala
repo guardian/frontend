@@ -10,6 +10,8 @@ import play.api.data.Forms.{nonEmptyText, single}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, Result}
 import utils.ConsentOrder.userWithOrderedConsents
+import utils.ConsentsJourneyType.AnyConsentsJourney
+
 import scala.concurrent.Future
 
 trait ConsentsJourney
@@ -25,6 +27,10 @@ trait ConsentsJourney
   /** GET /consents/thank-you */
   def displayConsentsJourneyThankYou: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageThankYou, None)
+
+  /** GET /consents/staywithus */
+  def displayConsentsJourneyGdprCampaign: Action[AnyContent] =
+    displayConsentJourneyForm(ConsentJourneyPageGdprCampaign, None)
 
   /** GET /consents */
   def displayConsentsJourney(consentHint: Option[String] = None): Action[AnyContent] =
@@ -50,7 +56,10 @@ trait ConsentsJourney
 
               case Right(updatedUser) =>
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
-                SeeOther(returnUrl)
+                val page = IdentityPage("/complete-consents", "Complete Consents", isFlow = true)
+                Ok(IdentityHtmlPage.html(
+                  views.html.completeConsents(idRequestParser(request), idUrlBuilder, returnUrl)
+                )(page, request, context))
             }
           }
         )
@@ -78,7 +87,7 @@ trait ConsentsJourney
 
   private def consentJourneyView(
     page: IdentityPage,
-    journey: String,
+    journey: AnyConsentsJourney,
     forms: ProfileForms,
     user: User,
     consentHint: Option[String])(implicit request: AuthRequest[AnyContent]): Future[Result] = {
@@ -97,6 +106,7 @@ trait ConsentsJourney
           newsletterService.getEmailSubscriptions(emailFilledForm),
           EmailNewsletters.all,
           consentHint,
+          skin = if(page == ConsentJourneyPageGdprCampaign) Some("gdpr-oi-campaign") else None
         ))(page, request, context)
       ))
 

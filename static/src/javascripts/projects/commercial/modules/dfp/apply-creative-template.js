@@ -5,16 +5,16 @@ import reportError from 'lib/report-error';
 
 import { Frame } from 'commercial/modules/creatives/frame';
 import { FabricV1 } from 'commercial/modules/creatives/fabric-v1';
-import fabricExpand from 'commercial/modules/creatives/fabric-expanding-v1';
-import { fabricExpandVideo } from 'commercial/modules/creatives/fabric-expandable-video-v2';
+import { FabricExpandingV1 } from 'commercial/modules/creatives/fabric-expanding-v1';
+import { FabricExpandableVideoV2 } from 'commercial/modules/creatives/fabric-expandable-video-v2';
 import { FabricVideo } from 'commercial/modules/creatives/fabric-video';
 import { ScrollableMpu } from 'commercial/modules/creatives/scrollable-mpu-v2';
 
 const creativeLookup: Object = {
     frame: Frame,
     'fabric-v1': FabricV1,
-    'fabric-expanding-v1': fabricExpand,
-    'fabric-expandable-video-v2': fabricExpandVideo,
+    'fabric-expanding-v1': FabricExpandingV1,
+    'fabric-expandable-video-v2': FabricExpandableVideoV2,
     'fabric-video': FabricVideo,
     'scrollable-mpu-v2': ScrollableMpu,
 };

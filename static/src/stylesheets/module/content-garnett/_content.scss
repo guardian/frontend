@@ -50,15 +50,15 @@
 
     @include mq(desktop) {
         margin-left: 0;
-        margin-right: $right-column + $gs-gutter;
+        margin-right: $right-column + ($gs-gutter * .5);
     }
 
     @include mq(leftCol) {
-        margin-left: $left-column + $gs-gutter;
+        margin-left: $left-column + ($gs-gutter * .5);
     }
 
     @include mq(wide) {
-        margin-left: $left-column-wide + $gs-gutter;
+        margin-left: $left-column-wide + ($gs-gutter * .5);
     }
 
     &.content__main-column--single-column {
@@ -89,7 +89,7 @@
 
 // % used for padding-bottom isn't supported on Grid items in FireFox <53
 // unless explicit width is set on the element with padding-bottom.
-// .force-percentage-padding ensures width is explicitly set so padding-bottom 
+// .force-percentage-padding ensures width is explicitly set so padding-bottom
 // works on responsive-ratio media.
 // https://bugzilla.mozilla.org/show_bug.cgi?id=958714
 .force-percentage-padding {
@@ -150,13 +150,18 @@
 
 .content__labels {
     box-sizing: border-box;
-    padding: $gs-baseline/2 0;
+    padding: $gs-baseline/2 0 0;
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
 
     @include mq($until: tablet) {
-        padding: 0;
+        order: 1;
+
+        .tonal__head--tone-comment &,
+        .tonal__head--tone-editorial & {
+            order: 0;
+        }
 
         & > div:not(.content__series-label) {
             display: none;
@@ -165,16 +170,13 @@
 }
 
 .content__labels--not-immersive {
-    border-bottom: 1px dotted $neutral-5;
-
-    @include mq($until: tablet) {
-        border: 0;
+    @include mq($from: phablet, $until: tablet) {
+        margin-left: $gs-gutter;
     }
 
     @include mq(leftCol) {
         position: absolute;
         top: 0;
-        border-bottom: 0;
         width: $left-column;
         margin-left: -($left-column + $gs-gutter);
         margin-bottom: $gs-baseline;
@@ -208,12 +210,12 @@
 }
 
 .content__series-label {
-    @include fs-headline(2);
+    font-family: $f-serif-headline;
+    font-size: 15px;
     float: left;
 
     @include mq($until: tablet) {
-        @include fs-header(1);
-        padding-top: $gs-baseline / 3;
+        font-weight: 800;
     }
 
     @include mq(leftCol) {
@@ -257,30 +259,16 @@
 }
 
 .content__headline {
-    @include fs-headline(5);
-    padding-top: $gs-baseline/6;
-    padding-bottom: $gs-baseline*2;
+    @include fs-headlineGarnett(4);
+    display: block;
+    font-weight: 400;
+    padding-bottom: $gs-baseline * 2;
+    padding-top: $gs-baseline / 4;
 
-    @include mq($until: tablet) {
-        padding-top: $gs-baseline / 3;
-    }
-
-    @include mq(mobileLandscape) {
-        @include fs-headline(7, true);
-    }
-
-    @include mq(leftCol) {
-        padding-top: $gs-baseline/2;
-        padding-bottom: $gs-row-height;
-    }
-
-    a {
-        &,
-        &:hover,
-        &:active,
-        &:focus {
-            color: $neutral-1;
-        }
+    @include mq(tablet) {
+        @include fs-headlineGarnett(6);
+        font-weight: 400;
+        padding-bottom: $gs-baseline * 3;
     }
 
     em {
@@ -293,14 +281,12 @@
 }
 
 .content__headline--byline {
-    display: block;
-    padding-top: 0;
-    margin-top: -$gs-baseline*2;
-    padding-bottom: $gs-baseline*2;
+    font-style: italic;
+    padding-bottom: $gs-baseline * 6;
+}
 
-    @include mq(leftCol) {
-        margin-top: -$gs-row-height;
-    }
+.content__headline--no-margin-bottom {
+    padding-bottom: 0;
 }
 
 .content__headline--kicker {
@@ -314,66 +300,29 @@
 .content__head--byline-pic {
     overflow: hidden;
 
-    .byline-img {
-        float: right;
-        height: $gs-baseline * 12.5;
-        z-index: 2;
-
-        @include mq($until: mobileLandscape) {
-            margin-left: -(gs-span(1) + $gs-gutter);
-            margin-right: -($gs-gutter * 2);
-        }
-
-        @include mq(mobileLandscape) {
-            position: absolute;
+    .content__header {
+        .byline-img {
             bottom: 0;
-            right: gs-span(3);
-            width: 0;
-            height: 80%;
-        }
+            float: right;
+            height: 150px;
+            margin-right: -$gs-gutter;
+            right: -$gs-gutter*2;
+            shape-outside: polygon(0 130px, 0 150px, 180px 150px, 180px 0, 20px 0, 20px 96px);
+            width: auto;
 
-        @include mq(phablet) {
-            height: gs-span(2.5);
-        }
+            @include mq(mobileLandscape) {
+                height: $gs-baseline * 15;
+                right: gs-span(3) - $gs-gutter;
+            }
 
-        @include mq(desktop) {
-            right: gs-span(1) + $gs-gutter;
+            @include mq(desktop) {
+                shape-outside: polygon(0 160px, 0 180px, 216px 180px, 216px 0, 36px 0, 24px 121px, 0 128px);
+            }
         }
     }
 
     .byline-img__img {
         height: 100%;
-    }
-
-    .content__head__comment-count {
-        position: absolute;
-        bottom: 0;
-
-        @include mq(desktop) {
-            position: static;
-        }
-    }
-
-    .content__header {
-        .content__main-column {
-            @include mq(mobileLandscape) {
-                min-height: gs-height(5);
-            }
-
-            @include mq(desktop) {
-                min-height: gs-height(4);
-            }
-        }
-
-        .content__headline {
-            @include mq(mobileLandscape) {
-                padding-right: gs-span(2) + $gs-gutter;
-            }
-
-            @include mq(desktop) {
-                padding-right: $gs-gutter*2;
-            }
-        }
     }
 }
 

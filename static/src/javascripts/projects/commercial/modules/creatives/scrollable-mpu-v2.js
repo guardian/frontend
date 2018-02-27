@@ -4,7 +4,7 @@ import $ from 'lib/$';
 import { isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
+import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
 import type { bonzo } from 'bonzo';
 
 /**

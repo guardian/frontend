@@ -100,39 +100,7 @@ $ima-controls-height: 70px;
 
     &:hover .vjs-control-text {
         transform: translate(-50%, -50%) scale(1.15);
-    }
 
-    .vjs-control-text {
-        // Magic numbers are used here to draw the play arrow and circle as pseudo elements.
-        @include video-play-button-size($vjs-garnett-small-button-size);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-        user-select: none;
-
-        &:before {
-            @include circular;
-            @include video-play-button-size($vjs-garnett-small-button-size);
-            content: '';
-            display: block;
-        }
-
-        &:after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-40%, -50%);
-            border-style: solid;
-            border-width: 1em 0 1em 2.4em;
-            border-color: transparent transparent transparent #ffffff;
-
-            @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
-                border-radius: .2em;
-            }
-        }
     }
 
     .gu-media--audio &,
@@ -917,7 +885,10 @@ $ima-controls-height: 70px;
 }
 .end-slate {
     margin-bottom: $gs-baseline*2;
-
+    .fc-item--media .inline-video-icon>svg {
+        border: 0;
+        padding: 0;
+    }
     &.items--media {
         .item {
             width: 25%;

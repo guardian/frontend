@@ -3,7 +3,7 @@
 import { Sticky } from 'common/modules/ui/sticky';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-const initPaidForBand = (): Promise<boolean> => {
+export const init = (): Promise<boolean> => {
     if (!commercialFeatures.paidforBand) {
         return Promise.resolve(false);
     }
@@ -15,5 +15,3 @@ const initPaidForBand = (): Promise<boolean> => {
 
     return Promise.resolve(true);
 };
-
-export { initPaidForBand };

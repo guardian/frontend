@@ -148,7 +148,7 @@ class AccountProfile {
         ) {
             const eventTarget: HTMLElement = event.target;
             if (eventTarget.dataset.tabsIgnore) {
-                if (eventTarget.href) window.location.href = eventTarget.href;
+                if (eventTarget.href) window.location.assign(eventTarget.href);
                 event.preventDefault();
                 event.stopImmediatePropagation();
             } else if (this.unsavedChangesForm) {

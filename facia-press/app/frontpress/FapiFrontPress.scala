@@ -12,8 +12,9 @@ import com.gu.facia.client.models.{Breaking, ConfigJson, Metadata, Special}
 import common._
 import common.commercial.CommercialProperties
 import conf.Configuration
+import conf.switches.Switches
 import conf.switches.Switches.FaciaInlineEmbeds
-import contentapi.{CapiHttpClient, CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
+import contentapi._
 import services.fronts.FrontsApi
 import model.{PressedPage, _}
 import model.facia.PressedCollection
@@ -51,8 +52,10 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
 class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit ec: ExecutionContext) extends FapiFrontPress {
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
-    httpClient = new CapiHttpClient(wsClient),
-    targetUrl = Configuration.contentApi.contentApiDraftHost,
+    httpClient = new CapiHttpClient(wsClient) { override val signer = Some(PreviewSigner()) },
+    targetUrl = Configuration.contentApi.previewHost
+      .filter(_ => Switches.FaciaToolDraftContent.isSwitchedOn)
+      .getOrElse(Configuration.contentApi.contentApiHost),
     apiKey = Configuration.contentApi.key.getOrElse("facia-press")
   )
 

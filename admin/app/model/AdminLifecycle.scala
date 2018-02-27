@@ -20,7 +20,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
                      emailService: EmailService,
                      fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
                      r2PagePressJob: R2PagePressJob,
-                     videoEncodingsJob: VideoEncodingsJob,
                      analyticsSanityCheckJob: AnalyticsSanityCheckJob,
                      rebuildIndexJob: RebuildIndexJob)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
@@ -92,12 +91,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
       ExpiringSwitchesEmailJob(emailService).runReminder()
     }
 
-    //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)
-    jobs.schedule("VideoEncodingsJob", "28 7/15 * * * ?") {
-      log.info("Starting VideoEncodingsJob")
-      videoEncodingsJob.run(akkaAsync)
-    }
-
     jobs.scheduleEveryNMinutes("AssetMetricsCache", 60 * 6) {
       AssetMetricsCache.run()
     }
@@ -114,7 +107,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     jobs.deschedule("FrontPressJobHighFrequency")
     jobs.deschedule("FrontPressJobStandardFrequency")
     jobs.deschedule("FrontPressJobLowFrequency")
-    jobs.deschedule("VideoEncodingsJob")
     jobs.deschedule("ExpiringSwitchesEmailJob")
     jobs.deschedule("ExpiringSwitchesAfternoonEmailJob")
     jobs.deschedule("AssetMetricsCache")
@@ -126,7 +118,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
 
     akkaAsync.after1s {
       rebuildIndexJob.run()
-      videoEncodingsJob.run(akkaAsync)
       AssetMetricsCache.run()
       LoadBalancer.refresh()
     }

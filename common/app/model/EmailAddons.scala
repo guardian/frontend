@@ -90,6 +90,12 @@ case object HandwrittenMediaBriefing extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "media/series/mediaguardian-briefing")
 }
 
+case object TheUpsideWeeklyReport extends ArticleEmailMetadata {
+  val name = "The Upside Weekly Report"
+  override val banner = Some("the-upside.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/the-upside-weekly-report")
+}
+
 case object CuratedMediaBriefing extends FrontEmailMetadata {
   val name = "Media Briefing"
   override val banner = Some("media-briefing.png")
@@ -226,6 +232,16 @@ case object OpinionUs extends FrontEmailMetadata {
   override val banner = Some("opinion.png")
 }
 
+case object ThisLandIsYourLand extends FrontEmailMetadata {
+  val name = "This Land Is Your Land"
+  override val banner = Some("this-land-is.png")
+}
+
+case object WinterOlympics2018 extends FrontEmailMetadata {
+  val name = "Winter Olympics 2018"
+  override val banner = Some("winter-olympics-2018.png")
+}
+
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
@@ -252,7 +268,8 @@ object EmailAddons {
     TheNewArrivals,
     FashionWeek,
     HearHere,
-    CrosswordEditorsUpdate)
+    CrosswordEditorsUpdate,
+    TheUpsideWeeklyReport)
   private val frontEmails = Seq(
     TheFlyer,
     CuratedMediaBriefing,
@@ -267,7 +284,9 @@ object EmailAddons {
     FashionStatement,
     BusinessView,
     TheGuardianB2b,
-    OpinionUs
+    OpinionUs,
+    ThisLandIsYourLand,
+    WinterOlympics2018
   )
 
   implicit class EmailContentType(p: Page) {

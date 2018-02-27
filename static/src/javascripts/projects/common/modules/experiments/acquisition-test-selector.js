@@ -10,22 +10,9 @@ import { askFourEarning } from 'common/modules/experiments/tests/contributions-e
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
-import { colourTestEpicHoldback } from 'common/modules/experiments/tests/circles-epic-holdback';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
-
-/**
- * acquisition tests in priority order (highest to lowest)
- */
-const tests: $ReadOnlyArray<AcquisitionsABTest> = [
-    acquisitionsEpicAusEnvCampaign,
-    acquisitionsEpicUSGunCampaign,
-    colourTestEpicHoldback,
-    askFourEarning,
-    acquisitionsEpicAlwaysAskIfTagged,
-    acquisitionsEpicLiveblog,
-    acquisitionsEpicThankYou,
-];
+import { supportEpicCircles } from 'common/modules/experiments/tests/support-epic-circles';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
@@ -46,11 +33,22 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
     return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
 };
 
-export const abTestClashData = tests;
+/**
+ * acquisition tests in priority order (highest to lowest)
+ */
+export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    acquisitionsEpicAusEnvCampaign,
+    acquisitionsEpicUSGunCampaign,
+    supportEpicCircles,
+    askFourEarning,
+    acquisitionsEpicAlwaysAskIfTagged,
+    acquisitionsEpicLiveblog,
+    acquisitionsEpicThankYou,
+];
 
 export const getTest = (): ?ABTest => {
     const forcedTests = getForcedTests()
-        .map(({ testId }) => tests.find(t => t.id === testId))
+        .map(({ testId }) => acquisitionsTests.find(t => t.id === testId))
         .filter(Boolean);
 
     if (forcedTests.length)
@@ -59,7 +57,7 @@ export const getTest = (): ?ABTest => {
             return variant && testCanBeRun(t) && isViewable(variant, t);
         });
 
-    return tests.find(t => {
+    return acquisitionsTests.find(t => {
         const variant: ?Variant = variantFor(t);
         return (
             variant && testCanBeRun(t) && isInTest(t) && isViewable(variant, t)
