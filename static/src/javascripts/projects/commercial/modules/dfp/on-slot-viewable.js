@@ -21,6 +21,11 @@ export const onSlotViewable = (event: ImpressionViewableEvent): void => {
         };
 
         setTimeout(() => {
+            // During the elapsed time, a 'disable-refresh' message may have been posted.
+            // Check the flag again.
+            if (!advert.shouldRefresh) {
+                return;
+            }
             if (document.hidden) {
                 document.addEventListener(
                     'visibilitychange',
