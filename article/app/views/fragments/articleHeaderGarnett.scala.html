@@ -6,12 +6,7 @@
 @import _root_.model.ContentDesignType.RichContentDesignType
 
 
-<<<<<<< HEAD
     <header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)">
-=======
-    <header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)
-    @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage && article.metadata.designType.nameOrDefault != "analysis") { content__head--byline-pic}">
->>>>>>> WIP not to be committed in one chunk
     <div class="matchreport">
         <div class="js-score"></div>
         <div class="js-sport-tabs football-tabs content__mobile-full-width"></div>
@@ -69,11 +64,6 @@
                         <span class="content__headline--byline-interview">By @ContributorLinks(text, article.tags.contributors)</span>
                     }
                 }
-                @if(article.content.hasTonalHeaderIllustration) {
-                    <span class="content__head__illustration hide-on-mobile">@fragments.inlineSvg("illustration-letters", "icon")</span>
-                }
-                @if(!(article.tags.isFeature && article.elements.hasShowcaseMainElement)) {
-
                 @if(article.content.hasTonalHeaderIllustration) {
                     <span class="content__head__illustration hide-on-mobile">@fragments.inlineSvg("illustration-letters", "icon")</span>
                 }

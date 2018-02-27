@@ -27,18 +27,17 @@
         @include mq(leftCol) {
             grid-area: main-media;
             margin-bottom: -70px;
-            max-height: 500px;
+            // TODO this should be done in a more intelligent way
+            max-height: 460px;
             overflow: hidden;
         }
     }
 
-    .content__labels {
-        box-sizing: border-box;
-        grid-area: content-labels;
+    .content__labels--column {
         margin-right: $gs-gutter;
         padding: ($gs-baseline / 2) ($gs-gutter / 2);
 
-        @include mq(mobileLandscape) {
+        @include mq(mobileLandscape, $until: tablet) {
             padding-left: $gs-gutter;
         }
 
@@ -47,23 +46,14 @@
         }
 
         @include mq(leftCol) {
+            grid-area: content-labels;
             margin: 0;
-            padding: ($gs-baseline / 2) ($gs-gutter / 2) ($gs-baseline * 2);
+            padding: ($gs-baseline / 2) ($gs-gutter / 2) ($gs-baseline * 4);
             width: gs-span(2) + $gs-gutter / 2;
         }
 
         @include mq(wide) {
             width: gs-span(3) + $gs-gutter / 2;
-        }
-
-        .content__series-label__link {
-            color: #ffffff !important; //Change
-            font-weight: 700;
-
-            @include mq(leftCol) {
-                font-size: 20px;
-                padding-right: 0;
-            }
         }
     }
 
@@ -71,32 +61,33 @@
         border-top: 1px solid #ffffff;
         box-sizing: border-box;
         margin: 0 $gs-gutter 0 0;
-        max-width: gs-span(8) + ($gs-gutter / 2);
-        padding: 0 ($gs-gutter / 2) ($gs-baseline * 2);
+        padding: 0 ($gs-gutter / 2) ($gs-baseline * 3);
+        position: relative;
         z-index: $zindex-content;
 
         @include mq($from: mobileLandscape, $until: tablet) {
             padding-left: $gs-gutter;
         }
 
-        @include mq($until: tablet) {
-            order: 2 !important;
+        @include mq($from:phablet, $until: tablet) {
+            margin-left: $gs-gutter;
         }
 
-        @include mq(tablet) {
-            padding-bottom: $gs-baseline * 4;
+        @include mq($until: tablet) {
+            order: 2 !important;
         }
 
         @include mq(leftCol) {
             border-left: 1px solid #ffffff;
             border-top: 0;
             grid-area: content-headline;
+            max-width: gs-span(8) + ($gs-gutter / 2);
         }
 
         .stars {
             bottom: 0;
+            margin-bottom: 0;
             position: absolute;
-            transform: none;
         }
     }
 
@@ -122,86 +113,71 @@
         }
     }
 
-    // Opinions specific styling
-    &.content--type-comment {
-        .content__headline-column-wrapper {
-            padding-bottom: 0;
-            overflow: hidden;
-
-            .content__header {
-                // Hides multiline
-                background: none;
-                padding-bottom: 0;
-            }
-        }
-
-        .content__headline__byline {
-            margin-top: 0;
-            padding-bottom: $gs-baseline * 2;
-
-            .tone-colour {
-                color: #ffffff !important;
-                font-style: normal;
-                font-weight: 700;
-            }
-        }
-
-        .content__labels--column:hover {
-            background-color: $opinion-garnett-feature;
-        }
-    }
-
     .content__headline--column {
         color: #ffffff !important;
         padding: 0;
     }
 
+    .content__series-label--column {
+        .content__series-label__link {
+            color: #ffffff !important; //TODO lose this
+            font-weight: 700;
+        }
+    }
+
+    // Opinion specific styling
+    &.content--type-comment {
+        .content__headline-column-wrapper {
+            overflow: hidden;
+
+            .content__header {
+                // Hides multiline
+                background: none;
+            }
+        }
+
+        .content__headline--byline {
+            .tone-colour {
+                color: #ffffff;
+                font-style: normal;
+                font-weight: 700;
+            }
+        }
+
+        // Fix for visible hover on series panel
+        .content__labels--column:hover {
+            background-color: $opinion-garnett-feature;
+        }
+    }
+
     // Article content
+    // TODO: emulate same lines you get above meta area
     .content__article-body {
         .content__meta-container + * {
             border-top: 1px solid $garnett-neutral-4;
             margin-top: -1px;
             padding-top: $gs-baseline / 4;
         }
-
-        h2 {
-            border-top: 1px solid $garnett-neutral-4;
-            padding-top: $gs-baseline / 4;
-        }
     }
 }
-
 
 // Opinion layout with byline pic
 .content__head--column.content__head--byline-pic {
     .content__header {
-        @supports (display: grid) {
-            @include mq(leftCol) {
-                display: grid;
-                grid-template-areas:
-                'headline byline-img'
-                'byline byline-img';
-                grid-template-columns: auto;
-                grid-template-rows: auto;
-            }
+        min-height: $gs-baseline * 12;
+
+        @include mq(leftCol) {
+            padding-right: gs-span(2);
         }
     }
 
-    .content__headline {
-        grid-area: headline;
-    }
-
-    .content__headline__byline {
-        grid-area: byline;
-    }
-
-    .meta__image {
-        align-self: end;
-        grid-area: byline-img;
-    }
-
     .byline-img {
-        margin-right: -50px;
+        margin-bottom: -$gs-baseline * 3;
+
+        @include mq(leftCol) {
+            right: -30px;
+            position: absolute;
+        }
     }
 }
 
@@ -212,7 +188,6 @@
 
     @include mq(leftCol) {
         bottom: $gs-baseline / 2;
-        margin-right: $gs-baseline / 4;
         position: absolute;
     }
 }

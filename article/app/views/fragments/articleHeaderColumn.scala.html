@@ -14,7 +14,7 @@
 
     <div class="content__headline-column-wrapper content__headline-column-wrapper--column">
         <div class="content__header tonal__header u-cf">
-            <h1 class="content__headline content__headline--column" articleprop="headline" @langAttributes(article.content)>
+            <h1 class="content__headline content__headline--column content__headline @if(article.content.hasTonalHeaderByline) {content__headline--no-margin-bottom}" articleprop="headline" @langAttributes(article.content)>
                 @Html(article.trail.headline)
             </h1>
 
@@ -24,7 +24,7 @@
 
             @if(article.content.hasTonalHeaderByline) {
                 @article.trail.byline.map { text =>
-                    <span class="content__headline__byline content__headline--column">@ContributorLinks(text, article.tags.contributors)</span>
+                    <span class="content__headline content__headline--byline content__headline--column">@ContributorLinks(text, article.tags.contributors)</span>
                 }
             }
 
