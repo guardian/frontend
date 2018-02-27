@@ -90,9 +90,7 @@ module.exports = {
             // to exhibit the same styles of the underlying platform. This
             // module below exposes a loader that catches requests for
             // atoms's CSS and automatically swaps in values for these variables
-            ...require('@guardian/atom-renderer/webpack/css')({
-                cssVarsPath: path.join(__dirname, 'static', 'src', 'stylesheets', 'atoms', 'vars.scss')
-            }),
+            ...require('@guardian/atom-renderer/webpack/css')(),
         ],
     },
     plugins: [
