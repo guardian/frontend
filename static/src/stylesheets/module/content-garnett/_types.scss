@@ -866,6 +866,7 @@ $quote-mark: 35px;
 
         @include mq($from: desktop) {
             padding-bottom: 0;
+            line-height: 29px;
         }
     }
 

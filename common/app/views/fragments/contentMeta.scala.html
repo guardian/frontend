@@ -30,7 +30,7 @@
     @if(!(item.content.isGallery || item.content.isImmersive)) {
     <div class="meta__contact-wrap">
         @if(!item.content.hasTonalHeaderByline || item.metadata.designType.nameOrDefault == "analysis") {
-            @if(item.metadata.designType.nameOrDefault != "interview"){
+            @if(item.metadata.designType.nameOrDefault != "interview" || item.tags.isVideo){
                 @byline()
             }
         }
