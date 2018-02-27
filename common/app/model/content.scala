@@ -241,6 +241,7 @@ final case class Content(
     ("isImmersive", JsBoolean(isImmersive)),
     ("isColumn", JsBoolean(isColumn)),
     ("isPaidContent", JsBoolean(isPaidContent)),
+    ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
 
   )
