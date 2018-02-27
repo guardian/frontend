@@ -238,6 +238,11 @@ class GuardianConfiguration extends Logging {
     lazy val jsLocation = "//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12919.js"
   }
 
+  object oriel {
+    lazy val orielApiKey = configuration.getMandatoryStringProperty("oriel.api.key")
+    lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
+  }
+
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
     lazy val webEngineersEmail = configuration.getStringProperty("email.web.engineers")

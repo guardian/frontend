@@ -317,6 +317,16 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val OrielFullIntegration: Switch = Switch(
+    group = Commercial,
+    name = "oriel-full-integration",
+    description = "Include the ESI tag dropped at the start of <head> for full Oriel integration",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 6, 28),
+    exposeClientSide = false
+  )
+
   val BlockthroughSwitch: Switch = Switch(
     group = Commercial,
     name = "blockthrough",
