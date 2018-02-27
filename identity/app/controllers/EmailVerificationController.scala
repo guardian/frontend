@@ -1,6 +1,6 @@
 package controllers
 
-import java.net.URLEncoder
+import java.net.{URI, URLEncoder}
 
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, Result}
 import idapiclient.IdApiClient
@@ -12,6 +12,7 @@ import actions.AuthenticatedActions
 import pages.IdentityHtmlPage
 
 import scala.concurrent.Future
+import scala.util.Try
 
 
 class EmailVerificationController(api: IdApiClient,
@@ -50,7 +51,13 @@ class EmailVerificationController(api: IdApiClient,
           val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
 
           if(validationState.isValidated) {
-            SeeOther(idUrlBuilder.buildUrl(s"/consents?returnUrl=$encodedReturnUrl"))
+            // Only redirect to consent journey return URL if not the journey already
+            val redirectUrl = Try(new URI(verifiedReturnUrl)).toOption
+              .flatMap { uri =>
+                val consentJourneyPath = "^\\/consents([?/#].*)?$".r
+                consentJourneyPath.findFirstMatchIn(uri.getPath).map(_ => verifiedReturnUrl)
+              }
+            SeeOther(redirectUrl.getOrElse(idUrlBuilder.buildUrl(s"/consents?returnUrl=$encodedReturnUrl")))
           } else {
             Ok(IdentityHtmlPage.html(views.html.emailVerified(validationState, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))(page, request, context))
           }

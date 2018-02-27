@@ -101,11 +101,18 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
     "when the api call succeeds" - {
       when(api.validateEmail(eql(token), any())).thenReturn(Future.successful(Right(())))
-      val result = controller.verify(token)(testRequest)
 
       "should redirect to default consent journey" in {
+        val result = controller.verify(token)(testRequest)
         status(result) should be(SEE_OTHER)
         redirectLocation(result).get should include("/consents?")
+      }
+
+      "should redirect to original returnUrl if it was already a consent journey" in {
+        when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://profile.theguardian.com/consents/staywithus"))
+        val result = controller.verify(token)(testRequest)
+        status(result) should be(SEE_OTHER)
+        redirectLocation(result).get should include("/consents/staywithus")
       }
     }
 
