@@ -359,12 +359,6 @@
    ========================================================================== */
 
 .identity-modal {
-    border: 1px solid $neutral-8;
-    padding: $gs-gutter;
-    margin: $gs-gutter;
-}
-
-.js-on .identity-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -379,12 +373,12 @@
     border: 0;
 }
 
-.js-on .identity-modal--active {
+.identity-modal--active {
     display: block;
     display: flex;
 }
 
-.js-on .identity-modal__bg {
+.identity-modal__bg {
     position: fixed;
     top: 0;
     left: 0;
@@ -395,23 +389,22 @@
     z-index: 9;
 }
 
-.js-on .identity-modal__wrap {
-    max-width: gs-span(10);
+.identity-modal__wrap {
     background: #ffffff;
     width: 100%;
     position: relative;
     z-index: 10;
-    border-top: 1px solid $neutral-1;
-    padding: ($gs-gutter * 3.75) ($gs-gutter * 1) ($gs-gutter * 1);
+    padding: $gs-gutter;
     margin: auto;
     float: none;
 }
 
-.identity-modal__closer {
-    display: none;
+.identity-modal__content {
+    max-width: gs-span(10);
+    margin: auto;
 }
 
-.js-on .identity-modal__closer {
+.identity-modal__closer {
     width: $gs-gutter * 1.75;
     height: $gs-gutter * 1.75;
     color: $identity-main;
@@ -419,7 +412,7 @@
     border-radius: 100%;
     display: block;
     position: absolute;
-    top: $gs-gutter;
+    top: $gs-gutter / 2;
     right: $gs-gutter;
     background: transparent;
 
