@@ -12,7 +12,7 @@ import views.html.fragments.commercial.{blockthrough, pageSkin, survey}
 import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{orielScriptTag, _}
+import views.html.fragments.page.head._
 import html.HtmlPageHelpers.ContentCSSFile
 
 object StoryHtmlPage {
