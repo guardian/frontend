@@ -10,10 +10,13 @@
     <section class="identity-forms-message">
         <h1 class="identity-title">Thank you for letting us know your preferences</h1>
         <div class="identity-forms-message__body">
-            <p>You can change your preferences anytime by visiting <a class="u-underline" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayEmailPrefsForm(false, None).url, idRequest)">Email Preferences</a>.</p>
+            <p>You can change your preferences anytime by signing in to your account and visiting <a class="u-underline" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayEmailPrefsForm(false, None).url, idRequest)">Email Preferences</a>.</p>
         </div>
         <aside class="identity-forms-message__body">
-            <a class="manage-account__button manage-account__button--center manage-account__button--main" href="@LinkTo(returnUrl)">Continue</a>
+            <a class="manage-account__button manage-account__button--main" href="@LinkTo(returnUrl)">
+                Continue
+                @fragments.inlineSvg("arrow-right", "icon")
+            </a>
         </aside>
     </section>
 </div>
