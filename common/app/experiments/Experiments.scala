@@ -22,7 +22,7 @@ object ActiveExperiments extends ExperimentsDefinition {
 object CommercialClientLogging extends Experiment(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
-  owners = Seq(Owner.withGithub("rich-nguyen")),
+  owners = Owner.group(SwitchGroup.Commercial),
   sellByDate = new LocalDate(2018, 2, 28),
   participationGroup = Perc1A
 )
