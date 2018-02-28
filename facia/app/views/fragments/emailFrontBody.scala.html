@@ -106,7 +106,7 @@
         case layoutStyle: EmailFaciaCard => {
             @card.cardStyle match {
                 case ExternalLink => {
-                    @faciaCardWithoutTrailText(
+                    @faciaCardWithTrailText(
                         card = card,
                         withImage = layoutStyle.image,
                         largeHeadline = false,
