@@ -28,12 +28,8 @@ self.addEventListener('message', function onMessage(evt) {
 </script>
 */
 
-const findAdvert = (adSlot: HTMLElement): any => {
-    const thing = dfpEnv.adverts.find( (advert: Advert) =>
-        advert.node.isSameNode(adSlot)
-    );
-    return thing;
-};
+const findAdvert = (adSlot: HTMLElement): any =>
+    dfpEnv.adverts.find((advert: Advert) => advert.node.isSameNode(adSlot));
 
 const init = (register: RegisterListeners) => {
     register('disable-refresh', (specs, ret, iframe) => {
