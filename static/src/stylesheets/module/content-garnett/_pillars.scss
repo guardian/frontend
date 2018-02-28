@@ -315,7 +315,8 @@
 
 .content--pillar-lifestyle.content--type-comment:not(.paid-content),
 .content--pillar-lifestyle.content--type-guardianview:not(.paid-content),
-.content--pillar-lifestyle:not(.paid-content) {
+.content--pillar-lifestyle:not(.paid-content),
+.content__labels--crossword {
     @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
 }
 
