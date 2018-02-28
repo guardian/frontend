@@ -3,11 +3,10 @@
         @supports (display: grid) {
             @include mq(leftCol) {
                 grid-template-areas:
-                'main-media main-media'
-                'content-labels content-headline'
+                'media-primary media-primary'
+                'series-tab content-headline'
                 '. content-standfirst';
                 grid-template-columns: auto (gs-span(8) + $gs-gutter / 2);
-                grid-template-rows: auto;
             }
 
             @include mq(wide) {
@@ -25,7 +24,7 @@
         }
 
         @include mq(leftCol) {
-            grid-area: main-media;
+            grid-area: media-primary;
             margin-bottom: -70px;
             // TODO this should be done in a more intelligent way
             max-height: 460px;
@@ -46,14 +45,19 @@
         }
 
         @include mq(leftCol) {
-            grid-area: content-labels;
-            margin: 0;
+            grid-area: series-tab;
+            margin-right: 0;
             padding: ($gs-baseline / 2) ($gs-gutter / 2) ($gs-baseline * 4);
-            width: gs-span(2) + $gs-gutter / 2;
+
+            @supports (display: grid) {
+                width: gs-span(2) + $gs-gutter / 2;
+            }
         }
 
         @include mq(wide) {
-            width: gs-span(3) + $gs-gutter / 2;
+            @supports (display: grid) {
+                width: gs-span(3) + $gs-gutter / 2;
+            }
         }
     }
 
@@ -78,10 +82,13 @@
         }
 
         @include mq(leftCol) {
-            border-left: 1px solid #ffffff;
             border-top: 0;
             grid-area: content-headline;
             max-width: gs-span(8) + ($gs-gutter / 2);
+
+            @supports (display: grid) {
+                border-left: 1px solid #ffffff;
+            }
         }
 
         .stars {
@@ -96,9 +103,16 @@
             order: 4 !important;
         }
 
+        @include mq(tablet) {
+            padding-bottom: $gs-baseline * 2;
+        }
+
         @include mq(leftCol) {
-            grid-area: content-standfirst;
-            padding: 0 ($gs-gutter / 2) ($gs-baseline * 2);
+            @supports (display: grid) {
+                grid-area: content-standfirst;
+                padding-left: $gs-gutter / 2;
+                padding-right: $gs-gutter / 2;
+            }
         }
     }
 

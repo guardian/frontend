@@ -7,7 +7,7 @@
 <div class="@RenderClasses(Map(
         "content__labels--gallery" -> item.content.isGallery,
         "content__labels--paidgallery" -> (item.content.isGallery && item.content.isPaidContent),
-        "content__labels--not-immersive" -> (!item.content.isImmersive && !item.content.isColumn),
+        "content__labels--not-immersive" -> !item.content.isImmersive,
         "content__labels--column" -> item.content.isColumn
     ), "content__labels")
 ">
