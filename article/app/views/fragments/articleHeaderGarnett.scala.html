@@ -18,9 +18,23 @@
 
             <div class="u-cf">
 
+                @if((article.tags.isInterview)){
+                    <div class="content__label-interview">Interview</div>
+                }
+
                 <h1 class="content__headline" itemprop="headline" @langAttributes(article.content)>
-                @Html(article.trail.headline)
+                    @if(article.tags.isInterview) {
+                        <span class="content__headline--interview-wrapper">@Html(article.trail.headline)</span>
+                    } else {
+                        @Html(article.trail.headline)
+                    }
                 </h1>
+
+                @if(article.tags.isInterview) {
+                    @article.trail.byline.map { text =>
+                        <span class="content__headline--byline-interview">By @ContributorLinks(text, article.tags.contributors)</span>
+                    }
+                }
             </div>
         </div>
     </div>
@@ -33,10 +47,23 @@
 
             <div class="u-cf">
 
+                @if((article.tags.isInterview)){
+                    <div class="content__label-interview">Interview</div>
+                }
+
                 <h1 class="content__headline @if(article.content.starRating && !article.elements.hasShowcaseMainElement) {content__headline--no-margin-bottom}" itemprop="headline" @langAttributes(article.content)>
-                    @Html(article.trail.headline)
+                    @if(article.tags.isInterview) {
+                        <span class="content__headline--interview-wrapper">@Html(article.trail.headline)</span>
+                    } else {
+                        @Html(article.trail.headline)
+                    }
                 </h1>
 
+                @if(article.tags.isInterview) {
+                    @article.trail.byline.map { text =>
+                        <span class="content__headline--byline-interview">By @ContributorLinks(text, article.tags.contributors)</span>
+                    }
+                }
                 @if(article.content.hasTonalHeaderIllustration) {
                     <span class="content__head__illustration hide-on-mobile">@fragments.inlineSvg("illustration-letters", "icon")</span>
                 }

@@ -670,6 +670,7 @@ final case class Tags(
   lazy val isLiveBlog: Boolean = tones.exists(t => Tags.liveMappings.contains(t.id))
   lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
   lazy val isFeature = tones.exists(t => Tags.featureMappings.contains(t.id))
+  lazy val isInterview = tones.exists(t => Tags.interviewMappings.contains(t.id))
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
   lazy val isMedia = types.exists(t => Tags.mediaTypes.contains(t.id))
   lazy val isAnalysis = tones.exists(_.id == Tags.Analysis)
@@ -761,13 +762,16 @@ object Tags {
   val featureMappings = Seq(
     "tone/features",
     "tone/recipes",
-    "tone/interview",
     "tone/performances",
     "tone/extract",
     "tone/reviews",
     "tone/albumreview",
     "tone/livereview",
     "tone/childrens-user-reviews"
+  )
+
+  val interviewMappings = Seq(
+    "tone/interview"
   )
 
   val reviewMappings = Seq(
