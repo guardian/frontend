@@ -32,6 +32,7 @@ import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
 import { init as sendClick } from 'commercial/modules/messenger/click';
 import { init as background } from 'commercial/modules/messenger/background';
+import { init as disableRefresh } from 'commercial/modules/messenger/disable-refresh';
 
 initMessenger(
     type,
@@ -42,7 +43,8 @@ initMessenger(
     scroll,
     viewport,
     sendClick,
-    background
+    background,
+    disableRefresh
 );
 
 const setDfpListeners = (): void => {
