@@ -80,7 +80,8 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
             config.get('page.isFront') ||
             config.get('page.contentType') === 'LiveBlog';
 
-        advert.shouldRefresh = isNotFluid && neverHasVideo && !config.page.hasPageSkin;
+        advert.shouldRefresh =
+            isNotFluid && neverHasVideo && !config.page.hasPageSkin;
 
         renderAdvert(advert, event).then(emitRenderEvents);
     }
