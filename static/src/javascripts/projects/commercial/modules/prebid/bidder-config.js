@@ -70,16 +70,6 @@ const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
 const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
     contains(sizes, [728, 90]) || contains(sizes, [970, 250]);
 
-const getTestImprovePlacementId = (sizes: PrebidSize[]): number => {
-    if (containsMpuOrDmpu(sizes)) {
-        return 1116414;
-    }
-    if (containsLeaderboardOrBillboard(sizes)) {
-        return 1116415;
-    }
-    return -1;
-};
-
 const getImprovePlacementId = (sizes: PrebidSize[]): number => {
     switch (config.page.edition) {
         case 'UK':
@@ -252,9 +242,7 @@ export const trustXBidder: PrebidBidder = {
 export const improveDigitalBidder: PrebidBidder = {
     name: 'improvedigital',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidImproveParams => ({
-        placementId: config.switches.testImproveBidder
-            ? getTestImprovePlacementId(sizes)
-            : getImprovePlacementId(sizes),
+        placementId: getImprovePlacementId(sizes),
         size: getImproveSizeParam(slotId),
     }),
 };

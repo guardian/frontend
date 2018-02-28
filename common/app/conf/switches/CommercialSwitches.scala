@@ -376,14 +376,4 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
-
-  val testImproveBidder: Switch = Switch(
-    group = Commercial,
-    name = "test-improve-bidder",
-    description = "Test multi-size slots in Improve Digital Prebid adapter",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 14),
-    exposeClientSide = true
-  )
 }
