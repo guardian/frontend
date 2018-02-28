@@ -159,7 +159,8 @@
         order: 1;
 
         .tonal__head--tone-comment &,
-        .tonal__head--tone-editorial & {
+        .tonal__head--tone-editorial &,
+        .content__head--column & {
             order: 0;
         }
 

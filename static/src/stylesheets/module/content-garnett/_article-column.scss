@@ -1,4 +1,5 @@
-.content--type-column {
+// I hate this specificty. So far this is the only way I can see to override template specific rules with multiple declared classes
+.content.content--article.content--type-column {
     .content__head--article {
         @supports (display: grid) {
             @include mq(leftCol) {
@@ -40,10 +41,6 @@
             padding-left: $gs-gutter;
         }
 
-        @include mq($until: tablet) {
-            order: 1 !important;
-        }
-
         @include mq(leftCol) {
             grid-area: series-tab;
             margin-right: 0;
@@ -73,18 +70,15 @@
             padding-left: $gs-gutter;
         }
 
-        @include mq($from:phablet, $until: tablet) {
+        @include mq($from: phablet, $until: tablet) {
             margin-left: $gs-gutter;
-        }
-
-        @include mq($until: tablet) {
-            order: 2 !important;
         }
 
         @include mq(leftCol) {
             border-top: 0;
             grid-area: content-headline;
             max-width: gs-span(8) + ($gs-gutter / 2);
+            padding-bottom: $gs-baseline * 4;
 
             @supports (display: grid) {
                 border-left: 1px solid #ffffff;
@@ -92,6 +86,14 @@
         }
 
         .stars {
+            @include mq($until: phablet) {
+                margin-left: -$gs-gutter / 2;
+
+                @include mq(mobileLandscape) {
+                    margin-left: -$gs-gutter;
+                }
+            }
+
             bottom: 0;
             margin-bottom: 0;
             position: absolute;
@@ -99,10 +101,6 @@
     }
 
     .content__headline-standfirst-wrapper {
-        @include mq($until: tablet) {
-            order: 4 !important;
-        }
-
         @include mq(tablet) {
             padding-bottom: $gs-baseline * 2;
         }
@@ -128,14 +126,18 @@
     }
 
     .content__headline--column {
-        color: #ffffff !important;
+        color: #ffffff;
         padding: 0;
     }
 
     .content__series-label--column {
         .content__series-label__link {
-            color: #ffffff !important; //TODO lose this
+            color: #ffffff;
             font-weight: 700;
+
+            @include mq(leftCol) {
+                font-size: 22px;
+            }
         }
     }
 
@@ -162,6 +164,30 @@
         .content__labels--column:hover {
             background-color: $opinion-garnett-feature;
         }
+
+        // Opinion layout with byline pic
+        .content__head--byline-pic {
+            .content__headline-column-wrapper--column {
+                padding-bottom: $gs-baseline * 3;
+            }
+
+            .content__header {
+                min-height: $gs-baseline * 12;
+
+                @include mq(leftCol) {
+                    padding-right: gs-span(2);
+                }
+            }
+
+            .byline-img {
+                margin-bottom: -$gs-baseline * 3;
+
+                @include mq(leftCol) {
+                    right: -30px;
+                    position: absolute;
+                }
+            }
+        }
     }
 
     // Article content
@@ -171,26 +197,6 @@
             border-top: 1px solid $garnett-neutral-4;
             margin-top: -1px;
             padding-top: $gs-baseline / 4;
-        }
-    }
-}
-
-// Opinion layout with byline pic
-.content__head--column.content__head--byline-pic {
-    .content__header {
-        min-height: $gs-baseline * 12;
-
-        @include mq(leftCol) {
-            padding-right: gs-span(2);
-        }
-    }
-
-    .byline-img {
-        margin-bottom: -$gs-baseline * 3;
-
-        @include mq(leftCol) {
-            right: -30px;
-            position: absolute;
         }
     }
 }
