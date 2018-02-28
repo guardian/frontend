@@ -14,6 +14,7 @@ import {
     sonobiBidder,
     trustXBidder,
 } from 'commercial/modules/prebid/bidder-config';
+import { priceGranularity } from 'commercial/modules/prebid/price-config';
 import type {
     PrebidAdSlotCriteria,
     PrebidBid,
@@ -156,7 +157,8 @@ class PrebidService {
             },
         };
         window.pbjs.setConfig({
-            priceGranularity: 'auto',
+            bidderTimeout,
+            priceGranularity,
         });
     }
 
@@ -181,7 +183,6 @@ class PrebidService {
                         window.pbjs.que.push(() => {
                             window.pbjs.requestBids({
                                 adUnits: [adUnit],
-                                timeout: bidderTimeout,
                                 bidsBackHandler() {
                                     window.pbjs.setTargetingForGPTAsync([
                                         adUnit.code,

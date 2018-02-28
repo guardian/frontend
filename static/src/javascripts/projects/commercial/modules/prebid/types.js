@@ -61,3 +61,14 @@ export type PrebidAdSlotCriteria = {
 export type PrebidBidderCriteria = {
     [bidder: string]: PrebidAdSlotCriteria[],
 };
+
+export type PrebidPriceBucket = {
+    precision?: number,
+    min: number,
+    max: number,
+    increment: number,
+};
+
+export type PrebidPriceGranularity = {
+    buckets: PrebidPriceBucket[],
+};
