@@ -22,8 +22,7 @@
 
         @include mq($until: mobileLandscape) {
             height: 300px;
-            height: 90vw;
-            background-color: pink;
+            height: 90vw; // sass-lint:no-duplicate-properties
             width: auto;
 
             .u-responsive-ratio {
@@ -32,7 +31,7 @@
 
             img {
                 height: 300px;
-                height: 90vw;
+                height: 90vw; // sass-lint:no-duplicate-properties 
                 object-fit: cover;
             }
         }
