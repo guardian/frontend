@@ -24,8 +24,7 @@
             "has-feature-showcase-element" -> (article.tags.isFeature && !article.tags.isComment && article.elements.hasShowcaseMainElement && !article.content.isColumn),
             "has-feature-showcase-opinion" -> (article.tags.isComment && article.elements.hasShowcaseMainElement && !article.content.isColumn),
             "content--type-column" -> article.content.isColumn,
-            "paid-content" -> isPaidContent,
-            "paid-content--white" -> (isPaidContent && ActiveExperiments.isParticipating(CommercialPaidContentTemplate))
+            "paid-content" -> isPaidContent
         ),
             "content",
             "content--article",
