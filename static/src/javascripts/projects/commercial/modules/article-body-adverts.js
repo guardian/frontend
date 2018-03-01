@@ -136,8 +136,7 @@ const getRules = (): Object => {
     };
 };
 
-const addInlineAds = (): Promise<number> =>
-    addArticleAds(1, getRules()).then(() => addArticleAds(9, getRules()));
+const addInlineAds = (): Promise<number> => addArticleAds(10, getRules());
 
 const getInlineMerchRules = (): Object => {
     const inlineMerchRules: Object = getRules();
