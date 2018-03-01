@@ -171,8 +171,10 @@ const addInlineMerchAd = (): Promise<any> =>
 const waitForMerch = (countAdded: number): Promise<void> =>
     countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
 
-export const init = (): Promise<boolean> => {
+export const init = (start: () => void, stop: () => void): Promise<boolean> => {
+    start();
     if (!commercialFeatures.articleBodyAdverts) {
+        stop();
         return Promise.resolve(false);
     }
 
@@ -190,11 +192,15 @@ export const init = (): Promise<boolean> => {
         // we must wait for DFP to return, since if the merch
         // component is empty, it might completely change the
         // positions where we insert those MPUs.
-        im.then(waitForMerch).then(addInlineAds);
+        im.then(waitForMerch)
+            .then(addInlineAds)
+            .then(stop);
+
         return im;
     }
 
-    addInlineAds();
+    addInlineAds()
+        .then(stop);
     return Promise.resolve(true);
 };
 
