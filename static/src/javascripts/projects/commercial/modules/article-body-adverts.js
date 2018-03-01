@@ -20,9 +20,9 @@ type AdSize = {
 /* bodyAds is a counter that keeps track of the number of inline MPUs
  * inserted dynamically. */
 let bodyAds: number;
-let replaceTopSlot: boolean;
-let getSlotName: () => string;
-let getSlotType: () => string;
+const replaceTopSlot: boolean = isBreakpoint({
+    max: 'phablet',
+});
 
 const getSlotNameForMobile = (): string =>
     bodyAds === 1 ? 'top-above-nav' : `inline${bodyAds - 1}`;
@@ -33,6 +33,9 @@ const getSlotTypeForMobile = (): string =>
     bodyAds === 1 ? 'top-above-nav' : 'inline';
 
 const getSlotTypeForDesktop = (): string => 'inline';
+
+const getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
+const getSlotType = replaceTopSlot ? getSlotTypeForMobile : getSlotTypeForDesktop;
 
 type Sizes = { desktop: Array<AdSize> };
 
@@ -179,11 +182,6 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     }
 
     bodyAds = 0;
-    replaceTopSlot = isBreakpoint({
-        max: 'phablet',
-    });
-    getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
-    getSlotType = replaceTopSlot ? getSlotTypeForMobile : getSlotTypeForDesktop;
 
     if (config.page.hasInlineMerchandise) {
         const im = addInlineMerchAd();
