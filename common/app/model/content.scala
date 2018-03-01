@@ -78,7 +78,7 @@ final case class Content(
   lazy val discussionId = Some(shortUrlId)
   lazy val isGallery = metadata.contentType.contains(DotcomContentType.Gallery)
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
-  lazy val isColumn = true
+  lazy val isColumn = fields.displayHint.contains("column")
   lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
