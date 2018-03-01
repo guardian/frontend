@@ -21,18 +21,17 @@
         margin-bottom: -46px;
 
         @include mq($until: mobileLandscape) {
-            height: 300px;
-            height: 90vw; // sass-lint:no-duplicate-properties
-            width: auto;
+            @supports (object-fit: cover) and (height: 1vh) {
+                height: 90vw;
 
-            .u-responsive-ratio {
-                position: unset;
-            }
+                .u-responsive-ratio {
+                    position: unset;
+                }
 
-            img {
-                height: 300px;
-                height: 90vw; // sass-lint:no-duplicate-properties 
-                object-fit: cover;
+                img {
+                    height: 90vw;
+                    object-fit: cover;
+                }
             }
         }
 
