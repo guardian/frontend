@@ -67,17 +67,11 @@
 
 
 @faciaCardExternal(card: ContentCard, withImage: Boolean, isBranded: Boolean) = {
-    @imgFromCard(card).filter(_ => withImage).fold {
-        @faciaCard(classesForCard(card), isBranded) {
-            @headline(card, isLast = true)
+    @faciaCard(classesForCard(card), isBranded) {
+        @if(withImage) {
+            @row(Seq("no-pad")){@imgFromCard(card)}
         }
-    } { img =>
-        @faciaCard(classesForCard(card), isBranded) {
-            <tr valign="top">
-                @row(Seq("no-pad")){@img}
-                @headline(card, isLast = true)
-            </tr>
-        }
+        @headline(card, isLast = true)
     }
 }
 
