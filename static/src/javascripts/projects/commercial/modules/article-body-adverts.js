@@ -132,23 +132,9 @@ const getRules = (): Object => {
     };
 };
 
-const getLongArticleRules = (): Object => {
-    const longArticleRules: Object = getRules();
-    const viewportHeight: number = getViewport().height;
-    longArticleRules.selectors[' .ad-slot'].minAbove = viewportHeight;
-    longArticleRules.selectors[' .ad-slot'].minBelow = viewportHeight;
-    return longArticleRules;
-};
-
 const addInlineAds = (): Promise<number> =>
-    addArticleAds(2, getRules()).then((countAdded: number) => {
-        if (countAdded === 2) {
-            return addArticleAds(8, getLongArticleRules()).then(
-                innerCountAdded => 2 + innerCountAdded
-            );
-        }
-        return countAdded;
-    });
+    addArticleAds(1, getRules())
+        .then( () => addArticleAds(9, getRules()));
 
 const getInlineMerchRules = (): Object => {
     const inlineMerchRules: Object = getRules();
