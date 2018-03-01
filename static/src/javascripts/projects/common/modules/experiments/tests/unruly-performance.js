@@ -3,7 +3,7 @@
 export const unrulyPerformanceTest: ABTest = {
     id: 'UnrulyPerformanceTest',
     start: '2017-11-10',
-    expiry: '2018-02-28',
+    expiry: '2018-03-15',
     author: 'Francis Carr',
     description:
         'This test removes 5% of users from Unruly to measure performance impact',
