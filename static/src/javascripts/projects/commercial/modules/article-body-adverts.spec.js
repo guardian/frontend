@@ -150,26 +150,6 @@ describe('Article Body Adverts', () => {
                     expect(countAdded).toEqual(10);
                 });
             });
-
-            it('inserts the third+ adverts with greater vertical spacing', () =>
-                // We do not want the same ad-density on long-read
-                // articles that we have on shorter pieces
-                init().then(() => {
-                    expect(spaceFillerStub).toHaveBeenCalledTimes(2);
-                    const longArticleInsertCalls = spaceFillerStub.mock.calls.slice(
-                        2
-                    );
-                    const longArticleInsertRules = longArticleInsertCalls.map(
-                        call => call[0]
-                    );
-                    longArticleInsertRules.forEach(ruleset => {
-                        const adSlotSpacing = ruleset.selectors[' .ad-slot'];
-                        expect(adSlotSpacing).toEqual({
-                            minAbove: 1300,
-                            minBelow: 1300,
-                        });
-                    });
-                }));
         });
 
         describe('Spacefinder rules', () => {
