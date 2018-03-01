@@ -31,6 +31,10 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 
 # Local dev server setup
 
+**Hello there!** 👋 After completing this setup guide, we would greatly appreciate it if you could complete our [Frontend Setup 
+Questionnaire](https://docs.google.com/forms/d/e/1FAIpQLSc6CVY0z-cGm2_Jm7gKkWbZ3yIlK0FaKPJZO3jAjxsZNSc5oQ/viewform?c=0&w=1).
+It should only take 3 minutes and wil help us improve this documentation and the setup process in the future.
+
 Before checking out the repository you may need to add your guardian email address to your github account and [add an
 SSH key to your GitHub account](https://help.github.com/articles/generating-ssh-keys/). Before pushing changes you may
 need to [create an access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/).
@@ -209,6 +213,10 @@ To create project files for use in IntelliJ, you need to make sure you install t
 Then load IntelliJ, then click Import project and import the directory as an SBT project. Default settings are fine, except you need to make sure you choose JDK 1.8 (under JVM - Custom) otherwise it won't import correctly - You can find the location by pasting `/usr/libexec/java_home` into your terminal.
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
+
+**Before you go:** We would greatly appreciate it if you could complete our [Frontend Setup 
+Questionnaire](https://docs.google.com/forms/d/e/1FAIpQLSc6CVY0z-cGm2_Jm7gKkWbZ3yIlK0FaKPJZO3jAjxsZNSc5oQ/viewform?c=0&w=1).
+It should only take 3 minutes and wil help us improve this documentation and the setup process in the future. Thank you! 🙏
 
 # Optional steps
 
