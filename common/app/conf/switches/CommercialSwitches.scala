@@ -320,7 +320,17 @@ trait CommercialSwitches {
   val OrielFullIntegration: Switch = Switch(
     group = Commercial,
     name = "oriel-full-integration",
-    description = "Include the ESI tag dropped at the start of <head> for full Oriel integration",
+    description = "Include a tag dropped at the start of <head> for full Oriel integration",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 6, 28),
+    exposeClientSide = false
+  )
+
+  val LotameScriptTag: Switch = Switch(
+    group = Commercial,
+    name = "lotame-script-tag",
+    description = "Include the Lotame script tag in the head of the page",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = new LocalDate(2018, 6, 28),

@@ -67,3 +67,11 @@ object GdprOptinAlert extends Experiment(
 ) {
   override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || IdentityShowOptInEngagementBanner.isSwitchedOn
 }
+
+object LotameParticipation extends Experiment(
+  name = "lotame-participation",
+  description = "A slice of the audience who will participate in Lotame tracking",
+  owners = Seq(Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2018, 6, 28),
+  participationGroup = Perc1D
+)
