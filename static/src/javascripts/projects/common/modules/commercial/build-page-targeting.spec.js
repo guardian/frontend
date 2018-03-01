@@ -75,6 +75,7 @@ describe('Build Page Targeting', () => {
                 tn: ['news'],
                 url: '/football/series/footballweekly',
             },
+            isSensitive: false,
         };
 
         config.ophan = {
@@ -113,6 +114,7 @@ describe('Build Page Targeting', () => {
     it('should build correct page targeting', () => {
         const pageTargeting = buildPageTargeting();
 
+        expect(pageTargeting.sens).toBe('f');
         expect(pageTargeting.edition).toBe('us');
         expect(pageTargeting.ct).toBe('video');
         expect(pageTargeting.p).toBe('ng');
@@ -184,6 +186,7 @@ describe('Build Page Targeting', () => {
         getKruxSegments.mockReturnValue([]);
 
         expect(buildPageTargeting()).toEqual({
+            sens: 'f',
             bp: 'mobile',
             at: 'ng101',
             si: 't',
