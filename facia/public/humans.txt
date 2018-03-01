@@ -8,10 +8,6 @@ Development Manager: Mark Butler
 Twitter: @mark_j_butler
 Location: London, UK
 
-Engineer: Richard Nguyen
-Twitter: @Sherbet_Noin
-From: London, UK
-
 Design human: Zef Cherry-Kynaston
 Twitter: @zeftilldeath
 From: Wales, UK
@@ -308,3 +304,7 @@ Twitter: @philwills
 Developer: Gustav Pursche
 Twitter: @jibcollective
 Website: jib-collective.net
+
+Engineer: Richard Nguyen
+Twitter: @Sherbet_Noin
+From: Cambridge, UK
