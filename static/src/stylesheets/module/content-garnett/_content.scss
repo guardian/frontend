@@ -1069,6 +1069,8 @@
             // adds enough space so that this doesn't clash with the content labels if css gris is not supported
             top: gs-height(3);
 
+            position: static !important;
+
             @supports (display: grid) {
                 grid-area: meta;
                 position: relative !important;
