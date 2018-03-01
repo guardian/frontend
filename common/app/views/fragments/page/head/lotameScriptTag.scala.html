@@ -1,0 +1,9 @@
+@()(implicit request: RequestHeader)
+
+@import experiments.{ ActiveExperiments, LotameParticipation }
+
+@if(
+    ActiveExperiments.isParticipating(LotameParticipation)
+) {
+    <script src="//tags.crwdcntrl.net/c/<client_id>/cc_af.js"></script>
+}
