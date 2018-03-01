@@ -1,9 +1,15 @@
-@(charts: Seq[tools.Chart[java.time.LocalDate]], title: Option[String] = None, description: Option[Html] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
+@import java.time.LocalDateTime
+@import java.time.format.DateTimeFormatter.ofPattern
+@(charts: Seq[tools.Chart[java.time.LocalDate]], title: Option[String] = None, description: Option[Html] = None, lastUpdated: Option[LocalDateTime])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main(title.getOrElse("Dashboard"), isAuthed = true, hasCharts = true) {
 
     @title.map{ t =>
         <h3>@t</h3>
+    }
+
+    @lastUpdated.map{ updated =>
+        <p>Last updated @updated.format(ofPattern("d MMMM HH:mm"))</p>
     }
 
     @description.map { d =>
