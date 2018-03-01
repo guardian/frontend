@@ -66,6 +66,21 @@
 }
 
 
+@faciaCardExternal(card: ContentCard, withImage: Boolean, isBranded: Boolean) = {
+    @imgFromCard(card).filter(_ => withImage).fold {
+        @faciaCard(classesForCard(card), isBranded) {
+            @headline(card, isLast = true)
+        }
+    } { img =>
+        @faciaCard(classesForCard(card), isBranded) {
+            <tr valign="top">
+                @row(Seq("no-pad")){@img}
+                @headline(card, isLast = true)
+            </tr>
+        }
+    }
+}
+
 @faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean, isBranded: Boolean) = {
     @faciaCard(classesForCard(card, withImage), isBranded) {
         @if(withImage) {
@@ -106,10 +121,9 @@
         case layoutStyle: EmailFaciaCard => {
             @card.cardStyle match {
                 case ExternalLink => {
-                    @faciaCardWithTrailText(
+                    @faciaCardExternal(
                         card = card,
                         withImage = layoutStyle.image,
-                        largeHeadline = false,
                         isBranded = isBranded
                     )
                 }
