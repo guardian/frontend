@@ -23,27 +23,30 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
   def renderPrebidDashboard(): Action[AnyContent] = Action { implicit request =>
     case class DataPoint(date: LocalDate, bidderName: String, impressionCount: Int, eCpm: Double)
 
-    val dataPoints = (
+    val (dataPoints, lastUpdated) = (
       for {
         report <- CommercialDfpReporting.getCustomReport(CommercialDfpReporting.prebidBidderPerformance)
       } yield {
-        report.flatMap { row =>
-          val fields = row.fields
-          for {
-            date            <- fields.lift(0).map(LocalDate.parse(_))
-            customCriteria  <- fields.lift(1)
-            impressionCount <- fields.lift(3).map(_.toInt)
-            eCpm            <- fields.lift(4).map(_.toDouble / 1000000.0d) // convert DFP micropounds to pounds
-          } yield
-            DataPoint(
-              date = date,
-              bidderName = customCriteria.stripPrefix("hb_bidder="),
-              impressionCount = impressionCount,
-              eCpm = eCpm
-            )
-        }
+        (
+          report.rows.flatMap { row =>
+            val fields = row.fields
+            for {
+              date            <- fields.lift(0).map(LocalDate.parse(_))
+              customCriteria  <- fields.lift(1)
+              impressionCount <- fields.lift(3).map(_.toInt)
+              eCpm            <- fields.lift(4).map(_.toDouble / 1000000.0d) // convert DFP micropounds to pounds
+            } yield
+              DataPoint(
+                date = date,
+                bidderName = customCriteria.stripPrefix("hb_bidder="),
+                impressionCount = impressionCount,
+                eCpm = eCpm
+              )
+          },
+          Some(report.lastUpdated)
+        )
       }
-    ).getOrElse(Nil)
+    ).getOrElse((Nil, None))
 
     trait BidPerformanceChart extends Chart[LocalDate] {
       def formatRowKey(key: LocalDate): String =
@@ -109,7 +112,8 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
         description = Some(Html(
           """NB: Today's figures update every 30 minutes.<br \>
              So <b>the cumulative figures for today</b> may initially appear to be falling off a cliff, but they <b>will increase</b> as the day goes on."""
-        ))
+        )),
+        lastUpdated = lastUpdated
       )))
   }
 }
