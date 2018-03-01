@@ -1,6 +1,6 @@
 // @flow
 import config from 'lib/config';
-import { isBreakpoint, getBreakpoint, getViewport } from 'lib/detect';
+import { isBreakpoint, getBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import type { SpacefinderItem } from 'common/modules/spacefinder';
 import { spaceFiller } from 'common/modules/article/space-filler';
@@ -34,8 +34,12 @@ const getSlotTypeForMobile = (): string =>
 
 const getSlotTypeForDesktop = (): string => 'inline';
 
-const getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
-const getSlotType = replaceTopSlot ? getSlotTypeForMobile : getSlotTypeForDesktop;
+const getSlotName = replaceTopSlot
+    ? getSlotNameForMobile
+    : getSlotNameForDesktop;
+const getSlotType = replaceTopSlot
+    ? getSlotTypeForMobile
+    : getSlotTypeForDesktop;
 
 type Sizes = { desktop: Array<AdSize> };
 
@@ -133,8 +137,7 @@ const getRules = (): Object => {
 };
 
 const addInlineAds = (): Promise<number> =>
-    addArticleAds(1, getRules())
-        .then( () => addArticleAds(9, getRules()));
+    addArticleAds(1, getRules()).then(() => addArticleAds(9, getRules()));
 
 const getInlineMerchRules = (): Object => {
     const inlineMerchRules: Object = getRules();
@@ -176,15 +179,15 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
         // we must wait for DFP to return, since if the merch
         // component is empty, it might completely change the
         // positions where we insert those MPUs.
-        im.then(waitForMerch)
+        im
+            .then(waitForMerch)
             .then(addInlineAds)
             .then(stop);
 
         return im;
     }
 
-    addInlineAds()
-        .then(stop);
+    addInlineAds().then(stop);
     return Promise.resolve(true);
 };
 
