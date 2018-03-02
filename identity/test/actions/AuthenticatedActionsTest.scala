@@ -69,7 +69,6 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
       when(client.me(any[Auth])).thenReturn(Future(Right(user)))
       when(mockFunc.apply(1)) thenReturn mock[Result]
-      Switches.IdentityPointToConsentJourneyPage.switchOn()
       when(profileRedirectService.toProfileRedirect(any[User], any[RequestHeader])).thenReturn(Future(NoRedirect))
 
       val result = actions.manageAccountRedirectAction(originalUrl).apply(callMock)(request)

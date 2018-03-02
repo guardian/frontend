@@ -471,7 +471,7 @@ import scala.concurrent.Future
           .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
 
         val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
+        status(result) should be(303)
         contentAsString(result) should not include (EmailNewsletters.guardianTodayUk.name)
       }
       "display Guardian Today UK newsletter" in new EditProfileFixture {
