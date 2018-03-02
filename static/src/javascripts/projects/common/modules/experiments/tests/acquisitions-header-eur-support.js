@@ -32,7 +32,7 @@ const modifySupportTheGuardianLink = (variant: variantName): void => {
             );
 
             supportTheGuardianLink.href = supportTheGuardianUrlWithTestData.toString();
-    });
+        });
 };
 
 export const acquisitionsHeaderEURSupport: AcquisitionsABTest = {
