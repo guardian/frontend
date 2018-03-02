@@ -333,7 +333,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 1),
+    sellByDate = new LocalDate(2018, 3, 16),
     exposeClientSide = false
    )
 
