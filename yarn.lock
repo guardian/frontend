@@ -7199,9 +7199,9 @@ postcss@^6.0.16:
     source-map "^0.6.1"
     supports-color "^5.1.0"
 
-"prebid.js@https://github.com/guardian/Prebid.js.git#aa1a425":
+"prebid.js@https://github.com/guardian/Prebid.js.git#628ea9f":
   version "0.34.1"
-  resolved "https://github.com/guardian/Prebid.js.git#aa1a42543a5bdea15dfed57e62db60169f405a85"
+  resolved "https://github.com/guardian/Prebid.js.git#628ea9f1939ac58e599ce9ab9881bafe9a917f40"
   dependencies:
     babel-plugin-transform-object-assign "^6.22.0"
     core-js "^2.4.1"

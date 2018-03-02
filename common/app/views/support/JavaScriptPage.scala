@@ -49,7 +49,8 @@ object JavaScriptPage {
         if (prebidSwitch.isSwitchedOn) JsString("prebid")
         else if (sonobiSwitch.isSwitchedOn) JsString("sonobi")
         else JsString("none")
-      }
+      },
+      "isSensitive" -> JsBoolean(page.metadata.sensitive)
     ) ++ sponsorshipType
 
     val readerRevenueMetaData = Map(

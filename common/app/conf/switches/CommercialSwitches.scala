@@ -171,7 +171,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-jobs-feed-fetch",
     "If this switch is on, jobs feed will be periodically updated from external source.",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
+    owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -181,7 +181,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-jobs-feed-parse",
     "If this switch is on, commercial components will be fed by jobs feed.",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
+    owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -301,7 +301,7 @@ trait CommercialSwitches {
     group = Commercial,
     name = "sonobi-header-bidding",
     description = "Turn on Sonobi header bidding",
-    owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+    owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false

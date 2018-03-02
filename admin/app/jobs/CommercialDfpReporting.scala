@@ -1,6 +1,6 @@
 package jobs
 
-import java.time.LocalDate
+import java.time.{LocalDate, LocalDateTime}
 
 import app.LifecycleComponent
 import com.google.api.ads.dfp.axis.v201802.Column.{AD_SERVER_IMPRESSIONS, AD_SERVER_WITHOUT_CPD_AVERAGE_ECPM}
@@ -14,14 +14,16 @@ import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object CommercialDfpReporting {
+object CommercialDfpReporting extends Logging {
 
   case class DfpReportRow(value: String) {
     val fields = value.split(",").toSeq
   }
 
+  case class DfpReport(rows: Seq[DfpReportRow], lastUpdated: LocalDateTime)
+
   private val dfpReports = Box[Map[Long, Seq[DfpReportRow]]](Map.empty)
-  private val dfpCustomReports = Box[Map[String, Seq[DfpReportRow]]](Map.empty)
+  private val dfpCustomReports = Box[Map[String, DfpReport]](Map.empty)
 
   val teamKPIReport = "All ab-test impressions and CPM"
   val prebidBidderPerformance = "Prebid Bidder Performance"
@@ -60,15 +62,24 @@ object CommercialDfpReporting {
       }
     }
 
-    dfpCustomReports.send(curr =>
-      curr + {
+    dfpCustomReports.send { prev =>
+      val curr = prev + {
         prebidBidderPerformance ->
-          dfpApi.runReportJob(prebidBidderPerformanceQry).filter(_.contains("hb_bidder=")).map(DfpReportRow)
-    })
+          DfpReport(
+            rows = dfpApi.runReportJob(prebidBidderPerformanceQry).filter(_.contains("hb_bidder=")).map(DfpReportRow),
+            lastUpdated = LocalDateTime.now
+          )
+      }
+      curr foreach {
+        case (key, report) =>
+          log.info(s"Updated report '$key' with ${report.rows.size} rows")
+      }
+      curr
+    }
   }
 
   def getReport(reportId: Long): Option[Seq[DfpReportRow]] = dfpReports.get().get(reportId)
-  def getCustomReport(reportName: String): Option[Seq[DfpReportRow]] = dfpCustomReports.get().get(reportName)
+  def getCustomReport(reportName: String): Option[DfpReport] = dfpCustomReports.get().get(reportName)
 }
 
 class CommercialDfpReportingLifecycle(

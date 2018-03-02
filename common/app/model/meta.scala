@@ -197,7 +197,8 @@ object MetaData {
         else CacheTime.NotRecentlyUpdated
       },
       isHosted = apiContent.isHosted,
-      commercial = Some(CommercialProperties.fromContent(apiContent))
+      commercial = Some(CommercialProperties.fromContent(apiContent)),
+      sensitive = fields.sensitive.getOrElse(false)
     )
   }
 }
@@ -234,7 +235,8 @@ final case class MetaData (
   twitterPropertiesOverrides: Map[String, String] = Map(),
   contentWithSlimHeader: Boolean = false,
   commercial: Option[CommercialProperties],
-  isNewRecipeDesign: Boolean = false
+  isNewRecipeDesign: Boolean = false,
+  sensitive: Boolean = false
 ){
   val sectionId = section map (_.value) getOrElse ""
   private val fullAdUnitPath = AdUnitMaker.make(id, adUnitSuffix)

@@ -44,6 +44,7 @@ class Advert {
     isRendering: boolean;
     isLoaded: boolean;
     isRendered: boolean;
+    shouldRefresh: boolean;
     whenLoaded: Promise<boolean>;
     whenLoadedResolver: Resolver;
     whenRendered: Promise<boolean>;
@@ -83,6 +84,7 @@ class Advert {
             loadingMethod: null,
             lazyWaitComplete: null,
         };
+        this.shouldRefresh = false;
 
         this.whenLoaded = new Promise(resolve => {
             this.whenLoadedResolver = resolve;

@@ -6,7 +6,6 @@
 @import views.support.RenderClasses
 @import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.TrailCssClasses.toneClass
-@import experiments._
 @import _root_.model.ContentDesignType.RichContentDesignType
 
 @defining((model.article, isPaidContent(model))) { case (article, isPaidContent) =>
@@ -14,8 +13,7 @@
         <article id="article" data-test-id="article-root"
 
             class="@RenderClasses(Map(
-                "paid-content" -> isPaidContent,
-                "paid-content--white" -> (isPaidContent && ActiveExperiments.isParticipating(CommercialPaidContentTemplate))
+                "paid-content" -> isPaidContent
             ),
                 "content",
                 "content--article",

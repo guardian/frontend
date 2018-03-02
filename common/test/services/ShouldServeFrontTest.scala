@@ -69,7 +69,8 @@ class ShouldServeFrontTest
         excludeFromRss = None,
         showTimestamps = None,
         hideShowMore = None,
-        displayHints = None
+        displayHints = None,
+        platform = None
       )
     )
   )

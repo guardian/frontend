@@ -730,10 +730,6 @@
         }
     }
 
-    &.paid-content--white.content--article {
-        background-color: $paid-article-variant;
-    }
-
     &.content {
         border-top: 0;
     }
@@ -742,7 +738,7 @@
         padding-top: $gs-baseline;
     }
 
-    &:not(.paid-content--white) .content__header {
+    .content__header {
         background-color: $paid-article-header;
     }
 
@@ -791,8 +787,8 @@
         line-height: get-line-height(header, 1);
     }
 
-    &:not(.paid-content--white) .ad-slot__label,
-    &:not(.paid-content--white) .ad-slot--inline {
+    .ad-slot__label,
+    .ad-slot--inline {
         background-color: $paid-article-subheader;
         border-top: 0;
         color: $neutral-2-contrasted;
