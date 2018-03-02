@@ -8,6 +8,7 @@ import {
     getBreakpoint as getBreakpoint_,
     isBreakpoint as isBreakpoint_,
 } from 'lib/detect';
+import { noop } from 'lib/noop';
 
 const getViewport: any = getViewport_;
 const getBreakpoint: any = getBreakpoint_;
@@ -39,7 +40,7 @@ jest.mock('lib/config', () => ({ page: {} }));
 
 const spaceFillerStub: JestMockFn<*, *> = (spaceFiller.fillSpace: any);
 const getFirstRulesUsed = () =>
-    init().then(() => {
+    init(noop, noop).then(() => {
         const firstCall = spaceFillerStub.mock.calls[0];
         return firstCall[0];
     });
@@ -59,14 +60,14 @@ describe('Article Body Adverts', () => {
 
     it('should exit if commercial feature disabled', () => {
         commercialFeatures.articleBodyAdverts = false;
-        return init().then(executionResult => {
+        return init(noop, noop).then(executionResult => {
             expect(executionResult).toBe(false);
             expect(spaceFillerStub).not.toHaveBeenCalled();
         });
     });
 
     it('should call space-filler`s insertion method with the correct arguments', () =>
-        init().then(() => {
+        init(noop, noop).then(() => {
             expect(spaceFillerStub).toHaveBeenCalled();
             const firstCallArgs = spaceFillerStub.mock.calls[0];
             const rulesArg = firstCallArgs[0];
@@ -87,7 +88,7 @@ describe('Article Body Adverts', () => {
         });
 
         it('its first call to space-filler uses the inline-merch rules', () =>
-            init().then(() => {
+            init(noop, noop).then(() => {
                 const firstCallArgs = spaceFillerStub.mock.calls[0];
                 const rules = firstCallArgs[0];
 
@@ -100,7 +101,7 @@ describe('Article Body Adverts', () => {
             const paragraph = document.createElement('p');
             fixture.appendChild(paragraph);
 
-            return init().then(() => {
+            return init(noop, noop).then(() => {
                 const firstCall = spaceFillerStub.mock.calls[0];
                 const writer = firstCall[1];
                 writer([paragraph]);
