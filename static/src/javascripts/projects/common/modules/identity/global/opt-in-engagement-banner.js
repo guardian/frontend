@@ -53,7 +53,7 @@ const templateHtml: string = `
                     ${template.title}
                 </div>
                 <div class="identity-gdpr-oi-alert__cta-space">
-                    <a data-class="identity-gdpr-oi-alert__cta identity-gdpr-oi-alert__cta--sub ${
+                    <a data-link-name="gdpr-oi-campaign : alert : remind-me-later" class="identity-gdpr-oi-alert__cta identity-gdpr-oi-alert__cta--sub ${
                         messageCloseBtn
                     }">
                         ${template.remindMeLater}
