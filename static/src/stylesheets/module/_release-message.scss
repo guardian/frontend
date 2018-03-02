@@ -1050,7 +1050,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .identity-gdpr-oi-alert__body {
-    margin: $gs-gutter / 4 0 $gs-gutter / 1.25 $gs-gutter;
+    margin: $gs-gutter / 4 $gs-gutter $gs-gutter / 1.25 $gs-gutter;
     max-width: gs-span(6);
     .identity-gdpr-oi-alert__cta {
         margin-left: -.1em;
@@ -1060,7 +1060,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         flex: 1 1 0;
         .identity-gdpr-oi-alert__cta {
             margin-left: $gs-gutter * -.9;
-            margin-right: -$gs-gutter * -.9;
+            width: 90%
         }
     }
 }
@@ -1068,6 +1068,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .identity-gdpr-oi-alert__text {
     @include fs-bodyCopy(1);
     margin-bottom: $gs-gutter;
+    a {
+        white-space: nowrap;
+    }
     @include mq(tablet) {
         @include fs-bodyCopy(2, true);
     }
