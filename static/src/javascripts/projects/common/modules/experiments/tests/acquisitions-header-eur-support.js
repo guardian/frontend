@@ -1,5 +1,8 @@
 // @flow
-import { getSupporterPaymentRegion as geolocationGetSupporterPaymentRegion } from 'lib/geolocation';
+import {
+    getSupporterPaymentRegion as geolocationGetSupporterPaymentRegion,
+    getSync as geolocationGetSync,
+} from 'lib/geolocation';
 import { updateAcquisitionData } from 'common/modules/commercial/acquisitions-ophan';
 
 const componentType = 'ACQUISITIONS_HEADER';
@@ -32,7 +35,8 @@ const modifySupportTheGuardianLink = (variant: variantName): void => {
             );
 
             supportTheGuardianLink.href = supportTheGuardianUrlWithTestData.toString();
-        });
+        }
+    );
 };
 
 export const acquisitionsHeaderEURSupport: AcquisitionsABTest = {
@@ -50,7 +54,8 @@ export const acquisitionsHeaderEURSupport: AcquisitionsABTest = {
     audienceCriteria: 'All EUR transaction web traffic.',
     dataLinkNames: '',
     idealOutcome: 'We get more money when we tailor the destination to the CTA',
-    canRun: () => geolocationGetSupporterPaymentRegion() === 'EU',
+    canRun: () =>
+        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'EU',
     variants: [
         {
             id: 'control',
