@@ -5,13 +5,13 @@ import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquis
 import { unrulyPerformanceTest } from 'common/modules/experiments/tests/unruly-performance';
 import { commercialLazyLoading } from 'common/modules/experiments/tests/commercial-lazy-loading';
 import { acquisitionsHeaderSubscribeMeansSubscribe } from 'common/modules/experiments/tests/acquisitions-header-subscribe-means-subscribe';
-import { acquisitionsHeaderEURSupport } from 'common/modules/experiments/tests/acquisitions-header-eur-support';
+import { acquisitionsHeaderEurSupport } from 'common/modules/experiments/tests/acquisitions-header-eur-support';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
     unrulyPerformanceTest,
     acquisitionsHeaderSubscribeMeansSubscribe,
-    acquisitionsHeaderEURSupport,
+    acquisitionsHeaderEurSupport,
     commercialLazyLoading,
 ].filter(Boolean);
 

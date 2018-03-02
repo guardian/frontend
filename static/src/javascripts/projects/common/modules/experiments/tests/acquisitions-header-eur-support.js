@@ -39,7 +39,7 @@ const modifySupportTheGuardianLink = (variant: variantName): void => {
     );
 };
 
-export const acquisitionsHeaderEURSupport: AcquisitionsABTest = {
+export const acquisitionsHeaderEurSupport: AcquisitionsABTest = {
     id: abTestName,
     campaignId: abTestName,
     componentType,
