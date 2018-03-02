@@ -1102,7 +1102,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     grid-gap: $gs-gutter / 4;
     .identity-gdpr-oi-alert__cta {
         margin-bottom: $gs-gutter / 4;
-        @supports(display:grid) {
+        @supports(display: grid) {
             margin-bottom: 0;
         }
     }
