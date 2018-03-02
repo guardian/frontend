@@ -112,10 +112,7 @@ describe('Article Body Adverts', () => {
         it('inserts up to ten adverts when DFP returns empty merchandising components', () => {
             // The 0 is for addInlineMerchAd, failing to add a merchandising component.
             spaceFillerStub.mockReturnValueOnce(Promise.resolve(0));
-            // The 2 is for addInlineAds, adding adverts using standard getRules().
-            spaceFillerStub.mockReturnValueOnce(Promise.resolve(2));
-            // The 8 is for addInlineAds again, adding adverts using getLongArticleRules().
-            spaceFillerStub.mockReturnValueOnce(Promise.resolve(8));
+            spaceFillerStub.mockReturnValueOnce(Promise.resolve(10));
 
             getBreakpoint.mockReturnValue('tablet');
 
@@ -141,16 +138,6 @@ describe('Article Body Adverts', () => {
     describe('Non-merchandising adverts', () => {
         beforeEach(() => {
             config.page.hasInlineMerchandise = false; // exclude IM components from count
-        });
-
-        describe('On mobiles and desktops', () => {
-            it('inserts up to ten adverts', () => {
-                spaceFillerStub.mockReturnValueOnce(Promise.resolve(2));
-                spaceFillerStub.mockReturnValueOnce(Promise.resolve(8));
-                return _.addInlineAds().then(countAdded => {
-                    expect(countAdded).toEqual(10);
-                });
-            });
         });
 
         describe('Spacefinder rules', () => {
