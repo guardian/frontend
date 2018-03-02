@@ -21,13 +21,6 @@ type ApiUser = {
     },
 };
 
-type Link = {
-    title: string,
-    href: ?string,
-    className: ?(string[]),
-    name: string,
-};
-
 type Template = {
     image: string,
     title: string,
@@ -42,34 +35,12 @@ const targets = {
 
 const template: Template = {
     image: config.get('images.identity.opt-in'),
-    title: `We’re changing how we communicate with readers. Let us know what emails you want to receive <strong>before 30 April</strong>.`,
-    cta: `Opt in now`,
-    links: [
-        {
-            title: 'Find out more',
-            href: targets.landing,
-            className: [],
-            name: 'gdpr-oi-campaign : alert : to-landing',
-        },
-        {
-            title: 'remind me later',
-            className: [messageCloseBtn],
-            name: 'gdpr-oi-campaign : alert : close',
-        },
-    ],
+    title: `We’re changing how we communicate with you. Let us know <strong>before April 30</strong> which emails you wish to continue receiving. <a data-link-name="gdpr-oi-campaign : alert : to-landing" href="${
+        targets.landing
+    }">Find out more</a> or click Continue.`,
+    cta: `Continue`,
+    remindMeLater: `Remind me later`
 };
-const linkHtml = (link): string => `
-    <a 
-        ${link.href ? `href="${link.href}"` : ''} 
-        ${
-            link.className.length > 0
-                ? `class="${link.className.join(' ')}"`
-                : ''
-        }
-        data-link-name="${link.name}"
-    >
-        ${link.title}</a>
-`;
 
 const templateHtml: string = `
     <div id="site-message__message">
@@ -80,14 +51,20 @@ const templateHtml: string = `
             <div class="identity-gdpr-oi-alert__body">
                 <div class="identity-gdpr-oi-alert__text">
                     ${template.title}
-                    ${template.links.map(linkHtml).join(' or ')}.
                 </div>
-                <a class="identity-gdpr-oi-alert__cta" target="_blank" href="${
-                    targets.journey
-                }" data-link-name="gdpr-oi-campaign : alert : to-consents">
-                    ${template.cta}
-                    ${inlineSvg('arrowWhiteRight')}
-                </a>
+                <div class="identity-gdpr-oi-alert__cta-space">
+                    <a data-class="identity-gdpr-oi-alert__cta identity-gdpr-oi-alert__cta--sub ${
+                        messageCloseBtn
+                    }">
+                        ${template.remindMeLater}
+                    </a>
+                    <a class="identity-gdpr-oi-alert__cta" target="_blank" href="${
+                        targets.journey
+                    }" data-link-name="gdpr-oi-campaign : alert : to-consents">
+                        ${template.cta}
+                        ${inlineSvg('arrowWhiteRight')}
+                    </a>
+                </div>
             </div>
         </div>
     </div>`;

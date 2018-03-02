@@ -1052,15 +1052,14 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .identity-gdpr-oi-alert__body {
     margin: $gs-gutter / 4 $gs-gutter $gs-gutter / 1.25 $gs-gutter;
     max-width: gs-span(6);
-    .identity-gdpr-oi-alert__cta {
+    .identity-gdpr-oi-alert__cta-space {
         margin-left: -.1em;
         margin-right: -.1em;
     }
     @include mq($until: tablet) {
         flex: 1 1 0;
-        .identity-gdpr-oi-alert__cta {
+        .identity-gdpr-oi-alert__cta-space {
             margin-left: $gs-gutter * -.9;
-            width: 90%
         }
     }
 }
@@ -1096,21 +1095,48 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
+.identity-gdpr-oi-alert__cta-space {
+    display: grid;
+    grid-auto-flow: row;
+    grid-auto-columns: auto 1fr;
+    grid-gap: $gs-gutter / 4;
+    .identity-gdpr-oi-alert__cta {
+        margin-bottom: $gs-gutter / 4;
+        @supports(display:grid) {
+            margin-bottom: 0;
+        }
+    }
+    @include mq(tablet) {
+        grid-auto-flow: column;
+    }
+}
+
 a.identity-gdpr-oi-alert__cta {
     @include circular;
     @include fs-textSans(3)
     display: inline-flex;
+    white-space: nowrap;
     color: #ffffff;
     text-decoration: none;
     background: $news-garnett-media-main-1;
     font-weight: 800;
-    height: $gs-baseline*3.8;
+    height: $gs-baseline*3.5;
     padding: 0 $gs-gutter;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
     transition: .125s;
+    box-sizing: border-box;
+    &.identity-gdpr-oi-alert__cta--sub {
+        background: none;
+        color: $garnett-neutral-7;
+        border: 1px solid $garnett-neutral-4;
+        &:hover {
+            background: none;
+            color: $garnett-neutral-1;
+            border: 1px solid $garnett-neutral-6;
+        }
+    }
     &:hover {
         background-color: darken($news-garnett-media-main-1, 5%);
         span {
