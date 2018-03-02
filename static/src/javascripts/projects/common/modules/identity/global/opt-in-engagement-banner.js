@@ -25,7 +25,7 @@ type Template = {
     image: string,
     title: string,
     cta: string,
-    links: Link[],
+    remindMeLater: string,
 };
 
 const targets = {
@@ -39,7 +39,7 @@ const template: Template = {
         targets.landing
     }">Find out more</a> or click Continue.`,
     cta: `Continue`,
-    remindMeLater: `Remind me later`
+    remindMeLater: `Remind me later`,
 };
 
 const templateHtml: string = `
@@ -119,12 +119,15 @@ const optInEngagementBannerInit = (): void => {
                     component: 'gdpr-oi-campaign-alert',
                     action: 'gdpr-oi-campaign : alert : show',
                 });
-                document
-                    .querySelector(`.${messageCloseBtn}`)
-                    .addEventListener('click', ev => {
-                        ev.preventDefault();
-                        hide(msg);
-                    });
+                const closeButtonEl: ?HTMLElement = document.querySelector(
+                    `.${messageCloseBtn}`
+                );
+                if (!closeButtonEl)
+                    throw new Error('gdpr-oi-campaign : Missing close button');
+                closeButtonEl.addEventListener('click', (ev: MouseEvent) => {
+                    ev.preventDefault();
+                    hide(msg);
+                });
             }
         }
     });
