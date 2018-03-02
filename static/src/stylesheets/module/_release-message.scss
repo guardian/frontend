@@ -1134,7 +1134,7 @@ a.identity-gdpr-oi-alert__cta {
         &:hover {
             background: none;
             color: $garnett-neutral-1;
-            border: 1px solid $garnett-neutral-6;
+            border: 1px solid darken($garnett-neutral-4, 10%);
         }
     }
     &:hover {
