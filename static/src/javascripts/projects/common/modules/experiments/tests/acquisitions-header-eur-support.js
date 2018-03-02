@@ -43,7 +43,7 @@ export const acquisitionsHeaderEURSupport: AcquisitionsABTest = {
     id: abTestName,
     campaignId: abTestName,
     componentType,
-    start: '2018-03-07',
+    start: '2018-03-01',
     expiry: '2018-04-17',
     author: 'Santiago Villa Fernandez',
     description:
