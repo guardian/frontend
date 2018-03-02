@@ -1085,6 +1085,7 @@
         grid-area: report;
     }
 }
+// Prevents badge overlapping meta in paidfor template when css grid is not supported
 .content__subhead {
     .content__meta-container {
         @include mq($from: leftCol) {
