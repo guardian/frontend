@@ -3,7 +3,7 @@ import { makeBannerABTestVariants } from 'common/modules/commercial/contribution
 import {
     getSupporterPaymentRegion as geolocationGetSupporterPaymentRegion,
     getSync as geolocationGetSync,
-} from 'lib/geolocation'
+} from 'lib/geolocation';
 
 const componentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
 const abTestName = 'AcquisitionsEngagementBannerEurSupport';
