@@ -15,16 +15,6 @@ trait IdentitySwitches {
     exposeClientSide = true
   )
 
-  val IdentityPointToConsentJourneyPage = Switch(
-    SwitchGroup.Identity,
-    "id-point-to-consent-journey-page",
-    "If switched on, several endpoints will redirect qualifying users to the Journey page to repermission",
-    owners = Seq(Owner.withGithub("mario-galic"), Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 1),
-    exposeClientSide = false
-  )
-
   val IdentityShowOptInEngagementBanner = Switch(
     SwitchGroup.Identity,
     "id-show-opt-in-engagement-banner",
