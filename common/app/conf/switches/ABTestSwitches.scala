@@ -125,4 +125,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 3, 13), // Tues 13th March (but should be complete by the 8th)
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-header-eur-support",
+    "Points the 'support the guardian' link in the header to the eur version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 17),
+    exposeClientSide = true
+  )
 }
