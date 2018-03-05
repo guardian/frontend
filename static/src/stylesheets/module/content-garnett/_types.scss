@@ -412,7 +412,8 @@ $quote-mark: 35px;
     }
 
     .content__article-body {
-        line-height: 1.4;
+        font-size: 17px;
+        line-height: 1.5;
 
         @include mq(tablet) {
             margin-left: 0;
