@@ -44,7 +44,6 @@ export const acquisitionsEpicUSGunCampaign = makeABTest({
             options: {
                 isUnlimited: true,
                 usesIframe: true,
-                showToContributorsAndSupporters: true,
                 template: variant =>
                     `<iframe src="https://interactive.guim.co.uk/embed/2017/11/break-the-cycle/epic.html"
                         data-component="${variant.options.componentName}"
