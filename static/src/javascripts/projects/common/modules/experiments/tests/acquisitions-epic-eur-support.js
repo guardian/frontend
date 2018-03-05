@@ -1,8 +1,5 @@
 // @flow
-import {
-    CtaUrls,
-    makeABTest,
-} from 'common/modules/commercial/contributions-utilities';
+import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 
 import {
     getSupporterPaymentRegion as geolocationGetSupporterPaymentRegion,
@@ -11,14 +8,18 @@ import {
 
 import config from 'lib/config';
 
+import type { CtaUrls } from 'common/modules/commercial/contributions-utilities';
+
 const EURsupportURL = 'https://support.theguardian.com/eu';
 const abTestName = 'AcquisitionsEpicEurSupport';
 
 const oneButtonTemplate = (urls: CtaUrls) => {
+    const url = urls.supportUrl || '';
+
     const supportButtonSupport = `
         <div>
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-single-button"
-              href="${urls.supportUrl}"
+              href="${url}"
               target="_blank">
               Support the Guardian
             </a>
