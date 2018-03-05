@@ -6,7 +6,7 @@ import {
 import { updateAcquisitionData } from 'common/modules/commercial/acquisitions-ophan';
 
 const componentType = 'ACQUISITIONS_HEADER';
-const campaignId =  'AcquisitionsEurSupport';
+const campaignId = 'AcquisitionsEurSupport';
 const abTestName = 'AcquisitionsHeaderEurSupport';
 const EURsupportURL = 'https://support.theguardian.com/eu';
 
