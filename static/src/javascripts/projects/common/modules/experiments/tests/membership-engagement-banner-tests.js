@@ -4,7 +4,4 @@ import { AcquisitionsEngagementBannerEurSupport } from 'common/modules/experimen
 
 export const membershipEngagementBannerTests: $ReadOnlyArray<
     AcquisitionsABTest
-> = [
-    SupportEngagementBannerCircles,
-    AcquisitionsEngagementBannerEurSupport
-];
+> = [SupportEngagementBannerCircles, AcquisitionsEngagementBannerEurSupport];
