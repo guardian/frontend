@@ -108,6 +108,18 @@ const getRules = (): Object => {
         minBelow: 500,
     };
 
+    const filter = (slot: SpacefinderItem) => {
+        if (
+            !prevSlot ||
+            Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >=
+                adSlotClassSelectorSizes.minBelow
+        ) {
+            prevSlot = slot;
+            return true;
+        }
+        return false;
+    };
+
     const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
@@ -128,17 +140,7 @@ const getRules = (): Object => {
                 minBelow: 400,
             },
         },
-        filter: (slot: SpacefinderItem) => {
-            if (
-                !prevSlot ||
-                Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >=
-                    adSlotClassSelectorSizes.minBelow
-            ) {
-                prevSlot = slot;
-                return true;
-            }
-            return false;
-        },
+        filter,
     };
 
     const variantDesktopRules = {
@@ -149,17 +151,7 @@ const getRules = (): Object => {
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
         },
-        filter: (slot: SpacefinderItem) => {
-            if (
-                !prevSlot ||
-                Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >=
-                    adSlotClassSelectorSizes.minBelow
-            ) {
-                prevSlot = slot;
-                return true;
-            }
-            return false;
-        },
+        filter,
     };
 
     return shouldUseVariantRules ? variantDesktopRules : defaultRules;
