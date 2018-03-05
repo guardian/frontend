@@ -1,13 +1,13 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
-import userPrefs from 'common/modules/user-prefs';
+import { addCookie } from 'lib/cookies';
 
 import loadEnhancers from './modules/loadEnhancers';
 import { show as showModal } from './modules/modal';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
-const HAS_REPERMISSIONED_LOCALSTORAGE_KEY = 'consents-user-has-repermissioned';
+const HAS_REPERMISSIONED_COOKIE_KEY = 'gu_consents_user_has_repermissioned';
 
 const showJourney = (journeyEl: HTMLElement): Promise<void> =>
     fastdom.write(() => journeyEl.classList.remove('u-h'));
@@ -86,7 +86,7 @@ const submitJourneyAnyway = (buttonEl: HTMLElement): void => {
 
 const setLocalHasRepermissionedFlag = (): void => {
     /* opt-in-engagement-banner will use this to decide wether to show an alert or not */
-    userPrefs.set(HAS_REPERMISSIONED_LOCALSTORAGE_KEY, true);
+    addCookie(HAS_REPERMISSIONED_COOKIE_KEY, 'true', null, true);
 };
 
 const enhanceConsentJourney = (): void => {
@@ -100,4 +100,4 @@ const enhanceConsentJourney = (): void => {
     loadEnhancers(loaders);
 };
 
-export { enhanceConsentJourney, HAS_REPERMISSIONED_LOCALSTORAGE_KEY };
+export { enhanceConsentJourney, HAS_REPERMISSIONED_COOKIE_KEY };
