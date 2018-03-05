@@ -49,7 +49,7 @@
             <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
         </div>
 
-        @if((item.content.isColumn && !amp)) {
+        @if(item.content.isColumn && !amp) {
             <div class="content__series-cta">
                     @fragments.inlineSvg("arrow-right", "icon", List("content__series-cta__icon", "rounded-icon centered-icon"))
                     <span class="content__series-cta__text hide-until-leftcol">

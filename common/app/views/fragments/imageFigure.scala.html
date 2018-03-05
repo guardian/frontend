@@ -120,7 +120,7 @@
                     </figcaption>
                 }
             } else {
-                <figcaption class="caption caption--img @if(isMain) {caption--main}" itemprop="description">
+                <figcaption class="caption caption--img" itemprop="description">
                     @fragments.inlineSvg("triangle", "icon")
                     @img.caption.map(Html(_))
                     @if(img.displayCredit && !img.creditEndsWithCaption) {

@@ -53,12 +53,11 @@
 
 
                         @if(!isPaidContent) {
-                            @if(!article.content.isColumn &&
-                                article.metadata.designType.nameOrDefault == "comment" ||
-                                article.metadata.designType.nameOrDefault == "guardianview") {
-                                @fragments.articleHeaderCommentGarnett(article, model, amp = amp)
-                            } else if(article.content.isColumn) {
+                            @if(article.content.isColumn) {
                                 @fragments.articleHeaderColumn(article, model, amp = amp)
+                            } else if(article.metadata.designType.nameOrDefault == "comment" ||
+                                    article.metadata.designType.nameOrDefault == "guardianview") {
+                                @fragments.articleHeaderCommentGarnett(article, model, amp = amp)
                             } else {
                                 @fragments.articleHeaderGarnett(article, model, amp = amp)
                             }
