@@ -20,7 +20,7 @@ type AdSize = {
 /* bodyAds is a counter that keeps track of the number of inline MPUs
  * inserted dynamically. */
 let bodyAds: number;
-const replaceTopSlot: boolean = isBreakpoint({
+const isMobileBreakpoint: boolean = isBreakpoint({
     max: 'phablet',
 });
 
@@ -34,10 +34,10 @@ const getSlotTypeForMobile = (): string =>
 
 const getSlotTypeForDesktop = (): string => 'inline';
 
-const getSlotName = replaceTopSlot
+const getSlotName = isMobileBreakpoint
     ? getSlotNameForMobile
     : getSlotNameForDesktop;
-const getSlotType = replaceTopSlot
+const getSlotType = isMobileBreakpoint
     ? getSlotTypeForMobile
     : getSlotTypeForDesktop;
 
