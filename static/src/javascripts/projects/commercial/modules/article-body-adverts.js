@@ -154,7 +154,9 @@ const getRules = (): Object => {
         filter,
     };
 
-    return shouldUseVariantRules ? variantDesktopRules : defaultRules;
+    return shouldUseVariantRules && bodyAds > 0
+        ? variantDesktopRules
+        : defaultRules;
 };
 
 const addInlineAds = (): Promise<number> => addArticleAds(10, getRules());
