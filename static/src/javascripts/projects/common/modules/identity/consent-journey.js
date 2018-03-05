@@ -1,11 +1,13 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
+import userPrefs from 'common/modules/user-prefs';
 
 import loadEnhancers from './modules/loadEnhancers';
 import { show as showModal } from './modules/modal';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
+const HAS_REPERMISSIONED_LOCALSTORAGE_KEY = 'consents-user-has-repermissioned';
 
 const showJourney = (journeyEl: HTMLElement): Promise<void> =>
     fastdom.write(() => journeyEl.classList.remove('u-h'));
@@ -82,14 +84,20 @@ const submitJourneyAnyway = (buttonEl: HTMLElement): void => {
     });
 };
 
+const setLocalHasRepermissionedFlag = (): void => {
+    /* opt-in-engagement-banner will use this to decide wether to show an alert or not */
+    userPrefs.set(HAS_REPERMISSIONED_LOCALSTORAGE_KEY, true);
+};
+
 const enhanceConsentJourney = (): void => {
     const loaders = [
         ['.identity-consent-journey', showJourney],
         ['.identity-consent-journey', showJourneyAlert],
+        ['.identity-consent-journey', setLocalHasRepermissionedFlag],
         ['.js-identity-consent-journey-continue', submitJourneyAnyway],
         ['#identityConsentsLoadingError', hideLoading],
     ];
     loadEnhancers(loaders);
 };
 
-export { enhanceConsentJourney };
+export { enhanceConsentJourney, HAS_REPERMISSIONED_LOCALSTORAGE_KEY };
