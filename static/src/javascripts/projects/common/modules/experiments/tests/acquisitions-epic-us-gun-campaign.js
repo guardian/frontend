@@ -1,6 +1,10 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import config from 'lib/config';
+import {
+    isPayingMember,
+    isRecentContributor,
+} from 'common/modules/commercial/user-features';
 
 const campaignTag = 'us-news/series/break-the-cycle';
 
@@ -9,6 +13,10 @@ const tagsMatch = () =>
         .get('page.nonKeywordTagIds', '')
         .split(',')
         .includes(campaignTag);
+
+const isTargetReader = () => isPayingMember() || isRecentContributor();
+
+const isTargetPage = () => tagsMatch() && !config.page.shouldHideReaderRevenue;
 
 export const acquisitionsEpicUSGunCampaign = makeABTest({
     id: 'AcquisitionsUsGunCampaign2017',
@@ -26,8 +34,9 @@ export const acquisitionsEpicUSGunCampaign = makeABTest({
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
-    canRun: tagsMatch,
-
+    canRun() {
+        return isTargetReader() && isTargetPage();
+    },
     variants: [
         {
             id: 'control',
