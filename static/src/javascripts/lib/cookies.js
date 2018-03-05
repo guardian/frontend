@@ -1,5 +1,7 @@
 // @flow
-const getShortDomain = (isCrossSubdomain: ?boolean = false): string => {
+const getShortDomain = (
+    { isCrossSubdomain = false }: { isCrossSubdomain: boolean } = {}
+): string => {
     const domain = document.domain || '';
     // Trim any possible subdomain (will be shared with supporter, identity, etc)
     if (isCrossSubdomain) {
@@ -9,8 +11,10 @@ const getShortDomain = (isCrossSubdomain: ?boolean = false): string => {
     return domain.replace(/^(www|m\.code|dev|m)\./, '.');
 };
 
-const getDomainAttribute = (isCrossSubdomain: ?boolean = false): string => {
-    const shortDomain = getShortDomain(isCrossSubdomain);
+const getDomainAttribute = (
+    { isCrossSubdomain = false }: { isCrossSubdomain: boolean } = {}
+): string => {
+    const shortDomain = getShortDomain({ isCrossSubdomain });
     return shortDomain === 'localhost' ? '' : ` domain=${shortDomain};`;
 };
 
@@ -35,7 +39,7 @@ const addCookie = (
     name: string,
     value: string,
     daysToLive: ?number,
-    isCrossSubdomain: ?boolean = false
+    isCrossSubdomain: boolean = false
 ): void => {
     const expires = new Date();
 
@@ -48,9 +52,9 @@ const addCookie = (
 
     document.cookie = `${name}=${
         value
-    }; path=/; expires=${expires.toUTCString()};${getDomainAttribute(
-        isCrossSubdomain
-    )}`;
+    }; path=/; expires=${expires.toUTCString()};${getDomainAttribute({
+        isCrossSubdomain,
+    })}`;
 };
 
 const cleanUp = (names: string[]): void => {
