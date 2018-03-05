@@ -3,10 +3,16 @@
 import { getUserFromApi } from 'common/modules/identity/api';
 import { Message } from 'common/modules/ui/message';
 import { inlineSvg } from 'common/views/svgs';
+import { HAS_REPERMISSIONED_COOKIE_KEY } from 'common/modules/identity/consent-journey';
+import { getCookie } from 'lib/cookies';
 import config from 'lib/config';
 import ophan from 'ophan/ng';
+import userPrefs from 'common/modules/user-prefs';
 
 const messageCode: string = 'gdpr-opt-in-jan-18';
+const messageHidAtPref: string = `${messageCode}-hid-at`;
+const messageCloseBtn = 'js-gdpr-oi-close';
+const remindMeLaterInterval = 24 * 60 * 60 * 1000;
 const medium: string = new URL(window.location.href).searchParams.get(
     'utm_medium'
 );
@@ -17,17 +23,25 @@ type ApiUser = {
     },
 };
 
+type Template = {
+    image: string,
+    title: string,
+    cta: string,
+    remindMeLater: string,
+};
+
 const targets = {
     landing: 'https://gu.com/staywithus',
     journey: `${config.get('page.idUrl')}/consents/staywithus`,
 };
 
-const template = {
+const template: Template = {
     image: config.get('images.identity.opt-in'),
-    title: `We’re changing how we communicate with readers. Let us know what emails you want to receive <strong>before 30 April</strong>, or&nbsp;<a data-link-name="gdpr-oi-campaign : alert : to-landing" href="${
+    title: `We’re changing how we communicate with you. Let us know <strong>before 30 April</strong> which emails you wish to continue receiving. <a data-link-name="gdpr-oi-campaign : alert : to-landing" href="${
         targets.landing
-    }">find&nbsp;out&nbsp;more</a>.`,
-    cta: `Opt in now`,
+    }">Find out more</a> or click Continue.`,
+    cta: `Continue`,
+    remindMeLater: `Remind me later`,
 };
 
 const templateHtml: string = `
@@ -40,23 +54,51 @@ const templateHtml: string = `
                 <div class="identity-gdpr-oi-alert__text">
                     ${template.title}
                 </div>
-                <a class="identity-gdpr-oi-alert__cta" target="_blank" href="${
-                    targets.journey
-                }" data-link-name="gdpr-oi-campaign : alert : to-consents">
-                    ${template.cta}
-                    ${inlineSvg('arrowWhiteRight')}
-                </a>
+                <div class="identity-gdpr-oi-alert__cta-space">
+                    <a data-link-name="gdpr-oi-campaign : alert : remind-me-later" class="identity-gdpr-oi-alert__cta identity-gdpr-oi-alert__cta--sub ${
+                        messageCloseBtn
+                    }">
+                        ${template.remindMeLater}
+                    </a>
+                    <a class="identity-gdpr-oi-alert__cta" target="_blank" href="${
+                        targets.journey
+                    }" data-link-name="gdpr-oi-campaign : alert : to-consents">
+                        ${template.cta}
+                        ${inlineSvg('arrowWhiteRight')}
+                    </a>
+                </div>
             </div>
         </div>
     </div>`;
 
+const shouldDisplayBasedOnRemindMeLaterInterval = (): boolean => {
+    const hidAt = userPrefs.get(messageHidAtPref);
+    if (!hidAt) return true;
+    return Date.now() > hidAt + remindMeLaterInterval;
+};
+
+const shouldDisplayBasedOnLocalHasRepermissionedFlag = (): boolean =>
+    getCookie(HAS_REPERMISSIONED_COOKIE_KEY) !== 'true';
+
+const shouldDisplayBasedOnExperimentFlag = (): boolean =>
+    config.get('tests.gdprOptinAlertVariant') === 'variant';
+
+const shouldDisplayBasedOnMedium = (): boolean =>
+    medium !== null && medium.toLowerCase() === 'email';
+
 const shouldDisplayOptInBanner = (): Promise<boolean> =>
     new Promise(decision => {
-        if (config.get('tests.gdprOptinAlertVariant') !== 'variant') {
+        const shouldDisplay = [
+            shouldDisplayBasedOnExperimentFlag(),
+            shouldDisplayBasedOnRemindMeLaterInterval(),
+            shouldDisplayBasedOnMedium(),
+            shouldDisplayBasedOnLocalHasRepermissionedFlag(),
+        ];
+
+        if (!shouldDisplay.every(_ => _ === true)) {
             return decision(false);
         }
-        if (medium === null || medium.toLowerCase() !== 'email')
-            return decision(false);
+
         getUserFromApi((user: ApiUser) => {
             if (user === null || !user.statusFields.hasRepermissioned)
                 decision(true);
@@ -64,17 +106,35 @@ const shouldDisplayOptInBanner = (): Promise<boolean> =>
         });
     });
 
+const hide = (msg: Message) => {
+    msg.hide();
+    userPrefs.set(messageHidAtPref, Date.now());
+};
+
 const optInEngagementBannerInit = (): void => {
     shouldDisplayOptInBanner().then((shouldIt: boolean) => {
         if (shouldIt) {
-            ophan.record({
-                component: 'gdpr-oi-campaign-alert',
-                action: 'gdpr-oi-campaign : alert : show',
-            });
-            new Message(messageCode, {
+            const msg = new Message(messageCode, {
                 cssModifierClass: 'gdpr-opt-in',
+                permanent: true,
                 siteMessageComponentName: messageCode,
-            }).show(templateHtml);
+            });
+            const shown = msg.show(templateHtml);
+            if (shown) {
+                ophan.record({
+                    component: 'gdpr-oi-campaign-alert',
+                    action: 'gdpr-oi-campaign : alert : show',
+                });
+                const closeButtonEl: ?HTMLElement = document.querySelector(
+                    `.${messageCloseBtn}`
+                );
+                if (!closeButtonEl)
+                    throw new Error('gdpr-oi-campaign : Missing close button');
+                closeButtonEl.addEventListener('click', (ev: MouseEvent) => {
+                    ev.preventDefault();
+                    hide(msg);
+                });
+            }
         }
     });
 };
