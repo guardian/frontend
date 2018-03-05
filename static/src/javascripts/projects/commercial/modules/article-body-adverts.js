@@ -9,6 +9,7 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlot } from 'commercial/modules/dfp/create-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { getTestVariantId } from 'common/modules/experiments/utils.js';
 
 type AdSize = {
     width: number,
@@ -23,6 +24,11 @@ let bodyAds: number;
 const isMobileBreakpoint: boolean = isBreakpoint({
     max: 'phablet',
 });
+
+const shouldUseVariantRules =
+    config.get('switches.abSpacefinderSimplify', false) &&
+    getTestVariantId('SpacefinderSimplify') === 'variant' &&
+    !isMobileBreakpoint;
 
 const getSlotNameForMobile = (): string =>
     bodyAds === 1 ? 'top-above-nav' : `inline${bodyAds - 1}`;
@@ -102,7 +108,7 @@ const getRules = (): Object => {
         minBelow: 500,
     };
 
-    return {
+    const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
         minAbove: isBreakpoint({
@@ -134,6 +140,29 @@ const getRules = (): Object => {
             return false;
         },
     };
+
+    const variantDesktopRules = {
+        bodySelector: '.js-article__body',
+        slotSelector: ' > p',
+        minAbove: 300,
+        minBelow: 300,
+        selectors: {
+            ' .ad-slot': adSlotClassSelectorSizes,
+        },
+        filter: (slot: SpacefinderItem) => {
+            if (
+                !prevSlot ||
+                Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >=
+                    adSlotClassSelectorSizes.minBelow
+            ) {
+                prevSlot = slot;
+                return true;
+            }
+            return false;
+        },
+    };
+
+    return shouldUseVariantRules ? variantDesktopRules : defaultRules;
 };
 
 const addInlineAds = (): Promise<number> => addArticleAds(10, getRules());
