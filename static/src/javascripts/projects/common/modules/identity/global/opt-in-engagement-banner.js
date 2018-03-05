@@ -3,6 +3,8 @@
 import { getUserFromApi } from 'common/modules/identity/api';
 import { Message } from 'common/modules/ui/message';
 import { inlineSvg } from 'common/views/svgs';
+import { HAS_REPERMISSIONED_COOKIE_KEY } from 'common/modules/identity/consent-journey';
+import { getCookie } from 'lib/cookies';
 import config from 'lib/config';
 import ophan from 'ophan/ng';
 import userPrefs from 'common/modules/user-prefs';
@@ -75,6 +77,9 @@ const shouldDisplayBasedOnRemindMeLaterInterval = (): boolean => {
     return Date.now() > hidAt + remindMeLaterInterval;
 };
 
+const shouldDisplayBasedOnLocalHasRepermissionedFlag = (): boolean =>
+    getCookie(HAS_REPERMISSIONED_COOKIE_KEY) !== 'true';
+
 const shouldDisplayBasedOnExperimentFlag = (): boolean =>
     config.get('tests.gdprOptinAlertVariant') === 'variant';
 
@@ -87,6 +92,7 @@ const shouldDisplayOptInBanner = (): Promise<boolean> =>
             shouldDisplayBasedOnExperimentFlag(),
             shouldDisplayBasedOnRemindMeLaterInterval(),
             shouldDisplayBasedOnMedium(),
+            shouldDisplayBasedOnLocalHasRepermissionedFlag(),
         ];
 
         if (!shouldDisplay.every(_ => _ === true)) {
