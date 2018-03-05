@@ -6,12 +6,13 @@ import {
 } from 'lib/geolocation';
 
 const componentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
+const campaignId = 'AcquisitionsEurSupport';
 const abTestName = 'AcquisitionsEngagementBannerEurSupport';
 const EURsupportURL = 'https://support.theguardian.com/eu';
 
 export const AcquisitionsEngagementBannerEurSupport: AcquisitionsABTest = {
     id: abTestName,
-    campaignId: abTestName,
+    campaignId,
     start: '2018-03-01',
     expiry: '2018-04-17',
     author: 'Santiago Villa Fernandez',
