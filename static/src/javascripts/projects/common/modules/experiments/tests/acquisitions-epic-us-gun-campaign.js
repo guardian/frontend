@@ -18,7 +18,8 @@ export const acquisitionsEpicUSGunCampaign = makeABTest({
     expiry: '2018-01-04',
 
     author: 'Guy Dawson',
-    description: 'Show a custom Epic for articles with the US gun campaign tag',
+    description:
+        'Show a custom thank you epic for articles with the US gun campaign tag',
     successMeasure: 'AV2.0',
     idealOutcome:
         'The US gun campaign resonates with our readers, and we continue to provide quality reporting on this important issue',
@@ -34,6 +35,7 @@ export const acquisitionsEpicUSGunCampaign = makeABTest({
             options: {
                 isUnlimited: true,
                 usesIframe: true,
+                showToContributorsAndSupporters: true,
                 template: variant =>
                     `<iframe src="https://interactive.guim.co.uk/embed/2017/11/break-the-cycle/epic.html"
                         data-component="${variant.options.componentName}"
