@@ -85,7 +85,7 @@ const submitJourneyAnyway = (buttonEl: HTMLElement): void => {
 };
 
 const setLocalHasRepermissionedFlag = (): void => {
-    /* opt-in-engagement-banner will use this to decide wether to show an alert or not */
+    /* opt-in-engagement-banner will use this to decide whether to show an alert or not */
     addCookie(HAS_REPERMISSIONED_COOKIE_KEY, 'true', null, true);
 };
 
