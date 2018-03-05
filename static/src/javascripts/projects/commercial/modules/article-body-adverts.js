@@ -74,10 +74,10 @@ const insertAdAtPara = (
 };
 
 // Add new ads while there is still space
-const addArticleAds = (count: number, rules: Object): Promise<number> => {
+const addArticleAds = (rules: Object, count: ?number): Promise<number> => {
     const insertInlineAds = (paras: HTMLElement[]): Promise<number> => {
         const slots: Array<Promise<void>> = paras
-            .slice(0, Math.min(paras.length, count))
+            .slice(0, count ? Math.min(paras.length, count) : paras.length)
             .map((para: Node) => {
                 bodyAds += 1;
                 return insertAdAtPara(
@@ -159,7 +159,8 @@ const getRules = (): Object => {
         : defaultRules;
 };
 
-const addInlineAds = (): Promise<number> => addArticleAds(10, getRules());
+const addInlineAds = (): Promise<number> =>
+    addArticleAds(getRules(), 1).then(() => addArticleAds(getRules()));
 
 const getInlineMerchRules = (): Object => {
     const inlineMerchRules: Object = getRules();
