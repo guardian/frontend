@@ -37,10 +37,10 @@ const adFreeSlotRemove = (): Promise<void> => {
     mpuCandidates = mpuCandidates.filter(shouldDisableAdSlotWhenAdFree);
 
     return fastdom.write(
-        () => adSlots.forEach((adSlot: Element) => adSlot.remove()),
-        mpuCandidates.forEach((candidate: Element) =>
-            candidate.classList.add(mpuHiderClass)
-        )
+        () => {
+            adSlots.forEach((adSlot: Element) => adSlot.remove());
+            mpuCandidates.forEach((candidate: Element) => candidate.classList.add(mpuHiderClass));
+        }
     );
 };
 
