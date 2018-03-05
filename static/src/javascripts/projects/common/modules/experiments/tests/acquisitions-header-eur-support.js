@@ -53,7 +53,6 @@ export const acquisitionsHeaderEurSupport: AcquisitionsABTest = {
     audienceOffset: 0,
     successMeasure: 'AV 2.0',
     audienceCriteria: 'All EUR transaction web traffic.',
-    dataLinkNames: '',
     idealOutcome: 'We get more money when we tailor the destination to the CTA',
     canRun: () =>
         geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'EU',
