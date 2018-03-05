@@ -7,7 +7,7 @@ import loadEnhancers from './modules/loadEnhancers';
 import { show as showModal } from './modules/modal';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
-const HAS_REPERMISSIONED_COOKIE_KEY = 'gu_consents_user_has_repermissioned';
+const HAS_VISITED_CONSENTS_COOKIE_KEY = 'gu_consents_user_has_repermissioned';
 
 const showJourney = (journeyEl: HTMLElement): Promise<void> =>
     fastdom.write(() => journeyEl.classList.remove('u-h'));
@@ -84,20 +84,20 @@ const submitJourneyAnyway = (buttonEl: HTMLElement): void => {
     });
 };
 
-const setLocalHasRepermissionedFlag = (): void => {
+const setLocalHasVisitedConsentsFlag = (): void => {
     /* opt-in-engagement-banner will use this to decide whether to show an alert or not */
-    addCookie(HAS_REPERMISSIONED_COOKIE_KEY, 'true', null, true);
+    addCookie(HAS_VISITED_CONSENTS_COOKIE_KEY, 'true', null, true);
 };
 
 const enhanceConsentJourney = (): void => {
     const loaders = [
         ['.identity-consent-journey', showJourney],
         ['.identity-consent-journey', showJourneyAlert],
-        ['.identity-consent-journey', setLocalHasRepermissionedFlag],
+        ['.identity-consent-journey', setLocalHasVisitedConsentsFlag],
         ['.js-identity-consent-journey-continue', submitJourneyAnyway],
         ['#identityConsentsLoadingError', hideLoading],
     ];
     loadEnhancers(loaders);
 };
 
-export { enhanceConsentJourney, HAS_REPERMISSIONED_COOKIE_KEY };
+export { enhanceConsentJourney, HAS_VISITED_CONSENTS_COOKIE_KEY };
