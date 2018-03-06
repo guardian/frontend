@@ -213,9 +213,3 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
     addInlineAds().then(stop);
     return Promise.resolve(true);
 };
-
-export const _ = {
-    waitForMerch,
-    addInlineMerchAd,
-    addInlineAds,
-};

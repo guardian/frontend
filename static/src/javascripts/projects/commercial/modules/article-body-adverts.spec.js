@@ -1,5 +1,5 @@
 // @flow
-import { init, _ } from 'commercial/modules/article-body-adverts';
+import { init } from 'commercial/modules/article-body-adverts';
 import config from 'lib/config';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
