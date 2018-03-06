@@ -1,3 +1,4 @@
+// @flow
 import bean from 'bean';
 import mediator from 'lib/mediator';
 import { initClickstream } from 'common/modules/ui/clickstream';
@@ -43,17 +44,17 @@ describe('Clickstream', () => {
         mediator.removeEvent('module:clickstream:click');
     });
 
-    const buildClickspecInspector = (expectedClickSpec, callback) =>
-        clickSpec => {
-            for (let prop in expectedClickSpec) {
-                if (expectedClickSpec.hasOwnProperty(prop)) {
-                    expect(clickSpec[prop]).toEqual(expectedClickSpec[prop]);
-                }
-            }
-            callback();
-        };
+    const buildClickspecInspector = (
+        expectedClickSpec,
+        callback
+    ) => clickSpec => {
+        Object.keys(expectedClickSpec).forEach(key => {
+            expect(clickSpec[key]).toEqual(expectedClickSpec[key]);
+        });
+        callback();
+    };
 
-    it('should report the ancestor \'clickable\' element, not the element that actually received the click', done => {
+    it("should report the ancestor 'clickable' element, not the element that actually received the click", done => {
         initClickstream({ filter: ['a'] });
 
         const el = document.getElementById('click-me-descendant');
@@ -62,11 +63,14 @@ describe('Clickstream', () => {
             sameHost: true,
             validTarget: true,
             tag: 'outer div | the ancestor | the descendant',
-            tags: ['outer div','the ancestor','the descendant'],
+            tags: ['outer div', 'the ancestor', 'the descendant'],
             customEventProperties: {},
         };
 
-        mediator.on('module:clickstream:click', buildClickspecInspector(expectedClickSpec, done));
+        mediator.on(
+            'module:clickstream:click',
+            buildClickspecInspector(expectedClickSpec, done)
+        );
         bean.fire(el, 'click');
     });
 
@@ -78,10 +82,13 @@ describe('Clickstream', () => {
             validTarget: false,
             tag: 'outer div',
             tags: ['outer div'],
-            customEventProperties: {}
+            customEventProperties: {},
         };
 
-        mediator.on('module:clickstream:click', buildClickspecInspector(expectedClickSpec, done));
+        mediator.on(
+            'module:clickstream:click',
+            buildClickspecInspector(expectedClickSpec, done)
+        );
         bean.fire(el, 'click');
     });
 
@@ -94,11 +101,14 @@ describe('Clickstream', () => {
             sameHost: true,
             validTarget: true,
             tag: 'outer div | paragraph',
-            tags: ['outer div','paragraph'],
-            customEventProperties: {}
+            tags: ['outer div', 'paragraph'],
+            customEventProperties: {},
         };
 
-        mediator.on('module:clickstream:click', buildClickspecInspector(expectedClickSpec, done));
+        mediator.on(
+            'module:clickstream:click',
+            buildClickspecInspector(expectedClickSpec, done)
+        );
         bean.fire(el, 'click');
     });
 
@@ -112,15 +122,21 @@ describe('Clickstream', () => {
             validTarget: true,
             tag: 'outer div | internal link',
             tags: ['outer div', 'internal link'],
-            customEventProperties: {}
+            customEventProperties: {},
         };
 
-        mediator.on('module:clickstream:click', buildClickspecInspector(expectedClickSpec, done));
+        mediator.on(
+            'module:clickstream:click',
+            buildClickspecInspector(expectedClickSpec, done)
+        );
         bean.fire(el, 'click');
     });
 
     it('should indicate if a click emanates from an absolute same-host HTTP link when the current page is on HTTPS', done => {
-        initClickstream({ filter: ['a'], location: { protocol: 'https:', hostname: 'www.theguardian.com' } });
+        initClickstream({
+            filter: ['a'],
+            location: { protocol: 'https:', hostname: 'www.theguardian.com' },
+        });
 
         const el = document.getElementById('click-me-internal-http');
         const expectedClickSpec = {
@@ -129,15 +145,21 @@ describe('Clickstream', () => {
             validTarget: true,
             tag: 'outer div | internal link (HTTP)',
             tags: ['outer div', 'internal link (HTTP)'],
-            customEventProperties: {}
+            customEventProperties: {},
         };
 
-        mediator.on('module:clickstream:click', buildClickspecInspector(expectedClickSpec, done));
+        mediator.on(
+            'module:clickstream:click',
+            buildClickspecInspector(expectedClickSpec, done)
+        );
         bean.fire(el, 'click');
     });
 
     it('should indicate if a click emanates from an absolute same-host HTTPS link when the current page is on HTTP', done => {
-        initClickstream({ filter: ['a'], location: { protocol: 'http:', hostname: 'www.theguardian.com' } });
+        initClickstream({
+            filter: ['a'],
+            location: { protocol: 'http:', hostname: 'www.theguardian.com' },
+        });
 
         const el = document.getElementById('click-me-internal-https');
         const expectedClickSpec = {
@@ -146,10 +168,13 @@ describe('Clickstream', () => {
             validTarget: true,
             tag: 'outer div | internal link (HTTPS)',
             tags: ['outer div', 'internal link (HTTPS)'],
-            customEventProperties: {}
+            customEventProperties: {},
         };
 
-        mediator.on('module:clickstream:click', buildClickspecInspector(expectedClickSpec, done));
+        mediator.on(
+            'module:clickstream:click',
+            buildClickspecInspector(expectedClickSpec, done)
+        );
         bean.fire(el, 'click');
     });
 
@@ -163,10 +188,13 @@ describe('Clickstream', () => {
             validTarget: true,
             tag: 'outer div | external link',
             tags: ['outer div', 'external link'],
-            customEventProperties: {}
+            customEventProperties: {},
         };
 
-        mediator.on('module:clickstream:click', buildClickspecInspector(expectedClickSpec, done));
+        mediator.on(
+            'module:clickstream:click',
+            buildClickspecInspector(expectedClickSpec, done)
+        );
         bean.fire(el, 'click');
     });
 
@@ -182,10 +210,13 @@ describe('Clickstream', () => {
             tags: ['outer div', 'the contextual link'],
             linkContextPath: 'the inner context path',
             linkContextName: 'the inner context name',
-            customEventProperties: {}
+            customEventProperties: {},
         };
 
-        mediator.on('module:clickstream:click', buildClickspecInspector(expectedClickSpec, done));
+        mediator.on(
+            'module:clickstream:click',
+            buildClickspecInspector(expectedClickSpec, done)
+        );
         bean.fire(el, 'click');
     });
 
@@ -199,11 +230,13 @@ describe('Clickstream', () => {
             samePage: true,
             sameHost: true,
             validTarget: true,
-            customEventProperties: { 'prop1': 'foo', 'prop2': 'foo' }
+            customEventProperties: { prop1: 'foo', prop2: 'foo' },
         };
 
-        mediator.on('module:clickstream:click', buildClickspecInspector(expectedClickSpec, done));
+        mediator.on(
+            'module:clickstream:click',
+            buildClickspecInspector(expectedClickSpec, done)
+        );
         bean.fire(el, 'click');
     });
 });
-

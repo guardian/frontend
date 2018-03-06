@@ -59,7 +59,7 @@ const getClickSpec = (spec: Spec, forceValid: ?boolean): Spec | boolean => {
 
         if (spec.validTarget && el.getAttribute('data-link-test')) {
             spec.tag = `${el.getAttribute('data-link-test') ||
-            ''} | ${spec.tag || ''}`;
+                ''} | ${spec.tag || ''}`;
         }
         return spec;
     }
@@ -88,10 +88,8 @@ const getClickSpec = (spec: Spec, forceValid: ?boolean): Spec | boolean => {
 
     // Pick up the nearest data-link-context
     if (!spec.linkContext && el.getAttribute('data-link-context-path')) {
-        spec.linkContextPath =
-            el.getAttribute('data-link-context-path') || '';
-        spec.linkContextName =
-            el.getAttribute('data-link-context-name') || '';
+        spec.linkContextPath = el.getAttribute('data-link-context-path') || '';
+        spec.linkContextName = el.getAttribute('data-link-context-name') || '';
     }
 
     spec.el = (el.parentNode: any);
