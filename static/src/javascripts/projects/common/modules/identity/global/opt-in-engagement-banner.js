@@ -31,8 +31,11 @@ type Template = {
 };
 
 const targets = {
-    landing: 'https://gu.com/staywithus',
-    journey: `${config.get('page.idUrl')}/consents/staywithus`,
+    landing:
+        'https://gu.com/staywithus?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert',
+    journey: `${config.get(
+        'page.idUrl'
+    )}/consents/staywithus?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert`,
 };
 
 const template: Template = {
