@@ -78,16 +78,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-banner-cta-contribute",
-    "Test a new CTA for the banner",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 14),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-australia-environment-campaign-2018",
     "Show a custom Epic for articles with the Australia environment campaign tag",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -102,7 +92,7 @@ trait ABTestSwitches {
     "Point the subscribe link in the header to a subscriptions-only version of the support site",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 1),
+    sellByDate = new LocalDate(2018, 3, 12),
     exposeClientSide = true
   )
 
@@ -123,6 +113,36 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 3, 13), // Tues 13th March (but should be complete by the 8th)
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-header-eur-support",
+    "Points the 'support the guardian' link in the header to the eur version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 17),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-eur-support",
+    "Points the 'support the guardian' link in the engagement banner to the eur version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 17),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-eur-support",
+    "Points the 'support the guardian' link in the epic to the eur version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 17),
     exposeClientSide = true
   )
 }

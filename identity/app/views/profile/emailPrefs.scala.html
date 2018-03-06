@@ -43,28 +43,34 @@
 
         <fieldset class="fieldset">
             <div class="fieldset__heading">
-                <h2 class="form__heading">Options</h2>
+                <h2 class="form__heading">Settings</h2>
             </div>
 
             <div class="fieldset__fields email-subscription__options">
                 <ul class="u-unstyled">
                     <li>
-                        <a href="@buildIdentityUrl("account/edit")" class="manage-account__button manage-account__button--icon manage-account__button--mini" data-link-name="identity : email : update">
-                            Update your email address
-                            @fragments.inlineSvg("arrow-right", "icon")
-                        </a>
+                        <p>
+                            <a href="@buildIdentityUrl("account/edit")" class="u-underline" data-link-name="identity : email : update">
+                                Update your email address
+                            </a>
+                        </p>
                     </li>
                     <li>
-                        <a href="#identity-modal--newsletterFormat" role="button" class="js-email-subscription__formatFieldsetToggle manage-account__button manage-account__button--mini manage-account__button--icon" data-link-name="identity : email : format">
+                        <p>
+                            <a href="https://jobs.theguardian.com/your-jobs/?ActiveSection=JbeList" class="u-underline" data-link-name="identity : jobs : alert-settings">
+                                Edit your Job Alert settings
+                            </a>
+                        </p>
+                    </li>
+                    <li>
+                        <a href="#identity-modal--newsletterFormat" class="u-underline" data-link-name="identity : email : format">
                             Change format
-                            @fragments.inlineSvg("arrow-right", "icon")
                         </a>
                     </li>
                     <li>
-                        <p class="label-like">No longer want to receive any of these emails?</p>
                         <button type="button" class="manage-account__button--mini manage-account__button--icon manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all">
                             <span class="email-unsubscribe-all__label js-unsubscribe--basic manage-account__button-flexwrap">
-                                Unsubscribe from all emails
+                                Unsubscribe from all newsletters
                                 @fragments.inlineSvg("cross", "icon")
                             </span>
                             <span class="email-unsubscribe-all__label js-unsubscribe--confirm hide" aria-hidden>

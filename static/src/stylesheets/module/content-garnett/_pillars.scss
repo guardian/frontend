@@ -17,7 +17,8 @@
         color: $pillarColor;
     }
 
-    .button--primary {
+    .button--primary,
+    .content__labels--column:hover {
         background: $pillarColor;
     }
 
@@ -66,7 +67,9 @@
         border-bottom: solid 1px $kickerColor;
     }
 
-    .bullet::before {
+    .bullet::before,
+    .content__headline-column-wrapper--column,
+    .content__labels--column {
         background-color: $kickerColor;
     }
 

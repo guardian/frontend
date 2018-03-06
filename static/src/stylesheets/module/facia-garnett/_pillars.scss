@@ -130,15 +130,22 @@ $pillars: (
         }
     }
 
+    &.fc-item--standard-tablet.fc-item--type-immersive .fc-item__kicker,
     &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker,
     &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker
     {
         color: map-get($palette, kicker);
     }
 
+    &.fc-item--standard-tablet.fc-item--type-immersive .fc-item__standfirst {
+        color: $garnett-neutral-1;
+    }
+
+    &.fc-item--standard-tablet.fc-item--type-immersive .inline-icon,
+    &.fc-item--standard-tablet.fc-item--type-immersive .fc-item__meta,
     &.fc-item--list-media-tablet.fc-item--type-immersive .inline-icon,
-    &.fc-item--list-tablet.fc-item--type-immersive .inline-icon,
     &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__meta,
+    &.fc-item--list-tablet.fc-item--type-immersive .inline-icon,
     &.fc-item--list-tablet.fc-item--type-immersive .fc-item__meta
     {
         fill: $garnett-neutral-6;

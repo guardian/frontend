@@ -159,11 +159,12 @@
         order: 1;
 
         .tonal__head--tone-comment &,
-        .tonal__head--tone-editorial & {
+        .tonal__head--tone-editorial &,
+        .content__head--column & {
             order: 0;
         }
 
-        & > div:not(.content__series-label) {
+        & > .content__section-label  {
             display: none;
         }
     }
@@ -980,6 +981,7 @@
 
 // This section below makes the meta align with the image on leftCol, and has the main media first on mobile.
 .content__head--article {
+
     @include mq($until: tablet) {
         display: flex;
         flex-direction: column;
@@ -1069,8 +1071,6 @@
             // adds enough space so that this doesn't clash with the content labels if css gris is not supported
             top: gs-height(3);
 
-            position: static !important;
-
             @supports (display: grid) {
                 grid-area: meta;
                 position: relative !important;
@@ -1085,6 +1085,14 @@
     /*** position match stats ***/
     .matchreport {
         grid-area: report;
+    }
+}
+// Prevents badge overlapping meta in paidfor template when css grid is not supported
+.content__subhead {
+    .content__meta-container {
+        @include mq($from: leftCol) {
+            top: 0;
+        }
     }
 }
 .paid-content {
