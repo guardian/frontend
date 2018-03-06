@@ -17,9 +17,6 @@ const exec = (cmd, args) => {
 module.exports = {
     description: 'Test JS app',
     task: [
-        require('../../compile/javascript/clean'),
-        require('../../compile/javascript/copy'),
-        require('../../compile/javascript/babel'),
         {
             description: 'Run tests',
             task: [

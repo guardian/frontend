@@ -1,3 +1,0 @@
-autoUpdate({
-	html: '<span>foo</span>'
-})
