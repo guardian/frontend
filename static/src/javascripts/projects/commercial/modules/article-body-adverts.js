@@ -162,7 +162,7 @@ const getRules = (): Object => {
             ' .ad-slot--inline1': {
                 minAbove: 0,
                 minBelow: blockadeMinAbove,
-            }
+            },
         },
         filter,
     };
