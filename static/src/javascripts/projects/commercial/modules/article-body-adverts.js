@@ -128,11 +128,12 @@ const getRules = (): Object => {
     const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: isBreakpoint({
-            max: 'tablet',
-        }) || shouldUseVariantRules
-            ? 300
-            : 700,
+        minAbove:
+            isBreakpoint({
+                max: 'tablet',
+            }) || shouldUseVariantRules
+                ? 300
+                : 700,
         minBelow: 300,
         selectors: {
             ' > h2': {
@@ -159,9 +160,7 @@ const getRules = (): Object => {
         filter,
     };
 
-    return shouldUseVariantRules && bodyAds > 0
-        ? variantRules
-        : defaultRules;
+    return shouldUseVariantRules && bodyAds > 0 ? variantRules : defaultRules;
 };
 
 const addInlineAds = (): Promise<number> =>
