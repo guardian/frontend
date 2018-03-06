@@ -77,7 +77,12 @@ const insertAdAtPara = (
 const addArticleAds = (rules: Object, count: ?number): Promise<number> => {
     const insertInlineAds = (paras: HTMLElement[]): Promise<number> => {
         const slots: Array<Promise<void>> = paras
-            .slice(0, count === undefined ? Math.min(paras.length, count) : paras.length)
+            .slice(
+                0,
+                count && count > 0
+                    ? Math.min(paras.length, count)
+                    : paras.length
+            )
             .map((para: Node) => {
                 bodyAds += 1;
                 return insertAdAtPara(
