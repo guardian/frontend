@@ -13,7 +13,7 @@ import type { CtaUrls } from 'common/modules/commercial/contributions-utilities'
 const EURsupportURL = 'https://support.theguardian.com/eu';
 const abTestName = 'AcquisitionsEpicEurSupport';
 
-const oneButtonTemplate = (urls: CtaUrls) => {
+const oneButtonTemplate = (urls: CtaUrls): string => {
     const url = urls.supportUrl || '';
 
     const supportButtonSupport = `
