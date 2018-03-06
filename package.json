@@ -23,7 +23,7 @@
     "lodash-amd": "~2.4.1",
     "object-fit-videos": "^1.0.3",
     "ophan-tracker-js": "1.3.9",
-    "prebid.js": "https://github.com/guardian/Prebid.js.git#628ea9f",
+    "prebid.js": "https://github.com/guardian/Prebid.js.git#7243aee",
     "qwery": "3.4.2",
     "rangefix": "^0.2.5",
     "raven-js": "^3.19.1",
