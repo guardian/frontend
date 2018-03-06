@@ -115,6 +115,26 @@
         box-shadow: $gs-baseline / 3 0 0 $pillarColor, -$gs-baseline / 2 0 0 $pillarColor;
     }
 
+    .meta__extras--crossword {
+        .social-icon {
+            background: white;
+            border: 1px solid $garnett-neutral-4;
+            &:hover {
+                background: $kickerColor;
+                border: 1px solid $kickerColor;
+            }
+        }
+
+
+
+        .social-icon svg {
+            fill: $kickerColor;
+            &:hover{
+                fill: white;
+            }
+        }
+
+    }
 
 }
 //////** Discussion (comment) styling **//////////
@@ -321,7 +341,7 @@
 .content--pillar-lifestyle.content--type-comment:not(.paid-content),
 .content--pillar-lifestyle.content--type-guardianview:not(.paid-content),
 .content--pillar-lifestyle:not(.paid-content),
-.content__labels--crossword {
+.content__head--crossword {
     @include colorPalatte($lifestyle-garnett-main-1, $lifestyle-garnett-feature, $lifestyle-garnett-media-main-1);
 }
 
