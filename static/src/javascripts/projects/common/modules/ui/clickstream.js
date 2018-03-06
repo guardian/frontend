@@ -8,8 +8,8 @@ type Options = {
     filter?: string[],
 };
 
-type Spec = {
-    el: ?Element,
+export type Spec = {
+    el?: Element,
     tag?: string,
     tags: string[],
     target: Element,
