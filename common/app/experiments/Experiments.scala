@@ -13,7 +13,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialAdRefresh,
     MoonLambda,
     OrielParticipation,
-    GdprOptinAlert
+    GdprOptinAlert,
+    LotameParticipation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
