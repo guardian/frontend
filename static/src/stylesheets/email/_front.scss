@@ -81,7 +81,7 @@ $container-color: #ffffff;
 .ct__padding {
     font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
     font-size: 26px;
-    color: #333333;
+    color: #121212;
     padding: 4px 0 0;
 }
 
@@ -117,7 +117,7 @@ $container-color: #ffffff;
 .trail-text,
 .review-stars {
     font-weight: normal;
-    padding: 6px $gutter 0;
+    padding: px $gutter 0;
 }
 
 // td
@@ -153,6 +153,10 @@ $container-color: #ffffff;
 }
 
 // span
+.fc__kicker {
+    font-weight: 900;
+}
+
 .kicker-separator {
     font-weight: normal;
 }
@@ -172,13 +176,13 @@ $email-tones: (
 .ct--not-top {
     // table
     .ct__inner {
-        border-top: 3px solid #46bcdf;
+        border-top: 1px solid #dfdfdf;
     }
 }
 
 // table
 .tone-external {
-    border-top: 1px solid #46bcdf;
+    border-top: 1px solid #dfdfdf;
 }
 
 

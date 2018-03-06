@@ -18,13 +18,8 @@
     @row(Seq("headline")) {
         <a @Html(card.header.url.hrefWithRel) class="fc-link">
             @card.header.kicker.map { kicker =>
-                <span class="fc__kicker">@Html(kicker.kickerHtml)</span>
-                <span class="kicker-separator">/</span>
+                <span class="fc__kicker">@Html(kicker.kickerHtml) <span class="kicker-separator">/</span></span>
             }
-
-            @if(card.header.isGallery) { @icon("gallery", isLarge) }
-            @if(card.header.isAudio) { @icon("podcast", isLarge) }
-            @if(card.header.isVideo) { @icon("video", isLarge) }
 
             @if(card.header.quoted) {
                 @card.cardStyle match {
@@ -33,6 +28,10 @@
                 }
             }
             @RemoveOuterParaHtml(card.header.headline)
+
+            @if(card.header.isGallery) { @icon("gallery", isLarge) }
+            @if(card.header.isAudio) { @icon("podcast", isLarge) }
+            @if(card.header.isVideo) { @icon("video", isLarge) }
         </a>
     }
     @if(card.header.quoted) {
