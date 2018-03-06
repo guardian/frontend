@@ -209,7 +209,7 @@ const makeABTestVariant = (
             },
         }),
         template = controlTemplate,
-        buttonTemplate = defaultButtonTemplate,
+        buttonTemplate = options.buttonTemplate || defaultButtonTemplate,
         testimonialBlock = getTestimonialBlock(
             acquisitionsTestimonialParametersControl
         ),

@@ -8,6 +8,7 @@ import {
     getBreakpoint as getBreakpoint_,
     isBreakpoint as isBreakpoint_,
 } from 'lib/detect';
+import { noop } from 'lib/noop';
 
 const getViewport: any = getViewport_;
 const getBreakpoint: any = getBreakpoint_;
@@ -39,7 +40,7 @@ jest.mock('lib/config', () => ({ page: {} }));
 
 const spaceFillerStub: JestMockFn<*, *> = (spaceFiller.fillSpace: any);
 const getFirstRulesUsed = () =>
-    init().then(() => {
+    init(noop, noop).then(() => {
         const firstCall = spaceFillerStub.mock.calls[0];
         return firstCall[0];
     });
@@ -59,14 +60,14 @@ describe('Article Body Adverts', () => {
 
     it('should exit if commercial feature disabled', () => {
         commercialFeatures.articleBodyAdverts = false;
-        return init().then(executionResult => {
+        return init(noop, noop).then(executionResult => {
             expect(executionResult).toBe(false);
             expect(spaceFillerStub).not.toHaveBeenCalled();
         });
     });
 
     it('should call space-filler`s insertion method with the correct arguments', () =>
-        init().then(() => {
+        init(noop, noop).then(() => {
             expect(spaceFillerStub).toHaveBeenCalled();
             const firstCallArgs = spaceFillerStub.mock.calls[0];
             const rulesArg = firstCallArgs[0];
@@ -87,7 +88,7 @@ describe('Article Body Adverts', () => {
         });
 
         it('its first call to space-filler uses the inline-merch rules', () =>
-            init().then(() => {
+            init(noop, noop).then(() => {
                 const firstCallArgs = spaceFillerStub.mock.calls[0];
                 const rules = firstCallArgs[0];
 
@@ -100,7 +101,7 @@ describe('Article Body Adverts', () => {
             const paragraph = document.createElement('p');
             fixture.appendChild(paragraph);
 
-            return init().then(() => {
+            return init(noop, noop).then(() => {
                 const firstCall = spaceFillerStub.mock.calls[0];
                 const writer = firstCall[1];
                 writer([paragraph]);
@@ -111,10 +112,7 @@ describe('Article Body Adverts', () => {
         it('inserts up to ten adverts when DFP returns empty merchandising components', () => {
             // The 0 is for addInlineMerchAd, failing to add a merchandising component.
             spaceFillerStub.mockReturnValueOnce(Promise.resolve(0));
-            // The 2 is for addInlineAds, adding adverts using standard getRules().
-            spaceFillerStub.mockReturnValueOnce(Promise.resolve(2));
-            // The 8 is for addInlineAds again, adding adverts using getLongArticleRules().
-            spaceFillerStub.mockReturnValueOnce(Promise.resolve(8));
+            spaceFillerStub.mockReturnValueOnce(Promise.resolve(10));
 
             getBreakpoint.mockReturnValue('tablet');
 
@@ -140,36 +138,6 @@ describe('Article Body Adverts', () => {
     describe('Non-merchandising adverts', () => {
         beforeEach(() => {
             config.page.hasInlineMerchandise = false; // exclude IM components from count
-        });
-
-        describe('On mobiles and desktops', () => {
-            it('inserts up to ten adverts', () => {
-                spaceFillerStub.mockReturnValueOnce(Promise.resolve(2));
-                spaceFillerStub.mockReturnValueOnce(Promise.resolve(8));
-                return _.addInlineAds().then(countAdded => {
-                    expect(countAdded).toEqual(10);
-                });
-            });
-
-            it('inserts the third+ adverts with greater vertical spacing', () =>
-                // We do not want the same ad-density on long-read
-                // articles that we have on shorter pieces
-                init().then(() => {
-                    expect(spaceFillerStub).toHaveBeenCalledTimes(2);
-                    const longArticleInsertCalls = spaceFillerStub.mock.calls.slice(
-                        2
-                    );
-                    const longArticleInsertRules = longArticleInsertCalls.map(
-                        call => call[0]
-                    );
-                    longArticleInsertRules.forEach(ruleset => {
-                        const adSlotSpacing = ruleset.selectors[' .ad-slot'];
-                        expect(adSlotSpacing).toEqual({
-                            minAbove: 1300,
-                            minBelow: 1300,
-                        });
-                    });
-                }));
         });
 
         describe('Spacefinder rules', () => {
