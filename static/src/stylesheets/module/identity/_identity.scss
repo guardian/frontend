@@ -450,6 +450,7 @@ $identity-header-height: 48px;
 
     &.email-unsubscribe {
         float: none;
+        margin-top: $gs-baseline;
         &.is-updating {
             svg {
                 display: none;
