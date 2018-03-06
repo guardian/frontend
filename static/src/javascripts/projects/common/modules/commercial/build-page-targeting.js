@@ -153,6 +153,7 @@ const buildPageTargeting = once((adFree: ?boolean): Object => {
     const adFreeTargeting: Object = adFree ? { af: 't' } : {};
     const pageTargets: Object = Object.assign(
         {
+            sens: page.isSensitive ? 't' : 'f',
             x: getKruxSegments(),
             pv: config.ophan.pageViewId,
             bp: getBreakpoint(),

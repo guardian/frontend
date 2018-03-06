@@ -4,23 +4,28 @@ import model.Titles
 import play.api.data.Forms._
 import com.gu.identity.model.{PrivateFields, User, UserDates}
 import idapiclient.UserUpdateDTO
+import play.api.data.Mapping
 import play.api.i18n.MessagesProvider
 
-class AccountDetailsMapping extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping with TelephoneNumberMapping {
+class AccountDetailsMapping
+    extends UserFormMapping[AccountFormData]
+    with AddressMapping
+    with DateMapping
+    with TelephoneNumberMapping {
 
-  def formMapping(implicit messagesProvider: MessagesProvider) = {
+  def formMapping(implicit messagesProvider: MessagesProvider): Mapping[AccountFormData] =
     mapping(
-      ("primaryEmailAddress", idEmail),
-      ("title", comboList("" :: Titles.titles)),
-      ("firstName",  nonEmptyText),
-      ("secondName", nonEmptyText),
-      "birthDate" -> dateMapping,
-      "address" -> idAddress,
-      "billingAddress" -> optional(idAddress),
-      "telephoneNumber" -> optional(telephoneNumberMapping),
-      "deleteTelephoneNumber" -> default(boolean, false)
+      "primaryEmailAddress"       -> idEmail,
+      "title"                     -> comboList("" :: Titles.titles),
+      "firstName"                 -> nonEmptyText,
+      "secondName"                -> nonEmptyText,
+      "birthDate"                 -> dateMapping,
+      "address"                   -> idAddress,
+      "billingAddress"            -> optional(idAddress),
+      "telephoneNumber"           -> optional(telephoneNumberMapping),
+      "deleteTelephoneNumber"     -> default(boolean, false),
+      "allowThirdPartyProfiling"  -> boolean
     )(AccountFormData.apply)(AccountFormData.unapply _)
-  }
 
   protected def toUserFormData(user: User) = AccountFormData(user)
 
@@ -41,7 +46,8 @@ class AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addres
     ("privateFields.billingAddress4", "billingAddress.line4"),
     ("privateFields.billingPostcode", "billingAddress.postcode"),
     ("privateFields.billingCountry", "billingAddress.country"),
-    ("privateFields.telephoneNumber", "telephoneNumber")
+    ("privateFields.telephoneNumber", "telephoneNumber"),
+    ("statusFields.allowThirdPartyProfiling", "allowThirdPartyProfiling")
   )
 }
 
@@ -54,7 +60,8 @@ case class AccountFormData(
   address: AddressFormData,
   billingAddress: Option[AddressFormData],
   telephoneNumber: Option[TelephoneNumberFormData],
-  deleteTelephone: Boolean = false
+  deleteTelephone: Boolean = false,
+  allowThirdPartyProfiling: Boolean = true
 ) extends UserFormData {
 
   def toUserUpdateDTO(currentUser: User): UserUpdateDTO = UserUpdateDTO(
@@ -77,7 +84,8 @@ case class AccountFormData(
       billingPostcode = billingAddress.flatMap(x => toUpdate(x.postcode, currentUser.privateFields.billingPostcode)),
       billingCountry = billingAddress.flatMap(x => toUpdate(x.country, currentUser.privateFields.billingCountry)),
       telephoneNumber = telephoneNumber.flatMap(_.telephoneNumber)
-    ))
+    )),
+    statusFields = Some(currentUser.statusFields.copy(allowThirdPartyProfiling = Some(allowThirdPartyProfiling)))
   )
 }
 
@@ -110,6 +118,7 @@ object AccountFormData {
           billingPostcode.getOrElse(""),
           billingCountry.getOrElse("")))
     },
-    telephoneNumber = user.privateFields.telephoneNumber.map(TelephoneNumberFormData(_))
+    telephoneNumber = user.privateFields.telephoneNumber.map(TelephoneNumberFormData(_)),
+    allowThirdPartyProfiling = user.statusFields.allowThirdPartyProfiling.getOrElse(true)
   )
 }

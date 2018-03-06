@@ -171,7 +171,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-jobs-feed-fetch",
     "If this switch is on, jobs feed will be periodically updated from external source.",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
+    owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -181,7 +181,7 @@ trait CommercialSwitches {
     SwitchGroup.CommercialFeeds,
     "gu-jobs-feed-parse",
     "If this switch is on, commercial components will be fed by jobs feed.",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
+    owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -301,7 +301,7 @@ trait CommercialSwitches {
     group = Commercial,
     name = "sonobi-header-bidding",
     description = "Turn on Sonobi header bidding",
-    owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
+    owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
@@ -313,9 +313,29 @@ trait CommercialSwitches {
     description = "Include the analytics script for Oriel to monitor ad-blocking",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 2, 21),
+    sellByDate = new LocalDate(2018, 6, 28),
     exposeClientSide = false
   )
+
+  val OrielFullIntegration: Switch = Switch(
+    group = Commercial,
+    name = "oriel-full-integration",
+    description = "Include the ESI tag dropped at the start of <head> for full Oriel integration",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 6, 28),
+    exposeClientSide = false
+  )
+
+  val BlockthroughSwitch: Switch = Switch(
+    group = Commercial,
+    name = "blockthrough",
+    description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 16),
+    exposeClientSide = false
+   )
 
   val prebidSonobi: Switch = Switch(
     group = Commercial,
@@ -354,16 +374,6 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val testImproveBidder: Switch = Switch(
-    group = Commercial,
-    name = "test-improve-bidder",
-    description = "Test multi-size slots in Improve Digital Prebid adapter",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 14),
     exposeClientSide = true
   )
 }

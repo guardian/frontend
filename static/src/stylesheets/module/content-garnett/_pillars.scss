@@ -17,7 +17,8 @@
         color: $pillarColor;
     }
 
-    .button--primary {
+    .button--primary,
+    .content__labels--column:hover {
         background: $pillarColor;
     }
 
@@ -34,7 +35,8 @@
         color: $garnett-neutral-8;
     }
 
-    .byline-img {
+    .content__meta-container .byline-img,
+    .gu-media-wrapper--video .vjs-big-play-button .vjs-control-text {
         background: $mediaColor;
     }
 
@@ -65,7 +67,9 @@
         border-bottom: solid 1px $kickerColor;
     }
 
-    .bullet::before {
+    .bullet::before,
+    .content__headline-column-wrapper--column,
+    .content__labels--column {
         background-color: $kickerColor;
     }
 
@@ -104,6 +108,11 @@
 
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
+    }
+
+    .content__label-interview {
+        background-color: $pillarColor;
+        box-shadow: $gs-baseline / 3 0 0 $pillarColor, -$gs-baseline / 2 0 0 $pillarColor;
     }
 }
 //////** Discussion (comment) styling **//////////

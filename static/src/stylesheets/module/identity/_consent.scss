@@ -1,5 +1,4 @@
 .identity-consent-journey {
-    max-width: gs-span(8);
     margin: auto;
     fieldset {
         border: 0;
@@ -9,16 +8,14 @@
             display: block;
         }
     }
-    > .identity-consent-journey__step:not(:first-of-type) {
-        margin-top: $gs-gutter * 3;
-        padding-top: $gs-gutter * .5;
+    > .identity-consent-journey-step {
         position: relative;
-        border-top: 1px solid $garnett-neutral-4;
-    }
-    > .identity-consent-journey__step[data-title='select-all'] {
-        margin-bottom: $gs-gutter * 2 * -1;
-        margin-top: $gs-gutter * 2;
-        border-top: 0;
+        &:not(:first-child) {
+            margin-top: $gs-gutter * 1.5;
+        }
+        &:not(:first-of-type) {
+            border-top: 1px solid $garnett-neutral-4;
+        }
     }
     .identity-consent-journey__controls {
         padding: $gs-gutter 0;
@@ -33,5 +30,88 @@
         .manage-account__button:not(.manage-account__button--round) {
             float: right;
         }
+    }
+}
+
+.identity-consent-journey-step {
+    @include clearfix;
+    padding-top: $gs-gutter / 6;
+    &.identity-consent-journey-step--intro {
+        margin-top: $gs-gutter * 2;
+    }
+    &.identity-consent-journey-step--controls {
+        padding-top: $gs-gutter;
+        border: 0!important;
+        .manage-account__button {
+            max-width: gs-span(5);
+            width: 100%;
+        }
+    }
+    .identity-consent-journey-step__info {
+        margin-bottom: $gs-gutter * 2;
+    }
+    .identity-consent-journey-step__title {
+        margin-bottom: $gs-gutter;
+    }
+    @include mq(desktop) {
+        display: grid;
+        grid-column-gap: $gs-gutter;
+        grid-template-columns: gs-span(4) 1fr;
+        .identity-consent-journey-step__title {
+            grid-column-start: 1;
+            padding-right: gs-span(1);
+        }
+        .identity-consent-journey-step__content {
+            grid-column-start: 2;
+        }
+        .identity-consent-journey-step__fields {
+            margin-top: $gs-gutter / 4;
+        }
+    }
+}
+
+.identity-consent-journey-step__title {
+    @include fs-headlineGarnett(2);
+    font-weight: 500;
+    .identity-consent-journey-step--intro & {
+        @include fs-headlineGarnett(4, true);
+        margin-top: ($gs-gutter /4) * -1;
+    }
+}
+
+.identity-consent-journey--gdpr-oi-campaign {
+    .identity-consent-journey-step {
+        border-top-color: #ed6300!important;
+    }
+    .identity-consent-journey-step__title {
+        font-weight: 600;
+    }
+}
+
+.identity-consent-hero {
+    $multiline-height: 4px * 3 + 1px; /*height of multiline (4px) times the number of lines (3)*/
+    height: $gs-row-height * 4;
+    background-size: cover;
+    border-bottom: 1px solid $garnett-neutral-4;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: visible;
+    margin-bottom: $multiline-height;
+    position: relative;
+    &:after {
+        @include multiline(4, $garnett-neutral-4, top);
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: ($multiline-height - 1) * -1;
+        height: $multiline-height;
+        margin-bottom: -1px;
+        margin-top: $gutter;
+        width: 100%;
+    }
+    @include mq(tablet) {
+        height: $gs-row-height * 6;
+        background-size: contain;
     }
 }

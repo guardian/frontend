@@ -9,7 +9,8 @@
     field: Field,
     extraFields: List[Html] = Nil,
     footer: Option[Html] = None,
-    highlighted: Boolean = false
+    highlighted: Boolean = false,
+    skin: Option[String] = None
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
 
@@ -18,7 +19,7 @@
         ("manage-account__switch", true),
         (switchJsBehaviour(behaviour), true),
         ("manage-account__switch--hinted", highlighted),
-        ("manage-account__switch--small", !description)
+        (s"manage-account__switch--${skin.getOrElse("")}", skin.isDefined)
     )
 }
 

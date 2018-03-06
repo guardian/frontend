@@ -6,7 +6,7 @@ import com.gu.contentapi.client.utils.DesignType
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
-import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform}
 import common.{Edition, HTML}
 import common.commercial.EditionBranding
 import model.content.{Atoms, MediaAtom}
@@ -40,7 +40,8 @@ object CollectionConfig {
       excludeFromRss = config.excludeFromRss,
       showTimestamps = config.showTimestamps,
       hideShowMore = config.hideShowMore,
-      displayHints = config.displayHints.map(DisplayHints.make)
+      displayHints = config.displayHints.map(DisplayHints.make),
+      platform = Some(config.platform)
     )
   }
 
@@ -67,7 +68,8 @@ final case class CollectionConfig(
   excludeFromRss: Boolean,
   showTimestamps: Boolean,
   hideShowMore: Boolean,
-  displayHints: Option[DisplayHints]
+  displayHints: Option[DisplayHints],
+  platform: Option[CollectionPlatform] = None
 )
 
 object CardStyle {

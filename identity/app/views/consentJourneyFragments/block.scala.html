@@ -9,7 +9,7 @@
 
 @showAgeStep(display: Boolean = false) = @{
     if(display){
-        List(ConsentStepHelpLegalText("By continuing, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
+        List(ConsentStepHelpText("By continuing, you confirm that you are older than 13 years or that you have the consent of your parent or a person holding parental responsibility."))
     } else {
         Nil
     }
@@ -29,51 +29,41 @@
 @showConsentStep(step: ConsentStep) = {
     <div
         role="group"
-        class="identity-consent-journey__step"
+        class="
+            identity-consent-journey-step
+            identity-consent-journey-step--@{step.name}
+            @step.extraClassNames.map(s => s"identity-consent-journey-step--${s}")
+        "
         aria-labelledby="consents@{step.name.capitalize}Title"
     >
-        <h2 id="consents@{step.name.capitalize}Title" class="identity-forms-wrapper-title">@step.title</h2>
-        <div class="identity-forms-wrapper">
+        <h2 id="consents@{step.name.capitalize}Title" class="identity-consent-journey-step__title">@step.title</h2>
+        <div class="identity-consent-journey-step__content">
             @if(step.help || showAgeStep(display = isFirst)){
-                <div class="identity-forms-wrapper__info">
+                <div class="identity-consent-journey-step__info">
                     @renderHelpText(step.help ++ showAgeStep(display = isFirst))
                 </div>
             }
-            <div class="identity-forms-wrapper__fields">
-            @step.content
+            <div class="identity-consent-journey-step__fields">
+                @step.content
             </div>
         </div>
 
     </div>
 }
 
-@showConsentInfo(info: ConsentInfo) = {
-    <div
-    class="identity-consent-journey__step"
-    >
-        <h1 class="identity-forms-wrapper-title identity-forms-wrapper-title__large">@info.title</h1>
-        <div class="identity-forms-wrapper">
-            @if(info.help || showAgeStep(display = isFirst)){
-                <div class="identity-forms-wrapper__info">
-                    @renderHelpText(info.help ++ showAgeStep(display = isFirst))
-                </div>
-            }
-        </div>
-    </div>
-}
-
 @showConsentCustomHtml(info: ConsentCustomHtml) = {
     <div
-        class="identity-consent-journey__step"
+        class="identity-consent-journey-step"
         data-title="@info.title"
     >
-        @info.content
+        <div class="identity-consent-journey-step__content">
+            @info.content
+        </div>
     </div>
 }
 
 @{block match {
     case m: ConsentStep => showConsentStep(m)
     case m: ConsentCustomHtml => showConsentCustomHtml(m)
-    case m: ConsentInfo => showConsentInfo(m)
     case m: ConsentBanner => Html(s"<p class='form__success'>${m.title}</p>")
 }}

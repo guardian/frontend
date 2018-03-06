@@ -4,6 +4,10 @@ $block-padding-left: gs-span(1) + $gs-gutter;
    ========================================================================== */
 
 .content__main-column--liveblog {
+    &::before {
+        display: none;
+    }
+
     @include mq(desktop) {
         margin-left: gs-span(4) + $gs-gutter;
         margin-right: 0;
@@ -25,6 +29,15 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
     .caption--main {
         padding-bottom: 0;
+    }
+}
+
+/*
+    have to do this to override specifity from _types.scss
+*/
+.content__main-column.content__main-column--liveblog {
+    @include mq(leftCol) {
+        padding-left: 0;
     }
 }
 

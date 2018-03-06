@@ -12,6 +12,23 @@
         min-height: 200px;
         margin-top: $gs-baseline*4;
     }
+    /* Warning
+    ========================================================================== */
+    .manage-account-warning {
+        border: 0;
+        padding: $gutter 0 0;
+        height: auto;
+        &:after {
+            @include multiline(4, $garnett-neutral-4, top);
+            content: '';
+            display: block;
+            height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
+            background-color: #ffffff;
+            margin-bottom: -1px;
+            margin-top: $gutter;
+            width: 100%;
+        }
+    }
 
     /* Up sell
     ========================================================================== */
@@ -341,13 +358,9 @@
 /* Modals
    ========================================================================== */
 
-.manage-account__modal {
-    border: 1px solid $neutral-8;
-    padding: $gs-gutter;
-    margin: $gs-gutter;
-}
+$modal-close-size: $gs-gutter * 1.75;
 
-.js-on .manage-account__modal {
+.identity-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -362,12 +375,12 @@
     border: 0;
 }
 
-.js-on .manage-account__modal--active {
+.identity-modal--active {
     display: block;
     display: flex;
 }
 
-.js-on .manage-account__modalBg {
+.identity-modal__bg {
     position: fixed;
     top: 0;
     left: 0;
@@ -378,33 +391,38 @@
     z-index: 9;
 }
 
-.js-on .manage-account__modalContent {
-    max-width: gs-span(10);
+.identity-modal__wrap {
     background: #ffffff;
     width: 100%;
     position: relative;
     z-index: 10;
-    border-top: 1px solid $neutral-1;
-    padding: ($gs-gutter * 3.75) ($gs-gutter * 1) ($gs-gutter * 1);
     margin: auto;
     float: none;
+    padding: ($gs-gutter + $modal-close-size) $gs-gutter/2 $gs-gutter;
+    @include mq(tablet) {
+        padding: $gs-gutter ($gs-gutter*2 + $modal-close-size);
+    }
 }
 
-.manage-account__modalCloser {
-    display: none;
+.identity-modal__content {
+    max-width: gs-span(10);
+    margin: auto;
 }
 
-.js-on .manage-account__modalCloser {
-    width: $gs-gutter * 1.75;
-    height: $gs-gutter * 1.75;
+.identity-modal__closer {
+    width: $modal-close-size;
+    height: $modal-close-size;
     color: $identity-main;
     border: 1px solid currentColor;
     border-radius: 100%;
     display: block;
     position: absolute;
-    top: $gs-gutter;
-    right: $gs-gutter;
+    top: $gs-gutter / 2;
+    right: $gs-gutter / 2;
     background: transparent;
+    @include mq(tablet) {
+        right: $gs-gutter;
+    }
 
     svg {
         position: absolute;

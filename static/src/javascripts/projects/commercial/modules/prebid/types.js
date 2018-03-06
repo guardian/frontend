@@ -68,3 +68,14 @@ export type PrebidBid = {
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };
+
+export type PrebidPriceBucket = {
+    precision?: number,
+    min: number,
+    max: number,
+    increment: number,
+};
+
+export type PrebidPriceGranularity = {
+    buckets: PrebidPriceBucket[],
+};

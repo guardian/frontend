@@ -43,7 +43,7 @@ if (!commercialFeatures.adFree) {
     commercialModules.push(
         ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
         ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
-        ['cm-articleBodyAdverts', initArticleBodyAdverts],
+        ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
         ['cm-stickyTopBanner', initStickyTopBanner]
     );

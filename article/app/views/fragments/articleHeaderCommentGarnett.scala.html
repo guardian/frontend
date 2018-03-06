@@ -12,18 +12,15 @@
     <div class="content__header tonal__header">
         <div class="u-cf">
 
-            <h1 class="content__headline" articleprop="headline" @langAttributes(article.content)>
+            <h1 class="content__headline @if(article.content.hasTonalHeaderByline) {content__headline--no-margin-bottom}" articleprop="headline" @langAttributes(article.content)>
                 @Html(article.trail.headline)
             </h1>
 
             @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) {
-                <div class="content__headline__byline">
-                    @fragments.meta.bylineImage(article.tags)
-                    @article.trail.byline.map { text =>
-                        <span class="byline-name">@ContributorLinks(text, article.tags.contributors)</span>
-                    }
-                </div>
-            } else if(article.content.hasTonalHeaderByline) {
+                @fragments.meta.bylineImage(article.tags)
+            }
+
+            @if(article.content.hasTonalHeaderByline) {
                 @article.trail.byline.map { text =>
                     <span class="content__headline content__headline--byline">@ContributorLinks(text, article.tags.contributors)</span>
                 }

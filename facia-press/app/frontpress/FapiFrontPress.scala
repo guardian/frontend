@@ -304,7 +304,9 @@ trait FapiFrontPress extends Logging {
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(path))
     } yield seoWithProperties match {
       case (seoData, frontProperties) =>
-        val dedupliatedCollections = PressedCollectionVisibility.deduplication(pressedCollections)
+        val webCollections = pressedCollections.filter(PressedCollectionVisibility.isWebCollection)
+
+        val dedupliatedCollections = PressedCollectionVisibility.deduplication(webCollections)
           .map(_.pressedCollectionVersions)
           .toList
         PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, dedupliatedCollections)

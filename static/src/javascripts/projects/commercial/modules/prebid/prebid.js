@@ -6,6 +6,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bidders } from 'commercial/modules/prebid/bidder-config';
 import { labels } from 'commercial/modules/prebid/labels';
 import { slots } from 'commercial/modules/prebid/slot-config';
+import { priceGranularity } from 'commercial/modules/prebid/price-config';
 import type {
     PrebidBid,
     PrebidBidder,
@@ -70,7 +71,8 @@ class PrebidService {
             },
         };
         window.pbjs.setConfig({
-            priceGranularity: 'auto',
+            bidderTimeout,
+            priceGranularity,
         });
     }
 
@@ -95,7 +97,6 @@ class PrebidService {
                         window.pbjs.que.push(() => {
                             window.pbjs.requestBids({
                                 adUnits: [adUnit],
-                                timeout: bidderTimeout,
                                 bidsBackHandler() {
                                     window.pbjs.setTargetingForGPTAsync([
                                         adUnit.code,

@@ -6,7 +6,6 @@
 @import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
-@import experiments._
 
 @schemaType(page: ArticlePage) = @{page.article.metadata.schemaType}
 
@@ -22,8 +21,7 @@
 
         class="@RenderClasses(Map(
             "has-feature-showcase-element" -> (article.tags.isFeature && article.elements.hasShowcaseMainElement),
-            "paid-content" -> isPaidContent,
-            "paid-content--white" -> (isPaidContent && ActiveExperiments.isParticipating(CommercialPaidContentTemplate))
+            "paid-content" -> isPaidContent
         ),
             "content",
             "content--article",

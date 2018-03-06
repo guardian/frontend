@@ -26,7 +26,10 @@
             },
             "acquisitions": {
                 "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")"
-             }
+            },
+            "identity": {
+                "opt-in": "@Static("images/identity/opt-in.svg")"
+            }
         },
         "stylesheets": {
             "fonts": {

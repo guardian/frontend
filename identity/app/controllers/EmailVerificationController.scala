@@ -1,6 +1,6 @@
 package controllers
 
-import java.net.URLEncoder
+import java.net.{URI, URLEncoder}
 
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, Result}
 import idapiclient.IdApiClient
@@ -12,6 +12,7 @@ import actions.AuthenticatedActions
 import pages.IdentityHtmlPage
 
 import scala.concurrent.Future
+import scala.util.Try
 
 
 class EmailVerificationController(api: IdApiClient,
@@ -27,12 +28,11 @@ class EmailVerificationController(api: IdApiClient,
   import ValidationState._
   import authenticatedActions.fullAuthWithIdapiUserAction
 
-  val page = IdentityPage("/verify-email", "Verify Email")
 
   def verify(token: String): Action[AnyContent] = Action.async {
     implicit request =>
       val idRequest = idRequestParser(request)
-
+      val page = IdentityPage("/verify-email", "Verify Email")
       api.validateEmail(token, idRequest.trackingData) map {
         response =>
           val validationState = response match {
@@ -51,32 +51,44 @@ class EmailVerificationController(api: IdApiClient,
           val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
 
           if(validationState.isValidated) {
-            SeeOther(idUrlBuilder.buildUrl(s"/consents?returnUrl=$encodedReturnUrl"))
+            // Only redirect to consent journey return URL if not the journey already
+            val redirectUrl = Try(new URI(verifiedReturnUrl)).toOption
+              .flatMap { uri =>
+                val consentJourneyPath = "^\\/consents([?/#].*)?$".r
+                consentJourneyPath.findFirstMatchIn(uri.getPath).map(_ => verifiedReturnUrl)
+              }
+            SeeOther(redirectUrl.getOrElse(idUrlBuilder.buildUrl(s"/consents?returnUrl=$encodedReturnUrl")))
           } else {
             Ok(IdentityHtmlPage.html(views.html.emailVerified(validationState, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))(page, request, context))
           }
       }
   }
 
-  def resendEmailValidationEmail(isRepermissioningRedirect: Boolean, isSignupFlow: Boolean): Action[AnyContent] = fullAuthWithIdapiUserAction.async {
+  def completeRegistration(): Action[AnyContent] = fullAuthWithIdapiUserAction.async {
     implicit request =>
       val idRequest = idRequestParser(request)
-      val customMessage = if (isRepermissioningRedirect) Some("To access all your account features and join the Guardian community, we need you to confirm your email address below.") else None
-
+      val page = IdentityPage("/complete-registration", "Complete Signup", isFlow = true)
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
 
-      val verificationEmailResentPage =
-        Ok(IdentityHtmlPage.html(views.html.verificationEmailResent(request.user, idRequest, idUrlBuilder, customMessage, verifiedReturnUrlAsOpt, returnUrlVerifier.defaultReturnUrl, isSignupFlow))(page, request, context))
+      Future.successful(Ok(IdentityHtmlPage.html(
+          views.html.verificationEmailResent(request.user, idRequest, idUrlBuilder, verifiedReturnUrlAsOpt, returnUrlVerifier.defaultReturnUrl, isSignupFlow = true)
+      )(page, request, context)))
+  }
 
-      if (isSignupFlow)
-        Future.successful(verificationEmailResentPage)
-      else
-        api.resendEmailValidationEmail(
-          request.user.auth,
-          idRequest.trackingData
-        ).map(_ =>
-          verificationEmailResentPage
-        )
+  def resendEmailValidationEmail(): Action[AnyContent] = fullAuthWithIdapiUserAction.async {
+    implicit request =>
+      val idRequest = idRequestParser(request)
+      val page = IdentityPage("/verify-email", "Verify Email")
+      val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
+
+      api.resendEmailValidationEmail(
+        request.user.auth,
+        idRequest.trackingData,
+        verifiedReturnUrlAsOpt
+      ).map(_ =>
+        Ok(IdentityHtmlPage.html(views.html.verificationEmailResent(request.user, idRequest, idUrlBuilder, verifiedReturnUrlAsOpt, returnUrlVerifier.defaultReturnUrl))(page, request, context))
+      )
+
   }
 }
 

@@ -235,14 +235,6 @@ $fc-item-gutter: $gs-gutter / 4;
     .gu-media-wrapper {
         margin-bottom: 0;
     }
-
-    .vjs-big-play-button > .vjs-control-text {
-        @include video-play-button-size($vjs-small-button-size);
-
-        &:before {
-            @include video-play-button-size($vjs-small-button-size);
-        }
-    }
 }
 
 .fc-item__title,

@@ -154,8 +154,10 @@ class IdApiClient(
   def validateEmail(token: String, trackingParameters: TrackingData): Future[Response[Unit]] =
     post(urlJoin("user","validate-email", token), trackingParameters = Some(trackingParameters)) map extractUnit
 
-  def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
-    post("user/send-validation-email", Some(auth), Some(trackingParameters)) map extractUnit
+  def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData, returnUrlOpt: Option[String]): Future[Response[Unit]] = {
+    val extraParams = returnUrlOpt.map(url => List("returnUrl" -> url))
+    httpClient.POST(apiUrl("user/send-validation-email"), None, buildParams(Some(auth), Some(trackingParameters), extraParams), buildHeaders(Some(auth))) map extractUnit
+  }
 
   def deleteTelephone(auth: Auth): Future[Response[Unit]] =
     delete("user/me/telephoneNumber", Some(auth)) map extractUnit

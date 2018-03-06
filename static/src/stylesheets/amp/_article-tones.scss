@@ -19,7 +19,7 @@
     }
 
     .bullet:before,
-    .byline-img {
+    .content__meta-container .byline-img {
         background-color: $bright;
     }
 
@@ -53,7 +53,8 @@
         color: $dark;
     }
 
-    .bullet:before {
+    .bullet:before,
+    .content__meta-container .byline-img {
         background-color: $bright;
     }
 

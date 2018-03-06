@@ -9,7 +9,8 @@
     emailPrefsForm: Form[_],
     emailSubscriptions: List[String],
     newsletter: EmailNewsletter,
-    unchecked: Boolean = false
+    unchecked: Boolean = false,
+    skin: Option[String] = None
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages, request: RequestHeader)
 
 @buildFooter(newsletter: EmailNewsletter) = {
@@ -54,5 +55,6 @@
     behaviour = NewsletterSwitch,
     field = newsletterField,
     extraFields = Nil,
-    footer = Some(buildFooter(newsletter))
+    footer = Some(buildFooter(newsletter)),
+    skin = skin
 )(nonInputFields, messages)

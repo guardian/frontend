@@ -1,6 +1,6 @@
 // @flow
 import config from 'lib/config';
-import { isBreakpoint, getBreakpoint, getViewport } from 'lib/detect';
+import { isBreakpoint, getBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import type { SpacefinderItem } from 'common/modules/spacefinder';
 import { spaceFiller } from 'common/modules/article/space-filler';
@@ -20,9 +20,9 @@ type AdSize = {
 /* bodyAds is a counter that keeps track of the number of inline MPUs
  * inserted dynamically. */
 let bodyAds: number;
-let replaceTopSlot: boolean;
-let getSlotName: () => string;
-let getSlotType: () => string;
+const replaceTopSlot: boolean = isBreakpoint({
+    max: 'phablet',
+});
 
 const getSlotNameForMobile = (): string =>
     bodyAds === 1 ? 'top-above-nav' : `inline${bodyAds - 1}`;
@@ -33,6 +33,13 @@ const getSlotTypeForMobile = (): string =>
     bodyAds === 1 ? 'top-above-nav' : 'inline';
 
 const getSlotTypeForDesktop = (): string => 'inline';
+
+const getSlotName = replaceTopSlot
+    ? getSlotNameForMobile
+    : getSlotNameForDesktop;
+const getSlotType = replaceTopSlot
+    ? getSlotTypeForMobile
+    : getSlotTypeForDesktop;
 
 type Sizes = { desktop: Array<AdSize> };
 
@@ -98,17 +105,13 @@ const getRules = (): Object => {
     return {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: 300, // a nominal value, the ' > header' rule is expected to separate insertions from the top.
+        minAbove: isBreakpoint({
+            max: 'tablet',
+        })
+            ? 300
+            : 700,
         minBelow: 300,
         selectors: {
-            ' > header': {
-                minAbove: isBreakpoint({
-                    max: 'tablet',
-                })
-                    ? 300
-                    : 700,
-                minBelow: 0,
-            },
             ' > h2': {
                 minAbove: getBreakpoint() === 'mobile' ? 100 : 0,
                 minBelow: 250,
@@ -133,23 +136,7 @@ const getRules = (): Object => {
     };
 };
 
-const getLongArticleRules = (): Object => {
-    const longArticleRules: Object = getRules();
-    const viewportHeight: number = getViewport().height;
-    longArticleRules.selectors[' .ad-slot'].minAbove = viewportHeight;
-    longArticleRules.selectors[' .ad-slot'].minBelow = viewportHeight;
-    return longArticleRules;
-};
-
-const addInlineAds = (): Promise<number> =>
-    addArticleAds(2, getRules()).then((countAdded: number) => {
-        if (countAdded === 2) {
-            return addArticleAds(8, getLongArticleRules()).then(
-                innerCountAdded => 2 + innerCountAdded
-            );
-        }
-        return countAdded;
-    });
+const addInlineAds = (): Promise<number> => addArticleAds(10, getRules());
 
 const getInlineMerchRules = (): Object => {
     const inlineMerchRules: Object = getRules();
@@ -175,17 +162,14 @@ const addInlineMerchAd = (): Promise<any> =>
 const waitForMerch = (countAdded: number): Promise<void> =>
     countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
 
-export const init = (): Promise<boolean> => {
+export const init = (start: () => void, stop: () => void): Promise<boolean> => {
+    start();
     if (!commercialFeatures.articleBodyAdverts) {
+        stop();
         return Promise.resolve(false);
     }
 
     bodyAds = 0;
-    replaceTopSlot = isBreakpoint({
-        max: 'phablet',
-    });
-    getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;
-    getSlotType = replaceTopSlot ? getSlotTypeForMobile : getSlotTypeForDesktop;
 
     if (config.page.hasInlineMerchandise) {
         const im = addInlineMerchAd();
@@ -194,11 +178,15 @@ export const init = (): Promise<boolean> => {
         // we must wait for DFP to return, since if the merch
         // component is empty, it might completely change the
         // positions where we insert those MPUs.
-        im.then(waitForMerch).then(addInlineAds);
+        im
+            .then(waitForMerch)
+            .then(addInlineAds)
+            .then(stop);
+
         return im;
     }
 
-    addInlineAds();
+    addInlineAds().then(stop);
     return Promise.resolve(true);
 };
 

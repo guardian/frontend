@@ -1,0 +1,17 @@
+@(
+    name: String,
+    contents: Html
+)
+
+<div id="identity-modal--@name" class="identity-modal identity-modal--@name" role="dialog">
+    <div class="identity-modal__wrap">
+        <button class="identity-modal__closer js-identity-modal__closer">
+            <span class="u-h">Close this window</span>
+            @fragments.inlineSvg("cross", "icon")
+        </button>
+        <div class="identity-modal__content">
+            @contents
+        </div>
+    </div>
+    <div class="identity-modal__bg js-identity-modal__closer"></div>
+</div>

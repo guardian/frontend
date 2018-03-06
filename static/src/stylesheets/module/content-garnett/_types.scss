@@ -113,7 +113,6 @@ $quote-mark: 35px;
             width: 100%;
             max-width: 38.75rem;
             margin: auto;
-            position: relative;
         }
     }
 
@@ -197,7 +196,7 @@ $quote-mark: 35px;
         }
     }
 
-    .byline-img {
+    .content__meta-container .byline-img {
         max-width: gs-span(1);
         float: left;
         border-top: 0;
@@ -388,9 +387,8 @@ $quote-mark: 35px;
         border-color: $garnett-neutral-4;
     }
     // *************** Header and Body Styles ***************
-    .content__article-body {
-        line-height: 1.4;
 
+    .content__main-column {
         &:before {
             @include mq(leftCol) {
                 content: '';
@@ -403,19 +401,25 @@ $quote-mark: 35px;
                 background: $garnett-neutral-4;
             }
         }
+
         @include mq(tablet) {
             padding-left: 0;
+        }
+        @include mq(leftCol) {
+            padding-left: $gs-gutter/2;
+        }
+    }
+
+    .content__article-body {
+        line-height: 1.4;
+
+        @include mq(tablet) {
             margin-left: 0;
             padding-bottom: $gs-baseline*4;
         }
         @include mq(desktop) {
-            padding-left: 0;
             margin-left: 0;
             padding-bottom: $gs-baseline*6;
-        }
-        @include mq(leftCol) {
-            padding-left: $gs-gutter/2;
-            margin-left: -$gs-gutter/2;
         }
     }
 
@@ -447,18 +451,6 @@ $quote-mark: 35px;
         margin-right: 0;
     }
 
-    .content__headline {
-        @include fs-headlineGarnett(4);
-        font-weight: 400; // magic number correcting line height so vertical alignment apprears even with labels
-        padding-top: 3px;
-        padding-bottom: $gs-baseline*2;
-        @include mq(tablet) {
-            @include fs-headlineGarnett(6);
-            font-weight: 400;
-            padding-bottom: $gs-baseline*3;
-        }
-    }
-
     //Review stars
     .stars {
         background-color: $news-garnett-highlight;
@@ -466,9 +458,8 @@ $quote-mark: 35px;
         line-height: 0;
         padding: calc((#{$gs-baseline} / 2) - 2px);
         padding-left: $gs-gutter / 2;
-        margin-top: -$gs-baseline / 2;
-        margin-bottom: $gs-baseline;
-        transform: translatey(-$gs-baseline / 2);
+        margin-top: $gs-baseline / 2;
+        margin-bottom: $gs-baseline + $gs-baseline / 2;
         @include mq($from: mobileLandscape) {
             padding-left: $gs-gutter;
         }
@@ -477,10 +468,7 @@ $quote-mark: 35px;
             //magic number used for alignment
             padding-left: 4px;
         }
-        @include mq($from: tablet) {
-            margin-bottom: 0;
-            transform: translatey(-$gs-gutter);
-        }
+
         @include mq($from: leftCol) {
             margin-left: -$gs-gutter / 2;
             padding-left: $gs-gutter / 2;
@@ -826,10 +814,126 @@ $quote-mark: 35px;
         }
     }
 }
+
+//**************** Interview style **************
+
+.content--type-interview {
+
+    .content__headline-showcase-wrapper {
+        .content__header {
+            @include mq($from: desktop) {
+                margin-bottom: calc(-#{$gs-baseline} * 7 - 2px);
+            }
+        }
+    }
+
+    .content__headline-standfirst-wrapper {
+        .content__header .content__headline {
+            margin-right: $gs-gutter / 2;
+            padding-bottom: $gs-baseline / 2;
+
+            @include mq($from: tablet) {
+                margin: 0;
+            }
+        }
+    }
+
+    .content__header  {
+        margin-left: $gs-baseline + 4px;
+
+        @include mq($from: mobileLandscape) {
+            margin-left: $gs-baseline * 2;
+        }
+
+        @include mq($from: phablet) {
+            margin-top: $gs-baseline / 2;
+        }
+
+        @include mq($from: tablet) {
+            margin-left: $gs-baseline / 2;
+        }
+    }
+
+    .content__label-interview {
+        @include fs-headlineGarnett(2);
+        padding-bottom: $gs-baseline / 4;
+        font-weight: 900;
+        display: inline-block;
+        box-decoration-break: clone;
+        position: relative;
+        color: #ffffff;
+
+        @include mq($from: desktop) {
+            padding-bottom: 0;
+            line-height: 29px;
+        }
+    }
+
+    .content__head--article .content__headline {
+        padding: 0;
+        line-height: 35px;
+
+        @include mq($from: desktop) {
+            line-height: 42px;
+        }
+
+        .content__headline--interview-wrapper {
+            background-color: $garnett-neutral-1;
+            display: inline;
+            position: relative;
+            z-index: 10;
+            color: #ffffff;
+            box-shadow: $gs-baseline / 2 0 0 $garnett-neutral-1, -$gs-baseline / 2 0 0 $garnett-neutral-1;
+            box-decoration-break: clone;
+            padding-bottom: $gs-baseline / 2;
+        }
+    }
+
+    .content__headline--byline-interview {
+        @include fs-headlineGarnett(2);
+        display: inline-block;
+        font-style: italic;
+        font-weight: 500;
+        background-color: $news-garnett-highlight;
+        box-shadow: $gs-baseline / 2 0 0 $news-garnett-highlight, -$gs-baseline / 2 0 0 $news-garnett-highlight;
+        color: $garnett-neutral-1;
+        margin-bottom: $gs-baseline;
+        padding-bottom: $gs-baseline / 4;
+        position: relative;
+        z-index: 10;
+
+        @include mq($from: tablet) {
+            margin-top: $gs-baseline / 3
+        }
+
+        @include mq($from: desktop) {
+            margin-top: 0;
+        }
+
+        a {
+            color: inherit;
+            font-weight: inherit;
+        }
+    }
+
+    &.has-feature-showcase-element {
+        .content__head--article .content__headline-showcase-wrapper {
+            .content__headline {
+                padding-bottom: $gs-baseline / 2;
+            }
+        }
+    }
+
+    .content__meta-container {
+        @include mq($from: desktop) {
+            margin-top: $gs-baseline * 3;
+        }
+    }
+}
+
 // *************** Opinion Styles ***************
 
-
-.content--type-guardianview,
+.content--type-guardianview:not(.content--type-column),
 .content--type-comment {
     .content__main {
         background-color: $opinion-garnett-background;
@@ -931,64 +1035,20 @@ $quote-mark: 35px;
         }
     }
 
-
     .content__header {
         @include multiline(8, $garnett-neutral-4);
         position: relative;
-        padding-bottom: $gs-baseline*6;
     }
 
     .content__headline {
         @include fs-headlineGarnett(5);
         font-weight: 100;
-        padding-bottom: 0;
         @include mq(mobileMedium) {
             @include fs-headlineGarnett(6);
         }
         @include mq(tablet) {
             @include fs-headlineGarnett(7);
         }
-        @include mq(leftCol) {
-            padding-bottom: 38px;
-        }
-    }
-
-    .content__head--byline-pic .content__header .content__headline__byline {
-        @include fs-headlineGarnett(5);
-        @include mq(mobileMedium) {
-            @include fs-headlineGarnett(6);
-        }
-        @include mq(tablet) {
-            @include fs-headlineGarnett(7);
-        }
-    }
-
-    .content__headline--byline {
-        font-style: italic;
-        margin-left: 0;
-        padding-top: $gs-baseline*2;
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-        }
-        @include mq(phablet) {
-            padding-top: 0;
-            padding-left: 0;
-        }
-        @include mq(tablet) {
-            padding-top: 28px;
-        }
-        @include mq(leftCol) {
-            padding-top: 0;
-        }
-    }
-
-    .content__headline--byline a {
-        text-decoration: none;
-        border-bottom: 0;
-    }
-
-    .content__headline--byline span:hover {
-        color: $neutral-3;
     }
 
     .content__standfirst {
@@ -1003,35 +1063,12 @@ $quote-mark: 35px;
         }
 
     }
-    .content__headline__byline {
-        overflow: visible;
-    }
 
     .meta__image {
         float: none;
         margin-right: -$gs-gutter;
         @include mq(phablet) {
             margin-right: 0;
-        }
-    }
-
-    .content__head--byline-pic .byline-img {
-
-        @include mq(mobileLandscape) {
-            height: $gs-baseline*15;
-        }
-    }
-
-    .byline-img {
-        position: absolute;
-        bottom: 0;
-        right: -$gs-gutter*2;
-        background: none!important;
-        margin: 0;
-        background-image: none;
-        max-width: none;
-        @include mq(mobileLandscape) {
-            right: gs-span(3) - $gs-gutter;
         }
     }
 
@@ -1292,6 +1329,31 @@ $quote-mark: 35px;
         background-color: $garnett-neutral-7;
     }
 }
+
+// For legacy videos, shows play circle and icon
+.gu-media-wrapper--video .vjs-big-play-button .vjs-control-text {
+    &:before {
+        content: '';
+        border-radius: 62.5rem;
+        width: 3.75rem;
+        height: 3.75rem;
+        font-size: 0;
+        display: block;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-40%, -50%);
+        border-style: solid;
+        border-width: .7em 0 .7em 1.4em;
+        border-color: transparent transparent transparent #ffffff;
+        @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
+            border-radius: .2em
+        }
+    }
+}
 // *************** Feature showcase overrides ***************
 .has-feature-showcase-element,
 .has-feature-showcase-opinion {
@@ -1319,7 +1381,10 @@ $quote-mark: 35px;
             }
         }
 
-        .content__headline-standfirst-wrapper .content__headline {
+        .content__headline-standfirst-wrapper .content__headline,
+        .content__headline-standfirst-wrapper .content__label-interview,
+        .content__headline-standfirst-wrapper .content__headline--byline-interview
+        {
             @include mq(leftCol) {
                 display: none;
             }
@@ -1337,7 +1402,7 @@ $quote-mark: 35px;
             transform: none;
             z-index: 5;
             bottom: 0;
-            @include mq(desktop) {
+            @include mq(tablet) {
                 bottom: unset;
                 top: 0;
             }
@@ -1597,51 +1662,6 @@ $quote-mark: 35px;
 
     .element .caption {
         background: transparent;
-    }
-}
-
-// *************** By line cutouts ****************
-
-.content__head--byline-pic .content__header {
-    padding-bottom: 0;
-
-    .content__headline {
-        padding-right: 0;
-        padding-bottom: 0;
-        width: auto;
-        float: none;
-    }
-
-    .content__headline__byline {
-        @include fs-headline(5);
-        @include mq(mobileLandscape) {
-            @include fs-headline(7, true);
-        }
-        overflow: hidden;
-        font-style: italic;
-        font-weight: 100;
-        padding: 0 $gs-gutter / 2;
-        @include mq(mobileLandscape) {
-            padding: 0 $gs-gutter;
-        }
-        @include mq(phablet) {
-            padding: 0;
-        }
-    }
-
-    .byline-img {
-        position: static;
-        float: right;
-        width: auto;
-        margin-right: -$gs-gutter;
-        shape-outside: polygon(0 130px, 0 150px, 180px 150px, 180px 0, 20px 0, 20px 96px);
-        @include mq(desktop) {
-            shape-outside: polygon(0 160px, 0 180px, 216px 180px, 216px 0, 36px 0, 24px 121px, 0 128px);
-        }
-    }
-
-    .byline-img__img {
-        float: none;
     }
 }
 

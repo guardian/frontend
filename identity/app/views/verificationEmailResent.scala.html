@@ -2,7 +2,6 @@
     user: com.gu.identity.model.User,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    customMessage: Option[String] = None,
     verifiedReturnUrl: Option[String],
     defaultReturnUrl: String,
     isSignupFlow: Boolean = false
@@ -10,24 +9,32 @@
 
 @import common.LinkTo
 
+@emailBlock = {
+    <div class="identity-forms-email-wrap">
+        <header>@user.getPrimaryEmailAddress</header>
+        <aside>
+            Is the email not correct? <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="mma : verify-email : update-email-from-error">Change it here</a>
+        </aside>
+    </div>
+}
+
 <div class="identity-wrapper monocolumn-wrapper">
     <section class="identity-forms-message">
-        <h1 class="identity-title">Confirm your email address</h1>
+        @if(isSignupFlow) {
+            <h1 class="identity-title">Please look in your email inbox</h1>
+        } else {
+            <h1 class="identity-title">To continue, you must confirm this is your email address</h1>
+        }
         <div class="identity-forms-message__body">
-            @for(m <- customMessage) {
-                <p>@m</p>
+            @if(isSignupFlow) {
+                <p>We have sent you a message because we need to confirm your email address. Please click the link in it.</p>
+            } else {
+                <p>We have sent a link to this email address. Please check your inbox and follow the instructions.</p>
             }
-            <div class="identity-forms-email-wrap">
-                <header>@user.getPrimaryEmailAddress</header>
-                <aside>
-                    Is the email not correct? <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="mma : verify-email : update-email-from-error">Change it here</a>
-                </aside>
-            </div>
-            <p>We have sent a link to this email address. Please check your inbox and follow the instructions.</p>
+            @emailBlock
         </div>
         <aside class="identity-forms-message__body">
-            <p class="identity-forms-message__explainer">Validation links are valid for 30 minutes before expiring.</p>
-            <p>Haven’t received the email or the link has expired?</p>
+            <p class="identity-forms-message__explainer">The link in the email is valid for 30 mins. If you haven’t received an email from us, please check your spam folder, or click below to resend.</p>
             <a class="manage-account__button manage-account__button--center js-id-send-validation-email" data-link-name="mma : verify-email : resent">Resend confirmation email</a>
         </aside>
         @if(isSignupFlow) {

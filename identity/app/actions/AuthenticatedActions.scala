@@ -1,7 +1,6 @@
 package actions
 
 import actions.AuthenticatedActions.AuthRequest
-import conf.switches.Switches.{IdentityPointToConsentJourneyPage}
 import idapiclient.IdApiClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
@@ -28,10 +27,11 @@ class AuthenticatedActions(
   private def redirectWithReturn(request: RequestHeader, path: String): Result = {
     val returnUrl = identityUrlBuilder.buildUrl(request.uri)
 
-    val redirectUrlWithParams = identityUrlBuilder.appendQueryParams(path, List(
-      "INTCMP" -> "email",
-      "returnUrl" -> returnUrl
-    ))
+    val params = List("returnUrl" -> returnUrl) ++
+      List("INTCMP", "email") //only forward these if they exist in original query string
+        .flatMap(name => request.getQueryString(name).map(value => name -> value))
+
+    val redirectUrlWithParams = identityUrlBuilder.appendQueryParams(path, params)
 
     SeeOther(identityUrlBuilder.buildUrl(redirectUrlWithParams))
   }
@@ -66,9 +66,10 @@ class AuthenticatedActions(
       authService.fullyAuthenticatedUser(request) match {
         case Some(user) if user.hasRecentlyAuthenticated =>
           Right(new AuthenticatedRequest(user, request))
-
-        case _ =>
+        case Some(user) =>
           Left(sendUserToReauthenticate(request))
+        case None =>
+          Left(sendUserToSignin(request))
       }
     }
 
@@ -91,7 +92,7 @@ class AuthenticatedActions(
       override val executionContext = ec
 
       def refine[A](request: Request[A]) =
-        authService.consentAuthenticatedUser(request) match {
+        authService.consentCookieAuthenticatedUser(request) match {
           case Some(userFormCookie) =>
             Future.successful(Right(new AuthenticatedRequest(userFormCookie, request)))
 
@@ -124,15 +125,12 @@ class AuthenticatedActions(
       override val executionContext = ec
 
       def filter[A](request: AuthRequest[A]) = {
-        if (IdentityPointToConsentJourneyPage.isSwitchedOn)
-          redirectService.toProfileRedirect(request.user, request).map { redirect =>
-            if (redirect.isAllowedFrom(pageId))
-              Some(sendUserToUserRedirectDecision(request, redirect))
-            else
-              None
-          }
-        else
-          Future.successful(None)
+        redirectService.toProfileRedirect(request.user, request).map { redirect =>
+          if (redirect.isAllowedFrom(pageId))
+            Some(sendUserToUserRedirectDecision(request, redirect))
+          else
+            None
+        }
       }
     }
 
@@ -182,6 +180,5 @@ class AuthenticatedActions(
 
   /** Redirects for the account page */
   def manageAccountRedirectAction(pageId: String = ""): ActionBuilder[AuthRequest, AnyContent] =
-    consentAuthWithIdapiUserAction andThen decideManageAccountRedirectFilter(pageId)
-
+    recentFullAuthWithIdapiUserAction andThen decideManageAccountRedirectFilter(pageId)
 }

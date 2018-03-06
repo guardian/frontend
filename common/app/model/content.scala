@@ -56,6 +56,7 @@ final case class Content(
   showInRelated: Boolean,
   cardStyle: CardStyle,
   shouldHideAdverts: Boolean,
+  shouldHideReaderRevenue: Boolean,
   witnessAssignment: Option[String],
   isbn: Option[String],
   imdb: Option[String],
@@ -123,7 +124,11 @@ final case class Content(
     if(isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) Item700
     else if(tags.isComment) FacebookOpenGraphImage.opinions
     else if(tags.isLiveBlog) FacebookOpenGraphImage.live
-    else FacebookOpenGraphImage.default
+    else starRating.map(rating =>
+        FacebookOpenGraphImage.starRating(rating)
+    ).getOrElse(
+        FacebookOpenGraphImage.default
+    )
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
   // These dimensions are just an educated guess (e.g. we don't take into account image-resizer being turned off)
@@ -139,7 +144,11 @@ final case class Content(
     val image = if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) Item700
     else if(tags.isComment) TwitterImage.opinions
     else if(tags.isLiveBlog) TwitterImage.live
-    else TwitterImage.default
+    else starRating.map(rating =>
+        TwitterImage.starRating(rating)
+    ).getOrElse(
+        TwitterImage.default
+    )
     ImgSrc(openGraphImageOrFallbackUrl, image)
   }
 
@@ -232,6 +241,7 @@ final case class Content(
     ("isImmersive", JsBoolean(isImmersive)),
     ("isColumn", JsBoolean(isColumn)),
     ("isPaidContent", JsBoolean(isPaidContent)),
+    ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
 
   )
@@ -379,6 +389,7 @@ object Content {
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
       cardStyle = CardStyle.make(cardStyle),
       shouldHideAdverts = apifields.flatMap(_.shouldHideAdverts).getOrElse(false),
+      shouldHideReaderRevenue = apifields.flatMap(_.shouldHideReaderRevenue).getOrElse(false),
       witnessAssignment = references.get("witness-assignment"),
       isbn = references.get("isbn"),
       imdb = references.get("imdb"),
@@ -443,7 +454,6 @@ object Article {
       ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
       ("isColumn", JsBoolean(content.isColumn)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
-      ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
       "videoDuration" -> videoDuration
     ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
 

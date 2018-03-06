@@ -66,6 +66,15 @@
 }
 
 
+@faciaCardExternal(card: ContentCard, withImage: Boolean, isBranded: Boolean) = {
+    @faciaCard(classesForCard(card), isBranded) {
+        @if(withImage) {
+            @row(Seq("no-pad")){@imgFromCard(card)}
+        }
+        @headline(card, isLast = true)
+    }
+}
+
 @faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean, isBranded: Boolean) = {
     @faciaCard(classesForCard(card, withImage), isBranded) {
         @if(withImage) {
@@ -106,10 +115,9 @@
         case layoutStyle: EmailFaciaCard => {
             @card.cardStyle match {
                 case ExternalLink => {
-                    @faciaCardWithoutTrailText(
+                    @faciaCardExternal(
                         card = card,
-                        withImage = false,
-                        largeHeadline = false,
+                        withImage = layoutStyle.image,
                         isBranded = isBranded
                     )
                 }
