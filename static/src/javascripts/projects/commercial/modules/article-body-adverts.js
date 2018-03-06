@@ -125,7 +125,7 @@ const getRules = (): Object => {
         slotSelector: ' > p',
         minAbove: isBreakpoint({
             max: 'tablet',
-        })
+        }) || shouldUseVariantRules
             ? 300
             : 700,
         minBelow: 300,
@@ -143,7 +143,7 @@ const getRules = (): Object => {
         filter,
     };
 
-    const variantDesktopRules = {
+    const variantRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
         minAbove: 300,
@@ -155,7 +155,7 @@ const getRules = (): Object => {
     };
 
     return shouldUseVariantRules && bodyAds > 0
-        ? variantDesktopRules
+        ? variantRules
         : defaultRules;
 };
 
