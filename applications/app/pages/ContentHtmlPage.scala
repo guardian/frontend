@@ -15,7 +15,7 @@ import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, 
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.{newspaperContent, quizAnswerContent}
 import html.HtmlPageHelpers.ContentCSSFile
-import conf.switches.Switches.{ WeAreHiring, OrielFullIntegration, LotameScriptTag }
+import conf.switches.Switches.{ WeAreHiring, OrielFullIntegration }
 
 object ContentHtmlPage extends HtmlPage[Page] {
 
