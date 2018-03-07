@@ -1709,5 +1709,28 @@ $quote-mark: 35px;
             border-color: darken($garnett-neutral-8, 10%);
         }
     }
+}
 
+.crossword__anagram-helper-outer {
+    .button--large {
+        background: $lifestyle-garnett-feature;
+        border: 1px solid $lifestyle-garnett-feature;
+        &:hover,
+        &:visited,
+        &:focus {
+            background-color: darken($lifestyle-garnett-feature, 10%);
+            border-color: darken($lifestyle-garnett-feature, 10%);
+        }
+    }
+
+    .button--tertiary {
+        background: transparent;
+        border: 1px solid $garnett-neutral-4;
+        &:hover,
+        &:visited,
+        &:focus {
+            background-color: transparent;
+            border-color: darken($garnett-neutral-4, 15%);
+        }
+    }
 }
