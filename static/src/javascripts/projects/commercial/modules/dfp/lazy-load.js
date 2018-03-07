@@ -10,6 +10,7 @@ import config from 'lib/config';
 import { getViewport, getBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import { getCurrentTime } from 'lib/user-timing';
+import { session } from 'lib/storage';
 import once from 'lodash/functions/once';
 
 const IntersectionObserver = window.IntersectionObserver;
@@ -67,6 +68,17 @@ const calculateLazyLoadingDistance = (viewport: {
         const breakpoint = getBreakpoint();
         const front = config.page.isFront ? 'front' : 'non-front';
         return optimisedRootMargin(viewport)[front][breakpoint];
+    }
+
+    if (variant === 'super-richard'){
+        if (session.isAvailable()) {
+            const highViewSlots = session.get('gu.commercial.slotVisibility') || 0;
+            const sessionPageViews = session.get('gu.commercial.pageViews') || 0;
+
+            if (highViewSlots / sessionPageViews > 2.5) {
+                return 400;
+            }
+        }
     }
 
     return 200;
