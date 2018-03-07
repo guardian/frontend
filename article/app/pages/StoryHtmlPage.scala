@@ -1,7 +1,7 @@
 package pages
 
 import common.Edition
-import conf.switches.Switches.{OrielFullIntegration, BlockthroughSwitch, SurveySwitch, WeAreHiring}
+import conf.switches.Switches._
 import html.HtmlPageHelpers._
 import html.Styles
 import model.{ApplicationContext, Page}
@@ -42,6 +42,7 @@ object StoryHtmlPage {
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
         orielScriptTag() when OrielFullIntegration.isSwitchedOn,
+        lotameScriptTag() when LotameScriptTag.isSwitchedOn,
         titleTag(),
         metaData(),
         head,
