@@ -2,14 +2,14 @@
 import config from 'lib/config';
 
 export const commercialLazyLoading: ABTest = {
-    id: 'CommercialLazyLoading',
+    id: 'CommercialLazyLoadingExtended',
     start: '2018-02-16',
     expiry: '2018-03-30',
     author: 'Jon Norman',
     description:
         'This test alters the threshold for when lazy loaded adverts are displayed',
     audience: 0.24,
-    audienceOffset: 0.7,
+    audienceOffset: 0.4,
     successMeasure:
         'No negative impact on viewability, positive impact in number of impressions rendered.',
     audienceCriteria: 'All web traffic.',
