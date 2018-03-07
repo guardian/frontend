@@ -9,6 +9,7 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlot } from 'commercial/modules/dfp/create-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { getTestVariantId } from 'common/modules/experiments/utils.js';
 
 type AdSize = {
     width: number,
@@ -20,9 +21,14 @@ type AdSize = {
 /* bodyAds is a counter that keeps track of the number of inline MPUs
  * inserted dynamically. */
 let bodyAds: number;
-const replaceTopSlot: boolean = isBreakpoint({
+const isMobileBreakpoint: boolean = isBreakpoint({
     max: 'phablet',
 });
+
+const shouldUseVariantRules =
+    config.get('switches.abSpacefinderSimplify', false) &&
+    getTestVariantId('SpacefinderSimplify') === 'variant' &&
+    !isMobileBreakpoint;
 
 const getSlotNameForMobile = (): string =>
     bodyAds === 1 ? 'top-above-nav' : `inline${bodyAds - 1}`;
@@ -34,10 +40,10 @@ const getSlotTypeForMobile = (): string =>
 
 const getSlotTypeForDesktop = (): string => 'inline';
 
-const getSlotName = replaceTopSlot
+const getSlotName = isMobileBreakpoint
     ? getSlotNameForMobile
     : getSlotNameForDesktop;
-const getSlotType = replaceTopSlot
+const getSlotType = isMobileBreakpoint
     ? getSlotTypeForMobile
     : getSlotTypeForDesktop;
 
@@ -68,10 +74,15 @@ const insertAdAtPara = (
 };
 
 // Add new ads while there is still space
-const addArticleAds = (count: number, rules: Object): Promise<number> => {
+const addArticleAds = (rules: Object, count: ?number): Promise<number> => {
     const insertInlineAds = (paras: HTMLElement[]): Promise<number> => {
         const slots: Array<Promise<void>> = paras
-            .slice(0, Math.min(paras.length, count))
+            .slice(
+                0,
+                count && count > 0
+                    ? Math.min(paras.length, count)
+                    : paras.length
+            )
             .map((para: Node) => {
                 bodyAds += 1;
                 return insertAdAtPara(
@@ -102,14 +113,27 @@ const getRules = (): Object => {
         minBelow: 500,
     };
 
-    return {
+    const filter = (slot: SpacefinderItem) => {
+        if (
+            !prevSlot ||
+            Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >=
+                adSlotClassSelectorSizes.minBelow
+        ) {
+            prevSlot = slot;
+            return true;
+        }
+        return false;
+    };
+
+    const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: isBreakpoint({
-            max: 'tablet',
-        })
-            ? 300
-            : 700,
+        minAbove:
+            isBreakpoint({
+                max: 'tablet',
+            }) || shouldUseVariantRules
+                ? 300
+                : 700,
         minBelow: 300,
         selectors: {
             ' > h2': {
@@ -122,21 +146,25 @@ const getRules = (): Object => {
                 minBelow: 400,
             },
         },
-        filter: (slot: SpacefinderItem) => {
-            if (
-                !prevSlot ||
-                Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >=
-                    adSlotClassSelectorSizes.minBelow
-            ) {
-                prevSlot = slot;
-                return true;
-            }
-            return false;
-        },
+        filter,
     };
+
+    const variantRules = {
+        bodySelector: '.js-article__body',
+        slotSelector: ' > p',
+        minAbove: 300,
+        minBelow: 300,
+        selectors: {
+            ' .ad-slot': adSlotClassSelectorSizes,
+        },
+        filter,
+    };
+
+    return shouldUseVariantRules && bodyAds > 0 ? variantRules : defaultRules;
 };
 
-const addInlineAds = (): Promise<number> => addArticleAds(10, getRules());
+const addInlineAds = (): Promise<number> =>
+    addArticleAds(getRules(), 1).then(() => addArticleAds(getRules()));
 
 const getInlineMerchRules = (): Object => {
     const inlineMerchRules: Object = getRules();
@@ -188,10 +216,4 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
 
     addInlineAds().then(stop);
     return Promise.resolve(true);
-};
-
-export const _ = {
-    waitForMerch,
-    addInlineMerchAd,
-    addInlineAds,
 };

@@ -1,5 +1,5 @@
 // @flow
-import { init, _ } from 'commercial/modules/article-body-adverts';
+import { init } from 'commercial/modules/article-body-adverts';
 import config from 'lib/config';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -36,7 +36,7 @@ jest.mock('lib/detect', () => ({
     getBreakpoint: jest.fn(),
     getViewport: jest.fn(),
 }));
-jest.mock('lib/config', () => ({ page: {} }));
+jest.mock('lib/config', () => ({ page: {}, get: () => false }));
 
 const spaceFillerStub: JestMockFn<*, *> = (spaceFiller.fillSpace: any);
 const getFirstRulesUsed = () =>
@@ -107,31 +107,6 @@ describe('Article Body Adverts', () => {
                 writer([paragraph]);
                 expect(fixture.querySelector('#dfp-ad--im')).toBeTruthy();
             });
-        });
-
-        it('inserts up to ten adverts when DFP returns empty merchandising components', () => {
-            // The 0 is for addInlineMerchAd, failing to add a merchandising component.
-            spaceFillerStub.mockReturnValueOnce(Promise.resolve(0));
-            spaceFillerStub.mockReturnValueOnce(Promise.resolve(10));
-
-            getBreakpoint.mockReturnValue('tablet');
-
-            jest.setMock(
-                'commercial/modules/dfp/track-ad-render',
-                (id: string) => {
-                    const ads = {
-                        'dfp-ad--im': false,
-                    };
-                    return Promise.resolve(ads[id]);
-                }
-            );
-
-            return _.addInlineMerchAd()
-                .then(_.waitForMerch)
-                .then(_.addInlineAds)
-                .then(countAdded => {
-                    expect(countAdded).toEqual(10);
-                });
         });
     });
 
