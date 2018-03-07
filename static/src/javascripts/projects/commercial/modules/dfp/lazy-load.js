@@ -70,10 +70,12 @@ const calculateLazyLoadingDistance = (viewport: {
         return optimisedRootMargin(viewport)[front][breakpoint];
     }
 
-    if (variant === 'super-richard'){
+    if (variant === 'super-richard') {
         if (session.isAvailable()) {
-            const highViewSlots = session.get('gu.commercial.slotVisibility') || 0;
-            const sessionPageViews = session.get('gu.commercial.pageViews') || 0;
+            const highViewSlots =
+                session.get('gu.commercial.slotVisibility') || 0;
+            const sessionPageViews =
+                session.get('gu.commercial.pageViews') || 0;
 
             if (highViewSlots / sessionPageViews > 2.5) {
                 return 400;
