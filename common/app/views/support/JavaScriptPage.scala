@@ -13,10 +13,9 @@ import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
 
-  def get(page: Page)(implicit request: RequestHeader, context: ApplicationContext): JsValue = Json.toJson(getMap(page))
+  def get(page: Page, edition: Edition, isPreview: Boolean): JsValue = Json.toJson(getMap(page, edition, isPreview))
 
-  def getMap(page: Page)(implicit request: RequestHeader, context: ApplicationContext): Map[String,JsValue] = {
-    val edition = Edition(request)
+  def getMap(page: Page, edition: Edition, isPreview: Boolean): Map[String,JsValue] = {
     val metaData = page.metadata
     val content: Option[Content] = Page.getContent(page).map(_.content)
 
@@ -67,7 +66,7 @@ object JavaScriptPage {
       ("idUrl", JsString(Configuration.id.url)),
       ("beaconUrl", JsString(Configuration.debug.beaconUrl)),
       ("assetsPath", JsString(Configuration.assets.path)),
-      ("isPreview", JsBoolean(context.isPreview)),
+      ("isPreview", JsBoolean(isPreview)),
       ("allowUserGeneratedContent", JsBoolean(allowUserGeneratedContent)),
       ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
       ("membershipAccess", JsString(membershipAccess)),
