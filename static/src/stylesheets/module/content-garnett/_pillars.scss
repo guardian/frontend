@@ -117,7 +117,7 @@
 
     .meta__extras--crossword {
         .social-icon {
-            background: white;
+            background: $garnett-neutral-5;
             border: 1px solid $garnett-neutral-4;
 
             &:hover {
@@ -130,7 +130,7 @@
             fill: $kickerColor;
 
             &:hover {
-                fill: white;
+                fill: $garnett-neutral-5;
             }
         }
     }
@@ -245,8 +245,8 @@
 
     .inline-garnett-quote svg {
         height: get-font-size(headline, 3);
-        width: get-font-size(headline, 3) * 0.5;
-        margin-right: get-font-size(headline, 3) * 0.5;
+        width: get-font-size(headline, 3) * .5;
+        margin-right: get-font-size(headline, 3) * .5;
         fill: $pillarColor;
     }
 
@@ -275,7 +275,7 @@
 
     .rich-link__kicker {
         border-right: 1px solid $pillarColor;
-        padding-right: 0.375em;
+        padding-right: .375em;
     }
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
