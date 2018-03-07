@@ -11,7 +11,7 @@ import views.html.fragments._
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring, orielScriptTag, lotameScriptTag}
+import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring, orielScriptTag}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.{newspaperContent, quizAnswerContent}
 import html.HtmlPageHelpers.ContentCSSFile
@@ -47,7 +47,6 @@ object ContentHtmlPage extends HtmlPage[Page] {
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
         orielScriptTag() when OrielFullIntegration.isSwitchedOn,
-        lotameScriptTag() when LotameScriptTag.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(allStyles),
