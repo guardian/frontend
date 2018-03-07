@@ -2,6 +2,7 @@ package pages
 
 import common.Edition
 import conf.switches.Switches._
+import experiments.LotameParticipation
 import html.HtmlPageHelpers._
 import html.Styles
 import model.{ApplicationContext, Page}
@@ -42,7 +43,7 @@ object StoryHtmlPage {
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
         orielScriptTag() when OrielFullIntegration.isSwitchedOn,
-        lotameScriptTag() when LotameScriptTag.isSwitchedOn,
+        lotameScriptTag() when LotameParticipation.isParticipating,
         titleTag(),
         metaData(),
         head,

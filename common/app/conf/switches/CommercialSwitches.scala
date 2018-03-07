@@ -327,16 +327,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val LotameScriptTag: Switch = Switch(
-    group = Commercial,
-    name = "lotame-script-tag",
-    description = "Include the Lotame script tag in the head of the page",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 28),
-    exposeClientSide = false
-  )
-
   val BlockthroughSwitch: Switch = Switch(
     group = Commercial,
     name = "blockthrough",
