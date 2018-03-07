@@ -1,139 +1,53 @@
 // @flow
 
 import 'prebid.js/build/dist/prebid';
-import { getCookie } from 'lib/cookies';
-import config from 'lib/config';
-import { type Breakpoint, breakpoints, isBreakpoint } from 'lib/detect';
 import { Advert } from 'commercial/modules/dfp/Advert';
-import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import {
-    bidderConfig,
-    improveDigitalBidder,
-    indexExchangeBidder,
-    sonobiBidder,
-    trustXBidder,
-} from 'commercial/modules/prebid/bidder-config';
+import { bidders } from 'commercial/modules/prebid/bidder-config';
+import { labels } from 'commercial/modules/prebid/labels';
+import { slots } from 'commercial/modules/prebid/slot-config';
 import { priceGranularity } from 'commercial/modules/prebid/price-config';
 import type {
-    PrebidAdSlotCriteria,
     PrebidBid,
     PrebidBidder,
     PrebidSize,
+    PrebidSlot,
+    PrebidSlotLabel,
 } from 'commercial/modules/prebid/types';
-
-const bidders = [];
-if (config.switches.prebidSonobi) {
-    bidders.push(sonobiBidder);
-}
-if (config.switches.prebidIndexExchange) {
-    bidders.push(indexExchangeBidder);
-}
-if (config.switches.prebidTrustx) {
-    bidders.push(trustXBidder);
-}
-if (config.switches.prebidImproveDigital) {
-    bidders.push(improveDigitalBidder);
-}
+import { stripTrailingNumbers } from 'commercial/modules/prebid/utils';
 
 const bidderTimeout = 1500;
-
-const isEqualAdSize = (a: PrebidSize, b: PrebidSize): boolean =>
-    a[0] === b[0] && a[1] === b[1];
-
-const filterConfigEntries = (
-    bidder: string,
-    slotSizes: PrebidSize[],
-    slotId: string
-): PrebidAdSlotCriteria[] => {
-    let bidConfigEntries: PrebidAdSlotCriteria[] = bidderConfig[bidder] || [];
-
-    bidConfigEntries = bidConfigEntries.filter(bid =>
-        bid.slots.some(slotName => slotId.startsWith(slotName))
-    );
-    bidConfigEntries = bidConfigEntries.filter(
-        bid =>
-            !bid.geoContinent ||
-            bid.geoContinent === getCookie('GU_geo_continent')
-    );
-    bidConfigEntries = bidConfigEntries.filter(
-        bid => !bid.editions || bid.editions.includes(config.page.edition)
-    );
-    bidConfigEntries = bidConfigEntries.filter(bid =>
-        isBreakpoint(bid.breakpoint)
-    );
-    bidConfigEntries = bidConfigEntries.filter(bid =>
-        slotSizes.some(slotSize =>
-            bid.sizes.some(configSize => isEqualAdSize(configSize, slotSize))
-        )
-    );
-
-    return bidConfigEntries;
-};
-
-// Returns array of dimensions, eg. [[300, 250], [300, 600]]
-const getAdSizesFromAdvert = (advert: Advert): PrebidSize[] => {
-    const validBreakpoints: Breakpoint[] = breakpoints.filter(breakpoint =>
-        isBreakpoint({ min: breakpoint.name })
-    );
-    const validBreakpointKeys: string[] = validBreakpoints
-        .map(breakpoint => breakpointNameToAttribute(breakpoint.name))
-        .reverse();
-    const bestMatch: string =
-        validBreakpointKeys.find(
-            breakpointName => breakpointName in advert.sizes
-        ) || '';
-
-    const sizes: any[] = advert.sizes[bestMatch] || [];
-    const validSizes = sizes.filter(
-        ([width, height]) => Number.isInteger(width) && Number.isInteger(height)
-    );
-    return (validSizes: PrebidSize[]);
-};
 
 class PrebidAdUnit {
     code: string;
     sizes: PrebidSize[];
     bids: PrebidBid[];
+    labelAny: PrebidSlotLabel[];
+    labelAll: PrebidSlotLabel[];
 
     constructor(advert: Advert) {
-        this.code = advert.id;
-        this.sizes = [];
-        this.bids = [];
+        const slot: ?PrebidSlot = slots.find((s): boolean =>
+            stripTrailingNumbers(advert.id).endsWith(s.key)
+        );
 
-        // Each Advert can take a number of possible of sizes. Using this array of sizes,
-        // find an entry in the bidder-config.js config object that matches the criteria.
-        const advertSizes: PrebidSize[] = getAdSizesFromAdvert(advert);
-        this.getMatchingBids(advertSizes);
-    }
-
-    getMatchingBids(availableSizes: PrebidSize[]) {
-        bidders.forEach((bidder: PrebidBidder) => {
-            const matchingConfigEntries: PrebidAdSlotCriteria[] = filterConfigEntries(
-                bidder.name,
-                availableSizes,
-                this.code
-            );
-            if (matchingConfigEntries.length > 0) {
-                // A config entry will specify a size, which should be added to the prebid ad unit if's not already included.
-                matchingConfigEntries.forEach(
-                    (matchedEntry: PrebidAdSlotCriteria) => {
-                        const newSizes = matchedEntry.sizes.filter(
-                            (newSize: PrebidSize) =>
-                                this.sizes.findIndex(size =>
-                                    isEqualAdSize(size, newSize)
-                                ) === -1
-                        );
-                        this.sizes.push(...newSizes);
-                    }
-                );
-
-                this.bids.push({
-                    bidder: bidder.name,
-                    params: bidder.bidParams(this.code, availableSizes),
-                });
-            }
-        });
+        if (slot) {
+            this.code = advert.id;
+            this.sizes = slot.sizes;
+            this.labelAny = slot.labelAny ? slot.labelAny : [];
+            this.labelAll = slot.labelAll ? slot.labelAll : [];
+            this.bids = bidders.map((bidder: PrebidBidder) => ({
+                bidder: bidder.name,
+                params: bidder.bidParams(this.code, this.sizes),
+                labelAny: bidder.labelAny,
+                labelAll: bidder.labelAll,
+            }));
+        } else {
+            this.code = '';
+            this.sizes = [];
+            this.bids = [];
+            this.labelAny = [];
+            this.labelAll = [];
+        }
     }
 }
 
@@ -172,7 +86,7 @@ class PrebidService {
         }
         const adUnit = new PrebidAdUnit(advert);
 
-        if (adUnit.bids.length === 0) {
+        if (adUnit.sizes.length === 0) {
             return PrebidService.requestQueue;
         }
 
@@ -189,6 +103,7 @@ class PrebidService {
                                     ]);
                                     resolve();
                                 },
+                                labels,
                             });
                         });
                     })
