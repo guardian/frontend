@@ -1709,6 +1709,12 @@ $quote-mark: 35px;
             border-color: darken($garnett-neutral-8, 10%);
         }
     }
+
+    .button--secondary.crossword__controls__button--confirm {
+        background-color: $garnett-neutral-1;
+        color: $garnett-neutral-5;
+        border: 0;
+    }
 }
 
 .crossword__anagram-helper-outer {
