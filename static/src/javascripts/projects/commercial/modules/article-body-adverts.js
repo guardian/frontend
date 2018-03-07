@@ -113,6 +113,9 @@ const getRules = (): Object => {
         minBelow: 500,
     };
 
+    // this can be used to ensure that _nothing_ can be placed above a given selector element
+    const blockadeMinAbove = 999999;
+
     const filter = (slot: SpacefinderItem) => {
         if (
             !prevSlot ||
@@ -156,6 +159,10 @@ const getRules = (): Object => {
         minBelow: 300,
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
+            ' .ad-slot--inline1': {
+                minAbove: 0,
+                minBelow: blockadeMinAbove,
+            },
         },
         filter,
     };
