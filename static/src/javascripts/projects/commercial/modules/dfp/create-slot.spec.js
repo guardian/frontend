@@ -19,7 +19,8 @@ const inline1Html = `
     data-link-name="ad slot inline1"
     data-name="inline1"
     data-mobile="1,1|2,2|300,250|fluid"
-    data-desktop="1,1|2,2|300,250|620,1|620,350|fluid"></div>
+    data-desktop="1,1|2,2|300,250|620,1|620,350|fluid"><span class="bt-uid-tg" uid="5a98587091-157" style="display: none !important"></span>
+</div>
 `;
 
 jest.mock('lib/config', () => ({ page: { edition: 'UK' } }));

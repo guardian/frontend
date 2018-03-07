@@ -3,7 +3,8 @@
     articleAsideOptionalSizes: Seq[String],
     isSticky: Boolean = true
 
-)
+)(implicit request: RequestHeader)
+
 @import conf.switches.Switches.CommercialSwitch
 
 @if(CommercialSwitch.isSwitchedOn && shouldShowAds) {

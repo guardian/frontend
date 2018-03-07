@@ -1,7 +1,5 @@
-@(
-    id: Int,
-    isMobile: Boolean = false
-)
+@(id: Int, isMobile: Boolean = false)(implicit request: RequestHeader)
+
 @import conf.switches.Switches.CommercialSwitch
 
 @if(CommercialSwitch.isSwitchedOn) {

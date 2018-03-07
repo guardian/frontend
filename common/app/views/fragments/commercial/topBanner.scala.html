@@ -1,6 +1,6 @@
-@import views.support.Commercial.topAboveNavSlot
+@()(implicit page: model.Page, request: RequestHeader)
 
-@()(implicit page: model.Page)
+@import views.support.Commercial.topAboveNavSlot
 
 <div class="@topAboveNavSlot.cssClasses(page.metadata)">
   @fragments.commercial.standardAd(
