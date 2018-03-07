@@ -68,7 +68,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-lazy-loading",
+    "ab-commercial-lazy-loading-extended",
     "Varies the strategy for lazyloading of adverts",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
