@@ -8,11 +8,11 @@
         }
     }
 
+    &.content--type-feature .content__headline,
+    &.content--type-review .content__headline,
     .button--secondary,
     .drop-cap,
     .element-pullquote p,
-    &.content--type-feature .content__headline,
-    &.content--type-review .content__headline,
     .u-underline {
         color: $pillarColor;
     }
@@ -24,9 +24,9 @@
 
     .byline,
     .content--media .content__headline,
+    .content__section-label__link,
     .old-article-message,
     .pullquote-cite,
-    .content__section-label__link,
     a {
         color: $kickerColor;
     }
@@ -41,12 +41,12 @@
     }
 
     .block-share__item .inline-icon,
-    .inline-close svg,
     .commentcount2__heading span,
+    .inline-close svg,
+    .inline-triangle,
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
-    .social-icon__svg,
-    .inline-triangle {
+    .social-icon__svg {
         fill: $kickerColor;
     }
 
@@ -101,8 +101,8 @@
         border-radius: 100%;
     }
 
-    .youtube-media-atom__bottom-bar__icon .inline-video-icon__svg,
-    .fc-item--media .fc-item__title .inline-video-icon {
+    .fc-item--media .fc-item__title .inline-video-icon,
+    .youtube-media-atom__bottom-bar__icon .inline-video-icon__svg {
         fill: $mediaColor;
     }
 
@@ -119,23 +119,21 @@
         .social-icon {
             background: white;
             border: 1px solid $garnett-neutral-4;
+
             &:hover {
                 background: $kickerColor;
                 border: 1px solid $kickerColor;
             }
         }
 
-
-
         .social-icon svg {
             fill: $kickerColor;
-            &:hover{
+
+            &:hover {
                 fill: white;
             }
         }
-
     }
-
 }
 //////** Discussion (comment) styling **//////////
 //d-comment__author a[href], ._underline_1lj47_3, .js-discussion-author-link
@@ -143,10 +141,10 @@
 // we can get rid of it once we clean up the pre-garnett code
 @mixin footerPalette($kickerColor) {
     ._underline_1lj47_3,
-    .d-show-more-replies__button,
     .d-comment__action,
     .d-comment__author a[href],
     .d-comment__reply-to-author,
+    .d-show-more-replies__button,
     .js-discussion-author-link {
         color: $kickerColor;
     }
@@ -215,8 +213,8 @@
     }
 
     .block-share__item .inline-icon,
-    .inline-close svg,
     .commentcount2__heading span,
+    .inline-close svg,
     .old-article-message .old-article-message--clock svg,
     .social-icon svg,
     .social-icon__svg {
@@ -247,8 +245,8 @@
 
     .inline-garnett-quote svg {
         height: get-font-size(headline, 3);
-        width: get-font-size(headline, 3) * .5;
-        margin-right: get-font-size(headline, 3) * .5;
+        width: get-font-size(headline, 3) * 0.5;
+        margin-right: get-font-size(headline, 3) * 0.5;
         fill: $pillarColor;
     }
 
@@ -277,7 +275,7 @@
 
     .rich-link__kicker {
         border-right: 1px solid $pillarColor;
-        padding-right: .375em;
+        padding-right: 0.375em;
     }
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
@@ -469,9 +467,9 @@
         }
     }
 
+    &.rich-link--audio,
     &.rich-link--gallery,
-    &.rich-link--video,
-    &.rich-link--audio {
+    &.rich-link--video {
         background: $media-garnett-main-1;
 
         .u-faux-block-link--hover {

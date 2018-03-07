@@ -1681,6 +1681,8 @@ $quote-mark: 35px;
 }
 
 ////// **Crossword******************************** ////
-.crossword__links .crossword__links-related a {
-    color: $lifestyle-garnett-main-1;
+.crossword__container {
+    .crossword__clues-header {
+        border-top: 1px solid $lifestyle-garnett-main-1;
+    }
 }
