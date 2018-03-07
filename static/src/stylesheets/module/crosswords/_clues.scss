@@ -1,6 +1,6 @@
 .crossword__clues-header {
     @include fs-header(1);
-    border-top: 1px solid $crosswordAccent2;
+    border-top: 1px solid $lifestyle-garnett-main-1;
     border-bottom: 1px dotted $neutral-3;
     padding-bottom: $gs-baseline * .75;
 }
@@ -66,4 +66,3 @@
 .crossword__clue--display-group-order:before {
     padding-right: 14px; // 14px - Matches the width between double digit numbers and clue of non-grouped clues
 }
-
