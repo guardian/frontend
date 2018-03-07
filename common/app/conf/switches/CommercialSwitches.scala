@@ -320,7 +320,7 @@ trait CommercialSwitches {
   val OrielFullIntegration: Switch = Switch(
     group = Commercial,
     name = "oriel-full-integration",
-    description = "Include the ESI tag dropped at the start of <head> for full Oriel integration",
+    description = "Include a tag dropped at the start of <head> for full Oriel integration",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = new LocalDate(2018, 6, 28),
