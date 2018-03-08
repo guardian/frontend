@@ -8,5 +8,5 @@ export const membershipEngagementBannerTests: $ReadOnlyArray<
 > = [
     SupportEngagementBannerCircles,
     AcquisitionsEngagementBannerEurSupport,
-    AcquisitionsEngagementBannerAudSupport
+    AcquisitionsEngagementBannerAudSupport,
 ];
