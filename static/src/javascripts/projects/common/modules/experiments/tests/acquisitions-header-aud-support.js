@@ -51,7 +51,7 @@ export const acquisitionsHeaderAudSupport: AcquisitionsABTest = {
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV 2.0',
-    audienceCriteria: 'All EUR transaction web traffic.',
+    audienceCriteria: 'All AUD transaction web traffic.',
     idealOutcome: 'We get more money when we tailor the destination to the CTA',
     canRun: () =>
         geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'AU',
