@@ -115,7 +115,8 @@ final case class Fields(
   def javascriptConfig: Map[String, JsValue] = {
     Map(
       "shortUrl" -> JsString(shortUrl),
-      "shortUrlId" -> JsString(shortUrlId)
+      "shortUrlId" -> JsString(shortUrlId),
+      "shouldHideReaderRevenue" -> JsBoolean(shouldHideReaderRevenue.getOrElse(false))
     )
   }
 }
