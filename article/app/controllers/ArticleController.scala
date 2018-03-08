@@ -114,8 +114,11 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         else if (request.isAmp) views.html.articleAMP(article)
         else ArticleHtmlPage.html(article)
       }
-      val jsonResponse = () => views.html.fragments.articleBody(article)
-      renderFormat(htmlResponse, jsonResponse, article, Switches.all)
+
+      val contentFieldsJson = if (request.isGuuiJson) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
+
+      val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
+      renderFormat(htmlResponse, jsonResponse, article)
   }
 
   def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
@@ -157,7 +160,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   def renderJson(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path) {
+      mapModel(path, if (request.isGuuiJson) Some(ArticleBlocks) else None) {
         render(path, _)
       }
     }

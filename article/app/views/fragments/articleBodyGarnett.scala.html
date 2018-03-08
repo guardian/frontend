@@ -78,7 +78,8 @@
                                 @fragments.contentMeta(article, model, amp = amp)
                             }
 
-                            @BodyCleaner(article, article.fields.body, amp = amp)
+                            @BodyCleaner(article, amp = amp)
+
                             @fragments.witnessCallToAction(article.content)
 
                             @fragments.submeta(article, amp)
