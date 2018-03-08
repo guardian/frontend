@@ -51,6 +51,9 @@ static/riffraff
 
 static/src/stylesheets/icons/*
 
+# emacs temp #
+**~
+
 # Eclipse #
 .project
 .settings/
