@@ -186,6 +186,9 @@ $pillars: (
         fill: map-get($palette, invertedKicker);
     }
 
+    &.video-playlist__item .video-overlay__duration {
+        color: map-get($palette, invertedKicker);
+    }
 
     &.fc-item--type-media,
     &.fc-item--type-interview {
