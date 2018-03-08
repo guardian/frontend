@@ -50,7 +50,7 @@ const calculateLazyLoadingDistance = (viewport: {
     width: number,
     height: number,
 }) => {
-    const variant = getTestVariantId('CommercialLazyLoading');
+    const variant = getTestVariantId('CommercialLazyLoadingExtended');
 
     if (variant === '400px') {
         return 400;
