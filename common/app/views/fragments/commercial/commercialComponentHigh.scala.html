@@ -1,4 +1,5 @@
-@(isPaidContent: Boolean, hasPageSkin: Boolean = false)
+@(isPaidContent: Boolean, hasPageSkin: Boolean = false)(implicit request: RequestHeader)
+
 @import conf.switches.Switches.CommercialSwitch
 
 @if(CommercialSwitch.isSwitchedOn) {

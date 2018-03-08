@@ -36,7 +36,7 @@
                         <div class="content__article-body from-content-api js-article__body"
                              itemprop="articleBody"
                              data-test-id="article-review-body" @langAttributes(article.content)>
-                            @BodyCleaner(article, article.fields.body, amp = false)
+                            @BodyCleaner(article, amp = false)
                         </div>
 
                         @fragments.witnessCallToAction(article.content)

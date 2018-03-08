@@ -13,7 +13,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialAdRefresh,
     MoonLambda,
     OrielParticipation,
-    GdprOptinAlert
+    GdprOptinAlert,
+    LotameParticipation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -46,7 +47,7 @@ object MoonLambda extends Experiment(
   name = "moon-lambda",
   description = "Users in this experiment will see 404 page rendered by a lambda",
   owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2018, 3, 7),
+  sellByDate = new LocalDate(2018, 3, 22),
   participationGroup = Perc1B
 )
 
@@ -67,3 +68,11 @@ object GdprOptinAlert extends Experiment(
 ) {
   override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || IdentityShowOptInEngagementBanner.isSwitchedOn
 }
+
+object LotameParticipation extends Experiment(
+  name = "lotame-participation",
+  description = "A slice of the audience who will participate in Lotame tracking",
+  owners = Seq(Owner.withGithub("janua")),
+  sellByDate = new LocalDate(2018, 6, 28),
+  participationGroup = Perc1D
+)

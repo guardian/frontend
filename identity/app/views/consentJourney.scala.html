@@ -128,7 +128,7 @@
 @emailRepermissionStep() = @{
     ConsentStep(
         name = "email",
-        title = "Newsletters",
+        title = "Email Newsletters",
         help = List(
             ConsentStepHelpText("The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.")
         ),
@@ -156,7 +156,7 @@
 @introStep = @{
     ConsentStep(
         name = "intro",
-        title = "Please select the emails you wish to receive",
+        title = "Please select the emails you wish to continue receiving",
         help = List(
             ConsentStepHelpText(
                 "You can change your preferences anytime by signing in, clicking My Account, then selecting Email Preferences."
@@ -187,17 +187,20 @@
         @renderBlocks(
             journey match {
                 case NewsletterConsentsJourney => {
-                    List(
-                        if(emailRepermissionStep.show) {
+                    if(emailRepermissionStep.show) {
+                        List(
+                            introGdprCampaignStep,
                             emailRepermissionStep
-                        } else {
+                        )
+                    } else {
+                        List(
                             ConsentStep(
                                 name = "error",
                                 title = "Sorry",
                                 content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
                             )
-                        }
-                    )
+                        )
+                    }
                 }
                 case ThankYouConsentsJourney => {
                     List(

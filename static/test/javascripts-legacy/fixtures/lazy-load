@@ -1,3 +1,0 @@
-lazyLoad({
-	html: '<span>foo</span>'
-})

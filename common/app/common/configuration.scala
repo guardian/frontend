@@ -239,7 +239,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object oriel {
-    lazy val orielApiKey = configuration.getMandatoryStringProperty("oriel.api.key")
+    lazy val orielApiKey = configuration.getStringProperty("oriel.api.key")
     lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
   }
 

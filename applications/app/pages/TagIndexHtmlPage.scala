@@ -1,7 +1,7 @@
 package pages
 
 import common.Edition
-import conf.switches.Switches.WeAreHiring
+import conf.switches.Switches.{OrielFullIntegration, WeAreHiring}
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
 import model.{ApplicationContext, ContributorsListing, PreferencesMetaData, StandalonePage, SubjectsListing, TagIndexPage}
@@ -11,7 +11,7 @@ import views.html.fragments._
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
+import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.preferences.index
 import html.HtmlPageHelpers.ContentCSSFile
@@ -43,6 +43,7 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
+        orielScriptTag() when OrielFullIntegration.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(allStyles),
