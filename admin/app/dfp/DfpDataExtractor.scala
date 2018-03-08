@@ -7,7 +7,7 @@ case class DfpDataExtractor(
   lineItems: Seq[GuLineItem],
   invalidLineItems: Seq[GuLineItem]) {
 
-  val hasValidLineItems = lineItems.nonEmpty
+  val hasValidLineItems: Boolean = lineItems.nonEmpty
 
   val inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = {
     lineItems.foldLeft(InlineMerchandisingTagSet()) { (soFar, lineItem) =>

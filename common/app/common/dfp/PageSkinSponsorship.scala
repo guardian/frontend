@@ -3,12 +3,17 @@ package common.dfp
 import common.{Edition, Logging}
 import play.api.libs.json._
 
+/** A PageSkinSponsorship
+  *   is a special decoration of a DFP LineItem that we need to scan for ourselves,
+  *   because DFP doesn't have this concept.
+ */
 case class PageSkinSponsorship(lineItemName: String,
                                lineItemId: Long,
                                adUnits: Seq[String],
+                              // Targeting properties
                                editions: Seq[Edition],
                                countries: Seq[String],
-                               isR2Only: Boolean,
+                               isR2Only: Boolean, // Legacy platform.
                                targetsAdTest: Boolean,
                                adTestValue: Option[String],
                                keywords: Seq[String])
