@@ -8,7 +8,7 @@ export const commercialLazyLoading: ABTest = {
     author: 'Jon Norman',
     description:
         'This test alters the threshold for when lazy loaded adverts are displayed',
-    audience: 0.24,
+    audience: 0.28,
     audienceOffset: 0.4,
     successMeasure:
         'No negative impact on viewability, positive impact in number of impressions rendered.',
@@ -42,6 +42,10 @@ export const commercialLazyLoading: ABTest = {
         },
         {
             id: 'super-richard',
+            test: () => {},
+        },
+        {
+            id: '0',
             test: () => {},
         },
     ],

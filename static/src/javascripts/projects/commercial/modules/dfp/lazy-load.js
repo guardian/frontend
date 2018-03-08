@@ -64,6 +64,10 @@ const calculateLazyLoadingDistance = (viewport: {
         return viewport.height / 2;
     }
 
+    if (variant === '0') {
+        return 0;
+    }
+
     if (variant === 'richard') {
         const breakpoint = getBreakpoint();
         const front = config.page.isFront ? 'front' : 'non-front';
