@@ -56,7 +56,6 @@ final case class Content(
   showInRelated: Boolean,
   cardStyle: CardStyle,
   shouldHideAdverts: Boolean,
-  shouldHideReaderRevenue: Boolean,
   witnessAssignment: Option[String],
   isbn: Option[String],
   imdb: Option[String],
@@ -241,7 +240,6 @@ final case class Content(
     ("isImmersive", JsBoolean(isImmersive)),
     ("isColumn", JsBoolean(isColumn)),
     ("isPaidContent", JsBoolean(isPaidContent)),
-    ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
 
   )
@@ -389,7 +387,6 @@ object Content {
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
       cardStyle = CardStyle.make(cardStyle),
       shouldHideAdverts = apifields.flatMap(_.shouldHideAdverts).getOrElse(false),
-      shouldHideReaderRevenue = apifields.flatMap(_.shouldHideReaderRevenue).getOrElse(false),
       witnessAssignment = references.get("witness-assignment"),
       isbn = references.get("isbn"),
       imdb = references.get("imdb"),

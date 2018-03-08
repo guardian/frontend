@@ -33,7 +33,7 @@ object CommercialDfpReporting extends Logging {
     teamKPIReport -> 10060521970L // This report is accessible by the DFP user: "NGW DFP Production"
   )
 
-  private val prebidBidderPerformanceQry = {
+  private def prebidBidderPerformanceQry = {
     def toGoogleDate(date: LocalDate) = new Date(date.getYear, date.getMonthValue, date.getDayOfMonth)
     val prebidBegan = LocalDate.of(2018, 1, 22)
     val qry = new ReportQuery()

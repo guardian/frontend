@@ -25,9 +25,9 @@ object MainMediaWidths {
 }
 
 object MainCleaner {
- def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+ def apply(article: Article, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
       implicit val edition = Edition(request)
-      withJsoup(BulletCleaner(html))(
+      withJsoup(BulletCleaner(article.fields.main))(
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
         MainFigCaptionCleaner,
@@ -37,13 +37,14 @@ object MainCleaner {
 }
 
 object BodyCleaner {
-  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+
+  def cleaners(article: Article, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): List[HtmlCleaner] = {
     implicit val edition = Edition(request)
 
     val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.sectionId != "childrens-books-site"
     def ListIf[T](condition: Boolean)(value: => T): List[T] = if(condition) List(value) else Nil
 
-    val cleaners = List(
+    List(
       InBodyElementCleaner,
       AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp),
       InBodyLinkCleaner("in body link", amp),
@@ -76,7 +77,15 @@ object BodyCleaner {
       ListIf(amp)(AmpEmbedCleaner(article)) ++
       ListIf(amp)(AttributeCleaner("style")) ++ // The inline 'style' attribute is not allowed in AMP documents
       ListIf(amp && shouldShowAds && !article.isLiveBlog)(AmpAdCleaner(edition, request.uri, article))
+  }
 
-    withJsoup(BulletCleaner(html))(cleaners :_*)
+  def apply(article: Article, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+
+    withJsoup(BulletCleaner(article.fields.body))(cleaners(article, amp) :_*)
+  }
+
+  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+
+    withJsoup(BulletCleaner(html))(cleaners(article, amp) :_*)
   }
 }

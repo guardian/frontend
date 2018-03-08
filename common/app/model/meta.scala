@@ -17,7 +17,8 @@ import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
 import com.github.nscala_time.time.Implicits._
-import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import play.api.libs.json._
+import play.api.libs.json.JodaWrites.JodaDateTimeWrites
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 
@@ -52,7 +53,6 @@ object Fields {
   // For content published before then, we need handle it as we did before, taking
   // the sensitive flag to mean "don't display reader revenue asks"
   private val shouldHideReaderRevenueCutoffDate = new DateTime("2017-07-10T12:00:00.000Z")
-
   def make(apiContent: contentapi.Content): Fields = {
     Fields (
       trailText = apiContent.fields.flatMap(_.trailText),
@@ -86,6 +86,8 @@ object Fields {
       case None => false
     }
   }
+
+  implicit val fieldsWrites: Writes[Fields] =  Json.writes[Fields]
 }
 
 final case class Fields(
@@ -113,7 +115,8 @@ final case class Fields(
   def javascriptConfig: Map[String, JsValue] = {
     Map(
       "shortUrl" -> JsString(shortUrl),
-      "shortUrlId" -> JsString(shortUrlId)
+      "shortUrlId" -> JsString(shortUrlId),
+      "shouldHideReaderRevenue" -> JsBoolean(shouldHideReaderRevenue.getOrElse(false))
     )
   }
 }

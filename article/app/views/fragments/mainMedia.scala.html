@@ -8,7 +8,7 @@
 
 @if(article.elements.hasMainEmbed || article.elements.elements("main").isEmpty) {
     <div class="media-primary">
-        @MainCleaner(article, article.fields.main, amp)
+        @MainCleaner(article, amp)
     </div>
 } else {
     @if(!article.hasVideoAtTop) {
@@ -57,6 +57,7 @@
                     if(article.lightbox.isMainMediaLightboxable) Some(1) else None,
                     article.elements.hasShowcaseMainElement,
                     article.tags.isFeature,
+                    article.content.isColumn,
                     MainMediaWidths(article),
                     amp = amp
                 )
