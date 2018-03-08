@@ -165,4 +165,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 4, 24),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-aud-support",
+    "Points the 'support the guardian' link in the engagement banner to the aud version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 24),
+    exposeClientSide = true
+  )
 }
