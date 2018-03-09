@@ -14,11 +14,13 @@
 .match-summary__team {
     position: relative;
     width: 50%;
-    padding: 0 6px $garnett-x-large-button-size + $gs-baseline;
+    padding-bottom: $garnett-x-large-button-size + $gs-baseline;
 }
 
 .match-summary__team--away {
     border-left: 1px solid $neutral-1;
+    margin-left: 6px;
+    padding-left: 6px;
 }
 
 .team__name {
