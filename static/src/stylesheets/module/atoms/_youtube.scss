@@ -143,12 +143,12 @@
     z-index: 1;
 
     &:after {
+        @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, .5));
         position: absolute;
         height: 100%;
         width: 100%;
         left: 0;
         z-index: -1;
-        @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, .5));
         content: '';
         opacity: .7;
     }
