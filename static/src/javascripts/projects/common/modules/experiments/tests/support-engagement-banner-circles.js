@@ -7,7 +7,7 @@ export const SupportEngagementBannerCircles: AcquisitionsABTest = {
     id: 'SupportEngagementBannerCircles',
     campaignId: 'gdnwb_copts_memco_sandc_circles',
     start: '2018-02-21',
-    expiry: '2018-03-13', // Tues 13th March (but should be complete by the 8th)
+    expiry: '2018-03-20', // Tues 20th March (was expected to be complete by the 8th)
     author: 'JustinPinner',
     description: 'Partition the audience for support frontend circles test',
     successMeasure: 'N/A',
