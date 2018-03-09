@@ -257,7 +257,6 @@ final case class MetaData (
 
   val hasSlimHeader: Boolean =
     contentWithSlimHeader ||
-      (sectionId == "identity" && !id.startsWith("/user/")) ||
       contentType.exists(c => c == DotcomContentType.Survey || c == DotcomContentType.Signup)
 
   // this is here so it can be included in analytics.
