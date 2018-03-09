@@ -45,7 +45,8 @@
     border-radius: $garnett-x-large-button-size / 2;
     background-color: $garnett-neutral-5;
     box-sizing: border-box;
-    padding: 3px;
+    padding: 8px;
+    overflow: hidden;
 }
 
 .team__crest {
