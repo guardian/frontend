@@ -79,3 +79,11 @@ export type PrebidPriceBucket = {
 export type PrebidPriceGranularity = {
     buckets: PrebidPriceBucket[],
 };
+
+export type PrebidBanner = {
+    sizes: PrebidSize[],
+};
+
+export type PrebidMediaTypes = {
+    banner: PrebidBanner,
+};
