@@ -8,9 +8,73 @@ $football-crest--large: 60px;
     border-bottom: 1px dotted $neutral-2;
     color: $neutral-1;
     background-color: $news-garnett-highlight;
+}
 
-    .content__head & {
-        padding-top: $gs-baseline/2;
+.match-summary__teams {
+    display: flex;
+    padding: 6px;
+}
+
+.match-summary__team {
+    position: relative;
+    width: 50%;
+    padding: 0 6px $garnett-x-large-button-size + $gs-baseline;
+}
+
+.match-summary__team--away {
+    border-left: 1px solid $neutral-1;
+}
+
+.team__name {
+    @include fs-header(4);
+    font-weight: 900;
+    margin-top: -4px;
+}
+
+.team__scorers {
+    @include fs-textSans(3);
+    color: $neutral-1;
+}
+
+.team__scorer {
+    margin: 0;
+}
+
+.team__crest-wrapper {
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    width: $garnett-x-large-button-size;
+    height: $garnett-x-large-button-size;
+    border-radius: $garnett-x-large-button-size / 2;
+    background-color: $garnett-neutral-5;
+    box-sizing: border-box;
+    padding: 3px;
+}
+
+.team__crest {
+    margin: auto;
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.team__score {
+    position: absolute;
+    bottom: 0;
+    left: $garnett-x-large-button-size;
+    width: $garnett-x-large-button-size;
+    height: $garnett-x-large-button-size;
+    border-radius: $garnett-x-large-button-size / 2;
+    border: 1px solid $neutral-1;
+
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
     }
 }
 

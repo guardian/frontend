@@ -41,110 +41,44 @@
 -->
 
     <div class='match-summary__teams'>
-        <div class='match-summary__team match-summary-team--home'>
+        <div class='match-summary__team match-summary__team--home'>
             <h2 class='team__name' data-abbr='@pa.TeamCodes.codeFor(homeTeam)'>
                 @homeTeam.name
             </h2>
 
-            <dl class='team__scorers'>
+            <dl class='team__scorers u-unstyled'>
                 <dt class="u-h">Home team scorers</dt>
-                @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
+                @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd class='team__scorer'>@scorer.replace("(", "").replace(")", "")</dd>}}
             </dl>
 
             <div class='team__crest-wrapper'>
-                <img class='team__crest' src='url(@Configuration.staticSport.path/football/crests/120/@{homeTeam.id}.png)' />
+                <img class='team__crest' src='@Configuration.staticSport.path/football/crests/120/@{homeTeam.id}.png' />
             </div>
 
             @if(theMatch.isLive || theMatch.isResult){
-                <div class='team__score'>
-                    @homeTeam.score
-                </div>
+                @homeTeam.score.map{score => @fragments.inlineSvg("number-" + score, "numbers", List("team__score")) }
             }
         </div>
 
-        <div class='match-summary__team match-summary-team--away'>
+        <div class='match-summary__team match-summary__team--away'>
             <h2 class='team__name' data-abbr='@pa.TeamCodes.codeFor(awayTeam)'>
                 @awayTeam.name
             </h2>
 
-            <dl class='team__scorers'>
+            <dl class='team__scorers u-unstyled'>
                 <dt class="u-h">Away team scorers</dt>
-                @awayTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
+                @awayTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd class='team__scorer'>@scorer.replace("(", "").replace(")", "")</dd>}}
             </dl>
 
             <div class='team__crest-wrapper'>
-                <img class='team__crest' src='url(@Configuration.staticSport.path/football/crests/120/@{awayTeam.id}.png)' />
+                <img class='team__crest' src='@Configuration.staticSport.path/football/crests/120/@{awayTeam.id}.png' />
             </div>
 
             @if(theMatch.isLive || theMatch.isResult){
-                <div class='team__score'>
-                    @awayTeam.score
-                </div>
+                @awayTeam.score.map{score => @fragments.inlineSvg("number-" + score, "numbers", List("team__score")) }
             }
         </div>
     </div>
-
-<!--
-    <div class="match-summary__teams">
-        <div class="match-summary__team match-summary__team--home u-cf">
-            <div class="team__crest team__crest--home">
-                <div class="team__crest__img-container">
-                    <span class="team__crest__img" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{homeTeam.id}.png)"></span>
-                </div>
-            </div>
-            <div class="team__info">
-                <h2 class="team__heading">
-                    <span class="team__name" data-abbr="@pa.TeamCodes.codeFor(homeTeam)">
-                        <span class="team__name-long">@homeTeam.name</span>
-                    </span>
-                    @if(theMatch.isLive || theMatch.isResult){<span class="team__score">@homeTeam.score</span>}
-                </h2>
-
-                @if(theMatch.isFixture){
-                    @competition.map{ competition =>
-                        <div class="team__results-container">
-                            @teamForm(homeTeam.id, competition)
-                        </div>
-                    }
-                }else{
-                    <dl class="team__scorers u-unstyled">
-                        <dt class="u-h">Home team scorers</dt>
-                        @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
-                    </dl>
-                }
-                <div class="team__battle-line"></div>
-            </div>
-        </div>
-
-        <div class="match-summary__team match-summary__team--away u-cf">
-            <div class="team__crest team__crest--away">
-                <div class="team__crest__img-container">
-                    <span class="team__crest__img" style="background-image: url(@Configuration.staticSport.path/football/crests/120/@{awayTeam.id}.png)"></span>
-                </div>
-            </div>
-            <div class="team__info">
-                <h2 class="team__heading">
-                    <span class="team__name" data-abbr="@pa.TeamCodes.codeFor(awayTeam)">
-                        <span class="team__name-long">@awayTeam.name</span>
-                    </span>
-                    @if(theMatch.isLive || theMatch.isResult){<span class="team__score">@awayTeam.score</span>}
-                </h2>
-                @if(theMatch.isFixture){
-                    @competition.map{ competition =>
-                        <div class="team__results-container">
-                            @teamForm(awayTeam.id, competition)
-                        </div>
-                    }
-                }else{
-                    <dl class="team__scorers u-unstyled">
-                        <dt class="u-h">Away team scorers</dt>
-                        @awayTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
-                    </dl>
-                }
-            </div>
-        </div>
-    </div>
--->
 
     @theMatch.comments.map{ comments => <div class="match-summary__comment">@comments.replace("(", "").replace(")", "")</div>}
     @theMatch.homeTeam.aggregateScore.map{ score => <div class="match-summary__aggregate">agg. @score-@theMatch.awayTeam.aggregateScore</div>}
