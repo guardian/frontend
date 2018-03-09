@@ -86,6 +86,12 @@ export type ImpressionViewableEvent = {
     slot: Slot,
 };
 
+export type SlotVisibilityChangedEvent = {
+    inViewPercentage: number,
+    serviceName: string,
+    slot: Slot,
+};
+
 type MPUUnitId = 228;
 type LeaderboardUnitId = 229;
 type BillboardUnitId = 229;

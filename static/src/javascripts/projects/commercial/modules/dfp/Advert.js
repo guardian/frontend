@@ -45,6 +45,7 @@ class Advert {
     isLoaded: boolean;
     isRendered: boolean;
     shouldRefresh: boolean;
+    maxViewPercentage: number;
     whenLoaded: Promise<boolean>;
     whenLoadedResolver: Resolver;
     whenRendered: Promise<boolean>;
@@ -85,6 +86,7 @@ class Advert {
             lazyWaitComplete: null,
         };
         this.shouldRefresh = false;
+        this.maxViewPercentage = 0;
 
         this.whenLoaded = new Promise(resolve => {
             this.whenLoadedResolver = resolve;

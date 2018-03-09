@@ -68,7 +68,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-lazy-loading",
+    "ab-commercial-lazy-loading-extended",
     "Varies the strategy for lazyloading of adverts",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
@@ -160,6 +160,16 @@ trait ABTestSwitches {
     ABTests,
     "ab-acquisitions-header-aud-support",
     "Points the 'support the guardian' link in the header to the aud version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-aud-support",
+    "Points the 'support the guardian' link in the engagement banner to the aud version of the support site",
     owners = Seq(Owner.withGithub("svillafe")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 4, 24),
