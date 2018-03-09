@@ -20,7 +20,8 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
   val articleMeta = MetaData.make("", None, "The title", None)
 
   val examplePageSponsorships = Seq(
-    PageSkinSponsorship("lineItemName",
+    PageSkinSponsorship(
+      "lineItemName",
       1234L,
       Seq("business/front"),
       Seq(Uk),
@@ -28,8 +29,11 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       isR2Only = false,
       targetsAdTest = false,
       adTestValue = None,
-      keywords = Seq.empty),
-    PageSkinSponsorship("lineItemName2",
+      keywords = Seq.empty,
+      series = Seq.empty
+    ),
+    PageSkinSponsorship(
+      "lineItemName2",
       12345L,
       Seq("music/front"),
       Nil,
@@ -37,8 +41,11 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       isR2Only = false,
       targetsAdTest = false,
       adTestValue = None,
-      keywords = Seq.empty),
-    PageSkinSponsorship("lineItemName3",
+      keywords = Seq.empty,
+      series = Seq.empty
+    ),
+    PageSkinSponsorship(
+      "lineItemName3",
       123456L,
       Seq("sport"),
       Nil,
@@ -46,8 +53,11 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       isR2Only = false,
       targetsAdTest = false,
       adTestValue = None,
-      keywords = Seq.empty),
-    PageSkinSponsorship("lineItemName4",
+      keywords = Seq.empty,
+      series = Seq.empty
+    ),
+    PageSkinSponsorship(
+      "lineItemName4",
       1234567L,
       Seq("testSport/front"),
       Seq(Uk),
@@ -55,8 +65,11 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       isR2Only = false,
       targetsAdTest = true,
       adTestValue = Some("6"),
-      keywords = Seq.empty),
-    PageSkinSponsorship("lineItemName5",
+      keywords = Seq.empty,
+      series = Seq.empty
+    ),
+    PageSkinSponsorship(
+      "lineItemName5",
       123458L,
       Seq("sport-index"),
       Seq(Uk),
@@ -64,7 +77,9 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       isR2Only = false,
       targetsAdTest = false,
       adTestValue = None,
-      keywords = Seq("sport-keyword"))
+      keywords = Seq("sport-keyword"),
+      series = Seq.empty
+    )
   )
 
   private object TestPageskinAdAgent extends PageskinAdAgent {

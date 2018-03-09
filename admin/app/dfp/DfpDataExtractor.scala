@@ -47,7 +47,8 @@ case class DfpDataExtractor(
         isR2Only = lineItem.targeting.targetsR2Only,
         targetsAdTest = lineItem.targeting.hasAdTestTargetting,
         adTestValue = lineItem.targeting.adTestValue,
-        keywords = lineItem.targeting.keyValues
+        keywords = lineItem.targeting.keywordValues,
+        series = lineItem.targeting.serieValues
       )
     }
   }

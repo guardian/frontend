@@ -85,6 +85,7 @@ object CustomTargetSet {
 
   implicit val customTargetSetFormats: Format[CustomTargetSet] = Json.format[CustomTargetSet]
 
+
 }
 
 
@@ -148,13 +149,13 @@ case class GuTargeting(adUnitsIncluded: Seq[GuAdUnit],
                        geoTargetsExcluded: Seq[GeoTarget],
                        customTargetSets: Seq[CustomTargetSet]) {
 
-  val keyValues: Seq[String] = {
-    for {
-      targetSet <- customTargetSets
-      target <- targetSet.targets if target.isKeywordTag
-      targetValue <- target.values
-    } yield targetValue
-  }
+  // This is local pure helper function:
+  private val tagValues = ( ( customTargetSets: Seq[CustomTargetSet],
+                              isGoodTag: CustomTarget => Boolean )
+                             => customTargetSets.flatMap( _.targets ).filter( isGoodTag ).flatMap( _.values ) )
+
+  val serieValues: Seq[String] = tagValues( customTargetSets, _.isSeriesTag )
+  val keywordValues: Seq[String] = tagValues( customTargetSets, _.isKeywordTag )
 
   val adTestValue: Option[String] = {
     val testValues = for {

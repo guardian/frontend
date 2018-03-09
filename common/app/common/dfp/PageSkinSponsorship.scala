@@ -16,7 +16,9 @@ case class PageSkinSponsorship(lineItemName: String,
                                isR2Only: Boolean, // Legacy platform.
                                targetsAdTest: Boolean,
                                adTestValue: Option[String],
-                               keywords: Seq[String])
+                               keywords: Seq[String],
+                               series: Seq[String]
+)
 
 object PageSkinSponsorship {
   implicit val pageskinSponsorShipFormat: Format[PageSkinSponsorship] = Json.format[PageSkinSponsorship]
