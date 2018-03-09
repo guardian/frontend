@@ -7,12 +7,15 @@ $football-crest--large: 60px;
     display: block;
     border-bottom: 1px dotted $neutral-2;
     color: $neutral-1;
+    background-color: $news-garnett-highlight;
 
     .content__head & {
         padding-top: $gs-baseline/2;
     }
 }
 
+
+/*
 .match-summary__teams {
     padding-top: $gs-baseline;
     position: relative;
@@ -179,9 +182,7 @@ $football-crest--large: 60px;
     display: inline-block;
     vertical-align: middle;
 }
-.match-info__competition {
-    font-weight: bold;
-}
+
 .match-info:empty {
     display: none;
 }
@@ -253,7 +254,7 @@ $football-crest--large: 60px;
 
     .match-summary__status {
         display: block;
-        height: 0; /* removing it from the flow but maintaining the ability to center */
+        height: 0;
         padding: 0;
         text-align: center;
     }
@@ -286,8 +287,7 @@ $football-crest--large: 60px;
         text-align: left;
         width: 100%;
 
-        .match-info__venue,
-        .match-info__competition {
+        .match-info__venue {
             display: inline-block;
         }
     }
@@ -335,4 +335,8 @@ $football-crest--large: 60px;
             padding: 0;
         }
     }
+}
+*/
+
+@mixin match-summary--responsive {
 }

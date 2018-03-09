@@ -21,6 +21,7 @@
     }else{
         <h1 class="u-h">@homeTeam.name v @awayTeam.name</h1>
     }
+<!--
 
     <div class="@RenderClasses(Map(
         "match-summary__status" -> true,
@@ -35,10 +36,55 @@
     </div>
 
     <div class="match-info">
-        @competition.map{ competition => <div class="match-info__competition">@competition.fullName</div>}
         @theMatch.venue.map{ venue => <div class="match-info__venue">@venue.name</div> }
     </div>
+-->
 
+    <div class='match-summary__teams'>
+        <div class='match-summary__team match-summary-team--home'>
+            <h2 class='team__name' data-abbr='@pa.TeamCodes.codeFor(homeTeam)'>
+                @homeTeam.name
+            </h2>
+
+            <dl class='team__scorers'>
+                <dt class="u-h">Home team scorers</dt>
+                @homeTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
+            </dl>
+
+            <div class='team__crest-wrapper'>
+                <img class='team__crest' src='url(@Configuration.staticSport.path/football/crests/120/@{homeTeam.id}.png)' />
+            </div>
+
+            @if(theMatch.isLive || theMatch.isResult){
+                <div class='team__score'>
+                    @homeTeam.score
+                </div>
+            }
+        </div>
+
+        <div class='match-summary__team match-summary-team--away'>
+            <h2 class='team__name' data-abbr='@pa.TeamCodes.codeFor(awayTeam)'>
+                @awayTeam.name
+            </h2>
+
+            <dl class='team__scorers'>
+                <dt class="u-h">Away team scorers</dt>
+                @awayTeam.scorers.map{scorers => @scorers.split(",").map{ scorer => <dd>@scorer.replace("(", "").replace(")", "")</dd>}}
+            </dl>
+
+            <div class='team__crest-wrapper'>
+                <img class='team__crest' src='url(@Configuration.staticSport.path/football/crests/120/@{awayTeam.id}.png)' />
+            </div>
+
+            @if(theMatch.isLive || theMatch.isResult){
+                <div class='team__score'>
+                    @awayTeam.score
+                </div>
+            }
+        </div>
+    </div>
+
+<!--
     <div class="match-summary__teams">
         <div class="match-summary__team match-summary__team--home u-cf">
             <div class="team__crest team__crest--home">
@@ -98,6 +144,7 @@
             </div>
         </div>
     </div>
+-->
 
     @theMatch.comments.map{ comments => <div class="match-summary__comment">@comments.replace("(", "").replace(")", "")</div>}
     @theMatch.homeTeam.aggregateScore.map{ score => <div class="match-summary__aggregate">agg. @score-@theMatch.awayTeam.aggregateScore</div>}
