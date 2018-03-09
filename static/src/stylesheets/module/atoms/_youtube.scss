@@ -139,44 +139,19 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 34px;
-    z-index: 2;
+    height: 60px;
+    z-index: 1;
 
-    &:before,
     &:after {
         position: absolute;
         height: 100%;
         width: 100%;
         left: 0;
         z-index: -1;
-    }
-
-    &:before {
-        content: '';
-        opacity: .1;
-        background: $neutral-1;
-    }
-
-    &:after {
         @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, .5));
         content: '';
         opacity: .7;
     }
-}
-
-.youtube-media-atom__bottom-bar__icon {
-    float: left;
-    height: 100%;
-    width: 36px;
-}
-
-.youtube-media-atom__bottom-bar__icon .inline-video-icon__svg {
-    fill: $media-default;
-    width: 19px;
-    height: 12px;
-    top: auto;
-    bottom: 10px;
-    left: 10px;
 }
 
 .youtube-media-atom__bottom-bar__duration {
@@ -185,20 +160,8 @@
     float: left;
     -webkit-font-smoothing: subpixel-antialiased;
     padding-top: 4px;
-    padding-left: 8px;
+    padding-left: $garnett-x-large-button-size + $gs-gutter;
     text-shadow: 0 0 16px rgba(51, 51, 51, .25);
-
-    &:before {
-        content: '';
-        width: 1px;
-        height: 16px;
-        opacity: .5;
-        position: absolute;
-        left: 36px;
-        background-color: $multimedia-main-2;
-        top: auto;
-        bottom: 8px;
-    }
 }
 
 .immersive-main-media__media .youtube-media-atom {
@@ -212,7 +175,7 @@
     z-index: 0;
 }
 
-.immersive-main-media__media  .youtube-media-atom__immersive-interface {
+.immersive-main-media__media .youtube-media-atom__immersive-interface {
     position: absolute;
     top: 50vh;
     transform: translateY(-100%);
