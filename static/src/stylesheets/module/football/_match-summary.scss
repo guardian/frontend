@@ -1,12 +1,9 @@
-$football-match-summary-breakpoint: tablet;
-$football-crest--small: 44px;
-$football-crest--large: 60px;
-
 .match-summary {
     position: relative;
     display: block;
     color: $neutral-1;
     background-color: $news-garnett-highlight;
+    margin-bottom: $gs-baseline;
 }
 
 .match-summary__teams {
