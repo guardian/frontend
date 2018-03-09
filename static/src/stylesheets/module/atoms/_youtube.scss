@@ -67,7 +67,7 @@
 
     &:hover ~ .youtube-media-atom__overlay .youtube-media-atom__play-button {
         transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-        transform: translate(-50%, -50%) scale(1.12);
+        transform: scale(1.12);
         transform-origin: center;
     }
 
@@ -296,21 +296,18 @@
     .fc-item--three-quarters-tablet &,
     .fc-item--half-tablet & {
         @include video-icon-size($garnett-large-button-size, $garnett-large-button-icon);
-        @include mq($from: mobileLandscape) {
-            @include video-icon-size($garnett-x-large-button-size, $garnett-x-large-button-icon);
-        }
     }
 
     .fc-item--third-tablet & {
         @include video-icon-size($garnett-large-button-size, $garnett-large-button-icon);
         @include mq($from: mobileLandscape, $until: tablet) {
-            @include video-icon-size($garnett-x-large-button-size, $garnett-x-large-button-icon);
+            @include video-icon-size($garnett-medium-button-size, $garnett-medium-button-icon);
         }
     }
 
     .fc-item--standard-tablet & {
         @include mq($from: tablet) {
-            @include video-icon-size($garnett-medium-button-size, $garnett-medium-button-icon);
+            @include video-icon-size($garnett-small-button-size, $garnett-small-button-icon);
         }
     }
 

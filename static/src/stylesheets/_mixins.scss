@@ -275,9 +275,8 @@
 @mixin video-icon-size($buttonSize, $iconSize) {
     border-radius: 50%;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    bottom: $buttonSize / 5;
+    left: $buttonSize / 5;
     transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
     user-select: none;
     width: $buttonSize;
