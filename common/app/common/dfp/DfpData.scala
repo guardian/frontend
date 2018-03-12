@@ -149,10 +149,9 @@ case class GuTargeting(adUnitsIncluded: Seq[GuAdUnit],
                        geoTargetsExcluded: Seq[GeoTarget],
                        customTargetSets: Seq[CustomTargetSet]) {
 
-  // This is local pure helper function:
   private val tagValues = ( ( customTargetSets: Seq[CustomTargetSet],
-                              isGoodTag: CustomTarget => Boolean )
-                             => customTargetSets.flatMap( _.targets ).filter( isGoodTag ).flatMap( _.values ) )
+                              tagFilter: CustomTarget => Boolean )
+                             => customTargetSets.flatMap( _.targets ).filter( tagFilter ).flatMap( _.values ) )
 
   val serieValues: Seq[String] = tagValues( customTargetSets, _.isSeriesTag )
   val keywordValues: Seq[String] = tagValues( customTargetSets, _.isKeywordTag )
