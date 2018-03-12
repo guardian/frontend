@@ -263,12 +263,14 @@
 
     .fc-item--third-tablet & {
         @include video-icon-size($garnett-large-button-size, $garnett-large-button-icon);
+
         @include mq($from: mobileLandscape, $until: tablet) {
             @include video-icon-size($garnett-medium-button-size, $garnett-medium-button-icon);
         }
     }
 
-    .fc-item--standard-tablet & {
+    .fc-item--standard-tablet &,
+    .fc-item--list-media-tablet & {
         @include mq($from: tablet) {
             @include video-icon-size($garnett-small-button-size, $garnett-small-button-icon);
         }
