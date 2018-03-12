@@ -1015,3 +1015,21 @@ $pillars: (
         }
     }
 }
+
+// *************** Has scores overrides ****************
+.content--has-scores.content--pillar-sport.content--liveblog {
+    .content__header {
+        background-color: $news-garnett-highlight;
+    }
+
+    .match-summary__teams {
+        @include mq($until: tablet) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    .content__labels .content__section-label__link {
+        color: $neutral-1;
+    }
+}

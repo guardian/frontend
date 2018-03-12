@@ -815,7 +815,8 @@ $quote-mark: 35px;
     }
 }
 
-.content--type-matchreport {
+// *************** Matchreport overrides ****************
+.content--has-scores {
     .content__labels .content__section-label__link {
         @include mq(leftCol) {
             color: $neutral-1;
@@ -826,8 +827,6 @@ $quote-mark: 35px;
         margin-bottom: 0;
     }
 }
-
-// *************** Matchreport overrides ****************
 
 //**************** Interview style **************
 
