@@ -1001,7 +1001,7 @@
 
             .content--type-article.section-football &,
             .content--type-matchreport & {
-                grid-template-areas: 'labels headline-standfirst' '. report' 'meta main-media';
+                grid-template-areas: 'labels report' '. headline-standfirst' 'meta main-media';
             }
         }
     }
@@ -1020,6 +1020,10 @@
                 position: relative;
                 margin: 0;
             }
+        }
+
+        .content--type-matchreport & .content__section-label__link {
+            color: $neutral-1;
         }
     }
 
