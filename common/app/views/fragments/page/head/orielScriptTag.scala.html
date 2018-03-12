@@ -3,9 +3,12 @@
 @import experiments.{ ActiveExperiments, OrielParticipation }
 @import common.commercial.OrielCache
 @import play.twirl.api.HtmlFormat
+@import conf.switches.Switches.orielSonobiIntegration
+
 
 @if(
-    ActiveExperiments.isParticipating(OrielParticipation)
+    ActiveExperiments.isParticipating(OrielParticipation) ||
+            (orielSonobiIntegration.isSwitchedOn && request.uri == "/environment/2018/mar/11/labrador-switch-energy-suppliers")
 ) {
     @OrielCache.cache.get().getLoaderScript.map { loaderScript => <script>@HtmlFormat.raw(loaderScript)</script> }
 }
