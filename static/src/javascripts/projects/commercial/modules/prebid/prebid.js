@@ -25,23 +25,17 @@ class PrebidAdUnit {
     labelAny: ?(PrebidSlotLabel[]);
     labelAll: ?(PrebidSlotLabel[]);
 
-    constructor(advert: Advert) {
-        const slot: ?PrebidSlot = slots.find((s): boolean =>
-            stripTrailingNumbers(advert.id).endsWith(s.key)
-        );
-
-        if (slot) {
-            this.code = advert.id;
-            this.bids = bidders.map((bidder: PrebidBidder) => ({
-                bidder: bidder.name,
-                params: bidder.bidParams(advert.id, slot.sizes),
-                labelAny: bidder.labelAny,
-                labelAll: bidder.labelAll,
-            }));
-            this.mediaTypes = { banner: { sizes: slot.sizes } };
-            this.labelAny = slot.labelAny ? slot.labelAny : [];
-            this.labelAll = slot.labelAll ? slot.labelAll : [];
-        }
+    constructor(advert: Advert, slot: PrebidSlot) {
+        this.code = advert.id;
+        this.bids = bidders.map((bidder: PrebidBidder) => ({
+            bidder: bidder.name,
+            params: bidder.bidParams(advert.id, slot.sizes),
+            labelAny: bidder.labelAny,
+            labelAll: bidder.labelAll,
+        }));
+        this.mediaTypes = { banner: { sizes: slot.sizes } };
+        this.labelAny = slot.labelAny ? slot.labelAny : [];
+        this.labelAll = slot.labelAll ? slot.labelAll : [];
     }
 
     isEmpty() {
@@ -72,9 +66,13 @@ class PrebidService {
         if (dfpEnv.externalDemand !== 'prebid') {
             return PrebidService.requestQueue;
         }
-        const adUnit = new PrebidAdUnit(advert);
 
-        if (adUnit.isEmpty()) {
+        const adUnits = slots
+            .filter(slot => stripTrailingNumbers(advert.id).endsWith(slot.key))
+            .map(slot => new PrebidAdUnit(advert, slot))
+            .filter(adUnit => !adUnit.isEmpty());
+
+        if (adUnits.length === 0) {
             return PrebidService.requestQueue;
         }
 
@@ -84,10 +82,10 @@ class PrebidService {
                     new Promise(resolve => {
                         window.pbjs.que.push(() => {
                             window.pbjs.requestBids({
-                                adUnits: [adUnit],
+                                adUnits,
                                 bidsBackHandler() {
                                     window.pbjs.setTargetingForGPTAsync([
-                                        adUnit.code,
+                                        adUnits[0].code,
                                     ]);
                                     resolve();
                                 },
