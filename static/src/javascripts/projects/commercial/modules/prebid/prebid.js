@@ -10,7 +10,7 @@ import { priceGranularity } from 'commercial/modules/prebid/price-config';
 import type {
     PrebidBid,
     PrebidBidder,
-    PrebidSize,
+    PrebidMediaTypes,
     PrebidSlot,
     PrebidSlotLabel,
 } from 'commercial/modules/prebid/types';
@@ -19,11 +19,11 @@ import { stripTrailingNumbers } from 'commercial/modules/prebid/utils';
 const bidderTimeout = 1500;
 
 class PrebidAdUnit {
-    code: string;
-    sizes: PrebidSize[];
-    bids: PrebidBid[];
-    labelAny: PrebidSlotLabel[];
-    labelAll: PrebidSlotLabel[];
+    code: ?string;
+    bids: ?(PrebidBid[]);
+    mediaTypes: ?PrebidMediaTypes;
+    labelAny: ?(PrebidSlotLabel[]);
+    labelAll: ?(PrebidSlotLabel[]);
 
     constructor(advert: Advert) {
         const slot: ?PrebidSlot = slots.find((s): boolean =>
@@ -32,22 +32,20 @@ class PrebidAdUnit {
 
         if (slot) {
             this.code = advert.id;
-            this.sizes = slot.sizes;
-            this.labelAny = slot.labelAny ? slot.labelAny : [];
-            this.labelAll = slot.labelAll ? slot.labelAll : [];
             this.bids = bidders.map((bidder: PrebidBidder) => ({
                 bidder: bidder.name,
-                params: bidder.bidParams(this.code, this.sizes),
+                params: bidder.bidParams(advert.id, slot.sizes),
                 labelAny: bidder.labelAny,
                 labelAll: bidder.labelAll,
             }));
-        } else {
-            this.code = '';
-            this.sizes = [];
-            this.bids = [];
-            this.labelAny = [];
-            this.labelAll = [];
+            this.mediaTypes = { banner: { sizes: slot.sizes } };
+            this.labelAny = slot.labelAny ? slot.labelAny : [];
+            this.labelAll = slot.labelAll ? slot.labelAll : [];
         }
+    }
+
+    isEmpty() {
+        return this.code == null;
     }
 }
 
@@ -68,8 +66,6 @@ class PrebidService {
         });
     }
 
-    // Prebid 1.0 supports concurrent bid requests, but for 0.34, each request
-    // must be enqueued sequentially.
     static requestQueue: Promise<void> = Promise.resolve();
 
     static requestBids(advert: Advert): Promise<void> {
@@ -78,7 +74,7 @@ class PrebidService {
         }
         const adUnit = new PrebidAdUnit(advert);
 
-        if (adUnit.sizes.length === 0) {
+        if (adUnit.isEmpty()) {
             return PrebidService.requestQueue;
         }
 
