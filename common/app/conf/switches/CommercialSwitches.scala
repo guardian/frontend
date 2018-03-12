@@ -376,4 +376,14 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val orielSonobiIntegration: Switch = Switch(
+    group = Commercial,
+    name = "oriel-sonobi-integration-test",
+    description = "This is a short test to test the integration between Oriel and Sonobi",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 3, 16),
+    exposeClientSide = false
+  )
 }
