@@ -106,7 +106,7 @@
 .team__score {
     position: absolute;
     bottom: 0;
-    left: $garnett-x-large-button-size;
+    left: $garnett-x-large-button-size - 6px;
     width: $garnett-x-large-button-size;
     height: $garnett-x-large-button-size;
     border-radius: $garnett-x-large-button-size / 2;
