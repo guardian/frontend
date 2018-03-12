@@ -817,7 +817,9 @@ $quote-mark: 35px;
 
 .content--type-matchreport {
     .content__labels .content__section-label__link {
-        color: $neutral-1;
+        @include mq(leftCol) {
+            color: $neutral-1;
+        }
     }
 
     .football-tabs .tabs__container {

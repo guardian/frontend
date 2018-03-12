@@ -6,33 +6,65 @@
     margin-bottom: $gs-baseline;
 
     &:before {
-        @include mq(tablet) {
+        @include mq(phablet) {
             content: '';
             position: absolute;
             top: 0;
             bottom: 0;
-            left: -100vh;
-            width: 100vh;
+            left: calc((100vw - 640px) / -2);
+            width: 100vw;
             background-color: $news-garnett-highlight;
+        }
+
+        @include mq(tablet) {
+            left: calc((100vw - 680px) / -2);
+        }
+
+        @include mq(desktop) {
+            left: -100vw;
         }
     }
 }
 
 .match-summary__teams {
     display: flex;
-    padding: 6px;
+    padding: 6px 10px;
+
+    @include mq(mobileLandscape) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @include mq(tablet) {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .match-summary__team {
     position: relative;
     width: 50%;
     padding-bottom: $garnett-x-large-button-size + $gs-baseline;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -10px;
+        bottom: 0;
+        background-color: mix($neutral-1, $news-garnett-highlight, 20%);
+        width: 1px;
+    }
 }
 
-.match-summary__team--away {
-    border-left: 1px solid $neutral-1;
-    margin-left: 6px;
-    padding-left: 6px;
+.match-summary__team--home {
+    &:before {
+        bottom: -6px;
+
+        @include mq($until: leftCol) {
+            display: none;
+        }
+    }
 }
 
 .team__name {
