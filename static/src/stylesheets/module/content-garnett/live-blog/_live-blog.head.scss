@@ -1029,7 +1029,10 @@ $pillars: (
         }
     }
 
-    .content__labels .content__section-label__link {
-        color: $neutral-1;
+    .content__labels {
+        .content__section-label__link,
+        .content__series-label__link {
+            color: $neutral-1;
+        }
     }
 }

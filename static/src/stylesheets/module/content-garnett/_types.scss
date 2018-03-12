@@ -817,9 +817,12 @@ $quote-mark: 35px;
 
 // *************** Matchreport overrides ****************
 .content--has-scores {
-    .content__labels .content__section-label__link {
-        @include mq(leftCol) {
-            color: $neutral-1;
+    .content__labels {
+        .content__series-label__link,
+        .content__section-label__link {
+            @include mq(leftCol) {
+                color: $neutral-1;
+            }
         }
     }
 
