@@ -27,7 +27,7 @@ export const epicButtonsTemplate = (
             <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-single-button"
               href="${supportUrl}"
               target="_blank">
-              Support the Guardian
+              Support The Guardian
             </a>
         </div>`;
 
