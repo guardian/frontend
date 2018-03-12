@@ -119,19 +119,15 @@ object PrevResult {
 case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
   private val darkenFactor = 0.3
   private val homeColour =
-    if (homeTeam.teamColour.isEmpty) "#eeeeee"
+    if (homeTeam.teamColour.isEmpty) "#ffffff"
     else homeTeam.teamColour.toLowerCase
   private val awayColour =
-    if (awayTeam.teamColour.isEmpty) "#eeeeee"
+    if (awayTeam.teamColour.isEmpty) "#ffffff"
     else awayTeam.teamColour.toLowerCase
 
-  lazy val home =
-    if (homeColour == "#ffffff") "#eeeeee"
-    else if (homeColour == "#eeeeee" && awayColour == "#ffffff") "#dddddd"
-    else homeColour
+  lazy val home = homeColour
   lazy val away =
     if (awayColour == "#ffffff" && homeColour == "#ffffff") darken(awayColour)
-    else if (awayColour == "#ffffff") "#eeeeee"
     else if (awayColour == homeColour) darken(awayColour)
     else awayColour
   lazy val homeTeamIsLight = isLight(home)
