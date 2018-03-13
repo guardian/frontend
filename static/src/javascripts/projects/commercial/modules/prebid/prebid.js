@@ -16,7 +16,7 @@ import type {
 } from 'commercial/modules/prebid/types';
 import {
     stripMobileSuffix,
-    stripTrailingNumbers,
+    stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
 
 const bidderTimeout = 1500;
@@ -72,9 +72,9 @@ class PrebidService {
 
         const adUnits = slots
             .filter(slot =>
-                stripTrailingNumbers(stripMobileSuffix(advert.id)).endsWith(
-                    slot.key
-                )
+                stripTrailingNumbersAbove1(
+                    stripMobileSuffix(advert.id)
+                ).endsWith(slot.key)
             )
             .map(slot => new PrebidAdUnit(advert, slot))
             .filter(adUnit => !adUnit.isEmpty());

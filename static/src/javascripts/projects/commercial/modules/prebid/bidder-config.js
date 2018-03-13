@@ -17,11 +17,11 @@ import type {
 import {
     getBreakpointKey,
     stripMobileSuffix,
-    stripTrailingNumbers,
+    stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
 
 const getTrustXAdUnitId = (slotId: string): string => {
-    switch (stripTrailingNumbers(stripMobileSuffix(slotId))) {
+    switch (stripTrailingNumbersAbove1(stripMobileSuffix(slotId))) {
         case 'dfp-ad--inline':
             return '2960';
         case 'dfp-ad--mostpop':

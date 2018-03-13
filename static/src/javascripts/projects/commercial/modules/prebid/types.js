@@ -27,7 +27,12 @@ export type PrebidImproveParams = {
     size: PrebidImproveSizeParam,
 };
 
-export type PrebidSlotKey = 'top-above-nav' | 'right' | 'inline' | 'mostpop';
+export type PrebidSlotKey =
+    | 'top-above-nav'
+    | 'right'
+    | 'inline1'
+    | 'inline'
+    | 'mostpop';
 
 export type PrebidSlotLabel = 'mobile' | 'tablet' | 'desktop';
 
