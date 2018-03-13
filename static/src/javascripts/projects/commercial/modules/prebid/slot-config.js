@@ -30,8 +30,18 @@ export const slots: PrebidSlot[] = [
     },
     {
         key: 'inline',
+        sizes: [[300, 250], [300, 600]],
+        labelAll: ['desktop', 'article'],
+    },
+    {
+        key: 'inline',
         sizes: [[300, 250]],
-        labelAny: ['mobile', 'tablet', 'desktop'],
+        labelAll: ['desktop', 'non-article'],
+    },
+    {
+        key: 'inline',
+        sizes: [[300, 250]],
+        labelAny: ['mobile', 'tablet'],
     },
     {
         key: 'mostpop',

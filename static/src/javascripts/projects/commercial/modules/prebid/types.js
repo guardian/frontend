@@ -34,7 +34,12 @@ export type PrebidSlotKey =
     | 'inline'
     | 'mostpop';
 
-export type PrebidSlotLabel = 'mobile' | 'tablet' | 'desktop';
+export type PrebidSlotLabel =
+    | 'mobile'
+    | 'tablet'
+    | 'desktop'
+    | 'article'
+    | 'non-article';
 
 export type PrebidBidLabel = 'edn-UK' | 'edn-INT' | 'geo-NA';
 
