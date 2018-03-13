@@ -194,7 +194,9 @@ describe('Search tool', () => {
     });
 
     it('should fetch data', done => {
-        fetchJson.mockImplementationOnce(() => Promise.resolve([{ "localizedName": "London"}]));
+        fetchJson.mockImplementationOnce(() =>
+            Promise.resolve([{ localizedName: 'London' }])
+        );
 
         jest.spyOn(sut, 'renderList');
 
