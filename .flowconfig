@@ -46,7 +46,6 @@ module.name_mapper='^svgs' -> '<PROJECT_ROOT>/static/src/inline-svgs'
 
 # modules that go by different names in webpack
 module.name_mapper='^lodash\(.*\)$' -> 'lodash-amd/compat\1'
-module.name_mapper='^picturefill' -> 'projects/common/utils/picturefill'
 module.name_mapper='^raven' -> 'raven-js'
 module.name_mapper='^EventEmitter' -> 'wolfy87-eventemitter'
 module.name_mapper='^videojs' -> 'video.js'

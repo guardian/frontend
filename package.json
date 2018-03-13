@@ -143,7 +143,6 @@
     ],
     "moduleNameMapper": {
       "^lodash/(.*)$": "lodash-node/compat/$1",
-      "picturefill": "projects/common/utils/picturefill",
       "raven": "raven-js",
       "EventEmitter": "wolfy87-eventemitter",
       "videojs": "video.js",
