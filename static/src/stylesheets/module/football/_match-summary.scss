@@ -132,7 +132,7 @@
         bottom: 0;
         margin: auto;
 
-        @include mq($until:mobileLandscape) {
+        @include mq($until: mobileLandscape) {
             transform: scale(.8);
         }
     }
@@ -163,8 +163,8 @@
 }
 
 .match-summary__comment {
-    position: relative;
     @include fs-textSans(3);
+    position: relative;
     color: $neutral-1;
     padding: 6px 10px;
     border-top: 1px solid mix($neutral-1, $news-garnett-highlight, 20%);
