@@ -192,7 +192,6 @@ $quote-mark: 35px;
         padding-bottom: $gs-baseline*1.5;
         @include mq($until: phablet) {
             border-top: 0;
-            vertical-align: top;
         }
     }
 

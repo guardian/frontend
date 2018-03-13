@@ -92,7 +92,7 @@ trait ABTestSwitches {
     "Point the subscribe link in the header to a subscriptions-only version of the support site",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 12),
+    sellByDate = new LocalDate(2018, 3, 19),
     exposeClientSide = true
   )
 

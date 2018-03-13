@@ -71,8 +71,8 @@ const supporterEngagementCtaCopy = (location: string): string =>
 
 const supporterEngagementCtaCopyJustOne = (location: string): string =>
     location === 'US'
-        ? 'Support the Guardian from as little as $1.'
-        : 'Support the Guardian from as little as £1.';
+        ? 'Support The Guardian from as little as $1.'
+        : 'Support The Guardian from as little as £1.';
 
 const getSupporterLinkUrl = (location: string): string =>
     location === 'GB'
@@ -81,7 +81,7 @@ const getSupporterLinkUrl = (location: string): string =>
 
 const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
-        buttonCaption: 'Support the Guardian',
+        buttonCaption: 'Support The Guardian',
         linkUrl: getSupporterLinkUrl(location),
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         messageText: engagementBannerCopy(),
