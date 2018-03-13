@@ -2,6 +2,11 @@
 
 import { getBreakpoint } from 'lib/detect';
 
+const stripSuffix = (s: string, suffix: string): string => {
+    const re = new RegExp(`${suffix}$`);
+    return s.replace(re, '');
+};
+
 export const getBreakpointKey = (): string => {
     switch (getBreakpoint()) {
         case 'mobile':
@@ -19,6 +24,9 @@ export const getBreakpointKey = (): string => {
             return 'D';
     }
 };
+
+export const stripMobileSuffix = (s: string): string =>
+    stripSuffix(s, '--mobile');
 
 export const stripTrailingNumbers = (s: string): string =>
     s.replace(/\d+$/, '');
