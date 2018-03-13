@@ -14,13 +14,13 @@
     }
 
     .button--large {
-        background: $lifestyle-garnett-feature;
-        border: 1px solid $lifestyle-garnett-feature;
+        background: $lifestyle-garnett-main-1;
+        border: 1px solid $lifestyle-garnett-main-1;
         &:hover,
         &:visited,
         &:focus {
-            background-color: darken($lifestyle-garnett-feature, 10%);
-            border-color: darken($lifestyle-garnett-feature, 10%);
+            background-color: darken($lifestyle-garnett-main-1, 10%);
+            border-color: darken($lifestyle-garnett-main-1, 10%);
         }
     }
 
