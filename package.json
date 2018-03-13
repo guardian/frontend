@@ -147,7 +147,6 @@
       "raven": "raven-js",
       "EventEmitter": "wolfy87-eventemitter",
       "videojs": "video.js",
-      "stripe": "stripe/stripe.min",
       "^svgs/(.*)$": "<rootDir>/__mocks__/svgMock.js",
       "^(.*)\\.html$": "<rootDir>/__mocks__/templateMock.js",
       "ophan/ng": "ophan-tracker-js",

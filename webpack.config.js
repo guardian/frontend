@@ -62,7 +62,6 @@ module.exports = {
             EventEmitter: 'wolfy87-eventemitter',
             videojs: 'video.js',
 
-            stripe: 'stripe/stripe.min',
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
