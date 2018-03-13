@@ -39,6 +39,7 @@
 
             @if(theMatch.isLive || theMatch.isResult){
                 @homeTeam.score.map{score => @fragments.inlineSvg("number-" + score, "numbers", List("team__score")) }
+                @homeTeam.aggregateScore.map{aggScore => @fragments.inlineSvg("number-" + aggScore, "numbers", List("team__agg-score"))}
             }
         </div>
 
@@ -58,11 +59,11 @@
 
             @if(theMatch.isLive || theMatch.isResult){
                 @awayTeam.score.map{score => @fragments.inlineSvg("number-" + score, "numbers", List("team__score")) }
+                @awayTeam.aggregateScore.map{aggScore => @fragments.inlineSvg("number-" + aggScore, "numbers", List("team__agg-score"))}
             }
         </div>
     </div>
 
     @theMatch.comments.map{ comments => <div class="match-summary__comment">@comments.replace("(", "").replace(")", "")</div>}
-    @theMatch.homeTeam.aggregateScore.map{ score => <div class="match-summary__aggregate">agg. @score-@theMatch.awayTeam.aggregateScore</div>}
 </@if(link){a}else{div}>
 }
