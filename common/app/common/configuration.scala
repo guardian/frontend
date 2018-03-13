@@ -243,6 +243,11 @@ class GuardianConfiguration extends Logging {
     lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
   }
 
+  object skimlinks {
+    lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
+    lazy val skimlinksSections = configuration.getStringProperty("skimlinks.sections").getOrElse("").split(",").toSet
+  }
+
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
     lazy val webEngineersEmail = configuration.getStringProperty("email.web.engineers")
