@@ -2,10 +2,13 @@
 
 import bean from 'bean';
 import $ from 'lib/$';
-import sinon from 'sinon';
-
+import fetchJson_ from 'lib/fetch-json';
 import { SearchTool } from 'facia/modules/onwards/search-tool';
 import mediator from 'lib/mediator';
+
+jest.mock('lib/fetch-json', () => jest.fn());
+
+const fetchJson: JestMockFn<*, *> = (fetchJson_: any);
 
 describe('Search tool', () => {
     let container;
@@ -38,6 +41,7 @@ describe('Search tool', () => {
     afterEach(() => {
         $('body').html('');
         container = null;
+        fetchJson.mockReset();
     });
 
     it('should be defined', () => {
@@ -71,6 +75,7 @@ describe('Search tool', () => {
 
         // Test for any other key
         stubEvent.keyCode = 22;
+        fetchJson.mockImplementationOnce(() => Promise.resolve([]));
         sut.handleKeyEvents(stubEvent);
         expect(sut.getListOfResults).toHaveBeenCalledWith(stubEvent);
     });
@@ -189,14 +194,7 @@ describe('Search tool', () => {
     });
 
     it('should fetch data', done => {
-        const server = sinon.fakeServer.create();
-        server.autoRespond = true;
-
-        server.respondWith([
-            200,
-            { 'Content-Type': 'application/json' },
-            '[{ "localizedName": "London"}]',
-        ]);
+        fetchJson.mockImplementationOnce(() => Promise.resolve([{ "localizedName": "London"}]));
 
         jest.spyOn(sut, 'renderList');
 
@@ -209,8 +207,6 @@ describe('Search tool', () => {
             done();
         });
         jest.runAllTimers();
-
-        server.restore();
     });
 
     it('should set input value', () => {
