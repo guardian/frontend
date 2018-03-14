@@ -1,7 +1,8 @@
 package views
 
 import common.Edition
-import model.{ApplicationContext, Interactive}
+import model.{ApplicationContext, GalleryPage, Interactive}
+import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import services.IndexPage
@@ -26,4 +27,12 @@ object IndexCleaner {
       CommercialMPUForFronts(isNetworkFront = false)
     )
   }
+}
+
+object GalleryCaptionCleaners {
+  def apply(page: GalleryPage, caption: String)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+    val cleaners = List(GalleryCaptionCleaner, SkimLinksCleaner(request.uri, page.gallery.content.metadata.sectionId))
+    withJsoup(caption)(cleaners: _*)
+  }
+
 }

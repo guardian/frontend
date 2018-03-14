@@ -1,7 +1,8 @@
 package services
 
-import java.net.URI
+import java.net.URL
 import common.Logging
+import scala.util.Try
 
 object SkimLinksCache extends Logging {
 
@@ -14,7 +15,7 @@ object SkimLinksCache extends Logging {
     } else {
       log.info("Fetching and caching skimlinks")
       val domains = S3.get("skimlinks/skimlinks-domains.csv").getOrElse{
-        log.warn("Failed to fetch skimlinks cache")
+        log.warn("Failed to fetch skimlinks from S3")
         ""
       }
       skimLinks = domains.split(",").toSet
@@ -23,9 +24,11 @@ object SkimLinksCache extends Logging {
   }
 
   def isSkimLink(link: String): Boolean = {
-    // strip the www. subdomain as it is not included in the list of domains from the skimlinks api
-    val host = new URI(link).getHost.replace("www.", "")
-    getSkimLinks.contains(host)
+    val uri: Option[URL] = Try(new URL(link)).toOption
+    uri.exists(u => {
+      // strip the www. subdomain as it is not included in the list of domains from the skimlinks api
+      val cleanedHost = u.getHost.replace("www.", "")
+      getSkimLinks.contains(cleanedHost)
+    })
   }
-
 }
