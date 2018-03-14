@@ -115,7 +115,6 @@
     "sass-lint": "~1.10.2",
     "sass-mq": "~3.3.2",
     "semver": "^5.4.1",
-    "sinon": "^2.1.0",
     "split": "^1.0.0",
     "stream-to-observable": "^0.2.0",
     "svgo": "^0.7.2",

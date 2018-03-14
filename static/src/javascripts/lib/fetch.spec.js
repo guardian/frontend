@@ -1,37 +1,40 @@
 // @flow
 
 import fetch from 'lib/fetch';
-import sinon from 'sinon';
+import reqwest_ from 'reqwest';
 
-let xhr;
-let requests;
+jest.mock('reqwest', () => jest.fn());
+
+const reqwest: JestMockFn<*, *> = (reqwest_: any);
 
 describe('Fetch util', () => {
-    beforeEach(() => {
-        requests = [];
-        xhr = sinon.useFakeXMLHttpRequest();
-        xhr.onCreate = req => requests.push(req);
-    });
-
     afterEach(() => {
-        xhr.restore();
+        reqwest.mockReset();
     });
 
-    it('returns a promise which rejects on network errors', done => {
-        fetch('error-path')
-            .then(done.fail)
-            .catch(ex => {
-                expect(ex instanceof Error).toBe(true);
-                expect(ex.message).toMatch(/fetch error/i);
-                done();
+    it('returns a promise which rejects on network errors', () => {
+        reqwest.mockImplementationOnce(() =>
+            Promise.resolve({
+                status: 0,
             })
-            .catch(done.fail);
+        );
 
-        requests[0].error();
+        return fetch('error-path').catch(ex => {
+            expect(ex instanceof Error).toBe(true);
+            expect(ex.message).toMatch(/fetch error/i);
+        });
     });
 
-    it('returns a promise which resolves on error responses', done => {
-        fetch('404-error-response')
+    it('returns a promise which resolves on error responses', () => {
+        reqwest.mockImplementationOnce(() =>
+            Promise.resolve({
+                status: 404,
+                responseText: 'Error response',
+                statusText: 'Not Found',
+            })
+        );
+
+        return fetch('404-error-response')
             .then(resp => {
                 expect(resp.ok).toBe(false);
                 expect(resp.status).toBe(404);
@@ -41,15 +44,19 @@ describe('Fetch util', () => {
             })
             .then(responseText => {
                 expect(responseText).toBe('Error response');
-            })
-            .then(done)
-            .catch(done.fail);
-
-        requests[0].respond(404, {}, 'Error response');
+            });
     });
 
-    it('rejects if response is not correct json', done => {
-        fetch('invalid-json')
+    it('rejects if response is not correct json', () => {
+        reqwest.mockImplementationOnce(() =>
+            Promise.resolve({
+                status: 200,
+                responseText: 'Plain text',
+                statusText: 'OK',
+            })
+        );
+
+        return fetch('invalid-json')
             .then(resp => {
                 expect(resp.ok).toBe(true);
                 expect(resp.status).toBe(200);
@@ -57,33 +64,39 @@ describe('Fetch util', () => {
 
                 return resp.json();
             })
-            .then(done.fail)
             .catch(ex => {
                 expect(ex instanceof Error).toBe(true);
                 expect(ex.message).toMatch(/json/i);
-                done();
-            })
-            .catch(done.fail);
-
-        requests[0].respond(200, {}, 'Plain text');
+            });
     });
 
-    it('rejects if trying to consume the body multiple times', done => {
-        fetch('multiple-body')
+    it('rejects if trying to consume the body multiple times', () => {
+        reqwest.mockImplementationOnce(() =>
+            Promise.resolve({
+                status: 200,
+                responseText: '{}',
+                statusText: 'OK',
+            })
+        );
+
+        return fetch('multiple-body')
             .then(resp => Promise.all([resp.text(), resp.json()]))
-            .then(done.fail)
             .catch(ex => {
                 expect(ex instanceof TypeError).toBe(true);
                 expect(ex.message).toBe('Already read');
-                done();
-            })
-            .catch(done.fail);
-
-        requests[0].respond(200, {}, '{}');
+            });
     });
 
-    it('resolves a correct response in plain text', done => {
-        fetch('correct-json')
+    it('resolves a correct response in plain text', () => {
+        reqwest.mockImplementationOnce(() =>
+            Promise.resolve({
+                status: 200,
+                responseText: '{"json":true}',
+                statusText: 'OK',
+            })
+        );
+
+        return fetch('correct-json')
             .then(resp => {
                 expect(resp.ok).toBe(true);
                 expect(resp.status).toBe(200);
@@ -93,15 +106,19 @@ describe('Fetch util', () => {
             })
             .then(responseText => {
                 expect(responseText).toBe('{"json":true}');
-            })
-            .then(done)
-            .catch(done.fail);
-
-        requests[0].respond(200, {}, '{"json":true}');
+            });
     });
 
-    it('resolves a correct response in json', done => {
-        fetch('correct-json')
+    it('resolves a correct response in json', () => {
+        reqwest.mockImplementationOnce(() =>
+            Promise.resolve({
+                status: 200,
+                responseText: '{"json":true}',
+                statusText: 'OK',
+            })
+        );
+
+        return fetch('correct-json')
             .then(resp => {
                 expect(resp.ok).toBe(true);
                 expect(resp.status).toBe(200);
@@ -113,10 +130,6 @@ describe('Fetch util', () => {
                 expect(json).toEqual({
                     json: true,
                 });
-            })
-            .then(done)
-            .catch(done.fail);
-
-        requests[0].respond(200, {}, '{"json":true}');
+            });
     });
 });
