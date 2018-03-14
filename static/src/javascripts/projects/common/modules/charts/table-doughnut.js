@@ -6,7 +6,6 @@ import { Doughnut } from 'common/modules/charts/doughnut';
 const TableDoughnut = () => {};
 
 TableDoughnut.prototype.render = (el: Element) => {
-    console.log(el);
     const width = el.scrollWidth || el.getAttribute('data-chart-width');
     const headings = $('th', el);
 
@@ -27,7 +26,8 @@ TableDoughnut.prototype.render = (el: Element) => {
     const currentClasses = $doughnut.attr('class');
     return $doughnut.attr(
         'class',
-        `${currentClasses} ${el.getAttribute('data-chart-class') || ''}`)[0].outerHTML;
+        `${currentClasses} ${el.getAttribute('data-chart-class') || ''}`
+    )[0].outerHTML;
 };
 
 export { TableDoughnut };
