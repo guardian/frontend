@@ -9,6 +9,16 @@ export const slots: PrebidSlot[] = [
         labelAll: ['desktop'],
     },
     {
+        key: 'top-above-nav',
+        sizes: [[728, 90]],
+        labelAll: ['tablet'],
+    },
+    {
+        key: 'top-above-nav',
+        sizes: [[300, 250]],
+        labelAll: ['mobile'],
+    },
+    {
         key: 'right',
         sizes: [[300, 250], [300, 600]],
         labelAny: ['mobile', 'tablet', 'desktop'],

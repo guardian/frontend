@@ -61,8 +61,9 @@
             }
         </div>
     </div>
-
-    @theMatch.comments.map{ comments => <div class="match-summary__comment">@comments.replace("(", "").replace(")", "")</div>}
-    @theMatch.homeTeam.aggregateScore.map{ score => <div class="match-summary__aggregate">agg. @score-@theMatch.awayTeam.aggregateScore</div>}
+    <div class='match-summary__comments'>
+        @theMatch.homeTeam.aggregateScore.map{homeAggScore => <span class='match-summary__comment'>Aggregate @homeAggScore-@theMatch.awayTeam.aggregateScore</span>}
+        @theMatch.comments.map{ comments => <span class='match-summary__comment'> @comments.replace("(", "").replace(")", "")</span>}
+    </div>
 </@if(link){a}else{div}>
 }

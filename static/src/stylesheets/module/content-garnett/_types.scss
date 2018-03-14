@@ -192,7 +192,6 @@ $quote-mark: 35px;
         padding-bottom: $gs-baseline*1.5;
         @include mq($until: phablet) {
             border-top: 0;
-            vertical-align: top;
         }
     }
 
@@ -824,6 +823,10 @@ $quote-mark: 35px;
                 color: $neutral-1;
             }
         }
+    }
+
+    .content__head {
+        grid-template-areas: 'labels report' '. headline-standfirst' 'meta main-media';
     }
 
     .football-tabs .tabs__container {
