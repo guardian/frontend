@@ -101,7 +101,6 @@ const renderTable = (competition: string, extras: Array<?Extra>): void => {
                         importance: 3,
                         content: container,
                         ready: true,
-                        chart: null,
                     };
                 } else {
                     extras[2] = undefined;
