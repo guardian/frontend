@@ -98,9 +98,6 @@
 }
 
 .badge--interactive {
-    float: right;
-    clear: right;
-    min-height: 135px;
     border-top: 1px dotted $paid-article-icon;
 
     @include mq(desktop) {
