@@ -138,33 +138,10 @@
     }
 }
 
-.team__agg-score {
-    position: absolute;
-    bottom: 0;
-    left: ($garnett-large-button-size * 2) - 12px;
-    width: $garnett-medium-button-size;
-    height: $garnett-medium-button-size;
-    border-radius: $garnett-medium-button-size / 2;
-    background-color: #ffffff;
-
-    @include mq(mobileLandscape) {
-        left: ($garnett-x-large-button-size * 2) - 12px;
-    }
-
-    svg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        transform: scale(.6);
-        margin: auto;
-    }
-}
-
-.match-summary__comment {
+.match-summary__comments {
     @include fs-textSans(3);
     position: relative;
+    font-style: italic;
     color: $neutral-1;
     padding: 6px 10px;
     border-top: 1px solid mix($neutral-1, $news-garnett-highlight, 20%);
@@ -191,4 +168,10 @@
             width: 1px;
         }
     }
+}
+
+.match-summary__comment + .match-summary__comment {
+    margin-left: $gs-gutter / 4;
+    padding-left: $gs-gutter / 4;
+    border-left: 1px solid mix($neutral-1, $news-garnett-highlight, 20%);
 }
