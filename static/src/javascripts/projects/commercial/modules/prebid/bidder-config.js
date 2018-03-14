@@ -22,6 +22,7 @@ import {
 
 const getTrustXAdUnitId = (slotId: string): string => {
     switch (stripTrailingNumbersAbove1(stripMobileSuffix(slotId))) {
+        case 'dfp-ad--inline1':
         case 'dfp-ad--inline':
             return '2960';
         case 'dfp-ad--mostpop':
