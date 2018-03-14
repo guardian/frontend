@@ -31,7 +31,8 @@ object EmailHelpers {
   def classesForCard(card: ContentCard, withImage: Boolean = false): Seq[String] = {
     Seq(toneClassFromStyle(card.cardStyle)) ++
       (if(withImage) Seq("fc--large") else Nil) ++
-      (if(card.branding.exists(_.isPaid)) Seq("tone-branded") else Nil)
+      (if(card.branding.exists(_.isPaid)) Seq("tone-branded") else Nil) ++
+      card.pillar.map( pillar => Seq(s"pillar-${pillar.name}") ).getOrElse(Nil)
   }
 
   def icon(name: String, largeHeadline: Boolean = false): Html = Html {

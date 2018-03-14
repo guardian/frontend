@@ -1,5 +1,5 @@
 .fc__inner {
-    border-top: 1px solid #c70000;
+    border-top: 1px solid #dfdfdf;
 
     &,
     & th {
@@ -7,21 +7,14 @@
     }
 
     .headline,
-    .fc-link {
-        color: #121212;
-    }
-
-    .fc__kicker,
-    .byline {
-        color: #c70000;
-    }
-
+    .fc-link,
     .trail-text {
         color: #121212;
     }
 }
 
-.tone-news {
+// Pillars
+.pillar-News {
     border-top: 1px solid #c70000;
 
     .fc__kicker,
@@ -30,20 +23,142 @@
     }
 }
 
-.tone-media {
+.pillar-Opinion {
+    border-top: 1px solid #e05e00;
+
     &,
     & th {
-        background-color: #333333;
+        background-color: #fef9f5;
     }
 
-    .fc__kicker {
-        color: #ff4e36;
+    .headline,
+    .fc-link,
+    .trail-text {
+        color: #121212;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #e05e00;
+    }
+}
+
+.pillar-Sport {
+    border-top: 1px solid #0084c6;
+
+    .fc__kicker,
+    .byline {
+        color: #0084c6;
+    }
+}
+
+.pillar-Arts {
+    border-top: 1px solid #a1845c;
+
+    .fc__kicker,
+    .byline {
+        color: #a1845c;
+    }
+}
+
+.pillar-Lifestyle {
+    border-top: 1px solid #bb3b80;
+
+    .fc__kicker,
+    .byline {
+        color: #bb3b80;
+    }
+}
+
+// Lie blogs
+.tone-live {
+    &.pillar-News {
+        border-top: 1px solid #ffbac8;
+
+        .fc__kicker {
+            color: #ffbac8;
+        }
+
+        &,
+        & th {
+            background-color: #ad0006;
+        }
+    }
+
+    &.pillar-Sport {
+        border-top: 1px solid #90ddff;
+
+        .fc__kicker {
+            color: #90ddff;
+        }
+
+        &,
+        & th {
+            background-color: #005689;
+        }
+    }
+
+    &.pillar-Lifestyle {
+        border-top: 1px solid #ffbac8;
+
+        .fc__kicker {
+            color: #ffbac8;
+        }
+
+        &,
+        & th {
+            background-color: #7c0067;
+        }
     }
 
     .headline,
     .fc-link,
     .trail-text {
         color: #ffffff;
+    }
+}
+
+// Tones
+.tone-media {
+    &,
+    & th {
+        background-color: #333333;
+    }
+
+    .headline,
+    .fc-link,
+    .trail-text {
+        color: #ffffff;
+    }
+
+    &.pillar-News {
+        .fc__kicker {
+            color: #ff4d36;
+        }
+    }
+
+    &.pillar-Opinion {
+        .fc__kicker {
+            color: #ef7a19;
+        }
+    }
+
+    &.pillar-Sport {
+        .fc__kicker {
+            color: #00b2ff;
+        }
+    }
+
+    &.pillar-Culture {
+        .fc__kicker {
+            color: #eacca0;
+        }
+    }
+
+    &.pillar-Lifestyle {
+        .fc__kicker {
+            color: #ffabdb;
+        }
     }
 }
 
@@ -69,53 +184,9 @@
     }
 }
 
-
-.tone-live {
-    border-top: 1px solid #d65e6c;
-
-    &,
-    & th {
-        background-color: #ad0006;
-    }
-
-    .headline,
-    .fc-link,
-    .trail-text {
-        color: #ffffff;
-    }
-}
-
-.tone-comment {
-    border-top: 1px solid #e05e00;
-
-    &,
-    & th {
-        background-color: #fef9f5;
-    }
-
-    .headline,
-    .fc-link,
-    .trail-text {
-        color: #121212;
-    }
-
-    .fc__kicker,
-    .byline {
-        color: #e05e00;
-    }
-}
-
-
 .tone-dead {
-    border-top: 1px solid #ffc0cb;
-
     &,
     & th {
         background-color: #f6f6f6;
-    }
-
-    .fc__kicker,
-    .byline {
-        color: #cc2b12;
     }
 }

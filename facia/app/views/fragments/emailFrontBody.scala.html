@@ -22,21 +22,30 @@
             }
 
             @if(card.header.quoted) {
-                @card.cardStyle match {
-                    case Feature => { @icon("quote-feature", isLarge) }
-                    case _ => { @icon("quote", isLarge) }
-                }
+                @card.pillar.map( pillar => {
+                    pillar.name match {
+                        case "News" => icon("quote-opinion", isLarge)
+                        case "Opinion" => icon("quote-opinion", isLarge)
+                        case "Sport" => icon("quote-sport", isLarge)
+                        case "Culture" => icon("quote-culture", isLarge)
+                        case "Lifestyle" => icon("quote-lifestyle", isLarge)
+                        case _ => icon("quote", isLarge)
+                    }
+                } )
             }
             @RemoveOuterParaHtml(card.header.headline)
-
-            @if(card.header.isGallery) { @icon("gallery", isLarge) }
-            @if(card.header.isAudio) { @icon("podcast", isLarge) }
-            @if(card.header.isVideo) { @icon("video", isLarge) }
         </a>
     }
     @if(card.header.quoted) {
         @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
     }
+
+    @if(card.header.isGallery) { @icon("gallery", isLarge) }
+
+
+    @if(card.header.isAudio) { @icon("podcast", isLarge) }
+    @if(card.header.isVideo) { @icon("video", isLarge) }
+
     @card.starRating.map { numberOfStars =>
         @row(Seq("review-stars")) {
             @for(i <- 0 to 4) {

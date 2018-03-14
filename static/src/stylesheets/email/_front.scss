@@ -60,10 +60,10 @@ $container-color: #ffffff;
     padding: 6px 0;
 
     a {
-        color: $guardian-brand;
+        color: #0084c6;
 
         &:hover {
-            color: lighten($guardian-brand, 10%) !important;
+            color: #055689 !important;
         }
     }
 }
@@ -109,6 +109,11 @@ $container-color: #ffffff;
 // td
 .fc__pad {
     padding-bottom: 26px;
+
+    .tone-media & {
+        // Space for icon
+        padding-bottom: 42px;
+    }
 }
 
 // td
@@ -146,7 +151,8 @@ $container-color: #ffffff;
 .review-stars {
     background-color: #ffe500;
     display: inline-block;
-    padding: 3px $gutter 3px 5px;
+    margin-left: $gutter;
+    padding: 3px 5px;
 }
 
 // td
@@ -155,6 +161,11 @@ $container-color: #ffffff;
     font-size: 14px;
     line-height: 18px;
     padding: $gutter $gutter 26px;
+
+    .tone-media & {
+        // Space for icon
+        padding-bottom: 42px;
+    }
 }
 
 .fc--large {
@@ -168,7 +179,17 @@ $container-color: #ffffff;
 
 // img
 .headline .icon {
-    height: .7em;
+    display: inline-block;
+    height: .8em;
+}
+
+.icon-podcast,
+.icon-gallery,
+.icon-video {
+    bottom: 6px;
+    height: 28px;
+    left: $gutter;
+    position: absolute;
 }
 
 $email-tones: (
@@ -193,7 +214,7 @@ $email-tones: (
 
 // branded containers for PaidFor content
 .ct-branded {
-    padding: 13px 0 12px;
+    padding: 12px 0;
 
     .ct__margin {
         padding-bottom: 0;
@@ -265,7 +286,7 @@ $email-tones: (
         .ct--not-top {
             // table
             .ct__inner {
-                border-top: 3px solid $tone-color;
+                border-top: 1px solid $tone-color;
             }
         }
         // table
