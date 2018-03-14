@@ -13,18 +13,18 @@ $container-color: #ffffff;
 
 @font-face {
     font-family: "Guardian Egyptian Web Header";
-    src: url("https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff2") format("woff2"),
-    url("https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff") format("woff"),
-    url("https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.ttf") format("truetype");
+    src: url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff2') format("woff2"),
+    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff') format("woff"),
+    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.ttf') format("truetype");
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Guardian Egyptian Web Headline";
-    src: url("https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.woff2") format("woff2"),
-    url("https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.woff") format("woff"),
-    url("https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.ttf") format("truetype");
+    src: url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.woff2') format("woff2"),
+    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.woff') format("woff"),
+    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.ttf') format("truetype");
     font-weight: 500;
     font-style: normal;
 }
@@ -70,7 +70,7 @@ $container-color: #ffffff;
 
 // td
 .ct__margin {
-    padding: 13px 0 12px;
+    padding: 0 0 12px;
 
     .ct--not-top & {
         padding: 26px 0 12px;
@@ -117,12 +117,12 @@ $container-color: #ffffff;
 .trail-text,
 .review-stars {
     font-weight: normal;
-    padding: 6px $gutter 0;
+    padding: 3px $gutter 0;
 }
 
 // td
 .fc__kicker {
-    font-family: "Guardian Egyptian Web Header", Georgia, serif;
+    font-family: 'Guardian Egyptian Web Header', Georgia, serif;
 }
 
 .kicker-seperator {
@@ -139,9 +139,14 @@ $container-color: #ffffff;
 }
 
 // td
-.byline,
-.review-stars {
+.byline {
     padding: 0 $gutter $gutter;
+}
+
+.review-stars {
+    background-color: #ffe500;
+    display: inline-block;
+    padding: 3px $gutter 3px 5px;
 }
 
 // td
