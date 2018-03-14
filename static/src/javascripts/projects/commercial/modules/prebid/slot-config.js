@@ -38,21 +38,10 @@ export const slots: PrebidSlot[] = [
         sizes: [[300, 250]],
         labelAll: ['desktop', 'non-article'],
     },
-    // following won't work yet because of https://github.com/prebid/Prebid.js/issues/2263
-    // {
-    //     key: 'inline',
-    //     sizes: [[300, 250]],
-    //     labelAny: ['tablet', 'mobile'],
-    // },
     {
         key: 'inline',
         sizes: [[300, 250]],
-        labelAll: ['tablet'],
-    },
-    {
-        key: 'inline',
-        sizes: [[300, 250]],
-        labelAll: ['mobile'],
+        labelAny: ['tablet', 'mobile'],
     },
     {
         key: 'mostpop',
