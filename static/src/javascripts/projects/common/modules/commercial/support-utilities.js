@@ -3,8 +3,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 const geo: string = geolocationGetSync();
 
-const useSupportDomain = (): boolean =>
-    geo === 'GB' || geo === 'US';
+const useSupportDomain = (): boolean => geo === 'GB' || geo === 'US';
 
 const supportPath = geo === 'US' ? '/us/contribute' : '/uk/contribute';
 
