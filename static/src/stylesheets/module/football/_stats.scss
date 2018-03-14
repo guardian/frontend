@@ -78,7 +78,7 @@
 .goal-attempts__on-target {
     box-sizing: border-box;
     height: $gs-baseline*6;
-    border: 4px solid $neutral-5;
+    border: 4px solid #e0eff8;
     border-bottom: 0;
     bottom: 0;
     position: absolute;
@@ -92,7 +92,7 @@
 }
 .goal-attempts__off-target--away,
 .goal-attempts__on-target--away {
-    background-color: $status-neutral;
+    background-color: #e0eff8;
     float: right;
     text-align: right;
 }
@@ -121,7 +121,7 @@
     @include fs-header(5);
     box-sizing: border-box;
     padding: 0 6px 3px;
-    background-color: $status-neutral;
+    background-color: #e0eff8;
     color: #ffffff;
     font-weight: bold;
     float: left;
@@ -131,7 +131,7 @@
 
 .bar-fight__bar--home {
     background-color: $neutral-1;
-    border-right: 2px solid #ffffff;
+    border-right: 2px solid #e0eff8;
     text-align: left;
 }
 
@@ -221,6 +221,10 @@
             bottom: 0;
             width: 100vw;
             background-color: #e0eff8;
+        }
+
+        @include mq(desktop) {
+            padding-right: 10px;
         }
     }
 
