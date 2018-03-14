@@ -5,6 +5,7 @@
 @import views.support.TrailCssClasses.toneClass
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.{GalleryCaptionCleaner, RenderClasses}
+@import views.GalleryCaptionCleaners
 
 @import model.DotcomContentType
 @(page: GalleryPage)(implicit request: RequestHeader, context: model.ApplicationContext)
@@ -69,7 +70,7 @@
 
             <div class="gallery__figcaption">
                 @image.caption.map { caption =>
-                    <div class="gallery__caption" itemprop="caption">@Html(GalleryCaptionCleaner(caption))</div>
+                    <div class="gallery__caption" itemprop="caption">@GalleryCaptionCleaners(page, caption)</div>
                 }
                 @if(image.displayCredit) {
                     @image.credit.map { credit =>

@@ -4,6 +4,7 @@ import java.net.URI
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo}
+import conf.switches.CommercialSwitches
 import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
@@ -14,6 +15,8 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
 import play.twirl.api.HtmlFormat
+import services.SkimLinksCache
+import conf.Configuration.skimlinks._
 
 import scala.collection.JavaConverters._
 import scala.util.Try
@@ -569,9 +572,8 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
 
 // Gallery Caption's don't come back as structured data
 // This is a hack to serve the correct html
-object GalleryCaptionCleaner {
-  def apply(caption: String): String = {
-    val galleryCaption = Jsoup.parse(caption)
+object GalleryCaptionCleaner extends HtmlCleaner {
+  override def clean(galleryCaption: Document): Document = {
     val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
     val captionTitle = galleryCaption.createElement("h2")
     val captionTitleText = firstStrong.map(_.text()).getOrElse("")
@@ -589,7 +591,7 @@ object GalleryCaptionCleaner {
     galleryCaption.prependElement("br")
     galleryCaption.prependChild(captionTitle)
 
-    galleryCaption.toString
+    galleryCaption
   }
 }
 
@@ -793,5 +795,27 @@ object GarnettQuoteCleaner extends HtmlCleaner {
     }
 
     document
+  }
+}
+
+case class SkimLinksCleaner(pageUrl: String, sectionId: String) extends HtmlCleaner with CommercialSwitches {
+
+  override def clean(document: Document): Document = {
+    if (ReplaceSkimLinks.isSwitchedOn && skimlinksSections.contains(sectionId)) {
+      val links = document.getElementsByAttribute("href")
+
+      links.asScala.foreach { link =>
+        val href = link.attr("href")
+        if (link.tagName == "a" && SkimLinksCache.isSkimLink(href)) {
+          link.attr("href", linkToSkimLink(link.attr("href")))
+        }
+      }
+      document
+    } else document
+  }
+
+  def linkToSkimLink(link: String): String = {
+    val urlEncodedLink = URLEncode(link)
+    s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$pageUrl"
   }
 }
