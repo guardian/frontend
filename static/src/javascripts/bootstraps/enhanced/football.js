@@ -21,7 +21,6 @@ import { MatchInfo } from 'common/modules/sport/football/match-info';
 import { MatchListLive } from 'common/modules/sport/football/match-list-live';
 import { tagPageStats } from 'common/modules/sport/football/tag-page-stats';
 import { ScoreBoard } from 'common/modules/sport/score-board';
-import { addComponent } from 'common/modules/ui/rhc';
 import { replaceLocaleTimestamps } from 'common/modules/ui/relativedates';
 
 declare type Extra = {
@@ -62,9 +61,7 @@ const renderNav = (
         });
 };
 
-const renderExtras = (
-    _extras: Array<?Extra>
-): void => {
+const renderExtras = (_extras: Array<?Extra>): void => {
     const extras = [..._extras].filter(extra => extra);
     const ready =
         extras.filter(extra => extra && extra.ready === false).length === 0;
@@ -80,13 +77,9 @@ const renderExtras = (
             });
         }
     }
-}
+};
 
-const renderTable = (
-    competition: string,
-    extras: Array<?Extra>,
-    template: string
-): void => {
+const renderTable = (competition: string, extras: Array<?Extra>): void => {
     extras[2] = {
         ready: false,
     };
@@ -110,11 +103,11 @@ const renderTable = (
                     extras[2] = undefined;
                 }
 
-                renderExtras(extras, template);
+                renderExtras(extras);
             })
             .catch(() => {
                 delete extras[2];
-                renderExtras(extras, template);
+                renderExtras(extras);
             });
     });
 };
@@ -175,13 +168,11 @@ const init = (): void => {
                 // match stats
                 if (resp.hasStarted && $nav) {
                     const statsUrl = $('.tab--stats a', $nav)
-                        .attr('href');
-                        // .replace(/^.*\/\/[^/]+/, '');
+                        .attr('href')
+                        .replace(/^.*\/\/[^/]+/, '');
 
                     $.create(
-                        `
-                        <div class="match-stats__container js-match-stats"></div>
-                    `
+                        `<div class="match-stats__container js-match-stats"></div>`
                     ).each(container => {
                         statsFor(statsUrl)
                             .fetch(container)
@@ -211,10 +202,7 @@ const init = (): void => {
 
                     // Group table
                     if (resp.group !== '') {
-                        renderTable(
-                            `${competition}/${resp.group}`,
-                            extras
-                        );
+                        renderTable(`${competition}/${resp.group}`, extras);
                     }
 
                     // Other games today
