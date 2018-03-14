@@ -47,7 +47,7 @@ const Doughnut = (data: Object, o: Object): bonzo => {
     };
 
     const $svg = $.create(
-        '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="chart chart--doughnut"></svg>'
+        '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMinYMin" class="chart chart--doughnut"></svg>'
     ).attr({
         width: w,
         height: h,

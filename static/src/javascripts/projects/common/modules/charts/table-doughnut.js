@@ -6,6 +6,7 @@ import { Doughnut } from 'common/modules/charts/doughnut';
 const TableDoughnut = () => {};
 
 TableDoughnut.prototype.render = (el: Element) => {
+    console.log(el);
     const width = el.scrollWidth || el.getAttribute('data-chart-width');
     const headings = $('th', el);
 
@@ -19,7 +20,7 @@ TableDoughnut.prototype.render = (el: Element) => {
     const $doughnut = new Doughnut(data, {
         showValues: el.getAttribute('data-chart-show-values') === 'true',
         unit: el.getAttribute('data-chart-unit'),
-        width,
+        width
     });
     // can't use bonzo's class methods, don't play well in IE
     const currentClasses = $doughnut.attr('class');
@@ -27,8 +28,7 @@ TableDoughnut.prototype.render = (el: Element) => {
         .attr(
             'class',
             `${currentClasses} ${el.getAttribute('data-chart-class') || ''}`
-        )
-        .insertAfter(el);
+        )[0].outerHTML;
 };
 
 export { TableDoughnut };

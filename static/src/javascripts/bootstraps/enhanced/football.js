@@ -70,10 +70,12 @@ const renderExtras = (_extras: Array<?Extra>): void => {
         if (config.get('page.isLiveBlog')) {
             extras.filter(Boolean).forEach(extra => {
                 $('.js-live-blog__sticky-components').append(extra.content);
+                $('.football-possession').append(extra.chart);
             });
         } else {
             extras.filter(Boolean).forEach(extra => {
                 $('.js-after-article').append(extra.content);
+                $('.football-possession').append(extra.chart);
             });
         }
     }
@@ -177,13 +179,16 @@ const init = (): void => {
                         statsFor(statsUrl)
                             .fetch(container)
                             .then(() => {
+                                // Chart is passed through seperately as when injected with the rest of the content it isn't responsive in Chrome
+                                let chart;
                                 $('.js-chart', container).each(el => {
-                                    new TableDoughnut().render(el);
+                                    chart = new TableDoughnut().render(el);
                                 });
                                 extras[0] = {
                                     name: 'Match stats',
                                     importance: 3,
                                     content: container,
+                                    chart: chart,
                                     ready: true,
                                 };
                                 renderExtras(extras);
