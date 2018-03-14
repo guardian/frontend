@@ -25,6 +25,7 @@ import { replaceLocaleTimestamps } from 'common/modules/ui/relativedates';
 
 declare type Extra = {
     content?: Element,
+    chart?: string,
     importance?: number,
     name?: string,
     ready: boolean,
@@ -100,6 +101,7 @@ const renderTable = (competition: string, extras: Array<?Extra>): void => {
                         importance: 3,
                         content: container,
                         ready: true,
+                        chart: null,
                     };
                 } else {
                     extras[2] = undefined;
@@ -188,8 +190,8 @@ const init = (): void => {
                                     name: 'Match stats',
                                     importance: 3,
                                     content: container,
-                                    chart: chart,
                                     ready: true,
+                                    chart,
                                 };
                                 renderExtras(extras);
                             });
