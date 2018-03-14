@@ -1001,7 +1001,7 @@
 
             .content--type-article.section-football &,
             .content--type-matchreport & {
-                grid-template-areas: 'labels report' '. headline-standfirst' 'meta main-media';
+                grid-template-areas: 'labels headline-standfirst' '. report' 'meta main-media';
             }
         }
     }
