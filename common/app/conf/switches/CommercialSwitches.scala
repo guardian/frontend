@@ -317,16 +317,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val OrielFullIntegration: Switch = Switch(
-    group = Commercial,
-    name = "oriel-full-integration",
-    description = "Include a tag dropped at the start of <head> for full Oriel integration",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 28),
-    exposeClientSide = false
-  )
-
   val BlockthroughSwitch: Switch = Switch(
     group = Commercial,
     name = "blockthrough",
@@ -383,7 +373,7 @@ trait CommercialSwitches {
     description = "This is a short test to test the integration between Oriel and Sonobi",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 16),
+    sellByDate = new LocalDate(2018, 6, 28),
     exposeClientSide = false
   )
 }
