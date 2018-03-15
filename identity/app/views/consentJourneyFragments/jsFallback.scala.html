@@ -7,7 +7,7 @@
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @forceSubmitFallback = {
-    <a class="manage-account__button manage-account__button--center" href="@verifiedReturnUrl" data-link-name="consents : navigation : submit-force">Set consents later</a>
+    <a class="manage-account__button manage-account__button--center" href="@LinkTo{/consents}" onclick="window.location.reload();return false;" data-link-name="consents : navigation : submit-force">Try again</a>
 }
 
 @spinnerError(id: String, text: Html, cta: Option[Html] = None, async: Boolean = false) = {
