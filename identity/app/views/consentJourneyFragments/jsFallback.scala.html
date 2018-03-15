@@ -7,40 +7,37 @@
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @forceSubmitFallback = {
-    <form method="POST" action="@idUrlBuilder.buildUrl("/complete-consents", idRequest)">
-        @views.html.helper.CSRF.formField
-        <input type="hidden" name="returnUrl" value="@verifiedReturnUrl" />
-        <button
-        type="submit"
-        class="manage-account__button"
-        data-link-name="consents : navigation : submit-force"
-        >
-            <span>Continue</span>
-        </button>
-    </form>
+    <a class="manage-account__button manage-account__button--center" href="@LinkTo{/consents}" onclick="window.location.reload();return false;" data-link-name="consents : navigation : submit-force">Try again</a>
+}
+
+@spinnerError(id: String, text: Html, cta: Option[Html] = None, async: Boolean = false) = {
+    <div id="@{id}" class="identity-forms-loading @if(async){ identity-forms-loading--hide-text } u-identity-forms-padded">
+        <div class="identity-forms-loading__spinner is-updating"></div>
+        <div class="identity-forms-loading__text">
+            <p>@text</p>
+            @cta
+        </div>
+    </div>
+    @if(async) {
+        <script>
+            setTimeout(function(){
+                if(window.@{id}) window.@{id}.className = window.@{id}.className.replace('identity-forms-loading--hide-text','')
+            },5000);
+        </script>
+    }
 }
 
 <noscript>
-    <div class="form__error">
-        <p>
-                Setting your communication preferences requires a browser with Javascript enabled.
-        </p>
-        <p>
-                Please consider upgrading to one of our <a class="u-underline" href="@LinkTo{/help/recommended-browsers}">recommended browsers</a>. If you need more help please <a href="@LinkTo{/info/tech-feedback}">contact us</a>.
-            </p>
-    </div>
-    @forceSubmitFallback
+    @spinnerError(
+        "noscriptError",
+        Html("Setting your communication preferences requires a browser with Javascript enabled. Please consider upgrading to one of our <a class=\"u-underline\" href=\"@LinkTo{/help/recommended-browsers}\">recommended browsers</a>. If you need more help please <a href=\"@LinkTo{/info/tech-feedback}\" class=\"u-underline\">contact us</a>."),
+        Some(forceSubmitFallback)
+    )
 </noscript>
 
-<div id="identityConsentsLoadingError" class="identity-forms-loading identity-forms-loading--hide-text u-identity-forms-padded">
-    <div class="identity-forms-loading__spinner is-updating"></div>
-    <div class="identity-forms-loading__text">
-            Loading seems to be taking a while. If you are in a hurry you can skip this and edit your consents later from your email preferences.
-        @forceSubmitFallback
-    </div>
-</div>
-<script>
-        setTimeout(function(){
-            if(window.identityConsentsLoadingError) window.identityConsentsLoadingError.className = window.identityConsentsLoadingError.className.replace('identity-forms-loading--hide-text','')
-        },5000);
-    </script>
+@spinnerError(
+    "identityConsentsLoadingError",
+    Html("Loading seems to be taking a while. If you are in a hurry you can skip this and edit your consents later from your email preferences."),
+    Some(forceSubmitFallback),
+    true
+)
