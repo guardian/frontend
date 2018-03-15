@@ -309,10 +309,10 @@ trait CommercialSwitches {
 
   val OrielAnalyticsSwitch: Switch = Switch(
     group = Commercial,
-    name = "oriel-analytics",
-    description = "Include the analytics script for Oriel to monitor ad-blocking",
+    name = "oriel-analytics-or-full",
+    description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2018, 6, 28),
     exposeClientSide = false
   )
