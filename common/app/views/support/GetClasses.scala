@@ -18,8 +18,6 @@ object GetClasses {
 
   def forItem(item: ContentCard, isFirstContainer: Boolean)(implicit request: RequestHeader): String = {
 
-    println("***", item.cardStyle, SpecialReport)
-
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
