@@ -25,33 +25,33 @@
             @if(card.header.quoted) {
                 @card.pillar.map( pillar => {
                     pillar.name match {
-                        case "News" => icon("quote-news", isLarge)
-                        case "Opinion" => icon("quote-opinion", isLarge)
-                        case "Sport" => icon("quote-sport", isLarge)
-                        case "Culture" => icon("quote-culture", isLarge)
-                        case "Lifestyle" => icon("quote-lifestyle", isLarge)
-                        case _ => icon("quote", isLarge)
+                        case "News" => icon("quote-news", isLarge, "quote-icon")
+                        case "Opinion" => icon("quote-opinion", isLarge, "quote-icon")
+                        case "Sport" => icon("quote-sport", isLarge, "quote-icon")
+                        case "Culture" => icon("quote-culture", isLarge, "quote-icon")
+                        case "Lifestyle" => icon("quote-lifestyle", isLarge, "quote-icon")
+                        case _ => icon("quote", isLarge, "quote-icon")
                     }
                 } )
+            }
+
+            @card.mediaTypeIcon.map { mediaType: String =>
+                @card.pillar.map( pillar => {
+                    pillar.name match {
+                        case "News" => icon(mediaType + "-news", isLarge, "media-icon")
+                        case "Opinion" => icon(mediaType + "-opinion", isLarge, "media-icon")
+                        case "Sport" => icon(mediaType + "-sport", isLarge, "media-icon")
+                        case "Culture" => icon(mediaType + "-culture", isLarge, "media-icon")
+                        case "Lifestyle" => icon(mediaType + "-lifestyle", isLarge, "media-icon")
+                        case _ => icon(mediaType, isLarge, "media-icon")
+                    }
+                })
             }
             @RemoveOuterParaHtml(card.header.headline)
         </a>
     }
     @if(card.header.quoted) {
         @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
-    }
-
-    @card.mediaTypeIcon.map { mediaType: String =>
-        @card.pillar.map( pillar => {
-            pillar.name match {
-                case "News" => icon(mediaType + "-news", isLarge)
-                case "Opinion" => icon(mediaType + "-opinion", isLarge)
-                case "Sport" => icon(mediaType + "-sport", isLarge)
-                case "Culture" => icon(mediaType + "-culture", isLarge)
-                case "Lifestyle" => icon(mediaType + "-lifestyle", isLarge)
-                case _ => icon(mediaType, isLarge)
-            }
-        })
     }
 
     @card.starRating.map { numberOfStars =>
