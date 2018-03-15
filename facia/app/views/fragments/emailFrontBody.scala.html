@@ -13,15 +13,6 @@
 @import fragments.email._
 @import common.LinkTo
 
-@getMediaType(card: ContentCard) = {
-    @println("Test")
-    card.header match {
-        case isGallery => Some("gallery")
-        case isAudio => Some("podcast")
-        case isVideo => Some("video")
-        case _ => None
-    }
-}
 
 @headline(card: ContentCard, isLarge: Boolean = false, isLast: Boolean) = {
 
@@ -49,9 +40,8 @@
     @if(card.header.quoted) {
         @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
     }
-    @println(getMediaType(card))
-    @getMediaType(card).map { mediaType =>
-        @println(mediaType)
+
+    @card.mediaTypeIcon.map { mediaType: String =>
         @card.pillar.map( pillar => {
             pillar.name match {
                 case "News" => icon(mediaType + "-news", isLarge)
@@ -61,7 +51,7 @@
                 case "Lifestyle" => icon(mediaType + "-lifestyle", isLarge)
                 case _ => icon(mediaType, isLarge)
             }
-        } )
+        })
     }
 
     @card.starRating.map { numberOfStars =>
