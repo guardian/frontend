@@ -183,9 +183,7 @@ $container-color: #ffffff;
     height: .8em;
 }
 
-.icon-podcast,
-.icon-gallery,
-.icon-video {
+.left-col > img {
     bottom: 6px;
     height: 28px;
     left: $gutter;

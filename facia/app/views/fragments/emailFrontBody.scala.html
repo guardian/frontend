@@ -40,11 +40,44 @@
         @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
     }
 
-    @if(card.header.isGallery) { @icon("gallery", isLarge) }
+    @if(card.header.isGallery) {
+        @card.pillar.map( pillar => {
+            pillar.name match {
+                case "News" => icon("gallery-opinion", isLarge)
+                case "Opinion" => icon("gallery-opinion", isLarge)
+                case "Sport" => icon("gallery-sport", isLarge)
+                case "Culture" => icon("gallery-culture", isLarge)
+                case "Lifestyle" => icon("gallery-lifestyle", isLarge)
+                case _ => icon("gallery", isLarge)
+            }
+        } )
+    }
 
+    @if(card.header.isAudio) {
+        @card.pillar.map( pillar => {
+            pillar.name match {
+                case "News" => icon("podcast-opinion", isLarge)
+                case "Opinion" => icon("podcast-opinion", isLarge)
+                case "Sport" => icon("podcast-sport", isLarge)
+                case "Culture" => icon("podcast-culture", isLarge)
+                case "Lifestyle" => icon("podcast-lifestyle", isLarge)
+                case _ => icon("podcast", isLarge)
+            }
+        } )
+    }
 
-    @if(card.header.isAudio) { @icon("podcast", isLarge) }
-    @if(card.header.isVideo) { @icon("video", isLarge) }
+    @if(card.header.isVideo) {
+        @card.pillar.map( pillar => {
+            pillar.name match {
+                case "News" => icon("video-opinion", isLarge)
+                case "Opinion" => icon("video-opinion", isLarge)
+                case "Sport" => icon("video-sport", isLarge)
+                case "Culture" => icon("video-culture", isLarge)
+                case "Lifestyle" => icon("video-lifestyle", isLarge)
+                case _ => icon("video", isLarge)
+            }
+        } )
+    }
 
     @card.starRating.map { numberOfStars =>
         @row(Seq("review-stars")) {
