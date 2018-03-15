@@ -13,6 +13,16 @@
 @import fragments.email._
 @import common.LinkTo
 
+@getMediaType(card: ContentCard) = {
+    @println("Test")
+    card.header match {
+        case isGallery => Some("gallery")
+        case isAudio => Some("podcast")
+        case isVideo => Some("video")
+        case _ => None
+    }
+}
+
 @headline(card: ContentCard, isLarge: Boolean = false, isLast: Boolean) = {
 
     @row(Seq("headline")) {
@@ -39,42 +49,17 @@
     @if(card.header.quoted) {
         @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
     }
-
-    @if(card.header.isGallery) {
+    @println(getMediaType(card))
+    @getMediaType(card).map { mediaType =>
+        @println(mediaType)
         @card.pillar.map( pillar => {
             pillar.name match {
-                case "News" => icon("gallery-news", isLarge)
-                case "Opinion" => icon("gallery-opinion", isLarge)
-                case "Sport" => icon("gallery-sport", isLarge)
-                case "Culture" => icon("gallery-culture", isLarge)
-                case "Lifestyle" => icon("gallery-lifestyle", isLarge)
-                case _ => icon("gallery", isLarge)
-            }
-        } )
-    }
-
-    @if(card.header.isAudio) {
-        @card.pillar.map( pillar => {
-            pillar.name match {
-                case "News" => icon("podcast-news", isLarge)
-                case "Opinion" => icon("podcast-opinion", isLarge)
-                case "Sport" => icon("podcast-sport", isLarge)
-                case "Culture" => icon("podcast-culture", isLarge)
-                case "Lifestyle" => icon("podcast-lifestyle", isLarge)
-                case _ => icon("podcast", isLarge)
-            }
-        } )
-    }
-
-    @if(card.header.isVideo) {
-        @card.pillar.map( pillar => {
-            pillar.name match {
-                case "News" => icon("video-news", isLarge)
-                case "Opinion" => icon("video-opinion", isLarge)
-                case "Sport" => icon("video-sport", isLarge)
-                case "Culture" => icon("video-culture", isLarge)
-                case "Lifestyle" => icon("video-lifestyle", isLarge)
-                case _ => icon("video", isLarge)
+                case "News" => icon(mediaType + "-news", isLarge)
+                case "Opinion" => icon(mediaType + "-opinion", isLarge)
+                case "Sport" => icon(mediaType + "-sport", isLarge)
+                case "Culture" => icon(mediaType + "-culture", isLarge)
+                case "Lifestyle" => icon(mediaType + "-lifestyle", isLarge)
+                case _ => icon(mediaType, isLarge)
             }
         } )
     }
