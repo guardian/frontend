@@ -1,14 +1,10 @@
 @(classes: Map[String, Boolean])(fragments: Html*)(implicit request: RequestHeader)
 
-@import conf.switches.Switches.OrielAnalyticsSwitch
-
 <body id="top" class="@views.support.RenderClasses(classes)" itemscope itemtype="http://schema.org/WebPage">
 @for(f <- fragments){
     @f
 }
 
-@if(OrielAnalyticsSwitch.isSwitchedOn && ) {
-    @views.html.fragments.commercial.orielAnalytics()
-}
+@views.html.fragments.commercial.orielAnalytics()
 
 </body>
