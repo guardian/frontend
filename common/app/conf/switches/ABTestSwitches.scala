@@ -98,26 +98,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-support-engagement-banner-circles",
-    "When ON, the circles design test for the support engagement banner is ACTIVE",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 20), // Tues 20th March
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-support-epic-circles",
-    "When ON, epic messaging will direct a share of the audience to the circles version of the support site",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 20), // Tues 20th March
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-header-eur-support",
     "Points the 'support the guardian' link in the header to the eur version of the support site",
     owners = Seq(Owner.withGithub("svillafe")),
