@@ -70,7 +70,7 @@
     }
 }
 
-// Lie blogs
+// Live blogs
 .tone-live {
     &.pillar-News {
         border-top: 1px solid #ffbac8;
@@ -159,6 +159,13 @@
         .fc__kicker {
             color: #ffabdb;
         }
+    }
+}
+
+.tone-comment {
+    &,
+    & th {
+        background-color: #fef9f5;
     }
 }
 

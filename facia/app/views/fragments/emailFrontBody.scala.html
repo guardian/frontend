@@ -24,7 +24,7 @@
             @if(card.header.quoted) {
                 @card.pillar.map( pillar => {
                     pillar.name match {
-                        case "News" => icon("quote-opinion", isLarge)
+                        case "News" => icon("quote-news", isLarge)
                         case "Opinion" => icon("quote-opinion", isLarge)
                         case "Sport" => icon("quote-sport", isLarge)
                         case "Culture" => icon("quote-culture", isLarge)
@@ -43,7 +43,7 @@
     @if(card.header.isGallery) {
         @card.pillar.map( pillar => {
             pillar.name match {
-                case "News" => icon("gallery-opinion", isLarge)
+                case "News" => icon("gallery-news", isLarge)
                 case "Opinion" => icon("gallery-opinion", isLarge)
                 case "Sport" => icon("gallery-sport", isLarge)
                 case "Culture" => icon("gallery-culture", isLarge)
@@ -56,7 +56,7 @@
     @if(card.header.isAudio) {
         @card.pillar.map( pillar => {
             pillar.name match {
-                case "News" => icon("podcast-opinion", isLarge)
+                case "News" => icon("podcast-news", isLarge)
                 case "Opinion" => icon("podcast-opinion", isLarge)
                 case "Sport" => icon("podcast-sport", isLarge)
                 case "Culture" => icon("podcast-culture", isLarge)
@@ -69,7 +69,7 @@
     @if(card.header.isVideo) {
         @card.pillar.map( pillar => {
             pillar.name match {
-                case "News" => icon("video-opinion", isLarge)
+                case "News" => icon("video-news", isLarge)
                 case "Opinion" => icon("video-opinion", isLarge)
                 case "Sport" => icon("video-sport", isLarge)
                 case "Culture" => icon("video-culture", isLarge)
