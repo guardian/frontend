@@ -7,7 +7,7 @@ case class DfpDataExtractor(
   lineItems: Seq[GuLineItem],
   invalidLineItems: Seq[GuLineItem]) {
 
-  val hasValidLineItems = lineItems.nonEmpty
+  val hasValidLineItems: Boolean = lineItems.nonEmpty
 
   val inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = {
     lineItems.foldLeft(InlineMerchandisingTagSet()) { (soFar, lineItem) =>
@@ -47,7 +47,8 @@ case class DfpDataExtractor(
         isR2Only = lineItem.targeting.targetsR2Only,
         targetsAdTest = lineItem.targeting.hasAdTestTargetting,
         adTestValue = lineItem.targeting.adTestValue,
-        keywords = lineItem.targeting.keyValues
+        keywords = lineItem.targeting.keywordValues,
+        series = lineItem.targeting.serieValues
       )
     }
   }
