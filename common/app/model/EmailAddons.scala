@@ -259,6 +259,11 @@ case object WinterOlympics2018 extends FrontEmailMetadata {
   override val banner = Some("winter-olympics-2018.png")
 }
 
+case object ThisIsEurope extends FrontEmailMetadata {
+  val name = "This Is Europe"
+  override val banner = Some("this-is-europe.png")
+}
+
 case object TeacherNetwork extends FrontEmailMetadata {
   val name = "Teacher Network"
   override val banner = Some("teacher-network.png")
@@ -312,6 +317,7 @@ object EmailAddons {
     OpinionUs,
     ThisLandIsYourLand,
     WinterOlympics2018,
+    ThisIsEurope,
     TeacherNetwork
   )
 
