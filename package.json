@@ -89,7 +89,6 @@
     "jest-environment-jsdom-global": "^1.0.3",
     "jest-teamcity-reporter": "^0.6.2",
     "listr": "^0.12.0",
-    "lodash": "^3.10.1",
     "lodash-node": "~2.4.1",
     "lodash.capitalize": "^4.2.1",
     "lodash.flatten": "^4.4.0",
@@ -142,7 +141,6 @@
     ],
     "moduleNameMapper": {
       "^lodash/(.*)$": "lodash-node/compat/$1",
-      "picturefill": "projects/common/utils/picturefill",
       "raven": "raven-js",
       "EventEmitter": "wolfy87-eventemitter",
       "videojs": "video.js",

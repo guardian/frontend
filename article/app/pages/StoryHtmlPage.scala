@@ -42,7 +42,7 @@ object StoryHtmlPage {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        orielScriptTag() when OrielFullIntegration.isSwitchedOn,
+        orielScriptTag(),
         lotameScriptTag() when ActiveExperiments.isParticipating(LotameParticipation),
         titleTag(),
         metaData(),

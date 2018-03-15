@@ -1,7 +1,7 @@
 package pages
 
 import common.Edition
-import conf.switches.Switches.{OrielFullIntegration, WeAreHiring}
+import conf.switches.Switches.WeAreHiring
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
 import model.{ApplicationContext, PressedPage}
@@ -45,7 +45,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        orielScriptTag() when OrielFullIntegration.isSwitchedOn,
+        orielScriptTag(),
         titleTag(),
         metaData(),
         frontMeta(),

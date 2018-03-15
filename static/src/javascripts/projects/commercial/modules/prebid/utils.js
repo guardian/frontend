@@ -28,5 +28,5 @@ export const getBreakpointKey = (): string => {
 export const stripMobileSuffix = (s: string): string =>
     stripSuffix(s, '--mobile');
 
-export const stripTrailingNumbers = (s: string): string =>
-    s.replace(/\d+$/, '');
+export const stripTrailingNumbersAbove1 = (s: string): string =>
+    stripSuffix(s, '([2-9]|\\d{2,})');
