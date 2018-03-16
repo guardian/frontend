@@ -165,4 +165,24 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 4, 24),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-uk-17-pence",
+    "Tests a CTA message that aims to push people towards recurring contributions in the UK",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-us-23-cents",
+    "Tests a CTA message that aims to push people towards recurring contributions in the US",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 24),
+    exposeClientSide = true
+  )
 }
