@@ -141,10 +141,9 @@
         height: 22px;
         padding: 6px;
 
-        @include mq($from: desktop){
+        @include mq($from: desktop) {
             height: 50px;
             width: 50px;
-            transform: none;
         }
     }
 }
