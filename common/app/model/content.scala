@@ -111,7 +111,8 @@ final case class Content(
   lazy val hasTonalHeaderIllustration: Boolean = tags.isLetters
 
   lazy val showCircularBylinePicAtSide: Boolean =
-    cardStyle == Feature || tags.isReview && tags.hasLargeContributorImage && tags.contributors.length == 1 && !tags.isInteractive
+    !tags.isInteractive &&
+      (cardStyle == Feature || tags.isReview && tags.hasLargeContributorImage && tags.contributors.length == 1)
 
   lazy val openGraphImageOrFallbackUrl: String =
     rawOpenGraphImage
