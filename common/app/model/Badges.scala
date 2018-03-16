@@ -43,7 +43,7 @@ object Badges {
   val generalElection2017 = Badge("politics/general-election-2017", Static("images/badges/GE2017Badge.svg"))
   val facebookFiles = Badge("news/series/facebook-files", Static("images/badges/facebookFiles.svg"))
   val britainsDebt = Badge("business/series/britains-debt-timebomb", Static("images/badges/uk-debt.svg"))
-  val paradisePapers = Badge("/news/series/paradise-papers", Static("images/badges/pp_web.svg"))
+  val paradisePapers = Badge("news/series/paradise-papers", Static("images/badges/pp_web.svg"))
   val specialReport = SpecialBadge("iL#oor8pie9thaed$ei{", "d58bc249740c282294a00cc6a975f", Static("images/badges/calock.svg"))
 
   val allBadges = Seq(newArrivals, brexitGamble, beyondTheBlade, generalElection2017, facebookFiles, britainsDebt, paradisePapers, specialReport)
