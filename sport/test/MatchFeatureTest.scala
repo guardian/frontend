@@ -19,12 +19,12 @@ import scala.collection.JavaConverters._
       goTo("/football/match/3834132") { browser =>
         import browser._
 
-        val teamsAndScore = $("h2").texts.asScala.map(_.replaceAll("\n", " "))
+        val teams = $("h2").texts.asScala.map(_.replaceAll("\n", " "))
         Then("I should see the home team score")
-        teamsAndScore should contain("Stoke 1")
+        teams should contain("Stoke")
 
         And("I should see the away team score")
-        teamsAndScore should contain("Villa 1")
+        teams should contain("Villa")
 
         And("I should see the home possession")
         el("[data-chart-class=chart--football-possession]").el(".bar-fight__bar--home").text should be("57")

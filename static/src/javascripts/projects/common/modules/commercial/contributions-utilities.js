@@ -197,9 +197,7 @@ const makeABTestVariant = (
             },
         }),
         supportURL = addTrackingCodesToUrl({
-            base: `${options.supportBaseURL || supportBaseURL}${
-                geolocationGetSync() === 'GB' ? '?bundle=contribute' : ''
-            }`,
+            base: `${options.supportBaseURL || supportBaseURL}`,
             componentType: parentTest.componentType,
             componentId: campaignCode,
             campaignCode,
@@ -209,7 +207,7 @@ const makeABTestVariant = (
             },
         }),
         template = controlTemplate,
-        buttonTemplate = defaultButtonTemplate,
+        buttonTemplate = options.buttonTemplate || defaultButtonTemplate,
         testimonialBlock = getTestimonialBlock(
             acquisitionsTestimonialParametersControl
         ),

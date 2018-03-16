@@ -2,6 +2,7 @@
     id: Int,
     isMobile: Boolean = false
 )(implicit request: RequestHeader)
+
 @import conf.switches.Switches.CommercialSwitch
 
 @commonSizes = @{Seq("1,1", "2,2", "300,250", "fluid")}

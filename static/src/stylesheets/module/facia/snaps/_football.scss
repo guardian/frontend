@@ -148,7 +148,6 @@
 
     &.facia-snap-point--large,
     &.facia-snap-point--medium {
-        @include match-summary--responsive;
         .team__crest {
             line-height: $gs-gutter*2;
         }

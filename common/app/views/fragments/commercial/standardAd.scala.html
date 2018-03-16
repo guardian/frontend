@@ -5,7 +5,8 @@
     showLabel: Boolean = true,
     refresh: Boolean = true,
     outOfPage: Boolean = false
-)
+)(implicit request: RequestHeader)
+
 @import conf.switches.Switches.CommercialSwitch
 
 @if(CommercialSwitch.isSwitchedOn) {

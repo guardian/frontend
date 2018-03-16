@@ -57,12 +57,10 @@ module.exports = {
 
             // #wp-rjs weird old aliasing from requirejs
             lodash: 'lodash-amd/compat',
-            picturefill: 'lib/picturefill',
             raven: 'raven-js',
             EventEmitter: 'wolfy87-eventemitter',
             videojs: 'video.js',
 
-            stripe: 'stripe/stripe.min',
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',

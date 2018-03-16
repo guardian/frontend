@@ -40,11 +40,6 @@ object Sponsorship {
 
 object BlockElement {
 
-  implicit object BlockElementFormat extends Format[Seq[BlockElement]] {
-    def reads(json: JsValue): JsResult[Seq[BlockElement]] = JsSuccess(Seq.empty)
-    def writes(els: Seq[BlockElement]): JsValue = JsArray(Seq(JsNull))
-  }
-
   def make(element: ApiBlockElement): Option[BlockElement] = {
     element.`type` match {
       case Text => Some(TextBlockElement(element.textTypeData.flatMap(_.html)))
@@ -104,4 +99,21 @@ object BlockElement {
     ) collect { case (k, Some (v) ) => (k, v) }
     } getOrElse Map()
   }
+
+  implicit val textBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
+  implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
+  implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
+  implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
+  implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
+  implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
+  implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
+  implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
+    def writes(sponsorship: Sponsorship): JsObject = Json.obj(
+      "sponsorName" -> sponsorship.sponsorName,
+      "sponsorLogo" -> sponsorship.sponsorLogo,
+      "sponsorLink" -> sponsorship.sponsorLink,
+      "sponsorshipType" -> sponsorship.sponsorshipType.name)
+  }
+  implicit val RichLinkBlockElementWrites: Writes[RichLinkBlockElement] = Json.writes[RichLinkBlockElement]
+  val blockElementWrites: Writes[BlockElement] = Json.writes[BlockElement]
 }

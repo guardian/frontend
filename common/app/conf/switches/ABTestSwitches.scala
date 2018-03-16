@@ -52,7 +52,7 @@ trait ABTestSwitches {
     "Show a custom Epic for articles with the US gun campaign tag",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 3, 15),
+    sellByDate = new LocalDate(2019, 3, 14),
     exposeClientSide = true
   )
 
@@ -62,13 +62,13 @@ trait ABTestSwitches {
     "Removes 5% of users from Unruly to measure performance impact",
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 15),
+    sellByDate = new LocalDate(2018, 3, 20),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-commercial-lazy-loading",
+    "ab-commercial-lazy-loading-extended",
     "Varies the strategy for lazyloading of adverts",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
@@ -78,21 +78,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-banner-cta-contribute",
-    "Test a new CTA for the banner",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 14),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-australia-environment-campaign-2018",
     "Show a custom Epic for articles with the Australia environment campaign tag",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 15),
+    sellByDate = new LocalDate(2019, 3, 14),
     exposeClientSide = true
   )
 
@@ -102,27 +92,77 @@ trait ABTestSwitches {
     "Point the subscribe link in the header to a subscriptions-only version of the support site",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 12),
+    sellByDate = new LocalDate(2018, 3, 19),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-support-engagement-banner-circles",
-    "When ON, the circles design test for the support engagement banner is ACTIVE",
-    owners = Seq(Owner.withGithub("justinpinner")),
+    "ab-acquisitions-header-eur-support",
+    "Points the 'support the guardian' link in the header to the eur version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 13), // Tues 13th March (but should be complete by the 8th)
+    sellByDate = new LocalDate(2018, 4, 17),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-support-epic-circles",
-    "When ON, epic messaging will direct a share of the audience to the circles version of the support site",
-    owners = Seq(Owner.withGithub("justinpinner")),
+    "ab-acquisitions-engagement-banner-eur-support",
+    "Points the 'support the guardian' link in the engagement banner to the eur version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 13), // Tues 13th March (but should be complete by the 8th)
+    sellByDate = new LocalDate(2018, 4, 17),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-eur-support",
+    "Points the 'support the guardian' link in the epic to the eur version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 17),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-spacefinder-simplify",
+    "Alters the rules for inserting ads on desktop breakpoints.",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-header-aud-support",
+    "Points the 'support the guardian' link in the header to the aud version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-aud-support",
+    "Points the 'support the guardian' link in the engagement banner to the aud version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-aud-support",
+    "Points the 'support the guardian' link in the epic to the aud version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 24),
     exposeClientSide = true
   )
 }

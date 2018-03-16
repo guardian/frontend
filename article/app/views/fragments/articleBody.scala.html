@@ -84,7 +84,7 @@
 
                         <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
                             data-test-id="article-review-body" @langAttributes(article.content)>
-                            @BodyCleaner(article, article.fields.body, amp = amp)
+                            @BodyCleaner(article, amp = amp)
 
                             @* A value for the image field is required for AMP article
                             WORKAROUND: if the article doesn't contain any image we insert the metadata of the fallback logo,

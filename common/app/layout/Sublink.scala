@@ -308,6 +308,13 @@ case class ContentCard(
     else None
   }
 
+  def mediaTypeIcon: Option[String] = {
+    if (header.isGallery) Some("gallery")
+    else if (header.isAudio) Some("podcast")
+    else if (header.isVideo) Some("video")
+    else  None
+  }
+
   def bylineText: Option[String] = if (useShortByline) byline.map(_.shortByline) else byline.map(_.get)
 
   def setKicker(kicker: Option[ItemKicker]): ContentCard = copy(header = header.copy(kicker = kicker))

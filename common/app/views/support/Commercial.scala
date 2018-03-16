@@ -4,6 +4,7 @@ import com.gu.commercial.branding._
 import common.Edition
 import common.commercial._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer, PaidCard}
+import model.DotcomContentType.Signup
 import model.{Page, PressedPage}
 import org.apache.commons.lang.StringEscapeUtils._
 import play.api.libs.json.JsBoolean
@@ -23,7 +24,7 @@ object Commercial {
   def shouldShowAds(page: Page): Boolean = page match {
     case c: model.ContentPage if c.item.content.shouldHideAdverts => false
     case p: model.Page if p.metadata.sectionId == "identity" => false
-    case s: model.SimplePage if s.metadata.contentType == "Signup" => false
+    case s: model.SimplePage if s.metadata.contentType.contains(Signup) => false
     case e: model.ContentPage if e.item.content.seriesName.contains("Newsletter sign-ups") => false
     case _: model.CommercialExpiryPage => false
     case _ => true
@@ -42,6 +43,14 @@ object Commercial {
     }
 
     s"/guardian-labs$glabsUrlSuffix"
+  }
+
+  def getBlockthroughElementUid(slotName: String): Option[String] = {
+    slotName match {
+      case "right" => Some("5a9858a84f-157")
+      case "top-above-nav" => Some("5a98585772-157")
+      case _ => None
+    }
   }
 
   def isPaidContent(page: Page): Boolean = page.metadata.commercial.exists(_.isPaidContent)

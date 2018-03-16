@@ -1,15 +1,21 @@
 package model
 
-import java.time.ZoneOffset
+import java.time.{OffsetDateTime, ZoneOffset}
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import model.content.MediaAtom
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.mockito.MockitoSugar
+import org.mockito.Mockito._
+import org.scalatest.{BeforeAndAfter, FlatSpec, Matchers}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import views.support.JavaScriptPage
+import common.Edition
+import play.api.libs.json.JsBoolean
 
-class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with implicits.Dates {
+
+class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with implicits.Dates with MockitoSugar with BeforeAndAfter {
   "Trail" should "be populated properly" in {
     val imageElement = ApiElement(
       "test-picture",
@@ -138,6 +144,59 @@ class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with i
 
     contentWithShortUrl("http://gu.com/p/3r1b5").fields.shortUrlId should be("/p/3r1b5")
     contentWithShortUrl("https://gu.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
+  }
+
+
+  val dateBeforeCutoff = Some(jodaToJavaInstant(new DateTime("2017-07-02T12:00:00.000Z")).atOffset(ZoneOffset.UTC).toCapiDateTime)
+  val dateAfterCutoff = Some(jodaToJavaInstant(new DateTime("2017-07-04T12:00:00.000Z")).atOffset(ZoneOffset.UTC).toCapiDateTime)
+  val edition: Edition = mock[Edition]
+  val sensitiveContentFields = Some(ContentFields(sensitive = Some(true)))
+  val nonSensitiveContentFields = Some(ContentFields(sensitive = Some(true)))
+
+
+  when(edition.id) thenReturn "GB"
+
+  "ContentJavascriptConfig" should "set shouldHideReaderRevenue to true for a sensitive article, published before the cutoff date, no RR flag" in {
+
+    val content = Content(article.copy(webPublicationDate = dateBeforeCutoff, fields =  Some(ContentFields(sensitive = Some(true)))))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false).get("shouldHideReaderRevenue") should equal (Some(JsBoolean(true)))
+  }
+
+  it should "set shouldHideReaderRevenue to false for a non-sensitive article, published before the cutoff date, no RR flag" in {
+
+    val content =  Content(article.copy(webPublicationDate = dateBeforeCutoff, fields = Some(ContentFields(sensitive = Some(false)))))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false).get("shouldHideReaderRevenue") should be(Some(JsBoolean(false)))
+  }
+
+  it should "set shouldHideReaderRevenue to false for a sensitive article, published after the cutoff date, sHHR flag set to false" in {
+
+    val content = Content(article.copy(webPublicationDate = dateAfterCutoff, fields = Some(ContentFields(sensitive = Some(true), shouldHideReaderRevenue = Some(false)))))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false).get("shouldHideReaderRevenue") should be(Some(JsBoolean(false)))
+  }
+
+  it should "set shouldHideReaderRevenue to true for a sensitive article, published after the cutoff date, sHHR flag set to true" in {
+
+    val content = Content(article.copy(webPublicationDate = dateAfterCutoff, fields = Some(ContentFields(sensitive = Some(true), shouldHideReaderRevenue = Some(true)))))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false).get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
+  }
+
+  it should "set shouldHideReaderRevenue to true for a non sensitive article, published after the cutoff date, sHHR flag set to true" in {
+
+    val content =  Content(article.copy(webPublicationDate = dateAfterCutoff, fields = Some(ContentFields(sensitive = Some(false), shouldHideReaderRevenue = Some(true)))))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview =false).get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
+  }
+
+  it should "set shouldHideReaderRevenue to true for any article that is Paid Content, regardless of the state of the shouldHideReaderRevenue flag in the CAPI response" in {
+
+    val content =
+      Content(
+        article.copy(
+          webPublicationDate = dateAfterCutoff,
+          fields = Some(ContentFields(sensitive = Some(false), shouldHideReaderRevenue = Some(false))),
+          tags = List(tag(s"tone/advertisement-features"))
+        )
+      )
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, false).get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
   }
 
 

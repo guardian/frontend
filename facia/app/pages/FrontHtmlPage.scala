@@ -10,7 +10,7 @@ import play.twirl.api.Html
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments._
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
+import views.html.fragments.page.head._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.stacked
@@ -45,6 +45,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
+        orielScriptTag(),
         titleTag(),
         metaData(),
         frontMeta(),

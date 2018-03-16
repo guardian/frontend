@@ -13,20 +13,20 @@ $container-color: #ffffff;
 
 @font-face {
     font-family: 'Guardian Egyptian Web Header';
-    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.eot');
-    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.eot?#iefix') format('embedded-opentype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.woff2') format('woff2'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.woff') format('woff'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.ttf') format('truetype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.svg#GuardianEgyptianWeb-Bold') format('svg');
-    font-weight: 900;
+    src: url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.woff') format('woff'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Bold.ttf') format('truetype');
+    font-weight: 700;
     font-style: normal;
-    font-stretch: normal;
 }
 
 @font-face {
     font-family: 'Guardian Egyptian Web Headline';
-    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.eot');
-    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.eot?#iefix') format('embedded-opentype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2') format('woff2'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff') format('woff'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.ttf') format('truetype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.svg#GuardianEgyptianWeb-Medium') format('svg');
+    src: url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.woff') format('woff'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GHGuardianHeadline-Medium.ttf') format('truetype');
     font-weight: 500;
     font-style: normal;
-    font-stretch: normal;
 }
 
 // table
@@ -60,17 +60,17 @@ $container-color: #ffffff;
     padding: 6px 0;
 
     a {
-        color: $guardian-brand;
+        color: #0084c6;
 
         &:hover {
-            color: lighten($guardian-brand, 10%) !important;
+            color: #055689 !important;
         }
     }
 }
 
 // td
 .ct__margin {
-    padding: 13px 0 12px;
+    padding: 0 0 12px;
 
     .ct--not-top & {
         padding: 26px 0 12px;
@@ -81,7 +81,7 @@ $container-color: #ffffff;
 .ct__padding {
     font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
     font-size: 26px;
-    color: #333333;
+    color: #121212;
     padding: 4px 0 0;
 }
 
@@ -109,6 +109,11 @@ $container-color: #ffffff;
 // td
 .fc__pad {
     padding-bottom: 26px;
+
+    .tone-media & {
+        // Space for icon
+        padding-bottom: 42px;
+    }
 }
 
 // td
@@ -117,10 +122,19 @@ $container-color: #ffffff;
 .trail-text,
 .review-stars {
     font-weight: normal;
-    padding: 6px $gutter 0;
+    padding: 3px $gutter 0;
 }
 
 // td
+.fc__kicker {
+    font-family: 'Guardian Egyptian Web Header', Georgia, serif;
+}
+
+.kicker-seperator {
+    font-family: 'Guardian Egyptian Web Headline', Georgia, serif;
+}
+
+
 .headline,
 .byline {
     font-family: 'Guardian Egyptian Web Headline', Georgia, serif;
@@ -130,9 +144,15 @@ $container-color: #ffffff;
 }
 
 // td
-.byline,
-.review-stars {
+.byline {
     padding: 0 $gutter $gutter;
+}
+
+.review-stars {
+    background-color: #ffe500;
+    display: inline-block;
+    margin-left: $gutter;
+    padding: 3px 5px;
 }
 
 // td
@@ -141,6 +161,11 @@ $container-color: #ffffff;
     font-size: 14px;
     line-height: 18px;
     padding: $gutter $gutter 26px;
+
+    .tone-media & {
+        // Space for icon
+        padding-bottom: 42px;
+    }
 }
 
 .fc--large {
@@ -152,14 +177,17 @@ $container-color: #ffffff;
     }
 }
 
-// span
-.kicker-separator {
-    font-weight: normal;
+// img
+.quote-icon {
+    display: inline-block;
+    height: .8em;
 }
 
-// img
-.headline .icon {
-    height: .7em;
+.media-icon {
+    bottom: 6px;
+    height: 28px;
+    left: $gutter;
+    position: absolute;
 }
 
 $email-tones: (
@@ -172,19 +200,19 @@ $email-tones: (
 .ct--not-top {
     // table
     .ct__inner {
-        border-top: 3px solid #46bcdf;
+        border-top: 1px solid #dfdfdf;
     }
 }
 
 // table
 .tone-external {
-    border-top: 1px solid #46bcdf;
+    border-top: 1px solid #dfdfdf;
 }
 
 
 // branded containers for PaidFor content
 .ct-branded {
-    padding: 13px 0 12px;
+    padding: 12px 0;
 
     .ct__margin {
         padding-bottom: 0;
@@ -256,7 +284,7 @@ $email-tones: (
         .ct--not-top {
             // table
             .ct__inner {
-                border-top: 3px solid $tone-color;
+                border-top: 1px solid $tone-color;
             }
         }
         // table

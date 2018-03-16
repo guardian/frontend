@@ -35,6 +35,14 @@
             }
         </ul>
     }
+    @if(sponsorship.series.nonEmpty) {
+        <small>Series:</small>
+        <ul>
+            @for(serie <- sponsorship.series) {
+                <li>@serie</li>
+            }
+        </ul>
+    }
   </li>
 }
 

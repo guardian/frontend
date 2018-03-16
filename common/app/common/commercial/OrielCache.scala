@@ -31,25 +31,29 @@ object OrielCache extends Logging  {
   val cache: Box[OrielResult] = Box.apply(EmptyResult)
 
   val OrielUrl: String = "https://gw.oriel.io/api/domain/"
-  val OrielApiKey: String = conf.Configuration.oriel.orielApiKey
+  val MaybeOrielApiKey: Option[String] = conf.Configuration.oriel.orielApiKey
 
-  def getOrielResponse(wsClient: WSClient): Future[WSResponse] =
-    wsClient
-      .url(OrielUrl)
-      .withHttpHeaders(("Authorization", s"Bearer $OrielApiKey"))
-      .get
+  def getOrielResponse(wsClient: WSClient): Option[Future[WSResponse]] =
+    MaybeOrielApiKey.map( orielApiKey =>
+      wsClient
+        .url(OrielUrl)
+        .withHttpHeaders(("Authorization", s"Bearer $orielApiKey"))
+        .get)
+
 
   def refresh(wsClient: WSClient)(implicit executionContext: ExecutionContext): Unit = {
-    getOrielResponse(wsClient)
-      .onComplete {
-        case Success(result) =>
-          result.status match {
-            case 200 =>
-              log.info(s"Successfully retrieved Oriel body at ${org.joda.time.DateTime.now().toString}")
-              cache.send(JsonResult(Json.parse(result.body), org.joda.time.DateTime.now()))
-            case _ => log.warn(s"Could not retrieve Oriel body code: ${result.status} ${result.body}")}
-       case Failure(NonFatal(ex)) =>
-        log.warn(s"Could not make request to Oriel: $ex")}
+    getOrielResponse(wsClient) match {
+      case None => log.info("There is no Oriel API key")
+      case Some(response) =>
+        response.onComplete {
+          case Success(result) =>
+            result.status match {
+          case 200 =>
+            log.info(s"Successfully retrieved Oriel body at ${org.joda.time.DateTime.now().toString}")
+            cache.send(JsonResult(Json.parse(result.body), org.joda.time.DateTime.now()))
+          case _ => log.warn(s"Could not retrieve Oriel body code: ${result.status} ${result.body}")}
+          case Failure(NonFatal(ex)) =>
+            log.warn(s"Could not make request to Oriel: $ex")}}
   }
 }
 

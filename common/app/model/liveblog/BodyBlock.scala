@@ -1,12 +1,14 @@
 package model.liveblog
 
 import java.util.Locale
+
 import implicits.Dates.CapiRichDateTime
-import com.gu.contentapi.client.model.v1.{Block, MembershipPlaceholder, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
+import com.gu.contentapi.client.model.v1.{Block, MembershipPlaceholder => ApiMembershipPlaceholder, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
 import org.jsoup.Jsoup
+import play.api.libs.json._
 
 object Blocks {
 
@@ -27,6 +29,7 @@ object Blocks {
     )
   }
 
+  implicit val blocksWrites: Writes[Blocks] = Json.writes[Blocks]
 }
 
 case class Blocks(
@@ -57,6 +60,10 @@ object BodyBlock {
   case object KeyEvent extends EventType
   case object SummaryEvent extends EventType
   case object UnclassifiedEvent extends EventType
+
+  implicit val dateWrites =  play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  implicit val blockElementWrites = BlockElement.blockElementWrites
+  implicit val bodyBlockWrites: Writes[BodyBlock] = Json.writes[BodyBlock]
 }
 
 case class BodyBlock(
@@ -118,7 +125,16 @@ case class LiveBlogDate(fullDate: String, hhmm: String, ampm: String, gmt: Strin
 
 object BlockAttributes {
   def make(blockAttributes: ApiBlockAttributes): BlockAttributes =
-    new BlockAttributes(blockAttributes.keyEvent.getOrElse(false), blockAttributes.summary.getOrElse(false), blockAttributes.membershipPlaceholder)
+    new BlockAttributes(blockAttributes.keyEvent.getOrElse(false), blockAttributes.summary.getOrElse(false), blockAttributes.membershipPlaceholder.map(mp => MembershipPlaceholder(mp.campaignCode)))
+
+  implicit val blockAttributes: Writes[BlockAttributes] = Json.writes[BlockAttributes]
+
+
 }
 
 case class BlockAttributes(keyEvent: Boolean, summary: Boolean, membershipPlaceholder: Option[MembershipPlaceholder])
+
+case class MembershipPlaceholder(campaignCode: Option[String])
+object MembershipPlaceholder {
+  implicit val membershipPlaceholderWrites: Writes[MembershipPlaceholder] = Json.writes[MembershipPlaceholder]
+}

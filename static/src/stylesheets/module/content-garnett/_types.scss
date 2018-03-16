@@ -113,7 +113,6 @@ $quote-mark: 35px;
             width: 100%;
             max-width: 38.75rem;
             margin: auto;
-            position: relative;
         }
     }
 
@@ -193,7 +192,6 @@ $quote-mark: 35px;
         padding-bottom: $gs-baseline*1.5;
         @include mq($until: phablet) {
             border-top: 0;
-            vertical-align: top;
         }
     }
 
@@ -816,6 +814,26 @@ $quote-mark: 35px;
     }
 }
 
+// *************** Matchreport overrides ****************
+.content--has-scores {
+    .content__labels {
+        .content__series-label__link,
+        .content__section-label__link {
+            @include mq(leftCol) {
+                color: $neutral-1;
+            }
+        }
+    }
+
+    .content__head {
+        grid-template-areas: 'labels report' '. headline-standfirst' 'meta main-media';
+    }
+
+    .football-tabs .tabs__container {
+        margin-bottom: 0;
+    }
+}
+
 //**************** Interview style **************
 
 .content--type-interview {
@@ -934,7 +952,7 @@ $quote-mark: 35px;
 
 // *************** Opinion Styles ***************
 
-.content--type-guardianview,
+.content--type-guardianview:not(.content--type-column),
 .content--type-comment {
     .content__main {
         background-color: $opinion-garnett-background;
