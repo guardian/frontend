@@ -133,6 +133,20 @@
         padding-bottom: 0;
         margin-bottom: 0;
     }
+
+    .badge-slot {
+        background-color: #fff;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        padding: 6px;
+
+        @include mq($from: desktop){
+            height: 50px;
+            width: 50px;
+            transform: none;
+        }
+    }
 }
 
 .immersive-main-media__headline-container--dark {
