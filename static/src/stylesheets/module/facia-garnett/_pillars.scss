@@ -187,7 +187,6 @@ $pillars: (
         .inline-camera {
             svg {
                 fill: map-get($palette, invertedKicker);
-                border: 1px solid map-get($palette, invertedKicker);
             }
 
             &::after {
@@ -205,6 +204,14 @@ $pillars: (
 
     .fc-item__media-meta {
         color: map-get($palette, invertedKicker);
+
+        .inline-icon {
+            width: 24px;
+            height: 23px;
+            display: inline-block;
+            border: 1px solid map-get($palette, invertedKicker);
+            border-radius: 50%;
+        }
     }
 
     .vjs-big-play-button .vjs-control-text {
