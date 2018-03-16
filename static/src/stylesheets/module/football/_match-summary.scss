@@ -1,338 +1,177 @@
-$football-match-summary-breakpoint: tablet;
-$football-crest--small: 44px;
-$football-crest--large: 60px;
-
 .match-summary {
     position: relative;
     display: block;
-    border-bottom: 1px dotted $neutral-2;
     color: $neutral-1;
+    background-color: $news-garnett-highlight;
+    margin-bottom: $gs-baseline;
 
-    .content__head & {
-        padding-top: $gs-baseline/2;
+    &:before {
+        @include mq(phablet) {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: calc((100vw - 640px) / -2);
+            width: 100vw;
+            background-color: $news-garnett-highlight;
+        }
+
+        @include mq(tablet) {
+            left: calc((100vw - 680px) / -2);
+        }
+
+        @include mq(desktop) {
+            left: -100vw;
+        }
     }
 }
 
 .match-summary__teams {
-    padding-top: $gs-baseline;
-    position: relative;
-    border-top: 1px dotted $neutral-5;
-    font-size: 0;
+    display: flex;
+    padding: 6px 10px;
+
+    @include mq(mobileLandscape) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 
     @include mq(tablet) {
-        padding-top: 0;
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
 .match-summary__team {
-    margin-bottom: $gs-baseline;
-}
-
-.team__info {
-    @include fs-headline(5);
     position: relative;
-    margin-left: $gs-gutter/2 + $football-crest--small;
+    width: 50%;
+    padding-bottom: $garnett-x-large-button-size + $gs-baseline;
 
-    @include mq(mobileLandscape) {
-        @include fs-headline(7, true);
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -10px;
+        bottom: 0;
+        background-color: mix($neutral-1, $news-garnett-highlight, 20%);
+        width: 1px;
     }
 }
 
-.team__heading {
-    font-size: inherit;
-    font-weight: normal;
-    line-height: 1.3;
-    position: relative;
-}
+.match-summary__team--home {
+    &:before {
+        bottom: -6px;
 
-.team__crest {
-    height: $football-crest--small;
-    float: left;
-    overflow: hidden;
-}
-.team__crest__img {
-    height: $football-crest--small;
-    width: $football-crest--small;
-    background-size: contain;
-    background-position: 100% 0;
-    display: inline-block;
-    background-repeat: no-repeat;
-}
-.team__crest__img-container {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.team__results-container {
-    margin-top: $gs-baseline/2;
+        @include mq($until: leftCol) {
+            display: none;
+        }
+    }
 }
 
 .team__name {
-    @include ellipsis();
-    box-sizing: border-box;
-    padding-right: $gs-gutter*2;
-    display: block;
-}
-
-.team__score {
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
-.match-summary {
-    dd {
-        margin: 0;
-    }
+    @include fs-header(4);
+    line-height: 1.5; // to align with content__labels
+    font-weight: 900;
+    margin-top: -4px;
 }
 
 .team__scorers {
     @include fs-textSans(3);
-    color: $neutral-2;
+    color: $neutral-1;
 }
 
-.match-summary--report .team__scorers dd {
-    @include mq(mobile) {
-        padding: 0;
-        margin: 0 56px 0 10px;
-    }
-    @include mq(tablet) {
-        padding: 0;
-        margin: 0 56px 0 64px;
-    }
+.team__scorer {
+    margin: 0;
 }
 
-.match-summary__status {
-    padding: ($gs-baseline / 2) 0;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.status__time {
-    @include fs-textSans(2);
+.team__crest-wrapper {
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    width: $garnett-large-button-size;
+    height: $garnett-large-button-size;
+    border-radius: $garnett-x-large-button-size / 2;
+    background-color: $garnett-neutral-5;
     box-sizing: border-box;
-    display: inline-block;
-    height: $football-crest--small;
-    width: $football-crest--small;
-    border-radius: 24px;
-    border: 2px dotted $neutral-2;
-    line-height: $football-crest--small - 3; // account for the border
-    text-align: center;
-}
+    padding: 8px;
+    overflow: hidden;
 
-.match-summary__status--live {
-    .status__time {
-        border-color: $news-accent;
-        color: $news-accent;
-        font-weight: bold;
+    @include mq(mobileLandscape) {
+        width: $garnett-x-large-button-size;
+        height: $garnett-x-large-button-size;
     }
 }
 
-.team__battle-line {
-    left: $gs-gutter;
-    display: none;
+.team__crest {
+    margin: auto;
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.team__score {
     position: absolute;
-    text-align: center;
-    top: 0;
-    width: 200%;
+    bottom: 0;
+    left: $garnett-large-button-size - 6px;
+    width: $garnett-large-button-size;
+    height: $garnett-large-button-size;
+    border-radius: $garnett-x-large-button-size / 2;
+    border: 1px solid $neutral-1;
+    background-color: $news-garnett-highlight;
 
-    &:after {
-        content: '\2013';
+    @include mq(mobileLandscape) {
+        left: $garnett-x-large-button-size - 6px;
+        width: $garnett-x-large-button-size;
+        height: $garnett-x-large-button-size;
     }
-}
-.match-summary--fixture {
-    .team__battle-line {
-        &:after {
-            content: 'v';
+
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+
+        @include mq($until: mobileLandscape) {
+            transform: scale(.8);
         }
     }
 }
 
-.match-summary__aggregate {
-    bottom: $gs-gutter/2;
-    margin-top: $gs-baseline;
-    position: absolute;
-    right: 0;
-    text-align: right;
-    width: 100%;
-}
+.match-summary__comments {
+    @include fs-textSans(3);
+    position: relative;
+    font-style: italic;
+    color: $neutral-1;
+    padding: 6px 10px;
+    border-top: 1px solid mix($neutral-1, $news-garnett-highlight, 20%);
 
-.match-summary__aggregate,
-.match-summary__comment {
-    @include fs-textSans(2);
-}
-
-.match-summary__comment {
-    text-align: right;
-    bottom: $gs-baseline / 3;
-    padding-bottom: $gs-baseline / 2;
+    @include mq(mobileLandscape) {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
 
     @include mq(tablet) {
-        padding-bottom: 0;
-        position: absolute;
-    }
-}
-
-.match-info {
-    @include fs-textSans(1);
-    padding-left: $gs-gutter/2;
-    display: inline-block;
-    vertical-align: middle;
-}
-.match-info__competition {
-    font-weight: bold;
-}
-.match-info:empty {
-    display: none;
-}
-
-@mixin match-summary--responsive {
-    &.match-summary,
-    .match-summary {
-        margin-bottom: $gs-baseline*4;
-    }
-
-    .match-summary__teams {
-        border-top: 0;
-        white-space: nowrap;
-    }
-    .match-summary__team {
-        box-sizing: border-box;
-        display: inline-block;
-        width: 50%;
-        vertical-align: top;
-    }
-    .match-summary__team--home {
-        padding-right: $gs-gutter;
-    }
-    .match-summary__team--away {
-        padding-left: $gs-gutter;
-        .team__heading {
-            text-align: right;
-        }
-        .team__name {
-            padding-left: $gs-gutter*2;
-            padding-right: 0;
-            text-align: right;
-        }
-        .team__score {
-            left: 0;
-            right: auto;
-        }
-        .team__scorers {
-            text-align: right;
-        }
-
-        .team__results {
-            text-align: right;
-        }
-    }
-
-    .team__info {
-        @include fs-headline(8, true);
-    }
-
-    .team__crest {
-        height: $football-crest--large;
-        display: table;
-        float: none;
-        width: 100%;
-    }
-    .team__crest--away {
-        text-align: right;
-    }
-    .team__crest__img {
-        height: $football-crest--large;
-        width: $football-crest--large;
-        background-size: contain;
-    }
-
-    .team__info {
-        margin: 0;
-    }
-
-    .match-summary__status {
-        display: block;
-        height: 0; /* removing it from the flow but maintaining the ability to center */
-        padding: 0;
-        text-align: center;
-    }
-
-    .status__time {
-        position: relative;
-    }
-
-    .team__battle-line {
-        display: block;
-    }
-
-    .match-summary__aggregate {
-        top: $gs-gutter*6;
-        bottom: 0;
-        text-align: center;
-    }
-
-    .match-summary__comment {
-        text-align: right;
-        width: 100%;
-    }
-
-    .match-info {
-        bottom: -$gs-baseline*2;
-        display: block;
-        left: 0;
+        margin-right: 6px;
         padding-left: 0;
-        position: absolute;
-        text-align: left;
-        width: 100%;
+        padding-right: 0;
+    }
 
-        .match-info__venue,
-        .match-info__competition {
-            display: inline-block;
+    &:before {
+        @include mq(leftCol) {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -10px;
+            bottom: 0;
+            background-color: mix($neutral-1, $news-garnett-highlight, 20%);
+            width: 1px;
         }
     }
 }
-.match-summary--responsive {
-    @include mq($football-match-summary-breakpoint) {
-        @include match-summary--responsive;
-    }
-}
 
-.match-summary--report {
-    border-bottom: 1px solid $neutral-6;
-    border-top: 1px solid $neutral-6;
-
-    .match-summary__status {
-        display: none;
-    }
-    .match-info {
-        padding: $gs-gutter/2 0;
-    }
-
-    .team__info {
-        @include fs-headline(4, true);
-    }
-    .team__scorers {
-        @include fs-textSans(2, true);
-    }
-    .team__crest {
-        margin-right: $gs-gutter;
-        float: left;
-        width: auto;
-    }
-    .team__crest__img {
-        height: $football-crest--small;
-        width: $football-crest--small;
-    }
-
-    @include mq($football-match-summary-breakpoint) {
-        .team__crest--away {
-            margin-left: $gs-baseline;
-            float: right;
-            margin-right: 0;
-        }
-        .match-info {
-            padding: 0;
-        }
-    }
+.match-summary__comment + .match-summary__comment {
+    margin-left: $gs-gutter / 4;
+    padding-left: $gs-gutter / 4;
+    border-left: 1px solid mix($neutral-1, $news-garnett-highlight, 20%);
 }

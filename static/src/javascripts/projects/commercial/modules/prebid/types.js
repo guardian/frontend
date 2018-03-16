@@ -27,9 +27,19 @@ export type PrebidImproveParams = {
     size: PrebidImproveSizeParam,
 };
 
-export type PrebidSlotKey = 'top-above-nav' | 'right' | 'inline' | 'mostpop';
+export type PrebidSlotKey =
+    | 'top-above-nav'
+    | 'right'
+    | 'inline1'
+    | 'inline'
+    | 'mostpop';
 
-export type PrebidSlotLabel = 'mobile' | 'tablet' | 'desktop';
+export type PrebidSlotLabel =
+    | 'mobile'
+    | 'tablet'
+    | 'desktop'
+    | 'article'
+    | 'non-article';
 
 export type PrebidBidLabel = 'edn-UK' | 'edn-INT' | 'geo-NA';
 
@@ -78,4 +88,12 @@ export type PrebidPriceBucket = {
 
 export type PrebidPriceGranularity = {
     buckets: PrebidPriceBucket[],
+};
+
+export type PrebidBanner = {
+    sizes: PrebidSize[],
+};
+
+export type PrebidMediaTypes = {
+    banner: PrebidBanner,
 };

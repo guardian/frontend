@@ -10,44 +10,50 @@ import { priceGranularity } from 'commercial/modules/prebid/price-config';
 import type {
     PrebidBid,
     PrebidBidder,
-    PrebidSize,
+    PrebidMediaTypes,
     PrebidSlot,
     PrebidSlotLabel,
 } from 'commercial/modules/prebid/types';
-import { stripTrailingNumbers } from 'commercial/modules/prebid/utils';
+import {
+    stripMobileSuffix,
+    stripTrailingNumbersAbove1,
+} from 'commercial/modules/prebid/utils';
 
 const bidderTimeout = 1500;
 
 class PrebidAdUnit {
-    code: string;
-    sizes: PrebidSize[];
-    bids: PrebidBid[];
-    labelAny: PrebidSlotLabel[];
-    labelAll: PrebidSlotLabel[];
+    code: ?string;
+    bids: ?(PrebidBid[]);
+    mediaTypes: ?PrebidMediaTypes;
+    labelAny: ?(PrebidSlotLabel[]);
+    labelAll: ?(PrebidSlotLabel[]);
 
-    constructor(advert: Advert) {
-        const slot: ?PrebidSlot = slots.find((s): boolean =>
-            stripTrailingNumbers(advert.id).endsWith(s.key)
-        );
-
-        if (slot) {
-            this.code = advert.id;
-            this.sizes = slot.sizes;
-            this.labelAny = slot.labelAny ? slot.labelAny : [];
-            this.labelAll = slot.labelAll ? slot.labelAll : [];
-            this.bids = bidders.map((bidder: PrebidBidder) => ({
+    constructor(advert: Advert, slot: PrebidSlot) {
+        this.code = advert.id;
+        this.bids = bidders.map((bidder: PrebidBidder) => {
+            const bid: PrebidBid = {
                 bidder: bidder.name,
-                params: bidder.bidParams(this.code, this.sizes),
-                labelAny: bidder.labelAny,
-                labelAll: bidder.labelAll,
-            }));
-        } else {
-            this.code = '';
-            this.sizes = [];
-            this.bids = [];
-            this.labelAny = [];
-            this.labelAll = [];
+                params: bidder.bidParams(advert.id, slot.sizes),
+            };
+            if (bidder.labelAny) {
+                bid.labelAny = bidder.labelAny;
+            }
+            if (bidder.labelAll) {
+                bid.labelAll = bidder.labelAll;
+            }
+            return bid;
+        });
+        this.mediaTypes = { banner: { sizes: slot.sizes } };
+        if (slot.labelAny) {
+            this.labelAny = slot.labelAny;
         }
+        if (slot.labelAll) {
+            this.labelAll = slot.labelAll;
+        }
+    }
+
+    isEmpty() {
+        return this.code == null;
     }
 }
 
@@ -68,17 +74,23 @@ class PrebidService {
         });
     }
 
-    // Prebid 1.0 supports concurrent bid requests, but for 0.34, each request
-    // must be enqueued sequentially.
     static requestQueue: Promise<void> = Promise.resolve();
 
     static requestBids(advert: Advert): Promise<void> {
         if (dfpEnv.externalDemand !== 'prebid') {
             return PrebidService.requestQueue;
         }
-        const adUnit = new PrebidAdUnit(advert);
 
-        if (adUnit.sizes.length === 0) {
+        const adUnits = slots
+            .filter(slot =>
+                stripTrailingNumbersAbove1(
+                    stripMobileSuffix(advert.id)
+                ).endsWith(slot.key)
+            )
+            .map(slot => new PrebidAdUnit(advert, slot))
+            .filter(adUnit => !adUnit.isEmpty());
+
+        if (adUnits.length === 0) {
             return PrebidService.requestQueue;
         }
 
@@ -88,10 +100,10 @@ class PrebidService {
                     new Promise(resolve => {
                         window.pbjs.que.push(() => {
                             window.pbjs.requestBids({
-                                adUnits: [adUnit],
+                                adUnits,
                                 bidsBackHandler() {
                                     window.pbjs.setTargetingForGPTAsync([
-                                        adUnit.code,
+                                        adUnits[0].code,
                                     ]);
                                     resolve();
                                 },

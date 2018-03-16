@@ -25,6 +25,12 @@ switch (getBreakpointKey()) {
     // do nothing
 }
 
+if (config.page.contentType === 'Article') {
+    slotLabels.push('article');
+} else {
+    slotLabels.push('non-article');
+}
+
 const bidLabels: PrebidBidLabel[] = [];
 
 switch (config.page.edition) {

@@ -89,7 +89,6 @@
     "jest-environment-jsdom-global": "^1.0.3",
     "jest-teamcity-reporter": "^0.6.2",
     "listr": "^0.12.0",
-    "lodash": "^3.10.1",
     "lodash-node": "~2.4.1",
     "lodash.capitalize": "^4.2.1",
     "lodash.flatten": "^4.4.0",
@@ -115,7 +114,6 @@
     "sass-lint": "~1.10.2",
     "sass-mq": "~3.3.2",
     "semver": "^5.4.1",
-    "sinon": "^2.1.0",
     "split": "^1.0.0",
     "stream-to-observable": "^0.2.0",
     "svgo": "^0.7.2",
@@ -125,7 +123,7 @@
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
-    "yargs": "^10.0.3"
+    "yargs": "^11.0.0"
   },
   "optionalDependencies": {
     "fsevents": "^1.1.2"
@@ -143,11 +141,9 @@
     ],
     "moduleNameMapper": {
       "^lodash/(.*)$": "lodash-node/compat/$1",
-      "picturefill": "projects/common/utils/picturefill",
       "raven": "raven-js",
       "EventEmitter": "wolfy87-eventemitter",
       "videojs": "video.js",
-      "stripe": "stripe/stripe.min",
       "^svgs/(.*)$": "<rootDir>/__mocks__/svgMock.js",
       "^(.*)\\.html$": "<rootDir>/__mocks__/templateMock.js",
       "ophan/ng": "ophan-tracker-js",
