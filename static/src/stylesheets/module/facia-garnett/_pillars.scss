@@ -117,6 +117,8 @@ $pillars: (
         color: map-get($palette, invertedKicker);
     }
 
+
+    &.fc-item--type-media .fc-item__headline .inline-garnett-quote,
     &.fc-item--type-immersive .fc-item__headline .inline-garnett-quote {
         fill: map-get($palette, invertedKicker);
     }
