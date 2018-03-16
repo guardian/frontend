@@ -13,7 +13,8 @@
         <article id="article" data-test-id="article-root"
 
             class="@RenderClasses(Map(
-                "paid-content" -> isPaidContent
+                "paid-content" -> isPaidContent,
+                "content--pillar-special-report" -> (toneClass(article) == "tone-special-report")
             ),
                 "content",
                 "content--article",
@@ -21,7 +22,6 @@
                 s"content--type-${article.metadata.designType.nameOrDefault}",
                 "tonal",
                 s"tonal--${toneClass(article)}",
-                "content--pillar-special-report" -> toneClass(article) == "tone-special-report",
                 s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"
             ), content content--type-immersive content--article content--immersive content--immersive-article content--immersive-garnett tonal"
 

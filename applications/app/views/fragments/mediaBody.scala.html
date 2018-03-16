@@ -14,7 +14,7 @@
                 Map(
                     "content--has-body" -> media.fields.body.nonEmpty,
                     "content--paid-content paid-content" -> isPaidContent,
-                    "content--pillar-special-report" -> toneClass(media) == "tone-special-report"
+                    "content--pillar-special-report" -> (toneClass(media) == "tone-special-report")
                 ),
                 "content", "content--media", s"content--pillar-${media.metadata.pillar.nameOrDefault}", s"content--media--$mediaType", "tonal", "tonal--tone-media", s"tonal--${toneClass(media)}"
             )"
