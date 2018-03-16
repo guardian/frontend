@@ -9,6 +9,8 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlot } from 'commercial/modules/dfp/create-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { isInVariant, getVariant } from 'common/modules/experiments/utils';
+import { spacefinderSimplify } from 'common/modules/experiments/tests/spacefinder-simplify';
 
 type AdSize = {
     width: number,
@@ -61,11 +63,14 @@ const filterNearbyCandidates = (candidate: SpacefinderItem): boolean => {
     return false;
 };
 
-const addDesktopInlineAds = (): Promise<number> => {
-    const rules = {
+const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
+    const variant = getVariant(spacefinderSimplify, 'variant');
+    const inTestVariant = variant && isInVariant(spacefinderSimplify, variant);
+
+    const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: 700,
+        minAbove: inTestVariant ? 300 : 700,
         minBelow: 700,
         selectors: {
             ' > h2': {
@@ -81,20 +86,33 @@ const addDesktopInlineAds = (): Promise<number> => {
         filter: filterNearbyCandidates,
     };
 
+    const relaxedRules = {
+        bodySelector: '.js-article__body',
+        slotSelector: ' > p',
+        minAbove: 700,
+        minBelow: 700,
+        selectors: {
+            ' .ad-slot': adSlotClassSelectorSizes,
+        },
+        filter: filterNearbyCandidates,
+    };
+
+    const rules = inTestVariant && !isInline1 ? relaxedRules : defaultRules;
+
     const insertAds = (paras: HTMLElement[]): Promise<number> => {
-        const slots: Array<Promise<void>> = paras.map(
-            (para: Node, i: number) => {
-                const inlineId = i + 1;
+        const slots: Array<Promise<void>> = paras
+            .slice(0, isInline1 ? 1 : paras.length)
+            .map((para: Node, i: number) => {
+                const inlineId = i + (isInline1 ? 1 : 2);
 
                 return insertAdAtPara(
                     para,
                     `inline${inlineId}`,
                     'inline',
-                    `inline${inlineId === 1 ? '' : ' offset-right'}`,
-                    inlineId === 1 ? null : { desktop: [adSizes.halfPage] }
+                    `inline${isInline1 ? '' : ' offset-right'}`,
+                    isInline1 ? null : { desktop: [adSizes.halfPage] }
                 );
-            }
-        );
+            });
 
         return Promise.all(slots).then(() => slots.length);
     };
@@ -152,7 +170,9 @@ const addInlineAds = (): Promise<number> => {
         max: 'phablet',
     });
 
-    return isMobile ? addMobileInlineAds() : addDesktopInlineAds();
+    return isMobile
+        ? addMobileInlineAds()
+        : addDesktopInlineAds(true).then(() => addDesktopInlineAds(false));
 };
 
 const attemptToAddInlineMerchAd = (): Promise<boolean> => {
