@@ -21,6 +21,7 @@
                 s"content--type-${article.metadata.designType.nameOrDefault}",
                 "tonal",
                 s"tonal--${toneClass(article)}",
+                "content--pillar-special-report" -> toneClass(article) == "tone-special-report",
                 s"section-${article.trail.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")}"
             ), content content--type-immersive content--article content--immersive content--immersive-article content--immersive-garnett tonal"
 
