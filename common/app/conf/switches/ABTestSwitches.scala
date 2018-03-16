@@ -62,7 +62,7 @@ trait ABTestSwitches {
     "Removes 5% of users from Unruly to measure performance impact",
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 15),
+    sellByDate = new LocalDate(2018, 3, 20),
     exposeClientSide = true
   )
 
