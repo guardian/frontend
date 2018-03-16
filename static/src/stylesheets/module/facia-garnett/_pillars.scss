@@ -331,4 +331,8 @@ $pillars: (
             }
         }
     }
+
+    .fc-item__container.u-faux-block-link--hover {
+        background-color: darken($story-package-garnett, 2%);
+    }
 }
