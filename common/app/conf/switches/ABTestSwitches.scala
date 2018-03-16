@@ -52,7 +52,7 @@ trait ABTestSwitches {
     "Show a custom Epic for articles with the US gun campaign tag",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 3, 15),
+    sellByDate = new LocalDate(2019, 3, 14),
     exposeClientSide = true
   )
 
@@ -82,7 +82,7 @@ trait ABTestSwitches {
     "Show a custom Epic for articles with the Australia environment campaign tag",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 15),
+    sellByDate = new LocalDate(2019, 3, 14),
     exposeClientSide = true
   )
 
