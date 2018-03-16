@@ -347,6 +347,10 @@ $pillars: (
         background-color: darken($story-package-garnett, 2%);
     }
 
+    .fc-sublink__kicker {
+        color: $news-garnett-highlight;
+    }
+
     .fc-sublink__title {
         color: #ffffff;
     }
