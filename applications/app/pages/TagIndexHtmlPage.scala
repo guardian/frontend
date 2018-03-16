@@ -1,7 +1,7 @@
 package pages
 
 import common.Edition
-import conf.switches.Switches.{OrielFullIntegration, WeAreHiring}
+import conf.switches.Switches.WeAreHiring
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
 import model.{ApplicationContext, ContributorsListing, PreferencesMetaData, StandalonePage, SubjectsListing, TagIndexPage}
@@ -43,7 +43,7 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        orielScriptTag() when OrielFullIntegration.isSwitchedOn,
+        orielScriptTag(),
         titleTag(),
         metaData(),
         styles(allStyles),

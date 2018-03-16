@@ -349,6 +349,16 @@
     @include colorPalatte($sport-garnett-main-1, $sport-garnett-feature, $sport-garnett-media-main-1);
 }
 
+.content--pillar-special-report.content--type-comment:not(.paid-content),
+.content--pillar-special-report.content--type-guardianview:not(.paid-content),
+.content--pillar-special-report:not(.paid-content) {
+    @include colorPalatte($story-package-garnett, $story-package-garnett, $news-garnett-highlight);
+
+    .youtube-media-atom__play-button .inline-icon svg {
+        fill: $garnett-neutral-1;
+    }
+}
+
 .content-footer--pillar-news:not(.paid-content) {
     @include footerPalette($news-garnett-main-1);
 }
@@ -392,6 +402,11 @@
 .content--media:not(.paid-content).content--pillar-sport,
 .immersive-main-media__headline-container.content--pillar-sport {
     @include mediaPalatte($sport-garnett-media-main-1, sport);
+}
+
+.content--media:not(.paid-content).content--pillar-special-report,
+.immersive-main-media__headline-container.content--pillar-special-report {
+    @include mediaPalatte($news-garnett-highlight, pink);
 }
 
 .content--type-analysis {

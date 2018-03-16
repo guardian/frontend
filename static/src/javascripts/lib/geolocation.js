@@ -143,7 +143,7 @@ const getLocalCurrencySymbol = (): string =>
         AU: '$',
         CA: '$',
         EU: '€',
-    }[getSync()] || '£');
+    }[getSupporterPaymentRegion(getSync())] || '£');
 
 export {
     get,

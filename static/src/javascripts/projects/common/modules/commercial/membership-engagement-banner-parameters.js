@@ -1,6 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { getSupporterPaymentRegion } from 'lib/geolocation';
+import { supportBaseURL } from './support-utilities';
 
 const baseParams = {
     minArticles: 3,
@@ -74,15 +75,10 @@ const supporterEngagementCtaCopyJustOne = (location: string): string =>
         ? 'Support The Guardian from as little as $1.'
         : 'Support The Guardian from as little as £1.';
 
-const getSupporterLinkUrl = (location: string): string =>
-    location === 'GB'
-        ? 'https://support.theguardian.com/?bundle=contribute'
-        : 'https://support.theguardian.com';
-
 const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Support The Guardian',
-        linkUrl: getSupporterLinkUrl(location),
+        linkUrl: supportBaseURL,
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         messageText: engagementBannerCopy(),
         ctaText: supporterEngagementCtaCopyJustOne(location),

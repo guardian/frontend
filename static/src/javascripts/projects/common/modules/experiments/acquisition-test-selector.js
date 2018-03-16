@@ -14,7 +14,6 @@ import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
 import { acquisitionsEpicEurSupport } from 'common/modules/experiments/tests/acquisitions-epic-eur-support';
 import { acquisitionsEpicAudSupport } from 'common/modules/experiments/tests/acquisitions-epic-aud-support';
-import { supportEpicCircles } from 'common/modules/experiments/tests/support-epic-circles';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
@@ -43,7 +42,6 @@ export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicUSGunCampaign,
     acquisitionsEpicAudSupport,
     acquisitionsEpicEurSupport,
-    supportEpicCircles,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

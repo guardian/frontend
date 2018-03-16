@@ -31,12 +31,13 @@ object EmailHelpers {
   def classesForCard(card: ContentCard, withImage: Boolean = false): Seq[String] = {
     Seq(toneClassFromStyle(card.cardStyle)) ++
       (if(withImage) Seq("fc--large") else Nil) ++
-      (if(card.branding.exists(_.isPaid)) Seq("tone-branded") else Nil)
+      (if(card.branding.exists(_.isPaid)) Seq("tone-branded") else Nil) ++
+      card.pillar.map( pillar => Seq(s"pillar-${pillar.name}") ).getOrElse(Nil)
   }
 
-  def icon(name: String, largeHeadline: Boolean = false): Html = Html {
+  def icon(name: String, largeHeadline: Boolean = false, className: String = ""): Html = Html {
     val height = if(largeHeadline) 18 else 12
-    s"""<img height="$height" src="${Static(s"images/email/icons/$name.png")}" class="icon icon-$name">"""
+    s"""<img height="$height" src="${Static(s"images/email/icons/$name.png")}" class="icon $className icon-$name">"""
   }
 
   private def img(width: Int)(src: String, alt: Option[String] = None) = Html {
