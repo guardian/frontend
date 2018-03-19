@@ -13,6 +13,7 @@ import type {
     PrebidSize,
     PrebidSonobiParams,
     PrebidTrustXParams,
+    PrebidXaxisParams,
 } from 'commercial/modules/prebid/types';
 import {
     getBreakpointKey,
@@ -164,6 +165,14 @@ const improveDigitalBidder: PrebidBidder = {
     labelAny: ['edn-UK', 'edn-INT'],
 };
 
+const xaxisBidder: PrebidBidder = {
+    name: 'appnexus',
+    bidParams: (): PrebidXaxisParams => ({
+        placementId: 12984524,
+    }),
+    labelAll: ['edn-UK'],
+};
+
 const bidders: PrebidBidder[] = [];
 if (config.switches.prebidSonobi) {
     bidders.push(sonobiBidder);
@@ -176,6 +185,9 @@ if (config.switches.prebidTrustx) {
 }
 if (config.switches.prebidImproveDigital) {
     bidders.push(improveDigitalBidder);
+}
+if (config.switches.prebidXaxis) {
+    bidders.push(xaxisBidder);
 }
 
 export { bidders };

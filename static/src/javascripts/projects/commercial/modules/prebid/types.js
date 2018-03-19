@@ -27,6 +27,10 @@ export type PrebidImproveParams = {
     size: PrebidImproveSizeParam,
 };
 
+export type PrebidXaxisParams = {
+    placementId: number,
+};
+
 export type PrebidSlotKey =
     | 'top-above-nav'
     | 'right'
@@ -63,7 +67,8 @@ export type PrebidBidder = {
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
-        | PrebidImproveParams,
+        | PrebidImproveParams
+        | PrebidXaxisParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };
@@ -74,7 +79,8 @@ export type PrebidBid = {
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
-        | PrebidImproveParams,
+        | PrebidImproveParams
+        | PrebidXaxisParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };
