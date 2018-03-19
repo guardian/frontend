@@ -1068,8 +1068,8 @@
         }
 
         @include mq($from: leftCol) {
-            // adds enough space so that this doesn't clash with the content labels if css gris is not supported
-            top: gs-height(3);
+            // adds enough space so that this doesn't clash with the content labels if css grid is not supported
+            top: gs-height(4);
 
             @supports (display: grid) {
                 grid-area: meta;
