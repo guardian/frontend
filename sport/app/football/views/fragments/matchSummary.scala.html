@@ -7,7 +7,6 @@
 
 @(theMatch: FootballMatch, competition: Option[Competition] = None, responsive: Boolean = false, link: Boolean = false)(implicit request: RequestHeader)
 
-
 @defining((theMatch.homeTeam, theMatch.awayTeam)){ case (homeTeam, awayTeam) =>
 <@if(link){a href="@LinkTo("/football/match-redirect/"+theMatch.id)"}else{div}
     data-component="big-match-special"
@@ -61,9 +60,11 @@
             }
         </div>
     </div>
-    <div class='match-summary__comments'>
-        @theMatch.homeTeam.aggregateScore.map{homeAggScore => <span class='match-summary__comment'>Aggregate @homeAggScore-@theMatch.awayTeam.aggregateScore</span>}
-        @theMatch.comments.map{ comments => <span class='match-summary__comment'> @comments.replace("(", "").replace(")", "")</span>}
-    </div>
+    @if(theMatch.homeTeam.aggregateScore || theMatch.comments) {
+        <div class='match-summary__comments'>
+            @theMatch.homeTeam.aggregateScore.map{homeAggScore => <span class='match-summary__comment'>Aggregate @homeAggScore-@theMatch.awayTeam.aggregateScore</span>}
+            @theMatch.comments.map{ comments => <span class='match-summary__comment'> @comments.replace("(", "").replace(")", "")</span>}
+        </div>
+    }
 </@if(link){a}else{div}>
 }
