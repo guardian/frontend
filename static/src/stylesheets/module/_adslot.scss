@@ -252,13 +252,16 @@
         clear: left;
     }
 }
-
+.ad-slot__content {
+    > div {
+        margin: 0 auto;
+    }
+}
 .ad-slot--container-inline:not(.ad-slot--fluid) {
     .ad-slot__content {
         margin: 0 auto;
     }
     @include mq(tablet) {
-
         position: relative;
         height: auto;
 
