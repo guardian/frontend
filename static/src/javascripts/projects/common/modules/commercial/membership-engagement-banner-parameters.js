@@ -69,7 +69,7 @@ const supporterCost = (location: string, contributionType: 'MONTHLY' | 'ONE-OFF'
             AU: '$1',
             CA: '$1',
             INT: '$1',
-        };
+        },
     }[contributionType][region];
 
     return payment || '£5';
