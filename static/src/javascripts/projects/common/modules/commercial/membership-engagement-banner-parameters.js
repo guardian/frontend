@@ -18,7 +18,10 @@ const engagementBannerCopy = (): string =>
     everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure.`;
 
 // Prices taken from https://membership.theguardian.com/<region>/supporter
-const supporterCost = (location: string, contributionType: 'MONTHLY' | 'ONE-OFF'): string => {
+const supporterCost = (
+    location: string,
+    contributionType: 'MONTHLY' | 'ONE-OFF'
+): string => {
     const region = getSupporterPaymentRegion(location);
 
     if (region === 'EU') {
