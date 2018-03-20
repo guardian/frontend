@@ -90,12 +90,11 @@
 
 .tonal--tone-special-report {
     @include PillarColourOne($story-package-garnett, $story-package-garnett);
-
     background-color: #eff1f2;
 
     .content__series-label__link {
-     background-color: $news-garnett-highlight;
-     padding: ($gs-baseline / 4) ($gs-gutter / 4);
+        background-color: $news-garnett-highlight;
+        padding: ($gs-baseline / 4) ($gs-gutter / 4);
     }
 
     .content__meta-container .byline-img {
