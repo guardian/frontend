@@ -12,15 +12,8 @@ const useSupportDomain = (): boolean =>
     geoCountryGroup === 'US' ||
     geoCountryGroup === 'EU';
 
-let supportPath = '/uk/contribute';
-if (geoCountryGroup === 'US') {
-    supportPath = '/us/contribute';
-} else if (geoCountryGroup === 'EU') {
-    supportPath = '/eu/contribute';
-}
-
 const supportBaseURL = useSupportDomain()
-    ? `https://support.theguardian.com${supportPath}`
+    ? 'https://support.theguardian.com/contribute'
     : 'https://membership.theguardian.com/supporter';
 
 export { useSupportDomain, supportBaseURL };
