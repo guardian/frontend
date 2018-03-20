@@ -28,7 +28,7 @@ const supporterCost = (
         // Format either 4.99 € or €4.99 depending on country
         // See https://en.wikipedia.org/wiki/Linguistic_issues_concerning_the_euro
         const euro = '€';
-        const amount = contributionType === 'MONTHLY' ? '4.99': '1';
+        const amount = contributionType === 'MONTHLY' ? '4.99' : '1';
 
         const euroAfterCountryCodes = [
             'BG',
@@ -86,11 +86,20 @@ const supporterEngagementCtaCopy = (location: string): string =>
 const supporterEngagementCtaCopyJustOne = (location: string): string => {
     switch (location) {
         case 'US':
-            return `Support The Guardian from as little as ${supporterCost(location, 'ONE-OFF')}.`;
+            return `Support The Guardian from as little as ${supporterCost(
+                location,
+                'ONE-OFF'
+            )}.`;
         case 'EU':
-            return `Support The Guardian from as little as ${supporterCost(location, 'ONE-OFF')}.`;
+            return `Support The Guardian from as little as ${supporterCost(
+                location,
+                'ONE-OFF'
+            )}.`;
         default:
-            return `Support The Guardian from as little as ${supporterCost(location, 'ONE-OFF')}.`;
+            return `Support The Guardian from as little as ${supporterCost(
+                location,
+                'ONE-OFF'
+            )}.`;
     }
 };
 
