@@ -19,11 +19,9 @@ const engagementBannerCopy = (): string =>
 
 // Prices taken from https://membership.theguardian.com/<region>/supporter
 const supporterCost = (
-    location: string,
+    region: string,
     contributionType: 'MONTHLY' | 'ONE-OFF'
 ): string => {
-    const region = getSupporterPaymentRegion(location);
-
     if (region === 'EU') {
         // Format either 4.99 € or €4.99 depending on country
         // See https://en.wikipedia.org/wiki/Linguistic_issues_concerning_the_euro
@@ -78,34 +76,37 @@ const supporterCost = (
     return payment || '£5';
 };
 
-const supporterEngagementCtaCopy = (location: string): string =>
-    location === 'US'
+const supporterEngagementCtaCopy = (region: string): string =>
+    region === 'US'
         ? `Support us with a one-time contribution`
-        : `Support us for ${supporterCost(location, 'MONTHLY')} a month.`;
+        : `Support us for ${supporterCost(region, 'MONTHLY')} a month.`;
 
-const supporterEngagementCtaCopyJustOne = (location: string): string =>
-    `Support The Guardian from as little as ${supporterCost(
-        location,
+const supporterEngagementCtaCopyJustOne = (region: string): string => {
+    console.log('location is:' + location);
+
+    return `Support The Guardian from as little as ${supporterCost(
+        region,
         'ONE-OFF'
     )}.`;
+};
 
-const supporterParams = (location: string): EngagementBannerParams =>
+const supporterParams = (region: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Support The Guardian',
         linkUrl: supportBaseURL,
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         messageText: engagementBannerCopy(),
-        ctaText: supporterEngagementCtaCopyJustOne(location),
+        ctaText: supporterEngagementCtaCopyJustOne(region),
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
-const membershipSupporterParams = (location: string): EngagementBannerParams =>
+const membershipSupporterParams = (region: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Become a Supporter',
         linkUrl: 'https://membership.theguardian.com/supporter',
         products: ['MEMBERSHIP_SUPPORTER'],
         messageText: engagementBannerCopy(),
-        ctaText: supporterEngagementCtaCopy(location),
+        ctaText: supporterEngagementCtaCopy(region),
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
