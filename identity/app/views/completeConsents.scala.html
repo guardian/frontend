@@ -37,7 +37,6 @@
                     </div>
                     <div class="fieldset__fields">
                         @fragments.emailListCategories(emailPrefsForm, availableLists, emailSubscriptions)(request, messages)
-                        <div hidden>@radioField(emailPrefsForm("htmlPreference"), List("HTML" -> "HTML (images and text)", "Text" -> "Text"))(nonInputFields, messages)</div>
                     </div>
                     <p class="identity-title-explainer identity-title-explainer--small">
                         The Guardian's newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.
