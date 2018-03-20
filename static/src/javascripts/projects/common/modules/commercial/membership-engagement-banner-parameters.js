@@ -19,9 +19,11 @@ const engagementBannerCopy = (): string =>
 
 // Prices taken from https://membership.theguardian.com/<region>/supporter
 const supporterCost = (
-    region: string,
+    location: string,
     contributionType: 'MONTHLY' | 'ONE-OFF'
 ): string => {
+    const region = getSupporterPaymentRegion(location);
+
     if (region === 'EU') {
         // Format either 4.99 € or €4.99 depending on country
         // See https://en.wikipedia.org/wiki/Linguistic_issues_concerning_the_euro
@@ -76,34 +78,34 @@ const supporterCost = (
     return payment || '£5';
 };
 
-const supporterEngagementCtaCopy = (region: string): string =>
-    region === 'US'
+const supporterEngagementCtaCopy = (location: string): string =>
+    location === 'US'
         ? `Support us with a one-time contribution`
-        : `Support us for ${supporterCost(region, 'MONTHLY')} a month.`;
+        : `Support us for ${supporterCost(location, 'MONTHLY')} a month.`;
 
-const supporterEngagementCtaCopyJustOne = (region: string): string =>
+const supporterEngagementCtaCopyJustOne = (location: string): string =>
     `Support The Guardian from as little as ${supporterCost(
-        region,
+        location,
         'ONE-OFF'
     )}.`;
 
-const supporterParams = (region: string): EngagementBannerParams =>
+const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Support The Guardian',
         linkUrl: supportBaseURL,
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         messageText: engagementBannerCopy(),
-        ctaText: supporterEngagementCtaCopyJustOne(region),
+        ctaText: supporterEngagementCtaCopyJustOne(location),
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
-const membershipSupporterParams = (region: string): EngagementBannerParams =>
+const membershipSupporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Become a Supporter',
         linkUrl: 'https://membership.theguardian.com/supporter',
         products: ['MEMBERSHIP_SUPPORTER'],
         messageText: engagementBannerCopy(),
-        ctaText: supporterEngagementCtaCopy(region),
+        ctaText: supporterEngagementCtaCopy(location),
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
@@ -113,7 +115,7 @@ export const engagementBannerParams = (
     const region = getSupporterPaymentRegion(location);
 
     if (region === 'US' || region === 'GB' || region === 'EU') {
-        return supporterParams(region);
+        return supporterParams(location);
     }
-    return membershipSupporterParams(region);
+    return membershipSupporterParams(location);
 };
