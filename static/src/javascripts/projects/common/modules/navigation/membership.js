@@ -10,8 +10,6 @@ import config from 'lib/config';
 import bean from 'bean';
 import mediator from 'lib/mediator';
 
-
-
 const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
     const gaTracker = config.get('googleAnalytics.trackers.editorial');
     const newMessage = new Message('membership-action-required', {
@@ -38,9 +36,9 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
         },
     });
     newMessage.show(
-        `An action is needed on your Guardian account. Please <a href='config.get("page.idUrl")/${
-            accountDataUpdateWarningLink
-        }/edit'>update your details</a>`
+        `An action is needed on your Guardian account. Please <a href='${config.get(
+            'page.idUrl'
+        )}/${accountDataUpdateWarningLink}/edit'>update your details</a>`
     );
 };
 
