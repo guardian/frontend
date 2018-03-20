@@ -98,36 +98,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-header-eur-support",
-    "Points the 'support the guardian' link in the header to the eur version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 17),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-engagement-banner-eur-support",
-    "Points the 'support the guardian' link in the engagement banner to the eur version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 17),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-eur-support",
-    "Points the 'support the guardian' link in the epic to the eur version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 17),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-spacefinder-simplify",
     "Alters the rules for inserting ads on desktop breakpoints.",
     owners = Seq(Owner.withGithub("JonNorman")),
