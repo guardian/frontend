@@ -38,7 +38,6 @@
     position: relative;
     height: $mpu-ad-label-height;
     background-color: $neutral-8;
-    margin: 0 auto;
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $neutral-5;
     color: $neutral-2-contrasted;
@@ -120,11 +119,6 @@
             width: auto !important;
             padding-left: 0 !important;
             text-align: center;
-
-            .ad-slot__label {
-                margin-left: auto;
-                margin-right: auto;
-            }
         }
     }
 }
@@ -139,10 +133,11 @@
         display: none;
     }
 
+    padding-left: $left-column-wide + $gs-gutter * 2;
+    margin-left: calc(50% - #{(gs-span($gs-max-columns) + $gs-gutter * 2) / 2});
+    text-align: left;
+
     @include mq(wide) {
-        padding-left: $left-column-wide + $gs-gutter * 2;
-        margin-left: calc(50% - #{(gs-span($gs-max-columns) + $gs-gutter * 2) / 2});
-        text-align: left;
 
         .has-page-skin & {
             margin-left: auto;
@@ -252,11 +247,7 @@
         clear: left;
     }
 }
-.ad-slot__content {
-    > div {
-        margin: 0 auto;
-    }
-}
+
 .ad-slot--container-inline:not(.ad-slot--fluid) {
     .ad-slot__content {
         margin: 0 auto;
