@@ -1,11 +1,23 @@
 // @flow
-import { getSync as geolocationGetSync } from 'lib/geolocation';
+import {
+    getSync as geolocationGetSync,
+    getSupporterPaymentRegion as  geolocationGetSupporterPaymentRegion,
+} from 'lib/geolocation';
 
 const geo: string = geolocationGetSync();
+const geoCountryGroup = geolocationGetSupporterPaymentRegion(geo);
 
-const useSupportDomain = (): boolean => geo === 'GB' || geo === 'US';
+const useSupportDomain = (): boolean =>
+    geoCountryGroup === 'GB' ||
+    geoCountryGroup === 'US' ||
+    geoCountryGroup === 'EU';
 
-const supportPath = geo === 'US' ? '/us/contribute' : '/uk/contribute';
+let supportPath = '/uk/contribute';
+if (geoCountryGroup === 'US') {
+    supportPath = '/us/contribute';
+} else if (geoCountryGroup === 'EU') {
+    supportPath = '/eu/contribute';
+}
 
 const supportBaseURL = useSupportDomain()
     ? `https://support.theguardian.com${supportPath}`
