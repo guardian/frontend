@@ -81,14 +81,11 @@ const supporterEngagementCtaCopy = (region: string): string =>
         ? `Support us with a one-time contribution`
         : `Support us for ${supporterCost(region, 'MONTHLY')} a month.`;
 
-const supporterEngagementCtaCopyJustOne = (region: string): string => {
-    console.log('location is:' + location);
-
-    return `Support The Guardian from as little as ${supporterCost(
+const supporterEngagementCtaCopyJustOne = (region: string): string =>
+    `Support The Guardian from as little as ${supporterCost(
         region,
         'ONE-OFF'
     )}.`;
-};
 
 const supporterParams = (region: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
