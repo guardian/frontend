@@ -22,7 +22,7 @@ object ReaderRevenueSite extends enumeratum.Enum[ReaderRevenueSite] {
   def isReaderRevenueSiteUrl(url: String): Boolean = getHost(url).exists(hosts.contains)
 
   case object Support extends ReaderRevenueSite {
-    val url: String = s"${Configuration.id.supportUrl}/uk"
+    val url: String = s"${Configuration.id.supportUrl}/"
   }
 
   case object Membership extends ReaderRevenueSite {
