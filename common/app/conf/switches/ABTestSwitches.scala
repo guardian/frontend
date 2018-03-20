@@ -175,4 +175,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 4, 24),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-cambridge-analytica-always-ask",
+    "measure the impact of placing an ever-present ask on \"moment\" stories",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 10),
+    exposeClientSide = true
+  )
 }
