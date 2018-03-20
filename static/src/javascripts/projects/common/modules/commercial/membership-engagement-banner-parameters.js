@@ -98,8 +98,9 @@ const membershipSupporterParams = (location: string): EngagementBannerParams =>
 export const engagementBannerParams = (
     location: string
 ): EngagementBannerParams => {
-    if (location === 'US' || location === 'GB') {
-        return supporterParams(location);
+    const region = getSupporterPaymentRegion(location);
+    if (region === 'US' || region === 'GB' || region === 'EU') {
+        return supporterParams(region);
     }
-    return membershipSupporterParams(location);
+    return membershipSupporterParams(region);
 };
