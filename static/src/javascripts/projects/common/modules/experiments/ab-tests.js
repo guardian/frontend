@@ -2,7 +2,6 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { unrulyPerformanceTest } from 'common/modules/experiments/tests/unruly-performance';
 import { commercialLazyLoading } from 'common/modules/experiments/tests/commercial-lazy-loading';
 import { acquisitionsHeaderSubscribeMeansSubscribe } from 'common/modules/experiments/tests/acquisitions-header-subscribe-means-subscribe';
 import { acquisitionsHeaderEurSupport } from 'common/modules/experiments/tests/acquisitions-header-eur-support';
@@ -11,7 +10,6 @@ import { spacefinderSimplify } from 'common/modules/experiments/tests/spacefinde
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
-    unrulyPerformanceTest,
     acquisitionsHeaderSubscribeMeansSubscribe,
     acquisitionsHeaderEurSupport,
     acquisitionsHeaderAudSupport,
@@ -31,6 +29,7 @@ export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
 export const getExpiredTests = (): $ReadOnlyArray<ABTest> =>
     TESTS.filter(test => isExpired(test.expiry));
 
+// UnrulyPerformanceTest
 export const getTest = (id: string): ?ABTest => {
     const testIds = TESTS.map(test => test.id);
     const index = testIds.indexOf(id);

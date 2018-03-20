@@ -58,16 +58,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-unruly-performance-test",
-    "Removes 5% of users from Unruly to measure performance impact",
-    owners = Seq(Owner.withGithub("janua")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 20),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-lazy-loading-extended",
     "Varies the strategy for lazyloading of adverts",
     owners = Seq(Owner.withGithub("JonNorman")),
