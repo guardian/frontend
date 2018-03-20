@@ -83,25 +83,11 @@ const supporterEngagementCtaCopy = (location: string): string =>
         ? `Support us with a one-time contribution`
         : `Support us for ${supporterCost(location, 'MONTHLY')} a month.`;
 
-const supporterEngagementCtaCopyJustOne = (location: string): string => {
-    switch (location) {
-        case 'US':
-            return `Support The Guardian from as little as ${supporterCost(
-                location,
-                'ONE-OFF'
-            )}.`;
-        case 'EU':
-            return `Support The Guardian from as little as ${supporterCost(
-                location,
-                'ONE-OFF'
-            )}.`;
-        default:
-            return `Support The Guardian from as little as ${supporterCost(
-                location,
-                'ONE-OFF'
-            )}.`;
-    }
-};
+const supporterEngagementCtaCopyJustOne = (location: string): string =>
+    `Support The Guardian from as little as ${supporterCost(
+        location,
+        'ONE-OFF'
+    )}.`;
 
 const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
