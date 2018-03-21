@@ -377,16 +377,18 @@ category: Common
 }
 .paid-content, .paid-content.tonal--tone-media {
     .social-icon,
-    .social-icon.social-icon--more {
+    .social-icon.social-icon--more,
+    .inline-close {
         background-color: transparent;
         border: 1px solid $neutral-1;
-
         &:hover,
         &:active,
         &:focus {
             background-color: $garnett-neutral-1;
         }
-        .social-icon__svg, .social-icon--more__svg {
+        .social-icon__svg,
+        .social-icon--more__svg,
+        .social-tray__icon__svg {
             fill: $garnett-neutral-1;
         }
         &:focus,
@@ -399,6 +401,6 @@ category: Common
 }
 .paid-content.tonal--tone-media {
     .social--expanded-top {
-        background: $garnett-neutral-4;
+        background: $paid-article;
     }
 }

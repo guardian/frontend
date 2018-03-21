@@ -946,18 +946,6 @@
             border-color: $neutral-1;
             padding-bottom: 1px;
         }
-
-        .social__tray-close .inline-close {
-            background-color: $neutral-1;
-
-            &:hover {
-                background-color: $neutral-2;
-            }
-
-            svg {
-                fill: $neutral-4;
-            }
-        }
     }
 }
 
@@ -1190,9 +1178,6 @@
     }
     .social--expanded-top {
         background-color: $paid-article;
-        .inline-close {
-            background-color: $neutral-6;
-        }
     }
     &.tonal--tone-media {
         .content__headline,
