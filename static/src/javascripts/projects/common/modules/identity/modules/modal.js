@@ -43,13 +43,28 @@ const getContents = (name: string): Promise<HTMLElement> =>
         })
     );
 
-const show = (name: string): Promise<void> =>
+const show = (name: string, uncheckedName: ?Array<string>): Promise<void> =>
     getModal(name).then(modalEl =>
         fastdom.read(() => {
             modalEl.classList.add('identity-modal--active');
+            return modalEl;
+        })
+        .then(modalEl => {
+            if(uncheckedName != null) {
+                fastdom.write(() => {
+                    uncheckedName.map(name => {
+                        var li = document.createElement('li');
+                        li.innerHTML = `<b>${name}</b>`;
+                        modalEl.querySelector(
+                            `.identity-consent-journey-modal-reminder`
+                        ).appendChild(li)
+                    })
+                })
+            }
         })
     );
 
+// NEEED TO REMOVE THE LI'S from the modal if you cross out of it
 const hide = (name: string): Promise<void> =>
     getModal(name).then(modalEl =>
         fastdom.read(() => {

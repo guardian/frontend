@@ -175,19 +175,32 @@
 
 @confirmModal = {
     <section class="identity-forms-message">
-
+        @if(onlySubscribedToV1Newsletters.isEmpty) {
+            <h1 class="identity-header">Really?</h1>
+        }else {
+            <h1 class="identity-header">Are you sure?</h1>
+        }
         <div class="identity-forms-message__body">
-            You have not selected any newsletters or Guardian products and services.<br/>
-            This means you will stop receiving these emails from us. Are you sure you want to continue?
-            <br>
-            <br>
-             You used to recieve the following newsletters, you will NO longer recieve these:
-            <br>
-             @emailRepermissionStepContent
+            @if(onlySubscribedToV1Newsletters.isEmpty) {
+                Looks like you haven't selected any newsletters or Guardian products and services.
+                <br/>
+                <br/>
+                This means you'll stop recieving <b>all</b> emails from us other than service communication.
+                <br/>
+                <br/>
+                Keeping you informed is a critical part of our job.
+                <br>
+                <b>Are you sure you want to unsubscribe from all Guardian emails?</b>
+            }else {
+                You've chosen to stop revieving the following newsletters:
+                <div class="identity-consent-journey-modal-reminder"></div>
+                <br/>
+                Are you sure you want to unsubscribe from these newsletters?
+            }
         </div>
 
         <footer class="identity-forms-message__options">
-            <a class="manage-account__button manage-account__button--secondary manage-account__button--center js-identity-consent-journey-continue" data-link-name="consents : confirm : continue">Continue</a>
+            <a class="manage-account__button manage-account__button--secondary manage-account__button--center js-identity-consent-journey-continue" data-link-name="consents : confirm : continue">Unsubscribe me</a>
             <a class="js-identity-modal__closer manage-account__button manage-account__button--main manage-account__button--center" data-link-name="consents : confirm : recheck">Let me look again</a>
         </footer>
 
