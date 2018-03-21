@@ -1,11 +1,18 @@
 .content--pillar-special-report:not(.content--type-immersive):not(.content--media) {
+    background-color: #eff1f2;
+
     .content__headline--byline .tone-colour {
         background-color: $news-garnett-highlight;
     }
 
     .content__series-label__link,
     .content__section-label__link {
-        background-color: $news-garnett-highlight;
+        box-shadow: -3px 0 0 0 $news-garnett-highlight, 3px 0 0 0 $news-garnett-highlight;
+
+        span {
+        	background: $news-garnett-highlight;
+        	position: relative;
+        }
     }
 
     .content__section-label__link {
@@ -13,7 +20,24 @@
         position: relative;
     }
 
-    background-color: #eff1f2;
+    .content__series-label {
+        @include mq(leftCol) {
+            margin-top: -2px;
+        }
+    }
+
+    .badge-slot {
+        @include mq(leftCol) {
+            margin-left: -3px;
+        }
+    }
+
+    .content__labels {
+        @include mq(leftCol) {
+            margin-bottom: $gs-baseline / 2;
+            padding-left: 3px;
+        }
+    }
 }
 
 .content--immersive.content--pillar-special-report:not(.immersive-main-media__gallery):not(.paid-content):not(.content--gallery):not(.content--minute-article) {

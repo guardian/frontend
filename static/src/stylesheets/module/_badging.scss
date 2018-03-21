@@ -2,7 +2,7 @@
     width: 33px;
     margin-top: 2px;
 
-    @include mq($until: desktop) {
+    @include mq($until: leftCol) {
         float: left;
         margin-right: $gs-gutter / 4;
     }

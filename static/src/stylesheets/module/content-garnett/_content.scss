@@ -190,14 +190,13 @@
 }
 
 .content__section-label {
-    @include fs-header(1);
-    float: left;
+    @include fs-header(2);
+    display: inline;
     padding-right: $gs-gutter/3;
 
     @include mq(leftCol) {
         @include fs-header(4);
         line-height: get-line-height(header, 2);
-        float: none;
         padding-right: 0;
     }
 
@@ -211,19 +210,19 @@
 }
 
 .content__series-label {
+    display: inline;
     font-family: $f-serif-headline;
-    font-size: 15px;
-    float: left;
+    font-size: 16px;
+    line-height: 19px;
 
     @include mq($until: tablet) {
         font-weight: 800;
     }
 
     @include mq(leftCol) {
-        @include fs-headline(3);
-        float: none;
+        @include fs-headline(2);
+        display: block;
     }
-
 }
 
 .content__series-label--immersive-article {
@@ -235,16 +234,12 @@
 }
 
 @include mq(leftCol, wide) {
-    .content__section-label,
     .container__meta__title {
         font-size: 20px;
         line-height: 24px;
     }
 
     .content__series-label {
-        @include font-size(18, 22);
-        display: block;
-
         .content--interactive & {
             font-size: 20px !important;
             line-height: 24px !important;
