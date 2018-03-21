@@ -155,4 +155,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 4, 10),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-cambridge-analytica-messaging",
+    "measure the impact of custom messaging in the ask on \"moment\" stories",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 10),
+    exposeClientSide = true
+  )
 }
