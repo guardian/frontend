@@ -140,7 +140,6 @@ category: Common
 
     .social--expanded-top {
         padding-bottom: 0;
-        background: transparent;
     }
  }
 
@@ -148,7 +147,7 @@ category: Common
     position: absolute;
     left: 0;
     height: auto;
-    background: transparent;
+    background: #ffffff;
     z-index: $zindex-popover;
     width: auto;
     display: inline-block;
