@@ -335,7 +335,7 @@ $quote-mark: 35px;
         }
     }
 
-    .social-icon {
+    .social-icon, .social-tray__icon {
         @include mq(leftCol) {
             max-width: 29px;
             min-width: 29px;
