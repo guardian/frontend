@@ -1686,15 +1686,8 @@ $quote-mark: 35px;
 
 // *************** Commercial overrides ****************
 
-.paid-content {
+.paid-content, .content--media.paid-content {
     a {
         color: $garnett-neutral-6;
-    }
-    .social-icon__svg {
-        fill: $garnett-neutral-1;
-    }
-
-    .social-icon:hover {
-        background-color: $garnett-neutral-1;
     }
 }

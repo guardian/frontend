@@ -1322,4 +1322,18 @@
     .fc-item__title svg {
         fill: $multimedia-main-2;
     }
+    &.content--article,
+    &.tonal--tone-media {
+        .meta__numbers,
+        .meta__social {
+            @include multiline(1, $garnett-neutral-6, top);
+            border-top: 0;
+            padding-top: $gs-baseline / 2;
+        }
+        .meta__social {
+            @include mq($until: leftCol) {
+                border-bottom: 1px solid $garnett-neutral-6;
+            }
+        }
+    }
 }
