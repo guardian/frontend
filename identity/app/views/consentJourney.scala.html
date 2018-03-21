@@ -167,23 +167,30 @@
     )
 }
 
-@if(skin.contains("gdpr-oi-campaign")) {
-    <div style="background-image: url(@Static("images/identity/gdpr-oi-hero.svg"))" class="identity-consent-hero identity-consent-hero--gdpr-oi-campaign">
-        <h1 class="u-h">Stay with us</h1>
-    </div>
+@defaultJourney = @{List(
+    emailRepermissionStep,
+    marketingConsentStep,
+    channelStep
+)}
+
+@confirmModal = {
+    <section class="identity-forms-message">
+
+        <div class="identity-forms-message__body">
+            You have not selected any newsletters or Guardian products and services.<br/>
+            This means you will stop receiving these emails from us. Are you sure you want to continue?
+        </div>
+
+        <footer class="identity-forms-message__options">
+            <a class="manage-account__button manage-account__button--secondary manage-account__button--center js-identity-consent-journey-continue" data-link-name="consents : confirm : continue">Continue</a>
+            <a class="js-identity-modal__closer manage-account__button manage-account__button--main manage-account__button--center" data-link-name="consents : confirm : recheck">Let me look again</a>
+        </footer>
+
+    </section>
 }
 
-<div class="identity-wrapper monocolumn-wrapper">
-    <div class="js-errorHolder manage-account__errors"></div>
-    @consentJourneyFragments.jsFallback(verifiedReturnUrl, idRequest, idUrlBuilder)
+@displayJourney = {
     <div class="identity-consent-journey @{skin.map(s => s"identity-consent-journey--$s" )} u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
-
-        @defaultJourney = @{List(
-            emailRepermissionStep,
-            marketingConsentStep,
-            channelStep
-        )}
-
         @renderBlocks(
             journey match {
                 case NewsletterConsentsJourney => {
@@ -241,24 +248,27 @@
             </form>
         </div>
 
-        @confirmModal = {
-            <section class="identity-forms-message">
-
-                <div class="identity-forms-message__body">
-                    You have not selected any newsletters or Guardian products and services.<br/>
-                    This means you will stop receiving these emails from us. Are you sure you want to continue?
-                </div>
-
-                <footer class="identity-forms-message__options">
-                    <a class="manage-account__button manage-account__button--secondary manage-account__button--center js-identity-consent-journey-continue" data-link-name="consents : confirm : continue">Continue</a>
-                    <a class="js-identity-modal__closer manage-account__button manage-account__button--main manage-account__button--center" data-link-name="consents : confirm : recheck">Let me look again</a>
-                </footer>
-
-            </section>
-        }
 
         @fragments.modal("confirm-consents", confirmModal)
 
     </div>
+
+}
+
+@if(skin.contains("gdpr-oi-campaign")) {
+    <div style="background-image: url(@Static("images/identity/gdpr-oi-hero.svg"))" class="identity-consent-hero identity-consent-hero--gdpr-oi-campaign">
+        <h1 class="u-h">Stay with us</h1>
+    </div>
+}
+
+<div class="identity-wrapper monocolumn-wrapper">
+    <div class="js-errorHolder manage-account__errors"></div>
+
+    @if(emailPrefsForm.hasGlobalErrors) {
+        @consentJourneyFragments.error(idRequest, idUrlBuilder)
+    } else {
+        @consentJourneyFragments.jsFallback(verifiedReturnUrl, idRequest, idUrlBuilder)
+        @displayJourney
+    }
 
 </div>

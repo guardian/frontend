@@ -133,6 +133,19 @@
         padding-bottom: 0;
         margin-bottom: 0;
     }
+
+    .badge-slot {
+        background-color: #ffffff;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        padding: 6px;
+
+        @include mq($from: desktop) {
+            height: 50px;
+            width: 50px;
+        }
+    }
 }
 
 .immersive-main-media__headline-container--dark {
@@ -845,3 +858,4 @@
 @include immersivePillarColours('sport', $sport-garnett-media-main-1, $sport-garnett-main-1);
 @include immersivePillarColours('arts', $culture-garnett-media-main-1, $culture-garnett-main-1);
 @include immersivePillarColours('lifestyle', $lifestyle-garnett-media-main-1, $lifestyle-garnett-main-1);
+@include immersivePillarColours('special-report', $news-garnett-highlight, $story-package-garnett);

@@ -18,14 +18,18 @@ const engagementBannerCopy = (): string =>
     everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure.`;
 
 // Prices taken from https://membership.theguardian.com/<region>/supporter
-const monthlySupporterCost = (location: string): string => {
+const supporterCost = (
+    location: string,
+    contributionType: 'MONTHLY' | 'ONE-OFF'
+): string => {
     const region = getSupporterPaymentRegion(location);
 
     if (region === 'EU') {
         // Format either 4.99 € or €4.99 depending on country
         // See https://en.wikipedia.org/wiki/Linguistic_issues_concerning_the_euro
         const euro = '€';
-        const amount = '4.99';
+        const amount = contributionType === 'MONTHLY' ? '4.99' : '1';
+
         const euroAfterCountryCodes = [
             'BG',
             'HR',
@@ -55,12 +59,21 @@ const monthlySupporterCost = (location: string): string => {
     }
 
     const payment = {
-        GB: '£5',
-        US: '$6.99',
-        AU: '$10',
-        CA: '$6.99',
-        INT: '$6.99',
-    }[region];
+        MONTHLY: {
+            GB: '£5',
+            US: '$6.99',
+            AU: '$10',
+            CA: '$6.99',
+            INT: '$6.99',
+        },
+        'ONE-OFF': {
+            GB: '£1',
+            US: '$1',
+            AU: '$1',
+            CA: '$1',
+            INT: '$1',
+        },
+    }[contributionType][region];
 
     return payment || '£5';
 };
@@ -68,12 +81,13 @@ const monthlySupporterCost = (location: string): string => {
 const supporterEngagementCtaCopy = (location: string): string =>
     location === 'US'
         ? `Support us with a one-time contribution`
-        : `Support us for ${monthlySupporterCost(location)} a month.`;
+        : `Support us for ${supporterCost(location, 'MONTHLY')} a month.`;
 
 const supporterEngagementCtaCopyJustOne = (location: string): string =>
-    location === 'US'
-        ? 'Support The Guardian from as little as $1.'
-        : 'Support The Guardian from as little as £1.';
+    `Support The Guardian from as little as ${supporterCost(
+        location,
+        'ONE-OFF'
+    )}.`;
 
 const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
@@ -98,7 +112,9 @@ const membershipSupporterParams = (location: string): EngagementBannerParams =>
 export const engagementBannerParams = (
     location: string
 ): EngagementBannerParams => {
-    if (location === 'US' || location === 'GB') {
+    const region = getSupporterPaymentRegion(location);
+
+    if (region === 'US' || region === 'GB' || region === 'EU') {
         return supporterParams(location);
     }
     return membershipSupporterParams(location);

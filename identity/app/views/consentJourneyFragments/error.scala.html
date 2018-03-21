@@ -1,0 +1,14 @@
+@import common.LinkTo
+
+@(
+    idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder
+)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+
+<div id="identityConsentsError" class="identity-forms-loading u-identity-forms-padded">
+    <div class="identity-forms-loading__text">
+        <p>Sorry, we seem to be experiencing some technical difficulties. Please reload the page to try setting your consents again.</p>
+        <a class="manage-account__button manage-account__button--center" href="@LinkTo{/consents}" onclick="window.location.reload();return false;" data-link-name="consents : navigation : submit-force">Try again</a>
+    </div>
+</div>
+

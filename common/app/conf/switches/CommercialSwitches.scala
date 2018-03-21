@@ -367,6 +367,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val prebidXaxis: Switch = Switch(
+    group = Commercial,
+    name = "prebid-xaxis",
+    description = "Include Xaxis adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val orielSonobiIntegration: Switch = Switch(
     group = Commercial,
     name = "oriel-sonobi-integration-test",
