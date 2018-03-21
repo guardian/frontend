@@ -35,8 +35,8 @@ object JavaScriptPage {
     val cardStyle = content.map(_.cardStyle.toneString).getOrElse("")
 
     val nonRefreshableLineItemIds: JsArray = {
-      val ids: Seq[Long] = metaData.commercial.map(x => x.nonRefreshableLineItemIds).toSeq.flatten
-      JsArray(ids map (id => JsString(id.toString)))
+      val ids: Seq[Long] = metaData.commercial.map(_.nonRefreshableLineItemIds) getOrElse Nil
+      JsArray(ids map (id => JsNumber(id)))
     }
 
     val commercialMetaData = Map(
