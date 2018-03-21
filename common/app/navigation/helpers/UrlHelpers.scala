@@ -89,9 +89,6 @@ object UrlHelpers {
       case _ => getReaderRevenueUrl(defaultDestination, position)
     }
 
-  def getContributionOrSupporterUrl(editionId: String)(implicit request: RequestHeader): String =
-    countryUrlLogic(editionId, Header, Membership)
-
   // This methods can be reverted once we decide to deploy the new support site to the rest of the world.
   def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
     val editionId = Edition(request).id.toLowerCase()
