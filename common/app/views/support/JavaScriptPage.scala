@@ -34,9 +34,15 @@ object JavaScriptPage {
 
     val cardStyle = content.map(_.cardStyle.toneString).getOrElse("")
 
+    val nonRefreshableLineItemIds: JsArray = {
+      val ids: Seq[Long] = metaData.commercial.map(_.nonRefreshableLineItemIds) getOrElse Nil
+      JsArray(ids map (id => JsNumber(id)))
+    }
+
     val commercialMetaData = Map(
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
+      "dfpNonRefreshableLineItemIds" -> nonRefreshableLineItemIds,
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
         case _: CommercialExpiryPage => true
