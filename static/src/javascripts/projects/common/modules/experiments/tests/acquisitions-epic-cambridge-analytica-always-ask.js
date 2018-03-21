@@ -1,28 +1,8 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import { shouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
-import config from 'lib/config';
+import { keywordExists } from 'lib/page';
 
 const abTestName = 'AcquisitionsEpicCambridgeAnalyticaAlwaysAsk';
-
-const tagsMatch = () => {
-    const pageKeywords = config.page.nonKeywordTagIds;
-    if (typeof pageKeywords !== 'undefined') {
-        const keywordList = pageKeywords.split(',');
-        return keywordList.some(
-            x => x === 'news/series/cambridge-analytica-files'
-        );
-    }
-    return false;
-};
-
-const worksWellWithPageTemplate = () =>
-    config.page.contentType === 'Article' &&
-    !config.page.isMinuteArticle &&
-    !(config.page.isImmersive === true);
-
-const isTargetPage = () =>
-    worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue;
 
 export const acquisitionsEpicCambridgeAnalyticaAlwaysAsk: EpicABTest = makeABTest(
     {
@@ -42,8 +22,7 @@ export const acquisitionsEpicCambridgeAnalyticaAlwaysAsk: EpicABTest = makeABTes
         audienceCriteria: 'All',
         audience: 1,
         audienceOffset: 0,
-        overrideCanRun: true,
-        canRun: () => tagsMatch() && shouldSeeReaderRevenue() && isTargetPage(),
+        canRun: () => keywordExists(['Cambridge Analytica']),
 
         variants: [
             {
