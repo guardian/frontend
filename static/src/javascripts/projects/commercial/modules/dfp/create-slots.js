@@ -98,11 +98,24 @@ const adSlotDefinitions = {
     },
 };
 
-const createAdSlotElement = (
+/*
+  Returns an array of adSlot HTMLElement(s) with always at least one HTMLDivElement
+  which is the main DFP slot.
+
+  Insert those elements as sibblings at the place
+  you want adverts to appear.
+
+  Note that for the DFP slot to be filled by GTP, you'll have to
+  use addSlot from add-slot.js
+*/
+const createAdSlotElements = (
     name: string,
     attrs: Object,
     classes: Array<string>
 ) => {
+    const adSlots = [];
+
+    // The 'main' adSlot
     const adSlot: HTMLDivElement = document.createElement('div');
     adSlot.id = `dfp-ad--${name}`;
     adSlot.className = `js-ad-slot ad-slot ${classes.join(' ')}`;
@@ -112,8 +125,10 @@ const createAdSlotElement = (
         adSlot.setAttribute(attr, attrs[attr]);
     });
 
-    const blockthroughUid = adSlotToBlockthroughUids[`${name}`];
+    adSlots.push(adSlot);
 
+    // Should we have a companion BlockThrough span?
+    const blockthroughUid = adSlotToBlockthroughUids[`${name}`];
     if (blockthroughUid) {
         const blockthroughAdSlot: HTMLSpanElement = document.createElement(
             'span'
@@ -121,13 +136,14 @@ const createAdSlotElement = (
         blockthroughAdSlot.className = 'bt-uid-tg';
         blockthroughAdSlot.setAttribute('uid', blockthroughUid);
         blockthroughAdSlot.setAttribute('style', 'display: none !important');
-        adSlot.appendChild(blockthroughAdSlot);
+
+        adSlots.push(blockthroughAdSlot);
     }
 
-    return adSlot;
+    return adSlots;
 };
 
-export const createSlot = (type: string, options: Object = {}) => {
+export const createSlots = (type: string, options: Object = {}) => {
     const attributes = {};
     const definition: Object = adSlotDefinitions[type];
     const slotName = options.name || definition.name || type;
@@ -163,7 +179,7 @@ export const createSlot = (type: string, options: Object = {}) => {
 
     classes.push(`ad-slot--${slotName}`);
 
-    return createAdSlotElement(
+    return createAdSlotElements(
         slotName,
         Object.keys(attributes).reduce(
             (result, key) =>
