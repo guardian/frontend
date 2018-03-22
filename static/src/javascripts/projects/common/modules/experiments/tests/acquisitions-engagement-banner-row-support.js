@@ -6,7 +6,7 @@ import {
 } from 'lib/geolocation';
 
 const componentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
-const abTestName = 'AcquisitionsEngagementBannerAudSupport';
+const abTestName = 'AcquisitionsEngagementBannerRowSupport';
 const INTsupportURL = 'https://support.theguardian.com/int';
 
 export const AcquisitionsEngagementBannerRowSupport: AcquisitionsABTest = {
