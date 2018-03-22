@@ -16,7 +16,7 @@ const showJourney = (journeyEl: HTMLElement): Promise<void> =>
 const hideLoading = (loadingEl: HTMLElement): Promise<void> =>
     fastdom.write(() => loadingEl.remove());
 
-const shouldDisplaySectionWarning = (
+const uncheckedBoxes = (
     journeyEl: HTMLElement,
     section: string
 ): Promise<boolean> =>
@@ -32,40 +32,11 @@ const shouldDisplaySectionWarning = (
             unchecked: checkboxes.filter(_ => _.checked === false),
             total: checkboxes,
         }));
-        // .then(
-        //     checkboxInfo => {
-        //
-        //         !(
-        //             checkboxInfo.total > 0 &&
-        //             checkboxInfo.total === checkboxInfo.checked
-        //         )
-        //     }
-        // );
 
-const uncheckedBoxes = (
-    journeyEl: HTMLElement,
-    section: string
-): Promise<boolean> =>
-    fastdom
-        .read(() => [
-            ...journeyEl.querySelectorAll(
-                `.identity-consent-journey-step--${
-                    section
-                    } input[type=checkbox]`
-            ),
-        ])
-        .then(checkboxes => ({
-            unchecked: checkboxes.filter(_ => _.checked === false),
-            total: checkboxes,
-        }));
+const missingNewsletters = (journeyEl: HTMLElement): Promise<boolean> =>
+    uncheckedBoxes(journeyEl, 'email');
 
-const missingNewsletters = (
-    journeyEl: HTMLElement
-): Promise<boolean> => uncheckedBoxes(journeyEl, 'email');
-
-const missingConsents = (
-    journeyEl: HTMLElement
-): Promise<boolean> =>
+const missingConsents = (journeyEl: HTMLElement): Promise<boolean> =>
     uncheckedBoxes(journeyEl, 'marketing-consents');
 
 const getForm = (journeyEl: HTMLElement) =>
@@ -84,13 +55,19 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
                     missingNewsletters(journeyEl),
                     missingConsents(journeyEl),
                 ]).then(([newslettersCheckboxInfo, marketingCheckboxInfo]) => {
-                    console.log(newslettersCheckboxInfo)
-                    let allUncheckedBoxes = newslettersCheckboxInfo.unchecked.concat(marketingCheckboxInfo.unchecked)
-                    let names = allUncheckedBoxes.map(box => box.parentElement.querySelector('.manage-account__switch-title').innerText)
-                    console.log(names)
-                    // console.log(singleArray[0].parentNode().querySelector('.switch-title').innerText)
-
-                    if (true) {
+                    if (
+                        newslettersCheckboxInfo.unchecked.length > 0 ||
+                        marketingCheckboxInfo.unchecked.length > 0
+                    ) {
+                        const allUncheckedBoxes = newslettersCheckboxInfo.unchecked.concat(
+                            marketingCheckboxInfo.unchecked
+                        );
+                        const names = allUncheckedBoxes.map(
+                            box =>
+                                box.parentElement.querySelector(
+                                    '.manage-account__switch-title'
+                                ).innerText
+                        );
                         showModal('confirm-consents', names);
                     } else {
                         formEl.submit();

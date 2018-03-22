@@ -24,8 +24,8 @@ const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
 const checkAllCheckboxClassName = 'js-manage-account__check-allCheckbox';
 const checkAllIgnoreClassName = 'js-manage-account__check-allCheckbox__ignore';
 
-const LC_CHECK_ALL = 'Re-subscribe to all your emails';
-const LC_UNCHECK_ALL = 'Un-subscribe from all your emails';
+const LC_CHECK_ALL = 'Select all';
+const LC_UNCHECK_ALL = 'Deselect all';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
