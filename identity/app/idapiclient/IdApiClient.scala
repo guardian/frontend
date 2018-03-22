@@ -148,7 +148,7 @@ class IdApiClient(
   }
 
   def deleteSubscription(userId: String, emailList: EmailList, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] = {
-    exactTargetLogger.debug(s"Unubscribing $userId to listId: ${emailList.listId}")
+    exactTargetLogger.debug(s"Unsubscribing $userId to listId: ${emailList.listId}")
     delete(urlJoin("useremails", userId, "subscriptions"), Some(auth), Some(trackingParameters), Some(write(emailList))) map extractUnit
   }
 
