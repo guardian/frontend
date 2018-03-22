@@ -19,7 +19,7 @@ const hideLoading = (loadingEl: HTMLElement): Promise<void> =>
 const uncheckedBoxes = (
     journeyEl: HTMLElement,
     section: string
-): Promise<boolean> =>
+): Promise<Object> =>
     fastdom
         .read(() => [
             ...journeyEl.querySelectorAll(
@@ -33,10 +33,10 @@ const uncheckedBoxes = (
             total: checkboxes,
         }));
 
-const missingNewsletters = (journeyEl: HTMLElement): Promise<boolean> =>
+const missingNewsletters = (journeyEl: HTMLElement): Promise<Object> =>
     uncheckedBoxes(journeyEl, 'email');
 
-const missingConsents = (journeyEl: HTMLElement): Promise<boolean> =>
+const missingConsents = (journeyEl: HTMLElement): Promise<Object> =>
     uncheckedBoxes(journeyEl, 'marketing-consents');
 
 const getForm = (journeyEl: HTMLElement) =>
@@ -55,6 +55,7 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
                     missingNewsletters(journeyEl),
                     missingConsents(journeyEl),
                 ]).then(([newslettersCheckboxInfo, marketingCheckboxInfo]) => {
+                    console.log(newslettersCheckboxInfo);
                     if (
                         newslettersCheckboxInfo.unchecked.length > 0 ||
                         marketingCheckboxInfo.unchecked.length > 0

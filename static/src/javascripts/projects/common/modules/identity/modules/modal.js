@@ -8,22 +8,27 @@ const removeNewsletterReminders = (modalEl: HTMLElement) => {
     const newsletterReminders = modalEl.querySelector(
         `.identity-consent-journey-modal-reminder`
     );
-    while (newsletterReminders.firstChild) {
-        newsletterReminders.removeChild(newsletterReminders.firstChild);
+    if (newsletterReminders != null) {
+        while (newsletterReminders.firstChild) {
+            newsletterReminders.removeChild(newsletterReminders.firstChild);
+        }
     }
 };
 
 const insertNewsletterReminders = (
     modalEl: HTMLElement,
     uncheckedNewsletters: Array<string>
-): HTMLElement =>
+): Promise<HTMLElement> =>
     fastdom.write(() => {
         uncheckedNewsletters.map(newsletterName => {
             const li = document.createElement('li');
             li.innerHTML = `<b>${newsletterName}</b>`;
-            modalEl
-                .querySelector(`.identity-consent-journey-modal-reminder`)
-                .appendChild(li);
+            const reminderEl = modalEl.querySelector(
+                `.identity-consent-journey-modal-reminder`
+            );
+            if (reminderEl != null) {
+                reminderEl.appendChild(li);
+            }
             return modalEl;
         });
     });
