@@ -19,6 +19,13 @@
 /* Content Rules
    ========================================================================== */
 .content__head--is-badged {
+    .content__header {
+        @include mq($from: leftCol) {
+            // Prevents badged labels area overlapping meta
+            min-height: gs-height(4);
+        }
+    }
+
     .content__section-label,
     .content__series-label {
         float: none;
