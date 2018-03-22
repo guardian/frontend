@@ -32,7 +32,7 @@
                   <a class="content__section-label__link"
                       data-link-name="article section"
                       href="@LinkTo {/@item.content.sectionLabelLink}">
-                      <span>
+                      <span class="label__link-wrapper">
                           @Html(Localisation(item.content.sectionLabelName))
                       </span>
                   </a>
@@ -49,7 +49,7 @@
             ), "content__series-label")
           ">
             <a class="content__series-label__link" href="@LinkTo {/@series.id}">
-                <span>
+                <span class="label__link-wrapper">
                     @series.name
                 </span>
             </a>
