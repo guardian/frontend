@@ -8,7 +8,6 @@ import { acquisitionsHeaderAudSupport } from 'common/modules/experiments/tests/a
 import { acquisitionsHeaderRowSupport } from 'common/modules/experiments/tests/acquisitions-header-row-support';
 import { spacefinderSimplify } from 'common/modules/experiments/tests/spacefinder-simplify';
 
-
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
     acquisitionsHeaderSubscribeMeansSubscribe,
