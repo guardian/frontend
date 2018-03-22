@@ -2,9 +2,9 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { keywordExists } from 'lib/page';
 
-const abTestName = 'AcquisitionsEpicCambridgeAnalyticaAlwaysAsk';
+const abTestName = 'AcquisitionsEpicCambridgeAnalyticaAlwaysAskFinal';
 
-export const acquisitionsEpicCambridgeAnalyticaAlwaysAsk: EpicABTest = makeABTest(
+export const acquisitionsEpicCambridgeAnalyticaAlwaysAskFinal: EpicABTest = makeABTest(
     {
         id: abTestName,
         campaignId: abTestName,
@@ -13,8 +13,7 @@ export const acquisitionsEpicCambridgeAnalyticaAlwaysAsk: EpicABTest = makeABTes
         expiry: '2018-04-10',
 
         author: 'Jonathan Rankin',
-        description:
-            'This test aims to measure the impact of placing an ever-present ask on "moment" stories',
+        description: 'Always ask on Cambridge analytica stories',
         successMeasure: 'Conversion rate',
         idealOutcome:
             'We learn the impact of placing an ever-present ask on "moment" stories',
@@ -25,10 +24,6 @@ export const acquisitionsEpicCambridgeAnalyticaAlwaysAsk: EpicABTest = makeABTes
         canRun: () => keywordExists(['Cambridge Analytica']),
 
         variants: [
-            {
-                id: 'control',
-                products: [],
-            },
             {
                 id: 'always_ask',
                 products: [],
