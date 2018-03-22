@@ -1,8 +1,5 @@
 // @flow
-import {
-    defaultCanEpicBeDisplayed,
-    makeABTest,
-} from 'common/modules/commercial/contributions-utilities';
+import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { keywordExists } from 'lib/page';
 
@@ -24,12 +21,9 @@ export const acquisitionsEpicCambridgeAnalyticaMessaging: EpicABTest = makeABTes
             'We learn the impact of custom messaging on "moment" stories',
 
         audienceCriteria: 'All',
-        audience: 0.8,
-        audienceOffset: 0.2,
-        overrideCanRun: true,
-        canRun: test =>
-            keywordExists(['Cambridge Analytica']) &&
-            defaultCanEpicBeDisplayed(test),
+        audience: 1,
+        audienceOffset: 0,
+        canRun: () => keywordExists(['Cambridge Analytica']),
 
         variants: [
             {
