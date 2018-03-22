@@ -39,15 +39,15 @@ object CommercialAdRefresh extends Experiment(
   name = "commercial-ad-refresh",
   description = "Users in this experiment will have their ad slots refreshed after 30 seconds",
   owners = Seq(Owner.withGithub("JonNorman")),
-  sellByDate = new LocalDate(2018, 4, 11),
-  participationGroup = Perc5A
+  sellByDate = new LocalDate(2018, 4, 26),
+  participationGroup = Perc20A
 )
 
 object MoonLambda extends Experiment(
   name = "moon-lambda",
   description = "Users in this experiment will see 404 page rendered by a lambda",
   owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2018, 3, 22),
+  sellByDate = new LocalDate(2018, 3, 27),
   participationGroup = Perc1B
 )
 

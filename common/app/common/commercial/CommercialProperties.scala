@@ -5,6 +5,7 @@ import com.gu.commercial.display._
 import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import common.Edition
 import common.Edition.defaultEdition
+import common.dfp.DfpAgent
 import play.api.libs.json.Json
 
 case class CommercialProperties(
@@ -15,6 +16,7 @@ case class CommercialProperties(
   val isPaidContent: Boolean = branding(defaultEdition).exists(_.isPaid)
   val isFoundationFunded: Boolean = branding(defaultEdition).exists(_.isFoundationFunded)
   def isSponsored(edition: Edition): Boolean = branding(edition).exists(_.isSponsored)
+  val nonRefreshableLineItemIds: Seq[Long] = DfpAgent.nonRefreshableLineItemIds()
 
   def branding(edition: Edition): Option[Branding] = for {
     editionBranding <- editionBrandings.find(_.edition == edition)

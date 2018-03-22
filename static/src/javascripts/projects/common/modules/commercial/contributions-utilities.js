@@ -90,7 +90,7 @@ const getTestimonialBlock = (
     testimonialParameters: AcquisitionsEpicTestimonialTemplateParameters
 ) => acquisitionsTestimonialBlockTemplate(testimonialParameters);
 
-const pageCanDisplayEpic = (page: Object): boolean =>
+const isCompatibleWithEpic = (page: Object): boolean =>
     page.contentType === 'Article' && !page.isMinuteArticle;
 
 const shouldShowReaderRevenue = (
@@ -107,7 +107,7 @@ const shouldShowReaderRevenue = (
     );
 };
 
-const defaultCanEpicBeDisplayed = (test: EpicABTest): boolean => {
+const shouldShowEpic = (test: EpicABTest): boolean => {
     const worksWellWithPageTemplate = test.pageCheck(config.get('page'));
 
     const storedGeolocation = geolocationGetSync();
@@ -399,7 +399,7 @@ const makeABTest = ({
     useTargetingTool = false,
     showToContributorsAndSupporters = false,
     canRun = () => true,
-    pageCheck = pageCanDisplayEpic,
+    pageCheck = isCompatibleWithEpic,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -407,12 +407,12 @@ const makeABTest = ({
         showForSensitive: true,
         canRun() {
             if (overrideCanRun) {
-                return doTagsMatch(this) && canRun(this);
+                return doTagsMatch(this) && canRun();
             }
 
             const testCanRun =
                 typeof canRun === 'function' ? canRun(this) : true;
-            const canEpicBeDisplayed = defaultCanEpicBeDisplayed(this);
+            const canEpicBeDisplayed = shouldShowEpic(this);
 
             return testCanRun && canEpicBeDisplayed;
         },
@@ -467,8 +467,7 @@ const makeBannerABTestVariants = (
 
 export {
     shouldShowReaderRevenue,
-    defaultCanEpicBeDisplayed,
-    pageCanDisplayEpic,
+    shouldShowEpic,
     getTestimonialBlock,
     makeABTest,
     defaultButtonTemplate,

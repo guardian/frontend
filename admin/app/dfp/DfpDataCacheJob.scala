@@ -142,6 +142,9 @@ class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
       Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now,
         pageSkinSponsorships))))
 
+      val sponsorshipLineItemIds: List[Long] = data.lineItems.filter(_.lineItemType == Sponsorship).map(_.id).toList
+      Store.putNonRefreshableLineItemIds(stringify(toJson(sponsorshipLineItemIds)))
+
       Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
 
       Store.putTopAboveNavSlotTakeovers(stringify(toJson(LineItemReport(now,
