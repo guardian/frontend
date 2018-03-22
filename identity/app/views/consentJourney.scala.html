@@ -177,34 +177,27 @@
     <section class="identity-forms-message">
         @if(onlySubscribedToV1Newsletters.isEmpty) {
             <h1 class="identity-header">Really?</h1>
+
+            <div>
+                <p>Looks like you haven't selected any newsletters or Guardian products and services.</p>
+
+                <p>This means you'll stop receiving <b>all</b> emails from us other than service communication.</p>
+
+                <p>Keeping you informed is a critical part of our job.</p>
+
+                <p><b>Are you sure you want to unsubscribe from all Guardian emails?</b></p>
+            </div>
         }else {
             <h1 class="identity-header">Are you sure?</h1>
-        }
-        <div class="identity-forms-message__body">
-            @if(onlySubscribedToV1Newsletters.isEmpty) {
-                <p>
-                    Looks like you haven't selected any newsletters or Guardian products and services.
-                </p>
-                <p>
-                    This means you'll stop receiving <b>all</b> emails from us other than service communication.
-                </p>
-                <p>
-                    Keeping you informed is a critical part of our job.
-                </p>
-                <p>
-                    <b>Are you sure you want to unsubscribe from all Guardian emails?</b>
-                </p>
-            } else {
-                <p>
-                    You've chosen not to recieve the following emails from the Guardian:
-                </p>
-                <div class="identity-consent-journey-modal__reminder"></div>
-                <p>
-                    Are you sure you want to unsubscribe from these email services?
-                </p>
-            }
-        </div>
 
+            <div class="identity-forms-message__body">
+                <p>You've chosen not to recieve the following emails from the Guardian:</p>
+
+                <div class="identity-consent-journey-modal__reminder"></div>
+
+                <p>Are you sure you want to unsubscribe from these email services?</p>
+            </div>
+        }
         <footer class="identity-forms-message__options">
             <a class="js-identity-modal__closer manage-account__button manage-account__button--main manage-account__button--center" data-link-name="consents : confirm : recheck">Let me look again</a>
             <a class="manage-account__button manage-account__button--secondary manage-account__button--center js-identity-consent-journey-continue" data-link-name="consents : confirm : continue">Unsubscribe me</a>
