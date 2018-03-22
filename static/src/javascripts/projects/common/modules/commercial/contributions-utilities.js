@@ -407,7 +407,7 @@ const makeABTest = ({
         showForSensitive: true,
         canRun() {
             if (overrideCanRun) {
-                return doTagsMatch(this) && canRun();
+                return doTagsMatch(this) && canRun(this);
             }
 
             const testCanRun =
