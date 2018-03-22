@@ -182,22 +182,26 @@
         }
         <div class="identity-forms-message__body">
             @if(onlySubscribedToV1Newsletters.isEmpty) {
-                Looks like you haven't selected any newsletters or Guardian products and services.
-                <br/>
-                <br/>
-                This means you'll stop recieving <b>all</b> emails from us other than service communication.
-                <br/>
-                <br/>
-                Keeping you informed is a critical part of our job.
-                <br/>
-                <br/>
-                <b>Are you sure you want to unsubscribe from all Guardian emails?</b>
+                <p>
+                    Looks like you haven't selected any newsletters or Guardian products and services.
+                </p>
+                <p>
+                    This means you'll stop recieving <b>all</b> emails from us other than service communication.
+                </p>
+                <p>
+                    Keeping you informed is a critical part of our job.
+                </p>
+                <p>
+                    <b>Are you sure you want to unsubscribe from all Guardian emails?</b>
+                </p>
             }else {
-                You've chosen not to recieve the following emails from the Guardian:
-                <br/>
+                <p>
+                    You've chosen not to recieve the following emails from the Guardian:
+                </p>
                 <div class="identity-consent-journey-modal-reminder"></div>
-                <br/>
-                Are you sure you want to unsubscribe from these email services?
+                <p>
+                    Are you sure you want to unsubscribe from these email services?
+                </p>
             }
         </div>
 
