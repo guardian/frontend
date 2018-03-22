@@ -1,6 +1,6 @@
 package idapiclient
 
-import com.gu.identity.model.{EmailList , Subscriber, User}
+import com.gu.identity.model.{EmailList, Subscriber, User}
 
 import scala.concurrent.{ExecutionContext, Future}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse, Error, HttpResponse}
@@ -10,6 +10,7 @@ import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
 import idapiclient.requests.{DeletionBody, PasswordUpdate, TokenPassword}
+import org.slf4j.LoggerFactory
 import play.api.libs.ws.WSClient
 
 class IdApiClient(
@@ -20,6 +21,7 @@ class IdApiClient(
 
   private val apiRootUrl: String = conf.apiRoot
   private val clientAuth: Auth = ClientAuth(conf.apiClientToken)
+  private val exactTargetLogger = LoggerFactory.getLogger("exactTarget")
 
   import idJsonBodyParser.{extractUnit, extract, jsonField}
 
@@ -141,10 +143,12 @@ class IdApiClient(
   }
 
   def addSubscription(userId: String, emailList: EmailList, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] = {
+    exactTargetLogger.debug(s"Subscribing $userId to listId: ${emailList.listId}")
     post(urlJoin("useremails", userId, "subscriptions"), Some(auth), Some(trackingParameters), Some(write(emailList))) map extractUnit
   }
 
   def deleteSubscription(userId: String, emailList: EmailList, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] = {
+    exactTargetLogger.debug(s"Unubscribing $userId to listId: ${emailList.listId}")
     delete(urlJoin("useremails", userId, "subscriptions"), Some(auth), Some(trackingParameters), Some(write(emailList))) map extractUnit
   }
 
