@@ -162,7 +162,17 @@ trait ABTestSwitches {
     "Points the 'support the guardian' link in the header to the row version of the support site",
     owners = Seq(Owner.withGithub("svillafe")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 24),
+    sellByDate = new LocalDate(2018, 5, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-row-support",
+    "Points the 'support the guardian' link in the engagement banner to the row version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 5, 24),
     exposeClientSide = true
   )
 }

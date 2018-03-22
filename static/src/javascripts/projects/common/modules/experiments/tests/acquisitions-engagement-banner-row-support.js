@@ -7,26 +7,26 @@ import {
 
 const componentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
 const abTestName = 'AcquisitionsEngagementBannerAudSupport';
-const AUDsupportURL = 'https://support.theguardian.com/au';
+const INTsupportURL = 'https://support.theguardian.com/int';
 
 export const AcquisitionsEngagementBannerAudSupport: AcquisitionsABTest = {
     id: abTestName,
     campaignId: abTestName,
     start: '2018-03-01',
-    expiry: '2018-04-24',
+    expiry: '2018-05-24',
     author: 'Santiago Villa Fernandez',
     description:
         'Points the "support the guardian" link in the engagement banner to the aud version of the support site',
     audience: 1,
     audienceOffset: 0,
-    audienceCriteria: 'All AUD transaction web traffic.',
+    audienceCriteria: 'All INT transaction web traffic.',
     successMeasure: 'AV 2.0',
     idealOutcome:
-        'We channel the audience from dotcom to support frontend au correctly',
+        'We channel the audience from dotcom to support frontend int correctly',
     componentType,
     showForSensitive: true,
     canRun: () =>
-        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'AU',
+        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'INT',
 
     variants: makeBannerABTestVariants([
         {
@@ -36,7 +36,7 @@ export const AcquisitionsEngagementBannerAudSupport: AcquisitionsABTest = {
             id: 'support_contribute',
             options: {
                 engagementBannerParams: {
-                    linkUrl: AUDsupportURL,
+                    linkUrl: INTsupportURL,
                     buttonCaption: 'Support The Guardian',
                 },
             },
