@@ -148,8 +148,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-cambridge-analytica-always-ask",
-    "measure the impact of placing an ever-present ask on \"moment\" stories",
+    "ab-acquisitions-epic-cambridge-analytica-always-ask-final",
+    "turn on always ask for CA stories",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 4, 10),
