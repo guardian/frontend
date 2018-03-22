@@ -20,7 +20,7 @@ export const acquisitionsEpicCambridgeAnalyticaAlwaysAsk: EpicABTest = makeABTes
             'We learn the impact of placing an ever-present ask on "moment" stories',
 
         audienceCriteria: 'All',
-        audience: 0.2,
+        audience: 1,
         audienceOffset: 0,
         canRun: () => keywordExists(['Cambridge Analytica']),
 
