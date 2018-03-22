@@ -9,7 +9,7 @@ const componentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
 const abTestName = 'AcquisitionsEngagementBannerAudSupport';
 const INTsupportURL = 'https://support.theguardian.com/int';
 
-export const AcquisitionsEngagementBannerAudSupport: AcquisitionsABTest = {
+export const AcquisitionsEngagementBannerRowSupport: AcquisitionsABTest = {
     id: abTestName,
     campaignId: abTestName,
     start: '2018-03-01',
