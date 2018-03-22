@@ -16,7 +16,7 @@ export const AcquisitionsEngagementBannerRowSupport: AcquisitionsABTest = {
     expiry: '2018-05-24',
     author: 'Santiago Villa Fernandez',
     description:
-        'Points the "support the guardian" link in the engagement banner to the aud version of the support site',
+        'Points the "support the guardian" link in the engagement banner to the int version of the support site',
     audience: 1,
     audienceOffset: 0,
     audienceCriteria: 'All INT transaction web traffic.',
