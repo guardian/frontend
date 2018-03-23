@@ -53,7 +53,8 @@ export const acquisitionsEpicRowSupport = makeABTest({
     audience: 1,
     audienceOffset: 0,
     canRun: () =>
-        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'INT',
+        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'INT' &&
+        geolocationGetSync() !== 'NZ',
     variants: [
         {
             id: 'control',
