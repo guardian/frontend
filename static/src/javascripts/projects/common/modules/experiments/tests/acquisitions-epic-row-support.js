@@ -37,7 +37,7 @@ const oneButtonTemplate = (urls: CtaUrls): string => {
         </div>`;
 };
 
-export const acquisitionsEpicAudSupport = makeABTest({
+export const acquisitionsEpicRowSupport = makeABTest({
     id: abTestName,
     campaignId: abTestName,
 
@@ -45,7 +45,7 @@ export const acquisitionsEpicAudSupport = makeABTest({
     expiry: '2018-05-24',
 
     author: 'Santiago Villa Fernandez',
-    description: 'Use the Epic to partition the audience for the AUD test',
+    description: 'Use the Epic to partition the audience for the ROW test',
     successMeasure: 'AV 2.0',
     idealOutcome:
         'We channel an even split of frontend traffic into the correct au version',
