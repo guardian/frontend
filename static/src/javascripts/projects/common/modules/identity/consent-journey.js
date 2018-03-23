@@ -23,7 +23,7 @@ const removeNewsletterReminders = (reminderEl: HTMLElement) =>
 const insertNewsletterReminders = (
     modalEl: HTMLElement,
     uncheckedNewsletters: Array<string>
-): Promise<HTMLElement> =>
+): Promise<void> =>
     fastdom
         .read(() => {
             const el = modalEl.querySelector(
