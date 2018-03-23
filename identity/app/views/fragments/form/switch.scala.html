@@ -35,7 +35,7 @@
         </h3>
         @if(description) {
             <p class="manage-account__switch-copy">
-                @description
+                @description.map(Html(_))
             </p>
         }
 

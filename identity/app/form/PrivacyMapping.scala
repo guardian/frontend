@@ -19,6 +19,8 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
       "receiveGnmMarketing" -> optional(boolean),     // TODO: statusFields to be removed once GDPR V2 is in PROD
       "receive3rdPartyMarketing" -> optional(boolean),
       "allowThirdPartyProfiling" -> optional(boolean),
+      "stopPostComms"            -> optional(boolean),
+      "stopPhoneComms"           -> optional(boolean),
       "consents" -> list(
         mapping(
           "actor" -> text,
@@ -34,10 +36,12 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
   protected def toUserFormData(userDO: User): PrivacyFormData =
     PrivacyFormData(userDO)
 
-  protected lazy val idapiErrorContextToFormFieldKeyMap =  Map(
+  protected lazy val idapiErrorContextToFormFieldKeyMap = Map(
     "statusFields.receiveGnmMarketing" -> "receiveGnmMarketing",
     "statusFields.receive3rdPartyMarketing" -> "receive3rdPartyMarketing",
-    "statusFields.allowThirdPartyProfiling" -> "allowThirdPartyProfiling"
+    "statusFields.allowThirdPartyProfiling" -> "allowThirdPartyProfiling",
+    "statusFields.stopPostComms" -> "stopPostComms",
+    "statusFields.stopPhoneComms" -> "stopPhoneComms"
   )
 }
 
@@ -48,6 +52,8 @@ case class PrivacyFormData(
     receiveGnmMarketing: Option[Boolean],
     receive3rdPartyMarketing: Option[Boolean],
     allowThirdPartyProfiling: Option[Boolean],
+    stopPostComms: Option[Boolean],
+    stopPhoneComms: Option[Boolean],
     consents: List[Consent]) extends UserFormData{
 
   /**
@@ -90,11 +96,23 @@ case class PrivacyFormData(
       case Some(_) => allowThirdPartyProfiling
     }
 
+    val newStopPostComms = stopPostComms match {
+      case None => oldUserDO.statusFields.stopPostComms
+      case Some(_) => stopPostComms
+    }
+
+    val newStopPhoneComms = stopPhoneComms match {
+      case None => oldUserDO.statusFields.stopPhoneComms
+      case Some(_) => stopPhoneComms
+    }
+
     UserUpdateDTO(
       statusFields = Some(StatusFields(
         receive3rdPartyMarketing = newReceive3rdPartyMarketing,
         receiveGnmMarketing = newReceiveGnmMarketing,
-        allowThirdPartyProfiling = newAllowThirdPartyProfiling
+        allowThirdPartyProfiling = newAllowThirdPartyProfiling,
+        stopPostComms = newStopPostComms,
+        stopPhoneComms = newStopPhoneComms
       )),
       consents = Some(consents))
   }
@@ -112,6 +130,8 @@ object PrivacyFormData extends SafeLogging {
       receiveGnmMarketing = userDO.statusFields.receiveGnmMarketing,
       receive3rdPartyMarketing = userDO.statusFields.receive3rdPartyMarketing,
       allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling,
+      stopPostComms = userDO.statusFields.stopPostComms,
+      stopPhoneComms = userDO.statusFields.stopPhoneComms,
       consents = if (userDO.consents.isEmpty) defaultConsents else onlyValidConsents(userDO)
     )
   }
