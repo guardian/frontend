@@ -26,7 +26,8 @@ export const AcquisitionsEngagementBannerRowSupport: AcquisitionsABTest = {
     componentType,
     showForSensitive: true,
     canRun: () =>
-        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'INT',
+        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'INT' &&
+        geolocationGetSync() !== 'NZ',
 
     variants: makeBannerABTestVariants([
         {

@@ -54,7 +54,8 @@ export const acquisitionsHeaderRowSupport: AcquisitionsABTest = {
     audienceCriteria: 'All ROW transaction web traffic.',
     idealOutcome: 'We get more money when we tailor the destination to the CTA',
     canRun: () =>
-        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'INT',
+        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'INT' &&
+        geolocationGetSync() !== 'NZ',
     variants: [
         {
             id: 'control',
