@@ -175,8 +175,9 @@
 
 @confirmModal = {
     <section class="identity-forms-message">
+        <h1 class="identity-header">Are you sure?</h1>
+        
         @if(onlySubscribedToV1Newsletters.isEmpty) {
-            <h1 class="identity-header">Really?</h1>
 
             <div>
                 <p>Looks like you haven't selected any newsletters or Guardian products and services.</p>
@@ -188,7 +189,6 @@
                 <p><b>Are you sure you want to unsubscribe from all Guardian emails?</b></p>
             </div>
         }else {
-            <h1 class="identity-header">Are you sure?</h1>
 
             <div class="identity-forms-message__body">
                 <p>You've chosen not to recieve the following emails from the Guardian:</p>
