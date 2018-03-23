@@ -55,7 +55,6 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
                     missingNewsletters(journeyEl),
                     missingConsents(journeyEl),
                 ]).then(([newslettersCheckboxInfo, marketingCheckboxInfo]) => {
-                    console.log(newslettersCheckboxInfo);
                     if (
                         newslettersCheckboxInfo.unchecked.length > 0 ||
                         marketingCheckboxInfo.unchecked.length > 0
