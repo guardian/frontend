@@ -133,9 +133,8 @@
         display: none;
     }
 
-    padding-left: $left-column-wide + $gs-gutter * 2;
-    margin-left: calc(50% - #{(gs-span($gs-max-columns) + $gs-gutter * 2) / 2});
     text-align: left;
+    display: table;
 
     @include mq(wide) {
 
