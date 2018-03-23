@@ -89,7 +89,6 @@
     transform: translate3d(0, 0, 0);
     contain: layout;
     z-index: $zindex-popover;
-    width: 100%;
     position: fixed;
     top: 0;
 }
@@ -103,8 +102,6 @@
     text-align: center;
 
     .ad-slot__label {
-        /* this is the minimum width of possible ads sizes */
-        width: 728px;
         border-top: 0;
         padding: 0;
         height: $gs-row-height/2;
@@ -116,8 +113,6 @@
 
     .has-page-skin & {
         @include mq(wide) {
-            width: auto !important;
-            padding-left: 0 !important;
             text-align: center;
         }
     }
@@ -135,13 +130,6 @@
 
     text-align: left;
     display: table;
-
-    @include mq(wide) {
-
-        .has-page-skin & {
-            margin-left: auto;
-        }
-    }
 
     &.ad-slot--fabric {
         > .ad-slot__label {
@@ -170,7 +158,9 @@
                 }
             }
         }
+    }
 
+    &.ad-slot--fluid {
         width: 100%;
     }
 
@@ -404,7 +394,7 @@
     margin: 0;
 
     &:not(.ad-slot--im):not(.ad-slot--carrot) {
-        width: auto;
+        width: 100%;
     }
 
     &.ad-slot--commercial-component-high {
