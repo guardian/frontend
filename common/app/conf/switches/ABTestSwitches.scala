@@ -159,7 +159,7 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-acquisitions-epic-cambridge-analytica-bespoke-copy",
-    "turn on always ask for CA stories",
+    "Custom copy on Cambridge analytica stories",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 4, 10),

@@ -10,14 +10,15 @@ export const acquisitionsEpicCambridgeAnalyticaBespokeCopy: EpicABTest = makeABT
         id: abTestName,
         campaignId: abTestName,
 
-        start: '2018-03-20',
+        start: '2018-03-23',
         expiry: '2018-04-10',
 
         author: 'Jonathan Rankin',
-        description: 'Always ask on Cambridge analytica stories',
+        description:
+            'A test which tries custom copy on Cambridge analytica stories',
         successMeasure: 'Conversion rate',
         idealOutcome:
-            'We learn the impact of placing an ever-present ask on "moment" stories',
+            'We learn the impact of moment-lead messaging on epic conversion',
 
         audienceCriteria: 'All',
         audience: 1,
