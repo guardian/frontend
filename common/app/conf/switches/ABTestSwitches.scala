@@ -158,6 +158,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-cambridge-analytica-bespoke-copy",
+    "Custom copy on Cambridge analytica stories",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-header-row-support",
     "Points the 'support the guardian' link in the header to the row version of the support site",
     owners = Seq(Owner.withGithub("svillafe")),
