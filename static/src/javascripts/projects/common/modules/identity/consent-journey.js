@@ -55,13 +55,11 @@ const uncheckedBoxes = (
     journeyEl: HTMLElement,
     section: string
 ): Promise<Array<Object>> =>
-        fastdom.read(() => [
-            ...journeyEl.querySelectorAll(
-                `.identity-consent-journey-step--${
-                    section
-                } input[type=checkbox]`
-            ),
-        ]);
+    fastdom.read(() => [
+        ...journeyEl.querySelectorAll(
+            `.identity-consent-journey-step--${section} input[type=checkbox]`
+        ),
+    ]);
 
 const getForm = (journeyEl: HTMLElement) =>
     fastdom.read(
@@ -77,7 +75,7 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
                 ev.preventDefault();
                 const uncheckBoxesPromise = Promise.all([
                     uncheckedBoxes(journeyEl, 'email'),
-                    uncheckedBoxes(journeyEl, 'marketing-consents')
+                    uncheckedBoxes(journeyEl, 'marketing-consents'),
                 ]).then(checkboxes =>
                     [].concat(...checkboxes).filter(_ => _.checked === false)
                 );
@@ -90,13 +88,13 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
                                 ).innerText
                         );
                         getModal('confirm-consents').then(modalEl => {
-                                if (consentNames) {
-                                    insertNewsletterReminders(
-                                        modalEl,
-                                        consentNames
-                                    );
-                                };
-                            });
+                            if (consentNames) {
+                                insertNewsletterReminders(
+                                    modalEl,
+                                    consentNames
+                                );
+                            }
+                        });
                         showModal('confirm-consents');
                     } else {
                         formEl.submit();
