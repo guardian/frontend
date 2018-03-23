@@ -47,7 +47,7 @@ const show = (name: string): Promise<void> =>
     getModal(name).then(modalEl =>
         fastdom.read(() => {
             modalEl.classList.add('identity-modal--active');
-            modalEl;
+             modalEl;
         })
     );
 
