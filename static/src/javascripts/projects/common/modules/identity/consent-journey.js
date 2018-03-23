@@ -4,7 +4,7 @@ import fastdom from 'lib/fastdom-promise';
 import { addCookie } from 'lib/cookies';
 
 import loadEnhancers from './modules/loadEnhancers';
-import { getModal, show as showModal } from './modules/modal';
+import { getContents, show as showModal } from './modules/modal';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
 const HAS_VISITED_CONSENTS_COOKIE_KEY =
@@ -87,7 +87,7 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
                                     '.manage-account__switch-title'
                                 ).innerText
                         );
-                        getModal('confirm-consents').then(modalEl => {
+                        getContents('confirm-consents').then(modalEl => {
                             if (consentNames) {
                                 insertNewsletterReminders(
                                     modalEl,

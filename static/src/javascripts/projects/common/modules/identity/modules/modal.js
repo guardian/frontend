@@ -57,4 +57,4 @@ const hide = (name: string): Promise<void> =>
         })
     );
 
-export { hide, show, getContents, getModal };
+export { hide, show, getContents };
