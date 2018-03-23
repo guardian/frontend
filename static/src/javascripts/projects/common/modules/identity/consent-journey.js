@@ -4,11 +4,46 @@ import fastdom from 'lib/fastdom-promise';
 import { addCookie } from 'lib/cookies';
 
 import loadEnhancers from './modules/loadEnhancers';
-import { show as showModal } from './modules/modal';
+import { getModal } from './modules/modal';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
 const HAS_VISITED_CONSENTS_COOKIE_KEY =
     'gu_consents_user_has_visited_consents_once';
+const ERR_MODAL_MALFORMED = 'Modal is malformed';
+
+const removeNewsletterReminders = (reminderEl: HTMLElement) =>
+    fastdom.write(() => {
+        if (reminderEl) {
+            while (reminderEl.firstChild) {
+                reminderEl.removeChild(reminderEl.firstChild);
+            }
+        }
+    });
+
+const insertNewsletterReminders = (
+    modalEl: HTMLElement,
+    uncheckedNewsletters: Array<string>
+): Promise<HTMLElement> =>
+    fastdom
+        .read(() => {
+            const el = modalEl.querySelector(
+                `.identity-consent-journey-modal__reminder`
+            );
+            if (el) return el;
+            throw new Error(ERR_MODAL_MALFORMED);
+        })
+        .then(reminderEl => {
+            fastdom.write(() => {
+                removeNewsletterReminders(reminderEl).then(() =>
+                    uncheckedNewsletters.map(newsletterName => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<b>${newsletterName}</b>`;
+                        reminderEl.appendChild(li);
+                        return modalEl;
+                    })
+                );
+            });
+        });
 
 const showJourney = (journeyEl: HTMLElement): Promise<void> =>
     fastdom.write(() => journeyEl.classList.remove('u-h'));
@@ -18,26 +53,21 @@ const hideLoading = (loadingEl: HTMLElement): Promise<void> =>
 
 const uncheckedBoxes = (
     journeyEl: HTMLElement,
-    section: string
-): Promise<Object> =>
-    fastdom
-        .read(() => [
-            ...journeyEl.querySelectorAll(
-                `.identity-consent-journey-step--${
-                    section
-                } input[type=checkbox]`
-            ),
-        ])
-        .then(checkboxes => ({
-            unchecked: checkboxes.filter(_ => _.checked === false),
-            total: checkboxes,
-        }));
-
-const missingNewsletters = (journeyEl: HTMLElement): Promise<Object> =>
-    uncheckedBoxes(journeyEl, 'email');
-
-const missingConsents = (journeyEl: HTMLElement): Promise<Object> =>
-    uncheckedBoxes(journeyEl, 'marketing-consents');
+    sections: Array<string>
+): Promise<Array<Object>> =>
+    Promise.all(
+        sections.map(section =>
+            fastdom.read(() => [
+                ...journeyEl.querySelectorAll(
+                    `.identity-consent-journey-step--${
+                        section
+                    } input[type=checkbox]`
+                ),
+            ])
+        )
+    ).then(checkboxes =>
+        [].concat(...checkboxes).filter(_ => _.checked === false)
+    );
 
 const getForm = (journeyEl: HTMLElement) =>
     fastdom.read(
@@ -51,24 +81,35 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
         formEl.addEventListener('submit', ev => {
             if (ev.isTrusted) {
                 ev.preventDefault();
-                Promise.all([
-                    missingNewsletters(journeyEl),
-                    missingConsents(journeyEl),
-                ]).then(([newslettersCheckboxInfo, marketingCheckboxInfo]) => {
-                    if (
-                        newslettersCheckboxInfo.unchecked.length > 0 ||
-                        marketingCheckboxInfo.unchecked.length > 0
-                    ) {
-                        const allUncheckedBoxes = newslettersCheckboxInfo.unchecked.concat(
-                            marketingCheckboxInfo.unchecked
-                        );
-                        const names = allUncheckedBoxes.map(
-                            box =>
-                                box.parentElement.querySelector(
+                const uncheckBoxesPromise = uncheckedBoxes(journeyEl, [
+                    'email',
+                    'marketing-consents',
+                ]);
+                uncheckBoxesPromise.then(unchecked => {
+                    if (unchecked.length > 0) {
+                        const consentNames = unchecked.map(
+                            uncheckedbox =>
+                                uncheckedbox.parentElement.querySelector(
                                     '.manage-account__switch-title'
                                 ).innerText
                         );
-                        showModal('confirm-consents', names);
+                        getModal('confirm-consents').then(modalEl =>
+                            fastdom
+                                .read(() => {
+                                    modalEl.classList.add(
+                                        'identity-modal--active'
+                                    );
+                                    return modalEl;
+                                })
+                                .then(nextModalEl => {
+                                    if (consentNames) {
+                                        insertNewsletterReminders(
+                                            nextModalEl,
+                                            consentNames
+                                        );
+                                    }
+                                })
+                        );
                     } else {
                         formEl.submit();
                     }

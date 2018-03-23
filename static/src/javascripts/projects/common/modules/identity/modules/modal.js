@@ -4,35 +4,6 @@ import fastdom from 'lib/fastdom-promise';
 const ERR_MODAL_NOT_FOUND = 'Modal not found';
 const ERR_MODAL_MALFORMED = 'Modal is malformed';
 
-const removeNewsletterReminders = (modalEl: HTMLElement) => {
-    const newsletterReminders = modalEl.querySelector(
-        `.identity-consent-journey-modal-reminder`
-    );
-    if (newsletterReminders != null) {
-        while (newsletterReminders.firstChild) {
-            newsletterReminders.removeChild(newsletterReminders.firstChild);
-        }
-    }
-};
-
-const insertNewsletterReminders = (
-    modalEl: HTMLElement,
-    uncheckedNewsletters: Array<string>
-): Promise<HTMLElement> =>
-    fastdom.write(() => {
-        uncheckedNewsletters.map(newsletterName => {
-            const li = document.createElement('li');
-            li.innerHTML = `<b>${newsletterName}</b>`;
-            const reminderEl = modalEl.querySelector(
-                `.identity-consent-journey-modal-reminder`
-            );
-            if (reminderEl != null) {
-                reminderEl.appendChild(li);
-            }
-            return modalEl;
-        });
-    });
-
 const bindCloserOnce = (modalEl: HTMLElement): Promise<void[]> =>
     fastdom
         .read(() => [...modalEl.querySelectorAll('.js-identity-modal__closer')])
@@ -44,7 +15,6 @@ const bindCloserOnce = (modalEl: HTMLElement): Promise<void[]> =>
                         buttonEl.dataset.closeIsBound = true;
                         buttonEl.addEventListener('click', () => {
                             modalEl.classList.remove('identity-modal--active');
-                            removeNewsletterReminders(modalEl);
                         });
                     })
                 )
@@ -73,24 +43,12 @@ const getContents = (name: string): Promise<HTMLElement> =>
         })
     );
 
-const show = (
-    name: string,
-    uncheckedNewsletters: ?Array<string>
-): Promise<void> =>
+const show = (name: string): Promise<void> =>
     getModal(name).then(modalEl =>
-        fastdom
-            .read(() => {
-                modalEl.classList.add('identity-modal--active');
-                return modalEl;
-            })
-            .then(nextModalEl => {
-                if (uncheckedNewsletters != null) {
-                    insertNewsletterReminders(
-                        nextModalEl,
-                        uncheckedNewsletters
-                    );
-                }
-            })
+        fastdom.read(() => {
+            modalEl.classList.add('identity-modal--active');
+            return modalEl;
+        })
     );
 
 const hide = (name: string): Promise<void> =>
@@ -100,4 +58,4 @@ const hide = (name: string): Promise<void> =>
         })
     );
 
-export { hide, show, getContents };
+export { hide, show, getContents, getModal };
