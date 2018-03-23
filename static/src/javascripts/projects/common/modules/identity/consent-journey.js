@@ -73,33 +73,36 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
         formEl.addEventListener('submit', ev => {
             if (ev.isTrusted) {
                 ev.preventDefault();
-                const uncheckBoxesPromise = Promise.all([
+                Promise.all([
                     uncheckedBoxes(journeyEl, 'email'),
                     uncheckedBoxes(journeyEl, 'marketing-consents'),
-                ]).then(checkboxes =>
-                    [].concat(...checkboxes).filter(_ => _.checked === false)
-                );
-                uncheckBoxesPromise.then(unchecked => {
-                    if (unchecked.length > 0) {
-                        const consentNames = unchecked.map(
-                            uncheckedbox =>
-                                uncheckedbox.parentElement.querySelector(
-                                    '.manage-account__switch-title'
-                                ).innerText
-                        );
-                        getContents('confirm-consents').then(modalEl => {
-                            if (consentNames) {
-                                insertNewsletterReminders(
-                                    modalEl,
-                                    consentNames
-                                );
-                            }
-                        });
-                        showModal('confirm-consents');
-                    } else {
-                        formEl.submit();
-                    }
-                });
+                ])
+                    .then(checkboxes =>
+                        []
+                            .concat(...checkboxes)
+                            .filter(_ => _.checked === false)
+                    )
+                    .then(unchecked => {
+                        if (unchecked.length > 0) {
+                            const consentNames = unchecked.map(
+                                uncheckedbox =>
+                                    uncheckedbox.parentElement.querySelector(
+                                        '.manage-account__switch-title'
+                                    ).innerText
+                            );
+                            getContents('confirm-consents').then(modalEl => {
+                                if (consentNames.length > 0) {
+                                    insertNewsletterReminders(
+                                        modalEl,
+                                        consentNames
+                                    );
+                                }
+                            });
+                            showModal('confirm-consents');
+                        } else {
+                            formEl.submit();
+                        }
+                    });
             }
         });
     });
