@@ -3,7 +3,7 @@ import React, { Component } from 'react/addons';
 import { classNames } from 'common/modules/crosswords/classNames';
 
 class ConfirmButton extends Component {
-    constructor(props) {
+    constructor(props: {}) {
         super(props);
         this.timeout = props.timeout || 2000;
         this.state = {
