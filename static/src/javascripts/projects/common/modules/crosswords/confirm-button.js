@@ -38,9 +38,9 @@ class ConfirmButton extends Component {
         const className = classNames(
             ((classes[
                 'crossword__controls__button--confirm'
-                ] = this.state.confirming),
-                (classes[this.props.className] = true),
-                classes)
+            ] = this.state.confirming),
+            (classes[this.props.className] = true),
+            classes)
         );
         const props = Object.assign(
             {},
@@ -55,6 +55,5 @@ class ConfirmButton extends Component {
         return <button {...props}>{inner}</button>;
     }
 }
-
 
 export { ConfirmButton };

@@ -22,9 +22,9 @@ class Controls extends Component {
                 onClick={this.props.crossword.onClearAll.bind(
                     this.props.crossword
                 )}
-                key='clear'
-                data-link-name='Clear all'
-                text='Clear all'
+                key="clear"
+                data-link-name="Clear all"
+                text="Clear all"
             />
         );
 
@@ -35,9 +35,9 @@ class Controls extends Component {
                     onClick={this.props.crossword.onSolution.bind(
                         this.props.crossword
                     )}
-                    key='solution'
-                    data-link-name='Reveal all'
-                    text='Reveal all'
+                    key="solution"
+                    data-link-name="Reveal all"
+                    text="Reveal all"
                 />
             );
             controls.grid.unshift(
@@ -46,9 +46,9 @@ class Controls extends Component {
                     onClick={this.props.crossword.onCheckAll.bind(
                         this.props.crossword
                     )}
-                    key='checkAll'
-                    data-link-name='Check all'
-                    text='Check all'
+                    key="checkAll"
+                    data-link-name="Check all"
+                    text="Check all"
                 />
             );
         }
@@ -57,15 +57,12 @@ class Controls extends Component {
         if (hasFocus) {
             controls.clue.unshift(
                 <button
-                    className={`${buttonClassName} ${
-                        buttonCurrentClassName
-                    }`}
+                    className={`${buttonClassName} ${buttonCurrentClassName}`}
                     onClick={this.props.crossword.onClearSingle.bind(
                         this.props.crossword
                     )}
-                    key='clear-single'
-                    data-link-name='Clear this'
-                >
+                    key="clear-single"
+                    data-link-name="Clear this">
                     Clear this
                 </button>
             );
@@ -73,15 +70,12 @@ class Controls extends Component {
             // anagram helper
             controls.clue.push(
                 <button
-                    className={`${buttonClassName} ${
-                        buttonCurrentClassName
-                    }`}
+                    className={`${buttonClassName} ${buttonCurrentClassName}`}
                     onClick={this.props.crossword.onToggleAnagramHelper.bind(
                         this.props.crossword
                     )}
-                    key='anagram'
-                    data-link-name='Show anagram helper'
-                >
+                    key="anagram"
+                    data-link-name="Show anagram helper">
                     Anagram helper
                 </button>
             );
@@ -95,9 +89,8 @@ class Controls extends Component {
                         onClick={this.props.crossword.onCheat.bind(
                             this.props.crossword
                         )}
-                        key='cheat'
-                        data-link-name='Reveal this'
-                    >
+                        key="cheat"
+                        data-link-name="Reveal this">
                         Reveal this
                     </button>
                 );
@@ -109,9 +102,8 @@ class Controls extends Component {
                         onClick={this.props.crossword.onCheck.bind(
                             this.props.crossword
                         )}
-                        key='check'
-                        data-link-name='Check this'
-                    >
+                        key="check"
+                        data-link-name="Check this">
                         Check this
                     </button>
                 );
@@ -119,14 +111,10 @@ class Controls extends Component {
         }
 
         return (
-            <div className='crossword__controls'>
-                <div className='crossword__controls__clue'>
-                    {controls.clue}
-                </div>
-                <div className='crossword__controls__grid'>
-                    {controls.grid}
-                </div>
-                <div className='crossword__controls_autosave_label'>
+            <div className="crossword__controls">
+                <div className="crossword__controls__clue">{controls.clue}</div>
+                <div className="crossword__controls__grid">{controls.grid}</div>
+                <div className="crossword__controls_autosave_label">
                     Crosswords are saved automatically
                 </div>
             </div>
