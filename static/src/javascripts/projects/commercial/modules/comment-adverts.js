@@ -5,7 +5,7 @@ import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { createSlot } from 'commercial/modules/dfp/create-slot';
+import { createSlots } from 'commercial/modules/dfp/create-slots';
 import type bonzo from 'bonzo';
 
 const init = (): ?boolean => {
@@ -28,7 +28,7 @@ const init = (): ?boolean => {
                     return;
                 }
 
-                const adSlot: HTMLDivElement = createSlot('comments', {
+                const adSlots = createSlots('comments', {
                     classes: 'mpu-banner-ad',
                 });
 
@@ -45,12 +45,13 @@ const init = (): ?boolean => {
                             );
                         }
 
-                        $adSlotContainer.append(adSlot);
-                        return adSlot;
+                        adSlots.forEach(adSlot => {
+                            $adSlotContainer.append(adSlot);
+                        });
+                        return adSlots[0];
                     })
-                    .then((htmlElement: HTMLElement) =>
-                        addSlot(htmlElement, false)
-                    );
+                    // Add only the fist slot (DFP slot) to GTP
+                    .then((adSlot: HTMLElement) => addSlot(adSlot, false));
             });
     });
 };

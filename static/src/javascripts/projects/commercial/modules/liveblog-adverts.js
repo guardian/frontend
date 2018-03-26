@@ -9,7 +9,7 @@ import { getBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { createSlot } from 'commercial/modules/dfp/create-slot';
+import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { spaceFiller } from 'common/modules/article/space-filler';
 
 const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
@@ -84,13 +84,20 @@ const insertAds = (slots: HTMLElement[]): void => {
     for (let i = 0; i < slots.length && SLOTCOUNTER < MAX_ADS; i += 1) {
         const slotName = getSlotName(isMobile, SLOTCOUNTER);
 
-        const adSlot = createSlot('inline', {
+        const adSlots = createSlots('inline', {
             name: slotName,
             classes: 'liveblog-inline',
         });
+
+        adSlots.reverse().forEach(adSlot => {
+            if (slots[i] && slots[i].parentNode) {
+                slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
+            }
+        });
+
+        // Only add the first adSlot (the DFP one) in DFP/GTP
         if (slots[i] && slots[i].parentNode) {
-            slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
-            addSlot(adSlot, false);
+            addSlot(adSlots[0], false);
             SLOTCOUNTER += 1;
         }
     }

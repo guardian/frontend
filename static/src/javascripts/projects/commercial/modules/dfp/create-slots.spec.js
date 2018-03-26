@@ -1,5 +1,5 @@
 // @flow
-import { createSlot } from 'commercial/modules/dfp/create-slot';
+import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import bonzo from 'bonzo';
 
@@ -19,51 +19,59 @@ const inline1Html = `
     data-link-name="ad slot inline1"
     data-name="inline1"
     data-mobile="1,1|2,2|300,250|fluid"
-    data-desktop="1,1|2,2|300,250|620,1|620,350|fluid"><span class="bt-uid-tg" uid="5a98587091-157" style="display: none !important"></span>
+    data-desktop="1,1|2,2|300,250|620,1|620,350|fluid">
 </div>
+`;
+
+const inline1BlockthroughHtml = `
+<span class="bt-uid-tg" uid="5a98587091-157" style="display: none !important"></span>
 `;
 
 jest.mock('lib/config', () => ({ page: { edition: 'UK' } }));
 
 describe('Create Ad Slot', () => {
     it('should exist', () => {
-        expect(createSlot).toBeDefined();
+        expect(createSlots).toBeDefined();
     });
 
     [
         {
             type: 'im',
-            html: imHtml,
+            htmls: [imHtml],
         },
         {
             type: 'inline',
             classes: 'inline',
             name: 'inline1',
-            html: inline1Html,
+            htmls: [inline1Html, inline1BlockthroughHtml],
         },
     ].forEach((expectation: Object) => {
         it(`should create "${expectation.type}" ad slot`, () => {
-            const adSlot = createSlot(expectation.type, {
+            const adSlots = createSlots(expectation.type, {
                 name: expectation.name,
                 classes: expectation.classes,
             });
 
-            expect(adSlot.outerHTML).toBe(
-                expectation.html.replace(/\n/g, '').replace(/\s+/g, ' ')
-            );
+            adSlots.forEach((adSlot, i) => {
+                expect(adSlot.outerHTML).toBe(
+                    expectation.htmls[i].replace(/\n/g, '').replace(/\s+/g, ' ')
+                );
+            });
         });
     });
 
     it('should create "inline1" ad slot for inline-extra slots', () => {
-        const adSlot = createSlot('inline', { classes: 'inline-extra' });
+        const adSlots = createSlots('inline', { classes: 'inline-extra' });
+        const adSlot = adSlots[0];
 
         expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
     });
 
     it('should create "inline1" ad slot with additional size', () => {
-        const adSlot = createSlot('inline', {
+        const adSlots = createSlots('inline', {
             sizes: { desktop: [adSizes.leaderboard] },
         });
+        const adSlot = adSlots[0];
 
         expect(
             bonzo(adSlot)

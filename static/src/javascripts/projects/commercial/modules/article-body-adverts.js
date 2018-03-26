@@ -7,7 +7,7 @@ import { spaceFiller } from 'common/modules/article/space-filler';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
-import { createSlot } from 'commercial/modules/dfp/create-slot';
+import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { isInVariant, getVariant } from 'common/modules/experiments/utils';
 import { spacefinderSimplify } from 'common/modules/experiments/tests/spacefinder-simplify';
@@ -33,17 +33,24 @@ const insertAdAtPara = (
     classes: ?string,
     sizes: ?Sizes
 ): Promise<void> => {
-    const ad: HTMLElement = createSlot(type, {
+    const ads = createSlots(type, {
         name,
         classes,
         sizes,
     });
 
     return fastdom
-        .write(() => para.parentNode && para.parentNode.insertBefore(ad, para))
+        .write(() =>
+            ads.forEach(ad => {
+                if (para.parentNode) {
+                    para.parentNode.insertBefore(ad, para);
+                }
+            })
+        )
         .then(() => {
             const shouldForceDisplay = ['im', 'carrot'].includes(name);
-            addSlot(ad, shouldForceDisplay);
+            // Only add the first ad (the DFP one) to GTP
+            addSlot(ads[0], shouldForceDisplay);
         });
 };
 
