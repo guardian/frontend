@@ -45,6 +45,56 @@ const insertNewsletterReminders = (
             });
         });
 
+const showRemindersDiv = (modalEl: HTMLElement): Promise<void> =>
+    fastdom
+        .read(() => {
+            const reminderDiv = modalEl.querySelector(
+                `.identity-forms-message-reminder__body`
+            );
+            const noReminderDiv = modalEl.querySelector(
+                `.identity-forms-message-no-reminder__body`
+            );
+            return {
+                reminderDiv,
+                noReminderDiv,
+            };
+        })
+        .then(modalAreas =>
+            fastdom.write(() => {
+                modalAreas.reminderDiv.classList.remove(
+                    'identity-forms-message-reminder__body--inactive'
+                );
+                modalAreas.noReminderDiv.classList.add(
+                    'identity-forms-message-reminder__body--inactive'
+                );
+            })
+        );
+
+const showNoRemindersDiv = (modalEl: HTMLElement): Promise<void> =>
+    fastdom
+        .read(() => {
+            const reminderDiv = modalEl.querySelector(
+                `.identity-forms-message-reminder__body`
+            );
+            const noReminderDiv = modalEl.querySelector(
+                `.identity-forms-message-no-reminder__body`
+            );
+            return {
+                reminderDiv,
+                noReminderDiv,
+            };
+        })
+        .then(modalAreas =>
+            fastdom.write(() => {
+                modalAreas.reminderDiv.classList.add(
+                    'identity-forms-message-reminder__body--inactive'
+                );
+                modalAreas.noReminderDiv.classList.remove(
+                    'identity-forms-message-reminder__body--inactive'
+                );
+            })
+        );
+
 const showJourney = (journeyEl: HTMLElement): Promise<void> =>
     fastdom.write(() => journeyEl.classList.remove('u-h'));
 
@@ -77,28 +127,44 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
                     uncheckedBoxes(journeyEl, 'email'),
                     uncheckedBoxes(journeyEl, 'marketing-consents'),
                 ])
-                    .then(checkboxes =>
-                        []
-                            .concat(...checkboxes)
-                            .filter(_ => _.checked === false)
-                    )
-                    .then(unchecked => {
-                        if (unchecked.length > 0) {
-                            const consentNames = unchecked.map(
-                                uncheckedbox =>
-                                    uncheckedbox.parentElement.querySelector(
-                                        '.manage-account__switch-title'
-                                    ).innerText
+                    .then(checkboxes => {
+                        const allCheckboxes = [].concat(...checkboxes);
+                        const unchecked = allCheckboxes.filter(
+                            _ => _.checked === false
+                        );
+
+                        return {
+                            unchecked,
+                            total: allCheckboxes.length,
+                        };
+                    })
+                    .then(checkboxInfo => {
+                        if (
+                            checkboxInfo.unchecked.length === checkboxInfo.total
+                        ) {
+                            showNoRemindersDiv(journeyEl).then(() =>
+                                showModal('confirm-consents')
                             );
-                            getContents('confirm-consents').then(modalEl => {
-                                if (consentNames.length > 0) {
-                                    insertNewsletterReminders(
-                                        modalEl,
-                                        consentNames
-                                    );
-                                }
+                        } else if (checkboxInfo.unchecked.length > 0) {
+                            showRemindersDiv(journeyEl).then(() => {
+                                const consentNames = checkboxInfo.unchecked.map(
+                                    uncheckedbox =>
+                                        uncheckedbox.parentElement.querySelector(
+                                            '.manage-account__switch-title'
+                                        ).innerText
+                                );
+                                getContents('confirm-consents').then(
+                                    modalEl => {
+                                        if (consentNames.length > 0) {
+                                            insertNewsletterReminders(
+                                                modalEl,
+                                                consentNames
+                                            );
+                                        }
+                                    }
+                                );
+                                showModal('confirm-consents');
                             });
-                            showModal('confirm-consents');
                         } else {
                             formEl.submit();
                         }
