@@ -29,7 +29,6 @@ export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
 export const getExpiredTests = (): $ReadOnlyArray<ABTest> =>
     TESTS.filter(test => isExpired(test.expiry));
 
-// UnrulyPerformanceTest
 export const getTest = (id: string): ?ABTest => {
     const testIds = TESTS.map(test => test.id);
     const index = testIds.indexOf(id);
