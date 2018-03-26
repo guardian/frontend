@@ -375,3 +375,32 @@ category: Common
         display: none;
     }
 }
+.paid-content, .paid-content.tonal--tone-media {
+    .social-icon,
+    .social-icon.social-icon--more,
+    .inline-close {
+        background-color: transparent;
+        border: 1px solid $neutral-1;
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: $garnett-neutral-1;
+        }
+        .social-icon__svg,
+        .social-icon--more__svg,
+        .social-tray__icon__svg {
+            fill: $garnett-neutral-1;
+        }
+        &:focus,
+        &:hover {
+            svg {
+                fill: $garnett-neutral-5;
+            }
+        }
+    }
+}
+.paid-content.tonal--tone-media {
+    .social--expanded-top {
+        background: $paid-article;
+    }
+}
