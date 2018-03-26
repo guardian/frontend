@@ -45,9 +45,11 @@ case class AddressFormData(
       postcode.isEmpty || ZipcodePattern.findFirstIn(postcode).isDefined
   }
 
-   private val PostcodePattern = """^(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) [0-9][A-Z-[CIKMOV]]{2})$""".r
+  private def stripSpacesAndUppercase(string: String) = string.toUpperCase.replaceAllLiterally(" ", "")
+
+  private val PostcodePattern = """^(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))[0-9][A-Z-[CIKMOV]]{2})$""".r
 
   private lazy val isValidUkPostcode = {
-      postcode.isEmpty || PostcodePattern.findFirstIn(postcode.toUpperCase).isDefined
+      postcode.isEmpty || PostcodePattern.findFirstIn(stripSpacesAndUppercase(postcode)).isDefined
   }
 }
