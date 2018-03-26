@@ -10,7 +10,6 @@
 <html AMP>
     <head>
         @* "utf-8" meta tag needs to be first according to AMP spec *@
-    <meta name="amp-3p-iframe-src" content="https://www.theguardian.com/amp/remote.html">
         @fragments.metaData(amp = true)(page, request, context)
     <title>@views.support.Title(page)</title>
         @fragments.amp.customStyles(page, mainPicture = "", page.cta.image, page.fontColour.hexCode)
