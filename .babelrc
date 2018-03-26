@@ -1,6 +1,6 @@
 {
     "presets": [
-        "babel-preset-flow"
+        "react"
     ],
     "plugins": [
         "babel-plugin-transform-object-rest-spread",
