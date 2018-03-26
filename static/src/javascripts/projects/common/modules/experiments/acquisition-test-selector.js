@@ -15,7 +15,6 @@ import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests
 import { acquisitionsEpicAudSupport } from 'common/modules/experiments/tests/acquisitions-epic-aud-support';
 import { acquisitionsEpicRowSupport } from 'common/modules/experiments/tests/acquisitions-epic-row-support';
 import { acquisitionsEpicCambridgeAnalyticaAlwaysAskFinal } from 'common/modules/experiments/tests/acquisitions-epic-cambridge-analytica-always-ask-final';
-import { acquisitionsEpicCambridgeAnalyticaBespokeCopy } from 'common/modules/experiments/tests/acquisitions-epic-cambridge-analytica-bespoke-copy';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
@@ -40,7 +39,6 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    acquisitionsEpicCambridgeAnalyticaBespokeCopy,
     acquisitionsEpicCambridgeAnalyticaAlwaysAskFinal,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
