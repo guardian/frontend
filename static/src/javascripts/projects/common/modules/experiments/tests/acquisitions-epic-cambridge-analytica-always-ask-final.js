@@ -1,6 +1,7 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { keywordExists } from 'lib/page';
+import { cambridgeCopy } from 'common/modules/commercial/acquisitions-copy';
 
 const abTestName = 'AcquisitionsEpicCambridgeAnalyticaAlwaysAskFinal';
 
@@ -28,6 +29,8 @@ export const acquisitionsEpicCambridgeAnalyticaAlwaysAskFinal: EpicABTest = make
                 id: 'always_ask',
                 products: [],
                 options: {
+                    copy: cambridgeCopy,
+                    testimonialBlock: '',
                     isUnlimited: true,
                 },
             },
