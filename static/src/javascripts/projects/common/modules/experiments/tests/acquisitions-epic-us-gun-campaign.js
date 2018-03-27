@@ -34,6 +34,8 @@ export const acquisitionsEpicUSGunCampaign = makeABTest({
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
+    showToContributorsAndSupporters: true,
+
     canRun() {
         return isTargetReader() && isTargetPage();
     },
@@ -45,7 +47,7 @@ export const acquisitionsEpicUSGunCampaign = makeABTest({
                 isUnlimited: true,
                 usesIframe: true,
                 template: variant =>
-                    `<iframe src="https://interactive.guim.co.uk/embed/2017/11/break-the-cycle/epic.html"
+                    `<iframe src="https://interactive.guim.co.uk/embed/2018/03/break-the-cycle/epic.html"
                         data-component="${variant.options.componentName}"
                         class="acquisitions-epic-iframe"
                         id="${variant.options.iframeId}">
