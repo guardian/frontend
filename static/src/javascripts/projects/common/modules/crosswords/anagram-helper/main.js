@@ -11,8 +11,8 @@ import { CluePreview } from './clue-preview';
 import { Ring } from './ring';
 
 class AnagramHelper extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             clueInput: '',
             showInput: true,
