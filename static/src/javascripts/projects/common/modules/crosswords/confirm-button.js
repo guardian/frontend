@@ -46,7 +46,7 @@ class ConfirmButton extends Component {
             {},
             this.props,
             {
-                onClick: this.confirm,
+                onClick: this.confirm.bind(this),
                 className,
             },
             this
