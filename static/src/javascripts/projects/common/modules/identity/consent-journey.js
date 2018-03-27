@@ -101,7 +101,7 @@ const showJourney = (journeyEl: HTMLElement): Promise<void> =>
 const hideLoading = (loadingEl: HTMLElement): Promise<void> =>
     fastdom.write(() => loadingEl.remove());
 
-const uncheckedBoxes = (
+const getCheckboxInfo = (
     journeyEl: HTMLElement,
     section: string
 ): Promise<Array<Object>> =>
@@ -124,8 +124,8 @@ const showJourneyAlert = (journeyEl: HTMLElement): void => {
             if (ev.isTrusted) {
                 ev.preventDefault();
                 Promise.all([
-                    uncheckedBoxes(journeyEl, 'email'),
-                    uncheckedBoxes(journeyEl, 'marketing-consents'),
+                    getCheckboxInfo(journeyEl, 'email'),
+                    getCheckboxInfo(journeyEl, 'marketing-consents'),
                 ])
                     .then(checkboxes => {
                         const allCheckboxes = [].concat(...checkboxes);
