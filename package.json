@@ -27,7 +27,7 @@
     "qwery": "3.4.2",
     "rangefix": "^0.2.5",
     "raven-js": "^3.19.1",
-    "react": "0.13.2",
+    "react": "^0.14.9",
     "reqwest": "2.0.5",
     "tcp-ping": "^0.1.1",
     "video.js": "~5.3",

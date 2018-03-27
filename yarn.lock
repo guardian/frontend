@@ -7638,15 +7638,16 @@ react-dom@^0.14.0:
   version "0.14.8"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-0.14.8.tgz#0f1c547514263f771bd31814a739e5306575069e"
 
-react@0.13.2:
-  version "0.13.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-0.13.2.tgz#a1c7cec5e7be080c4e249b20740d4d4cd18880ca"
-  dependencies:
-    envify "^3.0.0"
-
 react@^0.14.0:
   version "0.14.8"
   resolved "https://registry.yarnpkg.com/react/-/react-0.14.8.tgz#078dfa454d4745bcc54a9726311c2bf272c23684"
+  dependencies:
+    envify "^3.0.0"
+    fbjs "^0.6.1"
+
+react@^0.14.9:
+  version "0.14.9"
+  resolved "https://registry.yarnpkg.com/react/-/react-0.14.9.tgz#9110a6497c49d44ba1c0edd317aec29c2e0d91d1"
   dependencies:
     envify "^3.0.0"
     fbjs "^0.6.1"
