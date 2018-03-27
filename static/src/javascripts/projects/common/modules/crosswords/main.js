@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react/addons';
+import React, { render } from 'react/addons';
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
@@ -19,10 +19,8 @@ const initCrosswords = (): void => {
                     );
                 }
 
-                const crosswordComponent = React.render(
-                    React.createElement(Crossword, {
-                        data: JSON.parse(data),
-                    }),
+                const crosswordComponent = render(
+                    <Crossword data={JSON.parse(data)} />,
                     element
                 );
 
