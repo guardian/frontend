@@ -5,11 +5,7 @@ import sortBy from 'lodash/collections/sortBy';
 import { AnagramHelper } from './main';
 
 jest.mock('react/addons', () => ({
-    createClass(args) {
-        return function() {
-            return args;
-        };
-    },
+    Component: function Component() {},
 }));
 
 const CASES = [
