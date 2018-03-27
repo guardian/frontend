@@ -47,7 +47,7 @@ object MoonLambda extends Experiment(
   name = "moon-lambda",
   description = "Users in this experiment will see 404 page rendered by a lambda",
   owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2018, 3, 27),
+  sellByDate = new LocalDate(2018, 4, 9),
   participationGroup = Perc1B
 )
 
