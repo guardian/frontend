@@ -13,6 +13,28 @@
         margin-right: 0;
     }
 
+    .button--large {
+        background: $lifestyle-garnett-main-1;
+        border: 1px solid $lifestyle-garnett-main-1;
+        &:hover,
+        &:visited,
+        &:focus {
+            background-color: darken($lifestyle-garnett-main-1, 10%);
+            border-color: darken($lifestyle-garnett-main-1, 10%);
+        }
+    }
+
+    .button--tertiary {
+        background: transparent;
+        border: 1px solid $garnett-neutral-4;
+        &:hover,
+        &:visited,
+        &:focus {
+            background-color: transparent;
+            border-color: darken($garnett-neutral-4, 15%);
+        }
+    }
+
     @include mq($until: tablet) {
         z-index: 1030;
     }

@@ -14,22 +14,9 @@ const exec = (cmd, args) => {
     ).filter(Boolean);
 };
 
-const legacyTests = ['common'].map(set => ({
-    description: `Run ${set} tests (legacy)`,
-    task: () =>
-        exec('karma', [
-            'start',
-            `./static/test/javascripts-legacy/conf/${set}.js`,
-            '--single-run',
-        ]),
-}));
-
 module.exports = {
     description: 'Test JS app',
     task: [
-        require('../../compile/javascript/clean'),
-        require('../../compile/javascript/copy'),
-        require('../../compile/javascript/babel'),
         {
             description: 'Run tests',
             task: [
@@ -37,7 +24,6 @@ module.exports = {
                     description: 'JS tests',
                     task: () => exec('jest'),
                 },
-                ...legacyTests,
             ],
             concurrent: true,
         },

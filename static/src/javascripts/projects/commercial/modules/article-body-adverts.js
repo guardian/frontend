@@ -1,14 +1,16 @@
 // @flow
 import config from 'lib/config';
-import { isBreakpoint, getBreakpoint } from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import type { SpacefinderItem } from 'common/modules/spacefinder';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
-import { createSlot } from 'commercial/modules/dfp/create-slot';
+import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { isInVariant, getVariant } from 'common/modules/experiments/utils';
+import { spacefinderSimplify } from 'common/modules/experiments/tests/spacefinder-simplify';
 
 type AdSize = {
     width: number,
@@ -17,31 +19,12 @@ type AdSize = {
     toString: (_: void) => string,
 };
 
-/* bodyAds is a counter that keeps track of the number of inline MPUs
- * inserted dynamically. */
-let bodyAds: number;
-const replaceTopSlot: boolean = isBreakpoint({
-    max: 'phablet',
-});
-
-const getSlotNameForMobile = (): string =>
-    bodyAds === 1 ? 'top-above-nav' : `inline${bodyAds - 1}`;
-
-const getSlotNameForDesktop = (): string => `inline${bodyAds}`;
-
-const getSlotTypeForMobile = (): string =>
-    bodyAds === 1 ? 'top-above-nav' : 'inline';
-
-const getSlotTypeForDesktop = (): string => 'inline';
-
-const getSlotName = replaceTopSlot
-    ? getSlotNameForMobile
-    : getSlotNameForDesktop;
-const getSlotType = replaceTopSlot
-    ? getSlotTypeForMobile
-    : getSlotTypeForDesktop;
-
 type Sizes = { desktop: Array<AdSize> };
+
+const adSlotClassSelectorSizes = {
+    minAbove: 500,
+    minBelow: 500,
+};
 
 const insertAdAtPara = (
     para: Node,
@@ -50,70 +33,55 @@ const insertAdAtPara = (
     classes: ?string,
     sizes: ?Sizes
 ): Promise<void> => {
-    const ad: HTMLElement = createSlot(type, {
+    const ads = createSlots(type, {
         name,
         classes,
         sizes,
     });
 
     return fastdom
-        .write(() => {
-            if (para.parentNode) {
-                para.parentNode.insertBefore(ad, para);
-            }
-        })
+        .write(() =>
+            ads.forEach(ad => {
+                if (para.parentNode) {
+                    para.parentNode.insertBefore(ad, para);
+                }
+            })
+        )
         .then(() => {
-            addSlot(ad, name === 'im');
+            const shouldForceDisplay = ['im', 'carrot'].includes(name);
+            // Only add the first ad (the DFP one) to GTP
+            addSlot(ads[0], shouldForceDisplay);
         });
 };
 
-// Add new ads while there is still space
-const addArticleAds = (count: number, rules: Object): Promise<number> => {
-    const insertInlineAds = (paras: HTMLElement[]): Promise<number> => {
-        const slots: Array<Promise<void>> = paras
-            .slice(0, Math.min(paras.length, count))
-            .map((para: Node) => {
-                bodyAds += 1;
-                return insertAdAtPara(
-                    para,
-                    getSlotName(),
-                    getSlotType(),
-                    `inline${bodyAds > 1 ? ' offset-right' : ''}`,
-                    bodyAds > 1 ? { desktop: [adSizes.halfPage] } : null
-                );
-            });
+let previousAllowedCandidate;
 
-        return Promise.all(slots).then(() => slots.length);
-    };
-
-    // This just returns whatever is passed in the second argument
-    return spaceFiller.fillSpace(rules, insertInlineAds, {
-        waitForImages: true,
-        waitForLinks: true,
-        waitForInteractives: true,
-    });
+// this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
+const filterNearbyCandidates = (candidate: SpacefinderItem): boolean => {
+    if (
+        !previousAllowedCandidate ||
+        Math.abs(candidate.top - previousAllowedCandidate.top) -
+            adSizes.mpu.height >=
+            adSlotClassSelectorSizes.minBelow
+    ) {
+        previousAllowedCandidate = candidate;
+        return true;
+    }
+    return false;
 };
 
-const getRules = (): Object => {
-    let prevSlot: SpacefinderItem;
+const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
+    const variant = getVariant(spacefinderSimplify, 'variant');
+    const inTestVariant = variant && isInVariant(spacefinderSimplify, variant);
 
-    const adSlotClassSelectorSizes = {
-        minAbove: 500,
-        minBelow: 500,
-    };
-
-    return {
+    const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: isBreakpoint({
-            max: 'tablet',
-        })
-            ? 300
-            : 700,
-        minBelow: 300,
+        minAbove: inTestVariant ? 300 : 700,
+        minBelow: 700,
         selectors: {
             ' > h2': {
-                minAbove: getBreakpoint() === 'mobile' ? 100 : 0,
+                minAbove: 0,
                 minBelow: 250,
             },
             ' .ad-slot': adSlotClassSelectorSizes,
@@ -122,76 +90,159 @@ const getRules = (): Object => {
                 minBelow: 400,
             },
         },
-        filter: (slot: SpacefinderItem) => {
-            if (
-                !prevSlot ||
-                Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >=
-                    adSlotClassSelectorSizes.minBelow
-            ) {
-                prevSlot = slot;
-                return true;
-            }
-            return false;
+        filter: filterNearbyCandidates,
+    };
+
+    const relaxedRules = {
+        bodySelector: '.js-article__body',
+        slotSelector: ' > p',
+        minAbove: 700,
+        minBelow: 700,
+        selectors: {
+            ' .ad-slot': adSlotClassSelectorSizes,
+        },
+        filter: filterNearbyCandidates,
+    };
+
+    const rules = inTestVariant && !isInline1 ? relaxedRules : defaultRules;
+
+    const insertAds = (paras: HTMLElement[]): Promise<number> => {
+        const slots: Array<Promise<void>> = paras
+            .slice(0, isInline1 ? 1 : paras.length)
+            .map((para: Node, i: number) => {
+                const inlineId = i + (isInline1 ? 1 : 2);
+
+                return insertAdAtPara(
+                    para,
+                    `inline${inlineId}`,
+                    'inline',
+                    `inline${isInline1 ? '' : ' offset-right'}`,
+                    isInline1 ? null : { desktop: [adSizes.halfPage] }
+                );
+            });
+
+        return Promise.all(slots).then(() => slots.length);
+    };
+
+    return spaceFiller.fillSpace(rules, insertAds, {
+        waitForImages: true,
+        waitForLinks: true,
+        waitForInteractives: true,
+    });
+};
+
+const addMobileInlineAds = (): Promise<number> => {
+    const rules = {
+        bodySelector: '.js-article__body',
+        slotSelector: ' > p',
+        minAbove: 300,
+        minBelow: 300,
+        selectors: {
+            ' > h2': {
+                minAbove: 100,
+                minBelow: 250,
+            },
+            ' .ad-slot': adSlotClassSelectorSizes,
+            ' > :not(p):not(h2):not(.ad-slot)': {
+                minAbove: 35,
+                minBelow: 400,
+            },
+        },
+        filter: filterNearbyCandidates,
+    };
+
+    const insertAds = (paras: HTMLElement[]): Promise<number> => {
+        const slots: Array<Promise<void>> = paras.map((para: Node, i: number) =>
+            insertAdAtPara(
+                para,
+                i === 0 ? 'top-above-nav' : `inline${i}`,
+                i === 0 ? 'top-above-nav' : 'inline',
+                'inline'
+            )
+        );
+
+        return Promise.all(slots).then(() => slots.length);
+    };
+
+    // This just returns whatever is passed in the second argument
+    return spaceFiller.fillSpace(rules, insertAds, {
+        waitForImages: true,
+        waitForLinks: true,
+        waitForInteractives: true,
+    });
+};
+
+const addInlineAds = (): Promise<number> => {
+    const isMobile = isBreakpoint({
+        max: 'phablet',
+    });
+
+    return isMobile
+        ? addMobileInlineAds()
+        : addDesktopInlineAds(true).then(() => addDesktopInlineAds(false));
+};
+
+const attemptToAddInlineMerchAd = (): Promise<boolean> => {
+    const rules = {
+        bodySelector: '.js-article__body',
+        slotSelector: ' > p',
+        minAbove: 300,
+        minBelow: 0,
+        selectors: {
+            ' > .merch': {
+                minAbove: 0,
+                minBelow: 0,
+            },
+            ' > header': {
+                minAbove: isBreakpoint({
+                    max: 'tablet',
+                })
+                    ? 300
+                    : 700,
+                minBelow: 0,
+            },
+            ' > h2': {
+                minAbove: 100,
+                minBelow: 250,
+            },
+            ' .ad-slot': adSlotClassSelectorSizes,
+            ' > :not(p):not(h2):not(.ad-slot)': {
+                minAbove: 200,
+                minBelow: 400,
+            },
         },
     };
-};
 
-const addInlineAds = (): Promise<number> => addArticleAds(10, getRules());
-
-const getInlineMerchRules = (): Object => {
-    const inlineMerchRules: Object = getRules();
-    inlineMerchRules.minAbove = 300;
-    inlineMerchRules.selectors[' > h2'].minAbove = 100;
-    inlineMerchRules.selectors[
-        ' > :not(p):not(h2):not(.ad-slot)'
-    ].minAbove = 200;
-    return inlineMerchRules;
-};
-
-const addInlineMerchAd = (): Promise<any> =>
-    spaceFiller.fillSpace(
-        getInlineMerchRules(),
-        paras => insertAdAtPara(paras[0], 'im', 'im').then(() => 1),
+    return spaceFiller.fillSpace(
+        rules,
+        paras => insertAdAtPara(paras[0], 'im', 'im').then(() => true),
         {
             waitForImages: true,
             waitForLinks: true,
             waitForInteractives: true,
         }
     );
+};
 
-const waitForMerch = (countAdded: number): Promise<void> =>
-    countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
-
-export const init = (start: () => void, stop: () => void): Promise<boolean> => {
+export const init = (start: () => void, stop: () => void): Promise<any> => {
     start();
     if (!commercialFeatures.articleBodyAdverts) {
         stop();
-        return Promise.resolve(false);
+        return Promise.resolve();
     }
 
-    bodyAds = 0;
+    const im = config.page.hasInlineMerchandise
+        ? attemptToAddInlineMerchAd()
+        : Promise.resolve(false);
+    im
+        .then(
+            (inlineMerchAdded: boolean) =>
+                inlineMerchAdded
+                    ? trackAdRender('dfp-ad--im')
+                    : Promise.resolve()
+        )
+        .then(addInlineAds)
+        .then(stop);
 
-    if (config.page.hasInlineMerchandise) {
-        const im = addInlineMerchAd();
-        // Whether an inline merch has been inserted or not,
-        // we still want to try to insert inline MPUs. But
-        // we must wait for DFP to return, since if the merch
-        // component is empty, it might completely change the
-        // positions where we insert those MPUs.
-        im
-            .then(waitForMerch)
-            .then(addInlineAds)
-            .then(stop);
-
-        return im;
-    }
-
-    addInlineAds().then(stop);
-    return Promise.resolve(true);
-};
-
-export const _ = {
-    waitForMerch,
-    addInlineMerchAd,
-    addInlineAds,
+    return im;
 };

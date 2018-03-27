@@ -13,10 +13,9 @@ import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
 
-  def get(page: Page)(implicit request: RequestHeader, context: ApplicationContext): JsValue = Json.toJson(getMap(page))
+  def get(page: Page, edition: Edition, isPreview: Boolean): JsValue = Json.toJson(getMap(page, edition, isPreview))
 
-  def getMap(page: Page)(implicit request: RequestHeader, context: ApplicationContext): Map[String,JsValue] = {
-    val edition = Edition(request)
+  def getMap(page: Page, edition: Edition, isPreview: Boolean): Map[String,JsValue] = {
     val metaData = page.metadata
     val content: Option[Content] = Page.getContent(page).map(_.content)
 
@@ -35,9 +34,15 @@ object JavaScriptPage {
 
     val cardStyle = content.map(_.cardStyle.toneString).getOrElse("")
 
+    val nonRefreshableLineItemIds: JsArray = {
+      val ids: Seq[Long] = metaData.commercial.map(_.nonRefreshableLineItemIds) getOrElse Nil
+      JsArray(ids map (id => JsNumber(id)))
+    }
+
     val commercialMetaData = Map(
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
+      "dfpNonRefreshableLineItemIds" -> nonRefreshableLineItemIds,
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
         case _: CommercialExpiryPage => true
@@ -53,20 +58,13 @@ object JavaScriptPage {
       "isSensitive" -> JsBoolean(page.metadata.sensitive)
     ) ++ sponsorshipType
 
-    val readerRevenueMetaData = Map(
-      "shouldHideReaderRevenue" -> JsBoolean(page match {
-        case c: ContentPage if c.item.content.shouldHideReaderRevenue => true
-        case _ => false
-      })
-    )
-
     val javascriptConfig = page match {
       case c: ContentPage => c.getJavascriptConfig
       case s: StandalonePage => s.getJavascriptConfig
       case _ => Map()
     }
 
-    javascriptConfig ++ config ++ commercialMetaData ++ readerRevenueMetaData ++ Map(
+    javascriptConfig ++ config ++ commercialMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
       ("isDev", JsBoolean(!environment.isProd)),
@@ -74,7 +72,7 @@ object JavaScriptPage {
       ("idUrl", JsString(Configuration.id.url)),
       ("beaconUrl", JsString(Configuration.debug.beaconUrl)),
       ("assetsPath", JsString(Configuration.assets.path)),
-      ("isPreview", JsBoolean(context.isPreview)),
+      ("isPreview", JsBoolean(isPreview)),
       ("allowUserGeneratedContent", JsBoolean(allowUserGeneratedContent)),
       ("requiresMembershipAccess", JsBoolean(requiresMembershipAccess)),
       ("membershipAccess", JsString(membershipAccess)),

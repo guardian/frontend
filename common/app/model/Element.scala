@@ -2,8 +2,9 @@ package model
 
 import com.gu.contentapi.client.model.v1.AssetType
 import org.joda.time.Duration
-import com.gu.contentapi.client.model.v1.{Element => ApiElement, ElementType, AssetType}
+import com.gu.contentapi.client.model.v1.{AssetType, ElementType, Element => ApiElement}
 import org.apache.commons.math3.fraction.Fraction
+import play.api.libs.json.{Json, Writes}
 
 object ElementProperties {
   def make(capiElement: ApiElement, index: Int): ElementProperties = {
@@ -53,6 +54,7 @@ object ImageMedia {
   def make(crops: Seq[ImageAsset]): ImageMedia = ImageMedia(
     allImages = crops
   )
+  implicit val imageMediaWrites: Writes[ImageMedia] = Json.writes[ImageMedia]
 }
 final case class ImageMedia(allImages: Seq[ImageAsset]) {
 

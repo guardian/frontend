@@ -88,6 +88,7 @@ class AtomCleanerTest extends FlatSpec
     Switches.UseAtomsSwitch.switchOn()
     val result: Document = clean(doc, youTubeAtom, amp = true)
     result.select("amp-youtube").attr("data-videoid") should be("nQuN9CUsdVg")
+    result.select("amp-youtube").attr("id") should be("gu-video-youtube-887fb7b4-b31d-4a38-9d1f-26df5878cf9c")
   }
 
   "Youtube template" should "include endslate path" in {

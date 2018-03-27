@@ -2,7 +2,7 @@ package views.support.cleaner
 
 import org.scalatest.{FlatSpec, Matchers}
 import StringCleaner._
-
+import play.api.test.FakeRequest
 import views.support.CommercialMPUForFronts
 
 class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
@@ -12,7 +12,7 @@ class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
     try source.mkString finally source.close()
   }
 
-  val body = getFileContent("fixtures/CommercialMPUForFronts.html").cleanWith(CommercialMPUForFronts(true))
+  val body = getFileContent("fixtures/CommercialMPUForFronts.html").cleanWith(CommercialMPUForFronts(true)(FakeRequest()))
 
   it should "insert MPUs into applicable slices, and give them unique IDs" in {
     val desktopMPUs = body.getElementsByClass("fc-slice__item--mpu-candidate")

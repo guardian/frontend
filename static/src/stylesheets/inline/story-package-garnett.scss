@@ -14,9 +14,11 @@
         }
     }
 
-    .fc-sublink--pillar-#{$tone} {
-        .fc-sublink__kicker {
-            color: $colour;
+    .fc-item:not(.fc-item--pillar-special-report) {
+        .fc-sublink--pillar-#{$tone} {
+            .fc-sublink__kicker {
+                color: $colour;
+            }
         }
     }
 }
@@ -131,4 +133,5 @@
     @include kicker-override(sport, $sport-garnett-media-main-1);
     @include kicker-override(opinion, $opinion-garnett-media-main-1);
     @include kicker-override(news, $news-garnett-media-main-1);
+    @include kicker-override(special-report, $news-garnett-highlight);
 }

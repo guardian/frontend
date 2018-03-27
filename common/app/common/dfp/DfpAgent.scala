@@ -22,6 +22,7 @@ object DfpAgent
   private lazy val pageskinnedAdUnitAgent = Box[Seq[PageSkinSponsorship]](Nil)
   private lazy val lineItemAgent = Box[Map[AdSlot, Seq[GuLineItem]]](Map.empty)
   private lazy val takeoverWithEmptyMPUsAgent = Box[Seq[TakeoverWithEmptyMPUs]](Nil)
+  private lazy val nonRefreshableLineItemsAgent = Box[Seq[Long]](Nil)
 
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
   protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] = targetedHighMerchandisingLineItemsAgent get()
@@ -29,6 +30,8 @@ object DfpAgent
   protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent get()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
     takeoverWithEmptyMPUsAgent get()
+
+  def nonRefreshableLineItemIds(): Seq[Long] = nonRefreshableLineItemsAgent get()
 
   private def stringFromS3(key: String): Option[String] = S3.get(key)(UTF8)
 
@@ -57,6 +60,13 @@ object DfpAgent
       maybeTagSet getOrElse InlineMerchandisingTagSet()
     }
 
+    def grabNonRefreshableLineItemIdsFromStore() = {
+      (for {
+        jsonString <- stringFromS3(dfpNonRefreshableLineItemIdsKey)
+        lineItemIds <- Json.parse(jsonString).validate[Seq[Long]].asOpt
+      } yield lineItemIds) getOrElse Nil
+    }
+
     def grabTargetedHighMerchandisingLineItemFromStore(): Seq[HighMerchandisingLineItem] ={
       for {
         jsonString <- stringFromS3(dfpHighMerchandisingTagsDataKey).toSeq
@@ -79,6 +89,7 @@ object DfpAgent
 
     update(pageskinnedAdUnitAgent)(grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
 
+    update(nonRefreshableLineItemsAgent)(grabNonRefreshableLineItemIdsFromStore())
 
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
 

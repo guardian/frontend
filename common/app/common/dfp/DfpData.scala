@@ -11,6 +11,37 @@ import play.api.libs.json.JodaReads._
 
 import scala.language.postfixOps
 
+sealed trait GuLineItemType {
+  val asString: String
+}
+
+case object Sponsorship extends GuLineItemType {
+  val asString: String = "sponsorship"
+}
+case class Other(get: String) extends GuLineItemType {
+  val asString: String = get
+}
+
+
+object GuLineItemType {
+
+  def fromDFPLineItemType(dfpLineItemType: String): GuLineItemType = dfpLineItemType.toLowerCase match {
+    case Sponsorship.asString => Sponsorship
+    case otherLineItemType => Other(otherLineItemType)
+  }
+
+  implicit val guLineItemWrites = new Writes[GuLineItemType] {
+    def writes(lineItemType: GuLineItemType): JsValue = {
+      lineItemType match {
+        case Sponsorship => JsString("sponsorship")
+        case Other(lineItemTypeAsString) => JsString(lineItemTypeAsString)}}}
+
+  implicit val guLineItemTypeReads: Reads[GuLineItemType] =
+    JsPath.read[String].map {
+      case "sponsorship" => Sponsorship
+      case otherType => Other(otherType)}
+}
+
 case class GuCustomTargeting(
                               keyId: Long,
                               name: String,
@@ -85,6 +116,7 @@ object CustomTargetSet {
 
   implicit val customTargetSetFormats: Format[CustomTargetSet] = Json.format[CustomTargetSet]
 
+
 }
 
 
@@ -148,13 +180,12 @@ case class GuTargeting(adUnitsIncluded: Seq[GuAdUnit],
                        geoTargetsExcluded: Seq[GeoTarget],
                        customTargetSets: Seq[CustomTargetSet]) {
 
-  val keyValues: Seq[String] = {
-    for {
-      targetSet <- customTargetSets
-      target <- targetSet.targets if target.isKeywordTag
-      targetValue <- target.values
-    } yield targetValue
-  }
+  private val tagValues = ( ( customTargetSets: Seq[CustomTargetSet],
+                              tagFilter: CustomTarget => Boolean )
+                             => customTargetSets.flatMap( _.targets ).filter( tagFilter ).flatMap( _.values ) )
+
+  val serieValues: Seq[String] = tagValues( customTargetSets, _.isSeriesTag )
+  val keywordValues: Seq[String] = tagValues( customTargetSets, _.isKeywordTag )
 
   val adTestValue: Option[String] = {
     val testValues = for {
@@ -193,6 +224,7 @@ object GuTargeting {
 case class GuLineItem(id: Long,
                       orderId: Long,
                       name: String,
+                      lineItemType: GuLineItemType,
                       startTime: DateTime,
                       endTime: Option[DateTime],
                       isPageSkin: Boolean,
@@ -261,6 +293,7 @@ object GuLineItem {
         "id" -> lineItem.id,
         "orderId" -> lineItem.orderId,
         "name" -> lineItem.name,
+        "lineItemType" -> lineItem.lineItemType,
         "startTime" -> timeFormatter.print(lineItem.startTime),
         "endTime" -> lineItem.endTime.map(timeFormatter.print(_)),
         "isPageSkin" -> lineItem.isPageSkin,
@@ -278,6 +311,7 @@ object GuLineItem {
     (JsPath \ "id").read[Long] and
     (JsPath \ "orderId").read[Long] and
     (JsPath \ "name").read[String] and
+    (JsPath \ "lineItemType").read[GuLineItemType] and
     (JsPath \ "startTime").read[String].map(timeFormatter.parseDateTime) and
     (JsPath \ "endTime").readNullable[String].map(_.map(timeFormatter.parseDateTime)) and
     (JsPath \ "isPageSkin").read[Boolean] and

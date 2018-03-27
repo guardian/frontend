@@ -5,18 +5,7 @@ import {
 } from 'common/modules/commercial/user-features';
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
-import config from 'lib/config';
 import { acquisitionsEpicThankYouTemplate } from 'common/modules/commercial/templates/acquisitions-epic-thank-you';
-
-const isTargetReader = () => isPayingMember() || isRecentContributor();
-
-const worksWellWithPageTemplate = () =>
-    config.page.contentType === 'Article' &&
-    !config.page.isMinuteArticle &&
-    !(config.page.isImmersive === true);
-
-const isTargetPage = () =>
-    worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue;
 
 export const acquisitionsEpicThankYou = makeABTest({
     id: 'AcquisitionsEpicThankYou',
@@ -35,11 +24,9 @@ export const acquisitionsEpicThankYou = makeABTest({
     audience: 1,
     audienceOffset: 0,
 
-    overrideCanRun: true,
+    showToContributorsAndSupporters: true,
 
-    canRun() {
-        return isTargetReader() && isTargetPage();
-    },
+    canRun: () => isPayingMember() || isRecentContributor(),
 
     useLocalViewLog: true,
 

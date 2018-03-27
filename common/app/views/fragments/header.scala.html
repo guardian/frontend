@@ -3,7 +3,8 @@
 @import common.{LinkTo, Edition}
 @import views.support.RenderClasses
 @import navigation.NavMenu
-@import navigation.UrlHelpers.{getJobUrl, getContributionOrSupporterUrl, Header, getSupportOrSubscriptionUrl}
+@import navigation.UrlHelpers.{getJobUrl, Header, getSupportOrSubscriptionUrl, getReaderRevenueUrl }
+@import navigation.ReaderRevenueSite.Support
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
@@ -41,7 +42,7 @@
                         <a class="top-bar__item top-bar__item--cta js-change-become-member-link js-acquisition-link"
                             data-link-name="nav2 : supporter-cta"
                             data-edition="@{editionId}"
-                            href="@getContributionOrSupporterUrl(editionId)">
+                            href="@getReaderRevenueUrl(Support, Header)">
 
                             <span class="top-bar__item--cta--circle"></span>
                             <span class="top-bar__item--cta--text">

@@ -5,6 +5,7 @@ import raven from 'lib/raven';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import sha1 from 'lib/sha1';
+import { session } from 'lib/storage';
 import { getUserFromCookie } from 'common/modules/identity/api';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -13,6 +14,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { onSlotRender } from 'commercial/modules/dfp/on-slot-render';
 import { onSlotLoad } from 'commercial/modules/dfp/on-slot-load';
 import { onSlotViewable } from 'commercial/modules/dfp/on-slot-viewable';
+import { onSlotVisibilityChanged } from 'commercial/modules/dfp/on-slot-visibility-changed';
 import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import { refreshOnResize } from 'commercial/modules/dfp/refresh-on-resize';
 import { adFreeSlotRemove } from 'commercial/modules/close-disabled-slots';
@@ -56,6 +58,12 @@ const setDfpListeners = (): void => {
 
     if (config.get('tests.commercialAdRefreshVariant')) {
         pubads.addEventListener('impressionViewable', onSlotViewable);
+    }
+
+    pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
+    if (session.isAvailable()) {
+        const pageViews = session.get('gu.commercial.pageViews') || 0;
+        session.set('gu.commercial.pageViews', pageViews + 1);
     }
 };
 

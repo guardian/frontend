@@ -1,0 +1,242 @@
+// I hate this specificty. So far this is the only way I can see to override template specific rules with multiple declared classes
+.content.content--article.content--type-column {
+    .content__head--article {
+        @supports (display: grid) {
+            @include mq(leftCol) {
+                grid-template-areas:
+                'media-primary media-primary'
+                'series-tab content-headline'
+                '. content-standfirst';
+                grid-template-columns: auto (gs-span(8) + $gs-gutter / 2);
+            }
+
+            @include mq(wide) {
+                grid-template-columns: auto (gs-span(9) + $gs-gutter / 2);
+            }
+        }
+    }
+
+    .media-primary {
+        // Height of content__labels
+        margin-bottom: -46px;
+
+        @include mq($until: mobileLandscape) {
+            @supports (object-fit: cover) and (height: 1vh) {
+                height: 90vw;
+
+                .u-responsive-ratio {
+                    position: unset;
+                }
+
+                img {
+                    height: 90vw;
+                    object-fit: cover;
+                }
+            }
+        }
+
+        @include mq(leftCol) {
+            grid-area: media-primary;
+            margin-bottom: -70px;
+            // TODO this should be done in a more intelligent way
+            max-height: 460px;
+            overflow: hidden;
+        }
+    }
+
+    .content__labels--column {
+        margin-right: $gs-gutter;
+        padding: ($gs-baseline / 2) ($gs-gutter / 2);
+
+        @include mq(mobileLandscape, $until: tablet) {
+            padding-left: $gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            grid-area: series-tab;
+            margin-right: 0;
+            padding: ($gs-baseline / 2) ($gs-gutter / 2) ($gs-baseline * 4);
+
+            @supports (display: grid) {
+                width: gs-span(2) + $gs-gutter / 2;
+            }
+        }
+
+        @include mq(wide) {
+            @supports (display: grid) {
+                width: gs-span(3) + $gs-gutter / 2;
+            }
+        }
+    }
+
+    .content__headline-column-wrapper {
+        border-top: 1px solid #ffffff;
+        box-sizing: border-box;
+        margin: 0 $gs-gutter 0 0;
+        padding: 0 ($gs-gutter / 2) ($gs-baseline * 3);
+        position: relative;
+        z-index: $zindex-content;
+
+        @include mq($from: mobileLandscape, $until: tablet) {
+            padding-left: $gs-gutter;
+        }
+
+        @include mq($from: phablet, $until: tablet) {
+            margin-left: $gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            border-top: 0;
+            grid-area: content-headline;
+            max-width: gs-span(8) + ($gs-gutter / 2);
+            padding-bottom: $gs-baseline * 4;
+
+            @supports (display: grid) {
+                border-left: 1px solid #ffffff;
+            }
+        }
+
+        .stars {
+            @include mq($until: phablet) {
+                margin-left: -$gs-gutter / 2;
+
+                @include mq(mobileLandscape) {
+                    margin-left: -$gs-gutter;
+                }
+            }
+
+            bottom: 0;
+            margin-bottom: 0;
+            position: absolute;
+        }
+    }
+
+    .content__headline-standfirst-wrapper {
+        @include mq(tablet) {
+            padding-bottom: $gs-baseline * 2;
+        }
+
+        @include mq(leftCol) {
+            @supports (display: grid) {
+                grid-area: content-standfirst;
+                padding-left: $gs-gutter / 2;
+                padding-right: $gs-gutter / 2;
+            }
+        }
+    }
+
+    .content__meta-container {
+        @include mq($until: tablet) {
+            margin: ($gs-baseline * 2) (-$gs-gutter / 2) 0;
+        }
+
+        @include mq(leftCol) {
+            float: left;
+            position: relative;
+        }
+    }
+
+    .content__headline--column {
+        color: #ffffff;
+        padding: 0;
+
+        @include mq(tablet) {
+            font-size: 32px;
+            line-height: 36px;
+        }
+    }
+
+    .content__series-label--column {
+        font-size: 20px;
+
+        .content__series-label__link {
+            color: #ffffff;
+            font-weight: 700;
+        }
+    }
+
+    // Opinion specific styling
+    &.content--type-comment {
+        .content__headline-column-wrapper {
+            overflow: hidden;
+
+            .content__header {
+                // Hides multiline
+                background: none;
+            }
+        }
+
+        .content__headline--byline {
+            .tone-colour {
+                color: #ffffff;
+                font-style: normal;
+                font-weight: 700;
+            }
+        }
+
+        // Fix for visible hover on series panel
+        .content__labels--column:hover {
+            background-color: $opinion-garnett-feature;
+        }
+
+        // Opinion layout with byline pic
+        .content__head--byline-pic {
+            .content__headline-column-wrapper--column {
+                padding-bottom: $gs-baseline * 3;
+            }
+
+            .content__header {
+                min-height: $gs-baseline * 12;
+
+                @include mq(leftCol) {
+                    padding-right: gs-span(2);
+                }
+            }
+
+            .byline-img {
+                margin-bottom: -$gs-baseline * 3;
+
+                @include mq(leftCol) {
+                    right: -30px;
+                    position: absolute;
+                }
+            }
+        }
+    }
+
+    // Article content
+    .content__article-body {
+        .content__meta-container + * {
+            padding-top: $gs-baseline / 4;
+
+            @include mq(leftCol) {
+                border-top: 1px solid $garnett-neutral-4;
+                margin-top: -1px;
+            }
+        }
+    }
+}
+
+.content__series-cta {
+    @include mq($until: leftCol) {
+        float: right;
+    }
+
+    @include mq(leftCol) {
+        bottom: $gs-baseline / 2;
+        position: absolute;
+    }
+}
+
+.content__series-cta__text {
+    color: #ffffff;
+    font-size: 16px;
+    font-style: italic;
+}
+
+.content__series-cta__icon {
+    background-color: #ffffff;
+    fill: $garnett-neutral-1;
+    height: 34px;
+    width: 34px;
+}

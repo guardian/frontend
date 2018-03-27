@@ -7,14 +7,32 @@
         margin-bottom: $gs-baseline;
     }
 
-    .button--secondary {
-        color: $neutral-2;
+    .button--primary {
+        background: $lifestyle-garnett-main-1;
+        border: 1px solid $lifestyle-garnett-main-1;
+        &:hover,
+        &:visited,
+        &:focus {
+            background-color: darken($lifestyle-garnett-main-1, 10%);
+            border-color: darken($lifestyle-garnett-main-1, 10%);
+        }
     }
 
-    // Extra specificity needed to overcome above rule
-    .crossword__controls__button--confirm {
-        background-color: $comment-support-3;
-        color: #000000;
+    .button--secondary {
+        color: $garnett-neutral-6;
+        background: $garnett-neutral-8;
+        border: 1px solid $garnett-neutral-8;
+        &:hover,
+        &:visited,
+        &:focus {
+            background-color: darken($garnett-neutral-8, 10%);
+            border-color: darken($garnett-neutral-8, 10%);
+        }
+    }
+
+    .button--secondary.crossword__controls__button--confirm {
+        background-color: $garnett-neutral-1;
+        color: $garnett-neutral-5;
         border: 0;
     }
 }

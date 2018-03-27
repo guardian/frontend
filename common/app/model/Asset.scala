@@ -1,7 +1,8 @@
 package model
 
 import com.gu.contentapi.client.model.v1.Asset
-import views.support.{Orientation, Naked, ImgSrc}
+import play.api.libs.json.{Json, Writes}
+import views.support.{ImgSrc, Naked, Orientation}
 
 object Helpers {
   def assetFieldsToMap(asset: Asset): Map[String, String] =
@@ -39,6 +40,7 @@ object ImageAsset {
       mimeType = asset.mimeType,
       url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
   }
+  implicit val imageAssetWrites: Writes[ImageAsset] = Json.writes[ImageAsset]
 }
 
 case class ImageAsset(
@@ -89,6 +91,7 @@ object VideoAsset {
         case _ => None
       }.orElse(asset.file) )
   }
+  implicit val videoAssetWrites: Writes[VideoAsset] = Json.writes[VideoAsset]
 }
 
 case class VideoAsset(
@@ -122,6 +125,7 @@ object AudioAsset {
       mimeType = asset.mimeType,
       url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
   }
+  implicit val audioAssetWrites: Writes[AudioAsset] = Json.writes[AudioAsset]
 }
 
 case class AudioAsset(

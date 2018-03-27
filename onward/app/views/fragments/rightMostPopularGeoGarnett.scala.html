@@ -10,7 +10,7 @@
 
 @if(popular.trails.nonEmpty) {
     <div class="js-right-most-popular right-most-popular right-most-popular--image component--rhc hide-on-childrens-books-site" data-component="geo-most-popular" data-importance="-1" data-test-id="right-most-popular">
-        <h3 class="content__meta-heading right-most-popular__heading">most popular @{country.map{ name => s"in $name"}}</h3>
+        <h3 class="content__meta-heading right-most-popular__heading">most viewed @{country.map{ name => s"in $name"}}</h3>
         <ul class="right-most-popular__items u-unstyled" data-link-name="Right hand most popular geo @countryCode">
             @popular.trails.take(5).zipWithRowInfo.map{ case((trail: PressedContent), row) =>
                 <li class="right-most-popular-item" data-link-name="trail | @row.rowNum">

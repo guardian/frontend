@@ -206,6 +206,8 @@ const init = (): void => {
     let dropdownTemplate;
 
     isMatch((match: Object): void => {
+        $('article').addClass('content--has-scores');
+
         extras[0] = {
             ready: false,
         };

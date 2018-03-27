@@ -12,7 +12,9 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
-import { supportEpicCircles } from 'common/modules/experiments/tests/support-epic-circles';
+import { acquisitionsEpicAudSupport } from 'common/modules/experiments/tests/acquisitions-epic-aud-support';
+import { acquisitionsEpicRowSupport } from 'common/modules/experiments/tests/acquisitions-epic-row-support';
+import { acquisitionsEpicCambridgeAnalyticaAlwaysAskFinal } from 'common/modules/experiments/tests/acquisitions-epic-cambridge-analytica-always-ask-final';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
@@ -37,9 +39,11 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    acquisitionsEpicCambridgeAnalyticaAlwaysAskFinal,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
-    supportEpicCircles,
+    acquisitionsEpicAudSupport,
+    acquisitionsEpicRowSupport,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

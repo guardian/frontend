@@ -675,9 +675,9 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomType <- Some(bodyElement.attr("data-atom-type"))
       } {
-        findAtom(atomId).fold { 
-          atomContainer.remove() 
-        } { atomData => 
+        findAtom(atomId).fold {
+          atomContainer.remove()
+        } { atomData =>
           if(mediaWrapper.contains(MediaWrapper.MainMedia)){
             atomContainer.addClass("element-atom--main-media")
           }
@@ -709,7 +709,7 @@ object setSvgClasses {
   }
 }
 
-case class CommercialMPUForFronts(isNetworkFront: Boolean) extends HtmlCleaner {
+case class CommercialMPUForFronts(isNetworkFront: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
     def isNetworkFrontWithThrasher(element: Element, index: Int): Boolean = {
@@ -749,7 +749,7 @@ case class CommercialMPUForFronts(isNetworkFront: Boolean) extends HtmlCleaner {
   }
 }
 
-case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean) extends HtmlCleaner {
+case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 

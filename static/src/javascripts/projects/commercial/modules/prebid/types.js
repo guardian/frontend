@@ -1,14 +1,16 @@
 // @flow
 
+export type PrebidSonobiParams = {
+    ad_unit: string,
+    dom_id: string,
+    floor: number,
+    appNexusTargeting: string,
+    pageViewId: string,
+};
+
 export type PrebidIndexExchangeParams = {
     id: string,
     siteID: string,
-};
-
-export type PrebidSonobiParams = {
-    ad_unit: string,
-    dom_id: ?string,
-    floor: ?number,
 };
 
 export type PrebidTrustXParams = {
@@ -25,18 +27,36 @@ export type PrebidImproveParams = {
     size: PrebidImproveSizeParam,
 };
 
-export type PrebidBid = {
-    bidder: string,
-    params:
-        | PrebidSonobiParams
-        | PrebidIndexExchangeParams
-        | PrebidTrustXParams
-        | PrebidImproveParams,
+export type PrebidXaxisParams = {
+    placementId: number,
 };
 
-export type PrebidEdition = 'UK' | 'US' | 'AUS' | 'INT';
+export type PrebidSlotKey =
+    | 'top-above-nav'
+    | 'right'
+    | 'inline1'
+    | 'inline'
+    | 'mostpop';
+
+export type PrebidSlotLabel =
+    | 'mobile'
+    | 'tablet'
+    | 'desktop'
+    | 'article'
+    | 'non-article';
+
+export type PrebidBidLabel = 'edn-UK' | 'edn-INT' | 'geo-NA';
+
+export type PrebidLabel = PrebidSlotLabel | PrebidBidLabel;
 
 export type PrebidSize = [number, number];
+
+export type PrebidSlot = {
+    key: PrebidSlotKey,
+    sizes: PrebidSize[],
+    labelAny?: PrebidSlotLabel[],
+    labelAll?: PrebidSlotLabel[],
+};
 
 export type PrebidBidder = {
     name: string,
@@ -47,19 +67,22 @@ export type PrebidBidder = {
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
-        | PrebidImproveParams,
+        | PrebidImproveParams
+        | PrebidXaxisParams,
+    labelAny?: PrebidBidLabel[],
+    labelAll?: PrebidBidLabel[],
 };
 
-export type PrebidAdSlotCriteria = {
-    geoContinent?: string,
-    editions?: PrebidEdition[],
-    breakpoint: Object,
-    sizes: PrebidSize[],
-    slots: string[],
-};
-
-export type PrebidBidderCriteria = {
-    [bidder: string]: PrebidAdSlotCriteria[],
+export type PrebidBid = {
+    bidder: string,
+    params:
+        | PrebidSonobiParams
+        | PrebidIndexExchangeParams
+        | PrebidTrustXParams
+        | PrebidImproveParams
+        | PrebidXaxisParams,
+    labelAny?: PrebidBidLabel[],
+    labelAll?: PrebidBidLabel[],
 };
 
 export type PrebidPriceBucket = {
@@ -71,4 +94,12 @@ export type PrebidPriceBucket = {
 
 export type PrebidPriceGranularity = {
     buckets: PrebidPriceBucket[],
+};
+
+export type PrebidBanner = {
+    sizes: PrebidSize[],
+};
+
+export type PrebidMediaTypes = {
+    banner: PrebidBanner,
 };

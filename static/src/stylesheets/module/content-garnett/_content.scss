@@ -159,11 +159,12 @@
         order: 1;
 
         .tonal__head--tone-comment &,
-        .tonal__head--tone-editorial & {
+        .tonal__head--tone-editorial &,
+        .content__head--column & {
             order: 0;
         }
 
-        & > div:not(.content__series-label) {
+        & > .content__section-label  {
             display: none;
         }
     }
@@ -189,14 +190,13 @@
 }
 
 .content__section-label {
-    @include fs-header(1);
-    float: left;
+    @include fs-header(2);
+    display: inline;
     padding-right: $gs-gutter/3;
 
     @include mq(leftCol) {
         @include fs-header(4);
         line-height: get-line-height(header, 2);
-        float: none;
         padding-right: 0;
     }
 
@@ -210,19 +210,19 @@
 }
 
 .content__series-label {
+    display: inline;
     font-family: $f-serif-headline;
-    font-size: 15px;
-    float: left;
+    font-size: 16px;
+    line-height: 19px;
 
     @include mq($until: tablet) {
         font-weight: 800;
     }
 
     @include mq(leftCol) {
-        @include fs-headline(3);
-        float: none;
+        @include fs-headline(2);
+        display: block;
     }
-
 }
 
 .content__series-label--immersive-article {
@@ -234,16 +234,12 @@
 }
 
 @include mq(leftCol, wide) {
-    .content__section-label,
     .container__meta__title {
         font-size: 20px;
         line-height: 24px;
     }
 
     .content__series-label {
-        @include font-size(18, 22);
-        display: block;
-
         .content--interactive & {
             font-size: 20px !important;
             line-height: 24px !important;
@@ -945,18 +941,6 @@
             border-color: $neutral-1;
             padding-bottom: 1px;
         }
-
-        .social__tray-close .inline-close {
-            background-color: $neutral-1;
-
-            &:hover {
-                background-color: $neutral-2;
-            }
-
-            svg {
-                fill: $neutral-4;
-            }
-        }
     }
 }
 
@@ -980,6 +964,7 @@
 
 // This section below makes the meta align with the image on leftCol, and has the main media first on mobile.
 .content__head--article {
+
     @include mq($until: tablet) {
         display: flex;
         flex-direction: column;
@@ -1066,8 +1051,8 @@
         }
 
         @include mq($from: leftCol) {
-            // adds enough space so that this doesn't clash with the content labels if css gris is not supported
-            top: gs-height(3);
+            // adds enough space so that this doesn't clash with the content labels if css grid is not supported
+            top: gs-height(4);
 
             @supports (display: grid) {
                 grid-area: meta;
@@ -1188,9 +1173,6 @@
     }
     .social--expanded-top {
         background-color: $paid-article;
-        .inline-close {
-            background-color: $neutral-6;
-        }
     }
     &.tonal--tone-media {
         .content__headline,
@@ -1319,5 +1301,19 @@
     }
     .fc-item__title svg {
         fill: $multimedia-main-2;
+    }
+    &.content--article,
+    &.tonal--tone-media {
+        .meta__numbers,
+        .meta__social {
+            @include multiline(1, $garnett-neutral-6, top);
+            border-top: 0;
+            padding-top: $gs-baseline / 2;
+        }
+        .meta__social {
+            @include mq($until: leftCol) {
+                border-bottom: 1px solid $garnett-neutral-6;
+            }
+        }
     }
 }

@@ -37,6 +37,7 @@ class GuLineItemTest extends FlatSpec with Matchers {
       id = 0L,
       orderId = 0L,
       name = "name",
+      Sponsorship,
       startTime = now,
       endTime,
       isPageSkin = false,

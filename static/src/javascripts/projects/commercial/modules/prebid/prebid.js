@@ -1,139 +1,59 @@
 // @flow
 
 import 'prebid.js/build/dist/prebid';
-import { getCookie } from 'lib/cookies';
-import config from 'lib/config';
-import { type Breakpoint, breakpoints, isBreakpoint } from 'lib/detect';
 import { Advert } from 'commercial/modules/dfp/Advert';
-import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import {
-    bidderConfig,
-    improveDigitalBidder,
-    indexExchangeBidder,
-    sonobiBidder,
-    trustXBidder,
-} from 'commercial/modules/prebid/bidder-config';
+import { bidders } from 'commercial/modules/prebid/bidder-config';
+import { labels } from 'commercial/modules/prebid/labels';
+import { slots } from 'commercial/modules/prebid/slot-config';
 import { priceGranularity } from 'commercial/modules/prebid/price-config';
 import type {
-    PrebidAdSlotCriteria,
     PrebidBid,
     PrebidBidder,
-    PrebidSize,
+    PrebidMediaTypes,
+    PrebidSlot,
+    PrebidSlotLabel,
 } from 'commercial/modules/prebid/types';
-
-const bidders = [];
-if (config.switches.prebidSonobi) {
-    bidders.push(sonobiBidder);
-}
-if (config.switches.prebidIndexExchange) {
-    bidders.push(indexExchangeBidder);
-}
-if (config.switches.prebidTrustx) {
-    bidders.push(trustXBidder);
-}
-if (config.switches.prebidImproveDigital) {
-    bidders.push(improveDigitalBidder);
-}
+import {
+    stripMobileSuffix,
+    stripTrailingNumbersAbove1,
+} from 'commercial/modules/prebid/utils';
 
 const bidderTimeout = 1500;
 
-const isEqualAdSize = (a: PrebidSize, b: PrebidSize): boolean =>
-    a[0] === b[0] && a[1] === b[1];
-
-const filterConfigEntries = (
-    bidder: string,
-    slotSizes: PrebidSize[],
-    slotId: string
-): PrebidAdSlotCriteria[] => {
-    let bidConfigEntries: PrebidAdSlotCriteria[] = bidderConfig[bidder] || [];
-
-    bidConfigEntries = bidConfigEntries.filter(bid =>
-        bid.slots.some(slotName => slotId.startsWith(slotName))
-    );
-    bidConfigEntries = bidConfigEntries.filter(
-        bid =>
-            !bid.geoContinent ||
-            bid.geoContinent === getCookie('GU_geo_continent')
-    );
-    bidConfigEntries = bidConfigEntries.filter(
-        bid => !bid.editions || bid.editions.includes(config.page.edition)
-    );
-    bidConfigEntries = bidConfigEntries.filter(bid =>
-        isBreakpoint(bid.breakpoint)
-    );
-    bidConfigEntries = bidConfigEntries.filter(bid =>
-        slotSizes.some(slotSize =>
-            bid.sizes.some(configSize => isEqualAdSize(configSize, slotSize))
-        )
-    );
-
-    return bidConfigEntries;
-};
-
-// Returns array of dimensions, eg. [[300, 250], [300, 600]]
-const getAdSizesFromAdvert = (advert: Advert): PrebidSize[] => {
-    const validBreakpoints: Breakpoint[] = breakpoints.filter(breakpoint =>
-        isBreakpoint({ min: breakpoint.name })
-    );
-    const validBreakpointKeys: string[] = validBreakpoints
-        .map(breakpoint => breakpointNameToAttribute(breakpoint.name))
-        .reverse();
-    const bestMatch: string =
-        validBreakpointKeys.find(
-            breakpointName => breakpointName in advert.sizes
-        ) || '';
-
-    const sizes: any[] = advert.sizes[bestMatch] || [];
-    const validSizes = sizes.filter(
-        ([width, height]) => Number.isInteger(width) && Number.isInteger(height)
-    );
-    return (validSizes: PrebidSize[]);
-};
-
 class PrebidAdUnit {
-    code: string;
-    sizes: PrebidSize[];
-    bids: PrebidBid[];
+    code: ?string;
+    bids: ?(PrebidBid[]);
+    mediaTypes: ?PrebidMediaTypes;
+    labelAny: ?(PrebidSlotLabel[]);
+    labelAll: ?(PrebidSlotLabel[]);
 
-    constructor(advert: Advert) {
+    constructor(advert: Advert, slot: PrebidSlot) {
         this.code = advert.id;
-        this.sizes = [];
-        this.bids = [];
-
-        // Each Advert can take a number of possible of sizes. Using this array of sizes,
-        // find an entry in the bidder-config.js config object that matches the criteria.
-        const advertSizes: PrebidSize[] = getAdSizesFromAdvert(advert);
-        this.getMatchingBids(advertSizes);
+        this.bids = bidders.map((bidder: PrebidBidder) => {
+            const bid: PrebidBid = {
+                bidder: bidder.name,
+                params: bidder.bidParams(advert.id, slot.sizes),
+            };
+            if (bidder.labelAny) {
+                bid.labelAny = bidder.labelAny;
+            }
+            if (bidder.labelAll) {
+                bid.labelAll = bidder.labelAll;
+            }
+            return bid;
+        });
+        this.mediaTypes = { banner: { sizes: slot.sizes } };
+        if (slot.labelAny) {
+            this.labelAny = slot.labelAny;
+        }
+        if (slot.labelAll) {
+            this.labelAll = slot.labelAll;
+        }
     }
 
-    getMatchingBids(availableSizes: PrebidSize[]) {
-        bidders.forEach((bidder: PrebidBidder) => {
-            const matchingConfigEntries: PrebidAdSlotCriteria[] = filterConfigEntries(
-                bidder.name,
-                availableSizes,
-                this.code
-            );
-            if (matchingConfigEntries.length > 0) {
-                // A config entry will specify a size, which should be added to the prebid ad unit if's not already included.
-                matchingConfigEntries.forEach(
-                    (matchedEntry: PrebidAdSlotCriteria) => {
-                        const newSizes = matchedEntry.sizes.filter(
-                            (newSize: PrebidSize) =>
-                                this.sizes.findIndex(size =>
-                                    isEqualAdSize(size, newSize)
-                                ) === -1
-                        );
-                        this.sizes.push(...newSizes);
-                    }
-                );
-
-                this.bids.push({
-                    bidder: bidder.name,
-                    params: bidder.bidParams(this.code, availableSizes),
-                });
-            }
-        });
+    isEmpty() {
+        return this.code == null;
     }
 }
 
@@ -144,16 +64,8 @@ class PrebidService {
                 alwaysUseBid: false,
             },
             sonobi: {
-                // for Jetstream
+                // for Jetstream deals
                 alwaysUseBid: true,
-                adserverTargeting: [
-                    {
-                        key: 'hb_deal_sonobi',
-                        val(bidResponse) {
-                            return bidResponse.dealId;
-                        },
-                    },
-                ],
             },
         };
         window.pbjs.setConfig({
@@ -162,17 +74,23 @@ class PrebidService {
         });
     }
 
-    // Prebid 1.0 supports concurrent bid requests, but for 0.34, each request
-    // must be enqueued sequentially.
     static requestQueue: Promise<void> = Promise.resolve();
 
     static requestBids(advert: Advert): Promise<void> {
         if (dfpEnv.externalDemand !== 'prebid') {
             return PrebidService.requestQueue;
         }
-        const adUnit = new PrebidAdUnit(advert);
 
-        if (adUnit.bids.length === 0) {
+        const adUnits = slots
+            .filter(slot =>
+                stripTrailingNumbersAbove1(
+                    stripMobileSuffix(advert.id)
+                ).endsWith(slot.key)
+            )
+            .map(slot => new PrebidAdUnit(advert, slot))
+            .filter(adUnit => !adUnit.isEmpty());
+
+        if (adUnits.length === 0) {
             return PrebidService.requestQueue;
         }
 
@@ -182,13 +100,14 @@ class PrebidService {
                     new Promise(resolve => {
                         window.pbjs.que.push(() => {
                             window.pbjs.requestBids({
-                                adUnits: [adUnit],
+                                adUnits,
                                 bidsBackHandler() {
                                     window.pbjs.setTargetingForGPTAsync([
-                                        adUnit.code,
+                                        adUnits[0].code,
                                     ]);
                                     resolve();
                                 },
+                                labels,
                             });
                         });
                     })

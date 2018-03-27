@@ -67,7 +67,7 @@
 
     &:hover ~ .youtube-media-atom__overlay .youtube-media-atom__play-button {
         transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-        transform: translate(-50%, -50%) scale(1.12);
+        transform: scale(1.12);
         transform-origin: center;
     }
 
@@ -139,44 +139,19 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 34px;
-    z-index: 2;
+    height: 60px;
+    z-index: 1;
 
-    &:before,
     &:after {
+        @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, .5));
         position: absolute;
         height: 100%;
         width: 100%;
         left: 0;
         z-index: -1;
-    }
-
-    &:before {
-        content: '';
-        opacity: .1;
-        background: $neutral-1;
-    }
-
-    &:after {
-        @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, .5));
         content: '';
         opacity: .7;
     }
-}
-
-.youtube-media-atom__bottom-bar__icon {
-    float: left;
-    height: 100%;
-    width: 36px;
-}
-
-.youtube-media-atom__bottom-bar__icon .inline-video-icon__svg {
-    fill: $media-default;
-    width: 19px;
-    height: 12px;
-    top: auto;
-    bottom: 10px;
-    left: 10px;
 }
 
 .youtube-media-atom__bottom-bar__duration {
@@ -185,20 +160,8 @@
     float: left;
     -webkit-font-smoothing: subpixel-antialiased;
     padding-top: 4px;
-    padding-left: 8px;
+    padding-left: $garnett-x-large-button-size + $gs-gutter;
     text-shadow: 0 0 16px rgba(51, 51, 51, .25);
-
-    &:before {
-        content: '';
-        width: 1px;
-        height: 16px;
-        opacity: .5;
-        position: absolute;
-        left: 36px;
-        background-color: $multimedia-main-2;
-        top: auto;
-        bottom: 8px;
-    }
 }
 
 .immersive-main-media__media .youtube-media-atom {
@@ -212,7 +175,7 @@
     z-index: 0;
 }
 
-.immersive-main-media__media  .youtube-media-atom__immersive-interface {
+.immersive-main-media__media .youtube-media-atom__immersive-interface {
     position: absolute;
     top: 50vh;
     transform: translateY(-100%);
@@ -274,5 +237,48 @@
 
     &:before {
         display: none;
+    }
+}
+
+
+// this has been pasted here from container--video.scss to make the styling work on embed.theguardian.com videos
+// the videos will just have a black play button
+.youtube-media-atom__play-button {
+    background-color: $garnett-neutral-1;
+    border-radius: 50%;
+    color: transparent;
+}
+.vjs-big-play-button .vjs-control-text,
+.youtube-media-atom__play-button.vjs-control-text {
+    // Sets a base play button/icon size for all video players
+    @include video-icon-size($garnett-x-large-button-size, $garnett-x-large-button-icon);
+
+    // Sets specific play button/icon size for fronts depending on layout
+    .fc-item--full-media-75-tablet &,
+    .fc-item--full-media-50-tablet &,
+    .fc-item--three-quarters-tablet &,
+    .fc-item--half-tablet & {
+        @include video-icon-size($garnett-large-button-size, $garnett-large-button-icon);
+    }
+
+    .fc-item--third-tablet & {
+        @include video-icon-size($garnett-large-button-size, $garnett-large-button-icon);
+
+        @include mq($from: mobileLandscape, $until: tablet) {
+            @include video-icon-size($garnett-medium-button-size, $garnett-medium-button-icon);
+        }
+    }
+
+    .fc-item--standard-tablet &,
+    .fc-item--list-media-tablet & {
+        @include mq($from: tablet) {
+            @include video-icon-size($garnett-small-button-size, $garnett-small-button-icon);
+        }
+    }
+
+    .fc-item--list-media-mobile & {
+        @include mq($until: tablet) {
+            @include video-icon-size($garnett-small-button-size, $garnett-small-button-icon);
+        }
     }
 }
