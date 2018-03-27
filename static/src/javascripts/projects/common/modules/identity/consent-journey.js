@@ -48,31 +48,28 @@ const insertNewsletterReminders = (
 const showDiv = (modalEl: HTMLElement, divType: string): Promise<void> =>
     fastdom
         .read(() => ({
-                'reminder': modalEl.querySelector(
-                    `.identity-consent-journey-modal-message--reminder`
-                ),
-                'noReminder': modalEl.querySelector(
-                    `.identity-consent-journey-modal-message--no-reminder`
-                ),
-            })
-        )
-        .then((modalAreas) =>
+            reminder: modalEl.querySelector(
+                `.identity-consent-journey-modal-message--reminder`
+            ),
+            noReminder: modalEl.querySelector(
+                `.identity-consent-journey-modal-message--no-reminder`
+            ),
+        }))
+        .then(modalAreas =>
             fastdom.write(() => {
-                for (let area in modalAreas) {
-                    if(area === divType) {
+                Object.keys(modalAreas).forEach(area => {
+                    if (area === divType) {
                         modalAreas[area].classList.remove(
-                            'identity-forms-message-reminder__body--inactive'
+                            'identity-consent-journey-modal-message--inactive'
                         );
-                    }
-                    else {
+                    } else {
                         modalAreas[area].classList.add(
-                            'identity-forms-message-reminder__body--inactive'
+                            'identity-consent-journey-modal-message--inactive'
                         );
                     }
-                }
+                });
             })
         );
-
 
 const showJourney = (journeyEl: HTMLElement): Promise<void> =>
     fastdom.write(() => journeyEl.classList.remove('u-h'));
@@ -101,66 +98,56 @@ const shouldShowReminder = (journeyEl: HTMLElement) =>
     Promise.all([
         getCheckboxInfo(journeyEl, 'email'),
         getCheckboxInfo(journeyEl, 'marketing-consents'),
-    ])
-    .then(checkboxes => {
+    ]).then(checkboxes => {
         const allCheckboxes = [].concat(...checkboxes);
-        const unchecked = allCheckboxes.filter(
-            _ => _.checked === false
-        );
+        const unchecked = allCheckboxes.filter(_ => _.checked === false);
 
         return {
             unchecked,
             total: allCheckboxes.length,
         };
-    })
-
+    });
 
 const showJourneyAlert = (journeyEl: HTMLElement): void => {
-
     const showNoReminderModal = () => {
         showDiv(journeyEl, 'noReminder').then(() =>
             showModal('confirm-consents')
         );
-    }
+    };
 
-        const showReminderModal = () => {
+    const showReminderModal = checkboxInfo => {
         showDiv(journeyEl, 'reminder').then(() => {
-            const consentNames = checkboxInfo.unchecked.map(
+            const consentOrNewsletterNames = checkboxInfo.unchecked.map(
                 uncheckedbox =>
                     uncheckedbox.parentElement.querySelector(
                         '.manage-account__switch-title'
                     ).innerText
             );
-            getContents('confirm-consents').then(
-                modalEl => {
-                    if (consentNames.length > 0) {
-                        insertNewsletterReminders(
-                            modalEl,
-                            consentNames
-                        );
-                    }
+            getContents('confirm-consents').then(modalEl => {
+                if (consentOrNewsletterNames.length > 0) {
+                    return insertNewsletterReminders(
+                        modalEl,
+                        consentOrNewsletterNames
+                    );
                 }
-            );
+            });
             showModal('confirm-consents');
         });
-        }
+    };
 
     getForm(journeyEl).then(formEl => {
         formEl.addEventListener('submit', ev => {
             if (ev.isTrusted) {
                 ev.preventDefault();
-                shouldShowReminder(journeyEl)
-                    .then(checkboxInfo => {
-                        if (
-                            checkboxInfo.unchecked.length === checkboxInfo.total
-                        ) {
-                            showNoReminderModal();
-                        } else if (checkboxInfo.unchecked.length > 0) {
-                            showReminderModal()
-                        } else {
-                            formEl.submit();
-                        }
-                    });
+                shouldShowReminder(journeyEl).then(checkboxInfo => {
+                    if (checkboxInfo.unchecked.length === checkboxInfo.total) {
+                        showNoReminderModal();
+                    } else if (checkboxInfo.unchecked.length > 0) {
+                        showReminderModal(checkboxInfo);
+                    } else {
+                        formEl.submit();
+                    }
+                });
             }
         });
     });
