@@ -43,6 +43,7 @@
                 <div class="u-responsive-ratio u-responsive-ratio--hd">
                 @page.video.youtubeId.map { youtubeId =>
                     <amp-youtube
+                    id="gu-video-youtube-@{page.video.mediaId}"
                     data-videoid="@youtubeId"
                     data-param-modestbranding="1"
                     data-param-showinfo="0"
