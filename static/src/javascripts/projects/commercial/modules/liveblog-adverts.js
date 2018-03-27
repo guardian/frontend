@@ -89,7 +89,7 @@ const insertAds = (slots: HTMLElement[]): void => {
             classes: 'liveblog-inline',
         });
 
-        adSlots.reverse().forEach(adSlot => {
+        adSlots.forEach(adSlot => {
             if (slots[i] && slots[i].parentNode) {
                 slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
             }
