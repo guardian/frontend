@@ -5,7 +5,7 @@ import { constants } from 'common/modules/crosswords/constants';
 import { classNames } from 'common/modules/crosswords/classNames';
 
 class Cell extends Component {
-    onClick(event) {
+    onClick(event: Event) {
         event.preventDefault();
         this.props.handleSelect(this.props.x, this.props.y);
     }

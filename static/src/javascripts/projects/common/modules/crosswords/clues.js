@@ -66,7 +66,7 @@ class Clues extends Component {
     /**
      * Scroll clues into view when they're activated (i.e. clicked in the grid)
      */
-    componentDidUpdate(prev) {
+    componentDidUpdate(prev: Object) {
         if (
             isBreakpoint({
                 min: 'tablet',
