@@ -1101,6 +1101,21 @@
     .inline-icon {
         fill: $garnett-neutral-7;
     }
+    a {
+        color: $garnett-neutral-1;
+    }
+    .u-underline {
+        text-decoration: none !important;
+        border-bottom: 1px solid $garnett-neutral-2;
+        transition: border-color .15s ease-out;
+        &:hover,
+        &:focus {
+            border-color: mix($garnett-neutral-1, $garnett-neutral-1, 50%);
+        }
+        &:active {
+            border-color: $garnett-neutral-1;
+        }
+    }
     .element.element-pullquote {
         .pullquote-paragraph {
             font-family: $f-sans-serif-text;
