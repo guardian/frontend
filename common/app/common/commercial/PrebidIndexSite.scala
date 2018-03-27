@@ -6,6 +6,7 @@ import play.api.libs.json.{JsString, JsValue, _}
 
 import scala.collection.immutable.Map
 
+// Site ID passed to the Index Exchange adapter in Prebid bid requests
 case class PrebidIndexSite(bp: Breakpoint, id: Int)
 
 object PrebidIndexSite {
@@ -32,6 +33,8 @@ object PrebidIndexSite {
     PrebidIndexSite(Tablet, 215488)
   )
 
+  // The keys in this map are section IDs.
+  // Any entries can be safely removed when their section no longer exists.
   private val siteIds: Map[String, Set[PrebidIndexSite]] =
     Seq(
       "artanddesign"                              -> PrebidIndexSite(Desktop, 208282),
@@ -169,9 +172,6 @@ object PrebidIndexSite {
       "olam-partner-zone"                         -> PrebidIndexSite(Desktop, 208232),
       "olam-partner-zone"                         -> PrebidIndexSite(Mobile, 213505),
       "olam-partner-zone"                         -> PrebidIndexSite(Tablet, 215440),
-      "owntheweekend"                             -> PrebidIndexSite(Desktop, 208231),
-      "owntheweekend"                             -> PrebidIndexSite(Mobile, 213504),
-      "owntheweekend"                             -> PrebidIndexSite(Tablet, 215439),
       "personal-investments"                      -> PrebidIndexSite(Desktop, 208230),
       "personal-investments"                      -> PrebidIndexSite(Mobile, 213503),
       "personal-investments"                      -> PrebidIndexSite(Tablet, 215438),

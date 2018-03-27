@@ -76,7 +76,7 @@ declare type InitEpicABTest = {
     overrideCanRun?: boolean,
     useTargetingTool?: boolean,
     showToContributorsAndSupporters?: boolean,
-    canRun?: () => boolean,
+    canRun?: (test: EpicABTest) => boolean,
     pageCheck?: (page: Object) => boolean,
 }
 

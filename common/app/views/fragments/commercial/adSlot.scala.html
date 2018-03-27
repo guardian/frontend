@@ -25,9 +25,9 @@
     }
     >@placeholderContent
 
-    @if(!request.isAmp) {
-        @Commercial.getBlockthroughElementUid(name).map { uid =>
-            <span class="bt-uid-tg" uid="@uid" style="display: none !important"></span>
-        }
-    }
 </div>
+@if(!request.isAmp) {
+    @Commercial.getBlockthroughElementUid(name).map { uid =>
+<span class="bt-uid-tg" uid="@uid" style="display: none !important"></span>
+    }
+}

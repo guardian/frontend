@@ -48,6 +48,9 @@ trait Store extends Logging with Dates {
   def putDfpCustomTargetingKeyValues(keyValues: String): Unit ={
     S3.putPublic(dfpCustomTargetingKey, keyValues, defaultJsonEncoding )
   }
+  def putNonRefreshableLineItemIds(lineItemIds: String): Unit = {
+    S3.putPublic(dfpNonRefreshableLineItemIdsKey, lineItemIds, defaultJsonEncoding)
+  }
 
   val now: String = DateTime.now().toHttpDateTimeString
 

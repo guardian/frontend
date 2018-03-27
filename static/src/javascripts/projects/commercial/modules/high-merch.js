@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import { createSlot } from 'commercial/modules/dfp/create-slot';
+import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 export const init = (): Promise<void> => {
@@ -13,11 +13,13 @@ export const init = (): Promise<void> => {
         const container = document.createElement('div');
 
         container.className = 'fc-container fc-container--commercial';
-        container.appendChild(
-            createSlot(
-                config.page.isPaidContent ? 'high-merch-paid' : 'high-merch'
-            )
+        const slots = createSlots(
+            config.page.isPaidContent ? 'high-merch-paid' : 'high-merch'
         );
+
+        slots.forEach(slot => {
+            container.appendChild(slot);
+        });
 
         return fastdom.write(() => {
             if (anchor && anchor.parentNode) {

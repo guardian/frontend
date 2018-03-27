@@ -175,15 +175,29 @@
 
 @confirmModal = {
     <section class="identity-forms-message">
+        <h1 class="identity-header">Are you sure?</h1>
 
-        <div class="identity-forms-message__body">
-            You have not selected any newsletters or Guardian products and services.<br/>
-            This means you will stop receiving these emails from us. Are you sure you want to continue?
-        </div>
+            <div class="identity-consent-journey-modal-message identity-consent-journey-modal-message--inactive identity-consent-journey-modal-message--no-reminder">
+                <p>Looks like you haven't selected any newsletters or Guardian products and services.</p>
+
+                <p>This means you'll stop receiving <b>all</b> emails from us other than service communication.</p>
+
+                <p>Keeping you informed is a critical part of our job.</p>
+
+                <p><b>Are you sure you want to unsubscribe from all Guardian emails?</b></p>
+            </div>
+
+            <div class="identity-consent-journey-modal-message identity-consent-journey-modal-message--inactive  identity-consent-journey-modal-message--reminder">
+                <p>You've chosen not to receive the following emails from the Guardian:</p>
+
+                <div class="identity-consent-journey-modal__reminder"></div>
+
+                <p>Are you sure you want to unsubscribe from these email services?</p>
+            </div>
 
         <footer class="identity-forms-message__options">
-            <a class="manage-account__button manage-account__button--secondary manage-account__button--center js-identity-consent-journey-continue" data-link-name="consents : confirm : continue">Continue</a>
             <a class="js-identity-modal__closer manage-account__button manage-account__button--main manage-account__button--center" data-link-name="consents : confirm : recheck">Let me look again</a>
+            <a class="manage-account__button manage-account__button--secondary manage-account__button--center js-identity-consent-journey-continue" data-link-name="consents : confirm : continue">Unsubscribe me</a>
         </footer>
 
     </section>
@@ -241,8 +255,8 @@
                         class="manage-account__button--icon manage-account__button manage-account__button--@{skin.getOrElse("main")}"
                         data-link-name="consents : navigation : submit"
                     >
-                        <span>Done</span>
-                        @fragments.inlineSvg("tick-button", "icon")
+                        <span>All done!</span>
+                        @fragments.inlineSvg("arrow-right", "icon")
                     </button>
                 </div>
             </form>

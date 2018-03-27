@@ -1,7 +1,7 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
-import { createSlot } from 'commercial/modules/dfp/create-slot';
+import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { spaceFiller } from 'common/modules/article/space-filler';
 
@@ -46,14 +46,16 @@ const rules = {
 };
 
 const insertSlot = (paras: HTMLElement[]): Promise<void> => {
-    const slot = createSlot('carrot');
+    const slots = createSlots('carrot');
     return fastdom
         .write(() => {
-            if (paras[0] && paras[0].parentNode) {
-                paras[0].parentNode.insertBefore(slot, paras[0]);
-            }
+            slots.forEach(slot => {
+                if (paras[0] && paras[0].parentNode) {
+                    paras[0].parentNode.insertBefore(slot, paras[0]);
+                }
+            });
         })
-        .then(() => addSlot(slot, true));
+        .then(() => addSlot(slots[0], true));
 };
 
 export const init = (): Promise<void> => {

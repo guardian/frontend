@@ -82,7 +82,7 @@ trait ABTestSwitches {
     "Point the subscribe link in the header to a subscriptions-only version of the support site",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 26),
+    sellByDate = new LocalDate(2018, 4, 5),
     exposeClientSide = true
   )
 
@@ -148,11 +148,41 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-cambridge-analytica-always-ask",
-    "measure the impact of placing an ever-present ask on \"moment\" stories",
+    "ab-acquisitions-epic-cambridge-analytica-always-ask-final",
+    "turn on always ask for CA stories",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-header-row-support",
+    "Points the 'support the guardian' link in the header to the row version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 5, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-row-support",
+    "Points the 'support the guardian' link in the engagement banner to the row version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 5, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-row-support",
+    "Points the 'support the guardian' link in the epic to the row version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 5, 24),
     exposeClientSide = true
   )
 }
