@@ -18,6 +18,7 @@
     }
 
     .gallery__meta-container {
+        // TODO: remove the need for important by restructuring _types.scss
         background-image: none !important;
         .byline,
         .content__dateline {
