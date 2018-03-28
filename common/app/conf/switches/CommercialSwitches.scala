@@ -287,16 +287,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val prebidSwitch: Switch = Switch(
-    group = Commercial,
-    name = "prebid-header-bidding",
-    description = "Turn on Prebid header bidding (takes priority over Sonobi)",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val sonobiSwitch: Switch = Switch(
     group = Commercial,
     name = "sonobi-header-bidding",
@@ -326,6 +316,26 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2018, 4, 17),
     exposeClientSide = false
    )
+
+  val prebidSwitch: Switch = Switch(
+    group = Commercial,
+    name = "prebid-header-bidding",
+    description = "Turn on Prebid header bidding (takes priority over Sonobi)",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val prebidAnalytics: Switch = Switch(
+    group = Commercial,
+    name = "prebid-analytics",
+    description = "Gather analytics from Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 
   val prebidSonobi: Switch = Switch(
     group = Commercial,
