@@ -1,5 +1,7 @@
 package controllers
 
+import java.util.concurrent.atomic.AtomicBoolean
+
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
@@ -166,10 +168,23 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
+  val seen = new AtomicBoolean(false)
+
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
-        render(path, _)
+      if (path == "test/1/2/3/nic-error-page") {
+        if (seen.get()) {
+          log.error("NIC - FOLLOW HIT")
+          Future.successful(NoCache(play.api.mvc.Results.ServiceUnavailable("I am testing failure caching behaviour")))
+        } else {
+          log.error("NIC - FIRST HIT")
+          seen.set(true)
+          Future.successful(Cached(60)(WithoutRevalidationResult(play.api.mvc.Results.Ok)))
+        }
+      } else {
+        mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
+          render(path, _)
+        }
       }
     }
   }
