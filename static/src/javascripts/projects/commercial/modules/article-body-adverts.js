@@ -57,11 +57,13 @@ const insertAdAtPara = (
 let previousAllowedCandidate;
 
 // this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
-const filterNearbyCandidates = (candidate: SpacefinderItem): boolean => {
+const filterNearbyCandidates = (maximumAdHeight: number) => (
+    candidate: SpacefinderItem
+): boolean => {
     if (
         !previousAllowedCandidate ||
         Math.abs(candidate.top - previousAllowedCandidate.top) -
-            adSizes.mpu.height >=
+            maximumAdHeight >=
             adSlotClassSelectorSizes.minBelow
     ) {
         previousAllowedCandidate = candidate;
@@ -90,7 +92,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
                 minBelow: 400,
             },
         },
-        filter: filterNearbyCandidates,
+        filter: filterNearbyCandidates(adSizes.mpu.height),
     };
 
     const relaxedRules = {
@@ -101,7 +103,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
         },
-        filter: filterNearbyCandidates,
+        filter: filterNearbyCandidates(adSizes.halfPage.height),
     };
 
     const rules = inTestVariant && !isInline1 ? relaxedRules : defaultRules;
@@ -148,7 +150,7 @@ const addMobileInlineAds = (): Promise<number> => {
                 minBelow: 400,
             },
         },
-        filter: filterNearbyCandidates,
+        filter: filterNearbyCandidates(adSizes.mpu.height),
     };
 
     const insertAds = (paras: HTMLElement[]): Promise<number> => {
