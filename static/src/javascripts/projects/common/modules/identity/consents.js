@@ -31,12 +31,11 @@ const LC_UNCHECK_ALL = 'Deselect all';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
-let submitPartialConsentFormData = new FormData();
+let submitPartialConsentFormData = {};
 
-const submitPartialConsentForm = (formData: FormData): Promise<void> => {
-
-    [...formData].forEach(pair => {
-        submitPartialConsentFormData.set(pair[0], pair[1]);
+const submitPartialConsentForm = (formData: {}): Promise<void> => {
+    Object.keys(formData).forEach(key => {
+        submitPartialConsentFormData[key] = formData[key];
     });
 
     return debouncedPromise(
@@ -45,9 +44,8 @@ const submitPartialConsentForm = (formData: FormData): Promise<void> => {
                 url: '/privacy/edit-ajax',
                 method: 'POST',
                 data: submitPartialConsentFormData,
-                processData: false,
             }).then(() => {
-                submitPartialConsentFormData = new FormData();
+                submitPartialConsentFormData = {};
             }),
         500
     );
@@ -89,16 +87,17 @@ const submitNewsletterAction = (
 const buildFormDataForFields = (
     csrfToken: string,
     fields: NodeList<any> = new NodeList()
-): FormData => {
-    const formData: FormData = new FormData();
-    formData.append('csrfToken', csrfToken);
+): {} => {
+    const formData: { csrfToken: string } = {
+        csrfToken,
+    };
     [...fields].forEach((field: HTMLInputElement) => {
         switch (field.type) {
             case 'checkbox':
-                formData.append(field.name, field.checked.toString());
+                formData[field.name] = field.checked.toString();
                 break;
             default:
-                formData.append(field.name, field.value.toString());
+                formData[field.name] = field.value.toString();
                 break;
         }
     });
@@ -269,7 +268,7 @@ const updateConsentSwitch = (labelEl: HTMLElement): Promise<void> =>
         addSpinner(labelEl),
     ])
         .then(([token, fields]) => buildFormDataForFields(token, fields))
-        .then((formData: FormData) => submitPartialConsentForm(formData))
+        .then((formData: {}) => submitPartialConsentForm(formData))
         .catch((err: Error) => {
             pushError(err, 'reload').then(() => {
                 window.scrollTo(0, 0);
