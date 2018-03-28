@@ -4,6 +4,8 @@ import reqwest from 'reqwest';
 import fastdom from 'lib/fastdom-promise';
 import loadEnhancers from './modules/loadEnhancers';
 
+import debouncedPromise from './modules/debouncedPromise';
+
 import { push as pushError } from './modules/show-errors';
 import {
     addSpinner,
@@ -29,13 +31,27 @@ const LC_UNCHECK_ALL = 'Deselect all';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
-const submitPartialConsentForm = (formData: FormData): Promise<void> =>
-    reqwest({
-        url: '/privacy/edit-ajax',
-        method: 'POST',
-        data: formData,
-        processData: false,
+let submitPartialConsentFormData = new FormData();
+
+const submitPartialConsentForm = (formData: FormData): Promise<void> => {
+
+    [...formData].forEach(pair => {
+        submitPartialConsentFormData.set(pair[0], pair[1]);
     });
+
+    return debouncedPromise(
+        () =>
+            reqwest({
+                url: '/privacy/edit-ajax',
+                method: 'POST',
+                data: submitPartialConsentFormData,
+                processData: false,
+            }).then(() => {
+                submitPartialConsentFormData = new FormData();
+            }),
+        500
+    );
+};
 
 const submitNewsletterAction = (
     csrfToken: string,
@@ -336,34 +352,24 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                 labelEl.style.pointerEvents = 'all';
             });
 
-        /* TODO:these events get fired as a linear
-        timeout to avoid sending the requests
-        to the server at once as that creates a
-        race condition on its end. should be changed
-        to a single call that handles checking/unchecking */
         const handleChangeEvent = () => {
-            addSpinner(labelEl, 200);
-            Promise.all(
-                wrappedCheckboxEls
-                    .map(($el, i) => [$el, i * 100])
-                    .map(([wrappedCheckboxEl, timeout]) =>
-                        fastdom
-                            .write(() => {
-                                if (!(checkboxEl instanceof HTMLInputElement)) {
-                                    throw new Error(ERR_MALFORMED_HTML);
-                                }
-                                wrappedCheckboxEl.checked = checkboxEl.checked;
-                            })
-                            .then(() => {
-                                setTimeout(() => {
-                                    wrappedCheckboxEl.dispatchEvent(
-                                        new Event('change', { bubbles: true })
-                                    );
-                                    return Promise.resolve();
-                                }, timeout);
-                            })
-                    )
-            ).then(() => removeSpinner(labelEl));
+            addSpinner(labelEl, 9999)
+                .then(() => new Promise(accept => setTimeout(accept, 300)))
+                .then(() => removeSpinner(labelEl));
+            wrappedCheckboxEls.forEach(wrappedCheckboxEl => {
+                fastdom
+                    .write(() => {
+                        if (!(checkboxEl instanceof HTMLInputElement)) {
+                            throw new Error(ERR_MALFORMED_HTML);
+                        }
+                        wrappedCheckboxEl.checked = checkboxEl.checked;
+                    })
+                    .then(() => {
+                        wrappedCheckboxEl.dispatchEvent(
+                            new Event('change', { bubbles: true })
+                        );
+                    });
+            });
         };
 
         if (getCheckedAllStatus(wrappedCheckboxEls) === false) {
