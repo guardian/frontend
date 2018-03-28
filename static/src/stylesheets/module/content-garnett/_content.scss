@@ -67,7 +67,6 @@
     }
 
     &.content__main-column--media,
-    &.content__main-column--gallery,
     &.content__main-column--wide {
         @include mq(desktop) {
             max-width: none;
@@ -170,7 +169,8 @@
     }
 }
 
-.content__labels--not-immersive {
+.content__labels--not-immersive,
+.content__labels--gallery {
     @include mq($from: phablet, $until: tablet) {
         margin-left: $gs-gutter;
     }
@@ -949,7 +949,6 @@
 
 // This section below makes the meta align with the image on leftCol, and has the main media first on mobile.
 .content__head--article {
-
     @include mq($until: tablet) {
         display: flex;
         flex-direction: column;

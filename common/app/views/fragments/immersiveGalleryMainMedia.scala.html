@@ -24,22 +24,23 @@
 
     <div class="@RenderClasses("immersive-main-media__headline-container--dark", "immersive-main-media__headline-container", "content--pillar-news", s"content--pillar-${page.metadata.pillar.nameOrDefault}")">
         <div class="gs-container">
-            @fragments.meta.metaInline(page.item)
+            <div class="content__main-column content__main-column--gallery">
+                @fragments.meta.metaInline(page.item)
 
-            <h1 class="@RenderClasses(
-                Map("content__headline--paidgallery" -> isPaidContent(page)),
-                "content__headline", "content__headline--immersive", "content__headline--gallery", "content__headline--immersive--with-main-media"
-                )">
-                @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media"))
-                @Html(page.item.trail.headline)
-            </h1>
+                <h1 class="@RenderClasses(
+                    Map("content__headline--paidgallery" -> isPaidContent(page)),
+                    "content__headline", "content__headline--immersive", "content__headline--gallery", "content__headline--immersive--with-main-media"
+                    )">
+                    @fragments.inlineSvg("camera", "icon", List("inline-tone-fill", "inline-icon--media"))
+                    @Html(page.item.trail.headline)
+                </h1>
 
-            @if(page.item.content.hasTonalHeaderByline) {
-                @page.item.trail.byline.map { text =>
-                    <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
+                @if(page.item.content.hasTonalHeaderByline) {
+                    @page.item.trail.byline.map { text =>
+                        <span class="content__headline content__headline--byline">@ContributorLinks(text, page.item.tags.contributors)</span>
+                    }
                 }
-            }
-
+            </div>
         </div>
     </div>
 </div>
