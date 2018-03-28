@@ -128,6 +128,7 @@ export const display = (
                 display($parent, newCard);
                 window.ga(
                     `${gaTracker}.send`,
+                    'event',
                     'action required',
                     'change details',
                     'membership action required | change successful'
@@ -177,6 +178,7 @@ export const display = (
 
             window.ga(
                 `${gaTracker}.send`,
+                'event',
                 'action required',
                 'change details',
                 'membership action required | change start'
