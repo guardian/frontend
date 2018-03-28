@@ -20,91 +20,6 @@ $quote-mark: 35px;
 .content--type-media,
 .content--type-review,
 .content--type-quiz {
-    // *************** Meta and Social ***************
-    .submeta {
-        @include multiline(4, $garnett-neutral-4, top);
-        border-top: 0;
-        padding-top: $gs-baseline * 1.5;
-    }
-
-    .submeta--borderless-bottom .submeta__keywords {
-        border-bottom: 0;
-    }
-
-    .submeta__section-labels {
-        padding-top: $gs-baseline / 4;
-    }
-
-    .submeta__label {
-        font-size: 12px;
-        line-height: 16px;
-        color: $neutral-2;
-        display: block;
-        margin-bottom: -($gs-baseline / 4);
-        margin-top: -($gs-baseline / 4);
-    }
-
-    .submeta__keywords {
-        padding-top: $gs-baseline / 6;
-        padding-bottom: $gs-baseline / 2;
-        border-bottom: solid 1px $garnett-neutral-4;
-        margin-bottom: $gs-baseline / 2;
-    }
-
-    .submeta__links {
-        font-size: 0;
-        line-height: 0;
-        list-style: none;
-        overflow: hidden;
-        margin-bottom: 0;
-        margin-left: -$gs-gutter / 4;
-        margin-top: 0;
-    }
-
-    .submeta__link-item,
-    .syndication__item {
-        &:before {
-            content: none!important;
-            // I can't seem to override this behaviour without the important statment
-        }
-    }
-
-    .submeta__link {
-        @include trailing-slash-link;
-        font-weight: 400;
-        line-height: 22px;
-
-        &:after {
-            @include trailing-slash;
-            color: $garnett-neutral-4;
-        }
-
-        .submeta__keywords & {
-            font-size: 15px;
-            color: $neutral-2;
-        }
-
-        .submeta__section-labels & {
-            font-size: 16px;
-            line-height: 22px;
-        }
-    }
-
-    .submeta__section-labels .submeta__link {
-        @include fs-headline(2);
-        font-weight: 400;
-    }
-
-    .submeta__badge {
-        float: right;
-        margin-top: -$gs-baseline;
-        margin-left: $gs-gutter / 2;
-    }
-
-    .social {
-        overflow-y: visible;
-    }
-
     .content__header,
     .content__headline,
     .content__meta-container,
@@ -314,10 +229,6 @@ $quote-mark: 35px;
     .meta__extras {
         order: 5;
         border: 0;
-    }
-
-    .social {
-        margin-bottom: $gs-baseline/2;
     }
 
     .block-share__item,
@@ -1221,14 +1132,6 @@ $quote-mark: 35px;
     .byline span {
         display: inline;
     }
-
-    .submeta {
-        @include multiline(4, $garnett-neutral-7, top);
-    }
-
-    .submeta__keywords {
-        border-bottom: 0;
-    }
 }
 
 // For legacy videos, shows play circle and icon
@@ -1547,13 +1450,8 @@ $quote-mark: 35px;
         @include multiline(3, $garnett-neutral-6, top);
     }
 
-    .submeta {
-        @include multiline(4, $garnett-neutral-6, top);
-    }
-
     .social-icon,
-    .block-share__item,
-    .submeta__keywords {
+    .block-share__item {
         border-color: $garnett-neutral-6;
     }
 
