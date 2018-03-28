@@ -1,12 +1,12 @@
 // @flow
-import React, { Component, findDOMNode } from 'react';
+import React, { Component, findDOMNode } from 'react/addons';
 import bean from 'bean';
 import fastdom from 'fastdom';
 import { classNames } from 'common/modules/crosswords/classNames';
 import { isBreakpoint } from 'lib/detect';
 import { scrollTo } from 'lib/scroller';
 
-class Clue extends Component {
+class Clue extends Component<*, *> {
     onClick() {
         this.props.setReturnPosition();
     }
@@ -38,7 +38,7 @@ class Clue extends Component {
     }
 }
 
-class Clues extends Component {
+class Clues extends Component<*, *> {
     constructor(props: Object) {
         super(props);
         this.state = {

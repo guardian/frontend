@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component, findDOMNode } from 'react/addons';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
@@ -38,7 +38,7 @@ import {
 import { classNames } from 'common/modules/crosswords/classNames';
 import type { GridProps } from 'common/modules/crosswords/grid';
 
-class Crossword extends Component {
+class Crossword extends Component<*, *> {
     constructor(props: Object) {
         super(props);
         const dimensions = this.props.data.dimensions;
@@ -62,11 +62,9 @@ class Crossword extends Component {
 
     componentDidMount(): void {
         // Sticky clue
-        const $stickyClueWrapper = $(
-            React.findDOMNode(this.refs.stickyClueWrapper)
-        );
-        const $grid = $(React.findDOMNode(this.refs.grid));
-        const $game = $(React.findDOMNode(this.refs.game));
+        const $stickyClueWrapper = $(findDOMNode(this.refs.stickyClueWrapper));
+        const $grid = $(findDOMNode(this.refs.grid));
+        const $game = $(findDOMNode(this.refs.game));
 
         mediator.on(
             'window:resize',
@@ -349,6 +347,10 @@ class Crossword extends Component {
         this.returnPosition = position;
     }
 
+    columns: any;
+    rows: any;
+    clueMap: any;
+
     insertCharacter(character: string): void {
         const cell = this.state.cellInFocus;
         if (/[A-Z]/.test(character) && character.length === 1) {
@@ -489,7 +491,7 @@ class Crossword extends Component {
     }
 
     focusHiddenInput(x: number, y: number): void {
-        const wrapper = React.findDOMNode(
+        const wrapper = findDOMNode(
             this.refs.hiddenInputComponent.refs.wrapper
         );
         const left = gridSize(x);
@@ -500,7 +502,7 @@ class Crossword extends Component {
         wrapper.style.left = `${position.x}%`;
         wrapper.style.top = `${position.y}%`;
 
-        const hiddenInputNode = React.findDOMNode(
+        const hiddenInputNode = findDOMNode(
             this.refs.hiddenInputComponent.refs.input
         );
 
@@ -690,7 +692,7 @@ class Crossword extends Component {
             : false;
     }
 
-    render(): Element {
+    render(): React$Node {
         const focused = this.clueInFocus();
 
         const anagramHelper = this.state.showAnagramHelper && (

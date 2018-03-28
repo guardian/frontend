@@ -10,7 +10,7 @@ import { ClueInput } from './clue-input';
 import { CluePreview } from './clue-preview';
 import { Ring } from './ring';
 
-class AnagramHelper extends Component {
+class AnagramHelper extends Component<*, *> {
     constructor() {
         super();
         this.state = {

@@ -2,10 +2,11 @@
 import React, { Component } from 'react';
 import { classNames } from 'common/modules/crosswords/classNames';
 
-class ConfirmButton extends Component {
+const timeout = 2000;
+
+class ConfirmButton extends Component<*, *> {
     constructor(props: {}) {
         super(props);
-        this.timeout = props.timeout || 2000;
         this.state = {
             confirming: false,
         };
@@ -25,7 +26,7 @@ class ConfirmButton extends Component {
                 this.setState({
                     confirming: false,
                 });
-            }, this.timeout);
+            }, timeout);
         }
     }
 

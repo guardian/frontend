@@ -1,7 +1,7 @@
 // @flow
-import React, { Component, findDOMNode } from 'react';
+import React, { Component, findDOMNode } from 'react/addons';
 
-class ClueInput extends Component {
+class ClueInput extends Component<*, *> {
     componentDidMount() {
         findDOMNode(this).focus();
     }

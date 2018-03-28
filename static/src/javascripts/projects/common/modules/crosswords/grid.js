@@ -20,7 +20,7 @@ const createWordSeparator = (
     x: number,
     y: number,
     direction: Direction
-): ?React.Element => {
+): ?React$Node => {
     const top = gridSize(y);
     const left = gridSize(x);
     const borderWidth = 1;
@@ -55,7 +55,7 @@ const createHyphenSeparator = (
     x: number,
     y: number,
     direction: Direction
-): ?React.Element => {
+): ?React$Node => {
     const top = gridSize(y);
     const left = gridSize(x);
     const borderWidth = 1;
@@ -91,7 +91,7 @@ const createSeparator = (
     x: number,
     y: number,
     separatorDescription: ?SeparatorDescription
-): ?React.Element => {
+): ?React$Node => {
     if (separatorDescription) {
         if (separatorDescription.separator === ',') {
             return createWordSeparator(x, y, separatorDescription.direction);
@@ -101,7 +101,7 @@ const createSeparator = (
     }
 };
 
-export const Grid = (props: GridProps): React.Element<*> => {
+export const Grid = (props: GridProps): React$Node => {
     const getSeparators = (x: number, y: number): ?SeparatorDescription =>
         props.separators[clueMapKey(x, y)];
 

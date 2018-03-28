@@ -21,7 +21,7 @@ const getPosition = (
     };
 };
 
-class Ring extends Component {
+class Ring extends Component<*, *> {
     render() {
         const angle = 360 / this.props.letters.length;
 

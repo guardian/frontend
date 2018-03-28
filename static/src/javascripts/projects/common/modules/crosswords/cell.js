@@ -4,7 +4,7 @@ import { gridSize } from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
 import { classNames } from 'common/modules/crosswords/classNames';
 
-class Cell extends Component {
+class Cell extends Component<*, *> {
     onClick(event: Event) {
         event.preventDefault();
         this.props.handleSelect(this.props.x, this.props.y);

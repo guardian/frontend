@@ -9,7 +9,7 @@ type AccessibilityState = {
     'flashing-elements': boolean,
 };
 
-class BinaryToggle extends Component {
+class BinaryToggle extends Component<*, *> {
     render() {
         return (
             <div className="form-field">
@@ -42,7 +42,7 @@ class BinaryToggle extends Component {
     }
 }
 
-class Accessibility extends Component {
+class Accessibility extends Component<*, *> {
     constructor() {
         super();
         this.state = ({
@@ -97,7 +97,11 @@ class Accessibility extends Component {
 }
 
 const init = (callback: () => void): void => {
-    render(<Accessibility />, document.getElementById(DOM_ID), callback);
+    const el = document.getElementById(DOM_ID);
+
+    if (el) {
+        render(<Accessibility />, el, callback);
+    }
 };
 
 export { DOM_ID, init };
