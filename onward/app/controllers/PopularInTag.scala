@@ -33,7 +33,7 @@ class PopularInTag(
     // to aesthetic issues with the second slice when there are only 5 or 6 results in related content (7 looks fine).
     val numberOfCards = if (trails.faciaItems.length == 5 || trails.faciaItems.length == 6) 4 else 8
     val html = views.html.fragments.containers.facia_cards.container(
-      containerDefinition = onwardContainer("related content", trails.faciaItems take numberOfCards),
+      containerDefinition = onwardContainer("Related content", trails.faciaItems take numberOfCards),
       frontId = request.referrer.map(new URI(_).getPath.stripPrefix("/"))
     )
 
