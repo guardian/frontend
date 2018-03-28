@@ -16,6 +16,7 @@ import type {
     PrebidSlotLabel,
 } from 'commercial/modules/prebid/types';
 import {
+    getRandomIntInclusive,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
@@ -65,7 +66,12 @@ class PrebidService {
             priceGranularity,
         });
 
-        if (config.switches.prebidAnalytics) {
+        // gather analytics from 0.001% of pageviews
+        const inSample = getRandomIntInclusive(1, 100000) === 1;
+        if (
+            config.switches.prebidAnalytics &&
+            (inSample || config.page.isDev)
+        ) {
             window.pbjs.enableAnalytics([
                 {
                     provider: 'gu',
