@@ -3,7 +3,6 @@
     display: block;
     color: $neutral-1;
     background-color: $news-garnett-highlight;
-    margin-bottom: $gs-baseline;
 
     &:before {
         @include mq(phablet) {
