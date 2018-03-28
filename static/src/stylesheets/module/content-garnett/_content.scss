@@ -67,7 +67,6 @@
     }
 
     &.content__main-column--media,
-    &.content__main-column--gallery,
     &.content__main-column--wide {
         @include mq(desktop) {
             max-width: none;
@@ -170,7 +169,8 @@
     }
 }
 
-.content__labels--not-immersive {
+.content__labels--not-immersive,
+.content__labels--gallery {
     @include mq($from: phablet, $until: tablet) {
         margin-left: $gs-gutter;
     }
@@ -205,10 +205,6 @@
     }
 }
 
-.content__section-label--gallery {
-    margin-right: $gs-gutter / 4;
-}
-
 .content__series-label {
     display: inline;
     font-family: $f-serif-headline;
@@ -225,10 +221,6 @@
     }
 }
 
-.content__series-label--immersive-article {
-    font-weight: bold;
-}
-
 .content__series-label__link {
     color: $neutral-2;
 }
@@ -237,13 +229,6 @@
     .container__meta__title {
         font-size: 20px;
         line-height: 24px;
-    }
-
-    .content__series-label {
-        .content--interactive & {
-            font-size: 20px !important;
-            line-height: 24px !important;
-        }
     }
 }
 
@@ -964,7 +949,6 @@
 
 // This section below makes the meta align with the image on leftCol, and has the main media first on mobile.
 .content__head--article {
-
     @include mq($until: tablet) {
         display: flex;
         flex-direction: column;

@@ -3,24 +3,24 @@
 @import views.support.TrailCssClasses.toneClass
 
 @* Manually placing tonal__head--tone-media as temporary fix to ensute special report tones have it *@
-<header class="content__head tonal__head tonal__head--tone-media tonal__head--@toneClass(gallery.item)">
+<header class="tonal__head tonal__head--tone-media tonal__head--@toneClass(gallery.item)">
     @* Hidden because we visually show this data in the head, but needed
     here for SEO. *@
     <h1 class="is-hidden" itemprop="headline">@Html(gallery.item.trail.headline)</h1>
 
     <div class="gs-container">
-        @fragments.commercial.badge(gallery.item, gallery)
+        <div class="content__main-column content__main-column--gallery">
+            @fragments.commercial.badge(gallery.item, gallery)
 
-        @fragments.contentMeta(gallery.item, gallery)
+            @fragments.contentMeta(gallery.item, gallery)
 
-        @if(gallery.item.fields.standfirst.isDefined) {
-            <div class="tonal__standfirst">
-                @fragments.standfirst(gallery.item)
-            </div>
-        }
+            @if(gallery.item.fields.standfirst.isDefined) {
+                <div class="tonal__standfirst">
+                    @fragments.standfirst(gallery.item)
+                </div>
+            }
 
             <div class="content__meta-container gallery__meta-container">
-
                 @if(!gallery.item.content.hasTonalHeaderByline) {
                     @fragments.meta.byline(gallery.item.trail.byline, gallery.item.tags)
                 }
@@ -33,7 +33,7 @@
                 @if(!gallery.item.trail.shouldHidePublicationDate) {
                     @fragments.meta.dateline(gallery.item.trail.webPublicationDate, gallery.item.fields.lastModified, gallery.item.content.hasBeenModified, gallery.item.fields.firstPublicationDate, gallery.item.tags.isLiveBlog, gallery.item.fields.isLive)
                 }
-
             </div>
+        </div>
     </div>
 </header>
