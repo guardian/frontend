@@ -1,5 +1,6 @@
 // @flow
-import React, { Component } from 'react/addons';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 import { saveState, isOn } from 'common/modules/accessibility/main';
 
 const DOM_ID: string = 'js-accessibility-preferences';
@@ -96,7 +97,7 @@ class Accessibility extends Component {
 }
 
 const init = (callback: () => void): void => {
-    React.render(<Accessibility />, document.getElementById(DOM_ID), callback);
+    render(<Accessibility />, document.getElementById(DOM_ID), callback);
 };
 
 export { DOM_ID, init };

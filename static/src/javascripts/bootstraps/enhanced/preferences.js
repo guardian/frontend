@@ -1,5 +1,6 @@
 // @flow
-import React, { Component } from 'react/addons';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 import {
     getPopularFiltered,
     deleteFromSummary,
@@ -33,7 +34,10 @@ const init = (): void => {
             render() {
                 const tags: Object = this.state.popular.reduce((obj, tag) => {
                     obj[tag[0]] = (
-                        <span className="button button--small button--tag button--secondary">
+                        <span
+                            className="button button--small button--tag button--secondary"
+                            key={tag[0]}
+                        >
                             <button
                                 onClick={this.handleRemove.bind(this, tag[0])}
                                 data-link-name={`remove | ${tag[1]}`}>
@@ -55,9 +59,9 @@ const init = (): void => {
                     helperText =
                         "Remove individual topics by clicking 'X' or switch off the functionality below. We respect your privacy and your shortcuts will never be made public.";
                 }
-                tags.helperText = <p>{helperText}</p>;
+                tags.helperText = <p key="helper-text">{helperText}</p>;
 
-                return <div>{tags}</div>;
+                return <div>{Object.values(tags)}</div>;
             }
         }
 
@@ -100,7 +104,7 @@ const init = (): void => {
             }
         }
 
-        React.render(<SummaryTagsSettings />, placeholder);
+        render(<SummaryTagsSettings />, placeholder);
     };
 
     if (placeholder) {
