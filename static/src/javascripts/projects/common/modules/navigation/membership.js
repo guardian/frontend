@@ -21,6 +21,7 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
             bean.on(document, 'click', '.js-site-message-close', () => {
                 window.ga(
                     `${gaTracker}.send`,
+                    'event',
                     'click',
                     'in page',
                     'membership action required | banner hidden'
@@ -29,6 +30,7 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
 
             window.ga(
                 `${gaTracker}.send`,
+                'event',
                 'element view',
                 'internal',
                 'membership action required | banner impression'
