@@ -252,6 +252,11 @@
     .gu-image {
         height: auto;
     }
+    .social-icon,
+    .social-icon.social-icon--more,
+    .inline-close {
+    border: none;
+    }
 }
 
 .hosted__next-page-header--border {
