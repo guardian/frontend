@@ -79,7 +79,6 @@ const init = (): void => {
             }
 
             render() {
-                const self = this;
                 const toggleAction = this.state.enabled ? 'OFF' : 'ON';
 
                 return (
@@ -91,7 +90,7 @@ const init = (): void => {
                         </p>
                         {this.state.enabled ? <SummaryTagsList /> : null}
                         <button
-                            onClick={self.handleToggle}
+                            onClick={this.handleToggle.bind(this)}
                             className="button button--medium button--primary"
                             data-link-name={toggleAction}>
                             Switch recently visited links {toggleAction}
