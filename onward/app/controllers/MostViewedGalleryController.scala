@@ -16,13 +16,13 @@ class MostViewedGalleryController(
   extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   private val page = SimplePage(MetaData.make(
-    "more galleries",
+    "More galleries",
     Some(SectionId.fromId("inpictures")),
-    "more galleries"
+    "More galleries"
   ))
   private val dataId: String = "multimedia/gallery"
   private val config = CollectionConfig.empty.copy(
-    displayName = Some("more galleries"),
+    displayName = Some("More galleries"),
     groups = Some(List("multimedia/gallery"))
   )
 
@@ -52,7 +52,7 @@ class MostViewedGalleryController(
         1,
         Fixed(FixedContainers.fixedMediumSlowVI),
         CollectionConfigWithId(dataId, config),
-        CollectionEssentials(galleries.map(_.faciaContent), Nil, Some("more galleries"), None, None, None),
+        CollectionEssentials(galleries.map(_.faciaContent), Nil, Some("More galleries"), None, None, None),
         hasMore = false
       ).withTimeStamps,
       FrontProperties.empty

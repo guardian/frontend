@@ -208,6 +208,16 @@
         border: 0;
     }
 
+    .gallery__most-popular {
+        background-color: $garnett-neutral-1;
+    }
+
+.container__title:after,
+.fc-container__header__title--sticky:after,
+.fc-container__header__title:after {
+        background-color: $garnett-neutral-7;
+    }
+
     // Reset the styles from _content.scss
     .meta__numbers {
         position: relative;
