@@ -1,6 +1,7 @@
 // @flow
 
 import 'prebid.js/build/dist/prebid';
+import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bidders } from 'commercial/modules/prebid/bidder-config';
@@ -59,6 +60,23 @@ class PrebidAdUnit {
 
 class PrebidService {
     static initialise(): void {
+        window.pbjs.setConfig({
+            bidderTimeout,
+            priceGranularity,
+        });
+
+        if (config.switches.prebidAnalytics) {
+            window.pbjs.enableAnalytics([
+                {
+                    provider: 'gu',
+                    options: {
+                        ajaxUrl: config.page.ajaxUrl,
+                        pv: config.ophan.pageViewId,
+                    },
+                },
+            ]);
+        }
+
         window.pbjs.bidderSettings = {
             standard: {
                 alwaysUseBid: false,
@@ -68,10 +86,6 @@ class PrebidService {
                 alwaysUseBid: true,
             },
         };
-        window.pbjs.setConfig({
-            bidderTimeout,
-            priceGranularity,
-        });
     }
 
     static requestQueue: Promise<void> = Promise.resolve();
