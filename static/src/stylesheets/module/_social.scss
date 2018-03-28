@@ -379,7 +379,6 @@ category: Common
     .social-icon,
     .social-icon.social-icon--more,
     .inline-close {
-        background-color: transparent;
         border: 1px solid $neutral-1;
         &:hover,
         &:active,
@@ -397,10 +396,5 @@ category: Common
                 fill: $garnett-neutral-5;
             }
         }
-    }
-}
-.paid-content.tonal--tone-media {
-    .social--expanded-top {
-        background: $paid-article;
     }
 }
