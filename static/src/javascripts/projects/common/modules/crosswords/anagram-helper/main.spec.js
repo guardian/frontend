@@ -8,6 +8,10 @@ jest.mock('react', () => ({
     Component: function Component() {},
 }));
 
+jest.mock('react/addons', () => ({
+    Component: function Component() {},
+}));
+
 const CASES = [
     {
         entries: ['', '', '', '', 'l', '', 'e'],
