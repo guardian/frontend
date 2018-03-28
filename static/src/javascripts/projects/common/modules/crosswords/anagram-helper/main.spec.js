@@ -4,7 +4,7 @@ import sortBy from 'lodash/collections/sortBy';
 
 import { AnagramHelper } from './main';
 
-jest.mock('react/addons', () => ({
+jest.mock('react', () => ({
     Component: function Component() {},
 }));
 

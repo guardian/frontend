@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react/addons';
+import React, { Component } from 'react';
 import { classNames } from 'common/modules/crosswords/classNames';
 
 class ConfirmButton extends Component {

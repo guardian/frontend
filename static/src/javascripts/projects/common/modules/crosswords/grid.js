@@ -1,5 +1,5 @@
 // @flow
-import React from 'react/addons';
+import React from 'react';
 import { gridSize, clueMapKey } from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
 import Cell from 'common/modules/crosswords/cell';

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, findDOMNode } from 'react/addons';
+import React, { Component, findDOMNode } from 'react';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import { scrollTo } from 'lib/scroller';

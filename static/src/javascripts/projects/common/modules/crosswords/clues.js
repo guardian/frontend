@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, findDOMNode } from 'react/addons';
+import React, { Component, findDOMNode } from 'react';
 import bean from 'bean';
 import fastdom from 'fastdom';
 import { classNames } from 'common/modules/crosswords/classNames';

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react/addons';
+import React, { Component } from 'react';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
