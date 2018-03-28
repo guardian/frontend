@@ -98,7 +98,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     const relaxedRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: 700,
+        minAbove: 1000,
         minBelow: 700,
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
