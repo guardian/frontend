@@ -43,7 +43,7 @@ category: Common
     min-height: 45px; // Height of social + padding + 1px border to ensure layout is kept when opening overlay
 }
 
-.social {
+.social:not(.social--bottom) {
     overflow-y: hidden;
     height: 32px;
 }
