@@ -606,7 +606,7 @@
             @include mq($from: tablet) {
                 margin-left: -($gs-gutter / 2);
                 min-height: $gs-baseline * 4;
-                padding: ($gs-baseline / 2) ($gs-gutter / 2) ($gs-baseline / 2) ($gs-gutter / 2);
+                padding: ($gs-baseline / 2) ($gs-gutter / 2);
                 width: gs-span(4) + ($gs-gutter / 2);
             }
         }
