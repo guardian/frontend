@@ -170,7 +170,7 @@ object NavLinks {
   val newsletters = NavLink("Newsletters", "/email-newsletters")
   val jobs = NavLink("Jobs", "https://jobs.theguardian.com")
   val dating = NavLink("Dating", "https://soulmates.theguardian.com")
-  val apps = NavLink("The Guardian app", "https://app.adjust.com/f8qm1x_8q69t7?campaign=NewHeader&adgroup=Mobile&creative=generic")
+  val apps = NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
   val ukMasterClasses = NavLink("Masterclasses", "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader")
   val auEvents = NavLink("Events", "/guardian-live-australia")
   var holidays = NavLink("Holidays", "https://holidays.theguardian.com")
@@ -440,7 +440,7 @@ object NavLinks {
   )
 
   val ukOtherLinks = List(
-    apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
+    apps,
     video,
     podcasts,
     pictures,
@@ -453,7 +453,7 @@ object NavLinks {
     guardianMasterClasses
   )
   val auOtherLinks = List(
-    apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
+    apps,
     video,
     podcasts,
     pictures,
@@ -462,7 +462,7 @@ object NavLinks {
     crosswords
   )
   val usOtherLinks = List(
-    apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
+    apps,
     video,
     podcasts,
     pictures,
@@ -471,7 +471,7 @@ object NavLinks {
     crosswords
   )
   val intOtherLinks = List(
-    apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
+    apps,
     video,
     podcasts,
     pictures,
