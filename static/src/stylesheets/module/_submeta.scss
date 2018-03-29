@@ -51,6 +51,7 @@ article .submeta__links,
 
 .submeta__link {
     @include trailing-slash-link;
+    color: $garnett-neutral-1;
 
     .submeta__keywords & {
         @include fs-textSans(4);
