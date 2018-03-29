@@ -817,6 +817,12 @@ $timeline-width: 15px;
     }
 }
 
+.blog .content__secondary-column {
+    @include mq($until: wide) {
+        display: none;
+    }
+}
+
 $pillars: (
     news: (
         pillarColor: $news-garnett-main-1,
