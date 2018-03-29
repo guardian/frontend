@@ -1,6 +1,5 @@
 .badge-slot {
-    width: 33px;
-    margin-top: 2px;
+    width: 37px;
 
     @include mq($until: leftCol) {
         float: left;
@@ -9,10 +8,15 @@
 
     @include mq(desktop) {
         width: gs-span(1);
+
+        article:not(.content--type-immersive) & {
+            margin-bottom: $gs-baseline / 2;
+        }
     }
 }
 
 .badge-slot__img {
+    display: block;
     width: 100%;
 }
 
