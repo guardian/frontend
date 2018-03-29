@@ -16,6 +16,21 @@
     width: 100%;
 }
 
+.football-stats__column {
+    @include mq($until: tablet) {
+        margin-bottom: $gs-baseline;
+    }
+
+    @include mq(tablet) {
+        margin-right: 10px;
+    }
+
+    &:nth-of-type(odd) {
+        padding-right: 10px;
+        border-right: 1px solid $neutral-4;
+    }
+}
+
 
 /* ==========================================================================
    Goal attempts
@@ -165,11 +180,13 @@
 
 .football-possession {
     position: relative;
+    height: 0;
+    padding-top: 320px;
     margin-bottom: $gs-baseline;
     text-align: center;
-    width: $gs-gutter*14;
-    height: 0;
-    padding-top: 100%;
+    width: 100%;
+    max-width: 320px;
+    margin: auto;
 }
 
 .chart--football-possession {
@@ -211,24 +228,34 @@
     .match-stats__container {
         position: relative;
         padding: 6px 0;
-        background-color: #e0eff8;
+        background-color: mix($sport-garnett-main-1, #fff, 15%);
 
         &:before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100vw;;
+            z-index: -1;
+            left: -10px;
+            right: -10px;
             bottom: 0;
-            width: 100vw;
-            background-color: #e0eff8;
-        }
+            background-color: mix($sport-garnett-main-1, #fff, 15%);
 
-        @include mq(desktop) {
-            padding-right: 10px;
+            @include mq(mobileLandscape) {
+                left: -20px;
+                right: -20px;
+            }
+
+            @include mq(tablet) {
+                right: 0;
+                left: -100vw;
+            }
         }
     }
 
     .c-match-stats {
+        position: relative;
+        z-index: 2;
+
         @include mq(tablet) {
             display: grid;
             grid-template-columns: 50% 50%;
@@ -236,6 +263,10 @@
     }
 
     .match-stats__heading {
+        @include mq(tablet) {
+            grid-column-start: 1;
+            grid-column-end: 3; 
+        }
         @include mq(leftCol) {
             position: absolute;
             left: -160px;
