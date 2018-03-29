@@ -1,7 +1,7 @@
 package dfp
 
 import concurrent.BlockingOperations
-import common.dfp.{GuAdUnit, GuLineItem, GuTargeting}
+import common.dfp.{GuAdUnit, GuLineItem, GuTargeting, Sponsorship}
 import com.google.api.ads.dfp.axis.v201802._
 import org.joda.time.DateTime
 import org.scalatest._
@@ -21,6 +21,7 @@ class DfpApiValidationTest extends FlatSpec with Matchers {
       id = 0L,
       orderId = 0L,
       name = "test line item",
+      Sponsorship,
       startTime = DateTime.now.withTimeAtStartOfDay,
       endTime = None,
       isPageSkin = false,

@@ -38,7 +38,6 @@
     position: relative;
     height: $mpu-ad-label-height;
     background-color: $neutral-8;
-    margin: 0 auto;
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $neutral-5;
     color: $neutral-2-contrasted;
@@ -90,7 +89,6 @@
     transform: translate3d(0, 0, 0);
     contain: layout;
     z-index: $zindex-popover;
-    width: 100%;
     position: fixed;
     top: 0;
 }
@@ -104,8 +102,6 @@
     text-align: center;
 
     .ad-slot__label {
-        /* this is the minimum width of possible ads sizes */
-        width: 728px;
         border-top: 0;
         padding: 0;
         height: $gs-row-height/2;
@@ -117,14 +113,7 @@
 
     .has-page-skin & {
         @include mq(wide) {
-            width: auto !important;
-            padding-left: 0 !important;
             text-align: center;
-
-            .ad-slot__label {
-                margin-left: auto;
-                margin-right: auto;
-            }
         }
     }
 }
@@ -139,19 +128,8 @@
         display: none;
     }
 
-    @include mq(wide) {
-        padding-left: $left-column-wide + $gs-gutter * 2;
-        margin-left: calc(50% - #{(gs-span($gs-max-columns) + $gs-gutter * 2) / 2});
-        text-align: left;
-
-        &:not(.ad-slot--fluid):not(.ad-slot--fabric):not(.ad-slot--fluid250) {
-            max-width: 970px;
-        }
-
-        .has-page-skin & {
-            margin-left: auto;
-        }
-    }
+    text-align: left;
+    display: table;
 
     &.ad-slot--fabric {
         > .ad-slot__label {
@@ -180,6 +158,10 @@
                 }
             }
         }
+    }
+
+    &.ad-slot--fluid {
+        width: 100%;
     }
 
     .ad-slot__label {
@@ -256,11 +238,7 @@
         clear: left;
     }
 }
-.ad-slot__content {
-    > div {
-        margin: 0 auto;
-    }
-}
+
 .ad-slot--container-inline:not(.ad-slot--fluid) {
     .ad-slot__content {
         margin: 0 auto;
@@ -416,7 +394,7 @@
     margin: 0;
 
     &:not(.ad-slot--im):not(.ad-slot--carrot) {
-        width: auto;
+        width: 100%;
     }
 
     &.ad-slot--commercial-component-high {

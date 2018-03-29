@@ -32,7 +32,9 @@
                   <a class="content__section-label__link"
                       data-link-name="article section"
                       href="@LinkTo {/@item.content.sectionLabelLink}">
+                      <span class="label__link-wrapper">
                           @Html(Localisation(item.content.sectionLabelName))
+                      </span>
                   </a>
               </div>
           }
@@ -46,7 +48,11 @@
                 "content__series-label--column" -> item.content.isColumn
             ), "content__series-label")
           ">
-            <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
+            <a class="content__series-label__link" href="@LinkTo {/@series.id}">
+                <span class="label__link-wrapper">
+                    @series.name
+                </span>
+            </a>
         </div>
 
         @if(item.content.isColumn && !amp) {

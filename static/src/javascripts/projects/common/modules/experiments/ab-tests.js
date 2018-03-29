@@ -2,20 +2,16 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { unrulyPerformanceTest } from 'common/modules/experiments/tests/unruly-performance';
-import { commercialLazyLoading } from 'common/modules/experiments/tests/commercial-lazy-loading';
 import { acquisitionsHeaderSubscribeMeansSubscribe } from 'common/modules/experiments/tests/acquisitions-header-subscribe-means-subscribe';
-import { acquisitionsHeaderEurSupport } from 'common/modules/experiments/tests/acquisitions-header-eur-support';
 import { acquisitionsHeaderAudSupport } from 'common/modules/experiments/tests/acquisitions-header-aud-support';
+import { acquisitionsHeaderRowSupport } from 'common/modules/experiments/tests/acquisitions-header-row-support';
 import { spacefinderSimplify } from 'common/modules/experiments/tests/spacefinder-simplify';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
-    unrulyPerformanceTest,
     acquisitionsHeaderSubscribeMeansSubscribe,
-    acquisitionsHeaderEurSupport,
     acquisitionsHeaderAudSupport,
-    commercialLazyLoading,
+    acquisitionsHeaderRowSupport,
     spacefinderSimplify,
 ].filter(Boolean);
 

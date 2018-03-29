@@ -63,6 +63,19 @@ $pillars: (
         metaText: $garnett-neutral-2,
         cutoutBackground: $lifestyle-garnett-feature,
         invertedKicker: $lifestyle-garnett-media-main-1
+    ),
+    special-report: (
+        cardBackground: $story-package-garnett,
+        lines: $news-garnett-highlight,
+        kicker: $news-garnett-highlight,
+        headline: #ffffff,
+        featureHeadline: #ffffff,
+        byline: $story-package-garnett,
+        commentCount: $garnett-neutral-2,
+        headlineIcon: $story-package-garnett,
+        metaText: $garnett-neutral-2,
+        cutoutBackground: $news-garnett-highlight,
+        invertedKicker: $news-garnett-highlight
     )
 );
 
@@ -117,6 +130,8 @@ $pillars: (
         color: map-get($palette, invertedKicker);
     }
 
+
+    &.fc-item--type-media .fc-item__headline .inline-garnett-quote,
     &.fc-item--type-immersive .fc-item__headline .inline-garnett-quote {
         fill: map-get($palette, invertedKicker);
     }
@@ -197,7 +212,6 @@ $pillars: (
         .inline-camera {
             svg {
                 fill: map-get($palette, invertedKicker);
-                border: 1px solid map-get($palette, invertedKicker);
             }
 
             &::after {
@@ -215,6 +229,14 @@ $pillars: (
 
     .fc-item__media-meta {
         color: map-get($palette, invertedKicker);
+
+        .inline-icon {
+            width: 24px;
+            height: 23px;
+            display: inline-block;
+            border: 1px solid map-get($palette, invertedKicker);
+            border-radius: 50%;
+        }
     }
 
     .vjs-big-play-button .vjs-control-text {
@@ -286,5 +308,49 @@ $pillars: (
         .fc-item__kicker {
             color: $paid-card-kicker;
         }
+    }
+}
+
+
+
+.fc-item--pillar-special-report,
+.fc-item--pillar-special-report.fc-item--type-feature {
+    &.fc-item--type-comment {
+        .fc-item__headline,
+        .fc-item__standfirst {
+            color: $story-package-garnett;
+        }
+
+        .fc-item__byline {
+            color: $story-package-garnett;
+            background-color: $news-garnett-highlight;
+            display: inline;
+        }
+
+        .fc-item__kicker {
+            color: $story-package-garnett;
+        }
+    }
+
+    &.fc-item--type-media {
+        background-color: darken($story-package-garnett, 8%);
+
+        .youtube-media-atom__play-button.vjs-control-text {
+            .inline-play svg {
+                fill: $garnett-neutral-1;
+            }
+        }
+    }
+
+    .fc-item__container.u-faux-block-link--hover {
+        background-color: darken($story-package-garnett, 2%);
+    }
+
+    .fc-sublink__kicker {
+        color: $news-garnett-highlight;
+    }
+
+    .fc-sublink__title {
+        color: #ffffff;
     }
 }

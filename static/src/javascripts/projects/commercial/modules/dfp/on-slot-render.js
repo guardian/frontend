@@ -79,9 +79,17 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
             advert.id !== 'dfp-ad--inline1' ||
             config.get('page.isFront') ||
             config.get('page.contentType') === 'LiveBlog';
+        const isNonRefreshableLineItem =
+            event.lineItemId &&
+            config
+                .get('page.dfpNonRefreshableLineItemIds', [])
+                .includes(event.lineItemId);
 
         advert.shouldRefresh =
-            isNotFluid && neverHasVideo && !config.page.hasPageSkin;
+            isNotFluid &&
+            neverHasVideo &&
+            !config.page.hasPageSkin &&
+            !isNonRefreshableLineItem;
 
         renderAdvert(advert, event).then(emitRenderEvents);
     }

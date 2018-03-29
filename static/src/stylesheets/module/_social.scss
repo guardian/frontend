@@ -43,7 +43,7 @@ category: Common
     min-height: 45px; // Height of social + padding + 1px border to ensure layout is kept when opening overlay
 }
 
-.social {
+.social:not(.social--bottom) {
     overflow-y: hidden;
     height: 32px;
 }
@@ -373,5 +373,28 @@ category: Common
     .content[class*='-advertisement-feature'] &,
     .content[class*='-partner-zone'] & {
         display: none;
+    }
+}
+.paid-content, .paid-content.tonal--tone-media {
+    .social-icon,
+    .social-icon.social-icon--more,
+    .inline-close {
+        border: 1px solid $neutral-1;
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: $garnett-neutral-1;
+        }
+        .social-icon__svg,
+        .social-icon--more__svg,
+        .social-tray__icon__svg {
+            fill: $garnett-neutral-1;
+        }
+        &:focus,
+        &:hover {
+            svg {
+                fill: $garnett-neutral-5;
+            }
+        }
     }
 }

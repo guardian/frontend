@@ -36,6 +36,10 @@ trait ConsentsJourney
   def displayConsentsJourney(consentHint: Option[String] = None): Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint)
 
+  /** GET /complete-consents */
+  def displayConsentComplete: Action[AnyContent] =
+    displayConsentComplete(ConsentJourneyPageDefault, None)
+
   /** POST /complete-consents */
   def submitRepermissionedFlag: Action[AnyContent] =
     csrfCheck {
@@ -49,17 +53,15 @@ trait ConsentsJourney
               request.user.id,
               UserUpdateDTO(consents = Some(newConsents), statusFields = Some(StatusFields(hasRepermissioned = Some(true)))),
               request.user.auth
-            ).map {
+            ).flatMap {
               case Left(idapiErrors) =>
                 logger.error(s"Failed to set hasRepermissioned flag for user ${request.user.id}: $idapiErrors")
-                InternalServerError(Json.toJson(idapiErrors))
+                Future.successful(InternalServerError(Json.toJson(idapiErrors)))
 
               case Right(updatedUser) =>
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
                 val page = IdentityPage("/complete-consents", "Complete Consents", isFlow = true)
-                Ok(IdentityHtmlPage.html(
-                  views.html.completeConsents(idRequestParser(request), idUrlBuilder, returnUrl)
-                )(page, request, context))
+                consentCompleteView(page, returnUrl)
             }
           }
         )
@@ -84,6 +86,40 @@ trait ConsentsJourney
       }
     }
 
+  private def displayConsentComplete(
+    page: ConsentJourneyPage,
+    consentHint: Option[String]): Action[AnyContent] =
+    csrfAddToken {
+      consentsRedirectAction.async { implicit request =>
+
+        val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request) match {
+          case Some(url) => if (url contains "/consents") returnUrlVerifier.defaultReturnUrl else url
+          case _ => returnUrlVerifier.defaultReturnUrl
+        }
+
+        consentCompleteView(
+          page,
+          returnUrl
+        )
+      }
+    }
+
+  private def consentCompleteView(
+   page: IdentityPage,
+   returnUrl : String)(implicit request: AuthRequest[AnyContent]): Future[Result] = {
+
+    newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+      Ok(IdentityHtmlPage.html(
+        views.html.completeConsents(
+          idRequestParser(request),
+          idUrlBuilder,
+          returnUrl,
+          emailFilledForm,
+          newsletterService.getEmailSubscriptions(emailFilledForm),
+          EmailNewsletters.all)
+      )(page, request, context))
+    }
+  }
 
   private def consentJourneyView(
     page: IdentityPage,

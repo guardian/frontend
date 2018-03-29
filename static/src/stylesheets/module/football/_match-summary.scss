@@ -3,7 +3,6 @@
     display: block;
     color: $neutral-1;
     background-color: $news-garnett-highlight;
-    margin-bottom: $gs-baseline;
 
     &:before {
         @include mq(phablet) {
@@ -92,7 +91,6 @@
     border-radius: $garnett-x-large-button-size / 2;
     background-color: $garnett-neutral-5;
     box-sizing: border-box;
-    padding: 8px;
     overflow: hidden;
 
     @include mq(mobileLandscape) {
@@ -102,10 +100,15 @@
 }
 
 .team__crest {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    top: 8px;
+    max-width: calc(100% - 16px);
+    max-height: calc(100% - 16px);
     margin: auto;
     display: block;
-    max-height: 100%;
-    max-width: 100%;
 }
 
 .team__score {

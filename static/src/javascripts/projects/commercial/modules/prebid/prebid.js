@@ -1,6 +1,7 @@
 // @flow
 
 import 'prebid.js/build/dist/prebid';
+import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bidders } from 'commercial/modules/prebid/bidder-config';
@@ -15,8 +16,9 @@ import type {
     PrebidSlotLabel,
 } from 'commercial/modules/prebid/types';
 import {
+    getRandomIntInclusive,
     stripMobileSuffix,
-    stripTrailingNumbers,
+    stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
 
 const bidderTimeout = 1500;
@@ -30,15 +32,26 @@ class PrebidAdUnit {
 
     constructor(advert: Advert, slot: PrebidSlot) {
         this.code = advert.id;
-        this.bids = bidders.map((bidder: PrebidBidder) => ({
-            bidder: bidder.name,
-            params: bidder.bidParams(advert.id, slot.sizes),
-            labelAny: bidder.labelAny,
-            labelAll: bidder.labelAll,
-        }));
+        this.bids = bidders.map((bidder: PrebidBidder) => {
+            const bid: PrebidBid = {
+                bidder: bidder.name,
+                params: bidder.bidParams(advert.id, slot.sizes),
+            };
+            if (bidder.labelAny) {
+                bid.labelAny = bidder.labelAny;
+            }
+            if (bidder.labelAll) {
+                bid.labelAll = bidder.labelAll;
+            }
+            return bid;
+        });
         this.mediaTypes = { banner: { sizes: slot.sizes } };
-        this.labelAny = slot.labelAny ? slot.labelAny : [];
-        this.labelAll = slot.labelAll ? slot.labelAll : [];
+        if (slot.labelAny) {
+            this.labelAny = slot.labelAny;
+        }
+        if (slot.labelAll) {
+            this.labelAll = slot.labelAll;
+        }
     }
 
     isEmpty() {
@@ -48,6 +61,28 @@ class PrebidAdUnit {
 
 class PrebidService {
     static initialise(): void {
+        window.pbjs.setConfig({
+            bidderTimeout,
+            priceGranularity,
+        });
+
+        // gather analytics from 0.001% of pageviews
+        const inSample = getRandomIntInclusive(1, 100000) === 1;
+        if (
+            config.switches.prebidAnalytics &&
+            (inSample || config.page.isDev)
+        ) {
+            window.pbjs.enableAnalytics([
+                {
+                    provider: 'gu',
+                    options: {
+                        ajaxUrl: config.page.ajaxUrl,
+                        pv: config.ophan.pageViewId,
+                    },
+                },
+            ]);
+        }
+
         window.pbjs.bidderSettings = {
             standard: {
                 alwaysUseBid: false,
@@ -57,10 +92,6 @@ class PrebidService {
                 alwaysUseBid: true,
             },
         };
-        window.pbjs.setConfig({
-            bidderTimeout,
-            priceGranularity,
-        });
     }
 
     static requestQueue: Promise<void> = Promise.resolve();
@@ -72,9 +103,9 @@ class PrebidService {
 
         const adUnits = slots
             .filter(slot =>
-                stripTrailingNumbers(stripMobileSuffix(advert.id)).endsWith(
-                    slot.key
-                )
+                stripTrailingNumbersAbove1(
+                    stripMobileSuffix(advert.id)
+                ).endsWith(slot.key)
             )
             .map(slot => new PrebidAdUnit(advert, slot))
             .filter(adUnit => !adUnit.isEmpty());

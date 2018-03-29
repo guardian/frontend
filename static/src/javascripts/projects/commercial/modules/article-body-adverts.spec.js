@@ -39,11 +39,6 @@ jest.mock('lib/detect', () => ({
 jest.mock('lib/config', () => ({ page: {}, get: () => false }));
 
 const spaceFillerStub: JestMockFn<*, *> = (spaceFiller.fillSpace: any);
-const getFirstRulesUsed = () =>
-    init(noop, noop).then(() => {
-        const firstCall = spaceFillerStub.mock.calls[0];
-        return firstCall[0];
-    });
 
 describe('Article Body Adverts', () => {
     beforeEach(() => {
@@ -60,125 +55,16 @@ describe('Article Body Adverts', () => {
 
     it('should exit if commercial feature disabled', () => {
         commercialFeatures.articleBodyAdverts = false;
-        return init(noop, noop).then(executionResult => {
-            expect(executionResult).toBe(false);
+        return init(noop, noop).then(() => {
             expect(spaceFillerStub).not.toHaveBeenCalled();
         });
     });
-
-    it('should call space-filler`s insertion method with the correct arguments', () =>
-        init(noop, noop).then(() => {
-            expect(spaceFillerStub).toHaveBeenCalled();
-            const firstCallArgs = spaceFillerStub.mock.calls[0];
-            const rulesArg = firstCallArgs[0];
-            const writerArg = firstCallArgs[1];
-
-            expect(rulesArg.minAbove).toBeDefined();
-            expect(rulesArg.minBelow).toBeDefined();
-            expect(rulesArg.selectors).toBeDefined();
-
-            expect(writerArg).toEqual(expect.any(Function));
-        }));
 
     describe('When merchandising components enabled', () => {
         beforeEach(() => {
             getBreakpoint.mockReturnValue('mobile');
             isBreakpoint.mockReturnValue(true);
             config.page.hasInlineMerchandise = true;
-        });
-
-        it('its first call to space-filler uses the inline-merch rules', () =>
-            init(noop, noop).then(() => {
-                const firstCallArgs = spaceFillerStub.mock.calls[0];
-                const rules = firstCallArgs[0];
-
-                expect(rules.minAbove).toEqual(300);
-                expect(rules.selectors[' > h2'].minAbove).toEqual(100);
-            }));
-
-        it('its first call to space-filler passes an inline-merch writer', () => {
-            const fixture = document.createElement('div');
-            const paragraph = document.createElement('p');
-            fixture.appendChild(paragraph);
-
-            return init(noop, noop).then(() => {
-                const firstCall = spaceFillerStub.mock.calls[0];
-                const writer = firstCall[1];
-                writer([paragraph]);
-                expect(fixture.querySelector('#dfp-ad--im')).toBeTruthy();
-            });
-        });
-    });
-
-    describe('Non-merchandising adverts', () => {
-        beforeEach(() => {
-            config.page.hasInlineMerchandise = false; // exclude IM components from count
-        });
-
-        describe('Spacefinder rules', () => {
-            it('includes basic rules for all circumstances', () =>
-                getFirstRulesUsed().then(rules => {
-                    // do not appear in the bottom 300px of the article
-                    expect(rules.minBelow).toBe(300);
-
-                    // do not appear above headings
-                    expect(rules.selectors[' > h2'].minBelow).toEqual(250);
-
-                    // do not appear next to other adverts
-                    expect(rules.selectors[' .ad-slot']).toEqual({
-                        minAbove: 500,
-                        minBelow: 500,
-                    });
-
-                    // do not appear next to non-paragraph elements
-                    expect(
-                        rules.selectors[' > :not(p):not(h2):not(.ad-slot)']
-                    ).toEqual({
-                        minAbove: 35,
-                        minBelow: 400,
-                    });
-                }));
-
-            it('includes rules for mobile phones', () => {
-                getBreakpoint.mockReturnValue('mobile');
-                isBreakpoint.mockReturnValue(true);
-
-                return getFirstRulesUsed().then(rules => {
-                    // adverts can appear higher up the page
-                    expect(rules.minAbove).toEqual(300);
-
-                    // give headings more vertical clearance
-                    expect(rules.selectors[' > h2'].minAbove).toEqual(100);
-                });
-            });
-
-            it('includes rules for tablet devices', () => {
-                getBreakpoint.mockReturnValue('tablet');
-                // fudge check for max:tablet
-                isBreakpoint.mockReturnValue(true);
-
-                return getFirstRulesUsed().then(rules => {
-                    // adverts can appear higher up the page
-                    expect(rules.minAbove).toEqual(300);
-
-                    // give headings no vertical clearance
-                    expect(rules.selectors[' > h2'].minAbove).toEqual(0);
-                });
-            });
-
-            it('includes rules for larger screens', () => {
-                getBreakpoint.mockReturnValue('desktop');
-                // fudge check for max:tablet
-                isBreakpoint.mockReturnValue(false);
-
-                return getFirstRulesUsed().then(rules => {
-                    // adverts give the top of the page more clearance
-                    expect(rules.minAbove).toEqual(700);
-
-                    // give headings no vertical clearance
-                    expect(rules.selectors[' > h2'].minAbove).toEqual(0);
-                });
-            });
         });
     });
 });

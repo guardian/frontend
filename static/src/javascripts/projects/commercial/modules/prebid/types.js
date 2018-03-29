@@ -27,9 +27,23 @@ export type PrebidImproveParams = {
     size: PrebidImproveSizeParam,
 };
 
-export type PrebidSlotKey = 'top-above-nav' | 'right' | 'inline' | 'mostpop';
+export type PrebidXaxisParams = {
+    placementId: number,
+};
 
-export type PrebidSlotLabel = 'mobile' | 'tablet' | 'desktop';
+export type PrebidSlotKey =
+    | 'top-above-nav'
+    | 'right'
+    | 'inline1'
+    | 'inline'
+    | 'mostpop';
+
+export type PrebidSlotLabel =
+    | 'mobile'
+    | 'tablet'
+    | 'desktop'
+    | 'article'
+    | 'non-article';
 
 export type PrebidBidLabel = 'edn-UK' | 'edn-INT' | 'geo-NA';
 
@@ -53,7 +67,8 @@ export type PrebidBidder = {
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
-        | PrebidImproveParams,
+        | PrebidImproveParams
+        | PrebidXaxisParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };
@@ -64,7 +79,8 @@ export type PrebidBid = {
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
-        | PrebidImproveParams,
+        | PrebidImproveParams
+        | PrebidXaxisParams,
     labelAny?: PrebidBidLabel[],
     labelAll?: PrebidBidLabel[],
 };

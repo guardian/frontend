@@ -17,7 +17,7 @@ private[dfp] object ApiHelper extends Logging {
       }
     }
 
-    dfpLineItem.getRoadblockingType == RoadblockingType.CREATIVE_SET &&
+    ( dfpLineItem.getRoadblockingType == RoadblockingType.CREATIVE_SET ) &&
       hasA1x1Pixel(dfpLineItem.getCreativePlaceholders)
   }
 

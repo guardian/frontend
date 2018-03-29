@@ -10,8 +10,8 @@ import config from 'lib/config';
 
 import type { CtaUrls } from 'common/modules/commercial/contributions-utilities';
 
-const EURsupportURL = 'https://support.theguardian.com/eu';
-const abTestName = 'AcquisitionsEpicEurSupport';
+const ROWsupportURL = 'https://support.theguardian.com/int';
+const abTestName = 'AcquisitionsEpicRowSupport';
 
 const oneButtonTemplate = (urls: CtaUrls): string => {
     const url = urls.supportUrl || '';
@@ -37,23 +37,24 @@ const oneButtonTemplate = (urls: CtaUrls): string => {
         </div>`;
 };
 
-export const acquisitionsEpicEurSupport = makeABTest({
+export const acquisitionsEpicRowSupport = makeABTest({
     id: abTestName,
     campaignId: abTestName,
 
-    start: '2018-03-01',
-    expiry: '2018-04-17',
+    start: '2018-03-22',
+    expiry: '2018-05-24',
 
     author: 'Santiago Villa Fernandez',
-    description: 'Use the Epic to partition the audience for the EUR test',
+    description: 'Use the Epic to partition the audience for the ROW test',
     successMeasure: 'AV 2.0',
     idealOutcome:
-        'We channel an even split of frontend traffic into the correct eu version',
-    audienceCriteria: 'ALL EUR transaction web traffic',
+        'We channel an even split of frontend traffic into the correct au version',
+    audienceCriteria: 'ALL ROW transaction web traffic',
     audience: 1,
     audienceOffset: 0,
     canRun: () =>
-        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'EU',
+        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'INT' &&
+        geolocationGetSync() !== 'NZ',
     variants: [
         {
             id: 'control',
@@ -63,7 +64,7 @@ export const acquisitionsEpicEurSupport = makeABTest({
             id: 'support_contribute',
             products: [],
             options: {
-                supportBaseURL: EURsupportURL,
+                supportBaseURL: ROWsupportURL,
                 buttonTemplate: oneButtonTemplate,
             },
         },

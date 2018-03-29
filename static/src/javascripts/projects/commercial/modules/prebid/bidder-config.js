@@ -13,15 +13,17 @@ import type {
     PrebidSize,
     PrebidSonobiParams,
     PrebidTrustXParams,
+    PrebidXaxisParams,
 } from 'commercial/modules/prebid/types';
 import {
     getBreakpointKey,
     stripMobileSuffix,
-    stripTrailingNumbers,
+    stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
 
 const getTrustXAdUnitId = (slotId: string): string => {
-    switch (stripTrailingNumbers(stripMobileSuffix(slotId))) {
+    switch (stripTrailingNumbersAbove1(stripMobileSuffix(slotId))) {
+        case 'dfp-ad--inline1':
         case 'dfp-ad--inline':
             return '2960';
         case 'dfp-ad--mostpop':
@@ -115,10 +117,17 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
 
 // Improve has to have single size as parameter if slot doesn't accept multiple sizes,
 // because it uses same placement ID for multiple slot sizes and has no other size information
-const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam =>
-    slotId === 'dfp-ad--mostpop' || slotId.startsWith('dfp-ad--inline')
+const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
+    const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
+    const isInlineNotDesktopArticle =
+        key.endsWith('inline') &&
+        !(getBreakpointKey() === 'D' && config.page.contentType === 'Article');
+    return key.endsWith('mostpop') ||
+        key.endsWith('inline1') ||
+        isInlineNotDesktopArticle
         ? { w: 300, h: 250 }
         : {};
+};
 
 const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
@@ -156,6 +165,14 @@ const improveDigitalBidder: PrebidBidder = {
     labelAny: ['edn-UK', 'edn-INT'],
 };
 
+const xaxisBidder: PrebidBidder = {
+    name: 'appnexus',
+    bidParams: (): PrebidXaxisParams => ({
+        placementId: 12984524,
+    }),
+    labelAll: ['edn-UK'],
+};
+
 const bidders: PrebidBidder[] = [];
 if (config.switches.prebidSonobi) {
     bidders.push(sonobiBidder);
@@ -168,6 +185,9 @@ if (config.switches.prebidTrustx) {
 }
 if (config.switches.prebidImproveDigital) {
     bidders.push(improveDigitalBidder);
+}
+if (config.switches.prebidXaxis) {
+    bidders.push(xaxisBidder);
 }
 
 export { bidders };

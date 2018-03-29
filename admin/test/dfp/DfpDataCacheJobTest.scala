@@ -1,6 +1,6 @@
 package dfp
 
-import common.dfp.{GuLineItem, GuTargeting}
+import common.dfp.{GuLineItem, GuTargeting, Sponsorship}
 import org.joda.time.DateTime
 import org.scalatest._
 import org.scalatest.mockito.MockitoSugar
@@ -23,6 +23,7 @@ class DfpDataCacheJobTest
       id,
       0L,
       name,
+      Sponsorship,
       startTime = DateTime.now.withTimeAtStartOfDay,
       endTime = None,
       isPageSkin = false,

@@ -56,7 +56,7 @@ module.exports = {
             journalism: 'projects/journalism',
 
             // #wp-rjs weird old aliasing from requirejs
-            lodash: 'lodash-amd/compat',
+            lodash: 'lodash-node/compat',
             raven: 'raven-js',
             EventEmitter: 'wolfy87-eventemitter',
             videojs: 'video.js',
@@ -69,6 +69,10 @@ module.exports = {
     resolveLoader: {
         modules: [
             path.resolve(__dirname, 'dev', 'webpack-loaders'),
+            // TODO: atom-renderer's loaders are actually dependencies of frontend, not atom-renderer
+            // They should be listed as peerDependencies in atom-renderer
+            // https://github.com/guardian/atom-renderer/issues/41
+            path.resolve(__dirname, 'node_modules', '@guardian', 'atom-renderer', 'node_modules'),
             'node_modules',
         ],
     },

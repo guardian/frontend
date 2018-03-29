@@ -294,8 +294,8 @@ object Commercial {
     )(implicit request: RequestHeader): String = {
 
       val isContentPage =
-        containerDisplayName.contains("more on this story") ||
-          containerDisplayName.contains("related content")
+        containerDisplayName.contains("More on this story") ||
+          containerDisplayName.contains("Related content")
 
       mkString(
         containerType =

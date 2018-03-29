@@ -22,6 +22,7 @@
 function guardianPolyfilled() {
     try {
         window.guardian.polyfilled = true;
+        window.guardian.onPolyfilled();
     } catch (e) {};
 }
 

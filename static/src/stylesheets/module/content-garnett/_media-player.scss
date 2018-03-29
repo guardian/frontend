@@ -994,7 +994,7 @@ $ima-controls-height: 70px;
     padding-right: $gs-gutter/2;
 
     &.fc-item {
-        width: 25%;
+        max-width: 25%;
         background-color: transparent;
         margin-left: 0;
         margin-right: 0;

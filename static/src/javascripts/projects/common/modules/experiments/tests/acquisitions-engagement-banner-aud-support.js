@@ -13,7 +13,7 @@ export const AcquisitionsEngagementBannerAudSupport: AcquisitionsABTest = {
     id: abTestName,
     campaignId: abTestName,
     start: '2018-03-01',
-    expiry: '2018-04-17',
+    expiry: '2018-04-24',
     author: 'Santiago Villa Fernandez',
     description:
         'Points the "support the guardian" link in the engagement banner to the aud version of the support site',

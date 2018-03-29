@@ -52,17 +52,7 @@ trait ABTestSwitches {
     "Show a custom Epic for articles with the US gun campaign tag",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 3, 15),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-unruly-performance-test",
-    "Removes 5% of users from Unruly to measure performance impact",
-    owners = Seq(Owner.withGithub("janua")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 15),
+    sellByDate = new LocalDate(2019, 3, 14),
     exposeClientSide = true
   )
 
@@ -82,7 +72,7 @@ trait ABTestSwitches {
     "Show a custom Epic for articles with the Australia environment campaign tag",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 15),
+    sellByDate = new LocalDate(2019, 3, 14),
     exposeClientSide = true
   )
 
@@ -92,57 +82,7 @@ trait ABTestSwitches {
     "Point the subscribe link in the header to a subscriptions-only version of the support site",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-support-engagement-banner-circles",
-    "When ON, the circles design test for the support engagement banner is ACTIVE",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 20), // Tues 20th March
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-support-epic-circles",
-    "When ON, epic messaging will direct a share of the audience to the circles version of the support site",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 20), // Tues 20th March
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-header-eur-support",
-    "Points the 'support the guardian' link in the header to the eur version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 17),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-engagement-banner-eur-support",
-    "Points the 'support the guardian' link in the engagement banner to the eur version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 17),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-eur-support",
-    "Points the 'support the guardian' link in the epic to the eur version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 17),
+    sellByDate = new LocalDate(2018, 4, 5),
     exposeClientSide = true
   )
 
@@ -183,6 +123,66 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("svillafe")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 4, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-uk-17-pence",
+    "Tests a CTA message that aims to push people towards recurring contributions in the UK",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-us-23-cents",
+    "Tests a CTA message that aims to push people towards recurring contributions in the US",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-cambridge-analytica-always-ask-final",
+    "turn on always ask for CA stories",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 4, 10),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-header-row-support",
+    "Points the 'support the guardian' link in the header to the row version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 5, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-row-support",
+    "Points the 'support the guardian' link in the engagement banner to the row version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 5, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-row-support",
+    "Points the 'support the guardian' link in the epic to the row version of the support site",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 5, 24),
     exposeClientSide = true
   )
 }

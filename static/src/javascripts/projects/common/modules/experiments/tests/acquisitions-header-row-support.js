@@ -6,8 +6,8 @@ import {
 import { updateAcquisitionData } from 'common/modules/commercial/acquisitions-ophan';
 
 const componentType = 'ACQUISITIONS_HEADER';
-const abTestName = 'AcquisitionsHeaderEurSupport';
-const EURsupportURL = 'https://support.theguardian.com/eu';
+const abTestName = 'AcquisitionsHeaderRowSupport';
+const ROWsupportURL = 'https://support.theguardian.com/int';
 
 type variantName = 'control' | 'support_contribute';
 
@@ -21,7 +21,7 @@ const modifySupportTheGuardianLink = (variant: variantName): void => {
             let supportTheGuardianURL = new URL(supportTheGuardianLink.href);
 
             if (variant === 'support_contribute') {
-                supportTheGuardianURL = new URL(EURsupportURL);
+                supportTheGuardianURL = new URL(ROWsupportURL);
             }
 
             const supportTheGuardianUrlWithTestData = updateAcquisitionData(
@@ -39,22 +39,23 @@ const modifySupportTheGuardianLink = (variant: variantName): void => {
     );
 };
 
-export const acquisitionsHeaderEurSupport: AcquisitionsABTest = {
+export const acquisitionsHeaderRowSupport: AcquisitionsABTest = {
     id: abTestName,
     campaignId: abTestName,
     componentType,
-    start: '2018-03-01',
-    expiry: '2018-04-17',
+    start: '2018-03-22',
+    expiry: '2018-05-24',
     author: 'Santiago Villa Fernandez',
     description:
-        'Points the "support the guardian" link in the header to the eur version of the support site',
+        'Points the "support the guardian" link in the header to the ROW version of the support site',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV 2.0',
-    audienceCriteria: 'All EUR transaction web traffic.',
+    audienceCriteria: 'All ROW transaction web traffic.',
     idealOutcome: 'We get more money when we tailor the destination to the CTA',
     canRun: () =>
-        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'EU',
+        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'INT' &&
+        geolocationGetSync() !== 'NZ',
     variants: [
         {
             id: 'control',

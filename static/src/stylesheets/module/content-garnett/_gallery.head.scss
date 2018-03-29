@@ -1,33 +1,10 @@
-.gallery__main-content .content__meta-container,
-.content__standfirst--gallery {
-    @include mq(desktop) {
-        margin-left: gs-span(2) + $gs-gutter;
-        max-width: gs-span(8);
-
-    }
-    @include mq(leftCol) {
-        margin-left: gs-span(3) + $gs-baseline/2;
-
-    }
-}
-
-.content__labels--gallery,
-.content__headline--gallery {
-    @include mq(desktop) {
-        margin-left: gs-span(3) + $gs-gutter;
-        max-width: gs-span(8);
-
-    }
-    @include mq(leftCol) {
-        margin-left: gs-span(3) + $gs-baseline/2;
-    }
-
-}
-
-
 .gallery__main-content {
     .content__meta-container {
         position: relative;
+        margin-left: 0;
+        min-height: auto;
+        margin-bottom: $gs-baseline;
+        max-width: gs-span(8);
         width: auto;
     }
 
@@ -35,35 +12,38 @@
         display: flex;
         justify-content: space-between;
     }
+
+    .tonal__standfirst {
+        max-width: gs-span(8);
+    }
+
+    .gallery__meta-container {
+        // TODO: remove the need for important by restructuring _types.scss
+        background-image: none !important;
+        .byline,
+        .content__dateline {
+            background-image: none;
+            border: 0;
+            padding-top: 0;
+        }
+    }
+}
+
+.content__labels--gallery {
+    @include mq(leftCol) {
+        margin-left: -($left-column-wide + $gs-gutter);
+        width: $left-column-wide;
+    }
 }
 
 // Overriding the default for media tones
 .tonal--tone-media .content__headline--gallery {
     font-weight: 200;
+    max-width: gs-span(8);
     padding-top: 0;
 
     @include mq($until: tablet) {
         padding-top: $gs-baseline / 2;
-    }
-}
-
-.content__labels--gallery {
-    border: 0;
-    width: auto;
-    float: none;
-
-    .content__section-label {
-        margin-right: $gs-gutter / 4;
-    }
-
-    .content__series-label {
-        font-weight: normal;
-    }
-
-    .content__series-label,
-    .content__section-label {
-        @include fs-header(1, $size-only: true);
-        float: left;
     }
 }
 

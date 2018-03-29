@@ -287,16 +287,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val prebidSwitch: Switch = Switch(
-    group = Commercial,
-    name = "prebid-header-bidding",
-    description = "Turn on Prebid header bidding (takes priority over Sonobi)",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val sonobiSwitch: Switch = Switch(
     group = Commercial,
     name = "sonobi-header-bidding",
@@ -309,20 +299,10 @@ trait CommercialSwitches {
 
   val OrielAnalyticsSwitch: Switch = Switch(
     group = Commercial,
-    name = "oriel-analytics",
-    description = "Include the analytics script for Oriel to monitor ad-blocking",
+    name = "oriel-analytics-or-full",
+    description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 28),
-    exposeClientSide = false
-  )
-
-  val OrielFullIntegration: Switch = Switch(
-    group = Commercial,
-    name = "oriel-full-integration",
-    description = "Include a tag dropped at the start of <head> for full Oriel integration",
-    owners = group(Commercial),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2018, 6, 28),
     exposeClientSide = false
   )
@@ -333,9 +313,29 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 3, 16),
+    sellByDate = new LocalDate(2018, 4, 17),
     exposeClientSide = false
    )
+
+  val prebidSwitch: Switch = Switch(
+    group = Commercial,
+    name = "prebid-header-bidding",
+    description = "Turn on Prebid header bidding (takes priority over Sonobi)",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val prebidAnalytics: Switch = Switch(
+    group = Commercial,
+    name = "prebid-analytics",
+    description = "Gather analytics from Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 
   val prebidSonobi: Switch = Switch(
     group = Commercial,
@@ -375,5 +375,25 @@ trait CommercialSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val prebidXaxis: Switch = Switch(
+    group = Commercial,
+    name = "prebid-xaxis",
+    description = "Include Xaxis adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val orielSonobiIntegration: Switch = Switch(
+    group = Commercial,
+    name = "oriel-sonobi-integration-test",
+    description = "This is a short test to test the integration between Oriel and Sonobi",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 6, 28),
+    exposeClientSide = false
   )
 }

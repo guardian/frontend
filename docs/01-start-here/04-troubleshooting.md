@@ -22,7 +22,9 @@ If it is owned by root, then take ownership of it
 `sudo chown -R $(whoami) ~/.npm`
 
 ### { Error: ENOENT: no such file or directory, scandir '../frontend/node_modules/node-sass/vendor'
+Run `make reinstall` to resolve.
 
+### Accidentally ran `npm install` ot `yarn install`
 Run `make reinstall` to resolve.
 
 ### Global install permissions errors
