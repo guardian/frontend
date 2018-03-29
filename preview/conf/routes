@@ -175,7 +175,7 @@ GET        /sharecount/*path.json                                               
 # Email paths
 GET        /email/form/$emailType<article|footer|plain|plaindark|plaintone>/$listId<[0-9]+>    controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listName          controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
-GET        /email/:result                                                                      controllers.EmailSignupController.subscriptionResult(result: String)
+GET        /email/$result<success|invalid|error>                                               controllers.EmailSignupController.subscriptionResult(result: String)
 POST       /email                                                                              controllers.EmailSignupController.submit()
 OPTIONS    /email                                                                              controllers.EmailSignupController.options()
 
