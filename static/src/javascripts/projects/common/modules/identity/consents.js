@@ -25,14 +25,14 @@ const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
 const checkAllCheckboxClassName = 'js-manage-account__check-allCheckbox';
 const checkAllIgnoreClassName = 'js-manage-account__check-allCheckbox__ignore';
 
-const requestDebounceTimeout = 500;
+const requestDebounceTimeout = 150;
 
 const LC_CHECK_ALL = 'Select all';
 const LC_UNCHECK_ALL = 'Deselect all';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
-const submitPartialConsentFormDebouncedRq: Promise<void> = debounce(
+const submitPartialConsentFormDebouncedRq: ({}) => Promise<void> = debounce(
     formData =>
         reqwest({
             url: '/privacy/edit-ajax',
