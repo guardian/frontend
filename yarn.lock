@@ -2486,6 +2486,10 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
 
+debounce-promise@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/debounce-promise/-/debounce-promise-3.1.0.tgz#25035f4b45017bd51a7bef8b3bd9f6401dc47423"
+
 debug-fabulous@>=0.1.1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/debug-fabulous/-/debug-fabulous-1.0.0.tgz#57f6648646097b1b0849dcda0017362c1ec00f8b"

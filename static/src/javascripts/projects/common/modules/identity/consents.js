@@ -1,10 +1,9 @@
 // @flow
 
 import reqwest from 'reqwest';
+import debounce from 'debounce-promise';
 import fastdom from 'lib/fastdom-promise';
 import loadEnhancers from './modules/loadEnhancers';
-
-import debouncedPromise from './modules/debouncedPromise';
 
 import { push as pushError } from './modules/show-errors';
 import {
@@ -26,29 +25,33 @@ const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
 const checkAllCheckboxClassName = 'js-manage-account__check-allCheckbox';
 const checkAllIgnoreClassName = 'js-manage-account__check-allCheckbox__ignore';
 
+const requestDebounceTimeout = 500;
+
 const LC_CHECK_ALL = 'Select all';
 const LC_UNCHECK_ALL = 'Deselect all';
 
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
-let submitPartialConsentFormData = {};
+const submitPartialConsentFormDebouncedRq: Promise<void> = debounce(
+    formData =>
+        reqwest({
+            url: '/privacy/edit-ajax',
+            method: 'POST',
+            data: formData,
+        }),
+    requestDebounceTimeout
+);
+const submitPartialConsentFormData = {};
 
 const submitPartialConsentForm = (formData: {}): Promise<void> => {
-    Object.keys(formData).forEach(key => {
-        submitPartialConsentFormData[key] = formData[key];
+    Object.assign(submitPartialConsentFormData, formData);
+    return submitPartialConsentFormDebouncedRq(
+        submitPartialConsentFormData
+    ).then(() => {
+        Object.keys(submitPartialConsentFormData).forEach(_ => {
+            delete submitPartialConsentFormData[_];
+        });
     });
-
-    return debouncedPromise(
-        () =>
-            reqwest({
-                url: '/privacy/edit-ajax',
-                method: 'POST',
-                data: submitPartialConsentFormData,
-            }).then(() => {
-                submitPartialConsentFormData = {};
-            }),
-        500
-    );
 };
 
 const submitNewsletterAction = (
