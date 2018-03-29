@@ -91,7 +91,12 @@ trait ConsentsJourney
     consentHint: Option[String]): Action[AnyContent] =
     csrfAddToken {
       consentsRedirectAction.async { implicit request =>
-        val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
+
+        val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request) match {
+          case Some(url) => if (url contains "/consents") returnUrlVerifier.defaultReturnUrl else url
+          case _ => returnUrlVerifier.defaultReturnUrl
+        }
+
         consentCompleteView(
           page,
           returnUrl
