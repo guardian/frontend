@@ -2,7 +2,7 @@
 import React from 'react';
 import { gridSize, clueMapKey } from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
-import Cell from 'common/modules/crosswords/cell';
+import GridCell from 'common/modules/crosswords/cell';
 import { classNames } from 'common/modules/crosswords/classNames';
 import type Crossword from 'common/modules/crosswords/crossword';
 
@@ -12,7 +12,7 @@ export type GridProps = {
     cells: Array<Array<Cell>>,
     separators: SeparatorMap,
     crossword: Crossword,
-    focussedCell: Object,
+    focussedCell: ?Position,
 };
 
 // Position at end of previous cell
@@ -127,7 +127,7 @@ export const Grid = (props: GridProps): React$Node => {
             if (cellProps.isEditable) {
                 const isHighlighted = props.crossword.isHighlighted(x, y);
                 cells.push(
-                    <Cell
+                    <GridCell
                         {...Object.assign(
                             {},
                             cellProps,

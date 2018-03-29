@@ -4,13 +4,19 @@ import { findDOMNode } from 'react-dom';
 
 class ClueInput extends Component<*, *> {
     componentDidMount() {
-        findDOMNode(this).focus();
+        const el: HTMLElement = (findDOMNode(this): any);
+
+        if (el) {
+            el.focus();
+        }
     }
 
     componentDidUpdate() {
+        const el: HTMLElement = (findDOMNode(this): any);
+
         // focus on reset
-        if (this.props.value === '') {
-            findDOMNode(this).focus();
+        if (this.props.value === '' && el) {
+            el.focus();
         }
     }
 
@@ -22,8 +28,10 @@ class ClueInput extends Component<*, *> {
     }
 
     onKeyDown(e: Event) {
-        if (e.keyCode === 13) {
-            findDOMNode(this).blur();
+        const el: HTMLElement = (findDOMNode(this): any);
+
+        if (e.keyCode === 13 && el) {
+            el.blur();
             this.props.onEnter();
         }
     }

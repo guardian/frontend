@@ -48,7 +48,7 @@ class Clues extends Component<*, *> {
     }
 
     componentDidMount() {
-        this.$cluesNode = findDOMNode(this.refs.clues);
+        this.$cluesNode = (findDOMNode(this.refs.clues): any);
 
         const height =
             this.$cluesNode.scrollHeight - this.$cluesNode.clientHeight;
@@ -81,9 +81,11 @@ class Clues extends Component<*, *> {
         }
     }
 
+    $cluesNode: HTMLElement;
+
     scrollIntoView(clue: Object) {
         const buffer = 100;
-        const node = findDOMNode(this.refs[clue.id]);
+        const node: HTMLElement = (findDOMNode(this.refs[clue.id]): any);
         const visible =
             node.offsetTop - buffer > this.$cluesNode.scrollTop &&
             node.offsetTop + buffer <
