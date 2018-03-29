@@ -155,7 +155,7 @@ const Doughnut = (data: Object, o: Object): bonzo => {
                         .text(datum.value)
                         .attr({
                             x: 0,
-                            dy: '1em',
+                            dy: '.8em',
                         })
                 );
         } else {

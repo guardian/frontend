@@ -32,13 +32,18 @@ category: Charts
     position: relative;
 
     .chart__label {
-        @include fs-textSans(4);
+        @include fs-textSans(5);
         fill: #ffffff;
         text-anchor: middle;
     }
 
+    .chart__label-value {
+        @include fs-headlineGarnett(6);
+        font-weight: bold;
+    }
+
     .chart__unit {
-        @include fs-headline(4);
+        @include fs-headlineGarnett(7);
         fill: $neutral-2;
         font-weight: 900;
         text-anchor: middle;

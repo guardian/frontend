@@ -16,7 +16,7 @@
     width: 100%;
 }
 
-.football-stats__column {
+.match-stats__column {
     @include mq($until: tablet) {
         margin-bottom: $gs-baseline;
     }
@@ -25,12 +25,15 @@
         margin-right: 10px;
     }
 
-    &:nth-of-type(odd) {
+    &.match-stats__column--first {
         padding-right: 10px;
         border-right: 1px solid $neutral-4;
     }
 }
 
+.match-stats__stat {
+    margin: 0;
+}
 
 /* ==========================================================================
    Goal attempts
@@ -46,54 +49,46 @@
 
 .goal-attempts__label {
     box-sizing: border-box;
-    padding: $gs-baseline/6 6px;
     font-weight: normal;
     position: absolute;
     margin: 0;
     width: 100%;
     z-index: 2;
 }
-.goal-attempts__label--off-target-away,
-.goal-attempts__label--on-target-away {
-    text-align: right;
+
+.goal-attempts__label--off-target-home {
+    top: 34px;
+    left: 4px;
 }
-.goal-attempts__label--on-target-away,
+
 .goal-attempts__label--on-target-home {
-    bottom: $gs-baseline*3.5;
-}
-.goal-attempts__label--on-target-home {
-    left: 21%;
-}
-.goal-attempts__label--on-target-away {
-    right: 21%;
+    bottom: 10px;
+    left: 23.2%;
 }
 
 .goal-attempts__off-target,
 .goal-attempts__on-target {
-    @include fs-header(5);
+    @include fs-headlineGarnett(6);
+    line-height: .8;
     box-sizing: border-box;
-    padding: $gs-baseline*1.5 6px;
+    padding: 2px 4px;
     font-weight: 900;
     margin: 0;
     width: 50%;
 }
+
 .goal-attempts__off-target {
-    height: $gs-baseline*10;
+    height: $gs-baseline*11;
     background-image: url('data:image/svg+xml, %3Csvg%20width%3D%229%22%20height%3D%2212%22%20viewBox%3D%220%200%209%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22rgba%28255%2C%20255%2C%20255%2C%200.3%29%22%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
     background-repeat: repeat;
     background-size: 10px;
     background-position-x: 0px;
 }
 
-.match-stats--darken-home .goal-attempts__off-target--home,
-.match-stats--darken-away .goal-attempts__off-target--away {
-    background-image: url('data:image/svg+xml,%3Csvg%20width%3D%229%22%20height%3D%2212%22%20viewBox%3D%220%200%209%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22rgba%280%2C%200%2C%200%2C%200.1%29%22%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
-}
-
 .goal-attempts__on-target {
     box-sizing: border-box;
     height: $gs-baseline*6;
-    border: 4px solid #e0eff8;
+    border: 6px solid #e0eff8;
     border-bottom: 0;
     bottom: 0;
     position: absolute;
@@ -120,7 +115,6 @@
     right: 20%;
 }
 
-
 /* ==========================================================================
    Bar fights
    ========================================================================== */
@@ -128,14 +122,15 @@
 .bar-fight {
     .match-stats__caption {
         float: left;
-        margin-top: ($gs-baseline/3)*4;
+        margin-top: 6px;
     }
 }
 
 .bar-fight__bar {
-    @include fs-header(5);
+    @include fs-headlineGarnett(6);
+    line-height: .8;
     box-sizing: border-box;
-    padding: 0 6px 3px;
+    padding: 2px 6px 9px;
     background-color: #e0eff8;
     color: #ffffff;
     font-weight: bold;
@@ -150,30 +145,6 @@
     text-align: left;
 }
 
-/**
- * This will be our unfortunate solution until we do colour checking in play.
- */
-.match-stats--darken-home {
-    .bar-fight__bar--home,
-    .goal-attempts__label--off-target-home,
-    .goal-attempts__label--on-target-home,
-    .goal-attempts__off-target--home,
-    .goal-attempts__on-target--home {
-        color: $neutral-1;
-    }
-}
-
-.match-stats--darken-away {
-    .bar-fight__bar--away,
-    .goal-attempts__label--off-target-away,
-    .goal-attempts__label--on-target-away,
-    .goal-attempts__off-target--away,
-    .goal-attempts__on-target--away {
-        color: $neutral-1;
-    }
-}
-
-
 /* ==========================================================================
     Possession doughnut
    ========================================================================== */
@@ -187,6 +158,10 @@
     width: 100%;
     max-width: 320px;
     margin: auto;
+
+    @include mq(desktop) {
+        padding-top: 290px; // width of column without 10px padding
+    }
 }
 
 .chart--football-possession {
@@ -198,25 +173,46 @@
     width: 100%;
     height: 100%;
 
-    .chart__label-value {
-        @include fs-header(5);
-    }
-
     .chart__unit {
         fill: $neutral-1;
     }
 }
 
+/* ==========================================================================
+   Dark colour overrides
+   ========================================================================== */
+
+.match-stats--darken-home {
+    .bar-fight__bar--home,
+    .goal-attempts__label--off-target-home,
+    .goal-attempts__label--on-target-home,
+    .goal-attempts__off-target--home,
+    .goal-attempts__on-target--home {
+        color: $neutral-1;
+    }
+
+    .chart__arc:last-of-type .chart__label {
+        fill: $neutral-1;
+    }
+}
+
 .match-stats--darken-away {
+    .bar-fight__bar--away,
+    .goal-attempts__label--off-target-away,
+    .goal-attempts__label--on-target-away,
+    .goal-attempts__off-target--away,
+    .goal-attempts__on-target--away {
+        color: $neutral-1;
+    }
+
     .chart__arc:first-of-type .chart__label {
         fill: $neutral-1;
     }
 }
 
-.match-stats--darken-home {
-    .chart__arc:last-of-type .chart__label {
-        fill: $neutral-1;
-    }
+.match-stats--darken-home .goal-attempts__off-target--home,
+.match-stats--darken-away .goal-attempts__off-target--away {
+    background-image: url('data:image/svg+xml,%3Csvg%20width%3D%229%22%20height%3D%2212%22%20viewBox%3D%220%200%209%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22rgba%280%2C%200%2C%200%2C%200.1%29%22%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
 }
 
 
@@ -227,8 +223,8 @@
 .after-article {
     .match-stats__container {
         position: relative;
-        padding: 6px 0;
-        background-color: mix($sport-garnett-main-1, #fff, 15%);
+        padding: 9px 0;
+        background-color: mix($sport-garnett-main-1, #ffffff, 15%);
 
         &:before {
             content: '';
@@ -238,7 +234,7 @@
             left: -10px;
             right: -10px;
             bottom: 0;
-            background-color: mix($sport-garnett-main-1, #fff, 15%);
+            background-color: mix($sport-garnett-main-1, #ffffff, 15%);
 
             @include mq(mobileLandscape) {
                 left: -20px;
@@ -252,7 +248,7 @@
         }
     }
 
-    .c-match-stats {
+    .match-stats {
         position: relative;
         z-index: 2;
 
@@ -270,6 +266,7 @@
         @include mq(leftCol) {
             position: absolute;
             left: -160px;
+            top: -6px;
         }
 
         @include mq(wide) {
