@@ -1,5 +1,6 @@
 // @flow
-import React, { Component, findDOMNode } from 'react/addons';
+import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 
 class ClueInput extends Component<*, *> {
     componentDidMount() {

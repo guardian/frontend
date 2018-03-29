@@ -1,5 +1,6 @@
 // @flow
-import React, { Component, findDOMNode } from 'react/addons';
+import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
@@ -301,7 +302,7 @@ class Crossword extends Component<*, *> {
 
     setGridHeight(): void {
         if (!this.$gridWrapper) {
-            this.$gridWrapper = $(React.findDOMNode(this.refs.gridWrapper));
+            this.$gridWrapper = $(findDOMNode(this.refs.gridWrapper));
         }
 
         if (
