@@ -39,7 +39,8 @@
 
 
 // Nesting 'article' overrides from-content-api ul rules
-article .submeta__links {
+article .submeta__links,
+.submeta__links {
     font-size: 0;
     margin: 0 0 0 (-$gs-gutter / 4);
 }
@@ -50,6 +51,7 @@ article .submeta__links {
 
 .submeta__link {
     @include trailing-slash-link;
+    color: $garnett-neutral-1;
 
     .submeta__keywords & {
         @include fs-textSans(4);
