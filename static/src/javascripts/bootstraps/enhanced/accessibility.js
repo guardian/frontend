@@ -13,9 +13,11 @@ class BinaryToggle extends Component {
         return (
             <div className="form-field">
                 <div className="checkbox">
-                    <label className="label" htmlFor={this.props.name}>
+                    <label
+                        className="label"
+                        htmlFor={`checkbox-${this.props.name}`}>
                         <input
-                            name={this.props.name}
+                            id={`checkbox-${this.props.name}`}
                             key={this.props.name}
                             type="checkbox"
                             data-link-name={this.props.name}
