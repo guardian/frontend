@@ -30,3 +30,12 @@ export const stripMobileSuffix = (s: string): string =>
 
 export const stripTrailingNumbersAbove1 = (s: string): string =>
     stripSuffix(s, '([2-9]|\\d{2,})');
+
+export const getRandomIntInclusive = (
+    minimum: number,
+    maximum: number
+): number => {
+    const min = Math.ceil(minimum);
+    const max = Math.floor(maximum);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
