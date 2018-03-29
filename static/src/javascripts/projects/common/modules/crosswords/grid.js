@@ -69,6 +69,7 @@ const createHyphenSeparator = (
             <rect
                 x={left - borderWidth / 2 - width / 2}
                 y={top + constants.cellSize / 2 + height / 2}
+                key={['sep', direction, x, y].join('_')}
                 width={width}
                 height={height}
             />
@@ -80,6 +81,7 @@ const createHyphenSeparator = (
             <rect
                 x={left + constants.cellSize / 2 + width / 2}
                 y={top - borderWidth / 2 - height / 2}
+                key={['sep', direction, x, y].join('_')}
                 width={width}
                 height={height}
             />
