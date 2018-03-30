@@ -315,11 +315,33 @@
 }
 
 /* ==========================================================================
-   Match Report overrides
+   Football Stats overrides
    ========================================================================== */
 
 .content--football-stats {
     .match-stats {
         margin-top: $gs-baseline;
+    }
+}
+
+/* ==========================================================================
+   Liveblog overrides
+   ========================================================================== */
+
+.content--liveblog {
+    .match-stats__heading {
+        height: auto;
+        left: 0;
+    }
+
+    .match-stats__column {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        margin-right: 0;
+    }
+
+    .match-stats__column--first {
+        padding-right: 0;
+        border-right: 0;
     }
 }
