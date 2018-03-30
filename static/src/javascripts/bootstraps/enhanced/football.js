@@ -247,8 +247,9 @@ const init = (): void => {
     });
 
     isFootballStatsPage(() => {
+        console.log('stats page');
         $('.js-chart').each(el => {
-            new TableDoughnut().render(el);
+            $('.football-possession').append(new TableDoughnut().render(el));
         });
     });
 

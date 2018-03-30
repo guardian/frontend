@@ -1,4 +1,8 @@
 .match-stats {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 50% 50%;
     margin: 0;
     color: $garnett-neutral-1;
 }
@@ -6,6 +10,20 @@
 .match-stats__heading {
     @include fs-header(4);
     font-weight: 900;
+    grid-column-start: 1;
+    grid-column-end: 3;
+
+    @include mq(leftCol) {
+        position: relative;
+        height: 0;
+        left: -160px;
+        top: -4px;
+        margin: 0;
+    }
+
+    @include mq(wide) {
+        left: -240px;
+    }
 }
 
 .match-stats__caption {
@@ -20,8 +38,24 @@
 .match-stats__column {
     padding-bottom: $gs-baseline;
 
+    @include mq($until: tablet) {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    @include mq(tablet) {
+        margin-right: 10px;
+    }
+
     @include mq(leftCol) {
         padding-bottom: $gs-baseline*1.5;
+    }
+
+    &.match-stats__column--first {
+        @include mq(tablet) {
+            padding-right: 10px;
+            border-right: 1px solid $neutral-4;
+        }
     }
 }
 
@@ -82,7 +116,7 @@
 .goal-attempts__on-target {
     box-sizing: border-box;
     height: $gs-baseline*6;
-    border: 6px solid #e0eff8;
+    border: 6px solid #ffffff;
     border-bottom: 0;
     bottom: 0;
     position: absolute;
@@ -96,7 +130,7 @@
 }
 .goal-attempts__off-target--away,
 .goal-attempts__on-target--away {
-    background-color: #e0eff8;
+    background-color: #ffffff;
     float: right;
     text-align: right;
 }
@@ -135,7 +169,7 @@
 
 .bar-fight__bar--home {
     background-color: $garnett-neutral-1;
-    border-right: 2px solid #e0eff8;
+    border-right: 2px solid #ffffff;
     text-align: left;
 }
 
@@ -193,8 +227,12 @@
 
 .match-stats__player-number {
     font-weight: bold;
-    width: 30px;
+    width: 24px;
     display: inline-block;
+
+    @include mq(mobileLandscape) {
+        width: 30px;
+    }
 }
 
 /* ==========================================================================
@@ -234,7 +272,6 @@
     background-image: url('data:image/svg+xml,%3Csvg%20width%3D%229%22%20height%3D%2212%22%20viewBox%3D%220%200%209%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22rgba%280%2C%200%2C%200%2C%200.1%29%22%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
 }
 
-
 /* ==========================================================================
    Match Report overrides
    ========================================================================== */
@@ -267,43 +304,18 @@
         }
     }
 
-    .match-stats__column {
-        @include mq(tablet) {
-            margin-right: 10px;
-        }
-
-        &.match-stats__column--first {
-            padding-right: 10px;
-            border-right: 1px solid $neutral-4;
-        }
+    .bar-fight__bar--home,
+    .goal-attempts__on-target {
+        border-color: mix($sport-garnett-main-1, #ffffff, 15%);
     }
+}
 
+/* ==========================================================================
+   Match Report overrides
+   ========================================================================== */
+
+.content--football-stats {
     .match-stats {
-        position: relative;
-        z-index: 2;
-
-        @include mq(tablet) {
-            display: grid;
-            grid-template-columns: 50% 50%;
-        }
-    }
-
-    .match-stats__heading {
-        @include mq(tablet) {
-            grid-column-start: 1;
-            grid-column-end: 3; 
-        }
-
-        @include mq(leftCol) {
-            position: relative;
-            height: 0;
-            left: -160px;
-            top: -4px;
-            margin: 0;
-        }
-
-        @include mq(wide) {
-            left: -240px;
-        }
+        margin-top: $gs-baseline;
     }
 }

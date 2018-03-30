@@ -4,12 +4,6 @@ import pa.{ LineUpPlayer, Team }
 import common.Logging
 import play.twirl.api.Html
 
-object FootballHelpers {
-  implicit class lineUpPlayer2rich(t: LineUpPlayer) {
-    lazy val isUnusedSub = t.substitute && !t.events.exists(_.eventType == "substitution")
-  }
-}
-
 object ShortName {
 
   val names = Map("44" -> "Wolves")
