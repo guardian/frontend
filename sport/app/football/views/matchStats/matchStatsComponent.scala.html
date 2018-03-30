@@ -9,8 +9,8 @@
 @team(players: Seq[LineUpPlayer]) = {
     <ul class="match-stats__players u-unstyled">
         @players.map{ player =>
-            <li class="match-stats__player ">
-                <span class='match-stats__player-number'>@player.shirtNumber</span>
+            <li class="match-stats__player">
+                <span class="match-stats__player-number">@player.shirtNumber</span>
                 @player.lastName
                 @player.events.map{ event =>
                     @{ event.eventType match {
@@ -35,7 +35,7 @@
 
         <h3 class="match-stats__heading">Match stats</h3>
 
-        <div class='match-stats__column match-stats__column--first'>
+        <div class="match-stats__column match-stats__column--first">
             <h4 class="match-stats__caption">Possession</h4>
             <div class="football-possession">
                 <table class="match-stats bar-fight js-chart"
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class='match-stats__column'>
+        <div class="match-stats__column">
             <h4 class="match-stats__caption">Goal attempts</h4>
             <dl class="match-stats__stat goal-attempts u-cf">
                 <dd class="goal-attempts__off-target goal-attempts__off-target--home" style="background-color: @teamColours.home;">@home.shotsOff</dd>
@@ -101,7 +101,7 @@
         @if(hasLineUp) {
             <h3 class="match-stats__heading">Lineups</h3>
 
-            <div class='match-stats__lineup match-stats__lineup--home'>
+            <div class="match-stats__lineup match-stats__lineup--home">
                 <h4 class="match-stats__caption">@home.name</h4>
                 @team(page.lineUp.homeTeam.players.filterNot {
                     _.substitute
@@ -111,7 +111,7 @@
                     _.substitute
                 })
             </div>
-            <div class='match-stats__lineup match-stats__lineup--away'>
+            <div class="match-stats__lineup match-stats__lineup--away">
                 <h4 class="match-stats__caption">@away.name</h4>
                 @team(page.lineUp.awayTeam.players.filterNot {
                     _.substitute
