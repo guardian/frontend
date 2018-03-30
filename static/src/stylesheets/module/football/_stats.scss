@@ -1,5 +1,6 @@
 .match-stats {
     margin: 0;
+    color: $garnett-neutral-1;
 }
 
 .match-stats__heading {
@@ -10,24 +11,17 @@
 .match-stats__caption {
     @include fs-textSans(5);
     margin-bottom: $gs-baseline/6;
-    color: $neutral-1;
+    color: $garnett-neutral-1;
     font-weight: 400;
     text-align: left;
     width: 100%;
 }
 
 .match-stats__column {
-    @include mq($until: tablet) {
-        margin-bottom: $gs-baseline;
-    }
+    padding-bottom: $gs-baseline;
 
-    @include mq(tablet) {
-        margin-right: 10px;
-    }
-
-    &.match-stats__column--first {
-        padding-right: 10px;
-        border-right: 1px solid $neutral-4;
+    @include mq(leftCol) {
+        padding-bottom: $gs-baseline*1.5;
     }
 }
 
@@ -97,7 +91,7 @@
 
 .goal-attempts__off-target--home,
 .goal-attempts__on-target--home {
-    background-color: $neutral-1;
+    background-color: $garnett-neutral-1;
     float: left;
 }
 .goal-attempts__off-target--away,
@@ -140,7 +134,7 @@
 }
 
 .bar-fight__bar--home {
-    background-color: $neutral-1;
+    background-color: $garnett-neutral-1;
     border-right: 2px solid #e0eff8;
     text-align: left;
 }
@@ -174,8 +168,33 @@
     height: 100%;
 
     .chart__unit {
-        fill: $neutral-1;
+        fill: $garnett-neutral-1;
     }
+}
+
+/* ==========================================================================
+   Lineups
+   ========================================================================== */
+
+.match-stats__lineup {
+    margin-right: 10px;
+}
+
+.match-stats__lineup--home {
+    @include mq(tablet) {
+        border-right: $neutral-4 1px solid;
+        padding-right: 10px;
+    }
+}
+
+.match-stats__player {
+    @include fs-textSans(5);
+}
+
+.match-stats__player-number {
+    font-weight: bold;
+    width: 30px;
+    display: inline-block;
 }
 
 /* ==========================================================================
@@ -188,11 +207,11 @@
     .goal-attempts__label--on-target-home,
     .goal-attempts__off-target--home,
     .goal-attempts__on-target--home {
-        color: $neutral-1;
+        color: $garnett-neutral-1;
     }
 
     .chart__arc:last-of-type .chart__label {
-        fill: $neutral-1;
+        fill: $garnett-neutral-1;
     }
 }
 
@@ -202,11 +221,11 @@
     .goal-attempts__label--on-target-away,
     .goal-attempts__off-target--away,
     .goal-attempts__on-target--away {
-        color: $neutral-1;
+        color: $garnett-neutral-1;
     }
 
     .chart__arc:first-of-type .chart__label {
-        fill: $neutral-1;
+        fill: $garnett-neutral-1;
     }
 }
 
@@ -248,6 +267,17 @@
         }
     }
 
+    .match-stats__column {
+        @include mq(tablet) {
+            margin-right: 10px;
+        }
+
+        &.match-stats__column--first {
+            padding-right: 10px;
+            border-right: 1px solid $neutral-4;
+        }
+    }
+
     .match-stats {
         position: relative;
         z-index: 2;
@@ -263,10 +293,13 @@
             grid-column-start: 1;
             grid-column-end: 3; 
         }
+
         @include mq(leftCol) {
-            position: absolute;
+            position: relative;
+            height: 0;
             left: -160px;
-            top: -6px;
+            top: -4px;
+            margin: 0;
         }
 
         @include mq(wide) {

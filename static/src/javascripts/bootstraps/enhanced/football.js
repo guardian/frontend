@@ -141,7 +141,7 @@ const loaded = (elem: HTMLElement): void => {
 
 const init = (): void => {
     const extras = [];
-
+        console.log('hey');
     isMatch((match: Object): void => {
         $('article').addClass('content--has-scores');
 
@@ -160,6 +160,8 @@ const init = (): void => {
             });
 
             renderNav(match, (resp, $nav, endpoint): void => {
+                console.log(match);
+                console.log(resp);
                 // Test if template is not composed of just whitspace. A content validation check, apparently.
                 if (!/^\s+$/.test(scoreBoard.template || '')) {
                     scoreBoard.endpoint = endpoint;
