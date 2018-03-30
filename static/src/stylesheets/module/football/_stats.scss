@@ -229,6 +229,10 @@
     @include fs-textSans(5);
 }
 
+.match-stats__player .i {
+    transform: rotate(8deg);
+}
+
 .match-stats__player-number {
     font-weight: bold;
     width: 24px;
