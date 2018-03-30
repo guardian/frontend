@@ -221,6 +221,10 @@
     }
 }
 
+.match-stats__players {
+    margin-bottom: $gs-baseline;
+}
+
 .match-stats__player {
     @include fs-textSans(5);
 }
