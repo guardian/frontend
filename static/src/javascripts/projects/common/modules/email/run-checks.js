@@ -20,7 +20,7 @@ const pageHasBlanketBlacklist = (): boolean =>
     keywordExists(['US elections 2016', 'Football']) ||
     config.get('page.section') === 'film' ||
     config.get('page.seriesId') === 'world/series/guardian-morning-briefing' ||
-    config.get('page.contentId') === '/profile/first-dog-on-the-moon' ; //temporary to prevent some spammers to annoy us
+    config.get('page.contentId') === '/profile/first-dog-on-the-moon'; //temporary to prevent some spammers to annoy us
     
 const userHasRemoved = (id: string, formType: string): boolean => {
     const currentListPrefs = userPrefs.get(`email-sign-up-${formType}`);
