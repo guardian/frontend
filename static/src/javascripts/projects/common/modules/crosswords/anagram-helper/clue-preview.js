@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react/addons';
+import React, { Component } from 'react';
 
 type WordSeparator = ',' | '-';
 
@@ -24,7 +24,7 @@ const checkIfLetterHasSeparator = (
     return 'crossword__anagram-helper__cell';
 };
 
-class CluePreview extends Component {
+class CluePreview extends Component<*, *> {
     /**
      * Get the entries for the preview cells: first filter the user's input to
      * remove anything anything that's already been entered into the grid.

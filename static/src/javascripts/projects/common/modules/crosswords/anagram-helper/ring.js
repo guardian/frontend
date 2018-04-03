@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react/addons';
+import React, { Component } from 'react';
 
 const round = x => Math.round(x * 100) / 100;
 /**
@@ -21,7 +21,7 @@ const getPosition = (
     };
 };
 
-class Ring extends Component {
+class Ring extends Component<*, *> {
     render() {
         const angle = 360 / this.props.letters.length;
 

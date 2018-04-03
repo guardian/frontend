@@ -111,6 +111,10 @@ module.exports = {
             // add errors to webpack instead of warnings
             failOnError: true,
         }),
+
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        }),
     ],
     externals: {
         xhr2: {},

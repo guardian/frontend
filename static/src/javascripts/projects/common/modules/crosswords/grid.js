@@ -1,8 +1,8 @@
 // @flow
-import React from 'react/addons';
+import React from 'react';
 import { gridSize, clueMapKey } from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
-import Cell from 'common/modules/crosswords/cell';
+import GridCell from 'common/modules/crosswords/cell';
 import { classNames } from 'common/modules/crosswords/classNames';
 import type Crossword from 'common/modules/crosswords/crossword';
 
@@ -12,7 +12,7 @@ export type GridProps = {
     cells: Array<Array<Cell>>,
     separators: SeparatorMap,
     crossword: Crossword,
-    focussedCell: Object,
+    focussedCell: ?Position,
 };
 
 // Position at end of previous cell
@@ -20,7 +20,7 @@ const createWordSeparator = (
     x: number,
     y: number,
     direction: Direction
-): ?React.Element => {
+): ?React$Node => {
     const top = gridSize(y);
     const left = gridSize(x);
     const borderWidth = 1;
@@ -55,7 +55,7 @@ const createHyphenSeparator = (
     x: number,
     y: number,
     direction: Direction
-): ?React.Element => {
+): ?React$Node => {
     const top = gridSize(y);
     const left = gridSize(x);
     const borderWidth = 1;
@@ -69,6 +69,7 @@ const createHyphenSeparator = (
             <rect
                 x={left - borderWidth / 2 - width / 2}
                 y={top + constants.cellSize / 2 + height / 2}
+                key={['sep', direction, x, y].join('_')}
                 width={width}
                 height={height}
             />
@@ -80,6 +81,7 @@ const createHyphenSeparator = (
             <rect
                 x={left + constants.cellSize / 2 + width / 2}
                 y={top - borderWidth / 2 - height / 2}
+                key={['sep', direction, x, y].join('_')}
                 width={width}
                 height={height}
             />
@@ -91,7 +93,7 @@ const createSeparator = (
     x: number,
     y: number,
     separatorDescription: ?SeparatorDescription
-): ?React.Element => {
+): ?React$Node => {
     if (separatorDescription) {
         if (separatorDescription.separator === ',') {
             return createWordSeparator(x, y, separatorDescription.direction);
@@ -101,7 +103,7 @@ const createSeparator = (
     }
 };
 
-export const Grid = (props: GridProps): React.Element<*> => {
+export const Grid = (props: GridProps): React$Node => {
     const getSeparators = (x: number, y: number): ?SeparatorDescription =>
         props.separators[clueMapKey(x, y)];
 
@@ -125,7 +127,7 @@ export const Grid = (props: GridProps): React.Element<*> => {
             if (cellProps.isEditable) {
                 const isHighlighted = props.crossword.isHighlighted(x, y);
                 cells.push(
-                    <Cell
+                    <GridCell
                         {...Object.assign(
                             {},
                             cellProps,
