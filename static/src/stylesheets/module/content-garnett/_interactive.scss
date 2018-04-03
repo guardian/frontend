@@ -29,19 +29,49 @@
         }
     }
 
-    .meta__extras {
-        border-top: 1px dotted $neutral-5;
-        display: flex;
-        justify-content: space-between;
+    .content__standfirst {
+        @include mq($until: desktop) {
+            margin-left: 0;
+        }
     }
 
-    .meta__social,
+    .byline {
+        padding-bottom: 0;
+    }
+
+    .byline,
+    .content__dateline {
+        min-height: 0;
+    }
+
+    .content__dateline,
+    .meta__numbers,
+    .meta__social {
+        border-top: 0;
+    }
+
+    .meta__social {
+        border-bottom: 1px solid $garnett-neutral-4;
+    }
+
     .meta__numbers {
-        border: 0 none;
+        position: absolute;
+        right: 0;
+        top: 0;
     }
 
-    .meta__number {
-        text-align: right;
+    .block-share__item,
+    .inline-close,
+    .social-icon,
+    .social-icon.social-icon--more {
+        background-color: transparent;
+        border: 1px solid $neutral-4;
+        &:focus,
+        &:hover {
+            svg {
+                fill: $garnett-neutral-5;
+            }
+        }
     }
 
     .content__section-label,
