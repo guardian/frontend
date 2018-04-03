@@ -39,6 +39,7 @@ const classes = {
     form: 'js-email-sub__form',
     inlineLabel: 'js-email-sub__inline-label',
     textInput: 'js-email-sub__text-input',
+    dummyInput: 'js-email-sub__text-name',
     listNameHiddenInput: 'js-email-sub__listname-input',
 };
 
@@ -252,16 +253,19 @@ const submitForm = (
 
     return event => {
         const emailAddress = $(`.${classes.textInput}`, $form).val();
+        const dummy = $(`.${classes.dummyInput}`, $form).val();
         const listName = $(`.${classes.listNameHiddenInput}`, $form);
 
         let analyticsInfo;
 
         event.preventDefault();
-
+        debugger;
         if (!state.submitting && validate(emailAddress)) {
             const formData = $form.data('formData');
             const data = `email=${encodeURIComponent(
                 emailAddress
+            )}&name=${encodeURIComponent(
+                dummy
             )}&campaignCode=${formData.campaignCode}&referrer=${
                 formData.referrer
             }&listName=${listName.val()}`;

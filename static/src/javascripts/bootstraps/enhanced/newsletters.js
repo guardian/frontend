@@ -16,6 +16,11 @@ const classes = {
     previewButton: 'js-newsletter-preview',
 };
 
+const inputs = {
+    email: 'email',
+    dummy: 'name'
+};
+
 const hideInputAndShowPreview = (el: ?Node): void => {
     fastdom.write(() => {
         $(`.${classes.textInput}`, el).addClass('is-hidden');
@@ -43,10 +48,10 @@ const submitForm = (
     form: ?HTMLFormElement,
     buttonEl: HTMLButtonElement
 ): Promise<void> => {
-    const dummyEmail = $('input[name="email"]', form).val(); // Used as a 'bot-bait', see https://stackoverflow.com/a/34623588/2823715
-    const email = $('input[name="rznvy"]', form).val();
+    const dummyEmail = $(`input[name="${inputs.dummy}"]`, form).val(); // Used as a 'bot-bait', see https://stackoverflow.com/a/34623588/2823715
+    const email = $(`input[name="${inputs.email}"`, form).val();
     const listName = $('input[name="listName"]', form).val();
-    const formQueryString = `rznvy=${email}&listName=${listName}&email=${
+    const formQueryString = `${inputs.email}=${email}&listName=${listName}&${inputs.dummy}=${
         dummyEmail
     }`;
     console.log(`${config.page.ajaxUrl}/email`);
