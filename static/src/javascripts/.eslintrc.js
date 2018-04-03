@@ -12,7 +12,11 @@ module.exports = {
     settings: {
         'import/resolver': 'webpack',
     },
-    extends: ['plugin:flowtype/recommended', 'prettier/flowtype'],
+    extends: [
+        'plugin:flowtype/recommended',
+        'prettier/flowtype',
+        'prettier/react',
+    ],
     plugins: ['flowtype', 'flow-header'],
     rules: {
         // require-specific overrides
@@ -35,6 +39,9 @@ module.exports = {
         'react/no-string-refs': 'off',
         'react/prefer-stateless-function': 'off',
         'react/no-render-return-value': 'off',
+        'react/jsx-indent': [2, 4],
+        'react/jsx-indent-props': [2, 4],
+        'react/jsx-filename-extension': 'off',
 
         // disallow naming variables 'guardian', because
         // window.guardian is our global config/settings object

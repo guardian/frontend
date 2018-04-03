@@ -27,22 +27,26 @@ const createWordSeparator = (
 
     if (direction === 'across') {
         const width = 1;
-        return React.createElement('rect', {
-            x: left - borderWidth - width,
-            y: top,
-            key: ['sep', direction, x, y].join('_'),
-            width,
-            height: constants.cellSize,
-        });
+        return (
+            <rect
+                x={left - borderWidth - width}
+                y={top}
+                key={['sep', direction, x, y].join('_')}
+                width={width}
+                height={constants.cellSize}
+            />
+        );
     } else if (direction === 'down') {
         const height = 1;
-        return React.createElement('rect', {
-            x: left,
-            y: top - borderWidth - height,
-            key: ['sep', direction, x, y].join('_'),
-            width: constants.cellSize,
-            height,
-        });
+        return (
+            <rect
+                x={left}
+                y={top - borderWidth - height}
+                key={['sep', direction, x, y].join('_')}
+                width={constants.cellSize}
+                height={height}
+            />
+        );
     }
 };
 
@@ -61,21 +65,25 @@ const createHyphenSeparator = (
     if (direction === 'across') {
         width = constants.cellSize / 4;
         height = 1;
-        return React.createElement('rect', {
-            x: left - borderWidth / 2 - width / 2,
-            y: top + constants.cellSize / 2 + height / 2,
-            width,
-            height,
-        });
+        return (
+            <rect
+                x={left - borderWidth / 2 - width / 2}
+                y={top + constants.cellSize / 2 + height / 2}
+                width={width}
+                height={height}
+            />
+        );
     } else if (direction === 'down') {
         width = 1;
         height = constants.cellSize / 4;
-        return React.createElement('rect', {
-            x: left + constants.cellSize / 2 + width / 2,
-            y: top - borderWidth / 2 - height / 2,
-            width,
-            height,
-        });
+        return (
+            <rect
+                x={left + constants.cellSize / 2 + width / 2}
+                y={top - borderWidth / 2 - height / 2}
+                width={width}
+                height={height}
+            />
+        );
     }
 };
 
@@ -117,9 +125,8 @@ export const Grid = (props: GridProps): React.Element<*> => {
             if (cellProps.isEditable) {
                 const isHighlighted = props.crossword.isHighlighted(x, y);
                 cells.push(
-                    React.createElement(
-                        Cell,
-                        Object.assign(
+                    <Cell
+                        {...Object.assign(
                             {},
                             cellProps,
                             {
@@ -134,8 +141,8 @@ export const Grid = (props: GridProps): React.Element<*> => {
                                     y === props.focussedCell.y,
                             },
                             this
-                        )
-                    )
+                        )}
+                    />
                 );
 
                 separators = separators.concat(
@@ -145,29 +152,22 @@ export const Grid = (props: GridProps): React.Element<*> => {
         })
     );
 
-    return React.createElement(
-        'svg',
-        {
-            viewBox: `0 0 ${width} ${height}`,
-            className: classNames({
+    return (
+        <svg
+            viewBox={`0 0 ${width} ${height}`}
+            className={classNames({
                 crossword__grid: true,
                 'crossword__grid--focussed': !!props.focussedCell,
-            }),
-        },
-        React.createElement('rect', {
-            x: 0,
-            y: 0,
-            width,
-            height,
-            className: 'crossword__grid-background',
-        }),
-        cells,
-        React.createElement(
-            'g',
-            {
-                className: 'crossword__grid__separators',
-            },
-            separators
-        )
+            })}>
+            <rect
+                x={0}
+                y={0}
+                width={width}
+                height={height}
+                className="crossword__grid-background"
+            />
+            {cells}
+            <g className="crossword__grid__separators">{separators}</g>
+        </svg>
     );
 };

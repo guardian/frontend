@@ -1,5 +1,5 @@
 // @flow
-import React from 'react/addons';
+import React, { Component } from 'react/addons';
 import {
     getPopularFiltered,
     deleteFromSummary,
@@ -14,40 +14,35 @@ const init = (): void => {
     );
 
     const initialiseSummaryTagsSettings = () => {
-        const SummaryTagsList: React = React.createClass({
-            getInitialState() {
-                return {
+        class SummaryTagsList extends Component {
+            constructor() {
+                super();
+                this.state = {
                     popular: getPopularFiltered(),
                 };
-            },
+            }
+
             handleRemove(tag: string) {
                 deleteFromSummary(tag);
                 this.setState({
                     popular: getPopularFiltered({ flush: true }),
                 });
                 showInMegaNav();
-            },
+            }
+
             render() {
                 const tags: Object = this.state.popular.reduce((obj, tag) => {
-                    obj[tag[0]] = React.DOM.span(
-                        {
-                            className:
-                                'button button--small button--tag button--secondary',
-                        },
-                        React.DOM.button(
-                            {
-                                onClick: this.handleRemove.bind(this, tag[0]),
-                                'data-link-name': `remove | ${tag[1]}`,
-                            },
-                            'X'
-                        ),
-                        React.DOM.a(
-                            {
-                                href: `/${tag[0]}`,
-                            },
-                            tag[1]
-                        )
+                    obj[tag[0]] = (
+                        <span className="button button--small button--tag button--secondary">
+                            <button
+                                onClick={this.handleRemove.bind(this, tag[0])}
+                                data-link-name={`remove | ${tag[1]}`}>
+                                X
+                            </button>
+                            <a href={`/${tag[0]}`}>{tag[1]}</a>
+                        </span>
                     );
+
                     return obj;
                 }, {});
 
@@ -60,17 +55,20 @@ const init = (): void => {
                     helperText =
                         "Remove individual topics by clicking 'X' or switch off the functionality below. We respect your privacy and your shortcuts will never be made public.";
                 }
-                tags.helperText = React.DOM.p(null, helperText);
-                return React.DOM.div(null, tags);
-            },
-        });
+                tags.helperText = <p>{helperText}</p>;
 
-        const SummaryTagsSettings: React = React.createClass({
-            getInitialState() {
-                return {
+                return <div>{tags}</div>;
+            }
+        }
+
+        class SummaryTagsSettings extends Component {
+            constructor() {
+                super();
+                this.state = {
                     enabled: showInMegaNavEnabled(),
                 };
-            },
+            }
+
             handleToggle() {
                 const isEnabled = !this.state.enabled;
 
@@ -78,38 +76,31 @@ const init = (): void => {
                     enabled: isEnabled,
                 });
                 showInMegaNavEnable(isEnabled);
-            },
+            }
+
             render() {
-                const self = this;
                 const toggleAction = this.state.enabled ? 'OFF' : 'ON';
 
-                return React.DOM.div(
-                    {
-                        'data-link-name': 'suggested links',
-                    },
-                    [
-                        React.DOM.p(
-                            null,
-                            'These are based on the topics you visit most. You can access them at any time by opening the "all sections” menu.'
-                        ),
-                        this.state.enabled
-                            ? React.createElement(SummaryTagsList)
-                            : null,
-                        React.DOM.button(
-                            {
-                                onClick: self.handleToggle,
-                                className:
-                                    'button button--medium button--primary',
-                                'data-link-name': toggleAction,
-                            },
-                            `Switch recently visited links ${toggleAction}`
-                        ),
-                    ]
+                return (
+                    <div data-link-name="suggested links">
+                        <p>
+                            These are based on the topics you visit most. You
+                            can access them at any time by opening the &quot;all
+                            sections&quot; menu.
+                        </p>
+                        {this.state.enabled ? <SummaryTagsList /> : null}
+                        <button
+                            onClick={this.handleToggle.bind(this)}
+                            className="button button--medium button--primary"
+                            data-link-name={toggleAction}>
+                            Switch recently visited links {toggleAction}
+                        </button>
+                    </div>
                 );
-            },
-        });
+            }
+        }
 
-        React.render(React.createElement(SummaryTagsSettings), placeholder);
+        React.render(<SummaryTagsSettings />, placeholder);
     };
 
     if (placeholder) {

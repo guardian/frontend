@@ -1,5 +1,5 @@
 // @flow
-import React from 'react/addons';
+import React, { Component } from 'react/addons';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
@@ -38,7 +38,7 @@ import {
 import { classNames } from 'common/modules/crosswords/classNames';
 import type { GridProps } from 'common/modules/crosswords/grid';
 
-class Crossword extends React.Component {
+class Crossword extends Component {
     constructor(props: Object) {
         super(props);
         const dimensions = this.props.data.dimensions;
@@ -68,10 +68,13 @@ class Crossword extends React.Component {
         const $grid = $(React.findDOMNode(this.refs.grid));
         const $game = $(React.findDOMNode(this.refs.game));
 
-        mediator.on('window:resize', debounce(this.setGridHeight, 200));
+        mediator.on(
+            'window:resize',
+            debounce(this.setGridHeight.bind(this), 200)
+        );
         mediator.on(
             'window:orientationchange',
-            debounce(this.setGridHeight, 200)
+            debounce(this.setGridHeight.bind(this), 200)
         );
         this.setGridHeight();
 
@@ -690,15 +693,15 @@ class Crossword extends React.Component {
     render(): Element {
         const focused = this.clueInFocus();
 
-        const anagramHelper =
-            this.state.showAnagramHelper &&
-            React.createElement(AnagramHelper, {
-                crossword: this,
-                focussedEntry: focused,
-                entries: this.props.data.entries,
-                grid: this.state.grid,
-                close: this.onToggleAnagramHelper,
-            });
+        const anagramHelper = this.state.showAnagramHelper && (
+            <AnagramHelper
+                crossword={this}
+                focussedEntry={focused}
+                entries={this.props.data.entries}
+                grid={this.state.grid}
+                close={this.onToggleAnagramHelper}
+            />
+        );
 
         const gridProps: GridProps = {
             rows: this.rows,
@@ -710,92 +713,60 @@ class Crossword extends React.Component {
             ref: 'grid',
         };
 
-        return React.createElement(
-            'div',
-            {
-                className: `crossword__container crossword__container--${
+        return (
+            <div
+                className={`crossword__container crossword__container--${
                     this.props.data.crosswordType
-                } crossword__container--react`,
-                'data-link-name': 'Crosswords',
-            },
-            React.createElement(
-                'div',
-                {
-                    className: 'crossword__container__game',
-                    ref: 'game',
-                },
-                React.createElement(
-                    'div',
-                    {
-                        className: 'crossword__sticky-clue-wrapper',
-                        ref: 'stickyClueWrapper',
-                    },
-                    React.createElement(
-                        'div',
-                        {
-                            className: classNames({
+                } crossword__container--react`}
+                data-link-name="Crosswords">
+                <div className="crossword__container__game" ref="game">
+                    <div
+                        className="crossword__sticky-clue-wrapper"
+                        ref="stickyClueWrapper">
+                        <div
+                            className={classNames({
                                 'crossword__sticky-clue': true,
                                 'is-hidden': !focused,
-                            }),
-                            ref: 'stickyClue',
-                        },
-                        focused &&
-                            React.createElement(
-                                'div',
-                                {
-                                    className: 'crossword__sticky-clue__inner',
-                                },
-                                React.createElement(
-                                    'div',
-                                    {
-                                        className:
-                                            'crossword__sticky-clue__inner__inner',
-                                    },
-                                    React.createElement(
-                                        'strong',
-                                        null,
-                                        focused.number,
-                                        ' ',
-                                        React.createElement(
-                                            'span',
-                                            {
-                                                className:
-                                                    'crossword__sticky-clue__direction',
-                                            },
-                                            focused.direction
-                                        )
-                                    ),
-                                    ' ',
-                                    focused.clue
-                                )
-                            )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    {
-                        className: 'crossword__container__grid-wrapper',
-                        ref: 'gridWrapper',
-                    },
-                    Grid(gridProps),
-                    React.createElement(HiddenInput, {
-                        crossword: this,
-                        value: this.hiddenInputValue(),
-                        ref: 'hiddenInputComponent',
-                    }),
-                    anagramHelper
-                )
-            ),
-            React.createElement(Controls, {
-                hasSolutions: this.hasSolutions(),
-                clueInFocus: focused,
-                crossword: this,
-            }),
-            React.createElement(Clues, {
-                clues: this.cluesData(),
-                focussed: focused,
-                setReturnPosition: this.setReturnPosition,
-            })
+                            })}
+                            ref="stickyClue">
+                            {focused && (
+                                <div className="crossword__sticky-clue__inner">
+                                    <div className="crossword__sticky-clue__inner__inner">
+                                        <strong>
+                                            {focused.number}{' '}
+                                            <span className="crossword__sticky-clue__direction">
+                                                {focused.direction}
+                                            </span>
+                                        </strong>{' '}
+                                        {focused.clue}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div
+                        className="crossword__container__grid-wrapper"
+                        ref="gridWrapper">
+                        {Grid(gridProps)}
+                        <HiddenInput
+                            crossword={this}
+                            value={this.hiddenInputValue()}
+                            ref="hiddenInputComponent"
+                        />
+                        {anagramHelper}
+                    </div>
+                </div>
+                <Controls
+                    hasSolutions={this.hasSolutions()}
+                    clueInFocus={focused}
+                    crossword={this}
+                />
+                <Clues
+                    clues={this.cluesData()}
+                    focussed={focused}
+                    setReturnPosition={this.setReturnPosition.bind(this)}
+                />
+            </div>
         );
     }
 }
