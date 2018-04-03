@@ -595,19 +595,15 @@
             padding: 0;
         }
 
-        .content__labels {
+        .content__labels--immersive {
             margin-left: -$gs-gutter;
-            width: gs-span(3) + ($gs-gutter / 2);
             padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline / 4) $gs-gutter;
             position: absolute;
-            top: 0;
             transform: translateY(-100%);
 
             @include mq($from: tablet) {
                 margin-left: -($gs-gutter / 2);
-                min-height: $gs-baseline * 4;
                 padding: ($gs-baseline / 2) ($gs-gutter / 2);
-                width: gs-span(4) + ($gs-gutter / 2);
             }
         }
 
@@ -620,16 +616,12 @@
             }
         }
 
-        .content__series-label--immersive-article {
-            display: block;
-            padding-bottom: $gs-baseline;
-        }
-
         .content__series-label__link {
             color: #ffffff;
+            font-weight: 700;
 
             @include mq(desktop) {
-                font-size: 22px;
+                font-size: 20px;
             }
         }
         .content__main-column {
@@ -832,8 +824,8 @@
 //variable pillar colours
 
 @mixin immersivePillarColours($pillar, $color, $color2) {
-    .content--pillar-#{$pillar}.content--immersive-article {
-        .content__labels {
+    .content--pillar-#{$pillar}.content--immersive-article:not(.paid-content) {
+        .content__labels--immersive {
             background-color: $color2;
         }
         .u-underline {
