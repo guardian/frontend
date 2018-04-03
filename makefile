@@ -46,7 +46,7 @@ watch: compile-watch
 
 # Compile all assets in production.
 compile: install
-	@./tools/task-runner/runner compile
+	@NODE_ENV=production ./tools/task-runner/runner compile
 
 # Compile all assets in development.
 compile-dev: install
