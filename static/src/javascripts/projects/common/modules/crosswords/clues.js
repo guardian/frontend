@@ -1,12 +1,13 @@
 // @flow
-import React, { Component, findDOMNode } from 'react/addons';
+import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import bean from 'bean';
 import fastdom from 'fastdom';
 import { classNames } from 'common/modules/crosswords/classNames';
 import { isBreakpoint } from 'lib/detect';
 import { scrollTo } from 'lib/scroller';
 
-class Clue extends Component {
+class Clue extends Component<*, *> {
     onClick() {
         this.props.setReturnPosition();
     }
@@ -38,7 +39,7 @@ class Clue extends Component {
     }
 }
 
-class Clues extends Component {
+class Clues extends Component<*, *> {
     constructor(props: Object) {
         super(props);
         this.state = {
@@ -47,7 +48,7 @@ class Clues extends Component {
     }
 
     componentDidMount() {
-        this.$cluesNode = findDOMNode(this.refs.clues);
+        this.$cluesNode = (findDOMNode(this.refs.clues): any);
 
         const height =
             this.$cluesNode.scrollHeight - this.$cluesNode.clientHeight;
@@ -80,9 +81,11 @@ class Clues extends Component {
         }
     }
 
+    $cluesNode: HTMLElement;
+
     scrollIntoView(clue: Object) {
         const buffer = 100;
-        const node = findDOMNode(this.refs[clue.id]);
+        const node: HTMLElement = (findDOMNode(this.refs[clue.id]): any);
         const visible =
             node.offsetTop - buffer > this.$cluesNode.scrollTop &&
             node.offsetTop + buffer <

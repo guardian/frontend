@@ -84,14 +84,14 @@
 
 @displayNewslettersByTheme = {
     @List(
-        "news round ups" -> newsRoundUpEmails,
-        "news by topic"  -> newsEmails,
-        "features"       -> featureEmails,
-        "sport"          -> sportEmails,
-        "culture"        -> cultureEmails,
-        "lifestyle"      -> lifestyleEmails,
-        "commentEmails"  -> commentEmails,
-        "work"           -> workEmails
+        "News round ups" -> newsRoundUpEmails,
+        "News by topic"  -> newsEmails,
+        "Features"       -> featureEmails,
+        "Sport"          -> sportEmails,
+        "Culture"        -> cultureEmails,
+        "Lifestyle"      -> lifestyleEmails,
+        "Comment"        -> commentEmails,
+        "Work"           -> workEmails
     ).map { case (theme, newsletters) =>
         <div class="newsletters-category" name="@theme">
             @emailListCategoryList(theme, newsletters)
@@ -102,7 +102,7 @@
 <div class="l-side-margins">
 <div class="content">
     <div class="gs-container">
-        <div class="newsletters-heading">newsletters</div>
+        <div class="newsletters-heading">Newsletters</div>
         @displayNewslettersByTheme
     </div>
 </div>

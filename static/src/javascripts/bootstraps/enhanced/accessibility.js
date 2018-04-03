@@ -1,5 +1,6 @@
 // @flow
-import React, { Component } from 'react/addons';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 import { saveState, isOn } from 'common/modules/accessibility/main';
 
 const DOM_ID: string = 'js-accessibility-preferences';
@@ -8,7 +9,7 @@ type AccessibilityState = {
     'flashing-elements': boolean,
 };
 
-class BinaryToggle extends Component {
+class BinaryToggle extends Component<*, *> {
     render() {
         return (
             <div className="form-field">
@@ -41,7 +42,7 @@ class BinaryToggle extends Component {
     }
 }
 
-class Accessibility extends Component {
+class Accessibility extends Component<*, *> {
     constructor() {
         super();
         this.state = ({
@@ -96,7 +97,11 @@ class Accessibility extends Component {
 }
 
 const init = (callback: () => void): void => {
-    React.render(<Accessibility />, document.getElementById(DOM_ID), callback);
+    const el = document.getElementById(DOM_ID);
+
+    if (el) {
+        render(<Accessibility />, el, callback);
+    }
 };
 
 export { DOM_ID, init };

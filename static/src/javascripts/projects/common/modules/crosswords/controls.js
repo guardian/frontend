@@ -1,12 +1,12 @@
 // @flow
-import React, { Component } from 'react/addons';
+import React, { Component } from 'react';
 import { ConfirmButton } from 'common/modules/crosswords/confirm-button';
 
 const buttonClassName = 'button button--primary';
 const buttonCurrentClassName = 'button--crossword--current';
 const buttonGenericClassName = 'button--secondary';
 
-class Controls extends Component {
+class Controls extends Component<*, *> {
     render() {
         const hasSolutions = this.props.hasSolutions;
         const hasFocus = this.props.clueInFocus;

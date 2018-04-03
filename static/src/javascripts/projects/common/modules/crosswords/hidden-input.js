@@ -1,11 +1,12 @@
 // @flow
-import React, { Component, findDOMNode } from 'react/addons';
+import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import { scrollTo } from 'lib/scroller';
 import { isBreakpoint } from 'lib/detect';
 
-class HiddenInput extends Component {
+class HiddenInput extends Component<*, *> {
     constructor(props: Object) {
         super(props);
         this.state = {
