@@ -37,7 +37,7 @@ case class EmailForm(
   // `name` is a hidden (via css) form input
   // if it was set to something this form was likely filled by a bot
   // https://stackoverflow.com/a/34623588/2823715
-  def isLikelyBotSubmission: Boolean = name match {
+  def isLikelyBotSubmission: Boolean = name.map(_.trim) match {
     case Some("") | Some(null) | Some("undefined") | None | Some("null") => false
     case _ => true
   }
@@ -70,7 +70,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
       "listName" -> optional[String](of[String]),
       "referrer" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String]),
-      "name" -> optional[String](of[String])
+      "name" -> optional(text)
     )(EmailForm.apply)(EmailForm.unapply)
   )
 
