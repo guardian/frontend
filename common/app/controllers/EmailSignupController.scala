@@ -6,6 +6,7 @@ import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
+import com.typesafe.scalalogging.LazyLogging
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
@@ -30,15 +31,26 @@ case class EmailForm(
   email: String,
   listName: Option[String],
   referrer: Option[String],
-  campaignCode: Option[String])
+  campaignCode: Option[String],
+  name: Option[String]) {
 
-class EmailFormService(wsClient: WSClient) {
+  // `name` is a hidden (via css) form input
+  // if it was set to something this form was likely filled by a bot
+  // https://stackoverflow.com/a/34623588/2823715
+  def isLikelyBotSubmission: Boolean = name.map(_.trim) match {
+    case Some("") | Some(null) | Some("undefined") | None | Some("null") => false
+    case _ => true
+  }
 
-  def submit(form: EmailForm): Future[WSResponse] = {
+}
 
+class EmailFormService(wsClient: WSClient) extends LazyLogging {
+
+  def submit(form: EmailForm): Future[WSResponse] = if (form.isLikelyBotSubmission) {
+    Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
+  } else {
     val idAccessClientToken = Configuration.id.apiClientToken
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
-
     val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
 
     wsClient
@@ -49,13 +61,15 @@ class EmailFormService(wsClient: WSClient) {
 }
 
 class EmailSignupController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with Logging {
-    val emailFormService = new EmailFormService(wsClient)
+  val emailFormService = new EmailFormService(wsClient)
+
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
       "referrer" -> optional[String](of[String]),
-      "campaignCode" -> optional[String](of[String])
+      "campaignCode" -> optional[String](of[String]),
+      "name" -> optional(text)
     )(EmailForm.apply)(EmailForm.unapply)
   )
 
@@ -132,6 +146,8 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
             respond(OtherError)
 
         }) recover {
+          case _: IllegalAccessException =>
+            respond(Subscribed)
           case e: Exception =>
             log.error(s"Error posting to ExactTarget: ${e.getMessage}")
             APINetworkError.increment()
