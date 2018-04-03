@@ -308,12 +308,6 @@ object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
   private val articleEmails     = Seq(
-    SocialCareNetwork,
-    GuardianStudents,
-    HealthcareProfessionalsNetwork,
-    PublicLeadersNetwork,
-    VoluntarySectorNetwork,
-    HousingNetwork,
     ArtWeekly,
     DocumentariesUpdate,
     GreenLight,
@@ -341,6 +335,13 @@ object EmailAddons {
     TheUpsideWeeklyReport,
     AnimalsFarmed)
   private val frontEmails = Seq(
+    SocialCareNetwork,
+    HigherEducationNetwork,
+    GuardianStudents,
+    HealthcareProfessionalsNetwork,
+    PublicLeadersNetwork,
+    VoluntarySectorNetwork,
+    HousingNetwork,
     TheFlyer,
     LabNotesFront,
     CuratedMediaBriefing,
