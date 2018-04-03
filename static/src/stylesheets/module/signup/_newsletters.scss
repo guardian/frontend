@@ -38,7 +38,7 @@
 
 .newsletter-card {
     margin-bottom: $gs-baseline;
-    border-top: 2px solid $news-accent;
+    border-top: 1px solid $news-accent;
     border-bottom: 1px solid $neutral-3;
     background-color: $comment-support-2;
     padding: $gs-baseline / 2 $gs-gutter / 2 $gs-baseline;
@@ -197,7 +197,7 @@
 }
 
 .newsletters-category {
-    border-top: 2px solid $news-accent;
+    border-top: 1px solid $garnett-neutral-4;
     margin-top: $gs-baseline * 2;
 
     @include mq(tablet) {
@@ -223,137 +223,67 @@
     }
 }
 
-// TONE SPECIFIC MODS - FEATURE
-.newsletter-card--tone-feature {
-    border-top-color: $features-support-3;
+// TONE SPECIFIC MODS
+@mixin newsletter-card--tone($border, $cta: $garnett-neutral-1) {
+    border-top-color: $border;
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {
-            border-color: $features-support-1;
-            background-color: $features-support-1;
+            border-color: $cta;
+            background-color: $cta;
 
             &:hover,
             &:focus {
-                border-color: darken($features-support-1, 10%);
-                background-color: darken($features-support-1, 10%);
+                border-color: darken($cta, 10%);
+                background-color: darken($cta, 10%);
             }
         }
     }
 
     .newsletter-card__lozenge--preview {
-        border-color: $features-support-1;
-        color: $features-support-1;
+        border-color: $cta;
+        color: $cta;
 
         &:hover,
         &:focus,
         &:active {
-            border-color: $features-support-1;
+            border-color: $cta;
         }
 
         .inline-arrow-right {
-            fill: $features-support-1;
+            fill: $cta;
         }
     }
+}
+
+// TONE SPECIFIC MODS - FEATURE
+.newsletter-card--tone-feature {
+    @include newsletter-card--tone($features-support-3, $features-support-1)
 }
 
 // TONE SPECIFIC MODS - COMMENT
 .newsletter-card--tone-comment {
-    border-top-color: $comment-support-4;
-
-    .newsletter-card__signup {
-        .newsletter-card__lozenge {
-            border-color: $comment-support-4;
-            background-color: $comment-support-4;
-
-            &:hover,
-            &:focus {
-                border-color: darken($comment-support-4, 10%);
-                background-color: darken($comment-support-4, 10%);
-            }
-        }
-    }
-
-    .newsletter-card__lozenge--preview {
-        border-color: $comment-support-4;
-        color: $comment-support-4;
-
-        &:hover,
-        &:focus,
-        &:active {
-            border-color: $comment-support-4;
-        }
-
-        .inline-arrow-right {
-            fill: $comment-support-4;
-        }
-    }
+    @include newsletter-card--tone($comment-support-4, $comment-support-4)
 }
 
 // TONE SPECIFIC MODS - MEDIA
 .newsletter-card--tone-media {
-    border-top-color: $multimedia-main-2;
-
-    .newsletter-card__signup {
-        .newsletter-card__lozenge {
-            border-color: $multimedia-main-1;
-            background-color: $multimedia-main-1;
-
-            &:hover,
-            &:focus {
-                border-color: darken($multimedia-main-1, 10%);
-                background-color: darken($multimedia-main-1, 10%);
-            }
-        }
-    }
-
-    .newsletter-card__lozenge--preview {
-        border-color: $multimedia-main-1;
-        color: $multimedia-main-1;
-
-        &:hover,
-        &:focus,
-        &:active {
-            border-color: $multimedia-main-1;
-        }
-
-        .inline-arrow-right {
-            fill: $multimedia-main-1;
-        }
-    }
+    @include newsletter-card--tone($multimedia-main-2)
 }
 
-//  TONE SPECIFIC MODS - BREXIT
-.newsletter-card--tone-brexit {
-    $brexit-main-1: #00c0f2;
-    $brexit-main-2: #ff0ff0;
-
-    border-top-color: $brexit-main-2;
-
-    .newsletter-card__signup {
-        .newsletter-card__lozenge {
-            border-color: $brexit-main-1;
-            background-color: $brexit-main-1;
-
-            &:hover,
-            &:focus {
-                border-color: darken($brexit-main-1, 10%);
-                background-color: darken($brexit-main-1, 10%);
-            }
-        }
-    }
-
-    .newsletter-card__lozenge--preview {
-        border-color: $brexit-main-1;
-        color: $brexit-main-1;
-
-        &:hover,
-        &:focus,
-        &:active {
-            border-color: $brexit-main-1;
-        }
-
-        .inline-arrow-right {
-            fill: $brexit-main-1;
-        }
-    }
+// GARNETT TONES
+.newsletter-card--tone-news {
+    @include newsletter-card--tone($news-garnett-main-1)
+}
+.newsletter-card--tone-opinion {
+    @include newsletter-card--tone($opinion-garnett-main-1)
+}
+.newsletter-card--tone-sport {
+    @include newsletter-card--tone($sport-garnett-main-1)
+}
+.newsletter-card--tone-lifestyle {
+    @include newsletter-card--tone($lifestyle-garnett-main-1)
+}
+.newsletter-card--tone-culture {
+    @include newsletter-card--tone($culture-garnett-main-1)
 }
