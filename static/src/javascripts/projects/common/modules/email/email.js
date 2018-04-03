@@ -259,16 +259,13 @@ const submitForm = (
         let analyticsInfo;
 
         event.preventDefault();
-        debugger;
         if (!state.submitting && validate(emailAddress)) {
             const formData = $form.data('formData');
             const data = `email=${encodeURIComponent(
                 emailAddress
-            )}&name=${encodeURIComponent(
-                dummy
-            )}&campaignCode=${formData.campaignCode}&referrer=${
-                formData.referrer
-            }&listName=${listName.val()}`;
+            )}&name=${encodeURIComponent(dummy)}&campaignCode=${
+                formData.campaignCode
+            }&referrer=${formData.referrer}&listName=${listName.val()}`;
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType

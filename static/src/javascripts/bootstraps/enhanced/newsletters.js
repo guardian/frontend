@@ -18,7 +18,7 @@ const classes = {
 
 const inputs = {
     email: 'email',
-    dummy: 'name'
+    dummy: 'name',
 };
 
 const hideInputAndShowPreview = (el: ?Node): void => {
@@ -51,9 +51,9 @@ const submitForm = (
     const dummyEmail = $(`input[name="${inputs.dummy}"]`, form).val(); // Used as a 'bot-bait', see https://stackoverflow.com/a/34623588/2823715
     const email = $(`input[name="${inputs.email}"`, form).val();
     const listName = $('input[name="listName"]', form).val();
-    const formQueryString = `${inputs.email}=${email}&listName=${listName}&${inputs.dummy}=${
-        dummyEmail
-    }`;
+    const formQueryString = `${inputs.email}=${email}&listName=${listName}&${
+        inputs.dummy
+    }=${dummyEmail}`;
     console.log(`${config.page.ajaxUrl}/email`);
 
     return fetch(`${config.page.ajaxUrl}/email`, {

@@ -34,6 +34,9 @@ case class EmailForm(
   campaignCode: Option[String],
   name: Option[String]) {
 
+  // `name` is a hidden (via css) form input
+  // if it was set to something this form was likely filled by a bot
+  // https://stackoverflow.com/a/34623588/2823715
   def isLikelyBotSubmission: Boolean = name match {
     case Some("") | Some(null) | Some("undefined") | None => false
     case _ => true
