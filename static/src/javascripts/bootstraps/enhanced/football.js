@@ -5,7 +5,6 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import {
-    belowArticleVisible,
     isCompetition,
     isMatch,
     isFootballStatsPage,
@@ -22,11 +21,11 @@ import { MatchInfo } from 'common/modules/sport/football/match-info';
 import { MatchListLive } from 'common/modules/sport/football/match-list-live';
 import { tagPageStats } from 'common/modules/sport/football/tag-page-stats';
 import { ScoreBoard } from 'common/modules/sport/score-board';
-import { addComponent } from 'common/modules/ui/rhc';
 import { replaceLocaleTimestamps } from 'common/modules/ui/relativedates';
 
 declare type Extra = {
     content?: Element,
+    chart?: string,
     importance?: number,
     name?: string,
     ready: boolean,
@@ -63,87 +62,27 @@ const renderNav = (
         });
 };
 
-const renderExtras = (
-    _extras: Array<?Extra>,
-    dropdownTemplate: string
-): void => {
+const renderExtras = (_extras: Array<?Extra>): void => {
     const extras = [..._extras].filter(extra => extra);
     const ready =
         extras.filter(extra => extra && extra.ready === false).length === 0;
-    const createDropdown = (
-        template: string,
-        extra: Extra,
-        container: HTMLElement,
-        count: number
-    ): void => {
-        $.create(template)
-            .each(dropdown => {
-                if (config.get('page.isLiveBlog')) {
-                    $(dropdown).addClass('dropdown--key-events');
-                }
-
-                if (extra && extra.name) {
-                    $('.dropdown__label', dropdown).append(extra.name);
-                }
-
-                if (extra && extra.content) {
-                    $('.dropdown__content', dropdown).append(extra.content);
-                }
-
-                if (extra && extra.name) {
-                    $('.dropdown__button', dropdown)
-                        .attr(
-                            'data-link-name',
-                            `Show dropdown: ${extra.name || ''}`
-                        )
-                        .each(el => {
-                            if (count === 0) {
-                                bean.fire(el, 'click');
-                            }
-                        });
-                }
-            })
-            .appendTo(container);
-    };
 
     if (ready) {
-        belowArticleVisible(
-            () => {
-                $('.js-after-article').append(
-                    $.create('<div class="football-extras"></div>').each(
-                        extrasContainer => {
-                            extras.filter(Boolean).forEach((extra, i) => {
-                                if (dropdownTemplate) {
-                                    createDropdown(
-                                        dropdownTemplate,
-                                        extra,
-                                        extrasContainer,
-                                        i
-                                    );
-                                } else if (extra.content) {
-                                    extrasContainer.appendChild(extra.content);
-                                }
-                            });
-                        }
-                    )
-                );
-            },
-            () => {
-                extras.filter(Boolean).forEach(extra => {
-                    if (extra.content && extra.importance) {
-                        addComponent(extra.content, extra.importance);
-                    }
-                });
-            }
-        );
+        if (config.get('page.isLiveBlog')) {
+            extras.filter(Boolean).forEach(extra => {
+                $('.js-live-blog__sticky-components').append(extra.content);
+                $('.football-possession').append(extra.chart);
+            });
+        } else {
+            extras.filter(Boolean).forEach(extra => {
+                $('.js-after-article').append(extra.content);
+                $('.football-possession').append(extra.chart);
+            });
+        }
     }
 };
 
-const renderTable = (
-    competition: string,
-    extras: Array<?Extra>,
-    template: string
-): void => {
+const renderTable = (competition: string, extras: Array<?Extra>): void => {
     extras[2] = {
         ready: false,
     };
@@ -167,11 +106,11 @@ const renderTable = (
                     extras[2] = undefined;
                 }
 
-                renderExtras(extras, template);
+                renderExtras(extras);
             })
             .catch(() => {
                 delete extras[2];
-                renderExtras(extras, template);
+                renderExtras(extras);
             });
     });
 };
@@ -203,8 +142,6 @@ const loaded = (elem: HTMLElement): void => {
 const init = (): void => {
     const extras = [];
 
-    let dropdownTemplate;
-
     isMatch((match: Object): void => {
         $('article').addClass('content--has-scores');
 
@@ -223,8 +160,6 @@ const init = (): void => {
             });
 
             renderNav(match, (resp, $nav, endpoint): void => {
-                dropdownTemplate = resp.dropdown;
-
                 // Test if template is not composed of just whitspace. A content validation check, apparently.
                 if (!/^\s+$/.test(scoreBoard.template || '')) {
                     scoreBoard.endpoint = endpoint;
@@ -240,28 +175,29 @@ const init = (): void => {
                         .replace(/^.*\/\/[^/]+/, '');
 
                     $.create(
-                        `
-                        <div class="match-stats__container js-match-stats"></div>
-                    `
+                        `<div class="match-stats__container js-match-stats"></div>`
                     ).each(container => {
                         statsFor(statsUrl)
                             .fetch(container)
                             .then(() => {
+                                // Chart is passed through seperately as when injected with the rest of the content it isn't responsive in Chrome
+                                let chart;
                                 $('.js-chart', container).each(el => {
-                                    new TableDoughnut().render(el);
+                                    chart = new TableDoughnut().render(el);
                                 });
                                 extras[0] = {
                                     name: 'Match stats',
                                     importance: 3,
                                     content: container,
                                     ready: true,
+                                    chart,
                                 };
-                                renderExtras(extras, dropdownTemplate);
+                                renderExtras(extras);
                             });
                     });
                 } else {
                     delete extras[0];
-                    renderExtras(extras, dropdownTemplate);
+                    renderExtras(extras);
                 }
 
                 // Group table & Match day
@@ -272,11 +208,7 @@ const init = (): void => {
 
                     // Group table
                     if (resp.group !== '') {
-                        renderTable(
-                            `${competition}/${resp.group}`,
-                            extras,
-                            dropdownTemplate
-                        );
+                        renderTable(`${competition}/${resp.group}`, extras);
                     }
 
                     // Other games today
@@ -295,11 +227,11 @@ const init = (): void => {
                                     content: container,
                                     ready: true,
                                 };
-                                renderExtras(extras, dropdownTemplate);
+                                renderExtras(extras);
                             })
                             .catch(() => {
                                 delete extras[1];
-                                renderExtras(extras, dropdownTemplate);
+                                renderExtras(extras);
                             });
                     });
                 });
@@ -310,13 +242,14 @@ const init = (): void => {
     isCompetition((competition: string) => {
         const $rightHandCol = $('.js-secondary-column').dim().height;
         if ($rightHandCol === 0 || $rightHandCol > 1800) {
-            renderTable(competition, extras, dropdownTemplate);
+            renderTable(competition, extras);
         }
     });
 
     isFootballStatsPage(() => {
+        console.log('stats page');
         $('.js-chart').each(el => {
-            new TableDoughnut().render(el);
+            $('.football-possession').append(new TableDoughnut().render(el));
         });
     });
 

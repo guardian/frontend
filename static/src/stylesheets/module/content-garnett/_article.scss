@@ -19,9 +19,5 @@
     display: block;
     content: ' ';
     margin-top: $gs-baseline*2;
-
-    //This is required for football components, please do not remove
-    @include mq(desktop) {
-        display: none;
-    }
+    clear: both;
 }
