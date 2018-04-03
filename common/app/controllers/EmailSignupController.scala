@@ -6,6 +6,7 @@ import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
+import com.typesafe.scalalogging.LazyLogging
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
@@ -30,15 +31,24 @@ case class EmailForm(
   email: String,
   listName: Option[String],
   referrer: Option[String],
-  campaignCode: Option[String])
+  campaignCode: Option[String],
+  name: Option[String]) {
 
-class EmailFormService(wsClient: WSClient) {
+  def isLikelyBotSubmission: Boolean = name match {
+    case Some("") | Some(null) | Some("undefined") | None => false
+    case _ => true
+  }
 
-  def submit(form: EmailForm): Future[WSResponse] = {
+}
 
+class EmailFormService(wsClient: WSClient) extends LazyLogging {
+
+  def submit(form: EmailForm): Future[WSResponse] = if (form.isLikelyBotSubmission) {
+    logger.warn(s"Not submitting email form ${form}: 'name' was provided.")
+    wsClient.url(s"${Configuration.id.apiRoot}/management/healthcheck").get()
+  } else {
     val idAccessClientToken = Configuration.id.apiClientToken
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
-
     val consentMailerPayload = JsObject(Json.obj("email" -> form.email, "set-lists" -> List(form.listName)).fields)
 
     wsClient
@@ -50,12 +60,14 @@ class EmailFormService(wsClient: WSClient) {
 
 class EmailSignupController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with Logging {
   val emailFormService = new EmailFormService(wsClient)
+
   val emailForm: Form[EmailForm] = Form(
     mapping(
       "email" -> nonEmptyText.verifying(emailAddress),
       "listName" -> optional[String](of[String]),
       "referrer" -> optional[String](of[String]),
-      "campaignCode" -> optional[String](of[String])
+      "campaignCode" -> optional[String](of[String]),
+      "name" -> optional[String](of[String])
     )(EmailForm.apply)(EmailForm.unapply)
   )
 
