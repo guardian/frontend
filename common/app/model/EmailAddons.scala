@@ -269,6 +269,41 @@ case object TeacherNetwork extends FrontEmailMetadata {
   override val banner = Some("teacher-network.png")
 }
 
+case object SocialCareNetwork extends FrontEmailMetadata {
+  val name = "Social Care Network"
+  override val banner = Some("social-care-network.png")
+}
+
+case object GuardianStudents extends FrontEmailMetadata {
+  val name = "Guardian Students"
+  override val banner = Some("guardian-students.png")
+}
+
+case object HealthcareProfessionalsNetwork extends FrontEmailMetadata {
+  val name = "Healthcare Professionals Network"
+  override val banner = Some("healthcare-professionals-network.png")
+}
+
+case object HigherEducationNetwork extends FrontEmailMetadata {
+  val name = "Higher Education Network"
+  override val banner = Some("higher-education-network.png")
+}
+
+case object PublicLeadersNetwork extends FrontEmailMetadata {
+  val name = "Public Leaders Network"
+  override val banner = Some("public-leaders-network.png")
+}
+
+case object HousingNetwork extends FrontEmailMetadata {
+  val name = "Housing Network"
+  override val banner = Some("housing-network.png")
+}
+
+case object VoluntarySectorNetwork extends FrontEmailMetadata {
+  val name = "Voluntary Sector Network"
+  override val banner = Some("voluntary-sector-network.png")
+}
+
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
@@ -300,6 +335,13 @@ object EmailAddons {
     TheUpsideWeeklyReport,
     AnimalsFarmed)
   private val frontEmails = Seq(
+    SocialCareNetwork,
+    HigherEducationNetwork,
+    GuardianStudents,
+    HealthcareProfessionalsNetwork,
+    PublicLeadersNetwork,
+    VoluntarySectorNetwork,
+    HousingNetwork,
     TheFlyer,
     LabNotesFront,
     CuratedMediaBriefing,
