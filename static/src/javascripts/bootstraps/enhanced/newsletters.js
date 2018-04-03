@@ -43,10 +43,12 @@ const submitForm = (
     form: ?HTMLFormElement,
     buttonEl: HTMLButtonElement
 ): Promise<void> => {
-    const email = $('input[name="email"]', form).val();
+    const dummyEmail = $('input[name="email"]', form).val(); // Used as a 'bot-bait', see https://stackoverflow.com/a/34623588/2823715
+    const email = $('input[name="rznvy"]', form).val();
     const listName = $('input[name="listName"]', form).val();
-    const formQueryString = `email=${email}&listName=${listName}`;
-
+    const formQueryString = `rznvy=${email}&listName=${listName}&email=${dummyEmail}`;
+    console.log(`${config.page.ajaxUrl}/email`);
+    debugger;
     return fetch(`${config.page.ajaxUrl}/email`, {
         method: 'post',
         body: formQueryString,
