@@ -48,9 +48,15 @@ const submitForm = (
     form: ?HTMLFormElement,
     buttonEl: HTMLButtonElement
 ): Promise<void> => {
-    const dummyEmail = encodeURIComponent($(`input[name="${inputs.dummy}"]`, form).val()); // Used as a 'bot-bait', see https://stackoverflow.com/a/34623588/2823715
-    const email = encodeURIComponent($(`input[name="${inputs.email}"`, form).val());
-    const listName = encodeURIComponent($('input[name="listName"]', form).val());
+    const dummyEmail = encodeURIComponent(
+        $(`input[name="${inputs.dummy}"]`, form).val()
+    ); // Used as a 'bot-bait', see https://stackoverflow.com/a/34623588/2823715
+    const email = encodeURIComponent(
+        $(`input[name="${inputs.email}"`, form).val()
+    );
+    const listName = encodeURIComponent(
+        $('input[name="listName"]', form).val()
+    );
     const formQueryString = `${inputs.email}=${email}&listName=${listName}&${
         inputs.dummy
     }=${dummyEmail}`;
