@@ -28,7 +28,7 @@
             <br/>
         </div>
         @if(!emailPrefsForm.globalError) {
-            <div>
+            <form>
                 @views.html.helper.CSRF.formField
                 <div>
                     <h1 class="identity-title--small">Before you go...</h1>
@@ -44,7 +44,7 @@
                         The Guardian's newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.
                     </p>
                 </div>
-            </div>
+            </form>
         }
         <aside class="identity-forms-message__body">
             <a class="manage-account__button manage-account__button--secondary" data-link-name="complete-consents : cta-bottom : @LinkTo(returnUrl)" href="@LinkTo(returnUrl)">
