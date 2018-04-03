@@ -46,11 +46,11 @@
             <div class="email-sub__inline-label js-email-sub__inline-label">
                 @if(componentClass == "plaintone") {
                     <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" id="@inputId" placeholder="Email address" />
-                    <input class="email-sub__text-input js-email-sub__text-input-name u-h" type="text" name="name" id="@dummyInputId" placeholder="Name" />
+                    <input class="email-sub__text-input js-email-sub__text-input-name u-h" autocomplete="nope" type="text" name="name" id="@dummyInputId" placeholder="Name" />
                 } else {
                     <label class="email-sub__label js-email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))@labelText</label>
                     <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" id="@inputId" />
-                    <input class="email-sub__text-input js-email-sub__text-input-name u-h" type="text" name="name" id="@dummyInputId" />
+                    <input class="email-sub__text-input js-email-sub__text-input-name u-h" autocomplete="nope" type="text" name="name" id="@dummyInputId" />
                 }
                 <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@listName" />
 
