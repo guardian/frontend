@@ -61,12 +61,12 @@ const submitForm = (
         inputs.dummy
     }=${dummyEmail}`;
 
-    return fetch(`${config.page.ajaxUrl}/email`, {
-        method: 'post',
+    return fetch(`${config.get("page.ajaxUrl")}/email`, {
+        method: 'POST',
         body: formQueryString,
         headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
     }).then(response => {
         if (response.ok) {
