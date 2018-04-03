@@ -47,8 +47,7 @@ case class EmailForm(
 class EmailFormService(wsClient: WSClient) extends LazyLogging {
 
   def submit(form: EmailForm): Future[WSResponse] = if (form.isLikelyBotSubmission) {
-    logger.warn(s"Not submitting email form ${form}: 'name' was provided.")
-    wsClient.url(s"${Configuration.id.apiRoot}/management/healthcheck").get()
+    Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
   } else {
     val idAccessClientToken = Configuration.id.apiClientToken
     val consentMailerUrl = s"${Configuration.id.apiRoot}/consent-email"
@@ -147,6 +146,8 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
             respond(OtherError)
 
         }) recover {
+          case _: IllegalAccessException =>
+            respond(Subscribed)
           case e: Exception =>
             log.error(s"Error posting to ExactTarget: ${e.getMessage}")
             APINetworkError.increment()
