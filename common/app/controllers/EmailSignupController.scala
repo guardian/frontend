@@ -38,7 +38,7 @@ case class EmailForm(
   // if it was set to something this form was likely filled by a bot
   // https://stackoverflow.com/a/34623588/2823715
   def isLikelyBotSubmission: Boolean = name match {
-    case Some("") | Some(null) | Some("undefined") | None => false
+    case Some("") | Some(null) | Some("undefined") | None | Some("null") => false
     case _ => true
   }
 
