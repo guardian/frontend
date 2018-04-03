@@ -61,7 +61,7 @@ const submitForm = (
         inputs.dummy
     }=${dummyEmail}`;
 
-    return fetch(`${config.get("page.ajaxUrl")}/email`, {
+    return fetch(`${config.get('page.ajaxUrl')}/email`, {
         method: 'POST',
         body: formQueryString,
         headers: {
