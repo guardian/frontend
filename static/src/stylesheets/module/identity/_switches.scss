@@ -71,11 +71,19 @@ $checkbox-size: $gs-gutter / 1.25;
     display: flex;
     width: 100%;
 
-    &:hover {
+    &:hover, &:focus {
         .manage-account__switch-checkbox {
             border-color: $identity-main;
         }
+        input:checked + .manage-account__switch-checkbox {
+            box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px $identity-main;
+        }
     }
+
+    input:focus:checked + .manage-account__switch-checkbox {
+        box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px $garnett-neutral-7;
+    }
+
 
     &.manage-account__switch--hinted {
         color: $features-main-1;
@@ -139,9 +147,8 @@ $checkbox-size: $gs-gutter / 1.25;
             }
         }
 
-        input:focus, input:focus + .manage-account__switch-checkbox {
-            outline: 5px auto $identity-main;
-            border-color: $identity-main;
+        input:focus + .manage-account__switch-checkbox {
+            outline: none;
         }
 
         input:checked + .manage-account__switch-checkbox {

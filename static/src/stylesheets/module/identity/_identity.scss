@@ -362,6 +362,10 @@ $identity-header-height: 48px;
         .dropdown__content {
             padding-bottom: 2em;
         }
+        &.dropdown--active .dropdown__content {
+            padding: $gs-baseline/4;
+            margin: $gs-baseline/-4;
+        }
         .inline-dropdown-mask {
             display: none;
         }
