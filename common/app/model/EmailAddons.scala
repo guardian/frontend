@@ -309,6 +309,11 @@ object EmailAddons {
   private val defaultBanner = "generic.png"
   private val articleEmails     = Seq(
     SocialCareNetwork,
+    GuardianStudents,
+    HealthcareProfessionalsNetwork,
+    PublicLeadersNetwork,
+    VoluntarySectorNetwork,
+    HousingNetwork,
     ArtWeekly,
     DocumentariesUpdate,
     GreenLight,
