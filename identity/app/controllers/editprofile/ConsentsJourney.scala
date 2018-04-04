@@ -60,7 +60,7 @@ trait ConsentsJourney
 
               case Right(updatedUser) =>
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
-                Future.successful(SeeOther(s"/complete-consents?returnUrl=${returnUrl}"))
+                Future.successful(SeeOther(s"${routes.EditProfileController.displayConsentComplete().url}?returnUrl=${returnUrl}"))
             }
           }
         )
