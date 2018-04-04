@@ -61,7 +61,7 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging {
   }
 }
 
-class EmailSignupController(wsClient: WSClient, val controllerComponents: ControllerComponents, csrfCheck: CSRFCheck, val csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with Logging {
+class EmailSignupController(wsClient: WSClient, val controllerComponents: ControllerComponents, csrfCheck: CSRFCheck)(implicit context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with Logging {
   val emailFormService = new EmailFormService(wsClient)
 
   val emailForm: Form[EmailForm] = Form(
@@ -88,7 +88,6 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
       case _ => Cached(15.minute)(WithoutRevalidationResult(NotFound))
     }
   }
-
 
   def renderFormFromName(emailType: String, listName: String): Action[AnyContent] = Action { implicit request =>
     val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
