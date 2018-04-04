@@ -1,10 +1,6 @@
 [ignore]
 .*/node_modules/fbjs/.*
 .*node_modules.*/stylelint.*
-.*/node_modules/preact/.*
-.*/node_modules/emotion/.*
-.*/node_modules/emotion-utils/.*
-.*/node_modules/babel-plugin-emotion/.*
 
 [include]
 
@@ -14,12 +10,6 @@
 static/src/javascripts/__flow__/flow-typed
 static/src/javascripts/__flow__/types
 
-####### UI #######
-ui/src/__flow__/flow-typed
-ui/src/__flow__/types.js
-ui/src/__flow__/preact.js
-ui/src/__flow__/emotion.js
-
 ####### ATOM LIBRARY #######
 node_modules/@guardian/atom-renderer/dist/__flow__/types
 
@@ -27,10 +17,8 @@ node_modules/@guardian/atom-renderer/dist/__flow__/types
 emoji=true
 
 module.file_ext=.js
-module.file_ext=.jsx
 
 module.system.node.resolve_dirname=node_modules
-module.system.node.resolve_dirname=ui/node_modules
 
 ####### STATIC APP #######
 module.system.node.resolve_dirname=static/src/javascripts
@@ -54,11 +42,3 @@ module.name_mapper='^ophan/embed' -> 'ophan-tracker-js/build/ophan.embed'
 
 module.name_mapper='^raw-loader!.*$' -> '__flow__/stubs/raw'
 module.name_mapper.extension='svg' -> '__flow__/stubs/svg'
-
-####### UI #######
-module.system.node.resolve_dirname=ui/src
-
-module.name_mapper='React/JSX' -> 'Preact/h'
-
-module.name_mapper.extension='css' -> '__flow__/stubs/css'
-module.name_mapper.extension='js.scss' -> '__flow__/stubs/js-scss'
