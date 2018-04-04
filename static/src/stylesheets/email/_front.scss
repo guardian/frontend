@@ -119,8 +119,7 @@ $container-color: #ffffff;
 .headline,
 .byline,
 .trail-text,
-.review-stars,
-.media-icon-wrapper {
+.review-stars {
     font-weight: normal;
     padding: 3px $gutter 0;
 }
@@ -156,7 +155,7 @@ $container-color: #ffffff;
 }
 
 .media-icon-wrapper {
-    padding-bottom: 6px;
+    padding: 3px $gutter 6px;
 }
 
 // td
