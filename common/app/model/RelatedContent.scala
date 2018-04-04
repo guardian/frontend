@@ -1,6 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, ItemResponse}
+import com.gu.contentapi.client.model.v1.Package
 import model.pressed.PressedContent
 import services.FaciaContentConvert
 
@@ -21,10 +22,10 @@ case class RelatedContent (items: Seq[RelatedContentItem]) {
 }
 
 object StoryPackages {
-  def apply(parent: ContentType, response: ItemResponse): RelatedContent = {
+  def apply(parent: ContentType, packages: Option[Seq[Package]]): RelatedContent = {
 
-    val storyPackagesContent: Seq[ApiContent] = response.packages.map { packages =>
-      val allContentsPerPackage: Seq[Seq[ApiContent]] = packages.map(_.articles.map(_.content))
+    val storyPackagesContent: Seq[ApiContent] = packages.map { ps =>
+      val allContentsPerPackage: Seq[Seq[ApiContent]] = ps.map(_.articles.map(_.content))
       if(packages.size > 1) { //intermix packages only if more than one
         allContentsPerPackage
          .flatMap(_.zipWithIndex) // zip content with its position
