@@ -53,14 +53,14 @@ trait ConsentsJourney
               request.user.id,
               UserUpdateDTO(consents = Some(newConsents), statusFields = Some(StatusFields(hasRepermissioned = Some(true)))),
               request.user.auth
-            ).flatMap {
+            ).map {
               case Left(idapiErrors) =>
                 logger.error(s"Failed to set hasRepermissioned flag for user ${request.user.id}: $idapiErrors")
-                Future.successful(InternalServerError(Json.toJson(idapiErrors)))
+                InternalServerError(Json.toJson(idapiErrors))
 
               case Right(updatedUser) =>
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
-                Future.successful(SeeOther(s"${routes.EditProfileController.displayConsentComplete().url}?returnUrl=${returnUrl}"))
+                SeeOther(s"${routes.EditProfileController.displayConsentComplete().url}?returnUrl=${returnUrl}")
             }
           }
         )
