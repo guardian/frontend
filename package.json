@@ -17,6 +17,7 @@
     "classnames": "~2.2.0",
     "core-js": "^2.5.3",
     "curl": "cujojs/curl#0.8.9",
+    "debounce-promise": "^3.1.0",
     "domready": "^1.0.8",
     "fastdom": "0.8.5",
     "fence": "guardian/fence#0.2.11",
