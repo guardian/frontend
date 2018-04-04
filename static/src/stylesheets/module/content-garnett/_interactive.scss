@@ -1,6 +1,10 @@
 .content--interactive {
     padding: 0;
 
+    .content__head {
+        display: block;
+    }
+
     .content__headline {
         padding-bottom: $gs-baseline/2;
     }
@@ -29,25 +33,66 @@
         }
     }
 
-    .meta__extras {
-        border-top: 1px dotted $neutral-5;
-        display: flex;
-        justify-content: space-between;
+    .content__standfirst {
+        font-size: 18px;
+        @include mq(tablet) {
+            font-size: 20px;
+        }
+        @include mq(leftCol) {
+            font-size: 22px;
+        }
+        @include mq($until: desktop) {
+            margin-left: 0;
+        }
     }
 
-    .meta__social,
+    .byline {
+        padding-bottom: 0;
+    }
+
+    .byline,
+    .content__dateline {
+        min-height: 0;
+    }
+
+    .content__dateline,
+    .meta__numbers,
+    .meta__social {
+        border-top: 0;
+    }
+
+    .meta__social {
+        border-bottom: 1px solid $garnett-neutral-4;
+    }
+
     .meta__numbers {
-        border: 0 none;
+        position: absolute;
+        right: 0;
+        top: 0;
     }
 
-    .meta__number {
-        text-align: right;
+    .meta__extras {
+        border-bottom: 0;
+        border-top: 1px solid $garnett-neutral-4;
     }
 
-    .content__section-label,
-    .content__series-label {
-        @include mq(desktop) {
-            float: left;
+    .block-share__item,
+    .inline-close,
+    .social-icon,
+    .social-icon.social-icon--more {
+        background-color: transparent;
+        border: 1px solid $neutral-4;
+        &:focus,
+        &:hover {
+            svg {
+                fill: $garnett-neutral-5;
+            }
+        }
+    }
+
+    .content__labels {
+        @include mq($until: tablet) {
+            margin-left: 0;
         }
     }
 
@@ -84,7 +129,10 @@
         padding-top: $gs-baseline/2;
     }
     .byline {
-        display: none;
+        max-width: gs-span(4) - $gs-gutter;
+        @include mq(leftCol) {
+            max-width: gs-span(6);
+        }
     }
     .content__meta-footer .byline {
         @include mq(desktop) {
@@ -102,18 +150,9 @@
     .meta__twitter {
         display: none;
     }
-    .content__dateline {
-        display: none;
-    }
-    .content__head .content__dateline {
-        display: block;
-        margin-bottom: ($gs-baseline/3) * 2;
 
-        @include mq(leftCol) {
-            min-height: 0;
-            border-top: 0;
-            margin-bottom: 0;
-        }
+    .content__head .content__dateline {
+        display: none;
     }
 
     // Ensure margins don't overlay full-page take over interactives
