@@ -215,11 +215,11 @@
             @include multiline(4, $garnett-neutral-7, 4);
             padding-top: $gs-gutter;
             order: 1;
-            flex-basis:100%;
+            flex-basis: 100%;
         }
         .content__meta-container {
             order: 3;
-            flex-basis:100%;
+            flex-basis: 100%;
             padding-top: 0;
             background-image: none;
 
@@ -227,8 +227,7 @@
         .gallery__meta-container {
             order: 2;
             padding-top: 0;
-
-            flex-basis:100%;
+            flex-basis: 100%;
         }
     }
 }
