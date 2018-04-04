@@ -58,16 +58,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-lazy-loading-extended",
-    "Varies the strategy for lazyloading of adverts",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-australia-environment-campaign-2018",
     "Show a custom Epic for articles with the Australia environment campaign tag",
     owners = Seq(Owner.withGithub("joelochlann")),
