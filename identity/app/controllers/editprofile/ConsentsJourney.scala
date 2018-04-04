@@ -60,7 +60,7 @@ trait ConsentsJourney
 
               case Right(updatedUser) =>
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
-                SeeOther(s"${routes.EditProfileController.displayConsentComplete().url}?returnUrl=${returnUrl}")
+                Redirect(s"${routes.EditProfileController.displayConsentComplete().url}", Map("returnUrl" -> Seq(returnUrl)))
             }
           }
         )
