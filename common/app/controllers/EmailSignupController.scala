@@ -78,28 +78,26 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
     Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
   }
 
-  def renderForm(emailType: String, listId: Int): Action[AnyContent] = csrfAddToken {
-    Action { implicit request =>
-      val identityName = EmailNewsletter(listId)
-        .orElse(EmailNewsletter.fromV1ListId(listId))
-        .map(_.identityName)
+  def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
+    val identityName = EmailNewsletter(listId)
+      .orElse(EmailNewsletter.fromV1ListId(listId))
+      .map(_.identityName)
 
-      identityName match {
-        case Some(listName) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
-        case _ => Cached(15.minute)(WithoutRevalidationResult(NotFound))
-      }
+    identityName match {
+      case Some(listName) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
+      case _ => Cached(15.minute)(WithoutRevalidationResult(NotFound))
     }
   }
 
-  def renderFormFromName(emailType: String, listName: String): Action[AnyContent] = csrfAddToken {
-    Action { implicit request =>
-      val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
-      id match {
-        case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
-        case _            => Cached(15.minute)(WithoutRevalidationResult(NotFound))
-      }
+
+  def renderFormFromName(emailType: String, listName: String): Action[AnyContent] = Action { implicit request =>
+    val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
+    id match {
+      case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
+      case _            => Cached(15.minute)(WithoutRevalidationResult(NotFound))
     }
   }
+
 
   def subscriptionResult(result: String): Action[AnyContent] = Action { implicit request =>
     Cached(7.days)(result match {
