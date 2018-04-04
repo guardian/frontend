@@ -112,54 +112,52 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
 
   }
 
-  def submit(): Action[AnyContent] = csrfCheck {
-    Action.async { implicit request =>
-      AllEmailSubmission.increment()
+  def submit(): Action[AnyContent] = Action.async { implicit request =>
+    AllEmailSubmission.increment()
 
-      def respond(result: SubscriptionResult): Result = {
-        render {
-          case Accepts.Html() => result match {
-            case Subscribed   => SeeOther(LinkTo("/email/success"))
-            case InvalidEmail => SeeOther(LinkTo("/email/invalid"))
-            case OtherError   => SeeOther(LinkTo("/email/error"))
-          }
-
-          case Accepts.Json() => Cors(NoCache(result match {
-            case Subscribed   => Created("Subscribed")
-            case InvalidEmail => BadRequest("Invalid email")
-            case OtherError   => InternalServerError("Internal error")
-          }))
-          case _ =>
-            NotAccepted.increment()
-            NotAcceptable
+    def respond(result: SubscriptionResult): Result = {
+      render {
+        case Accepts.Html() => result match {
+          case Subscribed   => SeeOther(LinkTo("/email/success"))
+          case InvalidEmail => SeeOther(LinkTo("/email/invalid"))
+          case OtherError   => SeeOther(LinkTo("/email/error"))
         }
+
+        case Accepts.Json() => Cors(NoCache(result match {
+          case Subscribed   => Created("Subscribed")
+          case InvalidEmail => BadRequest("Invalid email")
+          case OtherError   => InternalServerError("Internal error")
+        }))
+        case _ =>
+          NotAccepted.increment()
+          NotAcceptable
       }
-
-      emailForm.bindFromRequest.fold(
-        formWithErrors => {
-          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
-          EmailFormError.increment()
-          Future.successful(respond(InvalidEmail))},
-
-        form => emailFormService.submit(form).map(_.status match {
-          case 200 | 201 =>
-            EmailSubmission.increment()
-            respond(Subscribed)
-
-          case status =>
-            log.error(s"Error posting to ExactTarget: HTTP $status")
-            APIHTTPError.increment()
-            respond(OtherError)
-
-        }) recover {
-          case _: IllegalAccessException =>
-            respond(Subscribed)
-          case e: Exception =>
-            log.error(s"Error posting to ExactTarget: ${e.getMessage}")
-            APINetworkError.increment()
-            respond(OtherError)
-        })
     }
+
+    emailForm.bindFromRequest.fold(
+      formWithErrors => {
+        log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+        EmailFormError.increment()
+        Future.successful(respond(InvalidEmail))},
+
+      form => emailFormService.submit(form).map(_.status match {
+        case 200 | 201 =>
+          EmailSubmission.increment()
+          respond(Subscribed)
+
+        case status =>
+          log.error(s"Error posting to ExactTarget: HTTP $status")
+          APIHTTPError.increment()
+          respond(OtherError)
+
+      }) recover {
+        case _: IllegalAccessException =>
+          respond(Subscribed)
+        case e: Exception =>
+          log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+          APINetworkError.increment()
+          respond(OtherError)
+      })
   }
 
   def options(): Action[AnyContent] = Action { implicit request =>
