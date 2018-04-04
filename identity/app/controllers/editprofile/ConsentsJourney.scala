@@ -60,8 +60,7 @@ trait ConsentsJourney
 
               case Right(updatedUser) =>
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
-                val page = IdentityPage("/complete-consents", "Complete Consents", isFlow = true)
-                consentCompleteView(page, returnUrl)
+                Future.successful(SeeOther(s"/complete-consents?returnUrl=${returnUrl}"))
             }
           }
         )
