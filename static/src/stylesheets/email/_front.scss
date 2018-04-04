@@ -111,8 +111,7 @@ $container-color: #ffffff;
     padding-bottom: 26px;
 
     .tone-media & {
-        // Space for icon
-        padding-bottom: 42px;
+        padding-bottom: 0;
     }
 }
 
@@ -120,7 +119,8 @@ $container-color: #ffffff;
 .headline,
 .byline,
 .trail-text,
-.review-stars {
+.review-stars,
+.media-icon-wrapper {
     font-weight: normal;
     padding: 3px $gutter 0;
 }
@@ -155,17 +155,16 @@ $container-color: #ffffff;
     padding: 3px 5px;
 }
 
+.media-icon-wrapper {
+    padding-bottom: 6px;
+}
+
 // td
 .trail-text {
     font-family: Georgia, serif;
     font-size: 14px;
     line-height: 18px;
     padding: $gutter $gutter 26px;
-
-    .tone-media & {
-        // Space for icon
-        padding-bottom: 42px;
-    }
 }
 
 .fc--large {
@@ -184,10 +183,7 @@ $container-color: #ffffff;
 }
 
 .media-icon {
-    bottom: 6px;
     height: 28px;
-    left: $gutter;
-    position: absolute;
 }
 
 $email-tones: (
