@@ -43,11 +43,13 @@
 
     @card.starRating.map { numberOfStars =>
         @row(Seq("review-stars")) {
-            @for(i <- 0 to 4) {
-                @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
-                    @icon("star-" + positiveOrNegative, isLarge)
+            <span class="review-stars-bg">
+                @for(i <- 0 to 4) {
+                    @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
+                        @icon("star-" + positiveOrNegative, isLarge)
+                    }
                 }
-            }
+            </span>
         }
     }
 
