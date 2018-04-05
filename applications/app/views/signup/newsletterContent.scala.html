@@ -45,6 +45,7 @@
                     </div>
 
                     <form action="@LinkTo("/email")" method="post" target="magicframe" class="newsletter-card__signup">
+                        @helper.CSRF.formField
                         <input class="newsletter-card__text-input u-h"
                           type="text"
                           name="name"
