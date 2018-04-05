@@ -7,7 +7,7 @@
 
 
 @if(
-    (OrielAnalyticsSwitch.isSwitchedOff && ActiveExperiments.isParticipating(OrielParticipation)) ||
+    (OrielAnalyticsSwitch.isSwitchedOff && (ActiveExperiments.isParticipating(OrielParticipation) || ActiveExperiments.isControl(OrielParticipation))) ||
             (orielSonobiIntegration.isSwitchedOn && request.path == "/environment/2018/mar/11/labrador-switch-energy-suppliers")
 ) {
     @OrielCache.cache.get().getLoaderScript.map { loaderScript => <script>@HtmlFormat.raw(loaderScript)</script> }
