@@ -87,9 +87,9 @@ install_node() {
         sudo apt-get install -y curl
       fi
 
-      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
-    elif mac && installed brew; then
-      brew install nvm
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+    elif mac; then
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
     fi
 
     nvm install
