@@ -30,7 +30,7 @@ object CommercialClientLogging extends Experiment(
 object CommercialBaseline extends Experiment(
   name = "commercial-baseline",
   description = "Users in this experiment will experience the commercial javascript stack as of 2018-01-01.",
-  owners = Seq(Owner.withGithub("JonNorman"), Owner.withGithub("shtukas")),
+  owners = Seq(Owner.withGithub("katebee"), Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2018, 4, 11),
   participationGroup = Perc2B
 )
@@ -38,7 +38,7 @@ object CommercialBaseline extends Experiment(
 object CommercialAdRefresh extends Experiment(
   name = "commercial-ad-refresh",
   description = "Users in this experiment will have their ad slots refreshed after 30 seconds",
-  owners = Seq(Owner.withGithub("JonNorman")),
+  owners = Seq(Owner.withGithub("katebee")),
   sellByDate = new LocalDate(2018, 4, 26),
   participationGroup = Perc20A
 )

@@ -80,9 +80,9 @@ trait ABTestSwitches {
     ABTests,
     "ab-spacefinder-simplify",
     "Alters the rules for inserting ads on desktop breakpoints.",
-    owners = Seq(Owner.withGithub("JonNorman")),
+    owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 6),
+    sellByDate = new LocalDate(2018, 4, 17),
     exposeClientSide = true
   )
 
