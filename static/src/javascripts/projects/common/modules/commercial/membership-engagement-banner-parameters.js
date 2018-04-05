@@ -113,8 +113,8 @@ export const engagementBannerParams = (
     location: string
 ): EngagementBannerParams => {
     const region = getSupporterPaymentRegion(location);
-
-    if (region === 'US' || region === 'GB' || region === 'EU' || region === 'INT') {
+    const supportRegions = ['US', 'GB', 'EU', 'INT'];
+    if (supportRegions.includes(region)) {
         return supporterParams(location);
     }
     return membershipSupporterParams(location);
