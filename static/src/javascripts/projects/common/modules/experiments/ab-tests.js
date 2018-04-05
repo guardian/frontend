@@ -10,7 +10,6 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
     acquisitionsHeaderSubscribeMeansSubscribe,
     acquisitionsHeaderAudSupport,
-    acquisitionsHeaderRowSupport,
     spacefinderSimplify,
 ].filter(Boolean);
 
