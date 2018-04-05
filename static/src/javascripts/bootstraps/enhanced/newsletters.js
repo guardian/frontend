@@ -62,7 +62,7 @@ const submitForm = (
     );
     const formQueryString = `${inputs.email}=${email}&csrfToken=${
         csrfToken
-    }listName=${listName}&${inputs.dummy}=${dummyEmail}`;
+    }&listName=${listName}&${inputs.dummy}=${dummyEmail}`;
 
     return fetch(`${config.get('page.ajaxUrl')}/email`, {
         method: 'POST',
