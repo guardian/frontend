@@ -5,7 +5,7 @@ import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.Cached.WithoutRevalidationResult
+import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
 import LiveBlogHelpers._
 import model.liveblog._
@@ -15,6 +15,9 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
 import views.support._
+import com.gu.contentapi.client.model.v1.Package
+import conf.switches.Switches.InlineEmailStyles
+import play.twirl.api.Html
 
 import scala.concurrent.Future
 
@@ -166,24 +169,95 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
+  sealed trait Error
+  object ContentNotFound extends Error
+  object InvalidContentType extends Error
+  object MissingRange extends Error
+  case class Redirect(result: Result) extends Error
+
+  def filterOnContentType(c: ApiContent): Either[Error, Unit] = {
+    if (c.isArticle || c.isLiveBlog || c.isSudoku) Right(Unit)
+    else Left(InvalidContentType)
+  }
+
+  def filterOnRedirect(request: RequestHeader, response: ItemResponse): Either[Error, Unit] = {
+    ContentRedirect.canonical(request, response).map(Redirect.apply).toLeft(Unit)
+  }
+
+  def buildResponse(page: PageWithStoryPackage)(implicit request: RequestHeader): Result = {
+    val isAmp = request.isAmp
+    val isJson = request.isJson
+    val isEmail = request.isEmail
+    val notFound = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
+
+    page match {
+      case ampArticle: ArticlePage if isAmp => asHtml(page, views.html.articleAMP(ampArticle))
+      case emailArticle: ArticlePage if isEmail => asEmail(page, ArticleEmailHtmlPage.html(emailArticle))
+      case jsonArticle: ArticlePage if isJson => notFound
+      case article: ArticlePage => asHtml(page, ArticleHtmlPage.html(article))
+
+      case ampBlog: LiveBlogPage if isAmp => asHtml(page, views.html.liveBlogAMP(ampBlog))
+      case emailBlog: LiveBlogPage if isEmail => notFound
+      case jsonBlog: LiveBlogPage if isJson => asJson(page, views.html.liveblog.liveBlogBody(jsonBlog))
+      case blog: LiveBlogPage => asHtml(page, LiveBlogHtmlPage.html(blog))
+
+      case ampMinute: MinutePage if isAmp => notFound
+      case emailMinute: MinutePage if isEmail => asEmail(page, ArticleEmailHtmlPage.html(emailMinute))
+      case jsonMinute: MinutePage if isJson => asJson(page, ArticleEmailHtmlPage.html(jsonMinute))
+      case minute: MinutePage => asHtml(page, MinuteHtmlPage.html(minute))
+    }
+  }
+
+  // TODO check correct caching behaviour
+  def asHtml(page: Page, html: Html)(implicit request: RequestHeader): Result = Cached(page)(RevalidatableResult.Ok(html))
+  def asEmail(page: Page, html: Html)(implicit request: RequestHeader): Result = {
+    Cached(page)(RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(html) else html))
+  }
+  def asJson(page: Page, html: Html)(implicit request: RequestHeader): Result = Cached(page)(JsonComponent(page, html))
+
+  def handleErrors(res: Either[Error, Result], ir: ItemResponse)(implicit request: RequestHeader): Result = {
+    val notFound = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
+
+    res match {
+      case Right(okay) => okay
+      case Left(ContentNotFound) | Left(InvalidContentType) => ContentRedirect.internal(request, ir).getOrElse(notFound)
+      case Left(MissingRange) => notFound
+      case Left(Redirect(r)) => r
+    }
+  }
+
+  // AIM: be able to easily pass certain request types to Moon without unnecessary cleaning
+  // AIM: to remove references to common or inline them
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
-        render(path, _)
-      }
+      // TODO more logic for range for liveblogs etc.
+      val range = if (request.isEmail) Some(ArticleBlocks) else None
+      val item = getFromCAPI(path, range)
+
+      item map { i =>
+        val res = for {
+          apiContent <- i.content.toRight(ContentNotFound)
+          _ <- filterOnContentType(apiContent)
+          _ <- filterOnRedirect(request, i)
+          page <- toPage(Content(apiContent), i.packages, range, request.isEmail)
+          result = buildResponse(page)
+        } yield result
+
+        handleErrors(res, i)
+      } recover convertApiExceptionsWithoutEither
     }
   }
 
   // range: None means the url didn't include /live/, Some(...) means it did.  Canonical just means no url parameter
   // if we switch to using blocks instead of body for articles, then it no longer needs to be Optional
   def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
-    lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
+    getFromCAPI(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
   }
 
-  private def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
+  private def getFromCAPI(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
     val edition = Edition(request)
 
     val capiItem = contentApiClient.item(path, edition)
@@ -196,8 +270,25 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("body")
       capiItem.showBlocks(blocksParam)
     }.getOrElse(capiItem)
-    contentApiClient.getResponse(capiItemWithBlocks)
 
+    contentApiClient.getResponse(capiItemWithBlocks)
+  }
+
+  def toPage(content: ContentType, packages: Option[Seq[Package]], range: Option[BlockRange], isEmail: Boolean): Either[Error, PageWithStoryPackage] = {
+    content match {
+      case minute: Article if minute.isTheMinute =>
+        Right(MinutePage(minute, StoryPackages(minute, packages)))
+      // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
+      case liveBlog: Article if liveBlog.isLiveBlog && isEmail =>
+        Right(MinutePage(liveBlog, StoryPackages(liveBlog, packages)))
+      case liveBlog: Article if liveBlog.isLiveBlog =>
+        for {
+          r <- range.toRight(MissingRange)
+          m <- createLiveBlogModel(liveBlog, packages, r).toRight(ContentNotFound)
+        } yield m
+      case article: Article =>
+        Right(ArticlePage(article, StoryPackages(article, packages)))
+    }
   }
 
   /**
@@ -212,16 +303,16 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     val supportedContentResult = ModelOrResult(supportedContent, response)
     val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
       case minute: Article if minute.isTheMinute =>
-        Left(MinutePage(minute, StoryPackages(minute, response)))
+        Left(MinutePage(minute, StoryPackages(minute, response.packages)))
         // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
-        Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
+        Left(MinutePage(liveBlog, StoryPackages(liveBlog, response.packages)))
       case liveBlog: Article if liveBlog.isLiveBlog =>
-        range.map {
-          createLiveBlogModel(liveBlog, response, _)
-        }.getOrElse(Right(NotFound))
+        range.flatMap {
+          createLiveBlogModel(liveBlog, response.packages, _)
+        }.toLeft(NotFound)
       case article: Article =>
-        Left(ArticlePage(article, StoryPackages(article, response)))
+        Left(ArticlePage(article, StoryPackages(article, response.packages)))
     }
 
     content
