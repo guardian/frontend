@@ -114,7 +114,7 @@ export const engagementBannerParams = (
 ): EngagementBannerParams => {
     const region = getSupporterPaymentRegion(location);
 
-    if (region === 'US' || region === 'GB' || region === 'EU') {
+    if (region === 'US' || region === 'GB' || region === 'EU' || region === 'INT') {
         return supporterParams(location);
     }
     return membershipSupporterParams(location);

@@ -10,7 +10,8 @@ const geoCountryGroup = geolocationGetSupporterPaymentRegion(geo);
 const useSupportDomain = (): boolean =>
     geoCountryGroup === 'GB' ||
     geoCountryGroup === 'US' ||
-    geoCountryGroup === 'EU';
+    geoCountryGroup === 'EU' ||
+    geoCountryGroup === 'INT';
 
 const supportBaseURL = useSupportDomain()
     ? 'https://support.theguardian.com/contribute'
