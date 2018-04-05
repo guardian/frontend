@@ -36,10 +36,10 @@
         &:before {
             content: '';
             position: absolute;
-            top: 0;
+            top: -$gs-gutter/2;
             bottom: 0;
             left: -$gs-gutter/2;
-            border-left: 1px solid $media-mute;
+            border-left: 1px solid $garnett-neutral-7;
         }
     }
 }

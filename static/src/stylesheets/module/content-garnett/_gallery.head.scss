@@ -1,5 +1,149 @@
-.gallery__main-content {
+// Gallery specific styles for Garnett
+.immersive-main-media__gallery {
+    overflow-x: hidden;
+
+    .immersive-main-media__headline-container {
+        position: absolute;
+        bottom: 0;
+        background: transparent;
+    }
+
+    .gs-container {
+        @include mq($until: tablet) {
+            padding-left: 0;
+        }
+    }
+
+    .content__main-column {
+        background-color: $garnett-neutral-1;
+        z-index: 10;
+        margin-left: -$gs-gutter/2;
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline*2;
+        border-bottom: solid 1px $garnett-neutral-7;
+        //This allows the headline block to be aligned to the left and not run full width
+        width: calc(90vw - #{$gs-gutter});
+        @include mq($from: tablet) {
+            width: 100vw;
+            padding-left: 0;
+        }
+        @include mq($from: desktop) {
+            margin-left: $left-column-wide + $gs-gutter/2;
+            padding-left: $gs-gutter / 2;
+        }
+        @include mq(leftCol) {
+            margin-left: $left-column-wide;
+            left: $gs-gutter / 2;
+        }
+    }
+
+    .content__headline {
+        @include fs-headline(6, true);
+        line-height: 1.1;
+        font-weight: 700;
+        max-width: gs-span(8);
+        padding: 0 $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+        }
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2;
+        }
+        @include mq(desktop) {
+            font-size: 50px;
+            line-height: 54px;
+        }
+    }
+
+    .inline-camera {
+        display: none;
+    }
+
+    .content__labels {
+        margin-left: 0;
+        position: absolute;
+        transform: translateY(-130%);
+        overflow: visible;
+        width: 100%;
+    }
+
+    .content__section-label {
+        display: none;
+    }
+
+    .content__series-label {
+        color: $garnett-neutral-5;
+        font-size: 16px;
+        font-weight: 700;
+        @include mq(desktop) {
+            font-size: 20px;
+        }
+    }
+
+    .label__link-wrapper {
+        padding: $gs-baseline/3 $gs-gutter/2 $gs-baseline/2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+        }
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2;
+        }
+    }
+
+    .content__labels--paidgallery {
+        .content__section-label__link {
+            color: $paid-article-brand;
+        }
+    }
+
+    .content__headline--paidgallery {
+        .inline-tone-fill {
+            fill: $paid-article-brand;
+        }
+    }
+
+    .article__fullscreen,
+    .gallery__fullscreen {
+        position: absolute;
+    }
+}
+// Gallery specific styles for Meta
+.tonal__head .content__main-column--gallery {
+    display: flex;
+    flex-wrap: wrap;
+    @include mq(tablet) {
+        padding-left: $gs-gutter/2 !important;
+        border-left: solid 1px $garnett-neutral-7;
+    }
+    @include mq(desktop) {
+        margin-left: gs-span(3) + $gs-gutter/2;
+
+    }
+
+    .meta__extras {
+        display: block;
+    }
+
+    .meta__numbers,
+    .meta__social {
+        display: inline;
+    }
+
+    .tonal__standfirst {
+        max-width: gs-span(8);
+        padding-top: $gs-baseline;
+        order: 1;
+        flex-basis: 100%;
+        @include mq($from: tablet) {
+            // @include multiline(4, $garnett-neutral-7, 4);
+            // padding-top: $gs-gutter;
+        }
+    }
+
     .content__meta-container {
+        order: 3;
+        flex-basis: 100%;
+        padding-top: 0;
+        background-image: none;
         position: relative;
         margin-left: 0;
         min-height: auto;
@@ -8,226 +152,17 @@
         width: auto;
     }
 
-    .meta__extras {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .tonal__standfirst {
-        max-width: gs-span(8);
-    }
-
     .gallery__meta-container {
-        // TODO: remove the need for important by restructuring _types.scss
+        order: 2;
+        padding-top: 0;
+        flex-basis: 100%;
         background-image: none !important;
+
         .byline,
         .content__dateline {
             background-image: none;
             border: 0;
             padding-top: 0;
-        }
-    }
-}
-
-// .content__labels--gallery {
-//     @include mq(leftCol) {
-//         margin-left: -($left-column-wide + $gs-gutter);
-//         width: $left-column-wide;
-//     }
-// }
-
-// Overriding the default for media tones
-.tonal--tone-media .content__headline--gallery {
-    font-weight: 700;
-    max-width: gs-span(8);
-    padding-top: 0;
-    padding: 0 $gs-gutter/2;
-
-    @include mq($until: tablet) {
-        padding-top: $gs-baseline / 2;
-    }
-
-    .inline-camera {
-        display: none;
-    }
-}
-
-.content__labels--paidgallery {
-    .content__section-label__link {
-        color: $paid-article-brand;
-    }
-}
-
-.content__headline--paidgallery {
-    .inline-tone-fill {
-        fill: $paid-article-brand;
-    }
-}
-
-.gallery__fullscreen,
-.article__fullscreen {
-    position: absolute;
-}
-
-//Garnett overrides
-
-.immersive-main-media__gallery  {
-    overflow-x: hidden;
-
-    .immersive-main-media__headline-container {
-        position: absolute;
-        bottom: 0;
-        background: transparent;
-
-        .content__headline {
-            @include fs-headline(6, true);
-            line-height: 1.1;
-
-            @include mq(desktop) {
-                font-size: 50px;
-                line-height: 54px;
-            }
-        }
-
-        // &:after {
-        //     position: absolute;
-        //     content: '';
-        //     display: none;
-        //     width: 50%;
-        //     right: 0;
-        //     background-color: $garnett-neutral-1;
-        //     z-index: 0;
-        //     top: 0;
-        //     bottom: 0;
-        //
-        //     @include mq($from: mobileLandscape) {
-        //         display: block;
-        //     }
-        // }
-
-        // .gs-container {
-        //     padding: 0;
-        // }
-
-        .content__labels--gallery {
-            margin-left: -$gs-gutter;
-            padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline / 4) $gs-gutter;
-            position: absolute;
-            transform: translateY(-100%);
-            width: auto;
-
-            @include mq($from: tablet) {
-                margin-left: 0;
-                padding: ($gs-baseline / 2) ($gs-gutter / 2) ($gs-baseline / 4);
-            }
-        }
-
-        .content__section-label,
-        .content__series-label {
-            font-size: 20px;
-            line-height: 1;
-            width: auto;
-            display: inline;
-
-        }
-
-        .content__series-label {
-            // font-weight: 100;
-            font-style: italic;
-            margin-left: $gs-baseline/2;
-        }
-
-        .content__section-label__link {
-            color: $garnett-neutral-5;
-        }
-
-
-
-        // .badge-slot {
-        //     float: left;
-        //     margin-right: $gs-gutter / 4;
-        //
-        //     @include mq($from: tablet) {
-        //         margin-right: $gs-gutter / 2;
-        //     }
-        // }
-
-        // .content__series-label__link {
-        //     color: #ffffff;
-        //     font-weight: 700;
-        //
-        //     @include mq(desktop) {
-        //         font-size: 20px;
-        //     }
-        // }
-
-
-
-        .content__main-column {
-            &::before {
-                display: none;
-            }
-
-            background-color: $garnett-neutral-1;
-            z-index: 10;
-            position: relative;
-            left: -$gs-gutter;
-            padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline*2;
-            //This allows the headline block to be aligned to the left and not run full width
-            width: calc(90vw - #{$gs-gutter});
-            min-height: 112px;
-
-            @include mq($from: tablet) {
-                padding-left: $gs-gutter / 2;
-                width: 100%;
-                left: $gs-gutter / 2;
-            }
-            @include mq($from: desktop) {
-                left: $gs-gutter / 2;
-            }
-            @include mq(leftCol) {
-                margin-left: $left-column;
-            }
-            @include mq(wide) {
-                margin-left: $left-column-wide;
-            }
-        }
-
-    }
-
-}
-
-.content--gallery {
-    .tonal__head .content__main-column--gallery {
-        display: flex;
-        flex-wrap: wrap;
-
-        .meta__extras {
-            display: block;
-        }
-
-        .meta__social,
-        .meta__numbers {
-            display: inline;
-        }
-
-        .tonal__standfirst {
-            @include multiline(4, $garnett-neutral-7, 4);
-            padding-top: $gs-gutter;
-            order: 1;
-            flex-basis: 100%;
-        }
-        .content__meta-container {
-            order: 3;
-            flex-basis: 100%;
-            padding-top: 0;
-            background-image: none;
-
-        }
-        .gallery__meta-container {
-            order: 2;
-            padding-top: 0;
-            flex-basis: 100%;
         }
     }
 }
