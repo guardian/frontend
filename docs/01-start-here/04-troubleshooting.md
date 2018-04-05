@@ -16,7 +16,7 @@ npm WARN locking Error: EACCES, open '/Users/jduffell/.npm/_locks/karma-requirej
 Sometimes when you install npm, it ends up owned by root (but in your home
 directory).
 
-Check that you own your own .npm directory `ls -ld ~/.npm`
+Check that you own your own `.npm` directory: `ls -ld ~/.npm`
 
 If it is owned by root, then take ownership of it
 `sudo chown -R $(whoami) ~/.npm`
@@ -24,7 +24,7 @@ If it is owned by root, then take ownership of it
 ### { Error: ENOENT: no such file or directory, scandir '../frontend/node_modules/node-sass/vendor'
 Run `make reinstall` to resolve.
 
-### Accidentally ran `npm install` ot `yarn install`
+### Accidentally ran `npm install` or `yarn install`
 Run `make reinstall` to resolve.
 
 ### Global install permissions errors
