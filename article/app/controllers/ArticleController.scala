@@ -1,23 +1,22 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{ItemResponse, Package, Content => ApiContent}
 import common._
 import conf.switches.Switches
+import conf.switches.Switches.InlineEmailStyles
 import contentapi.ContentApiClient
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
 import model._
-import LiveBlogHelpers._
 import model.liveblog._
 import org.joda.time.DateTime
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
-import views.support._
-import com.gu.contentapi.client.model.v1.Package
-import conf.switches.Switches.InlineEmailStyles
 import play.twirl.api.Html
+import views.support._
 
 import scala.concurrent.Future
 
@@ -29,7 +28,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(render(path, _))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Some(Canonical))(page => render(page))
 
 
   private def renderNewerUpdates(page: PageWithStoryPackage, lastUpdateBlockId: SinceBlockId, isLivePage: Option[Boolean])(implicit request: RequestHeader): Result = {
@@ -91,7 +90,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     else renderPage
   }
 
-  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
+  private def render(page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       val htmlResponse = () => {
         if (request.isAmp) views.html.liveBlogAMP(blog)
@@ -124,17 +123,16 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       renderFormat(htmlResponse, jsonResponse, article)
   }
 
-  def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
-    if (format.contains("email"))
+  def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] = {
+    def renderWithRange(range: BlockRange)(implicit request: RequestHeader): Future[Result] = {
+      // temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
+      mapModel(path, range = Some(range)) { page => render(page) }
+    }
+
+    if (format.contains("email")) {
       renderArticle(path)
-    else
+    } else {
       Action.async { implicit request =>
-
-        def renderWithRange(range: BlockRange) =
-          mapModel(path, range = Some(range)) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
-            render(path, _)
-          }
-
         page.map(ParseBlockId.fromPageParam) match {
           case Some(ParsedBlockId(id)) => renderWithRange(PageWithBlock(id)) // we know the id of a block
           case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
@@ -142,14 +140,17 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         }
       }
 
+    }
+  }
+
   def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
 
       def renderWithRange(range: BlockRange) =
-        mapModel(path, Some(range)) { model =>
+        mapModel(path, Some(range)) { page =>
           range match {
-            case SinceBlockId(lastBlockId) => renderNewerUpdates(model, SinceBlockId(lastBlockId), isLivePage)
-            case _ => render(path, model)
+            case SinceBlockId(lastBlockId) => renderNewerUpdates(page, SinceBlockId(lastBlockId), isLivePage)
+            case _ => render(page)
           }
         }
 
@@ -163,9 +164,8 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   def renderJson(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, if (request.isGuuiJson) Some(ArticleBlocks) else None) {
-        render(path, _)
-      }
+      val range = if (request.isGuuiJson) Some(ArticleBlocks) else None
+      mapModel(path, range) { page => render(page) }
     }
   }
 
@@ -317,8 +317,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
     content
   }
-
-
 }
 
 
