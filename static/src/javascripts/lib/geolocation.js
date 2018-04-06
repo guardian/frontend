@@ -368,7 +368,7 @@ const countryGroups: CountryGroups = {
 };
 
 // These are the different 'regions' we accept when taking payment.
-// See https://membership.theguardian.com/uk/supporter# for more context.
+// See https://github.com/guardian/support-internationalisation/blob/master/src/main/scala/com/gu/i18n/CountryGroup.scala for more context.
 const getSupporterCountryGroup = (location: string): CountryGroupId => {
     const availableCountryGroups = Object.keys(countryGroups);
     let response = null;
