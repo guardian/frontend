@@ -86,12 +86,9 @@ install_node() {
       if ! installed curl; then
         sudo apt-get install -y curl
       fi
-
-      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
-    elif mac && installed brew; then
-      brew install nvm
     fi
 
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
     nvm install
     EXTRA_STEPS+=("Add https://git.io/vKTnK to your .bash_profile")
   else
