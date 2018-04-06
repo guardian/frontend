@@ -38,14 +38,10 @@ case class EmailForm(
   // `name` is a hidden (via css) form input
   // if it was set to something this form was likely filled by a bot
   // https://stackoverflow.com/a/34623588/2823715
-  def isLikelyBotSubmission: Boolean =
-    if (name == null)
-      false
-    else
-      name match {
-        case "" | "undefined" | "null" => false
-        case _ => true
-      }
+  def isLikelyBotSubmission: Boolean = name match {
+    case "" | "undefined" | "null" => false
+    case _ => true
+  }
 }
 
 class EmailFormService(wsClient: WSClient) extends LazyLogging {
