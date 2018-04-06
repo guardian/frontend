@@ -33,16 +33,15 @@ case class EmailForm(
   listName: Option[String],
   referrer: Option[String],
   campaignCode: Option[String],
-  name: Option[String]) {
+  name: String) {
 
   // `name` is a hidden (via css) form input
   // if it was set to something this form was likely filled by a bot
   // https://stackoverflow.com/a/34623588/2823715
-  def isLikelyBotSubmission: Boolean = name.map(_.trim) match {
-    case Some("") | Some(null) | Some("undefined") | None | Some("null") => false
+  def isLikelyBotSubmission: Boolean = name match {
+    case "" | "undefined" | "null" => false
     case _ => true
   }
-
 }
 
 class EmailFormService(wsClient: WSClient) extends LazyLogging {
@@ -70,7 +69,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
       "listName" -> optional[String](of[String]),
       "referrer" -> optional[String](of[String]),
       "campaignCode" -> optional[String](of[String]),
-      "name" -> optional(text)
+      "name" -> text
     )(EmailForm.apply)(EmailForm.unapply)
   )
 
