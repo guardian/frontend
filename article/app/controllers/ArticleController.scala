@@ -24,6 +24,7 @@ import views.support._
 import scala.concurrent.duration._
 import scala.concurrent.Future
 
+
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
@@ -94,18 +95,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     else renderPage
   }
 
-  def remoteRenderArticle: Future[String] = ws.url(Configuration.moon.moonEndpoint)
-    .withRequestTimeout(2000.millis)
-    .get()
-    .map((response) => {
-      response.body
-    })
-
-  def getRemoteArticlePage(implicit request: RequestHeader): Future[Result] = remoteRenderArticle.map((s) => {
-    Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(s))))
-  })
-
-  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) : Result = page match {
+  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
     case blog: LiveBlogPage =>
       val htmlResponse = () => {
         if (request.isAmp) views.html.liveBlogAMP(blog)
@@ -126,11 +116,9 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       }
 
     case article: ArticlePage =>
-
       val htmlResponse = () => {
         if (request.isEmail) ArticleEmailHtmlPage.html(article)
         else if (request.isAmp) views.html.articleAMP(article)
-        else if (request.isGuui) Html("hurr")
         else ArticleHtmlPage.html(article)
       }
 
@@ -138,7 +126,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
       val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
       renderFormat(htmlResponse, jsonResponse, article)
-      //getRemoteArticlePage
   }
 
   def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
@@ -186,18 +173,51 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  def renderArticleGUUI(path: String): Action[AnyContent] = {
-    Action.async { implicit request =>
-      println("GUUI route")
-      getRemoteArticlePage
+
+  def remoteRenderArticle(payload: String): Future[String] = ws.url(Configuration.moon.moonEndpoint)
+    .withRequestTimeout(2000.millis)
+    .addHttpHeaders("Content-Type" -> "application/json")
+    .post(payload)
+    .map((response) => {
+      response.body
+    })
+
+  def remoteRender(path: String, model: PageWithStoryPackage)(implicit request: RequestHeader): Future[Result] = model match {
+
+    case article : ArticlePage => {
+      val contentFieldsJson = if (request.isGuui) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
+      val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
+      val jsonPayload = JsonComponent.jsonFor(model, jsonResponse():_*)
+      remoteRenderArticle(jsonPayload).map(s => {
+        Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(s))))
+      })
     }
+
+  }
+
+  // for the GUUI demo. Same as mapModel except the render method should return a  Future[Result] instead of Result
+  def mapModelGUUI(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
+
+    lookup(path, range).map((itemResp: ItemResponse) => responseToModelOrResult(range)(itemResp)).recover(convertApiExceptions).flatMap {
+      case Left(model) => render(model)
+      case Right(other) => Future{RenderOtherStatus(other)}
+    }
+
   }
 
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
-        render(path, _)
+
+      if(request.isGuui){
+        mapModelGUUI(path, Some(ArticleBlocks)){
+          remoteRender(path, _)
+        }
+      } else {
+        mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
+          render(path, _)
+        }
       }
+
     }
   }
 
