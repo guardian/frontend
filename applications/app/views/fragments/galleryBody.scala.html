@@ -17,7 +17,6 @@
             "content", "content--media", "content--gallery", s"content--pillar-${page.metadata.pillar.nameOrDefault}", "tonal", "content--immersive", "tonal--tone-media", s"tonal--${toneClass(page.item)}"
         )"
         itemscope itemtype="@page.item.metadata.schemaType" role="main">
-
         @fragments.galleryHeader(page)
 
         <div class="@RenderClasses(

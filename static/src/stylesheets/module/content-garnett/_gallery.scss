@@ -9,7 +9,7 @@
 }
 
 .gallery__divider {
-    border-top: 1px solid $media-mute;
+    border-top: 1px solid $garnett-neutral-7;
 
     @include mq(desktop) {
         padding-top: $gs-baseline / 2;

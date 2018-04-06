@@ -19,7 +19,6 @@
         z-index: 10;
         margin-left: -$gs-gutter/2;
         padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline*2;
-        border-bottom: solid 1px $garnett-neutral-7;
         //This allows the headline block to be aligned to the left and not run full width
         width: calc(90vw - #{$gs-gutter});
         @include mq($from: tablet) {
@@ -133,10 +132,6 @@
         padding-top: $gs-baseline;
         order: 1;
         flex-basis: 100%;
-        @include mq($from: tablet) {
-            // @include multiline(4, $garnett-neutral-7, 4);
-            // padding-top: $gs-gutter;
-        }
     }
 
     .content__meta-container {
