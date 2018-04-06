@@ -89,9 +89,7 @@ const supporterCost = (
 };
 
 const supporterEngagementCtaCopy = (location: string): string =>
-    location === 'US'
-        ? `Support us with a one-time contribution`
-        : `Support us for ${supporterCost(location, 'MONTHLY')} a month.`;
+    `Support us for ${supporterCost(location, 'MONTHLY')} a month.`;
 
 const supporterEngagementCtaCopyJustOne = (location: string): string =>
     `Support The Guardian from as little as ${supporterCost(
