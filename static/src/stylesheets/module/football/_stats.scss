@@ -1,73 +1,122 @@
 .match-stats {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 50% 50%;
     margin: 0;
+    color: $garnett-neutral-1;
+}
+
+.match-stats__heading {
+    @include fs-header(4);
+    font-weight: 900;
+    grid-column-start: 1;
+    grid-column-end: 3;
+
+    @include mq(leftCol) {
+        position: relative;
+        height: 0;
+        left: -160px;
+        top: -4px;
+        margin: 0;
+    }
+
+    @include mq(wide) {
+        left: -240px;
+    }
 }
 
 .match-stats__caption {
-    @include fs-textSans(4);
+    @include fs-textSans(5);
     margin-bottom: $gs-baseline/6;
-    color: $neutral-1;
+    color: $garnett-neutral-1;
     font-weight: 400;
     text-align: left;
     width: 100%;
 }
 
+.match-stats__column {
+    padding-bottom: $gs-baseline;
+
+    @include mq($until: tablet) {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    @include mq(tablet) {
+        margin-right: 10px;
+    }
+
+    @include mq(leftCol) {
+        padding-bottom: $gs-baseline*1.5;
+    }
+
+    &.match-stats__column--first {
+        @include mq(tablet) {
+            padding-right: 10px;
+            border-right: 1px solid $neutral-4;
+        }
+    }
+}
+
+.match-stats__stat {
+    margin: 0;
+}
 
 /* ==========================================================================
    Goal attempts
    ========================================================================== */
 
 .goal-attempts {
-    @include fs-textSans(4);
+    @include fs-textSans(5);
     color: #ffffff;
     margin: 0 auto;
-    max-width: $gs-column-width*5;
     overflow: hidden;
     position: relative;
 }
 
 .goal-attempts__label {
     box-sizing: border-box;
-    padding: $gs-baseline/6 ($gs-gutter/5)*2;
     font-weight: normal;
     position: absolute;
     margin: 0;
     width: 100%;
     z-index: 2;
 }
-.goal-attempts__label--off-target-away,
-.goal-attempts__label--on-target-away {
-    text-align: right;
+
+.goal-attempts__label--off-target-home {
+    top: 34px;
+    left: 4px;
 }
-.goal-attempts__label--on-target-away,
+
 .goal-attempts__label--on-target-home {
-    bottom: ($gs-baseline/3)*8;
-}
-.goal-attempts__label--on-target-home {
-    left: 21%;
-}
-.goal-attempts__label--on-target-away {
-    right: 21%;
+    bottom: 10px;
+    left: 23.2%;
 }
 
 .goal-attempts__off-target,
 .goal-attempts__on-target {
-    @include fs-header(2);
+    @include fs-headlineGarnett(6);
+    line-height: .8;
     box-sizing: border-box;
-    padding: $gs-baseline*1.5 ($gs-gutter/5)*2;
+    padding: 2px 4px;
     font-weight: 900;
     margin: 0;
     width: 50%;
 }
+
 .goal-attempts__off-target {
-    height: $gs-baseline*10;
-    /* taken from https://github.com/guardian/mobile-apps-article-templates/blob/master/ArticleTemplates/css/img/hor_bg.png */
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAGElEQVQoz2NgIAP8///feFTTqKbhrQkIAKVFLKEzqlndAAAAAElFTkSuQmCC');
-    background-size: 8px;
+    height: $gs-baseline*11;
+    background-image: url('data:image/svg+xml, %3Csvg%20width%3D%229%22%20height%3D%2212%22%20viewBox%3D%220%200%209%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22rgba%28255%2C%20255%2C%20255%2C%200.3%29%22%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    background-repeat: repeat;
+    background-size: 10px;
+    background-position-x: 0px;
 }
+
 .goal-attempts__on-target {
     box-sizing: border-box;
-    height: $gs-baseline*5;
-    border: 4px solid #ffffff;
+    height: $gs-baseline*6;
+    border: 6px solid #ffffff;
     border-bottom: 0;
     bottom: 0;
     position: absolute;
@@ -76,12 +125,12 @@
 
 .goal-attempts__off-target--home,
 .goal-attempts__on-target--home {
-    background-color: $neutral-1;
+    background-color: $garnett-neutral-1;
     float: left;
 }
 .goal-attempts__off-target--away,
 .goal-attempts__on-target--away {
-    background-color: $status-neutral;
+    background-color: #ffffff;
     float: right;
     text-align: right;
 }
@@ -94,7 +143,6 @@
     right: 20%;
 }
 
-
 /* ==========================================================================
    Bar fights
    ========================================================================== */
@@ -102,16 +150,16 @@
 .bar-fight {
     .match-stats__caption {
         float: left;
-        margin-top: ($gs-baseline/3)*4;
+        margin-top: 6px;
     }
 }
 
 .bar-fight__bar {
-    @include fs-header(2);
+    @include fs-headlineGarnett(6);
+    line-height: .8;
     box-sizing: border-box;
-    line-height: $gs-baseline*1.5;
-    padding: $gs-baseline/4 ($gs-gutter/4)+3 0;
-    background-color: $status-neutral;
+    padding: 2px 6px 9px;
+    background-color: #e0eff8;
     color: #ffffff;
     font-weight: bold;
     float: left;
@@ -120,21 +168,96 @@
 }
 
 .bar-fight__bar--home {
-    background-color: $neutral-1;
+    background-color: $garnett-neutral-1;
     border-right: 2px solid #ffffff;
     text-align: left;
 }
 
-/**
- * This will be our unfortunate solution until we do colour checking in play.
- */
+/* ==========================================================================
+    Possession doughnut
+   ========================================================================== */
+
+.football-possession {
+    position: relative;
+    height: 0;
+    padding-top: 320px;
+    margin-bottom: $gs-baseline;
+    text-align: center;
+    width: 100%;
+    max-width: 320px;
+    margin: auto;
+
+    @include mq(desktop) {
+        padding-top: 290px; // width of column without 10px padding
+    }
+}
+
+.chart--football-possession {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+
+    .chart__unit {
+        fill: $garnett-neutral-1;
+    }
+}
+
+/* ==========================================================================
+   Lineups
+   ========================================================================== */
+
+.match-stats__lineup {
+    margin-right: 10px;
+}
+
+.match-stats__lineup--home {
+    @include mq(tablet) {
+        border-right: $neutral-4 1px solid;
+        padding-right: 10px;
+    }
+}
+
+.match-stats__players {
+    margin-bottom: $gs-baseline;
+}
+
+.match-stats__player {
+    @include fs-textSans(5);
+}
+
+.match-stats__player .i {
+    transform: rotate(8deg);
+}
+
+.match-stats__player-number {
+    font-weight: bold;
+    width: 24px;
+    display: inline-block;
+
+    @include mq(mobileLandscape) {
+        width: 30px;
+    }
+}
+
+/* ==========================================================================
+   Dark colour overrides
+   ========================================================================== */
+
 .match-stats--darken-home {
     .bar-fight__bar--home,
     .goal-attempts__label--off-target-home,
     .goal-attempts__label--on-target-home,
     .goal-attempts__off-target--home,
     .goal-attempts__on-target--home {
-        color: $neutral-1;
+        color: $garnett-neutral-1;
+    }
+
+    .chart__arc:last-of-type .chart__label {
+        fill: $garnett-neutral-1;
     }
 }
 
@@ -144,162 +267,85 @@
     .goal-attempts__label--on-target-away,
     .goal-attempts__off-target--away,
     .goal-attempts__on-target--away {
-        color: $neutral-1;
+        color: $garnett-neutral-1;
     }
-}
 
-
-/* ==========================================================================
-    Possession doughnut
-   ========================================================================== */
-
-.football-possession {
-    margin: 0 auto $gs-baseline;
-    text-align: center;
-    width: $gs-gutter*10;
-}
-
-.chart--football-possession {
-    .chart__label-value {
-        @include fs-header(5);
-    }
-}
-
-.match-stats--darken-away {
     .chart__arc:first-of-type .chart__label {
-        fill: $neutral-1;
+        fill: $garnett-neutral-1;
     }
 }
 
-.match-stats--darken-home {
-    .chart__arc:last-of-type .chart__label {
-        fill: $neutral-1;
-    }
+.match-stats--darken-home .goal-attempts__off-target--home,
+.match-stats--darken-away .goal-attempts__off-target--away {
+    background-image: url('data:image/svg+xml,%3Csvg%20width%3D%229%22%20height%3D%2212%22%20viewBox%3D%220%200%209%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22rgba%280%2C%200%2C%200%2C%200.1%29%22%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%221.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%224.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%221.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%224.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%227.5%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%227.5%22%20cy%3D%2210.5%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
 }
-
 
 /* ==========================================================================
-   Legacy
+   Match Report overrides
    ========================================================================== */
 
-.match-aggregate,
-.match-comment {
-    text-align: center;
-    display: block;
-    width: 90%;
-}
+.after-article {
+    .match-stats__container {
+        position: relative;
+        padding: 9px 0;
+        background-color: mix($sport-garnett-main-1, #ffffff, 15%);
 
-.match-summary .match-aggregate,
-.match-summary .match-aggregate {
-    text-align: left;
-}
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            z-index: -1;
+            left: -10px;
+            right: -10px;
+            bottom: 0;
+            background-color: mix($sport-garnett-main-1, #ffffff, 15%);
 
-.match-aggregate span span {
-    letter-spacing: 2px;
-}
+            @include mq(mobileLandscape) {
+                left: -20px;
+                right: -20px;
+            }
 
-.home-stat {
-    box-sizing: border-box;
-    background-color: $sport-home;
-    border-right: 5px solid #ffffff;
-    height: 15px;
-    width: 100%;
-}
+            @include mq(tablet) {
+                right: 0;
+                left: -100vw;
+            }
+        }
+    }
 
-.away-stat {
-    box-sizing: border-box;
-    background-color: $sport-away;
-    height: 15px;
-}
-
-.home-num {
-    width: 100%;
-}
-
-.away-num {
-    width: 100%;
-}
-
-.home-stat-background,
-.away-stat-background {
-    background-color: #ededed;
-    width: 100%;
-}
-
-.team-list-name {
-    float: left;
-    width: 49.5%;
-
-    & + & {
-        float: right;
+    .bar-fight__bar--home,
+    .goal-attempts__on-target {
+        border-color: mix($sport-garnett-main-1, #ffffff, 15%);
     }
 }
 
-.team-list__item {
-    @include fs-textSans(2);
-}
+/* ==========================================================================
+   Football Stats overrides
+   ========================================================================== */
 
-.m-status {
-    padding: 0 5px;
-}
-
-.home-header {
-    float: left;
-    width: 49.5%;
-    margin-bottom: $gs-baseline;
-    border-bottom: 5px solid $sport-home;
-    padding-bottom: $gs-baseline/3;
-}
-
-.away-header {
-    float: right;
-    width: 49.5%;
-    text-align: right;
-    margin-bottom: $gs-baseline;
-    border-bottom: 5px solid $sport-away;
-    padding-bottom: $gs-baseline/3;
-}
-
-.lineup {
-    float: left;
-    width: 49.5%;
-    vertical-align: top;
-    padding-bottom: ($gs-baseline/3)*2;
-
-    & + & {
-        float: right;
+.content--football-stats {
+    .match-stats {
+        margin-top: $gs-baseline;
     }
 }
 
-.i-status {
-    padding: 5px;
-    margin-right: 5px;
-    font-size: 10px;
-    font-style: normal;
-    line-height: 1;
-    color: #ffffff;
-    background-color: $sport-bright;
+/* ==========================================================================
+   Liveblog overrides
+   ========================================================================== */
 
-    abbr {
-        border-bottom: 0 !important;
+.content--liveblog {
+    .match-stats__heading {
+        height: auto;
+        left: 0;
     }
-}
 
-.item-divider {
-    border-top: 1px solid $neutral-7;
-    padding-top: $gs-baseline/3;
-}
+    .match-stats__column {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        margin-right: 0;
+    }
 
-.section-divider {
-    @include fs-header(1);
-    border-bottom: 1px solid $neutral-7;
-    padding-top: ($gs-baseline/3)*2;
-    padding-bottom: $gs-baseline;
-}
-
-.dropdown {
-    .c-football-matches .date-divider,
-    .c-match-stats .component__heading {
-        display: none;
+    .match-stats__column--first {
+        padding-right: 0;
+        border-right: 0;
     }
 }

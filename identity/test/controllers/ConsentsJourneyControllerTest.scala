@@ -137,7 +137,7 @@ import scala.concurrent.Future
           .thenReturn(Future.successful(Right(updatedUser)))
 
         val result = controller.submitRepermissionedFlag.apply(fakeRequest)
-        status(result) should be(200)
+        status(result) should be(303)
 
         val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
         verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))

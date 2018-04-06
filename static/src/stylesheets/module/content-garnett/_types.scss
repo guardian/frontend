@@ -20,91 +20,6 @@ $quote-mark: 35px;
 .content--type-media,
 .content--type-review,
 .content--type-quiz {
-    // *************** Meta and Social ***************
-    .submeta {
-        @include multiline(4, $garnett-neutral-4, top);
-        border-top: 0;
-        padding-top: $gs-baseline * 1.5;
-    }
-
-    .submeta--borderless-bottom .submeta__keywords {
-        border-bottom: 0;
-    }
-
-    .submeta__section-labels {
-        padding-top: $gs-baseline / 4;
-    }
-
-    .submeta__label {
-        font-size: 12px;
-        line-height: 16px;
-        color: $neutral-2;
-        display: block;
-        margin-bottom: -($gs-baseline / 4);
-        margin-top: -($gs-baseline / 4);
-    }
-
-    .submeta__keywords {
-        padding-top: $gs-baseline / 6;
-        padding-bottom: $gs-baseline / 2;
-        border-bottom: solid 1px $garnett-neutral-4;
-        margin-bottom: $gs-baseline / 2;
-    }
-
-    .submeta__links {
-        font-size: 0;
-        line-height: 0;
-        list-style: none;
-        overflow: hidden;
-        margin-bottom: 0;
-        margin-left: -$gs-gutter / 4;
-        margin-top: 0;
-    }
-
-    .submeta__link-item,
-    .syndication__item {
-        &:before {
-            content: none!important;
-            // I can't seem to override this behaviour without the important statment
-        }
-    }
-
-    .submeta__link {
-        @include trailing-slash-link;
-        font-weight: 400;
-        line-height: 22px;
-
-        &:after {
-            @include trailing-slash;
-            color: $garnett-neutral-4;
-        }
-
-        .submeta__keywords & {
-            font-size: 15px;
-            color: $neutral-2;
-        }
-
-        .submeta__section-labels & {
-            font-size: 16px;
-            line-height: 22px;
-        }
-    }
-
-    .submeta__section-labels .submeta__link {
-        @include fs-headline(2);
-        font-weight: 400;
-    }
-
-    .submeta__badge {
-        float: right;
-        margin-top: -$gs-baseline;
-        margin-left: $gs-gutter / 2;
-    }
-
-    .social {
-        overflow-y: visible;
-    }
-
     .content__header,
     .content__headline,
     .content__meta-container,
@@ -314,10 +229,6 @@ $quote-mark: 35px;
     .meta__extras {
         order: 5;
         border: 0;
-    }
-
-    .social {
-        margin-bottom: $gs-baseline/2;
     }
 
     .block-share__item,
@@ -830,6 +741,7 @@ $quote-mark: 35px;
     }
 
     .football-tabs .tabs__container {
+        margin-top: $gs-baseline;
         margin-bottom: 0;
     }
 }
@@ -1170,13 +1082,6 @@ $quote-mark: 35px;
         font-style: normal;
     }
 
-    .content__labels {
-        padding-top: $gs-baseline/2;
-        @include mq(phablet) {
-            border-color: $garnett-neutral-6;
-        }
-    }
-
     .tonal__standfirst {
         @include mq($until: tablet) {
             max-width: gs-span(8);
@@ -1187,18 +1092,6 @@ $quote-mark: 35px;
     .content__standfirst {
         @include mq(mobileMedium) {
             max-width: 100%;
-        }
-    }
-
-    .content__standfirst--gallery {
-        @include mq(desktop) {
-            margin-left: gs-span(2) + $gs-gutter;
-            max-width: gs-span(8);
-
-        }
-        @include mq(leftCol) {
-            margin-left: gs-span(3) + $gs-baseline/2;
-
         }
     }
 
@@ -1239,113 +1132,6 @@ $quote-mark: 35px;
 
     .byline span {
         display: inline;
-    }
-
-    .submeta {
-        @include multiline(4, $garnett-neutral-7, top);
-    }
-
-    .submeta__keywords {
-        border-bottom: 0;
-    }
-    // *************** Gallery overrides ***************
-    &.content--gallery {
-        .content__main {
-            padding-bottom: 0;
-        }
-
-        .gallery:before {
-            content: none;
-        }
-
-        .content__main-column--gallery {
-            &:before {
-                @include mq(leftCol) {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    height: 100%;
-                    width: 1px;
-                    background: $garnett-neutral-7;
-                }
-            }
-            @include mq(tablet) {
-                padding-left: 0;
-                padding-bottom: $gs-baseline*4;
-            }
-            @include mq(desktop) {
-                padding-left: 0;
-                padding-bottom: $gs-baseline*6;
-            }
-            @include mq(leftCol) {
-                margin-left: gs-span(3) - $gs-gutter/2;;
-                padding-left: $gs-gutter/2;
-            }
-        }
-
-        .meta__twitter {
-            margin-top: $gs-baseline / 2;
-
-            .button:focus,
-            .button:hover {
-                border-width: 0;
-            }
-        }
-
-        .content__dateline {
-            background-image: none;
-        }
-
-        .meta__extras {
-            border: 0;
-        }
-
-        .u-underline[href] {
-            color: $garnett-neutral-4;
-        }
-
-        .meta__numbers,
-        .meta__social {
-            background-image: none;
-            padding-top: 0;
-
-            &::before {
-                content: none;
-            }
-        }
-
-        .gallery__meta-container {
-            background-image: none;
-        }
-
-        .gallery:before,
-        .gallery__divider {
-            border-color: $garnett-neutral-7;
-        }
-
-        .submeta {
-            @include mq(desktop) {
-                max-width: gs-span(8);
-            }
-        }
-    }
-}
-
-.gallery__main-content {
-    .content__series-label__link {
-        color: $garnett-neutral-5;
-    }
-
-    .gallery__most-popular {
-        background-color: $garnett-neutral-1;
-    }
-
-    .container__title:after,
-    .fc-container__header__title--sticky:after,
-    .fc-container__header__title:after {
-        background-color: $garnett-neutral-7;
     }
 }
 
@@ -1599,40 +1385,6 @@ $quote-mark: 35px;
     display: block;
     object-fit: cover;
 }
-// *************** Football ***************
-
-.section-football {
-    .team__info {
-        @include fs-headlineGarnett(3);
-        @include mq(mobileLandscape) {
-            @include fs-headlineGarnett(4);
-        }
-    }
-
-    .match-summary--responsive {
-        .team__info {
-            @include fs-headlineGarnett(7);
-        }
-    }
-
-    .goal-attempts__off-target,
-    .goal-attempts__on-target {
-        @include fs-headerGarnett(2);
-        line-height: $gs-baseline * 1.5;
-    }
-
-    .chart--football-possession {
-        .chart__label-value {
-            @include fs-headerGarnett(5);
-        }
-    }
-
-    .bar-fight__bar {
-        @include fs-headerGarnett(2);
-        line-height: $gs-baseline * 1.5;
-        padding: $gs-baseline/6 ($gs-gutter/4)+3 $gs-baseline/2;
-    }
-}
 
 .social__tray-close .social-tray__button {
     &:focus,
@@ -1665,13 +1417,8 @@ $quote-mark: 35px;
         @include multiline(3, $garnett-neutral-6, top);
     }
 
-    .submeta {
-        @include multiline(4, $garnett-neutral-6, top);
-    }
-
     .social-icon,
-    .block-share__item,
-    .submeta__keywords {
+    .block-share__item {
         border-color: $garnett-neutral-6;
     }
 
@@ -1681,13 +1428,5 @@ $quote-mark: 35px;
 
     .element .caption {
         background: transparent;
-    }
-}
-
-// *************** Commercial overrides ****************
-
-.paid-content, .content--media.paid-content {
-    a {
-        color: $garnett-neutral-6;
     }
 }

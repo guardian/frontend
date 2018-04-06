@@ -2,82 +2,127 @@
 @import model.TeamColours
 @import views.support.RenderClasses
 @import views.{NudgePercent, PercentMaker}
+@import pa.LineUpPlayer
 
 @(page: MatchPage)(implicit request: RequestHeader)
 
-@defining((page.hasPaStats, page.lineUp.homeTeam, page.lineUp.awayTeam, page.lineUp, TeamColours(page.lineUp.homeTeam, page.lineUp.awayTeam))){ case (hasStats, home, away, lineUp, teamColours) =>
+@team(players: Seq[LineUpPlayer]) = {
+    <ul class="match-stats__players u-unstyled">
+        @players.map{ player =>
+            <li class="match-stats__player">
+                <span class="match-stats__player-number">@player.shirtNumber</span>
+                @player.lastName
+                @player.events.map{ event =>
+                    @{ event.eventType match {
+                        case "booking" => <i class="i i-card-yellow"></i>
+                        case "dismissal" => <i class="i i-card-red"></i>
+                        case "substitution" => "(s " + event.eventTime + "')"
+                        case _ =>  ""
+                    }}
+                }
+            </li>
+        }
+    </ul>
+}
+
+@defining((page.hasPaStats, page.lineUp.homeTeam, page.lineUp.awayTeam, page.hasLineUp, page.lineUp, TeamColours(page.lineUp.homeTeam, page.lineUp.awayTeam))){ case (hasStats, home, away, hasLineUp, lineUp, teamColours) =>
 @if(hasStats) {
     <div data-component="football-stats-embed" class="@RenderClasses(Map(
-                "c-match-stats" -> true,
+                "match-stats" -> true,
                 "match-stats--darken-home" -> teamColours.homeTeamIsLight,
                 "match-stats--darken-away" -> teamColours.awayTeamIsLight
             ))">
 
-        <h3 class="component__heading content__meta-heading">Match stats</h3>
+        <h3 class="match-stats__heading">Match stats</h3>
 
-        <h4 class="match-stats__caption">Possession</h4>
-        <div class="football-possession">
-            <table class="match-stats bar-fight js-chart"
-                   data-chart-type="doughnut"
-                   data-chart-unit="%"
-                   data-chart-class="chart--football-possession"
-                   data-chart-width="200"
-                   data-chart-show-values="true">
-                <thead hidden>
-                    <tr>
-                        <th>@pa.TeamCodes.codeFor(away)</th>
-                        <th>@pa.TeamCodes.codeFor(home)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        @defining(PercentMaker(lineUp.homeTeamPossession, lineUp.awayTeamPossession)){ case (homePercent, awayPercent) =>
-                            <td
-                                class="bar-fight__bar bar-fight__bar--away"
-                                data-chart-value="@awayPercent"
-                                data-chart-color="@teamColours.away"
-                                style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@awayPercent</td>
-                            <td
-                                class="bar-fight__bar bar-fight__bar--home"
-                                data-chart-value="@homePercent"
-                                data-chart-color="@teamColours.home"
-                                style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@homePercent</td>
-                        }
-                    </tr>
-                </tbody>
-            </table>
+        <div class="match-stats__column match-stats__column--first">
+            <h4 class="match-stats__caption">Possession</h4>
+            <div class="football-possession">
+                <table class="match-stats bar-fight js-chart"
+                       data-chart-type="doughnut"
+                       data-chart-unit="%"
+                       data-chart-class="chart--football-possession"
+                       data-chart-width="300"
+                       data-chart-show-values="true">
+                    <thead hidden>
+                        <tr>
+                            <th>@pa.TeamCodes.codeFor(away)</th>
+                            <th>@pa.TeamCodes.codeFor(home)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @defining(PercentMaker(lineUp.homeTeamPossession, lineUp.awayTeamPossession)){ case (homePercent, awayPercent) =>
+                                <td
+                                    class="bar-fight__bar bar-fight__bar--away"
+                                    data-chart-value="@awayPercent"
+                                    data-chart-color="@teamColours.away"
+                                    style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@awayPercent</td>
+                                <td
+                                    class="bar-fight__bar bar-fight__bar--home"
+                                    data-chart-value="@homePercent"
+                                    data-chart-color="@teamColours.home"
+                                    style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@homePercent</td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <h4 class="match-stats__caption">Goal attempts</h4>
-        <dl class="match-stats goal-attempts u-cf">
-            <dt class="goal-attempts__label goal-attempts__label--off-target-home"><span class="u-h">@home.name </span>Off target</dt>
-            <dd class="goal-attempts__off-target goal-attempts__off-target--home" style="background-color: @teamColours.home;">@home.shotsOff</dd>
-            <dt class="goal-attempts__label goal-attempts__label--off-target-away"><span class="u-h">@away.name </span>Off target</dt>
-            <dd class="goal-attempts__off-target goal-attempts__off-target--away" style="background-color: @teamColours.away;">@away.shotsOff</dd>
+        <div class="match-stats__column">
+            <h4 class="match-stats__caption">Goal attempts</h4>
+            <dl class="match-stats__stat goal-attempts u-cf">
+                <dd class="goal-attempts__off-target goal-attempts__off-target--home" style="background-color: @teamColours.home;">@home.shotsOff</dd>
+                <dt class="goal-attempts__label goal-attempts__label--off-target-home"><span class="u-h">@home.name </span>Off target</dt>
+                <dd class="goal-attempts__off-target goal-attempts__off-target--away" style="background-color: @teamColours.away;">@away.shotsOff</dd>
+                <dt class="goal-attempts__label goal-attempts__label--off-target-away"><span class="u-h">@away.name </span></dt>
 
-            <dt class="goal-attempts__label goal-attempts__label--on-target-home"><span class="u-h">@home.name </span>On target</dt>
-            <dd class="goal-attempts__on-target goal-attempts__on-target--home" style="background-color: @teamColours.home;">@home.shotsOn</dd>
-            <dt class="goal-attempts__label goal-attempts__label--on-target-away"><span class="u-h">@away.name </span>On target</dt>
-            <dd class="goal-attempts__on-target goal-attempts__on-target--away" style="background-color: @teamColours.away;">@away.shotsOn</dd>
-        </dl>
+                <dd class="goal-attempts__on-target goal-attempts__on-target--home" style="background-color: @teamColours.home;">@home.shotsOn</dd>
+                <dt class="goal-attempts__label goal-attempts__label--on-target-home"><span class="u-h">@home.name </span>On target</dt>
+                <dd class="goal-attempts__on-target goal-attempts__on-target--away" style="background-color: @teamColours.away;">@away.shotsOn</dd>
+                <dt class="goal-attempts__label goal-attempts__label--on-target-away"><span class="u-h">@away.name </span></dt>
+            </dl>
 
-        <dl class="u-cf match-stats bar-fight">
-            <dt class="match-stats__caption">Corners</dt>
-            @defining(PercentMaker(home.corners, away.corners)){ case (homePercent, awayPercent) =>
-                <dd class="bar-fight__bar bar-fight__bar--home" data-stat-type="corners" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.corners</dd>
-                <dd class="bar-fight__bar bar-fight__bar--away" data-stat-type="corners" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.corners</dd>
-            }
-            <dt class="match-stats__caption">Fouls</dt>
-            @defining(PercentMaker(home.fouls, away.fouls)){ case (homePercent, awayPercent) =>
-                <dd class="bar-fight__bar bar-fight__bar--home" data-stat-type="fouls" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.fouls</dd>
-                <dd class="bar-fight__bar bar-fight__bar--away" data-stat-type="fouls" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.fouls</dd>
-            }
-            <dt class="match-stats__caption">Offsides</dt>
-            @defining(PercentMaker(home.offsides, away.offsides)){ case (homePercent, awayPercent) =>
-                <dd class="bar-fight__bar bar-fight__bar--home" data-stat-type="offsides" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.offsides</dd>
-                <dd class="bar-fight__bar bar-fight__bar--away" data-stat-type="offsides" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.offsides</dd>
-            }
-        </dl>
+            <dl class="u-cf match-stats__stat bar-fight">
+                <dt class="match-stats__caption">Corners</dt>
+                @defining(PercentMaker(home.corners, away.corners)){ case (homePercent, awayPercent) =>
+                    <dd class="bar-fight__bar bar-fight__bar--home" data-stat-type="corners" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.corners</dd>
+                    <dd class="bar-fight__bar bar-fight__bar--away" data-stat-type="corners" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.corners</dd>
+                }
+                <dt class="match-stats__caption">Fouls</dt>
+                @defining(PercentMaker(home.fouls, away.fouls)){ case (homePercent, awayPercent) =>
+                    <dd class="bar-fight__bar bar-fight__bar--home" data-stat-type="fouls" style="background-color: @teamColours.home; width: @NudgePercent(homePercent, awayPercent)%;">@home.fouls</dd>
+                    <dd class="bar-fight__bar bar-fight__bar--away" data-stat-type="fouls" style="background-color: @teamColours.away; width: @NudgePercent(awayPercent, homePercent)%;">@away.fouls</dd>
+                }
+            </dl>
+        </div>
+
+        @if(hasLineUp) {
+            <h3 class="match-stats__heading">Lineups</h3>
+
+            <div class="match-stats__lineup match-stats__lineup--home">
+                <h4 class="match-stats__caption">@home.name</h4>
+                @team(page.lineUp.homeTeam.players.filterNot {
+                    _.substitute
+                })
+                <h4 class="match-stats__caption">Substitutes</h4>
+                @team(page.lineUp.homeTeam.players.filter {
+                    _.substitute
+                })
+            </div>
+            <div class="match-stats__lineup match-stats__lineup--away">
+                <h4 class="match-stats__caption">@away.name</h4>
+                @team(page.lineUp.awayTeam.players.filterNot {
+                    _.substitute
+                })
+                <h4 class="match-stats__caption">Substitutes</h4>
+                @team(page.lineUp.awayTeam.players.filter {
+                    _.substitute
+                })
+            </div>
+        }
+
     </div>
 } else {
     <div></div>

@@ -332,8 +332,7 @@ $pillars: (
         }
     }
 
-    &.fc-item--type-media,
-    &.fc-item--type-interview {
+    &.fc-item--type-media {
         background-color: darken($story-package-garnett, 8%);
 
         .youtube-media-atom__play-button.vjs-control-text {

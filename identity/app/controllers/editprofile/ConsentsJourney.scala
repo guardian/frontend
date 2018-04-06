@@ -53,15 +53,14 @@ trait ConsentsJourney
               request.user.id,
               UserUpdateDTO(consents = Some(newConsents), statusFields = Some(StatusFields(hasRepermissioned = Some(true)))),
               request.user.auth
-            ).flatMap {
+            ).map {
               case Left(idapiErrors) =>
                 logger.error(s"Failed to set hasRepermissioned flag for user ${request.user.id}: $idapiErrors")
-                Future.successful(InternalServerError(Json.toJson(idapiErrors)))
+                InternalServerError(Json.toJson(idapiErrors))
 
               case Right(updatedUser) =>
                 logger.info(s"Successfully set hasRepermissioned flag for user ${request.user.id}")
-                val page = IdentityPage("/complete-consents", "Complete Consents", isFlow = true)
-                consentCompleteView(page, returnUrl)
+                Redirect(s"${routes.EditProfileController.displayConsentComplete().url}", Map("returnUrl" -> Seq(returnUrl)))
             }
           }
         )
@@ -91,7 +90,12 @@ trait ConsentsJourney
     consentHint: Option[String]): Action[AnyContent] =
     csrfAddToken {
       consentsRedirectAction.async { implicit request =>
-        val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
+
+        val returnUrl = returnUrlVerifier.getVerifiedReturnUrl(request) match {
+          case Some(url) => if (url contains "/consents") returnUrlVerifier.defaultReturnUrl else url
+          case _ => returnUrlVerifier.defaultReturnUrl
+        }
+
         consentCompleteView(
           page,
           returnUrl

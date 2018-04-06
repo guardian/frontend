@@ -36,6 +36,14 @@
 }
 
 .content--immersive.content--pillar-special-report:not(.immersive-main-media__gallery):not(.paid-content):not(.content--gallery):not(.content--minute-article) {
+    .content__labels {
+        background-color: $news-garnett-highlight;
+
+        .content__series-label__link {
+            color: $garnett-neutral-1;
+        }
+    }
+
     .immersive-main-media__headline-container .content__main-column,
     .immersive-main-media__headline-container::after {
         background-color: $story-package-garnett;

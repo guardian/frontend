@@ -3,7 +3,7 @@
 export const spacefinderSimplify: ABTest = {
     id: 'SpacefinderSimplify',
     start: '2018-03-05',
-    expiry: '2018-04-05',
+    expiry: '2018-04-17',
     author: 'Jon Norman',
     description:
         'This test alters the rules for inserting ads on desktop breakpoints.',

@@ -571,7 +571,7 @@
         }
     }
     .immersive-main-media__headline-container {
-        margin-top: -124px;
+        margin-top: -100px;
         position: relative;
         background: transparent;
 
@@ -595,26 +595,33 @@
             padding: 0;
         }
 
-        .content__labels {
-            padding-bottom: 0;
-            margin-bottom: 0;
-            overflow: visible;
-            margin-left: 0;
-            padding-left: 0;
+        .content__labels--immersive {
+            margin-left: -$gs-gutter;
+            padding: ($gs-baseline / 4) ($gs-gutter / 2) ($gs-baseline / 4) $gs-gutter;
+            position: absolute;
+            transform: translateY(-100%);
+
+            @include mq($from: tablet) {
+                margin-left: -($gs-gutter / 2);
+                padding: ($gs-baseline / 2) ($gs-gutter / 2);
+            }
         }
 
-        .content__series-label--immersive-article {
-            display: block;
-            float: none;
+        .badge-slot {
+            float: left;
+            margin-right: $gs-gutter / 4;
+
+            @include mq($from: tablet) {
+                margin-right: $gs-gutter / 2;
+            }
         }
 
         .content__series-label__link {
-            @include fs-headlineGarnett(6);
+            color: #ffffff;
             font-weight: 700;
 
             @include mq(desktop) {
-                font-size: 50px;
-                line-height: 54px;
+                font-size: 20px;
             }
         }
         .content__main-column {
@@ -817,11 +824,9 @@
 //variable pillar colours
 
 @mixin immersivePillarColours($pillar, $color, $color2) {
-    .content--pillar-#{$pillar}.content--immersive-article {
-        .content__series-label--immersive-article {
-            .content__series-label__link {
-                color: $color;
-            }
+    .content--pillar-#{$pillar}.content--immersive-article:not(.paid-content) {
+        .content__labels--immersive {
+            background-color: $color2;
         }
         .u-underline {
             color: $color2;

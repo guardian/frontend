@@ -1,14 +1,16 @@
 // @flow
-import { createClass, createElement } from 'react/addons';
+import React, { Component } from 'react';
 import { classNames } from 'common/modules/crosswords/classNames';
 
-const ConfirmButton = createClass({
-    getInitialState() {
-        this.timeout = this.props.timeout || 2000;
-        return {
+const timeout = 2000;
+
+class ConfirmButton extends Component<*, *> {
+    constructor(props: {}) {
+        super(props);
+        this.state = {
             confirming: false,
         };
-    },
+    }
 
     confirm() {
         if (this.state.confirming) {
@@ -24,9 +26,9 @@ const ConfirmButton = createClass({
                 this.setState({
                     confirming: false,
                 });
-            }, this.timeout);
+            }, timeout);
         }
-    },
+    }
 
     render() {
         const inner = this.state.confirming
@@ -41,21 +43,18 @@ const ConfirmButton = createClass({
             (classes[this.props.className] = true),
             classes)
         );
-
-        return createElement(
-            'button',
-            Object.assign(
-                {},
-                this.props,
-                {
-                    onClick: this.confirm,
-                    className,
-                },
-                this
-            ),
-            inner
+        const props = Object.assign(
+            {},
+            this.props,
+            {
+                onClick: this.confirm.bind(this),
+                className,
+            },
+            this
         );
-    },
-});
+
+        return <button {...props}>{inner}</button>;
+    }
+}
 
 export { ConfirmButton };

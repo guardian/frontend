@@ -29,6 +29,9 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 3. Submit a PR
 4. You may need to `pip install awscli` and add `/Library/Frameworks/Python.framework/Versions/Current/bin` to your `$PATH` to run the commands Janus gives you.
 
+**Note:** To install `awscli` on MacOS El Capitan and later, you will need to run `pip install awscli --upgrade --ignore-installed six`
+due to the [System Integrity Protocol](https://github.com/pypa/pip/issues/3165)
+
 # Local dev server setup
 
 **Hello there!** 👋 After completing this setup guide, we would greatly appreciate it if you could complete our [Frontend Setup 

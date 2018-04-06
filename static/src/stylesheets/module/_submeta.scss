@@ -1,7 +1,23 @@
 .submeta {
-    border-top: 1px dotted $neutral-5;
+    @include multiline(4, $garnett-neutral-4, top);
     margin-top: $gs-baseline;
-    padding-top: $gs-baseline / 2;
+    padding-top: $gs-baseline * 1.5;
+
+    .content--media:not(.paid-content)  & {
+        @include multiline(4, $garnett-neutral-7, top);
+
+        .submeta__keywords {
+            border-color: $garnett-neutral-7;
+        }
+    }
+
+    .paid-content & {
+        @include multiline(4, $garnett-neutral-6, top);
+
+        .submeta__keywords {
+            border-color: $garnett-neutral-6;
+        }
+    }
 }
 
 .submeta--borderless-bottom .submeta__keywords {
@@ -10,25 +26,23 @@
 
 .submeta__label {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $garnett-neutral-2;
     display: block;
-    margin-bottom: -($gs-baseline / 4);
+    margin-top: -($gs-baseline / 4);
 }
 
 .submeta__keywords {
-    border-bottom: 1px dotted $neutral-5;
-    padding-bottom: $gs-baseline;
-    min-height: $gs-baseline * 2;
+    border-bottom: 1px solid $garnett-neutral-4;
     margin-bottom: $gs-baseline / 2;
+    padding-bottom: $gs-baseline;
 }
 
+
+// Nesting 'article' overrides from-content-api ul rules
+article .submeta__links,
 .submeta__links {
     font-size: 0;
-    list-style: none;
-    overflow: hidden;
-    margin-bottom: 0;
-    margin-left: -$gs-gutter / 4;
-    margin-top: 0;
+    margin: 0 0 0 (-$gs-gutter / 4);
 }
 
 .submeta__link-item {
@@ -37,20 +51,19 @@
 
 .submeta__link {
     @include trailing-slash-link;
-    font-weight: bold;
+    color: $garnett-neutral-1;
 
     .submeta__keywords & {
         @include fs-textSans(4);
-        color: $neutral-2;
     }
 
     .submeta__section-labels & {
-        @include fs-textSans(5);
+        @include fs-headline(2);
     }
 
     &:after {
         @include trailing-slash;
-        color: $neutral-5;
+        color: $garnett-neutral-4;
     }
 }
 
@@ -62,13 +75,8 @@
 }
 
 .submeta__share {
+    float: left;
     margin-bottom: $gs-baseline / 2;
-
-    @include mq(tablet) {
-        float: left;
-        margin-right: $gs-gutter / 2;
-        margin-bottom: 0;
-    }
 }
 
 .submeta__syndication {
@@ -76,11 +84,8 @@
 
     @include mq(desktop) {
         @include fs-textSans(1);
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline / 2;
         display: inline-block;
-        height: 32px;
         float: right;
-        line-height: 15px;
-        margin-bottom: 0;
     }
 }

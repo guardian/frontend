@@ -32,7 +32,7 @@ trait EmailsTab
   /** POST /email-prefs */
   def saveEmailPreferencesAjax: Action[AnyContent] =
     csrfCheck {
-      fullAuthWithIdapiUserAction.async { implicit request =>
+      consentAuthWithIdapiUserAction.async { implicit request =>
         newsletterService.savePreferences().map { form  =>
           if (form.hasErrors) {
             val errorsAsJson = Json.toJson(

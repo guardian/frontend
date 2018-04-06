@@ -18,7 +18,8 @@ body {
 }
 
 ::selection {
-    background: rgba($news-main-2, .4);
+    background: $news-garnett-highlight;
+    color: $garnett-neutral-1;
 }
 
 /**

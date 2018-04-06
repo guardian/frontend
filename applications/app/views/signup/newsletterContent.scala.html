@@ -45,10 +45,15 @@
                     </div>
 
                     <form action="@LinkTo("/email")" method="post" target="magicframe" class="newsletter-card__signup">
+                        @helper.CSRF.formField
+                        <input class="newsletter-card__text-input u-h"
+                          type="text"
+                          name="name"
+                          autocomplete="nope"/>
                         <input class="newsletter-card__text-input js-newsletter-card__text-input"
                           type="email"
                           name="email"
-                          placeholder="Email address" required />
+                          placeholder="Email address" required/>
                         <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@emailListing.identityName" />
                         <button class="newsletter-card__lozenge js-newsletter-signup-button newsletter-card__lozenge--submit"
                           data-link-name="Subscribe to @emailListing.name"
@@ -80,14 +85,14 @@
 
 @displayNewslettersByTheme = {
     @List(
-        "news round ups" -> newsRoundUpEmails,
-        "news by topic"  -> newsEmails,
-        "features"       -> featureEmails,
-        "sport"          -> sportEmails,
-        "culture"        -> cultureEmails,
-        "lifestyle"      -> lifestyleEmails,
-        "commentEmails"  -> commentEmails,
-        "work"           -> workEmails
+        "News round ups" -> newsRoundUpEmails,
+        "News by topic"  -> newsEmails,
+        "Features"       -> featureEmails,
+        "Sport"          -> sportEmails,
+        "Culture"        -> cultureEmails,
+        "Lifestyle"      -> lifestyleEmails,
+        "Comment"        -> commentEmails,
+        "Work"           -> workEmails
     ).map { case (theme, newsletters) =>
         <div class="newsletters-category" name="@theme">
             @emailListCategoryList(theme, newsletters)
@@ -98,7 +103,7 @@
 <div class="l-side-margins">
 <div class="content">
     <div class="gs-container">
-        <div class="newsletters-heading">newsletters</div>
+        <div class="newsletters-heading">Newsletters</div>
         @displayNewslettersByTheme
     </div>
 </div>

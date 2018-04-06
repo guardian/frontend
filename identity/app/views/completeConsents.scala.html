@@ -22,12 +22,13 @@
     <section class="identity-forms-message">
         <h1 class="identity-title">Thank you! We've got your preferences</h1>
         <div class="identity-forms-message__body">
-            <p>You can change these anytime by going to My account > <a class="u-underline" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayEmailPrefsForm(false, None).url, idRequest)">Email
-                Preferences</a>.</p>
+            <p>You can change these anytime by going to My account > <a class="u-underline" data-link-name="complete-consents : to-email-prefs" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayEmailPrefsForm(false, None).url, idRequest)">
+                Email Preferences
+            </a>.</p>
             <br/>
         </div>
         @if(!emailPrefsForm.globalError) {
-            <form novalidate action="@buildIdentityUrl("email-prefs")" role="main" method="post" class="js-manage-account__ajaxForm">
+            <form>
                 @views.html.helper.CSRF.formField
                 <div>
                     <h1 class="identity-title--small">Before you go...</h1>
@@ -46,7 +47,7 @@
             </form>
         }
         <aside class="identity-forms-message__body">
-            <a class="manage-account__button manage-account__button--secondary" href="@LinkTo(returnUrl)">
+            <a class="manage-account__button manage-account__button--secondary" data-link-name="complete-consents : cta-bottom : @LinkTo(returnUrl)" href="@LinkTo(returnUrl)">
                 Go to the theguardian.com
                 @fragments.inlineSvg("arrow-right", "icon")
             </a>

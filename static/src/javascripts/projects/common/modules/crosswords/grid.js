@@ -1,8 +1,8 @@
 // @flow
-import React from 'react/addons';
+import React from 'react';
 import { gridSize, clueMapKey } from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
-import Cell from 'common/modules/crosswords/cell';
+import GridCell from 'common/modules/crosswords/cell';
 import { classNames } from 'common/modules/crosswords/classNames';
 import type Crossword from 'common/modules/crosswords/crossword';
 
@@ -12,7 +12,7 @@ export type GridProps = {
     cells: Array<Array<Cell>>,
     separators: SeparatorMap,
     crossword: Crossword,
-    focussedCell: Object,
+    focussedCell: ?Position,
 };
 
 // Position at end of previous cell
@@ -20,29 +20,33 @@ const createWordSeparator = (
     x: number,
     y: number,
     direction: Direction
-): ?React.Element => {
+): ?React$Node => {
     const top = gridSize(y);
     const left = gridSize(x);
     const borderWidth = 1;
 
     if (direction === 'across') {
         const width = 1;
-        return React.createElement('rect', {
-            x: left - borderWidth - width,
-            y: top,
-            key: ['sep', direction, x, y].join('_'),
-            width,
-            height: constants.cellSize,
-        });
+        return (
+            <rect
+                x={left - borderWidth - width}
+                y={top}
+                key={['sep', direction, x, y].join('_')}
+                width={width}
+                height={constants.cellSize}
+            />
+        );
     } else if (direction === 'down') {
         const height = 1;
-        return React.createElement('rect', {
-            x: left,
-            y: top - borderWidth - height,
-            key: ['sep', direction, x, y].join('_'),
-            width: constants.cellSize,
-            height,
-        });
+        return (
+            <rect
+                x={left}
+                y={top - borderWidth - height}
+                key={['sep', direction, x, y].join('_')}
+                width={constants.cellSize}
+                height={height}
+            />
+        );
     }
 };
 
@@ -51,7 +55,7 @@ const createHyphenSeparator = (
     x: number,
     y: number,
     direction: Direction
-): ?React.Element => {
+): ?React$Node => {
     const top = gridSize(y);
     const left = gridSize(x);
     const borderWidth = 1;
@@ -61,21 +65,27 @@ const createHyphenSeparator = (
     if (direction === 'across') {
         width = constants.cellSize / 4;
         height = 1;
-        return React.createElement('rect', {
-            x: left - borderWidth / 2 - width / 2,
-            y: top + constants.cellSize / 2 + height / 2,
-            width,
-            height,
-        });
+        return (
+            <rect
+                x={left - borderWidth / 2 - width / 2}
+                y={top + constants.cellSize / 2 + height / 2}
+                key={['sep', direction, x, y].join('_')}
+                width={width}
+                height={height}
+            />
+        );
     } else if (direction === 'down') {
         width = 1;
         height = constants.cellSize / 4;
-        return React.createElement('rect', {
-            x: left + constants.cellSize / 2 + width / 2,
-            y: top - borderWidth / 2 - height / 2,
-            width,
-            height,
-        });
+        return (
+            <rect
+                x={left + constants.cellSize / 2 + width / 2}
+                y={top - borderWidth / 2 - height / 2}
+                key={['sep', direction, x, y].join('_')}
+                width={width}
+                height={height}
+            />
+        );
     }
 };
 
@@ -83,7 +93,7 @@ const createSeparator = (
     x: number,
     y: number,
     separatorDescription: ?SeparatorDescription
-): ?React.Element => {
+): ?React$Node => {
     if (separatorDescription) {
         if (separatorDescription.separator === ',') {
             return createWordSeparator(x, y, separatorDescription.direction);
@@ -93,7 +103,7 @@ const createSeparator = (
     }
 };
 
-export const Grid = (props: GridProps): React.Element<*> => {
+export const Grid = (props: GridProps): React$Node => {
     const getSeparators = (x: number, y: number): ?SeparatorDescription =>
         props.separators[clueMapKey(x, y)];
 
@@ -117,9 +127,8 @@ export const Grid = (props: GridProps): React.Element<*> => {
             if (cellProps.isEditable) {
                 const isHighlighted = props.crossword.isHighlighted(x, y);
                 cells.push(
-                    React.createElement(
-                        Cell,
-                        Object.assign(
+                    <GridCell
+                        {...Object.assign(
                             {},
                             cellProps,
                             {
@@ -134,8 +143,8 @@ export const Grid = (props: GridProps): React.Element<*> => {
                                     y === props.focussedCell.y,
                             },
                             this
-                        )
-                    )
+                        )}
+                    />
                 );
 
                 separators = separators.concat(
@@ -145,29 +154,22 @@ export const Grid = (props: GridProps): React.Element<*> => {
         })
     );
 
-    return React.createElement(
-        'svg',
-        {
-            viewBox: `0 0 ${width} ${height}`,
-            className: classNames({
+    return (
+        <svg
+            viewBox={`0 0 ${width} ${height}`}
+            className={classNames({
                 crossword__grid: true,
                 'crossword__grid--focussed': !!props.focussedCell,
-            }),
-        },
-        React.createElement('rect', {
-            x: 0,
-            y: 0,
-            width,
-            height,
-            className: 'crossword__grid-background',
-        }),
-        cells,
-        React.createElement(
-            'g',
-            {
-                className: 'crossword__grid__separators',
-            },
-            separators
-        )
+            })}>
+            <rect
+                x={0}
+                y={0}
+                width={width}
+                height={height}
+                className="crossword__grid-background"
+            />
+            {cells}
+            <g className="crossword__grid__separators">{separators}</g>
+        </svg>
     );
 };

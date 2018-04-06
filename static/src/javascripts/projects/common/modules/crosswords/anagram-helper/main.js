@@ -1,5 +1,5 @@
 // @flow
-import React from 'react/addons';
+import React, { Component } from 'react';
 import { markup as closeCentralIcon } from 'svgs/icon/close-central.svg';
 import {
     cellsForClue,
@@ -10,20 +10,21 @@ import { ClueInput } from './clue-input';
 import { CluePreview } from './clue-preview';
 import { Ring } from './ring';
 
-const AnagramHelper = React.createClass({
-    getInitialState() {
-        return {
+class AnagramHelper extends Component<*, *> {
+    constructor() {
+        super();
+        this.state = {
             clueInput: '',
             showInput: true,
         };
-    },
+    }
 
     componentWillReceiveProps(next: Object) {
         // reset on clue change
         if (next.clue !== this.props.focussedEntry) {
             this.reset();
         }
-    },
+    }
 
     onClueInput(text: string) {
         if (!/\s|\d/g.test(text)) {
@@ -31,7 +32,7 @@ const AnagramHelper = React.createClass({
                 clueInput: text,
             });
         }
-    },
+    }
 
     /**
      * Shuffle the letters in the user's input.
@@ -42,6 +43,7 @@ const AnagramHelper = React.createClass({
      * shuffle it.
      *
      */
+    // eslint-disable-next-line class-methods-use-this
     shuffleWord(word: string, entries: { value: string }[]) {
         const wordEntries = entries
             .map(entry => entry.value.toLowerCase())
@@ -73,7 +75,7 @@ const AnagramHelper = React.createClass({
                     }
                 ).letters
         );
-    },
+    }
 
     shuffle() {
         if (this.canShuffle()) {
@@ -81,7 +83,7 @@ const AnagramHelper = React.createClass({
                 showInput: false,
             });
         }
-    },
+    }
 
     reset() {
         if (this.state.clueInput) {
@@ -90,11 +92,11 @@ const AnagramHelper = React.createClass({
                 showInput: true,
             });
         }
-    },
+    }
 
     canShuffle(): boolean {
         return !!this.state.clueInput && this.state.clueInput.length > 0;
-    },
+    }
 
     render() {
         const closeIcon = {
@@ -116,67 +118,53 @@ const AnagramHelper = React.createClass({
 
         const letters = this.shuffleWord(this.state.clueInput, entries);
 
-        const inner = this.state.showInput
-            ? React.createElement(ClueInput, {
-                  value: this.state.clueInput,
-                  clue,
-                  onChange: this.onClueInput,
-                  onEnter: this.shuffle,
-              })
-            : React.createElement(Ring, {
-                  letters,
-              });
-
-        return React.createElement(
-            'div',
-            {
-                className: 'crossword__anagram-helper-outer',
-                'data-link-name': 'Anagram Helper',
-            },
-            React.createElement(
-                'div',
-                {
-                    className: 'crossword__anagram-helper-inner',
-                },
-                inner
-            ),
-            React.createElement('button', {
-                className:
-                    'button button--large button--tertiary crossword__anagram-helper-close',
-                onClick: this.props.close.bind(this.props.crossword),
-                dangerouslySetInnerHTML: closeIcon,
-                'data-link-name': 'Close',
-            }),
-            React.createElement(
-                'button',
-                {
-                    className: `button button--large ${
-                        !this.state.clueInput ? 'button--tertiary' : ''
-                    }`,
-                    onClick: this.reset,
-                    'data-link-name': 'Start Again',
-                },
-                'start again'
-            ),
-            React.createElement(
-                'button',
-                {
-                    className: `button button--large ${
-                        this.canShuffle() ? '' : 'button--tertiary'
-                    }`,
-                    onClick: this.shuffle,
-                    'data-link-name': 'Shuffle',
-                },
-                'shuffle'
-            ),
-            React.createElement(CluePreview, {
-                clue,
-                entries,
-                letters,
-                hasShuffled: !this.state.showInput,
-            })
+        const inner = this.state.showInput ? (
+            <ClueInput
+                value={this.state.clueInput}
+                clue={clue}
+                onChange={this.onClueInput.bind(this)}
+                onEnter={this.shuffle.bind(this)}
+            />
+        ) : (
+            <Ring letters={letters} />
         );
-    },
-});
+
+        return (
+            <div
+                className="crossword__anagram-helper-outer"
+                data-link-name="Anagram Helper">
+                <div className="crossword__anagram-helper-inner">{inner}</div>
+                <button
+                    className="button button--large button--tertiary crossword__anagram-helper-close"
+                    onClick={this.props.close.bind(this.props.crossword)}
+                    dangerouslySetInnerHTML={closeIcon}
+                    data-link-name="Close"
+                />
+                <button
+                    className={`button button--large ${
+                        !this.state.clueInput ? 'button--tertiary' : ''
+                    }`}
+                    onClick={this.reset.bind(this)}
+                    data-link-name="Start Again">
+                    start again
+                </button>
+                <button
+                    className={`button button--large ${
+                        this.canShuffle() ? '' : 'button--tertiary'
+                    }`}
+                    onClick={this.shuffle.bind(this)}
+                    data-link-name="Shuffle">
+                    shuffle
+                </button>
+                <CluePreview
+                    clue={clue}
+                    entries={entries}
+                    letters={letters}
+                    hasShuffled={!this.state.showInput}
+                />
+            </div>
+        );
+    }
+}
 
 export { AnagramHelper };

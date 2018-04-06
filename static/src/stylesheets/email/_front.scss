@@ -111,16 +111,14 @@ $container-color: #ffffff;
     padding-bottom: 26px;
 
     .tone-media & {
-        // Space for icon
-        padding-bottom: 42px;
+        padding-bottom: 0;
     }
 }
 
 // td
 .headline,
 .byline,
-.trail-text,
-.review-stars {
+.trail-text {
     font-weight: normal;
     padding: 3px $gutter 0;
 }
@@ -134,6 +132,22 @@ $container-color: #ffffff;
     font-family: 'Guardian Egyptian Web Headline', Georgia, serif;
 }
 
+.review-stars {
+    padding: 6px $gutter 0;
+
+    .fc--large & {
+        padding-top: 12px;
+    }
+}
+
+.review-stars-bg {
+    background-color: #ffe500;
+    padding: 3px;
+
+    .fc--large & {
+        padding-top: 9px;
+    }
+}
 
 .headline,
 .byline {
@@ -148,11 +162,8 @@ $container-color: #ffffff;
     padding: 0 $gutter $gutter;
 }
 
-.review-stars {
-    background-color: #ffe500;
-    display: inline-block;
-    margin-left: $gutter;
-    padding: 3px 5px;
+.media-icon-wrapper {
+    padding: 3px $gutter 6px;
 }
 
 // td
@@ -161,11 +172,6 @@ $container-color: #ffffff;
     font-size: 14px;
     line-height: 18px;
     padding: $gutter $gutter 26px;
-
-    .tone-media & {
-        // Space for icon
-        padding-bottom: 42px;
-    }
 }
 
 .fc--large {
@@ -179,15 +185,11 @@ $container-color: #ffffff;
 
 // img
 .quote-icon {
-    display: inline-block;
     height: .8em;
 }
 
 .media-icon {
-    bottom: 6px;
     height: 28px;
-    left: $gutter;
-    position: absolute;
 }
 
 $email-tones: (

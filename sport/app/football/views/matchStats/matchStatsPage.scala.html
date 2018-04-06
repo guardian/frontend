@@ -1,50 +1,22 @@
 @import common.LinkTo
-@import pa.LineUpPlayer
 @import implicits.Football._
-@import views.FootballHelpers._
 
 @(page: football.controllers.MatchPage, competition: Option[model.Competition])(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@team(players: Seq[LineUpPlayer]) = {
-    <ul class="team-list u-unstyled">
-    @players.map{ player =>
-        <li class="team-list__item">
-            @player.name
-            @player.events.map{ event =>
-                @{ event.eventType match {
-                    case "booking" => <i class="i i-card-yellow"></i>
-                    case "dismissal" => <i class="i i-card-red"></i>
-                    case "substitution" => "(s " + event.eventTime + "')"
-                    case _ =>  ""
-                }}
-            }
-        </li>
-    }
-    </ul>
-}
 
 @mainLegacy(page, Some("football")){
 } {
 
-<article class="content">
+<article class="content content--football-stats">
     <header class="content__head">
         <div class="gs-container">
             <div class="content__head__border--top"></div>
             <div class="content__main-column">
-
-                <div class="content__section">
-                    <a class="tone-colour" data-link-name="article section" href="@LinkTo {/football}">football</a>
-                </div>
-
                 <div class="content__head__border--headline"></div>
 
                 @football.views.html.fragments.matchSummary(page.theMatch, competition, responsive = true)
 
                 <div class="js-sport-tabs">
                     @* this 'Stats' header gets replaced by the match navigation tabs (if available) *@
-                    @if(page.matchStarted && page.hasPaStats) {
-                        <h3 class="section-divider">Stats</h3>
-                    }
                 </div>
 
             </div>
@@ -53,7 +25,6 @@
 
     <div class="gs-container">
         <div class="content__main-column">
-
             <div class="js-article__container u-cf">
 
                 @if(page.theMatch.isLive) {
@@ -61,54 +32,16 @@
                         <div class="update update-live-matches update-match-stats" data-link-name="autoupdate"></div>
                     </div>
                 }
+
                 @if(page.theMatch.hasStarted && page.hasPaStats) {
-                    <div class="match-stats">
-                        @football.views.html.matchStats.matchStatsComponent(page)
-                    </div>
+                    @football.views.html.matchStats.matchStatsComponent(page)
                 }
 
-                <h3 class="section-divider">Teams</h3>
-                <div class="component u-cf">
-                    <div class="u-cf">
-                        <h5 class="team-list-name type-5">@page.theMatch.homeTeam.name</h5>
-                        <h5 class="team-list-name type-5">@page.theMatch.awayTeam.name</h5>
-                    </div>
-
-                    @if(!page.hasLineUp) {
-                        <p>Team lineups will be available once announced.</p>
-                    } else {
-                        <div class="u-cf">
-                            <div class="lineup">
-                            @team(page.lineUp.homeTeam.players.filterNot {
-                                _.isUnusedSub
-                            })
-                            </div>
-                            <div class="lineup">
-                            @team(page.lineUp.awayTeam.players.filterNot {
-                                _.isUnusedSub
-                            })
-                            </div>
-                        </div>
-                        <h3 class="type-5 item-divider">Unused substitutes</h3>
-                        <div class="u-cf">
-                            <div class="lineup">
-                            @team(page.lineUp.homeTeam.players.filter {
-                                _.isUnusedSub
-                            })
-                            </div>
-                            <div class="lineup">
-                            @team(page.lineUp.awayTeam.players.filter {
-                                _.isUnusedSub
-                            })
-                            </div>
-                        </div>
-                    }
-                </div>
             </div>
         </div>
     </div>
 </article>
 <div class="facia-container facia-container--layout-content">
-@fragments.mostPopularPlaceholder("sport")
+    @fragments.mostPopularPlaceholder("sport")
 </div>
 }

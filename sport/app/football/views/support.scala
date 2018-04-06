@@ -4,12 +4,6 @@ import pa.{ LineUpPlayer, Team }
 import common.Logging
 import play.twirl.api.Html
 
-object FootballHelpers {
-  implicit class lineUpPlayer2rich(t: LineUpPlayer) {
-    lazy val isUnusedSub = t.substitute && !t.events.exists(_.eventType == "substitution")
-  }
-}
-
 object ShortName {
 
   val names = Map("44" -> "Wolves")
@@ -68,8 +62,8 @@ object NudgePercent {
   // the realities of padding and margins means we never actually want 100%
   def apply(main: Int, other: Int): Int = {
     if (main == 0 && other == 0) 50
-    else if (main >= 91) 91
-    else if (main < 9) 9
+    else if (main >= 88) 88
+    else if (main < 12) 12
     else main
   }
 }

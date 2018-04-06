@@ -32,6 +32,7 @@
 
 @formId = @{ componentClass + "-email-sub-form" }
 @inputId = @{ componentClass + "-email-sub-input" }
+@dummyInputId = @{ componentClass + "-email-sub-input-name" }
 
 @wrapperClass = @{ "email-sub js-email-sub" + " email-sub--" + componentClass + " js-email-sub--" + componentClass }
 @wrapperToneClass = @{ if (componentClass == "article" || componentClass == "plaintone") "email-sub--tone-" + listNamesTones.getOrElse(listName, "news") }
@@ -41,13 +42,16 @@
 
 @form = {
     <form action="@LinkTo("/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass", data-email-list-name="@listName">
+        @helper.CSRF.formField
         <div class="email-sub__form-wrapper">
             <div class="email-sub__inline-label js-email-sub__inline-label">
                 @if(componentClass == "plaintone") {
-                    <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" id="@inputId" placeholder="Email address" required />
+                    <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" id="@inputId" placeholder="Email address" />
+                    <input class="email-sub__text-input js-email-sub__text-input-name u-h" autocomplete="nope" type="text" name="name" id="@dummyInputId" placeholder="Name" />
                 } else {
                     <label class="email-sub__label js-email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))@labelText</label>
-                    <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" id="@inputId" required />
+                    <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" id="@inputId" />
+                    <input class="email-sub__text-input js-email-sub__text-input-name u-h" autocomplete="nope" type="text" name="name" id="@dummyInputId" />
                 }
                 <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@listName" />
 

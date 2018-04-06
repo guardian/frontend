@@ -1,43 +1,54 @@
 // @flow
-import React from 'react/addons';
+import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 
-const ClueInput = React.createClass({
+class ClueInput extends Component<*, *> {
     componentDidMount() {
-        React.findDOMNode(this).focus();
-    },
+        const el: HTMLElement = (findDOMNode(this): any);
+
+        if (el) {
+            el.focus();
+        }
+    }
 
     componentDidUpdate() {
+        const el: HTMLElement = (findDOMNode(this): any);
+
         // focus on reset
-        if (this.props.value === '') {
-            React.findDOMNode(this).focus();
+        if (this.props.value === '' && el) {
+            el.focus();
         }
-    },
+    }
 
     onInputChange(e: Event) {
         if (!(e.target instanceof HTMLInputElement)) {
             return;
         }
         this.props.onChange(e.target.value.toLowerCase());
-    },
+    }
 
     onKeyDown(e: Event) {
-        if (e.keyCode === 13) {
-            React.findDOMNode(this).blur();
+        const el: HTMLElement = (findDOMNode(this): any);
+
+        if (e.keyCode === 13 && el) {
+            el.blur();
             this.props.onEnter();
         }
-    },
+    }
 
     render() {
-        return React.createElement('input', {
-            type: 'text',
-            className: 'crossword__anagram-helper__clue-input',
-            placeholder: 'Enter letters',
-            maxLength: this.props.clue.length,
-            value: this.props.value,
-            onChange: this.onInputChange,
-            onKeyDown: this.onKeyDown,
-        });
-    },
-});
+        return (
+            <input
+                type="text"
+                className="crossword__anagram-helper__clue-input"
+                placeholder="Enter letters"
+                maxLength={this.props.clue.length}
+                value={this.props.value}
+                onChange={this.onInputChange.bind(this)}
+                onKeyDown={this.onKeyDown.bind(this)}
+            />
+        );
+    }
+}
 
 export { ClueInput };

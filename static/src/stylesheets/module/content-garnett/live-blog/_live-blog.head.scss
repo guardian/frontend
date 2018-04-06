@@ -811,40 +811,15 @@ $timeline-width: 15px;
     }
 }
 
-.blog {
-    .content__headline {
-        @include fs-headlineGarnett(4);
-
-        @include mq(tablet) {
-            @include fs-headlineGarnett(6, true);
-        }
-        font-weight: 400;
-    }
-
-    .content__section-label {
-        @include mq(desktop) {
-            @include fs-header(3);
-            float: none;
-        }
-    }
-
-    .content__series-label {
-        @include mq(desktop) {
-            @include fs-headline(3);
-            float: none;
-        }
-    }
-
-    .content__secondary-column {
-        @include mq($until: wide) {
-            display: none;
-        }
-    }
-}
-
 .ad-slot--liveblog-inline {
     @include mq(tablet) {
         margin: 0 0 $gs-baseline;
+    }
+}
+
+.blog .content__secondary-column {
+    @include mq($until: wide) {
+        display: none;
     }
 }
 

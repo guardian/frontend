@@ -1,6 +1,6 @@
 {
     "presets": [
-        "babel-preset-flow"
+        "react"
     ],
     "plugins": [
         "babel-plugin-transform-object-rest-spread",
@@ -61,17 +61,6 @@
                         ],
                     }
                 }],
-            ],
-        },
-        "karma": {
-            "presets": [
-                ["babel-preset-env", {
-                    "modules": "amd"
-                }]
-            ],
-            "plugins": [
-                "babel-plugin-add-module-exports",
-                "babel-plugin-transform-class-properties",
             ],
         },
     },

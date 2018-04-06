@@ -153,6 +153,22 @@
     )
 }
 
+@introThankYouStep= @{
+    ConsentStep(
+        name = "intro",
+        title = "Would you like to hear about any of these Guardian products?",
+        help = List(
+            ConsentStepHelpText(
+                "Set your preferences: please let us know if you are interested in any of these products or services."
+            ),
+            ConsentStepHelpText(
+                "You can change your preferences anytime by signing in, clicking My Account, then selecting Email Preferences."
+            )
+        ),
+        content = selectAllCheckboxContent,
+    )
+}
+
 @introStep = @{
     ConsentStep(
         name = "intro",
@@ -228,7 +244,7 @@
                         ConsentBanner(
                             "Thank you"
                         ),
-                        introStep
+                        introThankYouStep
                     ) ++ defaultJourney
 
                 }

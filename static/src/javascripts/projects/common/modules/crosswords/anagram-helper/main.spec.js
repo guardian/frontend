@@ -4,12 +4,14 @@ import sortBy from 'lodash/collections/sortBy';
 
 import { AnagramHelper } from './main';
 
-jest.mock('react/addons', () => ({
-    createClass(args) {
-        return function() {
-            return args;
-        };
-    },
+jest.mock('react', () => ({
+    Component: function Component() {},
+}));
+
+jest.mock('react-dom', () => ({
+    findDOMNode: () => ({
+        focus: () => {},
+    }),
 }));
 
 const CASES = [

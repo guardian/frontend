@@ -16,6 +16,11 @@ const classes = {
     previewButton: 'js-newsletter-preview',
 };
 
+const inputs = {
+    email: 'email',
+    dummy: 'name',
+};
+
 const hideInputAndShowPreview = (el: ?Node): void => {
     fastdom.write(() => {
         $(`.${classes.textInput}`, el).addClass('is-hidden');
@@ -43,15 +48,28 @@ const submitForm = (
     form: ?HTMLFormElement,
     buttonEl: HTMLButtonElement
 ): Promise<void> => {
-    const email = $('input[name="email"]', form).val();
-    const listName = $('input[name="listName"]', form).val();
-    const formQueryString = `email=${email}&listName=${listName}`;
+    const dummyEmail = encodeURIComponent(
+        $(`input[name="${inputs.dummy}"]`, form).val()
+    ); // Used as a 'bot-bait', see https://stackoverflow.com/a/34623588/2823715
+    const email = encodeURIComponent(
+        $(`input[name="${inputs.email}"`, form).val()
+    );
+    const listName = encodeURIComponent(
+        $('input[name="listName"]', form).val()
+    );
+    const csrfToken = encodeURIComponent(
+        $('input[name="csrfToken"]', form).val()
+    );
+    const formQueryString = `${inputs.email}=${email}&csrfToken=${
+        csrfToken
+    }&listName=${listName}&${inputs.dummy}=${dummyEmail}`;
 
-    return fetch(`${config.page.ajaxUrl}/email`, {
-        method: 'post',
+    return fetch(`${config.get('page.ajaxUrl')}/email`, {
+        method: 'POST',
         body: formQueryString,
         headers: {
             Accept: 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
     }).then(response => {
         if (response.ok) {

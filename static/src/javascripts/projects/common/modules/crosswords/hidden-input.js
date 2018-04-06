@@ -1,16 +1,18 @@
 // @flow
-import { createClass, createElement, findDOMNode } from 'react/addons';
+import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import { scrollTo } from 'lib/scroller';
 import { isBreakpoint } from 'lib/detect';
 
-const HiddenInput = createClass({
-    getInitialState() {
-        return {
+class HiddenInput extends Component<*, *> {
+    constructor(props: Object) {
+        super(props);
+        this.state = {
             value: this.props.value,
         };
-    },
+    }
 
     componentDidUpdate() {
         if (
@@ -31,55 +33,52 @@ const HiddenInput = createClass({
                 );
             });
         }
-    },
+    }
+
+    onClick(event: SyntheticInputEvent<HTMLInputElement>) {
+        this.props.crossword.onClickHiddenInput(event);
+    }
+
+    onKeyDown(event: SyntheticInputEvent<HTMLInputElement>) {
+        this.props.crossword.onKeyDown(event);
+    }
+
+    onBlur(event: SyntheticInputEvent<HTMLInputElement>) {
+        this.props.crossword.goToReturnPosition(event);
+    }
+
+    touchStart(event: SyntheticInputEvent<HTMLInputElement>) {
+        this.props.crossword.onClickHiddenInput(event);
+    }
 
     handleChange(event: SyntheticInputEvent<HTMLInputElement>) {
         this.props.crossword.insertCharacter(event.target.value.toUpperCase());
         this.setState({
             value: '',
         });
-    },
-
-    onClick(event: SyntheticInputEvent<HTMLInputElement>) {
-        this.props.crossword.onClickHiddenInput(event);
-    },
-
-    touchStart(event: SyntheticInputEvent<HTMLInputElement>) {
-        this.props.crossword.onClickHiddenInput(event);
-    },
-
-    onKeyDown(event: SyntheticInputEvent<HTMLInputElement>) {
-        this.props.crossword.onKeyDown(event);
-    },
-
-    onBlur(event: SyntheticInputEvent<HTMLInputElement>) {
-        this.props.crossword.goToReturnPosition(event);
-    },
+    }
 
     render() {
-        return createElement(
-            'div',
-            {
-                className: 'crossword__hidden-input-wrapper',
-                ref: 'wrapper',
-            },
-            createElement('input', {
-                type: 'text',
-                className: 'crossword__hidden-input',
-                maxLength: '1',
-                onClick: this.onClick,
-                onChange: this.handleChange,
-                onTouchStart: this.touchStart,
-                onKeyDown: this.onKeyDown,
-                onBlur: this.onBlur,
-                value: this.state.value,
-                autoComplete: 'off',
-                spellCheck: 'false',
-                autoCorrect: 'off',
-                ref: 'input',
-            })
+        return (
+            <div className="crossword__hidden-input-wrapper" ref="wrapper">
+                <input
+                    type="text"
+                    className="crossword__hidden-input"
+                    maxLength="1"
+                    onClick={this.onClick.bind(this)}
+                    onChange={this.handleChange.bind(this)}
+                    onTouchStart={this.touchStart.bind(this)}
+                    onKeyDown={this.onKeyDown.bind(this)}
+                    onBlur={this.onBlur.bind(this)}
+                    value={this.state.value}
+                    autoComplete="off"
+                    spellCheck="false"
+                    autoCorrect="off"
+                    ref="input"
+                />
+            </div>
         );
-    },
-});
+    }
+}
 
 export { HiddenInput };

@@ -316,6 +316,7 @@
     }
 }
 
+.content--interactive,
 .content--pillar-news:not(.paid-content) {
     @include colorPalatte($news-garnett-main-1, $news-garnett-feature, $news-garnett-media-main-1);
 }

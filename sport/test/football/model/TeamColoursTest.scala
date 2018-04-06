@@ -7,17 +7,11 @@ import test.ConfiguredTestSuite
 
 @DoNotDiscover class TeamColoursTest extends FreeSpec with Matchers with ConfiguredTestSuite {
   "home team colour" - {
-    "should be darkened from white" in {
-      TeamColours(fakeTeam("#FFFFFF"), fakeTeam("#333333")).home should equal("#eeeeee")
-    }
     "should be left as-is if it is the same as the away team" in {
       TeamColours(fakeTeam("#333333"), fakeTeam("#333333")).home should equal("#333333")
     }
     "should be left as-is when different to the away team's colour" in {
       TeamColours(fakeTeam("#333333"), fakeTeam("#666666")).home should equal("#333333")
-    }
-    "should be darkened a bit if it clashes with the colour the away team is getting darkened to from white!" in {
-      TeamColours(fakeTeam("#EEEEEE"), fakeTeam("#FFFFFF")).home should equal("#dddddd")
     }
     "ignores case" in {
       TeamColours(fakeTeam("#abCdEf"), fakeTeam("#333333")).home should equal("#abcdef")
@@ -25,12 +19,6 @@ import test.ConfiguredTestSuite
   }
 
   "away team colour" - {
-    "should be darkened from white" in {
-      TeamColours(fakeTeam("#333333"), fakeTeam("#FFFFFF")).away should equal("#eeeeee")
-    }
-    "should be darkened from white even if the home team is the target colour" in {
-      TeamColours(fakeTeam("#EEEEEE"), fakeTeam("#FFFFFF")).away should equal("#eeeeee")
-    }
     "should be darkened 30% if it is the same as the home colour" in {
       TeamColours(fakeTeam("#666666"), fakeTeam("#666666")).away should equal("#474747")
     }

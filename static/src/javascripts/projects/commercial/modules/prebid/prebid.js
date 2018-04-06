@@ -1,6 +1,7 @@
 // @flow
 
 import 'prebid.js/build/dist/prebid';
+import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bidders } from 'commercial/modules/prebid/bidder-config';
@@ -15,6 +16,7 @@ import type {
     PrebidSlotLabel,
 } from 'commercial/modules/prebid/types';
 import {
+    getRandomIntInclusive,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
@@ -59,6 +61,28 @@ class PrebidAdUnit {
 
 class PrebidService {
     static initialise(): void {
+        window.pbjs.setConfig({
+            bidderTimeout,
+            priceGranularity,
+        });
+
+        // gather analytics from 0.001% of pageviews
+        const inSample = getRandomIntInclusive(1, 100000) === 1;
+        if (
+            config.switches.prebidAnalytics &&
+            (inSample || config.page.isDev)
+        ) {
+            window.pbjs.enableAnalytics([
+                {
+                    provider: 'gu',
+                    options: {
+                        ajaxUrl: config.page.ajaxUrl,
+                        pv: config.ophan.pageViewId,
+                    },
+                },
+            ]);
+        }
+
         window.pbjs.bidderSettings = {
             standard: {
                 alwaysUseBid: false,
@@ -68,10 +92,6 @@ class PrebidService {
                 alwaysUseBid: true,
             },
         };
-        window.pbjs.setConfig({
-            bidderTimeout,
-            priceGranularity,
-        });
     }
 
     static requestQueue: Promise<void> = Promise.resolve();

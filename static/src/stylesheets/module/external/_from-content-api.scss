@@ -149,7 +149,7 @@
 
 /* some atoms can contain share-items, which are wrappend into ul.social, and
    therefore we have to exclude them from the default CAPI list styling */
-.from-content-api ul:not(.social),
+.from-content-api ul:not(.social):not(.submeta__links):not(.syndication--bottom):not(.match-stats__players),
 .content__standfirst ul {
     list-style: none;
 
