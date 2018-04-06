@@ -115,7 +115,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
 
   }
 
-  def submit(): Action[AnyContent] = csrfCheck { Action.async { implicit request =>
+  def submit(): Action[AnyContent] = Action.async { implicit request =>
     AllEmailSubmission.increment()
 
     def respond(result: SubscriptionResult): Result = {
@@ -161,7 +161,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
           APINetworkError.increment()
           respond(OtherError)
       })
-  }}
+  }
 
   def options(): Action[AnyContent] = Action { implicit request =>
     TinyResponse.noContent(Some("GET, POST, OPTIONS"))
