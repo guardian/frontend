@@ -393,9 +393,9 @@ const getLocalCurrencySymbol = (): string =>
         GBPCountries: '£',
         UnitedStates: '$',
         AUDCountries: '$',
-        Canada: '$',
+        Canada: 'CA$',
         EURCountries: '€',
-        NZDCountries: '$',
+        NZDCountries: 'NZ$',
         International: '$',
     }[getSupporterCountryGroup(getSync())] || '£');
 
@@ -405,7 +405,7 @@ const extendedCurrencySymbol = {
     EURCountries: '€',
     Canada: 'CA$',
     NZDCountries: 'NZ$',
-    AUDCountries: 'AU$',
+    AUDCountries: '$',
     International: '$',
 };
 
