@@ -1,5 +1,7 @@
 package controllers
 
+import java.lang.System._
+
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
@@ -8,20 +10,24 @@ import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.Cached.WithoutRevalidationResult
 import model._
 import LiveBlogHelpers._
+import conf.Configuration
 import model.liveblog._
 import org.joda.time.DateTime
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
+import play.api.libs.ws.WSClient
 import play.api.mvc._
+import play.twirl.api.Html
 import views.support._
 
+import scala.concurrent.duration._
 import scala.concurrent.Future
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController
+class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController
     with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
@@ -88,7 +94,18 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     else renderPage
   }
 
-  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) = page match {
+  def remoteRenderArticle: Future[String] = ws.url(Configuration.moon.moonEndpoint)
+    .withRequestTimeout(2000.millis)
+    .get()
+    .map((response) => {
+      response.body
+    })
+
+  def getRemoteArticlePage(implicit request: RequestHeader): Future[Result] = remoteRenderArticle.map((s) => {
+    Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(s))))
+  })
+
+  private def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader) : Result = page match {
     case blog: LiveBlogPage =>
       val htmlResponse = () => {
         if (request.isAmp) views.html.liveBlogAMP(blog)
@@ -109,9 +126,11 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       }
 
     case article: ArticlePage =>
+
       val htmlResponse = () => {
         if (request.isEmail) ArticleEmailHtmlPage.html(article)
         else if (request.isAmp) views.html.articleAMP(article)
+        else if (request.isGuui) Html("hurr")
         else ArticleHtmlPage.html(article)
       }
 
@@ -119,6 +138,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
       val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
       renderFormat(htmlResponse, jsonResponse, article)
+      //getRemoteArticlePage
   }
 
   def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
@@ -163,6 +183,13 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       mapModel(path, if (request.isGuuiJson) Some(ArticleBlocks) else None) {
         render(path, _)
       }
+    }
+  }
+
+  def renderArticleGUUI(path: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      println("GUUI route")
+      getRemoteArticlePage
     }
   }
 
