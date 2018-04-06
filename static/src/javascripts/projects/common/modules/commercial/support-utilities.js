@@ -1,7 +1,7 @@
 // @flow
 import {
     getSync as geolocationGetSync,
-    getSupporterPaymentRegion as geolocationGetSupporterPaymentRegion,
+    getSupporterCountryGroups as geolocationGetSupporterPaymentRegion,
 } from 'lib/geolocation';
 
 const geo: string = geolocationGetSync();

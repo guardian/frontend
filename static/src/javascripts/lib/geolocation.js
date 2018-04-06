@@ -121,7 +121,7 @@ const europeCountryCodes = [
 // Returns one of { GB, US, AU, CA, EU, INT }
 // These are the different 'regions' we accept when taking payment.
 // See https://membership.theguardian.com/uk/supporter# for more context.
-const getSupporterPaymentRegion = (location: string): string => {
+const getSupporterCountryGroups = (location: string): string => {
     if (regionCountryCodes.includes(location)) {
         return getSync();
     }
@@ -143,11 +143,11 @@ const getLocalCurrencySymbol = (): string =>
         AU: '$',
         CA: '$',
         EU: '€',
-    }[getSupporterPaymentRegion(getSync())] || '£');
+    }[getSupporterCountryGroups(getSync())] || '£');
 
 export {
     get,
-    getSupporterPaymentRegion,
+    getSupporterCountryGroups,
     getSync,
     getLocalCurrencySymbol,
     isInEurope,

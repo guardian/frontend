@@ -1,6 +1,6 @@
 // @flow
 import {
-    getSupporterPaymentRegion as geolocationGetSupporterPaymentRegion,
+    getSupporterCountryGroups as geolocationGetSupporterPaymentRegion,
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
 import { updateAcquisitionData } from 'common/modules/commercial/acquisitions-ophan';

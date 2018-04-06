@@ -1,7 +1,7 @@
 // @flow
 import { makeBannerABTestVariants } from 'common/modules/commercial/contributions-utilities';
 import {
-    getSupporterPaymentRegion as geolocationGetSupporterPaymentRegion,
+    getSupporterCountryGroups as geolocationGetSupporterPaymentRegion,
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
 

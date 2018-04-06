@@ -1,6 +1,6 @@
 // @flow
 import config from 'lib/config';
-import { getSupporterPaymentRegion } from 'lib/geolocation';
+import { getSupporterCountryGroups } from 'lib/geolocation';
 import { supportBaseURL } from './support-utilities';
 
 const baseParams = {
@@ -22,7 +22,7 @@ const supporterCost = (
     location: string,
     contributionType: 'MONTHLY' | 'ONE-OFF'
 ): string => {
-    const region = getSupporterPaymentRegion(location);
+    const region = getSupporterCountryGroups(location);
 
     if (region === 'EU') {
         // Format either 4.99 € or €4.99 depending on country
@@ -112,7 +112,7 @@ const membershipSupporterParams = (location: string): EngagementBannerParams =>
 export const engagementBannerParams = (
     location: string
 ): EngagementBannerParams => {
-    const region = getSupporterPaymentRegion(location);
+    const region = getSupporterCountryGroups(location);
     const supportRegions = ['US', 'GB', 'EU', 'INT'];
     if (supportRegions.includes(region)) {
         return supporterParams(location);
