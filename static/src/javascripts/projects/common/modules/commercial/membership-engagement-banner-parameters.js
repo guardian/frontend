@@ -1,6 +1,10 @@
 // @flow
 import config from 'lib/config';
-import { getSupporterPaymentRegion } from 'lib/geolocation';
+import {
+    getSupporterCountryGroup,
+    extendedCurrencySymbol,
+} from 'lib/geolocation';
+import type { CountryGroupId } from 'lib/geolocation';
 import { supportBaseURL } from './support-utilities';
 
 const baseParams = {
@@ -18,17 +22,39 @@ const engagementBannerCopy = (): string =>
     everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure.`;
 
 // Prices taken from https://membership.theguardian.com/<region>/supporter
+
+const paymentAmounts = {
+    MONTHLY: {
+        GBPCountries: '5',
+        UnitedStates: '6.99',
+        AUDCountries: '10',
+        Canada: '6.99',
+        International: '6.99',
+        NZDCountries: '10',
+        EURCountries: '4.99',
+    },
+    'ONE-OFF': {
+        GBPCountries: '1',
+        UnitedStates: '1',
+        AUDCountries: '1',
+        Canada: '1',
+        International: '1',
+        NZDCountries: '1',
+        EURCountries: '1',
+    },
+};
+
 const supporterCost = (
     location: string,
     contributionType: 'MONTHLY' | 'ONE-OFF'
 ): string => {
-    const region = getSupporterPaymentRegion(location);
+    const region = getSupporterCountryGroup(location);
 
-    if (region === 'EU') {
+    if (region === 'EURCountries') {
         // Format either 4.99 € or €4.99 depending on country
         // See https://en.wikipedia.org/wiki/Linguistic_issues_concerning_the_euro
-        const euro = '€';
-        const amount = contributionType === 'MONTHLY' ? '4.99' : '1';
+        const euro = extendedCurrencySymbol.EURCountries;
+        const amount = paymentAmounts[contributionType].EURCountries;
 
         const euroAfterCountryCodes = [
             'BG',
@@ -58,30 +84,12 @@ const supporterCost = (
             : euro + amount;
     }
 
-    const payment = {
-        MONTHLY: {
-            GB: '£5',
-            US: '$6.99',
-            AU: '$10',
-            CA: '$6.99',
-            INT: '$6.99',
-        },
-        'ONE-OFF': {
-            GB: '£1',
-            US: '$1',
-            AU: '$1',
-            CA: '$1',
-            INT: '$1',
-        },
-    }[contributionType][region];
-
-    return payment || '£5';
+    return `${extendedCurrencySymbol[region]}
+            ${paymentAmounts[contributionType][region]}`;
 };
 
 const supporterEngagementCtaCopy = (location: string): string =>
-    location === 'US'
-        ? `Support us with a one-time contribution`
-        : `Support us for ${supporterCost(location, 'MONTHLY')} a month.`;
+    `Support us for ${supporterCost(location, 'MONTHLY')} a month.`;
 
 const supporterEngagementCtaCopyJustOne = (location: string): string =>
     `Support The Guardian from as little as ${supporterCost(
@@ -112,9 +120,16 @@ const membershipSupporterParams = (location: string): EngagementBannerParams =>
 export const engagementBannerParams = (
     location: string
 ): EngagementBannerParams => {
-    const region = getSupporterPaymentRegion(location);
-
-    if (region === 'US' || region === 'GB' || region === 'EU') {
+    const region = getSupporterCountryGroup(location);
+    const supportRegions: CountryGroupId[] = [
+        'UnitedStates',
+        'GBPCountries',
+        'EURCountries',
+        'International',
+        'NZDCountries',
+        'Canada',
+    ];
+    if (supportRegions.includes(region)) {
         return supporterParams(location);
     }
     return membershipSupporterParams(location);

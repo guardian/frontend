@@ -2,7 +2,7 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 
 import {
-    getSupporterPaymentRegion as geolocationGetSupporterPaymentRegion,
+    getSupporterCountryGroup as geolocationGetSupporterPaymentRegion,
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
 
@@ -53,7 +53,8 @@ export const acquisitionsEpicAudSupport = makeABTest({
     audience: 1,
     audienceOffset: 0,
     canRun: () =>
-        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'AU',
+        geolocationGetSupporterPaymentRegion(geolocationGetSync()) ===
+        'AUDCountries',
     variants: [
         {
             id: 'control',
