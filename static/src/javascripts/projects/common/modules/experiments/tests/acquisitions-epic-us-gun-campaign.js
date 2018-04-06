@@ -23,7 +23,7 @@ export const acquisitionsEpicUSGunCampaign = makeABTest({
     campaignId: 'epic_us_gun_campaign_2017',
 
     start: '2017-11-14',
-    expiry: '2018-01-04',
+    expiry: '2019-02-06',
 
     author: 'Guy Dawson',
     description:
