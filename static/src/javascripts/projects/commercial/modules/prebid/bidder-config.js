@@ -170,7 +170,6 @@ const xaxisBidder: PrebidBidder = {
     bidParams: (): PrebidXaxisParams => ({
         placementId: 12984524,
     }),
-    labelAll: ['edn-UK'],
 };
 
 const bidders: PrebidBidder[] = [];
