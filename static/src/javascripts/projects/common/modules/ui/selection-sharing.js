@@ -41,8 +41,8 @@ const $selectionSharing = $.create(selectionSharing);
 let $twitterAction;
 let $emailAction;
 
-// 140 - t.co length - 3 chars for quotes and url spacing
-const twitterMessageLimit = 114;
+// 280 - t.co length - 5 chars for quotes, url spacing and ellipsis
+const twitterMessageLimit = 252;
 
 const validAncestors = [
     'js-article__body',

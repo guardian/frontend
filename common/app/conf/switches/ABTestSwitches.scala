@@ -58,16 +58,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-lazy-loading-extended",
-    "Varies the strategy for lazyloading of adverts",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-australia-environment-campaign-2018",
     "Show a custom Epic for articles with the Australia environment campaign tag",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -82,7 +72,7 @@ trait ABTestSwitches {
     "Point the subscribe link in the header to a subscriptions-only version of the support site",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 5),
+    sellByDate = new LocalDate(2018, 4, 19),
     exposeClientSide = true
   )
 
@@ -90,9 +80,9 @@ trait ABTestSwitches {
     ABTests,
     "ab-spacefinder-simplify",
     "Alters the rules for inserting ads on desktop breakpoints.",
-    owners = Seq(Owner.withGithub("JonNorman")),
+    owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 6),
+    sellByDate = new LocalDate(2018, 4, 17),
     exposeClientSide = true
   )
 
@@ -133,36 +123,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-header-row-support",
-    "Points the 'support the guardian' link in the header to the row version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-engagement-banner-row-support",
-    "Points the 'support the guardian' link in the engagement banner to the row version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-row-support",
-    "Points the 'support the guardian' link in the epic to the row version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 24),
     exposeClientSide = true
   )
 }

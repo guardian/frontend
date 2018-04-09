@@ -1,7 +1,7 @@
 // @flow
 import { makeBannerABTestVariants } from 'common/modules/commercial/contributions-utilities';
 import {
-    getSupporterPaymentRegion as geolocationGetSupporterPaymentRegion,
+    getSupporterCountryGroup as geolocationGetSupporterPaymentRegion,
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
 
@@ -26,7 +26,8 @@ export const AcquisitionsEngagementBannerAudSupport: AcquisitionsABTest = {
     componentType,
     showForSensitive: true,
     canRun: () =>
-        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'AU',
+        geolocationGetSupporterPaymentRegion(geolocationGetSync()) ===
+        'AUDCountries',
 
     variants: makeBannerABTestVariants([
         {

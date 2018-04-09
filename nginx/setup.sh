@@ -51,7 +51,7 @@ fi
 function install_ssh_certificate() {
 	KEY_NAME="${1}.key"
 	CRT_NAME="${1}.crt"
-	echo "Downloading SSL certsificate $CRT_NAME from $S3_BUCKET"
+	echo "Downloading SSL certificate $CRT_NAME from $S3_BUCKET"
 	aws ${PROFILE} s3 cp "${S3_BUCKET}${KEY_NAME}" ${DIR} 1>/dev/null
 	echo "Downloading SSL key $KEY_NAME from $S3_BUCKET"
 	aws ${PROFILE} s3 cp "${S3_BUCKET}${CRT_NAME}" ${DIR} 1>/dev/null

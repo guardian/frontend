@@ -1,6 +1,6 @@
 // @flow
 import {
-    getSupporterPaymentRegion as geolocationGetSupporterPaymentRegion,
+    getSupporterCountryGroup as geolocationGetSupporterPaymentRegion,
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
 import { updateAcquisitionData } from 'common/modules/commercial/acquisitions-ophan';
@@ -54,7 +54,8 @@ export const acquisitionsHeaderAudSupport: AcquisitionsABTest = {
     audienceCriteria: 'All AUD transaction web traffic.',
     idealOutcome: 'We get more money when we tailor the destination to the CTA',
     canRun: () =>
-        geolocationGetSupporterPaymentRegion(geolocationGetSync()) === 'AU',
+        geolocationGetSupporterPaymentRegion(geolocationGetSync()) ===
+        'AUDCountries',
     variants: [
         {
             id: 'control',

@@ -206,13 +206,16 @@
 }
 
 .content__series-label {
-    display: inline;
     font-family: $f-serif-headline;
     font-size: 16px;
     line-height: 19px;
 
     @include mq($until: tablet) {
         font-weight: 800;
+    }
+
+    @include mq(tablet) {
+        display: inline;
     }
 
     @include mq(leftCol) {

@@ -34,19 +34,6 @@
                     }
                 } )
             }
-
-            @card.mediaTypeIcon.map { mediaType: String =>
-                @card.pillar.map( pillar => {
-                    pillar.name match {
-                        case "News" => icon(mediaType + "-news", isLarge, "media-icon")
-                        case "Opinion" => icon(mediaType + "-opinion", isLarge, "media-icon")
-                        case "Sport" => icon(mediaType + "-sport", isLarge, "media-icon")
-                        case "Arts" => icon(mediaType + "-culture", isLarge, "media-icon")
-                        case "Lifestyle" => icon(mediaType + "-lifestyle", isLarge, "media-icon")
-                        case _ => icon(mediaType, isLarge, "media-icon")
-                    }
-                })
-            }
             @RemoveOuterParaHtml(card.header.headline)
         </a>
     }
@@ -56,15 +43,33 @@
 
     @card.starRating.map { numberOfStars =>
         @row(Seq("review-stars")) {
-            @for(i <- 0 to 4) {
-                @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
-                    @icon("star-" + positiveOrNegative, isLarge)
+            <span class="review-stars-bg">
+                @for(i <- 0 to 4) {
+                    @defining(if(i < numberOfStars) "golden" else "grey") { positiveOrNegative =>
+                        @icon("star-" + positiveOrNegative, isLarge)
+                    }
                 }
-            }
+            </span>
         }
     }
+
     @if(isLast) {
         @row(Seq("fc__pad")) { }
+    }
+
+    @card.mediaTypeIcon.map { mediaType: String =>
+        @row(Seq("media-icon-wrapper")) {
+            @card.pillar.map( pillar => {
+                pillar.name match {
+                    case "News" => icon(mediaType + "-news", isLarge, "media-icon")
+                    case "Opinion" => icon(mediaType + "-opinion", isLarge, "media-icon")
+                    case "Sport" => icon(mediaType + "-sport", isLarge, "media-icon")
+                    case "Arts" => icon(mediaType + "-culture", isLarge, "media-icon")
+                    case "Lifestyle" => icon(mediaType + "-lifestyle", isLarge, "media-icon")
+                    case _ => icon(mediaType, isLarge, "media-icon")
+                }
+            })
+        }
     }
 }
 
