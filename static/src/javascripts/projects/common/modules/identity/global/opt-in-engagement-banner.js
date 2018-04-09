@@ -14,7 +14,7 @@ const messageCode: string = 'gdpr-opt-in-jan-18';
 const messageHidAtPref: string = `${messageCode}-hid-at`;
 const messageUserUsesNewslettersCookie: string = `gu-${
     messageCode
-}-via-newsletter`.toUpperCase();
+}-via-newsletter`.toUpperCase().replace(/\-/g, '_');
 const messageCloseBtn = 'js-gdpr-oi-close';
 const remindMeLaterInterval = 24 * 60 * 60 * 1000;
 
