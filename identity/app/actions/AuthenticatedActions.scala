@@ -147,7 +147,7 @@ class AuthenticatedActions(
 
       def filter[A](request: AuthRequest[A]) = {
         redirectService.toConsentsRedirect(request.user, request).map { redirect =>
-          if (redirect.isAllowedFrom(""))
+          if (redirect.isAllowedFrom("/consents"))
             Some(sendUserToUserRedirectDecision(request, redirect))
           else
             None
