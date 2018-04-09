@@ -798,10 +798,10 @@ object GarnettQuoteCleaner extends HtmlCleaner {
   }
 }
 
-case class SkimLinksCleaner(pageUrl: String, sectionId: String) extends HtmlCleaner with CommercialSwitches {
+case class SkimLinksCleaner(pageUrl: String, shouldShowAffiliateLinks: Boolean) extends HtmlCleaner with CommercialSwitches {
 
   override def clean(document: Document): Document = {
-    if (ReplaceSkimLinks.isSwitchedOn && skimlinksSections.contains(sectionId)) {
+    if (ReplaceSkimLinks.isSwitchedOn && shouldShowAffiliateLinks) {
       val links = document.getElementsByAttribute("href")
 
       links.asScala.foreach { link =>

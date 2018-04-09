@@ -72,7 +72,7 @@ object BodyCleaner {
       TimestampCleaner(article),
       MinuteCleaner(article),
       GarnettQuoteCleaner,
-      SkimLinksCleaner(request.uri, article.content.metadata.sectionId)
+      SkimLinksCleaner(request.uri, article.content.fields.shouldShowAffiliateLinks)
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++

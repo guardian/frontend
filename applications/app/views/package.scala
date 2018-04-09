@@ -31,7 +31,7 @@ object IndexCleaner {
 
 object GalleryCaptionCleaners {
   def apply(page: GalleryPage, caption: String)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-    val cleaners = List(GalleryCaptionCleaner, SkimLinksCleaner(request.uri, page.gallery.content.metadata.sectionId))
+    val cleaners = List(GalleryCaptionCleaner, SkimLinksCleaner(request.uri, page.gallery.content.fields.shouldShowAffiliateLinks))
     withJsoup(caption)(cleaners: _*)
   }
 
