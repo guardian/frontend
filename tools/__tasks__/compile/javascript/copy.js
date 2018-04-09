@@ -8,14 +8,7 @@ module.exports = {
     task: () =>
         Promise.all([
             cpy(
-                [
-                    'formstack-interactive/**/*',
-                    'omniture/**/*',
-                    'prebid/**/*',
-                    'stripe/**/*',
-                    'react/**/*',
-                    'ophan/**/*',
-                ],
+                ['formstack-interactive/**/*'],
                 path.resolve(target, 'javascripts', 'vendor'),
                 {
                     cwd: path.resolve(vendor, 'javascripts'),
