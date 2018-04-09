@@ -5,7 +5,7 @@ import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.Cached.WithoutRevalidationResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import LiveBlogHelpers._
 import conf.Configuration
@@ -185,9 +185,11 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       val contentFieldsJson = if (request.isGuui) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
       val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
       val jsonPayload = JsonComponent.jsonFor(model, jsonResponse():_*)
+
       remoteRenderArticle(jsonPayload).map(s => {
-        Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(s))))
+        Cached(article){ RevalidatableResult.Ok(Html(s)) }
       })
+
     case _ => throw new Exception("Remote render not supported for this content type")
 
   }
