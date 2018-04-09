@@ -171,25 +171,24 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-
   def remoteRenderArticle(payload: String): Future[String] = ws.url(Configuration.moon.moonEndpoint)
     .withRequestTimeout(2000.millis)
     .addHttpHeaders("Content-Type" -> "application/json")
     .post(payload)
-    .map((response) => {
+    .map((response) =>
       response.body
-    })
+    )
 
   def remoteRender(path: String, model: PageWithStoryPackage)(implicit request: RequestHeader): Future[Result] = model match {
 
-    case article : ArticlePage => {
+    case article : ArticlePage =>
       val contentFieldsJson = if (request.isGuui) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
       val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
       val jsonPayload = JsonComponent.jsonFor(model, jsonResponse():_*)
       remoteRenderArticle(jsonPayload).map(s => {
         Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(s))))
       })
-    }
+    case _ => throw new Exception("Remote render not supported for this content type")
 
   }
 
@@ -198,7 +197,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
     lookup(path, range).map((itemResp: ItemResponse) => responseToModelOrResult(range)(itemResp)).recover(convertApiExceptions).flatMap {
       case Left(model) => render(model)
-      case Right(other) => Future{RenderOtherStatus(other)}
+      case Right(other) => Future.successful(RenderOtherStatus(other))
     }
 
   }
