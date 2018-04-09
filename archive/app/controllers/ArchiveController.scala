@@ -38,40 +38,17 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
 
   private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
 
-  def remoteRender404: Future[String] = ws.url(Configuration.moon.moonEndpoint)
-      .withRequestTimeout(2000.millis)
-      .get()
-      .map((response) => {
-        response.body
-      })
-
-  def getRemote404Page(implicit request: RequestHeader): Future[Result] = remoteRender404.map((s) => {
-    Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(Html(s))))
-  }).recover {
-    case e: Throwable =>
-      log.warn(s"Archive failed to remotely render 404 and fell back to the local template")
-      Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
-  }
-
   def getLocal404Page(implicit request: RequestHeader): Future[Result] = Future {
     Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
   }
 
   def lookup(path: String): Action[AnyContent] = Action.async { implicit request =>
-
     lookupPath(path)
       .map { _
         .map(Cached(CacheTime.ArchiveRedirect))
         .orElse(redirectForPath(path))
       }
-      .flatMap(_.map(Future.successful).getOrElse {
-        ActiveExperiments.groupFor(MoonLambda) match {
-          case Participant => timedPage(getRemote404Page, MoonMetrics.MoonRenderingMetric)
-          case Control => timedPage(getLocal404Page, MoonMetrics.NonMoonRenderingMetric)
-          case Excluded => getLocal404Page
-        }
-      })
-
+      .flatMap(_.map(Future.successful).getOrElse(getLocal404Page))
   }
 
   def timedPage[T](future: Future[T], metric: TimingMetric): Future[T] = {
