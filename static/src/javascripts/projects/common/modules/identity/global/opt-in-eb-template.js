@@ -42,4 +42,5 @@ const makeTemplateHtml = (template: Template, targets: LinkTargets): string => `
         </div>
     </div>`;
 
-export { Template, LinkTargets, makeTemplateHtml };
+export type { Template, LinkTargets };
+export { makeTemplateHtml };
