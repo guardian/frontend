@@ -74,12 +74,13 @@ const filterNearbyCandidates = (maximumAdHeight: number) => (
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     const variant = getVariant(spacefinderSimplify, 'variant');
+    const isImmersive = config.get('page.isImmersive');
     const inTestVariant = variant && isInVariant(spacefinderSimplify, variant);
 
     const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: inTestVariant ? 300 : 700,
+        minAbove: inTestVariant && !isImmersive ? 300 : 700,
         minBelow: 700,
         selectors: {
             ' > h2': {
