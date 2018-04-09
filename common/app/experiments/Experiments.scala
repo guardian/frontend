@@ -11,7 +11,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialBaseline,
     CommercialAdRefresh,
-    MoonLambda,
     OrielParticipation,
     GdprOptinAlert,
     LotameParticipation
@@ -41,14 +40,6 @@ object CommercialAdRefresh extends Experiment(
   owners = Seq(Owner.withGithub("katebee")),
   sellByDate = new LocalDate(2018, 4, 26),
   participationGroup = Perc20A
-)
-
-object MoonLambda extends Experiment(
-  name = "moon-lambda",
-  description = "Users in this experiment will see 404 page rendered by a lambda",
-  owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2018, 4, 9),
-  participationGroup = Perc1B
 )
 
 object OrielParticipation extends Experiment(

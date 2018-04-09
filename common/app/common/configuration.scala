@@ -140,10 +140,6 @@ class GuardianConfiguration extends Logging {
     lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
   }
 
-  object moon {
-    lazy val moonEndpoint = configuration.getMandatoryStringProperty("moon.endpoint")
-  }
-
   object feedback {
     lazy val feedpipeEndpoint = configuration.getMandatoryStringProperty("feedback.feedpipeEndpoint")
   }

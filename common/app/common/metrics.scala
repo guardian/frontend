@@ -133,17 +133,6 @@ object ContentApiMetrics {
 
 }
 
-object MoonMetrics {
-  val MoonRenderingMetric = TimingMetric(
-    "moon-rendering-time",
-    "Moon rendering time"
-  )
-  val NonMoonRenderingMetric = TimingMetric(
-    "non-moon-rendering-time",
-    "Non-Moon rendering time"
-  )
-}
-
 object FaciaPressMetrics {
   val FrontPressCronSuccess = CountMetric(
     "front-press-cron-success",
