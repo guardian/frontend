@@ -1,7 +1,5 @@
 package controllers
 
-import java.lang.System._
-
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
