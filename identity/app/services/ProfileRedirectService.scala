@@ -23,7 +23,7 @@ sealed abstract class ProfileRedirect(val url: String) {
 }
 
 case object RedirectToEmailValidationFromEmailPrefsOrConsentJourney extends ProfileRedirect("/verify-email") {
-  override def isAllowedFrom(url: String): Boolean = (url contains "email-prefs") || (url contains "consents")
+  override def isAllowedFrom(url: String): Boolean = (url startsWith "/email-prefs") || (url startsWith "/consents")
 }
 
 case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents/staywithus") {
