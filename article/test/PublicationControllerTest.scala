@@ -28,7 +28,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
   val bookAgent = mock[NewspaperBookTagAgent]
   val bookSectionAgent = mock[NewspaperBookSectionTagAgent]
   lazy val controllerComponents = play.api.test.Helpers.stubControllerComponents()
-  lazy val articleController = new ArticleController(testContentApiClient, controllerComponents)
+  lazy val articleController = new ArticleController(testContentApiClient, controllerComponents, wsClient)
   lazy val publicationController = new PublicationController(bookAgent, bookSectionAgent, articleController, controllerComponents)
 
   "Publication Controller" should "redirect to an /all page when an observer dated book url is requested" in {

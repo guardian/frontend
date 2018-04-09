@@ -19,8 +19,10 @@ trait Requests {
 
     lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
 
-    // parameter for moon/guui new rendering layer project.
-    lazy val isGuuiJson: Boolean = isJson && r.getQueryString("guui").isDefined
+    // parameters for moon/guui new rendering layer project.
+    lazy val isGuuiJson: Boolean = isJson && isGuui
+
+    lazy val isGuui: Boolean = r.getQueryString("guui").isDefined
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
