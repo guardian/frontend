@@ -171,7 +171,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  def remoteRenderArticle(payload: String): Future[String] = ws.url(Configuration.moon.moonEndpoint)
+  def remoteRenderArticle(payload: String): Future[String] = ws.url(Configuration.rendering.renderingEndpoint)
     .withRequestTimeout(2000.millis)
     .addHttpHeaders("Content-Type" -> "application/json")
     .post(payload)

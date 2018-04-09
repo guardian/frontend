@@ -144,6 +144,10 @@ class GuardianConfiguration extends Logging {
     lazy val feedpipeEndpoint = configuration.getMandatoryStringProperty("feedback.feedpipeEndpoint")
   }
 
+  object rendering {
+    lazy val renderingEndpoint = configuration.getMandatoryStringProperty("rendering.endpoint")
+  }
+
   object weather {
     lazy val apiKey = configuration.getStringProperty("weather.api.key")
   }
