@@ -16,13 +16,18 @@ import scala.collection.JavaConverters._
   with WithMaterializer
   with WithTestWsClient
   with WithTestApplicationContext
-  with WithTestContentApiClient {
+  with WithTestContentApiClient
+ {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
 
-  lazy val articleController = new ArticleController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
+  lazy val articleController = new ArticleController(
+    testContentApiClient,
+    play.api.test.Helpers.stubControllerComponents(),
+    wsClient
+  )
 
   "Article Controller" should "200 when content type is article" in {
     val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))
