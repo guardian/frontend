@@ -51,12 +51,6 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
       .flatMap(_.map(Future.successful).getOrElse(getLocal404Page))
   }
 
-  def timedPage[T](future: Future[T], metric: TimingMetric): Future[T] = {
-    val start = currentTimeMillis
-    future.onComplete(_ => metric.recordDuration(currentTimeMillis - start))
-    future
-  }
-
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
   def normalise(path: String, zeros: String = ""): String = path match {
     case R1ArtifactUrl(p, artifactOrContextId, extension) =>
