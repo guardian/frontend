@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 7, 19),
+    sellByDate = new LocalDate(2019, 1, 24),
     exposeClientSide = true
   )
 
@@ -22,7 +22,7 @@ trait ABTestSwitches {
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 7, 19),
+    sellByDate = new LocalDate(2019, 1, 24),
     exposeClientSide = true
   )
 
@@ -32,7 +32,7 @@ trait ABTestSwitches {
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 7, 19),
+    sellByDate = new LocalDate(2019, 1, 24),
     exposeClientSide = true
   )
 
@@ -42,7 +42,7 @@ trait ABTestSwitches {
     "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 9, 5),
+    sellByDate = new LocalDate(2019, 1, 24),
     exposeClientSide = true
   )
 
