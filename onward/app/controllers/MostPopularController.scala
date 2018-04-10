@@ -5,34 +5,13 @@ import contentapi.ContentApiClient
 import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import model.Cached.RevalidatableResult
 import model._
-import model.pressed.PressedContent
+import models.OnwardCollection._
+import models.{MostPopularGeoResponse, OnwardCollection, OnwardCollectionResponse}
 import play.api.libs.json._
 import play.api.mvc._
-import views.support.{ContentOldAgeDescriber, ImgSrc, RemoveOuterParaHtml}
 import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
-
-case class MostPopularItem(
-  url: String,
-  linkText: String,
-  showByline: Boolean,
-  byline: Option[String],
-  image: Option[String],
-  ageWarning: Option[String],
-  isLiveBlog: Boolean
-)
-
-case class MostPopularGeoResponse(
-  country: Option[String],
-  heading: String,
-  trails: Seq[MostPopularItem]
-)
-
-case class MostPopularResponse(
-  heading: String,
-  trails: Seq[MostPopularItem]
-)
 
 class MostPopularController(contentApiClient: ContentApiClient,
   geoMostPopularAgent: GeoMostPopularAgent,
@@ -83,11 +62,6 @@ class MostPopularController(contentApiClient: ContentApiClient,
     "IN" -> "India"
   )
 
-  implicit val itemWrites = Json.writes[MostPopularItem]
-  implicit val geoWrites = Json.writes[MostPopularGeoResponse]
-  implicit val popularWrites = Json.writes[MostPopularResponse]
-  import implicits.FaciaContentFrontendHelpers._
-
   def renderPopularGeo(): Action[AnyContent] = Action { implicit request =>
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
@@ -109,9 +83,9 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
   def jsonResponse(mostPopulars: Seq[MostPopular])(implicit request: RequestHeader): Result = {
     val responses = mostPopulars.map{section =>
-      MostPopularResponse(
+      OnwardCollectionResponse(
         heading = section.heading,
-        trails = trailsToItems(section.trails)
+        trails = OnwardCollection.trailsToItems(section.trails)
       )
     }
 
@@ -122,31 +96,10 @@ class MostPopularController(contentApiClient: ContentApiClient,
     val data = MostPopularGeoResponse(
       country = countryNames.get(countryCode),
       heading = mostPopular.heading,
-      trails = trailsToItems(mostPopular.trails)
+      trails = OnwardCollection.trailsToItems(mostPopular.trails)
     )
 
     Cached(900)(JsonComponent(data))
-  }
-
-  private[this] def trailsToItems(trails: Seq[PressedContent])(implicit request: RequestHeader): Seq[MostPopularItem] = {
-    def ageWarning(content: PressedContent): Option[String] = {
-      content.properties.maybeContent
-        .filter(c => c.tags.tags.exists(_.id == "tone/news"))
-        .map(ContentOldAgeDescriber.apply)
-        .filterNot(_ == "")
-    }
-
-    trails.take(10).map(content =>
-      MostPopularItem(
-        url = LinkTo(content.header.url),
-        linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.properties.webTitle)).body,
-        showByline = content.properties.showByline,
-        byline = content.properties.byline,
-        image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
-        ageWarning = ageWarning(content),
-        isLiveBlog = false
-      )
-    )
   }
 
   def renderPopularDay(countryCode: String): Action[AnyContent] = Action { implicit request =>
