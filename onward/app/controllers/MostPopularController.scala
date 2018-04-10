@@ -29,6 +29,11 @@ case class MostPopularGeoResponse(
   trails: Seq[MostPopularItem]
 )
 
+case class MostPopularResponse(
+  heading: String,
+  trails: Seq[MostPopularItem]
+)
+
 class MostPopularController(contentApiClient: ContentApiClient,
   geoMostPopularAgent: GeoMostPopularAgent,
   dayMostPopularAgent: DayMostPopularAgent,
@@ -60,6 +65,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
       mostPopular match {
         case Nil => NotFound
+        case popular if request.isGuui => jsonResponse(popular)
         case popular if !request.isJson => Cached(900) { RevalidatableResult.Ok(views.html.mostPopular(page, popular)) }
         case popular => Cached(900) {
           JsonComponent(
@@ -79,6 +85,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
   implicit val itemWrites = Json.writes[MostPopularItem]
   implicit val geoWrites = Json.writes[MostPopularGeoResponse]
+  implicit val popularWrites = Json.writes[MostPopularResponse]
   import implicits.FaciaContentFrontendHelpers._
 
   def renderPopularGeo(): Action[AnyContent] = Action { implicit request =>
@@ -88,33 +95,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
     val countryPopular = MostPopular("across the guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
     if (request.isGuui) {
-
-      def ageWarning(content: PressedContent): Option[String] = {
-        content.properties.maybeContent
-          .filter(c => c.tags.tags.exists(_.id == "tone/news"))
-          .map(ContentOldAgeDescriber.apply)
-          .filterNot(_ == "")
-      }
-
-      val items = countryPopular.trails.take(10).map(content =>
-        MostPopularItem(
-          url = LinkTo(content.header.url),
-          webTitle = content.properties.webTitle,
-          showByline = content.properties.showByline,
-          byline = content.properties.byline,
-          image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
-          ageWarning = ageWarning(content),
-          isLiveBlog = false
-        )
-      )
-
-      val data = MostPopularGeoResponse(
-        country = countryNames.get(countryCode),
-        heading = countryPopular.heading,
-        trails = items
-      )
-
-      Cached(900)(JsonComponent(data))
+      jsonResponse(countryPopular, countryCode)
     } else {
       Cached(900) {
         JsonComponent(
@@ -124,6 +105,48 @@ class MostPopularController(contentApiClient: ContentApiClient,
         )
       }
     }
+  }
+
+  def jsonResponse(mostPopulars: Seq[MostPopular])(implicit request: RequestHeader): Result = {
+    val responses = mostPopulars.map{section =>
+      MostPopularResponse(
+        heading = section.heading,
+        trails = trailsToItems(section.trails)
+      )
+    }
+
+    Cached(900)(JsonComponent(responses))
+  }
+
+  def jsonResponse(mostPopular: MostPopular, countryCode: String)(implicit request: RequestHeader): Result = {
+    val data = MostPopularGeoResponse(
+      country = countryNames.get(countryCode),
+      heading = mostPopular.heading,
+      trails = trailsToItems(mostPopular.trails)
+    )
+
+    Cached(900)(JsonComponent(data))
+  }
+
+  private[this] def trailsToItems(trails: Seq[PressedContent])(implicit request: RequestHeader): Seq[MostPopularItem] = {
+    def ageWarning(content: PressedContent): Option[String] = {
+      content.properties.maybeContent
+        .filter(c => c.tags.tags.exists(_.id == "tone/news"))
+        .map(ContentOldAgeDescriber.apply)
+        .filterNot(_ == "")
+    }
+
+    trails.take(10).map(content =>
+      MostPopularItem(
+        url = LinkTo(content.header.url),
+        webTitle = content.properties.webTitle,
+        showByline = content.properties.showByline,
+        byline = content.properties.byline,
+        image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
+        ageWarning = ageWarning(content),
+        isLiveBlog = false
+      )
+    )
   }
 
   def renderPopularDay(countryCode: String): Action[AnyContent] = Action { implicit request =>
