@@ -5,11 +5,29 @@ import contentapi.ContentApiClient
 import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import model.Cached.RevalidatableResult
 import model._
+import model.pressed.PressedContent
 import play.api.libs.json._
 import play.api.mvc._
+import views.support.{ContentOldAgeDescriber, ImgSrc}
 import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
+
+case class MostPopularItem(
+  url: String,
+  webTitle: String,
+  showByline: Boolean,
+  byline: Option[String],
+  image: Option[String],
+  ageWarning: Option[String],
+  isLiveBlog: Boolean
+)
+
+case class MostPopularGeoResponse(
+  country: Option[String],
+  heading: String,
+  trails: Seq[MostPopularItem]
+)
 
 class MostPopularController(contentApiClient: ContentApiClient,
   geoMostPopularAgent: GeoMostPopularAgent,
@@ -56,21 +74,55 @@ class MostPopularController(contentApiClient: ContentApiClient,
   private val countryNames = Map(
     "AU" -> "Australia",
     "US" -> "US",
-    "IN" -> "India")
+    "IN" -> "India"
+  )
+
+  implicit val itemWrites = Json.writes[MostPopularItem]
+  implicit val geoWrites = Json.writes[MostPopularGeoResponse]
+  import implicits.FaciaContentFrontendHelpers._
 
   def renderPopularGeo(): Action[AnyContent] = Action { implicit request =>
-
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
 
     val countryPopular = MostPopular("across the guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
-    Cached(900) {
-      JsonComponent(
-        "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
-        "rightHtml" -> views.html.fragments.rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode),
-        "country" -> countryCode
+    if (request.isGuui) {
+
+      def ageWarning(content: PressedContent): Option[String] = {
+        content.properties.maybeContent
+          .filter(c => c.tags.tags.exists(_.id == "tone/news"))
+          .map(ContentOldAgeDescriber.apply)
+          .filterNot(_ == "")
+      }
+
+      val items = countryPopular.trails.take(10).map(content =>
+        MostPopularItem(
+          url = LinkTo(content.header.url),
+          webTitle = content.properties.webTitle,
+          showByline = content.properties.showByline,
+          byline = content.properties.byline,
+          image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
+          ageWarning = ageWarning(content),
+          isLiveBlog = false
+        )
       )
+
+      val data = MostPopularGeoResponse(
+        country = countryNames.get(countryCode),
+        heading = countryPopular.heading,
+        trails = items
+      )
+
+      Cached(900)(JsonComponent(data))
+    } else {
+      Cached(900) {
+        JsonComponent(
+          "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
+          "rightHtml" -> views.html.fragments.rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode),
+          "country" -> countryCode
+        )
+      }
     }
   }
 
