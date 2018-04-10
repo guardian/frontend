@@ -8,14 +8,14 @@ import model._
 import model.pressed.PressedContent
 import play.api.libs.json._
 import play.api.mvc._
-import views.support.{ContentOldAgeDescriber, ImgSrc}
+import views.support.{ContentOldAgeDescriber, ImgSrc, RemoveOuterParaHtml}
 import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
 
 case class MostPopularItem(
   url: String,
-  webTitle: String,
+  linkText: String,
   showByline: Boolean,
   byline: Option[String],
   image: Option[String],
@@ -139,7 +139,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
     trails.take(10).map(content =>
       MostPopularItem(
         url = LinkTo(content.header.url),
-        webTitle = content.properties.webTitle,
+        linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.properties.webTitle)).body,
         showByline = content.properties.showByline,
         byline = content.properties.byline,
         image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
