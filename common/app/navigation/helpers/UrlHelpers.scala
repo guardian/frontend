@@ -81,31 +81,4 @@ object UrlHelpers {
     } else {
       s"https://jobs.theguardian.com?INTCMP=jobs_${editionId}_web_newheader"
     }
-
-  def countryUrlLogic(editionId: String, position: Position, defaultDestination: ReaderRevenueSite)(implicit request: RequestHeader): String =
-    editionId match {
-      case "us" => getReaderRevenueUrl(SupportUsContribute, position)
-      case "uk" => getReaderRevenueUrl(Support, position)
-      case _ => getReaderRevenueUrl(defaultDestination, position)
-    }
-
-  // This methods can be reverted once we decide to deploy the new support site to the rest of the world.
-  def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
-    val editionId = Edition(request).id.toLowerCase()
-    countryUrlLogic(editionId, position, Membership)
-  }
-
-  def getSupportOrContributeUrl(position: Position)(implicit request: RequestHeader): String = {
-    val editionId = Edition(request).id.toLowerCase()
-    countryUrlLogic(editionId, position, Contribute)
-  }
-
-  def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
-    val editionId = Edition(request).id.toLowerCase()
-    if (editionId == "uk") {
-      getReaderRevenueUrl(Support, position)
-    } else {
-      getReaderRevenueUrl(Subscribe, position)
-    }
-  }
 }

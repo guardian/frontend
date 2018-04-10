@@ -3,8 +3,8 @@
 @import common.{LinkTo, Edition}
 @import views.support.RenderClasses
 @import navigation.NavMenu
-@import navigation.UrlHelpers.{getJobUrl, Header, getSupportOrSubscriptionUrl, getReaderRevenueUrl }
-@import navigation.ReaderRevenueSite.Support
+@import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
+@import navigation.ReaderRevenueSite.{Support, SupportBySubscribing}
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
@@ -58,7 +58,7 @@
                         <a class="top-bar__item hide-until-tablet js-subscribe js-acquisition-link"
                             data-link-name="nav2 : subscribe-cta"
                             data-edition="@{editionId}"
-                            href="@getSupportOrSubscriptionUrl(Header)">
+                            href="@getReaderRevenueUrl(SupportBySubscribing, Header)">
 
                             Subscribe
                         </a>
