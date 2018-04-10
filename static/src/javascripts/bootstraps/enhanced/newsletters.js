@@ -57,11 +57,8 @@ const submitForm = (
     const listName = encodeURIComponent(
         $('input[name="listName"]', form).val()
     );
-    const csrfToken = encodeURIComponent(
-        $('input[name="csrfToken"]', form).val()
-    );
-    const formQueryString = `${inputs.email}=${email}&csrfToken=${
-        csrfToken
+    const formQueryString = `${inputs.email}=${
+        email
     }&listName=${listName}&${inputs.dummy}=${dummyEmail}`;
 
     return fetch(`${config.get('page.ajaxUrl')}/email`, {

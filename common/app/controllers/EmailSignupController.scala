@@ -1,12 +1,13 @@
 package controllers
 
+import com.gu.identity.model.EmailNewsletter
+import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
 import conf.Configuration
+import http.RemoteAddress
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
-import com.typesafe.scalalogging.LazyLogging
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
@@ -14,11 +15,9 @@ import play.api.data.validation.Constraints.emailAddress
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.util.{Failure, Success, Try}
 
 object emailLandingPage extends StandalonePage {
   private val id = "email-landing-page"
@@ -44,9 +43,9 @@ case class EmailForm(
   }
 }
 
-class EmailFormService(wsClient: WSClient) extends LazyLogging {
+class EmailFormService(wsClient: WSClient) extends LazyLogging with RemoteAddress {
 
-  def submit(form: EmailForm): Future[WSResponse] = if (form.isLikelyBotSubmission) {
+  def submit(form: EmailForm)(implicit request: Request[_]): Future[WSResponse] = if (form.isLikelyBotSubmission) {
     Future.failed(new IllegalAccessException("Form was likely submitted by a bot."))
   } else {
     val idAccessClientToken = Configuration.id.apiClientToken
@@ -56,11 +55,12 @@ class EmailFormService(wsClient: WSClient) extends LazyLogging {
     wsClient
       .url(consentMailerUrl)
       .addHttpHeaders("X-GU-ID-Client-Access-Token" -> s"Bearer $idAccessClientToken")
+      .addHttpHeaders("X-Forwarded-For" -> clientIp(request).getOrElse("NA"))
       .post(consentMailerPayload)
   }
 }
 
-class EmailSignupController(wsClient: WSClient, val controllerComponents: ControllerComponents, csrfCheck: CSRFCheck, csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with Logging {
+class EmailSignupController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with Logging {
   val emailFormService = new EmailFormService(wsClient)
 
   val emailForm: Form[EmailForm] = Form(
@@ -77,28 +77,26 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
     Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
   }
 
-  def renderForm(emailType: String, listId: Int): Action[AnyContent] = csrfAddToken {
-    Action { implicit request =>
-      val identityName = EmailNewsletter(listId)
-        .orElse(EmailNewsletter.fromV1ListId(listId))
-        .map(_.identityName)
+  def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
+    val identityName = EmailNewsletter(listId)
+      .orElse(EmailNewsletter.fromV1ListId(listId))
+      .map(_.identityName)
 
-      identityName match {
-        case Some(listName) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
-        case _ => Cached(15.minute)(WithoutRevalidationResult(NotFound))
-      }
+    identityName match {
+      case Some(listName) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
+      case _ => Cached(15.minute)(WithoutRevalidationResult(NotFound))
     }
   }
 
-  def renderFormFromName(emailType: String, listName: String): Action[AnyContent] = csrfAddToken {
-    Action { implicit request =>
-      val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
-      id match {
-        case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
-        case _            => Cached(15.minute)(WithoutRevalidationResult(NotFound))
-      }
+
+  def renderFormFromName(emailType: String, listName: String): Action[AnyContent] = Action { implicit request =>
+    val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
+    id match {
+      case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
+      case _            => Cached(15.minute)(WithoutRevalidationResult(NotFound))
     }
   }
+
 
 
   def subscriptionResult(result: String): Action[AnyContent] = Action { implicit request =>

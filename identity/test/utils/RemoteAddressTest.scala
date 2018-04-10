@@ -1,5 +1,6 @@
 package utils
 
+import http.RemoteAddress
 import org.scalatest.FunSuite
 import play.api.test.FakeRequest
 import play.api.test.Helpers._

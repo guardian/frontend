@@ -253,7 +253,6 @@ const submitForm = (
 
     return event => {
         const emailAddress = $(`.${classes.textInput}`, $form).val();
-        const csrfToken = $(`input[name=csrfToken]`, $form).val();
         const dummy = $(`.${classes.dummyInput}`, $form).val();
         const listName = $(`.${classes.listNameHiddenInput}`, $form);
 
@@ -266,9 +265,7 @@ const submitForm = (
                 emailAddress
             )}&name=${encodeURIComponent(dummy)}&campaignCode=${
                 formData.campaignCode
-            }&referrer=${formData.referrer}&csrfToken=${encodeURIComponent(
-                csrfToken
-            )}&listName=${listName.val()}`;
+            }&referrer=${formData.referrer}&listName=${listName.val()}`;
 
             analyticsInfo = `rtrt | email form inline | ${
                 analytics.formType

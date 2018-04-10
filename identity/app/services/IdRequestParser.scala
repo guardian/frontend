@@ -2,9 +2,10 @@ package services
 
 import idapiclient.TrackingData
 import play.api.mvc.RequestHeader
-import utils.{ThirdPartyConditions, RemoteAddress}
+import utils.ThirdPartyConditions
 import jobs.TorExitNodeList
 import conf.switches.Switches
+import http.RemoteAddress
 
 class IdRequestParser(returnUrlVerifier: ReturnUrlVerifier) extends RemoteAddress {
   def apply(request: RequestHeader): IdentityRequest = {
