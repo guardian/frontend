@@ -22,6 +22,8 @@ object SkimLinksCache extends Logging {
       skimLinks
     }
   }
+  // initialise immediately upon startup
+  getSkimLinks
 
   def isSkimLink(link: String): Boolean = {
     val uri: Option[URL] = Try(new URL(link)).toOption
