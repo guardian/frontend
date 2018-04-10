@@ -21,7 +21,9 @@ import views.support._
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
+import java.lang.System.currentTimeMillis
 
+import metrics.TimingMetric
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -194,6 +196,12 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   }
 
+  def timedPage[T](future: Future[T], metric: TimingMetric): Future[T] = {
+      val start = currentTimeMillis
+      future.onComplete(_ => metric.recordDuration(currentTimeMillis - start))
+      future
+  }
+
   // for the GUUI demo. Same as mapModel except the render method should return a  Future[Result] instead of Result
   def mapModelGUUI(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
 
@@ -208,13 +216,23 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     Action.async { implicit request =>
 
       if(request.isGuui){
-        mapModelGUUI(path, Some(ArticleBlocks)){
-          remoteRender(path, _)
-        }
+
+        timedPage(
+          mapModelGUUI(path, Some(ArticleBlocks)){
+            remoteRender(path, _)
+          },
+          RenderingMetrics.RemoteRenderingMetric
+        )
+
       } else {
-        mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
-          render(path, _)
-        }
+
+        timedPage(
+          mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
+            render(path, _)
+          },
+          RenderingMetrics.LocalRenderingMetric
+        )
+
       }
 
     }

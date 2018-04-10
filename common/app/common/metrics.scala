@@ -165,6 +165,17 @@ object ApplicationMetrics {
   def apply(metrics: FrontendMetric*): ApplicationMetrics = ApplicationMetrics(metrics.toList)
 }
 
+object RenderingMetrics {
+  val RemoteRenderingMetric = TimingMetric(
+    "remote-rendering-time",
+    "Remote rendering time"
+  )
+  val LocalRenderingMetric = TimingMetric(
+    "local-rendering-time",
+    "Local rendering time"
+  )
+}
+
 class CloudWatchMetricsLifecycle(
   appLifecycle: ApplicationLifecycle,
   appIdentity: ApplicationIdentity,
