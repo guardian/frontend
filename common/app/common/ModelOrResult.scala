@@ -19,7 +19,34 @@ object ModelOrResult extends Results with Logging {
       .getOrElse(Right(NoCache(NotFound)))
 }
 
+object ContentRedirect {
+
+  private[this] def paramString(r: RequestHeader): String = {
+    if (r.rawQueryString.isEmpty) "" else s"?${r.rawQueryString}"
+  }
+
+  private[this] def getWebURL(response: ItemResponse): Option[String] = {
+    response.content
+      .map(_.webUrl)
+      .orElse(response.section.map(_.webUrl))
+      .orElse(response.tag.map(_.webUrl))
+      .map(new URI(_)).map(_.getPath)
+  }
+
+  def canonical(request: RequestHeader, response: ItemResponse): Option[Result] = {
+    val canonicalPath = getWebURL(response)
+    canonicalPath
+      .filter(path => path != request.pathWithoutModifiers && !request.isModified)
+      .map(path => Found(path + paramString(request)))
+  }
+
+  def internal(request: RequestHeader, response: ItemResponse): Option[Result] = {
+    InternalRedirect(response)(request)
+  }
+}
+
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
+// TODO remove this - we shouldn't have complex redirect logic in specific microservices
 private object ItemOrRedirect extends ItemResponses with Logging {
 
   def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection])(implicit request: RequestHeader): Either[T, Result] = {
@@ -68,9 +95,11 @@ object InternalRedirect extends implicits.Requests with Logging {
 
   lazy val ShortUrl = """^(/p/.*)$""".r
 
-  def apply(response: ItemResponse)(implicit request: RequestHeader): Option[Result] = contentTypes(response)
-    .orElse(response.tag.map(t => internalRedirect("facia", t.id)))
-    .orElse(response.section.map(s => internalRedirect("facia", s.id)))
+  def apply(response: ItemResponse)(implicit request: RequestHeader): Option[Result] = {
+    contentTypes(response)
+      .orElse(response.tag.map(t => internalRedirect("facia", t.id)))
+      .orElse(response.section.map(s => internalRedirect("facia", s.id)))
+  }
 
 
   def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Result] = {

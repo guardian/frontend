@@ -1,6 +1,7 @@
 package model
 
 import com.gu.contentapi.client.model.v1.ItemResponse
+import com.gu.contentapi.client.model.v1.Package
 import common.`package`._
 import model.liveblog.BodyBlock
 import model.ParseBlockId.ParsedBlockId
@@ -43,7 +44,7 @@ object LiveBlogHelpers {
 
   }
 
-  def createLiveBlogModel(liveBlog: Article, response: ItemResponse, range: BlockRange): Either[LiveBlogPage, Status] = {
+  def createLiveBlogModel(liveBlog: Article, packages: Option[Seq[Package]], range: BlockRange): Option[LiveBlogPage] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
@@ -74,9 +75,7 @@ object LiveBlogHelpers {
         content = liveBlog.content.copy(
           metadata = liveBlog.content.metadata.copy(
             cacheTime = cacheTime)))
-      Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, response)))
-
-    }.getOrElse(Right(NotFound))
-
+      LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog, packages))
+    }
   }
 }
