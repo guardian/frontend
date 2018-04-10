@@ -196,7 +196,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   }
 
-  def timedPage[T](future: Future[T], metric: TimingMetric): Future[T] = {
+  def timedFuture[T](future: Future[T], metric: TimingMetric): Future[T] = {
       val start = currentTimeMillis
       future.onComplete(_ => metric.recordDuration(currentTimeMillis - start))
       future
@@ -217,20 +217,20 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
       if(request.isGuui){
 
-        timedPage(
+        timedFuture(
           mapModelGUUI(path, Some(ArticleBlocks)){
             remoteRender(path, _)
           },
-          RenderingMetrics.RemoteRenderingMetric
+          ArticleRenderingMetrics.RemoteRenderingMetric
         )
 
       } else {
 
-        timedPage(
+        timedFuture(
           mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
             render(path, _)
           },
-          RenderingMetrics.LocalRenderingMetric
+          ArticleRenderingMetrics.LocalRenderingMetric
         )
 
       }
