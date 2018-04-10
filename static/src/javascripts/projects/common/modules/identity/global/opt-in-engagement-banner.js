@@ -46,7 +46,7 @@ const template: Template = {
 
 const userVisitedViaNewsletter = (): boolean =>
     ['utm_source=eml', 'utm_medium=email']
-        .map(_ => window.location.href.toLowerCase().contains(_))
+        .map(_ => window.location.href.toLowerCase().includes(_))
         .some(_ => _ === true);
 
 const shouldDisplayBasedOnRemindMeLaterInterval = (): boolean => {
