@@ -6,10 +6,12 @@ import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model.Cached.RevalidatableResult
 import model._
+import models.{OnwardCollection, OnwardCollectionResponse}
 import play.api.libs.json._
 import play.api.mvc._
 import services._
 import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
+import models.OnwardCollection._
 
 import scala.concurrent.duration._
 
@@ -43,7 +45,14 @@ class RelatedController(
   private def renderRelated(trails: Seq[RelatedContentItem], containerTitle: String)(implicit request: RequestHeader): Result = Cached(30.minutes) {
     val relatedTrails = trails take 8
 
-    if (request.isJson) {
+    if (request.isGuui) {
+      val data = OnwardCollectionResponse(
+        heading = containerTitle,
+        trails = trailsToItems(trails.map(_.faciaContent))
+      )
+
+      JsonComponent(data)
+    } else if (request.isJson) {
       val html = views.html.fragments.containers.facia_cards.container(
         onwardContainer(containerTitle, relatedTrails.map(_.faciaContent)),
         FrontProperties.empty
