@@ -6,7 +6,7 @@ export const askFourEarning: EpicABTest = makeABTest({
     campaignId: 'kr1_epic_ask_four_earning',
 
     start: '2017-01-24',
-    expiry: '2018-07-19',
+    expiry: '2019-01-24',
 
     author: 'Jonathan Rankin',
     description:
