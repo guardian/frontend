@@ -1,4 +1,4 @@
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.ContentApiError
 import play.api._
 import play.api.http.DefaultHttpErrorHandler
 import play.api.mvc.Results._
@@ -17,7 +17,7 @@ class PreviewErrorHandler(
 
   override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
     exception match  {
-      case GuardianContentApiError(statusCode, statusMessage, _) if statusCode == 404 =>
+      case ContentApiError(statusCode, statusMessage, _) if statusCode == 404 =>
         Future.successful(NotFound(views.html.not_found(request.path)))
       case _ =>
         super.onServerError(request, exception)

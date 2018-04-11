@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
-import com.gu.contentapi.client.ContentApiClientLogic
+import com.gu.contentapi.client.{ContentApiClient => CapiContentApiClient}
 import com.gu.contentapi.client.model._
 import com.gu.contentapi.client.model.v1.{Edition => _, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
@@ -97,13 +97,13 @@ trait ApiQueryDefaults extends Logging {
     .showAtoms("media")
 }
 
-// This trait extends ContentApiClientLogic with Cloudwatch metrics that monitor
+// This trait extends ContentApiClient with Cloudwatch metrics that monitor
 // the average response time, and the number of timeouts, from Content Api.
-trait MonitoredContentApiClientLogic extends ContentApiClientLogic with ApiQueryDefaults with Logging {
+trait MonitoredContentApiClientLogic extends CapiContentApiClient with ApiQueryDefaults with Logging {
 
   val httpClient: HttpClient
 
-  override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {
+  def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {
     val futureContent = httpClient.GET(url, headers) map { response: Response =>
       HttpResponse(response.body, response.status, response.statusText)
     }
@@ -131,7 +131,7 @@ final case class CircuitBreakingContentApiClient(
     resetTimeout = contentApi.circuitBreakerResetTimeout
   )
 
-  override lazy val http: OkHttpClient = new OkHttpClient.Builder()
+  val http: OkHttpClient = new OkHttpClient.Builder()
     .connectTimeout(2, TimeUnit.SECONDS)
     .readTimeout(2, TimeUnit.SECONDS)
     .followRedirects(true)
@@ -150,11 +150,11 @@ final case class CircuitBreakingContentApiClient(
     log.info("CAPI circuit breaker: Content API Client looks healthy again, circuit breaker is closed.")
   )
 
-  override def fetch(url: String)(implicit executionContext: ExecutionContext): Future[Array[Byte]] = {
+  override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {
     if (CircuitBreakerSwitch.isSwitchedOn) {
-      circuitBreaker.withCircuitBreaker(super.fetch(url)(executionContext))
+      circuitBreaker.withCircuitBreaker(super.get(url, headers)(executionContext))
     } else {
-      super.fetch(url)
+      super.get(url, headers)
     }
   }
 }
@@ -173,10 +173,10 @@ class ContentApiClient(httpClient: HttpClient)(implicit executionContext: Execut
   }
 
   def item(id: String): ItemQuery = getClient.item(id)
-  def tags: TagsQuery = getClient.tags
-  def search: SearchQuery = getClient.search
-  def sections: SectionsQuery = getClient.sections
-  def editions: EditionsQuery = getClient.editions
+  def tags: TagsQuery = CapiContentApiClient.tags
+  def search: SearchQuery = CapiContentApiClient.search
+  def sections: SectionsQuery = CapiContentApiClient.sections
+  def editions: EditionsQuery = CapiContentApiClient.editions
 
   def getResponse(itemQuery: ItemQuery): Future[ItemResponse] = getClient.getResponse(itemQuery)
 
