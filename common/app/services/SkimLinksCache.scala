@@ -11,6 +11,7 @@ object SkimLinksCache extends Logging {
 
   def getSkimLinks: Set[String] = {
     if (skimLinks.nonEmpty) {
+      log.info(s"Already got links: $skimLinks")
       skimLinks
     } else {
       log.info("Fetching and caching skimlinks")
