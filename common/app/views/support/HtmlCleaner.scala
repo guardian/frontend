@@ -3,7 +3,7 @@ package views.support
 import java.net.URI
 import java.util.regex.{Matcher, Pattern}
 
-import common.{Edition, LinkTo}
+import common.{Edition, LinkTo, Logging}
 import conf.switches.CommercialSwitches
 import conf.switches.Switches._
 import layout.ContentWidths
@@ -798,9 +798,10 @@ object GarnettQuoteCleaner extends HtmlCleaner {
   }
 }
 
-case class SkimLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean]) extends HtmlCleaner with CommercialSwitches {
+case class SkimLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean]) extends HtmlCleaner with CommercialSwitches with Logging {
 
   override def clean(document: Document): Document = {
+    log.info("CLEANING SKIMLINKS")
     if (AffiliateLinks.isSwitchedOn && SkimLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn, sectionId, showAffiliateLinks)) {
       SkimLinksCleaner.replaceLinksInHtml(document, pageUrl)
     } else document
