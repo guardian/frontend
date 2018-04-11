@@ -12,7 +12,6 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
-import { acquisitionsEpicAudSupport } from 'common/modules/experiments/tests/acquisitions-epic-aud-support';
 import { acquisitionsEpicCambridgeAnalyticaAlwaysAskFinal } from 'common/modules/experiments/tests/acquisitions-epic-cambridge-analytica-always-ask-final';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
@@ -41,7 +40,6 @@ export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicCambridgeAnalyticaAlwaysAskFinal,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
-    acquisitionsEpicAudSupport,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,
