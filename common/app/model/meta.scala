@@ -70,13 +70,8 @@ object Fields {
       legallySensitive = apiContent.fields.flatMap(_.legallySensitive),
       firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJoda),
       lang = apiContent.fields.flatMap(_.lang),
-      shouldShowAffiliateLinks = apiContent.fields.flatMap(_.showAffiliateLinks).getOrElse(isAffiliateLinksSection(apiContent.section))
+      showAffiliateLinks = apiContent.fields.flatMap(_.showAffiliateLinks)
     )
-  }
-
-  def isAffiliateLinksSection(section: Option[contentapi.Section]): Boolean = {
-    val sectionId = section.map(_.id).getOrElse("")
-    Configuration.skimlinks.skimlinksSections.contains(sectionId)
   }
 
   def shouldHideReaderRevenue(apiContent: contentapi.Content, cutoffDate: DateTime): Boolean = {
@@ -112,7 +107,7 @@ final case class Fields(
   legallySensitive: Option[Boolean],
   firstPublicationDate: Option[DateTime],
   lang: Option[String],
-  shouldShowAffiliateLinks: Boolean
+  showAffiliateLinks: Option[Boolean]
 ){
   lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
   lazy val isRightToLeftLang: Boolean = lang.contains("ar")

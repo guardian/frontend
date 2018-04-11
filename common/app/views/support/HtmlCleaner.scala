@@ -16,7 +16,7 @@ import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
 import play.twirl.api.HtmlFormat
 import services.SkimLinksCache
-import conf.Configuration.skimlinks._
+import conf.Configuration.affiliatelinks._
 
 import scala.collection.JavaConverters._
 import scala.util.Try
@@ -798,24 +798,38 @@ object GarnettQuoteCleaner extends HtmlCleaner {
   }
 }
 
-case class SkimLinksCleaner(pageUrl: String, shouldShowAffiliateLinks: Boolean) extends HtmlCleaner with CommercialSwitches {
+case class SkimLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean]) extends HtmlCleaner with CommercialSwitches {
 
   override def clean(document: Document): Document = {
-    if (ReplaceSkimLinks.isSwitchedOn && shouldShowAffiliateLinks) {
-      val links = document.getElementsByAttribute("href")
-
-      links.asScala.foreach { link =>
-        val href = link.attr("href")
-        if (link.tagName == "a" && SkimLinksCache.isSkimLink(href)) {
-          link.attr("href", linkToSkimLink(link.attr("href")))
-        }
-      }
-      document
+    if (AffiliateLinks.isSwitchedOn && SkimLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn, sectionId, showAffiliateLinks)) {
+      SkimLinksCleaner.replaceLinksInHtml(document, pageUrl)
     } else document
   }
+}
 
-  def linkToSkimLink(link: String): String = {
+object SkimLinksCleaner {
+  def replaceLinksInHtml(html: Document, pageUrl: String): Document = {
+    val links = html.getElementsByAttribute("href")
+
+    links.asScala.foreach { link =>
+      val href = link.attr("href")
+      if (link.tagName == "a" && SkimLinksCache.isSkimLink(href)) {
+        link.attr("href", linkToSkimLink(link.attr("href"), pageUrl))
+      }
+    }
+    html
+  }
+
+  def linkToSkimLink(link: String, pageUrl: String): String = {
     val urlEncodedLink = URLEncode(link)
     s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$pageUrl"
+  }
+
+  def shouldAddAffiliateLinks(switchedOn: Boolean, section: String, showAffiliateLinks: Option[Boolean]): Boolean = {
+    if (showAffiliateLinks.isDefined) {
+      showAffiliateLinks.contains(true)
+    } else {
+      switchedOn && affiliateLinkSections.contains(section)
+    }
   }
 }
