@@ -397,10 +397,20 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val ReplaceSkimLinks: Switch = Switch(
+  val AffiliateLinks: Switch = Switch(
     group = Commercial,
-    name = "replace-skimlinks",
-    description = "For content in certain sections, replace body links supported by skimlinks.com with a skimlink url",
+    name = "affiliate-links",
+    description = "Enable the automatic replacement of links with affiliate links.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val AffiliateLinkSections: Switch = Switch(
+    group = Commercial,
+    name = "affiliate-links-sections",
+    description = "Add affiliate links to all content in certain sections when no override exists in capi.",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
