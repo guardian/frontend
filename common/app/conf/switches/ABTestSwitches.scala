@@ -122,7 +122,7 @@ trait ABTestSwitches {
     "turn on always ask for CA stories",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 10),
+    sellByDate = new LocalDate(2018, 4, 18),
     exposeClientSide = true
   )
 }
