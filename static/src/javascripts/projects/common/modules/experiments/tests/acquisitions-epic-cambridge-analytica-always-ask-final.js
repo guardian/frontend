@@ -11,7 +11,7 @@ export const acquisitionsEpicCambridgeAnalyticaAlwaysAskFinal: EpicABTest = make
         campaignId: abTestName,
 
         start: '2018-03-20',
-        expiry: '2018-04-10',
+        expiry: '2018-06-05',
 
         author: 'Jonathan Rankin',
         description: 'Always ask on Cambridge analytica stories',
