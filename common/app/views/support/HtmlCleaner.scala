@@ -803,6 +803,7 @@ case class SkimLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLin
   override def clean(document: Document): Document = {
     log.info("CLEANING SKIMLINKS")
     if (AffiliateLinks.isSwitchedOn && SkimLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn, sectionId, showAffiliateLinks)) {
+      log.info("SKIMLINKS SHOULD BE CLEANED")
       SkimLinksCleaner.replaceLinksInHtml(document, pageUrl)
     } else document
   }
