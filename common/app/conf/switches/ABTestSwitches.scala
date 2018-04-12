@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 7, 19),
+    sellByDate = new LocalDate(2019, 1, 24),
     exposeClientSide = true
   )
 
@@ -22,7 +22,7 @@ trait ABTestSwitches {
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 7, 19),
+    sellByDate = new LocalDate(2019, 1, 24),
     exposeClientSide = true
   )
 
@@ -32,7 +32,7 @@ trait ABTestSwitches {
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 7, 19),
+    sellByDate = new LocalDate(2019, 1, 24),
     exposeClientSide = true
   )
 
@@ -42,7 +42,7 @@ trait ABTestSwitches {
     "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 9, 5),
+    sellByDate = new LocalDate(2019, 1, 24),
     exposeClientSide = true
   )
 
@@ -53,16 +53,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
     sellByDate = new LocalDate(2019, 3, 14),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-lazy-loading-extended",
-    "Varies the strategy for lazyloading of adverts",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 4),
     exposeClientSide = true
   )
 
@@ -82,7 +72,7 @@ trait ABTestSwitches {
     "Point the subscribe link in the header to a subscriptions-only version of the support site",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 5),
+    sellByDate = new LocalDate(2018, 4, 19),
     exposeClientSide = true
   )
 
@@ -90,57 +80,7 @@ trait ABTestSwitches {
     ABTests,
     "ab-spacefinder-simplify",
     "Alters the rules for inserting ads on desktop breakpoints.",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 6),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-header-aud-support",
-    "Points the 'support the guardian' link in the header to the aud version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-engagement-banner-aud-support",
-    "Points the 'support the guardian' link in the engagement banner to the aud version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-aud-support",
-    "Points the 'support the guardian' link in the epic to the aud version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-engagement-banner-uk-17-pence",
-    "Tests a CTA message that aims to push people towards recurring contributions in the UK",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-engagement-banner-us-23-cents",
-    "Tests a CTA message that aims to push people towards recurring contributions in the US",
-    owners = Seq(Owner.withGithub("jranks123")),
+    owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 4, 24),
     exposeClientSide = true
@@ -152,37 +92,7 @@ trait ABTestSwitches {
     "turn on always ask for CA stories",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-header-row-support",
-    "Points the 'support the guardian' link in the header to the row version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-engagement-banner-row-support",
-    "Points the 'support the guardian' link in the engagement banner to the row version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-row-support",
-    "Points the 'support the guardian' link in the epic to the row version of the support site",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 24),
+    sellByDate = new LocalDate(2018, 6, 5),
     exposeClientSide = true
   )
 }

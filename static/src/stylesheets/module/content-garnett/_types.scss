@@ -1385,40 +1385,6 @@ $quote-mark: 35px;
     display: block;
     object-fit: cover;
 }
-// *************** Football ***************
-
-.section-football {
-    .team__info {
-        @include fs-headlineGarnett(3);
-        @include mq(mobileLandscape) {
-            @include fs-headlineGarnett(4);
-        }
-    }
-
-    .match-summary--responsive {
-        .team__info {
-            @include fs-headlineGarnett(7);
-        }
-    }
-
-    .goal-attempts__off-target,
-    .goal-attempts__on-target {
-        @include fs-headerGarnett(2);
-        line-height: $gs-baseline * 1.5;
-    }
-
-    .chart--football-possession {
-        .chart__label-value {
-            @include fs-headerGarnett(5);
-        }
-    }
-
-    .bar-fight__bar {
-        @include fs-headerGarnett(2);
-        line-height: $gs-baseline * 1.5;
-        padding: $gs-baseline/6 ($gs-gutter/4)+3 $gs-baseline/2;
-    }
-}
 
 .social__tray-close .social-tray__button {
     &:focus,

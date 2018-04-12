@@ -5,23 +5,30 @@ import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.Cached.WithoutRevalidationResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import LiveBlogHelpers._
+import conf.Configuration
 import model.liveblog._
 import org.joda.time.DateTime
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
+import play.api.libs.ws.WSClient
 import play.api.mvc._
+import play.twirl.api.Html
 import views.support._
 
+import scala.concurrent.duration._
 import scala.concurrent.Future
+import java.lang.System.currentTimeMillis
+
+import metrics.TimingMetric
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController
+class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController
     with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
@@ -166,11 +173,68 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
+  def remoteRenderArticle(payload: String): Future[String] = ws.url(Configuration.rendering.renderingEndpoint)
+    .withRequestTimeout(2000.millis)
+    .addHttpHeaders("Content-Type" -> "application/json")
+    .post(payload)
+    .map((response) =>
+      response.body
+    )
+
+  def remoteRender(path: String, model: PageWithStoryPackage)(implicit request: RequestHeader): Future[Result] = model match {
+
+    case article : ArticlePage =>
+      val contentFieldsJson = if (request.isGuui) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
+      val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
+      val jsonPayload = JsonComponent.jsonFor(model, jsonResponse():_*)
+
+      remoteRenderArticle(jsonPayload).map(s => {
+        Cached(article){ RevalidatableResult.Ok(Html(s)) }
+      })
+
+    case _ => throw new Exception("Remote render not supported for this content type")
+
+  }
+
+  def timedFuture[T](future: Future[T], metric: TimingMetric): Future[T] = {
+      val start = currentTimeMillis
+      future.onComplete(_ => metric.recordDuration(currentTimeMillis - start))
+      future
+  }
+
+  // for the GUUI demo. Same as mapModel except the render method should return a  Future[Result] instead of Result
+  def mapModelGUUI(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
+
+    lookup(path, range).map((itemResp: ItemResponse) => responseToModelOrResult(range)(itemResp)).recover(convertApiExceptions).flatMap {
+      case Left(model) => render(model)
+      case Right(other) => Future.successful(RenderOtherStatus(other))
+    }
+
+  }
+
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
-        render(path, _)
+
+      if(request.isGuui){
+
+        timedFuture(
+          mapModelGUUI(path, Some(ArticleBlocks)){
+            remoteRender(path, _)
+          },
+          ArticleRenderingMetrics.RemoteRenderingMetric
+        )
+
+      } else {
+
+        timedFuture(
+          mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
+            render(path, _)
+          },
+          ArticleRenderingMetrics.LocalRenderingMetric
+        )
+
       }
+
     }
   }
 

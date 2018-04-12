@@ -130,6 +130,7 @@ const formatAppNexusTargeting = (obj: Object): string =>
 
 const buildAppNexusTargeting = once((pageTargeting: Object): string =>
     formatAppNexusTargeting({
+        sens: pageTargeting.sens,
         pt1: pageTargeting.url,
         pt2: pageTargeting.edition,
         pt3: pageTargeting.ct,

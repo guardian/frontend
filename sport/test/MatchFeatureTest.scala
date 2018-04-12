@@ -44,17 +44,11 @@ import scala.collection.JavaConverters._
         And("I should see the away fouls")
         el("[data-stat-type='fouls'][class*='--away']").text should be("15")
 
-        And("I should see the home offsides")
-        el("[data-stat-type='offsides'][class*='--home']").text should be("2")
-
-        And("I should see the away offsides")
-        el("[data-stat-type='offsides'][class*='--away']").text should be("2")
-
         And("I should see the home team lineup")
-        el(".team-list").text should include("Mame Diouf")
+        el(".match-stats__lineup--home").text should include("Shaqiri")
 
         And("I should see the away team lineup")
-        $(".team-list").asScala(1).text should include("Gabriel Agbonlahor")
+        el(".match-stats__lineup--away").text should include("Agbonlahor")
       }
     }
   }

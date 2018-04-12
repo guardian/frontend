@@ -137,7 +137,7 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     campaignSuffix: pageId.replace(/-/g, '_').replace(/\//g, '__'),
 
     start: '2017-04-01',
-    expiry: '2018-04-01',
+    expiry: '2019-01-24',
 
     author: 'Joseph Smith',
     description:

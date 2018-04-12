@@ -133,17 +133,6 @@ object ContentApiMetrics {
 
 }
 
-object MoonMetrics {
-  val MoonRenderingMetric = TimingMetric(
-    "moon-rendering-time",
-    "Moon rendering time"
-  )
-  val NonMoonRenderingMetric = TimingMetric(
-    "non-moon-rendering-time",
-    "Non-Moon rendering time"
-  )
-}
-
 object FaciaPressMetrics {
   val FrontPressCronSuccess = CountMetric(
     "front-press-cron-success",
@@ -174,6 +163,17 @@ case class ApplicationMetrics(metrics: List[FrontendMetric])
 
 object ApplicationMetrics {
   def apply(metrics: FrontendMetric*): ApplicationMetrics = ApplicationMetrics(metrics.toList)
+}
+
+object ArticleRenderingMetrics {
+  val RemoteRenderingMetric = TimingMetric(
+    "remote-rendering-time-article",
+    "Remote rendering time for articles"
+  )
+  val LocalRenderingMetric = TimingMetric(
+    "local-rendering-time-article",
+    "Local rendering time for articles"
+  )
 }
 
 class CloudWatchMetricsLifecycle(

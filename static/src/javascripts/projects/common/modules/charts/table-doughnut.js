@@ -21,14 +21,13 @@ TableDoughnut.prototype.render = (el: Element) => {
         unit: el.getAttribute('data-chart-unit'),
         width,
     });
+
     // can't use bonzo's class methods, don't play well in IE
     const currentClasses = $doughnut.attr('class');
-    return $doughnut
-        .attr(
-            'class',
-            `${currentClasses} ${el.getAttribute('data-chart-class') || ''}`
-        )
-        .insertAfter(el);
+    return $doughnut.attr(
+        'class',
+        `${currentClasses} ${el.getAttribute('data-chart-class') || ''}`
+    )[0].outerHTML;
 };
 
 export { TableDoughnut };
