@@ -119,12 +119,29 @@ $pillars: (
         color: map-get($palette, kicker);
     }
 
+    &.fc-item--half-tablet.fc-item--type-immersive.fc-item--standard-mobile,
+    &.fc-item--third-tablet.fc-item--type-immersive.fc-item--standard-mobile,
+    &.fc-item--three-quarters-tablet.fc-item--type-immersive.fc-item--standard-mobile,
+    &.fc-item--third-tablet.fc-item--type-immersive  {
+        border-bottom: 1px solid map-get($palette, kicker);
+        background-color: transparent;
+
+        .fc-item__content {
+            background-color: map-get($palette, kicker);
+        }
+
+        &:hover {
+            .fc-item__content {
+                background-color: darken(map-get($palette, kicker), 5%);
+            }
+        }
+    }
+
     //this is to make the colour lighter for the media cards
     &.fc-item--audio .fc-item__kicker,
     &.fc-item--gallery .fc-item__kicker,
     &.fc-item--video .fc-item__kicker,
     &.video-playlist__item .fc-item__kicker,
-    &.fc-item--type-immersive .fc-item__kicker,
     &.fc-item--type-immersive .fc-item__byline
     {
         color: map-get($palette, invertedKicker);
