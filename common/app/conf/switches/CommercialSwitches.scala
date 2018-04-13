@@ -402,7 +402,7 @@ trait CommercialSwitches {
     name = "affiliate-links",
     description = "Enable the automatic replacement of links with affiliate links.",
     owners = group(Commercial),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )
@@ -412,7 +412,7 @@ trait CommercialSwitches {
     name = "affiliate-links-sections",
     description = "Add affiliate links to all content in certain sections when no override exists in capi.",
     owners = group(Commercial),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = false
   )
