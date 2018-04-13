@@ -81,7 +81,7 @@
 
 .identity-consent-journey--gdpr-oi-campaign {
     .identity-consent-journey-step {
-        border-top-color: #ed6300!important;
+        border-top-color: #53bbd6!important;
     }
     .identity-consent-journey-step__title {
         font-weight: 600;
@@ -90,14 +90,25 @@
 
 .identity-consent-hero {
     $multiline-height: 4px * 3 + 1px; /*height of multiline (4px) times the number of lines (3)*/
-    height: $gs-row-height * 4;
-    background-size: cover;
+    background-color: #53bbd6;
     border-bottom: 1px solid $garnett-neutral-4;
     background-position: center;
     background-repeat: no-repeat;
     overflow: visible;
     margin-bottom: $multiline-height;
     position: relative;
+    padding: $gs-row-height * .5 0;
+
+    img {
+        display: block;
+        margin: auto;
+        height: 100%;
+        height: $gs-row-height * 3;
+        @include mq(tablet) {
+            height: $gs-row-height * 4;
+            background-size: contain;
+        }
+    }
     &:after {
         @include multiline(4, $garnett-neutral-4, top);
         content: '';
@@ -109,10 +120,6 @@
         margin-bottom: -1px;
         margin-top: $gutter;
         width: 100%;
-    }
-    @include mq(tablet) {
-        height: $gs-row-height * 6;
-        background-size: contain;
     }
 }
 

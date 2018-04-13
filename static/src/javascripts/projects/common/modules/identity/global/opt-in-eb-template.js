@@ -35,7 +35,7 @@ const makeTemplateHtml = (template: Template, targets: LinkTargets): string => `
                         targets.journey
                     }" data-link-name="gdpr-oi-campaign : alert : to-consents">
                         ${template.cta}
-                        ${inlineSvg('arrowWhiteRight')}
+                        ${inlineSvg('arrowRight')}
                     </a>
                 </div>
             </div>
