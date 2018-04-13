@@ -9,7 +9,7 @@ import { supportContributeURL } from './support-utilities';
 const baseParams = {
     minArticles: 3,
     colourStrategy() {
-        return 'membership-progitminent yellow';
+        return 'membership-prominent yellow';
     },
     campaignCode: 'gdnwb_copts_memco_banner',
 };
