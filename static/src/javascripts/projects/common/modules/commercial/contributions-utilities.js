@@ -24,19 +24,13 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
-import {
-    useSupportDomain,
-    supportBaseURL,
-} from 'common/modules/commercial/support-utilities';
+import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 export type CtaUrls = {
-    contributeUrl?: string,
-    supportUrl?: string,
+    supportUrl: string,
 };
-
-const contributionsBaseURL = 'https://contribute.theguardian.com';
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -50,8 +44,7 @@ const defaultMaxViews: {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate = (urls: CtaUrls) =>
-    epicButtonsTemplate(urls, useSupportDomain());
+const defaultButtonTemplate = (url: CtaUrls) => epicButtonsTemplate(url);
 
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
     acquisitionsEpicControlTemplate({
@@ -59,7 +52,6 @@ const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
         componentName: options.componentName,
         testimonialBlock: options.testimonialBlock,
         buttonTemplate: options.buttonTemplate({
-            contributeUrl: options.contributeURL,
             supportUrl: options.supportURL,
         }),
     });
@@ -186,18 +178,8 @@ const makeABTestVariant = (
             id,
             parentTest.campaignSuffix
         ),
-        contributeURL = addTrackingCodesToUrl({
-            base: contributionsBaseURL,
-            componentType: parentTest.componentType,
-            componentId: campaignCode,
-            campaignCode,
-            abTest: {
-                name: parentTest.id,
-                variant: id,
-            },
-        }),
         supportURL = addTrackingCodesToUrl({
-            base: `${options.supportBaseURL || supportBaseURL}`,
+            base: `${options.supportBaseURL || supportContributeURL}`,
             componentType: parentTest.componentType,
             componentId: campaignCode,
             campaignCode,
@@ -272,7 +254,6 @@ const makeABTestVariant = (
             isUnlimited,
             products,
             campaignCode,
-            contributeURL,
             supportURL,
             template,
             buttonTemplate,

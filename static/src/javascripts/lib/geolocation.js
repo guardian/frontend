@@ -367,7 +367,7 @@ const countryGroups: CountryGroups = {
     },
 };
 
-// These are the different 'regions' we accept when taking payment.
+// These are the different 'country groups' we accept when taking payment.
 // See https://github.com/guardian/support-internationalisation/blob/master/src/main/scala/com/gu/i18n/CountryGroup.scala for more context.
 const getSupporterCountryGroup = (location: string): CountryGroupId => {
     const availableCountryGroups = Object.keys(countryGroups);
@@ -380,53 +380,25 @@ const getSupporterCountryGroup = (location: string): CountryGroupId => {
     return response || 'GBPCountries';
 };
 
-const isInEurope = (): boolean => {
-    const countryCode = getSync();
-    return (
-        countryGroups.EURCountries.countries.includes(countryCode) ||
-        countryCode === 'GB'
-    );
-};
-
-const getLocalCurrencySymbol = (): string =>
-    ({
-        GBPCountries: '£',
-        UnitedStates: '$',
-        AUDCountries: '$',
-        Canada: 'CA$',
-        EURCountries: '€',
-        NZDCountries: 'NZ$',
-        International: '$',
-    }[getSupporterCountryGroup(getSync())] || '£');
-
 const extendedCurrencySymbol = {
     GBPCountries: '£',
     UnitedStates: '$',
-    EURCountries: '€',
-    Canada: 'CA$',
-    NZDCountries: 'NZ$',
     AUDCountries: '$',
+    Canada: 'CA$',
+    EURCountries: '€',
+    NZDCountries: 'NZ$',
     International: '$',
 };
 
-const currencySymbol = {
-    GBPCountries: '£',
-    UnitedStates: '$',
-    AUDCountries: '$',
-    EURCountries: '€',
-    NZDCountries: '$',
-    International: '$',
-    Canada: '$',
-};
+const getLocalCurrencySymbol = (): string =>
+    extendedCurrencySymbol[getSupporterCountryGroup(getSync())] || '£';
 
 export {
     get,
     getSupporterCountryGroup,
     getSync,
     getLocalCurrencySymbol,
-    isInEurope,
     init,
     setGeolocation,
-    currencySymbol,
     extendedCurrencySymbol,
 };
