@@ -1028,7 +1028,7 @@ $color-gdpr-opt-in: #53bbd6;
 
 .site-message--gdpr-opt-in {
     background: $color-gdpr-opt-in;
-    color: #fff;
+    color: #ffffff;
     box-shadow: inset 0 1px 0 0 hsla(0, 0%, 0%, .1);
     .site-message__copy {
         padding: 0;
@@ -1127,7 +1127,7 @@ a.identity-gdpr-oi-alert__cta {
         background: none;
         color: #ffffff;
         border: 1px solid #ffffff;
-        border-color: hsla(0,100%,100%,.75);
+        border-color: hsla(0, 100%, 100%, .75);
         &:hover {
             background: none;
             border-color: #ffffff;

@@ -102,7 +102,6 @@
     img {
         display: block;
         margin: auto;
-        height: 100%;
         height: $gs-row-height * 3;
         @include mq(tablet) {
             height: $gs-row-height * 4;
