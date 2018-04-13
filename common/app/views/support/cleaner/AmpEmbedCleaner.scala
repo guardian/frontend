@@ -295,13 +295,34 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     document.getElementsByClass("element-embed").asScala
       .filter(_.getElementsByTag("iframe").asScala.nonEmpty)
       .foreach(_.getElementsByTag("iframe").asScala.foreach {
-        //check for soundcloud embeds and remove any others
+        //check for soundcloud embeds and convert others to amp-iframes
         iframeElement: Element =>
           val soundcloudElement = AmpSoundcloud.getSoundCloudElement(document, iframeElement)
           if (soundcloudElement.nonEmpty) {
             iframeElement.replaceWith(soundcloudElement.get)
-          } else
-            iframeElement.remove()
+          } else {
+            val ampIframe = document.createElement("amp-iframe")
+            ampIframe.attr("width", "5")
+            ampIframe.attr("height", "3")
+            ampIframe.attr("layout", "responsive")
+            ampIframe.attr("resizable", "")
+
+            if (iframeElement.hasAttr("srcdoc")) {
+                ampIframe.attr("srcdoc", iframeElement.attr("srcdoc"))
+                ampIframe.attr("sandbox", "allow-scripts")
+            } else {
+                ampIframe.attr("src", iframeElement.attr("src"))
+                ampIframe.attr("sandbox", "allow-scripts allow-forms allow-same-origin")
+            }
+
+            val overflowElem = document.createElement("div")
+            overflowElem.addClass("cta cta--medium cta--show-more cta--show-more__unindent")
+            overflowElem.text("See the full visual")
+            overflowElem.attr("overflow", "")
+
+            ampIframe.appendChild(overflowElem)
+            iframeElement.replaceWith(ampIframe)
+          }
       })
   }
 
