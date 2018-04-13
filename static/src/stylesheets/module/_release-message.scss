@@ -1078,22 +1078,16 @@ $color-gdpr-opt-in: #53bbd6;
 }
 
 .identity-gdpr-oi-alert__logo {
-    margin-left: $gs-gutter * 2 * -1;
+    margin-top: $gs-gutter / 4;
     overflow: hidden;
     position: relative;
-    width: 180px;
+    width: 70px;
     min-height: 100px;
     > img {
-        position: absolute;
-        top: -15px;
-        left: 0;
         width: 100%;
     }
-    @include mq(desktop) {
-        width: 210px;
-        img {
-            top: -25px;
-        }
+    @include mq(tablet) {
+        width: 140px;
     }
 }
 
