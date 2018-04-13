@@ -17,6 +17,7 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.HtmlFormat
 import services.SkimLinksCache
 import conf.Configuration.affiliatelinks._
+import views.html.fragments.affiliateLinksDisclaimer
 
 import scala.collection.JavaConverters._
 import scala.util.Try
@@ -798,28 +799,41 @@ object GarnettQuoteCleaner extends HtmlCleaner {
   }
 }
 
-case class SkimLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean]) extends HtmlCleaner with CommercialSwitches with Logging {
+case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean], contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with CommercialSwitches with Logging {
 
   override def clean(document: Document): Document = {
     log.info("CLEANING SKIMLINKS")
-    if (AffiliateLinks.isSwitchedOn && SkimLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn, sectionId, showAffiliateLinks)) {
+    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn, sectionId, showAffiliateLinks)) {
       log.info("SKIMLINKS SHOULD BE CLEANED")
-      SkimLinksCleaner.replaceLinksInHtml(document, pageUrl)
+      val cleanedResult = AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl)
+      if (cleanedResult.affiliateLinksAdded && appendDisclaimer) {
+        AffiliateLinksCleaner.insertAffiliateDisclaimer(cleanedResult.document, contentType)
+      } else {
+        cleanedResult.document
+      }
     } else document
   }
 }
 
-object SkimLinksCleaner {
-  def replaceLinksInHtml(html: Document, pageUrl: String): Document = {
+case class AffiliateLinksCleanerResult(document: Document, affiliateLinksAdded: Boolean)
+
+object AffiliateLinksCleaner {
+  def replaceLinksInHtml(html: Document, pageUrl: String): AffiliateLinksCleanerResult = {
     val links = html.getElementsByAttribute("href")
 
-    links.asScala.foreach { link =>
+    val skimLinksReplaced: Boolean = links.asScala.exists { link =>
       val href = link.attr("href")
       if (link.tagName == "a" && SkimLinksCache.isSkimLink(href)) {
         link.attr("href", linkToSkimLink(link.attr("href"), pageUrl))
-      }
+        true
+      } else false
     }
-    html
+    AffiliateLinksCleanerResult(html, skimLinksReplaced)
+  }
+
+  def insertAffiliateDisclaimer(document: Document, contentType: String): Document = {
+    document.body().append(affiliateLinksDisclaimer(contentType).toString())
+    document
   }
 
   def linkToSkimLink(link: String, pageUrl: String): String = {

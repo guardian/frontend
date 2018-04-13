@@ -1,0 +1,18 @@
+@(contentType: String)
+
+
+@articleDisclaimer() = {
+    <p><em><sup>This article contains <a href="https://www.theguardian.com/info/2017/nov/01/reader-information-on-affiliate-links" data-link-name="in body link" class="u-underline">affiliate links</a> to products. Our journalism is independent and is never written to promote these products although we may earn a small commission if a reader makes a purchase.</sup></em></p>
+}
+
+@galleryDisclaimer() = {
+    <em>Please note: this gallery contains <a href="https://www.theguardian.com/info/2017/nov/01/reader-information-on-affiliate-links">affiliate links</a>
+        to products. Our journalism is independent and is never written to promote these products although we may earn a small
+        commission if a reader makes a purchase.</em>
+}
+
+@{contentType match {
+    case "gallery" => galleryDisclaimer()
+    case "article" => articleDisclaimer()
+    case _ => Html("")
+}}
