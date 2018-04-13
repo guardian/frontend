@@ -4,7 +4,7 @@
 
 @* Product consent switch/checkbox *@
 
-@(consentField: Field, highlighted: Boolean = false, skin: Option[String] = None)(messages: play.api.i18n.Messages)
+@(consentField: Field, highlighted: Boolean = false, skin: Option[String] = None, boldTitle: Boolean = true)(messages: play.api.i18n.Messages)
 
 @getConsentText(consentField: Field) = @{
     Consent.wording(
@@ -26,5 +26,6 @@
     field = consentField("consented"),
     extraFields = consentHiddenFormFields,
     highlighted = highlighted,
-    skin = skin
+    skin = skin,
+    boldTitle = boldTitle
 )(nonInputFields, messages)

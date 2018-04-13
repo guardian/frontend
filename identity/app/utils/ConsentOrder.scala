@@ -13,8 +13,8 @@ object ConsentOrder {
       "holidays",
       "events",
       "offers",
-      "post",
-      "phone",
+      "post-optout",
+      "phone-optout",
       "sms"
     )
 
@@ -27,7 +27,11 @@ object ConsentOrder {
     */
   def userWithOrderedConsents(userDO: User, consentHint: Option[String]): User = {
     val consentsToReorder =
-      if (userDO.consents.isEmpty) Consent.defaultConsents else userDO.consents
+      if (userDO.consents.isEmpty)
+        Consent.defaultConsents
+      else
+        // handle any default consents that may have been added since this user was created.
+        Consent.addNewDefaults(userDO.consents)
 
     userDO.copy(consents = hintedConsents(orderedConsents(consentsToReorder), consentHint))
   }

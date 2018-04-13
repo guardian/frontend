@@ -16,25 +16,13 @@
         <p class="identity-title-explainer">Please tick the boxes below to let us know if you <b>do not wish to receive</b> these.</p>
 
         <ul>
-            <li>
-            @fragments.form.switch(
-                title = "",
-                subheading = None,
-                description = Some("I <b>do not</b> wish to receive communications from the Guardian <b>by post</b>."),
-                behaviour = ConsentSwitch,
-                field = privacyForm("stopPostComms")
-            )(nonInputFields, messages)
-            </li>
-
-            <li>
-            @fragments.form.switch(
-                title = "",
-                subheading = None,
-                description = Some("I <b>do not</b> wish to receive communications from the Guardian <b>by telephone</b>."),
-                behaviour = ConsentSwitch,
-                field = privacyForm("stopPhoneComms")
-            )(nonInputFields, messages)
-            </li>
+            @helper.repeatWithIndex(privacyForm("consents"), min=1){ (consentField, index) =>
+                @if(isOptOutChannel(consentField, user)) {
+                    <li>
+                        @fragments.consentSwitch(consentField, boldTitle = false)(messages)
+                    </li>
+                }
+            }
         </ul>
     </div>
 </form>
