@@ -1024,10 +1024,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 /* GDPR Opt-in alert
    ========================================================================== */
-$color-gdpr-opt-in: #53bbd6;
-
 .site-message--gdpr-opt-in {
-    background: $color-gdpr-opt-in;
+    background: #53bbd6;
     color: #ffffff;
     box-shadow: inset 0 1px 0 0 hsla(0, 0%, 0%, .1);
     .site-message__copy {
