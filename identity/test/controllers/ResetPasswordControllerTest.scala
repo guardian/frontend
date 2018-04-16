@@ -68,7 +68,7 @@ class ResetPasswordControllerTest
       "should render to the the to the request new password form" in Fake {
         val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
-        header("Location", result).head should be ("/requestnewtoken")
+        header("Location", result).head should be ("/reset/resend")
       }
     }
   }
@@ -94,7 +94,7 @@ class ResetPasswordControllerTest
       "should redirect to request request new password with a token expired" in Fake {
         val result = resetPasswordController.resetPassword("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
-        header("Location", result).head should be ("/requestnewtoken")
+        header("Location", result).head should be ("/reset/resend")
       }
     }
 

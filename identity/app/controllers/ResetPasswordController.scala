@@ -63,12 +63,6 @@ class ResetPasswordController(
     data = form.data + ("password" -> "", "password-confirm" -> "")
   )
 
-  def requestNewToken: Action[AnyContent] = Action { implicit request =>
-    val idRequest = idRequestParser(request)
-    Ok(IdentityHtmlPage.html(
-      views.html.password.resetPasswordRequestNewToken(page, idRequest, idUrlBuilder, requestPasswordResetForm)
-    )(page, request, context))
-  }
 
   def renderEmailSentConfirmation: Action[AnyContent] = Action { implicit request =>
     val idRequest = idRequestParser(request)
@@ -106,7 +100,7 @@ class ResetPasswordController(
           case Left(errors) =>
             logger.info(s"reset password errors, ${errors.toString()}")
             if (errors.exists("Token expired" == _.message))
-              NoCache(SeeOther(routes.ResetPasswordController.requestNewToken().url))
+              NoCache(SeeOther(idUrlBuilder.buildUrl("/reset/resend")))
             else {
               val formWithError = errors.foldLeft(requestPasswordResetForm) { (form, error) =>
                 form.withError(error.context.getOrElse(""), error.description)
@@ -139,7 +133,7 @@ class ResetPasswordController(
     api.userForToken(token) map {
       case Left(errors) =>
         logger.warn(s"Could not retrieve password reset request for token: $token, errors: ${errors.toString()}")
-        NoCache(SeeOther(routes.ResetPasswordController.requestNewToken().url))
+        NoCache(SeeOther(idUrlBuilder.buildUrl("/reset/resend")))
 
       case Right(user) =>
         val filledForm = passwordResetForm.fill("","", user.primaryEmailAddress)
