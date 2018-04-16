@@ -799,7 +799,7 @@ object GarnettQuoteCleaner extends HtmlCleaner {
   }
 }
 
-case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean], contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with CommercialSwitches with Logging {
+case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean], contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with Logging {
 
   override def clean(document: Document): Document = {
     log.info(s"CLEANING SKIMLINKS ${AffiliateLinks.isSwitchedOn} $sectionId $showAffiliateLinks ${AffiliateLinkSections.isSwitchedOn}")
