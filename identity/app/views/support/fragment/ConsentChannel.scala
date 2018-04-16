@@ -6,8 +6,8 @@ import play.api.data.Field
 object ConsentChannel {
   sealed abstract class ConsentChannelBehaviour(val id: String)
   case object TextConsentChannel  extends ConsentChannelBehaviour("sms")
-  case object PhoneOptOutConsentChannel extends ConsentChannelBehaviour("phone-optout")
-  case object PostOptOutConsentChannel  extends ConsentChannelBehaviour("post-optout")
+  case object PhoneOptOutConsentChannel extends ConsentChannelBehaviour("phone_optout")
+  case object PostOptOutConsentChannel  extends ConsentChannelBehaviour("post_optout")
 
   private val channelsIds = List(
     TextConsentChannel.id,

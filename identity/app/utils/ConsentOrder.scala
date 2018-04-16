@@ -13,8 +13,8 @@ object ConsentOrder {
       "holidays",
       "events",
       "offers",
-      "post-optout",
-      "phone-optout",
+      "post_optout",
+      "phone_optout",
       "sms"
     )
 
