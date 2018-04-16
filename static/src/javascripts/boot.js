@@ -37,14 +37,10 @@ const go = () => {
         }
 
         // Start downloading these ASAP
-        const commercialBaselineControl =
-            config.get('tests.commercialBaselineControl') === 'control';
 
         // eslint-disable-next-line no-nested-ternary
         const fetchCommercial = config.get('switches.commercial')
-            ? (markTime('commercial request'), commercialBaselineControl)
-              ? import(/* webpackChunkName: "commercial-control" */ 'bootstraps/commercial-control')
-              : import(/* webpackChunkName: "commercial" */ 'bootstraps/commercial')
+            ? (markTime('commercial request'), import(/* webpackChunkName: "commercial" */ 'bootstraps/commercial'))
             : Promise.resolve({ bootCommercial: () => {} });
 
         const fetchEnhanced = window.guardian.isEnhanced
@@ -55,9 +51,7 @@ const go = () => {
         raven.context(
             {
                 tags: {
-                    feature: commercialBaselineControl
-                        ? 'commercial-control'
-                        : 'commercial',
+                    feature: 'commercial'
                 },
             },
             () => {
