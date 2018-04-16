@@ -1,27 +1,25 @@
 package services
 
 import java.net.URL
+import java.util.concurrent.atomic.AtomicReference
+
+import app.LifecycleComponent
 import common.Logging
+
+import scala.concurrent.ExecutionContext
 import scala.util.Try
 
 object SkimLinksCache extends Logging {
 
-  // evil mutable variable here so that we can cache skimlinks on startup
-  private var skimLinks = Set[String]()
+    private val skimLinkDomains = new AtomicReference(Set[String]())
 
-  def getSkimLinks: Set[String] = {
-    if (skimLinks.nonEmpty) {
-      log.info(s"Already got ${skimLinks.size} links")
-      skimLinks
-    } else {
-      log.info("Fetching and caching skimlinks")
-      val domains = S3.get("skimlinks/skimlinks-domains.csv").getOrElse{
-        log.warn("Failed to fetch skimlinks from S3")
-        ""
-      }
-      skimLinks = domains.split(",").toSet
-      skimLinks
+  def populateSkimLinkDomains(): Unit = {
+    log.info("Fetching and caching skimlinks")
+    val domains = S3.get("skimlinks/skimlinks-domains.csv").getOrElse{
+      log.error("Failed to fetch skimlinks from S3")
+      ""
     }
+    skimLinkDomains.set(domains.split(",").toSet)
   }
 
   def isSkimLink(link: String): Boolean = {
@@ -29,7 +27,14 @@ object SkimLinksCache extends Logging {
     uri.exists(u => {
       // strip the www. subdomain as it is not included in the list of domains from the skimlinks api
       val cleanedHost = u.getHost.replace("www.", "")
-      getSkimLinks.contains(cleanedHost)
+      skimLinkDomains.get().contains(cleanedHost)
     })
+  }
+}
+
+class SkimLinksCacheLifeCycle()(implicit ec: ExecutionContext) extends LifecycleComponent {
+
+  override def start(): Unit = {
+    SkimLinksCache.populateSkimLinkDomains()
   }
 }

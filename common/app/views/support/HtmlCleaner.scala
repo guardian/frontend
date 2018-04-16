@@ -4,7 +4,6 @@ import java.net.URI
 import java.util.regex.{Matcher, Pattern}
 
 import common.{Edition, LinkTo, Logging}
-import conf.switches.CommercialSwitches
 import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
@@ -802,9 +801,7 @@ object GarnettQuoteCleaner extends HtmlCleaner {
 case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean], contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with Logging {
 
   override def clean(document: Document): Document = {
-    log.info(s"CLEANING SKIMLINKS ${AffiliateLinks.isSwitchedOn} $sectionId $showAffiliateLinks ${AffiliateLinkSections.isSwitchedOn}")
     if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn, sectionId, showAffiliateLinks)) {
-      log.info("SKIMLINKS SHOULD BE CLEANED")
       val cleanedResult = AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl)
       if (cleanedResult.affiliateLinksAdded && appendDisclaimer) {
         AffiliateLinksCleaner.insertAffiliateDisclaimer(cleanedResult.document, contentType)
