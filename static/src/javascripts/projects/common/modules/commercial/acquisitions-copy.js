@@ -1,6 +1,6 @@
 // @flow
 import { getLocalCurrencySymbol } from 'lib/geolocation';
-import { useSupportDomain } from 'common/modules/commercial/support-utilities';
+
 // control
 const controlHeading = 'Since you’re here &hellip;';
 const controlP1 =
@@ -26,22 +26,12 @@ const ctaLinkSentence = (
     supportUrl: string,
     contributionUrl: string,
     currencySymbol: string
-): string => {
-    if (useSupportDomain()) {
-        return `<span class="contributions__highlight"> For as little as ${
-            currencySymbol
-        }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
-            supportUrl
-        }" target="_blank" class="u-underline">Make a contribution</a>`;
-    }
-    return `<span class="contributions__highlight"> For as little as ${
+): string =>
+    `<span class="contributions__highlight"> For as little as ${
         currencySymbol
     }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
         supportUrl
-    }" target="_blank" class="u-underline">Become a monthly supporter</a> or <a href="${
-        contributionUrl
-    }" target="_blank" class="u-underline">make a one-off contribution</a>`;
-};
+    }" target="_blank" class="u-underline">Make a contribution</a>`;
 
 const cambridgeP1 =
     '&hellip; now is the time to support investigative reporting. The Guardian and Observer have spent a year analysing documents, working with whistleblowers and gathering eyewitness reports to untangle a complex story around data in the digital age. This took months of painstaking research by a small team of reporters and editors &ndash; and has led to investigations on both sides of the Atlantic. <span class="contributions__highlight">We have received legal threats, including from Facebook, but we are determined to continue publishing stories that raise important questions about the use of people’s data in political campaigns</span> &ndash; from the US election to Brexit.';
