@@ -49,10 +49,19 @@ $checkbox-size: $gs-gutter / 1.25;
         grid-auto-rows: min-content;
     }
 
+    hr {
+        height: 0;
+        border: 0;
+        border-bottom: 1px solid $garnett-neutral-4;
+        margin: ($row-gutter * 2) 0;
+    }
+
+    ul:not(:last-child),
+    li:not(:last-child) {
+        margin-bottom: $row-gutter;
+    }
+
     li {
-        &:not(:last-child) {
-            margin-bottom: $row-gutter;
-        }
         display: flex;
         margin-bottom: $local-gutter;
         @supports(display: grid) {

@@ -48,28 +48,28 @@
     }
 }
 
-@channelStepContent = {
-    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" class="js-manage-account__check-allCheckbox__ignore" role="main" method="post">
-        @views.html.helper.CSRF.formField
-        <div class="manage-account__switches manage-account__switches--single-column">
-            <ul>
-            @helper.repeatWithIndex(forms.privacyForm("consents"), min=1) { (consentField, index) =>
-                @if(isSmsChannel(consentField, user)) {
-                    <li>
-                        @fragments.consentSwitch(consentField = consentField, skin = skin)(messages)
-                    </li>
-                }
-            }
-            </ul>
-        </div>
-    </form>
+@smsStepContent = {
+    @views.html.profile.smsConsent(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
 }
 
-@channelStep = @{
+@smsStep = @{
     ConsentStep(
-        name = "channels",
+        name = "sms",
+        title = "SMS updates",
+        content = smsStepContent,
+        show = true
+    )
+}
+
+@nonElectronicOptOutContent = {
+    @views.html.profile.nonElectronicOptOut(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
+}
+
+@nonElectronicOptOutStep = @{
+    ConsentStep(
+        name = "nonElectronicOptOut",
         title = "How else can we get in touch with you?",
-        content = channelStepContent,
+        content = nonElectronicOptOutContent,
         show = true
     )
 }
@@ -186,7 +186,8 @@
 @defaultJourney = @{List(
     emailRepermissionStep,
     marketingConsentStep,
-    channelStep
+    smsStep,
+    nonElectronicOptOutStep
 )}
 
 @confirmModal = {

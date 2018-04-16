@@ -6,13 +6,13 @@ import play.api.data.Field
 object ConsentChannel {
   sealed abstract class ConsentChannelBehaviour(val id: String)
   case object TextConsentChannel  extends ConsentChannelBehaviour("sms")
-  case object PhoneConsentChannel extends ConsentChannelBehaviour("phone")
-  case object PostConsentChannel  extends ConsentChannelBehaviour("post")
+  case object PhoneOptOutConsentChannel extends ConsentChannelBehaviour("phone_optout")
+  case object PostOptOutConsentChannel  extends ConsentChannelBehaviour("post_optout")
 
   private val channelsIds = List(
     TextConsentChannel.id,
-    PhoneConsentChannel.id,
-    PostConsentChannel.id
+    PhoneOptOutConsentChannel.id,
+    PostOptOutConsentChannel.id
   )
 
   def channelsProvidedBy(user: User): List[ConsentChannelBehaviour] = {
@@ -21,8 +21,8 @@ object ConsentChannel {
 
     val channels = List(
       (TextConsentChannel -> telephoneDefined),
-      (PhoneConsentChannel -> telephoneDefined),
-      (PostConsentChannel -> postcodeDefined)
+      (PhoneOptOutConsentChannel -> telephoneDefined),
+      (PostOptOutConsentChannel -> postcodeDefined)
     )
 
     channels.filter(_._2).map(_._1)
@@ -37,6 +37,12 @@ object ConsentChannel {
 
   def isSmsChannel(consentField: Field, user: User): Boolean =
     consentField("id").value.exists(_ == TextConsentChannel.id)
+
+  def isOptOutChannel(consentField: Field, user: User): Boolean =
+    consentField("id").value match {
+      case Some(PhoneOptOutConsentChannel.id) | Some(PostOptOutConsentChannel.id) => true
+      case _ => false
+    }
 
   def isChannel(consentField: Field): Boolean = {
     consentField("id").value.exists { id => channelsIds.contains(id) }
