@@ -11,9 +11,7 @@ import scala.util.Try
 
 object SkimLinksCache extends Logging {
 
-  // evil mutable variable here so that we can cache skimlinks on startup
-  // make atomic
-  private val skimLinkDomains = new AtomicReference(Set[String]())
+    private val skimLinkDomains = new AtomicReference(Set[String]())
 
   def populateSkimLinkDomains(): Unit = {
     log.info("Fetching and caching skimlinks")
