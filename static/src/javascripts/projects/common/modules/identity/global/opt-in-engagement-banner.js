@@ -35,7 +35,7 @@ const targets: LinkTargets = {
 };
 
 const template: Template = {
-    image: config.get('images.identity.opt-in'),
+    image: config.get('images.identity.opt-in-new-vertical'),
     title: `We’re changing how we communicate with you. Let us know <strong>before 30 April</strong> which emails you wish to continue receiving. <a data-link-name="gdpr-oi-campaign : alert : to-landing" href="${
         targets.landing
     }">Find out more</a> or click Continue.`,
