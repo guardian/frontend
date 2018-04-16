@@ -39,6 +39,9 @@ class ResetPasswordControllerTest
   )
 
   when(requestParser.apply(MockitoMatchers.anyObject())).thenReturn(identityRequest)
+  when(idUrlBuilder.buildUrl(MockitoMatchers.eq("/reset/resend"), MockitoMatchers.eq(identityRequest), MockitoMatchers.anyVararg[(String, String)]))
+    .thenReturn("https://profile.thegulocal.com/reset/resend")
+
 
   val userNotFound = List(Error("Not found", "Resource not found", 404))
   val tokenExpired = List(Error("Token expired", "The password reset token is longer valid"))
@@ -68,7 +71,8 @@ class ResetPasswordControllerTest
       "should render to the the to the request new password form" in Fake {
         val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
-        header("Location", result).head should be ("/reset/resend")
+        println(headers(result))
+        header("Location", result).head should endWith ("/reset/resend")
       }
     }
   }
@@ -90,11 +94,13 @@ class ResetPasswordControllerTest
     }
 
     "when the reset token has expired" - {
+
       when(api.resetPassword("1234","newpassword")).thenReturn(Future.successful(Left(tokenExpired)))
       "should redirect to request request new password with a token expired" in Fake {
         val result = resetPasswordController.resetPassword("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
-        header("Location", result).head should be ("/reset/resend")
+        println(headers(result))
+        header("Location", result).head should endWith ("/reset/resend")
       }
     }
 
