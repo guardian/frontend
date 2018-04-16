@@ -36,7 +36,7 @@ object CacheTime {
 
 object Cached extends implicits.Dates {
 
-  private val cacheableStatusCodes = Seq(200, 404, 304)
+  private val cacheableStatusCodes = Seq(200, 404)
 
   private val tenDaysInSeconds = 864000
 
@@ -45,6 +45,7 @@ object Cached extends implicits.Dates {
   sealed trait CacheableResult { def result: Result }
   case class RevalidatableResult(result: Result, hash: Hash) extends CacheableResult
   case class WithoutRevalidationResult(result: Result) extends CacheableResult
+  case class PanicReuseExistingResult(result: Result) extends CacheableResult
 
   object RevalidatableResult {
     def apply[C](result: Result, content: C)(implicit writeable: Writeable[C]): RevalidatableResult = {
@@ -88,6 +89,7 @@ object Cached extends implicits.Dates {
         case RevalidatableResult(result, hash) =>
           cacheHeaders(seconds, result, Some((hash, ifNoneMatch)))
         case WithoutRevalidationResult(result) => cacheHeaders(seconds, result, None)
+        case PanicReuseExistingResult(result) => cacheHeaders(seconds, result, None)
       }
     } else {
       cacheableResult.result

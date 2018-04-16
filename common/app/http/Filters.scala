@@ -1,7 +1,6 @@
 package http
 
 import javax.inject.Inject
-
 import akka.stream.Materializer
 import cache.SurrogateKey
 import conf.switches.Switches
@@ -11,7 +10,7 @@ import play.api.http.HttpFilters
 import play.api.mvc._
 import play.filters.gzip.{GzipFilter, GzipFilterConfig}
 import experiments.LookedAtExperiments
-import model.Cached.WithoutRevalidationResult
+import model.Cached.PanicReuseExistingResult
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -106,7 +105,7 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
 class PanicSheddingFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     if (Switches.PanicShedding.isSwitchedOn && request.headers.hasHeader("If-None-Match")) {
-      Future.successful(Cached(900)(WithoutRevalidationResult(Results.NotModified.withHeaders()))(request))
+      Future.successful(Cached.explicitlyCache(900)(PanicReuseExistingResult(Results.NotModified.withHeaders()).result))
     } else {
       nextFilter(request)
     }
