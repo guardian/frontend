@@ -155,6 +155,12 @@
         }
     }
 
+    &.content--pillar-special-report {
+        .content__series-label__link {
+            color: $news-garnett-highlight;
+        }
+    }
+
     // Opinion specific styling
     &.content--type-comment {
         .content__headline-column-wrapper {
