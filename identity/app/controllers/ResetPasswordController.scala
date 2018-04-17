@@ -4,8 +4,8 @@ import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.data.{Form, Forms}
 import play.api.mvc._
-import idapiclient.IdApiClient
-import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder}
+import idapiclient.{EmailPassword, IdApiClient}
+import services._
 import play.api.i18n.{Messages, MessagesProvider}
 import play.api.data.validation._
 import play.api.data.Forms._
@@ -22,6 +22,7 @@ class ResetPasswordController(
   idRequestParser: IdRequestParser,
   idUrlBuilder: IdentityUrlBuilder,
   authenticationService: AuthenticationService,
+  signInService : PlaySigninService,
   val controllerComponents: ControllerComponents,
   val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
@@ -111,10 +112,10 @@ class ResetPasswordController(
                   .flashing(formWithError.toFlash)
               )
             }
-
-          case Right(ok) =>
-            val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
+          case Right(cookieResponse) =>
+            logger.trace("Logging user in from reset password")
             NoCache(SeeOther(routes.ResetPasswordController.renderPasswordResetConfirmation.url))
+              .withCookies(signInService.getCookies(cookieResponse, true):_*)
         }
     }
 
