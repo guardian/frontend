@@ -11,7 +11,7 @@ import scala.util.Try
 
 object SkimLinksCache extends Logging {
 
-    private val skimLinkDomains = new AtomicReference(Set[String]())
+  private val skimLinkDomains = new AtomicReference(Set[String]())
 
   def populateSkimLinkDomains(): Unit = {
     log.info("Fetching and caching skimlinks")
