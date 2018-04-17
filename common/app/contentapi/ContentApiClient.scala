@@ -70,8 +70,8 @@ object QueryDefaults extends implicits.Collections {
 
 trait ApiQueryDefaults extends Logging {
 
-  def item(id:String): ItemQuery
-  def search: SearchQuery
+  def item(id:String): ItemQuery = CapiContentApiClient.item(id)
+  def search: SearchQuery = CapiContentApiClient.search
 
   def item(id: String, edition: Edition): ItemQuery = item(id, edition.id)
 
@@ -172,9 +172,7 @@ class ContentApiClient(httpClient: HttpClient)(implicit executionContext: Execut
     thriftClient
   }
 
-  def item(id: String): ItemQuery = getClient.item(id)
   def tags: TagsQuery = CapiContentApiClient.tags
-  def search: SearchQuery = CapiContentApiClient.search
   def sections: SectionsQuery = CapiContentApiClient.sections
   def editions: EditionsQuery = CapiContentApiClient.editions
 
