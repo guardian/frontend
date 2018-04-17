@@ -38,6 +38,10 @@ object UrlHelpers {
       case (Support, SideMenu) => "side_menu_support"
       case (Support, Footer) => "footer_support"
 
+      case (SupportContribute, Header | AmpHeader | SlimHeaderDropdown) => "header_support_contribute"
+      case (SupportContribute, SideMenu) => "side_menu_support_contribute"
+      case (SupportContribute, Footer) => "footer_support_contribute"
+
       case (SupportUkSubscribe, Header | AmpHeader | SlimHeaderDropdown) => "header_support_uk_subscribe"
       case (SupportUkSubscribe, SideMenu) => "side_menu_support_uk_subscribe"
       case (SupportUkSubscribe, Footer) => "footer_support_uk_subscribe"
@@ -78,22 +82,14 @@ object UrlHelpers {
       s"https://jobs.theguardian.com?INTCMP=jobs_${editionId}_web_newheader"
     }
 
-  def countryUrlLogic(editionId: String, position: Position, defaultDestination: ReaderRevenueSite)(implicit request: RequestHeader): String =
-    editionId match {
-      case "us" => getReaderRevenueUrl(SupportUsContribute, position)
-      case "uk" => getReaderRevenueUrl(Support, position)
-      case _ => getReaderRevenueUrl(defaultDestination, position)
-    }
-
-  // This methods can be reverted once we decide to deploy the new support site to the rest of the world.
   def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
-    val editionId = Edition(request).id.toLowerCase()
-    countryUrlLogic(editionId, position, Membership)
+    // The support site will choose between bundle page, contribute page, or membership redirect
+    getReaderRevenueUrl(Support, position)
   }
 
   def getSupportOrContributeUrl(position: Position)(implicit request: RequestHeader): String = {
-    val editionId = Edition(request).id.toLowerCase()
-    countryUrlLogic(editionId, position, Contribute)
+    // The support site will choose between contribute page or contribute redirect
+    getReaderRevenueUrl(SupportContribute, position)
   }
 
   def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
