@@ -1,0 +1,230 @@
+
+.campaign--snippet {
+    border-top: 1px $garnett-neutral-4 solid;
+    background: $garnett-neutral-8;
+    position: relative;
+    padding: 0 0 6px;
+    margin: 16px 0 36px;
+    font-size: 14px;
+    line-height: 21px;
+
+    &:not([open]) .is-on,
+    &[open] .is-off {
+        display: none;
+    }
+}
+
+/* SUMMARY */
+
+.campaign--snippet > summary {
+    outline: none;
+    padding: 0;
+    border-top: 1px $garnett-neutral-4 solid;
+    list-style: none;
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    .campaign--kicker {
+        display: flex;
+        flex-direction: row;
+
+        > .campaign--snippet__heading-logo {
+            flex: initial;
+            margin-right: 10px;
+
+            .speech-bubble {
+                background-color: $news-garnett-main-1;
+                padding: 6px 10px 10px;
+                color: #ffffff;
+                line-height: 18px;
+            }
+        }
+        > .heading {
+            flex: auto;
+            font-weight: bold;
+        }
+    }
+}
+
+.campaign--snippet__header {
+    margin: 0 0 16px;
+}
+
+.campaign--snippet__headline, .campaign--snippet__heading-logo {
+    font-size: 18px;
+    line-height: 22px;
+    font-family: $f-serif-text;
+    font-weight: 500;
+}
+
+.campaign--snippet__handle {
+    background: #121212;
+    color: #ffffff;
+    font-family: $f-sans-serif-text;
+    font-size: 13px;
+    position: absolute;
+    bottom: 0;
+    transform: translate(0, 50%);
+    padding: 0 15px 0 7px;
+    margin-left: 5px;
+    span {
+        display: inline-flex;
+        align-items: center;
+    }
+    .icon {
+        fill: #ffffff;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+}
+
+.campaign__button--rounded {
+    border-radius: 100em;
+}
+.campaign__button--large {
+    height: 2.25em;
+}
+
+.campaign__button {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    border: 0;
+    margin: 0;
+}
+
+.content--pillar-news .campaign--snippet__handle:focus {
+    background-color: $news-garnett-main-1;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+.speech-bubble {
+    position: relative;
+
+    &::after {
+        content: '';
+        width: 14px;
+        height: 12px;
+        border-radius: 0 0 14px;
+        position: absolute;
+        bottom: -12px;
+        left: 10px;
+        background: $news-garnett-main-1;
+    }
+}
+
+/*---------- FORM -----------------*/
+
+.campaign--snippet form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 .5em 2em;
+    border-top: 1px $garnett-neutral-4 solid;
+
+    [type=radio], [type=checkbox] {
+        margin-left: 0;
+    }
+
+}
+
+.campaign--snippet .form_input {
+
+    &:not(:first-child) {
+        margin: 12px 0;
+    }
+    &.form_input--radio .form_field,
+    &.form_input--checkbox .form_field {
+        display: flex;
+        flex-direction: column;
+        label {
+            flex: initial;
+            margin-right: 1em;
+        }
+        input {
+            flex: initial;
+        }
+    }
+
+    textarea {
+        max-width: 100%;
+        min-width: 100%;
+        min-height: 25px;
+    }
+
+    .form_option_container {
+        display: flex;
+        margin-left: .3em;
+        label {
+            flex: initial;
+            margin-right: 1em;
+            margin-left: .5em;
+        }
+    }
+}
+
+.campaign--snippet .form_field {
+    display: flex;
+    flex-direction: column;
+
+    input {
+        align-self: stretch;
+        padding: 3px 5px 4px;
+    }
+
+    input,
+    select,
+    textarea {
+        border: 1px solid var(--c-garnett-neutral-8);
+        font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    }
+    .form_field_label {
+        margin-left: .3em;
+        font-weight: 500;
+        font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+        span {
+            font-weight: normal;
+            display: table; /* hack to force new line for span */
+        }
+    }
+}
+
+.campaign--snippet .form_footer {
+    display: flex;
+    flex-direction: row;
+
+    .form_submit {
+        flex: auto;
+        .button {
+            background-color: #c70000;
+            color: #ffffff;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 10px;
+            border: 0;
+        }
+    }
+    .t_and_c {
+        flex: auto;
+        text-align: right;
+        display: flex;
+        font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+        a {
+            flex: auto;
+            align-self: center;
+            color: #121212;
+        }
+    }
+}
+
+
+
+
+

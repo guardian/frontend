@@ -436,3 +436,6 @@ GET            /*path/email                                                     
 # temp route for live blogs so we can paginate without getting the blocks for all articles
 GET            /$path<[^/]+/([^/]+/)?live/.*>                                                                                    controllers.ArticleController.renderLiveBlog(path, page: Option[String], format: Option[String])
 GET            /*path                                                                                                            controllers.ArticleController.renderArticle(path)
+
+# Formstack form submission
+POST      /formstack-campaign/submit                                                                                             controllers.CampaignsController.formSubmit()
