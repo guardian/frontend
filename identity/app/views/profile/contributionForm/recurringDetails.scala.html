@@ -1,5 +1,9 @@
 @(user: com.gu.identity.model.User)(implicit request: RequestHeader)
 <div class="is-hidden js-contribution-info">
+    <div class="manage-account-warning js-mem-warning is-hidden">
+        <h2>Action required</h2>
+        <p class="js-mem-warning-text"></p>
+    </div>
     <ul class="details-list u-unstyled js-contribution-details">
         <li class="details-list__item">
             <div class="fieldset__heading">
