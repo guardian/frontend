@@ -100,7 +100,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
         minAbove: 1000,
-        minBelow: 700,
+        minBelow: 800,
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
         },
