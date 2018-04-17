@@ -33,11 +33,6 @@ const ctaLinkSentence = (
         supportUrl
     }" target="_blank" class="u-underline">Make a contribution</a>`;
 
-const cambridgeP1 =
-    '&hellip; now is the time to support investigative reporting. The Guardian and Observer have spent a year analysing documents, working with whistleblowers and gathering eyewitness reports to untangle a complex story around data in the digital age. This took months of painstaking research by a small team of reporters and editors &ndash; and has led to investigations on both sides of the Atlantic. <span class="contributions__highlight">We have received legal threats, including from Facebook, but we are determined to continue publishing stories that raise important questions about the use of people’s data in political campaigns</span> &ndash; from the US election to Brexit.';
-const cambridgeP2FirstSentence =
-    'We increasingly need our readers to fund our fearless, independent, investigative reporting. Thank you to the many people who have already supported us financially &ndash; your contribution is what makes stories like this possible. Unlike many news organisations, we have not put up a paywall &ndash; we want to keep our journalism as open as we can.</br></br>';
-
 /*
  Exported instances of AcquisitionsEpicTemplateCopy
  */
@@ -51,12 +46,6 @@ export const regulars: AcquisitionsEpicTemplateCopy = {
     heading: controlHeadingRegulars,
     p1: controlP1Regulars,
     p2: controlP2(controlP2FirstSentence),
-};
-
-export const cambridgeCopy: AcquisitionsEpicTemplateCopy = {
-    heading: controlHeading,
-    p1: cambridgeP1,
-    p2: controlP2(cambridgeP2FirstSentence),
 };
 
 export const liveblogCopy = (

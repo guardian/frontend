@@ -88,8 +88,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-cambridge-analytica-always-ask-final",
-    "turn on always ask for CA stories",
+    "ab-acquisitions-epic-always-ask-april-story",
+    "turn on always ask for this story",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 6, 5),
