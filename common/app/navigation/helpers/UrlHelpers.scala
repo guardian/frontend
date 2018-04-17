@@ -38,7 +38,9 @@ object UrlHelpers {
       case (Support, SideMenu) => "side_menu_support"
       case (Support, Footer) => "footer_support"
 
-      case (SupportUkSubscribe, Header) => "header_support_uk_subscribe"
+      case (SupportUkSubscribe, Header | AmpHeader | SlimHeaderDropdown) => "header_support_uk_subscribe"
+      case (SupportUkSubscribe, SideMenu) => "side_menu_support_uk_subscribe"
+      case (SupportUkSubscribe, Footer) => "footer_support_uk_subscribe"
 
       case (_, ManageMyAccountUpsell) => "manage_my_account_upsell"
     }
