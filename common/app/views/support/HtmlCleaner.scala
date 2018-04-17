@@ -19,6 +19,7 @@ import conf.Configuration.affiliatelinks._
 import views.html.fragments.affiliateLinksDisclaimer
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 import scala.util.Try
 
 trait HtmlCleaner {
@@ -802,31 +803,24 @@ case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffilia
 
   override def clean(document: Document): Document = {
     if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn, sectionId, showAffiliateLinks)) {
-      val cleanedResult = AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl)
-      if (cleanedResult.affiliateLinksAdded && appendDisclaimer) {
-        AffiliateLinksCleaner.insertAffiliateDisclaimer(cleanedResult.document, contentType)
-      } else {
-        cleanedResult.document
-      }
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType)
     } else document
   }
 }
 
-case class AffiliateLinksCleanerResult(document: Document, affiliateLinksAdded: Boolean)
-
 object AffiliateLinksCleaner {
-  def replaceLinksInHtml(html: Document, pageUrl: String): AffiliateLinksCleanerResult = {
+  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Boolean, contentType: String): Document = {
     val links = html.getElementsByAttribute("href")
 
-    val skimLinksReplaced: Boolean = links.asScala.exists { link =>
-      val href = link.attr("href")
-      if (link.tagName == "a" && SkimLinksCache.isSkimLink(href)) {
-        link.attr("href", linkToSkimLink(link.attr("href"), pageUrl))
-        true
-      } else false
-    }
-    AffiliateLinksCleanerResult(html, skimLinksReplaced)
+    val supportedLinks: mutable.Seq[Element] = links.asScala.filter(isAffiliatable)
+    supportedLinks.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl))}
+
+    if (supportedLinks.nonEmpty) insertAffiliateDisclaimer(html, contentType)
+    else html
   }
+
+  def isAffiliatable(element: Element): Boolean =
+    element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
 
   def insertAffiliateDisclaimer(document: Document, contentType: String): Document = {
     document.body().append(affiliateLinksDisclaimer(contentType).toString())
