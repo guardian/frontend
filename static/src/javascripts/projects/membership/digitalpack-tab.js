@@ -28,12 +28,22 @@ const DIG_INFO = '.js-dig-info';
 const LOADER = '.js-dig-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
 const ERROR = '.js-dig-error';
+const WARNING = '.js-dig-warning';
+const WARNING_TEXT = '.js-dig-warning-text';
 
 const hideLoader = (): void => {
     $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
 };
 
+const showWarning = (message: string): void => {
+    $(WARNING_TEXT).text(message);
+    $(WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
 const populateUserDetails = (userDetails: UserDetails): void => {
+    if (userDetails.alertText) {
+        showWarning(userDetails.alertText);
+    }
     const glyph = userDetails.subscription.plan.currency;
     $(SUBSCRIBER_ID).text(userDetails.subscription.subscriberId);
     $(DIGITALPACK_PRODUCT).text(userDetails.subscription.plan.name);

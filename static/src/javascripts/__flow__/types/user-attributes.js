@@ -23,5 +23,6 @@ declare type ContributorDetails = {
             currency: string,
             interval: string
         }
-    }
+    },
+    alertText?: string
 }

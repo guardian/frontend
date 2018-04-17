@@ -60,6 +60,14 @@ const CONTRIBUTION_INVALID_NUMBER_WARNING =
 const CONTRIBUTION_HIGH_AMOUNT_WARNING =
     '.js-manage-account-change-contribution-amount-verify';
 const CONTRIBUTION_CHANGE_SUCCESS = '.js-contribution-change-success-msg';
+const WARNING = '.js-contribution-warning';
+const WARNING_TEXT = '.js-contribution-warning-text';
+
+const showWarning = (message: string): void => {
+    $(WARNING_TEXT).text(message);
+    $(WARNING).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
 const displayLoader = (): void => {
     $(LOADER).removeClass(IS_HIDDEN_CLASSNAME);
 };
@@ -499,6 +507,10 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     const isPayPal =
         contributorDetails.subscription.paymentMethod.toLowerCase() ===
         'paypal';
+
+    if (contributorDetails.alertText) {
+        showWarning(contributorDetails.alertText);
+    }
 
     $(PACKAGE_INTERVAL).text(intervalText);
 
