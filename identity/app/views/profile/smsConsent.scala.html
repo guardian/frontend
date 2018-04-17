@@ -10,7 +10,7 @@
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 <form method="post" action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" novalidate>
     @views.html.helper.CSRF.formField
-    <div class="manage-account__switches manage-account__switches--single-column">
+    <div class="manage-account__switches manage-account__switches--single-column js-manage-account__check-allCheckbox__ignore">
         <ul>
         @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
             @if(isSmsChannel(consentField, user)) {
