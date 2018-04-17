@@ -40,7 +40,8 @@ const go = () => {
 
         // eslint-disable-next-line no-nested-ternary
         const fetchCommercial = config.get('switches.commercial')
-            ? (markTime('commercial request'), import(/* webpackChunkName: "commercial" */ 'bootstraps/commercial'))
+            ? (markTime('commercial request'),
+              import(/* webpackChunkName: "commercial" */ 'bootstraps/commercial'))
             : Promise.resolve({ bootCommercial: () => {} });
 
         const fetchEnhanced = window.guardian.isEnhanced
@@ -51,7 +52,7 @@ const go = () => {
         raven.context(
             {
                 tags: {
-                    feature: 'commercial'
+                    feature: 'commercial',
                 },
             },
             () => {
