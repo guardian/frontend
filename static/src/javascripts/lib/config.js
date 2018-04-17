@@ -57,7 +57,7 @@ const dateFromSlug = (): ?string => {
     return s ? s[0] : null;
 };
 
-const isMedia: boolean = ['Video', 'Audio'].includes(config.page.contentType);
+const isMedia: boolean = ['Video'].includes(config.page.contentType);
 
 export default Object.assign(
     {},

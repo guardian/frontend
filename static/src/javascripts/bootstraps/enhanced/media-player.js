@@ -263,12 +263,6 @@ const enhanceVideo = (
                                 } else {
                                     resolve();
                                 }
-                            } else {
-                                player.playlist({
-                                    mediaType: 'audio',
-                                    continuous: false,
-                                });
-                                resolve();
                             }
 
                             // built in vjs-user-active is buggy so using custom implementation
@@ -368,8 +362,7 @@ export const initMediaPlayer = (): void => {
         !config.get('page.hasYouTubeAtom') &&
         !config.get('page.isFront') &&
         !config.get('page.isPaidContent') &&
-        !config.get('page.sponsorshipType') &&
-        config.get('page.contentType') !== 'Audio';
+        !config.get('page.sponsorshipType');
 
     if (shouldPreroll) {
         loadScript('//imasdk.googleapis.com/js/sdkloader/ima3.js')
