@@ -6,7 +6,7 @@ import org.scalatest.mockito.MockitoSugar
 import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
 import idapiclient.{IdApiClient, TrackingData}
-import test.{Fake, WithTestApplicationContext}
+import test.{Fake, WithTestApplicationContext, WithTestIdConfig}
 import play.api.test._
 import play.api.test.Helpers._
 
@@ -20,7 +20,8 @@ class ResetPasswordControllerTest
   extends path.FreeSpec
   with Matchers
   with MockitoSugar
-  with WithTestApplicationContext {
+  with WithTestApplicationContext
+  with WithTestIdConfig {
 
   val api = mock[IdApiClient]
   val requestParser = mock[IdRequestParser]
@@ -39,6 +40,9 @@ class ResetPasswordControllerTest
   )
 
   when(requestParser.apply(MockitoMatchers.anyObject())).thenReturn(identityRequest)
+  when(idUrlBuilder.buildUrl(MockitoMatchers.eq("/reset/resend"), MockitoMatchers.eq(identityRequest), MockitoMatchers.anyVararg[(String, String)]))
+    .thenReturn(testIdConfig.url + "/reset/resend")
+
 
   val userNotFound = List(Error("Not found", "Resource not found", 404))
   val tokenExpired = List(Error("Token expired", "The password reset token is longer valid"))
@@ -68,7 +72,7 @@ class ResetPasswordControllerTest
       "should render to the the to the request new password form" in Fake {
         val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
-        header("Location", result).head should be ("/requestnewtoken")
+        header("Location", result).head should endWith ("/reset/resend")
       }
     }
   }
@@ -90,11 +94,12 @@ class ResetPasswordControllerTest
     }
 
     "when the reset token has expired" - {
+
       when(api.resetPassword("1234","newpassword")).thenReturn(Future.successful(Left(tokenExpired)))
       "should redirect to request request new password with a token expired" in Fake {
         val result = resetPasswordController.resetPassword("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
-        header("Location", result).head should be ("/requestnewtoken")
+        header("Location", result).head should endWith ("/reset/resend")
       }
     }
 
