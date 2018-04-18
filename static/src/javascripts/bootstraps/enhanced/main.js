@@ -180,27 +180,22 @@ const bootEnhanced = (): void => {
         );
     }
 
-    fastdom
-        .read(() =>
-            qwery(
-                `${config.switches.enhancedVideoPlayer ? 'video, ' : ''} audio`
-            )
-        )
-        .then(els => {
-            if (els.length) {
-                require.ensure(
-                    [],
-                    require => {
-                        bootstrapContext(
-                            'media-player',
-                            require('bootstraps/enhanced/media-player')
-                                .initMediaPlayer
-                        );
-                    },
-                    'media-player'
-                );
-            }
-        });
+    if (config.get('switches.enhancedVideoPlayer')) {
+        const els = qwery('video');
+        if (els.length) {
+            require.ensure(
+                [],
+                require => {
+                    bootstrapContext(
+                        'media-player',
+                        require('bootstraps/enhanced/media-player')
+                            .initMediaPlayer
+                    );
+                },
+                'media-player'
+            );
+        }
+    }
 
     if (config.page.contentType === 'Gallery') {
         require.ensure(
