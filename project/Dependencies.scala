@@ -5,8 +5,8 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.139"
   val awsVersion = "1.11.240"
-  val capiVersion = "11.55"
-  val faciaVersion = "2.5.5"
+  val capiVersion = "12.0"
+  val faciaVersion = "2.6.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -73,6 +73,7 @@ object Dependencies {
   val atomRenderer = "com.gu" %% "atom-renderer" % "0.14.4"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
+  val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
 
   // Fixing transient dependency issue
   // AWS SDK (1.11.181), which kinesis-logback-appender depends on, brings com.fasterxml.jackson.core and com.fasterxml.jackson.dataformat libs in version 2.6.9

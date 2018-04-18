@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.ContentApiError
 import common.Edition.defaultEdition
 import common.{Edition, ImplicitControllerExecutionContext, Logging}
 import contentapi.{ContentApiClient, SectionsLookUp}
@@ -147,7 +147,7 @@ class AllIndexController(
     }
 
     result.failed.foreach {
-      case GuardianContentApiError(404, _, _) =>
+      case ContentApiError(404, _, _) =>
         log.warn(s"Cannot fetch content for request '${request.uri}'")
       case e: Exception =>
         log.error(e.getMessage, e)
@@ -168,7 +168,7 @@ class AllIndexController(
     }
 
     result.failed.foreach {
-      case GuardianContentApiError(404, _, _) =>
+      case ContentApiError(404, _, _) =>
         log.warn(s"Cannot fetch content for request '${request.uri}'")
       case e: Exception =>
         log.error(e.getMessage, e)
