@@ -71,7 +71,8 @@ object BodyCleaner {
       ImmersiveLinks(article.isImmersive),
       TimestampCleaner(article),
       MinuteCleaner(article),
-      GarnettQuoteCleaner
+      GarnettQuoteCleaner,
+      AffiliateLinksCleaner(request.uri, article.content.metadata.sectionId, article.content.fields.showAffiliateLinks, "article")
     ) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++
