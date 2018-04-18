@@ -1,10 +1,18 @@
 @import com.gu.identity.model.Consent
+@import com.gu.identity.model.ConsentWording
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.Switch._
 
 @* Product consent switch/checkbox *@
 
-@(consentField: Field, highlighted: Boolean = false, skin: Option[String] = None, boldTitle: Boolean = true)(messages: play.api.i18n.Messages)
+@(
+    consentField: Field,
+    highlighted: Boolean = false,
+    skin: Option[String] = None,
+    boldTitle: Boolean = true,
+    titleProvider: ConsentWording => String = w => w.wording,
+    descriptionProvider: ConsentWording => Option[String] = w => w.description
+)(messages: play.api.i18n.Messages)
 
 @getConsentText(consentField: Field) = @{
     Consent.wording(
@@ -19,9 +27,9 @@
 }
 
 @fragments.form.switch(
-    title = getConsentText(consentField).wording,
+    title = titleProvider(getConsentText(consentField)),
     subheading = None,
-    description = getConsentText(consentField).description,
+    description = descriptionProvider(getConsentText(consentField)),
     behaviour = ConsentSwitch,
     field = consentField("consented"),
     extraFields = consentHiddenFormFields,

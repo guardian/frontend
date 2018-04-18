@@ -19,7 +19,12 @@
             @helper.repeatWithIndex(privacyForm("consents"), min=1){ (consentField, index) =>
                 @if(isOptOutChannel(consentField, user)) {
                     <li>
-                        @fragments.consentSwitch(consentField, boldTitle = false)(messages)
+                        @fragments.consentSwitch(
+                            consentField,
+                            boldTitle = false,
+                            titleProvider = wording => wording.description.getOrElse(""),
+                            descriptionProvider = _ => None
+                        )(messages)
                     </li>
                 }
             }
