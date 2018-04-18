@@ -5,9 +5,7 @@ import org.scalatest.Matchers
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
-import idapiclient.{IdApiClient, Response, TrackingData}
-import test.{Fake, WithTestApplicationContext, WithTestExecutionContext}
-import idapiclient.{IdApiClient, TrackingData}
+import idapiclient.{IdApiClient, TrackingData, Response}
 import test.{Fake, WithTestApplicationContext, WithTestExecutionContext, WithTestIdConfig}
 import play.api.test._
 import play.api.test.Helpers._
