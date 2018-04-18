@@ -61,7 +61,8 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     wire[SwitchboardLifecycle],
     wire[SiteMapLifecycle],
     wire[CachedHealthCheckLifeCycle],
-    wire[DiscussionExternalAssetsLifecycle]
+    wire[DiscussionExternalAssetsLifecycle],
+    wire[SkimLinksCacheLifeCycle]
   )
 
   lazy val router: Router = wire[Routes]

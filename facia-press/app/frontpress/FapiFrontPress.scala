@@ -1,7 +1,7 @@
 package frontpress
 
 import metrics.SamplerMetric
-import com.gu.contentapi.client.ContentApiClientLogic
+import com.gu.contentapi.client.{ContentApiClient => CapiContentApiClient}
 import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
@@ -34,7 +34,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
   override def putPressedJson(path: String, json: String, pressedType: PressedPageType): Unit = S3FrontsApi.putLiveFapiPressedJson(path, json, pressedType)
   override def isLiveContent: Boolean = true
 
-  override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
+  override implicit val capiClient: CapiContentApiClient = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient),
     targetUrl = Configuration.contentApi.contentApiHost,
     apiKey = Configuration.contentApi.key.getOrElse("facia-press")
@@ -51,7 +51,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
 
 class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit ec: ExecutionContext) extends FapiFrontPress {
 
-  override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
+  override implicit val capiClient: CapiContentApiClient = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient) { override val signer = Some(PreviewSigner()) },
     targetUrl = Configuration.contentApi.previewHost
       .filter(_ => Switches.FaciaToolDraftContent.isSwitchedOn)
@@ -82,7 +82,7 @@ object EmbedJsonHtml {
 
 trait FapiFrontPress extends Logging {
 
-  implicit val capiClient: ContentApiClientLogic
+  implicit val capiClient: CapiContentApiClient
   implicit def fapiClient: ApiClient
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient

@@ -27,7 +27,7 @@ import play.api.routing.Router
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
-import services.{ConfigAgentLifecycle, OphanApi}
+import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
 
 trait PreviewLifecycleComponents extends SportServices with CommercialServices with FapiServices with OnwardServices {
   self: FrontendComponents =>
@@ -48,7 +48,8 @@ trait PreviewLifecycleComponents extends SportServices with CommercialServices w
     wire[FootballLifecycle],
     wire[CricketLifecycle],
     wire[RugbyLifecycle],
-    wire[TargetingLifecycle]
+    wire[TargetingLifecycle],
+    wire[SkimLinksCacheLifeCycle]
   )
 
   def actorSystem: ActorSystem

@@ -9,7 +9,6 @@ import conf.switches.Switches.IdentityShowOptInEngagementBanner
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
-    CommercialBaseline,
     CommercialAdRefresh,
     OrielParticipation,
     GdprOptinAlert,
@@ -24,14 +23,6 @@ object CommercialClientLogging extends Experiment(
   owners = Owner.group(SwitchGroup.Commercial),
   sellByDate = new LocalDate(2018, 5, 31),
   participationGroup = Perc1A
-)
-
-object CommercialBaseline extends Experiment(
-  name = "commercial-baseline",
-  description = "Users in this experiment will experience the commercial javascript stack as of 2018-01-01.",
-  owners = Seq(Owner.withGithub("katebee"), Owner.withGithub("shtukas")),
-  sellByDate = new LocalDate(2018, 4, 18),
-  participationGroup = Perc2B
 )
 
 object CommercialAdRefresh extends Experiment(
