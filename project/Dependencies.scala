@@ -3,10 +3,10 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.136"
+  val identityLibVersion = "3.139"
   val awsVersion = "1.11.240"
-  val capiVersion = "11.51"
-  val faciaVersion = "2.5.4"
+  val capiVersion = "11.55"
+  val faciaVersion = "2.5.5"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -70,7 +70,7 @@ object Dependencies {
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
-  val atomRenderer = "com.gu" %% "atom-renderer" % "0.12.2"
+  val atomRenderer = "com.gu" %% "atom-renderer" % "0.14.4"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
 

@@ -313,7 +313,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 17),
+    sellByDate = new LocalDate(2018, 5, 15),
     exposeClientSide = false
    )
 
@@ -394,6 +394,26 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = new LocalDate(2018, 6, 28),
+    exposeClientSide = false
+  )
+
+  val AffiliateLinks: Switch = Switch(
+    group = Commercial,
+    name = "affiliate-links",
+    description = "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val AffiliateLinkSections: Switch = Switch(
+    group = Commercial,
+    name = "affiliate-links-sections",
+    description = "Add affiliate links to all content in sections in affiliateLinkSections config property when no override exists in capi (showAffiliateLinks field).",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = false
   )
 }
