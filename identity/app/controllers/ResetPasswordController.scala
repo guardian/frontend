@@ -4,7 +4,7 @@ import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.data.{Form, Forms}
 import play.api.mvc._
-import idapiclient.{EmailPassword, IdApiClient}
+import idapiclient.IdApiClient
 import services._
 import play.api.i18n.{Messages, MessagesProvider}
 import play.api.data.validation._
@@ -97,7 +97,9 @@ class ResetPasswordController(
 
     def onSuccess(form: (String, String, String)): Future[Result] = form match {
       case (password, password_confirm, email_address) =>
-        api.resetPassword(token,password) map {
+
+        val authResponse = api.resetPassword(token,password)
+        signInService.getCookies(authResponse, true) map {
           case Left(errors) =>
             logger.info(s"reset password errors, ${errors.toString()}")
             if (errors.exists("Token expired" == _.message)) {
@@ -112,10 +114,11 @@ class ResetPasswordController(
                   .flashing(formWithError.toFlash)
               )
             }
-          case Right(cookieResponse) =>
-            logger.trace("Logging user in from reset password")
-            NoCache(SeeOther(routes.ResetPasswordController.renderPasswordResetConfirmation.url))
-              .withCookies(signInService.getCookies(cookieResponse, true):_*)
+
+          case Right(responseCookies) =>
+            logger.trace("Logging user in")
+            SeeOther(routes.ResetPasswordController.renderPasswordResetConfirmation.url)
+              .withCookies(responseCookies:_*)
         }
     }
 
