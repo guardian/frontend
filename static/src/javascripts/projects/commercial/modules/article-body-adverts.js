@@ -57,11 +57,13 @@ const insertAdAtPara = (
 let previousAllowedCandidate;
 
 // this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
-const filterNearbyCandidates = (candidate: SpacefinderItem): boolean => {
+const filterNearbyCandidates = (maximumAdHeight: number) => (
+    candidate: SpacefinderItem
+): boolean => {
     if (
         !previousAllowedCandidate ||
         Math.abs(candidate.top - previousAllowedCandidate.top) -
-            adSizes.mpu.height >=
+            maximumAdHeight >=
             adSlotClassSelectorSizes.minBelow
     ) {
         previousAllowedCandidate = candidate;
@@ -72,12 +74,13 @@ const filterNearbyCandidates = (candidate: SpacefinderItem): boolean => {
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     const variant = getVariant(spacefinderSimplify, 'variant');
+    const isImmersive = config.get('page.isImmersive');
     const inTestVariant = variant && isInVariant(spacefinderSimplify, variant);
 
     const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: inTestVariant ? 300 : 700,
+        minAbove: inTestVariant && !isImmersive ? 300 : 700,
         minBelow: 700,
         selectors: {
             ' > h2': {
@@ -90,18 +93,18 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
                 minBelow: 400,
             },
         },
-        filter: filterNearbyCandidates,
+        filter: filterNearbyCandidates(adSizes.mpu.height),
     };
 
     const relaxedRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: 700,
+        minAbove: 1000,
         minBelow: 700,
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
         },
-        filter: filterNearbyCandidates,
+        filter: filterNearbyCandidates(adSizes.halfPage.height),
     };
 
     const rules = inTestVariant && !isInline1 ? relaxedRules : defaultRules;
@@ -148,7 +151,7 @@ const addMobileInlineAds = (): Promise<number> => {
                 minBelow: 400,
             },
         },
-        filter: filterNearbyCandidates,
+        filter: filterNearbyCandidates(adSizes.mpu.height),
     };
 
     const insertAds = (paras: HTMLElement[]): Promise<number> => {

@@ -48,7 +48,7 @@ trait ConsentsJourney
         returnUrlForm.bindFromRequest.fold(
           formWithErrors => Future.successful(BadRequest(Json.toJson(formWithErrors.errors.toList))),
           returnUrl => {
-            val newConsents = if (request.user.consents.isEmpty) Consent.defaultConsents else request.user.consents
+            val newConsents = if (request.user.consents.isEmpty) Consent.defaultConsents else Consent.addNewDefaults(request.user.consents)
             identityApiClient.saveUser(
               request.user.id,
               UserUpdateDTO(consents = Some(newConsents), statusFields = Some(StatusFields(hasRepermissioned = Some(true)))),

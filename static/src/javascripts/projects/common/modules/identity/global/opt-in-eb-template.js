@@ -18,9 +18,11 @@ type LinkTargets = {
 const makeTemplateHtml = (template: Template, targets: LinkTargets): string => `
     <div id="site-message__message">
         <div class="site-message__message identity-gdpr-oi-alert">
-            <div class="identity-gdpr-oi-alert__logo">
+            <a class="identity-gdpr-oi-alert__logo" target="_blank" href="${
+                targets.journey
+            }" data-link-name="gdpr-oi-campaign : alert : to-consents : img">
                 <img src="${template.image}" alt="Stay with us" />
-            </div>
+            </a>
             <div class="identity-gdpr-oi-alert__body">
                 <div class="identity-gdpr-oi-alert__text">
                     ${template.title}
@@ -35,7 +37,7 @@ const makeTemplateHtml = (template: Template, targets: LinkTargets): string => `
                         targets.journey
                     }" data-link-name="gdpr-oi-campaign : alert : to-consents">
                         ${template.cta}
-                        ${inlineSvg('arrowWhiteRight')}
+                        ${inlineSvg('arrowRight')}
                     </a>
                 </div>
             </div>

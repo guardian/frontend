@@ -274,7 +274,6 @@ GET            /advertiser-content/:campaignName/:pageName/:cType/onward.json   
 GET            /advertiser-content/:campaignName/:pageName/autoplay.json                                                         commercial.controllers.HostedContentController.renderAutoplayComponent(campaignName, pageName)
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
-GET            /commercial/kpi/revenue                                                                                           controllers.admin.commercial.TeamKPIController.renderBaselineDashboard()
 GET            /commercial/prebid/revenue                                                                                        controllers.admin.commercial.TeamKPIController.renderPrebidDashboard()
 PUT            /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.insert()
 OPTIONS        /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.getOptions

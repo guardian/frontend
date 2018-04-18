@@ -220,7 +220,8 @@ final case class CommonsDivisionAtom(
 object Atoms extends common.Logging {
 
   def articleConfig = ArticleConfiguration(
-    ajaxUrl = Configuration.ajax.url
+    ajaxUrl = Configuration.ajax.url,
+    commonsdivisionConfiguration = ArticleConfiguration.CommonsdivisionConfiguration(showMps = true)
   )
 
   def extract[T](

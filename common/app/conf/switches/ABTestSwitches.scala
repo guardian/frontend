@@ -68,28 +68,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-header-subscribe-means-subscribe",
-    "Point the subscribe link in the header to a subscriptions-only version of the support site",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 19),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-spacefinder-simplify",
     "Alters the rules for inserting ads on desktop breakpoints.",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 17),
+    sellByDate = new LocalDate(2018, 4, 24),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-cambridge-analytica-always-ask-final",
-    "turn on always ask for CA stories",
+    "ab-acquisitions-epic-always-ask-april-story",
+    "turn on always ask for this story",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 6, 5),

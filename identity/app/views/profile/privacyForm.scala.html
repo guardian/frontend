@@ -76,23 +76,6 @@
     </form>
 }
 
-@channelConsentForm = {
-    <form method="post" action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" novalidate>
-        @views.html.helper.CSRF.formField
-        <div class="manage-account__switches">
-            <ul>
-            @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
-                @if(isSmsChannel(consentField, user)) {
-                  <li>
-                      @fragments.consentSwitch(consentField)(messages)
-                  </li>
-                }
-            }
-            </ul>
-        </div>
-    </form>
-}
-
 @if(consentsUpdated) {
     <div class="form__success">
         <h2>Thank you</h2>
@@ -110,19 +93,6 @@
 @* CHANNELS *@
 <hr class="manage-account-divider" />
 
-<fieldset class="fieldset fieldset--manage-account-noborder">
-    <div class="fieldset__heading">
-        <h2 class="form__heading">How else can we get in touch with you?</h2>
-    </div>
-    <div class="fieldset__fields">
-        @if(channelsProvidedBy(user).nonEmpty) {
-            @channelConsentForm
-        } else {
-            <p class="identity-title-explainer">
-                Update your <a class="u-underline" href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.displayAccountForm.url, idRequest)" data-link-name="identity : email : add-channel-info">account details</a> with your phone number to be able to opt in to receiving SMS communications from the Guardian.
-            </p>
-        }
-    </div>
-</fieldset>
+@views.html.profile.otherChannels(idUrlBuilder, idRequest, privacyForm, user)(request, messages)
 
 @registrationFooter(idRequest, idUrlBuilder)
