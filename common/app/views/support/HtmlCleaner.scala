@@ -799,21 +799,23 @@ object GarnettQuoteCleaner extends HtmlCleaner {
   }
 }
 
-case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean], contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with Logging {
+case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean],
+  contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with Logging {
 
   override def clean(document: Document): Document = {
-    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn, sectionId, showAffiliateLinks)) {
-      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType)
+    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn,
+      sectionId, showAffiliateLinks, affiliateLinkSections)) {
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
   }
 }
 
 object AffiliateLinksCleaner {
-  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Boolean, contentType: String): Document = {
+  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Boolean, contentType: String, skimlinksId: String): Document = {
     val links = html.getElementsByAttribute("href")
 
     val supportedLinks: mutable.Seq[Element] = links.asScala.filter(isAffiliatable)
-    supportedLinks.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl))}
+    supportedLinks.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
 
     if (supportedLinks.nonEmpty) insertAffiliateDisclaimer(html, contentType)
     else html
@@ -827,16 +829,16 @@ object AffiliateLinksCleaner {
     document
   }
 
-  def linkToSkimLink(link: String, pageUrl: String): String = {
+  def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
     val urlEncodedLink = URLEncode(link)
     s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$pageUrl"
   }
 
-  def shouldAddAffiliateLinks(switchedOn: Boolean, section: String, showAffiliateLinks: Option[Boolean]): Boolean = {
+  def shouldAddAffiliateLinks(switchedOn: Boolean, section: String, showAffiliateLinks: Option[Boolean], supportedSections: Set[String]): Boolean = {
     if (showAffiliateLinks.isDefined) {
       showAffiliateLinks.contains(true)
     } else {
-      switchedOn && affiliateLinkSections.contains(section)
+      switchedOn && supportedSections.contains(section)
     }
   }
 }
