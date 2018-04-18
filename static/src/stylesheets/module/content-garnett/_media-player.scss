@@ -1078,3 +1078,30 @@ $ima-controls-height: 70px;
         }
     }
 }
+
+
+// ------------------------------------------------------------------------
+// Native audio player customisation
+// ------------------------------------------------------------------------
+
+.gu-media--audio {
+    &::-webkit-media-controls-panel {
+        background: transparent;
+    }
+
+    &::-webkit-media-controls-play-button,
+    &::-webkit-media-controls-mute-button {
+        filter: invert(1);
+    }
+
+    &::-webkit-media-controls-current-time-display {
+        color: white;
+        font-family: $f-sans-serif-text;
+        margin-left: $gs-gutter / 4;
+    }
+
+    &::-webkit-media-controls-time-remaining-display {
+        color: $neutral-3;
+        font-family: $f-sans-serif-text;
+    }
+}
