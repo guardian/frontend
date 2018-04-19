@@ -247,7 +247,7 @@ $quote-mark: 35px;
         }
     }
 
-    .social-icon, .social-tray__icon {
+    .social-icon {
         @include mq(leftCol) {
             max-width: 29px;
             min-width: 29px;
@@ -1388,18 +1388,6 @@ $quote-mark: 35px;
     object-fit: cover;
 }
 
-.social__tray-close .social-tray__button {
-    &:focus,
-    &:hover {
-        .social-tray__icon__svg {
-            fill: #ffffff;
-        }
-    }
-}
-
-.social__tray-close .social-tray__icon {
-    box-sizing: content-box;
-}
 // *************** Interactive elements ***************
 .interactive.element--showcase,
 .interactive.element--supporting {
