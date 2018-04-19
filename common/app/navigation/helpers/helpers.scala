@@ -1,7 +1,8 @@
 package navigation
 
 import common.Edition
-import UrlHelpers.{SideMenu, getSupportOrMembershipUrl, getSupportOrSubscriptionUrl}
+import navigation.ReaderRevenueSite._
+import UrlHelpers.{SideMenu, getReaderRevenueUrl}
 import play.api.mvc.RequestHeader
 
 object NavigationHelpers {
@@ -10,8 +11,8 @@ object NavigationHelpers {
     val editionId = edition.id.toLowerCase()
 
     List(
-      NavLink("Become a supporter", getSupportOrMembershipUrl(SideMenu)),
-      NavLink("Subscribe", getSupportOrSubscriptionUrl(SideMenu), classList = Seq("js-subscribe"))
+      NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
+      NavLink("Subscribe", getReaderRevenueUrl(SupportSubscribe, SideMenu), classList = Seq("js-subscribe"))
     )
   }
 }
