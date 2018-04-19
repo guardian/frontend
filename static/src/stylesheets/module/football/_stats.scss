@@ -286,6 +286,7 @@
 
 .after-article {
     .match-stats__container {
+        clear: left;
         position: relative;
         padding: 9px 0;
         background-color: mix($sport-garnett-main-1, #ffffff, 15%);

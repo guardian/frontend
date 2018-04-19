@@ -672,6 +672,7 @@ $quote-mark: 35px;
 }
 
 // *************** Article overides *************
+.content--type-matchreport:not(.content--liveblog),
 .content--type-article:not(.content--liveblog) {
     .block-time.published-time {
         position: relative;
