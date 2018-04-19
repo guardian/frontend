@@ -93,6 +93,7 @@ Client-Side Developer: George Haberis
 Location: London, UK
 
 Developer: Phil McMahon
+Twitter: @pmcmahon
 Location: London, UK
 
 Developer: Calum Campbell
