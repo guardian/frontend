@@ -85,4 +85,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 6, 5),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-native-vs-dfp",
+    "See if there is any difference in annualised value between serving the Epic natively vs DFP",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 5, 19),
+    exposeClientSide = true
+  )
 }
