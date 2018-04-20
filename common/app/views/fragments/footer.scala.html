@@ -4,8 +4,8 @@
 @import common.Edition
 @import common.LinkTo
 @import navigation.NavMenu
-@import navigation.ReaderRevenueSite.{Contribute, Membership, Subscribe}
-@import navigation.UrlHelpers.{getReaderRevenueUrl, Footer, getSupportOrMembershipUrl, getSupportOrSubscriptionUrl, getSupportOrContributeUrl}
+@import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute}
+@import navigation.UrlHelpers.{getReaderRevenueUrl, Footer}
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
 @import conf.switches.Switches.{ EmailInlineInFooterSwitch }
@@ -70,11 +70,11 @@
                             <li class="colophon__item"><a data-link-name="uk : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=NGW_FOOTER_UK_GU_SOULMATES">
                                 dating</a>
                             </li>
-                            <li class="colophon__item"><a data-link-name="uk : footer : membership" class="js-acquisition-link" href="@getSupportOrMembershipUrl(Footer)">
-                                become a supporter</a>
-                            </li>
-                            <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getSupportOrContributeUrl(Footer)">
+                            <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportContribute, Footer)">
                                 make a contribution</a>
+                            </li>
+                            <li class="colophon__item"><a data-link-name="uk : footer : membership" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
+                                subscribe</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="uk : footer : guardian labs" href="@LinkTo {/guardian-labs}">
                                 Guardian labs</a>
@@ -136,9 +136,6 @@
                             <li class="colophon__item"><a data-link-name="uk : footer : twitter" href="https://twitter.com/guardian">
                                 Twitter</a>
                             </li>
-                            <li class="colophon__item"><a data-link-name="uk : footer : subscribe" class="js-acquisition-link js-subscribe" href="@getSupportOrSubscriptionUrl(Footer)">
-                                subscribe</a>
-                            </li>
                         </ul>
                     }
 
@@ -147,11 +144,11 @@
                             <li class="colophon__item"><a data-link-name="us : footer : jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_US_GU_JOBS">
                                 jobs</a>
                             </li>
-                            <li class="colophon__item"><a data-link-name="uk : footer : membership" class="js-acquisition-link" href="@getSupportOrMembershipUrl(Footer)">
-                                become a supporter</a>
-                            </li>
-                            <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getSupportOrContributeUrl(Footer)">
+                            <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportContribute, Footer)">
                                 make a contribution</a>
+                            </li>
+                            <li class="colophon__item"><a data-link-name="uk : footer : membership" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
+                                subscribe</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="us : footer : guardian labs" href="@LinkTo {/guardian-labs-us}">
                                 guardian labs</a>
@@ -209,9 +206,6 @@
                             <li class="colophon__item"><a data-link-name="us : footer : twitter" href="https://twitter.com/GuardianUs">
                                 Twitter</a>
                             </li>
-                            <li class="colophon__item"><a data-link-name="us : footer : subscribe" class="js-acquisition-link" href="@getReaderRevenueUrl(Subscribe, Footer)">
-                                subscribe</a>
-                            </li>
                             <li class="colophon__item"><a data-link-name="digital newspaper archive" href="https://theguardian.newspapers.com">
                                 digital newspaper archive</a>
                             </li>
@@ -221,11 +215,11 @@
 
                     case Au => {
                         <ul class="colophon__list">
-                            <li class="colophon__item"><a data-link-name="uk : footer : membership" class="js-acquisition-link" href="@getReaderRevenueUrl(Membership, Footer)">
-                                become a supporter</a>
-                            </li>
-                            <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getReaderRevenueUrl(Contribute, Footer)">
+                            <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportContribute, Footer)">
                                 make a contribution</a>
+                            </li>
+                            <li class="colophon__item"><a data-link-name="us : footer : subscribe" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
+                                subscribe</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="au : footer : uk-jobs" href="https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_AU_GU_JOBS">
                                 UK jobs</a>
@@ -291,9 +285,6 @@
                             <li class="colophon__item"><a data-link-name="au : footer : twitter" href="https://twitter.com/GuardianAus">
                                 Twitter</a>
                             </li>
-                            <li class="colophon__item"><a data-link-name="au : footer : subscribe" class="js-acquisition-link" href="@getReaderRevenueUrl(Subscribe, Footer)">
-                                subscribe</a>
-                            </li>
                             <li class="colophon__item"><a data-link-name="digital newspaper archive" href="https://theguardian.newspapers.com">
                                 digital newspaper archive</a>
                             </li>
@@ -302,11 +293,11 @@
 
                     case International => {
                         <ul class="colophon__list">
-                            <li class="colophon__item"><a data-link-name="uk : footer : membership" class="js-acquisition-link" href="@getReaderRevenueUrl(Membership, Footer)">
-                                become a supporter</a>
-                            </li>
-                            <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getReaderRevenueUrl(Contribute, Footer)">
+                            <li class="colophon__item"><a data-link-name="uk : footer : contribute" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportContribute, Footer)">
                                 make a contribution</a>
+                            </li>
+                            <li class="colophon__item"><a data-link-name="uk : footer : membership" class="js-acquisition-link" href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
+                                subscribe</a>
                             </li>
                             <li class="colophon__item"><a data-link-name="securedrop" href="https://securedrop.theguardian.com/">
                                 securedrop</a>

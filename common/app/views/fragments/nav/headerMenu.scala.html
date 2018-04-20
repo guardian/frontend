@@ -1,6 +1,6 @@
 @import common.{ LinkTo, Edition }
 @import conf.switches.Switches.SearchSwitch
-@import navigation.{ NavMenu, NavigationHelpers, NavLink }
+@import navigation.{ NavMenu, NavLink, UrlHelpers }
 @import views.support.RenderClasses
 
 @(navMenu: NavMenu)(implicit request: RequestHeader)
@@ -103,10 +103,9 @@
                     </form>
                 </div>
             }
-
             <ul class="menu-group menu-group--membership"
                 role="menubar">
-                @NavigationHelpers.getMembershipLinks(edition).map { item =>
+                @UrlHelpers.readerRevenueLinks.map { item =>
                     <li class="menu-item hide-from-desktop"
                         data-edition="@{edition.id.toLowerCase}"
                         role="menuitem">

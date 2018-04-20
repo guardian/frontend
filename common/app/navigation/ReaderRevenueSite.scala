@@ -25,23 +25,11 @@ object ReaderRevenueSite extends enumeratum.Enum[ReaderRevenueSite] {
     val url: String = Configuration.id.supportUrl
   }
 
-  case object SupportUkSubscribe extends ReaderRevenueSite {
-    val url: String = s"${Configuration.id.supportUrl}/uk/subscribe"
+  case object SupportSubscribe extends ReaderRevenueSite {
+    val url: String = s"${Configuration.id.supportUrl}/subscribe"
   }
 
   case object SupportContribute extends ReaderRevenueSite {
     val url: String = s"${Configuration.id.supportUrl}/contribute"
-  }
-
-  case object Membership extends ReaderRevenueSite {
-    val url: String = s"${Configuration.id.membershipUrl}/supporter"
-  }
-
-  case object Contribute extends ReaderRevenueSite {
-    val url: String = Configuration.id.contributeUrl
-  }
-
-  case object Subscribe extends ReaderRevenueSite {
-    val url: String = Configuration.id.subscribeUrl
   }
 }
