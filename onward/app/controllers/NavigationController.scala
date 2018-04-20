@@ -16,8 +16,6 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
       menu.otherLinks.map(section => navSectionLink(section))
     )
 
-    val readerRevenueLinks = readerRevenueLinks
-
     Cached(900) {
 
       implicit val sectionLinkAndTitleWrites = new Writes[navSectionLink] {
