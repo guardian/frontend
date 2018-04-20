@@ -103,11 +103,6 @@ Product Manager: Scott Painter
 Twitter: @scottp719
 Location: London, UK
 
-Developer: Anne Byrne
-Twitter: @aycenne
-From: Cork, Ireland
-Location: London, UK
-
 Developer: Mariot Chauvin
 Twitter: @mchv
 
@@ -315,4 +310,9 @@ Location: London, England
 
 Developer: Josh Holder
 Twitter: @Josh_H
+Location: London, UK
+
+Developer: Anne Byrne
+Twitter: @aycenne
+From: Cork, Ireland
 Location: London, UK
