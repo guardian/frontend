@@ -229,13 +229,10 @@ $quote-mark: 35px;
 
     .meta__extras {
         order: 5;
-        border: 0;
     }
 
     .block-share__item,
-    .inline-close,
-    .social-icon,
-    .social-icon.social-icon--more {
+    .social-icon {
         background-color: transparent;
         border: 1px solid $neutral-4;
 
@@ -243,53 +240,6 @@ $quote-mark: 35px;
         &:hover {
             svg {
                 fill: $garnett-neutral-5;
-            }
-        }
-    }
-
-    .social-icon {
-        @include mq(leftCol) {
-            max-width: 29px;
-            min-width: 29px;
-            height: 29px;
-        }
-        @include mq(wide) {
-            min-width: 32px;
-            max-width: 100%;
-            width: auto;
-            height: 32px;
-        }
-    }
-
-    .social--top {
-        padding-top: 0!important;
-        //only way to override behaviour
-    }
-
-    .meta__numbers,
-    .meta__social {
-        @include multiline(1, $garnett-neutral-4, top);
-        border-top: 0;
-        padding-top: $gs-baseline / 2;
-    }
-
-    .meta__social {
-        @include mq($until: leftCol) {
-            border-bottom: 1px solid $garnett-neutral-4;
-        }
-    }
-
-    .meta__numbers {
-        margin-right: $gs-gutter/2;
-        @include mq(mobileLandscape) {
-            margin-right: $gs-gutter;
-        }
-        @include mq(phablet) {
-            margin-right: 0;
-        }
-        @include mq($until: leftCol) {
-            &:before {
-                content: none;
             }
         }
     }
@@ -1107,16 +1057,6 @@ $quote-mark: 35px;
 
     .content__meta-container {
         @include multiline(4, $garnett-neutral-7, top);
-    }
-
-    .meta__numbers,
-    .meta__social {
-        @include multiline(1, $garnett-neutral-7, top);
-    }
-
-    .meta__numbers {
-        background-image: none;
-        padding-top: 0;
     }
 
     .inline-icon,

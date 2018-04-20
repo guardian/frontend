@@ -55,25 +55,8 @@
         min-height: 0;
     }
 
-    .content__dateline,
-    .meta__numbers,
-    .meta__social {
+    .content__dateline {
         border-top: 0;
-    }
-
-    .meta__social {
-        border-bottom: 1px solid $garnett-neutral-4;
-    }
-
-    .meta__numbers {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
-    .meta__extras {
-        border-bottom: 0;
-        border-top: 1px solid $garnett-neutral-4;
     }
 
     .block-share__item,

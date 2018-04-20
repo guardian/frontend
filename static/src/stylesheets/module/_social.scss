@@ -39,15 +39,6 @@ category: Common
 ```
 */
 
-.meta__social {
-    min-height: 45px; // Height of social + padding + 1px border to ensure layout is kept when opening overlay
-}
-
-.social:not(.social--bottom) {
-    overflow-y: hidden;
-    height: 32px;
-}
-
 .social__item {
     float: left;
     min-width: 32px;
@@ -70,22 +61,6 @@ category: Common
 .social__action {
     display: inline-block;
 }
-
-.social__saveforlater {
-    display: none;
-}
-
-.content--article,
-.content--liveblog,
-.content--gallery,
-.content--media,
-.content--image,
-.content--interactive {
-    .social--top {
-        padding-top: $gs-baseline / 2;
-        padding-bottom: $gs-baseline / 2;
-    }
- }
 
 /**
  * Social icons

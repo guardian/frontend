@@ -88,35 +88,14 @@
 
 .meta__number {
     display: block;
-    height: 100%;
-    text-align: left;
+    text-align: right;
     float: left;
     min-width: 15px; // Min width is the width of the icons
-
-    @include mq($until: leftCol) {
-        text-align: right;
-    }
-}
-
-.meta__extras--crossword {
-    border-top: 1px dotted $neutral-5;
-    display: flex;
-    justify-content: space-between;
-
-    .meta__social,
-    .meta__numbers {
-        border: 0 none;
-    }
-
-    .meta__number {
-        border-left: 1px solid $neutral-7;
-        padding-left: $gs-gutter / 2;
-        text-align: right;
-    }
+    padding-top: $gs-baseline / 2;
 }
 
 .meta__number:not(.u-h) + .meta__number {
-    border-left: 1px solid $neutral-7;
-    padding-left: $gs-gutter / 2;
-    margin-left: $gs-gutter / 2;
+    border-left: 1px solid $garnett-neutral-4;
+    padding-left: $gs-gutter / 4;
+    margin-left: $gs-gutter / 4;
 }
