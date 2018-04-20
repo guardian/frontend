@@ -71,18 +71,8 @@
         &.content {
             background-color: $multimedia-support-5;
 
-            .tonal__head,
-            .meta__social .social--expanded-top {
+            .tonal__head {
                 background-color: lighten($news-support-6, 5%);
-            }
-
-            .social__tray-close .inline-close {
-                background-color: rgba(0, 0, 0, .1);
-
-                &:hover,
-                &:focus {
-                    background-color: rgba(0, 0, 0, .3);
-                }
             }
 
             .meta__extras,

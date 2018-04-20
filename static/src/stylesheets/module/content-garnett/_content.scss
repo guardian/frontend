@@ -923,14 +923,6 @@
             fill: $neutral-3;
         }
     }
-
-    .meta__social {
-        .social--expanded-top {
-            background-color: $multimedia-support-5;
-            border-color: $neutral-1;
-            padding-bottom: 1px;
-        }
-    }
 }
 
 .content--interactive {
@@ -1176,9 +1168,7 @@
     .meta__extras {
         border-color: $garnett-neutral-7;
     }
-    .social--expanded-top {
-        background-color: $paid-article;
-    }
+
     &.tonal--tone-media {
         .content__headline,
         .from-content-api,
