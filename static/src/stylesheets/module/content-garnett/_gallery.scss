@@ -1,4 +1,5 @@
 @charset 'UTF-8';
+
 // The main image needs to take up 100vh and the slim header needs to sit just on top of it.
 .l-header--new-gallery {
     position: absolute;
@@ -6,22 +7,12 @@
     right: 0;
     left: 0;
 }
-// .gallery__divider {
-//     border-top: 1px solid $garnett-neutral-7;
-//
-// @include mq(desktop) {
-//     padding-top: $gs-baseline / 2;
-// }
-// }
 
-.l-side-margins--gallery {
-    &:after,
-    &:before {
-        content: none;
-    }
+.gallery__divider {
+    border-top: 1px solid $garnett-neutral-7;
 
-    .content__main {
-        border-top: 1px solid $garnett-neutral-7;
+    @include mq(desktop) {
+        padding-top: $gs-baseline / 2;
     }
 }
 
@@ -29,6 +20,7 @@
     max-width: none;
     margin-right: auto;
     padding-bottom: $gs-baseline*2;
+
     @include mq(desktop) {
         margin-left: gs-span(3) + $gs-gutter;
         padding-left: 0 !important;
@@ -39,6 +31,7 @@
     list-style: none;
     margin: 0;
     position: relative;
+
     @include mq(desktop) {
         &:before {
             content: '';
@@ -56,6 +49,7 @@
         display: flex;
         flex-direction: column-reverse;
     }
+
     // On mobile/tablet the images should be 100% of the width of the screen
     @include mq($until: desktop) {
         margin-left: -$gs-gutter;
@@ -67,10 +61,12 @@
             border-top: 0;
         }
     }
+
     @include mq($until: mobileLandscape) {
         margin-left: -$gs-gutter / 2;
         margin-right: -$gs-gutter / 2;
     }
+
     @include mq(desktop) {
         position: relative;
         border-top: 0;
@@ -97,16 +93,19 @@
     position: relative;
     border: 0;
     width: inherit;
+
     @include mq($until: desktop) {
         margin-bottom: $gs-baseline * 2;
         padding-top: $gs-baseline / 2;
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
+
     @include mq($until: mobileLandscape) {
         padding-left: $gs-gutter / 2;
         padding-right: $gs-gutter / 2;
     }
+
     @include mq(desktop) {
         @include fs-textSans(2, true);
         position: absolute;
@@ -119,7 +118,8 @@
 
 .gallery__caption {
     color: $neutral-4;
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem;
+
     @include mq(desktop) {
         padding-right: $gs-gutter / 2;
     }
@@ -127,7 +127,7 @@
     a {
         color: $neutral-4;
         border-bottom: 1px solid $neutral-2;
-        transition: border-color 0.15s ease-out;
+        transition: border-color .15s ease-out;
 
         &:hover {
             border-bottom: 1px solid $neutral-7;
@@ -145,6 +145,7 @@
 
 .gallery__credit {
     color: $neutral-3;
+
     @include mq(desktop) {
         padding-right: $gs-gutter / 2;
     }
@@ -152,9 +153,11 @@
 
 .gallery__img-container {
     position: relative;
+
     @include mq(desktop) {
         padding-bottom: 2.5rem;
     }
+
     @include mq($until: desktop) {
         text-align: center;
 
@@ -163,9 +166,10 @@
         }
     }
 }
+
 // All images should fit within the viewport height
-.gallery__img,
-.gallery__img-container {
+.gallery__img-container,
+.gallery__img {
     width: 100%;
 }
 
@@ -175,7 +179,7 @@
     }
 
     .content--immersive .content__main {
-        padding-top: $gs-gutter / 2;
+        padding-top: 0;
     }
 
     .meta__comment-count--top {
@@ -213,6 +217,7 @@
     .fc-container__header__title:after {
         background-color: $garnett-neutral-7;
     }
+
     // Reset the styles from _content.scss
     .meta__numbers {
         position: relative;
@@ -233,14 +238,16 @@
     .badge--alt {
         margin-top: 0;
         margin-bottom: $gs-baseline;
+
         @include mq(desktop) {
             margin-top: $gs-baseline * 2;
         }
     }
+
 }
 
-.article__fullscreen,
-.gallery__fullscreen {
+.gallery__fullscreen,
+.article__fullscreen {
     top: 0;
     right: 0;
     width: 44px;
@@ -263,15 +270,17 @@
     .element--thumbnail:hover & {
         display: block;
     }
+
     @if $old-ie {
         display: none;
     }
 }
+
 @include mq(desktop) {
     .article__fullscreen,
     .gallery__fullscreen {
         opacity: 0;
-        transition: opacity 0.15s ease-out;
+        transition: opacity .15s ease-out;
     }
 
     .article__img-container:hover .article__fullscreen,

@@ -1,5 +1,4 @@
 // Gallery specific styles for Garnett
-
 .immersive-main-media__gallery {
     overflow-x: hidden;
 
@@ -107,7 +106,6 @@
     }
 }
 // Gallery specific styles for Meta
-
 .tonal__head .content__main-column--gallery {
     display: flex;
     flex-wrap: wrap;
@@ -117,6 +115,7 @@
     }
     @include mq(desktop) {
         margin-left: gs-span(3) + $gs-gutter/2;
+
     }
 
     .meta__extras {
@@ -130,7 +129,7 @@
 
     .tonal__standfirst {
         max-width: gs-span(8);
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline;
         order: 1;
         flex-basis: 100%;
     }
