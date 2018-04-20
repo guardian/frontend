@@ -38,6 +38,11 @@ object UrlHelpers {
     }
   }
 
+  def readerRevenueLinks(implicit request: RequestHeader) = List(
+    NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
+    NavLink("Subscribe", getReaderRevenueUrl(SupportSubscribe, SideMenu), classList = Seq("js-subscribe"))
+  )
+
   def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): String = {
     val componentId = getComponentId(destination, position)
 

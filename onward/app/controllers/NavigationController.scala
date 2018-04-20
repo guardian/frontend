@@ -1,10 +1,6 @@
 package controllers
 
-import common.{Edition, JsonComponent, LinkTo}
-import navigation.{NavLink, NavigationHelpers, NavMenu}
-import model.Cached
-import play.api.libs.json.{Json, Writes}
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import navigation.UrlHelpers.readerRevenueLinks
 
 class NavigationController(val controllerComponents: ControllerComponents) extends BaseController {
 
@@ -19,6 +15,8 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
       menu.brandExtensions.map(section => navSectionLink(section)),
       menu.otherLinks.map(section => navSectionLink(section))
     )
+
+    val readerRevenueLinks = readerRevenueLinks
 
     Cached(900) {
 
@@ -41,7 +39,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
         "items" -> Json.arr(
           Json.obj(
             "topLevelSections" -> menu.pillars.map( section => topLevelNavItems(section) ),
-            "membershipLinks" -> NavigationHelpers.getMembershipLinks(edition).map( section => navSectionLink(section)),
+            "readerRevenueLinks" -> readerRevenueLinks.map( section => navSectionLink(section)),
             "secondarySections" -> navSecondarySections
           )
         )
