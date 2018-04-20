@@ -5,7 +5,7 @@ import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.data.{Form, Forms}
 import play.api.mvc._
 import idapiclient.IdApiClient
-import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder}
+import services._
 import play.api.i18n.{Messages, MessagesProvider}
 import play.api.data.validation._
 import play.api.data.Forms._
@@ -22,6 +22,7 @@ class ResetPasswordController(
   idRequestParser: IdRequestParser,
   idUrlBuilder: IdentityUrlBuilder,
   authenticationService: AuthenticationService,
+  signInService : PlaySigninService,
   val controllerComponents: ControllerComponents,
   val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
@@ -63,12 +64,6 @@ class ResetPasswordController(
     data = form.data + ("password" -> "", "password-confirm" -> "")
   )
 
-  def requestNewToken: Action[AnyContent] = Action { implicit request =>
-    val idRequest = idRequestParser(request)
-    Ok(IdentityHtmlPage.html(
-      views.html.password.resetPasswordRequestNewToken(page, idRequest, idUrlBuilder, requestPasswordResetForm)
-    )(page, request, context))
-  }
 
   def renderEmailSentConfirmation: Action[AnyContent] = Action { implicit request =>
     val idRequest = idRequestParser(request)
@@ -102,12 +97,15 @@ class ResetPasswordController(
 
     def onSuccess(form: (String, String, String)): Future[Result] = form match {
       case (password, password_confirm, email_address) =>
-        api.resetPassword(token,password) map {
+
+        val authResponse = api.resetPassword(token,password)
+        signInService.getCookies(authResponse, true) map {
           case Left(errors) =>
             logger.info(s"reset password errors, ${errors.toString()}")
-            if (errors.exists("Token expired" == _.message))
-              NoCache(SeeOther(routes.ResetPasswordController.requestNewToken().url))
-            else {
+            if (errors.exists("Token expired" == _.message)) {
+              val idRequest = idRequestParser(request)
+              NoCache(SeeOther(idUrlBuilder.buildUrl("/reset/resend", idRequest)))
+            } else {
               val formWithError = errors.foldLeft(requestPasswordResetForm) { (form, error) =>
                 form.withError(error.context.getOrElse(""), error.description)
               }
@@ -117,9 +115,10 @@ class ResetPasswordController(
               )
             }
 
-          case Right(ok) =>
-            val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-            NoCache(SeeOther(routes.ResetPasswordController.renderPasswordResetConfirmation.url))
+          case Right(responseCookies) =>
+            logger.trace("Logging user in")
+            SeeOther(routes.ResetPasswordController.renderPasswordResetConfirmation.url)
+              .withCookies(responseCookies:_*)
         }
     }
 
@@ -139,8 +138,8 @@ class ResetPasswordController(
     api.userForToken(token) map {
       case Left(errors) =>
         logger.warn(s"Could not retrieve password reset request for token: $token, errors: ${errors.toString()}")
-        NoCache(SeeOther(routes.ResetPasswordController.requestNewToken().url))
-
+        val idRequest = idRequestParser(request)
+        NoCache(SeeOther(idUrlBuilder.buildUrl("/reset/resend", idRequest)))
       case Right(user) =>
         val filledForm = passwordResetForm.fill("","", user.primaryEmailAddress)
         NoCache(SeeOther(routes.ResetPasswordController.renderResetPassword(token).url).flashing(filledForm.toFlash))

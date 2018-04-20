@@ -2,20 +2,23 @@
 
 import { getUserFromApi } from 'common/modules/identity/api';
 import { Message } from 'common/modules/ui/message';
-import { inlineSvg } from 'common/views/svgs';
 import { HAS_VISITED_CONSENTS_COOKIE_KEY } from 'common/modules/identity/consent-journey';
-import { getCookie } from 'lib/cookies';
+import { getCookie, addCookie } from 'lib/cookies';
 import config from 'lib/config';
 import ophan from 'ophan/ng';
 import userPrefs from 'common/modules/user-prefs';
+import type { LinkTargets, Template } from './opt-in-eb-template';
+import { makeTemplateHtml } from './opt-in-eb-template';
 
 const messageCode: string = 'gdpr-opt-in-jan-18';
 const messageHidAtPref: string = `${messageCode}-hid-at`;
+const messageUserUsesNewslettersCookie: string = `gu-${
+    messageCode
+}-via-newsletter`
+    .toUpperCase()
+    .replace(/-/g, '_');
 const messageCloseBtn = 'js-gdpr-oi-close';
 const remindMeLaterInterval = 24 * 60 * 60 * 1000;
-const medium: string = new URL(window.location.href).searchParams.get(
-    'utm_medium'
-);
 
 type ApiUser = {
     statusFields: {
@@ -23,14 +26,7 @@ type ApiUser = {
     },
 };
 
-type Template = {
-    image: string,
-    title: string,
-    cta: string,
-    remindMeLater: string,
-};
-
-const targets = {
+const targets: LinkTargets = {
     landing:
         'https://gu.com/staywithus?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert',
     journey: `${config.get(
@@ -39,40 +35,19 @@ const targets = {
 };
 
 const template: Template = {
-    image: config.get('images.identity.opt-in'),
+    image: config.get('images.identity.opt-in-new-vertical'),
     title: `We’re changing how we communicate with you. Let us know <strong>before 30 April</strong> which emails you wish to continue receiving. <a data-link-name="gdpr-oi-campaign : alert : to-landing" href="${
         targets.landing
     }">Find out more</a> or click Continue.`,
     cta: `Continue`,
     remindMeLater: `Remind me later`,
+    messageCloseBtn,
 };
 
-const templateHtml: string = `
-    <div id="site-message__message">
-        <div class="site-message__message identity-gdpr-oi-alert">
-            <div class="identity-gdpr-oi-alert__logo">
-                <img src="${template.image}" alt="Stay with us" />
-            </div>
-            <div class="identity-gdpr-oi-alert__body">
-                <div class="identity-gdpr-oi-alert__text">
-                    ${template.title}
-                </div>
-                <div class="identity-gdpr-oi-alert__cta-space">
-                    <a data-link-name="gdpr-oi-campaign : alert : remind-me-later" class="identity-gdpr-oi-alert__cta identity-gdpr-oi-alert__cta--sub ${
-                        messageCloseBtn
-                    }">
-                        ${template.remindMeLater}
-                    </a>
-                    <a class="identity-gdpr-oi-alert__cta" target="_blank" href="${
-                        targets.journey
-                    }" data-link-name="gdpr-oi-campaign : alert : to-consents">
-                        ${template.cta}
-                        ${inlineSvg('arrowWhiteRight')}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>`;
+const userVisitedViaNewsletter = (): boolean =>
+    ['utm_source=eml', 'utm_medium=email']
+        .map(_ => window.location.href.toLowerCase().includes(_))
+        .some(_ => _ === true);
 
 const shouldDisplayBasedOnRemindMeLaterInterval = (): boolean => {
     const hidAt = userPrefs.get(messageHidAtPref);
@@ -86,8 +61,7 @@ const shouldDisplayBasedOnLocalHasVisitedConsentsFlag = (): boolean =>
 const shouldDisplayBasedOnExperimentFlag = (): boolean =>
     config.get('tests.gdprOptinAlertVariant') === 'variant';
 
-const shouldDisplayBasedOnMedium = (): boolean =>
-    medium !== null && medium.toLowerCase() === 'email';
+const shouldDisplayBasedOnMedium = (): boolean => userVisitedViaNewsletter();
 
 const shouldDisplayOptInBanner = (): Promise<boolean> =>
     new Promise(decision => {
@@ -115,6 +89,10 @@ const hide = (msg: Message) => {
 };
 
 const optInEngagementBannerInit = (): void => {
+    if (userVisitedViaNewsletter()) {
+        addCookie(messageUserUsesNewslettersCookie, 'true');
+    }
+
     shouldDisplayOptInBanner().then((shouldIt: boolean) => {
         if (shouldIt) {
             const msg = new Message(messageCode, {
@@ -122,7 +100,8 @@ const optInEngagementBannerInit = (): void => {
                 permanent: true,
                 siteMessageComponentName: messageCode,
             });
-            const shown = msg.show(templateHtml);
+            const html = makeTemplateHtml(template, targets);
+            const shown = msg.show(html);
             if (shown) {
                 ophan.record({
                     component: 'gdpr-oi-campaign-alert',

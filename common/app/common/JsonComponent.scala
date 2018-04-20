@@ -40,11 +40,11 @@ object JsonComponent extends Results with implicits.Requests {
     resultFor(request, json)
   }
 
-  private def jsonFor(page: Page, items: (String, Any)*)(implicit request: RequestHeader, context: ApplicationContext): String = {
+  def jsonFor(page: Page, items: (String, Any)*)(implicit request: RequestHeader, context: ApplicationContext): String = {
     jsonFor(("config" -> Json.parse(templates.js.javaScriptConfig(page).body)) +: items: _*)
   }
 
-  private def jsonFor(items: (String, Any)*) = {
+  def jsonFor(items: (String, Any)*): String = {
     import play.api.libs.json.Writes._
     Json.stringify(toJson(
       (items.toMap + ("refreshStatus" -> AutoRefreshSwitch.isSwitchedOn)).map {

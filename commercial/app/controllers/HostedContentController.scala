@@ -1,6 +1,6 @@
 package commercial.controllers
 
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.ItemQuery
 import com.gu.contentapi.client.model.v1.ContentType.Video
 import commercial.model.hosted.HostedTrails
@@ -47,7 +47,7 @@ class HostedContentController(
         }
       case _ => NoCache(NotFound)
     } recover {
-      case e: GuardianContentApiError if e.httpStatus == 410 =>
+      case e: ContentApiError if e.httpStatus == 410 =>
         cached(commercialExpired(wasAHostedPage = true))
     }
   }

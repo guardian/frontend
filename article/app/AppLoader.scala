@@ -20,7 +20,7 @@ import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
-import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi}
+import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheLifeCycle}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
@@ -47,7 +47,8 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[CachedHealthCheckLifeCycle],
     wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle],
-    wire[OrielCacheLifecycle]
+    wire[OrielCacheLifecycle],
+    wire[SkimLinksCacheLifeCycle]
   )
 
   lazy val router: Router = wire[Routes]
@@ -58,7 +59,9 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric,
-    ContentApiMetrics.ContentApiRequestsMetric
+    ContentApiMetrics.ContentApiRequestsMetric,
+    ArticleRenderingMetrics.RemoteRenderingMetric,
+    ArticleRenderingMetrics.LocalRenderingMetric
   )
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]

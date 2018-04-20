@@ -4,8 +4,9 @@ import idapiclient.{Auth, ScGuRp, ScGuU}
 import com.gu.identity.model.User
 import conf.FrontendIdentityCookieDecoder
 import play.api.mvc.{Cookie, RequestHeader, Results}
+
 import scala.language.implicitConversions
-import org.joda.time.Minutes
+import org.joda.time.Hours
 
 object AuthenticatedUser {
   implicit def authUserToUser(authUser: AuthenticatedUser): User = authUser.user
@@ -50,6 +51,6 @@ class AuthenticationService(
       cookieDecoder.userHasRecentScGuLaCookie(
         user,
         scGuLa.value,
-        Minutes.minutes(20).toStandardDuration))
+        Hours.hours(1).toStandardDuration))
   }
 }

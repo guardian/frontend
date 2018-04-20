@@ -5,6 +5,8 @@ import contentapi.ContentApiClient
 import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import model.Cached.RevalidatableResult
 import model._
+import models.OnwardCollection._
+import models.{MostPopularGeoResponse, OnwardCollection, OnwardCollectionResponse}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
@@ -42,6 +44,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
       mostPopular match {
         case Nil => NotFound
+        case popular if request.isGuui => jsonResponse(popular)
         case popular if !request.isJson => Cached(900) { RevalidatableResult.Ok(views.html.mostPopular(page, popular)) }
         case popular => Cached(900) {
           JsonComponent(
@@ -56,22 +59,47 @@ class MostPopularController(contentApiClient: ContentApiClient,
   private val countryNames = Map(
     "AU" -> "Australia",
     "US" -> "US",
-    "IN" -> "India")
+    "IN" -> "India"
+  )
 
   def renderPopularGeo(): Action[AnyContent] = Action { implicit request =>
-
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
 
     val countryPopular = MostPopular("across the guardian", "", geoMostPopularAgent.mostPopular(countryCode).map(_.faciaContent))
 
-    Cached(900) {
-      JsonComponent(
-        "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
-        "rightHtml" -> views.html.fragments.rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode),
-        "country" -> countryCode
+    if (request.isGuui) {
+      jsonResponse(countryPopular, countryCode)
+    } else {
+      Cached(900) {
+        JsonComponent(
+          "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
+          "rightHtml" -> views.html.fragments.rightMostPopularGeoGarnett(countryPopular, countryNames.get(countryCode), countryCode),
+          "country" -> countryCode
+        )
+      }
+    }
+  }
+
+  def jsonResponse(mostPopulars: Seq[MostPopular])(implicit request: RequestHeader): Result = {
+    val responses = mostPopulars.map{section =>
+      OnwardCollectionResponse(
+        heading = section.heading,
+        trails = OnwardCollection.trailsToItems(section.trails)
       )
     }
+
+    Cached(900)(JsonComponent(responses))
+  }
+
+  def jsonResponse(mostPopular: MostPopular, countryCode: String)(implicit request: RequestHeader): Result = {
+    val data = MostPopularGeoResponse(
+      country = countryNames.get(countryCode),
+      heading = mostPopular.heading,
+      trails = OnwardCollection.trailsToItems(mostPopular.trails)
+    )
+
+    Cached(900)(JsonComponent(data))
   }
 
   def renderPopularDay(countryCode: String): Action[AnyContent] = Action { implicit request =>

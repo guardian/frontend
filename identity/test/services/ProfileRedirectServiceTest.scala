@@ -46,8 +46,10 @@ class ProfileRedirectServiceTest extends path.FreeSpec with MockitoSugar with Sc
     val userWithoutValidEmail = new User(statusFields = new StatusFields(userEmailValidated = Some(false)))
     val profileRedirectService = new ProfileRedirectService(newsletterService, idRequestParser, controllerComponents)
 
-    val originalUrl = "https://profile.thegulocal.com/email-prefs"
-    val request = Request(FakeRequest("GET", originalUrl), AnyContent())
+    val originalEmailPreflUrl = "https://profile.thegulocal.com/email-prefs"
+    val originalConsentUrl = "https://profile.thegulocal.com/consents/staywithus"
+    val emailPrefRequest = Request(FakeRequest("GET", originalEmailPreflUrl), AnyContent())
+    val consentJourneyRequest = Request(FakeRequest("GET", originalConsentUrl), AnyContent())
 
   }
 
@@ -57,7 +59,7 @@ class ProfileRedirectServiceTest extends path.FreeSpec with MockitoSugar with Sc
 
         when(newsletterService.getV1EmailSubscriptions(emailForm)) thenReturn List.empty
 
-        val result: Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithValidEmailAndHasRepermed, request)
+        val result: Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithValidEmailAndHasRepermed, emailPrefRequest)
 
         whenReady(result)(_ shouldBe NoRedirect)
       }
@@ -65,15 +67,40 @@ class ProfileRedirectServiceTest extends path.FreeSpec with MockitoSugar with Sc
     "redirect to newsletter consents when user still has v1 subscriptions" in new TestFixture {
       when(newsletterService.getV1EmailSubscriptions(emailForm)) thenReturn List("somethingHere")
 
-      val result: Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithValidEmailAndHasRepermed, request)
+      val result: Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithValidEmailAndHasRepermed, emailPrefRequest)
 
       whenReady(result)(_ shouldBe RedirectToNewsletterConsentsFromEmailPrefs)
     }
 
     "redirect to email validation if user has not validated their email" in new TestFixture {
-      val result : Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithoutValidEmail, request)
+      val result : Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithoutValidEmail, emailPrefRequest)
 
-      whenReady(result)( _ shouldBe RedirectToEmailValidationFromEmailPrefs)
+      whenReady(result)( _ shouldBe RedirectToEmailValidationFromEmailPrefsOrConsentJourney)
+    }
+
+    "redirect to email validation from consent journey if user has not validated their email" in new TestFixture {
+      val result : Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithoutValidEmail, consentJourneyRequest)
+
+      whenReady(result)( res =>
+      res.isAllowedFrom("/consents/staywithus") shouldBe true)
+    }
+
+    "redirect to email validation from email-prefs" in new TestFixture {
+      val result : Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithoutValidEmail, emailPrefRequest)
+
+      whenReady(result)( res =>
+        res.isAllowedFrom("/email-prefs") shouldBe true)
+    }
+
+    "don't redirect to email validation from /public/edit" in new TestFixture {
+
+      val accountEditUrl = "https://profile.thegulocal.com/public/edit"
+      val fakeRequest = Request(FakeRequest("GET", accountEditUrl), AnyContent())
+
+      val result : Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithoutValidEmail, emailPrefRequest)
+
+      whenReady(result)( res =>
+        res.isAllowedFrom("/public/edit") shouldBe false)
     }
 
      "don't redirect from account details page even without validated email" in new TestFixture {
@@ -84,7 +111,7 @@ class ProfileRedirectServiceTest extends path.FreeSpec with MockitoSugar with Sc
        val result : Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithoutValidEmail, fakeRequest)
 
        whenReady(result){ res =>
-         res.isAllowedFrom(accountDetailsUrl) shouldBe false
+         res.isAllowedFrom("/account/edit") shouldBe false
        }
      }
 
@@ -95,7 +122,7 @@ class ProfileRedirectServiceTest extends path.FreeSpec with MockitoSugar with Sc
       val result : Future[ProfileRedirect] = profileRedirectService.toProfileRedirect(userWithoutValidEmail, fakeRequest)
 
       whenReady(result){ res =>
-        res.isAllowedFrom(membershipEditUrl) shouldBe false
+        res.isAllowedFrom("/membership/edit") shouldBe false
       }
     }
   }

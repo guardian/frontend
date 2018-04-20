@@ -34,7 +34,7 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
   protected def toUserFormData(userDO: User): PrivacyFormData =
     PrivacyFormData(userDO)
 
-  protected lazy val idapiErrorContextToFormFieldKeyMap =  Map(
+  protected lazy val idapiErrorContextToFormFieldKeyMap = Map(
     "statusFields.receiveGnmMarketing" -> "receiveGnmMarketing",
     "statusFields.receive3rdPartyMarketing" -> "receive3rdPartyMarketing",
     "statusFields.allowThirdPartyProfiling" -> "allowThirdPartyProfiling"

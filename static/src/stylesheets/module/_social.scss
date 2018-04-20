@@ -67,64 +67,12 @@ category: Common
     }
 }
 
-.social-icon {
-    &.social-icon--more {
-        @include social-icon($neutral-6);
-        border-radius: 50%;
-        display: inline-block;
-        line-height: 32px;
-        text-align: center;
-        &:hover {
-            color: $neutral-2;
-        }
-    }
-
-    .social-icon--more__svg {
-        fill: $neutral-2;
-        top: -1px; // Tweak for centering, half circle height
-        width: 60%; // Scale the more icon
-    }
-}
-
-.social--hidden {
-    display: none;
-}
-
 .social__action {
     display: inline-block;
 }
 
 .social__saveforlater {
     display: none;
-}
-
-.social__tray-close {
-    height: 32px;
-}
-
-.social-tray__icon {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    position: relative;
-    background-color: $neutral-4;
-    box-sizing: border-box;
-}
-
-.social-tray__icon__svg {
-    fill: $neutral-2;
-    width: 16px;
-}
-
-.social-tray__button {
-    &:hover,
-    &:focus {
-        .social-tray__icon,
-        .social-icon--more {
-            background-color: $neutral-3;
-        }
-    }
 }
 
 .content--article,
@@ -137,39 +85,7 @@ category: Common
         padding-top: $gs-baseline / 2;
         padding-bottom: $gs-baseline / 2;
     }
-
-    .social--expanded-top {
-        padding-bottom: 0;
-    }
  }
-
-.social--expanded-top {
-    position: absolute;
-    left: 0;
-    height: auto;
-    background: #ffffff;
-    z-index: $zindex-popover;
-    width: auto;
-    display: inline-block;
-    clear: both;
-    box-sizing: border-box;
-
-    @include mq($until: mobileMedium) {
-        min-height: $gs-baseline * 8;
-    }
-
-    @include mq($until: mobileLandscape) {
-        right: 0;
-    }
-
-    @include mq($from: desktop) {
-        min-width: gs-span(2);
-    }
-
-    @include mq($from: wide) {
-        min-width: gs-span(3);
-    }
-}
 
 /**
  * Social icons
@@ -260,45 +176,6 @@ category: Common
     opacity: 1;
 }
 
-// Testing static social on mobile
-.social-fixed {
-    height: 40px;
-    position: fixed;
-    left: 0;
-    bottom: -40px;
-    width: 100%;
-    opacity: 0;
-    z-index: 10;
-    transition: bottom .4s ease;
-}
-
-.social-fixed__item {
-    color: #ffffff;
-    float: left;
-    border-radius: 20px;
-
-    .i {
-        height: 40px;
-        width: 40px;
-        float: left;
-        margin: 0 (-$gs-gutter/2) 0 (-$gs-gutter*.6) !important;
-    }
-}
-
-.social-fixed__item--facebook {
-    background-color: $social-facebook;
-    margin: 0 $gs-gutter/4 0 $gs-gutter/2 !important;
-}
-
-.social-fixed__item--twitter {
-    background-color: $social-twitter;
-}
-
-.social-fixed--show {
-    bottom: $gs-baseline/2;
-    opacity: 1;
-}
-
 .share-text {
     @include fs-textSans(3);
     float: left;
@@ -376,18 +253,14 @@ category: Common
     }
 }
 .paid-content, .paid-content.tonal--tone-media {
-    .social-icon,
-    .social-icon.social-icon--more,
-    .inline-close {
+    .social-icon {
         border: 1px solid $neutral-1;
         &:hover,
         &:active,
         &:focus {
             background-color: $garnett-neutral-1;
         }
-        .social-icon__svg,
-        .social-icon--more__svg,
-        .social-tray__icon__svg {
+        .social-icon__svg {
             fill: $garnett-neutral-1;
         }
         &:focus,

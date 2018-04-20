@@ -1,23 +1,15 @@
 /* CURRENT TEAM */
 
-Development Manager: Dominic Kendrick
-Twitter: @dominickendrick
+Product Manager: Stephan Fowler
+Twitter: @stephanfowler
 From: London, UK
-
-Development Manager: Mark Butler
-Twitter: @mark_j_butler
-Location: London, UK
 
 Design human: Zef Cherry-Kynaston
 Twitter: @zeftilldeath
 From: Wales, UK
 Location: London, UK
 
-Developer: Stephan Fowler
-Twitter: @stephanfowler
-From: London, UK
-
-QA: Michael McNamara
+QA Automation: Michael McNamara
 Twitter: @m_w_mcnamara
 From: Melbourne, Aus
 
@@ -25,11 +17,7 @@ Agile Programme Manager: Nichola Johnson
 linkedin: nicholajohnson
 Location: London, UK
 
-Developer: Josh Holder
-Twitter: @Josh_H
-Location: London, UK
-
-Developer: Natalia Baltazar
+Developer Manager: Natalia Baltazar
 Twitter: @NataliaLKB
 From: Halifax, Canada
 
@@ -45,11 +33,6 @@ Location: London/Norwich
 Twitter: @asanders
 
 Developer: John Duffell
-
-Developer: Zofia Korcz
-Twitter: @intuitio
-From: Poznan, Poland
-Location: London, England
 
 Developer: Sam Desborough
 Twitter: @samdesborough
@@ -106,16 +89,18 @@ Client-Side Developer: Simon Adcock
 Twitter: @siadcock
 Location: London, UK
 
+Client-Side Developer: George Haberis
+Location: London, UK
+
+Developer: Phil McMahon
+Twitter: @pmcmahon
+Location: London, UK
+
 Developer: Calum Campbell
 From: Malvern, UK
 
-QA: Scott Painter
+Product Manager: Scott Painter
 Twitter: @scottp719
-Location: London, UK
-
-Developer: Anne Byrne
-Twitter: @aycenne
-From: Cork, Ireland
 Location: London, UK
 
 Developer: Mariot Chauvin
@@ -143,6 +128,14 @@ Twitter: @freezydorito
 From: Oviedo, ES
 Location: London, UK
 
+Development Manager: Dominic Kendrick
+Twitter: @dominickendrick
+From: London, UK
+
+Development Manager: Mark Butler
+Twitter: @mark_j_butler
+Location: London, UK
+
 
 /* CONTENT PRODUCTION */
 
@@ -154,6 +147,7 @@ Solutions Architect: Sakib Supple
 Twitter:@twistedsweeter
 From: Narobi, Kenya
 Location: London, UK
+
 
 /* FORMER MEMBERS */
 
@@ -308,3 +302,17 @@ Website: jib-collective.net
 Engineer: Richard Nguyen
 Twitter: @Sherbet_Noin
 From: Cambridge, UK
+
+Developer: Zofia Korcz
+Twitter: @intuitio
+From: Poznań, Poland
+Location: London, England
+
+Developer: Josh Holder
+Twitter: @Josh_H
+Location: London, UK
+
+Developer: Anne Byrne
+Twitter: @aycenne
+From: Cork, Ireland
+Location: London, UK

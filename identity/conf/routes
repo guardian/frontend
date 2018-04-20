@@ -16,7 +16,6 @@ GET         /password/change                        controllers.ChangePasswordCo
 POST        /password/change                        controllers.ChangePasswordController.submitForm
 GET         /password/reset-confirmation            controllers.ResetPasswordController.renderPasswordResetConfirmation
 GET         /password/email-sent                    controllers.ResetPasswordController.renderEmailSentConfirmation
-GET         /requestnewtoken                        controllers.ResetPasswordController.requestNewToken
 GET         /user/id/:id                            controllers.PublicProfileController.renderProfileFromId(id: String, activityType = "discussions")
 GET         /user/id/:id/:activityType              controllers.PublicProfileController.renderProfileFromId(id: String, activityType: String)
 GET         /user/:vanityUrl                        controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType = "discussions")

@@ -1,6 +1,6 @@
 package formstack
 
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.ContentApiError
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -20,7 +20,7 @@ class WsFormstackHttp(wsClient: WSClient) extends FormstackHttp {
       .get()
       .map(response => FormstackHttpResponse(response.body, response.status, response.statusText))
       .recover{
-        case GuardianContentApiError(status, message, _) => FormstackHttpResponse("", status, message)
+        case ContentApiError(status, message, _) => FormstackHttpResponse("", status, message)
     }
   }
 }

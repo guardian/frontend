@@ -33,16 +33,6 @@ $sfl-button-height: 30px;
     }
 }
 
-.social--expanded-top {
-    .save-for-later__button--saved,
-    .save-for-later__button--save:hover,
-    .save-for-later__button--save:focus {
-        .inline-icon {
-            fill: $neutral-5;
-        }
-    }
-}
-
 // media tone
 .tonal--tone-media {
     .save-for-later__button {
@@ -61,16 +51,6 @@ $sfl-button-height: 30px;
             fill: $multimedia-support-5;
             border-color: $neutral-4;
             background-color: $neutral-4;
-        }
-    }
-
-    .social--expanded-top {
-        .save-for-later__button--saved,
-        .save-for-later__button--save:hover,
-        .save-for-later__button--save:focus {
-            .inline-icon {
-                fill: $neutral-1;
-            }
         }
     }
 }

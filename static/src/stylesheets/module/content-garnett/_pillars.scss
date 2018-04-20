@@ -50,15 +50,6 @@
         fill: $kickerColor;
     }
 
-    .social__tray-close .social-tray__button {
-        &:focus,
-        &:hover {
-            .inline-close {
-                border-color: $kickerColor;
-            }
-        }
-    }
-
     .inline-garnett-quote svg {
         fill: $kickerColor;
     }
@@ -80,14 +71,6 @@
         &:hover {
             background-color: $kickerColor;
             border: 1px solid $kickerColor;
-        }
-    }
-
-    .social-tray__button {
-        &:hover {
-            .inline-close {
-                background-color: $kickerColor;
-            }
         }
     }
 
@@ -115,8 +98,7 @@
     }
 
     .meta__extras--crossword {
-        .social-icon,
-        .social-tray__icon {
+        .social-icon {
             background: $garnett-neutral-5;
             border: 1px solid $garnett-neutral-4;
 

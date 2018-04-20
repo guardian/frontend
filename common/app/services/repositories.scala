@@ -1,6 +1,6 @@
 package services
 
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.{ItemResponse, SearchResponse, Section => ApiSection}
 import common._
 import contentapi.{ContentApiClient, QueryDefaults, SectionTagLookUp, SectionsLookUp}
@@ -86,7 +86,7 @@ trait Index extends ConciergeRepository with Collections {
 
     promiseOfResponse.recover({
       //this is the best handle we have on a wrong 'page' number
-      case GuardianContentApiError(400, _, _) => Right(Found(s"/$leftSide+$rightSide"))
+      case ContentApiError(400, _, _) => Right(Found(s"/$leftSide+$rightSide"))
     }).recover(convertApiExceptions)
 
   }
@@ -137,7 +137,7 @@ trait Index extends ConciergeRepository with Collections {
 
     promiseOfResponse.recover({
       //this is the best handle we have on a wrong 'page' number
-      case GuardianContentApiError(400, _, _) if pageNum != 1 => Right(Found(s"/$path"))
+      case ContentApiError(400, _, _) if pageNum != 1 => Right(Found(s"/$path"))
     }).recover(convertApiExceptions)
   }
 

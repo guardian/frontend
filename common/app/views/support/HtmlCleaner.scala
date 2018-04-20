@@ -3,7 +3,7 @@ package views.support
 import java.net.URI
 import java.util.regex.{Matcher, Pattern}
 
-import common.{Edition, LinkTo}
+import common.{Edition, LinkTo, Logging}
 import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
@@ -14,8 +14,12 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
 import play.twirl.api.HtmlFormat
+import services.SkimLinksCache
+import conf.Configuration.affiliatelinks._
+import views.html.fragments.affiliateLinksDisclaimer
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 import scala.util.Try
 
 trait HtmlCleaner {
@@ -569,9 +573,8 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
 
 // Gallery Caption's don't come back as structured data
 // This is a hack to serve the correct html
-object GalleryCaptionCleaner {
-  def apply(caption: String): String = {
-    val galleryCaption = Jsoup.parse(caption)
+object GalleryCaptionCleaner extends HtmlCleaner {
+  override def clean(galleryCaption: Document): Document = {
     val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
     val captionTitle = galleryCaption.createElement("h2")
     val captionTitleText = firstStrong.map(_.text()).getOrElse("")
@@ -589,7 +592,7 @@ object GalleryCaptionCleaner {
     galleryCaption.prependElement("br")
     galleryCaption.prependChild(captionTitle)
 
-    galleryCaption.toString
+    galleryCaption
   }
 }
 
@@ -793,5 +796,49 @@ object GarnettQuoteCleaner extends HtmlCleaner {
     }
 
     document
+  }
+}
+
+case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean],
+  contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with Logging {
+
+  override def clean(document: Document): Document = {
+    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn,
+      sectionId, showAffiliateLinks, affiliateLinkSections)) {
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
+    } else document
+  }
+}
+
+object AffiliateLinksCleaner {
+  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Boolean, contentType: String, skimlinksId: String): Document = {
+    val links = html.getElementsByAttribute("href")
+
+    val supportedLinks: mutable.Seq[Element] = links.asScala.filter(isAffiliatable)
+    supportedLinks.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+
+    if (supportedLinks.nonEmpty) insertAffiliateDisclaimer(html, contentType)
+    else html
+  }
+
+  def isAffiliatable(element: Element): Boolean =
+    element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
+
+  def insertAffiliateDisclaimer(document: Document, contentType: String): Document = {
+    document.body().append(affiliateLinksDisclaimer(contentType).toString())
+    document
+  }
+
+  def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
+    val urlEncodedLink = URLEncode(link)
+    s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$pageUrl"
+  }
+
+  def shouldAddAffiliateLinks(switchedOn: Boolean, section: String, showAffiliateLinks: Option[Boolean], supportedSections: Set[String]): Boolean = {
+    if (showAffiliateLinks.isDefined) {
+      showAffiliateLinks.contains(true)
+    } else {
+      switchedOn && supportedSections.contains(section)
+    }
   }
 }

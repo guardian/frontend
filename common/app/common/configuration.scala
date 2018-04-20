@@ -140,12 +140,12 @@ class GuardianConfiguration extends Logging {
     lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
   }
 
-  object moon {
-    lazy val moonEndpoint = configuration.getMandatoryStringProperty("moon.endpoint")
-  }
-
   object feedback {
     lazy val feedpipeEndpoint = configuration.getMandatoryStringProperty("feedback.feedpipeEndpoint")
+  }
+
+  object rendering {
+    lazy val renderingEndpoint = configuration.getMandatoryStringProperty("rendering.endpoint")
   }
 
   object weather {
@@ -241,6 +241,11 @@ class GuardianConfiguration extends Logging {
   object oriel {
     lazy val orielApiKey = configuration.getStringProperty("oriel.api.key")
     lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
+  }
+
+  object affiliatelinks {
+    lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
+    lazy val affiliateLinkSections: Set[String] = configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet
   }
 
   object frontend {
