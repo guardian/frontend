@@ -131,7 +131,7 @@ class Clues extends Component<*, *> {
                         </ol>
                     </div>
                     <div className="crossword__clues--down">
-                        <h3 className={headerClass}>Ddown</h3>
+                        <h3 className={headerClass}>Down</h3>
                         <ol className="crossword__clues-list">
                             {cluesByDirection('down')}
                         </ol>
