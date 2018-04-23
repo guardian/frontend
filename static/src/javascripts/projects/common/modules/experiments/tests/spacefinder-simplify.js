@@ -4,7 +4,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 export const spacefinderSimplify: ABTest = {
     id: 'SpacefinderSimplify',
     start: '2018-04-10',
-    expiry: '2018-04-24',
+    expiry: '2018-04-30',
     author: 'Jon Norman',
     description:
         'This test alters the rules for inserting ads on desktop breakpoints.',
