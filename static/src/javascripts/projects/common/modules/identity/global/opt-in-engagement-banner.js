@@ -5,6 +5,7 @@ import { Message } from 'common/modules/ui/message';
 import { HAS_VISITED_CONSENTS_COOKIE_KEY } from 'common/modules/identity/consent-journey';
 import { getCookie, addCookie } from 'lib/cookies';
 import config from 'lib/config';
+import mediator from 'lib/mediator';
 import ophan from 'ophan/ng';
 import userPrefs from 'common/modules/user-prefs';
 import type { LinkTargets, Template } from './opt-in-eb-template';
@@ -12,6 +13,8 @@ import { makeTemplateHtml } from './opt-in-eb-template';
 
 const messageCode: string = 'gdpr-opt-in-jan-18';
 const messageHidAtPref: string = `${messageCode}-hid-at`;
+const messageMoreShownAtPref: string = `${messageCode}-more-shown-at`;
+const messageWasDismissedPref: string = `${messageCode}-hidden-once`;
 const messageUserUsesNewslettersCookie: string = `gu-${
     messageCode
 }-via-newsletter`
@@ -19,6 +22,12 @@ const messageUserUsesNewslettersCookie: string = `gu-${
     .replace(/-/g, '_');
 const messageCloseBtn = 'js-gdpr-oi-close';
 const remindMeLaterInterval = 24 * 60 * 60 * 1000;
+const lastShownAtInterval = 24 * 60 * 60 * 1000;
+
+const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
+
+const shouldDisplayForMoreUsers = (): boolean =>
+    config.get('switches.idShowOptInEngagementBannerMore');
 
 type ApiUser = {
     statusFields: {
@@ -31,7 +40,7 @@ const targets: LinkTargets = {
         'https://gu.com/staywithus?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert',
     journey: `${config.get(
         'page.idUrl'
-    )}/consents/staywithus?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert`,
+    )}/email-prefs?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert`,
 };
 
 const template: Template = {
@@ -40,7 +49,7 @@ const template: Template = {
         targets.landing
     }">Find out more</a> or click Continue.`,
     cta: `Continue`,
-    remindMeLater: `Remind me later`,
+    remindMeLater: shouldDisplayForMoreUsers() ? `Dismiss` : `Remind me later`,
     messageCloseBtn,
 };
 
@@ -61,18 +70,43 @@ const shouldDisplayBasedOnLocalHasVisitedConsentsFlag = (): boolean =>
 const shouldDisplayBasedOnExperimentFlag = (): boolean =>
     config.get('switches.idShowOptInEngagementBanner');
 
+const shouldDisplayOnceADay = (): boolean => {
+    const lastShownAt = userPrefs.get(messageMoreShownAtPref);
+    if (!lastShownAt) return true;
+    return Date.now() > lastShownAt + lastShownAtInterval;
+};
+
+const shouldDisplayIfNotAlreadyDismissed = (): boolean =>
+    userPrefs.get(messageWasDismissedPref) !== 'true';
+
 const shouldDisplayBasedOnMedium = (): boolean => userVisitedViaNewsletter();
+
+const getDisplayConditions = (): boolean[] => {
+    const basics = [
+        shouldDisplayBasedOnExperimentFlag(),
+        shouldDisplayBasedOnLocalHasVisitedConsentsFlag(),
+    ];
+
+    if (shouldDisplayForMoreUsers()) {
+        return [
+            ...basics,
+            shouldDisplayOnceADay(),
+            shouldDisplayIfNotAlreadyDismissed(),
+        ];
+    }
+
+    return [
+        ...basics,
+        shouldDisplayBasedOnRemindMeLaterInterval(),
+        shouldDisplayBasedOnMedium(),
+    ];
+};
 
 const shouldDisplayOptInBanner = (): Promise<boolean> =>
     new Promise(decision => {
-        const shouldDisplay = [
-            shouldDisplayBasedOnExperimentFlag(),
-            shouldDisplayBasedOnRemindMeLaterInterval(),
-            shouldDisplayBasedOnMedium(),
-            shouldDisplayBasedOnLocalHasVisitedConsentsFlag(),
-        ];
+        const conditions = getDisplayConditions();
 
-        if (!shouldDisplay.every(_ => _ === true)) {
+        if (conditions.some(_ => _ !== true)) {
             return decision(false);
         }
 
@@ -86,39 +120,80 @@ const shouldDisplayOptInBanner = (): Promise<boolean> =>
 const hide = (msg: Message) => {
     msg.hide();
     userPrefs.set(messageHidAtPref, Date.now());
+    if (shouldDisplayForMoreUsers()) {
+        userPrefs.set(messageWasDismissedPref, 'true');
+    } else {
+        userPrefs.set(messageHidAtPref, Date.now());
+    }
 };
+
+const waitForBannersOrTimeout = (): Promise<void> =>
+    new Promise(show => {
+        mediator.on('modules:onwards:breaking-news:ready', breakingShown => {
+            if (!breakingShown) {
+                show();
+            } else {
+                throw new Error(ERR_EXPECTED_NO_BANNER);
+            }
+        });
+        mediator.on('membership-message:display', () => {
+            throw new Error(ERR_EXPECTED_NO_BANNER);
+        });
+        setTimeout(() => {
+            show();
+        }, 1000);
+    });
 
 const optInEngagementBannerInit = (): void => {
     if (userVisitedViaNewsletter()) {
         addCookie(messageUserUsesNewslettersCookie, 'true');
     }
 
-    shouldDisplayOptInBanner().then((shouldIt: boolean) => {
-        if (shouldIt) {
+    shouldDisplayOptInBanner()
+        .then((shouldIt: boolean) => {
+            if (shouldIt) {
+                return waitForBannersOrTimeout();
+            }
+
+            throw new Error(ERR_EXPECTED_NO_BANNER);
+        })
+        .then(() => {
             const msg = new Message(messageCode, {
                 cssModifierClass: 'gdpr-opt-in',
+                trackDisplay: true,
                 permanent: true,
                 siteMessageComponentName: messageCode,
+                customJs: () => {
+                    if (shouldDisplayForMoreUsers()) {
+                        userPrefs.set(messageMoreShownAtPref, Date.now());
+                    }
+                    ophan.record({
+                        component: 'gdpr-oi-campaign-alert',
+                        action: 'gdpr-oi-campaign : alert : show',
+                        value: 'gdpr-oi-campaign : alert : show',
+                    });
+                    const closeButtonEl: ?HTMLElement = document.querySelector(
+                        `.${messageCloseBtn}`
+                    );
+                    if (!closeButtonEl)
+                        throw new Error(
+                            'gdpr-oi-campaign : Missing close button'
+                        );
+                    closeButtonEl.addEventListener(
+                        'click',
+                        (ev: MouseEvent) => {
+                            ev.preventDefault();
+                            hide(msg);
+                        }
+                    );
+                },
             });
             const html = makeTemplateHtml(template, targets);
-            const shown = msg.show(html);
-            if (shown) {
-                ophan.record({
-                    component: 'gdpr-oi-campaign-alert',
-                    action: 'gdpr-oi-campaign : alert : show',
-                });
-                const closeButtonEl: ?HTMLElement = document.querySelector(
-                    `.${messageCloseBtn}`
-                );
-                if (!closeButtonEl)
-                    throw new Error('gdpr-oi-campaign : Missing close button');
-                closeButtonEl.addEventListener('click', (ev: MouseEvent) => {
-                    ev.preventDefault();
-                    hide(msg);
-                });
-            }
-        }
-    });
+            msg.show(html);
+        })
+        .catch(err => {
+            if (err.message !== ERR_EXPECTED_NO_BANNER) throw err;
+        });
 };
 
 export { optInEngagementBannerInit };
