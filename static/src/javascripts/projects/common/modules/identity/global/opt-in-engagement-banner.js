@@ -49,7 +49,9 @@ const template: Template = {
         targets.landing
     }">Find out more</a> or click Continue.`,
     cta: `Continue`,
-    remindMeLater: shouldDisplayForMoreUsers() ? `Dismiss` : `Remind me later`,
+    remindMeLater: shouldDisplayForMoreUsers()
+        ? `No, thanks`
+        : `Remind me later`,
     messageCloseBtn,
 };
 
