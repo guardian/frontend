@@ -26,126 +26,52 @@ const longTrueCheck = () =>
         }, 2000);
     });
 
-describe('Banner Mediator picks correct banner to show', () => {
-    let checkList;
+describe('bannerMediator picks correct banner to show', () => {
+    const tests = [
+        {
+            checks: [shortTrueCheck],
+            successfulIndex: 0,
+        },
+        {
+            checks: [shortFalseCheck, shortTrueCheck],
+            successfulIndex: 1,
+        },
+        {
+            checks: [longFalseCheck, shortTrueCheck],
+            successfulIndex: 1,
+        },
+        {
+            checks: [longTrueCheck, shortTrueCheck],
+            successfulIndex: 0,
+        },
+        {
+            checks: [
+                longFalseCheck,
+                shortFalseCheck,
+                longTrueCheck,
+                shortTrueCheck,
+            ],
+            successfulIndex: 2,
+        },
+    ];
 
-    it('should run checkList[0].show', () => {
-        checkList = [
-            {
-                check: shortTrueCheck,
-                show: jest.fn(),
-            },
-        ];
+    const createBanner = check => ({ check, show: jest.fn() });
 
-        _.resetChecks(checkList);
+    tests.forEach(test => {
+        it(`calls show() for banner at index ${test.successfulIndex}`, () => {
+            const bannerList = test.checks.map(createBanner);
 
-        return init().then(() => {
-            expect(checkList[0].show).toHaveBeenCalled();
-        });
-    });
+            _.resetChecks(bannerList);
 
-    it('should not run checkList[0].show', () => {
-        checkList = [
-            {
-                check: shortFalseCheck,
-                show: jest.fn(),
-            },
-        ];
-
-        _.resetChecks(checkList);
-
-        return init().then(() => {
-            expect(checkList[0].show).not.toHaveBeenCalled();
-        });
-    });
-
-    it('should run checkList[1].show', () => {
-        checkList = [
-            {
-                check: shortFalseCheck,
-                show: jest.fn(),
-            },
-            {
-                check: shortTrueCheck,
-                show: jest.fn(),
-            },
-        ];
-
-        _.resetChecks(checkList);
-
-        return init().then(() => {
-            expect(checkList[0].show).not.toHaveBeenCalled();
-            expect(checkList[1].show).toHaveBeenCalled();
-        });
-    });
-
-    it('should run checkList[1].show', () => {
-        checkList = [
-            {
-                check: longFalseCheck,
-                show: jest.fn(),
-            },
-            {
-                check: shortTrueCheck,
-                show: jest.fn(),
-            },
-        ];
-
-        _.resetChecks(checkList);
-
-        return init().then(() => {
-            expect(checkList[0].show).not.toHaveBeenCalled();
-            expect(checkList[1].show).toHaveBeenCalled();
-        });
-    });
-
-    it('should run checkList[0].show', () => {
-        checkList = [
-            {
-                check: longTrueCheck,
-                show: jest.fn(),
-            },
-            {
-                check: shortTrueCheck,
-                show: jest.fn(),
-            },
-        ];
-
-        _.resetChecks(checkList);
-
-        return init().then(() => {
-            expect(checkList[0].show).toHaveBeenCalled();
-            expect(checkList[1].show).not.toHaveBeenCalled();
-        });
-    });
-
-    it('should run checkList[1].show', () => {
-        checkList = [
-            {
-                check: shortFalseCheck,
-                show: jest.fn(),
-            },
-            {
-                check: longTrueCheck,
-                show: jest.fn(),
-            },
-            {
-                check: shortTrueCheck,
-                show: jest.fn(),
-            },
-            {
-                check: shortTrueCheck,
-                show: jest.fn(),
-            },
-        ];
-
-        _.resetChecks(checkList);
-
-        return init().then(() => {
-            expect(checkList[0].show).not.toHaveBeenCalled();
-            expect(checkList[1].show).toHaveBeenCalled();
-            expect(checkList[2].show).not.toHaveBeenCalled();
-            expect(checkList[3].show).not.toHaveBeenCalled();
+            return init().then(() => {
+                bannerList.forEach((check, index) => {
+                    if (index === test.successfulIndex) {
+                        expect(bannerList[index].show).toHaveBeenCalled();
+                    } else {
+                        expect(bannerList[index].show).not.toHaveBeenCalled();
+                    }
+                });
+            });
         });
     });
 });
