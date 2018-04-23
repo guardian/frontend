@@ -18,6 +18,10 @@ import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { optInEngagementBannerInit } from 'common/modules/identity/global/opt-in-engagement-banner';
 import ophan from 'ophan/ng';
+import {
+    init as dataComicInit,
+    toggle as dataComicToggle,
+} from 'common/modules/article/data-comic';
 
 const modules = {
     initCmpParam() {
@@ -70,6 +74,8 @@ const init = () => {
         ['article-mediator-emit-event', modules.emitReadyEvent],
         ['article-handle-quiz-completion', handleQuizCompletion],
         ['article-opt-in-engagement-banner', optInEngagementBannerInit],
+        ['article-data-comic-init', dataComicInit],
+        ['article-data-comic-switcher', dataComicToggle],
     ]);
 };
 

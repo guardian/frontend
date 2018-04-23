@@ -1,0 +1,10 @@
+@(content: model.Content)(implicit request: RequestHeader)
+
+<div class="toggle_comic-wrapper">
+    <div class="toggle_comic-cta">
+        <div class="button button--large button--primary toggle-data-comic__button">
+            @fragments.inlineSvg("plus", "icon")
+            View as comic
+        </div>
+    </div>
+</div>

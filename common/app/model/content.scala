@@ -517,6 +517,9 @@ final case class Article (
   val isImmersive: Boolean = content.isImmersive
   val isPhotoEssay: Boolean = content.isPhotoEssay
   val isColumn: Boolean = content.isColumn
+
+  val isDataComicCompatible: Boolean = !(isLiveBlog || isTheMinute || isImmersive || isPhotoEssay)
+
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().asScala.headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
