@@ -7,28 +7,31 @@ type BannerCheck = {
 
 let checks: Array<BannerCheck> = [];
 
-let results = new Array(checks.length).fill('pending', 0);
+let results: Array<'pending' | boolean> = new Array(checks.length).fill(
+    'pending',
+    0
+);
 
-const arrayIsSolved = (arr: Array<'pending' | boolean>): boolean => {
-    const firstCheckPassedIndex = arr.findIndex(item => item === true);
+const getSuccessfulBannerIndex = (): number => {
+    const firstCheckPassedIndex = results.findIndex(item => item === true);
 
-    if (firstCheckPassedIndex === -1) {
-        // no check has passed
-        return false;
+    // If no check has passed firstCheckPassedIndex equals -1
+    // If first check has passed firstCheckPassedIndex equals 0
+    if (firstCheckPassedIndex <= 0) {
+        return firstCheckPassedIndex;
     }
 
-    if (firstCheckPassedIndex === 0) {
-        // highest priority check has already passed
-        return true;
-    }
-
-    // if firstCheckPassedIndex not 0 then get higher priority checks from array that are pending
-    const pendingHigherPriorityCheckIndex = arr
+    // if firstCheckPassedIndex greater than 0 then get higher priority checks from array that are pending
+    const pendingHigherPriorityCheckIndex = results
         .slice(0, firstCheckPassedIndex)
         .findIndex(item => item === 'pending');
 
-    // if there are no higher priority checks pending arrayIsSolved is true
-    return pendingHigherPriorityCheckIndex === -1;
+    // if there are no higher priority checks pending return firstCheckPassedIndex
+    if (pendingHigherPriorityCheckIndex === -1) {
+        return firstCheckPassedIndex;
+    }
+
+    return -1;
 };
 
 const init = (): Promise<void> =>
@@ -36,8 +39,10 @@ const init = (): Promise<void> =>
         const pushToResults = (result: boolean, index: number): void => {
             results[index] = result;
 
-            if (arrayIsSolved(results)) {
-                checks[index].show();
+            const successfulBannerIndex = getSuccessfulBannerIndex();
+
+            if (successfulBannerIndex !== -1) {
+                checks[successfulBannerIndex].show();
             }
 
             if (!results.includes('pending')) {
