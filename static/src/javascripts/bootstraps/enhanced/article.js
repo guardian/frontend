@@ -132,7 +132,7 @@ const init = () => {
         ['article-mediator-emit-event', modules.emitReadyEvent],
         ['article-handle-quiz-completion', handleQuizCompletion],
         ['article-opt-in-engagement-banner', optInEngagementBannerInit],
-        ['article-payment-request-button', modules.initPaymentRequestButton],
+        // ['article-payment-request-button', modules.initPaymentRequestButton],
     ]);
 };
 

@@ -13,6 +13,7 @@ import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acqui
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
 import { acquisitionsEpicAlwaysAskAprilStory } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-april-story';
+import { acquisitionsEpicPaymentRequest } from 'common/modules/experiments/tests/acquisitions-epic-payment-request';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
@@ -37,6 +38,7 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    acquisitionsEpicPaymentRequest,
     acquisitionsEpicAlwaysAskAprilStory,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
@@ -59,6 +61,12 @@ export const getTest = (): ?ABTest => {
 
     return acquisitionsTests.find(t => {
         const variant: ?Variant = variantFor(t);
+        console.log('t', t);
+        console.log('testCanBeRun(t)', testCanBeRun(t));
+        console.log('isInTest(t)', isInTest(t));
+        if (variant) {
+            console.log('isViewable(variant, t)', isViewable(variant, t));
+        }
         return (
             variant && testCanBeRun(t) && isInTest(t) && isViewable(variant, t)
         );

@@ -9,6 +9,8 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     spacefinderSimplify,
 ].filter(Boolean);
 
+console.log('TESTS', TESTS);
+
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
     TESTS.filter(test => {
         if (isExpired(test.expiry)) {
