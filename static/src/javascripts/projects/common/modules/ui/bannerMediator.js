@@ -15,8 +15,8 @@ let results: Array<'pending' | boolean> = new Array(checks.length).fill(
 const getSuccessfulBannerIndex = (): number => {
     const firstCheckPassedIndex = results.findIndex(item => item === true);
 
-    // If no check has passed firstCheckPassedIndex equals -1
-    // If first check has passed firstCheckPassedIndex equals 0
+    // if no check has passed firstCheckPassedIndex equals -1
+    // if first check has passed firstCheckPassedIndex equals 0
     if (firstCheckPassedIndex <= 0) {
         return firstCheckPassedIndex;
     }
