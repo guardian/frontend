@@ -59,7 +59,7 @@ const shouldDisplayBasedOnLocalHasVisitedConsentsFlag = (): boolean =>
     getCookie(HAS_VISITED_CONSENTS_COOKIE_KEY) !== 'true';
 
 const shouldDisplayBasedOnExperimentFlag = (): boolean =>
-    config.get('tests.gdprOptinAlertVariant') === 'variant';
+    config.get('switches.idShowOptInEngagementBanner');
 
 const shouldDisplayBasedOnMedium = (): boolean => userVisitedViaNewsletter();
 
