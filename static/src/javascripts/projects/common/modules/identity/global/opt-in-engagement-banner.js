@@ -6,6 +6,7 @@ import { HAS_VISITED_CONSENTS_COOKIE_KEY } from 'common/modules/identity/consent
 import { getCookie, addCookie } from 'lib/cookies';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
+import { local } from 'lib/storage';
 import ophan from 'ophan/ng';
 import userPrefs from 'common/modules/user-prefs';
 import type { LinkTargets, Template } from './opt-in-eb-template';
@@ -69,6 +70,9 @@ const shouldDisplayBasedOnRemindMeLaterInterval = (): boolean => {
 const shouldDisplayBasedOnLocalHasVisitedConsentsFlag = (): boolean =>
     getCookie(HAS_VISITED_CONSENTS_COOKIE_KEY) !== 'true';
 
+const shouldDisplayBasedOnVisitedPageCount = (): boolean =>
+    (local.get('gu.alreadyVisited') || 0) >= 5;
+
 const shouldDisplayBasedOnExperimentFlag = (): boolean =>
     config.get('switches.idShowOptInEngagementBanner');
 
@@ -93,6 +97,7 @@ const getDisplayConditions = (): boolean[] => {
         return [
             ...basics,
             shouldDisplayOnceADay(),
+            shouldDisplayBasedOnVisitedPageCount(),
             shouldDisplayIfNotAlreadyDismissed(),
         ];
     }
