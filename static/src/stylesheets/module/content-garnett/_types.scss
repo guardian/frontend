@@ -1034,6 +1034,12 @@ $quote-mark: 35px;
         font-style: normal;
     }
 
+    .meta__extras,
+    .meta__number:not(.u-h) + .meta__number,
+    .meta__numbers {
+        border-color: $garnett-neutral-7;
+    }
+
     .tonal__standfirst {
         @include mq($until: tablet) {
             max-width: gs-span(8);
