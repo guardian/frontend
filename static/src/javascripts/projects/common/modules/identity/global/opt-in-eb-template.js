@@ -28,7 +28,7 @@ const makeTemplateHtml = (template: Template, targets: LinkTargets): string => `
                     ${template.title}
                 </div>
                 <div class="identity-gdpr-oi-alert__cta-space">
-                    <a data-link-name="gdpr-oi-campaign : alert : remind-me-later" class="identity-gdpr-oi-alert__cta identity-gdpr-oi-alert__cta--sub ${
+                    <a href="#" data-link-name="gdpr-oi-campaign : alert : remind-me-later" class="identity-gdpr-oi-alert__cta identity-gdpr-oi-alert__cta--sub ${
                         template.messageCloseBtn
                     }">
                         ${template.remindMeLater}
