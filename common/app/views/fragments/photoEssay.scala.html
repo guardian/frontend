@@ -51,24 +51,25 @@
         @if(!page.item.elements.hasMainVideo){
           <div class="immersive-main-media__image-overlay"></div>
         }
-        @if(!page.item.elements.hasMainVideo){
-          <div class="@if(hasMainMedia){immersive-main-media__headline-container immersive-main-media__headline-container--dark}">
-              <div class="gs-container">
-                <div class="content__main-column">
-                    @fragments.meta.metaInline(page.item)
-                    <h1 class="@if(hasMainMedia){content__headline--immersive--with-main-media} @if(isPaidContent){content__headline--advertisement} content__headline content__headline--immersive content__headline--immersive-article">
-                        @Html(page.item.trail.headline)
-                    </h1>
-                    @if(page.item.fields.standfirst.isDefined) {
-                        <div class="hide-on-mobile">
-                            @fragments.standfirst(page.item)
-                        </div>
-                    }
-                </div>
-              </div>
-          </div>
-        }
     </div>
+
+    @if(!page.item.elements.hasMainVideo){
+      <div class="@if(hasMainMedia){immersive-main-media__headline-container immersive-main-media__headline-container--dark}">
+          <div class="gs-container">
+            <div class="content__main-column">
+                @fragments.meta.metaInline(page.item)
+                <h1 class="@if(hasMainMedia){content__headline--immersive--with-main-media} @if(isPaidContent){content__headline--advertisement} content__headline content__headline--immersive content__headline--immersive-article">
+                    @Html(page.item.trail.headline)
+                </h1>
+                @if(page.item.fields.standfirst.isDefined) {
+                    <div class="hide-on-mobile">
+                        @fragments.standfirst(page.item)
+                    </div>
+                }
+            </div>
+          </div>
+      </div>
+    }
     @if(page.item.fields.standfirst.isDefined) {
         <div class="content__wrapper--standfirst mobile-only">
             @fragments.standfirst(page.item)
