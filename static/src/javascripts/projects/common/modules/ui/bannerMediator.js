@@ -36,23 +36,34 @@ const getSuccessfulBannerIndex = (): number => {
 
 const init = (): Promise<void> =>
     new Promise(resolve => {
-        const pushToResults = (result: boolean, index: number): void => {
-            results[index] = result;
-
-            const successfulBannerIndex = getSuccessfulBannerIndex();
-
-            if (successfulBannerIndex !== -1) {
-                checks[successfulBannerIndex].show();
-            }
-
-            if (!results.includes('pending')) {
-                resolve();
-            }
-        };
-
         checks.forEach((check, index) => {
+            const pushToResults = (result: boolean): void => {
+                results[index] = result;
+
+                const successfulBannerIndex = getSuccessfulBannerIndex();
+
+                if (successfulBannerIndex !== -1) {
+                    checks[successfulBannerIndex].show();
+                }
+
+                if (!results.includes('pending')) {
+                    resolve();
+                }
+            };
+
+            let hasTimedOut = false;
+
+            // checks that take longer than 2500ms are forced to fail
+            const timeout = setTimeout(() => {
+                hasTimedOut = true;
+                pushToResults(false);
+            }, 2500);
+
             check.check().then(result => {
-                pushToResults(result, index);
+                if (!hasTimedOut) {
+                    clearTimeout(timeout);
+                    pushToResults(result);
+                }
             });
         });
     });

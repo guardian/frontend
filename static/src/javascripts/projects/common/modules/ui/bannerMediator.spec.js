@@ -25,6 +25,18 @@ const longTrueCheck = () =>
             resolve(true);
         }, 2000);
     });
+const extraLongTrueCheck = () =>
+    new Promise(resolve => {
+        setTimeout(() => {
+            resolve(true);
+        }, 3000);
+    });
+const extraLongFalseCheck = () =>
+    new Promise(resolve => {
+        setTimeout(() => {
+            resolve(false);
+        }, 3000);
+    });
 
 describe('bannerMediator picks correct banner to show', () => {
     const tests = [
@@ -52,6 +64,23 @@ describe('bannerMediator picks correct banner to show', () => {
                 shortTrueCheck,
             ],
             successfulIndex: 2,
+        },
+        {
+            checks: [extraLongTrueCheck, shortTrueCheck],
+            successfulIndex: 1,
+        },
+        {
+            checks: [extraLongTrueCheck, longFalseCheck, shortTrueCheck],
+            successfulIndex: 2,
+        },
+        {
+            checks: [
+                extraLongFalseCheck,
+                longTrueCheck,
+                shortTrueCheck,
+                extraLongTrueCheck,
+            ],
+            successfulIndex: 1,
         },
     ];
 
