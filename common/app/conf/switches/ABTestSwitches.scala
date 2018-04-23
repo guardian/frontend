@@ -85,4 +85,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 6, 5),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-always-ask-from-google-doc",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 6, 5),
+    exposeClientSide = true
+  )
 }
