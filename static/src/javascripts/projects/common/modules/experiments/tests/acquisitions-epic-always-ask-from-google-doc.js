@@ -2,6 +2,7 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { keywordExists } from 'lib/page';
 import fetchJSON from "../../../../../lib/fetch-json";
+import config from "../../../../../lib/config";
 
 const abTestName = 'AcquisitionsEpicAlwaysAskFromGoogleDoc';
 
@@ -29,16 +30,9 @@ export const acquisitionsEpicAlwaysAskFromGoogleDoc: EpicABTest = makeABTest({
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
-    canRun: () => keywordExists(['Cambridge Analytica']),
+    canRun: () => config.get('page.contentId', '') === 'environment/2015/aug/28/languid-life-drowsy-wood',
 
     variants: [
-        // {
-        //     id: 'control',
-        //     products: [],
-        //     options: {
-        //         isUnlimited: true,
-        //     }
-        // },
         {
             id: 'custom_copy',
             products: [],
