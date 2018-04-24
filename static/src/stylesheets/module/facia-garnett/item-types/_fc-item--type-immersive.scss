@@ -52,10 +52,6 @@
 @mixin immersiveBottom() {
     @include immersiveCommon();
 
-    .fc-item__container {
-        // margin-bottom: 26px;
-    }
-
     .fc-item__content {
         margin: 0 30px 0 0;
     }
@@ -88,12 +84,8 @@
 @mixin immersiveLeft() {
     @include immersiveCommon();
 
-    .fc-item__container {
-        margin-bottom: 36px;
-    }
-
     .fc-item__content {
-        margin: 0 auto -36px 0;
+        margin: 0 auto 0 0;
         min-width: gs-span(5) - ($gs-gutter * 2);
 
         @include mq(desktop) {

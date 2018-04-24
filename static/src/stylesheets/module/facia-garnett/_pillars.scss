@@ -10,7 +10,8 @@ $pillars: (
         headlineIcon: $news-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $news-garnett-main-1,
-        invertedKicker: $news-garnett-media-main-1
+        invertedKicker: $news-garnett-media-main-1,
+        liveColour: $live-garnett-main-2
     ),
     opinion: (
         cardBackground: $garnett-neutral-3,
@@ -23,7 +24,8 @@ $pillars: (
         headlineIcon: $opinion-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $opinion-garnett-main-1,
-        invertedKicker: $opinion-garnett-media-main-1
+        invertedKicker: $opinion-garnett-media-main-1,
+        liveColour: #ffffff
     ),
     sport: (
         cardBackground: $garnett-neutral-3,
@@ -36,7 +38,8 @@ $pillars: (
         headlineIcon: $sport-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $sport-garnett-feature,
-        invertedKicker: $sport-garnett-media-main-1
+        invertedKicker: $sport-garnett-media-main-1,
+        liveColour: $live-garnett-sport2
     ),
     arts: (
         cardBackground: $garnett-neutral-3,
@@ -49,7 +52,8 @@ $pillars: (
         headlineIcon: $culture-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $culture-garnett-main-1,
-        invertedKicker: $culture-garnett-media-main-1
+        invertedKicker: $culture-garnett-media-main-1,
+        liveColour: $live-garnett-culture2
     ),
     lifestyle: (
         cardBackground: $garnett-neutral-3,
@@ -62,7 +66,8 @@ $pillars: (
         headlineIcon: $lifestyle-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $lifestyle-garnett-feature,
-        invertedKicker: $lifestyle-garnett-media-main-1
+        invertedKicker: $lifestyle-garnett-media-main-1,
+        liveColour: $live-garnett-lifestyle2
     ),
     special-report: (
         cardBackground: $story-package-garnett,
@@ -75,7 +80,8 @@ $pillars: (
         headlineIcon: $story-package-garnett,
         metaText: $garnett-neutral-2,
         cutoutBackground: $news-garnett-highlight,
-        invertedKicker: $news-garnett-highlight
+        invertedKicker: $news-garnett-highlight,
+        liveColour: #ffffff
     )
 );
 
@@ -123,7 +129,6 @@ $pillars: (
     &.fc-item--third-tablet.fc-item--type-immersive.fc-item--standard-mobile,
     &.fc-item--three-quarters-tablet.fc-item--type-immersive.fc-item--standard-mobile,
     &.fc-item--third-tablet.fc-item--type-immersive  {
-        border-bottom: 1px solid map-get($palette, kicker);
         background-color: transparent;
 
         .fc-item__content {
@@ -148,9 +153,12 @@ $pillars: (
     }
 
 
-    &.fc-item--type-media .fc-item__headline .inline-garnett-quote,
-    &.fc-item--type-immersive .fc-item__headline .inline-garnett-quote {
+    &.fc-item--type-media .fc-item__headline .inline-garnett-quote {
         fill: map-get($palette, invertedKicker);
+    }
+
+    &.fc-item--type-immersive .fc-item__headline .inline-garnett-quote {
+        fill: map-get($palette, liveColour);
     }
 
     &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker,
