@@ -103,7 +103,7 @@
     padding-top: $gs-baseline / 2;
 }
 
-.meta__number:not(.u-h) + .meta__number {
+.meta__number + .meta__number {
     border-left: 1px solid $garnett-neutral-4;
     padding-left: $gs-gutter / 4;
     margin-left: $gs-gutter / 4;
