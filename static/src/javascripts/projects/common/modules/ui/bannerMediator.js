@@ -1,13 +1,14 @@
 // @flow
+import breakingNewsBanner from 'common/modules/ui/banners/breakingNews';
 
-type BannerCheck = {
+type Banner = {
     canShow: () => Promise<boolean>,
     show: () => void,
 };
 
-let checks: Array<BannerCheck> = [];
+let banners: Array<Banner> = [breakingNewsBanner];
 
-let results: Array<'pending' | boolean> = new Array(checks.length).fill(
+let results: Array<'pending' | boolean> = new Array(banners.length).fill(
     'pending',
     0
 );
@@ -36,14 +37,14 @@ const getSuccessfulBannerIndex = (): number => {
 
 const init = (): Promise<void> =>
     new Promise(resolve => {
-        checks.forEach((check, index) => {
+        banners.forEach((banner, index) => {
             const pushToResults = (result: boolean): void => {
                 results[index] = result;
 
                 const successfulBannerIndex = getSuccessfulBannerIndex();
 
                 if (successfulBannerIndex !== -1) {
-                    checks[successfulBannerIndex].show();
+                    banners[successfulBannerIndex].show();
                 }
 
                 if (!results.includes('pending')) {
@@ -59,7 +60,7 @@ const init = (): Promise<void> =>
                 pushToResults(false);
             }, 2500);
 
-            check.canShow().then(result => {
+            banner.canShow().then(result => {
                 if (!hasTimedOut) {
                     clearTimeout(timeout);
                     pushToResults(result);
@@ -69,9 +70,9 @@ const init = (): Promise<void> =>
     });
 
 // used for testing purposes
-const resetChecks = (checkList: Array<BannerCheck>): void => {
-    checks = checkList;
-    results = new Array(checks.length).fill('pending', 0);
+const resetChecks = (bannerList: Array<Banner>): void => {
+    banners = bannerList;
+    results = new Array(banners.length).fill('pending', 0);
 };
 
 export { init };
