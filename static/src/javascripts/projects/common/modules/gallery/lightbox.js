@@ -18,6 +18,7 @@ import loaderTpl from 'raw-loader!common/views/content/loader.html';
 import shareButtonTpl from 'raw-loader!common/views/content/share-button.html';
 import throttle from 'lodash/functions/throttle';
 import { loadCssPromise } from 'lib/load-css-promise';
+import fetch from 'lib/fetch';
 
 type ImageJson = {
     caption: string,
@@ -452,12 +453,17 @@ class GalleryLightbox {
                         this.initSwipe();
                     }
 
+                bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'xkcdNext'));
+                bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'xkcdPrev'));
+
                     if (this.galleryJson.images.length < 2) {
-                        bonzo([this.nextBtn, this.prevBtn]).hide();
+                        // bonzo([this.nextBtn, this.prevBtn]).hide();
                         $(
                             '.gallery-lightbox__progress',
                             this.lightboxEl
                         ).hide();
+
+                        console.log("HELLO MY NAME IS PHILIP")
                     }
 
                     this.state = 'image';
@@ -508,6 +514,7 @@ class GalleryLightbox {
             },
             events: {
                 next(): void {
+                    console.log("GOT TO HERE NEXT")
                     pulseButton(this.nextBtn);
 
                     if (this.index === this.images.length) {
@@ -522,6 +529,7 @@ class GalleryLightbox {
                         this.index += 1;
                         this.reloadState = true;
                     }
+                    console.log("FINISHED NEXT")
                 },
                 prev(): void {
                     pulseButton(this.prevBtn);
@@ -538,6 +546,35 @@ class GalleryLightbox {
                         this.index -= 1;
                         this.reloadState = true;
                     }
+                },
+                xkcdNext(): void {
+                    const seriesTag = guardian.config.page.nonKeywordTagIds.split(",").filter(tag => tag.includes("series"))[0];
+                    console.log("NEXT");
+                    // console.log(this.galleryJson.images);
+                    const galleryJsonxkcd = this.galleryJson;
+                    const parent = this;
+                    const fetchUrl = '/getnext/' + seriesTag  + window.location.pathname;
+                    console.log("FETCHURL", fetchUrl);
+                    // fetch(fetchUrl)
+                    //     .then(function(response) {
+                    //         return response.json();
+                    //     }).catch(function(ex) {
+                    //     console.log('parsing failed', ex)
+                    // })
+                    //     .then(function(json) {
+                    //         galleryJsonxkcd.images.push(json);
+                    //         parent.images.push(json);
+                    //         console.log("PARENT", parent.galleryJson);
+                    //         console.log("DOING NEXT GENERATION");
+                    //         parent.trigger('next', galleryJsonxkcd);
+                    //     });
+
+
+                    window.location.href = fetchUrl + '#img-1';
+                },
+                xkcdPrev(): void {
+                    const seriesTag = guardian.config.page.nonKeywordTagIds.split(",").filter(tag => tag.includes("series"))[0];
+                    window.location.href = '/getprev/' + seriesTag + window.location.pathname + '#img-1';
                 },
                 reload(): void {
                     this.reloadState = true;
