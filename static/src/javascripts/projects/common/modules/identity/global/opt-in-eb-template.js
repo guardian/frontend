@@ -28,16 +28,16 @@ const makeTemplateHtml = (template: Template, targets: LinkTargets): string => `
                     ${template.title}
                 </div>
                 <div class="identity-gdpr-oi-alert__cta-space">
-                    <a href="#" data-link-name="gdpr-oi-campaign : alert : remind-me-later" class="identity-gdpr-oi-alert__cta identity-gdpr-oi-alert__cta--sub ${
-                        template.messageCloseBtn
-                    }">
-                        ${template.remindMeLater}
-                    </a>
                     <a class="identity-gdpr-oi-alert__cta" target="_blank" href="${
                         targets.journey
                     }" data-link-name="gdpr-oi-campaign : alert : to-consents">
                         ${template.cta}
                         ${inlineSvg('arrowRight')}
+                    </a>
+                    <a href="#" data-link-name="gdpr-oi-campaign : alert : remind-me-later" class="identity-gdpr-oi-alert__cta identity-gdpr-oi-alert__cta--sub ${
+                        template.messageCloseBtn
+                    }">
+                        ${template.remindMeLater}
                     </a>
                 </div>
             </div>
