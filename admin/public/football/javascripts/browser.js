@@ -106,6 +106,8 @@ jQuery(function($){
                 }).filter(function(field){
                     return field !== "apiKey";
                 });
+            // set input to converted value
+            dom.query.val(query);
             $.each(fields, function(_, field){
                 if (!currentFields.hasOwnProperty(field)) {
                     addReplacementField(field);
