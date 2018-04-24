@@ -135,16 +135,16 @@ const hide = (msg: Message) => {
 };
 
 const waitForBannersOrTimeout = (): Promise<void> =>
-    new Promise(show => {
+    new Promise((show, reject) => {
         mediator.on('modules:onwards:breaking-news:ready', breakingShown => {
             if (!breakingShown) {
                 show();
             } else {
-                throw new Error(ERR_EXPECTED_NO_BANNER);
+                reject(new Error(ERR_EXPECTED_NO_BANNER));
             }
         });
         mediator.on('membership-message:display', () => {
-            throw new Error(ERR_EXPECTED_NO_BANNER);
+            reject(new Error(ERR_EXPECTED_NO_BANNER));
         });
         setTimeout(() => {
             show();
