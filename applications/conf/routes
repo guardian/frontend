@@ -61,6 +61,9 @@ GET        /opt/reset                                                           
 GET        /service-worker.js                                                   controllers.WebAppController.serviceWorker()
 GET        /2015-06-24-manifest.json                                            controllers.WebAppController.manifest()
 
+GET        /getnext/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                   controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "next")
+GET        /getprev/$tag<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/*path                   controllers.ImageContentController.getNextLightboxJson(path, tag, direction = "prev")
+
 # Newspaper pages
 GET        /theguardian                                                                     controllers.NewspaperController.latestGuardianNewspaper()
 GET        /theobserver                                                                     controllers.NewspaperController.latestObserverNewspaper()
@@ -89,6 +92,8 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                              
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json       controllers.ImageContentController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>            controllers.ImageContentController.render(path)
 
+
+
 # Audio and Video paths
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>/info.json              controllers.MediaController.renderInfoJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   controllers.MediaController.renderJson(path)
@@ -107,6 +112,9 @@ GET        /$path<info/2017/jul/26/interactive-test>                            
 # Short urls with campaign codes
 GET        /$shortCode<p/[\w]+>                                                 controllers.ShortUrlsController.redirectShortUrl(shortCode)
 GET        /$shortCode<p/[\w]+>/:campaignCode                                   controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
+
+
+#GET        /getprevious/$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                 controllers.IndexController.render(path)
 
 # Index pages for tags
 GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                 controllers.IndexController.renderTrailsJson(path)

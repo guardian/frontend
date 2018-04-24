@@ -7,7 +7,7 @@
 	For more information please visit Commercial Type at http://commercialtype.com or email us at info[at]commercialtype.com
 
 	Copyright (C) 2013 Schwartzco Inc.
-	
+
 */
 
 
@@ -280,7 +280,7 @@
 	font-style: normal;
 	font-stretch: normal;
 	}
-	
+
 	@font-face {
 	font-family: 'GuardianAgateSans1Web';
 	src: url('GuardianAgateSans1Web/GuardianAgateSans1Web-RegularItalic.eot');
@@ -389,7 +389,7 @@
 	font-style: normal;
 	font-stretch: normal;
 	}
-	
+
 	@font-face {
 	font-family: 'GuardianEgyptianWeb';
 	src: url('GuardianEgyptianWeb/GuardianEgyptianWeb-SemiboldItalic.eot');
@@ -416,8 +416,8 @@
 	font-style: normal;
 	font-stretch: normal;
 	}
-	
-	
+
+
 
 	@font-face {
 	font-family: 'GuardianEgyptianWeb';
@@ -433,7 +433,7 @@
 	}
 
 	/* GUARDIAN TEXT EGYPTIAN */
-	
+
 	@font-face {
 	font-family: 'GuardianTextEgyptianWeb';
 	src: url('GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.eot');
@@ -488,7 +488,7 @@
 	}
 
 
-	
+
 	@font-face {
 	font-family: 'GuardianTextEgyptianWeb';
 	src: url('GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Bold.eot');
@@ -679,7 +679,7 @@
 	font-style: normal;
 	font-stretch: normal;
 	}
-	
+
 
 	@font-face {
 	font-family: 'GuardianTextSansWeb';
@@ -734,4 +734,3 @@
 	font-style: normal;
 	font-stretch: normal;
 	}
-	

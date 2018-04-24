@@ -18,6 +18,7 @@ import endslateTpl from 'raw-loader!common/views/content/endslate.html';
 import loaderTpl from 'raw-loader!common/views/content/loader.html';
 import shareButtonTpl from 'raw-loader!common/views/content/share-button.html';
 import { loadCssPromise } from 'lib/load-css-promise';
+import fetch from 'lib/fetch';
 
 type ImageJson = {
     caption: string,
@@ -129,6 +130,8 @@ class GalleryLightbox {
         this.$swipeContainer = $('.js-gallery-swipe');
         bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'next'));
         bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
+        // bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'xkcdNext'));
+        // bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'xkcdPrev'));
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggleInfo'));
         this.handleKeyEvents = this.handleKeyEvents.bind(this); // bound for event handler
@@ -295,13 +298,53 @@ class GalleryLightbox {
         this.fsm.trigger(event, data);
     }
 
+    loadNextOrPrevious(pathPrefix: string): Promise<Object> {
+        const seriesTag = guardian.config.page.nonKeywordTagIds.split(",").filter(tag => tag.includes("series"))[0];
+        const fetchUrl = '/' + pathPrefix + '/' + seriesTag  + window.location.pathname;
+        return fetch(fetchUrl)
+            .then(function(response) {
+                return response.json();
+            }).catch(function(ex) {
+            console.log('next/previous parsing failed', ex);
+        });
+    }
+
+    loadOrOpen(newGalleryJson: Object): void {
+        console.log("LOADING OR OPENING")
+        if (this.galleryJson && newGalleryJson.id === this.galleryJson.id && newGalleryJson.images.length === this.galleryJson.images.length) {
+        console.log("OPENING");
+        this.trigger('open');
+    } else {
+        console.log("LOADING JSON");
+        this.trigger('loadJson', newGalleryJson);
+    }
+    }
+
     loadGalleryfromJson(galleryJson: GalleryJson, startIndex: number): void {
         this.index = startIndex;
+        const parent = this;
 
-        if (this.galleryJson && galleryJson.id === this.galleryJson.id) {
-            this.trigger('open');
+        console.log("LOADING", galleryJson);
+        if (galleryJson.images.length < 2) {
+            console.log("Loading next and previous")
+
+            this.loadNextOrPrevious('getnext').then(function(nextJson){
+                return parent.loadNextOrPrevious('getprev').then(function(prevJson){
+                    return { next: nextJson, prev: prevJson }
+                })
+            }).then(function(nextPrevJson) {
+                console.log("END OF NEXT PREV PROMISE CHAIN")
+                galleryJson.images.unshift(nextPrevJson.prev.images[0]);
+                galleryJson.images.push(nextPrevJson.next.images[0]);
+                parent.index = 2;
+
+                console.log("added prev", galleryJson);
+
+                parent.loadOrOpen(galleryJson)
+
+            })
         } else {
-            this.trigger('loadJson', galleryJson);
+            this.loadOrOpen(galleryJson);
         }
     }
 
@@ -309,11 +352,14 @@ class GalleryLightbox {
         let imageContent;
         let $img;
 
+        // console.log("loadsurrounding", index, count);
         [-1, 0, 1]
             .map(i => (index + i === 0 ? count - 1 : (index - 1 + i) % count))
             .forEach(i => {
                 imageContent = this.images[i];
                 $img = bonzo(this.$images[i]);
+                // console.log("images", this.$images)
+                // console.log($img)
 
                 if (!$img.attr('src')) {
                     $img.parent().append(bonzo.create(loaderTpl));
@@ -321,6 +367,7 @@ class GalleryLightbox {
                     $img.attr('src', imageContent.src);
                     $img.attr('srcset', imageContent.srcsets);
                     $img.attr('sizes', imageContent.sizes);
+                    // console.log("foreaching", i, $img[0]);
 
                     bean.one($img[0], 'load', () => {
                         $('.js-loader').remove();
@@ -434,9 +481,12 @@ class GalleryLightbox {
                     this.state = 'image';
                 },
                 loadJson(json: GalleryJson): void {
+                    console.log("loading passed json", json)
                     this.galleryJson = json;
                     this.images = json.images || [];
                     this.$countEl.text(this.images.length);
+
+                    // console.log("loading", this.images)
 
                     const imagesHtml = this.images
                         .map((img, i) => this.generateImgHTML(img, i + 1))
@@ -448,6 +498,7 @@ class GalleryLightbox {
                         '.js-gallery-lightbox-img',
                         this.$contentEl[0]
                     );
+                    // console.log("generated images", this.$images)
 
                     if (this.showEndslate) {
                         this.loadEndslate();
@@ -459,14 +510,20 @@ class GalleryLightbox {
                         this.initSwipe();
                     }
 
+                // bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'xkcdNext'));
+                // bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'xkcdPrev'));
+
                     if (this.galleryJson.images.length < 2) {
-                        bonzo([this.nextBtn, this.prevBtn]).hide();
+                        // bonzo([this.nextBtn, this.prevBtn]).hide();
                         $(
                             '.gallery-lightbox__progress',
                             this.lightboxEl
                         ).hide();
+
+                        console.log("less than 2 images")
                     }
 
+                    // console.log("end loadjson state ", this.state)
                     this.state = 'image';
                 },
             },
@@ -477,6 +534,7 @@ class GalleryLightbox {
                 this.swipeContainerWidth = this.$swipeContainer.dim().width;
 
                 // load prev/current/next
+            console.log("LS index, length", this.index, this.images.length, this.images);
                 this.loadSurroundingImages(this.index, this.images.length);
 
                 this.translateContent(
@@ -526,6 +584,7 @@ class GalleryLightbox {
                             this.reloadState = true;
                         }
                     } else {
+                        console.log("not last slate")
                         this.index += 1;
                         this.reloadState = true;
                     }
@@ -545,6 +604,37 @@ class GalleryLightbox {
                         this.index -= 1;
                         this.reloadState = true;
                     }
+                },
+                xkcdNext(): void {
+                    const seriesTag = guardian.config.page.nonKeywordTagIds.split(",").filter(tag => tag.includes("series"))[0];
+                    console.log("xkcd NEXT");
+                    // console.log(this.galleryJson.images);
+                    const galleryJsonxkcd = this.galleryJson;
+                    const parent = this;
+                    const fetchUrl = '/getnext/' + seriesTag  + window.location.pathname;
+                    fetch(fetchUrl)
+                        .then(function(response) {
+                            return response.json();
+                        }).catch(function(ex) {
+                        console.log('parsing failed', ex);
+                    })
+                        .then(function(nextImageGalleryJson) {
+                            galleryJsonxkcd.images.push(json.images[0]);
+                            // parent.images.push(json);
+                            console.log("PARENT", parent.galleryJson);
+                            // parent.trigger('next', galleryJsonxkcd);
+                            // parent.loadGalleryfromJson(galleryJsonxkcd, 1, imagesChanged = true)
+                            parent.trigger('loadJson', galleryJsonxkcd)
+                            parent.trigger('next', nextImageGalleryJson)
+                        });
+
+
+
+                    // window.location.href = fetchUrl + '#img-1';
+                },
+                xkcdPrev(): void {
+                    const seriesTag = guardian.config.page.nonKeywordTagIds.split(",").filter(tag => tag.includes("series"))[0];
+                    window.location.href = '/getprev/' + seriesTag + window.location.pathname + '#img-1';
                 },
                 reload(): void {
                     this.reloadState = true;
@@ -609,6 +699,7 @@ class GalleryLightbox {
 
 const init = (): void => {
     loadCssPromise.then(() => {
+        console.log("Initialising")
         const images = config.get('page.lightboxImages');
 
         if (images && images.images.length > 0) {
