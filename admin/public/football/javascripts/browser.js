@@ -106,8 +106,6 @@ jQuery(function($){
                 }).filter(function(field){
                     return field !== "apiKey";
                 });
-            // set input to converted value
-            dom.query.val(query);
             $.each(fields, function(_, field){
                 if (!currentFields.hasOwnProperty(field)) {
                     addReplacementField(field);
@@ -150,7 +148,7 @@ jQuery(function($){
         setTimeout(createReplacements, 10);
     });
     dom.form.on("submit", function() {
-        dom.query.val(dom.query.val().replace("{", "%7B").replace("}", "%7D"));
+        dom.query.val(dom.query.val().replace(/:([^\/]+)/g, "{$1}").replace("{", "%7B").replace("}", "%7D"));
     });
     dom.parameters.on("click", ".hint", function(e) {
         e.preventDefault();

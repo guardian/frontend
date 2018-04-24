@@ -25,9 +25,9 @@ object PA extends Collections {
     ("625", "Bundesliga"),
     ("635", "Serie A"),
     ("650", "La Liga"),
-    ("700", "World Cup 2014"),
+    ("700", "World Cup"),
     ("721", "International friendlies"),
-    ("870", "Women's World Cup 2015")
+    ("870", "Women's World Cup")
   )
   def competitionName(season: Season): String = competitionNames.getOrElse(season.id, season.name)
 
