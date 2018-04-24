@@ -84,27 +84,8 @@
         margin-left: 0;
         width: 100%;
 
-        .meta__number {
-            @include mq($until: mobile) {
-                position: relative;
-                top: $gs-baseline;
-            }
-        }
-
         @include mq(leftCol) {
             position: relative;
-        }
-
-        .commentcount {
-            top: $gs-baseline / 3;
-
-            @include mq(desktop) {
-                display: block;
-                position: static;
-                padding-top: $gs-baseline / 3;
-                margin-bottom: $gs-baseline;
-                border-top: 1px dotted $neutral-5;
-            }
         }
     }
     .content__meta-container--twitter,

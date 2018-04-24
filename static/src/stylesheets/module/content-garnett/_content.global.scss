@@ -13,7 +13,8 @@
 
 .meta__numbers {
     @include mq($from: leftCol, $until: wide) {
-        .content:not(.content--liveblog):not(.content--gallery) .meta__extras:not(.meta__extras--crossword) & {
+        // Excude templates that have a full width meta
+        .content:not(.content--liveblog):not(.content--gallery):not(.content--interactive) .meta__extras:not(.meta__extras--crossword) & {
             border-top: 1px solid $garnett-neutral-4;
             margin-top: -1px;
             flex-grow: 1;
