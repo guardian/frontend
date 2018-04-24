@@ -1,12 +1,12 @@
-// Gallery specific styles for Garnett
 .immersive-header-container {
     background-color: $garnett-neutral-1;
     overflow-x: hidden;
 }
 
-.js-adblock-sticky  {
+.js-adblock-sticky {
     background-color: $garnett-neutral-3;
 }
+// Header and tags
 .immersive-main-media__headline-container {
     position: relative;
     background: transparent;
@@ -20,7 +20,6 @@
 
     .content__main-column {
         background-color: $garnett-neutral-1;
-        z-index: 10;
         margin-left: -$gs-gutter/2;
         padding: 0 $gs-gutter/2 $gs-baseline*2;
         min-height: gs-height(2);
@@ -34,10 +33,6 @@
         @include mq($from: desktop) {
             margin-left: $left-column-wide + ($gs-gutter / 2) * 3;
             padding-left: $gs-gutter / 2;
-        }
-        @include mq(leftCol) {
-            margin-left: $left-column-wide;
-            left: ($gs-gutter / 2) * 3;
         }
     }
 
@@ -87,7 +82,6 @@
         }
     }
 
-
     .content__labels--paidgallery {
         .content__section-label__link {
             color: $paid-article-brand;
@@ -99,6 +93,89 @@
             fill: $paid-article-brand;
         }
     }
+}
 
+// Standfirst and meta
+.tonal__head {
+    border-bottom: solid 1px $garnett-neutral-7;
+    .content__main-column--gallery {
+        display: flex;
+        flex-wrap: wrap;
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2 !important;
+            border-left: solid 1px $garnett-neutral-7;
+        }
+        @include mq(desktop) {
+            margin-left: gs-span(3) + $gs-gutter/2;
+        }
 
+        .meta__extras {
+            border-top: solid 1px $garnett-neutral-7;
+        }
+
+        .meta__numbers,
+        .meta__social {
+            display: inline-block;
+        }
+
+        .meta__numbers {
+            float: right;
+            padding-top: $gs-baseline/2;
+
+            .sharecount__value,
+            a {
+                color: #bdbdbd;
+            }
+
+            .inline-tone-fill {
+                fill: #bdbdbd;
+            }
+
+            .meta__number:not(.js-sharecount) {
+                border-left: solid 1px $garnett-neutral-7;
+            }
+        }
+
+        .content__meta-container,
+        .gallery__meta-container,
+        .tonal__standfirst {
+            flex-basis: 100%;
+        }
+
+        .tonal__standfirst {
+            max-width: gs-span(8);
+            order: 2;
+        }
+
+        .content__meta-container {
+            order: 4;
+            padding-top: 0;
+            background-image: none;
+            position: relative;
+            margin: 0;
+            min-height: 0;
+            max-width: gs-span(8);
+            @include mq($from: desktop) {
+                order: 1;
+            }
+        }
+
+        .byline,
+        .content__dateline {
+            background-image: none;
+            border: 0;
+            padding-top: 0;
+        }
+
+        .byline,
+        .byline span {
+            font-style: italic;
+            font-weight: 700;
+        }
+
+        .gallery__meta-container {
+            order: 3;
+            padding-top: 0;
+        }
+    }
 }
