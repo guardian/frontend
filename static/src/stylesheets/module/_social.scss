@@ -158,64 +158,6 @@ category: Common
     padding: ($gs-baseline/3*2) ($gs-gutter/10) 0 ($gs-gutter/2);
 }
 
-.social--referred-only {
-    &.social--bottom .social__item {
-        display: none;
-    }
-
-    &.social--top .social__item--referred,
-    &.social--bottom .social__item--referred {
-        display: list-item;
-    }
-}
-
-.social__item--referred {
-    @include mq($until: desktop) {
-        margin-right: $gs-baseline / 3;
-    }
-
-    .social-icon:after {
-        @include fs-textSans(1);
-        margin-right: $gs-baseline;
-        margin-left: $gs-baseline * -1/2;
-
-        .svg & i {
-            width: none;
-        }
-    }
-
-    .social-icon:after {
-        @include fs-textSans(1);
-        margin-right: $gs-baseline;
-        margin-left: $gs-baseline * -1/2;
-
-        .svg & i {
-            width: none;
-        }
-    }
-
-    .svg & .social-icon i {
-        width: 32px;
-    }
-
-    &.social__item--facebook .social-icon:after {
-        content: 'Share on Facebook';
-    }
-
-    &.social__item--twitter .social-icon:after {
-        content: 'Share on Twitter';
-    }
-
-    &.social__item--facebook .social-icon:after,
-    &.social__item--twitter .social-icon:after {
-        @include mq(leftCol, $until: wide) {
-            & {
-                content: 'share';
-            }
-        }
-    }
-}
-
 // Pintrest is inappropriate in certain sections
 
 .social__item--pinterest {
