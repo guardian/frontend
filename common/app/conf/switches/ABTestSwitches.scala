@@ -72,7 +72,7 @@ trait ABTestSwitches {
     "Alters the rules for inserting ads on desktop breakpoints.",
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 24),
+    sellByDate = new LocalDate(2018, 4, 30),
     exposeClientSide = true
   )
 
