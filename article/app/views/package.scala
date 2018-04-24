@@ -31,7 +31,7 @@ object MainCleaner {
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
         MainFigCaptionCleaner,
-        AtomsCleaner(atoms = article.content.atoms, amp = amp, mediaWrapper = Some(MediaWrapper.MainMedia))
+        AtomsCleaner(atoms = article.content.atoms, amp = amp, mediaWrapper = Some(MediaWrapper.MainMedia), pillar = article.metadata.pillar)
       )
   }
 }
@@ -46,7 +46,7 @@ object BodyCleaner {
 
     List(
       InBodyElementCleaner,
-      AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp),
+      AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp, pillar = article.metadata.pillar),
       InBodyLinkCleaner("in body link", amp),
       BlockNumberCleaner,
       new TweetCleaner(article.content, amp),

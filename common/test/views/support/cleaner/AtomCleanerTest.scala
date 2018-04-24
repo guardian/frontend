@@ -10,6 +10,7 @@ import test.{TestRequest, WithTestApplicationContext}
 import views.support.AtomsCleaner
 import conf.switches.Switches
 import model.{ImageAsset, ImageMedia}
+import model.Pillar.RichPillar
 
 import scala.collection.JavaConverters._
 
@@ -52,8 +53,10 @@ class AtomCleanerTest extends FlatSpec
     profiles = Nil,
     timelines = Nil,
     commonsdivisions = Nil
-  )
-)
+  ))
+
+  val pillar: RichPillar = RichPillar(None)
+
   def doc: Document = Jsoup.parse( s"""<figure class="element element-atom">
                                 <gu-atom data-atom-id="887fb7b4-b31d-4a38-9d1f-26df5878cf9c" data-atom-type="media">
                                 <div>
@@ -64,13 +67,13 @@ class AtomCleanerTest extends FlatSpec
 
 
  private def clean(document: Document, atom:Option[Atoms], amp: Boolean): Document = {
-    val cleaner = AtomsCleaner(youTubeAtom, amp = amp)(TestRequest(), testApplicationContext)
+    val cleaner = AtomsCleaner(youTubeAtom, amp = amp, pillar = pillar)(TestRequest(), testApplicationContext)
     cleaner.clean(document)
     document
   }
 
  private def renderAndGetId(atom: MediaAtom): String = {
-   val html = views.html.fragments.atoms.youtube(media = atom, displayCaption = false, mediaWrapper = None)(TestRequest())
+   val html = views.html.fragments.atoms.youtube(media = atom, displayCaption = false, mediaWrapper = None, pillar = pillar)(TestRequest())
    val doc = Jsoup.parse(html.toString())
 
    doc.getElementsByClass("youtube-media-atom__iframe").attr("id")
@@ -92,19 +95,19 @@ class AtomCleanerTest extends FlatSpec
   }
 
   "Youtube template" should "include endslate path" in {
-    val html = views.html.fragments.atoms.youtube(media = youTubeAtom.map(_.media.head).get, displayEndSlate = true, displayCaption = false, mediaWrapper = None)(TestRequest())
+    val html = views.html.fragments.atoms.youtube(media = youTubeAtom.map(_.media.head).get, displayEndSlate = true, displayCaption = false, mediaWrapper = None, pillar = pillar)(TestRequest())
     val doc = Jsoup.parse(html.toString())
     doc.select("div.youtube-media-atom").first().attr("data-end-slate") should be("/video/end-slate/section/football.json?shortUrl=https://gu.com/p/6vf9z")
   }
 
   "Youtube template" should "include main media caption" in {
-    val html = views.html.fragments.atoms.youtube(media = youTubeAtom.map(_.media.head).get, displayEndSlate = true, displayCaption = true, mediaWrapper = Some(MediaWrapper.MainMedia))(TestRequest())
+    val html = views.html.fragments.atoms.youtube(media = youTubeAtom.map(_.media.head).get, displayEndSlate = true, displayCaption = true, mediaWrapper = Some(MediaWrapper.MainMedia), pillar = pillar)(TestRequest())
     val doc = Jsoup.parse(html.toString())
     doc.select("figcaption").hasClass("caption--main") should be(true)
   }
 
   "Youtube template" should "include duration" in {
-    val html = views.html.fragments.atoms.media(media = youTubeAtom.map(_.media.head).get, displayCaption = false, mediaWrapper = None)(TestRequest())
+    val html = views.html.fragments.atoms.media(media = youTubeAtom.map(_.media.head).get, displayCaption = false, mediaWrapper = None, pillar = pillar)(TestRequest())
     val doc = Jsoup.parse(html.toString())
     doc.getElementsByClass("youtube-media-atom__bottom-bar__duration").html() should be("0:36")
   }
