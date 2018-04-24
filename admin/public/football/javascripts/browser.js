@@ -61,10 +61,16 @@ jQuery(function($){
                 label: "Premier league 2013/14",
                 value: "785"
             }],
-            competitionID: [{
-                label: "Premier league 2013/14",
-                value: "100"
-            }],
+            competitionID: [
+                {
+                    label: "Premier league",
+                    value: "100"
+                },
+                {
+                    label: "World Cup",
+                    value: "700"
+                }
+            ],
             type: [
                 {
                     label: "Strikers",
@@ -91,7 +97,10 @@ jQuery(function($){
         currentFields = {},
         createReplacements = function() {
             var r = /({.*?})/g,
-                query = dom.query.val(),
+                query = dom.query.val()
+                    // replace to convert new-style in PA docs `:key`
+                    // to old-style `{key}` supported by this tool
+                    .replace(/:([^\/]+)/g, "{$1}"),
                 fields = $.map(query.match(r), function(field){
                     return field.replace("{", "").replace("}", "");
                 }).filter(function(field){
