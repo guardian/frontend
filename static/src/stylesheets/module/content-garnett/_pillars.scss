@@ -260,10 +260,18 @@
         padding-right: .375em;
     }
 }
-@mixin mediaPalatte($mediaColor, $pillar) {
+@mixin mediaPalatte($mediaColor, $pillarColor, $pillar) {
     .content__section-label__link,
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
+    }
+
+    .content__labels--immersive {
+        background: $pillarColor;
+    }
+
+    .social-icon__svg path {
+        fill: #bdbdbd;
     }
 
     .gu-media--show-controls-at-start.vjs-paused .vjs-big-play-button .vjs-control-text:before,
@@ -364,32 +372,32 @@
 
 .content--media.content--pillar-news,
 .immersive-main-media__headline-container.content--pillar-news {
-    @include mediaPalatte($news-garnett-media-main-1, news);
+    @include mediaPalatte($news-garnett-media-main-1, $news-garnett-main-1, news);
 }
 
 .content--media:not(.paid-content).content--pillar-opinion,
 .immersive-main-media__headline-container.content--pillar-opinion {
-    @include mediaPalatte($opinion-garnett-media-main-1, opinion);
+    @include mediaPalatte($opinion-garnett-media-main-1, $opinion-garnett-main-1, opinion);
 }
 
 .content--media:not(.paid-content).content--pillar-arts,
 .immersive-main-media__headline-container.content--pillar-arts {
-    @include mediaPalatte($culture-garnett-media-main-1, culture);
+    @include mediaPalatte($culture-garnett-media-main-1, $culture-garnett-feature, culture);
 }
 
 .content--media:not(.paid-content).content--pillar-lifestyle,
 .immersive-main-media__headline-container.content--pillar-lifestyle {
-    @include mediaPalatte($lifestyle-garnett-media-main-1, lifestyle);
+    @include mediaPalatte($lifestyle-garnett-media-main-1, $lifestyle-garnett-feature, lifestyle);
 }
 
 .content--media:not(.paid-content).content--pillar-sport,
 .immersive-main-media__headline-container.content--pillar-sport {
-    @include mediaPalatte($sport-garnett-media-main-1, sport);
+    @include mediaPalatte($sport-garnett-media-main-1, $sport-garnett-main-1, sport);
 }
 
 .content--media:not(.paid-content).content--pillar-special-report,
 .immersive-main-media__headline-container.content--pillar-special-report {
-    @include mediaPalatte($news-garnett-highlight, pink);
+    @include mediaPalatte($news-garnett-highlight, $news-garnett-highlight, pink);
 }
 
 .content--type-analysis {

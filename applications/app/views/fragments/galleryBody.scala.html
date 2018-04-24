@@ -18,13 +18,9 @@
             "content", "content--media", "content--gallery", s"content--pillar-${page.metadata.pillar.nameOrDefault}", "tonal", "content--immersive", "tonal--tone-media", s"tonal--${toneClass(page.item)}"
         )"
         itemscope itemtype="@page.item.metadata.schemaType" role="main">
-
         @fragments.galleryHeader(page)
 
-        <div class="@RenderClasses(
-                    Map("l-side-margins--paidgallery" -> isPaidContent(page)),
-                    "l-side-margins", "l-side-margins--media", "l-side-margins--gallery"
-                )">
+        <div>
             <div class="content__main tonal__main tonal__main--@toneClass(page.item)">
                 <div class="gs-container gallery__divider">
                     <div class="content__main-column content__main-column--gallery">
@@ -33,9 +29,9 @@
                             @page.item.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
                                 @galleryItem(4, image, row.rowNum, page.item.lightbox.imageContainer(row.rowNum - 1))
                             }
+                            @fragments.witnessCallToAction(page.item.content)
+                            @fragments.submeta(page.item)
                         </ul>
-                        @fragments.witnessCallToAction(page.item.content)
-                        @fragments.submeta(page.item)
                     </div>
                 </div>
             </div>

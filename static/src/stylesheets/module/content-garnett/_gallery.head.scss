@@ -1,65 +1,211 @@
-.gallery__main-content {
-    .content__meta-container {
-        position: relative;
+.immersive-header-container {
+    background-color: $garnett-neutral-1;
+    overflow-x: hidden;
+}
+
+.immersive-header-container--photo-essay {
+    background-color: $garnett-neutral-5;
+}
+
+.js-adblock-sticky {
+    background-color: $garnett-neutral-3;
+}
+// Header and tags
+
+.immersive-main-media__headline-container {
+    position: relative;
+    background: transparent;
+    margin-top: -$gs-gutter*5;
+
+    .gs-container {
+        @include mq($until: tablet) {
+            padding-left: 0;
+        }
+    }
+
+    .content__main-column {
+        background-color: $garnett-neutral-1;
+        margin-left: -$gs-gutter/2;
+        padding: 0 $gs-gutter/2 $gs-baseline*2;
+        min-height: gs-height(2);
+        //This allows the headline block to be aligned to the left and not run full width
+        width: calc(90vw - #{$gs-gutter});
+        max-width: none;
+        @include mq($from: tablet) {
+            margin-left: $gs-gutter;
+            width: 100vw;
+            padding-left: 0;
+        }
+        @include mq($from: desktop) {
+            margin-left: $left-column-wide + ($gs-gutter / 2) * 3;
+            padding-left: $gs-gutter / 2;
+        }
+    }
+
+    .content__headline {
+        @include fs-headline(6, true);
+        line-height: 1.1;
+        font-weight: 700;
+        max-width: gs-span(8);
+        padding: 0 $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+        }
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2;
+        }
+        @include mq(desktop) {
+            font-size: 50px;
+            line-height: 54px;
+        }
+    }
+
+    .content__labels {
         margin-left: 0;
-        min-height: auto;
-        margin-bottom: $gs-baseline;
-        max-width: gs-span(8);
+        position: absolute;
+        transform: translateY(-100%);
+        overflow: visible;
         width: auto;
+        padding: $gs-baseline/3 $gs-gutter/2;
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+        }
+        @include mq(tablet) {
+            padding: $gs-baseline/2 $gs-gutter/2;
+        }
     }
 
-    .meta__extras {
-        display: flex;
-        justify-content: space-between;
+    .content__section-label {
+        display: none;
     }
 
-    .tonal__standfirst {
-        max-width: gs-span(8);
+    .content__series-label {
+        color: $garnett-neutral-5;
+        font-size: 16px;
+        font-weight: 700;
+        @include mq(desktop) {
+            font-size: 20px;
+        }
     }
 
-    .gallery__meta-container {
-        // TODO: remove the need for important by restructuring _types.scss
-        background-image: none !important;
-        .byline,
-        .content__dateline {
-            background-image: none;
-            border: 0;
-            padding-top: 0;
+    .content__labels--paidgallery {
+        .content__section-label__link {
+            color: $paid-article-brand;
+        }
+    }
+
+    .content__headline--paidgallery {
+        .inline-tone-fill {
+            fill: $paid-article-brand;
         }
     }
 }
+// Standfirst and meta
+.content--gallery .tonal__head {
+    border-bottom: solid 1px $neutral-1;
 
-.content__labels--gallery {
-    @include mq(leftCol) {
-        margin-left: -($left-column-wide + $gs-gutter);
-        width: $left-column-wide;
+    .content__main-column--gallery {
+        display: flex;
+        flex-wrap: wrap;
+        padding-bottom: $gs-baseline*2;
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2 !important;
+            border-left: solid 1px $neutral-1;
+        }
+        @include mq(desktop) {
+            margin-left: gs-span(3) + $gs-gutter/2;
+        }
     }
-}
 
-// Overriding the default for media tones
-.tonal--tone-media .content__headline--gallery {
-    font-weight: 200;
-    max-width: gs-span(8);
-    padding-top: 0;
-
-    @include mq($until: tablet) {
-        padding-top: $gs-baseline / 2;
+    .meta__extras {
+        border-top: solid 1px $neutral-1;
+        margin-top: $gs-baseline;
+        @include mq(desktop) {
+            position: absolute;
+            width: gs-span(3);
+            margin-top: 0;
+            top: 0;
+            right: auto;
+            margin-left: -(gs-span(3) + $gs-gutter);
+        }
     }
-}
 
-.content__labels--paidgallery {
-    .content__section-label__link {
-        color: $paid-article-brand;
+    .meta__numbers,
+    .meta__social {
+        display: inline-block;
     }
-}
 
-.content__headline--paidgallery {
-    .inline-tone-fill {
-        fill: $paid-article-brand;
+    .meta__numbers {
+        float: right;
+        padding-top: $gs-baseline/2;
+
+        .sharecount__value,
+        a {
+            color: #bdbdbd;
+        }
+
+        .inline-tone-fill {
+            fill: #bdbdbd;
+        }
+
+        .meta__number:not(.js-sharecount) {
+            border-left: solid 1px $neutral-1;
+        }
     }
-}
 
-.gallery__fullscreen,
-.article__fullscreen {
-    position: absolute;
+    .content__meta-container,
+    .gallery__meta-container,
+    .tonal__standfirst {
+        flex-basis: 100%;
+    }
+
+    .tonal__standfirst {
+        max-width: gs-span(4) - $gs-gutter/2;
+        margin: 0;
+        order: 2;
+
+        @include mq($from: tablet) {
+            max-width: gs-span(5) + $gs-gutter;
+        }
+
+        @include mq(desktop) {
+            max-width: gs-span(6);
+        }
+    }
+
+    .content__meta-container {
+        order: 4;
+        padding-top: 0;
+        background-image: none;
+        position: relative;
+        margin: 0;
+        min-height: 0;
+        max-width: gs-span(8);
+        @include mq($from: desktop) {
+            order: 1;
+        }
+    }
+
+    .content__standfirst {
+        margin-bottom: $gs-baseline;
+    }
+
+    .byline,
+    .content__dateline {
+        background-image: none;
+        border: 0;
+        padding: 0;
+    }
+
+    .byline,
+    .byline span {
+        font-style: italic;
+        font-weight: 700;
+        margin-bottom: $gs-baseline;
+    }
+
+    .gallery__meta-container {
+        order: 3;
+        padding-top: 0;
+    }
 }
