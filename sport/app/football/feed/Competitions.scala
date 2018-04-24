@@ -110,6 +110,7 @@ object CompetitionsProvider {
     Competition("121", "/football/scottish-championship", "Scottish Championship", "Scottish Championship", "Scottish", showInTeamsList = true, tableDividers = List(1, 8, 9)),
     Competition("122", "/football/scottish-league-one", "Scottish League One", "Scottish League One", "Scottish", showInTeamsList = true, tableDividers = List(1, 4, 8, 9)),
     Competition("123", "/football/scottish-league-two", "Scottish League Two", "Scottish League Two", "Scottish", showInTeamsList = true, tableDividers = List(1, 4)),
+    Competition("700", "/football/world-cup-2018", "World Cup 2018", "World Cup 2018", "Internationals", showInTeamsList = true, tableDividers = List(2)),
     Competition("750", "/football/euro-2016", "Euro 2016", "Euro", "Internationals"),
     Competition("751", "/football/euro-2016-qualifiers", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
     Competition("501", "/football/champions-league-qualifying", "Champions League qualifying", "Champions League qual.", "European"),
