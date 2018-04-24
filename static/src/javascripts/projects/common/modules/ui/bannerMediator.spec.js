@@ -11,7 +11,7 @@ const shortFalseCheck = () =>
     new Promise(resolve => {
         setTimeout(() => {
             resolve(false);
-        }, 199);
+        }, 200);
     });
 const longFalseCheck = () =>
     new Promise(resolve => {
@@ -84,7 +84,7 @@ describe('bannerMediator picks correct banner to show', () => {
         },
     ];
 
-    const createBanner = check => ({ check, show: jest.fn() });
+    const createBanner = canShow => ({ canShow, show: jest.fn() });
 
     tests.forEach(test => {
         it(`calls show() for banner at index ${test.successfulIndex}`, () => {

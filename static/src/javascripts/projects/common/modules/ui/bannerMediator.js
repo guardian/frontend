@@ -1,7 +1,7 @@
 // @flow
 
 type BannerCheck = {
-    check: () => Promise<boolean>,
+    canShow: () => Promise<boolean>,
     show: () => void,
 };
 
@@ -59,7 +59,7 @@ const init = (): Promise<void> =>
                 pushToResults(false);
             }, 2500);
 
-            check.check().then(result => {
+            check.canShow().then(result => {
                 if (!hasTimedOut) {
                     clearTimeout(timeout);
                     pushToResults(result);
