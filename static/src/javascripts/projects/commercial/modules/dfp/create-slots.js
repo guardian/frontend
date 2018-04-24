@@ -10,6 +10,7 @@ const inlineDefinition = {
             adSizes.mpu,
             adSizes.video,
             adSizes.video2,
+            adSizes.googleCard,
             adSizes.fluid,
         ],
     },
