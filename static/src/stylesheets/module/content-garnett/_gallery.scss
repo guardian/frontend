@@ -1,5 +1,5 @@
-@charset 'UTF-8';
-// The main image needs to take up 100vh and the slim header needs to sit just on top of it.
+@charset 'UTF-8'; // The main image needs to take up 100vh and the slim header needs to sit just on top of it.
+
 .l-header--new-gallery {
     position: absolute;
     z-index: 1;
@@ -9,14 +9,13 @@
 
 .gallery__divider {
     @include mq(desktop) {
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-gutter / 2;
     }
 }
 
 .content__main-column--gallery {
     max-width: none;
     margin-right: auto;
-    padding-bottom: $gs-baseline*2;
     @include mq(desktop) {
         margin-left: gs-span(3) + $gs-gutter;
         padding-left: 0 !important;
@@ -34,7 +33,7 @@
             top: -$gs-gutter/2;
             bottom: 0;
             left: -$gs-gutter/2;
-            border-left: 1px solid $garnett-neutral-7;
+            border-left: 1px solid $neutral-1;
         }
     }
 }
@@ -78,8 +77,7 @@
     }
 }
 
-.gallery__figcaption,
-.meta__extras {
+.gallery__figcaption {
     @include fs-textSans(1);
     overflow: visible;
     max-height: 100%;
@@ -129,7 +127,11 @@
     @include fs-headline(2);
     color: $neutral-5;
     display: block;
-    margin-bottom: $gs-baseline/2;
+    margin-bottom: $gs-baseline;
+
+    &:empty {
+        display: none;
+    }
 }
 
 .gallery__credit {
@@ -153,18 +155,22 @@
     }
 }
 // All images should fit within the viewport height
+
 .gallery__img,
 .gallery__img-container {
     width: 100%;
 }
 
 .gallery__main-content {
+    background: $garnett-neutral-1;
+
     .content__head {
         padding-bottom: $gs-baseline;
     }
 
     .content--immersive .content__main {
-        padding-top: 0;
+        border-bottom: solid 1px $neutral-1;
+        padding: 0;
     }
 
     .meta__comment-count--top {
@@ -200,7 +206,7 @@
     .container__title:after,
     .fc-container__header__title--sticky:after,
     .fc-container__header__title:after {
-        background-color: $garnett-neutral-7;
+        background-color: $neutral-1;
     }
     // Reset the styles from _content.scss
     .meta__numbers {
@@ -224,6 +230,17 @@
         margin-bottom: $gs-baseline;
         @include mq(desktop) {
             margin-top: $gs-baseline * 2;
+        }
+    }
+
+    .submeta {
+        padding: 0;
+        margin: 0;
+        background-image: none!important;
+
+        .submeta__keywords {
+            border-bottom: none;
+            margin: 0;
         }
     }
 }
@@ -267,5 +284,42 @@
     .article__img-container:hover .article__fullscreen,
     .gallery__img-container:hover .gallery__fullscreen {
         opacity: 1;
+    }
+}
+
+#more-galleries {
+    .fc-container__inner {
+        border-top: none;
+    }
+}
+//picture essay styles
+.immersive-header-container--photo-essay {
+    .content__wrapper--standfirst {
+        background: none;
+
+        .content__main-column {
+            @include mq(tablet) {
+                padding-left: $gs-gutter/2 !important;
+            }
+            @include mq(desktop) {
+                margin-left: gs-span(3) + $gs-gutter;
+            }
+
+        }
+
+
+    }
+
+    .content__standfirst {
+        color: #000;
+    }
+
+    .content__standfirst--immersive-article .u-underline {
+        color: $garnett-neutral-6;
+        border-bottom: 1px solid $garnett-neutral-6;
+    }
+
+    .content__main-column {
+        padding-left: 0;
     }
 }

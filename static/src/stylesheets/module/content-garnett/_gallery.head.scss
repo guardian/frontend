@@ -3,10 +3,15 @@
     overflow-x: hidden;
 }
 
+.immersive-header-container--photo-essay {
+    background-color: $garnett-neutral-5;
+}
+
 .js-adblock-sticky {
     background-color: $garnett-neutral-3;
 }
 // Header and tags
+
 .immersive-main-media__headline-container {
     position: relative;
     background: transparent;
@@ -25,6 +30,7 @@
         min-height: gs-height(2);
         //This allows the headline block to be aligned to the left and not run full width
         width: calc(90vw - #{$gs-gutter});
+        max-width: none;
         @include mq($from: tablet) {
             margin-left: $gs-gutter;
             width: 100vw;
@@ -94,88 +100,112 @@
         }
     }
 }
-
 // Standfirst and meta
-.tonal__head {
-    border-bottom: solid 1px $garnett-neutral-7;
+.content--gallery .tonal__head {
+    border-bottom: solid 1px $neutral-1;
+
     .content__main-column--gallery {
         display: flex;
         flex-wrap: wrap;
+        padding-bottom: $gs-baseline*2;
         @include mq(tablet) {
             padding-left: $gs-gutter/2 !important;
-            border-left: solid 1px $garnett-neutral-7;
+            border-left: solid 1px $neutral-1;
         }
         @include mq(desktop) {
             margin-left: gs-span(3) + $gs-gutter/2;
         }
+    }
 
-        .meta__extras {
-            border-top: solid 1px $garnett-neutral-7;
+    .meta__extras {
+        border-top: solid 1px $neutral-1;
+        margin-top: $gs-baseline;
+        @include mq(desktop) {
+            position: absolute;
+            width: gs-span(3);
+            margin-top: 0;
+            top: 0;
+            right: auto;
+            margin-left: -(gs-span(3) + $gs-gutter);
+        }
+    }
+
+    .meta__numbers,
+    .meta__social {
+        display: inline-block;
+    }
+
+    .meta__numbers {
+        float: right;
+        padding-top: $gs-baseline/2;
+
+        .sharecount__value,
+        a {
+            color: #bdbdbd;
         }
 
-        .meta__numbers,
-        .meta__social {
-            display: inline-block;
+        .inline-tone-fill {
+            fill: #bdbdbd;
         }
 
-        .meta__numbers {
-            float: right;
-            padding-top: $gs-baseline/2;
+        .meta__number:not(.js-sharecount) {
+            border-left: solid 1px $neutral-1;
+        }
+    }
 
-            .sharecount__value,
-            a {
-                color: #bdbdbd;
-            }
+    .content__meta-container,
+    .gallery__meta-container,
+    .tonal__standfirst {
+        flex-basis: 100%;
+    }
 
-            .inline-tone-fill {
-                fill: #bdbdbd;
-            }
+    .tonal__standfirst {
+        max-width: gs-span(4) - $gs-gutter/2;
+        margin: 0;
+        order: 2;
 
-            .meta__number:not(.js-sharecount) {
-                border-left: solid 1px $garnett-neutral-7;
-            }
+        @include mq($from: tablet) {
+            max-width: gs-span(5) + $gs-gutter;
         }
 
-        .content__meta-container,
-        .gallery__meta-container,
-        .tonal__standfirst {
-            flex-basis: 100%;
+        @include mq(desktop) {
+            max-width: gs-span(6);
         }
+    }
 
-        .tonal__standfirst {
-            max-width: gs-span(8);
-            order: 2;
+    .content__meta-container {
+        order: 4;
+        padding-top: 0;
+        background-image: none;
+        position: relative;
+        margin: 0;
+        min-height: 0;
+        max-width: gs-span(8);
+        @include mq($from: desktop) {
+            order: 1;
         }
+    }
 
-        .content__meta-container {
-            order: 4;
-            padding-top: 0;
-            background-image: none;
-            position: relative;
-            margin: 0;
-            min-height: 0;
-            max-width: gs-span(8);
-            @include mq($from: desktop) {
-                order: 1;
-            }
-        }
+    .content__standfirst {
+        margin-bottom: $gs-baseline;
+    }
 
-        .byline,
-        .content__dateline {
-            background-image: none;
-            border: 0;
-            padding-top: 0;
-        }
+    .byline,
+    .content__dateline {
+        background-image: none;
+        border: 0;
+        padding: 0;
+    }
 
-        .byline,
-        .byline span {
-            font-style: italic;
-            font-weight: 700;
-        }
+    .byline,
+    .byline span {
+        font-style: italic;
+        font-weight: 700;
+        margin-bottom: $gs-baseline;
+    }
 
-        .gallery__meta-container {
-            order: 3;
-            padding-top: 0;
-        }
+    .gallery__meta-container {
+        order: 3;
+        padding-top: 0;
     }
 }

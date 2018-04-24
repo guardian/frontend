@@ -588,8 +588,6 @@ object GalleryCaptionCleaner extends HtmlCleaner {
     captionTitle.addClass("gallery__caption__title")
     captionTitle.text(captionTitleText)
 
-    // There should be one br after the title
-    galleryCaption.prependElement("br")
     galleryCaption.prependChild(captionTitle)
 
     galleryCaption

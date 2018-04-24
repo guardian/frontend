@@ -29,9 +29,9 @@
                             @page.item.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
                                 @galleryItem(4, image, row.rowNum, page.item.lightbox.imageContainer(row.rowNum - 1))
                             }
+                            @fragments.witnessCallToAction(page.item.content)
+                            @fragments.submeta(page.item)
                         </ul>
-                        @fragments.witnessCallToAction(page.item.content)
-                        @fragments.submeta(page.item)
                     </div>
                 </div>
             </div>
