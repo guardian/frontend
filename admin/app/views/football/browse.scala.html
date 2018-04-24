@@ -1,8 +1,14 @@
 @()(implicit context: model.ApplicationContext, request: RequestHeader)
 @views.html.football.main("PA API browser") {
     <div class="page-header">
-      <h1>PA API browser</h1>
-      <p>Copy queries from <a href="@{conf.AdminConfiguration.pa.apiExplorer}">the PA Football documentation</a> into the query box below.</p>
+        <h1>PA API browser</h1>
+        <p>Copy queries from <a href="@{conf.AdminConfiguration.pa.apiExplorer}">the PA Football documentation</a> into the query box below.</p>
+        <p>Example queries</p>
+        <ul>
+            <li>/competitions/competitions/:apiKey</li>
+            <li>/competitions/matchDay/:apiKey/:matchDay</li>
+            <li>/competition/stats/summary/:apiKey/:competitionId/:startDate/:endDate</li>
+        </ul>
     </div>
 
     <form action="/admin/football/browserRedirect" method="POST" class="browser-form">
