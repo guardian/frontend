@@ -244,7 +244,7 @@ $quote-mark: 35px;
         }
     }
 
-    .meta__number:not(.u-h)+.meta__number {
+    .meta__number + .meta__number {
         border-color: $garnett-neutral-4;
     }
     // *************** Header and Body Styles ***************
