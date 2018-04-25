@@ -92,12 +92,11 @@
     $multiline-height: 4px * 3 + 1px; /*height of multiline (4px) times the number of lines (3)*/
     background-color: #53bbd6;
     border-bottom: 1px solid $garnett-neutral-4;
-    background-position: center;
     background-repeat: no-repeat;
     overflow: visible;
     margin-bottom: $multiline-height;
     position: relative;
-    padding: $gs-row-height 0;
+    padding: ($gs-row-height/2) 0;
     box-shadow: 0 ($slim-nav-height * -2) 0 0 #53bbd6;
 
     .identity-consent-hero--gdpr-oi-campaign__bubble-holder {
@@ -121,7 +120,7 @@
 
     img {
         display: block;
-        margin: auto;
+        margin: 0 auto 10px;
         height: $gs-row-height * 3;
         @include mq(tablet) {
             height: $gs-row-height * 4;

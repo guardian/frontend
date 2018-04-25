@@ -7,7 +7,7 @@ $gutter: 5px;
     background-color: $nav-background-colour;
     padding: ($gutter/2) 0 0;
     color: $nav-primary-colour;
-    height: $slim-nav-height;
+    height: $slim-nav-height + 1px;
     overflow: visible;
     position: relative;
     z-index: $zindex-main-menu;
@@ -20,7 +20,7 @@ $gutter: 5px;
         right: 0;
         height: 1px;
         display: block;
-        z-index: 10;
+        z-index: 0;
         background: #000000;
         opacity: .14;
     }
@@ -78,7 +78,7 @@ $gutter: 5px;
 html body .identity-header__logo {
     float: right;
     order: -99;
-    z-index: 11;
+    z-index: 1;
 
     .inline-the-guardian-roundel {
         display: block;
