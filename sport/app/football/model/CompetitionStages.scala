@@ -29,17 +29,23 @@ class CompetitionStage(competitions: Seq[Competition]) {
 
       if (stageLeagueEntries.isEmpty) {
         if (rounds.size > 1) {
-          orderings.get(competition.id).map { matchDates =>
-            // for knockout tournaments PA delete and re-issue ghost/placeholder matches when the actual teams become available
-            // this would create duplicate matches since our addMatches code is purely additive, so we must de-dupe matches based on KO time
-            val dedupedMatches = stageMatches.groupBy(_.date).flatMap { case (_, dateMatches) =>
-              dateMatches.sortWith { case (match1, match2) =>
-                Try(match1.id.toInt > match2.id.toInt)
-                  .getOrElse(match1.id > match2.id)
-              }.headOption
-            }
-            KnockoutSpider(competitions, dedupedMatches.toList, rounds, matchDates)
-          }.orElse(Some(KnockoutList(competitions, stageMatches, rounds)))
+          orderings.get(competition.id) match {
+            case Some(matchDates) if orderingsApplyToTheseMatches(matchDates, stageMatches) =>
+              // for knockout tournaments PA delete and re-issue ghost/placeholder matches when the actual teams become available
+              // this would create duplicate matches since our addMatches code is purely additive, so we must de-dupe matches based on KO time
+              val dedupedMatches = stageMatches.groupBy(_.date).flatMap { case (_, dateMatches) =>
+                dateMatches.sortWith { case (match1, match2) =>
+                  Try(match1.id.toInt > match2.id.toInt)
+                    .getOrElse(match1.id > match2.id)
+                }.headOption
+              }
+              Some(KnockoutSpider(competitions, dedupedMatches.toList, rounds, matchDates))
+            case _ =>
+              // if there are no orderings, or the provided orderings do not apply to the
+              // matches in this round then we cannot show a spider, fall back to list
+              // NOTE: check the timezone on your orderings (we use UK time for all football stuff)
+              Some(KnockoutList(competitions, stageMatches, rounds))
+          }
         } else None  // or just a collection of matches (e.g. international friendlies)
       } else {
         if (rounds.size > 1) {
@@ -52,6 +58,14 @@ class CompetitionStage(competitions: Seq[Competition]) {
         } else None
       }
     }
+  }
+
+  private def orderingsApplyToTheseMatches(matchDates: List[DateTime], matches: List[FootballMatch]): Boolean = {
+    KnockoutSpider
+      .makeMatchIntervals(matchDates)
+      .exists(interval => matches
+        .exists(fMatch => interval.contains(fMatch.date))
+      )
   }
 }
 
@@ -79,8 +93,21 @@ case class KnockoutSpider(competitions: Seq[Competition], matches: List[Football
   override def roundMatches(round: Round): List[FootballMatch] =
     super.roundMatches(round).sortWith(lt)
 
-  private val matchIntervals = matchDates.map(dateTime => new Interval(dateTime.minusHours(1), dateTime.plusHours(1)))
+  private val matchIntervals = KnockoutSpider.makeMatchIntervals(matchDates)
   private def lt(match1: FootballMatch, match2: FootballMatch): Boolean = {
     matchIntervals.indexWhere(_.contains(match1.date)) < matchIntervals.indexWhere(_.contains(match2.date))
+  }
+}
+object KnockoutSpider {
+  // Pay attention to the timezone for the orderings
+  // If the dates of the matches don't line up with the ordering dates, the ordering will be ignored.
+  val orderings: Map[String, List[DateTime]] = Map(
+    
+  )
+
+  // adds a little flex around the match dates in case they aren't listed at exactly the right time
+  // (especially for ghost/placeholder matches in tournaments)
+  def makeMatchIntervals(matchDates: List[DateTime]): List[Interval] = {
+    matchDates.map(dateTime => new Interval(dateTime.minusHours(1), dateTime.plusHours(1)))
   }
 }
