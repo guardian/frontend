@@ -17,6 +17,7 @@ export const getCampaign = () => {
             formFields,
             formId,
         } = campaignToShow.fields;
+
         return {
             title: callout,
             description,

@@ -5,8 +5,9 @@ import campaignForm from 'raw-loader!journalism/views/campaignForm.html';
 import { getCampaign } from 'journalism/modules/get-campaign';
 import { submitForm } from 'journalism/modules/submit-form';
 
-const renderCampaign = (anchorNode: HTMLElement): void => {
-    const campaign = template(campaignForm, { data: getCampaign() });
+const renderCampaign = (anchorNode: HTMLElement, calloutData): void => {
+    const campaign = template(campaignForm, { data: calloutData });
+
     const campaignDiv = `<figure class="element element-campaign">${
         campaign
     }</figure>`;
@@ -23,9 +24,13 @@ const renderCampaign = (anchorNode: HTMLElement): void => {
         });
 };
 
+
 export const initCampaign = () => {
+    const calloutData = getCampaign();
+    const isCalloutPresent = calloutData !== undefined;
+
     const fourthParagraph = document.querySelector(
         '.content__article-body p:nth-of-type(4)'
     );
-    if (fourthParagraph) renderCampaign(fourthParagraph);
+    if (isCalloutPresent && fourthParagraph) renderCampaign(fourthParagraph, calloutData);
 };
