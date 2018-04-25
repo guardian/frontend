@@ -3,16 +3,13 @@
     overflow-x: hidden;
 }
 
-.immersive-header-container--photo-essay {
+.immersive-header-container--photo-essay,
+.js-adblock-sticky {
     background-color: $garnett-neutral-5;
 }
 
-.js-adblock-sticky {
-    background-color: $garnett-neutral-3;
-}
 // Header and tags
-
-.immersive-main-media__headline-container {
+.immersive-main-media__headline-container--gallery {
     position: relative;
     background: transparent;
     margin-top: -$gs-gutter*5;
@@ -64,7 +61,6 @@
         margin-left: 0;
         position: absolute;
         transform: translateY(-100%);
-        overflow: visible;
         width: auto;
         padding: $gs-baseline/3 $gs-gutter/2;
         @include mq(mobileLandscape) {
@@ -73,10 +69,6 @@
         @include mq(tablet) {
             padding: $gs-baseline/2 $gs-gutter/2;
         }
-    }
-
-    .content__section-label {
-        display: none;
     }
 
     .content__series-label {
@@ -100,7 +92,7 @@
         }
     }
 }
-// Standfirst and meta
+// Standfirst and meta for gallery and picture essay
 .content--gallery .tonal__head {
     border-bottom: solid 1px $neutral-1;
 
@@ -125,7 +117,6 @@
             width: gs-span(3);
             margin-top: 0;
             top: 0;
-            right: auto;
             margin-left: -(gs-span(3) + $gs-gutter);
         }
     }
@@ -141,11 +132,11 @@
 
         .sharecount__value,
         a {
-            color: #bdbdbd;
+            color: $neutral-3;
         }
 
         .inline-tone-fill {
-            fill: #bdbdbd;
+            fill: $neutral-3;
         }
 
         .meta__number:not(.js-sharecount) {
@@ -155,7 +146,8 @@
 
     .content__meta-container,
     .gallery__meta-container,
-    .tonal__standfirst {
+    .tonal__standfirst,
+    .badge {
         flex-basis: 100%;
     }
 
@@ -201,11 +193,27 @@
     .byline span {
         font-style: italic;
         font-weight: 700;
+        line-height: 1.3;
         margin-bottom: $gs-baseline;
+        max-width: 80%;
+        @include mq($from: tablet) {
+            max-width: 100%;
+        }
     }
 
     .gallery__meta-container {
         order: 3;
         padding-top: 0;
     }
+
+    .badge {
+        order: 5;
+        margin-top: $gs-baseline/2;
+        margin-bottom: 0;
+        padding: 0;
+        @include mq(tablet) {
+            margin-top: $gs-baseline;
+        }
+    }
+
 }

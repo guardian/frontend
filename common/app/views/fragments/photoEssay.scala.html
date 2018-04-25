@@ -54,7 +54,7 @@
     </div>
 
     @if(!page.item.elements.hasMainVideo){
-      <div class="@RenderClasses("immersive-main-media__headline-container--dark", "immersive-main-media__headline-container", "content--pillar-news", s"content--pillar-${page.metadata.pillar.nameOrDefault}")">
+      <div class="@RenderClasses("immersive-main-media__headline-container--dark", "immersive-main-media__headline-container--gallery", "content--pillar-news", s"content--pillar-${page.metadata.pillar.nameOrDefault}")">
           <div class="gs-container">
             <div class="content__main-column">
                 @fragments.meta.metaInline(page.item)

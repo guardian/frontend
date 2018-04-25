@@ -106,7 +106,7 @@
 
 .gallery__caption {
     color: $neutral-4;
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem;
     @include mq(desktop) {
         padding-right: $gs-gutter / 2;
     }
@@ -114,7 +114,7 @@
     a {
         color: $neutral-4;
         border-bottom: 1px solid $neutral-2;
-        transition: border-color 0.15s ease-out;
+        transition: border-color .15s ease-out;
 
         &:hover {
             border-bottom: 1px solid $neutral-7;
@@ -239,7 +239,7 @@
         background-image: none!important;
 
         .submeta__keywords {
-            border-bottom: none;
+            border-bottom: 0;
             margin: 0;
         }
     }
@@ -278,7 +278,7 @@
     .article__fullscreen,
     .gallery__fullscreen {
         opacity: 0;
-        transition: opacity 0.15s ease-out;
+        transition: opacity .15s ease-out;
     }
 
     .article__img-container:hover .article__fullscreen,
@@ -289,37 +289,42 @@
 
 #more-galleries {
     .fc-container__inner {
-        border-top: none;
+        border-top: 0;
     }
 }
-//picture essay styles
+//Picture essay styles - Header
 .immersive-header-container--photo-essay {
     .content__wrapper--standfirst {
         background: none;
-
-        .content__main-column {
-            @include mq(tablet) {
-                padding-left: $gs-gutter/2 !important;
-            }
-            @include mq(desktop) {
-                margin-left: gs-span(3) + $gs-gutter;
-            }
-
-        }
-
-
     }
 
     .content__standfirst {
-        color: #000;
+        color: $garnett-neutral-1;
     }
 
-    .content__standfirst--immersive-article .u-underline {
+    .u-underline {
         color: $garnett-neutral-6;
         border-bottom: 1px solid $garnett-neutral-6;
     }
 
     .content__main-column {
-        padding-left: 0;
+        position: relative;
+        padding-left: $gs-gutter;
+        padding-right: $gs-baseline;
+        left: -$gs-gutter;
+        margin-left: 0;
+        @include mq($from: tablet) {
+            padding-left: 0;
+            left: $gs-gutter / 2;
+        }
+        @include mq($from: desktop) {
+            left: $gs-gutter / 2;
+        }
+        @include mq(leftCol) {
+            margin-left: $left-column + $gs-gutter;
+        }
+        @include mq(wide) {
+            margin-left: $left-column-wide + $gs-gutter;
+        }
     }
 }
