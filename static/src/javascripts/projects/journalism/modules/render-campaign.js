@@ -7,7 +7,6 @@ import { submitForm } from 'journalism/modules/submit-form';
 
 const renderCampaign = (anchorNode: HTMLElement, calloutData): void => {
     const campaign = template(campaignForm, { data: calloutData });
-
     const campaignDiv = `<figure class="element element-campaign">${
         campaign
     }</figure>`;
@@ -17,20 +16,21 @@ const renderCampaign = (anchorNode: HTMLElement, calloutData): void => {
             anchorNode.insertAdjacentHTML('afterend', campaignDiv);
         })
         .then(() => {
-            const cForm = anchorNode.querySelector('.campaign form');
+            const cForm = document.querySelector(
+                '.element-campaign .campaign .campaign--snippet__body'
+            );
             if (cForm) {
                 cForm.addEventListener('submit', submitForm);
             }
         });
 };
 
-
 export const initCampaign = () => {
     const calloutData = getCampaign();
-    const isCalloutPresent = calloutData !== undefined;
 
     const fourthParagraph = document.querySelector(
         '.content__article-body p:nth-of-type(4)'
     );
-    if (isCalloutPresent && fourthParagraph) renderCampaign(fourthParagraph, calloutData);
+    if (calloutData && fourthParagraph)
+        renderCampaign(fourthParagraph, calloutData);
 };
