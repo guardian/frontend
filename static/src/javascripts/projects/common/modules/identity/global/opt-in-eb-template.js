@@ -29,8 +29,8 @@ const makeTemplateHtml = (template: Template, targets: LinkTargets): string => `
                 </div>
                 <div class="identity-gdpr-oi-alert__cta-space">
                     <a class="identity-gdpr-oi-alert__cta" target="_blank" href="${
-                        targets.journey
-                    }" data-link-name="gdpr-oi-campaign : alert : to-consents">
+                        targets.landing
+                    }" data-link-name="gdpr-oi-campaign : alert : to-landing-cta">
                         ${template.cta}
                         ${inlineSvg('arrowRight')}
                     </a>
