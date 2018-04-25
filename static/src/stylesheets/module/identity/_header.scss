@@ -7,17 +7,30 @@ $gutter: 5px;
     background-color: $nav-background-colour;
     padding: ($gutter/2) 0 0;
     color: $nav-primary-colour;
-    z-index: 999;
-    border-bottom: 1px solid $rule;
     height: $slim-nav-height;
     overflow: visible;
+    position: relative;
+    z-index: $zindex-main-menu;
+
+    &:before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        display: block;
+        z-index: 10;
+        background: #000000;
+        opacity: .14;
+    }
 
     .identity-dropdown {
         position: absolute;
         display: none;
         left: 0;
         top: get-line-height(textSans, 3)*1.25;
-        z-index: 999;
+        z-index: $zindex-main-menu + 1;
         li {
             display: block;
         }
@@ -65,6 +78,7 @@ $gutter: 5px;
 html body .identity-header__logo {
     float: right;
     order: -99;
+    z-index: 11;
 
     .inline-the-guardian-roundel {
         display: block;
