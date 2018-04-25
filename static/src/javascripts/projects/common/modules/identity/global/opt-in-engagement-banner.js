@@ -38,7 +38,7 @@ type ApiUser = {
 
 const targets: LinkTargets = {
     landing:
-        'https://gu.com/staywithus?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert',
+        'https://www.theguardian.com/info/ng-interactive/2018/feb/21/stay-with-us?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert',
     journey: `${config.get(
         'page.idUrl'
     )}/email-prefs?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert`,
