@@ -41,7 +41,7 @@ const targets: LinkTargets = {
         'https://gu.com/staywithus?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert',
     journey: `${config.get(
         'page.idUrl'
-    )}/email-prefs?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert`,
+    )}/email-prefs?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert&clientId=opt-in`,
 };
 
 const template: Template = {
