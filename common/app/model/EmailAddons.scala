@@ -304,7 +304,7 @@ case object VoluntarySectorNetwork extends FrontEmailMetadata {
   override val banner = Some("voluntary-sector-network.png")
 }
 
-case object The Cityscape extends FrontEmailMetadata {
+case object TheCityscape extends FrontEmailMetadata {
   val name = "The Cityscape"
   override val banner = Some("the-cityscape.png")
 }
