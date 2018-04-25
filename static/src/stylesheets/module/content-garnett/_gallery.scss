@@ -208,22 +208,6 @@
     .fc-container__header__title:after {
         background-color: $neutral-1;
     }
-    // Reset the styles from _content.scss
-    .meta__numbers {
-        position: relative;
-        border: 0 none;
-        height: auto;
-        padding: $gs-baseline/2 0 0;
-    }
-
-    .meta__number {
-        text-align: right;
-    }
-
-    .meta__social {
-        background-image: none !important;
-        border-bottom: 0;
-    }
 
     .badge--alt {
         margin-top: 0;

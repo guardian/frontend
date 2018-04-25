@@ -9,29 +9,3 @@
         </a>
     }
 </div>
-
-@if(contentType != DotcomContentType.Article && !isNewGallery && !amp) {
-    <div class="block-share--@contentType.name.toLowerCase-mobile" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
-        <button class="block-share__item--mobile button button--small @if(contentType == model.DotcomContentType.Gallery){button--tone-media-variant} else {button--tertiary} mobile-only">
-            Share
-        </button>
-    </div>
-
-    <div id="share-modal-@id" class="overlay overlay--@contentType.name.toLowerCase share-modal js-share-modal">
-        <div class="share-modal__content" data-link-name="mobile block share">
-            <div class="share-modal__title">Share this post</div>
-            @shareItems.map { item: model.ShareLink =>
-                <a class="share-modal__link" href="@item.href" target="_blank" data-link-name="social @item.css">
-                    <div class="share-modal__item button button--xlarge button--tertiary share-modal__item--@item.css">
-                        @fragments.inlineSvg("share-" + item.css, "icon")
-                        @item.text
-                    </div>
-                </a>
-            }
-            <button class="share-modal__close js-overlay-close" data-link-name="close">
-                <i class="i i-close-icon-dark-small"></i>
-                <span class="u-h">close</span>
-            </button>
-        </div>
-    </div>
-}

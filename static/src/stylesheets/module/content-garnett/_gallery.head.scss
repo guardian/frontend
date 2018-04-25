@@ -112,6 +112,7 @@
     .meta__extras {
         border-top: solid 1px $neutral-1;
         margin-top: $gs-baseline;
+        padding: 0;
         @include mq(desktop) {
             position: absolute;
             width: gs-span(3);
