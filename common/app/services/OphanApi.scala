@@ -1,6 +1,9 @@
 package services
 
 import java.net.URLEncoder
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 import common.{BadConfigurationException, Logging}
 import conf.Configuration._
@@ -17,6 +20,7 @@ object MostReadItem {
 case class MostReadItem(url: String, count: Int)
 
 class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends Logging with implicits.WSRequests {
+  private val mostViewedDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
   private def getBody(path: String)(params: Map[String, String] = Map.empty): Future[JsValue] = {
     val maybeJson = for {
@@ -91,7 +95,9 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext) 
 
   def getSurgingContent(): Future[JsValue] = getBody("surging")()
 
-  def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] =
-    getBody("video/mostviewed")(Map("hours" -> hours.toString, "count" -> count.toString))
+  def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] = {
+    val sixMonthsAgo = mostViewedDateFormatter.format(LocalDate.now.minus(6, ChronoUnit.MONTHS))
+    getBody("video/mostviewed")(Map("hours" -> hours.toString, "count" -> count.toString, "publication-date-from" -> sixMonthsAgo))
+  }
 }
 
