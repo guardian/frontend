@@ -61,7 +61,8 @@ object ProjectSettings {
   val frontendTestSettings = Seq(
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
-    concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 8)),
+    concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
+    parallelExecution in Test := true,
 
     checkScalastyle := org.scalastyle.sbt.ScalastylePlugin.autoImport.scalastyle.in(Test).toTask("").value,
     (test in Test) := (test in Test).dependsOn(checkScalastyle).value,
