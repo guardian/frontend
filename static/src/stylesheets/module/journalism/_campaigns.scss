@@ -96,14 +96,14 @@
     align-items: center;
     border: 0;
     margin: 0;
+
+    svg:not(:root) {
+        overflow: hidden;
+    }
 }
 
 .content--pillar-news .campaign--snippet__handle:focus {
     background-color: $news-garnett-main-1;
-}
-
-svg:not(:root) {
-    overflow: hidden;
 }
 
 .speech-bubble {
