@@ -55,25 +55,8 @@
         min-height: 0;
     }
 
-    .content__dateline,
-    .meta__numbers,
-    .meta__social {
+    .content__dateline {
         border-top: 0;
-    }
-
-    .meta__social {
-        border-bottom: 1px solid $garnett-neutral-4;
-    }
-
-    .meta__numbers {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
-    .meta__extras {
-        border-bottom: 0;
-        border-top: 1px solid $garnett-neutral-4;
     }
 
     .block-share__item,
@@ -101,27 +84,8 @@
         margin-left: 0;
         width: 100%;
 
-        .meta__number {
-            @include mq($until: mobile) {
-                position: relative;
-                top: $gs-baseline;
-            }
-        }
-
         @include mq(leftCol) {
             position: relative;
-        }
-
-        .commentcount {
-            top: $gs-baseline / 3;
-
-            @include mq(desktop) {
-                display: block;
-                position: static;
-                padding-top: $gs-baseline / 3;
-                margin-bottom: $gs-baseline;
-                border-top: 1px dotted $neutral-5;
-            }
         }
     }
     .content__meta-container--twitter,
