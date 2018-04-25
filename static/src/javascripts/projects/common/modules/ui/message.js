@@ -19,6 +19,7 @@ class Message {
     id: string;
     important: boolean;
     permanent: boolean;
+    blocking: boolean;
     trackDisplay: boolean;
     type: string;
     pinOnHide: boolean;
@@ -38,6 +39,7 @@ class Message {
         this.id = id;
         this.important = opts.important || false;
         this.permanent = opts.permanent || false;
+        this.blocking = opts.blocking || false;
         this.trackDisplay = opts.trackDisplay || false;
         this.type = opts.type || 'banner';
         this.pinOnHide = opts.pinOnHide || false;
@@ -50,10 +52,12 @@ class Message {
         this.customJs = opts.customJs || noop;
         this.customOpts = opts.customOpts || {};
         this.$footerMessage = $('.js-footer-message');
+        this.$siteMessage = $('.js-site-message');
     }
 
     show(message: string): boolean {
         const siteMessage = $('.js-site-message');
+        const siteMessageOverlay = $('.js-site-message-overlay');
 
         if (this.pinOnHide) {
             $('.js-footer-site-message-copy').html(message);
@@ -71,6 +75,18 @@ class Message {
             return false;
         }
         $('.js-site-message-copy').html(message);
+
+        // Add a blocking overlay if needed
+        if (this.blocking) {
+            siteMessageOverlay.removeClass('is-hidden');
+            siteMessageOverlay[0].addEventListener('click', () => {
+                siteMessage[0].focus();
+            });
+            siteMessageOverlay[0].addEventListener('focus', () => {
+                siteMessage[0].focus();
+            });
+            this.trapFocus();
+        }
 
         // Add site modifier message
         if (this.cssModifierClass) {
@@ -143,9 +159,28 @@ class Message {
         );
     }
 
+    trapFocus(): void {
+        const messageEl = this.$siteMessage[0];
+        const [trapStartEl, trapEndEl] = new Array(2).fill(
+            document.createElement('div')
+        );
+
+        trapStartEl.tabIndex = -1;
+        trapEndEl.tabIndex = 0;
+
+        trapEndEl.addEventListener('focus', () => {
+            trapStartEl.focus();
+        });
+
+        messageEl.prepend(trapStartEl);
+        messageEl.append(trapEndEl);
+        messageEl.focus();
+    }
+
     hide(): void {
         $('#header').removeClass('js-site-message');
         $('.js-site-message').addClass('is-hidden');
+        $('.js-site-message-overlay').addClass('is-hidden');
         if (this.pinOnHide) {
             this.$footerMessage.removeClass('is-hidden');
         }
