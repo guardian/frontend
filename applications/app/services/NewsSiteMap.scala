@@ -5,7 +5,9 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import model.Content
 import org.joda.time.{DateTime, DateTimeZone}
-import implicits.Dates.{ DateTime2ToCommonDateFormats, jodaToJavaInstant}
+import implicits.Dates.{DateTime2ToCommonDateFormats, jodaToJavaInstant}
+import views.support.Item1200
+
 import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.{Elem, NodeSeq}
 
@@ -87,7 +89,8 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
           case _ => None
         }).mkString(", ")
 
-        val imageUrl: String = item.elements.mainPicture.flatMap(_.images.largestEditorialCrop.flatMap(_.url))
+        val imageUrl = item.elements.mainPicture
+          .flatMap(element => Item1200.bestSrcFor(element.images))
           .getOrElse(Configuration.images.fallbackLogo)
 
         Url(
