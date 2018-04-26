@@ -173,7 +173,7 @@ const setLocalHasVisitedConsentsFlag = (): void => {
 const enhanceConsentJourney = (): void => {
     const loaders = [
         ['.identity-consent-journey', showJourney],
-        ['.identity-consent-journey', showJourneyAlert],
+        ['.identity-consent-journey--with-alert', showJourneyAlert],
         ['.identity-consent-journey', setLocalHasVisitedConsentsFlag],
         ['.js-identity-consent-journey-continue', submitJourneyAnyway],
         ['#identityConsentsLoadingError', hideLoading],

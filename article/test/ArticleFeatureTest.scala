@@ -3,8 +3,10 @@ package test
 import conf.Configuration
 import conf.switches.Switches._
 import org.openqa.selenium.By
-import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
+import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import org.fluentlenium.core.filter.FilterConstructor._
+import play.api.test.TestBrowser
+
 import collection.JavaConverters._
 
 @DoNotDiscover class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
@@ -55,7 +57,7 @@ import collection.JavaConverters._
     }
 
     scenario("Have a meta description") {
-      goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
+      goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser: TestBrowser =>
         import browser._
         el("meta[name=description]").attribute("content") should be("Director Danny Boyle reveals plans for London 2012 Olympic opening ceremony, including village cricket, maypoles and rain")
       }

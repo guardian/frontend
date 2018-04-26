@@ -15,11 +15,6 @@ class TeamKPIController(val controllerComponents: ControllerComponents)(implicit
   with I18nSupport
   with Logging {
 
-  def renderBaselineDashboard(): Action[AnyContent] = Action { implicit request =>
-    // The test variants for the team KPIs are commercialBaselineControl-control and commercialBaselineVariant-variant.
-    DashboardRenderer.renderDashboard("commercialBaseline", "Commercial Team Revenue KPI", "hotpink", "deepskyblue")
-  }
-
   def renderPrebidDashboard(): Action[AnyContent] = Action { implicit request =>
     case class DataPoint(date: LocalDate, bidderName: String, impressionCount: Int, eCpm: Double)
 

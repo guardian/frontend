@@ -3,10 +3,10 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.139"
+  val identityLibVersion = "3.141"
   val awsVersion = "1.11.240"
-  val capiVersion = "11.51"
-  val faciaVersion = "2.5.4"
+  val capiVersion = "12.0"
+  val faciaVersion = "2.6.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -63,16 +63,17 @@ object Dependencies {
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
-  val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.1"
+  val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.5"
   val scanamo = "com.gu" %% "scanamo" % "0.9.5"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.12"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.2"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
-  val atomRenderer = "com.gu" %% "atom-renderer" % "0.12.2"
+  val atomRenderer = "com.gu" %% "atom-renderer" % "0.14.4"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
+  val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
 
   // Fixing transient dependency issue
   // AWS SDK (1.11.181), which kinesis-logback-appender depends on, brings com.fasterxml.jackson.core and com.fasterxml.jackson.dataformat libs in version 2.6.9

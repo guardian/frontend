@@ -221,7 +221,12 @@
 }
 
 @displayJourney = {
-    <div class="identity-consent-journey @{skin.map(s => s"identity-consent-journey--$s" )} u-h" data-journey="@journey" data-component="identity-consent-journey-@journey">
+    <div class="
+        identity-consent-journey
+        @{if (!user.statusFields.hasRepermissioned.getOrElse(false)){"identity-consent-journey--with-alert"}}
+        @{skin.map(s => s"identity-consent-journey--$s" )}
+        u-h
+    " data-journey="@journey" data-component="identity-consent-journey-@journey">
         @renderBlocks(
             journey match {
                 case NewsletterConsentsJourney => {

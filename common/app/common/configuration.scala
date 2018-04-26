@@ -243,6 +243,11 @@ class GuardianConfiguration extends Logging {
     lazy val orielCacheTimeInMinutes: Int = if (environment.isProd) 60 else 5
   }
 
+  object affiliatelinks {
+    lazy val skimlinksId = configuration.getMandatoryStringProperty("skimlinks.id")
+    lazy val affiliateLinkSections: Set[String] = configuration.getStringProperty("affiliatelinks.sections").getOrElse("").split(",").toSet
+  }
+
   object frontend {
     lazy val store = configuration.getMandatoryStringProperty("frontend.store")
     lazy val webEngineersEmail = configuration.getStringProperty("email.web.engineers")
@@ -589,8 +594,9 @@ class GuardianConfiguration extends Logging {
   }
 
   object formstack {
-    lazy val url = configuration.getMandatoryStringProperty("formstack.url")
-    lazy val oAuthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
+    val url = configuration.getMandatoryStringProperty("formstack.url")
+    val identityOauthToken = configuration.getMandatoryStringProperty("formstack.oauthToken")
+    val editorialOauthToken = configuration.getMandatoryStringProperty("formstack.editorial.oauthToken")
   }
 
   object standalone {

@@ -53,7 +53,8 @@ val common = library("common").settings(
     jacksonDataFormat,
     atomRenderer,
     identityModel,
-    capiAws
+    capiAws,
+    okhttp
   )
 ).settings(
     mappings in TestAssets ~= filterAssets

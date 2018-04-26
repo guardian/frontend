@@ -20,7 +20,7 @@ import {
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 
 // change messageCode to force redisplay of the message to users who already closed it.
-const messageCode = 'engagement-banner-2018-03-16';
+const messageCode = 'engagement-banner-2018-04-17';
 
 const canDisplayMembershipEngagementBanner = (): Promise<boolean> =>
     adblockInUse.then(adblockUsed => !adblockUsed && shouldShowReaderRevenue());

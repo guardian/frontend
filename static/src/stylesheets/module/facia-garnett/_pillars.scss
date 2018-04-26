@@ -152,7 +152,7 @@ $pillars: (
         color: map-get($palette, kicker);
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive .fc-item__standfirst {
+    &.fc-item--standard-tablet.fc-item--type-immersive:not(.fc-item--pillar-special-report) .fc-item__standfirst {
         color: $garnett-neutral-1;
     }
 

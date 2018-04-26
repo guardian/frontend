@@ -6,9 +6,7 @@
         margin-bottom: $gs-baseline;
 
         @include mq(mobileLandscape) {
-            margin-left: $gs-gutter;
             margin-top: 0;
-            float: right;
             width: 100%;
         }
 

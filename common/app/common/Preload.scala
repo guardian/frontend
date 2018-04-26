@@ -3,16 +3,11 @@ package common
 import model.ApplicationIdentity
 import html.HtmlPageHelpers.ContentCSSFile
 import play.api.mvc.RequestHeader
-import experiments.{CommercialBaseline, ActiveExperiments}
+import experiments.ActiveExperiments
 
 object Preload {
 
-  def commercialBundleName(implicit request: RequestHeader): String =
-    if (ActiveExperiments.isControl(CommercialBaseline)) {
-    "graun.commercial-control.js"
-  } else {
-    "graun.commercial.js"
-  }
+  def commercialBundleName(implicit request: RequestHeader): String = "graun.commercial.js"
 
   def articleDefaultPreloads(implicit request: RequestHeader): Seq[PreloadAsset] = Seq(
     CssPreloadAsset(s"$ContentCSSFile.css"),

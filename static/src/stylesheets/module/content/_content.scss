@@ -860,7 +860,7 @@
         .commentcount,
         .meta__numbers,
         .meta__social,
-        .meta__number:not(u-h) + .meta__number {
+        .meta__number + .meta__number {
             border-color: $neutral-3;
         }
 
@@ -1260,26 +1260,6 @@
 
         .old-article-message--clock svg {
             fill: $neutral-3;
-        }
-    }
-
-    .meta__social {
-        .social--expanded-top {
-            background-color: $multimedia-support-5;
-            border-color: $neutral-1;
-            padding-bottom: 1px;
-        }
-
-        .social__tray-close .inline-close {
-            background-color: $neutral-1;
-
-            &:hover {
-                background-color: $neutral-2;
-            }
-
-            svg {
-                fill: $neutral-4;
-            }
         }
     }
 }

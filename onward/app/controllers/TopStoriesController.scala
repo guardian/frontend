@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.ContentApiError
 import common._
 import contentapi.ContentApiClient
 import model.Cached.RevalidatableResult
@@ -45,7 +45,7 @@ class TopStoriesController(
           case Nil => None
           case picks => Some(RelatedContent(picks))
         }
-      } recover { case GuardianContentApiError(404, message, _) =>
+      } recover { case ContentApiError(404, message, _) =>
         log.info(s"Got a 404 while calling content api: $message")
         None
       }

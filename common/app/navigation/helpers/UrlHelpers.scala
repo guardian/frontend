@@ -4,6 +4,7 @@ import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import common.Edition
 import navigation.ReaderRevenueSite._
+import PartialFunction.condOpt
 
 object UrlHelpers {
 
@@ -19,36 +20,31 @@ object UrlHelpers {
   case object ManageMyAccountUpsell extends Position
   case object ManageMyAccountCancel extends Position
 
-  def getCampaignCode(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): Option[String] = {
-    val editionId = Edition(request).id.toUpperCase()
+  def getComponentId(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): Option[String] = {
+    condOpt((destination, position)) {
+      case (Support, Header | AmpHeader | SlimHeaderDropdown) => "header_support"
+      case (Support, SideMenu) => "side_menu_support"
+      case (Support, Footer) => "footer_support"
 
-    (destination, position) match {
-      case (Membership, Header | SideMenu) => Some(s"mem_${editionId.toLowerCase()}_web_newheader")
-      case (Membership, AmpHeader) => Some("AMP_HEADER_GU_SUPPORTER")
-      case (Membership, SlimHeaderDropdown) => Some(s"NGW_TOPNAV_${editionId}_GU_MEMBERSHIP")
-      case (Membership, Footer) => Some(s"NGW_FOOTER_${editionId}_GU_MEMBERSHIP")
+      case (SupportContribute, Header | AmpHeader | SlimHeaderDropdown) => "header_support_contribute"
+      case (SupportContribute, SideMenu) => "side_menu_support_contribute"
+      case (SupportContribute, Footer) => "footer_support_contribute"
 
-      case (Contribute, Header) => Some("gdnwb_copts_co_dotcom_header")
-      case (Contribute, Footer) => Some("gdnwb_copts_memco_dotcom_footer")
+      case (SupportSubscribe, Header | AmpHeader | SlimHeaderDropdown) => "header_support_subscribe"
+      case (SupportSubscribe, SideMenu) => "side_menu_support_subscribe"
+      case (SupportSubscribe, Footer) => "footer_support_subscribe"
 
-      // this editionId is lowercase even though the rest of the campaign code is uppercase
-      // this is for consistency with the existing campaign code
-      case (Subscribe, SideMenu) => Some(s"NGW_NEWHEADER_${editionId.toLowerCase()}_GU_SUBSCRIBE")
-      case (Subscribe, Header) => Some(s"subs_${editionId.toLowerCase()}_web_newheader")
-      case (Subscribe, SlimHeaderDropdown) => Some(s"NGW_TOPNAV_${editionId}_GU_SUBSCRIBE")
-      case (Subscribe, Footer) => Some(s"NGW_FOOTER_${editionId}_GU_SUBSCRIBE")
-
-      case (Support, Footer) => Some("gdnwb_copts_memco_dotcom_footer")
-      case (Support, AmpHeader) => Some("gdnwb_copts_memco_header_amp")
-      case (Support, ManageMyAccountUpsell) => Some(s"DOTCOM_MANAGE_JOIN")
-      case (Support, _) => Some("gdnwb_copts_memco_header")
-
-      case (_, _) => None
+      case (_, ManageMyAccountUpsell) => "manage_my_account_upsell"
     }
   }
 
+  def readerRevenueLinks(implicit request: RequestHeader) = List(
+    NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
+    NavLink("Subscribe", getReaderRevenueUrl(SupportSubscribe, SideMenu), classList = Seq("js-subscribe"))
+  )
+
   def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): String = {
-    val campaignCode = getCampaignCode(destination, position)
+    val componentId = getComponentId(destination, position)
 
     val acquisitionData = Json.obj(
       // GUARDIAN_WEB corresponds to a value in the Thrift enum
@@ -61,18 +57,15 @@ object UrlHelpers {
         case ManageMyAccountUpsell | ManageMyAccountCancel => "ACQUISITIONS_MANAGE_MY_ACCOUNT"
         case Footer => "ACQUISITIONS_FOOTER"
       })
-    ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
-      // Currently campaignCode is used to uniquely identify components that drove acquisition.
-      // This will eventually be the job of componentId, allowing us to re-purpose campaign code
-      // for high-level groupings that correspond to actual campaigns (e.g. UK election).
-      // But for now, we're duplicating this value across both fields.
-      "componentId" -> c,
-      "campaignCode" -> c
+    ) ++ componentId.fold(Json.obj())(c => Json.obj(
+      "componentId" -> c
     ))
 
     import com.netaporter.uri.dsl._
 
-    destination.url ? ("INTCMP" -> campaignCode) & ("acquisitionData" -> acquisitionData.toString)
+    // INTCMP is passed as a separate param because people look at it in Google Analytics
+    // It's set to the most specific thing (componentId) to maximise its usefulness
+    destination.url ? ("INTCMP" -> componentId) & ("acquisitionData" -> acquisitionData.toString)
   }
 
   def getJobUrl(editionId: String): String =
@@ -81,31 +74,4 @@ object UrlHelpers {
     } else {
       s"https://jobs.theguardian.com?INTCMP=jobs_${editionId}_web_newheader"
     }
-
-  def countryUrlLogic(editionId: String, position: Position, defaultDestination: ReaderRevenueSite)(implicit request: RequestHeader): String =
-    editionId match {
-      case "us" => getReaderRevenueUrl(SupportUsContribute, position)
-      case "uk" => getReaderRevenueUrl(Support, position)
-      case _ => getReaderRevenueUrl(defaultDestination, position)
-    }
-
-  // This methods can be reverted once we decide to deploy the new support site to the rest of the world.
-  def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
-    val editionId = Edition(request).id.toLowerCase()
-    countryUrlLogic(editionId, position, Membership)
-  }
-
-  def getSupportOrContributeUrl(position: Position)(implicit request: RequestHeader): String = {
-    val editionId = Edition(request).id.toLowerCase()
-    countryUrlLogic(editionId, position, Contribute)
-  }
-
-  def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
-    val editionId = Edition(request).id.toLowerCase()
-    if (editionId == "uk") {
-      getReaderRevenueUrl(Support, position)
-    } else {
-      getReaderRevenueUrl(Subscribe, position)
-    }
-  }
 }

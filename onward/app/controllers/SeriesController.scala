@@ -2,7 +2,7 @@ package controllers
 
 import java.net.URI
 
-import com.gu.contentapi.client.GuardianContentApiError
+import com.gu.contentapi.client.model.ContentApiError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.facia.client.models.Backfill
 import common._
@@ -65,7 +65,7 @@ class SeriesController(
           } else { None }
         }
       }
-      seriesResponse.recover{ case GuardianContentApiError(404, message, _) =>
+      seriesResponse.recover{ case ContentApiError(404, message, _) =>
         log.info(s"Got a 404 calling content api: $message" )
         None
       }

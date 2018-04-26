@@ -1,6 +1,6 @@
 // @flow
 
-// total_hours_spent_maintaining_this = 70
+// total_hours_spent_maintaining_this = 72
 
 import qwery from 'qwery';
 import bean from 'bean';

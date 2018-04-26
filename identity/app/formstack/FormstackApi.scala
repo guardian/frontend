@@ -21,7 +21,7 @@ class FormstackApi(httpClient: WsFormstackHttp) extends SafeLogging {
 
   def checkForm(formstackForm: FormstackForm)(implicit executionContext: ExecutionContext): Future[Response[FormstackForm]] = {
 
-    httpClient.GET(formstackUrl(formstackForm.formId), Seq("oauth_token" -> Configuration.formstack.oAuthToken)) map {
+    httpClient.GET(formstackUrl(formstackForm.formId), Seq("oauth_token" -> Configuration.formstack.identityOauthToken)) map {
       case FormstackHttpResponse(body, statusCode, _) => {
         statusCode match {
           case 200 => {
