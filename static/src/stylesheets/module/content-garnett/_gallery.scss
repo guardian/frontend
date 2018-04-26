@@ -18,7 +18,6 @@
     margin-right: auto;
     @include mq(desktop) {
         margin-left: gs-span(3) + $gs-gutter;
-        padding-left: 0;
     }
 }
 

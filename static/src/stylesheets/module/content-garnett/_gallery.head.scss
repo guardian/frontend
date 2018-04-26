@@ -39,7 +39,6 @@
         }
         @include mq($from: desktop) {
             margin-left: $left-column-wide + ($gs-gutter / 2) * 3;
-            padding-left: $gs-gutter / 2;
         }
     }
 
