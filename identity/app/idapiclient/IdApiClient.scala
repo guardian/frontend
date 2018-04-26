@@ -119,11 +119,11 @@ class IdApiClient(
     response map extractUser
   }
 
-  def resetPassword( token : String, newPassword : String ): Future[Response[Unit]] = {
+  def resetPassword( token : String, newPassword : String ): Future[Response[CookiesResponse]] = {
     val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
     val response = httpClient.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, clientAuth.headers)
-    response map extractUnit
+    response map extract(jsonField("cookies"))
   }
 
   def sendPasswordResetEmail(emailAddress : String, trackingParameters: TrackingData): Future[Response[Unit]] = {

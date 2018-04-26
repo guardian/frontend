@@ -22,18 +22,6 @@ object UrlHelpers {
 
   def getComponentId(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): Option[String] = {
     condOpt((destination, position)) {
-      case (Membership, Header | AmpHeader | SlimHeaderDropdown) => "header_membership"
-      case (Membership, SideMenu) => "side_menu_membership"
-      case (Membership, Footer) => "footer_membership"
-
-      case (Contribute, Header | AmpHeader | SlimHeaderDropdown) => "header_contribute"
-      case (Contribute, SideMenu) => "side_menu_membership"
-      case (Contribute, Footer) => "footer_contribute"
-
-      case (Subscribe, Header | AmpHeader | SlimHeaderDropdown) => "header_subscribe"
-      case (Subscribe, SideMenu) => "side_menu_subscribe"
-      case (Subscribe, Footer) => "footer_subscribe"
-
       case (Support, Header | AmpHeader | SlimHeaderDropdown) => "header_support"
       case (Support, SideMenu) => "side_menu_support"
       case (Support, Footer) => "footer_support"
@@ -42,13 +30,18 @@ object UrlHelpers {
       case (SupportContribute, SideMenu) => "side_menu_support_contribute"
       case (SupportContribute, Footer) => "footer_support_contribute"
 
-      case (SupportUkSubscribe, Header | AmpHeader | SlimHeaderDropdown) => "header_support_uk_subscribe"
-      case (SupportUkSubscribe, SideMenu) => "side_menu_support_uk_subscribe"
-      case (SupportUkSubscribe, Footer) => "footer_support_uk_subscribe"
+      case (SupportSubscribe, Header | AmpHeader | SlimHeaderDropdown) => "header_support_subscribe"
+      case (SupportSubscribe, SideMenu) => "side_menu_support_subscribe"
+      case (SupportSubscribe, Footer) => "footer_support_subscribe"
 
       case (_, ManageMyAccountUpsell) => "manage_my_account_upsell"
     }
   }
+
+  def readerRevenueLinks(implicit request: RequestHeader) = List(
+    NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
+    NavLink("Subscribe", getReaderRevenueUrl(SupportSubscribe, SideMenu), classList = Seq("js-subscribe"))
+  )
 
   def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): String = {
     val componentId = getComponentId(destination, position)
@@ -81,23 +74,4 @@ object UrlHelpers {
     } else {
       s"https://jobs.theguardian.com?INTCMP=jobs_${editionId}_web_newheader"
     }
-
-  def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
-    // The support site will choose between bundle page, contribute page, or membership redirect
-    getReaderRevenueUrl(Support, position)
-  }
-
-  def getSupportOrContributeUrl(position: Position)(implicit request: RequestHeader): String = {
-    // The support site will choose between contribute page or contribute redirect
-    getReaderRevenueUrl(SupportContribute, position)
-  }
-
-  def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
-    val editionId = Edition(request).id.toLowerCase()
-    if (editionId == "uk") {
-      getReaderRevenueUrl(SupportUkSubscribe, position)
-    } else {
-      getReaderRevenueUrl(Subscribe, position)
-    }
-  }
 }

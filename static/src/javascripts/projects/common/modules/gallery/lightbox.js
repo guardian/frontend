@@ -16,7 +16,6 @@ import buttonTpl from 'raw-loader!common/views/content/button.html';
 import endslateTpl from 'raw-loader!common/views/content/endslate.html';
 import loaderTpl from 'raw-loader!common/views/content/loader.html';
 import shareButtonTpl from 'raw-loader!common/views/content/share-button.html';
-import shareButtonMobileTpl from 'raw-loader!common/views/content/share-button-mobile.html';
 import throttle from 'lodash/functions/throttle';
 import { loadCssPromise } from 'lib/load-css-promise';
 
@@ -213,9 +212,6 @@ class GalleryLightbox {
             blockShortUrl,
             shareButtons: shareItems
                 .map(s => template(shareButtonTpl, s))
-                .join(''),
-            shareButtonsMobile: shareItems
-                .map(s => template(shareButtonMobileTpl, s))
                 .join(''),
         });
     }

@@ -6,7 +6,7 @@
             display: none;
         }
     }
-    
+
     .content__head__comment-count {
         display: none;
     }
@@ -38,14 +38,6 @@
 
             &:hover,
             &:focus {
-                background-color: transparent;
-                border-color: $neutral-6;
-            }
-        }
-
-        .social-tray__button:hover,
-        .social-tray__button:focus {
-            .social-icon--more {
                 background-color: transparent;
                 border-color: $neutral-6;
             }

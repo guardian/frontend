@@ -34,7 +34,9 @@ object GalleryCaptionCleaners {
     val cleaners = List(
       GalleryCaptionCleaner,
       AffiliateLinksCleaner(request.uri, page.gallery.content.metadata.sectionId, page.gallery.content.fields.showAffiliateLinks, "gallery", appendDisclaimer = rowNum == 1))
-    withJsoup(caption)(cleaners: _*)
+
+    val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(caption)) { case (html, cleaner) => cleaner.clean(html) }
+    Html(cleanedHtml.toString)
   }
 
 }

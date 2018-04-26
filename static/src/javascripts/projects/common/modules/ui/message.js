@@ -19,6 +19,7 @@ class Message {
     id: string;
     important: boolean;
     permanent: boolean;
+    blocking: boolean;
     trackDisplay: boolean;
     type: string;
     pinOnHide: boolean;
@@ -30,14 +31,17 @@ class Message {
     cssModifierClass: string;
     customJs: Object => void;
     customOpts: Object;
-    $footerMessage: Object;
     $siteMessage: Object;
+    $siteMessageContainer: Object;
+    $siteMessageOverlay: Object;
+    $footerMessage: Object;
 
     constructor(id: string, options?: Object) {
         const opts = options || {};
         this.id = id;
         this.important = opts.important || false;
         this.permanent = opts.permanent || false;
+        this.blocking = opts.blocking || false;
         this.trackDisplay = opts.trackDisplay || false;
         this.type = opts.type || 'banner';
         this.pinOnHide = opts.pinOnHide || false;
@@ -50,18 +54,19 @@ class Message {
         this.customJs = opts.customJs || noop;
         this.customOpts = opts.customOpts || {};
         this.$footerMessage = $('.js-footer-message');
+        this.$siteMessageContainer = $('.js-site-message');
+        this.$siteMessageOverlay = $('.js-site-message-overlay');
     }
 
     show(message: string): boolean {
-        const siteMessage = $('.js-site-message');
-
         if (this.pinOnHide) {
             $('.js-footer-site-message-copy').html(message);
         }
 
         // don't let messages unknowingly overwrite each other
         if (
-            (!siteMessage.hasClass('is-hidden') && !this.important) ||
+            (!this.$siteMessageContainer.hasClass('is-hidden') &&
+                !this.important) ||
             this.hasSeen()
         ) {
             // if we're not showing a banner message, display it in the footer
@@ -72,9 +77,23 @@ class Message {
         }
         $('.js-site-message-copy').html(message);
 
+        // Add a blocking overlay if needed
+        if (this.blocking) {
+            this.$siteMessageOverlay.removeClass('is-hidden');
+            this.$siteMessageOverlay[0].addEventListener('click', () => {
+                this.$siteMessageContainer[0].focus();
+            });
+            this.$siteMessageOverlay[0].addEventListener('focus', () => {
+                this.$siteMessageContainer[0].focus();
+            });
+            this.trapFocus();
+        }
+
         // Add site modifier message
         if (this.cssModifierClass) {
-            siteMessage.addClass(`site-message--${this.cssModifierClass}`);
+            this.$siteMessageContainer.addClass(
+                `site-message--${this.cssModifierClass}`
+            );
         }
 
         this.$siteMessage = $('.js-site-message__message');
@@ -87,13 +106,19 @@ class Message {
         );
 
         if (this.siteMessageComponentName) {
-            siteMessage.attr('data-component', this.siteMessageComponentName);
+            this.$siteMessageContainer.attr(
+                'data-component',
+                this.siteMessageComponentName
+            );
             if (this.trackDisplay) {
                 begin(this.siteMessageComponentName);
             }
         }
         if (this.siteMessageLinkName) {
-            siteMessage.attr('data-link-name', this.siteMessageLinkName);
+            this.$siteMessageContainer.attr(
+                'data-link-name',
+                this.siteMessageLinkName
+            );
         }
         if (this.siteMessageCloseBtn) {
             $('.site-message__close-btn', '.js-site-message').attr(
@@ -102,12 +127,12 @@ class Message {
             );
         }
 
-        siteMessage
+        this.$siteMessageContainer
             .addClass(`site-message--${this.type}`)
             .addClass(`site-message--${this.id}`);
-        siteMessage.removeClass('is-hidden');
+        this.$siteMessageContainer.removeClass('is-hidden');
         if (this.permanent) {
-            siteMessage.addClass('site-message--permanent');
+            this.$siteMessageContainer.addClass('site-message--permanent');
             $('.site-message__close').addClass('is-hidden');
         } else {
             bean.on(
@@ -143,9 +168,24 @@ class Message {
         );
     }
 
+    trapFocus(): void {
+        const messageEl = this.$siteMessageContainer[0];
+        const trapEndEl = document.createElement('div');
+
+        trapEndEl.tabIndex = 0;
+
+        trapEndEl.addEventListener('focus', () => {
+            messageEl.focus();
+        });
+
+        messageEl.append(trapEndEl);
+        messageEl.focus();
+    }
+
     hide(): void {
         $('#header').removeClass('js-site-message');
         $('.js-site-message').addClass('is-hidden');
+        $('.js-site-message-overlay').addClass('is-hidden');
         if (this.pinOnHide) {
             this.$footerMessage.removeClass('is-hidden');
         }

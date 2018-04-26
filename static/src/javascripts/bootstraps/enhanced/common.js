@@ -38,7 +38,6 @@ import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { breakingNewsInit } from 'common/modules/onward/breaking-news';
 import { initPinterest } from 'common/modules/social/pinterest';
-import { hiddenShareToggle } from 'common/modules/social/hidden-share-toggle';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
@@ -315,7 +314,6 @@ const init = (): void => {
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
         ['c-pinterest', startPinterest],
-        ['c-hidden-share-toggle', hiddenShareToggle],
         ['c-show-membership-engagement-banner', membershipEngagementBanner],
         ['c-email', initialiseEmail],
         ['c-user-features', refreshUserFeatures],

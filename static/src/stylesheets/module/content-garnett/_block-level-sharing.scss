@@ -99,132 +99,11 @@
     }
 }
 
-
-.share-modal__item--facebook {
-    background-color: $social-facebook;
-    color: #ffffff;
-
-    &:hover {
-        background-color: darken($social-facebook, 15%);
-    }
-}
-
-.share-modal__item--twitter {
-    background-color: $social-twitter;
-    color: #ffffff;
-
-    &:hover {
-        background-color: darken($social-twitter, 15%);
-    }
-}
-
-.share-modal__item--gplus {
-    background-color: $social-gplus;
-    color: #ffffff;
-
-    &:hover {
-        background-color: darken($social-gplus, 15%);
-    }
-}
-
-.share-modal__item--pinterest {
-    background-color: $social-pinterest;
-    color: #ffffff;
-
-    &:hover {
-        background-color: darken($social-pinterest, 15%);
-    }
-}
-
-.share-modal__item--email {
-    background-color: $social-email;
-    color: #ffffff;
-
-    &:hover {
-        background-color: darken($social-email, 15%);
-    }
-}
-
 .block-share--liveblog-mobile {
     margin-left: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;
     cursor: pointer;
     clear: both;
-}
-
-.share-modal {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: $neutral-8;
-}
-
-.share-modal__content {
-    @extend %absolute-center;
-    height: gs-height(8);
-}
-
-.share-modal__title {
-    @include fs-textSans(3);
-    color: $neutral-2;
-    text-align: center;
-    margin-bottom: $gs-baseline * 3;
-    font-weight: bold;
-}
-
-.share-modal__item {
-    width: gs-span(3);
-    margin: auto;
-    display: block;
-    text-align: center;
-    position: relative;
-    border: 0;
-
-    &.inline-icon__fallback {
-        width: 150px;
-        position: relative;
-    }
-
-    .inline-icon {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto 0;
-        left: 5px;
-        svg {
-            width: 33px;
-            height: 33px;
-            vertical-align: middle;
-        }
-    }
-}
-
-.share-modal__close {
-    @include circular;
-    border: 1px solid $neutral-2;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: gs-height(1) + $gs-baseline auto 0;
-    background: transparent;
-    box-sizing: border-box;
-
-    .i {
-        @extend %absolute-center;
-        width: 85%;
-        height: 85%;
-        opacity: .6;
-    }
-}
-
-.share-modal__link + .share-modal__link {
-    display: block;
-    margin-top: $gs-baseline;
 }
 
 // Live blogs
@@ -279,16 +158,6 @@
     cursor: pointer;
     opacity: .8;
     margin-top: $gs-baseline / 2;
-}
-
-.overlay--gallery {
-    background-color: $neutral-1;
-    .share-modal__title {
-        color: #ffffff;
-    }
-    .share-modal__close .i {
-        @include icon(close-icon-white-small);
-    }
 }
 
 // Inline embeds

@@ -1,0 +1,102 @@
+<details class="campaign campaign--snippet">
+
+    <summary class="campaign--snippet__header">
+        <div class="campaign--kicker">
+            <div class="campaign--snippet__heading-logo">
+                <div class="speech-bubble">
+                    <h4>Take part</h4>
+                </div>
+            </div>
+            <div class="heading">
+                <h4 class="campaign--snippet__headline"> <%= data.title %></h4>
+                <p> <%= data.description %></p>
+            </div>
+        </div>
+        <button class="campaign__button campaign__button--large campaign__button--rounded campaign--snippet__handle" aria-hidden="true">
+            <span class="is-off">
+                <svg class="icon icon--plus " viewBox="0 0 18 18">
+                    <path d="M8.2 0h1.6l.4 7.8 7.8.4v1.6l-7.8.4-.4 7.8H8.2l-.4-7.8L0 9.8V8.2l7.8-.4.4-7.8z"></path>
+                </svg>
+                    Tell us
+                </span>
+            <span class="is-on">
+                <svg class="icon icon--minus " viewBox="0 0 32 32">
+                    <rect x="5" y="15" width="22" height="3"></rect>
+                </svg>
+                  Hide
+            </span>
+        </button>
+    </summary>
+
+
+    <form action="/formstack-campaign/submit" method="post" class="campaign--snippet__body">
+
+        <input name="formId" type="hidden" value="<%=data.formId%>" />
+
+        <% data.formFields.forEach(function(field) { %>
+
+        <div class="form_input form_input--<%=field.type%>">
+            <div class="form_field">
+                <label for="<%=field.name%>"
+                       class="form_field_label">
+                    <%= field.label %>
+                    <span><%= field.description %></span>
+                </label>
+
+                <% if(field.type === "textarea") { %>
+                <textarea name="field_<%=field.id%>"
+                <% if (field.required == "1") { %> required <% } %>
+                />
+                </textarea>
+
+                <% } else if(field.type === "radio" || field.type === "checkbox") { %>
+                <div class="form_option_container">
+                <% field.options.forEach(function(option){ %>
+                    <input type="<%=field.type%>"
+                       value="<%=option.value%>"
+                       id="<%=option.label%>"
+                       name="field_<%=field.id%>"
+                    <% if (field.required == "1") { %> required <% } %>
+                    />
+                    <label for="<%=option.label%>">
+                        <%=option.value%>
+                    </label>
+                <% }) %>
+                </div>
+
+                <% } else if(field.type === "select") { %>
+                <select name="field_<%=field.id%>"
+                <% if (field.required == "1") { %> required <% } %>
+                >
+                <% field.options.forEach(function(option){ %>
+                <option value="<%=option.value%>">
+                    <%=option.value%>
+                </option>
+                <% }) %>
+
+                </select>
+
+                <% } else { %>
+                <input name="field_<%=field.id%>"
+                       type="<%=field.type%>"
+                <% if (field.required == "1") { %> required <% } %>
+                />
+                <% } %>
+            </div>
+        </div>
+
+        <% }) %>
+
+        <div class="form_footer">
+            <div class="form_submit">
+                <button class="button button--rounded" type="submit">Share with the Guardian</button>
+            </div>
+            <div class="t_and_c">
+                <a href="https://www.theguardian.com/help/terms-of-service">Terms and conditions</a>
+            </div>
+        </div>
+
+    </form>
+
+</details>
+
