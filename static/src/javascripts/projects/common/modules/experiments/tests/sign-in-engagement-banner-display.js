@@ -14,6 +14,7 @@ export const signInEngagementBannerDisplay: ABTest = {
     dataLinkNames: 'All starting with "sign-in-eb :"',
     idealOutcome:
         'We increase the number of signed in users more than the banner puts people off visiting the site.',
+    canRun: () => true,
     variants: [
         {
             id: 'variant',

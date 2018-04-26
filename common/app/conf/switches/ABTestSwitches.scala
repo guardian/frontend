@@ -34,7 +34,7 @@ trait ABTestSwitches {
     safeState = Off,
     sellByDate = new LocalDate(2019, 1, 24),
     exposeClientSide = true
-  ),
+  )
 
   Switch(
     ABTests,
