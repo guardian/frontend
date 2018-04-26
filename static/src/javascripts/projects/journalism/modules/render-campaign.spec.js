@@ -1,8 +1,12 @@
 // @flow
 
 import { initCampaign } from 'journalism/modules/render-campaign';
+import { getCampaign } from 'journalism/modules/get-campaign';
 
+// hack to stop flow complaining about 'mockImplementation'
+const mock = (mockFn: any) => mockFn;
 jest.mock('journalism/modules/get-campaign');
+mock(getCampaign).mockImplementation(() => ({ title: 'A great campaign' }));
 
 describe('Create a campaign element and insert into an article', () => {
     beforeEach(() => {

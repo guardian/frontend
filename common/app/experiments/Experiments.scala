@@ -27,7 +27,7 @@ object CommercialAdRefresh extends Experiment(
   name = "commercial-ad-refresh",
   description = "Users in this experiment will have their ad slots refreshed after 30 seconds",
   owners = Seq(Owner.withGithub("katebee")),
-  sellByDate = new LocalDate(2018, 4, 26),
+  sellByDate = new LocalDate(2018, 5, 3),
   participationGroup = Perc50
 )
 
@@ -36,7 +36,7 @@ object OrielParticipation extends Experiment(
   description = "A slice of the audience who will participate in Oriel ad-blocking technology",
   owners = Seq(Owner.withGithub("janua")),
   sellByDate = new LocalDate(2018, 6, 28),
-  participationGroup = Perc1C
+  participationGroup = Perc20A
 )
 
 object LotameParticipation extends Experiment(
