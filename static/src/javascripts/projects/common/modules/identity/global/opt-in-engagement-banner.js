@@ -38,7 +38,7 @@ type ApiUser = {
 
 const targets: LinkTargets = {
     landing:
-        'https://gu.com/staywithus?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert',
+        'https://www.theguardian.com/info/ng-interactive/2018/feb/21/stay-with-us?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert',
     journey: `${config.get(
         'page.idUrl'
     )}/email-prefs?CMP=gdpr-oi-campaign-alert&utm_campaign=gdpr-oi-campaign-alert&clientId=opt-in`,
@@ -46,9 +46,7 @@ const targets: LinkTargets = {
 
 const template: Template = {
     image: config.get('images.identity.opt-in-new-vertical'),
-    title: `We’re changing how we communicate with you. Let us know <strong>before 30 April</strong> which emails you wish to continue receiving. <a data-link-name="gdpr-oi-campaign : alert : to-landing" href="${
-        targets.landing
-    }">Find out more</a> or click Continue.`,
+    title: `We’re changing how we communicate with you. Let us know <strong>before 30 April</strong> which emails you wish to continue receiving, otherwise you will stop hearing from us.`,
     cta: `Continue`,
     remindMeLater: shouldDisplayForMoreUsers()
         ? `No, thanks`
