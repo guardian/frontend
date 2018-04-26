@@ -31,8 +31,10 @@ class Message {
     cssModifierClass: string;
     customJs: Object => void;
     customOpts: Object;
-    $footerMessage: Object;
     $siteMessage: Object;
+    $siteMessageContainer: Object;
+    $siteMessageOverlay: Object;
+    $footerMessage: Object;
 
     constructor(id: string, options?: Object) {
         const opts = options || {};
@@ -52,20 +54,19 @@ class Message {
         this.customJs = opts.customJs || noop;
         this.customOpts = opts.customOpts || {};
         this.$footerMessage = $('.js-footer-message');
-        this.$siteMessage = $('.js-site-message');
+        this.$siteMessageContainer = $('.js-site-message');
+        this.$siteMessageOverlay = $('.js-site-message-overlay');
     }
 
     show(message: string): boolean {
-        const siteMessage = $('.js-site-message');
-        const siteMessageOverlay = $('.js-site-message-overlay');
-
         if (this.pinOnHide) {
             $('.js-footer-site-message-copy').html(message);
         }
 
         // don't let messages unknowingly overwrite each other
         if (
-            (!siteMessage.hasClass('is-hidden') && !this.important) ||
+            (!this.$siteMessageContainer.hasClass('is-hidden') &&
+                !this.important) ||
             this.hasSeen()
         ) {
             // if we're not showing a banner message, display it in the footer
@@ -78,19 +79,21 @@ class Message {
 
         // Add a blocking overlay if needed
         if (this.blocking) {
-            siteMessageOverlay.removeClass('is-hidden');
-            siteMessageOverlay[0].addEventListener('click', () => {
-                siteMessage[0].focus();
+            this.$siteMessageOverlay.removeClass('is-hidden');
+            this.$siteMessageOverlay[0].addEventListener('click', () => {
+                this.$siteMessageContainer[0].focus();
             });
-            siteMessageOverlay[0].addEventListener('focus', () => {
-                siteMessage[0].focus();
+            this.$siteMessageOverlay[0].addEventListener('focus', () => {
+                this.$siteMessageContainer[0].focus();
             });
             this.trapFocus();
         }
 
         // Add site modifier message
         if (this.cssModifierClass) {
-            siteMessage.addClass(`site-message--${this.cssModifierClass}`);
+            this.$siteMessageContainer.addClass(
+                `site-message--${this.cssModifierClass}`
+            );
         }
 
         this.$siteMessage = $('.js-site-message__message');
@@ -103,13 +106,19 @@ class Message {
         );
 
         if (this.siteMessageComponentName) {
-            siteMessage.attr('data-component', this.siteMessageComponentName);
+            this.$siteMessageContainer.attr(
+                'data-component',
+                this.siteMessageComponentName
+            );
             if (this.trackDisplay) {
                 begin(this.siteMessageComponentName);
             }
         }
         if (this.siteMessageLinkName) {
-            siteMessage.attr('data-link-name', this.siteMessageLinkName);
+            this.$siteMessageContainer.attr(
+                'data-link-name',
+                this.siteMessageLinkName
+            );
         }
         if (this.siteMessageCloseBtn) {
             $('.site-message__close-btn', '.js-site-message').attr(
@@ -118,12 +127,12 @@ class Message {
             );
         }
 
-        siteMessage
+        this.$siteMessageContainer
             .addClass(`site-message--${this.type}`)
             .addClass(`site-message--${this.id}`);
-        siteMessage.removeClass('is-hidden');
+        this.$siteMessageContainer.removeClass('is-hidden');
         if (this.permanent) {
-            siteMessage.addClass('site-message--permanent');
+            this.$siteMessageContainer.addClass('site-message--permanent');
             $('.site-message__close').addClass('is-hidden');
         } else {
             bean.on(
@@ -160,19 +169,15 @@ class Message {
     }
 
     trapFocus(): void {
-        const messageEl = this.$siteMessage[0];
-        const [trapStartEl, trapEndEl] = new Array(2).fill(
-            document.createElement('div')
-        );
+        const messageEl = this.$siteMessageContainer[0];
+        const trapEndEl = document.createElement('div');
 
-        trapStartEl.tabIndex = -1;
         trapEndEl.tabIndex = 0;
 
         trapEndEl.addEventListener('focus', () => {
-            trapStartEl.focus();
+            messageEl.focus();
         });
 
-        messageEl.prepend(trapStartEl);
         messageEl.append(trapEndEl);
         messageEl.focus();
     }
