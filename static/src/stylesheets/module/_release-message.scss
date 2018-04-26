@@ -3,10 +3,22 @@
     background: $garnett-neutral-1;
     display: block;
     color: #ffffff;
+    outline: none;
 
     @include mq(tablet) {
         @include fs-headline(2, true);
     }
+}
+
+.site-message-overlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: $garnett-neutral-8;
+    opacity: .75;
+    z-index: $zindex-popover - 1;
 }
 
 .site-message--banner {
