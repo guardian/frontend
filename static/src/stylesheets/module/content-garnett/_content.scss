@@ -534,22 +534,6 @@
     margin-left: $gs-gutter/4;
 }
 
-.meta__numbers {
-    padding-bottom: $gs-baseline / 2;
-    padding-top: $gs-baseline / 2;
-    position: absolute;
-    right: 0;
-    top: 0;
-
-    @include mq(leftCol) {
-        border-top: 1px dotted $neutral-5;
-        height: 36px;
-        padding-bottom: $gs-baseline / 4;
-        padding-top: $gs-baseline / 4;
-        position: static;
-    }
-}
-
 .byline {
     @include fs-bodyHeading(2);
     margin-bottom: 0;
@@ -681,15 +665,13 @@
 }
 
 .meta__extras {
+    border-top: 1px solid $garnett-neutral-4;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: $gs-baseline / 2;
     position: relative;
     clear: both;
-    min-height: 45px;
-    border-top: 1px dotted $neutral-5;
-    border-bottom: 1px dotted $neutral-5;
-
-    @include mq(leftCol) {
-        border: 0;
-    }
 
     .content__head--crossword & {
         clear: none;
@@ -697,44 +679,7 @@
 }
 
 .meta__social {
-    padding: 0;
-    box-sizing: border-box;
-
-    @include mq(leftCol) {
-        border-top: 1px dotted $neutral-5;
-    }
-
-    .meta__extras--crossword & {
-        @include mq(leftCol) {
-            float: left;
-        }
-    }
-}
-
-.meta__social--sticky {
-    position: fixed;
-    bottom: $gs-baseline;
-    border: 0;
-    z-index: 4;
-    transform: translate3d(0, $gs-baseline * 4, 0);
-
-    @include mq(leftCol, $until: wide) {
-        margin-left: $gs-gutter * -8;
-        .social__item--gplus {
-            display: none;
-        }
-    }
-    @include mq(wide) {
-        margin-left: $gs-gutter * -12;
-    }
-}
-
-.meta__social--sticky--revealable {
-    transition: transform 100ms linear;
-}
-
-.meta__social--sticky--reveal {
-    transform: translate3d(0, 0, 0);
+    padding-top: $gs-baseline / 2;
 }
 
 .meta__twitter,
@@ -1207,7 +1152,7 @@
         .commentcount,
         .meta__numbers,
         .meta__social,
-        .meta__number:not(u-h)+.meta__number {
+        .meta__number + .meta__number {
             border-color: $neutral-3;
         }
         .byline {
@@ -1296,19 +1241,5 @@
     }
     .fc-item__title svg {
         fill: $multimedia-main-2;
-    }
-    &.content--article,
-    &.tonal--tone-media {
-        .meta__numbers,
-        .meta__social {
-            @include multiline(1, $garnett-neutral-6, top);
-            border-top: 0;
-            padding-top: $gs-baseline / 2;
-        }
-        .meta__social {
-            @include mq($until: leftCol) {
-                border-bottom: 1px solid $garnett-neutral-6;
-            }
-        }
     }
 }

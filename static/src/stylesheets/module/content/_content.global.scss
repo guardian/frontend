@@ -97,26 +97,3 @@
         text-align: right;
     }
 }
-
-.meta__extras--crossword {
-    border-top: 1px dotted $neutral-5;
-    display: flex;
-    justify-content: space-between;
-
-    .meta__social,
-    .meta__numbers {
-        border: 0 none;
-    }
-
-    .meta__number {
-        border-left: 1px solid $neutral-7;
-        padding-left: $gs-gutter / 2;
-        text-align: right;
-    }
-}
-
-.meta__number:not(.u-h) + .meta__number {
-    border-left: 1px solid $neutral-7;
-    padding-left: $gs-gutter / 2;
-    margin-left: $gs-gutter / 2;
-}

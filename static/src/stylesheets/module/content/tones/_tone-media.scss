@@ -77,7 +77,7 @@
     .meta__extras,
     .submeta,
     .submeta__keywords,
-    .meta__number:not(u-h) + .meta__number {
+    .meta__number + .meta__number {
         border-color: $media-mute;
     }
 

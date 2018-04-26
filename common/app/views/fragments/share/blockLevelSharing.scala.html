@@ -1,7 +1,7 @@
 @import model.DotcomContentType
 @(id: String, shareItems: Seq[model.ShareLink], contentType: DotcomContentType, isNewGallery: Boolean = false, amp: Boolean = false)
 
-<div class="block-share block-share--@contentType.name.toLowerCase" data-link-name="block share">
+<div class="block-share block-share--@contentType.name.toLowerCase @if(!isNewGallery) { hide-on-mobile }" data-link-name="block share">
     @shareItems.map { item: model.ShareLink =>
         <a class="rounded-icon block-share__item block-share__item--@item.css js-blockshare-link" href="@item.href" target="_blank" data-link-name="social @item.css">
             @fragments.inlineSvg("share-" + item.css, "icon")

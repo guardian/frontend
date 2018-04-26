@@ -1050,7 +1050,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .identity-gdpr-oi-alert__body {
-    margin: $gs-gutter / 4 $gs-gutter $gs-gutter / 1.25 $gs-gutter;
+    margin: $gs-gutter / 4 $gs-gutter $gs-gutter / 1.25 $gs-gutter * 2;
     max-width: gs-span(6);
     .identity-gdpr-oi-alert__cta-space {
         margin-left: -.1em;
@@ -1058,6 +1058,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
     @include mq($until: tablet) {
         flex: 1 1 0;
+        margin-left: $gs-gutter;
+    }
+    @include mq($until: mobile) {
+        margin-left: $gs-gutter / 2;
         .identity-gdpr-oi-alert__cta-space {
             margin-left: $gs-gutter * -.9;
         }
@@ -1079,13 +1083,11 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     margin-top: $gs-gutter / 4;
     overflow: hidden;
     position: relative;
-    width: 70px;
+    width: 30%;
+    max-width: 140px;
     min-height: 100px;
     > img {
         width: 100%;
-    }
-    @include mq(tablet) {
-        width: 140px;
     }
 }
 

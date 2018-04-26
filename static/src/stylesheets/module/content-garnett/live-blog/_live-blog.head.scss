@@ -66,15 +66,6 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         min-height: gs-height(1)*1.5;
         position: static;
         width: 100%;
-
-        .meta__numbers {
-            @include clearfix;
-            border-bottom: 0;
-            height: 36px;
-            padding-bottom: $gs-baseline / 4;
-            padding-top: $gs-baseline / 4;
-            position: static;
-        }
     }
 
     .byline {

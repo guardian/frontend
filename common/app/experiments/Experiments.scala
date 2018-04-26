@@ -4,14 +4,12 @@ import conf.switches.{Owner, SwitchGroup}
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
-import conf.switches.Switches.IdentityShowOptInEngagementBanner
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
     CommercialAdRefresh,
     OrielParticipation,
-    GdprOptinAlert,
     LotameParticipation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -29,7 +27,7 @@ object CommercialAdRefresh extends Experiment(
   name = "commercial-ad-refresh",
   description = "Users in this experiment will have their ad slots refreshed after 30 seconds",
   owners = Seq(Owner.withGithub("katebee")),
-  sellByDate = new LocalDate(2018, 4, 26),
+  sellByDate = new LocalDate(2018, 5, 3),
   participationGroup = Perc50
 )
 
@@ -38,18 +36,8 @@ object OrielParticipation extends Experiment(
   description = "A slice of the audience who will participate in Oriel ad-blocking technology",
   owners = Seq(Owner.withGithub("janua")),
   sellByDate = new LocalDate(2018, 6, 28),
-  participationGroup = Perc1C
+  participationGroup = Perc20A
 )
-
-object GdprOptinAlert extends Experiment(
-  name = "gdpr-optin-alert",
-  description = "Audience who will see the Stay with us alert",
-  owners = Seq(Owner.withGithub("walaura")),
-  sellByDate = new LocalDate(2018, 6, 25), // GDPR goes into effect + 1 month
-  participationGroup = Perc0E
-) {
-  override def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = super.isParticipating || IdentityShowOptInEngagementBanner.isSwitchedOn
-}
 
 object LotameParticipation extends Experiment(
   name = "lotame-participation",
