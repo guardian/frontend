@@ -47,7 +47,7 @@ webpackBundler.watch(
         const info = stats.toJson();
         // send editing errors to console and browser
         if (stats.hasErrors()) {
-            console.log(info.errors);
+            console.log(chalk.red(info.errors));
             return browserSync.sockets.emit('fullscreen:message', {
                 title: 'Webpack Error:',
                 body: info.errors,
