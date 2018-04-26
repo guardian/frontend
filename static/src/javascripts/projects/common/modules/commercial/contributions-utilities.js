@@ -25,8 +25,11 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
+import { addSlot } from 'commercial/modules/dfp/add-slot';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
+
+export type AdBlockEpicTemplate = () => HTMLElement;
 
 export type CtaUrls = {
     supportUrl: string,
@@ -237,6 +240,7 @@ const makeABTestVariant = (
                 });
                 submitABTestComplete();
             }),
+        adSlotEpicTemplate = null,
     } = options;
 
     if (usesIframe) {
@@ -272,6 +276,8 @@ const makeABTestVariant = (
             impression,
             success,
             iframeId,
+            adSlotEpicTemplate,
+            isAdSlot: typeof adSlotEpicTemplate === 'function',
         },
 
         test() {
@@ -282,13 +288,18 @@ const makeABTestVariant = (
             const render = (templateFn: ?EpicTemplate) =>
                 copyPromise
                     .then((copy: AcquisitionsEpicTemplateCopy) => {
+                        if (this.options.isAdSlot) {
+                            return this.options.adSlotEpicTemplate()
+                        }
                         const renderTemplate: EpicTemplate =
                             templateFn ||
                             (this.options && this.options.template);
                         return renderTemplate(this, copy);
                     })
                     .then(renderedTemplate => {
+
                         const component = $.create(renderedTemplate);
+
 
                         mediator.emit('register:begin', trackingCampaignId);
 
@@ -299,10 +310,18 @@ const makeABTestVariant = (
                             );
 
                             if (targets.length > 0) {
+
                                 if (insertAfter) {
                                     component.insertAfter(targets);
                                 } else {
                                     component.insertBefore(targets);
+                                }
+
+                                if (this.options.isAdSlot) {
+                                    // TODO: remove logging
+                                    console.log('adding epic add slot');
+                                    console.log(component.get(0));
+                                    addSlot(component.get(0), true)
                                 }
 
                                 mediator.emit(parentTest.insertEvent, {

@@ -1,5 +1,12 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import type { AdBlockEpicTemplate } from 'common/modules/commercial/contributions-utilities';
+import { createSlots } from "commercial/modules/dfp/create-slots";
+
+const adSlotEpicTemplate: AdBlockEpicTemplate = (): HTMLElement => {
+    const adSlots = createSlots('comments', {});
+    return adSlots[0];
+};
 
 export const acquisitionsEpicNativeVsDfp = makeABTest({
     id: 'AcquisitionsEpicNativeVsDfp',
@@ -17,10 +24,17 @@ export const acquisitionsEpicNativeVsDfp = makeABTest({
         {
             id: 'control',
             products: ['CONTRIBUTION'],
+            options: {
+                isUnlimited: true,
+            },
         },
         {
             id: 'dfp',
             products: ['CONTRIBUTION'],
+            options: {
+                isUnlimited: true,
+                adSlotEpicTemplate: adSlotEpicTemplate,
+            },
         }
     ]
 });
