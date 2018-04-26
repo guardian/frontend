@@ -9,7 +9,6 @@
 }
 
 // Header and tags
-
 .immersive-main-media__gallery {
     height: 100vh;
 }
@@ -86,8 +85,14 @@
     }
 
     .content__labels--paidgallery {
+        background: $paid-article-brand;
         .content__section-label__link {
-            color: $paid-article-brand;
+            color: $garnett-neutral-1;
+            font-size: 16px;
+            font-weight: 700;
+            @include mq(desktop) {
+                font-size: 18px;
+            }
         }
     }
 
