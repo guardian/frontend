@@ -1,5 +1,22 @@
 // @flow
 
+const thankYouEpic = `
+    <div>
+        <h2 class="contributions__title contributions__title--epic">
+            Thank you …
+        </h2>
+        <p class="contributions__paragraph contributions__paragraph--epic">
+            … for supporting us, by funding our independent journalism and helping to keep it open.
+            Your contribution and the similar pledges of more than 800,000 readers around the world
+            enables the Guardian’s journalists to find things out, reveal new information and challenge
+            the powerful. Your knowledge and experience makes our reporting better too. Did you know
+            we publish articles and podcasts for our supporters, featuring your views and voices?
+        </p>
+
+        <a href="#" target="_blank" class="u-underline">You can learn more about how to get involved here.</a>
+    </div>
+`;
+
 export const initPaymentRequest = (stripeKey: string, paymentApiUrl: string) => {
     const stripe = Stripe(stripeKey);
 
@@ -7,7 +24,7 @@ export const initPaymentRequest = (stripeKey: string, paymentApiUrl: string) => 
         country: 'GB',
         currency: 'gbp',
         total: {
-            label: 'Demo total',
+            label: 'One-off contribution to The Guardian',
             amount: 100,
         },
     });
@@ -15,6 +32,11 @@ export const initPaymentRequest = (stripeKey: string, paymentApiUrl: string) => 
     const elements = stripe.elements();
     const prButton = elements.create('paymentRequestButton', {
         paymentRequest: paymentRequest,
+        style: {
+            paymentRequestButton: {
+                type: 'donate',
+            },
+        },
     });
 
     // Check the availability of the Payment Request API first.
@@ -43,21 +65,25 @@ export const initPaymentRequest = (stripeKey: string, paymentApiUrl: string) => 
             }),
             headers: {'content-type': 'application/json'},
         })
-            .then(function(response) {
-                if (response.ok) {
-                    // Report to the browser that the payment was successful, prompting
-                    // it to close the browser payment interface.
-                    console.log('success!');
-                    ev.complete('success');
-                } else {
-                    // Report to the browser that the payment failed, prompting it to
-                    // re-show the payment interface, or show an error message and close
-                    // the payment interface.
-                    console.log('fail');
-                    console.log(response);
-                    ev.complete('fail');
+        .then(function(response) {
+            if (response.ok) {
+                // Report to the browser that the payment was successful, prompting
+                // it to close the browser payment interface.
+                console.log('success!');
+                ev.complete('success');
+                const epic = document.querySelector('.contributions__epic');
+                if (epic instanceof HTMLElement) {
+                    epic.innerHTML = thankYouEpic;
                 }
-            });
+            } else {
+                // Report to the browser that the payment failed, prompting it to
+                // re-show the payment interface, or show an error message and close
+                // the payment interface.
+                console.log('fail');
+                console.log(response);
+                ev.complete('fail');
+            }
+        });
     });
 };
 
