@@ -15,7 +15,7 @@ import { makeTemplateHtml } from './opt-in-eb-template';
 const messageCode: string = 'gdpr-opt-in-jan-18';
 const messageHidAtPref: string = `${messageCode}-hid-at`;
 const messageMoreShownAtPref: string = `${messageCode}-more-shown-at`;
-const messageWasDismissedPref: string = `${messageCode}-hidden-once`;
+const messageWasDismissedPref: string = `${messageCode}-was-dismissed`;
 const messageUserUsesNewslettersCookie: string = `gu-${
     messageCode
 }-via-newsletter`
