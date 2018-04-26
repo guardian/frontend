@@ -3,7 +3,7 @@
     margin-top: $gs-baseline;
     padding-top: $gs-baseline * 1.5;
 
-    .content--media:not(.paid-content)  & {
+    .content--media:not(.paid-content):not(.content--gallery)  & {
         @include multiline(4, $garnett-neutral-7, top);
 
         .submeta__keywords {

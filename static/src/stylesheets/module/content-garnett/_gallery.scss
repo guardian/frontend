@@ -18,7 +18,7 @@
     margin-right: auto;
     @include mq(desktop) {
         margin-left: gs-span(3) + $gs-gutter;
-        padding-left: 0 !important;
+        padding-left: 0;
     }
 }
 
@@ -220,7 +220,7 @@
     .submeta {
         padding: 0;
         margin: 0;
-        background-image: none!important;
+        background-image: none;
 
         .submeta__keywords {
             border-bottom: 0;

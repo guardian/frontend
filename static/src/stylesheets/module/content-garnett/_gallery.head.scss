@@ -111,7 +111,7 @@
         flex-wrap: wrap;
         padding-bottom: $gs-baseline*2;
         @include mq(tablet) {
-            padding-left: $gs-gutter/2 !important;
+            padding-left: $gs-gutter/2;
             border-left: solid 1px $neutral-1;
         }
         @include mq(desktop) {
