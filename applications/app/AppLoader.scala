@@ -5,6 +5,7 @@ import com.softwaremill.macwire._
 import common.dfp.DfpAgentLifecycle
 import common.{ApplicationMetrics, CloudWatchMetricsLifecycle, ContentApiMetrics, EmailSubsciptionMetrics}
 import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
+import common.commercial.OrielCacheLifecycle
 import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
@@ -62,7 +63,8 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     wire[SiteMapLifecycle],
     wire[CachedHealthCheckLifeCycle],
     wire[DiscussionExternalAssetsLifecycle],
-    wire[SkimLinksCacheLifeCycle]
+    wire[SkimLinksCacheLifeCycle],
+    wire[OrielCacheLifecycle]
   )
 
   lazy val router: Router = wire[Routes]
