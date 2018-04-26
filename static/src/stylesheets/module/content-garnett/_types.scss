@@ -102,8 +102,7 @@ $quote-mark: 35px;
         }
     }
 
-    .byline,
-    .content__dateline {
+    .byline {
         padding-top: 0;
         padding-bottom: $gs-baseline*1.5;
         @include mq($until: phablet) {
@@ -154,17 +153,6 @@ $quote-mark: 35px;
         border-top: 0;
         padding-top: 0;
         padding-bottom: $gs-baseline;
-    }
-
-    .content__dateline {
-        border: 0;
-        min-height: 0;
-        // magic numbers are correcting line heights so vertical alignment appears even
-        margin-bottom: -4px;
-        display: block;
-        padding-bottom: $gs-baseline;
-        padding-top: 2px;
-        margin-top: -$gs-baseline / 4;
     }
 
     .old-article-message {
@@ -878,21 +866,6 @@ $quote-mark: 35px;
         }
     }
 
-    .content__dateline {
-        // magic number used to align date stamp with standfirst baseline in opinion pieces per design
-        margin-top: 8px;
-
-        @include mq(leftCol) {
-            margin-top: -$gs-baseline/2;
-        }
-    }
-
-    .content__dateline:before {
-        @include mq($from: leftCol) {
-            @include multiline(1, $garnett-neutral-4);
-        }
-    }
-
     .meta__twitter,
     .meta__email {
         display: block;
@@ -1058,13 +1031,6 @@ $quote-mark: 35px;
     .meta__numbers .inline-share svg,
     .social-icon__svg {
         fill: $garnett-neutral-4;
-    }
-
-    .content__dateline {
-        @include mq(phablet) {
-            @include multiline(1, $garnett-neutral-7, top);
-            padding-top: $gs-baseline;
-        }
     }
 
     .byline span {
