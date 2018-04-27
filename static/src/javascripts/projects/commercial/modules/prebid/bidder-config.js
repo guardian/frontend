@@ -59,6 +59,7 @@ const getTrustXAdUnitId = (slotId: string): string => {
         case 'dfp-ad--top-above-nav':
             return '2963';
         default:
+            // for inline10 and onwards just use same IDs as inline9
             if (slotId.startsWith('dfp-ad--inline')) {
                 if (isDesktopArticle) return '3840';
                 return '3841';
