@@ -21,11 +21,37 @@ import {
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
 
+const isDesktopArticle =
+    getBreakpointKey() === 'D' && config.page.contentType === 'Article';
+
 const getTrustXAdUnitId = (slotId: string): string => {
-    switch (stripTrailingNumbersAbove1(stripMobileSuffix(slotId))) {
+    switch (stripMobileSuffix(slotId)) {
         case 'dfp-ad--inline1':
-        case 'dfp-ad--inline':
             return '2960';
+        case 'dfp-ad--inline2':
+            if (isDesktopArticle) return '3826';
+            return '3827';
+        case 'dfp-ad--inline3':
+            if (isDesktopArticle) return '3828';
+            return '3829';
+        case 'dfp-ad--inline4':
+            if (isDesktopArticle) return '3830';
+            return '3831';
+        case 'dfp-ad--inline5':
+            if (isDesktopArticle) return '3832';
+            return '3833';
+        case 'dfp-ad--inline6':
+            if (isDesktopArticle) return '3834';
+            return '3835';
+        case 'dfp-ad--inline7':
+            if (isDesktopArticle) return '3836';
+            return '3837';
+        case 'dfp-ad--inline8':
+            if (isDesktopArticle) return '3838';
+            return '3839';
+        case 'dfp-ad--inline9':
+            if (isDesktopArticle) return '3840';
+            return '3841';
         case 'dfp-ad--mostpop':
             return '2961';
         case 'dfp-ad--right':
@@ -33,6 +59,10 @@ const getTrustXAdUnitId = (slotId: string): string => {
         case 'dfp-ad--top-above-nav':
             return '2963';
         default:
+            if (slotId.startsWith('dfp-ad--inline')) {
+                if (isDesktopArticle) return '3840';
+                return '3841';
+            }
             console.log(
                 `PREBID: Failed to get TrustX ad unit for slot ${slotId}.`
             );
@@ -119,12 +149,9 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
 // because it uses same placement ID for multiple slot sizes and has no other size information
 const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
     const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
-    const isInlineNotDesktopArticle =
-        key.endsWith('inline') &&
-        !(getBreakpointKey() === 'D' && config.page.contentType === 'Article');
     return key.endsWith('mostpop') ||
         key.endsWith('inline1') ||
-        isInlineNotDesktopArticle
+        (key.endsWith('inline') && !isDesktopArticle)
         ? { w: 300, h: 250 }
         : {};
 };
