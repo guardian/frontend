@@ -1,12 +1,12 @@
 // @flow
-import breakingNewsBanner from 'common/modules/ui/banners/breakingNews';
+import breakingNews from 'common/modules/onward/breaking-news';
 
 type Banner = {
     canShow: () => Promise<boolean>,
     show: () => void,
 };
 
-let banners: Array<Banner> = [breakingNewsBanner];
+let banners: Array<Banner> = [breakingNews];
 
 let results: Array<'pending' | boolean> = new Array(banners.length).fill(
     'pending',

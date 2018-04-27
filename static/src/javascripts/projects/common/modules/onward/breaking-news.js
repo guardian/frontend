@@ -9,12 +9,13 @@ import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 import { local } from 'lib/storage';
 import template from 'lodash/utilities/template';
-import mediator from 'lib/mediator';
 import { isWithinSeconds } from 'common/modules/ui/relativedates';
 import { inlineSvg } from 'common/views/svgs';
 import alertHtml from 'raw-loader!common/views/breaking-news.html';
 import flatten from 'lodash/arrays/flatten';
 import pick from 'lodash/objects/pick';
+
+let alertToShow;
 
 const supportedSections = {
     sport: 'sport',
@@ -113,6 +114,7 @@ const pruneKnownAlertIDs = (alerts: Array<Alert>): Array<Alert> => {
     );
 
     storeKnownAlertIDs();
+
     return alerts;
 };
 
@@ -121,11 +123,11 @@ const filterAlertsByDismissed = (alerts: Array<Alert>): Array<Alert> =>
     alerts.filter(alert => knownAlertIDs[alert.id] !== true);
 
 // don't show alerts if they're over a certain age
-const filterAlertsByAge = (alerts: Array<Alert>): Array<Alert> =>
+const filterAlertsByAge = (alerts: Array<Alert>): Array<Alert> => 
     alerts.filter(alert => {
         const alertTime = alert.frontPublicationDate;
         return alertTime && isWithinSeconds(new Date(alertTime), 1200); // 20 mins
-    });
+    }); 
 
 // we only show one alert at a time, pick the youngest available
 const pickNewest = (alerts: Array<Alert>): Alert =>
@@ -155,63 +157,74 @@ const renderSpectre = ($breakingNews: bonzo): bonzo =>
         .removeClass('breaking-news--fade-in breaking-news--hidden');
 
 // show an alert
-const showAlert = (alert: Alert): Alert => {
-    if (alert) {
-        const $body = bonzo(document.body);
-        const $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
+const show = (): void => {
+    console.log('**** SHOW BREAKING NEWS ****');
 
-        // if its the first time we've seen this alert, we wait 3 secs to show it
-        // otherwise we show it immediately
-        const alertDelay = knownAlertIDs.hasOwnProperty(alert.id)
-            ? 0
-            : DEFAULT_DELAY;
+    const $body = bonzo(document.body);
+    const $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
 
-        // $breakingNews is hidden, so this won't trigger layout etc
-        $breakingNews.append(renderAlert(alert));
+    // if its the first time we've seen this alert, we wait 3 secs to show it
+    // otherwise we show it immediately
+    const alertDelay = knownAlertIDs.hasOwnProperty(alertToShow.id)
+        ? 0
+        : DEFAULT_DELAY;
 
-        // copy of breaking news banner (with blank content) used inline at the
-        // bottom of the body, so the bottom of the body can visibly scroll
-        // past the pinned alert
-        const $spectre = renderSpectre($breakingNews);
+    // $breakingNews is hidden, so this won't trigger layout etc
+    $breakingNews.append(renderAlert(alertToShow));
 
-        // inject the alerts into DOM
-        setTimeout(() => {
-            fastdom.write(() => {
-                if (alertDelay === 0) {
-                    $breakingNews.removeClass('breaking-news--fade-in');
-                }
-                $body.append($spectre);
-                $breakingNews.removeClass('breaking-news--hidden');
-                markAlertAsSeen(alert.id);
-            });
-        }, alertDelay);
+    // copy of breaking news banner (with blank content) used inline at the
+    // bottom of the body, so the bottom of the body can visibly scroll
+    // past the pinned alert
+    const $spectre = renderSpectre($breakingNews);
 
-        mediator.emit('modules:onwards:breaking-news:ready', true);
-    } else {
-        mediator.emit('modules:onwards:breaking-news:ready', false);
-    }
-    return alert;
+    // inject the alerts into DOM
+    setTimeout(() => {
+        fastdom.write(() => {
+            if (alertDelay === 0) {
+                $breakingNews.removeClass('breaking-news--fade-in');
+            }
+            $body.append($spectre);
+            $breakingNews.removeClass('breaking-news--hidden');
+            markAlertAsSeen(alertToShow.id);
+        });
+    }, alertDelay);
 };
 
-const breakingNewsInit = (): Promise<?Alert> => {
-    if (userCanDismissAlerts()) {
-        knownAlertIDs = local.get(knownAlertIDsStorageKey) || {};
+const canShow = (): Promise<boolean> => {
+    return new Promise(resolve => {
+        if (userCanDismissAlerts()) {
+            knownAlertIDs = local.get(knownAlertIDsStorageKey) || {};
 
-        return fetchBreakingNews()
-            .then(parseResponse)
-            .then(getRelevantAlerts)
-            .then(pruneKnownAlertIDs)
-            .then(filterAlertsByDismissed)
-            .then(filterAlertsByAge)
-            .then(pickNewest)
-            .then(showAlert)
-            .catch(ex => {
-                reportError(ex, {
-                    feature: 'breaking-news',
+            fetchBreakingNews()
+                .then(parseResponse)
+                .then(getRelevantAlerts)
+                .then(pruneKnownAlertIDs)
+                .then(filterAlertsByDismissed)
+                .then(filterAlertsByAge)
+                .then(pickNewest)
+                .then(alert => {
+                    console.log('alert --->', alert);
+
+                    if (alert) {
+                        alertToShow = alert;
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                })
+                .catch(ex => {
+                    reportError(ex, {
+                        feature: 'breaking-news',
+                    });
+                    resolve(false);
                 });
-            });
-    }
-    return Promise.reject(new Error('cannot dismiss'));
-};
+        } else {
+            resolve(false);
+        }
+    }); 
+}
 
-export { breakingNewsInit };
+export default {
+    show,
+    canShow,
+};

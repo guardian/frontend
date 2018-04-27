@@ -36,7 +36,6 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initCustomSmartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
-import { breakingNewsInit } from 'common/modules/onward/breaking-news';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
@@ -223,18 +222,6 @@ const initOpenOverlayOnClick = (): void => {
     });
 };
 
-const loadBreakingNews = (): void => {
-    if (
-        config.switches.breakingNews &&
-        config.page.section !== 'identity' &&
-        !config.page.isHosted
-    ) {
-        breakingNewsInit().catch(() => {
-            // breaking news may not load if local storage is unavailable - this is fine
-        });
-    }
-};
-
 const initPublicApi = (): void => {
     // BE CAREFUL what you expose here...
     window.guardian.api = {};
@@ -292,7 +279,6 @@ const init = (): void => {
         ['c-discussion', initDiscussion],
         ['c-test-cookie', testCookie],
         ['c-event-listeners', windowEventListeners],
-        ['c-breaking-news', loadBreakingNews],
         ['c-block-link', fauxBlockLink],
         ['c-iframe', checkIframe],
         ['c-tabs', showTabs],
