@@ -10,7 +10,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialAdRefresh,
     OrielParticipation,
-    LotameParticipation
+    LotameParticipation,
+    LineHeightFontSize
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -45,4 +46,12 @@ object LotameParticipation extends Experiment(
   owners = Seq(Owner.withGithub("janua")),
   sellByDate = new LocalDate(2018, 6, 28),
   participationGroup = Perc1D
+)
+
+object LineHeightFontSize extends Experiment(
+  name = "line-height-font-size",
+  description = "User in this experiment will have an increased article body line height and font size",
+  owners = Seq(Owner.withGithub("frankie297")),
+  sellByDate = new LocalDate(2018, 5, 17),
+  participationGroup = Perc1B
 )
