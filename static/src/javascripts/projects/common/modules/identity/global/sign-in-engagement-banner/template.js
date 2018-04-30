@@ -80,6 +80,7 @@ const makeTemplateHtml = (tpl: Template) => `
         </div>
         <a href="#" data-link-name="sign-in-eb : to-info" class="site-message--sign-in__why">
             ${tpl.advantagesCta}
+            ${arrowRight.markup}
         </a>
         <button data-link-name="sign-in-eb : close" class="${
             bindableClassNames.closeBtn
