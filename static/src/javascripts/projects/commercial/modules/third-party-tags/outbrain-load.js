@@ -12,7 +12,7 @@ const outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 const outbrainTpl = ({ widgetCode }: { widgetCode: string }): string => `
     <div class="OUTBRAIN" data-widget-id="${
         widgetCode
-    }" data-ob-template="guardian"></div>
+    }" data-ob-template="guardian" aria-hidden="true"></div>
     `;
 
 const selectors = {
