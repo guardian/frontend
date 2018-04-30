@@ -1,5 +1,5 @@
 // @flow
-import { init, _ } from 'common/modules/ui/bannerMediator';
+import { init, _ } from 'common/modules/ui/bannerPicker';
 
 const shortTrueCheck = () =>
     new Promise(resolve => {

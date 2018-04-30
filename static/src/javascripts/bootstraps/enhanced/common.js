@@ -41,7 +41,7 @@ import { membershipEngagementBannerInit } from 'common/modules/commercial/member
 import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
-import { init as initBannerMediator } from 'common/modules/ui/bannerMediator';
+import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import ophan from 'ophan/ng';
 
 const initialiseTopNavItems = (): void => {
@@ -305,7 +305,7 @@ const init = (): void => {
         ['c-email', initialiseEmail],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
-        ['c-banner-mediator', initBannerMediator],
+        ['c-banner-picker', initBannerPicker],
     ]);
 };
 
