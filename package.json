@@ -38,7 +38,7 @@
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
     "videojs-playlist": "guardian/videojs-playlist#0.1.4",
     "webshot": "^0.18.0",
-    "wolfy87-eventemitter": "~4.2.6"
+    "wolfy87-eventemitter": "~5.2.4"
   },
   "devDependencies": {
     "amphtml-validator": "^1.0.21",
