@@ -124,14 +124,14 @@ const filterAlertsByDismissed = (alerts: Array<Alert>): Array<Alert> =>
     alerts.filter(alert => knownAlertIDs[alert.id] !== true);
 
 // don't show alerts if they're over a certain age
-const filterAlertsByAge = (alerts: Array<Alert>): Array<Alert> => 
+const filterAlertsByAge = (alerts: Array<Alert>): Array<Alert> =>
     alerts.filter(alert => {
         const alertTime = alert.frontPublicationDate;
         return alertTime && isWithinSeconds(new Date(alertTime), 1200); // 20 mins
-    }); 
+    });
 
 // we only show one alert at a time, pick the youngest available
-const pickNewest = (alerts: Array<Alert>): Alert => 
+const pickNewest = (alerts: Array<Alert>): Alert =>
     alerts.sort((a, b) => b.frontPublicationDate - a.frontPublicationDate)[0];
 
 const renderAlert = (alert: Alert): bonzo => {
@@ -190,8 +190,8 @@ const show = (): void => {
     }, alertDelay);
 };
 
-const canShow = (): Promise<boolean> => {
-    return new Promise(resolve => {
+const canShow = (): Promise<boolean> =>
+    new Promise(resolve => {
         if (userCanDismissAlerts()) {
             knownAlertIDs = local.get(knownAlertIDsStorageKey) || {};
 
@@ -219,8 +219,7 @@ const canShow = (): Promise<boolean> => {
         } else {
             resolve(false);
         }
-    }); 
-}
+    });
 
 export default {
     show,
