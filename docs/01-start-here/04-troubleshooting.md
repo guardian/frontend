@@ -36,6 +36,8 @@ Flow can sometimes take a long time to run. The first time you run Flowtype chec
 $ yarn flow stop
 ```
 
+Next time you push your branch or manually run the Flow checks, a new Flow server will be started.
+
 ### Global install permissions errors
 The script installs global npm packages without sudo. If you get npm permission errors, follow the guide to using npm without sudo [here](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
