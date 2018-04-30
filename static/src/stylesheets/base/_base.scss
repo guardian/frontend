@@ -107,3 +107,11 @@ input[type='button'],
 input[type='submit'] {
     touch-action: manipulation;
 }
+
+// don't animate anything if people have said they don't want it
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
