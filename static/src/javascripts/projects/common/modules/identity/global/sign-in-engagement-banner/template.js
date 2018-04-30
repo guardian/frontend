@@ -12,7 +12,7 @@ type Feature = {
 type LinkTargets = {
     signIn: string,
     register: string,
-    why: ?string,
+    why?: string,
 };
 
 type Template = {
@@ -89,7 +89,7 @@ const makeTemplateHtml = (tpl: Template) => `
                 ${arrowRight.markup}
             </a>
         </div>
-        ${tpl.links.why &&
+        ${tpl.links.why ?
             `
             <a href="${
                 tpl.links.why
@@ -97,7 +97,7 @@ const makeTemplateHtml = (tpl: Template) => `
                 ${tpl.advantagesCta}
                 ${arrowRight.markup}
             </a>
-        `}
+        `:''}
         <button data-link-name="sign-in-eb : close" class="${
             bindableClassNames.closeBtn
         }">
@@ -111,5 +111,5 @@ const makeTemplateHtml = (tpl: Template) => `
 </div>
 `;
 
-export type { Template, Feature };
+export type { Template, Feature, LinkTargets };
 export { makeTemplateHtml, bindableClassNames };
