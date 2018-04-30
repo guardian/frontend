@@ -2,6 +2,7 @@
 
 import { Message } from 'common/modules/ui/message';
 import { getCookie } from 'lib/cookies';
+import { local } from 'lib/storage';
 import mediator from 'lib/mediator';
 import type { Template } from './sign-in-engagement-banner/template';
 import {
@@ -18,12 +19,28 @@ const signedInCookie: string = 'GU_U';
 const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
 const ERR_MALFORMED_HTML = 'ERR_MALFORMED_HTML';
 
-const isUserNotSignedIn = (): boolean => getCookie(signedInCookie) === null;
+const dayInMs = 24 * 60 * 60 * 1000;
+const monthInMs = 30 * dayInMs;
 
-const getDisplayConditions = (): boolean[] => [isUserNotSignedIn()];
+/* Must have visited 4 articles */
+const hasReadOver4Articles = (): boolean => (local.get('gu.alreadyVisited') || 0) >= 4;
 
-const shouldDisplayBanner = (): Promise<boolean> =>
-    Promise.resolve(getDisplayConditions().every(_ => _ === true));
+/* Must be not already signed in */
+const isNotSignedIn = (): boolean => getCookie(signedInCookie) === null;
+
+/* Must have visited between 1 month & 24 hours ago */
+const isRecurringVisitor = (): boolean => {
+    const ga: ?string = getCookie('_ga');
+    if (!ga) return false;
+    const date: number = parseInt(ga.split('.').pop(), 10) * 1000;
+    if (!date || Number.isNaN(date)) return false;
+    return Date.now() - date > dayInMs && Date.now() - date < monthInMs;
+};
+
+const shouldDisplayBanner = (): Promise<boolean> => {
+    const conditions = [isNotSignedIn(), isRecurringVisitor(), hasReadOver4Articles()];
+    return Promise.resolve(conditions.every(_ => _ === true));
+};
 
 const waitForBannersOrTimeout = (): Promise<void> =>
     new Promise((show, reject) => {
