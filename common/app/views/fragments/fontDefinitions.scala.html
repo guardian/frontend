@@ -2,13 +2,11 @@
 
 @import conf.Static
 
-@List("GuardianHeadline", "GuardianTextEgyptianWeb", "GuardianTextSansWeb").map { typeface =>
+@List("GuardianHeadline", "GuardianTextEgyptian", "GuardianTextSans").map { typeface =>
     <style class="webfont" data-cache-name="@typeface"
         @List("woff2", "woff", "ttf").map { font =>
             data-cache-file-@font="@Static(s"fonts/${typeface}.${font}.json")"
-            @List("cleartype", "auto").map { hinting =>
-                data-cache-file-hinted-@hinting-@font="@Static(s"fonts/${typeface}${hinting.capitalize}Hinted.${font}.json")"
-            }
+            data-cache-file-hinted-auto-@font="@Static(s"fonts/${typeface}AutoHinted.${font}.json")"
         }
     ></style>
 }

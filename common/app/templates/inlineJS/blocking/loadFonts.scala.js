@@ -27,14 +27,9 @@ do you have fonts in localStorage?
                 const version = parseFloat(windowsNT[1], 10);
 
                 // For Windows XP-7
-                if (version >= 5.1 && version <= 6.1) {
-                    if (/Chrome/.exec(ua) && version < 6.0) {
-                        // Chrome on windows XP wants auto-hinting
-                        hinting = 'Auto';
-                    } else {
-                        // All others use cleartype
-                        hinting = 'Cleartype';
-                    }
+                if (/Chrome/.exec(ua) && version >= 5.1 && version < 6.0) {
+                    // Chrome on windows XP wants auto-hinting
+                    hinting = 'Auto';
                 }
             }
         } catch (e) {
