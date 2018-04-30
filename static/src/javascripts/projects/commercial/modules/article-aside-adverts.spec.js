@@ -95,7 +95,7 @@ describe('Article Aside Adverts', () => {
         mediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
-                '1,1|2,2|300,250|300,600|fluid'
+                '1,1|2,2|300,250|300,274|300,600|fluid'
             );
             done();
         });
@@ -107,7 +107,7 @@ describe('Article Aside Adverts', () => {
         mediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).not.toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
-                '1,1|2,2|300,250|fluid'
+                '1,1|2,2|300,250|300,274|fluid'
             );
             done();
         });
