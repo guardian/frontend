@@ -40,20 +40,59 @@ const waitForBannersOrTimeout = (): Promise<void> =>
         }, 1000);
     });
 
+type Feature = {
+    id: string,
+    mainCopy: string,
+    subCopy: string
+};
+
+type Template = {
+    headerMain: string[],
+    headerSub: string[],
+    signInCta: string,
+    registerCta: string,
+    advantagesCta: string,
+    closeButton: string,
+    features: Feature[]
+};
+
+const tpl: Template = {
+    headerMain: ['Enjoy even','more from','The Guardian'],
+    headerSub: ['Please sign in or register to manage your preferences'],
+}
+
+const wrapLineBreakingString = (text: string[], className: string): string =>
+    text.map((line,index) =>
+        `<span class="${className}">${line}${index===text.length?'':' '}</span><wbr>
+    `).join('');
+
 const html = `
                 <div id="site-message__message" class="site-message--sign-in-container">
-                    <section class="site-message__message site-message--sign-in">
+                    <section class="site-message__message site-message__message--sign-in">
                         <div class="site-message--sign-in__header">
-                            <h2>Sign in to The Guardian to continue</h2>
+                            <h2 class="site-message--sign-in__header-msg site-message--sign-in__header-msg--main">${wrapLineBreakingString(tpl.headerMain,'site-message--sign-in__header-msg-line')}</h2>
+                            <br/>
+                            <p class="site-message--sign-in__header-msg site-message--sign-in__header-msg--sub">${wrapLineBreakingString(tpl.headerSub,'site-message--sign-in__header-msg-line')}</p>
                         </div>
                         <div class="site-message--sign-in__body">
-                            <p>Enjoy the following exclusive features:</p>
                             <ul>
                                 <li>A more personalised Guardian</li>
                                 <li>Comment on the crosswords</li>
                                 <li>Get our award-winning newsletters</li>
                             </ul> 
                         </div>
+                        <div class="site-message--sign-in__buttons">
+                            <a href="#" class="site-message--sign-in-cta site-message--sign-in-cta--main">
+                                Sign in
+                            </a>
+                            <a href="#" class="site-message--sign-in-cta site-message--sign-in-cta--secondary">
+                                Register
+                            </a>
+                        </div>
+                        <a href="#" class="site-message--sign-in__why">
+                            Why sign in to The Guardian?
+                        </a>
+                        <button class="site-message--sign-in__dismiss">Close this</button>
                     </section>
                 </div>
             `;
@@ -70,7 +109,7 @@ const signInEngagementBannerInit = (): void => {
         })
         .then(() => {
             const msg = new Message(messageCode, {
-                cssModifierClass: 'sign-in',
+                cssModifierClass: 'sign-in-message',
                 trackDisplay: true,
                 permanent: true,
                 blocking: true,
