@@ -44,6 +44,11 @@ import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import ophan from 'ophan/ng';
+import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
+import {
+    getVariant,
+    isInVariant,
+} from 'common/modules/experiments/utils';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -253,7 +258,13 @@ const membershipEngagementBanner = (): void => {
 };
 
 const signInEngagementBanner = (): void => {
-    signInEngagementBannerInit();
+    const variant = getVariant(signInEngagementBannerDisplay, 'variant');
+    const inTestVariant =
+        variant && isInVariant(signInEngagementBannerDisplay, variant);
+
+    if (inTestVariant) {
+        signInEngagementBannerInit();
+    }
 };
 
 const initialiseEmail = (): void => {
