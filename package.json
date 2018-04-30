@@ -141,7 +141,6 @@
     "moduleNameMapper": {
       "^lodash/(.*)$": "lodash-node/compat/$1",
       "raven": "raven-js",
-      "EventEmitter": "wolfy87-eventemitter",
       "videojs": "video.js",
       "^svgs/(.*)$": "<rootDir>/__mocks__/svgMock.js",
       "^(.*)\\.html$": "<rootDir>/__mocks__/templateMock.js",
