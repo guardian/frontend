@@ -47,28 +47,38 @@ describe('breaking news', () => {
         fakeFetchJson.mockReturnValue(
             Promise.resolve({
                 webTitle: 'Breaking News',
-                collections: [{
-                    href: 'global',
-                    content: [{
-                        headline: 'alert 1',
-                        id: 'alert_1',
-                        frontPublicationDate: Date.now(),
-                    }]
-                }, {
-                    href: 'uk',
-                    content: [{
-                        headline: 'alert 2',
-                        id: 'alert_2',
-                        frontPublicationDate: Date.now() - 1000,
-                    }] 
-                }, {
-                    href: 'sport',
-                    content: [{
-                        headline: 'alert 3',
-                        id: 'alert_3',
-                        frontPublicationDate: Date.now() - 2000,
-                    }] 
-                }],
+                collections: [
+                    {
+                        href: 'global',
+                        content: [
+                            {
+                                headline: 'alert 1',
+                                id: 'alert_1',
+                                frontPublicationDate: Date.now(),
+                            },
+                        ],
+                    },
+                    {
+                        href: 'uk',
+                        content: [
+                            {
+                                headline: 'alert 2',
+                                id: 'alert_2',
+                                frontPublicationDate: Date.now() - 1000,
+                            },
+                        ],
+                    },
+                    {
+                        href: 'sport',
+                        content: [
+                            {
+                                headline: 'alert 3',
+                                id: 'alert_3',
+                                frontPublicationDate: Date.now() - 2000,
+                            },
+                        ],
+                    },
+                ],
             })
         );
     });
@@ -82,15 +92,14 @@ describe('breaking news', () => {
     });
 
     describe('canShow', () => {
-        it('should return true', () => {
-            return breakingNews.canShow().then(canShow => {
+        it('should return true', () =>
+            breakingNews.canShow().then(canShow => {
                 expect(canShow).toBe(true);
-            });
-        });
+            }));
 
         it('should return false if user cannot dismiss alerts', () => {
             localStorageStub.isAvailable.mockReturnValue(false);
-        
+
             return breakingNews.canShow().then(canShow => {
                 expect(canShow).toBe(false);
             });
@@ -138,9 +147,11 @@ describe('breaking news', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
-                    collections: [{
-                        content: []
-                    }],
+                    collections: [
+                        {
+                            content: [],
+                        },
+                    ],
                 })
             );
 
@@ -153,10 +164,12 @@ describe('breaking news', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
-                    collections: [{
-                        href: 'foo',
-                        content: [{}]
-                    }],
+                    collections: [
+                        {
+                            href: 'foo',
+                            content: [{}],
+                        },
+                    ],
                 })
             );
 
@@ -177,12 +190,16 @@ describe('breaking news', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
-                    collections: [{
-                        href: 'global',
-                        content: [{
-                            id: 'alert_1'
-                        }]
-                    }],
+                    collections: [
+                        {
+                            href: 'global',
+                            content: [
+                                {
+                                    id: 'alert_1',
+                                },
+                            ],
+                        },
+                    ],
                 })
             );
 
@@ -205,13 +222,17 @@ describe('breaking news', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
-                    collections: [{
-                        href: 'global',
-                        content: [{
-                            id: 'alert_1',
-                            frontPublicationDate: Date.now(),
-                        }]
-                    },],
+                    collections: [
+                        {
+                            href: 'global',
+                            content: [
+                                {
+                                    id: 'alert_1',
+                                    frontPublicationDate: Date.now(),
+                                },
+                            ],
+                        },
+                    ],
                 })
             );
 
@@ -224,14 +245,18 @@ describe('breaking news', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
-                    collections: [{
-                        href: 'aus',
-                        content: [{
-                            headline: 'alert 1',
-                            id: 'alert_1',
-                            frontPublicationDate: Date.now(),
-                        }]
-                    }],
+                    collections: [
+                        {
+                            href: 'aus',
+                            content: [
+                                {
+                                    headline: 'alert 1',
+                                    id: 'alert_1',
+                                    frontPublicationDate: Date.now(),
+                                },
+                            ],
+                        },
+                    ],
                 })
             );
 
@@ -240,14 +265,14 @@ describe('breaking news', () => {
             });
         });
 
-        it('should show an edition alert before a section alert', () => {
-        });
+        it('should show an edition alert before a section alert', () => {});
     });
 
     describe('show', () => {
         beforeEach(() => {
             if (document && document.body) {
-                document.body.innerHTML = '<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>';
+                document.body.innerHTML =
+                    '<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>';
             }
             setTimeout.mockClear();
         });
@@ -270,7 +295,7 @@ describe('breaking news', () => {
 
             return breakingNews.canShow().then(canShow => {
                 expect(canShow).toBe(true);
-                
+
                 if (canShow) {
                     breakingNews.show();
 
@@ -279,29 +304,36 @@ describe('breaking news', () => {
                         localStorageStub.set.mock.calls[callLength - 1];
 
                     if (document) {
-                        const fadeInElems = document.querySelectorAll('.breaking-news--hidden.breaking-news--fade-in');
+                        const fadeInElems = document.querySelectorAll(
+                            '.breaking-news--hidden.breaking-news--fade-in'
+                        );
                         expect(fadeInElems.length).toBe(1);
 
-                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        const spectreElems = document.querySelectorAll(
+                            '.breaking-news--spectre'
+                        );
                         expect(spectreElems.length).toBe(0);
                     }
-                    
+
                     jest.runAllTimers();
                     expect(setTimeout.mock.calls[0][1]).toBe(
                         BREAKING_NEWS_DELAY
                     );
 
                     if (document) {
-                        const hiddenElems = document.querySelectorAll('.breaking-news--hidden');
+                        const hiddenElems = document.querySelectorAll(
+                            '.breaking-news--hidden'
+                        );
                         expect(hiddenElems.length).toBe(0);
 
-                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        const spectreElems = document.querySelectorAll(
+                            '.breaking-news--spectre'
+                        );
                         expect(spectreElems.length).toBe(1);
 
-                        const alertHeadline = document.querySelector('.breaking-news__item-headline');
-                        if (alertHeadline) {
-                            expect(alertHeadline.innerText).toBe('alert 1');
-                        }
+                        expect(fakeTemplate.mock.calls[0][1].id).toBe(
+                            'alert_1'
+                        );
                     }
 
                     expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
@@ -314,10 +346,10 @@ describe('breaking news', () => {
             });
         });
 
-        it('should show a known alert immediately', () => {
-            return breakingNews.canShow().then(canShow => {
+        it('should show a known alert immediately', () =>
+            breakingNews.canShow().then(canShow => {
                 expect(canShow).toBe(true);
-                
+
                 if (canShow) {
                     breakingNews.show();
 
@@ -326,26 +358,34 @@ describe('breaking news', () => {
                         localStorageStub.set.mock.calls[callLength - 1];
 
                     if (document) {
-                        const fadeInElems = document.querySelectorAll('.breaking-news--hidden.breaking-news--fade-in');
+                        const fadeInElems = document.querySelectorAll(
+                            '.breaking-news--hidden.breaking-news--fade-in'
+                        );
                         expect(fadeInElems.length).toBe(1);
 
-                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        const spectreElems = document.querySelectorAll(
+                            '.breaking-news--spectre'
+                        );
                         expect(spectreElems.length).toBe(0);
                     }
-                    
+
                     jest.runAllTimers();
-                    expect(setTimeout.mock.calls[0][1]).toBe(
-                        0
-                    );
+                    expect(setTimeout.mock.calls[0][1]).toBe(0);
 
                     if (document) {
-                        const hiddenElems = document.querySelectorAll('.breaking-news--hidden');
+                        const hiddenElems = document.querySelectorAll(
+                            '.breaking-news--hidden'
+                        );
                         expect(hiddenElems.length).toBe(0);
 
-                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        const spectreElems = document.querySelectorAll(
+                            '.breaking-news--spectre'
+                        );
                         expect(spectreElems.length).toBe(1);
 
-                        expect(fakeTemplate.mock.calls[0][1].id).toBe('alert_1');
+                        expect(fakeTemplate.mock.calls[0][1].id).toBe(
+                            'alert_1'
+                        );
                     }
 
                     expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
@@ -355,29 +395,35 @@ describe('breaking news', () => {
                         alert_3: false,
                     });
                 }
-            });
-        });
+            }));
 
         it('should show a global alert before an edition alert', () => {
             const pubDate = Date.now();
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
-                    collections: [{
-                        href: 'uk',
-                        content: [{
-                            headline: 'alert 1',
-                            id: 'alert_1',
-                            frontPublicationDate: pubDate,
-                        }]
-                    }, {
-                        href: 'global',
-                        content: [{
-                            headline: 'alert 2',
-                            id: 'alert_2',
-                            frontPublicationDate: pubDate,
-                        }] 
-                    }],
+                    collections: [
+                        {
+                            href: 'uk',
+                            content: [
+                                {
+                                    headline: 'alert 1',
+                                    id: 'alert_1',
+                                    frontPublicationDate: pubDate,
+                                },
+                            ],
+                        },
+                        {
+                            href: 'global',
+                            content: [
+                                {
+                                    headline: 'alert 2',
+                                    id: 'alert_2',
+                                    frontPublicationDate: pubDate,
+                                },
+                            ],
+                        },
+                    ],
                 })
             );
 
@@ -401,26 +447,34 @@ describe('breaking news', () => {
                         localStorageStub.set.mock.calls[callLength - 1];
 
                     if (document) {
-                        const fadeInElems = document.querySelectorAll('.breaking-news--hidden.breaking-news--fade-in');
+                        const fadeInElems = document.querySelectorAll(
+                            '.breaking-news--hidden.breaking-news--fade-in'
+                        );
                         expect(fadeInElems.length).toBe(1);
 
-                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        const spectreElems = document.querySelectorAll(
+                            '.breaking-news--spectre'
+                        );
                         expect(spectreElems.length).toBe(0);
                     }
-                    
+
                     jest.runAllTimers();
-                    expect(setTimeout.mock.calls[0][1]).toBe(
-                        0
-                    );
+                    expect(setTimeout.mock.calls[0][1]).toBe(0);
 
                     if (document) {
-                        const hiddenElems = document.querySelectorAll('.breaking-news--hidden');
+                        const hiddenElems = document.querySelectorAll(
+                            '.breaking-news--hidden'
+                        );
                         expect(hiddenElems.length).toBe(0);
 
-                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        const spectreElems = document.querySelectorAll(
+                            '.breaking-news--spectre'
+                        );
                         expect(spectreElems.length).toBe(1);
 
-                        expect(fakeTemplate.mock.calls[0][1].id).toBe('alert_2');
+                        expect(fakeTemplate.mock.calls[0][1].id).toBe(
+                            'alert_2'
+                        );
                     }
 
                     expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
@@ -437,21 +491,28 @@ describe('breaking news', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
-                    collections: [{
-                        href: 'sport',
-                        content: [{
-                            headline: 'alert 1',
-                            id: 'alert_1',
-                            frontPublicationDate: pubDate,
-                        }]
-                    }, {
-                        href: 'uk',
-                        content: [{
-                            headline: 'alert 2',
-                            id: 'alert_2',
-                            frontPublicationDate: pubDate,
-                        }] 
-                    }],
+                    collections: [
+                        {
+                            href: 'sport',
+                            content: [
+                                {
+                                    headline: 'alert 1',
+                                    id: 'alert_1',
+                                    frontPublicationDate: pubDate,
+                                },
+                            ],
+                        },
+                        {
+                            href: 'uk',
+                            content: [
+                                {
+                                    headline: 'alert 2',
+                                    id: 'alert_2',
+                                    frontPublicationDate: pubDate,
+                                },
+                            ],
+                        },
+                    ],
                 })
             );
 
@@ -475,26 +536,34 @@ describe('breaking news', () => {
                         localStorageStub.set.mock.calls[callLength - 1];
 
                     if (document) {
-                        const fadeInElems = document.querySelectorAll('.breaking-news--hidden.breaking-news--fade-in');
+                        const fadeInElems = document.querySelectorAll(
+                            '.breaking-news--hidden.breaking-news--fade-in'
+                        );
                         expect(fadeInElems.length).toBe(1);
 
-                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        const spectreElems = document.querySelectorAll(
+                            '.breaking-news--spectre'
+                        );
                         expect(spectreElems.length).toBe(0);
                     }
-                    
+
                     jest.runAllTimers();
-                    expect(setTimeout.mock.calls[0][1]).toBe(
-                        0
-                    );
+                    expect(setTimeout.mock.calls[0][1]).toBe(0);
 
                     if (document) {
-                        const hiddenElems = document.querySelectorAll('.breaking-news--hidden');
+                        const hiddenElems = document.querySelectorAll(
+                            '.breaking-news--hidden'
+                        );
                         expect(hiddenElems.length).toBe(0);
 
-                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        const spectreElems = document.querySelectorAll(
+                            '.breaking-news--spectre'
+                        );
                         expect(spectreElems.length).toBe(1);
 
-                        expect(fakeTemplate.mock.calls[0][1].id).toBe('alert_2');
+                        expect(fakeTemplate.mock.calls[0][1].id).toBe(
+                            'alert_2'
+                        );
                     }
 
                     expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
