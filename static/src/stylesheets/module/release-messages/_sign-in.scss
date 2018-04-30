@@ -1,6 +1,6 @@
-$color-sign-in-eb-main: #F8C7CF;
-$color-sign-in-eb-alt: #1E8DCD;
-$color-sign-in-eb-alt-contrast: #0074A6;
+$color-sign-in-eb-main: #f8c7cf;
+$color-sign-in-eb-alt: #1e8dcd;
+$color-sign-in-eb-alt-contrast: #0074a6;
 $color-sign-in-eb-callout: $news-garnett-highlight;
 
 .site-message.site-message--sign-in-message {
@@ -24,6 +24,10 @@ $color-sign-in-eb-callout: $news-garnett-highlight;
     }
     .site-message__message {
         max-width: 100%;
+        padding: 0;
+    }
+    .site-message__media {
+        display: none;
     }
     .site-message__copy {
         padding: 0;
