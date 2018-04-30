@@ -45,10 +45,7 @@ import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import ophan from 'ophan/ng';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
-import {
-    getVariant,
-    isInVariant,
-} from 'common/modules/experiments/utils';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');

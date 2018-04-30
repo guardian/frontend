@@ -3,8 +3,13 @@
 import { Message } from 'common/modules/ui/message';
 import { getCookie } from 'lib/cookies';
 import { local } from 'lib/storage';
+import config from 'lib/config';
 import mediator from 'lib/mediator';
-import type { Template } from './sign-in-engagement-banner/template';
+import type {
+    Template,
+    LinkTargets,
+    Feature,
+} from './sign-in-engagement-banner/template';
 import {
     makeTemplateHtml,
     bindableClassNames,
@@ -23,7 +28,8 @@ const dayInMs = 24 * 60 * 60 * 1000;
 const monthInMs = 30 * dayInMs;
 
 /* Must have visited 4 articles */
-const hasReadOver4Articles = (): boolean => (local.get('gu.alreadyVisited') || 0) >= 4;
+const hasReadOver4Articles = (): boolean =>
+    (local.get('gu.alreadyVisited') || 0) >= 4;
 
 /* Must be not already signed in */
 const isNotSignedIn = (): boolean => getCookie(signedInCookie) === null;
@@ -38,7 +44,11 @@ const isRecurringVisitor = (): boolean => {
 };
 
 const shouldDisplayBanner = (): Promise<boolean> => {
-    const conditions = [isNotSignedIn(), isRecurringVisitor(), hasReadOver4Articles()];
+    const conditions = [
+        isNotSignedIn(),
+        isRecurringVisitor(),
+        hasReadOver4Articles(),
+    ];
     return Promise.resolve(conditions.every(_ => _ === true));
 };
 
@@ -59,6 +69,33 @@ const waitForBannersOrTimeout = (): Promise<void> =>
         }, 1000);
     });
 
+const links: LinkTargets = {
+    signIn: `${config.get(
+        'page.idUrl'
+    )}/signin?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
+    register: `${config.get(
+        'page.idUrl'
+    )}/register?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
+};
+
+const features: Feature[] = [
+    {
+        icon: iconPhone.markup,
+        mainCopy: 'A consistent experience',
+        subCopy: 'across all of your devices',
+    },
+    {
+        icon: iconComment.markup,
+        mainCopy: 'Join the conversation',
+        subCopy: 'and comment on articles',
+    },
+    {
+        icon: iconEmail.markup,
+        mainCopy: 'Get closer to the journalism',
+        subCopy: 'by subscribing to editorial emails',
+    },
+];
+
 const tpl: Template = {
     headerMain: ['Enjoy even', 'more from', 'The Guardian'],
     headerSub: ['Please sign in or register to manage your preferences'],
@@ -66,23 +103,8 @@ const tpl: Template = {
     registerCta: 'Register',
     advantagesCta: 'Why sign in to The Guardian?',
     closeButton: 'Continue without signing in',
-    features: [
-        {
-            icon: iconPhone.markup,
-            mainCopy: 'A consistent experience',
-            subCopy: 'across all of your devices',
-        },
-        {
-            icon: iconComment.markup,
-            mainCopy: 'Join the conversation',
-            subCopy: 'and comment on articles',
-        },
-        {
-            icon: iconEmail.markup,
-            mainCopy: 'Get closer to the journalism',
-            subCopy: 'by subscribing to editorial emails',
-        },
-    ],
+    features,
+    links,
 };
 
 const hide = (msg: Message) => {

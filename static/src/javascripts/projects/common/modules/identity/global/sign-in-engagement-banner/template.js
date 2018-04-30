@@ -9,6 +9,12 @@ type Feature = {
     subCopy: string,
 };
 
+type LinkTargets = {
+    signIn: string,
+    register: string,
+    why: ?string,
+};
+
 type Template = {
     headerMain: string[],
     headerSub: string[],
@@ -17,6 +23,7 @@ type Template = {
     advantagesCta: string,
     closeButton: string,
     features: Feature[],
+    links: LinkTargets,
 };
 
 const bindableClassNames = {
@@ -69,19 +76,28 @@ const makeTemplateHtml = (tpl: Template) => `
                 .join('')}
         </ul>
         <div class="site-message--sign-in__buttons">
-            <a href="#" data-link-name="sign-in-eb : success : to-sign-in" class="site-message--sign-in-cta site-message--sign-in-cta--main">
+            <a href="${
+                tpl.links.signIn
+            }" data-link-name="sign-in-eb : success : to-sign-in" class="site-message--sign-in-cta site-message--sign-in-cta--main">
                 ${tpl.signInCta}
                 ${arrowRight.markup}
             </a>
-            <a href="#" data-link-name="sign-in-eb : success : to-register" class="site-message--sign-in-cta site-message--sign-in-cta--secondary">
+            <a href="${
+                tpl.links.register
+            }" data-link-name="sign-in-eb : success : to-register" class="site-message--sign-in-cta site-message--sign-in-cta--secondary">
                 ${tpl.registerCta}
                 ${arrowRight.markup}
             </a>
         </div>
-        <a href="#" data-link-name="sign-in-eb : to-info" class="site-message--sign-in__why">
-            ${tpl.advantagesCta}
-            ${arrowRight.markup}
-        </a>
+        ${tpl.links.why &&
+            `
+            <a href="${
+                tpl.links.why
+            }" data-link-name="sign-in-eb : to-info" class="site-message--sign-in__why">
+                ${tpl.advantagesCta}
+                ${arrowRight.markup}
+            </a>
+        `}
         <button data-link-name="sign-in-eb : close" class="${
             bindableClassNames.closeBtn
         }">
