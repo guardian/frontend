@@ -1,4 +1,6 @@
 // @flow
+import { inlineSvg } from 'common/views/svgs';
+
 type Feature = {
     id: string,
     mainCopy: string,
@@ -14,6 +16,10 @@ type Template = {
     closeButton: string,
     features: Feature[],
 };
+
+const bindableClassNames = {
+    closeBtn: 'site-message--sign-in__dismiss'
+}
 
 const wrapLineBreakingString = (text: string[], className: string): string =>
     text
@@ -56,20 +62,22 @@ const makeTemplateHtml = (tpl: Template) => `
                 .join('')}
         </ul>
         <div class="site-message--sign-in__buttons">
-            <a href="#" class="site-message--sign-in-cta site-message--sign-in-cta--main">
-                Sign in
+            <a href="#" data-link-name="sign-in-eb : success : to-sign-in" class="site-message--sign-in-cta site-message--sign-in-cta--main">
+                ${tpl.signInCta}
+                ${inlineSvg('arrowRight')}
             </a>
-            <a href="#" class="site-message--sign-in-cta site-message--sign-in-cta--secondary">
-                Register
+            <a href="#" data-link-name="sign-in-eb : success : to-register" class="site-message--sign-in-cta site-message--sign-in-cta--secondary">
+                ${tpl.registerCta}
+                ${inlineSvg('arrowRight')}
             </a>
         </div>
-        <a href="#" class="site-message--sign-in__why">
-            Why sign in to The Guardian?
+        <a href="#" data-link-name="sign-in-eb : to-info" class="site-message--sign-in__why">
+            ${tpl.advantagesCta}
         </a>
-        <button class="site-message--sign-in__dismiss">Close this</button>
+        <button data-link-name="sign-in-eb : close" class="${bindableClassNames.closeBtn}">${tpl.closeButton}</button>
     </section>
 </div>
 `;
 
 export type { Template, Feature };
-export { makeTemplateHtml };
+export { makeTemplateHtml, bindableClassNames };

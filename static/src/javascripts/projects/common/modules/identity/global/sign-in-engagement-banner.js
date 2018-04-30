@@ -4,12 +4,13 @@ import { Message } from 'common/modules/ui/message';
 import { getCookie } from 'lib/cookies';
 import mediator from 'lib/mediator';
 import type { Template } from './sign-in-eb-template';
-import { makeTemplateHtml } from './sign-in-eb-template';
+import { makeTemplateHtml, bindableClassNames } from './sign-in-eb-template';
 
 const messageCode: string = 'sign-in-30-april';
 const signedInCookie: string = 'GU_U';
 
 const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
+const ERR_MALFORMED_HTML = 'ERR_MALFORMED_HTML';
 
 const isUserNotSignedIn = (): boolean => getCookie(signedInCookie) === null;
 
@@ -61,6 +62,10 @@ const tpl: Template = {
     ],
 };
 
+const hide = (msg: Message) => {
+    msg.hide();
+};
+
 const signInEngagementBannerInit = (): void => {
     shouldDisplayBanner()
         .then((shouldIt: boolean) => {
@@ -76,7 +81,22 @@ const signInEngagementBannerInit = (): void => {
                 permanent: true,
                 blocking: true,
                 siteMessageComponentName: messageCode,
-                customJs: () => {},
+                customJs: () => {
+                    const closeButtonEl: ?HTMLElement = document.querySelector(
+                        `.${bindableClassNames.closeBtn}`
+                    );
+                    if (!closeButtonEl) {
+                        hide(msg);
+                        throw new Error(ERR_MALFORMED_HTML);
+                    }
+                    closeButtonEl.addEventListener(
+                        'click',
+                        (ev: MouseEvent) => {
+                            ev.preventDefault();
+                            hide(msg);
+                        }
+                    );
+                },
             });
             msg.show(makeTemplateHtml(tpl));
         })
