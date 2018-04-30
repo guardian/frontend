@@ -20,20 +20,20 @@ jest.mock('lib/fetch-json', () => jest.fn());
 jest.mock('common/modules/ui/relativedates', () => ({
     isWithinSeconds: jest.fn(() => true),
 }));
+jest.mock('lodash/utilities/template', () => jest.fn());
 jest.useFakeTimers();
 
 const fakeFetchJson: any = require('lib/fetch-json');
 const fakeRelativeDates: any = require('common/modules/ui/relativedates');
+const fakeTemplate: any = require('lodash/utilities/template');
+
+const BREAKING_NEWS_DELAY = 3000;
 
 describe('breaking news', () => {
     const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
 
     beforeEach(() => {
-        localStorageStub.isAvailable.mockReturnValue(true);
-        fakeRelativeDates.isWithinSeconds.mockImplementationOnce(
-            () => false
-        );
-        localStorageStub.get.mockImplementationOnce(key => {
+        localStorageStub.get.mockImplementation(key => {
             if (key === knownAlertIDsStorageKey) {
                 return {
                     alert_1: false,
@@ -42,24 +42,29 @@ describe('breaking news', () => {
                 };
             }
         });
+        localStorageStub.isAvailable.mockReturnValue(true);
+        fakeRelativeDates.isWithinSeconds.mockReturnValue(true);
         fakeFetchJson.mockReturnValue(
             Promise.resolve({
                 webTitle: 'Breaking News',
                 collections: [{
                     href: 'global',
                     content: [{
+                        headline: 'alert 1',
                         id: 'alert_1',
                         frontPublicationDate: Date.now(),
                     }]
                 }, {
                     href: 'uk',
                     content: [{
+                        headline: 'alert 2',
                         id: 'alert_2',
                         frontPublicationDate: Date.now() - 1000,
                     }] 
                 }, {
                     href: 'sport',
                     content: [{
+                        headline: 'alert 3',
                         id: 'alert_3',
                         frontPublicationDate: Date.now() - 2000,
                     }] 
@@ -68,8 +73,22 @@ describe('breaking news', () => {
         );
     });
 
-    describe('canShow returns false', () => {
-        it('if user cannot dismiss alerts', () => {
+    afterEach(() => {
+        localStorageStub.get.mockReset();
+        localStorageStub.isAvailable.mockReset();
+        fakeRelativeDates.isWithinSeconds.mockReset();
+        fakeFetchJson.mockReset();
+        fakeTemplate.mockReset();
+    });
+
+    describe('canShow', () => {
+        it('should return true', () => {
+            return breakingNews.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+            });
+        });
+
+        it('should return false if user cannot dismiss alerts', () => {
             localStorageStub.isAvailable.mockReturnValue(false);
         
             return breakingNews.canShow().then(canShow => {
@@ -77,7 +96,7 @@ describe('breaking news', () => {
             });
         });
 
-        it('if fetchBreakingNews returns no collection', () => {
+        it('should return false if fetchBreakingNews returns no collection', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
@@ -89,7 +108,7 @@ describe('breaking news', () => {
             });
         });
 
-        it('if fetchBreakingNews returns an empty collection', () => {
+        it('should return false if fetchBreakingNews returns an empty collection', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
@@ -102,7 +121,7 @@ describe('breaking news', () => {
             });
         });
 
-        it('if fetchBreakingNews returns a collection with no content', () => {
+        it('should return false if fetchBreakingNews returns a collection with no content', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
@@ -115,7 +134,7 @@ describe('breaking news', () => {
             });
         });
 
-        it('if fetchBreakingNews returns a collection with empty content', () => {
+        it('should return false if fetchBreakingNews returns a collection with empty content', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
@@ -130,7 +149,7 @@ describe('breaking news', () => {
             });
         });
 
-        it('if fetchBreakingNews returns a collection with no relevant alerts', () => {
+        it('should return false if fetchBreakingNews returns a collection with no relevant alerts', () => {
             fakeFetchJson.mockReturnValue(
                 Promise.resolve({
                     webTitle: 'Breaking News',
@@ -146,12 +165,11 @@ describe('breaking news', () => {
             });
         });
 
-        it('if fetchBreakingNews returns a collection with relevent alerts that have already been dismissed', () => {
-            localStorageStub.get.mockImplementationOnce(key => {
+        it('should return false if fetchBreakingNews returns a collection a relevent alert that has already been dismissed', () => {
+            localStorageStub.get.mockImplementation(key => {
                 if (key === knownAlertIDsStorageKey) {
                     return {
                         alert_1: true,
-                        alert_2: true,
                     };
                 }
             });
@@ -164,11 +182,6 @@ describe('breaking news', () => {
                         content: [{
                             id: 'alert_1'
                         }]
-                    }, {
-                        href: 'global',
-                        content: [{
-                            id: 'alert_2'
-                        }]
                     }],
                 })
             );
@@ -178,12 +191,10 @@ describe('breaking news', () => {
             });
         });
 
-        it('if fetchBreakingNews returns a collection with relevent alerts that are over 20 mins old', () => {
-            fakeRelativeDates.isWithinSeconds.mockImplementationOnce(
-                () => false
-            );
+        it('should return false if fetchBreakingNews returns a collection with relevent alerts that are over 20 mins old', () => {
+            fakeRelativeDates.isWithinSeconds.mockReturnValue(false);
 
-            localStorageStub.get.mockImplementationOnce(key => {
+            localStorageStub.get.mockImplementation(key => {
                 if (key === knownAlertIDsStorageKey) {
                     return {
                         alert_1: false,
@@ -208,358 +219,291 @@ describe('breaking news', () => {
                 expect(canShow).toBe(false);
             });
         });
+
+        it('should return false if relevant alert for a different edition', () => {
+            fakeFetchJson.mockReturnValue(
+                Promise.resolve({
+                    webTitle: 'Breaking News',
+                    collections: [{
+                        href: 'aus',
+                        content: [{
+                            headline: 'alert 1',
+                            id: 'alert_1',
+                            frontPublicationDate: Date.now(),
+                        }]
+                    }],
+                })
+            );
+
+            return breakingNews.canShow().then(canShow => {
+                expect(canShow).toBe(false);
+            });
+        });
+
+        it('should show an edition alert before a section alert', () => {
+        });
     });
 
+    describe('show', () => {
+        beforeEach(() => {
+            if (document && document.body) {
+                document.body.innerHTML = '<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>';
+            }
+            setTimeout.mockClear();
+        });
+
+        afterEach(() => {
+            if (document && document.body) {
+                document.body.innerHTML = '';
+            }
+        });
+
+        it('should wait 3 seconds before displaying new alert', () => {
+            localStorageStub.get.mockImplementation(key => {
+                if (key === knownAlertIDsStorageKey) {
+                    return {
+                        alert_2: false,
+                        alert_3: false,
+                    };
+                }
+            });
+
+            return breakingNews.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+                
+                if (canShow) {
+                    breakingNews.show();
+
+                    const callLength = localStorageStub.set.mock.calls.length;
+                    const lastCallArgs =
+                        localStorageStub.set.mock.calls[callLength - 1];
+
+                    if (document) {
+                        const fadeInElems = document.querySelectorAll('.breaking-news--hidden.breaking-news--fade-in');
+                        expect(fadeInElems.length).toBe(1);
+
+                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        expect(spectreElems.length).toBe(0);
+                    }
+                    
+                    jest.runAllTimers();
+                    expect(setTimeout.mock.calls[0][1]).toBe(
+                        BREAKING_NEWS_DELAY
+                    );
+
+                    if (document) {
+                        const hiddenElems = document.querySelectorAll('.breaking-news--hidden');
+                        expect(hiddenElems.length).toBe(0);
+
+                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        expect(spectreElems.length).toBe(1);
+
+                        const alertHeadline = document.querySelector('.breaking-news__item-headline');
+                        if (alertHeadline) {
+                            expect(alertHeadline.innerText).toBe('alert 1');
+                        }
+                    }
+
+                    expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
+                    expect(lastCallArgs[1]).toEqual({
+                        alert_1: false,
+                        alert_2: false,
+                        alert_3: false,
+                    });
+                }
+            });
+        });
+
+        it('should show a known alert immediately', () => {
+            return breakingNews.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+                
+                if (canShow) {
+                    breakingNews.show();
+
+                    const callLength = localStorageStub.set.mock.calls.length;
+                    const lastCallArgs =
+                        localStorageStub.set.mock.calls[callLength - 1];
+
+                    if (document) {
+                        const fadeInElems = document.querySelectorAll('.breaking-news--hidden.breaking-news--fade-in');
+                        expect(fadeInElems.length).toBe(1);
+
+                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        expect(spectreElems.length).toBe(0);
+                    }
+                    
+                    jest.runAllTimers();
+                    expect(setTimeout.mock.calls[0][1]).toBe(
+                        0
+                    );
+
+                    if (document) {
+                        const hiddenElems = document.querySelectorAll('.breaking-news--hidden');
+                        expect(hiddenElems.length).toBe(0);
+
+                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        expect(spectreElems.length).toBe(1);
+
+                        expect(fakeTemplate.mock.calls[0][1].id).toBe('alert_1');
+                    }
+
+                    expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
+                    expect(lastCallArgs[1]).toEqual({
+                        alert_1: false,
+                        alert_2: false,
+                        alert_3: false,
+                    });
+                }
+            });
+        });
+
+        it('should show a global alert before an edition alert', () => {
+            const pubDate = Date.now();
+            fakeFetchJson.mockReturnValue(
+                Promise.resolve({
+                    webTitle: 'Breaking News',
+                    collections: [{
+                        href: 'uk',
+                        content: [{
+                            headline: 'alert 1',
+                            id: 'alert_1',
+                            frontPublicationDate: pubDate,
+                        }]
+                    }, {
+                        href: 'global',
+                        content: [{
+                            headline: 'alert 2',
+                            id: 'alert_2',
+                            frontPublicationDate: pubDate,
+                        }] 
+                    }],
+                })
+            );
+
+            localStorageStub.get.mockImplementation(key => {
+                if (key === knownAlertIDsStorageKey) {
+                    return {
+                        alert_1: false,
+                        alert_2: false,
+                    };
+                }
+            });
+
+            return breakingNews.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                if (canShow) {
+                    breakingNews.show();
+
+                    const callLength = localStorageStub.set.mock.calls.length;
+                    const lastCallArgs =
+                        localStorageStub.set.mock.calls[callLength - 1];
+
+                    if (document) {
+                        const fadeInElems = document.querySelectorAll('.breaking-news--hidden.breaking-news--fade-in');
+                        expect(fadeInElems.length).toBe(1);
+
+                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        expect(spectreElems.length).toBe(0);
+                    }
+                    
+                    jest.runAllTimers();
+                    expect(setTimeout.mock.calls[0][1]).toBe(
+                        0
+                    );
+
+                    if (document) {
+                        const hiddenElems = document.querySelectorAll('.breaking-news--hidden');
+                        expect(hiddenElems.length).toBe(0);
+
+                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        expect(spectreElems.length).toBe(1);
+
+                        expect(fakeTemplate.mock.calls[0][1].id).toBe('alert_2');
+                    }
+
+                    expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
+                    expect(lastCallArgs[1]).toEqual({
+                        alert_1: false,
+                        alert_2: false,
+                    });
+                }
+            });
+        });
+
+        it('should show an edition alert before a section alert', () => {
+            const pubDate = Date.now();
+            fakeFetchJson.mockReturnValue(
+                Promise.resolve({
+                    webTitle: 'Breaking News',
+                    collections: [{
+                        href: 'sport',
+                        content: [{
+                            headline: 'alert 1',
+                            id: 'alert_1',
+                            frontPublicationDate: pubDate,
+                        }]
+                    }, {
+                        href: 'uk',
+                        content: [{
+                            headline: 'alert 2',
+                            id: 'alert_2',
+                            frontPublicationDate: pubDate,
+                        }] 
+                    }],
+                })
+            );
+
+            localStorageStub.get.mockImplementation(key => {
+                if (key === knownAlertIDsStorageKey) {
+                    return {
+                        alert_1: false,
+                        alert_2: false,
+                    };
+                }
+            });
+
+            return breakingNews.canShow().then(canShow => {
+                expect(canShow).toBe(true);
+
+                if (canShow) {
+                    breakingNews.show();
+
+                    const callLength = localStorageStub.set.mock.calls.length;
+                    const lastCallArgs =
+                        localStorageStub.set.mock.calls[callLength - 1];
+
+                    if (document) {
+                        const fadeInElems = document.querySelectorAll('.breaking-news--hidden.breaking-news--fade-in');
+                        expect(fadeInElems.length).toBe(1);
+
+                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        expect(spectreElems.length).toBe(0);
+                    }
+                    
+                    jest.runAllTimers();
+                    expect(setTimeout.mock.calls[0][1]).toBe(
+                        0
+                    );
+
+                    if (document) {
+                        const hiddenElems = document.querySelectorAll('.breaking-news--hidden');
+                        expect(hiddenElems.length).toBe(0);
+
+                        const spectreElems = document.querySelectorAll('.breaking-news--spectre');
+                        expect(spectreElems.length).toBe(1);
+
+                        expect(fakeTemplate.mock.calls[0][1].id).toBe('alert_2');
+                    }
+
+                    expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
+                    expect(lastCallArgs[1]).toEqual({
+                        alert_1: false,
+                        alert_2: false,
+                    });
+                }
+            });
+        });
+    });
 });
-
-// import $ from 'lib/$';
-// import { breakingNewsInit } from 'common/modules/onward/breaking-news';
-// import mediator from 'lib/mediator';
-// import { local as localStorageStub } from 'lib/storage';
-
-// jest.mock('lib/storage', () => ({
-//     local: {
-//         get: jest.fn(),
-//         set: jest.fn(),
-//         isAvailable: jest.fn(),
-//     },
-// }));
-// jest.mock('lib/config', () => ({
-//     page: {
-//         edition: 'UK',
-//     },
-// }));
-// jest.mock('lib/fetch-json', () => jest.fn());
-// jest.mock('fastdom');
-// jest.mock('common/modules/ui/relativedates', () => ({
-//     isWithinSeconds: jest.fn(() => true),
-// }));
-// jest.useFakeTimers();
-
-// const fakeFetchJson: any = require('lib/fetch-json');
-// const fakeRelativeDates: any = require('common/modules/ui/relativedates');
-
-// describe('Breaking news', () => {
-//     const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
-//     const BREAKING_NEWS_DELAY = 3000;
-//     const alertThatIs = (type, options) => {
-//         const opts = Object.assign(
-//             {},
-//             {
-//                 collection: 'uk',
-//                 age: 1,
-//             },
-//             options
-//         );
-//         const sAge = opts.age !== 1 ? `${opts.age}min ` : '';
-
-//         return {
-//             href: opts.collection,
-//             content: [
-//                 {
-//                     headline: `${sAge + opts.collection} ${type} headline`,
-//                     trailText: `${opts.collection} ${type} trailText`,
-//                     id: `${opts.collection}_${type}`,
-//                     frontPublicationDate: Date.now() - 1000 * 60 * opts.age,
-//                 },
-//             ],
-//         };
-//     };
-//     const callBreakingNewsWith = collections => {
-//         fakeFetchJson.mockReturnValue(
-//             Promise.resolve({
-//                 webTitle: 'Breaking News',
-//                 collections,
-//             })
-//         );
-//         localStorageStub.get.mockImplementationOnce(key => {
-//             if (key === knownAlertIDsStorageKey) {
-//                 return {
-//                     uk_known: false,
-//                     uk_dismissed: true,
-//                 };
-//             }
-//         });
-
-//         return breakingNewsInit();
-//     };
-
-//     beforeEach(() => {
-//         $('body').html(
-//             '<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>'
-//         );
-//         setTimeout.mockClear();
-//     });
-
-//     afterEach(() => {
-//         mediator.removeAllListeners();
-
-//         $('.js-breaking-news-placeholder').remove();
-//     });
-
-//     describe('user cannot dismiss alerts', () => {
-//         beforeEach(() => {
-//             localStorageStub.isAvailable.mockReturnValue(false);
-//         });
-
-//         it('should not try and fetch the json', done => {
-//             callBreakingNewsWith([])
-//                 .then(
-//                     () => {
-//                         done.fail(
-//                             'user cannot use local storage, but we seem to think things are okish'
-//                         );
-//                     },
-//                     res => {
-//                         expect(fakeFetchJson).not.toHaveBeenCalled();
-//                         expect(res.message).toEqual('cannot dismiss');
-//                         expect(
-//                             $('.js-breaking-news-placeholder:not(:empty)')
-//                                 .length
-//                         ).toBe(0);
-//                     }
-//                 )
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-//     });
-
-//     describe('user can dismiss alerts', () => {
-//         beforeEach(() => {
-//             localStorageStub.isAvailable.mockReturnValue(true);
-//         });
-
-//         it('should try and fetch the json', done => {
-//             callBreakingNewsWith([])
-//                 .then(() => {
-//                     expect(fakeFetchJson).toHaveBeenCalled();
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should show an unknown alert after 3 seconds and record it', done => {
-//             const collections = [
-//                 alertThatIs('unknown', { age: 2, collection: 'uk' }),
-//             ];
-
-//             callBreakingNewsWith(collections)
-//                 .then(alert => {
-//                     if (!alert) {
-//                         return done.fail(
-//                             'Exception reported in breaking news initialisation'
-//                         );
-//                     }
-//                     const callLength = localStorageStub.set.mock.calls.length;
-//                     const lastCallArgs =
-//                         localStorageStub.set.mock.calls[callLength - 1];
-
-//                     expect(alert.headline).toEqual('2min uk unknown headline');
-//                     expect(
-//                         $('.breaking-news--hidden.breaking-news--fade-in')
-//                             .length
-//                     ).toBe(1);
-//                     expect($('.breaking-news--spectre').length).toBe(0);
-
-//                     jest.runAllTimers();
-//                     expect(setTimeout.mock.calls[0][1]).toBe(
-//                         BREAKING_NEWS_DELAY
-//                     );
-
-//                     expect($('.breaking-news--spectre').length).toBe(1);
-//                     expect($('.breaking-news--hidden').length).toBe(0);
-//                     expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
-//                     expect(lastCallArgs[1]).toEqual({
-//                         uk_unknown: false,
-//                     });
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should show a known alert immediately', done => {
-//             const collections = [alertThatIs('known')];
-//             callBreakingNewsWith(collections)
-//                 .then(alert => {
-//                     if (!alert) {
-//                         return done.fail(
-//                             'Exception reported in breaking news initialisation'
-//                         );
-//                     }
-
-//                     jest.runAllTimers();
-//                     expect(setTimeout.mock.calls[0][1]).toBe(0);
-
-//                     expect(alert.headline).toEqual('uk known headline');
-//                     expect(
-//                         $('.breaking-news--hidden.breaking-news--fade-in')
-//                             .length
-//                     ).toBe(0);
-//                     expect($('.breaking-news--spectre').length).toBe(1);
-//                     expect($('.breaking-news--hidden').length).toBe(0);
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should not show a dismissed alert', done => {
-//             const collections = [alertThatIs('dismissed')];
-//             callBreakingNewsWith(collections)
-//                 .then(alert => {
-//                     expect(alert).toBeFalsy();
-//                     expect(
-//                         $('.js-breaking-news-placeholder:not(:empty)').length
-//                     ).toBe(0);
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should show an alert for this edition', done => {
-//             const collections = [alertThatIs('unknown', { collection: 'uk' })];
-//             callBreakingNewsWith(collections)
-//                 .then(alert => {
-//                     expect(alert).not.toBeUndefined();
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should not show an alert for a different edition', done => {
-//             const collections = [alertThatIs('unknown', { collection: 'us' })];
-//             callBreakingNewsWith(collections)
-//                 .then(alert => {
-//                     expect(alert).toBeUndefined();
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should show a global alert before an edition alert', done => {
-//             const collections = [
-//                 alertThatIs('unknown', { collection: 'uk' }),
-//                 alertThatIs('unknown', { collection: 'global' }),
-//             ];
-//             callBreakingNewsWith(collections)
-//                 .then(alert => {
-//                     if (!alert) {
-//                         return done.fail(
-//                             'Exception reported in breaking news initialisation'
-//                         );
-//                     }
-
-//                     expect(alert.headline).toEqual('global unknown headline');
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should show an edition alert before a section alert', done => {
-//             const collections = [
-//                 alertThatIs('unknown', { collection: 'uk' }),
-//                 alertThatIs('unknown', { collection: 'football' }),
-//             ];
-//             callBreakingNewsWith(collections)
-//                 .then(alert => {
-//                     if (!alert) {
-//                         return done.fail();
-//                     }
-
-//                     expect(alert.headline).toEqual('uk unknown headline');
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should not show an alert that is 20 mins old', done => {
-//             const collections = [alertThatIs('unknown', { age: 20 })];
-
-//             fakeRelativeDates.isWithinSeconds.mockImplementationOnce(
-//                 () => false
-//             );
-//             callBreakingNewsWith(collections)
-//                 .then(alert => {
-//                     expect(alert).toBeUndefined();
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should show an alert less than 20 mins old', done => {
-//             const collections = [alertThatIs('unknown', { age: 19 })];
-//             callBreakingNewsWith(collections)
-//                 .then(alert => {
-//                     expect(alert).not.toBeUndefined();
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should show the newest viable alert', done => {
-//             const collections = [
-//                 alertThatIs('unknown', { age: 5 }),
-//                 alertThatIs('unknown', { age: 2 }),
-//             ];
-//             callBreakingNewsWith(collections)
-//                 .then(alert => {
-//                     if (!alert) {
-//                         return done.fail(
-//                             'Exception reported in breaking news initialisation'
-//                         );
-//                     }
-
-//                     expect(alert.headline).toEqual('2min uk unknown headline');
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-
-//         it('should prune known alerts', done => {
-//             const collections = [alertThatIs('known')];
-
-//             callBreakingNewsWith(collections)
-//                 .then(() => {
-//                     const callLength = localStorageStub.set.mock.calls.length;
-//                     const lastCallArgs =
-//                         localStorageStub.set.mock.calls[callLength - 1];
-
-//                     expect(lastCallArgs[0]).toBe(knownAlertIDsStorageKey);
-//                     expect(lastCallArgs[1]).toEqual({
-//                         uk_known: false,
-//                     });
-//                 })
-//                 .then(done)
-//                 .catch(done.fail);
-//         });
-//     });
-
-//     describe('banner emits ready events', () => {
-//         it('should pass false when banner will not show', done => {
-//             mediator.on(
-//                 'modules:onwards:breaking-news:ready',
-//                 breakingShown => {
-//                     expect(breakingShown).toBe(false);
-//                     done();
-//                 }
-//             );
-
-//             callBreakingNewsWith([]).catch(done.fail);
-//         });
-
-//         it('should pass true when banner will show', done => {
-//             const collections = [
-//                 alertThatIs('unknown', { age: 2, collection: 'uk' }),
-//             ];
-
-//             mediator.on(
-//                 'modules:onwards:breaking-news:ready',
-//                 breakingShown => {
-//                     expect(breakingShown).toBe(true);
-//                     done();
-//                 }
-//             );
-
-//             callBreakingNewsWith(collections).catch(done.fail);
-//         });
-//     });
-// });

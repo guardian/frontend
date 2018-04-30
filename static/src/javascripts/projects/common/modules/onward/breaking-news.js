@@ -50,6 +50,7 @@ const storeKnownAlertIDs = (): void => {
 
 const updateKnownAlertID = (id: string, state: boolean): void => {
     knownAlertIDs[id] = state;
+
     storeKnownAlertIDs();
 };
 
@@ -130,13 +131,14 @@ const filterAlertsByAge = (alerts: Array<Alert>): Array<Alert> =>
     }); 
 
 // we only show one alert at a time, pick the youngest available
-const pickNewest = (alerts: Array<Alert>): Alert =>
+const pickNewest = (alerts: Array<Alert>): Alert => 
     alerts.sort((a, b) => b.frontPublicationDate - a.frontPublicationDate)[0];
 
 const renderAlert = (alert: Alert): bonzo => {
     alert.closeIcon = inlineSvg('closeCentralIcon');
 
     const $alert = bonzo.create(template(alertHtml, alert));
+
     const closeButton = $('.js-breaking-news__item__close', $alert)[0];
 
     if (closeButton) {
@@ -158,8 +160,6 @@ const renderSpectre = ($breakingNews: bonzo): bonzo =>
 
 // show an alert
 const show = (): void => {
-    console.log('**** SHOW BREAKING NEWS ****');
-
     const $body = bonzo(document.body);
     const $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
 
@@ -203,8 +203,6 @@ const canShow = (): Promise<boolean> => {
                 .then(filterAlertsByAge)
                 .then(pickNewest)
                 .then(alert => {
-                    console.log('alert --->', alert);
-
                     if (alert) {
                         alertToShow = alert;
                         resolve(true);
