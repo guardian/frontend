@@ -158,7 +158,6 @@ const renderSpectre = ($breakingNews: bonzo): bonzo =>
         .addClass('breaking-news--spectre')
         .removeClass('breaking-news--fade-in breaking-news--hidden');
 
-// show an alert
 const show = (): void => {
     const $body = bonzo(document.body);
     const $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
