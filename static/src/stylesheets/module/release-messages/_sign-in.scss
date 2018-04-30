@@ -97,12 +97,30 @@ a.site-message--sign-in-cta {
     background: $color-sign-in-eb-callout;
     font-weight: 800;
     height: $gs-baseline*3;
-    padding: 0 $gs-gutter;
+    padding: 0 $gs-gutter/1.5;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    transition: .125s;
     box-sizing: border-box;
+    position: relative;
+    transition: .25s;
+    .inline-icon svg {
+        position: absolute;
+        top: 0;
+        right: $gs-gutter/4;
+        bottom: 0;
+        margin: auto;
+        transition: .25s;
+        * {
+            fill: $garnett-neutral-1;
+        }
+    }
+    &:hover {
+        background-color: darken($color-sign-in-eb-callout, 1%);
+        .inline-icon svg {
+            transform: translateX(5%);
+        }
+    }
 }
 
 .site-message--sign-in__buttons {

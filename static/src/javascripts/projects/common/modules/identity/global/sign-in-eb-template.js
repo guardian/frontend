@@ -18,8 +18,8 @@ type Template = {
 };
 
 const bindableClassNames = {
-    closeBtn: 'site-message--sign-in__dismiss'
-}
+    closeBtn: 'site-message--sign-in__dismiss',
+};
 
 const wrapLineBreakingString = (text: string[], className: string): string =>
     text
@@ -74,7 +74,9 @@ const makeTemplateHtml = (tpl: Template) => `
         <a href="#" data-link-name="sign-in-eb : to-info" class="site-message--sign-in__why">
             ${tpl.advantagesCta}
         </a>
-        <button data-link-name="sign-in-eb : close" class="${bindableClassNames.closeBtn}">${tpl.closeButton}</button>
+        <button data-link-name="sign-in-eb : close" class="${
+            bindableClassNames.closeBtn
+        }">${tpl.closeButton}</button>
     </section>
 </div>
 `;
