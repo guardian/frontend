@@ -1,0 +1,168 @@
+// @flow
+import fakeMediator from 'lib/mediator';
+import { getCookie as getCookie_ } from 'lib/cookies';
+import { signInEngagementBannerInit } from 'common/modules/identity/global/sign-in-engagement-banner';
+import { bindableClassNames } from 'common/modules/identity/global/sign-in-engagement-banner/template';
+
+const getCookie: any = getCookie_;
+
+jest.spyOn(Date, 'now').mockImplementation(() => 1525096983756);
+
+jest.mock('lib/mediator');
+jest.mock('lib/storage', () => ({
+    local: {
+        get: jest.fn(() => 10), // gu.alreadyVisited
+        set: jest.fn(),
+        isAvailable: jest.fn(),
+    },
+}));
+jest.mock('lib/cookies', () => ({
+    getCookie: jest.fn(name => {
+        if (name === '_ga') {
+            return 'GA1.2.1570044477.1524924183'; /* valid GA cookie */
+        } else if (name === 'GU_U') {
+            return null;
+        }
+        return '-';
+    }),
+}));
+jest.mock('./sign-in-engagement-banner/icon-comment.svg', () => ({
+    markup: 'icon-comment',
+}));
+jest.mock('./sign-in-engagement-banner/icon-email.svg', () => ({
+    markup: 'icon-email',
+}));
+jest.mock('./sign-in-engagement-banner/icon-phone.svg', () => ({
+    markup: 'icon-phone',
+}));
+jest.mock('./sign-in-engagement-banner/close.svg', () => ({
+    markup: 'close',
+}));
+jest.mock('svgs/icon/marque-54-inverted.svg', () => ({
+    markup: 'marque-54-inverted',
+}));
+jest.mock('svgs/icon/arrow-right.svg', () => ({
+    markup: 'arrow-right',
+}));
+
+jest.mock('common/modules/experiments/test-can-run-checks', () => ({
+    testCanBeRun: jest.fn(() => true),
+}));
+jest.mock('common/modules/experiments/segment-util', () => ({
+    isInTest: jest.fn(() => true),
+    variantFor: jest.fn(() => ({ id: 'fake-variant-id' })),
+}));
+jest.mock('common/modules/ui/message', () => ({
+    Message: jest.fn(),
+}));
+jest.mock('lib/url', () => ({
+    constructQuery: jest.fn(() => ''),
+}));
+jest.mock('ophan/ng', () => ({
+    record: jest.fn(),
+}));
+jest.mock('lib/config', () => ({
+    get: jest.fn(() => ''),
+}));
+jest.mock('lib/detect', () => ({
+    adblockInUse: Promise.resolve(false),
+}));
+jest.mock('common/modules/commercial/contributions-utilities', () => ({
+    shouldShowReaderRevenue: jest.fn(() => true),
+}));
+
+const FakeMessage: any = require('common/modules/ui/message').Message;
+
+beforeEach(() => {
+    FakeMessage.mockReset();
+    FakeMessage.prototype.show = jest.fn(() => true);
+});
+afterEach(() => {
+    FakeMessage.prototype.show.mockRestore();
+});
+
+const validGaCookie = 'GA1.2.xx.1524903850';
+const oldGaCookie = 'GA1.2.xx.1515096983';
+const newGaCookie = 'GA1.2.xx.1525096983';
+
+describe('Sign in engagement banner', () => {
+    describe('If user already signed in', () => {
+        it('should not show any messages', () => {
+            getCookie.mockImplementation(name => {
+                if (name === '_ga') {
+                    return validGaCookie;
+                } else if (name === 'GU_U') {
+                    return '-';
+                }
+                return '-';
+            });
+            return signInEngagementBannerInit()
+                .then(() => {
+                    fakeMediator.emit(
+                        'modules:onwards:breaking-news:ready',
+                        false
+                    );
+                })
+                .then(() => {
+                    expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+                });
+        });
+    });
+
+    describe('With GA cookie', () => {
+        it('should not show if the cookie is too new', () => {
+            getCookie.mockImplementation(name => {
+                if (name === '_ga') {
+                    return newGaCookie;
+                }
+                return null;
+            });
+            return signInEngagementBannerInit().then(() => {
+                expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+            });
+        });
+        it('should not show if the cookie is too old', () => {
+            getCookie.mockImplementation(name => {
+                if (name === '_ga') {
+                    return oldGaCookie;
+                }
+                return null;
+            });
+            return signInEngagementBannerInit().then(() => {
+                expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+            });
+        });
+        it('should show if the cookie is between 1 month & 1 day', () => {
+            getCookie.mockImplementation(name => {
+                if (name === '_ga') {
+                    return validGaCookie;
+                }
+                return null;
+            });
+            return signInEngagementBannerInit().then(() => {
+                expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
+            });
+        });
+    });
+
+    describe('Renders message with', () => {
+        it('message text', () =>
+            signInEngagementBannerInit().then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /Please sign in/
+                );
+            }));
+        it('close button', () =>
+            signInEngagementBannerInit().then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    new RegExp(bindableClassNames.closeBtn)
+                );
+            }));
+        it('close button', () =>
+            signInEngagementBannerInit().then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    new RegExp(bindableClassNames.closeBtn)
+                );
+            }));
+    });
+});

@@ -52,21 +52,22 @@ const shouldDisplayBanner = (): Promise<boolean> => {
     return Promise.resolve(conditions.every(_ => _ === true));
 };
 
-const waitForBannersOrTimeout = (): Promise<void> =>
-    new Promise((show, reject) => {
+const bannerDoesNotCollide = (): Promise<boolean> =>
+    new Promise(show => {
+        setTimeout(() => {
+            show(true);
+        }, 1000);
+
         mediator.on('modules:onwards:breaking-news:ready', breakingShown => {
             if (!breakingShown) {
-                show();
+                show(true);
             } else {
-                reject(new Error(ERR_EXPECTED_NO_BANNER));
+                show(false);
             }
         });
         mediator.on('membership-message:display', () => {
-            reject(new Error(ERR_EXPECTED_NO_BANNER));
+            show(false);
         });
-        setTimeout(() => {
-            show();
-        }, 1000);
     });
 
 const links: LinkTargets = {
@@ -111,13 +112,12 @@ const hide = (msg: Message) => {
     msg.hide();
 };
 
-const signInEngagementBannerInit = (): void => {
-    shouldDisplayBanner()
-        .then((shouldIt: boolean) => {
-            if (shouldIt) {
-                return waitForBannersOrTimeout();
+const signInEngagementBannerInit = (): Promise<void> =>
+    Promise.all([shouldDisplayBanner(), bannerDoesNotCollide()])
+        .then(([shouldDisplay: boolean, doesNotCollide: boolean]) => {
+            if (!shouldDisplay || !doesNotCollide) {
+                throw new Error(ERR_EXPECTED_NO_BANNER);
             }
-            throw new Error(ERR_EXPECTED_NO_BANNER);
         })
         .then(() => {
             const msg = new Message(messageCode, {
@@ -148,6 +148,5 @@ const signInEngagementBannerInit = (): void => {
         .catch(err => {
             if (err.message !== ERR_EXPECTED_NO_BANNER) throw err;
         });
-};
 
 export { signInEngagementBannerInit };

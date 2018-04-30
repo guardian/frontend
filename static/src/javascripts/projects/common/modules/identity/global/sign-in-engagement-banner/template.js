@@ -89,15 +89,18 @@ const makeTemplateHtml = (tpl: Template) => `
                 ${arrowRight.markup}
             </a>
         </div>
-        ${tpl.links.why ?
-            `
+        ${
+            tpl.links.why
+                ? `
             <a href="${
                 tpl.links.why
             }" data-link-name="sign-in-eb : to-info" class="site-message--sign-in__why">
                 ${tpl.advantagesCta}
                 ${arrowRight.markup}
             </a>
-        `:''}
+        `
+                : ''
+        }
         <button data-link-name="sign-in-eb : close" class="${
             bindableClassNames.closeBtn
         }">
