@@ -166,26 +166,6 @@ do you have fonts in localStorage?
         return false;
     }
 
-    // Load fonts by injecting a `link` element.
-    function loadFontsAsynchronously() {
-        try {
-            const scripts = document.getElementsByTagName('script');
-            const thisScript = scripts[scripts.length - 1];
-            const fonts = document.createElement('link');
-
-            fonts.rel = 'stylesheet';
-            fonts.className = 'webfonts';
-
-            // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
-            fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
-            window.setTimeout(function () {
-                thisScript.parentNode.insertBefore(fonts, thisScript);
-            });
-        } catch (e) {
-            @if(context.environment.mode == Dev){throw(e)}
-        }
-    }
-
     // Detect whether browser is smoothing its fonts.
     // Technique adapted from @@zoltandulac's clever hack:
     // http://www.useragentman.com/blog/2009/11/29/how-to-detect-font-smoothing-using-javascript
@@ -290,7 +270,7 @@ do you have fonts in localStorage?
         checkUserFontDisabling();
         if (fontsEnabled) {
             if (fontSmoothingEnabled()) {
-                loadFontsFromStorage() || loadFontsAsynchronously();
+                loadFontsFromStorage();
             } else {
                 disableFonts();
             }

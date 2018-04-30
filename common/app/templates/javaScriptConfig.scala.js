@@ -31,19 +31,6 @@
                 "opt-in-new-vertical": "@Static("images/identity/opt-in-new-vertical.svg")"
             }
         },
-        "stylesheets": {
-            "fonts": {
-                "hintingCleartype": {
-                    "kerningOn": "@Static("stylesheets/webfonts-hinting-cleartype-kerning-on.css")"
-                },
-                "hintingOff": {
-                    "kerningOn": "@Static("stylesheets/webfonts-hinting-off-kerning-on.css")"
-                },
-                "hintingAuto": {
-                    "kerningOn": "@Static("stylesheets/webfonts-hinting-auto-kerning-on.css")"
-                }
-            }
-        },
         "googleAnalytics": {
             "trackers": {
                 "editorialTest": "@{GoogleAnalyticsAccount.editorialTest.trackerName}",
