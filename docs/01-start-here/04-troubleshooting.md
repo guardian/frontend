@@ -27,6 +27,15 @@ Run `make reinstall` to resolve.
 ### Accidentally ran `npm install` or `yarn install`
 Run `make reinstall` to resolve.
 
+### Run Flowtype checks takes forever
+This happens automatically when you push your branch, assuming you have made JavaScript changes.
+
+Flow can sometimes take a long time to run. The first time you run Flowtype checks, Flow starts up a Flow server which is a slow process. If you think Flow is hanging ([a known bug](https://github.com/facebook/flow/issues/3528)), you can try stopping the Flow server by running:
+
+```bash
+$ yarn flow stop
+```
+
 ### Global install permissions errors
 The script installs global npm packages without sudo. If you get npm permission errors, follow the guide to using npm without sudo [here](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
 
