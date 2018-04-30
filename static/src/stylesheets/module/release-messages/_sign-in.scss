@@ -146,11 +146,30 @@ a.site-message--sign-in__why {
     @include circular;
     background: $color-sign-in-eb-callout;
     color: $garnett-neutral-1;
-    padding: $gs-gutter/4;
     border: 0;
     position: absolute;
-    top: $gs-gutter * -.5;
-    right: $gs-gutter * -.5;
+    height: $gs-baseline * 2;
+    width: $gs-baseline * 2;
+    top: $gs-baseline * -1;
+    right: $gs-baseline * -1;
+    /*larger tap target*/
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: $gs-baseline * 4;
+        height: $gs-baseline * 4;
+        top: $gs-baseline * -1;
+        left: $gs-baseline * -1;
+    }
+    svg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+    }
 }
 
 .site-message--sign-in-container .site-message--sign-in__body {
@@ -160,10 +179,17 @@ a.site-message--sign-in__why {
     padding-top: 0;
     padding-bottom: 0;
     li {
+        position: relative;
         margin: 0 0 $gs-baseline;
+        padding-left: $gs-baseline * 2.5;
         strong {
             display: block;
         }
+    }
+    .site-message--sign-in__feature-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 }
 
@@ -171,8 +197,8 @@ a.site-message--sign-in__why {
     position: absolute;
     width: $sign-in-eb-logo;
     height: $sign-in-eb-logo;
-    top: $sign-in-eb-padding;
-    right: $sign-in-eb-padding;
+    top: $sign-in-eb-padding * .8;
+    right: $sign-in-eb-padding * .8;
     z-index: 9;
 }
 

@@ -3,8 +3,14 @@
 import { Message } from 'common/modules/ui/message';
 import { getCookie } from 'lib/cookies';
 import mediator from 'lib/mediator';
-import type { Template } from './sign-in-eb-template';
-import { makeTemplateHtml, bindableClassNames } from './sign-in-eb-template';
+import type { Template } from './sign-in-engagement-banner/template';
+import {
+    makeTemplateHtml,
+    bindableClassNames,
+} from './sign-in-engagement-banner/template';
+import iconComment from './sign-in-engagement-banner/icon-comment.svg';
+import iconEmail from './sign-in-engagement-banner/icon-email.svg';
+import iconPhone from './sign-in-engagement-banner/icon-phone.svg';
 
 const messageCode: string = 'sign-in-30-april';
 const signedInCookie: string = 'GU_U';
@@ -45,17 +51,17 @@ const tpl: Template = {
     closeButton: 'Continue without signing in',
     features: [
         {
-            id: 'consistent',
+            icon: iconPhone.markup,
             mainCopy: 'A consistent experience',
             subCopy: 'across all of your devices',
         },
         {
-            id: 'comment',
+            icon: iconComment.markup,
             mainCopy: 'Join the conversation',
             subCopy: 'and comment on articles',
         },
         {
-            id: 'email',
+            icon: iconEmail.markup,
             mainCopy: 'Get closer to the journalism',
             subCopy: 'by subscribing to editorial emails',
         },

@@ -1,9 +1,10 @@
 // @flow
 import arrowRight from 'svgs/icon/arrow-right.svg';
 import marque from 'svgs/icon/marque-54-inverted.svg';
+import close from './close.svg';
 
 type Feature = {
-    id: string,
+    icon: ?string,
     mainCopy: string,
     subCopy: string,
 };
@@ -50,15 +51,20 @@ const makeTemplateHtml = (tpl: Template) => `
         <ul class="site-message--sign-in__body">
             ${tpl.features
                 .map(
-                    (feature: Feature) =>
-                        `
-                    <li class="site-message--sign-in__feature site-message--sign-in__feature--${
-                        feature.id
-                    }">
+                    (feature: Feature) => `
+                    <li class="site-message--sign-in__feature">
                         <strong>${feature.mainCopy}</strong>
                         ${feature.subCopy}
-                    </li>
-                    `
+                        ${
+                            feature.icon
+                                ? `
+                            <div aria-hidden="true" class="site-message--sign-in__feature-icon">
+                                ${feature.icon}
+                            </div>
+                            `
+                                : ''
+                        }
+                    </li>`
                 )
                 .join('')}
         </ul>
@@ -77,7 +83,10 @@ const makeTemplateHtml = (tpl: Template) => `
         </a>
         <button data-link-name="sign-in-eb : close" class="${
             bindableClassNames.closeBtn
-        }">${tpl.closeButton}</button>
+        }">
+            <span class="u-h">${tpl.closeButton}</span>
+            ${close.markup}
+        </button>
         <div aria-hidden="true" class="site-message--sign-in__marque">
             ${marque.markup}
         </div>
