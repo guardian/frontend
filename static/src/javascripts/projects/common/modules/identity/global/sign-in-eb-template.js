@@ -1,5 +1,6 @@
 // @flow
-import { inlineSvg } from 'common/views/svgs';
+import arrowRight from 'svgs/icon/arrow-right.svg';
+import marque from 'svgs/icon/marque-54-inverted.svg';
 
 type Feature = {
     id: string,
@@ -64,11 +65,11 @@ const makeTemplateHtml = (tpl: Template) => `
         <div class="site-message--sign-in__buttons">
             <a href="#" data-link-name="sign-in-eb : success : to-sign-in" class="site-message--sign-in-cta site-message--sign-in-cta--main">
                 ${tpl.signInCta}
-                ${inlineSvg('arrowRight')}
+                ${arrowRight.markup}
             </a>
             <a href="#" data-link-name="sign-in-eb : success : to-register" class="site-message--sign-in-cta site-message--sign-in-cta--secondary">
                 ${tpl.registerCta}
-                ${inlineSvg('arrowRight')}
+                ${arrowRight.markup}
             </a>
         </div>
         <a href="#" data-link-name="sign-in-eb : to-info" class="site-message--sign-in__why">
@@ -77,6 +78,9 @@ const makeTemplateHtml = (tpl: Template) => `
         <button data-link-name="sign-in-eb : close" class="${
             bindableClassNames.closeBtn
         }">${tpl.closeButton}</button>
+        <div aria-hidden="true" class="site-message--sign-in__marque">
+            ${marque.markup}
+        </div>
     </section>
 </div>
 `;

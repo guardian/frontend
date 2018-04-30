@@ -3,6 +3,9 @@ $color-sign-in-eb-alt: #1e8dcd;
 $color-sign-in-eb-alt-contrast: #0074a6;
 $color-sign-in-eb-callout: $news-garnett-highlight;
 
+$sign-in-eb-padding: $gs-baseline * 1.5;
+$sign-in-eb-logo: $gs-baseline * 3.5;
+
 .site-message.site-message--sign-in-message {
     background: transparent;
     top: 0;
@@ -16,7 +19,7 @@ $color-sign-in-eb-callout: $news-garnett-highlight;
     .site-message__inner {
         background: $color-sign-in-eb-main;
         color: $garnett-neutral-1;
-        animation: pop-in .5s cubic-bezier(.175, .885, .32, 1.275);
+        animation: sign-in-eb-pop-in .5s cubic-bezier(.175, .885, .32, 1.275);
         max-width: 310px;
         padding: 0;
         position: relative;
@@ -38,7 +41,7 @@ $color-sign-in-eb-callout: $news-garnett-highlight;
     .site-message--sign-in__header,
     .site-message--sign-in__body,
     .site-message--sign-in__buttons {
-        padding: $gs-baseline * 1.5;
+        padding: $sign-in-eb-padding;
     }
 }
 
@@ -52,6 +55,8 @@ $color-sign-in-eb-callout: $news-garnett-highlight;
     }
     .site-message--sign-in__header-msg {
         position: relative;
+        margin-right: $sign-in-eb-logo;
+        z-index: 10;
         > .site-message--sign-in__header-msg-line {
             display: inline-block;
             &:nth-child(1) {
@@ -78,15 +83,6 @@ $color-sign-in-eb-callout: $news-garnett-highlight;
             line-height: 1.2;
             margin-top: $gs-gutter/4;
         }
-    }
-}
-
-@keyframes pop-in {
-    from {
-        transform: scaleX(.9) scaleY(.5) translateY(10em);
-    }
-    to {
-        transform: scaleX(1) scaleY(1) translateY(0);
     }
 }
 
@@ -142,7 +138,7 @@ a.site-message--sign-in__why {
     background: $color-sign-in-eb-alt;
     color: #ffffff;
     text-decoration: none;
-    padding: $gs-baseline/3 $gs-baseline * 1.5;
+    padding: $gs-baseline/3 $sign-in-eb-padding;
 }
 
 .site-message--sign-in__dismiss {
@@ -168,5 +164,24 @@ a.site-message--sign-in__why {
         strong {
             display: block;
         }
+    }
+}
+
+.site-message--sign-in__marque svg {
+    position: absolute;
+    width: $sign-in-eb-logo;
+    height: $sign-in-eb-logo;
+    top: $sign-in-eb-padding;
+    right: $sign-in-eb-padding;
+    z-index: 9;
+}
+
+
+@keyframes sign-in-eb-pop-in {
+    from {
+        transform: scaleX(.9) scaleY(.5) translateY(10em);
+    }
+    to {
+        transform: scaleX(1) scaleY(1) translateY(0);
     }
 }
