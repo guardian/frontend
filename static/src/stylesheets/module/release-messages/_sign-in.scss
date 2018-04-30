@@ -1,0 +1,23 @@
+.site-message.site-message--sign-in {
+    background: transparent;
+    top: 0;
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.site-message--sign-in-container {
+    background: $news-garnett-highlight;
+    color: $garnett-neutral-1;
+    padding: $gs-gutter;
+    animation: pop-in .5s cubic-bezier(.175, .885, .32, 1.275);
+}
+
+@keyframes pop-in {
+    from {
+        transform: scaleX(.9) scaleY(.5) translateY(10em);
+    }
+    to {
+        transform: scaleX(1) scaleY(1) translateY(0);
+    }
+}
