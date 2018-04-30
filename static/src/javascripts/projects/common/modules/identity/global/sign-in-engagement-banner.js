@@ -7,6 +7,8 @@ import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import ophan from 'ophan/ng';
 import userPrefs from 'common/modules/user-prefs';
+import type { Feature, Template } from './sign-in-eb-template';
+import { makeTemplateHtml } from './sign-in-eb-template';
 
 const messageCode: string = 'sign-in-30-april';
 const signInCookie: string = 'GU_U';
@@ -40,62 +42,28 @@ const waitForBannersOrTimeout = (): Promise<void> =>
         }, 1000);
     });
 
-type Feature = {
-    id: string,
-    mainCopy: string,
-    subCopy: string
-};
-
-type Template = {
-    headerMain: string[],
-    headerSub: string[],
-    signInCta: string,
-    registerCta: string,
-    advantagesCta: string,
-    closeButton: string,
-    features: Feature[]
-};
-
 const tpl: Template = {
     headerMain: ['Enjoy even','more from','The Guardian'],
     headerSub: ['Please sign in or register to manage your preferences'],
+    features: [
+        {
+            id: 'consistent',
+            mainCopy: 'A consistent experience',
+            subCopy: 'across all of your devices',
+        },
+        {
+            id: 'comment',
+            mainCopy: 'Join the conversation',
+            subCopy: 'and comment on articles',
+        },
+        {
+            id: 'email',
+            mainCopy: 'Get closer to the journalism',
+            subCopy: 'by subscribing to editorial emails',
+        },
+    ]
 }
 
-const wrapLineBreakingString = (text: string[], className: string): string =>
-    text.map((line,index) =>
-        `<span class="${className}">${line}${index===text.length?'':' '}</span><wbr>
-    `).join('');
-
-const html = `
-                <div id="site-message__message" class="site-message--sign-in-container">
-                    <section class="site-message__message site-message__message--sign-in">
-                        <div class="site-message--sign-in__header">
-                            <h2 class="site-message--sign-in__header-msg site-message--sign-in__header-msg--main">${wrapLineBreakingString(tpl.headerMain,'site-message--sign-in__header-msg-line')}</h2>
-                            <br/>
-                            <p class="site-message--sign-in__header-msg site-message--sign-in__header-msg--sub">${wrapLineBreakingString(tpl.headerSub,'site-message--sign-in__header-msg-line')}</p>
-                        </div>
-                        <div class="site-message--sign-in__body">
-                            <ul>
-                                <li>A more personalised Guardian</li>
-                                <li>Comment on the crosswords</li>
-                                <li>Get our award-winning newsletters</li>
-                            </ul> 
-                        </div>
-                        <div class="site-message--sign-in__buttons">
-                            <a href="#" class="site-message--sign-in-cta site-message--sign-in-cta--main">
-                                Sign in
-                            </a>
-                            <a href="#" class="site-message--sign-in-cta site-message--sign-in-cta--secondary">
-                                Register
-                            </a>
-                        </div>
-                        <a href="#" class="site-message--sign-in__why">
-                            Why sign in to The Guardian?
-                        </a>
-                        <button class="site-message--sign-in__dismiss">Close this</button>
-                    </section>
-                </div>
-            `;
 
 const signInEngagementBannerInit = (): void => {
 
@@ -104,7 +72,6 @@ const signInEngagementBannerInit = (): void => {
             if (shouldIt) {
                 return waitForBannersOrTimeout();
             }
-
             throw new Error(ERR_EXPECTED_NO_BANNER);
         })
         .then(() => {
@@ -116,7 +83,7 @@ const signInEngagementBannerInit = (): void => {
                 siteMessageComponentName: messageCode,
                 customJs: () => {},
             });
-            msg.show(html);
+            msg.show(makeTemplateHtml(tpl));
         })
         .catch(err => {
             if (err.message !== ERR_EXPECTED_NO_BANNER) throw err;
