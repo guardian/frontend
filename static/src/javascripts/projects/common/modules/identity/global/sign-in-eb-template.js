@@ -1,7 +1,8 @@
+// @flow
 type Feature = {
     id: string,
     mainCopy: string,
-    subCopy: string
+    subCopy: string,
 };
 
 type Template = {
@@ -11,33 +12,48 @@ type Template = {
     registerCta: string,
     advantagesCta: string,
     closeButton: string,
-    features: Feature[]
+    features: Feature[],
 };
 
 const wrapLineBreakingString = (text: string[], className: string): string =>
-    text.map((line,index) =>
-        `<span class="${className}">${line}${index===text.length?'':' '}</span><wbr>
-    `).join('');
+    text
+        .map(
+            (line, index) =>
+                `<span class="${className}">${line}${
+                    index === text.length ? '' : ' '
+                }</span><wbr>
+    `
+        )
+        .join('');
 
-const makeTemplateHtml = (tpl:Template) => `
+const makeTemplateHtml = (tpl: Template) => `
 <div id="site-message__message" class="site-message--sign-in-container">
     <section class="site-message__message site-message__message--sign-in">
         <div class="site-message--sign-in__header">
-            <h2 class="site-message--sign-in__header-msg site-message--sign-in__header-msg--main">${wrapLineBreakingString(tpl.headerMain,'site-message--sign-in__header-msg-line')}</h2>
+            <h2 class="site-message--sign-in__header-msg site-message--sign-in__header-msg--main">${wrapLineBreakingString(
+                tpl.headerMain,
+                'site-message--sign-in__header-msg-line'
+            )}</h2>
             <br/>
-            <p class="site-message--sign-in__header-msg site-message--sign-in__header-msg--sub">${wrapLineBreakingString(tpl.headerSub,'site-message--sign-in__header-msg-line')}</p>
+            <p class="site-message--sign-in__header-msg site-message--sign-in__header-msg--sub">${wrapLineBreakingString(
+                tpl.headerSub,
+                'site-message--sign-in__header-msg-line'
+            )}</p>
         </div>
         <ul class="site-message--sign-in__body">
-            ${
-                tpl.features.map((feature: Feature) =>
-                    `
-                    <li class="site-message--sign-in__feature site-message--sign-in__feature--${feature.id}">
+            ${tpl.features
+                .map(
+                    (feature: Feature) =>
+                        `
+                    <li class="site-message--sign-in__feature site-message--sign-in__feature--${
+                        feature.id
+                    }">
                         <strong>${feature.mainCopy}</strong>
                         ${feature.subCopy}
                     </li>
                     `
-                ).join('')
-            }
+                )
+                .join('')}
         </ul>
         <div class="site-message--sign-in__buttons">
             <a href="#" class="site-message--sign-in-cta site-message--sign-in-cta--main">

@@ -1,29 +1,22 @@
 // @flow
 
 import { Message } from 'common/modules/ui/message';
-import { getCookie, addCookie } from 'lib/cookies';
-import config from 'lib/config';
+import { getCookie } from 'lib/cookies';
 import mediator from 'lib/mediator';
-import { local } from 'lib/storage';
-import ophan from 'ophan/ng';
-import userPrefs from 'common/modules/user-prefs';
-import type { Feature, Template } from './sign-in-eb-template';
+import type { Template } from './sign-in-eb-template';
 import { makeTemplateHtml } from './sign-in-eb-template';
 
 const messageCode: string = 'sign-in-30-april';
-const signInCookie: string = 'GU_U';
+const signedInCookie: string = 'GU_U';
 
 const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
 
-const getDisplayConditions = (): boolean[] =>
-    [
-        true
-    ];
+const isUserNotSignedIn = (): boolean => getCookie(signedInCookie) === null;
+
+const getDisplayConditions = (): boolean[] => [isUserNotSignedIn()];
 
 const shouldDisplayBanner = (): Promise<boolean> =>
-    Promise.resolve(
-        getDisplayConditions().every(_ => _ === true)
-    )
+    Promise.resolve(getDisplayConditions().every(_ => _ === true));
 
 const waitForBannersOrTimeout = (): Promise<void> =>
     new Promise((show, reject) => {
@@ -43,8 +36,12 @@ const waitForBannersOrTimeout = (): Promise<void> =>
     });
 
 const tpl: Template = {
-    headerMain: ['Enjoy even','more from','The Guardian'],
+    headerMain: ['Enjoy even', 'more from', 'The Guardian'],
     headerSub: ['Please sign in or register to manage your preferences'],
+    signInCta: 'Sign in',
+    registerCta: 'Register',
+    advantagesCta: 'Why sign in to The Guardian?',
+    closeButton: 'Continue without signing in',
     features: [
         {
             id: 'consistent',
@@ -61,12 +58,10 @@ const tpl: Template = {
             mainCopy: 'Get closer to the journalism',
             subCopy: 'by subscribing to editorial emails',
         },
-    ]
-}
-
+    ],
+};
 
 const signInEngagementBannerInit = (): void => {
-
     shouldDisplayBanner()
         .then((shouldIt: boolean) => {
             if (shouldIt) {

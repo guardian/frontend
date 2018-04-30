@@ -253,8 +253,8 @@ const membershipEngagementBanner = (): void => {
 };
 
 const signInEngagementBanner = (): void => {
-    signInEngagementBannerInit()
-}
+    signInEngagementBannerInit();
+};
 
 const initialiseEmail = (): void => {
     // Initalise email embedded in page
