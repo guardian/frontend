@@ -3,7 +3,7 @@
 export const signInEngagementBannerDisplay: ABTest = {
     id: 'SignInEngagementBannerDisplay',
     start: '2018-04-26',
-    expiry: '2018-05-26',
+    expiry: '2019-01-24',
     author: 'Laura gonzalez',
     description:
         'This test will show a sign in engagement banner to non signed in users.',
