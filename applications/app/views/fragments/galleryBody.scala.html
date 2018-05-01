@@ -20,7 +20,6 @@
         itemscope itemtype="@page.item.metadata.schemaType" role="main">
         @fragments.galleryHeader(page)
 
-        <div>
             <div class="content__main tonal__main tonal__main--@toneClass(page.item)">
                 <div class="gs-container gallery__divider">
                     <div class="content__main-column content__main-column--gallery">
@@ -35,7 +34,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </article>
 
     @if(page.item.content.showInRelated && !isPaidContent(page)) {
