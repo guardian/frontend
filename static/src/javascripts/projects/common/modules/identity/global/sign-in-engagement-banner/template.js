@@ -41,7 +41,7 @@ const wrapLineBreakingString = (text: string[], className: string): string =>
         )
         .join('');
 
-const makeTemplateHtml = (tpl: Template) => `
+const makeTemplateHtml = (tpl: Template): string => `
 <div id="site-message__message" class="site-message--sign-in-container">
     <section class="site-message__message site-message__message--sign-in">
         <div class="site-message--sign-in__header">
