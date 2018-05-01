@@ -8,6 +8,7 @@ const imHtml = `
     class="js-ad-slot ad-slot ad-slot--im"
     data-link-name="ad slot im"
     data-name="im"
+    aria-hidden="true"
     data-mobile="1,1|2,2|88,85|fluid"
     data-label="false"
     data-refresh="false"></div>
@@ -18,13 +19,14 @@ const inline1Html = `
     class="js-ad-slot ad-slot ad-slot--inline ad-slot--inline1"
     data-link-name="ad slot inline1"
     data-name="inline1"
+    aria-hidden="true"
     data-mobile="1,1|2,2|300,250|fluid"
     data-desktop="1,1|2,2|300,250|620,1|620,350|fluid">
 </div>
 `;
 
 const inline1BlockthroughHtml = `
-<span class="bt-uid-tg" uid="5a98587091-157" style="display: none !important"></span>
+<span class="bt-uid-tg" uid="5a98587091-157" style="display: none !important" aria-hidden="true"></span>
 `;
 
 jest.mock('lib/config', () => ({ page: { edition: 'UK' } }));

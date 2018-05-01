@@ -23,7 +23,7 @@
     "lodash-node": "^2.4.1",
     "object-fit-videos": "^1.0.3",
     "ophan-tracker-js": "1.3.9",
-    "prebid.js": "https://github.com/guardian/Prebid.js.git#04105c2",
+    "prebid.js": "https://github.com/guardian/Prebid.js.git#b2652ad",
     "qwery": "3.4.2",
     "rangefix": "^0.2.5",
     "raven-js": "^3.19.1",
@@ -38,7 +38,7 @@
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
     "videojs-playlist": "guardian/videojs-playlist#0.1.4",
     "webshot": "^0.18.0",
-    "wolfy87-eventemitter": "~4.2.6"
+    "wolfy87-eventemitter": "~5.2.4"
   },
   "devDependencies": {
     "amphtml-validator": "^1.0.21",
@@ -141,9 +141,9 @@
     "moduleNameMapper": {
       "^lodash/(.*)$": "lodash-node/compat/$1",
       "raven": "raven-js",
-      "EventEmitter": "wolfy87-eventemitter",
       "videojs": "video.js",
       "^svgs/(.*)$": "<rootDir>/__mocks__/svgMock.js",
+      "^(.*)\\.svg$": "<rootDir>/__mocks__/svgMock.js",
       "^(.*)\\.html$": "<rootDir>/__mocks__/templateMock.js",
       "ophan/ng": "ophan-tracker-js",
       "ophan/embed": "ophan-tracker-js/build/ophan.embed"

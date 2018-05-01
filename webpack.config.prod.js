@@ -10,6 +10,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const config = require('./webpack.config.js');
 
 module.exports = webpackMerge.smart(config, {
+    mode: 'production',
     output: {
         filename: `[chunkhash]/graun.[name].js`,
         chunkFilename: `[chunkhash]/graun.[name].js`,
