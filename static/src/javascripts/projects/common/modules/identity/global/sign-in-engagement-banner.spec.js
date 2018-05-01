@@ -1,7 +1,9 @@
 // @flow
-import fakeMediator from 'lib/mediator';
 import { getCookie as getCookie_ } from 'lib/cookies';
-import { signInEngagementBannerInit } from 'common/modules/identity/global/sign-in-engagement-banner';
+import {
+    show,
+    canShow,
+} from 'common/modules/identity/global/sign-in-engagement-banner';
 import { bindableClassNames } from 'common/modules/identity/global/sign-in-engagement-banner/template';
 
 const getCookie: any = getCookie_;
@@ -17,14 +19,7 @@ jest.mock('lib/storage', () => ({
     },
 }));
 jest.mock('lib/cookies', () => ({
-    getCookie: jest.fn(name => {
-        if (name === '_ga') {
-            return 'GA1.2.1570044477.1524924183'; /* valid GA cookie */
-        } else if (name === 'GU_U') {
-            return null;
-        }
-        return '-';
-    }),
+    getCookie: jest.fn(() => null),
 }));
 jest.mock('./sign-in-engagement-banner/icon-comment.svg', () => ({
     markup: 'icon-comment',
@@ -86,8 +81,8 @@ const oldGaCookie = 'GA1.2.xx.1515096983';
 const newGaCookie = 'GA1.2.xx.1525096983';
 
 describe('Sign in engagement banner', () => {
-    describe('If user already signed in', () => {
-        it('should not show any messages', () => {
+    describe('With user', () => {
+        it('should not show any messages for signed in users', () => {
             getCookie.mockImplementation(name => {
                 if (name === '_ga') {
                     return validGaCookie;
@@ -96,16 +91,22 @@ describe('Sign in engagement banner', () => {
                 }
                 return '-';
             });
-            return signInEngagementBannerInit()
-                .then(() => {
-                    fakeMediator.emit(
-                        'modules:onwards:breaking-news:ready',
-                        false
-                    );
-                })
-                .then(() => {
-                    expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
-                });
+            return canShow().then(showable => {
+                expect(showable).toBe(false);
+            });
+        });
+        it('should show messages to signed out users', () => {
+            getCookie.mockImplementation(name => {
+                if (name === '_ga') {
+                    return validGaCookie;
+                } else if (name === 'GU_U') {
+                    return null;
+                }
+                return '-';
+            });
+            return canShow().then(showable => {
+                expect(showable).toBe(true);
+            });
         });
     });
 
@@ -117,8 +118,8 @@ describe('Sign in engagement banner', () => {
                 }
                 return null;
             });
-            return signInEngagementBannerInit().then(() => {
-                expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+            return canShow().then(showable => {
+                expect(showable).toBe(false);
             });
         });
         it('should not show if the cookie is too old', () => {
@@ -128,8 +129,8 @@ describe('Sign in engagement banner', () => {
                 }
                 return null;
             });
-            return signInEngagementBannerInit().then(() => {
-                expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+            return canShow().then(showable => {
+                expect(showable).toBe(false);
             });
         });
         it('should show if the cookie is between 1 month & 1 day', () => {
@@ -139,30 +140,24 @@ describe('Sign in engagement banner', () => {
                 }
                 return null;
             });
-            return signInEngagementBannerInit().then(() => {
-                expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
+            return canShow().then(showable => {
+                expect(showable).toBe(true);
             });
         });
     });
 
     describe('Renders message with', () => {
-        it('message text', () =>
-            signInEngagementBannerInit().then(() => {
-                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                    /Please sign in/
-                );
-            }));
-        it('close button', () =>
-            signInEngagementBannerInit().then(() => {
-                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                    new RegExp(bindableClassNames.closeBtn)
-                );
-            }));
-        it('close button', () =>
-            signInEngagementBannerInit().then(() => {
-                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                    new RegExp(bindableClassNames.closeBtn)
-                );
-            }));
+        it('message text', () => {
+            show();
+            return expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                /Please sign in/
+            );
+        });
+        it('close button', () => {
+            show();
+            return expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                new RegExp(bindableClassNames.closeBtn)
+            );
+        });
     });
 });
