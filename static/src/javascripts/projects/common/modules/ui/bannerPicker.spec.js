@@ -1,41 +1,43 @@
 // @flow
 import { init, _ } from 'common/modules/ui/bannerPicker';
 
+jest.mock('ophan/ng', () => {});
+
 const shortTrueCheck = () =>
     new Promise(resolve => {
         setTimeout(() => {
             resolve(true);
-        }, 200);
+        }, 100);
     });
 const shortFalseCheck = () =>
     new Promise(resolve => {
         setTimeout(() => {
             resolve(false);
-        }, 200);
+        }, 100);
     });
 const longFalseCheck = () =>
     new Promise(resolve => {
         setTimeout(() => {
             resolve(false);
-        }, 2000);
+        }, 200);
     });
 const longTrueCheck = () =>
     new Promise(resolve => {
         setTimeout(() => {
             resolve(true);
-        }, 2000);
+        }, 200);
     });
 const extraLongTrueCheck = () =>
     new Promise(resolve => {
         setTimeout(() => {
             resolve(true);
-        }, 3000);
+        }, 2500);
     });
 const extraLongFalseCheck = () =>
     new Promise(resolve => {
         setTimeout(() => {
             resolve(false);
-        }, 3000);
+        }, 2500);
     });
 
 describe('bannerMediator picks correct banner to show', () => {

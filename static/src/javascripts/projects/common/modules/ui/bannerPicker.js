@@ -38,6 +38,8 @@ const getSuccessfulBannerIndex = (): number => {
 
 const init = (): Promise<void> =>
     new Promise(resolve => {
+        const TIME_LIMIT = 2000;
+
         banners.forEach((banner, index) => {
             const pushToResults = (result: boolean): void => {
                 results[index] = result;
@@ -55,11 +57,11 @@ const init = (): Promise<void> =>
 
             let hasTimedOut = false;
 
-            // checks that take longer than 2500ms are forced to fail
+            // checks that take longer than TIME_LIMIT are forced to fail
             const timeout = setTimeout(() => {
                 hasTimedOut = true;
                 pushToResults(false);
-            }, 2500);
+            }, TIME_LIMIT);
 
             banner.canShow().then(result => {
                 if (!hasTimedOut) {
