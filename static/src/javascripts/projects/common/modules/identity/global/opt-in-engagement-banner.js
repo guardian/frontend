@@ -5,7 +5,6 @@ import { Message } from 'common/modules/ui/message';
 import { HAS_VISITED_CONSENTS_COOKIE_KEY } from 'common/modules/identity/consent-journey';
 import { getCookie, addCookie } from 'lib/cookies';
 import config from 'lib/config';
-import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import ophan from 'ophan/ng';
 import userPrefs from 'common/modules/user-prefs';
@@ -24,8 +23,6 @@ const messageUserUsesNewslettersCookie: string = `gu-${
 const messageCloseBtn = 'js-gdpr-oi-close';
 const remindMeLaterInterval = 24 * 60 * 60 * 1000;
 const lastShownAtInterval = 24 * 60 * 60 * 1000;
-
-const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
 
 const shouldDisplayForMoreUsers = (): boolean =>
     config.get('switches.idShowOptInEngagementBannerMore');
@@ -104,8 +101,21 @@ const getDisplayConditions = (): boolean[] => {
     ];
 };
 
-const shouldDisplayOptInBanner = (): Promise<boolean> =>
-    new Promise(decision => {
+const hide = (msg: Message) => {
+    msg.hide();
+    userPrefs.set(messageHidAtPref, Date.now());
+    if (shouldDisplayForMoreUsers()) {
+        userPrefs.set(messageWasDismissedPref, 'true');
+    } else {
+        userPrefs.set(messageHidAtPref, Date.now());
+    }
+};
+
+const canShow = (): Promise<boolean> => {
+    if (userVisitedViaNewsletter()) {
+        addCookie(messageUserUsesNewslettersCookie, 'true');
+    }
+    return new Promise(decision => {
         const conditions = getDisplayConditions();
 
         if (conditions.some(_ => _ !== true)) {
@@ -118,84 +128,39 @@ const shouldDisplayOptInBanner = (): Promise<boolean> =>
             else decision(false);
         });
     });
-
-const hide = (msg: Message) => {
-    msg.hide();
-    userPrefs.set(messageHidAtPref, Date.now());
-    if (shouldDisplayForMoreUsers()) {
-        userPrefs.set(messageWasDismissedPref, 'true');
-    } else {
-        userPrefs.set(messageHidAtPref, Date.now());
-    }
 };
 
-const waitForBannersOrTimeout = (): Promise<void> =>
-    new Promise((show, reject) => {
-        mediator.on('modules:onwards:breaking-news:ready', breakingShown => {
-            if (!breakingShown) {
-                show();
-            } else {
-                reject(new Error(ERR_EXPECTED_NO_BANNER));
+const show = (): void => {
+    const msg = new Message(messageCode, {
+        cssModifierClass: 'gdpr-opt-in',
+        trackDisplay: true,
+        permanent: true,
+        siteMessageComponentName: messageCode,
+        customJs: () => {
+            if (shouldDisplayForMoreUsers()) {
+                userPrefs.set(messageMoreShownAtPref, Date.now());
             }
-        });
-        mediator.on('membership-message:display', () => {
-            reject(new Error(ERR_EXPECTED_NO_BANNER));
-        });
-        setTimeout(() => {
-            show();
-        }, 1000);
-    });
-
-const optInEngagementBannerInit = (): void => {
-    if (userVisitedViaNewsletter()) {
-        addCookie(messageUserUsesNewslettersCookie, 'true');
-    }
-
-    shouldDisplayOptInBanner()
-        .then((shouldIt: boolean) => {
-            if (shouldIt) {
-                return waitForBannersOrTimeout();
-            }
-
-            throw new Error(ERR_EXPECTED_NO_BANNER);
-        })
-        .then(() => {
-            const msg = new Message(messageCode, {
-                cssModifierClass: 'gdpr-opt-in',
-                trackDisplay: true,
-                permanent: true,
-                siteMessageComponentName: messageCode,
-                customJs: () => {
-                    if (shouldDisplayForMoreUsers()) {
-                        userPrefs.set(messageMoreShownAtPref, Date.now());
-                    }
-                    ophan.record({
-                        component: 'gdpr-oi-campaign-alert',
-                        action: 'gdpr-oi-campaign : alert : show',
-                        value: 'gdpr-oi-campaign : alert : show',
-                    });
-                    const closeButtonEl: ?HTMLElement = document.querySelector(
-                        `.${messageCloseBtn}`
-                    );
-                    if (!closeButtonEl)
-                        throw new Error(
-                            'gdpr-oi-campaign : Missing close button'
-                        );
-                    closeButtonEl.addEventListener(
-                        'click',
-                        (ev: MouseEvent) => {
-                            ev.preventDefault();
-                            hide(msg);
-                        }
-                    );
-                },
+            ophan.record({
+                component: 'gdpr-oi-campaign-alert',
+                action: 'gdpr-oi-campaign : alert : show',
+                value: 'gdpr-oi-campaign : alert : show',
             });
-            const html = makeTemplateHtml(template, targets);
-            msg.show(html);
-        })
-        .catch(err => {
-            if (err.message !== ERR_EXPECTED_NO_BANNER) throw err;
-        });
+            const closeButtonEl: ?HTMLElement = document.querySelector(
+                `.${messageCloseBtn}`
+            );
+            if (!closeButtonEl)
+                throw new Error('gdpr-oi-campaign : Missing close button');
+            closeButtonEl.addEventListener('click', (ev: MouseEvent) => {
+                ev.preventDefault();
+                hide(msg);
+            });
+        },
+    });
+    const html = makeTemplateHtml(template, targets);
+    msg.show(html);
 };
 
-export { optInEngagementBannerInit };
+export default {
+    show,
+    canShow,
+};

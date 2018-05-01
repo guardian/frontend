@@ -1,12 +1,13 @@
 // @flow
 import breakingNews from 'common/modules/onward/breaking-news';
+import optInEngagementAlert from 'common/modules/identity/global/opt-in-engagement-banner.js';
 
 type Banner = {
     canShow: () => Promise<boolean>,
     show: () => void,
 };
 
-let banners: Array<Banner> = [breakingNews];
+let banners: Array<Banner> = [breakingNews, optInEngagementAlert];
 
 let results: Array<'pending' | boolean> = new Array(banners.length).fill(
     'pending',
