@@ -20,7 +20,6 @@ module.exports = {
     plugins: ['flowtype', 'flow-header'],
     rules: {
         // require-specific overrides
-        'import/no-extraneous-dependencies': 'off', // necessary while we use aliases
         'import/extensions': 'off',
         'import/no-webpack-loader-syntax': 'off', // used for require plugins still
         'import/no-namespace': 2,
