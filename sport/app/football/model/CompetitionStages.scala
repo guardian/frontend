@@ -115,8 +115,8 @@ object KnockoutSpider {
 
       new DateTime(2018, 7,  6, 15, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044564
       new DateTime(2018, 7,  6, 19, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044565
-      new DateTime(2018, 7,  7, 19, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044567
       new DateTime(2018, 7,  7, 15, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044566
+      new DateTime(2018, 7,  7, 19, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044567
 
       new DateTime(2018, 7, 10, 19, 0, DateTimeZone.forID("Europe/London")), // Semi-Final 4044568
       new DateTime(2018, 7, 11, 19, 0, DateTimeZone.forID("Europe/London")), // Semi-Final 4044569
