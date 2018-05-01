@@ -4,6 +4,7 @@ import { Message } from 'common/modules/ui/message';
 import { getCookie } from 'lib/cookies';
 import { local } from 'lib/storage';
 import config from 'lib/config';
+import userPrefs from 'common/modules/user-prefs';
 import mediator from 'lib/mediator';
 import type {
     Template,
@@ -21,9 +22,16 @@ import iconPhone from './sign-in-engagement-banner/icon-phone.svg';
 const messageCode: string = 'sign-in-30-april';
 const signedInCookie: string = 'GU_U';
 
+const lastSeenAtKey = 'sign-in-eb.last-seen-at';
+const lifeTimeViewsKey = 'sign-in-eb.lifetime-views';
+const lifeTimeClosesKey = 'sign-in-eb.lifetime-closes';
+const sessionStartedAtKey = 'sign-in-eb.session-started-at';
+const sessionVisitsKey = 'sign-in-eb.session-visits';
+
 const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
 const ERR_MALFORMED_HTML = 'ERR_MALFORMED_HTML';
 
+const halfHourInMs = 30 * 60 * 1000;
 const dayInMs = 24 * 60 * 60 * 1000;
 const monthInMs = 30 * dayInMs;
 
@@ -34,6 +42,15 @@ const links: LinkTargets = {
     register: `${config.get(
         'page.idUrl'
     )}/register?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
+};
+
+const recordSessionVisit = (): void => {
+    if (Date.now() - (userPrefs.get(sessionStartedAtKey) || 0) > halfHourInMs) {
+        userPrefs.set(sessionStartedAtKey, Date.now());
+        userPrefs.set(sessionVisitsKey, 0);
+    }
+    const sessionVisits: number = userPrefs.get(sessionVisitsKey) || 0;
+    userPrefs.set(sessionVisitsKey, sessionVisits + 1);
 };
 
 const features: Feature[] = [
@@ -72,6 +89,19 @@ const hasReadOver4Articles = (): boolean =>
 /* Must be not already signed in */
 const isNotSignedIn = (): boolean => getCookie(signedInCookie) === null;
 
+/* Must be shown only 4 times total */
+const hasSeenBannerLessThanFourTimesTotal = (): boolean =>
+    (userPrefs.get(lifeTimeViewsKey) || 0) < 4;
+
+/* Must be shown only once every 2 days */
+const hasSeenBannerOnceInLastTwoDays = (): boolean =>
+    Date.now() - (userPrefs.get(lastSeenAtKey) || Date.now() - monthInMs) >
+    dayInMs * 2;
+
+/* Must be shown on the second session pageview */
+const isSecondSessionPageview = (): boolean =>
+    (userPrefs.get(sessionVisitsKey) || 0) >= 2;
+
 /* Must have visited between 1 month & 24 hours ago */
 const isRecurringVisitor = (): boolean => {
     const ga: ?string = getCookie('_ga');
@@ -100,22 +130,37 @@ const bannerDoesNotCollide = (): Promise<boolean> =>
     });
 
 const hide = (msg: Message) => {
+    userPrefs.set(
+        lifeTimeClosesKey,
+        (userPrefs.get(lifeTimeClosesKey) || 0) + 1
+    );
     msg.hide();
 };
 
 const canShow = (): Promise<boolean> => {
+    /* sorry for the side-effects */
+    recordSessionVisit();
+
     const conditions = [
         isNotSignedIn(),
+        hasSeenBannerOnceInLastTwoDays(),
+        hasSeenBannerLessThanFourTimesTotal(),
+        isSecondSessionPageview(),
         isRecurringVisitor(),
         hasReadOver4Articles(),
         bannerDoesNotCollide(),
     ];
+
     return Promise.all(conditions).then(solvedConditions =>
         solvedConditions.every(_ => _ === true)
     );
 };
 
 const show = (): void => {
+    /* sorry for the side-effects */
+    userPrefs.set(lastSeenAtKey, Date.now());
+    userPrefs.set(lifeTimeViewsKey, (userPrefs.get(lifeTimeViewsKey) || 0) + 1);
+
     const msg = new Message(messageCode, {
         cssModifierClass: 'sign-in-message',
         trackDisplay: true,
@@ -153,4 +198,12 @@ const signInEngagementBannerInit = (): Promise<void> =>
             if (err.message !== ERR_EXPECTED_NO_BANNER) throw err;
         });
 
-export { signInEngagementBannerInit, canShow, show };
+export {
+    signInEngagementBannerInit,
+    canShow,
+    show,
+    sessionVisitsKey,
+    lifeTimeViewsKey,
+    sessionStartedAtKey,
+    lastSeenAtKey,
+};

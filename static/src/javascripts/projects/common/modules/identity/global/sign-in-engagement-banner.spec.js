@@ -1,22 +1,44 @@
 // @flow
 import { getCookie as getCookie_ } from 'lib/cookies';
+import userPrefs_ from 'common/modules/user-prefs';
 import {
     show,
     canShow,
+    sessionVisitsKey,
+    lifeTimeViewsKey,
+    lastSeenAtKey,
 } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { bindableClassNames } from 'common/modules/identity/global/sign-in-engagement-banner/template';
 
 const getCookie: any = getCookie_;
+const userPrefs: any = userPrefs_;
 
-jest.spyOn(Date, 'now').mockImplementation(() => 1525096983756);
+const validGaCookie = 'GA1.2.xx.1524903850';
+const oldGaCookie = 'GA1.2.xx.1515096983';
+const newGaCookie = 'GA1.2.xx.1525096983';
+
+const timestampToday = 1525096983756;
+const timestampThreeDaysAgo = 1524837783756;
+
+const passingStore = _ => {
+    if (_ === sessionVisitsKey) return 4;
+    else if (_ === lifeTimeViewsKey) return 1;
+    return timestampThreeDaysAgo;
+};
+
+jest.spyOn(Date, 'now').mockImplementation(() => timestampToday);
 
 jest.mock('lib/mediator');
 jest.mock('lib/storage', () => ({
     local: {
-        get: jest.fn(() => 10), // gu.alreadyVisited
+        get: jest.fn(() => 10),
         set: jest.fn(),
         isAvailable: jest.fn(),
     },
+}));
+jest.mock('common/modules/user-prefs', () => ({
+    get: jest.fn(() => null),
+    set: jest.fn(),
 }));
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(() => null),
@@ -71,14 +93,11 @@ const FakeMessage: any = require('common/modules/ui/message').Message;
 beforeEach(() => {
     FakeMessage.mockReset();
     FakeMessage.prototype.show = jest.fn(() => true);
+    userPrefs.get.mockImplementation(passingStore);
 });
 afterEach(() => {
     FakeMessage.prototype.show.mockRestore();
 });
-
-const validGaCookie = 'GA1.2.xx.1524903850';
-const oldGaCookie = 'GA1.2.xx.1515096983';
-const newGaCookie = 'GA1.2.xx.1525096983';
 
 describe('Sign in engagement banner', () => {
     describe('With user', () => {
@@ -103,6 +122,69 @@ describe('Sign in engagement banner', () => {
                     return null;
                 }
                 return '-';
+            });
+            return canShow().then(showable => {
+                expect(showable).toBe(true);
+            });
+        });
+    });
+
+    describe('With recurrent visits', () => {
+        it('should not show any messages for visitors who have seen the alert already', () => {
+            userPrefs.get.mockImplementation(_ => {
+                if (_ === lastSeenAtKey) return timestampToday;
+                return passingStore(_);
+            });
+            return canShow().then(showable => {
+                expect(showable).toBe(false);
+            });
+        });
+        it('should show it otherwise', () => {
+            userPrefs.get.mockImplementation(_ => {
+                if (_ === lastSeenAtKey) return timestampThreeDaysAgo;
+                return passingStore(_);
+            });
+            return canShow().then(showable => {
+                expect(showable).toBe(true);
+            });
+        });
+    });
+
+    describe('With session visits', () => {
+        it('should not show any messages for visitors who have seen 1 session articles', () => {
+            userPrefs.get.mockImplementation(_ => {
+                if (_ === sessionVisitsKey) return 1;
+                return passingStore(_);
+            });
+            return canShow().then(showable => {
+                expect(showable).toBe(false);
+            });
+        });
+        it('should show it otherwise', () => {
+            userPrefs.get.mockImplementation(_ => {
+                if (_ === sessionVisitsKey) return 4;
+                return passingStore(_);
+            });
+            return canShow().then(showable => {
+                expect(showable).toBe(true);
+            });
+        });
+    });
+
+    describe('With lifetime views', () => {
+        it('should not show any messages for visitors who have seen the alert 4+ times', () => {
+            userPrefs.get.mockImplementation(_ => {
+                if (_ === lifeTimeViewsKey) return 4;
+                return passingStore(_);
+            });
+            return canShow().then(showable => {
+                expect(showable).toBe(false);
+            });
+        });
+        it('should show it otherwise', () => {
+            userPrefs.get.mockImplementation(_ => {
+                if (_ === lifeTimeViewsKey) return 1;
+                return passingStore(_);
             });
             return canShow().then(showable => {
                 expect(showable).toBe(true);
