@@ -79,15 +79,6 @@
     }
 }
 
-.identity-consent-journey--gdpr-oi-campaign {
-    .identity-consent-journey-step {
-        border-top-color: #53bbd6!important;
-    }
-    .identity-consent-journey-step__title {
-        font-weight: 600;
-    }
-}
-
 .identity-consent-hero {
     $multiline-height: 4px * 3 + 1px; /*height of multiline (4px) times the number of lines (3)*/
     background-color: #1e8dcd;
