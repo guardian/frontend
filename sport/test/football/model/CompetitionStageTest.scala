@@ -211,14 +211,22 @@ import test._
         stages(0) should be (instanceOf[KnockoutList])
       }
 
+      "creates a knockout list if orderings are provided but do not apply to the provided matches" in {
+        val matchDates = tournament.matches.map(_.date.plusYears(1)).toList
+        val orderings = Map("1" -> matchDates)
+        val stages = competitionStage.stagesFromCompetition(tournament, orderings)
+        stages(0) should be (instanceOf[KnockoutList])
+      }
+
       "will de-dupe spider matches based on provided ordering" in {
         // for knockout tournaments PA will delete and then re-issue a ghost/placeholder match when the actual teams become available
         // e.g. final teams are known after semi finals are done
         // this would create duplicate matches since our addMatches code is purely additive, so we must de-dupe matches based on time
         val matches = futureKnockoutMatches(Stage("1"))
+        val dates = matches.map(_.date)
         val reissuedMatches = List(matches(0).copy(id="1235"), matches(1).copy(id="1236"), matches(2).copy(id="1237"), matches(3).copy(id="1238"))
         val comp = testCompetition(leagueTable = Nil, matches = futureKnockoutMatches(Stage("1")) ++ reissuedMatches)
-        val stages = competitionStage.stagesFromCompetition(comp, Map("1" -> Nil))
+        val stages = competitionStage.stagesFromCompetition(comp, Map("1" -> dates))
         val ko = stages(0).asInstanceOf[KnockoutSpider]
         ko should be (instanceOf[KnockoutSpider])
         val qfMatches = ko.roundMatches(quarterFinals)
