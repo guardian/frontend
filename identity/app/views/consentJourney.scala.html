@@ -293,8 +293,10 @@
 
 @if(skin.contains("gdpr-oi-campaign")) {
     <div class="identity-consent-hero identity-consent-hero--gdpr-oi-campaign">
-        <img src="@Static("images/identity/opt-in-new.svg")" irrelevant/>
-        <h1 class="u-h">Stay with us</h1>
+        <div class="identity-wrapper monocolumn-wrapper">
+            <img src="@Static("images/identity/missing.svg")" aria-hidden="true"/>
+            <h1 class="u-h">Missing Something?</h1>
+        </div>
     </div>
 }
 
