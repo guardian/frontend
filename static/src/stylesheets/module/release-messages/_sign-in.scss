@@ -1,0 +1,237 @@
+$color-sign-in-eb-main: #f8c7cf;
+$color-sign-in-eb-alt: #1e8dcd;
+$color-sign-in-eb-alt-contrast: #0074a6;
+$color-sign-in-eb-callout: $news-garnett-highlight;
+
+$sign-in-eb-padding: $gs-baseline * 1.5;
+$sign-in-eb-logo: $gs-baseline * 3.5;
+
+.site-message.site-message--sign-in-message {
+    background: transparent;
+    top: 0;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    overflow-y: auto;
+    .gs-container {
+        margin: auto;
+    }
+    .site-message__inner {
+        background: $color-sign-in-eb-main;
+        color: $garnett-neutral-1;
+        max-width: 310px;
+        padding: 0;
+        position: relative;
+        margin: $gs-baseline auto;
+        body:not(.disable-flashing-elements) & {
+            animation: sign-in-eb-pop-in .5s cubic-bezier(.175, .885, .32, 1.275);
+        }
+    }
+    .site-message__message {
+        max-width: 100%;
+        padding: 0;
+    }
+    .site-message__media {
+        display: none;
+    }
+    .site-message__copy {
+        padding: 0;
+    }
+}
+
+.site-message--sign-in-container {
+    .site-message--sign-in__header,
+    .site-message--sign-in__body,
+    .site-message--sign-in__buttons {
+        padding: $sign-in-eb-padding;
+    }
+}
+
+.site-message--sign-in__header {
+    @include fs-headline(3);
+    @media all and(min-height: 29em) {
+        @include fs-headline(4, true);
+    }
+    @media all and(min-height: 34em) {
+        @include fs-headline(5, true);
+    }
+    @media all and(min-height: 39em) {
+        @include fs-headline(6, true);
+    }
+    .site-message--sign-in__header-msg {
+        > .site-message--sign-in__header-msg-line {
+            display: inline;
+            position: relative;
+            &:nth-child(1) {
+                z-index: 10;
+            }
+            &:nth-child(2) {
+                z-index: 9;
+            }
+            &:nth-child(3) {
+                z-index: 8;
+            }
+        }
+        &.site-message--sign-in__header-msg--main {
+            font-weight: 600;
+            font-size: 1em;
+            display: inline;
+            margin-right: $sign-in-eb-logo;
+            > .site-message--sign-in__header-msg-line {
+                background: $color-sign-in-eb-callout;
+                white-space: nowrap;
+                line-height: 1;
+            }
+        }
+        &.site-message--sign-in__header-msg--sub {
+            color: $color-sign-in-eb-alt-contrast;
+            font-weight: 500;
+            font-size: 80%;
+            line-height: 1.2;
+            margin-top: $gs-gutter/4;
+        }
+    }
+}
+
+.site-message--sign-in-cta,
+a.site-message--sign-in-cta {
+    @include circular;
+    @include fs-textSans(3)
+    display: inline-flex;
+    white-space: nowrap;
+    color: $garnett-neutral-1;
+    text-decoration: none;
+    background: $color-sign-in-eb-callout;
+    font-weight: 800;
+    height: $gs-baseline*3;
+    padding: 0 $gs-gutter/1.5;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    position: relative;
+    transition: .25s;
+    .inline-icon svg {
+        position: absolute;
+        top: 0;
+        right: $gs-gutter/4;
+        bottom: 0;
+        margin: auto;
+        transition: .25s;
+        * {
+            fill: $garnett-neutral-1;
+        }
+    }
+    &:hover {
+        background-color: darken($color-sign-in-eb-callout, 1%);
+        .inline-icon svg {
+            transform: translateX(5%);
+        }
+    }
+}
+
+.site-message--sign-in__buttons {
+    .site-message--sign-in-cta {
+        margin-bottom: $gs-gutter/4;
+    }
+    display: grid;
+    grid-gap: $gs-gutter/4;
+    grid-template-columns: 1fr 1fr;
+}
+
+a.site-message--sign-in__why {
+    @include fs-textSans(3);
+    display: block;
+    background: $color-sign-in-eb-alt;
+    color: #ffffff;
+    text-decoration: none;
+    padding: $gs-baseline/3 $sign-in-eb-padding;
+    .inline-icon {
+        @include circular;
+        vertical-align: sub;
+        display: inline-block;
+        width: $gs-baseline * 1.25;
+        height: $gs-baseline * 1.25;
+        background: #ffffff;
+        svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        svg * {
+            fill: $color-sign-in-eb-alt;
+        }
+    }
+}
+
+.site-message--sign-in__dismiss {
+    @include fs-textSans(3);
+    @include circular;
+    background: $color-sign-in-eb-callout;
+    color: $garnett-neutral-1;
+    border: 0;
+    position: absolute;
+    height: $gs-baseline * 2;
+    width: $gs-baseline * 2;
+    top: $gs-baseline * -1;
+    right: $gs-baseline * -1;
+    /*larger tap target*/
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: $gs-baseline * 4;
+        height: $gs-baseline * 4;
+        top: $gs-baseline * -1;
+        left: $gs-baseline * -1;
+    }
+    svg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+    }
+}
+
+.site-message--sign-in-container .site-message--sign-in__body {
+    @include fs-bodyCopy(1);
+    line-height: 1.4;
+    list-style: none;
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    .site-message--sign-in__feature {
+        position: relative;
+        margin: 0 0 $gs-baseline;
+        padding-left: $gs-baseline * 2.5;
+        strong {
+            display: block;
+        }
+    }
+    .site-message--sign-in__feature-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.site-message--sign-in__marque svg {
+    position: absolute;
+    width: $sign-in-eb-logo;
+    height: $sign-in-eb-logo;
+    top: $sign-in-eb-padding * .8;
+    right: $sign-in-eb-padding * .8;
+    z-index: 9;
+}
+
+
+@keyframes sign-in-eb-pop-in {
+    from {
+        transform: scaleX(.9) scaleY(.5) translateY(10em);
+    }
+    to {
+        transform: scaleX(1) scaleY(1) translateY(0);
+    }
+}

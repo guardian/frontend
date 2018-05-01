@@ -42,8 +42,8 @@ const targets: LinkTargets = {
 };
 
 const template: Template = {
-    image: config.get('images.identity.opt-in-new-vertical'),
-    title: `We’re changing how we communicate with you. Let us know <strong>before 30 April</strong> which emails you wish to continue receiving, otherwise you will stop hearing from us.`,
+    image: config.get('images.identity.missing'),
+    title: `We’re changing how we communicate with you. Let us know which emails you wish to continue receiving, otherwise you will stop hearing from us.`,
     cta: `Continue`,
     remindMeLater: shouldDisplayForMoreUsers()
         ? `No, thanks`

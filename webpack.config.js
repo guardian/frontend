@@ -57,7 +57,6 @@ module.exports = {
             // #wp-rjs weird old aliasing from requirejs
             lodash: 'lodash-node/compat',
             raven: 'raven-js',
-            EventEmitter: 'wolfy87-eventemitter',
             videojs: 'video.js',
 
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
