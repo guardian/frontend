@@ -30,6 +30,8 @@ const passingStore = _ => {
 
 jest.spyOn(Date, 'now').mockImplementation(() => timestampToday);
 
+jest.useFakeTimers();
+
 jest.mock('lib/mediator');
 jest.mock('lib/storage', () => ({
     local: {
@@ -83,7 +85,9 @@ describe('Sign in engagement banner', () => {
                 }
                 return '-';
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(false);
             });
         });
@@ -96,7 +100,9 @@ describe('Sign in engagement banner', () => {
                 }
                 return '-';
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(true);
             });
         });
@@ -108,7 +114,9 @@ describe('Sign in engagement banner', () => {
                 if (_ === lastSeenAtKey) return timestampToday;
                 return passingStore(_);
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(false);
             });
         });
@@ -117,7 +125,9 @@ describe('Sign in engagement banner', () => {
                 if (_ === lastSeenAtKey) return timestampThreeDaysAgo;
                 return passingStore(_);
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(true);
             });
         });
@@ -129,7 +139,9 @@ describe('Sign in engagement banner', () => {
                 if (_ === sessionVisitsKey) return 1;
                 return passingStore(_);
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(false);
             });
         });
@@ -138,7 +150,9 @@ describe('Sign in engagement banner', () => {
                 if (_ === sessionVisitsKey) return 4;
                 return passingStore(_);
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(true);
             });
         });
@@ -150,7 +164,9 @@ describe('Sign in engagement banner', () => {
                 if (_ === lifeTimeViewsKey) return 4;
                 return passingStore(_);
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(false);
             });
         });
@@ -159,7 +175,9 @@ describe('Sign in engagement banner', () => {
                 if (_ === lifeTimeViewsKey) return 1;
                 return passingStore(_);
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(true);
             });
         });
@@ -173,7 +191,9 @@ describe('Sign in engagement banner', () => {
                 }
                 return null;
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(false);
             });
         });
@@ -184,7 +204,9 @@ describe('Sign in engagement banner', () => {
                 }
                 return null;
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(false);
             });
         });
@@ -195,7 +217,9 @@ describe('Sign in engagement banner', () => {
                 }
                 return null;
             });
-            return canShow().then(showable => {
+            const canShowPr = canShow();
+            jest.runAllTimers();
+            return canShowPr.then(showable => {
                 expect(showable).toBe(true);
             });
         });
