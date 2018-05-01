@@ -183,12 +183,12 @@
     select,
     textarea {
         border: 1px solid var(--c-garnett-neutral-8);
-        font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+        font-family: $f-sans-serif-text;
     }
     .form_field_label {
         margin-left: .3em;
         font-weight: 500;
-        font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+        font-family: $f-serif-headline;
         span {
             font-weight: normal;
             display: table; /* hack to force new line for span */
@@ -215,7 +215,7 @@
         flex: auto;
         text-align: right;
         display: flex;
-        font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+        font-family: $f-sans-serif-text;
         a {
             flex: auto;
             align-self: center;
