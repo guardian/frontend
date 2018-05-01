@@ -61,19 +61,16 @@ class ImageContentController(
   }
 
   def getNextLightboxJson(path: String, tag: String, direction: String): Action[AnyContent] = Action.async { implicit request =>
-    println(path)
-
 
     val capiquery = ContentApiNavQuery(currentId = path).tag(tag).showTags("all").showElements("all")
     println(capiquery.pathSegment)
     println(capiquery)
-    println(capiquery.getUrl("lol"))
     val capimod = contentApiClient.thriftClient.getResponse(capiquery).map {
       mod =>
 //        println(mod)
         Content(mod.results.head) match {
           case content: ImageContent =>
-            Cached(1)(JsonComponent(content.lightBox.javascriptConfig("images")(0)))
+            Cached(1)(JsonComponent(content.lightBox.javascriptConfig))
           case _ => InternalServerError
         }
     }
