@@ -62,32 +62,31 @@ class ImageContentController(
 
   def getNextLightboxJson(path: String, tag: String, direction: String): Action[AnyContent] = Action.async { implicit request =>
 
-    val capiquery = ContentApiNavQuery(currentId = path).tag(tag).showTags("all").showElements("all")
+    val capiquery = ContentApiNavQuery(currentId = path, direction=direction).tag(tag).showTags("all").showElements("all").pageSize(100)
     println(capiquery.pathSegment)
     println(capiquery)
     val capimod = contentApiClient.thriftClient.getResponse(capiquery).map {
       mod =>
-//        println(mod)
-        Content(mod.results.head) match {
-          case content: ImageContent =>
-            Cached(1)(JsonComponent(content.lightBox.javascriptConfig))
-          case _ => InternalServerError
-        }
+
+        println(mod.results.length)
+        val json = mod.results.flatMap(result => Content(result) match {
+          case content: ImageContent => Some(content.lightBox.javascriptConfig)
+          case _ => None
+        })
+        Cached(1)(JsonComponent(JsArray(json)))
+//        mod.results.map(Content.apply) match {
+//          case content: Seq[ImageContent @unchecked] if classTag[A] == classTag[String] =>
+//            Cached(1)(JsonComponent(JsArray(content.map(_.lightBox.javascriptConfig))))
+//          case _ => InternalServerError
+//        }
     }
     capimod
-//    wsClient.url(s"${contentApiClient.thriftClient.targetUrl}/content/$path/$direction?tag=commentisfree/series/observer-comment-cartoon&show-elements=all&show-fields=all").get().flatMap {
-//      stuff =>
-//        val fullres = stuff.json("response")("results")(0)
-////        println(fullres)
-//        val result = stuff.json("response")("results")(0)("id").as[String]
-//        renderItem(result)
-//    }
   }
 }
 
-case class ContentApiNavQuery(parameterHolder: Map[String, Parameter] = Map.empty, currentId: String)
+case class ContentApiNavQuery(parameterHolder: Map[String, Parameter] = Map.empty, currentId: String, direction: String)
   extends SearchQueryBase[ContentApiNavQuery] {
   def withParameters(parameterMap: Map[String, Parameter]): ContentApiNavQuery = copy(parameterMap)
 
-  override def pathSegment: String = s"content/$currentId/next"
+  override def pathSegment: String = s"content/$currentId/$direction"
 }
