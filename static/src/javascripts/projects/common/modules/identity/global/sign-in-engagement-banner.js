@@ -44,12 +44,13 @@ const links: LinkTargets = {
     )}/register?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
 };
 
+/* A "session" here is defined as views separated < 30 minutes away from each other */
 const recordSessionVisit = (): void => {
     if (Date.now() - (userPrefs.get(sessionStartedAtKey) || 0) > halfHourInMs) {
-        userPrefs.set(sessionStartedAtKey, Date.now());
         userPrefs.set(sessionVisitsKey, 0);
     }
     const sessionVisits: number = userPrefs.get(sessionVisitsKey) || 0;
+    userPrefs.set(sessionStartedAtKey, Date.now());
     userPrefs.set(sessionVisitsKey, sessionVisits + 1);
 };
 
@@ -138,9 +139,6 @@ const hide = (msg: Message) => {
 };
 
 const canShow = (): Promise<boolean> => {
-    /* sorry for the side-effects */
-    recordSessionVisit();
-
     const conditions = [
         isNotSignedIn(),
         hasSeenBannerOnceInLastTwoDays(),
@@ -197,6 +195,9 @@ const signInEngagementBannerInit = (): Promise<void> =>
         .catch(err => {
             if (err.message !== ERR_EXPECTED_NO_BANNER) throw err;
         });
+
+/* this needs to be a side effect */
+recordSessionVisit();
 
 export {
     signInEngagementBannerInit,
