@@ -144,8 +144,8 @@ const canShow = (): Promise<boolean> => {
     const conditions = [
         isNotSignedIn(),
         hasSeenBannerOnceInLastTwoDays(),
-        hasSeenBannerLessThanFourTimesTotal(),
         isSecondSessionPageview(),
+        hasSeenBannerLessThanFourTimesTotal(),
         isRecurringVisitor(),
         hasReadOver4Articles(),
         bannerDoesNotCollide(),
