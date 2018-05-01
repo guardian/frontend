@@ -49,10 +49,6 @@ jest.mock('lib/cookies', () => ({
 jest.mock('common/modules/experiments/test-can-run-checks', () => ({
     testCanBeRun: jest.fn(() => true),
 }));
-jest.mock('common/modules/experiments/segment-util', () => ({
-    isInTest: jest.fn(() => true),
-    variantFor: jest.fn(() => ({ id: 'fake-variant-id' })),
-}));
 jest.mock('common/modules/ui/message', () => ({
     Message: jest.fn(),
 }));
@@ -61,6 +57,10 @@ jest.mock('lib/url', () => ({
 }));
 jest.mock('lib/config', () => ({
     get: jest.fn(() => ''),
+}));
+jest.mock('common/modules/experiments/utils', () => ({
+    getVariant: jest.fn(() => ({})),
+    isInVariant: jest.fn(() => true),
 }));
 
 beforeEach(() => {

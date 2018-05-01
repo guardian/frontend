@@ -6,6 +6,9 @@ import { local } from 'lib/storage';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
 import mediator from 'lib/mediator';
+import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
+
 import type {
     Template,
     LinkTargets,
@@ -112,6 +115,13 @@ const isRecurringVisitor = (): boolean => {
     return Date.now() - date > dayInMs && Date.now() - date < monthInMs;
 };
 
+/* Test must be running & user must be in variant */
+const isInTestVariant = (): boolean => {
+    const variant = getVariant(signInEngagementBannerDisplay, 'variant');
+    if (!variant) return false;
+    return isInVariant(signInEngagementBannerDisplay, variant);
+};
+
 const bannerDoesNotCollide = (): Promise<boolean> =>
     new Promise(show => {
         setTimeout(() => {
@@ -147,6 +157,7 @@ const canShow = (): Promise<boolean> => {
         isRecurringVisitor(),
         hasReadOver4Articles(),
         bannerDoesNotCollide(),
+        isInTestVariant(),
     ];
 
     return Promise.all(conditions).then(solvedConditions =>
