@@ -39,6 +39,7 @@ import { Toggles } from 'common/modules/ui/toggles';
 import { breakingNewsInit } from 'common/modules/onward/breaking-news';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
+import { signInEngagementBannerInit } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
@@ -315,6 +316,7 @@ const init = (): void => {
         ['c-accessibility-prefs', initAccessibilityPreferences],
         ['c-pinterest', startPinterest],
         ['c-show-membership-engagement-banner', membershipEngagementBanner],
+        ['c-show-sign-in-engagment-banner', signInEngagementBannerInit],
         ['c-email', initialiseEmail],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],

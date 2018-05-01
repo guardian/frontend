@@ -143,6 +143,7 @@
       "raven": "raven-js",
       "videojs": "video.js",
       "^svgs/(.*)$": "<rootDir>/__mocks__/svgMock.js",
+      "^(.*)\\.svg$": "<rootDir>/__mocks__/svgMock.js",
       "^(.*)\\.html$": "<rootDir>/__mocks__/templateMock.js",
       "ophan/ng": "ophan-tracker-js",
       "ophan/embed": "ophan-tracker-js/build/ophan.embed"
