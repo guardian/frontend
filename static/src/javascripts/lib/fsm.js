@@ -64,7 +64,6 @@ class FiniteStateMachine {
 
         // execute leave/enter callbacks if present and we have changed state
         if (state !== this.context.state || this.context.reloadState) {
-            console.log("State change eep")
             this.context.reloadState = false;
             this.onChangeState(state, this.context.state);
             (this.states[state].leave || noop).apply(this.context);
@@ -72,7 +71,6 @@ class FiniteStateMachine {
 
             this.log('fsm: (state)', `${state} -> ${this.context.state}`);
         }
-        console.log("FINISHED TRIGGER")
     }
 }
 
