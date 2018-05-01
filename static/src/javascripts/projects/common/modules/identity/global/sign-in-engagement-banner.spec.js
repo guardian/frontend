@@ -1,5 +1,6 @@
 // @flow
 import { getCookie as getCookie_ } from 'lib/cookies';
+import { Message as Message_ } from 'common/modules/ui/message';
 import userPrefs_ from 'common/modules/user-prefs';
 import {
     show,
@@ -12,6 +13,7 @@ import { bindableClassNames } from 'common/modules/identity/global/sign-in-engag
 
 const getCookie: any = getCookie_;
 const userPrefs: any = userPrefs_;
+const Message: any = Message_;
 
 const validGaCookie = 'GA1.2.xx.1524903850';
 const oldGaCookie = 'GA1.2.xx.1515096983';
@@ -43,24 +45,6 @@ jest.mock('common/modules/user-prefs', () => ({
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(() => null),
 }));
-jest.mock('./sign-in-engagement-banner/icon-comment.svg', () => ({
-    markup: 'icon-comment',
-}));
-jest.mock('./sign-in-engagement-banner/icon-email.svg', () => ({
-    markup: 'icon-email',
-}));
-jest.mock('./sign-in-engagement-banner/icon-phone.svg', () => ({
-    markup: 'icon-phone',
-}));
-jest.mock('./sign-in-engagement-banner/close.svg', () => ({
-    markup: 'close',
-}));
-jest.mock('svgs/icon/marque-54-inverted.svg', () => ({
-    markup: 'marque-54-inverted',
-}));
-jest.mock('svgs/icon/arrow-right.svg', () => ({
-    markup: 'arrow-right',
-}));
 
 jest.mock('common/modules/experiments/test-can-run-checks', () => ({
     testCanBeRun: jest.fn(() => true),
@@ -75,28 +59,17 @@ jest.mock('common/modules/ui/message', () => ({
 jest.mock('lib/url', () => ({
     constructQuery: jest.fn(() => ''),
 }));
-jest.mock('ophan/ng', () => ({
-    record: jest.fn(),
-}));
 jest.mock('lib/config', () => ({
     get: jest.fn(() => ''),
 }));
-jest.mock('lib/detect', () => ({
-    adblockInUse: Promise.resolve(false),
-}));
-jest.mock('common/modules/commercial/contributions-utilities', () => ({
-    shouldShowReaderRevenue: jest.fn(() => true),
-}));
-
-const FakeMessage: any = require('common/modules/ui/message').Message;
 
 beforeEach(() => {
-    FakeMessage.mockReset();
-    FakeMessage.prototype.show = jest.fn(() => true);
+    Message.mockReset();
+    Message.prototype.show = jest.fn(() => true);
     userPrefs.get.mockImplementation(passingStore);
 });
 afterEach(() => {
-    FakeMessage.prototype.show.mockRestore();
+    Message.prototype.show.mockRestore();
 });
 
 describe('Sign in engagement banner', () => {
@@ -231,13 +204,13 @@ describe('Sign in engagement banner', () => {
     describe('Renders message with', () => {
         it('message text', () => {
             show();
-            return expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+            return expect(Message.prototype.show.mock.calls[0][0]).toMatch(
                 /Please sign in/
             );
         });
         it('close button', () => {
             show();
-            return expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+            return expect(Message.prototype.show.mock.calls[0][0]).toMatch(
                 new RegExp(bindableClassNames.closeBtn)
             );
         });
