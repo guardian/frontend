@@ -84,10 +84,6 @@ object Edition {
 
   def others(edition: Edition): Seq[Edition] = all.filterNot(_ == edition)
 
-  def othersById(id: String): Seq[Edition] = byId(id).map(others(_)).getOrElse(Nil)
-  def othersByHomepage(path: String): Seq[Edition] = all.find(_.homePagePath == path)
-    .map(_.id).map(othersById).getOrElse(Nil)
-
   def byId(id: String): Option[Edition] = all.find(_.id.equalsIgnoreCase(id))
 
   implicit val editionWrites: Writes[Edition] = new Writes[Edition] {
@@ -103,18 +99,18 @@ object Edition {
 
   private lazy val EditionalisedId = s"^/($editionRegex)(/[\\w\\d-]+)$$".r
 
-
-  def otherPagesFor(request: RequestHeader): Seq[EditionLink] = {
+  def allPagesFor(request: RequestHeader): Seq[EditionLink] = {
     val path = request.path
     path match {
       case EditionalisedId(editionId, section) if Edition.defaultEdition.isEditionalised(section.drop(1)) =>
-        val links = Edition.othersById(editionId).map(EditionLink(_, section))
+        val links = Edition.all.map(EditionLink(_, section))
         links.filter(link => link.edition.isEditionalised(link.path.drop(1)))
       case EditionalisedFront(_) =>
-        Edition.othersByHomepage(path).map(EditionLink(_, "/"))
+        all.map(EditionLink(_, "/"))
       case _ => Nil
     }
   }
+
 }
 
 object Editionalise {
