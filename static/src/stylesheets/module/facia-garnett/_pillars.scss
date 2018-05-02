@@ -125,12 +125,10 @@ $pillars: (
         color: map-get($palette, kicker);
     }
 
-    &.fc-item--half-tablet.fc-item--type-immersive.fc-item--standard-mobile,
-    &.fc-item--third-tablet.fc-item--type-immersive.fc-item--standard-mobile,
-    &.fc-item--three-quarters-tablet.fc-item--type-immersive.fc-item--standard-mobile,
-    &.fc-item--third-tablet.fc-item--type-immersive  {
-        background-color: transparent;
-
+    &.fc-item--half-tablet.fc-item--type-splash.fc-item--standard-mobile,
+    &.fc-item--third-tablet.fc-item--type-splash.fc-item--standard-mobile,
+    &.fc-item--three-quarters-tablet.fc-item--type-splash.fc-item--standard-mobile,
+    &.fc-item--third-tablet.fc-item--type-splash  {
         .fc-item__content {
             background-color: map-get($palette, kicker);
         }
@@ -147,7 +145,7 @@ $pillars: (
     &.fc-item--gallery .fc-item__kicker,
     &.fc-item--video .fc-item__kicker,
     &.video-playlist__item .fc-item__kicker,
-    &.fc-item--type-immersive .fc-item__byline
+    &.fc-item--type-splash .fc-item__byline
     {
         color: map-get($palette, invertedKicker);
     }
@@ -157,12 +155,12 @@ $pillars: (
         fill: map-get($palette, invertedKicker);
     }
 
-    &.fc-item--type-immersive .fc-item__headline .inline-garnett-quote {
+    &.fc-item--type-splash .fc-item__headline .inline-garnett-quote {
         fill: map-get($palette, liveColour);
     }
 
-    &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker,
-    &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker
+    &.fc-item--list-media-mobile.fc-item--type-splash .fc-item__kicker,
+    &.fc-item--list-mobile.fc-item--type-splash .fc-item__kicker
     {
         color: map-get($palette, kicker);
         @include mq($from: tablet) {
@@ -170,23 +168,23 @@ $pillars: (
         }
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive .fc-item__kicker,
-    &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker,
-    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker
+    &.fc-item--standard-tablet.fc-item--type-splash .fc-item__kicker,
+    &.fc-item--list-media-tablet.fc-item--type-splash .fc-item__kicker,
+    &.fc-item--list-tablet.fc-item--type-splash .fc-item__kicker
     {
         color: map-get($palette, kicker);
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive:not(.fc-item--pillar-special-report) .fc-item__standfirst {
+    &.fc-item--standard-tablet.fc-item--type-splash:not(.fc-item--pillar-special-report) .fc-item__standfirst {
         color: $garnett-neutral-1;
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive .inline-icon,
-    &.fc-item--standard-tablet.fc-item--type-immersive .fc-item__meta,
-    &.fc-item--list-media-tablet.fc-item--type-immersive .inline-icon,
-    &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__meta,
-    &.fc-item--list-tablet.fc-item--type-immersive .inline-icon,
-    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__meta
+    &.fc-item--standard-tablet.fc-item--type-splash .inline-icon,
+    &.fc-item--standard-tablet.fc-item--type-splash .fc-item__meta,
+    &.fc-item--list-media-tablet.fc-item--type-splash .inline-icon,
+    &.fc-item--list-media-tablet.fc-item--type-splash .fc-item__meta,
+    &.fc-item--list-tablet.fc-item--type-splash .inline-icon,
+    &.fc-item--list-tablet.fc-item--type-splash .fc-item__meta
     {
         fill: $garnett-neutral-6;
         color: $garnett-neutral-6;

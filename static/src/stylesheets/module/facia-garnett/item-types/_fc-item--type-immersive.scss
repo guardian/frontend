@@ -16,15 +16,7 @@
     // TODO: remove this temporary css fix
     .fc-item__standfirst,
     .fc-sublinks {
-        display: none !important;
-    }
-
-    //Todo better way to get this immersive card type to set the height when sublinks. This is fixed height enough to fit two lines of sublink
-    &.fc-item--has-sublinks-3 .fc-item__content,
-    &.fc-item--has-sublinks-2 .fc-item__content {
-        @include mq($from: tablet) {
-            padding-bottom: $gs-gutter * 3.6;
-        }
+        display: none;
     }
 
     .fc-item__content {
@@ -114,7 +106,7 @@
     }
 }
 
-.fc-item--type-immersive {
+.fc-item--type-splash {
 
     // ?# It is very easy to opt out as the below, but
     // it increases the cyclomatic complexity of all selectors.
