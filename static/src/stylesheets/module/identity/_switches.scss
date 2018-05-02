@@ -226,3 +226,12 @@ $checkbox-size: $gs-gutter / 1.25;
         margin-right: .25em;
     }
 }
+
+@include mq(desktop) {
+    .fieldset__fields {
+        &.email-categories__categories {
+            width: gs-span(8);
+            max-width: gs-span(8);
+        }
+    }
+}
