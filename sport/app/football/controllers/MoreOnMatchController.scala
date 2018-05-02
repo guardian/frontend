@@ -213,8 +213,11 @@ class MoreOnMatchController(
       c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) >= matchDate.toDateTimeAtStartOfDay &&
         c.matchReport && !c.minByMin && !c.preview
     }
+
     val minByMin = related.find { c =>
-      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")).toLocalDate == matchDate && c.minByMin && !c.preview
+      val dateOfPublication = c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London"))
+      val dateOfMatch = theMatch.date.withZone(DateTimeZone.forID("Europe/London"))
+      dateOfPublication.sameDay(dateOfMatch) && c.minByMin && !c.preview
     }
     val preview = related.find { c =>
       c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) <= matchDate.toDateTimeAtStartOfDay &&
