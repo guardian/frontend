@@ -17,9 +17,10 @@ import scala.collection.JavaConverters._
   it should "add alternate pages to editionalised sections for /uk/culture" in goTo("/uk/culture") { browser =>
 
     val alternateLinks = getAlternateLinks(browser)
-    alternateLinks.size should be (2)
+    alternateLinks.size should be (3)
     alternateLinks.exists(link => toPath(link.attribute("href")) == "/us/culture" && link.attribute("hreflang") == "en-US") should be (true)
     alternateLinks.exists(link => toPath(link.attribute("href")) == "/au/culture" && link.attribute("hreflang") == "en-AU") should be (true)
+    alternateLinks.exists(link => toPath(link.attribute("href")) == "/uk/culture" && link.attribute("hreflang") == "en-GB") should be (true)
 
   }
 
@@ -31,14 +32,6 @@ import scala.collection.JavaConverters._
         val href: Option[String] = Option(element.attribute("href"))
         href.isDefined && !href.exists(_.contains("ios-app"))
       })
-  }
-
-  it should "add alternate pages to editionalised sections for /au/culture" in goTo("/au/culture") { browser =>
-
-    val alternateLinks = getAlternateLinks(browser)
-    alternateLinks.size should be (2)
-    alternateLinks.exists(link => toPath(link.attribute("href")) == "/us/culture" && link.attribute("hreflang") == "en-US") should be (true)
-    alternateLinks.exists(link => toPath(link.attribute("href")) == "/uk/culture" && link.attribute("hreflang") == "en-GB") should be (true)
   }
 
   it should "not add alternate pages to non editionalised sections" in goTo("/books") { browser =>
