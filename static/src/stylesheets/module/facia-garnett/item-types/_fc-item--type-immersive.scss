@@ -9,11 +9,11 @@
     }
 
     .fc-item__container {
-        // overflow: hidden;
+        overflow: hidden;
         position: relative;
     }
 
-    // Temporary css fix
+    // TODO: remove this temporary css fix
     .fc-item__standfirst,
     .fc-sublinks {
         display: none !important;
@@ -56,10 +56,18 @@
         margin: 0 30px 0 0;
     }
 
+    &.fc-item--third-tablet  {
+        @include mq($from: tablet) {
+            .fc-item__content {
+                max-width: gs-span(3);
+            }
+        }
+    }
+
     &.fc-item--half-tablet  {
         @include mq($from: tablet) {
             .fc-item__content {
-                max-width: 220px;
+                max-width: gs-span(4);
             }
         }
     }
@@ -101,11 +109,6 @@
 @mixin immersiveRight() {
     @include immersiveCommon();
 
-    .fc-item__content {
-        border-right: 20px solid green;
-    }
-
-
     .u-responsive-ratio {
         padding-bottom: 45%;
     }
@@ -140,15 +143,12 @@
         }
 
         .fc-item__meta {
-            position: absolute;
-            right: -180px;
-            bottom: 0;
-            // margin-left: auto;
-            // color: #ffffff;
+            margin-left: auto;
+            color: #ffffff;
         }
 
         .inline-icon {
-            // fill: #ffffff;
+            fill: #ffffff;
         }
 
         &.fc-item--standard-mobile {
