@@ -444,6 +444,12 @@
     }
 }
 
+.ad-slot--gc {
+    .ad-slot__label {
+        display: none;
+    }
+}
+
 .ad-slot--fabric-v1 {
     min-height: 250px;
 }

@@ -3,13 +3,20 @@ import { adSizes } from 'commercial/modules/ad-sizes';
 
 const inlineDefinition = {
     sizeMappings: {
-        mobile: [adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid],
+        mobile: [
+            adSizes.outOfPage,
+            adSizes.empty,
+            adSizes.mpu,
+            adSizes.googleCard,
+            adSizes.fluid,
+        ],
         desktop: [
             adSizes.outOfPage,
             adSizes.empty,
             adSizes.mpu,
             adSizes.video,
             adSizes.video2,
+            adSizes.googleCard,
             adSizes.fluid,
         ],
     },

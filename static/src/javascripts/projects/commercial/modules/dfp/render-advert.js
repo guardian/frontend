@@ -95,6 +95,12 @@ sizeCallbacks[adSizes.video2] = (_, advert) => {
     });
 };
 
+sizeCallbacks[adSizes.googleCard] = (_, advert) => {
+    fastdom.write(() => {
+        advert.node.classList.add('ad-slot--gc');
+    });
+};
+
 /**
  * Out of page adverts - creatives that aren't directly shown on the page - need to be hidden,
  * and their containers closed up.
