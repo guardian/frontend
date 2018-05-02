@@ -1,7 +1,5 @@
 // @flow
-import { init, _ } from 'common/modules/ui/bannerPicker';
-
-jest.mock('ophan/ng', () => {});
+import { init } from 'common/modules/ui/bannerPicker';
 
 const shortTrueCheck = () =>
     new Promise(resolve => {
@@ -92,9 +90,7 @@ describe('bannerMediator picks correct banner to show', () => {
         it(`calls show() for banner at index ${test.successfulIndex}`, () => {
             const bannerList = test.checks.map(createBanner);
 
-            _.resetChecks(bannerList);
-
-            return init().then(() => {
+            return init(bannerList).then(() => {
                 bannerList.forEach((check, index) => {
                     if (index === test.successfulIndex) {
                         expect(bannerList[index].show).toHaveBeenCalled();

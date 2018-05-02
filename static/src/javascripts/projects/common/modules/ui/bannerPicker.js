@@ -1,43 +1,39 @@
 // @flow
-import breakingNews from 'common/modules/onward/breaking-news';
-import optInEngagementAlert from 'common/modules/identity/global/opt-in-engagement-banner.js';
 
 type Banner = {
     canShow: () => Promise<boolean>,
     show: () => void,
 };
 
-let banners: Array<Banner> = [breakingNews, optInEngagementAlert];
+const init = (banners: Array<Banner>): Promise<void> => {
+    const results: Array<'pending' | boolean> = new Array(banners.length).fill(
+        'pending',
+        0
+    );
 
-let results: Array<'pending' | boolean> = new Array(banners.length).fill(
-    'pending',
-    0
-);
+    const getSuccessfulBannerIndex = (): number => {
+        const firstCheckPassedIndex = results.findIndex(item => item === true);
 
-const getSuccessfulBannerIndex = (): number => {
-    const firstCheckPassedIndex = results.findIndex(item => item === true);
+        // if no check has passed firstCheckPassedIndex equals -1
+        // if first check has passed firstCheckPassedIndex equals 0
+        if (firstCheckPassedIndex <= 0) {
+            return firstCheckPassedIndex;
+        }
 
-    // if no check has passed firstCheckPassedIndex equals -1
-    // if first check has passed firstCheckPassedIndex equals 0
-    if (firstCheckPassedIndex <= 0) {
-        return firstCheckPassedIndex;
-    }
+        // if firstCheckPassedIndex greater than 0 then get higher priority checks from array that are pending
+        const pendingHigherPriorityCheckIndex = results
+            .slice(0, firstCheckPassedIndex)
+            .findIndex(item => item === 'pending');
 
-    // if firstCheckPassedIndex greater than 0 then get higher priority checks from array that are pending
-    const pendingHigherPriorityCheckIndex = results
-        .slice(0, firstCheckPassedIndex)
-        .findIndex(item => item === 'pending');
+        // if there are no higher priority checks pending return firstCheckPassedIndex
+        if (pendingHigherPriorityCheckIndex === -1) {
+            return firstCheckPassedIndex;
+        }
 
-    // if there are no higher priority checks pending return firstCheckPassedIndex
-    if (pendingHigherPriorityCheckIndex === -1) {
-        return firstCheckPassedIndex;
-    }
+        return -1;
+    };
 
-    return -1;
-};
-
-const init = (): Promise<void> =>
-    new Promise(resolve => {
+    return new Promise(resolve => {
         const TIME_LIMIT = 2000;
 
         banners.forEach((banner, index) => {
@@ -71,15 +67,6 @@ const init = (): Promise<void> =>
             });
         });
     });
-
-// used for testing purposes
-const resetChecks = (bannerList: Array<Banner>): void => {
-    banners = bannerList;
-    results = new Array(banners.length).fill('pending', 0);
 };
 
 export { init };
-
-export const _ = {
-    resetChecks,
-};
