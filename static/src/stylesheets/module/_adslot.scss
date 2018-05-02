@@ -239,7 +239,7 @@
     }
 }
 
-.ad-slot--container-inline:not(.ad-slot--fluid) {
+.ad-slot--container-inline:not(.ad-slot--fluid):not(.ad-slot--gc) {
     .ad-slot__content {
         margin: 0 auto;
     }
