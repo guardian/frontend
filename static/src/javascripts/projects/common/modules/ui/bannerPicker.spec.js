@@ -206,13 +206,8 @@ describe('bannerMediator picks correct banner to show when check timesout', () =
         resolveList[1](true);
 
         return asyncTest.then(() => {
-            banners.forEach((banner, index) => {
-                if (index === 1) {
-                    expect(banner.show).toHaveBeenCalled();
-                } else {
-                    expect(banner.show).not.toHaveBeenCalled();
-                }
-            });
+            expect(banners[0].show).not.toHaveBeenCalled();
+            expect(banners[1].show).toHaveBeenCalled();
         });
     });
 });
