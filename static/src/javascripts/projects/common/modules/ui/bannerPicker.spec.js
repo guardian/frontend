@@ -3,7 +3,7 @@ import { init } from 'common/modules/ui/bannerPicker';
 
 jest.useFakeTimers();
 
-describe('bannerMediator picks correct banner to show', () => {
+describe('bannerPicker picks correct banner to show', () => {
     // resultsSeq is the order banner's checks will resolve in the test
     const tests = [
         {
@@ -147,7 +147,7 @@ describe('bannerMediator picks correct banner to show', () => {
     });
 });
 
-describe('bannerMediator picks correct banner to show when check timesout', () => {
+describe('bannerPicker picks correct banner to show when check timesout', () => {
     it('should call show() for banner at index 1 if index 0 timesout', () => {
         const resolveList = [];
 
