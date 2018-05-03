@@ -13,7 +13,7 @@ const record = (mediaId: string, eventType: string) => {
     });
 };
 
-const constant = <A>(a: A) => (): A => a;
+const True = () => true;
 
 // Determines whether a reader has listened up to pct% of the audio track
 const percent = (pct: number) => (event: Event): boolean =>
@@ -35,14 +35,14 @@ const recordIf = (pred: Event => boolean, eventType: string) => (
 };
 
 const init = (): void => {
-    const audios = Array.from(document.querySelectorAll(audioSelector));
+    const audios: Element[] = Array.from(document.querySelectorAll(audioSelector));
     const events: Array<[string, (Event) => void]> = [
-        ['canplay', recordIf(constant(true), 'READY')],
-        ['playing', recordIf(constant(true), 'play')],
+        ['canplay', recordIf(True, 'READY')],
+        ['playing', recordIf(True, 'play')],
         ['progress', recordIf(percent(25), '25')],
         ['progress', recordIf(percent(50), '50')],
         ['progress', recordIf(percent(75), '75')],
-        ['ended', recordIf(constant(true), 'end')],
+        ['ended', recordIf(True, 'end')],
     ];
 
     events.forEach(([eventType, action]: [string, (Event) => void]) => {
@@ -51,7 +51,7 @@ const init = (): void => {
         document.addEventListener(
             eventType,
             (event: Event) => {
-                const audio = event.target && audios.find(event.target);
+                const audio = event.target && audios.find((elem) => elem === event.target);
 
                 if (!audio) return;
 
