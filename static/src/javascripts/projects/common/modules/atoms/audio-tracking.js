@@ -39,7 +39,7 @@ const init = (): void => {
         document.querySelectorAll(audioSelector)
     );
     const events: Array<[string, (Event) => void]> = [
-        ['canplay', recordIf(True, 'READY')],
+        ['canplay', recordIf(True, 'ready')],
         ['playing', recordIf(True, 'play')],
         ['progress', recordIf(percent(25), '25')],
         ['progress', recordIf(percent(50), '50')],
