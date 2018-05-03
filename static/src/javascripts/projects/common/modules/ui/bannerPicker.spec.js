@@ -1,6 +1,8 @@
 // @flow
 import { init } from 'common/modules/ui/bannerPicker';
 
+jest.useFakeTimers();
+
 describe('bannerMediator picks correct banner to show', () => {
     // resultsSeq is the order banner's checks will resolve in the test
     const tests = [
@@ -149,9 +151,40 @@ describe('bannerMediator picks correct banner to show when check timesout', () =
     it('should call show() for banner at index 1 if index 0 timesout', () => {
         const resolveList = [];
 
+        /**
+         * this will be assigned the resolve function of
+         * onCheckResolved.
+         * */
+        let triggerTimeout;
+
+        /**
+         * the promise returned by onCheckResolved.
+         * will resolve when triggerTimeout has been called
+         * */
+        const onCheckResolved = () =>
+            new Promise(resolve => {
+                triggerTimeout = resolve;
+            });
+
+        /**
+         * wait for onCheckResolved to resolve then execute all pending timers
+         * to force a timeout on the banners[0]
+         * */
+        onCheckResolved().then(() => {
+            jest.runOnlyPendingTimers();
+        });
+
         const newCheck = () => () =>
             new Promise(resolve => {
-                resolveList.push(resolve);
+                resolveList.push(result => {
+                    resolve(result);
+                    /**
+                     * we've just resolved the check for banners[1] call
+                     * triggerTimeout to resolve onCheckResolved
+                     * and trigger a timeout on banners[0]
+                     * */
+                    triggerTimeout();
+                });
             });
 
         const banners = [
@@ -167,17 +200,7 @@ describe('bannerMediator picks correct banner to show when check timesout', () =
 
         const asyncTest = init(banners);
 
-        /**
-         * after resolving the canShow check for bannerIndex 1
-         * call jest.runOnlyPendingTimers, this will execute the timeout
-         * on bannerIndex 0, in affect simulating bannerIndex 0's canShow
-         * taking too long to resolve
-         * */
-        banners[1].canShow().then(() => {
-            jest.runOnlyPendingTimers();
-        });
-
-        // resolve bannerIndex 1 canshow check
+        // resolve banner[1] check
         resolveList[1](true);
 
         return asyncTest.then(() => {
