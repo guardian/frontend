@@ -11,7 +11,8 @@
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
     idRequest: services.IdentityRequest,
-    idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+    idUrlBuilder: services.IdentityUrlBuilder,
+    user: com.gu.identity.model.User)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @buildIdentityUrl(endpoint: String) = {
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
@@ -33,7 +34,7 @@
                 The Guardian’s newsletters include content from our website, which may be funded by outside parties. Newsletters may also display information about Guardian News and Media's other products, services or events (such as Guardian Jobs or Masterclasses), chosen charities or online advertisements.
             </p>
         </div>
-        <div class="fieldset__fields">
+        <div class="fieldset__fields email-categories__categories">
             @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions)(request, messages)
         </div>
     </fieldset>
@@ -43,17 +44,30 @@
 
         <fieldset class="fieldset">
             <div class="fieldset__heading">
-                <h2 class="form__heading">Settings</h2>
+                <h2 class="form__heading">Email Settings</h2>
             </div>
 
             <div class="fieldset__fields email-subscription__options">
                 <ul class="u-unstyled">
+                    @if(user.primaryEmailAddress != null | !user.primaryEmailAddress.isEmpty) {
+                        <li>
+                            <p>
+                                You are receiving newsletters, notifications and all other emails to
+                                <b>@user.primaryEmailAddress</b><b>.</b>
+                            </p>
+                        </li>
+                    }
                     <li>
                         <p>
                             <a href="@buildIdentityUrl("account/edit")" class="u-underline" data-link-name="identity : email : update">
-                                Update your email address
+                                Change email address via Account & profile tab
                             </a>
                         </p>
+                    </li>
+                    <li>
+                        <a href="#identity-modal--newsletterFormat" class="u-underline js-email-subscription__formatFieldsetToggle" data-link-name="identity : email : format">
+                            Change email format (HTML/text)
+                        </a>
                     </li>
                     <li>
                         <p>
@@ -61,22 +75,6 @@
                                 Edit your Job Alert settings
                             </a>
                         </p>
-                    </li>
-                    <li>
-                        <a href="#identity-modal--newsletterFormat" class="u-underline js-email-subscription__formatFieldsetToggle" data-link-name="identity : email : format">
-                            Change format
-                        </a>
-                    </li>
-                    <li>
-                        <button type="button" class="manage-account__button--mini manage-account__button--icon manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all">
-                            <span class="email-unsubscribe-all__label js-unsubscribe--basic manage-account__button-flexwrap">
-                                Unsubscribe from all newsletters
-                                @fragments.inlineSvg("cross", "icon")
-                            </span>
-                            <span class="email-unsubscribe-all__label js-unsubscribe--confirm hide" aria-hidden>
-                                Are you sure?
-                            </span>
-                        </button>
                     </li>
                 </ul>
             </div>

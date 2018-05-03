@@ -11,7 +11,7 @@
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @emailListCategoryList(theme: String, newsletters: List[EmailNewsletter], isActive: Boolean) = {
-    @fragments.dropdown(theme.capitalize, modifier = Some("email-subscription"), isActive = isActive, isAnimated = true) {
+    @fragments.dropdown(theme.capitalize, modifier = Some("email-subscription"), isActive = isActive, isAnimated = true, totalEmails =newsletters.length) {
         <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
                 @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
@@ -32,4 +32,18 @@
     @List("news", "features", "sport", "culture", "lifestyle", "comment", "work").zipWithIndex.map { case (theme, index) =>
         @emailListCategoryList(theme, availableLists.subscriptions.filter(_.theme == theme), (startsOpen == true && index == 0))
     }
+
+    <ul class="u-unstyled">
+        <li>
+            <button type="button" class="manage-account__button--mini manage-account__button--icon manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all">
+                <span class="email-unsubscribe-all__label js-unsubscribe--basic manage-account__button-flexwrap">
+                    Unsubscribe from all newsletters
+                    @fragments.inlineSvg("cross", "icon")
+                </span>
+                <span class="email-unsubscribe-all__label js-unsubscribe--confirm hide" aria-hidden>
+                    Are you sure?
+                </span>
+            </button>
+        </li>
+    </ul>
 </div>
