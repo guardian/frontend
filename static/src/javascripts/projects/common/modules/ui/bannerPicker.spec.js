@@ -112,7 +112,7 @@ describe('bannerMediator picks correct banner to show', () => {
                 });
 
             const createBanner = result => ({
-                index: result.bannerIndex,
+                id: `banner-${result.bannerIndex}`,
                 canShow: newCheck(),
                 show: jest.fn(),
             });
@@ -189,10 +189,12 @@ describe('bannerMediator picks correct banner to show when check timesout', () =
 
         const banners = [
             {
+                id: 'banner-0',
                 canShow: newCheck(),
                 show: jest.fn(),
             },
             {
+                id: 'banner-1',
                 canShow: newCheck(),
                 show: jest.fn(),
             },

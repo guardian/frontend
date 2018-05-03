@@ -221,6 +221,7 @@ const canShow = (): Promise<boolean> =>
     });
 
 export default {
+    id: 'breakingNews',
     show,
     canShow,
 };

@@ -1,6 +1,7 @@
 // @flow
 
 type Banner = {
+    id: string,
     canShow: () => Promise<boolean>,
     show: () => void,
 };

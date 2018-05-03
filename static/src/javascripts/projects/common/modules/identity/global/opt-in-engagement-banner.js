@@ -161,6 +161,7 @@ const show = (): void => {
 };
 
 export default {
+    id: 'optInEngagementBanner',
     show,
     canShow,
 };
