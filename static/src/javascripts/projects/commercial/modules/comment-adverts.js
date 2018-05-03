@@ -8,7 +8,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import type bonzo from 'bonzo';
 
-const init = (): ?boolean => {
+export const initCommentAdverts = (): ?boolean => {
     const $adSlotContainer: bonzo = $('.js-discussion__ad-slot');
 
     if (!commercialFeatures.commentAdverts || !$adSlotContainer.length) {
@@ -55,5 +55,3 @@ const init = (): ?boolean => {
             });
     });
 };
-
-export default init;
