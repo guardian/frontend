@@ -118,7 +118,7 @@ describe('bannerMediator picks correct banner to show', () => {
             // create a list to be populated with banners
             const banners = new Array(test.resultsSeq.length);
 
-            // create a banner for each result and add to bannerList
+            // create a banner for each result and add to banners list
             test.resultsSeq.forEach(result => {
                 banners[result.bannerIndex] = createBanner(result);
             });
