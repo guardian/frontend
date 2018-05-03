@@ -7,11 +7,12 @@ import com.amazonaws.services.kinesisfirehose.model.{PutRecordRequest, Record}
 import com.amazonaws.services.kinesisfirehose.{AmazonKinesisFirehoseAsync, AmazonKinesisFirehoseAsyncClientBuilder}
 import common.Logging
 import conf.Configuration.aws.{mandatoryCredentials, region}
+import conf.Configuration.environment.isProd
 import conf.switches.Switches.prebidAnalytics
 import model.Cached.WithoutRevalidationResult
 import model.{CacheTime, Cached, TinyResponse}
 import play.api.libs.json.JsValue
-import play.api.libs.json.Json.toBytes
+import play.api.libs.json.Json.{prettyPrint, toBytes}
 import play.api.mvc._
 
 import scala.concurrent.ExecutionContext
@@ -33,9 +34,13 @@ class PrebidAnalyticsController(val controllerComponents: ControllerComponents) 
 
   private val newLine = "\n".getBytes
 
-  private def putRequest(data: Array[Byte]): PutRecordRequest = {
-    val record = new Record().withData(ByteBuffer.wrap(data ++ newLine))
-    new PutRecordRequest().withDeliveryStreamName(deliveryStream).withRecord(record)
+  private def streamAnalytics(json: JsValue) = {
+    val record  = new Record().withData(ByteBuffer.wrap(toBytes(json) ++ newLine))
+    val request = new PutRecordRequest().withDeliveryStreamName(deliveryStream).withRecord(record)
+    val result  = firehose.putRecordFuture(request)
+    result.failed foreach {
+      case NonFatal(e) => log.error(s"Failed to put '$json'", e)
+    }
   }
 
   private def serve404[A](implicit request: Request[A]) =
@@ -43,10 +48,8 @@ class PrebidAnalyticsController(val controllerComponents: ControllerComponents) 
 
   def insert(): Action[JsValue] = Action(parse.json) { implicit request =>
     if (prebidAnalytics.isSwitchedOn) {
-      val result = firehose.putRecordFuture(putRequest(toBytes(request.body)))
-      result.failed foreach {
-        case NonFatal(e) => log.error(s"Failed to put '${request.body}'", e)
-      }
+      if (isProd) streamAnalytics(request.body)
+      else log.info(prettyPrint(request.body))
       TinyResponse.noContent()
     } else
       serve404
