@@ -372,6 +372,12 @@ $quote-mark: 35px;
             font-size: 17px;
             line-height: 24px;
         }
+
+        // negative margin on these is currently based on inital
+        // font-size so we need to set this for the test duration.
+        .ad-slot--offset-right {
+            font-size: 16px;
+        }
     }
 
     .media-primary {
