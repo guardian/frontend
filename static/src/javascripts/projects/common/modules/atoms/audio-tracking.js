@@ -35,7 +35,9 @@ const recordIf = (pred: Event => boolean, eventType: string) => (
 };
 
 const init = (): void => {
-    const audios: Element[] = Array.from(document.querySelectorAll(audioSelector));
+    const audios: Element[] = Array.from(
+        document.querySelectorAll(audioSelector)
+    );
     const events: Array<[string, (Event) => void]> = [
         ['canplay', recordIf(True, 'READY')],
         ['playing', recordIf(True, 'play')],
@@ -51,7 +53,8 @@ const init = (): void => {
         document.addEventListener(
             eventType,
             (event: Event) => {
-                const audio = event.target && audios.find((elem) => elem === event.target);
+                const audio =
+                    event.target && audios.find(elem => elem === event.target);
 
                 if (!audio) return;
 
