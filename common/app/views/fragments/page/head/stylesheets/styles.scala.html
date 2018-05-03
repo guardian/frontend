@@ -1,6 +1,19 @@
 @(styles: html.Styles)(implicit applicationContext: model.ApplicationContext, request: RequestHeader)
 
+@import conf.switches.Switches.FontSwitch
 @import conf.Static
+@import common.InlineJs
+@import templates.inlineJS.blocking.js.loadFonts
+
+@fragments.fontDefinitions()
+<script>
+    @if(FontSwitch.isSwitchedOn) {
+        // try and get the browser to load all the fonts before using any of them.
+        // means longer FOUT, but only one repaint and no FOIT.
+        // if we can't use document.fonts, just behaves as normal.
+        @InlineJs(loadFonts().body, "loadFonts.js")
+    }
+</script>
 
 @* any images in head need to go here (or they'll be relative to the page)} *@
 <style class="js-loggable">
@@ -57,4 +70,3 @@
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
 
 @* placeholder <style>'s for font to go in *@
-@fragments.fontDefinitions()
