@@ -26,7 +26,7 @@ const recordIf = (pred: Event => Boolean, eventType: String): void => (
     event: Event
 ) => {
     if (pred(event)) {
-        record(event.target.getAttribute('data-media-id'), eventType);
+        record(event.target.getAttribute('data-media-id') || '', eventType);
     }
 };
 
@@ -41,19 +41,20 @@ const init = (): void => {
         ['ended', recordIf(constant(true), 'end')],
     ];
 
-    events.forEach(([eventType, action]) => {
+    events.forEach(([eventType, action]: [String, Function]) => {
         // Just in case there is more than one audio on the page,
         // we delegate to the document
-        document.addEventListener(eventType, function listener(event) {
-            const audio = audios.find(event.target);
+        document.addEventListener(
+            eventType,
+            (event: Event) => {
+                const audio = event.target && audios.find(event.target);
 
-            if (!audio) return;
+                if (!audio) return;
 
-            action(event);
-
-            // These are all one-time events
-            document.removeEventListener(eventType, listener);
-        });
+                action(event);
+            },
+            { once: true }
+        );
     });
 };
 
