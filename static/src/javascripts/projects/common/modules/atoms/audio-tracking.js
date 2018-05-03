@@ -1,7 +1,19 @@
 // @flow
 import ophan from 'ophan/ng';
+import config from 'lib/config';
+import { buildGoogleAnalyticsEvent } from 'common/modules/video/ga-helper';
 
 const audioSelector = '.gu-media--audio';
+const gaTracker = config.get('googleAnalytics.trackers.editorial');
+const eventAction = 'audio content';
+const metricMap = {
+    play: 'metric1',
+    skip: 'metric2',
+    '25': 'metric3',
+    '50': 'metric4',
+    '75': 'metric5',
+    end: 'metric6',
+};
 
 // Sends a media event to Ophan
 const record = (mediaId: string, eventType: string) => {
@@ -11,6 +23,24 @@ const record = (mediaId: string, eventType: string) => {
             eventType: `audio:content:${eventType}`,
         },
     });
+    window.ga(
+        `${gaTracker}.send`,
+        'event',
+        buildGoogleAnalyticsEvent(
+            {
+                mediaType: 'audio',
+                isPreroll: false,
+                mediaId,
+                eventType,
+            },
+            metricMap,
+            `${eventType}:${mediaId}`,
+            'gu-audio',
+            () => eventAction,
+            mediaId
+        )
+    );
+
 };
 
 const True = () => true;
