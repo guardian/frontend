@@ -328,6 +328,21 @@ const bootEnhanced = (): void => {
         }
     });
 
+    fastdom.read(() => {
+        if ($('.gu-media--audio').length > 0) {
+            require.ensure(
+                [],
+                require => {
+                    bootstrapContext(
+                        'audio',
+                        require('bootstraps/enhanced/audio').init
+                    );
+                },
+                'audio'
+            );
+        }
+    });
+
     if (window.location.hash.includes('experiments')) {
         require.ensure(
             [],
