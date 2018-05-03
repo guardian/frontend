@@ -199,10 +199,12 @@ $avatarPadding: $gs-gutter / 2;
     float: left;
 }
 
-.content__repositioned-comments .content__main-column {
-    @include mq(desktop) {
-        max-width: none;
-        margin-right: 25%;
+.content__repositioned-comments {
+    .content__main-column:not(.discussion__ad-wrapper) {
+        @include mq(desktop) {
+            max-width: none;
+            margin-right: 25%;
+        }
     }
 }
 
