@@ -40,7 +40,6 @@ const record = (mediaId: string, eventType: string) => {
             mediaId
         )
     );
-
 };
 
 const True = () => true;
