@@ -26,13 +26,17 @@ const recordIf = (pred: Event => boolean, eventType: string) => (
     event: Event
 ): void => {
     if (pred(event)) {
-        record(((event.target: any): HTMLElement).getAttribute('data-media-id') || '', eventType);
+        record(
+            ((event.target: any): HTMLElement).getAttribute('data-media-id') ||
+                '',
+            eventType
+        );
     }
 };
 
 const init = (): void => {
     const audios = Array.from(document.querySelectorAll(audioSelector));
-    const events: Array<[string, Event => void]> = [
+    const events: Array<[string, (Event) => void]> = [
         ['canplay', recordIf(constant(true), 'READY')],
         ['playing', recordIf(constant(true), 'play')],
         ['progress', recordIf(percent(25), '25')],
@@ -41,7 +45,7 @@ const init = (): void => {
         ['ended', recordIf(constant(true), 'end')],
     ];
 
-    events.forEach(([eventType, action]: [string, Event => void]) => {
+    events.forEach(([eventType, action]: [string, (Event) => void]) => {
         // Just in case there is more than one audio on the page,
         // we delegate to the document
         document.addEventListener(
