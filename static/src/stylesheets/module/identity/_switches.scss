@@ -37,6 +37,7 @@ $checkbox-size: $gs-gutter / 1.25;
         @include mq(desktop) {
             grid-template-columns: repeat(2, 1fr);
             grid-auto-rows: 1fr;
+            width: gs-span(8);
         }
     }
 
@@ -226,3 +227,12 @@ $checkbox-size: $gs-gutter / 1.25;
         margin-right: .25em;
     }
 }
+
+@include mq(desktop) {
+    .fieldset__fields {
+        &.email-categories__categories {
+            width: gs-span(8);
+            max-width: gs-span(8);
+        }
+    }
+ }
