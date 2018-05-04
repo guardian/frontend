@@ -25,7 +25,7 @@ import iconPhone from './sign-in-engagement-banner/icon-phone.svg';
 const messageCode: string = 'sign-in-30-april';
 const signedInCookie: string = 'GU_U';
 
-const forceDisplayKey = 'sign-in-eb.force-display';
+const forceDisplayHash = 'sign-in-eb-display=true';
 const lastSeenAtKey = 'sign-in-eb.last-seen-at';
 const lifeTimeViewsKey = 'sign-in-eb.lifetime-views';
 const lifeTimeClosesKey = 'sign-in-eb.lifetime-closes';
@@ -124,7 +124,7 @@ const isInTestVariant = (): boolean => {
 
 /* Make the alert show up iregardless */
 const isForcedDisplay = (): boolean =>
-    (userPrefs.get(forceDisplayKey) || false) === true;
+    window.location.hash.includes(forceDisplayHash);
 
 const bannerDoesNotCollide = (): Promise<boolean> =>
     new Promise(show => {
@@ -215,5 +215,5 @@ export {
     lifeTimeViewsKey,
     sessionStartedAtKey,
     lastSeenAtKey,
-    forceDisplayKey,
+    forceDisplayHash,
 };
