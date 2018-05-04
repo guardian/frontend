@@ -53,20 +53,24 @@ var isRequestForAsset = (function () {
     }
 })();
 
-var handleAssetRequest = function (event) {
+var handleAssetRequest = function(event) {
     // Default fetch behaviour
     // Cache first for all other requests
     event.respondWith(
-        caches.match(event.request)
-            .then(function (response) {
-                // Workaround Firefox bug which drops cookies
-                // https://github.com/guardian/frontend/issues/12012
-                return response || fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
-                    credentials: 'include'
-                } : {});
-            })
+        caches.open('assets').then(function(cache) {
+            return cache.match(event.request).then(function(response) {
+                return (
+                    response ||
+                    fetch(event.request).then(function(response) {
+                        cache.put(event.request, response.clone());
+                        return response;
+                    })
+                );
+            });
+        })
     );
 };
+
 
 var blockIAS = false;
 var iasRX = /adsafeprotected\.com/;
