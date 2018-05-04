@@ -8,6 +8,7 @@ import {
     sessionVisitsKey,
     lifeTimeViewsKey,
     lastSeenAtKey,
+    forceDisplayKey,
 } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { bindableClassNames } from 'common/modules/identity/global/sign-in-engagement-banner/template';
 
@@ -23,6 +24,7 @@ const timestampToday = 1525096983756;
 const timestampThreeDaysAgo = 1524837783756;
 
 const passingStore = _ => {
+    if (_ === forceDisplayKey) return false;
     if (_ === sessionVisitsKey) return 4;
     else if (_ === lifeTimeViewsKey) return 1;
     return timestampThreeDaysAgo;

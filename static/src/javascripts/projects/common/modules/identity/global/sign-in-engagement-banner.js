@@ -123,7 +123,8 @@ const isInTestVariant = (): boolean => {
 };
 
 /* Make the alert show up iregardless */
-const isForcedDisplay = (): boolean => userPrefs.get(forceDisplayKey) || false;
+const isForcedDisplay = (): boolean =>
+    (userPrefs.get(forceDisplayKey) || false) === true;
 
 const bannerDoesNotCollide = (): Promise<boolean> =>
     new Promise(show => {
@@ -214,4 +215,5 @@ export {
     lifeTimeViewsKey,
     sessionStartedAtKey,
     lastSeenAtKey,
+    forceDisplayKey,
 };
