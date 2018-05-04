@@ -88,8 +88,9 @@ $sign-in-eb-logo: $gs-baseline * 3.5;
 .site-message--sign-in-cta,
 a.site-message--sign-in-cta {
     @include circular;
-    @include fs-textSans(3)
-    display: inline-flex;
+    @include fs-textSans(3);
+    display: block;
+    display: flex;
     white-space: nowrap;
     color: $garnett-neutral-1;
     text-decoration: none;
