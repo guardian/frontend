@@ -10,7 +10,7 @@ object CommercialBodyCleaner {
   def apply(article: HostedArticlePage, html: String)(implicit request: RequestHeader, context: ApplicationContext): Html = {
 
     val cleaners = List(
-      AtomsCleaner(atoms = article.content.atoms)
+      AtomsCleaner(atoms = article.content.atoms, pillar = article.metadata.pillar)
     )
 
     withJsoup(html)(cleaners :_*)

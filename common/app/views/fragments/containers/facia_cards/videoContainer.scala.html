@@ -41,7 +41,18 @@
                 @item.properties.maybeContent.map { content =>
                     @defining(content.elements.mediaAtoms.find(_.assets.exists(_.platform == MediaAssetPlatform.Youtube))) { youTubeAtom =>
                         @youTubeAtom.map { youTubeAtom =>
-                            @youtube(media = youTubeAtom, displayCaption = false, mediaWrapper = Some(VideoContainer), displayEndSlate = false, displayDuration = false, faciaHeaderProperties = Some(VideoFaciaProperties(header = FaciaCardHeader.fromTrail(item, None), showByline = item.properties.showByline, item.properties.byline)))
+                            @youtube(
+                                media = youTubeAtom,
+                                displayCaption = false,
+                                mediaWrapper = Some(VideoContainer),
+                                displayEndSlate = false,
+                                displayDuration = false,
+                                pillar = item.maybePillar,
+                                faciaHeaderProperties = Some(VideoFaciaProperties(
+                                    header = FaciaCardHeader.fromTrail(item, None),
+                                    showByline = item.properties.showByline,
+                                    item.properties.byline))
+                            )
                         }
                     }
 

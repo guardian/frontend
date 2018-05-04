@@ -92,7 +92,7 @@
                                             }
 
                                             @video.mediaAtom.map { mediaAtom =>
-                                                @fragments.atoms.media(mediaAtom, displayCaption = displayCaption, displayEndSlate = true, mediaWrapper = None)
+                                                @fragments.atoms.media(mediaAtom, displayCaption = displayCaption, displayEndSlate = true, mediaWrapper = None, pillar = media.metadata.pillar)
                                             }
 
                                             @video.elements.mainVideo.map { videoElement =>

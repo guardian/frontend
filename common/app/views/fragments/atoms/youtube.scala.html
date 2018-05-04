@@ -11,8 +11,23 @@
 @import conf.switches.Switches.YouTubePosterOverride
 @import model.VideoFaciaProperties
 @import views.html.fragments.items.elements.facia_cards.title
+@import model.Pillar.RichPillar
 
-@(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None, faciaHeaderProperties: Option[VideoFaciaProperties] = None)(implicit request: RequestHeader)
+@import play.api.libs.json.Json
+
+@import views.support.GetYoutubePlayerColour
+@(
+    media: model.content.MediaAtom,
+    displayCaption: Boolean,
+    displayDuration: Boolean = true,
+    displayEndSlate: Boolean = true,
+    playable: Boolean = true,
+    pillar: RichPillar,
+    posterImageOverride: Option[ImageMedia] = None,
+    cardStyle: Option[CardStyle] = None,
+    mediaWrapper: Option[MediaWrapper] = None,
+    faciaHeaderProperties: Option[VideoFaciaProperties] = None
+)(implicit request: RequestHeader)
 
 @videoJsError() = @{
     <div class="vjs-error-display vjs-modal-dialog">
@@ -46,7 +61,8 @@
                 "enablejsapi" -> 1,
                 "rel" -> 0,
                 "showinfo" -> 0,
-                "origin" -> (if(mediaWrapper.contains(EmbedPage)) Some(Media.externalEmbedHost) else if(!host.isEmpty) Some(host) else None)
+                "origin" -> (if(mediaWrapper.contains(EmbedPage)) Some(Media.externalEmbedHost) else if(!host.isEmpty) Some(host) else None),
+                "embed_config" -> Json.obj("primaryThemeColor" -> GetYoutubePlayerColour.forPillar(pillar))
                 )).toString
                 }") { embedUri: String  =>
                 <iframe class="youtube-media-atom__iframe" id="youtube-@asset.id" width="100%" height="100%"

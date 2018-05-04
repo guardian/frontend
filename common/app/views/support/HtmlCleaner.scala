@@ -16,6 +16,7 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.HtmlFormat
 import services.SkimLinksCache
 import conf.Configuration.affiliatelinks._
+import model.Pillar.RichPillar
 import views.html.fragments.affiliateLinksDisclaimer
 
 import scala.collection.JavaConverters._
@@ -665,7 +666,7 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mediaWrapper: Option[MediaWrapper] = None)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
+case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mediaWrapper: Option[MediaWrapper] = None, pillar: RichPillar)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -691,7 +692,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
           atomContainer.attr("data-atom-id", atomId)
           atomContainer.attr("data-atom-type", atomType)
 
-          val html = views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper).toString()
+          val html = views.html.fragments.atoms.atom(atomData, Atoms.articleConfig, shouldFence, amp, mediaWrapper = mediaWrapper, pillar = pillar).toString()
           bodyElement.remove()
           atomContainer.append(html)
         }
