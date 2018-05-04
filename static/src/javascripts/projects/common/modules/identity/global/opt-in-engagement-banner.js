@@ -22,9 +22,6 @@ const messageUserUsesNewslettersCookie: string = `gu-${
     .replace(/-/g, '_');
 const messageCloseBtn = 'js-gdpr-oi-close';
 const remindMeLaterInterval = 24 * 60 * 60 * 1000;
-const lastShownAtInterval = 24 * 60 * 60 * 1000;
-
-const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
 
 const shouldDisplayForMoreUsers = (): boolean =>
     config.get('switches.idShowOptInEngagementBannerMore');
@@ -70,12 +67,6 @@ const shouldDisplayBasedOnVisitedPageCount = (): boolean =>
 const shouldDisplayBasedOnExperimentFlag = (): boolean =>
     config.get('switches.idShowOptInEngagementBanner');
 
-const shouldDisplayOnceADay = (): boolean => {
-    const lastShownAt = userPrefs.get(messageMoreShownAtPref);
-    if (!lastShownAt) return true;
-    return Date.now() > lastShownAt + lastShownAtInterval;
-};
-
 const shouldDisplayIfNotAlreadyDismissed = (): boolean =>
     userPrefs.get(messageWasDismissedPref) !== 'true';
 
@@ -102,14 +93,17 @@ const getDisplayConditions = (): boolean[] => {
     ];
 };
 
-const hide = (msg: Message) => {
-    msg.hide();
-    userPrefs.set(messageHidAtPref, Date.now());
+const dismiss = () => {
     if (shouldDisplayForMoreUsers()) {
         userPrefs.set(messageWasDismissedPref, 'true');
     } else {
         userPrefs.set(messageHidAtPref, Date.now());
     }
+};
+
+const hide = (msg: Message) => {
+    msg.hide();
+    dismiss();
 };
 
 const canShow = (): Promise<boolean> => {
@@ -149,11 +143,19 @@ const show = (): void => {
             const closeButtonEl: ?HTMLElement = document.querySelector(
                 `.${messageCloseBtn}`
             );
+            const dismissableEls: HTMLElement[] = [
+                ...document.querySelectorAll(`.identity-gdpr-oi-alert__body a`),
+            ];
             if (!closeButtonEl)
                 throw new Error('gdpr-oi-campaign : Missing close button');
             closeButtonEl.addEventListener('click', (ev: MouseEvent) => {
                 ev.preventDefault();
                 hide(msg);
+            });
+            dismissableEls.forEach(_ => {
+                _.addEventListener('click', () => {
+                    dismiss();
+                });
             });
         },
     });
@@ -162,18 +164,11 @@ const show = (): void => {
 };
 
 const optInEngagementBannerInit = (): Promise<void> =>
-    canShow()
-        .then((shouldDisplay: boolean) => {
-            if (!shouldDisplay) {
-                throw new Error(ERR_EXPECTED_NO_BANNER);
-            }
-        })
-        .then(() => {
+    canShow().then((shouldDisplay: boolean) => {
+        if (shouldDisplay) {
             show();
-        })
-        .catch(err => {
-            if (err.message !== ERR_EXPECTED_NO_BANNER) throw err;
-        });
+        }
+    });
 
 export { optInEngagementBannerInit };
 
