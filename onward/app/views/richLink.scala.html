@@ -7,8 +7,9 @@
 
 <html class="svg">
     <head>
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/webfonts-hinting-off-kerning-on.css")" />
-
+        @if(FontSwitch.isSwitchedOn) {
+            @fragments.fontDefinitions()
+        }
 
         @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
             <link rel="stylesheet" data-reload="head.rich-links" type="text/css" href="@Static(s"stylesheets/head.$RichLinksCSSFile.css")" />
