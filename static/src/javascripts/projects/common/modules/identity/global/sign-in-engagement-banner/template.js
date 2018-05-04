@@ -95,7 +95,6 @@ const makeTemplateHtml = (tpl: Template): string => `
                 tpl.links.why
             }" data-link-name="sign-in-eb : to-info" class="site-message--sign-in__why">
                 ${tpl.advantagesCta}
-                ${arrowRight.markup}
             </a>
         `
                 : ''

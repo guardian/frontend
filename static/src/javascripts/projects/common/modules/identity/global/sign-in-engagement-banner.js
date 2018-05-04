@@ -45,6 +45,7 @@ const links: LinkTargets = {
     register: `${config.get(
         'page.idUrl'
     )}/register?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
+    why: '#',
 };
 
 /* A "session" here is defined as views separated < 30 minutes away from each other */
@@ -76,7 +77,7 @@ const features: Feature[] = [
 ];
 
 const tpl: Template = {
-    headerMain: ['Enjoy even', 'more from', 'The&nbsp;Guardian'],
+    headerMain: ['Enjoy even more&nbsp;from The&nbsp;Guardian'],
     headerSub: ['Please sign in or register to manage your preferences'],
     signInCta: 'Sign in',
     registerCta: 'Register',

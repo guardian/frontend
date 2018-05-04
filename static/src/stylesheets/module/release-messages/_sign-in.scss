@@ -4,7 +4,9 @@ $color-sign-in-eb-callout: $news-garnett-highlight;
 
 $sign-in-eb-padding: $gs-baseline * 1.5;
 $sign-in-eb-padding-vertical: $gs-baseline * .75;
-$sign-in-eb-logo: $gs-baseline * 3.5;
+$sign-in-eb-logo: $gs-baseline * 5;
+
+$sign-in-eb-vertical-mq: 36em;
 
 .site-message.site-message--sign-in-message {
     background: transparent;
@@ -43,6 +45,10 @@ $sign-in-eb-logo: $gs-baseline * 3.5;
 
 .site-message--sign-in-container {
     padding: $sign-in-eb-padding-vertical 0;
+    font-size: 80%;
+    @media all and(min-height: $sign-in-eb-vertical-mq) {
+        font-size: 100%;
+    }
     .site-message--sign-in__header,
     .site-message--sign-in__body,
     .site-message--sign-in__buttons {
@@ -51,7 +57,9 @@ $sign-in-eb-logo: $gs-baseline * 3.5;
 }
 
 .site-message--sign-in__header {
+    @include f-headline;
     position: relative;
+    padding-right: $sign-in-eb-padding*3.5!important; /*close button*/
     &:after {
         content: '';
         background: darken($garnett-neutral-4, 10%);
@@ -61,27 +69,18 @@ $sign-in-eb-logo: $gs-baseline * 3.5;
         right: 0;
         left: $sign-in-eb-padding;
     }
-
     .site-message--sign-in__header-msg {
         &.site-message--sign-in__header-msg--main {
-            @include fs-headline(5);
-            @media all and(min-height: 36em) {
-                @include fs-headline(6, true);
-                line-height: .9;
-            }
             font-weight: 600;
             display: inline;
-            margin-right: $sign-in-eb-logo;
             line-height: .9;
-            > .site-message--sign-in__header-msg-line {
-                white-space: nowrap;
-            }
+            font-size: 220%;
         }
         &.site-message--sign-in__header-msg--sub {
-            @include fs-headline(3, true);
             line-height: 1;
             font-weight: 100;
-            padding: ($gs-gutter * .9) 0 $gs-gutter;
+            font-size: 120%;
+            padding: ($gs-gutter * .5) 0 $gs-gutter;
         }
     }
 }
@@ -136,30 +135,10 @@ a.site-message--sign-in-cta {
 a.site-message--sign-in__why {
     @include fs-textSans(3);
     display: block;
-    background: $color-sign-in-eb-alt;
-    color: #ffffff;
-    text-decoration: none;
-    padding: $gs-baseline/3 $sign-in-eb-padding;
-    .inline-icon {
-        @include circular;
-        vertical-align: sub;
-        display: inline-block;
-        width: $gs-baseline * 1.25;
-        height: $gs-baseline * 1.25;
-        background: #ffffff;
-        svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-        svg * {
-            fill: $color-sign-in-eb-alt;
-        }
-    }
+    padding: $gs-baseline/3 $sign-in-eb-padding 0;
 }
 
 .site-message--sign-in__dismiss {
-    @include fs-textSans(3);
     @include circular;
     color: $garnett-neutral-1;
     position: absolute;
@@ -187,14 +166,18 @@ a.site-message--sign-in__why {
 }
 
 .site-message--sign-in-container .site-message--sign-in__body {
-    @include fs-bodyCopy(2);
+    @include f-bodyCopy;
     line-height: 1.2;
+    font-size: 95%;
     list-style: none;
     margin: 0 0 ($sign-in-eb-padding-vertical * 2);
     .site-message--sign-in__feature {
         position: relative;
         margin: 0 0 $gs-baseline;
-        padding-left: $gs-baseline * 2.5;
+        padding-left: $gs-baseline * 1.75;
+        @media all and(min-height: $sign-in-eb-vertical-mq) {
+            padding-left: $gs-baseline * 2.5;
+        }
         strong {
             display: block;
         }
@@ -203,6 +186,11 @@ a.site-message--sign-in__why {
         position: absolute;
         top: 0;
         left: 0;
+        transform-origin: 0 0;
+        transform: scale(.75);
+        @media all and(min-height: $sign-in-eb-vertical-mq) {
+            transform: scale(1);
+        }
     }
 }
 
