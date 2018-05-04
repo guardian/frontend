@@ -1,5 +1,7 @@
 @()(implicit request: RequestHeader)
 
+@* these definitions are manipulated by common/app/templates/inlineJS/blocking/loadFonts.scala.js *@
+
 @import conf.Static
 <style id="fonts">
 
@@ -9,8 +11,7 @@
     font-family: "Guardian Headline";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Light.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Light.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianHeadline/GuardianHeadline-Light.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Light.woff")") format('woff');
     font-weight: 200;
     font-style: normal;
 }
@@ -18,8 +19,7 @@
     font-family: "Guardian Headline";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-LightItalic.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-LightItalic.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianHeadline/GuardianHeadline-LightItalic.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-LightItalic.woff")") format('woff');
     font-weight: 200;
     font-style: italic;
 }
@@ -27,8 +27,7 @@
     font-family: "Guardian Headline";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Medium.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Medium.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianHeadline/GuardianHeadline-Medium.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Medium.woff")") format('woff');
     font-weight: 400;
     font-style: normal;
 }
@@ -36,8 +35,7 @@
     font-family: "Guardian Headline";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-MediumItalic.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-MediumItalic.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianHeadline/GuardianHeadline-MediumItalic.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-MediumItalic.woff")") format('woff');
     font-weight: 400;
     font-style: italic;
 }
@@ -45,8 +43,7 @@
     font-family: "Guardian Headline";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Semibold.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Semibold.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianHeadline/GuardianHeadline-Semibold.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Semibold.woff")") format('woff');
     font-weight: 500;
     font-style: normal;
 }
@@ -54,8 +51,7 @@
     font-family: "Guardian Headline";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Bold.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Bold.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianHeadline/GuardianHeadline-Bold.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianHeadline/GuardianHeadline-Bold.woff")") format('woff');
     font-weight: 900;
     font-style: normal;
 }
@@ -66,8 +62,7 @@
     font-family: "Guardian Text Egyptian";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianTextEgyptian/GuardianTextEgyptian-Regular.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianTextEgyptian/GuardianTextEgyptian-Regular.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianTextEgyptian/GuardianTextEgyptian-Regular.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianTextEgyptian/GuardianTextEgyptian-Regular.woff")") format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -75,8 +70,7 @@
     font-family: "Guardian Text Egyptian";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianTextEgyptian/GuardianTextEgyptian-RegularItalic.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianTextEgyptian/GuardianTextEgyptian-RegularItalic.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianTextEgyptian/GuardianTextEgyptian-RegularItalic.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianTextEgyptian/GuardianTextEgyptian-RegularItalic.woff")") format('woff');
     font-weight: normal;
     font-style: italic;
 }
@@ -84,8 +78,7 @@
     font-family: "Guardian Text Egyptian";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianTextEgyptian/GuardianTextEgyptian-Bold.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianTextEgyptian/GuardianTextEgyptian-Bold.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianTextEgyptian/GuardianTextEgyptian-Bold.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianTextEgyptian/GuardianTextEgyptian-Bold.woff")") format('woff');
     font-weight: 700;
     font-style: normal;
 }
@@ -96,8 +89,7 @@
     font-family: "Guardian Text Sans";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianTextSans/GuardianTextSans-Regular.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianTextSans/GuardianTextSans-Regular.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianTextSans/GuardianTextSans-Regular.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianTextSans/GuardianTextSans-Regular.woff")") format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -105,8 +97,7 @@
     font-family: "Guardian Text Sans";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianTextSans/GuardianTextSans-RegularItalic.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianTextSans/GuardianTextSans-RegularItalic.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianTextSans/GuardianTextSans-RegularItalic.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianTextSans/GuardianTextSans-RegularItalic.woff")") format('woff');
     font-weight: normal;
     font-style: italic;
 }
@@ -114,8 +105,7 @@
     font-family: "Guardian Text Sans";
     src:
         url("@Static(s"fonts/hinting-off/noalts/GuardianTextSans/GuardianTextSans-Medium.woff2")") format('woff2'),
-        url("@Static(s"fonts/hinting-off/noalts/GuardianTextSans/GuardianTextSans-Medium.woff")") format('woff'),
-        url("@Static(s"fonts/hinting-off/latin1/GuardianTextSans/GuardianTextSans-Medium.ttf")") format('ttf');
+        url("@Static(s"fonts/hinting-off/noalts/GuardianTextSans/GuardianTextSans-Medium.woff")") format('woff');
     font-weight: 700;
     font-style: normal;
 }
