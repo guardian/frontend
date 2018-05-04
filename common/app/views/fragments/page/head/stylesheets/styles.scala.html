@@ -5,17 +5,17 @@
 @import common.InlineJs
 @import templates.inlineJS.blocking.js.loadFonts
 
-@fragments.fontDefinitions()
-<script>
-    @if(FontSwitch.isSwitchedOn) {
+@if(FontSwitch.isSwitchedOn) {
+    @fragments.fontDefinitions()
+    <script>
         // try and get the browser to load all the fonts before using any of them.
         // means longer FOUT, but only one repaint and no FOIT.
         // if we can't use document.fonts, just behaves as normal.
         @InlineJs(loadFonts().body, "loadFonts.js")
-    }
-</script>
+    </script>
+}
 
-@* any images in head need to go here (or they'll be relative to the page)} *@
+@* any images in head need to gohere (or they'll be relative to the page)} *@
 <style class="js-loggable">
     .svg .i,
     .svg .caption:before,
