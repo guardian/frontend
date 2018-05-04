@@ -1,6 +1,5 @@
-$color-sign-in-eb-main: #f8c7cf;
-$color-sign-in-eb-alt: #1e8dcd;
-$color-sign-in-eb-alt-contrast: #0074a6;
+$color-sign-in-eb-main: $garnett-nav-background;
+$color-sign-in-eb-alt: $garnett-neutral-1;
 $color-sign-in-eb-callout: $news-garnett-highlight;
 
 $sign-in-eb-padding: $gs-baseline * 1.5;
@@ -77,16 +76,10 @@ $sign-in-eb-logo: $gs-baseline * 3.5;
             font-size: 1em;
             display: inline;
             margin-right: $sign-in-eb-logo;
-            > .site-message--sign-in__header-msg-line {
-                background: $color-sign-in-eb-callout;
-                white-space: nowrap;
-                line-height: 1;
-            }
         }
         &.site-message--sign-in__header-msg--sub {
-            color: $color-sign-in-eb-alt-contrast;
-            font-weight: 500;
-            font-size: 80%;
+            font-weight: 100;
+            font-size: 60%;
             line-height: 1.2;
             margin-top: $gs-gutter/4;
         }
@@ -217,21 +210,11 @@ a.site-message--sign-in__why {
     }
 }
 
-.site-message--sign-in__marque svg {
-    position: absolute;
-    width: $sign-in-eb-logo;
-    height: $sign-in-eb-logo;
-    top: $sign-in-eb-padding * .8;
-    right: $sign-in-eb-padding * .8;
-    z-index: 9;
-}
-
-
 @keyframes sign-in-eb-pop-in {
     from {
-        transform: scaleX(.9) scaleY(.5) translateY(10em);
+        transform: scaleY(.9) translateY(10em);
     }
     to {
-        transform: scaleX(1) scaleY(1) translateY(0);
+        transform: scaleY(1) translateY(0);
     }
 }

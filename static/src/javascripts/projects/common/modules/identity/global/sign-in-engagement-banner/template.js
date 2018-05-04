@@ -1,7 +1,6 @@
 // @flow
 import arrowRight from 'svgs/icon/arrow-right.svg';
-import marque from 'svgs/icon/marque-54-inverted.svg';
-import close from './close.svg';
+import close from 'svgs/icon/close.svg';
 
 type Feature = {
     icon: ?string,
@@ -107,9 +106,6 @@ const makeTemplateHtml = (tpl: Template): string => `
             <span class="u-h">${tpl.closeButton}</span>
             ${close.markup}
         </button>
-        <div aria-hidden="true" class="site-message--sign-in__marque">
-            ${marque.markup}
-        </div>
     </section>
 </div>
 `;
