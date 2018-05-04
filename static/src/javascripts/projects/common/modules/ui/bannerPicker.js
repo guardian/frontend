@@ -1,4 +1,5 @@
 // @flow
+import ophan from 'ophan/ng';
 
 type Banner = {
     id: string,
@@ -44,7 +45,14 @@ const init = (banners: Array<Banner>): Promise<void> => {
                 const successfulBannerIndex = getSuccessfulBannerIndex();
 
                 if (successfulBannerIndex !== -1) {
-                    banners[successfulBannerIndex].show();
+                    const successfulBanner = banners[successfulBannerIndex];
+                    successfulBanner.show();
+
+                    const trackingObj = {
+                        component: 'banner-picker',
+                        value: successfulBanner.id,
+                    };
+                    ophan.record(trackingObj);
                 }
 
                 if (!results.includes('pending')) {
