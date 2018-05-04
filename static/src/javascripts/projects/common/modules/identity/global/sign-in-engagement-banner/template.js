@@ -48,7 +48,6 @@ const makeTemplateHtml = (tpl: Template): string => `
                 tpl.headerMain,
                 'site-message--sign-in__header-msg-line'
             )}</h2>
-            <br/>
             <p class="site-message--sign-in__header-msg site-message--sign-in__header-msg--sub">${wrapLineBreakingString(
                 tpl.headerSub,
                 'site-message--sign-in__header-msg-line'
