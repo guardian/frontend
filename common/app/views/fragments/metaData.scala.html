@@ -59,7 +59,7 @@
     ONLY for EDITONALISED sections
     https://support.google.com/webmasters/answer/189077
 *@
-@Edition.otherPagesFor(request).map{ link =>
+@Edition.allPagesFor(request).map{ link =>
     <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.locale.toLanguageTag" />
 }
 

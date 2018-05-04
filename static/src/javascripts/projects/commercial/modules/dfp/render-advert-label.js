@@ -9,6 +9,7 @@ const shouldRenderLabel = adSlotNode =>
     !(
         adSlotNode.classList.contains('ad-slot--fluid') ||
         adSlotNode.classList.contains('ad-slot--frame') ||
+        adSlotNode.classList.contains('ad-slot--gc') ||
         adSlotNode.getAttribute('data-label') === 'false' ||
         adSlotNode.getElementsByClassName('ad-slot__label').length
     );

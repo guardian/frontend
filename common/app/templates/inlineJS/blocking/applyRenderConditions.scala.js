@@ -1,5 +1,6 @@
-@()
+@()(implicit request: RequestHeader)
 @import conf.switches.Switches._
+@import experiments.{ ActiveExperiments, LineHeightFontSize }
 
 /**
  * Choose how the browser should render the page before any painting begins.
@@ -118,6 +119,10 @@
 
     if (window.guardian.isEnhanced) {
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
+    }
+
+    @if(ActiveExperiments.isParticipating(LineHeightFontSize)) {
+      docClass += ' commercial-line-height';
     }
 
     @if(FontKerningSwitch.isSwitchedOn) {

@@ -83,15 +83,32 @@ class PrebidService {
             ]);
         }
 
-        window.pbjs.bidderSettings = {
-            standard: {
-                alwaysUseBid: false,
-            },
-            sonobi: {
+        window.pbjs.bidderSettings = {};
+
+        if (config.switches.prebidSonobi) {
+            window.pbjs.bidderSettings.sonobi = {
                 // for Jetstream deals
                 alwaysUseBid: true,
-            },
-        };
+            };
+        }
+
+        if (config.switches.prebidXaxis) {
+            // Using AppNexus adapter for Xaxis bids but need to know they are actually Xaxis bids in DFP
+            window.pbjs.aliasBidder('appnexus', 'xhb');
+
+            window.pbjs.bidderSettings.xhb = {
+                // for First Look deals
+                alwaysUseBid: true,
+                adserverTargeting: [
+                    {
+                        key: 'hb_buyer_id',
+                        val(bidResponse) {
+                            return bidResponse.buyerMemberId;
+                        },
+                    },
+                ],
+            };
+        }
     }
 
     static requestQueue: Promise<void> = Promise.resolve();

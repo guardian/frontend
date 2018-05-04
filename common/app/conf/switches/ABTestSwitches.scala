@@ -28,6 +28,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-engagement-banner-display",
+    "This test will show a sign in engagement banner to non signed in users",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 1, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -63,16 +73,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 3, 14),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-spacefinder-simplify",
-    "Alters the rules for inserting ads on desktop breakpoints.",
-    owners = Seq(Owner.withGithub("katebee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 4, 30),
     exposeClientSide = true
   )
 

@@ -157,6 +157,12 @@ const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
         : {};
 };
 
+const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
+    if (contains(sizes, [970, 250])) return 13218365;
+    if (contains(sizes, [300, 600])) return 12984524;
+    return 13218372;
+};
+
 const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
     bidParams: (slotId: string): PrebidSonobiParams => ({
@@ -195,9 +201,10 @@ const improveDigitalBidder: PrebidBidder = {
 
 const xaxisBidder: PrebidBidder = {
     name: 'appnexus',
-    bidParams: (): PrebidXaxisParams => ({
-        placementId: 12984524,
+    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
+        placementId: getXaxisPlacementId(sizes),
     }),
+    labelAll: ['edn-UK', 'deal-FirstLook'],
 };
 
 const bidders: PrebidBidder[] = [];

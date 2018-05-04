@@ -54,6 +54,23 @@
             @include u-h;
         }
     }
+
+    .football-match--result {
+        >td {
+            padding-left: .3rem;
+            padding-right: .3rem;
+            &:first-child {
+                padding-left: .5rem;
+            }
+            &:last-child {
+                padding-right: .5rem;
+            }
+        }
+
+        .team-crest {
+            margin-right: 0;
+        }
+    }
 }
 
 .team-crest {

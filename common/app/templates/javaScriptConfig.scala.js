@@ -28,7 +28,7 @@
                 "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")"
             },
             "identity": {
-                "opt-in-new-vertical": "@Static("images/identity/opt-in-new-vertical.svg")"
+                "missing": "@Static("images/identity/missing.svg")"
             }
         },
         "googleAnalytics": {
