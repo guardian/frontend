@@ -59,11 +59,6 @@ const recordSessionVisit = (): void => {
 
 const features: Feature[] = [
     {
-        icon: iconPhone.markup,
-        mainCopy: 'A consistent experience',
-        subCopy: 'across all of your devices',
-    },
-    {
         icon: iconComment.markup,
         mainCopy: 'Join the conversation',
         subCopy: 'and comment on articles',
@@ -71,7 +66,12 @@ const features: Feature[] = [
     {
         icon: iconEmail.markup,
         mainCopy: 'Get closer to the journalism',
-        subCopy: 'by subscribing to editorial emails',
+        subCopy: 'by subscribing to editorial&nbsp;emails',
+    },
+    {
+        icon: iconPhone.markup,
+        mainCopy: 'A consistent experience',
+        subCopy: 'across all of your devices',
     },
 ];
 

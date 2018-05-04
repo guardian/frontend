@@ -13,6 +13,7 @@ $sign-in-eb-logo: $gs-baseline * 3.5;
     align-content: center;
     align-items: center;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     .gs-container {
         margin: auto;
         padding: 0 $gs-gutter;
