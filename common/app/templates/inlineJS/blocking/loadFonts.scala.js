@@ -56,7 +56,7 @@ try {
         // now force fonts to download.
         // once they've all downloaded, we'll renable the stylesheet, triggering a repaint
 
-        if (!document.fonts) {
+        if (document.fonts) {
             // proper way to do this
             const loadFonts = Array.from(document.fonts).map(font => font.load());
             Promise.all(loadFonts).then(() => {
