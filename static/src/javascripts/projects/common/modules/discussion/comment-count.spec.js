@@ -67,7 +67,7 @@ describe('Comment Count', () => {
                 document.querySelectorAll(
                     '.fc-trail__count--commentcount, .commentcount2'
                 ).length
-            ).toBe(6);
+            ).toBe(5);
         }));
 
     test('should append "default" format comment counts to DOM', () =>
