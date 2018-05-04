@@ -11,7 +11,7 @@ import userPrefs from 'common/modules/user-prefs';
 import type { LinkTargets, Template } from './opt-in-eb-template';
 import { makeTemplateHtml } from './opt-in-eb-template';
 
-const messageCode: string = 'gdpr-opt-in-jan-18';
+const messageCode: string = 'gdpr-opt-in-may-04';
 const messageHidAtPref: string = `${messageCode}-hid-at`;
 const messageMoreShownAtPref: string = `${messageCode}-more-shown-at`;
 const messageWasDismissedPref: string = `${messageCode}-was-dismissed`;
@@ -23,6 +23,7 @@ const messageUserUsesNewslettersCookie: string = `gu-${
 const messageCloseBtn = 'js-gdpr-oi-close';
 const remindMeLaterInterval = 24 * 60 * 60 * 1000;
 const lastShownAtInterval = 24 * 60 * 60 * 1000;
+
 const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
 
 const shouldDisplayForMoreUsers = (): boolean =>
@@ -89,7 +90,6 @@ const getDisplayConditions = (): boolean[] => {
     if (shouldDisplayForMoreUsers()) {
         return [
             ...basics,
-            shouldDisplayOnceADay(),
             shouldDisplayBasedOnVisitedPageCount(),
             shouldDisplayIfNotAlreadyDismissed(),
         ];
