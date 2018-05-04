@@ -1,7 +1,6 @@
 // @flow
 import arrowRight from 'svgs/icon/arrow-right.svg';
-import marque from 'svgs/icon/marque-54-inverted.svg';
-import close from './close.svg';
+import close from 'svgs/icon/close.svg';
 
 type Feature = {
     icon: ?string,
@@ -49,7 +48,6 @@ const makeTemplateHtml = (tpl: Template): string => `
                 tpl.headerMain,
                 'site-message--sign-in__header-msg-line'
             )}</h2>
-            <br/>
             <p class="site-message--sign-in__header-msg site-message--sign-in__header-msg--sub">${wrapLineBreakingString(
                 tpl.headerSub,
                 'site-message--sign-in__header-msg-line'
@@ -96,7 +94,6 @@ const makeTemplateHtml = (tpl: Template): string => `
                 tpl.links.why
             }" data-link-name="sign-in-eb : to-info" class="site-message--sign-in__why">
                 ${tpl.advantagesCta}
-                ${arrowRight.markup}
             </a>
         `
                 : ''
@@ -107,9 +104,6 @@ const makeTemplateHtml = (tpl: Template): string => `
             <span class="u-h">${tpl.closeButton}</span>
             ${close.markup}
         </button>
-        <div aria-hidden="true" class="site-message--sign-in__marque">
-            ${marque.markup}
-        </div>
     </section>
 </div>
 `;

@@ -9,6 +9,10 @@ import mediator from 'lib/mediator';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 
+import iconComment from 'svgs/icon/comment-16.svg';
+import iconEmail from 'svgs/icon/mail.svg';
+import iconPhone from 'svgs/icon/device.svg';
+
 import type {
     Template,
     LinkTargets,
@@ -18,20 +22,17 @@ import {
     makeTemplateHtml,
     bindableClassNames,
 } from './sign-in-engagement-banner/template';
-import iconComment from './sign-in-engagement-banner/icon-comment.svg';
-import iconEmail from './sign-in-engagement-banner/icon-email.svg';
-import iconPhone from './sign-in-engagement-banner/icon-phone.svg';
 
 const messageCode: string = 'sign-in-30-april';
 const signedInCookie: string = 'GU_U';
 
+const forceDisplayHash = 'sign-in-eb-display=true';
 const lastSeenAtKey = 'sign-in-eb.last-seen-at';
 const lifeTimeViewsKey = 'sign-in-eb.lifetime-views';
 const lifeTimeClosesKey = 'sign-in-eb.lifetime-closes';
 const sessionStartedAtKey = 'sign-in-eb.session-started-at';
 const sessionVisitsKey = 'sign-in-eb.session-visits';
 
-const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
 const ERR_MALFORMED_HTML = 'ERR_MALFORMED_HTML';
 
 const halfHourInMs = 30 * 60 * 1000;
@@ -45,6 +46,7 @@ const links: LinkTargets = {
     register: `${config.get(
         'page.idUrl'
     )}/register?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
+    why: '#',
 };
 
 /* A "session" here is defined as views separated < 30 minutes away from each other */
@@ -59,11 +61,6 @@ const recordSessionVisit = (): void => {
 
 const features: Feature[] = [
     {
-        icon: iconPhone.markup,
-        mainCopy: 'A consistent experience',
-        subCopy: 'across all of your devices',
-    },
-    {
         icon: iconComment.markup,
         mainCopy: 'Join the conversation',
         subCopy: 'and comment on articles',
@@ -71,12 +68,17 @@ const features: Feature[] = [
     {
         icon: iconEmail.markup,
         mainCopy: 'Get closer to the journalism',
-        subCopy: 'by subscribing to editorial emails',
+        subCopy: 'by subscribing to editorial&nbsp;emails',
+    },
+    {
+        icon: iconPhone.markup,
+        mainCopy: 'A consistent experience',
+        subCopy: 'across all of your devices',
     },
 ];
 
 const tpl: Template = {
-    headerMain: ['Enjoy even', 'more from', 'The Guardian'],
+    headerMain: ['Enjoy even', 'more', 'from', 'The&nbsp;Guardian'],
     headerSub: ['Please sign in or register to manage your preferences'],
     signInCta: 'Sign in',
     registerCta: 'Register',
@@ -122,6 +124,10 @@ const isInTestVariant = (): boolean => {
     return isInVariant(signInEngagementBannerDisplay, variant);
 };
 
+/* Make the alert show up iregardless */
+const isForcedDisplay = (): boolean =>
+    window.location.hash.includes(forceDisplayHash);
+
 const bannerDoesNotCollide = (): Promise<boolean> =>
     new Promise(show => {
         setTimeout(() => {
@@ -149,16 +155,18 @@ const hide = (msg: Message) => {
 };
 
 const canShow = (): Promise<boolean> => {
-    const conditions = [
-        isNotSignedIn(),
-        hasSeenBannerOnceInLastTwoDays(),
-        isSecondSessionPageview(),
-        hasSeenBannerLessThanFourTimesTotal(),
-        isRecurringVisitor(),
-        hasReadOver4Articles(),
-        bannerDoesNotCollide(),
-        isInTestVariant(),
-    ];
+    const conditions = isForcedDisplay()
+        ? [true]
+        : [
+              isNotSignedIn(),
+              hasSeenBannerOnceInLastTwoDays(),
+              isSecondSessionPageview(),
+              hasSeenBannerLessThanFourTimesTotal(),
+              isRecurringVisitor(),
+              hasReadOver4Articles(),
+              bannerDoesNotCollide(),
+              isInTestVariant(),
+          ];
 
     return Promise.all(conditions).then(solvedConditions =>
         solvedConditions.every(_ => _ === true)
@@ -194,21 +202,18 @@ const show = (): void => {
 };
 
 const signInEngagementBannerInit = (): Promise<void> =>
-    canShow()
-        .then((shouldDisplay: boolean) => {
-            if (!shouldDisplay) {
-                throw new Error(ERR_EXPECTED_NO_BANNER);
-            }
-        })
-        .then(() => {
-            show();
-        })
-        .catch(err => {
-            if (err.message !== ERR_EXPECTED_NO_BANNER) throw err;
-        });
+    canShow().then((shouldDisplay: boolean) => {
+        if (shouldDisplay) show();
+    });
 
 /* this needs to be a side effect */
 recordSessionVisit();
+
+export default {
+    id: 'signInEngagementBanner',
+    show,
+    canShow,
+};
 
 export {
     signInEngagementBannerInit,
@@ -218,4 +223,5 @@ export {
     lifeTimeViewsKey,
     sessionStartedAtKey,
     lastSeenAtKey,
+    forceDisplayHash,
 };
