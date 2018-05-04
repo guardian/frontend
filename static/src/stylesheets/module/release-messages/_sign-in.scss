@@ -59,7 +59,7 @@ $sign-in-eb-vertical-mq: 36em;
 .site-message--sign-in__header {
     @include f-headline;
     position: relative;
-    padding-right: $sign-in-eb-padding*3.5!important; /*close button*/
+    padding-right: $sign-in-eb-padding*3!important; /*close button*/
     &:after {
         content: '';
         background: darken($garnett-neutral-4, 10%);
@@ -95,7 +95,6 @@ a.site-message--sign-in-cta {
     color: $garnett-neutral-1;
     text-decoration: none;
     background: $color-sign-in-eb-callout;
-    font-weight: 800;
     height: $gs-baseline*3;
     padding: 0 $gs-gutter/1.5;
     flex-direction: row;
@@ -184,12 +183,29 @@ a.site-message--sign-in__why {
     }
     .site-message--sign-in__feature-icon {
         position: absolute;
-        top: 0;
+        top: 1px;
         left: 0;
         transform-origin: 0 0;
         transform: scale(.75);
         @media all and(min-height: $sign-in-eb-vertical-mq) {
             transform: scale(1);
+        }
+        svg {
+            width: $gs-gutter;
+            height: auto;
+            transform-origin: top right;
+            path {
+                fill: currentColor;
+            }
+        }
+        .inline-comment-16 svg {
+            transform: translateX(1.5px);
+        }
+        .inline-mail svg {
+            transform: scale(.9);
+        }
+        .inline-device svg {
+            transform: scale(.75);
         }
     }
 }

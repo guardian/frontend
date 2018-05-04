@@ -9,6 +9,10 @@ import mediator from 'lib/mediator';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 
+import iconComment from 'svgs/icon/comment-16.svg';
+import iconEmail from 'svgs/icon/mail.svg';
+import iconPhone from 'svgs/icon/device.svg';
+
 import type {
     Template,
     LinkTargets,
@@ -18,9 +22,6 @@ import {
     makeTemplateHtml,
     bindableClassNames,
 } from './sign-in-engagement-banner/template';
-import iconComment from './sign-in-engagement-banner/icon-comment.svg';
-import iconEmail from './sign-in-engagement-banner/icon-email.svg';
-import iconPhone from './sign-in-engagement-banner/icon-phone.svg';
 
 const messageCode: string = 'sign-in-30-april';
 const signedInCookie: string = 'GU_U';
@@ -77,7 +78,7 @@ const features: Feature[] = [
 ];
 
 const tpl: Template = {
-    headerMain: ['Enjoy even more&nbsp;from The&nbsp;Guardian'],
+    headerMain: ['Enjoy even more', 'from The&nbsp;Guardian'],
     headerSub: ['Please sign in or register to manage your preferences'],
     signInCta: 'Sign in',
     registerCta: 'Register',
@@ -207,6 +208,12 @@ const signInEngagementBannerInit = (): Promise<void> =>
 
 /* this needs to be a side effect */
 recordSessionVisit();
+
+export default {
+    id: 'signInEngagementBanner',
+    show,
+    canShow,
+};
 
 export {
     signInEngagementBannerInit,
