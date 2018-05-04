@@ -7,6 +7,7 @@
 @import services.EmailPrefsData
 @import views.support.fragment.Switch._
 @import views.support.fragment.ConsentChannel._
+@import views.html.fragments.form.radioField
 
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
@@ -18,6 +19,10 @@
   consentsUpdated: Boolean = false,
   consentHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+
+@buildIdentityUrl(endpoint: String) = {
+    @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
+}
 
 @marketingConsentForm = {
     <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
@@ -76,6 +81,84 @@
     </form>
 }
 
+@emailSettings = {
+    <div class="email-subscription__fieldset">
+
+        <fieldset class="fieldset">
+            <div class="fieldset__heading">
+                <h2 class="form__heading">Settings</h2>
+            </div>
+
+            <div class="fieldset__fields email-subscription__options">
+                <ul class="u-unstyled">
+                    <li>
+                        <p>
+                            <a href="@buildIdentityUrl("account/edit")" class="u-underline" data-link-name="identity : email : update">
+                                Update your email address
+                            </a>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <a href="https://jobs.theguardian.com/your-jobs/?ActiveSection=JbeList" class="u-underline" data-link-name="identity : jobs : alert-settings">
+                                Edit your Job Alert settings
+                            </a>
+                        </p>
+                    </li>
+                    <li>
+                        <a href="#identity-modal--newsletterFormat" class="u-underline js-email-subscription__formatFieldsetToggle" data-link-name="identity : email : format">
+                            Change format
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </fieldset>
+
+    </div>
+
+    <fieldset class="fieldset fieldset--manage-account-rightsubmit js-manage-account__ajaxForm-submit">
+        <div class="fieldset__heading"></div>
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
+                <li>
+                    <button type="submit" class="manage-account__button" data-link-name="Save email preferences">Save changes</button>
+                </li>
+            </ul>
+        </div>
+    </fieldset>
+}
+
+@newsletterModalContents = {
+    <fieldset class="fieldset">
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Formatting</h2>
+        </div>
+
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
+
+                <li class="form-field @if(emailPrefsForm("htmlPreference").errors.nonEmpty) {form-field--error}">
+                    <label class="label" for="htmlPreference">In which format would you like to receive email?</label>
+                    <div class="form-field__note">
+                        HTML emails have formatted text, images and look better. Text emails are quicker to download, but don't contain images or any formatting.
+                        <br />
+                        We recommend HTML emails.
+                    </div>
+
+                    @radioField(emailPrefsForm("htmlPreference"), List("HTML" -> "HTML (images and text)", "Text" -> "Text"))(nonInputFields, messages)
+
+                </li>
+
+                <li>
+                    <button type="submit" class="manage-account__button save__button js-save-button" data-link-name="Save email preferences">Save</button>
+                </li>
+            </ul>
+        </div>
+
+    </fieldset>
+}
+
 @if(consentsUpdated) {
     <div class="form__success">
         <h2>Thank you</h2>
@@ -83,16 +166,21 @@
     </div>
 }
 
+@* NEWSLETTERS *@
+@profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
+
+<hr class="manage-account-divider" />
+
 @* MARKETING CONSENT *@
 @marketingConsentForm
 
-@* NEWSLETTERS *@
+@* SETTINGS *@
+@emailSettings
+@fragments.modal("newsletterFormat",newsletterModalContents)
+
 <hr class="manage-account-divider" />
-@profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
 
 @* CHANNELS *@
-<hr class="manage-account-divider" />
-
 @views.html.profile.otherChannels(idUrlBuilder, idRequest, privacyForm, user)(request, messages)
 
 @registrationFooter(idRequest, idUrlBuilder)
