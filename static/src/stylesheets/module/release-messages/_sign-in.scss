@@ -25,7 +25,7 @@ $sign-in-eb-logo: $gs-baseline * 3.5;
         position: relative;
         margin: $gs-baseline auto;
         body:not(.disable-flashing-elements) & {
-            animation: sign-in-eb-pop-in .5s cubic-bezier(.175, .885, .32, 1.275);
+            animation: sign-in-eb-pop-in .15s ease-out;
         }
     }
     .site-message__message {
@@ -207,9 +207,9 @@ a.site-message--sign-in__why {
 
 @keyframes sign-in-eb-pop-in {
     from {
-        transform: scaleY(.9) translateY(10em);
+        transform: translateY(2em);
     }
     to {
-        transform: scaleY(1) translateY(0);
+        transform: translateY(0);
     }
 }
