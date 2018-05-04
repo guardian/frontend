@@ -1,6 +1,7 @@
 // @flow
 import { getCookie, addCookie } from 'lib/cookies';
 import { Message } from 'common/modules/ui/message';
+
 /**
  * Rules:
  *
@@ -10,18 +11,28 @@ import { Message } from 'common/modules/ui/message';
  * Show only on FIRST page view
  * Persist close state
  */
-const init = (): boolean => {
-    const geoContinentCookie = getCookie('GU_geo_continent');
-    if (!geoContinentCookie || geoContinentCookie.toUpperCase() !== 'EU') {
-        return false;
-    }
 
-    const EU_COOKIE_MSG = 'GU_EU_MSG';
-    const euMessageCookie = getCookie(EU_COOKIE_MSG);
-    if (euMessageCookie && euMessageCookie === 'seen') {
-        return false;
-    }
+const EU_COOKIE_MSG = 'GU_EU_MSG';
 
+const canShow = (): Promise<boolean> => {
+    return new Promise(resolve => {
+        const geoContinentCookie = getCookie('GU_geo_continent');
+
+        if (!geoContinentCookie || geoContinentCookie.toUpperCase() !== 'EU') {
+            resolve(false);
+        }
+
+        const euMessageCookie = getCookie(EU_COOKIE_MSG);
+
+        if (euMessageCookie && euMessageCookie === 'seen') {
+            resolve(false);
+        } else {
+            resolve(true);
+        }
+    });
+};
+
+const show = (): void => {
     const link = 'https://www.theguardian.com/info/cookies';
     const txt = `Welcome to the Guardian. This site uses cookies. Read <a href="${
         link
@@ -33,9 +44,20 @@ const init = (): boolean => {
     const msg = new Message('cookies', opts);
     msg.show(txt);
     addCookie(EU_COOKIE_MSG, 'seen', cookieLifeDays);
-    return true;
 };
 
-export default {
-    init,
+const init = (): void => {
+    canShow().then(result => {
+        if (result) {
+            show();
+        }
+    });
 };
+
+export { init };
+
+export default {
+    id: 'cookieBanner',
+    show,
+    canShow,
+}
