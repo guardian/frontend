@@ -1,6 +1,6 @@
 // @flow
 import fetchJson from 'lib/fetch-json';
-import commentCount from './comment-count';
+import { initCommentCount } from './comment-count';
 
 jest.mock('lib/fastdom-promise');
 
@@ -62,7 +62,7 @@ describe('Comment Count', () => {
     });
 
     test('should append comment counts to DOM for open discussions only', () =>
-        commentCount.init().then(() => {
+        initCommentCount().then(() => {
             expect(
                 document.querySelectorAll(
                     '.fc-trail__count--commentcount, .commentcount2'
@@ -71,7 +71,7 @@ describe('Comment Count', () => {
         }));
 
     test('should append "default" format comment counts to DOM', () =>
-        commentCount.init().then(() => {
+        initCommentCount().then(() => {
             expect(
                 document.getElementsByClassName('fc-trail__count--commentcount')
                     .length
@@ -79,7 +79,7 @@ describe('Comment Count', () => {
         }));
 
     test('should append "content" format comment counts to DOM', () =>
-        commentCount.init().then(() => {
+        initCommentCount().then(() => {
             const contentCommentCounts = document.getElementsByClassName(
                 'commentcount2__value'
             );
