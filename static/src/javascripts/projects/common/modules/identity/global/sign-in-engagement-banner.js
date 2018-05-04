@@ -25,13 +25,13 @@ import iconPhone from './sign-in-engagement-banner/icon-phone.svg';
 const messageCode: string = 'sign-in-30-april';
 const signedInCookie: string = 'GU_U';
 
+const forceDisplayKey = 'sign-in-eb.force-display';
 const lastSeenAtKey = 'sign-in-eb.last-seen-at';
 const lifeTimeViewsKey = 'sign-in-eb.lifetime-views';
 const lifeTimeClosesKey = 'sign-in-eb.lifetime-closes';
 const sessionStartedAtKey = 'sign-in-eb.session-started-at';
 const sessionVisitsKey = 'sign-in-eb.session-visits';
 
-const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
 const ERR_MALFORMED_HTML = 'ERR_MALFORMED_HTML';
 
 const halfHourInMs = 30 * 60 * 1000;
@@ -122,6 +122,9 @@ const isInTestVariant = (): boolean => {
     return isInVariant(signInEngagementBannerDisplay, variant);
 };
 
+/* Make the alert show up iregardless */
+const isForcedDisplay = (): boolean => userPrefs.get(forceDisplayKey) || false;
+
 const bannerDoesNotCollide = (): Promise<boolean> =>
     new Promise(show => {
         setTimeout(() => {
@@ -149,16 +152,18 @@ const hide = (msg: Message) => {
 };
 
 const canShow = (): Promise<boolean> => {
-    const conditions = [
-        isNotSignedIn(),
-        hasSeenBannerOnceInLastTwoDays(),
-        isSecondSessionPageview(),
-        hasSeenBannerLessThanFourTimesTotal(),
-        isRecurringVisitor(),
-        hasReadOver4Articles(),
-        bannerDoesNotCollide(),
-        isInTestVariant(),
-    ];
+    const conditions = isForcedDisplay()
+        ? [true]
+        : [
+              isNotSignedIn(),
+              hasSeenBannerOnceInLastTwoDays(),
+              isSecondSessionPageview(),
+              hasSeenBannerLessThanFourTimesTotal(),
+              isRecurringVisitor(),
+              hasReadOver4Articles(),
+              bannerDoesNotCollide(),
+              isInTestVariant(),
+          ];
 
     return Promise.all(conditions).then(solvedConditions =>
         solvedConditions.every(_ => _ === true)
@@ -196,15 +201,7 @@ const show = (): void => {
 const signInEngagementBannerInit = (): Promise<void> =>
     canShow()
         .then((shouldDisplay: boolean) => {
-            if (!shouldDisplay) {
-                throw new Error(ERR_EXPECTED_NO_BANNER);
-            }
-        })
-        .then(() => {
-            show();
-        })
-        .catch(err => {
-            if (err.message !== ERR_EXPECTED_NO_BANNER) throw err;
+            if (shouldDisplay) show();
         });
 
 /* this needs to be a side effect */
