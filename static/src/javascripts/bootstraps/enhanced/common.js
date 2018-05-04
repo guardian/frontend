@@ -31,7 +31,7 @@ import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-pr
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
-import { init as initCookiesBanner}  from 'common/modules/ui/cookiesBanner';
+import { init as initCookiesBanner } from 'common/modules/ui/cookiesBanner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initCustomSmartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';

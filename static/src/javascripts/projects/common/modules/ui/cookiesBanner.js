@@ -14,8 +14,8 @@ import { Message } from 'common/modules/ui/message';
 
 const EU_COOKIE_MSG = 'GU_EU_MSG';
 
-const canShow = (): Promise<boolean> => {
-    return new Promise(resolve => {
+const canShow = (): Promise<boolean> =>
+    new Promise(resolve => {
         const geoContinentCookie = getCookie('GU_geo_continent');
 
         if (!geoContinentCookie || geoContinentCookie.toUpperCase() !== 'EU') {
@@ -30,7 +30,6 @@ const canShow = (): Promise<boolean> => {
             resolve(true);
         }
     });
-};
 
 const show = (): void => {
     const link = 'https://www.theguardian.com/info/cookies';
@@ -60,4 +59,4 @@ export default {
     id: 'cookieBanner',
     show,
     canShow,
-}
+};
