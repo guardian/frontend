@@ -30,7 +30,6 @@ describe('Comment Count', () => {
                 <div class="trail" data-discussion-id="/p/3gh4n"><a href="/article/3">1</a></div>
                 <div class="trail" data-discussion-id="/p/3ghv5"><a href="/article/4">4</a></div>
                 <div class="trail" data-commentcount-format="content" data-discussion-id="/p/3ghNp"><a href="/article/3">1</a></div>
-                <div class="trail" data-commentcount-format="contentImmersive" data-discussion-id="/p/3ghNp"><a href="/article/4">4</a></div>
             </div>`;
         }
 
@@ -88,16 +87,5 @@ describe('Comment Count', () => {
             expect(contentCommentCounts.length).toBe(1);
 
             expect(contentCommentCounts[0].innerHTML).toBe('400');
-        }));
-
-    test('should append "content immersive" format comment counts to DOM', () =>
-        commentCount.init().then(() => {
-            const contentImmersiveCommentCounts = document.getElementsByClassName(
-                'commentcount__value'
-            );
-
-            expect(contentImmersiveCommentCounts.length).toBe(1);
-
-            expect(contentImmersiveCommentCounts[0].innerHTML).toBe('400');
         }));
 });
