@@ -9,7 +9,7 @@ import userPrefs from 'common/modules/user-prefs';
 import mediator from 'lib/mediator';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
-import { trackNonClickInteraction } from 'common/modules/analytics/interaction-tracking';
+import { trackNonClickInteraction } from 'common/modules/analytics/google';
 
 import iconComment from 'svgs/icon/comment-16.svg';
 import iconEmail from 'svgs/icon/mail.svg';
@@ -197,7 +197,9 @@ const show = (): void => {
                 `.${bindableClassNames.closeBtn}`
             );
             ophan.record({
-                clickLinkNames: ['sign-in-eb : display'],
+                component: 'sign-in-eb',
+                action: 'sign-in-eb : show',
+                value: 'sign-in-eb : show',
             });
             trackNonClickInteraction('sign-in-eb : display');
             if (!closeButtonEl) {
