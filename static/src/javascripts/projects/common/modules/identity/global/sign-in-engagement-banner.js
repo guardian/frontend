@@ -116,13 +116,13 @@ const hasSeenBannerOnceInLastTwoDays = (): boolean =>
 const isSecondSessionPageview = (): boolean =>
     (userPrefs.get(sessionVisitsKey) || 0) >= 2;
 
-/* Must have visited between 1 month & 24 hours ago */
+/* Must have first visited over 24 hours ago */
 const isRecurringVisitor = (): boolean => {
     const ga: ?string = getCookie('_ga');
     if (!ga) return false;
     const date: number = parseInt(ga.split('.').pop(), 10) * 1000;
     if (!date || Number.isNaN(date)) return false;
-    return Date.now() - date > dayInMs && Date.now() - date < monthInMs;
+    return Date.now() - date > dayInMs;
 };
 
 /* Test must be running & user must be in variant */
