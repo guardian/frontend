@@ -4,10 +4,12 @@ import { Message } from 'common/modules/ui/message';
 import { getCookie } from 'lib/cookies';
 import { local } from 'lib/storage';
 import config from 'lib/config';
+import ophan from 'ophan/ng';
 import userPrefs from 'common/modules/user-prefs';
 import mediator from 'lib/mediator';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
+import { trackNonClickInteraction } from 'common/modules/analytics/google';
 
 import iconComment from 'svgs/icon/comment-16.svg';
 import iconEmail from 'svgs/icon/mail.svg';
@@ -26,18 +28,18 @@ import {
 const messageCode: string = 'sign-in-30-april';
 const signedInCookie: string = 'GU_U';
 
-const forceDisplayHash = 'sign-in-eb-display=true';
-const lastSeenAtKey = 'sign-in-eb.last-seen-at';
-const lifeTimeViewsKey = 'sign-in-eb.lifetime-views';
-const lifeTimeClosesKey = 'sign-in-eb.lifetime-closes';
-const sessionStartedAtKey = 'sign-in-eb.session-started-at';
-const sessionVisitsKey = 'sign-in-eb.session-visits';
+const forceDisplayHash: string = 'sign-in-eb-display=true';
+const lastSeenAtKey: string = 'sign-in-eb.last-seen-at';
+const lifeTimeViewsKey: string = 'sign-in-eb.lifetime-views';
+const lifeTimeClosesKey: string = 'sign-in-eb.lifetime-closes';
+const sessionStartedAtKey: string = 'sign-in-eb.session-started-at';
+const sessionVisitsKey: string = 'sign-in-eb.session-visits';
 
-const ERR_MALFORMED_HTML = 'ERR_MALFORMED_HTML';
+const ERR_MALFORMED_HTML: string = 'ERR_MALFORMED_HTML';
 
-const halfHourInMs = 30 * 60 * 1000;
-const dayInMs = 24 * 60 * 60 * 1000;
-const monthInMs = 30 * dayInMs;
+const halfHourInMs: number = 30 * 60 * 1000;
+const dayInMs: number = 24 * 60 * 60 * 1000;
+const monthInMs: number = 30 * dayInMs;
 
 const links: LinkTargets = {
     signIn: `${config.get(
@@ -46,7 +48,8 @@ const links: LinkTargets = {
     register: `${config.get(
         'page.idUrl'
     )}/register?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
-    why: '#',
+    why:
+        'https://www.theguardian.com/info/2018/may/08/why-sign-in-to-the-guardian',
 };
 
 /* A "session" here is defined as views separated < 30 minutes away from each other */
@@ -88,6 +91,10 @@ const tpl: Template = {
     links,
 };
 
+/* Is not paid content */
+const isNotPaidContent = (): boolean =>
+    (config.get('page.isPaidContent') || false) === false;
+
 /* Must have visited 4 articles */
 const hasReadOver4Articles = (): boolean =>
     (local.get('gu.alreadyVisited') || 0) >= 4;
@@ -108,13 +115,13 @@ const hasSeenBannerOnceInLastTwoDays = (): boolean =>
 const isSecondSessionPageview = (): boolean =>
     (userPrefs.get(sessionVisitsKey) || 0) >= 2;
 
-/* Must have visited between 1 month & 24 hours ago */
+/* Must have first visited over 24 hours ago */
 const isRecurringVisitor = (): boolean => {
     const ga: ?string = getCookie('_ga');
     if (!ga) return false;
     const date: number = parseInt(ga.split('.').pop(), 10) * 1000;
     if (!date || Number.isNaN(date)) return false;
-    return Date.now() - date > dayInMs && Date.now() - date < monthInMs;
+    return Date.now() - date > dayInMs;
 };
 
 /* Test must be running & user must be in variant */
@@ -146,7 +153,7 @@ const bannerDoesNotCollide = (): Promise<boolean> =>
         });
     });
 
-const hide = (msg: Message) => {
+const hide = (msg: Message): void => {
     userPrefs.set(
         lifeTimeClosesKey,
         (userPrefs.get(lifeTimeClosesKey) || 0) + 1
@@ -159,6 +166,7 @@ const canShow = (): Promise<boolean> => {
         ? [true]
         : [
               isNotSignedIn(),
+              isNotPaidContent(),
               hasSeenBannerOnceInLastTwoDays(),
               isSecondSessionPageview(),
               hasSeenBannerLessThanFourTimesTotal(),
@@ -188,6 +196,12 @@ const show = (): void => {
             const closeButtonEl: ?HTMLElement = document.querySelector(
                 `.${bindableClassNames.closeBtn}`
             );
+            ophan.record({
+                component: 'sign-in-eb',
+                action: 'sign-in-eb : show',
+                value: 'sign-in-eb : show',
+            });
+            trackNonClickInteraction('sign-in-eb : display');
             if (!closeButtonEl) {
                 hide(msg);
                 throw new Error(ERR_MALFORMED_HTML);
