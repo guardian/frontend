@@ -8,7 +8,7 @@ import fastdom from 'lib/fastdom-promise';
 import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
 import bean from 'bean';
-import mediator from 'lib/mediator';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 const accountDataUpdateLink = accountDataUpdateWarningLink =>
     `${config.get('page.idUrl')}/${
@@ -51,15 +51,22 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
     );
 };
 
-const initMembership = (): void => {
+const canShow = () => new Promise(_ => _(accountDataUpdateWarning() !== null));
+
+const show = () => {
     const updateLink = accountDataUpdateWarning();
     if (updateLink) {
-        mediator.on('modules:onwards:breaking-news:ready', breakingShown => {
-            if (!breakingShown) {
-                showAccountDataUpdateWarningMessage(updateLink);
-            }
-        });
+        showAccountDataUpdateWarningMessage(updateLink);
     }
+};
+
+export const membershipBanner: Banner = {
+    id: 'membership-action-required',
+    show,
+    canShow,
+};
+
+export const initMembership = (): void => {
     if (isPayingMember()) {
         fastdom
             .read(() => document.getElementsByClassName('js-become-member'))
@@ -80,5 +87,3 @@ const initMembership = (): void => {
             });
     }
 };
-
-export { initMembership };
