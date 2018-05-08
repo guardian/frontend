@@ -271,6 +271,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
         const checkboxClassAttr = checkbox.getAttribute('class');
+        const checkboxTabIndex = checkbox.getAttribute('tabindex');
         const dataLinkName = checkbox.getAttribute('data-link-name');
 
         const menuEl: ?HTMLElement = document.querySelector(
@@ -281,8 +282,27 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         );
 
         const buttonClickHandlers = {};
+        const labelKeyHandlers = {};
 
-        buttonClickHandlers['main-menu-toggle'] = toggleMenu;
+        const attachKeyEvent = (elem: HTMLElement, eventID: number, action: Function): void => {
+            elem.addEventListener('keyup', event => {
+                if (event.which === eventID) {
+                    action();
+                }
+            });
+        };
+
+        const MENU_TOGGLE_CLASS = 'main-menu-toggle';
+
+        buttonClickHandlers[MENU_TOGGLE_CLASS] = toggleMenu;
+        
+        labelKeyHandlers[MENU_TOGGLE_CLASS] = () => {
+            const label = document.querySelector(`label[for='${MENU_TOGGLE_CLASS}']`);
+
+            if (label) {
+                attachKeyEvent(label, 13, toggleMenu);
+            }
+        };
 
         if (
             menuEl &&
@@ -304,8 +324,16 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const enhance = () => {
             const eventHandler = buttonClickHandlers[checkboxId];
 
+            if (labelKeyHandlers[checkboxId]) {
+                labelKeyHandlers[checkboxId]();
+            }
+
             if (checkboxClassAttr) {
                 button.setAttribute('class', checkboxClassAttr);
+            }
+
+            if (checkboxTabIndex) {
+                button.setAttribute('tabindex', checkboxTabIndex);
             }
 
             button.addEventListener('click', () => eventHandler());
