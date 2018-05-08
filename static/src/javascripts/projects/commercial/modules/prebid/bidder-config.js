@@ -200,7 +200,7 @@ const improveDigitalBidder: PrebidBidder = {
 };
 
 const xaxisBidder: PrebidBidder = {
-    name: 'appnexus',
+    name: 'xhb',
     bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
         placementId: getXaxisPlacementId(sizes),
     }),

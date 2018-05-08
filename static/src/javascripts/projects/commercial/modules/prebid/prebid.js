@@ -93,9 +93,6 @@ class PrebidService {
         }
 
         if (config.switches.prebidXaxis) {
-            // Using AppNexus adapter for Xaxis bids but need to know they are actually Xaxis bids in DFP
-            window.pbjs.aliasBidder('appnexus', 'xhb');
-
             window.pbjs.bidderSettings.xhb = {
                 // for First Look deals
                 alwaysUseBid: true,

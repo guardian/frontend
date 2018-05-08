@@ -19,7 +19,9 @@ const getTemplate = (
     if (type === 'content') {
         return `<a href="${
             url
-        }" data-link-name="Comment count" class="commentcount2 tone-colour">
+        }" data-link-name="Comment count" class="commentcount2 tone-colour" aria-label="${
+            count
+        } comments">
                     <h3 class="commentcount2__heading">${
                         icon
                     } <span class ="commentcount2__text u-h">Comments</span></h3>
@@ -29,19 +31,11 @@ const getTemplate = (
                 </a>`;
     }
 
-    if (type === 'contentImmersive') {
-        return `<a href="${
-            url
-        }" data-link-name="Comment count" class="commentcount2 tone-colour">
-                    ${icon}<span class="commentcount__value">${
-            count
-        }</span> Comments
-                </a>`;
-    }
-
     return `<a class="fc-trail__count fc-trail__count--commentcount" href="${
         url
-    }" data-link-name="Comment count">${icon} ${count}</a>`;
+    }" data-link-name="Comment count" aria-label="${count} comments">${icon} ${
+        count
+    }</a>`;
 };
 
 const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
@@ -143,12 +137,8 @@ const getCommentCounts = (context?: HTMLElement): Promise<void> => {
     return Promise.resolve();
 };
 
-const init = (): Promise<void> => {
+export const initCommentCount = (): Promise<void> => {
     mediator.on('modules:related:loaded', getCommentCounts);
 
     return getCommentCounts();
-};
-
-export default {
-    init,
 };
