@@ -94,3 +94,9 @@ const init = (): void => {
 };
 
 export { init };
+
+export default {
+    id: 'smartAppBanner',
+    show,
+    canShow,
+};
