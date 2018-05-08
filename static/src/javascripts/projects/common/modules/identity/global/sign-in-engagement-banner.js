@@ -28,18 +28,18 @@ import {
 const messageCode: string = 'sign-in-30-april';
 const signedInCookie: string = 'GU_U';
 
-const forceDisplayHash = 'sign-in-eb-display=true';
-const lastSeenAtKey = 'sign-in-eb.last-seen-at';
-const lifeTimeViewsKey = 'sign-in-eb.lifetime-views';
-const lifeTimeClosesKey = 'sign-in-eb.lifetime-closes';
-const sessionStartedAtKey = 'sign-in-eb.session-started-at';
-const sessionVisitsKey = 'sign-in-eb.session-visits';
+const forceDisplayHash: string = 'sign-in-eb-display=true';
+const lastSeenAtKey: string = 'sign-in-eb.last-seen-at';
+const lifeTimeViewsKey: string = 'sign-in-eb.lifetime-views';
+const lifeTimeClosesKey: string = 'sign-in-eb.lifetime-closes';
+const sessionStartedAtKey: string = 'sign-in-eb.session-started-at';
+const sessionVisitsKey: string = 'sign-in-eb.session-visits';
 
-const ERR_MALFORMED_HTML = 'ERR_MALFORMED_HTML';
+const ERR_MALFORMED_HTML: string = 'ERR_MALFORMED_HTML';
 
-const halfHourInMs = 30 * 60 * 1000;
-const dayInMs = 24 * 60 * 60 * 1000;
-const monthInMs = 30 * dayInMs;
+const halfHourInMs: number = 30 * 60 * 1000;
+const dayInMs: number = 24 * 60 * 60 * 1000;
+const monthInMs: number = 30 * dayInMs;
 
 const links: LinkTargets = {
     signIn: `${config.get(
@@ -153,7 +153,7 @@ const bannerDoesNotCollide = (): Promise<boolean> =>
         });
     });
 
-const hide = (msg: Message) => {
+const hide = (msg: Message): void => {
     userPrefs.set(
         lifeTimeClosesKey,
         (userPrefs.get(lifeTimeClosesKey) || 0) + 1
