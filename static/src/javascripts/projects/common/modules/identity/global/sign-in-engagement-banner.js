@@ -4,10 +4,12 @@ import { Message } from 'common/modules/ui/message';
 import { getCookie } from 'lib/cookies';
 import { local } from 'lib/storage';
 import config from 'lib/config';
+import ophan from 'ophan/ng';
 import userPrefs from 'common/modules/user-prefs';
 import mediator from 'lib/mediator';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
+import {trackNonClickInteraction} from "common/modules/analytics/interaction-tracking";
 
 import iconComment from 'svgs/icon/comment-16.svg';
 import iconEmail from 'svgs/icon/mail.svg';
@@ -188,6 +190,10 @@ const show = (): void => {
             const closeButtonEl: ?HTMLElement = document.querySelector(
                 `.${bindableClassNames.closeBtn}`
             );
+            ophan.record({
+                clickLinkNames: ['sign-in-eb : display']
+            });
+            trackNonClickInteraction('sign-in-eb : display');
             if (!closeButtonEl) {
                 hide(msg);
                 throw new Error(ERR_MALFORMED_HTML);
