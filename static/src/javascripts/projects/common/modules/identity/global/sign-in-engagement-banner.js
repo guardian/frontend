@@ -48,7 +48,7 @@ const links: LinkTargets = {
     register: `${config.get(
         'page.idUrl'
     )}/register?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
-    why: '#',
+    why: 'https://www.theguardian.com/info/2018/may/08/why-sign-in-to-the-guardian',
 };
 
 /* A "session" here is defined as views separated < 30 minutes away from each other */
@@ -89,6 +89,12 @@ const tpl: Template = {
     features,
     links,
 };
+
+/* Is not paid content */
+const isNotPaidContent = ():boolean =>
+    (config.get(
+        'page.isPaidContent'
+    ) || false) === false
 
 /* Must have visited 4 articles */
 const hasReadOver4Articles = (): boolean =>
@@ -161,6 +167,7 @@ const canShow = (): Promise<boolean> => {
         ? [true]
         : [
               isNotSignedIn(),
+              isNotPaidContent(),
               hasSeenBannerOnceInLastTwoDays(),
               isSecondSessionPageview(),
               hasSeenBannerLessThanFourTimesTotal(),
