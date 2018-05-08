@@ -9,7 +9,7 @@ import userPrefs from 'common/modules/user-prefs';
 import mediator from 'lib/mediator';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
-import {trackNonClickInteraction} from "common/modules/analytics/interaction-tracking";
+import { trackNonClickInteraction } from 'common/modules/analytics/interaction-tracking';
 
 import iconComment from 'svgs/icon/comment-16.svg';
 import iconEmail from 'svgs/icon/mail.svg';
@@ -48,7 +48,8 @@ const links: LinkTargets = {
     register: `${config.get(
         'page.idUrl'
     )}/register?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
-    why: 'https://www.theguardian.com/info/2018/may/08/why-sign-in-to-the-guardian',
+    why:
+        'https://www.theguardian.com/info/2018/may/08/why-sign-in-to-the-guardian',
 };
 
 /* A "session" here is defined as views separated < 30 minutes away from each other */
@@ -91,10 +92,8 @@ const tpl: Template = {
 };
 
 /* Is not paid content */
-const isNotPaidContent = ():boolean =>
-    (config.get(
-        'page.isPaidContent'
-    ) || false) === false
+const isNotPaidContent = (): boolean =>
+    (config.get('page.isPaidContent') || false) === false;
 
 /* Must have visited 4 articles */
 const hasReadOver4Articles = (): boolean =>
@@ -198,7 +197,7 @@ const show = (): void => {
                 `.${bindableClassNames.closeBtn}`
             );
             ophan.record({
-                clickLinkNames: ['sign-in-eb : display']
+                clickLinkNames: ['sign-in-eb : display'],
             });
             trackNonClickInteraction('sign-in-eb : display');
             if (!closeButtonEl) {
