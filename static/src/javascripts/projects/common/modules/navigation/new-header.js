@@ -286,10 +286,7 @@ const toggleEditionPicker = (): void => {
         '.js-edition-picker-trigger'
     );
 
-    if (
-        menu &&
-        trigger
-    ) {
+    if (menu && trigger) {
         const editionPickerDropdownEls: MenuAndTriggerEls = {
             menu,
             trigger,
