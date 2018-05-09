@@ -5,6 +5,8 @@ import common.Logging
 import common.commercial.hosted.ContentUtils._
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.MetaData
+import views.support.{ImgSrc, Item700, Item1200}
+import conf.Configuration
 
 case class HostedGalleryPage(
   override val id: String,
@@ -56,6 +58,12 @@ object HostedGalleryPage extends Logging {
         }
       }
 
+      val mainImage = findLargestMainImageAsset(content)
+        .flatMap(_.file)
+        .getOrElse(Configuration.images.fallbackLogo)
+
+      val openGraphImages: Seq[String] = Seq(ImgSrc(mainImage, Item1200))
+
       HostedGalleryPage(
         id = content.id,
         campaign = HostedCampaign.fromContent(content),
@@ -67,9 +75,14 @@ object HostedGalleryPage extends Logging {
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         thumbnailUrl = thumbnailUrl(content),
-        metadata = HostedMetadata
-          .fromContent(content)
-          .copy(openGraphImages = findLargestMainImageAsset(content).flatMap(_.file).toList)
+        metadata = HostedMetadata.fromContent(content)
+          .copy(
+            schemaType = Some("https://schema.org/ImageGallery"),
+            openGraphImages = openGraphImages,
+            twitterPropertiesOverrides = Map(
+              "twitter:image" -> ImgSrc(mainImage, Item700)
+            )
+        )
       )
     }
 
