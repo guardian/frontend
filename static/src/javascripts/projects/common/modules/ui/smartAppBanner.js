@@ -93,8 +93,10 @@ const init = (): void => {
     });
 };
 
+// TODO: remove once bannerPicker is in use
 export { init };
 
+// To be used by bannerPicker
 export default {
     id: 'smartAppBanner',
     show,
