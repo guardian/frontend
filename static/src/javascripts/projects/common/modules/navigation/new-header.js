@@ -268,7 +268,7 @@ const initiateUserAccountDropdown = (): void => {
 const attachKeyEvent = (
     elem: HTMLElement,
     eventID: number,
-    action: Function
+    action: () => void
 ): void => {
     elem.addEventListener('keyup', (event: Event): void => {
         if (event.which === eventID) {
@@ -304,6 +304,8 @@ const buttonClickHandlers = {
     [EDITION_PICKER_TOGGLE_CLASS]: toggleEditionPicker,
 };
 
+const ENTER_KEY = 13;
+
 const labelKeyHandlers = {
     [MENU_TOGGLE_CLASS]: () => {
         const label = document.querySelector(
@@ -311,7 +313,7 @@ const labelKeyHandlers = {
         );
 
         if (label) {
-            attachKeyEvent(label, 13, toggleMenu);
+            attachKeyEvent(label, ENTER_KEY, toggleMenu);
         }
     },
     [EDITION_PICKER_TOGGLE_CLASS]: () => {
@@ -320,7 +322,7 @@ const labelKeyHandlers = {
         );
 
         if (label) {
-            attachKeyEvent(label, 13, toggleEditionPicker);
+            attachKeyEvent(label, ENTER_KEY, toggleEditionPicker);
         }
     },
 };
