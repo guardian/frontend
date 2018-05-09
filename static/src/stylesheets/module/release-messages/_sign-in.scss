@@ -12,6 +12,15 @@ $sign-in-eb-vertical-mq: 36em;
     padding: 0 $sign-in-eb-padding;
 }
 
+.site-message--sign-in__overlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 10;
+}
+
 .site-message.site-message--sign-in-message {
     background: transparent;
     top: 0;
@@ -24,7 +33,6 @@ $sign-in-eb-vertical-mq: 36em;
         margin: auto;
     }
     .site-message__inner {
-        background: $color-sign-in-eb-main;
         color: $garnett-neutral-1;
         max-width: 310px;
         padding: 0;
@@ -37,6 +45,11 @@ $sign-in-eb-vertical-mq: 36em;
     .site-message__message {
         max-width: 100%;
         padding: 0;
+    }
+    .site-message--sign-in-container {
+        z-index: 11;
+        position: relative;
+        background: $color-sign-in-eb-main;
     }
     .site-message__media {
         display: none;
