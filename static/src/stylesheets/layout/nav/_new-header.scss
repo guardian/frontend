@@ -88,6 +88,8 @@ from scrolling */
 }
 
 .new-header__menu-toggle {
+    display: block;
+    
     @include mq($until: desktop) {
         position: absolute;
         right: $gutter-small;
@@ -116,7 +118,7 @@ from scrolling */
         }
     }
 
-    &:focus {
+    &:active {
         outline: 0;
     }
 }
