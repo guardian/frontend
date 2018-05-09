@@ -8,6 +8,7 @@ import userPrefs from 'common/modules/user-prefs';
 import mediator from 'lib/mediator';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 import type {
     Template,
@@ -210,10 +211,14 @@ const signInEngagementBannerInit = (): Promise<void> =>
 /* this needs to be a side effect */
 recordSessionVisit();
 
+const signInEngagementBanner: Banner = {
+    id: 'signInEngagementBanner',
+    canShow: canShow,
+    show: show,
+}
+
 export {
-    signInEngagementBannerInit,
-    canShow,
-    show,
+    signInEngagementBanner,
     sessionVisitsKey,
     lifeTimeViewsKey,
     sessionStartedAtKey,

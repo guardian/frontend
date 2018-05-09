@@ -9,6 +9,7 @@ import { local } from 'lib/storage';
 import ophan from 'ophan/ng';
 import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 import type { LinkTargets, Template } from './opt-in-eb-template';
 import { makeTemplateHtml } from './opt-in-eb-template';
 
@@ -192,10 +193,10 @@ const optInEngagementBannerInit = (): Promise<void> =>
         }
     });
 
-export { optInEngagementBannerInit };
-
-export default {
+const optInEngagementBanner: Banner = {
     id: 'optInEngagementBanner',
     show,
     canShow,
 };
+
+export { optInEngagementBanner };
