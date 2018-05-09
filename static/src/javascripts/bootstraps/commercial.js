@@ -28,24 +28,24 @@ import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import commentAdverts from 'commercial/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
-    ['cm-highMerch', initHighMerch],
     ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-paidContainers', paidContainers],
-    ['cm-paidforBand', initPaidForBand],
     ['cm-carrot', initCarrotTrafficDriver],
     ['cm-checkDispatcher', initCheckDispatcher],
-    ['cm-commentAdverts', commentAdverts],
 ];
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
+        ['cm-highMerch', initHighMerch],
         ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
         ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
         ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
-        ['cm-stickyTopBanner', initStickyTopBanner]
+        ['cm-stickyTopBanner', initStickyTopBanner],
+        ['cm-paidContainers', paidContainers],
+        ['cm-paidforBand', initPaidForBand],
+        ['cm-commentAdverts', commentAdverts],
     );
 }
 
