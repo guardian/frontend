@@ -5,6 +5,8 @@ import common.Logging
 import common.commercial.hosted.ContentUtils.{findLargestMainImageAsset, thumbnailUrl}
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.{Content, MetaData}
+import views.support.{ImgSrc, Item700, Item1200}
+import conf.Configuration
 
 case class HostedArticlePage(
   override val id: String,
@@ -36,6 +38,9 @@ object HostedArticlePage extends Logging {
     } yield {
 
       val mainImageAsset = findLargestMainImageAsset(content)
+      val mainImage = mainImageAsset.flatMap(_.file).getOrElse(Configuration.images.fallbackLogo)
+
+      val openGraphImages: Seq[String] = Seq(ImgSrc(mainImage, Item1200))
 
       HostedArticlePage(
         id = content.id,
@@ -50,7 +55,13 @@ object HostedArticlePage extends Logging {
         thumbnailUrl = thumbnailUrl(content),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
-        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = mainImageAsset.flatMap(_.file).toList),
+        metadata = HostedMetadata.fromContent(content)
+          .copy(
+            openGraphImages = openGraphImages,
+            twitterPropertiesOverrides = Map(
+              "twitter:image" -> ImgSrc(mainImage, Item700)
+            )
+          ),
         content = Content.make(content)
       )
     }
