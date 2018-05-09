@@ -134,7 +134,7 @@ const isInTestVariant = (): boolean => {
 const isForcedDisplay = (): boolean =>
     window.location.hash.includes(forceDisplayHash);
 
-const hide = (msg: Message) => {
+const hide = (msg: Message): void => {
     userPrefs.set(
         lifeTimeClosesKey,
         (userPrefs.get(lifeTimeClosesKey) || 0) + 1
