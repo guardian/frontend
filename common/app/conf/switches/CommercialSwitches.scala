@@ -416,4 +416,14 @@ trait CommercialSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
+
+  val personalisedAdsConsent: Switch = Switch(
+    group = Commercial,
+    name = "personalised-ads-consent",
+    description = "Include a flag with consent status in ad calls.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 6, 6),
+    exposeClientSide = true
+  )
 }

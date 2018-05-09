@@ -67,6 +67,13 @@ const setDfpListeners = (): void => {
     }
 };
 
+const setPersonalisedAds = (): void => {
+    if (config.switches.personalisedAdsConsent) {
+        const nonPersonalised = 1;
+        window.googletag.pubads().setRequestNonPersonalizedAds(nonPersonalised);
+    }
+};
+
 const setPageTargeting = (): void => {
     const pubads = window.googletag.pubads();
     // because commercialFeatures may export itself as {} in the event of an exception during construction
@@ -111,6 +118,7 @@ export const init = (start: () => void, stop: () => void): Promise<void> => {
         // fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
         window.googletag.cmd.push(
             setDfpListeners,
+            setPersonalisedAds,
             setPageTargeting,
             setPublisherProvidedId,
             refreshOnResize,
