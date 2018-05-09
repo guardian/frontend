@@ -161,7 +161,7 @@ trait FeatureSwitches {
     "If this is switched on then videos are enhanced using our JavaScript player",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 5, 8),
+    sellByDate = new LocalDate(2018, 7, 19),
     exposeClientSide = true
   )
 

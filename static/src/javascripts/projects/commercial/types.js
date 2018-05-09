@@ -86,6 +86,8 @@ export type ImpressionViewableEvent = {
     slot: Slot,
 };
 
+export type ImpressionViewableEventCallback = ImpressionViewableEvent => void;
+
 export type SlotVisibilityChangedEvent = {
     inViewPercentage: number,
     serviceName: string,
