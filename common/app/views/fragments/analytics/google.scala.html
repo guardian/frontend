@@ -4,8 +4,15 @@
 @import views.support.Commercial.listSponsorLogosOnPage
 @import views.support.{Commercial, GoogleAnalyticsAccount}
 @import conf.Configuration
+@import common.Edition
+@import navigation.NavMenu
 
 <script id='google_analytics'>
+
+@defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
+    const pillar = '@{navMenu.currentPillar.map(_.title).getOrElse("")}';
+}
+
 
 (function() {
 
@@ -107,11 +114,13 @@
           ga('@{trackerName}.set', 'dimension42', '@brandingType.name');
         }
         ga('@{trackerName}.set', 'dimension43', getExperienceValue()); @* 'Experience' dimension, for short-lived experiment values. *@
+        ga('@{trackerName}.set', 'dimension50', pillar);
 
         if(document.location.hash === '#fbLogin') {
             ga('@{trackerName}.set', 'referrer', null);
             document.location.hash = '';
         }
+
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker(context).trackerName) { trackerName =>
