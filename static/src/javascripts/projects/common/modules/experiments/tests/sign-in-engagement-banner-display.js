@@ -7,13 +7,13 @@ export const signInEngagementBannerDisplay: ABTest = {
     author: 'Laura gonzalez',
     description:
         'This test will show a sign in engagement banner to non signed in users.',
-    audience: 0,
+    audience: 0.3,
     audienceOffset: 0.25,
     successMeasure: 'More signed in users as % of visitors',
     audienceCriteria: 'All web traffic',
     dataLinkNames: 'All starting with "sign-in-eb :"',
     idealOutcome:
-        'We increase the number of signed in users more than the banner puts people off visiting the site.',
+        'We increase the number of signed in users more than the banner puts people off from visiting the site.',
     canRun: () => true,
     variants: [
         {
