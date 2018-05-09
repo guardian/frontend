@@ -23,30 +23,36 @@ const closeDisabledSlots = once((): Promise<void> => {
 const mpuCandidateClass: string = 'fc-slice__item--mpu-candidate';
 const mpuCandidateSelector: string = `.${mpuCandidateClass}`;
 
-const shouldRemoveAdSlotWhenAdFree = adSlot =>
-    commercialFeatures.adFree;
+const shouldRemoveAdSlotWhenAdFree = () => commercialFeatures.adFree;
 
 const shouldRemoveMpuWhenAdFree = mpuCandidate =>
-    commercialFeatures.adFree && mpuCandidate.className.toLowerCase().includes(mpuCandidateClass);
+    commercialFeatures.adFree &&
+    mpuCandidate.className.toLowerCase().includes(mpuCandidateClass);
 
 const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
-    let att = faciaContainer.getAttribute('data-component');
-    return commercialFeatures.adFree && att && att.indexOf('commercial-container') > -1;
+    const att = faciaContainer.getAttribute('data-component');
+    return (
+        commercialFeatures.adFree &&
+        att &&
+        att.indexOf('commercial-container') > -1
+    );
 };
 
 const adFreeSlotRemove = (): Promise<void> => {
-    let adSlotsToRemove: Array<Element> =
-        qwery(dfpEnv.adSlotSelector).filter(shouldRemoveAdSlotWhenAdFree);
+    const adSlotsToRemove: Array<Element> = qwery(dfpEnv.adSlotSelector).filter(
+        shouldRemoveAdSlotWhenAdFree
+    );
 
-    let mpusToRemove: Array<Element> =
-        qwery(mpuCandidateSelector).filter(shouldRemoveMpuWhenAdFree);
+    const mpusToRemove: Array<Element> = qwery(mpuCandidateSelector).filter(
+        shouldRemoveMpuWhenAdFree
+    );
 
-    let commercialFaciaContainersToRemove: Array<Element> =
-        qwery('.fc-container').filter(shouldRemoveFaciaContainerWhenAdFree);
+    const commercialFaciaContainersToRemove: Array<Element> = qwery(
+        '.fc-container'
+    ).filter(shouldRemoveFaciaContainerWhenAdFree);
 
     return fastdom.write(() => {
-        adSlotsToRemove.forEach((adSlot: Element) =>
-            adSlot.remove());
+        adSlotsToRemove.forEach((adSlot: Element) => adSlot.remove());
         mpusToRemove.forEach((mpu: Element) =>
             mpu.classList.add('fc-slice__item--no-mpu')
         );
