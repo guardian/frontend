@@ -2,7 +2,7 @@ package form
 
 import model.Titles
 import play.api.data.Forms._
-import com.gu.identity.model.{PrivateFields, User, UserDates}
+import com.gu.identity.model.{Consent, PrivateFields, User, UserDates}
 import idapiclient.UserUpdateDTO
 import play.api.data.Mapping
 import play.api.i18n.MessagesProvider
@@ -85,7 +85,8 @@ case class AccountFormData(
       billingCountry = billingAddress.flatMap(x => toUpdate(x.country, currentUser.privateFields.billingCountry)),
       telephoneNumber = telephoneNumber.flatMap(_.telephoneNumber)
     )),
-    statusFields = Some(currentUser.statusFields.copy(allowThirdPartyProfiling = Some(allowThirdPartyProfiling)))
+    statusFields = Some(currentUser.statusFields.copy(allowThirdPartyProfiling = Some(allowThirdPartyProfiling))),
+    consents = Some(List(Consent(id = Consent.ProfilingOptout.id, consented = !allowThirdPartyProfiling)))
   )
 }
 
