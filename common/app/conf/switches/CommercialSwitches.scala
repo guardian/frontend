@@ -417,9 +417,9 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val personalisedAdsConsent: Switch = Switch(
+  val includePersonalisedAdsConsent: Switch = Switch(
     group = Commercial,
-    name = "personalised-ads-consent",
+    name = "include-personalised-ads-consent",
     description = "Include a flag with consent status in ad calls.",
     owners = group(Commercial),
     safeState = Off,

@@ -68,9 +68,12 @@ const setDfpListeners = (): void => {
 };
 
 const setPersonalisedAds = (): void => {
-    if (config.switches.personalisedAdsConsent) {
-        const nonPersonalised = 1;
-        window.googletag.pubads().setRequestNonPersonalizedAds(nonPersonalised);
+    if (config.switches.includePersonalisedAdsConsent) {
+        // TODO: replace this hardcoded value with one from local storage
+        const personalised = false;
+        window.googletag
+            .pubads()
+            .setRequestNonPersonalizedAds(personalised ? 0 : 1);
     }
 };
 
