@@ -265,6 +265,69 @@ const initiateUserAccountDropdown = (): void => {
         });
 };
 
+const attachKeyEvent = (
+    elem: HTMLElement,
+    eventID: number,
+    action: Function
+): void => {
+    elem.addEventListener('keyup', (event: Event): void => {
+        if (event.which === eventID) {
+            action();
+        }
+    });
+};
+
+const toggleEditionPicker = (): void => {
+    const menu: ?HTMLElement = document.querySelector(
+        '.js-edition-dropdown-menu'
+    );
+
+    const trigger: ?HTMLElement = document.querySelector(
+        '.js-edition-picker-trigger'
+    );
+
+    if (
+        menu &&
+        trigger
+    ) {
+        const editionPickerDropdownEls: MenuAndTriggerEls = {
+            menu,
+            trigger,
+        };
+
+        toggleDropdown(editionPickerDropdownEls);
+    }
+};
+
+const MENU_TOGGLE_CLASS = 'main-menu-toggle';
+const EDITION_PICKER_TOGGLE_CLASS = 'edition-picker-toggle';
+
+const buttonClickHandlers = {
+    [MENU_TOGGLE_CLASS]: toggleMenu,
+    [EDITION_PICKER_TOGGLE_CLASS]: toggleEditionPicker,
+};
+
+const labelKeyHandlers = {
+    [MENU_TOGGLE_CLASS]: () => {
+        const label = document.querySelector(
+            `label[for='${MENU_TOGGLE_CLASS}']`
+        );
+
+        if (label) {
+            attachKeyEvent(label, 13, toggleMenu);
+        }
+    },
+    [EDITION_PICKER_TOGGLE_CLASS]: () => {
+        const label = document.querySelector(
+            `label[for='${EDITION_PICKER_TOGGLE_CLASS}']`
+        );
+
+        if (label) {
+            attachKeyEvent(label, 13, toggleEditionPicker);
+        }
+    },
+};
+
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
     fastdom.read(() => {
         const button = document.createElement('button');
@@ -273,53 +336,6 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const checkboxClassAttr = checkbox.getAttribute('class');
         const checkboxTabIndex = checkbox.getAttribute('tabindex');
         const dataLinkName = checkbox.getAttribute('data-link-name');
-
-        const menuEl: ?HTMLElement = document.querySelector(
-            '.js-edition-dropdown-menu'
-        );
-        const triggerEl: ?HTMLElement = document.querySelector(
-            '.js-edition-picker-trigger'
-        );
-
-        const buttonClickHandlers = {};
-        const labelKeyHandlers = {};
-
-        const attachKeyEvent = (elem: HTMLElement, eventID: number, action: Function): void => {
-            elem.addEventListener('keyup', event => {
-                if (event.which === eventID) {
-                    action();
-                }
-            });
-        };
-
-        const MENU_TOGGLE_CLASS = 'main-menu-toggle';
-
-        buttonClickHandlers[MENU_TOGGLE_CLASS] = toggleMenu;
-        
-        labelKeyHandlers[MENU_TOGGLE_CLASS] = () => {
-            const label = document.querySelector(`label[for='${MENU_TOGGLE_CLASS}']`);
-
-            if (label) {
-                attachKeyEvent(label, 13, toggleMenu);
-            }
-        };
-
-        if (
-            menuEl &&
-            menuEl instanceof HTMLElement &&
-            triggerEl &&
-            triggerEl instanceof HTMLElement
-        ) {
-            const editionPickerDropdownEls: MenuAndTriggerEls = {
-                menu: menuEl,
-                trigger: triggerEl,
-            };
-
-            buttonClickHandlers['edition-picker-toggle'] = toggleDropdown.bind(
-                null,
-                editionPickerDropdownEls
-            );
-        }
 
         const enhance = () => {
             const eventHandler = buttonClickHandlers[checkboxId];
