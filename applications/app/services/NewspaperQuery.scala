@@ -23,7 +23,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logg
 
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
   private val hrefFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
-  val FRONT_PAGE_DISPLAY_NAME = "front page"
+  val FRONT_PAGE_DISPLAY_NAME = "Front page"
   val pathToTag = Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
 
   def fetchLatestGuardianNewspaper()(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
@@ -77,7 +77,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logg
 
       val bookSectionContainers = orderedBookSections.map { list =>
         val content = list.content.map(c => FaciaContentConvert.contentToFaciaContent(c))
-        bookSectionContainer(Some(list.tag.id), Some(lowercaseDisplayName(list.tag.webTitle)), None, content, orderedBookSections.indexOf(list) + 1, Nil)
+        bookSectionContainer(Some(list.tag.id), Some(list.tag.webTitle), None, content, orderedBookSections.indexOf(list) + 1, Nil)
       }
 
       firstPageContainer :: bookSectionContainers
@@ -134,8 +134,6 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logg
   }
 
   private def getNewspaperPageNumber(content: ApiContent) = content.fields.flatMap(_.newspaperPageNumber)
-
-  def lowercaseDisplayName(s: String): String = if(s.equals("UK news") || s.equals("US news")) s else s.toLowerCase()
 
   def getPastSundayDateFor(date: DateTime): DateTime = {
     if(date.getDayOfWeek != DateTimeConstants.SUNDAY) {
