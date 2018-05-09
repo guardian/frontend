@@ -7,7 +7,6 @@ import { getCookie, addCookie } from 'lib/cookies';
 import config from 'lib/config';
 import { local } from 'lib/storage';
 import ophan from 'ophan/ng';
-import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import type { LinkTargets, Template } from './opt-in-eb-template';
@@ -60,21 +59,6 @@ const shouldDisplayBasedOnRemindMeLaterInterval = (): boolean => {
     return Date.now() > hidAt + remindMeLaterInterval;
 };
 
-const bannerDoesNotCollide = (): Promise<boolean> =>
-    new Promise(resolve => {
-        mediator.on('modules:onwards:breaking-news:ready', breakingShown => {
-            if (breakingShown) {
-                resolve(false);
-            }
-        });
-        mediator.on('membership-message:display', () => {
-            resolve(false);
-        });
-        setTimeout(() => {
-            resolve(true);
-        }, 1000);
-    });
-
 const shouldDisplayBasedOnLocalHasVisitedConsentsFlag = (): boolean =>
     getCookie(HAS_VISITED_CONSENTS_COOKIE_KEY) !== 'true';
 
@@ -88,6 +72,15 @@ const shouldDisplayIfNotAlreadyDismissed = (): boolean =>
     userPrefs.get(messageWasDismissedPref) !== 'true';
 
 const shouldDisplayBasedOnMedium = (): boolean => userVisitedViaNewsletter();
+
+const checkUser = (): Promise<boolean> =>
+    new Promise(decision => {
+        getUserFromApi((user: ApiUser) => {
+            if (user === null || !user.statusFields.hasRepermissioned)
+                decision(true);
+            else decision(false);
+        });
+    });
 
 const getDisplayConditions = (): boolean[] => {
     const basics = [
@@ -124,28 +117,13 @@ const hide = (msg: Message) => {
 };
 
 const canShow = (): Promise<boolean> => {
-    if (userVisitedViaNewsletter()) {
-        addCookie(messageUserUsesNewslettersCookie, 'true');
-    }
-
-    const checkUser = () =>
-        new Promise(decision => {
-            getUserFromApi((user: ApiUser) => {
-                if (user === null || !user.statusFields.hasRepermissioned)
-                    decision(true);
-                else decision(false);
-            });
-        });
-
     const conditions = getDisplayConditions();
 
     if (conditions.some(_ => _ !== true)) {
         return Promise.resolve(false);
     }
 
-    return Promise.all([checkUser(), bannerDoesNotCollide()]).then(
-        asyncConditions => asyncConditions.every(_ => _ === true)
-    );
+    return checkUser();
 };
 
 const show = (): void => {
@@ -186,12 +164,9 @@ const show = (): void => {
     msg.show(html);
 };
 
-const optInEngagementBannerInit = (): Promise<void> =>
-    canShow().then((shouldDisplay: boolean) => {
-        if (shouldDisplay) {
-            show();
-        }
-    });
+if (userVisitedViaNewsletter()) {
+    addCookie(messageUserUsesNewslettersCookie, 'true');
+}
 
 const optInEngagementBanner: Banner = {
     id: 'optInEngagementBanner',

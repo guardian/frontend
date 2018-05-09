@@ -5,7 +5,6 @@ import { getCookie } from 'lib/cookies';
 import { local } from 'lib/storage';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
-import mediator from 'lib/mediator';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import type { Banner } from 'common/modules/ui/bannerPicker';
@@ -32,7 +31,6 @@ const lifeTimeClosesKey = 'sign-in-eb.lifetime-closes';
 const sessionStartedAtKey = 'sign-in-eb.session-started-at';
 const sessionVisitsKey = 'sign-in-eb.session-visits';
 
-const ERR_EXPECTED_NO_BANNER = 'ERR_EXPECTED_NO_BANNER';
 const ERR_MALFORMED_HTML = 'ERR_MALFORMED_HTML';
 
 const halfHourInMs = 30 * 60 * 1000;
@@ -123,24 +121,6 @@ const isInTestVariant = (): boolean => {
     return isInVariant(signInEngagementBannerDisplay, variant);
 };
 
-const bannerDoesNotCollide = (): Promise<boolean> =>
-    new Promise(show => {
-        setTimeout(() => {
-            show(true);
-        }, 1000);
-
-        mediator.on('modules:onwards:breaking-news:ready', breakingShown => {
-            if (!breakingShown) {
-                show(true);
-            } else {
-                show(false);
-            }
-        });
-        mediator.on('membership-message:display', () => {
-            show(false);
-        });
-    });
-
 const hide = (msg: Message) => {
     userPrefs.set(
         lifeTimeClosesKey,
@@ -157,7 +137,6 @@ const canShow = (): Promise<boolean> => {
         hasSeenBannerLessThanFourTimesTotal(),
         isRecurringVisitor(),
         hasReadOver4Articles(),
-        bannerDoesNotCollide(),
         isInTestVariant(),
     ];
 
@@ -194,28 +173,14 @@ const show = (): void => {
     msg.show(makeTemplateHtml(tpl));
 };
 
-const signInEngagementBannerInit = (): Promise<void> =>
-    canShow()
-        .then((shouldDisplay: boolean) => {
-            if (!shouldDisplay) {
-                throw new Error(ERR_EXPECTED_NO_BANNER);
-            }
-        })
-        .then(() => {
-            show();
-        })
-        .catch(err => {
-            if (err.message !== ERR_EXPECTED_NO_BANNER) throw err;
-        });
-
 /* this needs to be a side effect */
 recordSessionVisit();
 
 const signInEngagementBanner: Banner = {
     id: 'signInEngagementBanner',
-    canShow: canShow,
-    show: show,
-}
+    canShow,
+    show,
+};
 
 export {
     signInEngagementBanner,

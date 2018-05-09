@@ -275,7 +275,11 @@ const initialiseEmail = (): void => {
 
 const initialiseBanner = (): void => {
     // ordered by priority
-    const bannerList = [breakingNews, optInEngagementBanner, signInEngagementBanner];
+    const bannerList = [
+        breakingNews,
+        optInEngagementBanner,
+        signInEngagementBanner,
+    ];
     initBannerPicker(bannerList);
 };
 
