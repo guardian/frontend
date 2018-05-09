@@ -43,15 +43,11 @@ class ConfirmButton extends Component<*, *> {
             (classes[this.props.className] = true),
             classes)
         );
-        const props = Object.assign(
-            {},
-            this.props,
-            {
-                onClick: this.confirm.bind(this),
-                className,
-            },
-            this
-        );
+        const props = {
+            'data-link-name': this.props['data-link-name'],
+            onClick: this.confirm.bind(this),
+            className,
+        };
 
         return <button {...props}>{inner}</button>;
     }

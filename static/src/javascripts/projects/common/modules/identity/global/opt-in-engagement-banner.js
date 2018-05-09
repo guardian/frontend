@@ -9,6 +9,8 @@ import { local } from 'lib/storage';
 import ophan from 'ophan/ng';
 import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
+import { isParticipating } from 'common/modules/experiments/utils';
+import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import type { LinkTargets, Template } from './opt-in-eb-template';
 import { makeTemplateHtml } from './opt-in-eb-template';
 
@@ -88,9 +90,14 @@ const shouldDisplayIfNotAlreadyDismissed = (): boolean =>
 
 const shouldDisplayBasedOnMedium = (): boolean => userVisitedViaNewsletter();
 
+/* Test must be running & user must be in variant */
+const shouldDisplayifNotInSignInTestVariant = (): boolean =>
+    !isParticipating(signInEngagementBannerDisplay);
+
 const getDisplayConditions = (): boolean[] => {
     const basics = [
         shouldDisplayBasedOnExperimentFlag(),
+        shouldDisplayifNotInSignInTestVariant(),
         shouldDisplayBasedOnLocalHasVisitedConsentsFlag(),
     ];
 

@@ -15,7 +15,7 @@ import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 import { requestUserSegmentsFromId } from 'common/modules/commercial/user-ad-targeting';
 import { initDonotUseAdblock } from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
-import CommentCount from 'common/modules/discussion/comment-count';
+import { initCommentCount } from 'common/modules/discussion/comment-count';
 import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
@@ -181,7 +181,7 @@ const startRegister = (): void => {
 
 const initDiscussion = (): void => {
     if (config.switches.enableDiscussionSwitch) {
-        CommentCount.init();
+        initCommentCount();
     }
 };
 
