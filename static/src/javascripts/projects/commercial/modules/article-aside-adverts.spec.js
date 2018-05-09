@@ -21,7 +21,7 @@ describe('Article Aside Adverts', () => {
         <div class="js-content-main-column"></div>
         <div class="content__secondary-column js-secondary-column">
             <div class="ad-slot-container">
-                <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,600|fluid"></div>
+                <div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right ad-slot--mpu-banner-ad js-sticky-mpu ad-slot--rendered" data-link-name="ad slot right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>
             </div>
         </div>
     `;
@@ -95,7 +95,7 @@ describe('Article Aside Adverts', () => {
         mediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
-                '1,1|2,2|300,250|300,600|fluid'
+                '1,1|2,2|300,250|300,274|300,600|fluid'
             );
             done();
         });
@@ -107,7 +107,7 @@ describe('Article Aside Adverts', () => {
         mediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).not.toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
-                '1,1|2,2|300,250|fluid'
+                '1,1|2,2|300,250|300,274|fluid'
             );
             done();
         });

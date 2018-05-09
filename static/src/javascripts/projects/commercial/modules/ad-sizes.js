@@ -33,6 +33,7 @@ const adSizes: Object = {
     // dfp proprietary ad sizes
     fluid: getAdSize(0, 0),
     outOfPage: getAdSize(1, 1),
+    googleCard: getAdSize(300, 274),
 
     // guardian proprietary ad sizes
     video: getAdSize(620, 1),

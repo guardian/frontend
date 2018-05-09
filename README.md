@@ -1,4 +1,4 @@
-[![Gitter](https://badges.gitter.im/guardian/frontend.svg)](https://gitter.im/guardian/frontend?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Known Vulnerabilities](https://snyk.io/test/github/guardian/frontend/badge.svg)](https://snyk.io/test/github/guardian/frontend)
 
 ## We're hiring!
 Ever thought about joining us? 

@@ -23,6 +23,7 @@
     @sizeMapping.map { case(breakpoint, sizes) =>
         data-@breakpoint="@sizes.mkString("|")"
     }
+    aria-hidden="true"
     >@placeholderContent
 
 </div>

@@ -45,7 +45,7 @@ export type PrebidSlotLabel =
     | 'article'
     | 'non-article';
 
-export type PrebidBidLabel = 'edn-UK' | 'edn-INT' | 'geo-NA';
+export type PrebidBidLabel = 'edn-UK' | 'edn-INT' | 'geo-NA' | 'deal-FirstLook';
 
 export type PrebidLabel = PrebidSlotLabel | PrebidBidLabel;
 

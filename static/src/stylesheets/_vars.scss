@@ -66,7 +66,6 @@ $mq-breakpoints: (
 // =============================================================================
 
 $guss-column-rule: none;
-$f-serif-headline: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
 
 
 // Colours, take from pasteup/palette
@@ -134,6 +133,8 @@ $garnett-x-large-button-icon: 24px;
 
 $immersive-garnett-main-1: rgba(0, 0, 0, .65);
 $analysis-garnett-underline: #ffbac8;
+
+$garnett-nav-background: #e9eff1;
 
 
 // Tones
@@ -292,9 +293,9 @@ $zindex-ads: 1010;     // Ads
 $zindex-content: 1015; // Modals and overlays inside content
 $zindex-sticky: 1020;  // Sticky header
 $zindex-modal: 1030;   // Search modal
-$zindex-popover: 1040; // Breaking news
 $zindex-overlay: 1050; // Overlays
 $zindex-notifications-permissions-warning: 1060; //Chrome Live Blog notifications
 $zindex-main-menu: 1070; // New header navigation dropdown
 $zindex-sticky-top-banner: 1080;  // Sticky header
-$zindex-lightbox: 1090; // Lightbox
+$zindex-popover: 1090; // Breaking news
+$zindex-lightbox: 1100; // Lightbox

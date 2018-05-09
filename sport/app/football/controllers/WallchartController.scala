@@ -5,7 +5,7 @@ import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{ImplicitControllerExecutionContext, Logging}
 import model.{ApplicationContext, Cached}
-import football.model.CompetitionStage
+import football.model.{CompetitionStage, KnockoutSpider}
 
 class WallchartController(
   competitionsService: CompetitionsService,
@@ -21,7 +21,8 @@ class WallchartController(
         "football",
         s"${competition.fullName} wallchart"
       )
-      val competitionStages = new CompetitionStage(competitionsService.competitions).stagesFromCompetition(competition)
+      val competitionStages = new CompetitionStage(competitionsService.competitions)
+        .stagesFromCompetition(competition, KnockoutSpider.orderings)
 
       Cached(60) {
         if(embed) RevalidatableResult.Ok(football.views.html.wallchart.embed(page, competition, competitionStages))

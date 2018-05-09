@@ -54,21 +54,23 @@ function guardianPolyfilled() {
         }
     }
 
-    while (src = scripts.shift()) {
-        if ('async' in firstScript) { // modern browsers
-            script = document.createElement('script');
-            script.async = false;
-            script.src = src;
-            document.head.appendChild(script);
-        }
-        else if (firstScript.readyState) { // IE<10
-            script = document.createElement('script');
-            pendingScripts.push(script);
-            script.onreadystatechange = stateChange;
-            script.src = src;
-        }
-        else { // fall back to defer
-            document.write('<script src="' + src + '" defer></'+'script>');
+    if (window.location.hash !== '#nojs') {
+        while (src = scripts.shift()) {
+            if ('async' in firstScript) { // modern browsers
+                script = document.createElement('script');
+                script.async = false;
+                script.src = src;
+                document.head.appendChild(script);
+            }
+            else if (firstScript.readyState) { // IE<10
+                script = document.createElement('script');
+                pendingScripts.push(script);
+                script.onreadystatechange = stateChange;
+                script.src = src;
+            }
+            else { // fall back to defer
+                document.write('<script src="' + src + '" defer></'+'script>');
+            }
         }
     }
 })(document, window);

@@ -790,15 +790,6 @@
         &:before {
             display: none;
         }
-
-        .content__dateline {
-            display: block;
-            margin-left: auto;
-
-            @include mq($from: leftCol) {
-                margin: auto;
-            }
-        }
     }
     .drop-cap {
         height: 105px;

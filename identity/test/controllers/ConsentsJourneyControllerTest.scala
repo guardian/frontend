@@ -188,7 +188,7 @@ import scala.concurrent.Future
       "reference the GDPR campaign" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape("Stay with us"))
+        contentAsString(result) should include (xml.Utility.escape("Missing Something?"))
       }
 
       "have consent checkboxes" in new ConsentsJourneyFixture {

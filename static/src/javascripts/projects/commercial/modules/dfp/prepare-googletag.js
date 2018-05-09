@@ -13,7 +13,7 @@ import { buildPageTargeting } from 'common/modules/commercial/build-page-targeti
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { onSlotRender } from 'commercial/modules/dfp/on-slot-render';
 import { onSlotLoad } from 'commercial/modules/dfp/on-slot-load';
-import { onSlotViewable } from 'commercial/modules/dfp/on-slot-viewable';
+import { onSlotViewableFunction } from 'commercial/modules/dfp/on-slot-viewable';
 import { onSlotVisibilityChanged } from 'commercial/modules/dfp/on-slot-visibility-changed';
 import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import { refreshOnResize } from 'commercial/modules/dfp/refresh-on-resize';
@@ -56,9 +56,7 @@ const setDfpListeners = (): void => {
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
 
-    if (config.get('tests.commercialAdRefreshVariant')) {
-        pubads.addEventListener('impressionViewable', onSlotViewable);
-    }
+    pubads.addEventListener('impressionViewable', onSlotViewableFunction());
 
     pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
     if (session.isAvailable()) {
