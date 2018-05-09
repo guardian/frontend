@@ -1,7 +1,7 @@
 // @flow
 import ophan from 'ophan/ng';
 
-type Banner = {
+export type Banner = {
     id: string,
     canShow: () => Promise<boolean>,
     show: () => void,
