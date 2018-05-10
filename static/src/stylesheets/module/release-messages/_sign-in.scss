@@ -96,6 +96,21 @@ $sign-in-eb-vertical-mq: 36em;
     }
 }
 
+.site-message--sign-in__radio {
+    @include fs-textSans(3);
+    display: block;
+    position: relative;
+    padding-left: 1.5em; /*going with native radio buttons here*/
+    padding-top: $sign-in-eb-padding-vertical/2;
+    padding-bottom: $sign-in-eb-padding-vertical/2;
+    input {
+        position: absolute;
+        top: $sign-in-eb-padding-vertical/1.5;
+        left: 0;
+        margin: 0;
+    }
+}
+
 .site-message--sign-in-cta,
 a.site-message--sign-in-cta {
     @include circular;
@@ -113,6 +128,7 @@ a.site-message--sign-in-cta {
     justify-content: space-between;
     box-sizing: border-box;
     position: relative;
+    border: none;
     transition: .25s;
     .inline-icon svg {
         position: absolute;
@@ -135,11 +151,14 @@ a.site-message--sign-in-cta {
 
 .site-message--sign-in__buttons {
     @include sign-in-eb-content-area;
-    display: grid;
-    grid-gap: $gs-gutter/4;
-    grid-template-columns: 1fr 1fr;
+    &:not(.site-message--sign-in__buttons--compact) {
+        display: grid;
+        grid-gap: $gs-gutter/4;
+        grid-template-columns: 1fr 1fr;
+    }
     .site-message--sign-in-cta {
         margin-bottom: $gs-gutter/4;
+        width: 100%;
     }
 }
 
@@ -183,6 +202,7 @@ a.site-message--sign-in__why {
     font-size: 95%;
     list-style: none;
     margin: 0 0 ($sign-in-eb-padding-vertical * 2);
+    border: 0;
     .site-message--sign-in__feature {
         position: relative;
         margin: 0 0 $gs-baseline;

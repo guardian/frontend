@@ -11,24 +11,14 @@ import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 
-import iconComment from 'svgs/icon/comment-16.svg';
-import iconEmail from 'svgs/icon/mail.svg';
-import iconPhone from 'svgs/icon/device.svg';
-
-import type {
-    Template,
-    LinkTargets,
-    Feature,
-} from './sign-in-engagement-banner/template';
-import {
-    makeTemplateHtml,
-    bindableClassNames,
-} from './sign-in-engagement-banner/template';
+import { mainHtml, feedbackHtml } from './sign-in-engagement-banner/content';
 
 const messageCode: string = 'sign-in-30-april';
 const signedInCookie: string = 'GU_U';
 
-const forceDisplayHash: string = 'sign-in-eb-display=true';
+const forceDisplayHash: string = 'sign-in-eb-display=';
+const forceDisplayFeedbackHash: string = `${forceDisplayHash}feedback`;
+const forceDisplaySegueHash: string = `${forceDisplayHash}segue`;
 const lastSeenAtKey: string = 'sign-in-eb.last-seen-at';
 const lifeTimeViewsKey: string = 'sign-in-eb.lifetime-views';
 const lifeTimeClosesKey: string = 'sign-in-eb.lifetime-closes';
@@ -37,18 +27,17 @@ const sessionVisitsKey: string = 'sign-in-eb.session-visits';
 
 const ERR_MALFORMED_HTML: string = 'ERR_MALFORMED_HTML';
 
+const ALERT_FEEDBACK: string = 'alert_feedback';
+const ALERT_MAIN: string = 'alert_main';
+
 const halfHourInMs: number = 30 * 60 * 1000;
 const dayInMs: number = 24 * 60 * 60 * 1000;
 const monthInMs: number = 30 * dayInMs;
 
-const links: LinkTargets = {
-    signIn: `${config.get(
-        'page.idUrl'
-    )}/signin?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
-    register: `${config.get(
-        'page.idUrl'
-    )}/register?cmp=sign-in-eb&utm_campaign=sign-in-eb`,
-    why: 'https://www.theguardian.com/why-sign-in-to-the-guardian',
+const maxLifetimeViews = 4;
+
+const bindableClassNames = {
+    closeBtn: 'js-site-message--sign-in__dismiss',
 };
 
 /* A "session" here is defined as views separated < 30 minutes away from each other */
@@ -61,34 +50,16 @@ const recordSessionVisit = (): void => {
     userPrefs.set(sessionVisitsKey, sessionVisits + 1);
 };
 
-const features: Feature[] = [
-    {
-        icon: iconComment.markup,
-        mainCopy: 'Join the conversation',
-        subCopy: 'and comment on articles',
-    },
-    {
-        icon: iconEmail.markup,
-        mainCopy: 'Get closer to the journalism',
-        subCopy: 'by subscribing to editorial&nbsp;emails',
-    },
-    {
-        icon: iconPhone.markup,
-        mainCopy: 'A consistent experience',
-        subCopy: 'across all of your devices',
-    },
-];
+/* What initial alert to show */
+const getInitialAlertType = (): string =>
+    window.location.hash.includes(forceDisplayFeedbackHash)
+        ? ALERT_FEEDBACK
+        : ALERT_MAIN;
 
-const tpl: Template = {
-    headerMain: ['Enjoy even', 'more', 'from', 'The&nbsp;Guardian'],
-    headerSub: ['Please sign in or register to manage your preferences'],
-    signInCta: 'Sign in',
-    registerCta: 'Register',
-    advantagesCta: 'Why sign in to The Guardian?',
-    closeButton: 'Continue without signing in',
-    features,
-    links,
-};
+/* Should show feedback after? */
+const showFeedbackSegue = (): boolean =>
+    (userPrefs.get(lifeTimeViewsKey) || 0) >= maxLifetimeViews - 1 ||
+    window.location.hash.includes(forceDisplaySegueHash);
 
 /* Is not paid content */
 const isNotPaidContent = (): boolean =>
@@ -96,7 +67,7 @@ const isNotPaidContent = (): boolean =>
 
 /* Must have visited 4 articles */
 const hasReadOver4Articles = (): boolean =>
-    (local.get('gu.alreadyVisited') || 0) >= 4;
+    (local.get('gu.alreadyVisited') || 0) >= maxLifetimeViews;
 
 /* Must be not already signed in */
 const isNotSignedIn = (): boolean => getCookie(signedInCookie) === null;
@@ -180,11 +151,13 @@ const canShow = (): Promise<boolean> => {
     );
 };
 
-const show = (): void => {
-    /* sorry for the side-effects */
-    userPrefs.set(lastSeenAtKey, Date.now());
-    userPrefs.set(lifeTimeViewsKey, (userPrefs.get(lifeTimeViewsKey) || 0) + 1);
+type AlertParams = {
+    displayEvent: string,
+    html: string,
+    onClose: () => void,
+};
 
+const showAlert = (params: AlertParams) => {
     const msg = new Message(messageCode, {
         cssModifierClass: 'sign-in-message',
         trackDisplay: true,
@@ -197,8 +170,8 @@ const show = (): void => {
             ];
             ophan.record({
                 component: 'sign-in-eb',
-                action: 'sign-in-eb : show',
-                value: 'sign-in-eb : show',
+                action: params.displayEvent,
+                value: params.displayEvent,
             });
             trackNonClickInteraction('sign-in-eb : display');
             if (closeButtonEls.length < 1) {
@@ -209,11 +182,36 @@ const show = (): void => {
                 closeButtonEl.addEventListener('click', (ev: MouseEvent) => {
                     ev.preventDefault();
                     hide(msg);
+                    if (params.onClose) {
+                        requestAnimationFrame(() => {
+                            params.onClose();
+                        });
+                    }
                 });
             });
         },
     });
-    msg.show(makeTemplateHtml(tpl));
+    msg.show(params.html);
+};
+
+const show = (): void => {
+    userPrefs.set(lastSeenAtKey, Date.now());
+    userPrefs.set(lifeTimeViewsKey, (userPrefs.get(lifeTimeViewsKey) || 0) + 1);
+
+    const html = getInitialAlertType() === ALERT_MAIN ? mainHtml : feedbackHtml;
+
+    showAlert({
+        displayEvent: 'sign-in-eb : display',
+        html,
+        onClose: () => {
+            if (showFeedbackSegue()) {
+                showAlert({
+                    displayEvent: 'sign-in-eb : display-feedback',
+                    html: feedbackHtml,
+                });
+            }
+        },
+    });
 };
 
 const signInEngagementBannerInit = (): Promise<void> =>
@@ -238,5 +236,6 @@ export {
     lifeTimeViewsKey,
     sessionStartedAtKey,
     lastSeenAtKey,
+    bindableClassNames,
     forceDisplayHash,
 };
