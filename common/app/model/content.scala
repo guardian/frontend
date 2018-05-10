@@ -78,8 +78,7 @@ final case class Content(
   lazy val isGallery = metadata.contentType.contains(DotcomContentType.Gallery)
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
   lazy val isColumn = fields.displayHint.contains("column")
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
-  lazy val isSplash = fields.displayHint.contains("splash")
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay || fields.displayHint.contains("splash")
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
@@ -240,7 +239,6 @@ final case class Content(
     ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else showInRelated && !legallySensitive)),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
-    ("isSplash", JsBoolean(isSplash)),
     ("isColumn", JsBoolean(isColumn)),
     ("isPaidContent", JsBoolean(isPaidContent)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
@@ -450,7 +448,6 @@ object Article {
       ("lightboxImages", lightbox.javascriptConfig),
       ("hasMultipleVideosInPage", JsBoolean(content.hasMultipleVideosInPage)),
       ("isImmersive", JsBoolean(content.isImmersive)),
-      ("isSplash", JsBoolean(content.isSplash)),
       ("isHosted", JsBoolean(false)),
       ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
       ("isColumn", JsBoolean(content.isColumn)),
@@ -518,7 +515,6 @@ final case class Article (
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
-  val isSplash: Boolean = content.isSplash
   val isPhotoEssay: Boolean = content.isPhotoEssay
   val isColumn: Boolean = content.isColumn
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().asScala.headOption
