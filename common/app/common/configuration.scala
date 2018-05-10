@@ -450,6 +450,8 @@ class GuardianConfiguration extends Logging {
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
 
     lazy val expiredPaidContentUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
+
+    lazy val prebidAnalyticsStream = configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
   }
 
   object interactive {
