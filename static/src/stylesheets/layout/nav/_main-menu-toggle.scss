@@ -1,0 +1,49 @@
+button {
+    &#main-menu-toggle {
+        border: none;
+        background: none;
+    
+        span {
+            display: block;
+            height: 100%;
+    
+            &::after {
+                content: '';
+                border: 2px solid currentColor;
+                border-left: transparent;
+                border-top: transparent;
+                display: inline-block;
+                height: 6px;
+                margin-left: 6px;
+                transform: translateY(-3px) rotate(45deg);
+                transition: transform 250ms ease-out;
+                vertical-align: middle;
+                width: 6px;
+            }
+        }
+
+        &:hover {
+            span {
+                &::after {
+                    transform: translateY(0) rotate(45deg);
+                }
+            }
+        }
+
+        .new-header--open & {
+            span {
+                &::after {
+                    transform: translateY(1px) rotate(-135deg);
+                }
+            }
+
+            &:hover {
+                span {
+                    &::after {
+                        transform: translateY(-2px) rotate(-135deg);
+                    }
+                }
+            }
+        }
+    }
+}

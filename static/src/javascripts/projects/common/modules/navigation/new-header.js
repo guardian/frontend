@@ -299,60 +299,55 @@ const toggleEditionPicker = (): void => {
 const MENU_TOGGLE_CLASS = 'main-menu-toggle';
 const EDITION_PICKER_TOGGLE_CLASS = 'edition-picker-toggle';
 
-const buttonClickHandlers = {
-    [MENU_TOGGLE_CLASS]: toggleMenu,
-    [EDITION_PICKER_TOGGLE_CLASS]: toggleEditionPicker,
-};
-
-const ENTER_KEY = 13;
-
-const labelKeyHandlers = {
-    [MENU_TOGGLE_CLASS]: () => {
-        const label = document.querySelector(
-            `label[for='${MENU_TOGGLE_CLASS}']`
-        );
-
-        if (label) {
-            attachKeyEvent(label, ENTER_KEY, toggleMenu);
-        }
+const buttons = {
+    [MENU_TOGGLE_CLASS]: {
+        innerHTML: '<span><span class="u-h">Show </span>More</span>',
+        clickHandler: toggleMenu,
+        classList: [
+            'pillar-link',
+            'pillar-link--dropdown',
+            'pillar-link--sections',
+            'hide-until-desktop',
+        ]
     },
-    [EDITION_PICKER_TOGGLE_CLASS]: () => {
-        const label = document.querySelector(
-            `label[for='${EDITION_PICKER_TOGGLE_CLASS}']`
-        );
-
-        if (label) {
-            attachKeyEvent(label, ENTER_KEY, toggleEditionPicker);
-        }
-    },
-};
+    [EDITION_PICKER_TOGGLE_CLASS]: {
+        innerHTML: displayName => `<span class="u-h">current edition: </span>${displayName}`,
+        clickHandler: toggleEditionPicker,
+        classList: [
+            'top-bar__item',
+            'top-bar__item--dropdown',
+            'js-edition-picker-trigger',
+        ]
+    }
+}
 
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
     fastdom.read(() => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
-        const checkboxClassAttr = checkbox.getAttribute('class');
-        const checkboxTabIndex = checkbox.getAttribute('tabindex');
         const dataLinkName = checkbox.getAttribute('data-link-name');
+        const label = document.querySelector(
+            `label[for='${checkboxId}']`
+        );
 
         const enhance = () => {
-            const eventHandler = buttonClickHandlers[checkboxId];
+            const btnOpts = buttons[checkboxId];
 
-            if (labelKeyHandlers[checkboxId]) {
-                labelKeyHandlers[checkboxId]();
+            if (!btnOpts) {
+                return;
             }
 
-            if (checkboxClassAttr) {
-                button.setAttribute('class', checkboxClassAttr);
-            }
+            const eventHandler = btnOpts.clickHandler;
+            
+            btnOpts.classList.forEach(className => {
+                button.classList.add(className);
+            });
 
-            if (checkboxTabIndex) {
-                button.setAttribute('tabindex', checkboxTabIndex);
-            }
-
-            button.addEventListener('click', () => eventHandler());
             button.setAttribute('id', checkboxId);
+
+            button.addEventListener('click', eventHandler);
+            
             button.setAttribute('aria-expanded', 'false');
 
             if (dataLinkName) {
@@ -361,6 +356,26 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
 
             if (checkboxControls) {
                 button.setAttribute('aria-controls', checkboxControls);
+            }
+
+            if (label) {
+                const labelTabIndex = label.getAttribute('tabindex');
+
+                if (labelTabIndex) {
+                    button.setAttribute('tabindex', labelTabIndex);
+                }
+
+                if (checkboxId === EDITION_PICKER_TOGGLE_CLASS) {
+                    const displayName = label.getAttribute('data-display-name');
+
+                    if (displayName) {
+                        button.innerHTML = btnOpts.innerHTML(displayName);
+                    }
+                } else {
+                    button.innerHTML = btnOpts.innerHTML;
+                }
+
+                label.classList.add('u-h');
             }
 
             if (checkbox.parentNode) {

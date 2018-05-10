@@ -1,0 +1,10 @@
+button {
+    &#edition-picker-toggle {
+        border: none;
+        background: none;
+
+        &::after {
+            margin-left: 5px;
+        }
+    }
+}
