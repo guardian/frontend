@@ -173,7 +173,7 @@ const showAlert = (params: AlertParams) => {
                 action: params.displayEvent,
                 value: params.displayEvent,
             });
-            trackNonClickInteraction('sign-in-eb : display');
+            trackNonClickInteraction(params.displayEvent);
             if (closeButtonEls.length < 1) {
                 hide(msg);
                 throw new Error(ERR_MALFORMED_HTML);
