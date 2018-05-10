@@ -88,7 +88,7 @@ $sign-in-eb-vertical-mq: 36em;
             margin: 0 $sign-in-eb-padding*2.8 0 0; /*close button*/
         }
         &.site-message--sign-in__header-msg--sub {
-            line-height: 1;
+            line-height: 1.1;
             font-weight: 100;
             font-size: 120%;
             padding: ($gs-gutter * .5) 0 $gs-gutter;
