@@ -423,7 +423,7 @@ trait CommercialSwitches {
     description = "Include a flag with consent status in ad calls.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 6),
+    sellByDate = new LocalDate(2018, 5, 25),
     exposeClientSide = true
   )
 }
