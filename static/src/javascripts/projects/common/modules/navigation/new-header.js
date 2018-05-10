@@ -295,12 +295,12 @@ const buttons = {
                     <span class=" hide-from-desktop veggie-burger">
                         <span class="veggie-burger__icon"></span>
                     </span>`,
-        clickHandler: toggleMenu
+        clickHandler: toggleMenu,
     },
     [EDITION_PICKER_TOGGLE_CLASS]: {
         innerHTML: displayName =>
             `<span class="u-h">current edition: </span>${displayName}`,
-        clickHandler: toggleEditionPicker
+        clickHandler: toggleEditionPicker,
     },
 };
 
@@ -310,7 +310,9 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
         const dataLinkName = checkbox.getAttribute('data-link-name');
-        const label: ?HTMLElement = document.querySelector(`label[for='${checkboxId}']`);
+        const label: ?HTMLElement = document.querySelector(
+            `label[for='${checkboxId}']`
+        );
 
         const enhance = () => {
             const btnOpts = buttons[checkboxId];
