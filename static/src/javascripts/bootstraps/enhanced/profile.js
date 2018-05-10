@@ -16,6 +16,7 @@ import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
 import { initHeader } from 'common/modules/identity/header';
 import { initUserAvatars } from 'common/modules/discussion/user-avatars';
 import { init as initTabs } from 'common/modules/ui/tabs';
+import { enhanceAdPrefs } from "common/modules/identity/ad-prefs";
 
 const initFormstack = (): void => {
     const attr = 'data-formstack-id';
@@ -59,6 +60,7 @@ const initProfile = (): void => {
         ['setup-loading-animation', setupLoadingAnimation],
         ['init-public-profile', initPublicProfile],
         ['enhance-consents', enhanceConsents],
+        ['enhance-ad-prefs', enhanceAdPrefs],
         ['enhance-form-ajax', enhanceFormAjax],
         ['enhance-consent-journey', enhanceConsentJourney],
         ['init-header', initHeader],

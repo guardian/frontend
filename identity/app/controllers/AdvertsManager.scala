@@ -39,7 +39,7 @@ class AdvertsManager(
   def renderAdvertsManager(returnUrl: Option[String]): Action[AnyContent] = Action { implicit request =>
     Ok(
       IdentityHtmlPage.html(
-        content = Html("Hello")
+        content = views.html.advertsManager()
       )(page, request, context)
     )
   }
