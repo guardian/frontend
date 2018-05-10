@@ -57,6 +57,14 @@ $sign-in-eb-vertical-mq: 36em;
     .site-message__copy {
         padding: 0;
     }
+    hr {
+        border: 0;
+        background: darken($garnett-neutral-4, 10%);
+        height: 1px;
+        display: block;
+        margin-top: $sign-in-eb-padding-vertical * 1.75;
+        margin-left: $sign-in-eb-padding;
+    }
 }
 
 .site-message--sign-in-container {
@@ -67,18 +75,15 @@ $sign-in-eb-vertical-mq: 36em;
     }
 }
 
-.site-message--sign-in__header {
+.site-message.site-message--sign-in-message .site-message--sign-in__header {
     @include f-headline;
     @include sign-in-eb-content-area;
     position: relative;
-    &:after {
-        content: '';
-        background: darken($garnett-neutral-4, 10%);
-        position: absolute;
-        height: 1px;
-        bottom: 0;
-        right: 0;
-        left: $sign-in-eb-padding;
+    hr {
+        margin-left: 0;
+        margin-right: $sign-in-eb-padding * -1;
+        margin-bottom: 0;
+        margin-top: $sign-in-eb-padding-vertical * 2;
     }
     .site-message--sign-in__header-msg {
         &.site-message--sign-in__header-msg--main {
@@ -91,7 +96,7 @@ $sign-in-eb-vertical-mq: 36em;
             line-height: 1.1;
             font-weight: 100;
             font-size: 120%;
-            padding: ($gs-gutter * .5) 0 $gs-gutter;
+            padding: $sign-in-eb-padding-vertical 0;
         }
     }
 }

@@ -32,6 +32,7 @@ export const makeTemplateHtml = (tpl: MainTemplate): string => `
                 'site-message--sign-in__header-msg-line'
             )}</p>
         </div>
+        <hr />
         <ul class="site-message--sign-in__body">
             ${tpl.features
                 .map(

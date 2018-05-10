@@ -15,6 +15,7 @@ export const makeTemplateHtml = (tpl: FeedbackTemplate): string => `
             <h2 class="site-message--sign-in__header-msg site-message--sign-in__header-msg--main">${
                 tpl.headerMain
             }</h2>
+            <hr />
             <p class="site-message--sign-in__header-msg site-message--sign-in__header-msg--sub">${
                 tpl.headerSub
             }</p>
