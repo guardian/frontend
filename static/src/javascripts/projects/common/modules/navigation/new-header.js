@@ -265,18 +265,6 @@ const initiateUserAccountDropdown = (): void => {
         });
 };
 
-const attachKeyEvent = (
-    elem: HTMLElement,
-    eventID: number,
-    action: () => void
-): void => {
-    elem.addEventListener('keyup', (event: Event): void => {
-        if (event.which === eventID) {
-            action();
-        }
-    });
-};
-
 const toggleEditionPicker = (): void => {
     const menu: ?HTMLElement = document.querySelector(
         '.js-edition-dropdown-menu'
@@ -308,18 +296,19 @@ const buttons = {
             'pillar-link--dropdown',
             'pillar-link--sections',
             'hide-until-desktop',
-        ]
+        ],
     },
     [EDITION_PICKER_TOGGLE_CLASS]: {
-        innerHTML: displayName => `<span class="u-h">current edition: </span>${displayName}`,
+        innerHTML: displayName =>
+            `<span class="u-h">current edition: </span>${displayName}`,
         clickHandler: toggleEditionPicker,
         classList: [
             'top-bar__item',
             'top-bar__item--dropdown',
             'js-edition-picker-trigger',
-        ]
-    }
-}
+        ],
+    },
+};
 
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
     fastdom.read(() => {
@@ -327,9 +316,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
         const dataLinkName = checkbox.getAttribute('data-link-name');
-        const label = document.querySelector(
-            `label[for='${checkboxId}']`
-        );
+        const label = document.querySelector(`label[for='${checkboxId}']`);
 
         const enhance = () => {
             const btnOpts = buttons[checkboxId];
@@ -339,7 +326,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
             }
 
             const eventHandler = btnOpts.clickHandler;
-            
+
             btnOpts.classList.forEach(className => {
                 button.classList.add(className);
             });
@@ -347,7 +334,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
             button.setAttribute('id', checkboxId);
 
             button.addEventListener('click', eventHandler);
-            
+
             button.setAttribute('aria-expanded', 'false');
 
             if (dataLinkName) {
