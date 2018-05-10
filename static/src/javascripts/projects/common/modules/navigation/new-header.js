@@ -342,6 +342,8 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
                     button.classList.add(className);
                 });
 
+                button.classList.add(`${checkboxId}-button`);
+
                 const labelTabIndex = label.getAttribute('tabindex');
 
                 if (labelTabIndex) {
@@ -358,7 +360,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
                     button.innerHTML = btnOpts.innerHTML;
                 }
 
-                label.classList.add('u-h');
+                label.remove();
             }
 
             if (checkbox.parentNode) {
