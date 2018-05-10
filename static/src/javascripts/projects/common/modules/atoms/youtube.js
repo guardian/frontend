@@ -26,26 +26,26 @@ declare class YoutubePlayerEvent {
 const players = {};
 const iframes = [];
 
-document.addEventListener('focusout', function () {
+document.addEventListener('focusout', () => {
     iframes.forEach(iframe => {
-        fastdom.read(() => {
-            if (document.activeElement === iframe) {
-                return $('.vjs-big-play-button', iframe.parentElement)
-            }
-        }).then(($playButton: ?bonzo) => {
-            fastdom.write(() => {
-                if ($playButton) {
-                    $playButton.addClass('youtube-play-btn-focussed');
+        fastdom
+            .read(() => {
+                if (document.activeElement === iframe) {
+                    return $('.vjs-big-play-button', iframe.parentElement);
                 }
+            })
+            .then(($playButton: ?bonzo) => {
+                fastdom.write(() => {
+                    if ($playButton) {
+                        $playButton.addClass('youtube-play-btn-focussed');
+                    }
+                });
             });
-        });
     });
 });
 
-document.addEventListener('focusin', function () {
-    fastdom.read(() => {
-        return $('.vjs-big-play-button');
-    }).then(($playButton: bonzo) => {
+document.addEventListener('focusin', () => {
+    fastdom.read(() => $('.vjs-big-play-button')).then(($playButton: bonzo) => {
         fastdom.write(() => {
             if ($playButton) {
                 $playButton.removeClass('youtube-play-btn-focussed');
@@ -238,7 +238,7 @@ const onPlayerReady = (
         players[atomId].overlay = overlay;
 
         if (
-            !!config.page.section &&
+            !!config.get('page.section') &&
             isBreakpoint({
                 min: 'desktop',
             })
