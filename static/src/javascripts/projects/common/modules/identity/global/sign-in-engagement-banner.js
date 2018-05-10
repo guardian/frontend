@@ -192,22 +192,24 @@ const show = (): void => {
         blocking: true,
         siteMessageComponentName: messageCode,
         customJs: () => {
-            const closeButtonEl: ?HTMLElement = document.querySelector(
-                `.${bindableClassNames.closeBtn}`
-            );
+            const closeButtonEls: HTMLElement[] = [
+                ...document.querySelectorAll(`.${bindableClassNames.closeBtn}`),
+            ];
             ophan.record({
                 component: 'sign-in-eb',
                 action: 'sign-in-eb : show',
                 value: 'sign-in-eb : show',
             });
             trackNonClickInteraction('sign-in-eb : display');
-            if (!closeButtonEl) {
+            if (closeButtonEls.length < 1) {
                 hide(msg);
                 throw new Error(ERR_MALFORMED_HTML);
             }
-            closeButtonEl.addEventListener('click', (ev: MouseEvent) => {
-                ev.preventDefault();
-                hide(msg);
+            closeButtonEls.forEach(closeButtonEl => {
+                closeButtonEl.addEventListener('click', (ev: MouseEvent) => {
+                    ev.preventDefault();
+                    hide(msg);
+                });
             });
         },
     });

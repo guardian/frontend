@@ -26,7 +26,7 @@ type Template = {
 };
 
 const bindableClassNames = {
-    closeBtn: 'site-message--sign-in__dismiss',
+    closeBtn: 'js-site-message--sign-in__dismiss',
 };
 
 const wrapLineBreakingString = (text: string[], className: string): string =>
@@ -41,6 +41,9 @@ const wrapLineBreakingString = (text: string[], className: string): string =>
         .join('');
 
 const makeTemplateHtml = (tpl: Template): string => `
+<div data-link-name="sign-in-eb : dismiss" class="site-message--sign-in__overlay ${
+    bindableClassNames.closeBtn
+}"></div>
 <div id="site-message__message" class="site-message--sign-in-container">
     <section class="site-message__message site-message__message--sign-in">
         <div class="site-message--sign-in__header">
@@ -98,7 +101,7 @@ const makeTemplateHtml = (tpl: Template): string => `
         `
                 : ''
         }
-        <button data-link-name="sign-in-eb : close" class="${
+        <button data-link-name="sign-in-eb : close" class="site-message--sign-in__dismiss ${
             bindableClassNames.closeBtn
         }">
             <span class="u-h">${tpl.closeButton}</span>
