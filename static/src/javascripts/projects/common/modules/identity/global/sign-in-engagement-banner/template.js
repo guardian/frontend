@@ -33,6 +33,7 @@ type FeedbackTemplate = {
     headerSub: string,
     reasonsWhy: DismissalReason[],
     submitCta: string,
+    closeButton: string,
 };
 
 const bindableClassNames = {

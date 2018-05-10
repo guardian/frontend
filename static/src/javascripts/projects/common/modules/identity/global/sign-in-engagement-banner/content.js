@@ -82,6 +82,7 @@ const feedbackTpl: FeedbackTemplate = {
     headerMain: 'Please leave feedback to help us improve',
     headerSub: `I don't want to sign in or register because:`,
     reasonsWhy: feedbackDismissalReasons,
+    closeButton: 'Close',
     submitCta: 'Submit your feedback',
 };
 

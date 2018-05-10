@@ -3,8 +3,9 @@ import arrowRight from 'svgs/icon/arrow-right.svg';
 import close from 'svgs/icon/close.svg';
 
 import { bindableClassNames } from './template';
+import type { FeedbackTemplate } from './template';
 
-export const makeTemplateHtml = (tpl: Template): string => `
+export const makeTemplateHtml = (tpl: FeedbackTemplate): string => `
 <div data-link-name="sign-in-eb : feedback-dismiss" class="site-message--sign-in__overlay ${
     bindableClassNames.closeBtn
 }"></div>

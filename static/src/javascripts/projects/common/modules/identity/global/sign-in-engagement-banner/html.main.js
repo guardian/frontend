@@ -3,6 +3,7 @@ import arrowRight from 'svgs/icon/arrow-right.svg';
 import close from 'svgs/icon/close.svg';
 
 import { bindableClassNames } from './template';
+import type { MainTemplate, Feature } from './template';
 
 const wrapLineBreakingString = (text: string[], className: string): string =>
     text
@@ -15,7 +16,7 @@ const wrapLineBreakingString = (text: string[], className: string): string =>
         )
         .join('');
 
-export const makeTemplateHtml = (tpl: Template): string => `
+export const makeTemplateHtml = (tpl: MainTemplate): string => `
 <div data-link-name="sign-in-eb : dismiss" class="site-message--sign-in__overlay ${
     bindableClassNames.closeBtn
 }"></div>

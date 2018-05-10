@@ -154,10 +154,11 @@ const canShow = (): Promise<boolean> => {
 type AlertParams = {
     displayEvent: string,
     html: string,
-    onClose: () => void,
+    onClose?: () => void,
 };
 
 const showAlert = (params: AlertParams) => {
+    if (!params) throw new Error(ERR_MALFORMED_HTML);
     const msg = new Message(messageCode, {
         cssModifierClass: 'sign-in-message',
         trackDisplay: true,
@@ -182,11 +183,11 @@ const showAlert = (params: AlertParams) => {
                 closeButtonEl.addEventListener('click', (ev: MouseEvent) => {
                     ev.preventDefault();
                     hide(msg);
-                    if (params.onClose) {
-                        requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        if (params.onClose) {
                             params.onClose();
-                        });
-                    }
+                        }
+                    });
                 });
             });
         },
