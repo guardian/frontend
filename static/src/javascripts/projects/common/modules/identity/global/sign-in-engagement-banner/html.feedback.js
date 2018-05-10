@@ -5,7 +5,7 @@ import close from 'svgs/icon/close.svg';
 import { bindableClassNames } from './template';
 
 export const makeTemplateHtml = (tpl: Template): string => `
-<div data-link-name="sign-in-eb : dismiss" class="site-message--sign-in__overlay ${
+<div data-link-name="sign-in-eb : feedback-dismiss" class="site-message--sign-in__overlay ${
     bindableClassNames.closeBtn
 }"></div>
 <div id="site-message__message" class="site-message--sign-in-container">
@@ -24,9 +24,10 @@ export const makeTemplateHtml = (tpl: Template): string => `
                 .map(
                     reason => `
                 <label class="site-message--sign-in__radio">
-                    <input type="radio" name="sign-in-eb-reason-why" value="${
+                    <input type="radio" name="sign-in-eb-reason-why" data-link-name="sign-in-eb : feedback-response : ${
                         reason.key
-                    }" />
+                    }" 
+                    value="${reason.key}" />
                     <span>${reason.label}</span>
                 </label>
             `
@@ -34,14 +35,14 @@ export const makeTemplateHtml = (tpl: Template): string => `
                 .join('')}
         </fieldset>
         <div class="site-message--sign-in__buttons site-message--sign-in__buttons--compact">
-            <button data-link-name="sign-in-eb : success : to-sign-in" class="site-message--sign-in-cta site-message--sign-in-cta--main ${
+            <button data-link-name="sign-in-eb : feedback-submit" class="site-message--sign-in-cta site-message--sign-in-cta--main ${
                 bindableClassNames.closeBtn
             }">
                 ${tpl.submitCta}
                 ${arrowRight.markup}
             </a>
         </div>
-        <button data-link-name="sign-in-eb : close" class="site-message--sign-in__dismiss ${
+        <button data-link-name="sign-in-eb : feedback-close" class="site-message--sign-in__dismiss ${
             bindableClassNames.closeBtn
         }">
             <span class="u-h">${tpl.closeButton}</span>
