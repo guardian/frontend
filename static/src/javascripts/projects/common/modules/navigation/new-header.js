@@ -289,24 +289,18 @@ const EDITION_PICKER_TOGGLE_CLASS = 'edition-picker-toggle';
 
 const buttons = {
     [MENU_TOGGLE_CLASS]: {
-        innerHTML: '<span><span class="u-h">Show </span>More</span>',
-        clickHandler: toggleMenu,
-        classList: [
-            'pillar-link',
-            'pillar-link--dropdown',
-            'pillar-link--sections',
-            'hide-until-desktop',
-        ],
+        innerHTML: `<span class="hide-until-desktop pillar-link pillar-link--dropdown pillar-link--sections">
+                        <span class="u-h">Show </span>More</span>
+                    </span>
+                    <span class=" hide-from-desktop veggie-burger">
+                        <span class="veggie-burger__icon"></span>
+                    </span>`,
+        clickHandler: toggleMenu
     },
     [EDITION_PICKER_TOGGLE_CLASS]: {
         innerHTML: displayName =>
             `<span class="u-h">current edition: </span>${displayName}`,
-        clickHandler: toggleEditionPicker,
-        classList: [
-            'top-bar__item',
-            'top-bar__item--dropdown',
-            'js-edition-picker-trigger',
-        ],
+        clickHandler: toggleEditionPicker
     },
 };
 
@@ -325,13 +319,9 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
                 return;
             }
 
-            const eventHandler = btnOpts.clickHandler;
-
-            btnOpts.classList.forEach(className => {
-                button.classList.add(className);
-            });
-
             button.setAttribute('id', checkboxId);
+
+            const eventHandler = btnOpts.clickHandler;
 
             button.addEventListener('click', eventHandler);
 
@@ -346,6 +336,10 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
             }
 
             if (label) {
+                label.classList.forEach(className => {
+                    button.classList.add(className);
+                });
+
                 const labelTabIndex = label.getAttribute('tabindex');
 
                 if (labelTabIndex) {
