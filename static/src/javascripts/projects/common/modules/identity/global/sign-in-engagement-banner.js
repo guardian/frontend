@@ -58,7 +58,7 @@ const getInitialAlertType = (): string =>
 
 /* Should show feedback after? */
 const showFeedbackSegue = (): boolean =>
-    (userPrefs.get(lifeTimeViewsKey) || 0) >= maxLifetimeViews - 1 ||
+    (userPrefs.get(lifeTimeViewsKey) || 0) >= maxLifetimeViews ||
     window.location.hash.includes(forceDisplaySegueHash);
 
 /* Is not paid content */
@@ -67,14 +67,14 @@ const isNotPaidContent = (): boolean =>
 
 /* Must have visited 4 articles */
 const hasReadOver4Articles = (): boolean =>
-    (local.get('gu.alreadyVisited') || 0) >= maxLifetimeViews;
+    (local.get('gu.alreadyVisited') || 0) >= 4;
 
 /* Must be not already signed in */
 const isNotSignedIn = (): boolean => getCookie(signedInCookie) === null;
 
 /* Must be shown only 4 times total */
 const hasSeenBannerLessThanFourTimesTotal = (): boolean =>
-    (userPrefs.get(lifeTimeViewsKey) || 0) < 4;
+    (userPrefs.get(lifeTimeViewsKey) || 0) <= maxLifetimeViews;
 
 /* Must be shown only once every 2 days */
 const hasSeenBannerOnceInLastTwoDays = (): boolean =>
@@ -237,5 +237,5 @@ export {
     sessionStartedAtKey,
     lastSeenAtKey,
     bindableClassNames,
-    forceDisplayHash,
+    showFeedbackSegue,
 };
