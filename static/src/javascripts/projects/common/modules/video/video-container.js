@@ -166,6 +166,7 @@ const update = (state: State, container: Element): Promise<number> => {
             activeEl.classList.remove('video-playlist__item--active');
             $('.youtube-media-atom__iframe', activeEl).hide();
             $('.video-overlay .fc-item__link', activeEl).attr('tabindex', '-1');
+            $('.video-overlay .fc-item__link', activeEl).attr('aria-hidden', 'true');
         }
 
         const newActive = container.querySelector(
@@ -178,6 +179,9 @@ const update = (state: State, container: Element): Promise<number> => {
             $('.video-overlay .fc-item__link', newActive).removeAttr(
                 'tabindex'
             );
+            $('.video-overlay .fc-item__link', newActive).removeAttr(
+                'aria-hidden'
+            );
         }
 
         container.classList.remove(
@@ -188,10 +192,14 @@ const update = (state: State, container: Element): Promise<number> => {
         if (state.atStart) {
             container.classList.add('video-playlist--start');
             $('.video-title__link', container).removeAttr('tabindex');
+            $('.video-title__link', container).removeAttr('aria-hidden');
             $('.treats__treat', container).removeAttr('tabindex');
+            $('.treats__treat', container).removeAttr('aria-hidden');
         } else {
             $('.video-title__link', container).attr('tabindex', '-1');
+            $('.video-title__link', container).attr('aria-hidden', 'true');
             $('.treats__treat', container).attr('tabindex', '-1');
+            $('.treats__treat', container).attr('aria-hidden', 'true');
         }
 
         if (state.atEnd) {
@@ -311,5 +319,6 @@ export const videoContainerInit = (container: Element) => {
     $('.video-playlist__item:not(.video-playlist__item--first)').each($el => {
         $('.youtube-media-atom__iframe', $el).hide();
         $('.video-overlay .fc-item__link', $el).attr('tabindex', '-1');
+        $('.video-overlay .fc-item__link', $el).attr('aria-hidden', 'true');
     });
 };
