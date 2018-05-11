@@ -88,6 +88,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
                 minAbove: 35,
                 minBelow: 400,
             },
+            ' figure.element--immersive': {
+                minAbove: 0,
+                minBelow: 600,
+            },
         },
         filter: filterNearbyCandidates(adSizes.mpu.height),
     };
@@ -99,6 +103,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
         minBelow: 800,
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
+            ' figure.element--immersive': {
+                minAbove: 0,
+                minBelow: 600,
+            },
         },
         filter: filterNearbyCandidates(adSizes.halfPage.height),
     };
