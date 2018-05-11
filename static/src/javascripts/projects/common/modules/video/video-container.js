@@ -175,7 +175,9 @@ const update = (state: State, container: Element): Promise<number> => {
         if (newActive != null) {
             newActive.classList.add('video-playlist__item--active');
             $('.youtube-media-atom__iframe', newActive).show();
-            $('.video-overlay .fc-item__link', newActive).removeAttr('tabindex');
+            $('.video-overlay .fc-item__link', newActive).removeAttr(
+                'tabindex'
+            );
         }
 
         container.classList.remove(
@@ -234,7 +236,7 @@ const setupDispatches = (
         });
     });
 
-    bean.on(container, 'keypress', '.js-video-playlist-next', (e) => {
+    bean.on(container, 'keypress', '.js-video-playlist-next', e => {
         e.preventDefault();
         if (e.key === ' ' || e.key === 'Enter') {
             dispatch({
@@ -249,7 +251,7 @@ const setupDispatches = (
         });
     });
 
-    bean.on(container, 'keypress', '.js-video-playlist-prev', (e) => {
+    bean.on(container, 'keypress', '.js-video-playlist-prev', e => {
         e.preventDefault();
         if (e.key === ' ' || e.key === 'Enter') {
             dispatch({
@@ -306,7 +308,7 @@ export const videoContainerInit = (container: Element) => {
         update(store.getState(), container);
     });
 
-    $('.video-playlist__item:not(.video-playlist__item--first)').each(($el) => {
+    $('.video-playlist__item:not(.video-playlist__item--first)').each($el => {
         $('.youtube-media-atom__iframe', $el).hide();
         $('.video-overlay .fc-item__link', $el).attr('tabindex', '-1');
     });
