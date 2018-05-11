@@ -292,16 +292,14 @@ const buttonClickHandlers = {
     [EDITION_PICKER_TOGGLE_CLASS]: toggleEditionPicker,
 };
 
-const ESC_KEY_ID = 27;
-
 const menuKeyHandlers = {
-    [MENU_TOGGLE_CLASS]: (event: Event): void => {
-        if (event.keyCode === ESC_KEY_ID) {
+    [MENU_TOGGLE_CLASS]: (event: KeyboardEvent): void => {
+        if (event.key === 'Escape') {
             toggleMenu();
         }
     },
-    [EDITION_PICKER_TOGGLE_CLASS]: (event: Event): void => {
-        if (event.keyCode === ESC_KEY_ID) {
+    [EDITION_PICKER_TOGGLE_CLASS]: (event: KeyboardEvent): void => {
+        if (event.key === 'Escape') {
             toggleEditionPicker();
         }
     },
