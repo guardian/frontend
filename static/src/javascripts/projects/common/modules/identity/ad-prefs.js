@@ -8,11 +8,20 @@ import {
     setProviderState,
     adProviders,
 } from './ad-prefs.lib';
+import type { AdProvider } from './ad-prefs.lib';
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
 
-class ConsentRadioButton extends Component<*, *> {
-    handleChange(event) {
+type ConsentRadioButtonProps = {
+    value: string,
+    label: string,
+    checked: boolean,
+    provider: AdProvider,
+    onToggle: () => void,
+};
+
+class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
+    handleChange(event): void {
         if (event.target.checked) {
             this.props.onToggle();
         }
@@ -41,7 +50,10 @@ class ConsentRadioButton extends Component<*, *> {
     }
 }
 
-class ConsentBox extends Component<*, *> {
+class ConsentBox extends Component<
+    { provider: AdProvider },
+    { providerState: ?boolean }
+> {
     constructor(props) {
         super(props);
         this.state = {
@@ -49,7 +61,7 @@ class ConsentBox extends Component<*, *> {
         };
     }
 
-    setProviderState(state: boolean) {
+    setProviderState(state: boolean): void {
         setProviderState(this.props.provider.id, state);
         this.setState({
             providerState: getProviderState(this.props.provider.id),
@@ -65,14 +77,14 @@ class ConsentBox extends Component<*, *> {
                 <div>
                     <ConsentRadioButton
                         label="Turn on"
-                        value
+                        value="true"
                         checked={this.state.providerState === true}
                         provider={this.props.provider}
                         onToggle={() => this.setProviderState(true)}
                     />
                     <ConsentRadioButton
                         label="Turn off"
-                        value={false}
+                        value="false"
                         checked={this.state.providerState === false}
                         provider={this.props.provider}
                         onToggle={() => this.setProviderState(false)}
@@ -83,7 +95,7 @@ class ConsentBox extends Component<*, *> {
     }
 }
 
-class ConsentBoxes extends Component<*, *> {
+class ConsentBoxes extends Component<{}, {}> {
     render() {
         return (
             <div>
