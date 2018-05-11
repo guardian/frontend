@@ -1,27 +1,7 @@
-@import views.support.fragment.Switch.AdvertSwitch
-@import controllers.AdvertProvider
 @(
     returnUrl : String,
-    providers: Seq[AdvertProvider],
     idUrlBuilder: services.IdentityUrlBuilder
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
-
-@providerCheckbox(provider:AdvertProvider) = {
-    <li>
-        <label class="manage-account__switch" data-link-name-template="mma switch : adverts : @provider.id [action]">
-            <div class="manage-account__switch-content">
-                <input type="checkbox" name="@provider.id">
-                <div class="manage-account__switch-checkbox"></div>
-                <h3 class="manage-account__switch-title">
-                    Personalise adverts from @provider.name
-                </h3>
-                <p class="manage-account__switch-copy">
-                    Get personalised ads from @provider.name.
-                </p>
-            </div>
-        </label>
-    </li>
-}
 
 <div class="identity-wrapper-header">
     <div class="identity-wrapper monocolumn-wrapper">
@@ -39,12 +19,8 @@
 
         <div class="fieldset__fields">
             <p class="identity-title-explainer">Google uses personalisation to deliver better ads. Unticking this will not reduce the number of ads in The Guardian but it will make them less relevant to your interests</p>
-            <form novalidate>
-                <div class="manage-account__switches manage-account__switches--single-column js-manage-account__ad-prefs is-hidden">
-                    <ul>
-                        @{providers.map(provider=>providerCheckbox(provider))}
-                    </ul>
-                </div>
+            <form class="js-manage-account__ad-prefs is-hidden">
+                <span>Loading</span>
             </form>
             <noscript>
                 Javascript is required to edit your advert preferences

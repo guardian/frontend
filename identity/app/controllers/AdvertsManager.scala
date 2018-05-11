@@ -12,16 +12,9 @@ import play.api.data.validation.Constraints
 import play.api.http.HttpConfiguration
 import play.api.i18n.{Messages, MessagesProvider}
 import play.api.mvc._
-import play.twirl.api.Html
 import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
 import utils.SafeLogging
 
-import scala.concurrent.Future
-
-case class AdvertProvider (
-  name: String,
-  id: String
-)
 
 class AdvertsManager(
     returnUrlVerifier: ReturnUrlVerifier,
@@ -46,15 +39,9 @@ class AdvertsManager(
     val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
     val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
 
-    val advertProviders = Seq(
-      AdvertProvider(
-        name="Google",id="google"
-      )
-    )
-
     Ok(
       IdentityHtmlPage.html(
-        content = views.html.advertsManager(verifiedReturnUrl,advertProviders,idUrlBuilder)
+        content = views.html.advertsManager(verifiedReturnUrl,idUrlBuilder)
       )(page, request, context)
     )
   }

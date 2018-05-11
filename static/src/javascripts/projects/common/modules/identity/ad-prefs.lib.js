@@ -2,6 +2,18 @@
 
 import { addCookie, getCookie } from 'lib/cookies';
 
+type AdProvider = {
+    id: string,
+    label: string,
+};
+
+const adProviders: AdProvider[] = [
+    {
+        label: 'Google',
+        id: 'google',
+    },
+];
+
 const cleanup = (str: string) =>
     str
         .replace(/ /g, '_')
@@ -16,10 +28,16 @@ const setProviderState = (provider: string, state: boolean): void => {
 };
 
 const getProviderState = (provider: string): ?boolean => {
-    const cookie = getCookie(getProviderCookieName(provider))
-    if(cookie === 'true') return true;
-    if(cookie === 'false') return false;
+    const cookie = getCookie(getProviderCookieName(provider));
+    if (cookie === 'true') return true;
+    if (cookie === 'false') return false;
     return null;
-}
+};
 
-export { setProviderState, getProviderState, getProviderCookieName };
+export type { AdProvider };
+export {
+    setProviderState,
+    getProviderState,
+    getProviderCookieName,
+    adProviders,
+};
