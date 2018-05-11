@@ -208,23 +208,6 @@ const toggleMenu = (): void => {
     fastdom.write(update);
 };
 
-const initiateUserAccountDropdown = (): void => {
-    fastdom
-        .read(() => ({
-            menu: document.querySelector('.js-user-account-dropdown-menu'),
-            trigger: document.querySelector('.js-user-account-trigger'),
-        }))
-        .then((userAccountDropdownEls: MenuAndTriggerEls) => {
-            const button = userAccountDropdownEls.trigger;
-
-            if (button && button instanceof HTMLButtonElement) {
-                button.addEventListener('click', () =>
-                    toggleDropdown(userAccountDropdownEls)
-                );
-            }
-        });
-};
-
 const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     const openClass = 'dropdown-menu--open';
 
@@ -265,6 +248,23 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     });
 };
 
+const initiateUserAccountDropdown = (): void => {
+    fastdom
+        .read(() => ({
+            menu: document.querySelector('.js-user-account-dropdown-menu'),
+            trigger: document.querySelector('.js-user-account-trigger'),
+        }))
+        .then((userAccountDropdownEls: MenuAndTriggerEls) => {
+            const button = userAccountDropdownEls.trigger;
+
+            if (button && button instanceof HTMLButtonElement) {
+                button.addEventListener('click', () =>
+                    toggleDropdown(userAccountDropdownEls)
+                );
+            }
+        });
+};
+
 const toggleEditionPicker = (): void => {
     const menu: ?HTMLElement = document.querySelector(
         '.js-edition-dropdown-menu'
@@ -287,13 +287,9 @@ const toggleEditionPicker = (): void => {
 const MENU_TOGGLE_CLASS = 'main-menu-toggle';
 const EDITION_PICKER_TOGGLE_CLASS = 'edition-picker-toggle';
 
-const buttons = {
-    [MENU_TOGGLE_CLASS]: {
-        clickHandler: toggleMenu
-    },
-    [EDITION_PICKER_TOGGLE_CLASS]: {
-        clickHandler: toggleEditionPicker
-    },
+const buttonClickHandlers = {
+    [MENU_TOGGLE_CLASS]: toggleMenu,
+    [EDITION_PICKER_TOGGLE_CLASS]: toggleEditionPicker,
 };
 
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
@@ -307,17 +303,13 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         );
 
         const enhance = () => {
-            const btnOpts = buttons[checkboxId];
-
-            if (!btnOpts) {
-                return;
-            }
-
             button.setAttribute('id', checkboxId);
 
-            const eventHandler = btnOpts.clickHandler;
+            const clickHandler = buttonClickHandlers[checkboxId];
 
-            button.addEventListener('click', eventHandler);
+            if (clickHandler) {
+                button.addEventListener('click', clickHandler);
+            }
 
             button.setAttribute('aria-expanded', 'false');
 
