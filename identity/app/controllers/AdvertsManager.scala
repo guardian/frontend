@@ -18,6 +18,11 @@ import utils.SafeLogging
 
 import scala.concurrent.Future
 
+case class AdvertProvider (
+  name: String,
+  id: String
+)
+
 class AdvertsManager(
     returnUrlVerifier: ReturnUrlVerifier,
     api: IdApiClient,
@@ -37,9 +42,19 @@ class AdvertsManager(
   val page = IdentityPage("/adverts/manage", "Manage Adverts", usesGuardianHeader = true)
 
   def renderAdvertsManager(returnUrl: Option[String]): Action[AnyContent] = Action { implicit request =>
+
+    val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
+    val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
+
+    val advertProviders = Seq(
+      AdvertProvider(
+        name="Google",id="google"
+      )
+    )
+
     Ok(
       IdentityHtmlPage.html(
-        content = views.html.advertsManager()
+        content = views.html.advertsManager(verifiedReturnUrl,advertProviders,idUrlBuilder)
       )(page, request, context)
     )
   }
