@@ -6,21 +6,20 @@ import { elementInView } from 'lib/element-inview';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
 import { isBreakpoint } from 'lib/detect';
 
-type State = {
-    position: number,
-    length: number,
-    videoWidth: number,
-    container: Element,
-};
-
 type Action = {
     type: string,
 };
 
 type Position = {
     position: number,
-    atStart: boolean,
-    atEnd: boolean,
+    atStart?: boolean,
+    atEnd?: boolean,
+};
+
+type State = Position & {
+    length: number,
+    videoWidth: number,
+    container: Element,
 };
 
 const updateYouTubeVideo = (currentItem: ?Element): void => {
@@ -167,7 +166,6 @@ const update = (state: State, container: Element): Promise<number> => {
             activeEl.classList.remove('video-playlist__item--active');
             $('.youtube-media-atom__iframe', activeEl).hide();
             $('.video-overlay .fc-item__link', activeEl).attr('tabindex', '-1');
-
         }
 
         const newActive = container.querySelector(
@@ -184,10 +182,18 @@ const update = (state: State, container: Element): Promise<number> => {
             'video-playlist--end',
             'video-playlist--start'
         );
+
+        if (state.atStart) {
+            container.classList.add('video-playlist--start');
+            $('.video-title__link', container).removeAttr('tabindex');
+            $('.treats__treat', container).removeAttr('tabindex');
+        } else {
+            $('.video-title__link', container).attr('tabindex', '-1');
+            $('.treats__treat', container).attr('tabindex', '-1');
+        }
+
         if (state.atEnd) {
             container.classList.add('video-playlist--end');
-        } else if (state.atStart) {
-            container.classList.add('video-playlist--start');
         }
 
         // fetch the next image (for desktop)
@@ -228,10 +234,28 @@ const setupDispatches = (
         });
     });
 
+    bean.on(container, 'keypress', '.js-video-playlist-next', (e) => {
+        e.preventDefault();
+        if (e.key === ' ' || e.key === 'Enter') {
+            dispatch({
+                type: 'NEXT',
+            });
+        }
+    });
+
     bean.on(container, 'click', '.js-video-playlist-prev', () => {
         dispatch({
             type: 'PREV',
         });
+    });
+
+    bean.on(container, 'keypress', '.js-video-playlist-prev', (e) => {
+        e.preventDefault();
+        if (e.key === ' ' || e.key === 'Enter') {
+            dispatch({
+                type: 'PREV',
+            });
+        }
     });
 };
 

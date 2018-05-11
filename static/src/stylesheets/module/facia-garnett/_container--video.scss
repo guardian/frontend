@@ -164,7 +164,8 @@ $video-width-desktop: 700px;
         z-index: 2;
         cursor: pointer;
 
-        &:hover .video-playlist__icon {
+        &:hover .video-playlist__icon,
+        &:focus .video-playlist__icon {
             background-color: $news-garnett-highlight;
 
             svg {
