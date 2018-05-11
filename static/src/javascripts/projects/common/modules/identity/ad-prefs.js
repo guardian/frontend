@@ -1,22 +1,12 @@
 // @flow
 
-import { addCookie, getCookie } from 'lib/cookies';
 import fastdom from 'lib/fastdom-promise';
 import { bindAnalyticsEventsOnce as bindCheckboxAnalyticsEventsOnce } from './modules/switch';
+import { getProviderState, setProviderState } from './ad-prefs.lib';
 
 const checkboxSelector: string =
     '.js-manage-account__ad-prefs input[type=checkbox]';
 const rootSelector: string = '.js-manage-account__ad-prefs';
-
-const getProviderCookieName = (provider: string): string =>
-    `GU_PERSONALISED_ADS_${provider.toUpperCase()}`;
-
-const setProviderState = (provider: string, state: boolean): void => {
-    addCookie(getProviderCookieName(provider), state.toString(), 365 * 6, true);
-};
-
-const getProviderState = (provider: string): boolean =>
-    getCookie(getProviderCookieName(provider)) === 'true';
 
 const enhanceSwitch = (switchEl: HTMLInputElement): void => {
     const provider = switchEl.name;
