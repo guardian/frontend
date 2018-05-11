@@ -159,6 +159,10 @@ $pillars: (
         fill: map-get($palette, liveColour);
     }
 
+    &.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__byline {
+        color: map-get($palette, liveColour);
+    }
+
     &.fc-item--list-media-mobile.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker,
     &.fc-item--list-mobile.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker
     {
