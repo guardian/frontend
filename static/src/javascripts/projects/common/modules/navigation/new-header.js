@@ -295,12 +295,12 @@ const buttonClickHandlers = {
 const ESC_KEY_ID = 27;
 
 const menuKeyHandlers = {
-    [MENU_TOGGLE_CLASS]: event => {
+    [MENU_TOGGLE_CLASS]: (event: Event): void => {
         if (event.keyCode === ESC_KEY_ID) {
             toggleMenu();
         }
     },
-    [EDITION_PICKER_TOGGLE_CLASS]: event => {
+    [EDITION_PICKER_TOGGLE_CLASS]: (event: Event): void => {
         if (event.keyCode === ESC_KEY_ID) {
             toggleEditionPicker();
         }
