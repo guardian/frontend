@@ -1,28 +1,21 @@
 package controllers
 
-import actions.AuthenticatedActions
 import common.ImplicitControllerExecutionContext
 import form.Mappings
-import idapiclient.{EmailPassword, IdApiClient, ScGuU}
 import implicits.Forms
 import model.{ApplicationContext, IdentityPage, NoCache}
 import pages.IdentityHtmlPage
-import play.api.data._
-import play.api.data.validation.Constraints
 import play.api.http.HttpConfiguration
-import play.api.i18n.{Messages, MessagesProvider}
 import play.api.mvc._
-import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
+import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import utils.SafeLogging
+import conf.switches.Switches.IdentityAdConsentsSwitch
 
 
 class AdvertsManager(
     returnUrlVerifier: ReturnUrlVerifier,
-    api: IdApiClient,
     idRequestParser: IdRequestParser,
     idUrlBuilder: IdentityUrlBuilder,
-    authenticatedActions: AuthenticatedActions,
-    signInService : PlaySigninService,
     val controllerComponents: ControllerComponents,
     val httpConfiguration: HttpConfiguration)
     (implicit context: ApplicationContext)
@@ -36,13 +29,19 @@ class AdvertsManager(
 
   def renderAdvertsManager(returnUrl: Option[String]): Action[AnyContent] = Action { implicit request =>
 
-    val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
-    val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
+    if(IdentityAdConsentsSwitch.isSwitchedOff) {
+      NotFound(views.html.errors._404())
+    }
+    else {
+      val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
+      val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
 
-    Ok(
-      IdentityHtmlPage.html(
-        content = views.html.advertsManager(verifiedReturnUrl,idUrlBuilder)
-      )(page, request, context)
-    )
+      NoCache(Ok(
+        IdentityHtmlPage.html(
+          content = views.html.advertsManager(verifiedReturnUrl,idUrlBuilder)
+        )(page, request, context)
+      ))
+    }
   }
+
 }
