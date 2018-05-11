@@ -36,15 +36,17 @@ describe('getProviderCookieName', () => {
 });
 
 describe('getProviderState', () => {
-    it('should convert false & null cookies properly', () => {
+    it('should convert false & true cookies properly', () => {
         getCookie.mockImplementation(() => 'false');
         expect(getProviderState('foogle')).toBe(false);
-        getCookie.mockImplementation(() => null);
-        expect(getProviderState('foogle')).toBe(false);
-    });
-    it('should convert true cookies properly', () => {
         getCookie.mockImplementation(() => 'true');
         expect(getProviderState('foogle')).toBe(true);
+    });
+    it('should convert null & inconsistent cookies properly', () => {
+        getCookie.mockImplementation(() => null);
+        expect(getProviderState('foogle')).toBe(null);
+        getCookie.mockImplementation(() => 'verdadero');
+        expect(getProviderState('foogle')).toBe(null);
     });
 });
 

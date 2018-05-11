@@ -15,7 +15,11 @@ const setProviderState = (provider: string, state: boolean): void => {
     addCookie(getProviderCookieName(provider), state.toString(), 365 * 6, true);
 };
 
-const getProviderState = (provider: string): boolean =>
-    getCookie(getProviderCookieName(provider)) === 'true';
+const getProviderState = (provider: string): ?boolean => {
+    const cookie = getCookie(getProviderCookieName(provider))
+    if(cookie === 'true') return true;
+    if(cookie === 'false') return false;
+    return null;
+}
 
 export { setProviderState, getProviderState, getProviderCookieName };
