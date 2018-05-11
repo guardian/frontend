@@ -45,13 +45,15 @@ document.addEventListener('focusout', () => {
 });
 
 document.addEventListener('focusin', () => {
-    fastdom.read(() => $('.vjs-big-play-button')).then(($playButton: bonzo) => {
-        fastdom.write(() => {
-            if ($playButton) {
-                $playButton.removeClass('youtube-play-btn-focussed');
-            }
+    fastdom
+        .read(() => $('.vjs-big-play-button'))
+        .then(($playButton: ?bonzo) => {
+            fastdom.write(() => {
+                if ($playButton) {
+                    $playButton.removeClass('youtube-play-btn-focussed');
+                }
+            });
         });
-    });
 });
 
 // retrieves actual id of atom without appended index
