@@ -292,6 +292,21 @@ const buttonClickHandlers = {
     [EDITION_PICKER_TOGGLE_CLASS]: toggleEditionPicker,
 };
 
+const ESC_KEY_ID = 27;
+
+const menuKeyHandlers = {
+    [MENU_TOGGLE_CLASS]: event => {
+        if (event.keyCode === ESC_KEY_ID) {
+            toggleMenu();
+        }
+    },
+    [EDITION_PICKER_TOGGLE_CLASS]: event => {
+        if (event.keyCode === ESC_KEY_ID) {
+            toggleEditionPicker();
+        }
+    },
+};
+
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
     fastdom.read(() => {
         const button = document.createElement('button');
@@ -319,6 +334,13 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
 
             if (checkboxControls) {
                 button.setAttribute('aria-controls', checkboxControls);
+
+                const menu = document.getElementById(checkboxControls);
+                const keyHandler = menuKeyHandlers[checkboxId];
+
+                if (menu && keyHandler) {
+                    menu.addEventListener('keyup', keyHandler);
+                }
             }
 
             if (label) {
