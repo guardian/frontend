@@ -162,13 +162,23 @@ const update = (state: State, container: Element): Promise<number> => {
         const activeEl = container.querySelector(
             '.video-playlist__item--active'
         );
-        if (activeEl != null)
+
+        if (activeEl != null) {
             activeEl.classList.remove('video-playlist__item--active');
+            $('.youtube-media-atom__iframe', activeEl).hide();
+            $('.video-overlay .fc-item__link', activeEl).attr('tabindex', '-1');
+
+        }
+
         const newActive = container.querySelector(
             `.js-video-playlist-item-${state.position}`
         );
-        if (newActive != null)
+
+        if (newActive != null) {
             newActive.classList.add('video-playlist__item--active');
+            $('.youtube-media-atom__iframe', newActive).show();
+            $('.video-overlay .fc-item__link', newActive).removeAttr('tabindex');
+        }
 
         container.classList.remove(
             'video-playlist--end',
@@ -225,7 +235,6 @@ const setupDispatches = (
     });
 };
 
-// #? is this over-kill? should we use Redux?
 const reducer = (previousState: State, action: Action): State =>
     reducers[action.type]
         ? reducers[action.type](previousState)
@@ -271,5 +280,10 @@ export const videoContainerInit = (container: Element) => {
     setupDispatches(store.dispatch, container);
     store.subscribe(() => {
         update(store.getState(), container);
+    });
+
+    $('.video-playlist__item:not(.video-playlist__item--first)').each(($el) => {
+        $('.youtube-media-atom__iframe', $el).hide();
+        $('.video-overlay .fc-item__link', $el).attr('tabindex', '-1');
     });
 };
