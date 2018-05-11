@@ -13,7 +13,6 @@
         position: relative;
     }
 
-    // TODO: remove this temporary css fix
     .fc-item__standfirst,
     .fc-sublinks {
         display: none;
@@ -73,7 +72,7 @@
     }
 
     &.fc-item--standard-mobile {
-        @include mq($from: mobile, $until: tablet) {
+        @include mq($until: tablet) {
             .u-responsive-ratio {
                 padding-bottom: 60%;
             }
@@ -144,7 +143,7 @@
         }
 
         &.fc-item--standard-mobile {
-            @include mq($from: mobile, $until: tablet) {
+            @include mq($until: tablet) {
                 @include immersiveBottom();
             }
         }
