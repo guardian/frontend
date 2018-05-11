@@ -208,6 +208,23 @@ const toggleMenu = (): void => {
     fastdom.write(update);
 };
 
+const initiateUserAccountDropdown = (): void => {
+    fastdom
+        .read(() => ({
+            menu: document.querySelector('.js-user-account-dropdown-menu'),
+            trigger: document.querySelector('.js-user-account-trigger'),
+        }))
+        .then((userAccountDropdownEls: MenuAndTriggerEls) => {
+            const button = userAccountDropdownEls.trigger;
+
+            if (button && button instanceof HTMLButtonElement) {
+                button.addEventListener('click', () =>
+                    toggleDropdown(userAccountDropdownEls)
+                );
+            }
+        });
+};
+
 const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     const openClass = 'dropdown-menu--open';
 
@@ -248,23 +265,6 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     });
 };
 
-const initiateUserAccountDropdown = (): void => {
-    fastdom
-        .read(() => ({
-            menu: document.querySelector('.js-user-account-dropdown-menu'),
-            trigger: document.querySelector('.js-user-account-trigger'),
-        }))
-        .then((userAccountDropdownEls: MenuAndTriggerEls) => {
-            const button = userAccountDropdownEls.trigger;
-
-            if (button && button instanceof HTMLButtonElement) {
-                button.addEventListener('click', () =>
-                    toggleDropdown(userAccountDropdownEls)
-                );
-            }
-        });
-};
-
 const toggleEditionPicker = (): void => {
     const menu: ?HTMLElement = document.querySelector(
         '.js-edition-dropdown-menu'
@@ -289,18 +289,10 @@ const EDITION_PICKER_TOGGLE_CLASS = 'edition-picker-toggle';
 
 const buttons = {
     [MENU_TOGGLE_CLASS]: {
-        innerHTML: `<span class="hide-until-desktop pillar-link pillar-link--dropdown pillar-link--sections">
-                        <span class="u-h">Show </span>More</span>
-                    </span>
-                    <span class=" hide-from-desktop veggie-burger">
-                        <span class="veggie-burger__icon"></span>
-                    </span>`,
-        clickHandler: toggleMenu,
+        clickHandler: toggleMenu
     },
     [EDITION_PICKER_TOGGLE_CLASS]: {
-        innerHTML: displayName =>
-            `<span class="u-h">current edition: </span>${displayName}`,
-        clickHandler: toggleEditionPicker,
+        clickHandler: toggleEditionPicker
     },
 };
 
@@ -350,15 +342,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
                     button.setAttribute('tabindex', labelTabIndex);
                 }
 
-                if (checkboxId === EDITION_PICKER_TOGGLE_CLASS) {
-                    const displayName = label.getAttribute('data-display-name');
-
-                    if (displayName) {
-                        button.innerHTML = btnOpts.innerHTML(displayName);
-                    }
-                } else {
-                    button.innerHTML = btnOpts.innerHTML;
-                }
+                button.innerHTML = label.innerHTML;
 
                 label.remove();
             }
