@@ -260,7 +260,8 @@ $quote-mark: 35px;
     }
 
     .content__article-body {
-        line-height: 1.4;
+        font-size: 17px;
+        line-height: 24px;
 
         @include mq(tablet) {
             margin-left: 0;
@@ -345,7 +346,8 @@ $quote-mark: 35px;
     .content__standfirst {
         @include fs-bodyCopy(2);
         font-weight: 700;
-        line-height: 20px;
+        font-size: 17px;
+        line-height: 22px;
         border-top: 0;
         color: $garnett-neutral-1;
         padding-top: 2px;
@@ -358,25 +360,6 @@ $quote-mark: 35px;
         @include mq(tablet) {
             max-width: gs-span(7);
             margin-left: 0;
-        }
-    }
-
-    // overrides for those in the LineHeightFontSize server-side test
-    .commercial-line-height & {
-        .content__standfirst {
-            font-size: 17px;
-            line-height: 22px;
-        }
-
-        .content__article-body {
-            font-size: 17px;
-            line-height: 24px;
-        }
-
-        // negative margin on these is currently based on inital
-        // font-size so we need to set this for the test duration.
-        .ad-slot--offset-right {
-            font-size: 16px;
         }
     }
 
