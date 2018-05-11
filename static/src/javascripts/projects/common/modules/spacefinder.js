@@ -51,7 +51,9 @@ export type SpacefinderRules = {
     clearContentMeta: number,
     // custom rules using selectors.
     selectors: {
-        [k: string]: RuleSpacing,
+        // The  selected should be 'minBelow' pixels below the candidate SpacefinderItem
+        // and 'minAbove' pixels above the candidate SpacefinderItem
+        [selector: string]: RuleSpacing,
     },
     // will run each slot through this fn to check if it must be counted in
     filter?: (x: SpacefinderItem) => boolean,
@@ -217,11 +219,11 @@ const testCandidates = (
 ): boolean => opponents.every(testCandidate.bind(undefined, rules, challenger));
 
 const enforceRules = (
-    data: Measurements,
+    measurements: Measurements,
     rules: SpacefinderRules,
     exclusions: SpacefinderExclusions
 ): SpacefinderItem[] => {
-    let candidates: SpacefinderItem[] = data.candidates;
+    let candidates: SpacefinderItem[] = measurements.candidates;
 
     // enforce absoluteMinAbove rule
     exclusions.absoluteMinAbove = [];
@@ -229,7 +231,7 @@ const enforceRules = (
         candidates,
         candidate =>
             !rules.absoluteMinAbove ||
-            candidate.top + data.bodyTop >= rules.absoluteMinAbove,
+            candidate.top + measurements.bodyTop >= rules.absoluteMinAbove,
         exclusions.absoluteMinAbove
     );
 
@@ -240,7 +242,7 @@ const enforceRules = (
         candidate => {
             const farEnoughFromTopOfBody = candidate.top >= rules.minAbove;
             const farEnoughFromBottomOfBody =
-                candidate.top + rules.minBelow <= data.bodyHeight;
+                candidate.top + rules.minBelow <= measurements.bodyHeight;
             return farEnoughFromTopOfBody && farEnoughFromBottomOfBody;
         },
         exclusions.aboveAndBelow
@@ -252,8 +254,9 @@ const enforceRules = (
         candidates = filter(
             candidates,
             c =>
-                !!data.contentMeta &&
-                c.top > data.contentMeta.bottom + rules.clearContentMeta,
+                !!measurements.contentMeta &&
+                c.top >
+                    measurements.contentMeta.bottom + rules.clearContentMeta,
             exclusions.contentMeta
         );
     }
@@ -268,7 +271,9 @@ const enforceRules = (
                     testCandidates(
                         rules.selectors[selector],
                         candidate,
-                        data.opponents ? data.opponents[selector] : []
+                        measurements.opponents
+                            ? measurements.opponents[selector]
+                            : []
                     ),
                 exclusions[selector]
             );
@@ -426,7 +431,7 @@ const findSpace = (
     return getReady(rules, options || defaultOptions)
         .then(() => getCandidates(rules, exclusions))
         .then(candidates => getMeasurements(rules, candidates))
-        .then(data => enforceRules(data, rules, exclusions))
+        .then(measurements => enforceRules(measurements, rules, exclusions))
         .then(winners => returnCandidates(rules, winners));
 };
 
