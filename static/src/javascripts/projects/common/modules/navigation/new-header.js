@@ -265,51 +265,68 @@ const initiateUserAccountDropdown = (): void => {
         });
 };
 
+const toggleEditionPicker = (): void => {
+    const menu: ?HTMLElement = document.querySelector(
+        '.js-edition-dropdown-menu'
+    );
+
+    const trigger: ?HTMLElement = document.querySelector(
+        '.js-edition-picker-trigger'
+    );
+
+    if (menu && trigger) {
+        const editionPickerDropdownEls: MenuAndTriggerEls = {
+            menu,
+            trigger,
+        };
+
+        toggleDropdown(editionPickerDropdownEls);
+    }
+};
+
+const MENU_TOGGLE_CLASS = 'main-menu-toggle';
+const EDITION_PICKER_TOGGLE_CLASS = 'edition-picker-toggle';
+
+const buttons = {
+    [MENU_TOGGLE_CLASS]: {
+        innerHTML: `<span class="hide-until-desktop pillar-link pillar-link--dropdown pillar-link--sections">
+                        <span class="u-h">Show </span>More</span>
+                    </span>
+                    <span class=" hide-from-desktop veggie-burger">
+                        <span class="veggie-burger__icon"></span>
+                    </span>`,
+        clickHandler: toggleMenu,
+    },
+    [EDITION_PICKER_TOGGLE_CLASS]: {
+        innerHTML: displayName =>
+            `<span class="u-h">current edition: </span>${displayName}`,
+        clickHandler: toggleEditionPicker,
+    },
+};
+
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
     fastdom.read(() => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
-        const checkboxClassAttr = checkbox.getAttribute('class');
         const dataLinkName = checkbox.getAttribute('data-link-name');
-
-        const menuEl: ?HTMLElement = document.querySelector(
-            '.js-edition-dropdown-menu'
+        const label: ?HTMLElement = document.querySelector(
+            `label[for='${checkboxId}']`
         );
-        const triggerEl: ?HTMLElement = document.querySelector(
-            '.js-edition-picker-trigger'
-        );
-
-        const buttonClickHandlers = {};
-
-        buttonClickHandlers['main-menu-toggle'] = toggleMenu;
-
-        if (
-            menuEl &&
-            menuEl instanceof HTMLElement &&
-            triggerEl &&
-            triggerEl instanceof HTMLElement
-        ) {
-            const editionPickerDropdownEls: MenuAndTriggerEls = {
-                menu: menuEl,
-                trigger: triggerEl,
-            };
-
-            buttonClickHandlers['edition-picker-toggle'] = toggleDropdown.bind(
-                null,
-                editionPickerDropdownEls
-            );
-        }
 
         const enhance = () => {
-            const eventHandler = buttonClickHandlers[checkboxId];
+            const btnOpts = buttons[checkboxId];
 
-            if (checkboxClassAttr) {
-                button.setAttribute('class', checkboxClassAttr);
+            if (!btnOpts) {
+                return;
             }
 
-            button.addEventListener('click', () => eventHandler());
             button.setAttribute('id', checkboxId);
+
+            const eventHandler = btnOpts.clickHandler;
+
+            button.addEventListener('click', eventHandler);
+
             button.setAttribute('aria-expanded', 'false');
 
             if (dataLinkName) {
@@ -318,6 +335,32 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
 
             if (checkboxControls) {
                 button.setAttribute('aria-controls', checkboxControls);
+            }
+
+            if (label) {
+                label.classList.forEach(className => {
+                    button.classList.add(className);
+                });
+
+                button.classList.add(`${checkboxId}-button`);
+
+                const labelTabIndex = label.getAttribute('tabindex');
+
+                if (labelTabIndex) {
+                    button.setAttribute('tabindex', labelTabIndex);
+                }
+
+                if (checkboxId === EDITION_PICKER_TOGGLE_CLASS) {
+                    const displayName = label.getAttribute('data-display-name');
+
+                    if (displayName) {
+                        button.innerHTML = btnOpts.innerHTML(displayName);
+                    }
+                } else {
+                    button.innerHTML = btnOpts.innerHTML;
+                }
+
+                label.remove();
             }
 
             if (checkbox.parentNode) {
