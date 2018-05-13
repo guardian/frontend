@@ -23,6 +23,13 @@ import {
 
 const bidderTimeout = 1500;
 
+const consentManagement = {
+    cmpApi: 'iab',
+    timeout: 8000,
+    allowAuctionWithoutConsent: true,
+    consentRequired: true,
+};
+
 class PrebidAdUnit {
     code: ?string;
     bids: ?(PrebidBid[]);
@@ -64,6 +71,7 @@ class PrebidService {
         window.pbjs.setConfig({
             bidderTimeout,
             priceGranularity,
+            consentManagement,
         });
 
         // gather analytics from 0.01% of pageviews
