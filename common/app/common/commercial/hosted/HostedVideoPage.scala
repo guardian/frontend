@@ -43,7 +43,11 @@ object HostedVideoPage extends Logging {
 
       // using capi trail text instead of standfirst because we don't want the markup
       val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
-      val mainImage = video.posterUrl.getOrElse(Configuration.images.fallbackLogo)
+
+      val mainImage: String = video.posterUrl.orElse(
+        findLargestMainImageAsset(content)
+        .flatMap(_.file))
+        .getOrElse(Configuration.images.fallbackLogo)
 
       HostedVideoPage(
         id = content.id,
@@ -64,7 +68,7 @@ object HostedVideoPage extends Logging {
         metadata = HostedMetadata.fromContent(content)
           .copy(
             schemaType = Some("https://schema.org/VideoObject"),
-            openGraphImages = video.posterUrl.toList,
+            openGraphImages = Seq(ImgSrc(mainImage, Item1200)),
             twitterPropertiesOverrides = Map(
               "twitter:image" -> ImgSrc(mainImage, Item700)
             )
