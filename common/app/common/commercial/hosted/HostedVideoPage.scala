@@ -3,11 +3,10 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
-import common.commercial.hosted.ContentUtils.{findLargestMainImageAsset, thumbnailUrl}
+import common.commercial.hosted.ContentUtils.{imageForSocialShare, thumbnailUrl}
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.{Encoding, EncodingOrdering, MetaData}
-import views.support.{ImgSrc, Item700, Item1200}
-import conf.Configuration
+import views.support.{ImgSrc, Item1200, Item700}
 
 case class HostedVideoPage(
   override val id: String,
@@ -44,10 +43,7 @@ object HostedVideoPage extends Logging {
       // using capi trail text instead of standfirst because we don't want the markup
       val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
 
-      val mainImage: String = video.posterUrl.orElse(
-        findLargestMainImageAsset(content)
-        .flatMap(_.file))
-        .getOrElse(Configuration.images.fallbackLogo)
+      val mainImage: String = video.posterUrl getOrElse imageForSocialShare(content)
 
       HostedVideoPage(
         id = content.id,
