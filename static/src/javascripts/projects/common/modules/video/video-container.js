@@ -251,8 +251,8 @@ const setupDispatches = (
     });
 
     bean.on(container, 'keypress', '.js-video-playlist-next', e => {
-        e.preventDefault();
         if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
             dispatch({
                 type: 'NEXT',
             });
@@ -266,8 +266,8 @@ const setupDispatches = (
     });
 
     bean.on(container, 'keypress', '.js-video-playlist-prev', e => {
-        e.preventDefault();
         if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
             dispatch({
                 type: 'PREV',
             });
