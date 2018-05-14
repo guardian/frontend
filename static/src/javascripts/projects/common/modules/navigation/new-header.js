@@ -85,7 +85,10 @@ const removeClickstreamListener = (menuId: string): void => {
     delete clickstreamListeners[menuId];
 };
 
-const registerClickstreamListener = (menuId: string, clickHandler: () => void) => {
+const registerClickstreamListener = (
+    menuId: string,
+    clickHandler: () => void
+) => {
     removeClickstreamListener(menuId);
     mediator.on('module:clickstream:click', clickHandler);
     clickstreamListeners[menuId] = clickHandler;
