@@ -92,6 +92,9 @@ const reducers = {
                 ];
                 overlayLinks.forEach(el => {
                     el.classList.add('u-faux-block-link__overlay');
+                    // make visible to screen readers / keyboard users
+                    el.removeAttribute('tabindex');
+                    el.removeAttribute('aria-hidden');
                 });
 
                 const atomWrapper = [
@@ -166,7 +169,10 @@ const update = (state: State, container: Element): Promise<number> => {
             activeEl.classList.remove('video-playlist__item--active');
             $('.youtube-media-atom__iframe', activeEl).hide();
             $('.video-overlay .fc-item__link', activeEl).attr('tabindex', '-1');
-            $('.video-overlay .fc-item__link', activeEl).attr('aria-hidden', 'true');
+            $('.video-overlay .fc-item__link', activeEl).attr(
+                'aria-hidden',
+                'true'
+            );
         }
 
         const newActive = container.querySelector(
