@@ -1,7 +1,7 @@
 @(rating: Int)(implicit request: RequestHeader)
 
 <span class="u-h">@rating out of 5 stars.</span>
-<div class="stars fc-item__stars" role="presentation">
+<div class="stars fc-item__stars" aria-hidden="true">
     @List(1,2,3,4,5).map{ i =>
         @fragments.inlineSvg("star", "icon", List("star__item", if(i <= rating){ "star__item--golden" }else{ "star__item--grey" }))
     }
