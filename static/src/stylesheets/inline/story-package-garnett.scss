@@ -26,10 +26,6 @@
 .fc-container--story-package {
     background-color: $garnett-neutral-4;
 
-    .fc-container__toggle {
-        display: none;
-    }
-
     .fc-container__header__title {
         padding-left: calc((#{$gs-baseline} / 2) - 2px);
         margin-bottom: $gs-baseline / 2;
