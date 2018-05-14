@@ -7,8 +7,10 @@ import { getCookie, addCookie } from 'lib/cookies';
 import config from 'lib/config';
 import { local } from 'lib/storage';
 import ophan from 'ophan/ng';
-import mediator from 'lib/mediator';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 import userPrefs from 'common/modules/user-prefs';
+import { isParticipating } from 'common/modules/experiments/utils';
+import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import type { LinkTargets, Template } from './opt-in-eb-template';
 import { makeTemplateHtml } from './opt-in-eb-template';
 
@@ -59,21 +61,6 @@ const shouldDisplayBasedOnRemindMeLaterInterval = (): boolean => {
     return Date.now() > hidAt + remindMeLaterInterval;
 };
 
-const bannerDoesNotCollide = (): Promise<boolean> =>
-    new Promise(resolve => {
-        mediator.on('modules:onwards:breaking-news:ready', breakingShown => {
-            if (breakingShown) {
-                resolve(false);
-            }
-        });
-        mediator.on('membership-message:display', () => {
-            resolve(false);
-        });
-        setTimeout(() => {
-            resolve(true);
-        }, 1000);
-    });
-
 const shouldDisplayBasedOnLocalHasVisitedConsentsFlag = (): boolean =>
     getCookie(HAS_VISITED_CONSENTS_COOKIE_KEY) !== 'true';
 
@@ -88,9 +75,23 @@ const shouldDisplayIfNotAlreadyDismissed = (): boolean =>
 
 const shouldDisplayBasedOnMedium = (): boolean => userVisitedViaNewsletter();
 
+/* Test must be running & user must be in variant */
+const shouldDisplayifNotInSignInTestVariant = (): boolean =>
+    !isParticipating(signInEngagementBannerDisplay);
+
+const checkUser = (): Promise<boolean> =>
+    new Promise(decision => {
+        getUserFromApi((user: ApiUser) => {
+            if (user === null || !user.statusFields.hasRepermissioned)
+                decision(true);
+            else decision(false);
+        });
+    });
+
 const getDisplayConditions = (): boolean[] => {
     const basics = [
         shouldDisplayBasedOnExperimentFlag(),
+        shouldDisplayifNotInSignInTestVariant(),
         shouldDisplayBasedOnLocalHasVisitedConsentsFlag(),
     ];
 
@@ -123,28 +124,13 @@ const hide = (msg: Message) => {
 };
 
 const canShow = (): Promise<boolean> => {
-    if (userVisitedViaNewsletter()) {
-        addCookie(messageUserUsesNewslettersCookie, 'true');
-    }
-
-    const checkUser = () =>
-        new Promise(decision => {
-            getUserFromApi((user: ApiUser) => {
-                if (user === null || !user.statusFields.hasRepermissioned)
-                    decision(true);
-                else decision(false);
-            });
-        });
-
     const conditions = getDisplayConditions();
 
     if (conditions.some(_ => _ !== true)) {
         return Promise.resolve(false);
     }
 
-    return Promise.all([checkUser(), bannerDoesNotCollide()]).then(
-        asyncConditions => asyncConditions.every(_ => _ === true)
-    );
+    return checkUser();
 };
 
 const show = (): void => {
@@ -185,17 +171,14 @@ const show = (): void => {
     msg.show(html);
 };
 
-const optInEngagementBannerInit = (): Promise<void> =>
-    canShow().then((shouldDisplay: boolean) => {
-        if (shouldDisplay) {
-            show();
-        }
-    });
+if (userVisitedViaNewsletter()) {
+    addCookie(messageUserUsesNewslettersCookie, 'true');
+}
 
-export { optInEngagementBannerInit };
-
-export default {
+const optInEngagementBanner: Banner = {
     id: 'optInEngagementBanner',
     show,
     canShow,
 };
+
+export { optInEngagementBanner };

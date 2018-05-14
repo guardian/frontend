@@ -1,6 +1,6 @@
 // @flow
 import fetchJson from 'lib/fetch-json';
-import commentCount from './comment-count';
+import { initCommentCount } from './comment-count';
 
 jest.mock('lib/fastdom-promise');
 
@@ -30,7 +30,6 @@ describe('Comment Count', () => {
                 <div class="trail" data-discussion-id="/p/3gh4n"><a href="/article/3">1</a></div>
                 <div class="trail" data-discussion-id="/p/3ghv5"><a href="/article/4">4</a></div>
                 <div class="trail" data-commentcount-format="content" data-discussion-id="/p/3ghNp"><a href="/article/3">1</a></div>
-                <div class="trail" data-commentcount-format="contentImmersive" data-discussion-id="/p/3ghNp"><a href="/article/4">4</a></div>
             </div>`;
         }
 
@@ -63,16 +62,16 @@ describe('Comment Count', () => {
     });
 
     test('should append comment counts to DOM for open discussions only', () =>
-        commentCount.init().then(() => {
+        initCommentCount().then(() => {
             expect(
                 document.querySelectorAll(
                     '.fc-trail__count--commentcount, .commentcount2'
                 ).length
-            ).toBe(6);
+            ).toBe(5);
         }));
 
     test('should append "default" format comment counts to DOM', () =>
-        commentCount.init().then(() => {
+        initCommentCount().then(() => {
             expect(
                 document.getElementsByClassName('fc-trail__count--commentcount')
                     .length
@@ -80,7 +79,7 @@ describe('Comment Count', () => {
         }));
 
     test('should append "content" format comment counts to DOM', () =>
-        commentCount.init().then(() => {
+        initCommentCount().then(() => {
             const contentCommentCounts = document.getElementsByClassName(
                 'commentcount2__value'
             );
@@ -88,16 +87,5 @@ describe('Comment Count', () => {
             expect(contentCommentCounts.length).toBe(1);
 
             expect(contentCommentCounts[0].innerHTML).toBe('400');
-        }));
-
-    test('should append "content immersive" format comment counts to DOM', () =>
-        commentCount.init().then(() => {
-            const contentImmersiveCommentCounts = document.getElementsByClassName(
-                'commentcount__value'
-            );
-
-            expect(contentImmersiveCommentCounts.length).toBe(1);
-
-            expect(contentImmersiveCommentCounts[0].innerHTML).toBe('400');
         }));
 });

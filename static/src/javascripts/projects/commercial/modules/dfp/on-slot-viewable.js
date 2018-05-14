@@ -1,13 +1,20 @@
 // @flow
-import type { ImpressionViewableEvent } from 'commercial/types';
+
+import config from 'lib/config';
+import { getUrlVars } from 'lib/url';
+
+import type {
+    ImpressionViewableEvent,
+    ImpressionViewableEventCallback,
+} from 'commercial/types';
 
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
-export const onSlotViewable = (event: ImpressionViewableEvent): void => {
+const setSlotAdRefresh = (event: ImpressionViewableEvent): void => {
     const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
-    const viewabilityThresholdMs = 30000;
+    const viewabilityThresholdMs = 30000; // 30 seconds
 
     if (advert && advert.shouldRefresh) {
         const onDocumentVisible = () => {
@@ -36,4 +43,25 @@ export const onSlotViewable = (event: ImpressionViewableEvent): void => {
             }
         }, viewabilityThresholdMs);
     }
+};
+
+/*
+
+  Returns a function to be used as a callback for GTP 'impressionViewable' event
+
+  Uses the global config and URL parameters.
+
+ */
+export const onSlotViewableFunction = (): ImpressionViewableEventCallback => {
+    const queryParams = getUrlVars();
+
+    if (
+        queryParams.adrefresh !== 'false' &&
+        config.get('tests.commercialAdRefreshVariant')
+    ) {
+        return setSlotAdRefresh;
+    }
+
+    // Nothing to do. Return an empty callback
+    return () => {};
 };
