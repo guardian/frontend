@@ -51,7 +51,7 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
     );
 };
 
-const canShow = () => new Promise(_ => _(accountDataUpdateWarning() !== null));
+const canShow = () => Promise.resolve(accountDataUpdateWarning() !== null);
 
 const show = () => {
     const updateLink = accountDataUpdateWarning();
