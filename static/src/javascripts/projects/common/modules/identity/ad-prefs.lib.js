@@ -2,42 +2,28 @@
 
 import { addCookie, getCookie } from 'lib/cookies';
 
-type AdProvider = {
-    id: string,
+type AdConsent = {
     label: string,
+    cookie: string,
 };
 
-const adProviders: AdProvider[] = [
+const adConsentList: AdConsent[] = [
     {
-        label: 'Google',
-        id: 'google',
+        label: 'Third party tracking',
+        cookie: 'GU_AD_CONSENT_THIRD_PARTY_TRACKING',
     },
 ];
 
-const cleanup = (str: string): string =>
-    str
-        .replace(/ /g, '_')
-        .replace(/[^a-zA-Z0-9_]/g, '')
-        .toUpperCase();
-
-const getProviderCookieName = (provider: string): string =>
-    `GU_PERSONALISED_ADS_${cleanup(provider)}`;
-
-const setProviderState = (provider: string, state: boolean): void => {
-    addCookie(getProviderCookieName(provider), state.toString(), 365 * 6, true);
+const setAdConsentState = (provider: AdConsent, state: boolean): void => {
+    addCookie(provider.cookie, state.toString(), 365 * 6, true);
 };
 
-const getProviderState = (provider: string): ?boolean => {
-    const cookie = getCookie(getProviderCookieName(provider));
+const getAdConsentState = (provider: AdConsent): ?boolean => {
+    const cookie = getCookie(provider.cookie);
     if (cookie === 'true') return true;
     if (cookie === 'false') return false;
     return null;
 };
 
-export type { AdProvider };
-export {
-    setProviderState,
-    getProviderState,
-    getProviderCookieName,
-    adProviders,
-};
+export type { AdConsent };
+export { setAdConsentState, getAdConsentState, adConsentList };

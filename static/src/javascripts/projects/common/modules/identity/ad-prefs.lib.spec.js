@@ -1,15 +1,15 @@
 // @flow
 import { getCookie as getCookie_, addCookie as addCookie_ } from 'lib/cookies';
-import {
-    getProviderCookieName,
-    setProviderState,
-    getProviderState,
-} from './ad-prefs.lib';
+import { setAdConsentState, getAdConsentState } from './ad-prefs.lib';
+import type { AdConsent } from './ad-prefs.lib';
 
 const getCookie: any = getCookie_;
 const addCookie: any = addCookie_;
 
-const foogleProviderCookieName = 'GU_PERSONALISED_ADS_FOOGLE';
+const testConsent: AdConsent = {
+    label: 'Test consent',
+    cookie: 'GU_AD_CONSENT_TEST',
+};
 
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(() => null),
@@ -21,45 +21,31 @@ beforeEach(() => {
     getCookie.mockReset();
 });
 
-describe('getProviderCookieName', () => {
-    it('should convert provider names to a full cookie name', () => {
-        expect(getProviderCookieName('foogle')).toBe(
-            'GU_PERSONALISED_ADS_FOOGLE'
-        );
-        expect(getProviderCookieName('foogle with spaces')).toBe(
-            'GU_PERSONALISED_ADS_FOOGLE_WITH_SPACES'
-        );
-        expect(getProviderCookieName('foogle 性状 unicode')).toBe(
-            'GU_PERSONALISED_ADS_FOOGLE__UNICODE'
-        );
-    });
-});
-
-describe('getProviderState', () => {
+describe('getAdConsentState', () => {
     it('should convert false & true cookies properly', () => {
         getCookie.mockImplementation(() => 'false');
-        expect(getProviderState('foogle')).toBe(false);
+        expect(getAdConsentState(testConsent)).toBe(false);
         getCookie.mockImplementation(() => 'true');
-        expect(getProviderState('foogle')).toBe(true);
+        expect(getAdConsentState(testConsent)).toBe(true);
     });
     it('should convert null & inconsistent cookies properly', () => {
         getCookie.mockImplementation(() => null);
-        expect(getProviderState('foogle')).toBe(null);
+        expect(getAdConsentState(testConsent)).toBe(null);
         getCookie.mockImplementation(() => 'verdadero');
-        expect(getProviderState('foogle')).toBe(null);
+        expect(getAdConsentState(testConsent)).toBe(null);
     });
 });
 
-describe('setProviderState', () => {
+describe('setAdConsentState', () => {
     it('should set a full proper cookie', () => {
-        setProviderState('foogle', true);
-        expect(addCookie.mock.calls[0][0]).toMatch(foogleProviderCookieName);
+        setAdConsentState(testConsent, true);
+        expect(addCookie.mock.calls[0][0]).toMatch('GU_AD_CONSENT_TEST');
         expect(addCookie.mock.calls[0][1]).toMatch('true');
         expect(addCookie.mock.calls[0][2]).toBeGreaterThanOrEqual(365 * 4);
         expect(addCookie.mock.calls[0][3]).toBe(true);
     });
     it('should set a false cookie', () => {
-        setProviderState('foogle', false);
+        setAdConsentState(testConsent, false);
         expect(addCookie.mock.calls[0][1]).toMatch('false');
     });
 });

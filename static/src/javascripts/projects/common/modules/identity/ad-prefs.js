@@ -4,11 +4,11 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import fastdom from 'lib/fastdom-promise';
 import {
-    getProviderState,
-    setProviderState,
-    adProviders,
+    getAdConsentState,
+    setAdConsentState,
+    adConsentList,
 } from './ad-prefs.lib';
-import type { AdProvider } from './ad-prefs.lib';
+import type { AdConsent } from './ad-prefs.lib';
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
 
@@ -16,7 +16,7 @@ type ConsentRadioButtonProps = {
     value: string,
     label: string,
     checked: boolean,
-    provider: AdProvider,
+    consent: AdConsent,
     onToggle: () => void,
 };
 
@@ -28,9 +28,9 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
     }
     render() {
         const id = `gu-ad-prefs-${this.props.value.toString()}-${
-            this.props.provider.id
+            this.props.consent.cookie
         }`;
-        const name = `gu-ad-prefs-${this.props.provider.id}`;
+        const name = `gu-ad-prefs-${this.props.consent.cookie}`;
 
         return (
             <div>
@@ -51,20 +51,20 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
 }
 
 class ConsentBox extends Component<
-    { provider: AdProvider },
-    { providerState: ?boolean }
+    { consent: AdConsent },
+    { consentState: ?boolean }
 > {
     constructor(props) {
         super(props);
         this.state = {
-            providerState: getProviderState(this.props.provider.id),
+            consentState: getAdConsentState(this.props.consent),
         };
     }
 
-    setProviderState(state: boolean): void {
-        setProviderState(this.props.provider.id, state);
+    setConsentTo(state: boolean): void {
+        setAdConsentState(this.props.consent, state);
         this.setState({
-            providerState: getProviderState(this.props.provider.id),
+            consentState: getAdConsentState(this.props.consent),
         });
     }
 
@@ -72,22 +72,22 @@ class ConsentBox extends Component<
         return (
             <fieldset>
                 <legend>
-                    Allow personalised ads from {this.props.provider.label}
+                    Allow personalised ads from {this.props.consent.label}
                 </legend>
                 <div>
                     <ConsentRadioButton
                         label="Turn on"
                         value="true"
-                        checked={this.state.providerState === true}
-                        provider={this.props.provider}
-                        onToggle={() => this.setProviderState(true)}
+                        checked={this.state.consentState === true}
+                        consent={this.props.consent}
+                        onToggle={() => this.setConsentTo(true)}
                     />
                     <ConsentRadioButton
                         label="Turn off"
                         value="false"
-                        checked={this.state.providerState === false}
-                        provider={this.props.provider}
-                        onToggle={() => this.setProviderState(false)}
+                        checked={this.state.consentState === false}
+                        consent={this.props.consent}
+                        onToggle={() => this.setConsentTo(false)}
                     />
                 </div>
             </fieldset>
@@ -99,8 +99,8 @@ class ConsentBoxes extends Component<{}, {}> {
     render() {
         return (
             <div>
-                {adProviders.map(provider => (
-                    <ConsentBox provider={provider} key={provider.id} />
+                {adConsentList.map((consent: AdConsent) => (
+                    <ConsentBox consent={consent} key={consent.cookie} />
                 ))}
             </div>
         );
