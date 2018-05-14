@@ -68,8 +68,11 @@ const setDfpListeners = (): void => {
 };
 
 const setPersonalisedAds = (): void => {
+    const cookieName = 'GU_PERSONALISED_ADS_GOOGLE';
     if (config.switches.includePersonalisedAdsConsent) {
-        const personalised = getCookie('GU_PERSONALISED_ADS_GOOGLE') === 'true';
+        const personalised =
+            !config.switches.noPersonalisedAds &&
+            getCookie(cookieName) === 'true';
         window.googletag
             .pubads()
             .setRequestNonPersonalizedAds(personalised ? 0 : 1);
