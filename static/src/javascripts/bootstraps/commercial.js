@@ -31,7 +31,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-carrot', initCarrotTrafficDriver],
+    ['cm-carrot', initCarrotTrafficDriver], // TODO: check if this should move into non-ad-free specifically
     ['cm-checkDispatcher', initCheckDispatcher],
 ];
 
