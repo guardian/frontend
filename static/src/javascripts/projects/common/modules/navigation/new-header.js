@@ -250,7 +250,6 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
 
             menu.setAttribute('aria-hidden', hiddenAttr);
             menu.classList.toggle(openClass, !isOpen);
-
             if (!isOpen) {
                 const menuId = menu.getAttribute('id');
                 const triggerToggle = clickSpec => {
@@ -307,33 +306,42 @@ const toggleEditionPicker = (): void => {
     }
 };
 
-const MENU_TOGGLE_CLASS = 'main-menu-toggle';
-const EDITION_PICKER_TOGGLE_CLASS = 'edition-picker-toggle';
+const MENU_TOGGLE_ID = 'main-menu-toggle';
+const EDITION_PICKER_TOGGLE_ID = 'edition-picker-toggle';
 
 const buttonClickHandlers = {
-    [MENU_TOGGLE_CLASS]: toggleMenu,
-    [EDITION_PICKER_TOGGLE_CLASS]: toggleEditionPicker,
+    [MENU_TOGGLE_ID]: toggleMenu,
+    [EDITION_PICKER_TOGGLE_ID]: toggleEditionPicker,
+};
+
+const returnFocusToButton = (btnId: string): void => {
+    fastdom.read(() => document.getElementById(btnId)).then(btn => {
+        if (btn) {
+            btn.focus();
+            /**
+             * As we're closing the menu with the ESC key we no longer need the
+             * clickstream listener that toggles the menu on a click outside the menu
+             * so let's unregister it here
+             * */
+            const menuId = btn.getAttribute('aria-controls');
+            if (menuId) {
+                removeClickstreamListener(menuId);
+            }
+        }
+    });
 };
 
 const menuKeyHandlers = {
-    [MENU_TOGGLE_CLASS]: (event: KeyboardEvent): void => {
+    [MENU_TOGGLE_ID]: (event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
             toggleMenu();
-            /**
-             * As we're closing the menu with the ESC key we no longer need the
-             * clickstream listener that toggles the menu on a click outside the menu
-             * */
-            removeClickstreamListener(MENU_TOGGLE_CLASS);
+            returnFocusToButton(MENU_TOGGLE_ID);
         }
     },
-    [EDITION_PICKER_TOGGLE_CLASS]: (event: KeyboardEvent): void => {
+    [EDITION_PICKER_TOGGLE_ID]: (event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
             toggleEditionPicker();
-            /**
-             * As we're closing the menu with the ESC key we no longer need the
-             * clickstream listener that toggles the menu on a click outside the menu
-             * */
-            removeClickstreamListener(EDITION_PICKER_TOGGLE_CLASS);
+            returnFocusToButton(EDITION_PICKER_TOGGLE_ID);
         }
     },
 };
