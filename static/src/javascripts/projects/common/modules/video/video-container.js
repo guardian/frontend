@@ -201,15 +201,24 @@ const update = (state: State, container: Element): Promise<number> => {
             $('.video-title__link', container).removeAttr('aria-hidden');
             $('.treats__treat', container).removeAttr('tabindex');
             $('.treats__treat', container).removeAttr('aria-hidden');
+            $('.js-video-playlist-prev', container).attr('aria-hidden', 'true');
+            $('.js-video-playlist-prev', container).attr('tabindex', '-1');
         } else {
             $('.video-title__link', container).attr('tabindex', '-1');
             $('.video-title__link', container).attr('aria-hidden', 'true');
             $('.treats__treat', container).attr('tabindex', '-1');
             $('.treats__treat', container).attr('aria-hidden', 'true');
+            $('.js-video-playlist-prev', container).removeAttr('aria-hidden');
+            $('.js-video-playlist-prev', container).attr('tabindex', '0');
         }
 
         if (state.atEnd) {
             container.classList.add('video-playlist--end');
+            $('.js-video-playlist-next', container).attr('aria-hidden', 'true');
+            $('.js-video-playlist-next', container).attr('tabindex', '-1');
+        } else {
+            $('.js-video-playlist-next', container).removeAttr('aria-hidden');
+            $('.js-video-playlist-next', container).attr('tabindex', '0');
         }
 
         // fetch the next image (for desktop)
