@@ -10,7 +10,7 @@ type AdConsent = {
 const adConsentList: AdConsent[] = [
     {
         label: 'Third party tracking',
-        cookie: 'GU_AD_CONSENT_THIRD_PARTY_TRACKING',
+        cookie: 'GU_TK',
     },
 ];
 
