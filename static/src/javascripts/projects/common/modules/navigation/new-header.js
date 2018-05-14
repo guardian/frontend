@@ -77,6 +77,20 @@ const toggleMenuSection = (section: HTMLElement): void => {
     }
 };
 
+const clickstreamListeners = {};
+
+const removeClickstreamListener = (menuId: string): void => {
+    const clickHandler = clickstreamListeners[menuId];
+    mediator.off('module:clickstream:click', clickHandler);
+    delete clickstreamListeners[menuId];
+};
+
+const registerClickstreamListener = (menuId: string, clickHandler: () => void) => {
+    removeClickstreamListener(menuId);
+    mediator.on('module:clickstream:click', clickHandler);
+    clickstreamListeners[menuId] = clickHandler;
+};
+
 const toggleMenu = (): void => {
     const documentElement = document.documentElement;
     const openClass = 'new-header--open';
@@ -162,18 +176,22 @@ const toggleMenu = (): void => {
                     min: 'desktop',
                 })
             ) {
-                mediator.on('module:clickstream:click', function triggerToggle(
-                    clickSpec
-                ) {
+                const menuId = menu.getAttribute('id');
+                const triggerToggle = clickSpec => {
                     const elem = clickSpec ? clickSpec.target : null;
 
-                    // if anywhere else but the links are clicked, the dropdown will close
                     if (elem !== menu) {
                         toggleMenu();
-                        // remove event when the dropdown closes
-                        mediator.off('module:clickstream:click', triggerToggle);
+                        // remove event listener when the menu closes
+                        if (menuId) {
+                            removeClickstreamListener(menuId);
+                        }
                     }
-                });
+                };
+                // if anywhere outside the menu is clicked the menu will close
+                if (menuId) {
+                    registerClickstreamListener(menuId, triggerToggle);
+                }
             }
         } else {
             removeEnhancedMenuMargin().then(() => {
@@ -231,18 +249,20 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
             menu.classList.toggle(openClass, !isOpen);
 
             if (!isOpen) {
-                mediator.on('module:clickstream:click', function triggerToggle(
-                    clickSpec
-                ) {
+                const menuId = menu.getAttribute('id');
+                const triggerToggle = clickSpec => {
                     const elem = clickSpec ? clickSpec.target : null;
 
-                    // if anywhere else but the links are clicked, the dropdown will close
                     if (elem !== menu) {
                         toggleDropdown(menuAndTriggerEls);
-                        // remove event when the dropdown closes
-                        mediator.off('module:clickstream:click', triggerToggle);
+                        // remove event listener when the dropdown closes
+                        if (menuId) {
+                            removeClickstreamListener(menuId);
+                        }
                     }
-                });
+                };
+                // if anywhere outside the menu is clicked the dropdown will close
+                registerClickstreamListener(menuId, triggerToggle);
             }
         });
     });
@@ -296,11 +316,21 @@ const menuKeyHandlers = {
     [MENU_TOGGLE_CLASS]: (event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
             toggleMenu();
+            /**
+             * As we're closing the menu with the ESC key we no longer need the
+             * clickstream listener that toggles the menu on a click outside the menu
+             * */
+            removeClickstreamListener(MENU_TOGGLE_CLASS);
         }
     },
     [EDITION_PICKER_TOGGLE_CLASS]: (event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
             toggleEditionPicker();
+            /**
+             * As we're closing the menu with the ESC key we no longer need the
+             * clickstream listener that toggles the menu on a click outside the menu
+             * */
+            removeClickstreamListener(EDITION_PICKER_TOGGLE_CLASS);
         }
     },
 };
