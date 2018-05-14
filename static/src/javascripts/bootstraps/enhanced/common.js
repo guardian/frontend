@@ -282,7 +282,7 @@ const initialiseBanner = (): void => {
         breakingNews,
         optInEngagementBanner,
         signInEngagementBanner,
-        membershipBanner
+        membershipBanner,
     ];
     initBannerPicker(bannerList);
 };

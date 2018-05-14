@@ -50,11 +50,11 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
         )}'>update your details</a>`
     );
 };
+const updateLink = accountDataUpdateWarning();
 
-const canShow = () => Promise.resolve(accountDataUpdateWarning() !== null);
+const canShow = () => Promise.resolve(updateLink !== null);
 
 const show = () => {
-    const updateLink = accountDataUpdateWarning();
     if (updateLink) {
         showAccountDataUpdateWarningMessage(updateLink);
     }
