@@ -262,6 +262,16 @@ const initiateUserAccountDropdown = (): void => {
                     toggleDropdown(userAccountDropdownEls)
                 );
             }
+
+            const { menu } = userAccountDropdownEls;
+
+            if (menu) {
+                menu.addEventListener('keyup', (event: KeyboardEvent): void => {
+                    if (event.key === 'Escape') {
+                        toggleDropdown(userAccountDropdownEls);
+                    }
+                });
+            }
         });
 };
 
