@@ -6,7 +6,7 @@ import fastdom from 'lib/fastdom-promise';
 import {
     getAdConsentState,
     setAdConsentState,
-    adConsentList,
+    allAdConsents,
 } from './ad-prefs.lib';
 import type { AdConsent } from './ad-prefs.lib';
 
@@ -99,7 +99,7 @@ class ConsentBoxes extends Component<{}, {}> {
     render() {
         return (
             <div>
-                {adConsentList.map((consent: AdConsent) => (
+                {allAdConsents.map((consent: AdConsent) => (
                     <ConsentBox consent={consent} key={consent.cookie} />
                 ))}
             </div>
