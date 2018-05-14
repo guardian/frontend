@@ -8,6 +8,7 @@ import {
     sessionVisitsKey,
     lifeTimeViewsKey,
     lastSeenAtKey,
+    showFeedbackSegue,
 } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { bindableClassNames } from 'common/modules/identity/global/sign-in-engagement-banner/template';
 
@@ -163,7 +164,7 @@ describe('Sign in engagement banner', () => {
     describe('With lifetime views', () => {
         it('should not show any messages for visitors who have seen the alert 4+ times', () => {
             userPrefs.get.mockImplementation(_ => {
-                if (_ === lifeTimeViewsKey) return 4;
+                if (_ === lifeTimeViewsKey) return 5;
                 return passingStore(_);
             });
             const canShowPr = canShow();
@@ -182,6 +183,20 @@ describe('Sign in engagement banner', () => {
             return canShowPr.then(showable => {
                 expect(showable).toBe(true);
             });
+        });
+        it('should not ask for feedback views 1-3', () => {
+            userPrefs.get.mockImplementation(_ => {
+                if (_ === lifeTimeViewsKey) return 1;
+                return passingStore(_);
+            });
+            return expect(showFeedbackSegue()).toBe(false);
+        });
+        it('should ask for feedback in the last view', () => {
+            userPrefs.get.mockImplementation(_ => {
+                if (_ === lifeTimeViewsKey) return 4;
+                return passingStore(_);
+            });
+            return expect(showFeedbackSegue()).toBe(true);
         });
     });
 

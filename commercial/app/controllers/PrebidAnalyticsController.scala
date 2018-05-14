@@ -7,6 +7,7 @@ import com.amazonaws.services.kinesisfirehose.model.{PutRecordRequest, Record}
 import com.amazonaws.services.kinesisfirehose.{AmazonKinesisFirehoseAsync, AmazonKinesisFirehoseAsyncClientBuilder}
 import common.Logging
 import conf.Configuration.aws.{mandatoryCredentials, region}
+import conf.Configuration.commercial.prebidAnalyticsStream
 import conf.Configuration.environment.isProd
 import conf.switches.Switches.prebidAnalytics
 import model.Cached.WithoutRevalidationResult
@@ -30,13 +31,11 @@ class PrebidAnalyticsController(val controllerComponents: ControllerComponents) 
       .build()
   }
 
-  private val deliveryStream = "CommercialPrebidAnalyticsStream"
-
   private val newLine = "\n".getBytes
 
   private def streamAnalytics(json: JsValue) = {
     val record  = new Record().withData(ByteBuffer.wrap(toBytes(json) ++ newLine))
-    val request = new PutRecordRequest().withDeliveryStreamName(deliveryStream).withRecord(record)
+    val request = new PutRecordRequest().withDeliveryStreamName(prebidAnalyticsStream).withRecord(record)
     val result  = firehose.putRecordFuture(request)
     result.failed foreach {
       case NonFatal(e) => log.error(s"Failed to put '$json'", e)

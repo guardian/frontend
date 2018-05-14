@@ -12,6 +12,15 @@ $sign-in-eb-vertical-mq: 36em;
     padding: 0 $sign-in-eb-padding;
 }
 
+.site-message--sign-in__overlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 10;
+}
+
 .site-message.site-message--sign-in-message {
     background: transparent;
     top: 0;
@@ -24,7 +33,6 @@ $sign-in-eb-vertical-mq: 36em;
         margin: auto;
     }
     .site-message__inner {
-        background: $color-sign-in-eb-main;
         color: $garnett-neutral-1;
         max-width: 310px;
         padding: 0;
@@ -38,11 +46,24 @@ $sign-in-eb-vertical-mq: 36em;
         max-width: 100%;
         padding: 0;
     }
+    .site-message--sign-in-container {
+        z-index: 11;
+        position: relative;
+        background: $color-sign-in-eb-main;
+    }
     .site-message__media {
         display: none;
     }
     .site-message__copy {
         padding: 0;
+    }
+    hr {
+        border: 0;
+        background: darken($garnett-neutral-4, 10%);
+        height: 1px;
+        display: block;
+        margin-top: $sign-in-eb-padding-vertical * 1.75;
+        margin-left: $sign-in-eb-padding;
     }
 }
 
@@ -54,18 +75,15 @@ $sign-in-eb-vertical-mq: 36em;
     }
 }
 
-.site-message--sign-in__header {
+.site-message.site-message--sign-in-message .site-message--sign-in__header {
     @include f-headline;
     @include sign-in-eb-content-area;
     position: relative;
-    &:after {
-        content: '';
-        background: darken($garnett-neutral-4, 10%);
-        position: absolute;
-        height: 1px;
-        bottom: 0;
-        right: 0;
-        left: $sign-in-eb-padding;
+    hr {
+        margin-left: 0;
+        margin-right: $sign-in-eb-padding * -1;
+        margin-bottom: 0;
+        margin-top: $sign-in-eb-padding-vertical * 2;
     }
     .site-message--sign-in__header-msg {
         &.site-message--sign-in__header-msg--main {
@@ -75,11 +93,26 @@ $sign-in-eb-vertical-mq: 36em;
             margin: 0 $sign-in-eb-padding*2.8 0 0; /*close button*/
         }
         &.site-message--sign-in__header-msg--sub {
-            line-height: 1;
+            line-height: 1.1;
             font-weight: 100;
             font-size: 120%;
-            padding: ($gs-gutter * .5) 0 $gs-gutter;
+            padding: $sign-in-eb-padding-vertical 0;
         }
+    }
+}
+
+.site-message--sign-in__radio {
+    @include fs-textSans(3);
+    display: block;
+    position: relative;
+    padding-left: 1.5em; /*going with native radio buttons here*/
+    padding-top: $sign-in-eb-padding-vertical/2;
+    padding-bottom: $sign-in-eb-padding-vertical/2;
+    input {
+        position: absolute;
+        top: $sign-in-eb-padding-vertical/1.5;
+        left: 0;
+        margin: 0;
     }
 }
 
@@ -100,6 +133,7 @@ a.site-message--sign-in-cta {
     justify-content: space-between;
     box-sizing: border-box;
     position: relative;
+    border: 0;
     transition: .25s;
     .inline-icon svg {
         position: absolute;
@@ -122,11 +156,14 @@ a.site-message--sign-in-cta {
 
 .site-message--sign-in__buttons {
     @include sign-in-eb-content-area;
-    display: grid;
-    grid-gap: $gs-gutter/4;
-    grid-template-columns: 1fr 1fr;
+    &:not(.site-message--sign-in__buttons--compact) {
+        display: grid;
+        grid-gap: $gs-gutter/4;
+        grid-template-columns: 1fr 1fr;
+    }
     .site-message--sign-in-cta {
         margin-bottom: $gs-gutter/4;
+        width: 100%;
     }
 }
 
@@ -170,6 +207,7 @@ a.site-message--sign-in__why {
     font-size: 95%;
     list-style: none;
     margin: 0 0 ($sign-in-eb-padding-vertical * 2);
+    border: 0;
     .site-message--sign-in__feature {
         position: relative;
         margin: 0 0 $gs-baseline;
