@@ -426,15 +426,4 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2018, 5, 25),
     exposeClientSide = true
   )
-
-  // Consider in six months' time whether there's value in having this switch available indefinitely
-  val noPersonalisedAds: Switch = Switch(
-    group = Commercial,
-    name = "no-personalised-ads",
-    description = "No personalised ads are served.",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 11, 14),
-    exposeClientSide = true
-  )
 }
