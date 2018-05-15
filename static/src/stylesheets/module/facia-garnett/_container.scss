@@ -462,7 +462,7 @@ $header-image-size-desktop: 100px;
 
         &:before {
             content: '';
-            background: url("https://s3-eu-west-1.amazonaws.com/uploads-origin.guim.co.uk/2018/05/15/heart.png");
+            background: url('https://s3-eu-west-1.amazonaws.com/uploads-origin.guim.co.uk/2018/05/15/heart.png');
             background-size: cover;
             display: block;
             position: absolute;
@@ -498,7 +498,7 @@ $header-image-size-desktop: 100px;
         }
 
         &:after {
-            content: "Republican?";
+            content: 'Republican?';
         }
 
         @include mq(tablet) {
@@ -523,7 +523,7 @@ $header-image-size-desktop: 100px;
     &.fc-container--rolled-up {
         .fc-container__toggle {
             &:after {
-                content: "Royalist?";
+                content: 'Royalist?';
 
             }
         }
