@@ -16,7 +16,11 @@ type MenuAndTriggerEls = {
 };
 
 const enhanced = {};
+const clickstreamListeners = {};
 const SEARCH_STORAGE_KEY = 'gu.recent.search';
+const MY_ACCOUNT_ID = 'my-account-toggle';
+const MENU_TOGGLE_ID = 'main-menu-toggle';
+const EDITION_PICKER_TOGGLE_ID = 'edition-picker-toggle';
 
 const getMenu = (): ?HTMLElement =>
     document.getElementsByClassName('js-main-menu')[0];
@@ -76,8 +80,6 @@ const toggleMenuSection = (section: HTMLElement): void => {
         closeMenuSection(section);
     }
 };
-
-const clickstreamListeners = {};
 
 const removeClickstreamListener = (menuId: string): void => {
     const clickHandler = clickstreamListeners[menuId];
@@ -284,6 +286,17 @@ const initiateUserAccountDropdown = (): void => {
                     toggleDropdown(userAccountDropdownEls)
                 );
             }
+
+            const { menu } = userAccountDropdownEls;
+
+            if (menu) {
+                menu.addEventListener('keyup', (event: KeyboardEvent): void => {
+                    if (event.key === 'Escape') {
+                        toggleDropdown(userAccountDropdownEls);
+                        returnFocusToButton(MY_ACCOUNT_ID);
+                    }
+                });
+            }
         });
 };
 
@@ -305,9 +318,6 @@ const toggleEditionPicker = (): void => {
         toggleDropdown(editionPickerDropdownEls);
     }
 };
-
-const MENU_TOGGLE_ID = 'main-menu-toggle';
-const EDITION_PICKER_TOGGLE_ID = 'edition-picker-toggle';
 
 const buttonClickHandlers = {
     [MENU_TOGGLE_ID]: toggleMenu,
