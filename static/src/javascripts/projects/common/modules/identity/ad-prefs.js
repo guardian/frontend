@@ -21,7 +21,7 @@ type ConsentRadioButtonProps = {
 };
 
 class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
-    handleChange(event): void {
+    handleChange(event: SyntheticInputEvent<HTMLInputElement>): void {
         if (event.target.checked) {
             this.props.onToggle();
         }
@@ -50,11 +50,13 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
     }
 }
 
+type ConsentBoxProps = { consent: AdConsent };
+
 class ConsentBox extends Component<
-    { consent: AdConsent },
+    ConsentBoxProps,
     { consentState: ?boolean }
 > {
-    constructor(props) {
+    constructor(props: ConsentBoxProps) {
         super(props);
         this.state = {
             consentState: getAdConsentState(this.props.consent),
