@@ -46,8 +46,6 @@ const show = (): void => {
 
 const init = (): void => {
     canShow().then(result => {
-        console.log('*** result ***', result);
-
         if (result) {
             show();
         }
