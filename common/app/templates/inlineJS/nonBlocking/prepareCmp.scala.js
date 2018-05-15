@@ -57,8 +57,8 @@ try {
                 };
                 cmp.config = {
                     globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
-                    storeConsentGlobally: true,
-                    storePublisherData: true,
+                    storeConsentGlobally: false,
+                    storePublisherData: false,
                     logging: 'debug',
                     gdprApplies: true,
                 }
