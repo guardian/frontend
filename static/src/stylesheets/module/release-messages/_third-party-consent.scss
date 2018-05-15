@@ -1,17 +1,32 @@
+%link {
+    text-decoration-color: hsla(0, 100%, 100%, .75);
+    &:hover {
+        text-decoration-color: currentColor;
+    }
+}
+
 .site-message--third-party-consent__button {
-    @include fs-textSans(2);
+    @include fs-textSans(3);
     @include circular;
     height: $btn-height;
     background: transparent;
     padding: 0 $gs-gutter;
-    color: #ffffff;
-    border: 1px solid rgba(#ffffff, .3);
     display: inline-block;
     display: inline-flex;
+    color: currentColor;
     vertical-align: middle;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
+
+    &.site-message--third-party-consent__button--link {
+        text-decoration: underline;
+        @extend %link;
+    }
+
+    &.site-message--third-party-consent__button--main {
+        border: 1px solid rgba(#ffffff, .3);
+    }
 }
 
 
@@ -34,6 +49,10 @@
     }
     .site-message--third-party-consent__intro {
         grid-area: intro;
+        a {
+            @extend %link;
+            color: currentColor;
+        }
     }
     .site-message--third-party-consent__actions {
         grid-area: buttons;
