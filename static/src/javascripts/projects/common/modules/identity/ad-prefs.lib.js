@@ -15,13 +15,13 @@ const thirdPartyTrackingAdConsent: AdConsent = {
 const allAdConsents: AdConsent[] = [thirdPartyTrackingAdConsent];
 
 const setAdConsentState = (provider: AdConsent, state: boolean): void => {
-    addCookie(provider.cookie, state.toString(), 365 * 6, true);
+    addCookie(provider.cookie, state ? '1' : '0', 365 * 6, true);
 };
 
 const getAdConsentState = (provider: AdConsent): ?boolean => {
     const cookie = getCookie(provider.cookie);
-    if (cookie === 'true') return true;
-    if (cookie === 'false') return false;
+    if (cookie === '1') return true;
+    if (cookie === '0') return false;
     return null;
 };
 
