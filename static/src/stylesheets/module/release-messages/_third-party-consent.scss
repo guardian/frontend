@@ -1,0 +1,41 @@
+.site-message--third-party-consent__button {
+    @include fs-textSans(2);
+    @include circular;
+    height: $btn-height;
+    background: transparent;
+    padding: 0 $gs-gutter;
+    color: #ffffff;
+    border: 1px solid rgba(#ffffff, .3);
+    display: inline-block;
+    display: inline-flex;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+
+.site-message.site-message--third-party-consent {
+    .site-message__media {
+        display: none;
+    }
+    .site-message__inner {
+        padding: 0;
+    }
+    .site-message__copy {
+        display: grid;
+        grid-template: 'intro buttons' 1fr / 1fr auto;
+        align-items: center;
+        margin: $gs-gutter / 2;
+        @mq(mobileLandscape) {
+            margin-left: $gs-gutter;
+            margin-right: $gs-gutter;
+        }
+    }
+    .site-message--third-party-consent__intro {
+        grid-area: intro;
+    }
+    .site-message--third-party-consent__actions {
+        grid-area: buttons;
+    }
+}
