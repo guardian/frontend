@@ -272,6 +272,23 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     });
 };
 
+const returnFocusToButton = (btnId: string): void => {
+    fastdom.read(() => document.getElementById(btnId)).then(btn => {
+        if (btn) {
+            btn.focus();
+            /**
+             * As we're closing the menu with the ESC key we no longer need the
+             * clickstream listener that toggles the menu on a click outside the menu
+             * so let's unregister it here
+             * */
+            const menuId = btn.getAttribute('aria-controls');
+            if (menuId) {
+                removeClickstreamListener(menuId);
+            }
+        }
+    });
+};
+
 const initiateUserAccountDropdown = (): void => {
     fastdom
         .read(() => ({
@@ -322,23 +339,6 @@ const toggleEditionPicker = (): void => {
 const buttonClickHandlers = {
     [MENU_TOGGLE_ID]: toggleMenu,
     [EDITION_PICKER_TOGGLE_ID]: toggleEditionPicker,
-};
-
-const returnFocusToButton = (btnId: string): void => {
-    fastdom.read(() => document.getElementById(btnId)).then(btn => {
-        if (btn) {
-            btn.focus();
-            /**
-             * As we're closing the menu with the ESC key we no longer need the
-             * clickstream listener that toggles the menu on a click outside the menu
-             * so let's unregister it here
-             * */
-            const menuId = btn.getAttribute('aria-controls');
-            if (menuId) {
-                removeClickstreamListener(menuId);
-            }
-        }
-    });
 };
 
 const menuKeyHandlers = {
