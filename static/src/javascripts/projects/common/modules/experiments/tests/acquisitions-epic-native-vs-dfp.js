@@ -4,7 +4,7 @@ import type { AdBlockEpicTemplate } from 'common/modules/commercial/contribution
 import { createSlots } from "commercial/modules/dfp/create-slots";
 
 const adSlotEpicTemplate: AdBlockEpicTemplate = (): HTMLElement => {
-    const adSlots = createSlots('comments', {});
+    const adSlots = createSlots('epic', {});
     return adSlots[0];
 };
 
