@@ -26,8 +26,13 @@
 .fc-container--story-package {
     background-color: $garnett-neutral-4;
 
-    &[data-component="six-by-nine"] .fc-container__toggle {
+    .fc-container__toggle {
+        display: none;
+    }
+
+    &[data-component='six-by-nine'] .fc-container__toggle {
         color: $garnett-neutral-1;
+        display: block;
 
         &:before {
             background: $news-garnett-highlight;

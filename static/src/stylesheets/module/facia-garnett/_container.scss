@@ -450,7 +450,6 @@ $header-image-size-desktop: 100px;
 }
 
 .fc-container__toggle {
-    background-color: pink;
     @include fs-textSans(3);
     min-height: gs-height(1);
     min-width: gs-span(1);
@@ -461,7 +460,7 @@ $header-image-size-desktop: 100px;
     background-color: transparent;
     color: #ffffff;
 
-    [data-component="headlines"] & {
+    [data-component='headlines'] & {
         // Ensures toggle is never visible in Headlines container
         display: none;
     }
