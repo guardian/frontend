@@ -20,7 +20,10 @@ import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
 import { Search } from 'common/modules/navigation/search';
-import { initMembership } from 'common/modules/navigation/membership';
+import {
+    initMembership,
+    membershipBanner,
+} from 'common/modules/navigation/membership';
 import {
     logHistory,
     logSummary,
@@ -279,6 +282,7 @@ const initialiseBanner = (): void => {
         breakingNews,
         optInEngagementBanner,
         signInEngagementBanner,
+        membershipBanner,
     ];
     initBannerPicker(bannerList);
 };
