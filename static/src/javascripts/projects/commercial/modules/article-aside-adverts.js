@@ -40,7 +40,7 @@ export const init = (start: () => void, stop: () => void): Promise<boolean> => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                     $adSlot[0].setAttribute(
                         'data-mobile',
-                        '1,1|2,2|300,250|fluid'
+                        '1,1|2,2|300,250|300,274|fluid'
                     );
                     return $adSlot[0];
                 });

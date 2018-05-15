@@ -7,7 +7,10 @@ import type {
     PrebidLabel,
     PrebidSlotLabel,
 } from 'commercial/modules/prebid/types';
-import { getBreakpointKey } from 'commercial/modules/prebid/utils';
+import {
+    getBreakpointKey,
+    getRandomIntInclusive,
+} from 'commercial/modules/prebid/utils';
 
 const slotLabels: PrebidSlotLabel[] = [];
 
@@ -51,5 +54,8 @@ switch (getCookie('GU_geo_continent')) {
     default:
     // do nothing
 }
+
+if (config.page.isDev || getRandomIntInclusive(1, 10) === 1)
+    bidLabels.push('deal-FirstLook');
 
 export const labels: PrebidLabel[] = slotLabels.concat(bidLabels);

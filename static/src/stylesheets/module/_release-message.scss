@@ -16,8 +16,8 @@
     left: 0;
     right: 0;
     top: 0;
-    background: $garnett-neutral-8;
-    opacity: .75;
+    background: $garnett-neutral-1;
+    opacity: .85;
     z-index: $zindex-popover - 1;
 }
 
@@ -1037,7 +1037,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 /* GDPR Opt-in alert
    ========================================================================== */
 .site-message--gdpr-opt-in {
-    background: #53bbd6;
+    background: #1e8dcd;
     color: #ffffff;
     box-shadow: inset 0 1px 0 0 hsla(0, 0%, 0%, .1);
     .site-message__copy {
@@ -1055,28 +1055,26 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .identity-gdpr-oi-alert {
-    display: flex;
-    align-items: stretch;
-    max-width: 100%;
-    margin-right: $gs-gutter/2;
+    margin: $gs-gutter / 4 0 $gs-gutter;
+    @include mq(mobileLandscape) {
+        padding: 0 $gs-gutter;
+    }
+    @include mq(phablet) {
+        display: flex;
+        max-width: none;
+        align-items: stretch;
+        margin-right: $gs-gutter/2;
+    }
 }
 
 .identity-gdpr-oi-alert__body {
-    margin: $gs-gutter / 4 $gs-gutter $gs-gutter / 1.25 $gs-gutter * 2;
-    max-width: gs-span(6);
     .identity-gdpr-oi-alert__cta-space {
         margin-left: -.1em;
         margin-right: -.1em;
     }
-    @include mq($until: tablet) {
-        flex: 1 1 0;
-        margin-left: $gs-gutter;
-    }
-    @include mq($until: mobile) {
-        margin-left: $gs-gutter / 2;
-        .identity-gdpr-oi-alert__cta-space {
-            margin-left: $gs-gutter * -.9;
-        }
+    @include mq(phablet) {
+        max-width: gs-span(6);
+        margin-left: $gs-gutter * 2;
     }
 }
 
@@ -1086,18 +1084,19 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     a {
         white-space: nowrap;
     }
-    @include mq(tablet) {
+    @include mq(phablet) {
         @include fs-bodyCopy(2, true);
     }
 }
 
 .identity-gdpr-oi-alert__logo {
-    margin-top: $gs-gutter / 4;
     overflow: hidden;
     position: relative;
-    width: 30%;
-    max-width: 140px;
-    min-height: 100px;
+    width: 180px;
+    display: block;
+    @include mq(phablet) {
+        max-width: gs-span(2.5);
+    }
     > img {
         width: 100%;
     }
@@ -1114,7 +1113,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             margin-bottom: 0;
         }
     }
-    @include mq(tablet) {
+    @include mq(phablet) {
         grid-auto-flow: column;
     }
 }

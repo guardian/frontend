@@ -47,7 +47,7 @@ import scala.concurrent.Future
     val httpConfiguration = HttpConfiguration.createWithDefaults()
 
     val userId: String = "123"
-    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
+    val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
     val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
@@ -188,7 +188,7 @@ import scala.concurrent.Future
       "reference the GDPR campaign" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape("Stay with us"))
+        contentAsString(result) should include (xml.Utility.escape("Missing Something?"))
       }
 
       "have consent checkboxes" in new ConsentsJourneyFixture {

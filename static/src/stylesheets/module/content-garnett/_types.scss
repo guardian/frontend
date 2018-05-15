@@ -361,6 +361,25 @@ $quote-mark: 35px;
         }
     }
 
+    // overrides for those in the LineHeightFontSize server-side test
+    .commercial-line-height & {
+        .content__standfirst {
+            font-size: 17px;
+            line-height: 22px;
+        }
+
+        .content__article-body {
+            font-size: 17px;
+            line-height: 24px;
+        }
+
+        // negative margin on these is currently based on inital
+        // font-size so we need to set this for the test duration.
+        .ad-slot--offset-right {
+            font-size: 16px;
+        }
+    }
+
     .media-primary {
         margin-bottom: 0;
         @include mq(tablet) {
@@ -834,6 +853,7 @@ $quote-mark: 35px;
 
     .content__head {
         overflow: hidden;
+
         @include mq(phablet) {
             overflow: visible;
         }
@@ -843,6 +863,7 @@ $quote-mark: 35px;
         background-image: none;
         padding-top: 0;
         margin-bottom: 0;
+
         @include mq(leftCol) {
             @include multiline(8, $garnett-neutral-4, 8);
             padding-top: $gs-baseline * 3;
@@ -854,8 +875,6 @@ $quote-mark: 35px;
     .meta__twitter,
     .meta__email,
     .content__dateline {
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -868,7 +887,7 @@ $quote-mark: 35px;
 
     .meta__twitter,
     .meta__email {
-        display: block;
+        //display: block;
         padding-top: 8px;
         // magic number used to align date stamp with Twitter handle
         margin-top: -3px;

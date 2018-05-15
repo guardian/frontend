@@ -10,7 +10,8 @@ $pillars: (
         headlineIcon: $news-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $news-garnett-main-1,
-        invertedKicker: $news-garnett-media-main-1
+        invertedKicker: $news-garnett-media-main-1,
+        liveColour: $live-garnett-main-2
     ),
     opinion: (
         cardBackground: $garnett-neutral-3,
@@ -23,7 +24,8 @@ $pillars: (
         headlineIcon: $opinion-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $opinion-garnett-main-1,
-        invertedKicker: $opinion-garnett-media-main-1
+        invertedKicker: $opinion-garnett-media-main-1,
+        liveColour: #ffffff
     ),
     sport: (
         cardBackground: $garnett-neutral-3,
@@ -36,7 +38,8 @@ $pillars: (
         headlineIcon: $sport-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $sport-garnett-feature,
-        invertedKicker: $sport-garnett-media-main-1
+        invertedKicker: $sport-garnett-media-main-1,
+        liveColour: $live-garnett-sport2
     ),
     arts: (
         cardBackground: $garnett-neutral-3,
@@ -49,7 +52,8 @@ $pillars: (
         headlineIcon: $culture-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $culture-garnett-main-1,
-        invertedKicker: $culture-garnett-media-main-1
+        invertedKicker: $culture-garnett-media-main-1,
+        liveColour: $live-garnett-culture2
     ),
     lifestyle: (
         cardBackground: $garnett-neutral-3,
@@ -62,7 +66,8 @@ $pillars: (
         headlineIcon: $lifestyle-garnett-main-1,
         metaText: $garnett-neutral-2,
         cutoutBackground: $lifestyle-garnett-feature,
-        invertedKicker: $lifestyle-garnett-media-main-1
+        invertedKicker: $lifestyle-garnett-media-main-1,
+        liveColour: $live-garnett-lifestyle2
     ),
     special-report: (
         cardBackground: $story-package-garnett,
@@ -75,7 +80,8 @@ $pillars: (
         headlineIcon: $story-package-garnett,
         metaText: $garnett-neutral-2,
         cutoutBackground: $news-garnett-highlight,
-        invertedKicker: $news-garnett-highlight
+        invertedKicker: $news-garnett-highlight,
+        liveColour: #ffffff
     )
 );
 
@@ -119,25 +125,46 @@ $pillars: (
         color: map-get($palette, kicker);
     }
 
+    &.fc-item--half-tablet.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
+    &.fc-item--third-tablet.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
+    &.fc-item--three-quarters-tablet.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
+    &.fc-item--third-tablet.fc-item--type-immersive.fc-item--has-boosted-title  {
+        .fc-item__content {
+            background-color: map-get($palette, kicker);
+        }
+
+        &:hover {
+            .fc-item__content {
+                background-color: darken(map-get($palette, kicker), 5%);
+            }
+        }
+    }
+
     //this is to make the colour lighter for the media cards
     &.fc-item--audio .fc-item__kicker,
     &.fc-item--gallery .fc-item__kicker,
     &.fc-item--video .fc-item__kicker,
     &.video-playlist__item .fc-item__kicker,
-    &.fc-item--type-immersive .fc-item__kicker,
-    &.fc-item--type-immersive .fc-item__byline
+    &.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__byline
     {
         color: map-get($palette, invertedKicker);
     }
 
 
-    &.fc-item--type-media .fc-item__headline .inline-garnett-quote,
-    &.fc-item--type-immersive .fc-item__headline .inline-garnett-quote {
+    &.fc-item--type-media .fc-item__headline .inline-garnett-quote {
         fill: map-get($palette, invertedKicker);
     }
 
-    &.fc-item--list-media-mobile.fc-item--type-immersive .fc-item__kicker,
-    &.fc-item--list-mobile.fc-item--type-immersive .fc-item__kicker
+    &.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__headline .inline-garnett-quote {
+        fill: map-get($palette, liveColour);
+    }
+
+    &.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__byline {
+        color: map-get($palette, liveColour);
+    }
+
+    &.fc-item--list-media-mobile.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker,
+    &.fc-item--list-mobile.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker
     {
         color: map-get($palette, kicker);
         @include mq($from: tablet) {
@@ -145,23 +172,23 @@ $pillars: (
         }
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive .fc-item__kicker,
-    &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__kicker,
-    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__kicker
+    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker,
+    &.fc-item--list-media-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker,
+    &.fc-item--list-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker
     {
         color: map-get($palette, kicker);
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive:not(.fc-item--pillar-special-report) .fc-item__standfirst {
+    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title:not(.fc-item--pillar-special-report) .fc-item__standfirst {
         color: $garnett-neutral-1;
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive .inline-icon,
-    &.fc-item--standard-tablet.fc-item--type-immersive .fc-item__meta,
-    &.fc-item--list-media-tablet.fc-item--type-immersive .inline-icon,
-    &.fc-item--list-media-tablet.fc-item--type-immersive .fc-item__meta,
-    &.fc-item--list-tablet.fc-item--type-immersive .inline-icon,
-    &.fc-item--list-tablet.fc-item--type-immersive .fc-item__meta
+    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon,
+    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__meta,
+    &.fc-item--list-media-tablet.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon,
+    &.fc-item--list-media-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__meta,
+    &.fc-item--list-tablet.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon,
+    &.fc-item--list-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__meta
     {
         fill: $garnett-neutral-6;
         color: $garnett-neutral-6;

@@ -17,7 +17,11 @@ jQuery(function($){
             return dom;
         })(),
         hints = {
-            teamID: [
+            teamId: [
+                {
+                    label: "England",
+                    value: "497"
+                },
                 {
                     label: "Spurs",
                     value: "19"
@@ -39,7 +43,7 @@ jQuery(function($){
                     value: "31"
                 }
             ],
-            playerID: [
+            playerId: [
                 {
                     label: "Joe Hart",
                     value: "Joe_Hart"
@@ -49,22 +53,28 @@ jQuery(function($){
                     value: "237670"
                 }
             ],
-            matchID: [{
-                label: "Swansea v Spurs, 19/01/2014",
-                value: "3684146"
+            matchId: [{
+                label: "Stoke v Spurs, 07/04/2018",
+                value: "3998945"
             }],
-            managerID: [{
+            managerId: [{
                 label: "Andre Villas-Boas",
                 value: "468795"
             }],
-            seasonID: [{
-                label: "Premier league 2013/14",
-                value: "785"
+            seasonId: [{
+                label: "Premier league 17/18",
+                value: "4578"
             }],
-            competitionID: [{
-                label: "Premier league 2013/14",
-                value: "100"
-            }],
+            competitionId: [
+                {
+                    label: "Premier league",
+                    value: "100"
+                },
+                {
+                    label: "World Cup",
+                    value: "700"
+                }
+            ],
             type: [
                 {
                     label: "Strikers",
@@ -91,7 +101,10 @@ jQuery(function($){
         currentFields = {},
         createReplacements = function() {
             var r = /({.*?})/g,
-                query = dom.query.val(),
+                query = dom.query.val()
+                    // replace to convert new-style in PA docs `:key`
+                    // to old-style `{key}` supported by this tool
+                    .replace(/:([^\/]+)/g, "{$1}"),
                 fields = $.map(query.match(r), function(field){
                     return field.replace("{", "").replace("}", "");
                 }).filter(function(field){
@@ -139,7 +152,7 @@ jQuery(function($){
         setTimeout(createReplacements, 10);
     });
     dom.form.on("submit", function() {
-        dom.query.val(dom.query.val().replace("{", "%7B").replace("}", "%7D"));
+        dom.query.val(dom.query.val().replace(/:([^\/]+)/g, "{$1}").replace("{", "%7B").replace("}", "%7D"));
     });
     dom.parameters.on("click", ".hint", function(e) {
         e.preventDefault();

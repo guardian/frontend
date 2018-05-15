@@ -3,7 +3,6 @@
 export type PrebidSonobiParams = {
     ad_unit: string,
     dom_id: string,
-    floor: number,
     appNexusTargeting: string,
     pageViewId: string,
 };
@@ -45,7 +44,7 @@ export type PrebidSlotLabel =
     | 'article'
     | 'non-article';
 
-export type PrebidBidLabel = 'edn-UK' | 'edn-INT' | 'geo-NA';
+export type PrebidBidLabel = 'edn-UK' | 'edn-INT' | 'geo-NA' | 'deal-FirstLook';
 
 export type PrebidLabel = PrebidSlotLabel | PrebidBidLabel;
 

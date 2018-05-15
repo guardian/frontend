@@ -12,15 +12,14 @@ type Template = {
 
 type LinkTargets = {
     landing: string,
-    journey: string,
 };
 
 const makeTemplateHtml = (template: Template, targets: LinkTargets): string => `
     <div id="site-message__message">
         <div class="site-message__message identity-gdpr-oi-alert">
             <a class="identity-gdpr-oi-alert__logo" target="_blank" href="${
-                targets.journey
-            }" data-link-name="gdpr-oi-campaign : alert : to-consents : img">
+                targets.landing
+            }" data-link-name="gdpr-oi-campaign : alert : to-landing-img">
                 <img src="${template.image}" alt="Stay with us" />
             </a>
             <div class="identity-gdpr-oi-alert__body">

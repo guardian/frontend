@@ -3,13 +3,20 @@ import { adSizes } from 'commercial/modules/ad-sizes';
 
 const inlineDefinition = {
     sizeMappings: {
-        mobile: [adSizes.outOfPage, adSizes.empty, adSizes.mpu, adSizes.fluid],
+        mobile: [
+            adSizes.outOfPage,
+            adSizes.empty,
+            adSizes.mpu,
+            adSizes.googleCard,
+            adSizes.fluid,
+        ],
         desktop: [
             adSizes.outOfPage,
             adSizes.empty,
             adSizes.mpu,
             adSizes.video,
             adSizes.video2,
+            adSizes.googleCard,
             adSizes.fluid,
         ],
     },
@@ -129,6 +136,7 @@ const createAdSlotElements = (
     adSlot.className = `js-ad-slot ad-slot ${classes.join(' ')}`;
     adSlot.setAttribute('data-link-name', `ad slot ${name}`);
     adSlot.setAttribute('data-name', name);
+    adSlot.setAttribute('aria-hidden', 'true');
     Object.keys(attrs).forEach(attr => {
         adSlot.setAttribute(attr, attrs[attr]);
     });
@@ -144,6 +152,7 @@ const createAdSlotElements = (
         blockthroughAdSlot.className = 'bt-uid-tg';
         blockthroughAdSlot.setAttribute('uid', blockthroughUid);
         blockthroughAdSlot.setAttribute('style', 'display: none !important');
+        blockthroughAdSlot.setAttribute('aria-hidden', 'true');
 
         adSlots.push(blockthroughAdSlot);
     }
