@@ -16,8 +16,8 @@ const bindableClassNames = {
 };
 
 const templateHtml = `
-    <div class="site-message--third-party-consent__intro">${text.consent}</div>
-    <div class="site-message--third-party-consent__actions">
+    <div class="site-message--third-party-consent__block site-message--third-party-consent__intro">${text.consent}</div>
+    <div class="site-message--third-party-consent__block site-message--third-party-consent__actions">
         <a href="#" class="site-message--third-party-consent__button site-message--third-party-consent__button--link ${bindableClassNames.choices}">${text.choicesButton}</a>
         <button class="site-message--third-party-consent__button site-message--third-party-consent__button--main ${bindableClassNames.agree}">${text.agreeButton}</button>
     </div>
