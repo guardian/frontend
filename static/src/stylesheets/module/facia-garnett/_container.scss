@@ -104,6 +104,7 @@ $header-image-size-desktop: 100px;
 
 .fc-container__header {
     @include mq($until: leftCol) {
+        overflow: hidden;
 
         .fc-container__header__title {
             float: left;
@@ -437,7 +438,7 @@ $header-image-size-desktop: 100px;
         clear: left;
     }
 
-    .fc-container--will-have-toggle &, .fc-container--has-toggle &, .fc-container--first.fc-container--will-have-toggle, .fc-container--first.fc-container--has-toggle {
+    .fc-container--will-have-toggle &, .fc-container--has-toggle & {
         @include mq(leftCol, wide) {
             padding-top: gs-height(1);
         }
@@ -449,12 +450,102 @@ $header-image-size-desktop: 100px;
     transition: opacity .25s linear; // Used to fade-in new updates
 }
 
+
+
+[data-component='the-lives-of-grenfell-tower'] {
+    &.fc-container--story-package {
+        background: #ffd9e1;
+    }
+
+    .fc-item__avatar {
+        border-radius: 0;
+
+        &:before {
+            content: '';
+            background: url("https://s3-eu-west-1.amazonaws.com/uploads-origin.guim.co.uk/2018/05/15/heart.png");
+            background-size: cover;
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+    }
+
+    @include mq($until: tablet) {
+        .fc-container__header__title {
+            padding-right: 100px;
+        }
+    }
+
+    .fc-container__toggle {
+        background-color: $lifestyle-garnett-media-main-1;
+        border-radius: 24px;
+        color: $garnett-neutral-1;
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        min-height: 24px;
+        line-height: 18px !important;
+        min-width: auto;
+        padding: 0 10px;
+        top: $gs-baseline / 2;
+
+        .fc-container__toggle__text,
+        .inline-arrow {
+            display: none;
+        }
+
+        &:after {
+            content: "Republican?";
+        }
+
+        @include mq(tablet) {
+            top: 2px;
+            left: gs-span(9);
+            transform: translateX(-100%);
+        }
+
+        @include mq(desktop) {
+            left: gs-span(12);
+        }
+
+        @include mq(leftCol) {
+            left: gs-span(14);
+        }
+
+        @include mq(wide) {
+            left: gs-span(16) + 12px;
+        }
+    }
+
+    &.fc-container--rolled-up {
+        .fc-container__toggle {
+            &:after {
+                content: "Royalist?";
+
+            }
+        }
+
+        .fc-container__header__title {
+            .fc-container__title__text {
+                display: none;
+            }
+
+            a:after {
+                content: "Nothing to see here";
+            }
+        }
+    }
+}
+
 .fc-container__toggle {
     @include fs-textSans(3);
     min-height: gs-height(1);
     min-width: gs-span(1);
     position: absolute;
-    top: -$gs-baseline / 2;
+    top: -3px;
     right: 0;
     border: 0;
     background-color: transparent;
@@ -479,7 +570,7 @@ $header-image-size-desktop: 100px;
     }
 
     @include mq(tablet) {
-        text-align: center;
+        text-align: right;
         color: $neutral-2;
 
         .fc-container--paid-content & {
@@ -512,8 +603,8 @@ $header-image-size-desktop: 100px;
 
 .fc-container__toggle__text {
     display: none;
-    margin-top: -$gs-baseline / 4;
     position: relative;
+    top: -2px;
 }
 
 .fc-container--media {

@@ -23,28 +23,11 @@
     }
 }
 
-.fc-container--story-package {
+.fc-container--story-package:not([data-component='the-lives-of-grenfell-tower']) {
     background-color: $garnett-neutral-4;
 
     .fc-container__toggle {
         display: none;
-    }
-
-    &[data-component='six-by-nine'] .fc-container__toggle {
-        color: $garnett-neutral-1;
-        display: block;
-
-        &:before {
-            background: $news-garnett-highlight;
-            border-radius: 50%;
-            bottom: $gs-baseline / 4;
-            content: '';
-            display: block;
-            left: 0;
-            height: 60px;
-            width: 60px;
-            position: absolute;
-        }
     }
 
     .fc-container__header__title {
