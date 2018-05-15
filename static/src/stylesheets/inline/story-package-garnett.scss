@@ -26,6 +26,22 @@
 .fc-container--story-package {
     background-color: $garnett-neutral-4;
 
+    &[data-component="six-by-nine"] .fc-container__toggle {
+        color: $garnett-neutral-1;
+
+        &:before {
+            background: $news-garnett-highlight;
+            border-radius: 50%;
+            bottom: $gs-baseline / 4;
+            content: '';
+            display: block;
+            left: 0;
+            height: 60px;
+            width: 60px;
+            position: absolute;
+        }
+    }
+
     .fc-container__header__title {
         padding-left: calc((#{$gs-baseline} / 2) - 2px);
         margin-bottom: $gs-baseline / 2;
@@ -59,6 +75,9 @@
         }
     }
 
+    .fc-container__inner {
+        border-top: 0;
+    }
 
     //These need to be this specific as elsewhere in pillars.scss these are targeted using 3 selectors
     .fc-item,
