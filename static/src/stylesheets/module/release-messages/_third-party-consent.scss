@@ -1,5 +1,8 @@
+$underline: hsla(0, 100%, 100%, .75);
+
 %link {
-    text-decoration-color: hsla(0, 100%, 100%, .75);
+    text-decoration: underline;
+    text-decoration-color: $underline;
     &:hover {
         text-decoration-color: currentColor;
     }
@@ -20,12 +23,14 @@
     cursor: pointer;
 
     &.site-message--third-party-consent__button--link {
-        text-decoration: underline;
         @extend %link;
     }
 
     &.site-message--third-party-consent__button--main {
-        border: 1px solid rgba(#ffffff, .3);
+        border: 1px solid $underline;
+        &:hover {
+            border-color: currentColor;
+        }
     }
 }
 
