@@ -14,22 +14,21 @@ import { Message } from 'common/modules/ui/message';
 
 const EU_COOKIE_MSG = 'GU_EU_MSG';
 
-const canShow = (): Promise<boolean> =>
-    new Promise(resolve => {
-        const geoContinentCookie = getCookie('GU_geo_continent');
+const canShow = (): Promise<boolean> => {
+    const geoContinentCookie = getCookie('GU_geo_continent');
 
-        if (!geoContinentCookie || geoContinentCookie.toUpperCase() !== 'EU') {
-            resolve(false);
-        }
+    if (!geoContinentCookie || geoContinentCookie.toUpperCase() !== 'EU') {
+        return Promise.resolve(false);
+    }
 
-        const euMessageCookie = getCookie(EU_COOKIE_MSG);
+    const euMessageCookie = getCookie(EU_COOKIE_MSG);
 
-        if (euMessageCookie && euMessageCookie === 'seen') {
-            resolve(false);
-        } else {
-            resolve(true);
-        }
-    });
+    if (euMessageCookie && euMessageCookie === 'seen') {
+        return Promise.resolve(false);
+    }
+
+    return Promise.resolve(true);
+};
 
 const show = (): void => {
     const link = 'https://www.theguardian.com/info/cookies';
@@ -47,6 +46,8 @@ const show = (): void => {
 
 const init = (): void => {
     canShow().then(result => {
+        console.log('*** result ***', result);
+
         if (result) {
             show();
         }
