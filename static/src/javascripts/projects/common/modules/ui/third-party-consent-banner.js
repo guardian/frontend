@@ -5,8 +5,8 @@ import {
     getAdConsentState,
     setAdConsentState,
     allAdConsents,
-} from 'common/modules/identity/ad-prefs.lib';
-import type { AdConsent } from '../identity/ad-prefs.lib';
+} from 'common/modules/commercial/ad-prefs.lib';
+import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 
 type Template = {
     consentText: string,
