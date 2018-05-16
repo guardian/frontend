@@ -1,7 +1,7 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import type { AdBlockEpicTemplate } from 'common/modules/commercial/contributions-utilities';
-import { createSlots } from "commercial/modules/dfp/create-slots";
+import { createSlots } from 'commercial/modules/dfp/create-slots';
 
 // The adblockInUse boolean in detect.js is (necessarily) a promise.
 // This does not interact well with the synchronous canRun() function expected by the AB testing framework.
@@ -29,9 +29,11 @@ export const acquisitionsEpicNativeVsDfp = makeABTest({
     start: '2018-05-16', // TODO: update
     expiry: '2018-05-19', // TODO: update
     author: 'Guy Dawson',
-    description: 'See if there is any difference in annualised value between serving the Epic natively vs DFP',
+    description:
+        'See if there is any difference in annualised value between serving the Epic natively vs DFP',
     successMeasure: 'AV2.0',
-    idealOutcome: 'There is no difference between these two methods of serving the Epic',
+    idealOutcome:
+        'There is no difference between these two methods of serving the Epic',
     audienceCriteria: 'All',
     audience: 1, // TODO: update
     audienceOffset: 0, // TODO: update
@@ -49,8 +51,8 @@ export const acquisitionsEpicNativeVsDfp = makeABTest({
             products: ['CONTRIBUTION'],
             options: {
                 isUnlimited: true, // TODO: remove
-                adSlotEpicTemplate: adSlotEpicTemplate,
+                adSlotEpicTemplate,
             },
-        }
-    ]
+        },
+    ],
 });

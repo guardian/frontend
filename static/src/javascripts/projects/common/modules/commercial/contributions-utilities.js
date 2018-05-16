@@ -289,7 +289,7 @@ const makeABTestVariant = (
                 copyPromise
                     .then((copy: AcquisitionsEpicTemplateCopy) => {
                         if (this.options.isAdSlot) {
-                            return this.options.adSlotEpicTemplate()
+                            return this.options.adSlotEpicTemplate();
                         }
                         const renderTemplate: EpicTemplate =
                             templateFn ||
@@ -297,9 +297,7 @@ const makeABTestVariant = (
                         return renderTemplate(this, copy);
                     })
                     .then(renderedTemplate => {
-
                         const component = $.create(renderedTemplate);
-
 
                         mediator.emit('register:begin', trackingCampaignId);
 
@@ -310,7 +308,6 @@ const makeABTestVariant = (
                             );
 
                             if (targets.length > 0) {
-
                                 if (insertAfter) {
                                     component.insertAfter(targets);
                                 } else {
@@ -318,7 +315,7 @@ const makeABTestVariant = (
                                 }
 
                                 if (this.options.isAdSlot) {
-                                    addSlot(component.get(0), true)
+                                    addSlot(component.get(0), true);
                                 }
 
                                 mediator.emit(parentTest.insertEvent, {
