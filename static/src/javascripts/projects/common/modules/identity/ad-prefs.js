@@ -7,8 +7,8 @@ import {
     getAdConsentState,
     setAdConsentState,
     allAdConsents,
-} from './ad-prefs.lib';
-import type { AdConsent } from './ad-prefs.lib';
+} from 'common/modules/commercial/ad-prefs.lib';
+import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
 
