@@ -20,9 +20,9 @@ type BindableClassNames = {
 };
 
 const template: Template = {
-    consentText: `Welcome to The Guardian. We use cookies, tracking & other technologies.`,
+    consentText: `Do you agree to the use of cookies on our website and the sharing of data with our partners to see ads that are more relevant to you? You can learn more in our updated privacy policy and cookie policy, effective 25 May 2018.`,
     agreeButton: 'I agree',
-    choicesButton: 'More choices',
+    choicesButton: 'Show me more options',
     linkToPreferences: `${config.get('page.idUrl')}/adverts/manage`,
 };
 
@@ -37,9 +37,9 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     <div class="site-message--third-party-consent__block site-message--third-party-consent__actions">
         <a href="${
             tpl.linkToPreferences
-        }" class="site-message--third-party-consent__button site-message--third-party-consent__button--link ${
-    bindableClassNames.choices
-}">${tpl.choicesButton}</a>
+        }" class="site-message--third-party-consent__button site-message--third-party-consent__button--link">${
+    tpl.choicesButton
+}</a>
         <button class="site-message--third-party-consent__button site-message--third-party-consent__button--main ${
             classes.agree
         }">${tpl.agreeButton}</button>
