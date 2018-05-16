@@ -1,10 +1,14 @@
-$underline: hsla(0, 100%, 100%, .75);
+$underline: hsla(0, 100%, 100%, .5);
 
 %link {
     text-decoration: underline;
     text-decoration-color: $underline;
+    color: currentColor;
     &:hover {
         text-decoration-color: currentColor;
+    }
+    &:active {
+        color: currentColor;
     }
 }
 

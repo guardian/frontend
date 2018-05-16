@@ -5,7 +5,7 @@ import { Message } from 'common/modules/ui/message';
 const canShow: Promise<boolean> = () => Promise.resolve(true);
 
 const text = {
-    consent: 'We use cookies & ads & <a href="#">all that</a> jazz.',
+    consent: 'Welcome to The Guardian. We use cookies & <a href="#">third party tracking</a> & other technologies.',
     agreeButton: 'I agree',
     choicesButton: 'More choices',
 };
