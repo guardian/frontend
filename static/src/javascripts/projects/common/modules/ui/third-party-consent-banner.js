@@ -1,44 +1,65 @@
 // @flow
 import config from 'lib/config';
 import { Message } from 'common/modules/ui/message';
+import {
+    getAdConsentState,
+    setAdConsentState,
+    allAdConsents,
+} from 'common/modules/identity/ad-prefs.lib';
+import type { AdConsent } from '../identity/ad-prefs.lib';
 
-const linkToPreferences = `${config.get('page.idUrl')}/adverts/manage`;
+type Template = {
+    consentText: string,
+    agreeButton: string,
+    choicesButton: string,
+    linkToPreferences: string,
+};
 
-const text = {
-    consent: `Welcome to The Guardian. We use cookies & <a href="${
-        linkToPreferences
-    }">third party tracking</a> & other technologies.`,
+type BindableClassNames = {
+    agree: string,
+};
+
+const template: Template = {
+    consentText: `Welcome to The Guardian. We use cookies, tracking & other technologies.`,
     agreeButton: 'I agree',
     choicesButton: 'More choices',
+    linkToPreferences: `${config.get('page.idUrl')}/adverts/manage`,
 };
 
-const bindableClassNames = {
+const bindableClassNames: BindableClassNames = {
     agree: 'js-third-party-consent-agree',
-    choices: 'js-third-party-consent-choices',
 };
 
-const templateHtml = `
+const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     <div class="site-message--third-party-consent__block site-message--third-party-consent__intro">${
-        text.consent
+        tpl.consentText
     }</div>
     <div class="site-message--third-party-consent__block site-message--third-party-consent__actions">
-        <a href="#" class="site-message--third-party-consent__button site-message--third-party-consent__button--link ${
-            bindableClassNames.choices
-        }">${text.choicesButton}</a>
+        <a href="${
+            tpl.linkToPreferences
+        }" class="site-message--third-party-consent__button site-message--third-party-consent__button--link ${
+    bindableClassNames.choices
+}">${tpl.choicesButton}</a>
         <button class="site-message--third-party-consent__button site-message--third-party-consent__button--main ${
-            bindableClassNames.agree
-        }">${text.agreeButton}</button>
+            classes.agree
+        }">${tpl.agreeButton}</button>
     </div>
 `;
 
-const onAgree = msg => {
-    alert('thanks!');
+const onAgree = (msg: Message): void => {
+    allAdConsents.forEach(_ => {
+        setAdConsentState(_, true);
+    });
     msg.hide();
 };
 
-const canShow: Promise<boolean> = () => Promise.resolve(true);
+const hasUnsetAdChoices = (): boolean =>
+    allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
 
-const show = (): boolean => {
+const canShow = (): Promise<boolean> =>
+    Promise.resolve([hasUnsetAdChoices()].every(_ => _ === true));
+
+const show = (): void => {
     const msg = new Message('third-party-consent', {
         important: true,
         permanent: true,
@@ -50,8 +71,7 @@ const show = (): boolean => {
             });
         },
     });
-    msg.show(templateHtml);
-    return true;
+    msg.show(makeHtml(template, bindableClassNames));
 };
 
 const init = (): Promise<void> =>

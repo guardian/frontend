@@ -286,11 +286,10 @@ const initialiseEmail = (): void => {
 const showFirstVisitBanner = (): void => {
     if (config.get('switches.idAdConsents', false)) {
         initThirdPartyConsentBanner();
-    }
-    else {
+    } else {
         cookiesBanner.init();
     }
-}
+};
 
 const init = (): void => {
     catchErrorsWithContext([
