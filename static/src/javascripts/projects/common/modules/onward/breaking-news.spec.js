@@ -1,5 +1,5 @@
 // @flow
-import breakingNews from 'common/modules/onward/breaking-news';
+import { breakingNews } from 'common/modules/onward/breaking-news';
 import { local as localStorageStub } from 'lib/storage';
 
 jest.mock('lib/storage', () => ({

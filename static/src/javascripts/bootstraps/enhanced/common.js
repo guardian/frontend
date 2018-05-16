@@ -34,9 +34,9 @@ import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-pr
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
-import { init as initCookiesBanner } from 'common/modules/ui/cookiesBanner';
+import { cookiesBanner } from 'common/modules/ui/cookiesBanner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
-import { init as initCustomSmartAppBanner } from 'common/modules/ui/smartAppBanner';
+import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
@@ -46,7 +46,7 @@ import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
-import breakingNews from 'common/modules/onward/breaking-news';
+import { breakingNews } from 'common/modules/onward/breaking-news';
 import { optInEngagementBanner } from 'common/modules/identity/global/opt-in-engagement-banner.js';
 
 import ophan from 'ophan/ng';
@@ -279,7 +279,9 @@ const initialiseEmail = (): void => {
 const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
+        cookiesBanner,
         breakingNews,
+        smartAppBanner,
         optInEngagementBanner,
         signInEngagementBanner,
         membershipBanner,
@@ -291,7 +293,6 @@ const init = (): void => {
     catchErrorsWithContext([
         // Analytics comes at the top. If you think your thing is more important then please think again...
         ['c-analytics', loadAnalytics],
-        ['c-cookies-banner', initCookiesBanner],
         ['c-identity', initIdentity],
         ['c-adverts', requestUserSegmentsFromId],
         ['c-discussion', initDiscussion],
@@ -309,7 +310,6 @@ const init = (): void => {
         ['c-id-cookie-refresh', idCookieRefresh],
         ['c-history-nav', showHistoryInMegaNav],
         ['c-start-register', startRegister],
-        ['c-smart-banner', initCustomSmartAppBanner],
         ['c-adblock', showAdblockMessage],
         ['c-cookies', cleanupCookies],
         ['c-localStorage', cleanupLocalStorage],

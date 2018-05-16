@@ -14,6 +14,7 @@ import { inlineSvg } from 'common/views/svgs';
 import alertHtml from 'raw-loader!common/views/breaking-news.html';
 import flatten from 'lodash/arrays/flatten';
 import pick from 'lodash/objects/pick';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 let alertToShow;
 
@@ -220,8 +221,10 @@ const canShow = (): Promise<boolean> =>
         }
     });
 
-export default {
-    id: 'breakingNews',
+const breakingNews: Banner = {
+    id: 'breakingNewsBanner',
     show,
     canShow,
 };
+
+export { breakingNews };
