@@ -104,7 +104,7 @@ const adSlotDefinitions = {
         },
     },
     epic: {
-        label: true,
+        label: false,
         refresh: false,
         name: 'epic',
         sizeMappings: {
