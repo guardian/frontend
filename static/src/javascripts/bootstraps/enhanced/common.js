@@ -32,6 +32,7 @@ import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
 import { init as initCookiesBanner } from 'common/modules/ui/cookiesBanner';
+import { init as initFirstPvConsentBanner } from 'common/modules/ui/first-pv-consent-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initCustomSmartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
@@ -282,11 +283,19 @@ const initialiseEmail = (): void => {
     });
 };
 
+const showFirstVisitBanner = (): void => {
+    if (config.get('switches.idAdConsents', false)) {
+        initFirstPvConsentBanner();
+    } else {
+        initCookiesBanner();
+    }
+};
+
 const init = (): void => {
     catchErrorsWithContext([
         // Analytics comes at the top. If you think your thing is more important then please think again...
         ['c-analytics', loadAnalytics],
-        ['c-cookies-banner', initCookiesBanner],
+        ['c-first-visit-banner', showFirstVisitBanner],
         ['c-identity', initIdentity],
         ['c-adverts', requestUserSegmentsFromId],
         ['c-discussion', initDiscussion],
