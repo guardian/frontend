@@ -3,7 +3,6 @@
 import qwery from 'qwery';
 
 import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
 import fastdom from 'lib/fastdom-promise';
 import { loadScript } from 'lib/load-script';
 import raven from 'lib/raven';
@@ -37,6 +36,10 @@ import { init as resize } from 'commercial/modules/messenger/resize';
 import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
+import {
+    getAdConsentState,
+    thirdPartyTrackingAdConsent,
+} from 'common/modules/identity/ad-prefs.lib';
 
 initMessenger(
     type,
@@ -68,9 +71,10 @@ const setDfpListeners = (): void => {
 };
 
 const setPersonalisedAds = (): void => {
-    const cookieName = 'GU_PERSONALISED_ADS_GOOGLE';
     if (config.switches.includePersonalisedAdsConsent) {
-        const personalised = getCookie(cookieName) !== 'false';
+        // everything except an explicit non-consent gives personalised ads
+        const personalised =
+            getAdConsentState(thirdPartyTrackingAdConsent) !== false;
         window.googletag
             .pubads()
             .setRequestNonPersonalizedAds(personalised ? 0 : 1);
