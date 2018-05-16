@@ -103,27 +103,27 @@ object KnockoutSpider {
   // If the dates of the matches don't line up with the ordering dates, the ordering will be ignored.
   val orderings: Map[String, List[DateTime]] = Map(
     // world cup 2018
-    "700" -> List(
-      new DateTime(2018, 6, 30, 19, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044557
-      new DateTime(2018, 6, 30, 15, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044556
-      new DateTime(2018, 7,  2, 15, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044560
-      new DateTime(2018, 7,  2, 19, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044561
-      new DateTime(2018, 7,  1, 15, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044558
-      new DateTime(2018, 7,  1, 19, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044559
-      new DateTime(2018, 7,  3, 17, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044562
-      new DateTime(2018, 7,  3, 19, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044563
-
-      new DateTime(2018, 7,  6, 15, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044564
-      new DateTime(2018, 7,  6, 19, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044565
-      new DateTime(2018, 7,  7, 15, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044566
-      new DateTime(2018, 7,  7, 19, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044567
-
-      new DateTime(2018, 7, 10, 19, 0, DateTimeZone.forID("Europe/London")), // Semi-Final 4044568
-      new DateTime(2018, 7, 11, 19, 0, DateTimeZone.forID("Europe/London")), // Semi-Final 4044569
-
-      new DateTime(2018, 7, 14, 15, 0, DateTimeZone.forID("Europe/London")), // 3rd/4th Play-Offs 4044570
-      new DateTime(2018, 7, 15, 16, 0, DateTimeZone.forID("Europe/London"))  // Final 4044571
-    )
+//    "700" -> List(
+//      new DateTime(2018, 6, 30, 19, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044557
+//      new DateTime(2018, 6, 30, 15, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044556
+//      new DateTime(2018, 7,  2, 15, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044560
+//      new DateTime(2018, 7,  2, 19, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044561
+//      new DateTime(2018, 7,  1, 15, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044558
+//      new DateTime(2018, 7,  1, 19, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044559
+//      new DateTime(2018, 7,  3, 17, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044562
+//      new DateTime(2018, 7,  3, 19, 0, DateTimeZone.forID("Europe/London")), // Round of 16 4044563
+//
+//      new DateTime(2018, 7,  6, 15, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044564
+//      new DateTime(2018, 7,  6, 19, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044565
+//      new DateTime(2018, 7,  7, 15, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044566
+//      new DateTime(2018, 7,  7, 19, 0, DateTimeZone.forID("Europe/London")), // Quarter Final 4044567
+//
+//      new DateTime(2018, 7, 10, 19, 0, DateTimeZone.forID("Europe/London")), // Semi-Final 4044568
+//      new DateTime(2018, 7, 11, 19, 0, DateTimeZone.forID("Europe/London")), // Semi-Final 4044569
+//
+//      new DateTime(2018, 7, 14, 15, 0, DateTimeZone.forID("Europe/London")), // 3rd/4th Play-Offs 4044570
+//      new DateTime(2018, 7, 15, 16, 0, DateTimeZone.forID("Europe/London"))  // Final 4044571
+//    )
   )
 
   // adds a little flex around the match dates in case they aren't listed at exactly the right time
