@@ -40,7 +40,7 @@ import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
-import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
+import membershipEngagementBanner from 'common/modules/commercial/membership-engagement-banner';
 import { signInEngagementBanner } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
@@ -240,11 +240,11 @@ const startPinterest = (): void => {
     }
 };
 
-const membershipEngagementBanner = (): void => {
-    if (config.switches.membershipEngagementBanner) {
-        membershipEngagementBannerInit();
-    }
-};
+// const membershipEngagementBanner = (): void => {
+//     if (config.switches.membershipEngagementBanner) {
+//         membershipEngagementBannerInit();
+//     }
+// };
 
 const initialiseEmail = (): void => {
     // Initalise email embedded in page
@@ -285,6 +285,7 @@ const initialiseBanner = (): void => {
         optInEngagementBanner,
         signInEngagementBanner,
         membershipBanner,
+        membershipEngagementBanner,
     ];
     initBannerPicker(bannerList);
 };
@@ -319,7 +320,6 @@ const init = (): void => {
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
         ['c-pinterest', startPinterest],
-        ['c-show-membership-engagement-banner', membershipEngagementBanner],
         ['c-email', initialiseEmail],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
