@@ -9,6 +9,10 @@ import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
 
+import {
+    getAdConsentState,
+    thirdPartyTrackingAdConsent,
+} from 'common/modules/commercial/ad-prefs.lib';
 import { buildPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
@@ -36,10 +40,6 @@ import { init as resize } from 'commercial/modules/messenger/resize';
 import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
-import {
-    getAdConsentState,
-    thirdPartyTrackingAdConsent,
-} from 'common/modules/identity/ad-prefs.lib';
 
 initMessenger(
     type,
