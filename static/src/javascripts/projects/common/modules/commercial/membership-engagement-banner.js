@@ -197,7 +197,7 @@ const showBanner = (params: EngagementBannerParams): void => {
 
 let bannerParams;
 
-const show = () => {
+const show = (): void => {
     if (bannerParams) {
         showBanner(bannerParams);
     }
