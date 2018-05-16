@@ -12,7 +12,7 @@ $underline: hsla(0, 100%, 100%, .5);
     }
 }
 
-.site-message--third-party-consent__button {
+.site-message--first-pv-consent__button {
     @include fs-textSans(3);
     @include circular;
     height: $btn-height;
@@ -26,13 +26,13 @@ $underline: hsla(0, 100%, 100%, .5);
     justify-content: space-between;
     cursor: pointer;
 
-    &.site-message--third-party-consent__button--link {
+    &.site-message--first-pv-consent__button--link {
         @extend %link;
         padding-left: 0;
         padding-right: 0;
     }
 
-    &.site-message--third-party-consent__button--main {
+    &.site-message--first-pv-consent__button--main {
         border: 1px solid $underline;
         &:hover {
             border-color: currentColor;
@@ -41,7 +41,7 @@ $underline: hsla(0, 100%, 100%, .5);
 }
 
 
-.site-message.site-message--third-party-consent {
+.site-message.site-message--first-pv-consent {
     .site-message__media {
         display: none;
     }
@@ -60,20 +60,20 @@ $underline: hsla(0, 100%, 100%, .5);
             align-items: center;
         }
     }
-    .site-message--third-party-consent__intro {
+    .site-message--first-pv-consent__intro {
         flex: 1 1 auto;
         a {
             @extend %link;
             color: currentColor;
         }
     }
-    .site-message--third-party-consent__actions {
+    .site-message--first-pv-consent__actions {
         flex: 0 0 auto;
     }
 }
 
-.site-message--third-party-consent__actions {
-    .site-message--third-party-consent__button {
+.site-message--first-pv-consent__actions {
+    .site-message--first-pv-consent__button {
         margin: 0 $gs-gutter / 4;
         &:first-child {
             margin-left: 0;
@@ -84,6 +84,6 @@ $underline: hsla(0, 100%, 100%, .5);
     }
 }
 
-.site-message--third-party-consent__block {
+.site-message--first-pv-consent__block {
     margin: $gs-gutter / 2 0;
 }

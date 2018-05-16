@@ -27,20 +27,20 @@ const template: Template = {
 };
 
 const bindableClassNames: BindableClassNames = {
-    agree: 'js-third-party-consent-agree',
+    agree: 'js-first-pv-consent-agree',
 };
 
 const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
-    <div class="site-message--third-party-consent__block site-message--third-party-consent__intro">${
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__intro">${
         tpl.consentText
     }</div>
-    <div class="site-message--third-party-consent__block site-message--third-party-consent__actions">
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__actions">
         <a href="${
             tpl.linkToPreferences
-        }" class="site-message--third-party-consent__button site-message--third-party-consent__button--link">${
+        }" class="site-message--first-pv-consent__button site-message--first-pv-consent__button--link">${
     tpl.choicesButton
 }</a>
-        <button class="site-message--third-party-consent__button site-message--third-party-consent__button--main ${
+        <button class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
             classes.agree
         }">${tpl.agreeButton}</button>
     </div>
@@ -60,7 +60,7 @@ const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices()].every(_ => _ === true));
 
 const show = (): void => {
-    const msg = new Message('third-party-consent', {
+    const msg = new Message('first-pv-consent', {
         important: true,
         permanent: true,
         customJs: () => {
