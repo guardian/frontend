@@ -283,11 +283,20 @@ const initialiseEmail = (): void => {
     });
 };
 
+const showFirstVisitBanner = (): void => {
+    if (config.get('switches.idAdConsents', false)) {
+        initThirdPartyConsentBanner();
+    }
+    else {
+        cookiesBanner.init();
+    }
+}
+
 const init = (): void => {
     catchErrorsWithContext([
         // Analytics comes at the top. If you think your thing is more important then please think again...
         ['c-analytics', loadAnalytics],
-        ['c-cookies-banner', cookiesBanner.init],
+        ['c-first-visit-banner', showFirstVisitBanner],
         ['c-identity', initIdentity],
         ['c-adverts', requestUserSegmentsFromId],
         ['c-discussion', initDiscussion],
@@ -309,7 +318,6 @@ const init = (): void => {
         ['c-smart-banner', initCustomSmartAppBanner],
         ['c-adblock', showAdblockMessage],
         ['c-cookies', cleanupCookies],
-        ['c-third-party-consent-banner', initThirdPartyConsentBanner],
         ['c-localStorage', cleanupLocalStorage],
         ['c-overlay', initOpenOverlayOnClick],
         ['c-public-api', initPublicApi],
