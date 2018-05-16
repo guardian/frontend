@@ -56,20 +56,19 @@ $underline: hsla(0, 100%, 100%, .5);
             margin-right: $gs-gutter;
         }
         @include mq(tablet) {
-            display: grid;
-            grid-template: 'intro buttons' 1fr / 1fr auto;
+            display: flex;
             align-items: center;
         }
     }
     .site-message--third-party-consent__intro {
-        grid-area: intro;
+        flex: 1 1 auto;
         a {
             @extend %link;
             color: currentColor;
         }
     }
     .site-message--third-party-consent__actions {
-        grid-area: buttons;
+        flex: 0 0 auto;
     }
 }
 
