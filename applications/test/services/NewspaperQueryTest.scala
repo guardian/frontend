@@ -17,12 +17,6 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
   lazy val newspaperQuery = new NewspaperQuery(testContentApiClient)
 
   "NewspapeQueryTest" - {
-    "lowercase display name except UK news and US news" in {
-      newspaperQuery.lowercaseDisplayName("International") should be("international")
-      newspaperQuery.lowercaseDisplayName("UK news") should be("UK news")
-      newspaperQuery.lowercaseDisplayName("US news") should be("US news")
-    }
-
     "use past Sunday date for a given day (required for /theobserver)" in {
       newspaperQuery.getPastSundayDateFor(new DateTime(2015, 11, 19, 0, 0).withZone(DateTimeZone.UTC)).toISODateTimeString should be("2015-11-15T00:00:00.000Z")
     }

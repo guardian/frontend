@@ -21,12 +21,16 @@
 <div class="video-playlist video-playlist--start js-video-playlist"
      data-number-of-videos="@(containerDefinition.collectionEssentials.items.zipWithIndex.length - 1)"
      data-component="video-playlist">
-    <div class="video-playlist__control video-playlist__control--prev js-video-playlist-prev" data-link-name="video-container-prev">
+    <a
+        class="video-playlist__control video-playlist__control--prev js-video-playlist-prev"
+        data-link-name="video-container-prev"
+        role="button"
+        tabindex="-1"
+        aria-hidden="true"
+        aria-label="show previous video"
+    >
         @fragments.inlineSvg("chevron-left", "icon", Seq("video-playlist__icon"))
-    </div>
-    <div class="video-playlist__control video-playlist__control--next js-video-playlist-next" data-link-name="video-container-next">
-        @fragments.inlineSvg("chevron-right", "icon", Seq("video-playlist__icon"))
-    </div>
+    </a>
 
     <ul class="u-unstyled video-playlist__inner js-video-playlist-inner">
         <li class="video-playlist__item video-title video-title--leftcol fc-container__header__title">
@@ -79,4 +83,14 @@
         }
       }
     </ul>
+
+    <a
+        class="video-playlist__control video-playlist__control--next js-video-playlist-next"
+        data-link-name="video-container-next"
+        role="button"
+        tabindex="0"
+        aria-label="show next video"
+    >
+        @fragments.inlineSvg("chevron-right", "icon", Seq("video-playlist__icon"))
+    </a>
 </div>

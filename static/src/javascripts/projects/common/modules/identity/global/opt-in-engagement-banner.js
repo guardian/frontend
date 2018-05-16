@@ -9,7 +9,7 @@ import { local } from 'lib/storage';
 import ophan from 'ophan/ng';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import userPrefs from 'common/modules/user-prefs';
-import { isParticipating } from 'common/modules/experiments/utils';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import type { LinkTargets, Template } from './opt-in-eb-template';
 import { makeTemplateHtml } from './opt-in-eb-template';
@@ -75,9 +75,12 @@ const shouldDisplayIfNotAlreadyDismissed = (): boolean =>
 
 const shouldDisplayBasedOnMedium = (): boolean => userVisitedViaNewsletter();
 
-/* Test must be running & user must be in variant */
-const shouldDisplayifNotInSignInTestVariant = (): boolean =>
-    !isParticipating(signInEngagementBannerDisplay);
+/* User must not be in variant */
+const shouldDisplayifNotInSignInTestVariant = (): boolean => {
+    const variant = getVariant(signInEngagementBannerDisplay, 'variant');
+    if (!variant) return true;
+    return !isInVariant(signInEngagementBannerDisplay, variant);
+};
 
 const checkUser = (): Promise<boolean> =>
     new Promise(decision => {

@@ -3,9 +3,10 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
-import common.commercial.hosted.ContentUtils.thumbnailUrl
+import common.commercial.hosted.ContentUtils.{imageForSocialShare, thumbnailUrl}
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.{Encoding, EncodingOrdering, MetaData}
+import views.support.{ImgSrc, Item1200, Item700}
 
 case class HostedVideoPage(
   override val id: String,
@@ -42,6 +43,8 @@ object HostedVideoPage extends Logging {
       // using capi trail text instead of standfirst because we don't want the markup
       val standfirst = content.fields.flatMap(_.trailText).getOrElse("")
 
+      val mainImage: String = video.posterUrl getOrElse imageForSocialShare(content)
+
       HostedVideoPage(
         id = content.id,
         campaign = HostedCampaign.fromContent(content),
@@ -58,7 +61,14 @@ object HostedVideoPage extends Logging {
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         thumbnailUrl = thumbnailUrl(content),
-        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = video.posterUrl.toList)
+        metadata = HostedMetadata.fromContent(content)
+          .copy(
+            schemaType = Some("https://schema.org/VideoObject"),
+            openGraphImages = Seq(ImgSrc(mainImage, Item1200)),
+            twitterPropertiesOverrides = Map(
+              "twitter:image" -> ImgSrc(mainImage, Item700)
+            )
+          )
       )
     }
 

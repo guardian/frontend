@@ -22,7 +22,7 @@ class PublicProfileController(
     with ImplicitControllerExecutionContext
     with SafeLogging{
 
-  def page(url: String, username: String): IdentityPage = IdentityPage(url,  s"$username's public profile")
+  def page(url: String, username: String): IdentityPage = IdentityPage(url,  s"$username's public profile", usesGuardianHeader=true)
 
   def renderProfileFromVanityUrl(vanityUrl: String, activityType: String): Action[AnyContent] = renderPublicProfilePage(
     "/user/" + vanityUrl,

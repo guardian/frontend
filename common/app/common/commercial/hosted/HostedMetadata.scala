@@ -41,6 +41,7 @@ object HostedMetadata {
       opengraphPropertiesOverrides = Map(
         "og:url" -> s"${site.host}/${item.id}",
         "og:title" -> item.webTitle,
+        "og:type" -> "article",
         "og:description" -> s"ADVERTISER CONTENT FROM ${owner.toUpperCase} HOSTED BY THE GUARDIAN | $description",
         "fb:app_id" -> "180444840287"
       )

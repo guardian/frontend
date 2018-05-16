@@ -24,6 +24,7 @@ trait IdentityControllers extends IdApiComponents
   def csrfAddToken: CSRFAddToken
 
   lazy val authenticatedActions = wire[AuthenticatedActions]
+  lazy val advertsManager = wire[AdvertsManager]
   lazy val changePasswordController = wire[ChangePasswordController]
   lazy val reauthenticationController = wire[ReauthenticationController]
   lazy val resetPasswordController = wire[ResetPasswordController]

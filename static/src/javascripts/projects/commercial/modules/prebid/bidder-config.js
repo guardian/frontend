@@ -168,7 +168,6 @@ const sonobiBidder: PrebidBidder = {
     bidParams: (slotId: string): PrebidSonobiParams => ({
         ad_unit: config.page.adUnit,
         dom_id: slotId,
-        floor: 0.5,
         appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
         pageViewId: config.ophan.pageViewId,
     }),

@@ -313,7 +313,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 15),
+    sellByDate = new LocalDate(2018, 6, 20),
     exposeClientSide = false
    )
 
@@ -415,5 +415,15 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  val includePersonalisedAdsConsent: Switch = Switch(
+    group = Commercial,
+    name = "include-personalised-ads-consent",
+    description = "Include a flag with consent status in ad calls.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 5, 25),
+    exposeClientSide = true
   )
 }

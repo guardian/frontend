@@ -1,0 +1,70 @@
+@(
+    returnUrl : String,
+    idUrlBuilder: services.IdentityUrlBuilder
+)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
+
+<div class="identity-wrapper-header">
+    <div class="identity-wrapper monocolumn-wrapper">
+        <h1 class="identity-title">Manage advert preferences</h1>
+    </div>
+</div>
+
+<div class="identity-wrapper identity-wrapper--mma-body monocolumn-wrapper">
+
+    <fieldset class="fieldset fieldset--manage-account-noborder">
+
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Tracking</h2>
+        </div>
+
+        <div class="fieldset__fields">
+            <p class="identity-title-explainer">Google uses personalisation to deliver better ads. Unticking this will not reduce the number of ads in The Guardian but it will make them less relevant to your interests</p>
+            <form class="js-manage-account__ad-prefs is-hidden">
+                <span>Loading</span>
+            </form>
+            <noscript>
+                Javascript is required to edit your advert preferences
+            </noscript>
+        </div>
+
+    </fieldset>
+
+    <fieldset class="fieldset">
+        <div class="fieldset__heading">
+            <h2 class="form__heading">More controls</h2>
+        </div>
+
+        <div class="fieldset__fields email-subscription__options">
+            <p class="identity-title-explainer">
+                You can use the following links to control your ad personalisation across the web - not just The Guardian.
+            </p>
+            <ul class="u-unstyled">
+                <li>
+                    <p>
+                        <a href="https://adssettings.google.com/" class="u-underline" data-link-name="adverts-manager : out : google">
+                            Adjust your Google ads across the web
+                        </a>
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        <a href="http://www.youronlinechoices.com" class="u-underline" data-link-name="adverts-manager : out : IAB">
+                            Visit AdChoices
+                        </a>
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+    </fieldset>
+
+    <fieldset class="fieldset">
+        <div class="fieldset__heading">
+
+        </div>
+        <div class="fieldset__fields">
+            <a class="manage-account__button" href="@returnUrl" data-link-name="adverts-manager : to-return-url">Return to The Guardian</a>
+        </div>
+    </fieldset>
+
+</div>

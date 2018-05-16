@@ -3,7 +3,6 @@
 export type PrebidSonobiParams = {
     ad_unit: string,
     dom_id: string,
-    floor: number,
     appNexusTargeting: string,
     pageViewId: string,
 };

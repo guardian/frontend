@@ -21,25 +21,45 @@ const closeDisabledSlots = once((): Promise<void> => {
 });
 
 const mpuCandidateClass: string = 'fc-slice__item--mpu-candidate';
-const mpuHiderClass: string = 'fc-slice__item--no-mpu';
 const mpuCandidateSelector: string = `.${mpuCandidateClass}`;
 
-const shouldDisableAdSlotWhenAdFree = adSlot =>
+const shouldRemoveAdSlotWhenAdFree = () => commercialFeatures.adFree;
+
+const shouldRemoveMpuWhenAdFree = mpuCandidate =>
     commercialFeatures.adFree &&
-    (adSlot.className.toLowerCase().includes(mpuCandidateClass) ||
-        !adSlot.className.toLowerCase().includes('merchandising'));
+    mpuCandidate.className.toLowerCase().includes(mpuCandidateClass);
+
+const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
+    const dataComponentAttribute = faciaContainer.getAttribute(
+        'data-component'
+    );
+    return (
+        commercialFeatures.adFree &&
+        dataComponentAttribute &&
+        dataComponentAttribute.includes('commercial-container')
+    );
+};
 
 const adFreeSlotRemove = (): Promise<void> => {
-    let adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
-    let mpuCandidates: Array<Element> = qwery(mpuCandidateSelector);
+    const adSlotsToRemove: Array<Element> = qwery(dfpEnv.adSlotSelector).filter(
+        shouldRemoveAdSlotWhenAdFree
+    );
 
-    adSlots = adSlots.filter(shouldDisableAdSlotWhenAdFree);
-    mpuCandidates = mpuCandidates.filter(shouldDisableAdSlotWhenAdFree);
+    const mpusToRemove: Array<Element> = qwery(mpuCandidateSelector).filter(
+        shouldRemoveMpuWhenAdFree
+    );
+
+    const commercialFaciaContainersToRemove: Array<Element> = qwery(
+        '.fc-container'
+    ).filter(shouldRemoveFaciaContainerWhenAdFree);
 
     return fastdom.write(() => {
-        adSlots.forEach((adSlot: Element) => adSlot.remove());
-        mpuCandidates.forEach((candidate: Element) =>
-            candidate.classList.add(mpuHiderClass)
+        adSlotsToRemove.forEach((adSlot: Element) => adSlot.remove());
+        mpusToRemove.forEach((mpu: Element) =>
+            mpu.classList.add('fc-slice__item--no-mpu')
+        );
+        commercialFaciaContainersToRemove.forEach((faciaContainer: Element) =>
+            faciaContainer.classList.add('u-h')
         );
     });
 };
