@@ -1,13 +1,11 @@
 // @flow
-import log from 'commercial/modules/cmp/log';
+import { log } from 'commercial/modules/cmp/log';
 import { vendorVersionMap } from 'commercial/modules/cmp/cmp-env';
 
 const SIX_BIT_ASCII_OFFSET = 65;
 const NUM_BITS_VERSION = 6;
 
-/* eslint-disable func-style */
-
-const repeat = (count: Int, string: String = '0'): String => {
+const repeat = (count: number, string: string = '0'): string => {
     let padString = '';
     for (let i = 0; i < count; i += 1) {
         padString += string;
@@ -15,31 +13,31 @@ const repeat = (count: Int, string: String = '0'): String => {
     return padString;
 };
 
-const padLeft = (string: String, padding: String): String =>
-    repeat(Math.max(0, padding)) + string;
+const padLeft = (string: string, padding: number): string =>
+    repeat(Math.max(0, padding)).toString() + string;
 
-const padRight = (string: String, padding: String): String =>
+const padRight = (string: string, padding: number): string =>
     string + repeat(Math.max(0, padding));
 
-const encodeIntToBits = (number: Int, numBits: Int): String => {
+const encodeIntToBits = (number: number, numBits: ?number): string => {
     let bitString = '';
     if (typeof number === 'number' && !Number.isNaN(number)) {
         bitString = parseInt(number, 10).toString(2);
     }
 
     // Pad the string if not filling all bits
-    if (numBits >= bitString.length) {
+    if (numBits && numBits >= bitString.length) {
         bitString = padLeft(bitString, numBits - bitString.length);
     }
 
     // Truncate the string if longer than the number of bits
-    if (bitString.length > numBits) {
+    if (numBits && numBits < bitString.length) {
         bitString = bitString.substring(0, numBits);
     }
     return bitString;
 };
 
-const getEncoded = (string: String): String => {
+const getEncoded = (string: string): string => {
     if (typeof string !== 'string') {
         return '';
     }
@@ -59,34 +57,46 @@ const getEncoded = (string: String): String => {
  * Encodes each character of a string in 6 bits starting
  * with [aA]=0 through [zZ]=25
  */
-function encode6BitCharacters(string, numBits) {
+const encode6BitCharacters = (string: string, numBits: number): string => {
     const encoded = getEncoded(string);
     return padRight(encoded, numBits).substr(0, numBits);
-}
+};
 
-function encodeBoolToBits(value: Boolean): Int {
-    return encodeIntToBits(value === true ? 1 : 0, 1);
-}
+const encodeBoolToBits = (value: boolean): string =>
+    encodeIntToBits(value === true ? 1 : 0, 1);
 
-function encodeDateToBits(date, numBits) {
+const encodeDateToBits = (date: Date, numBits: number): string => {
     if (date instanceof Date) {
         return encodeIntToBits(date.getTime() / 100, numBits);
     }
     return encodeIntToBits(date, numBits);
-}
+};
 
-function decodeBitsToInt(bitString, start, length) {
-    return parseInt(bitString.substr(start, length), 2);
-}
+const decodeBitsToInt = (
+    bitString: string,
+    start: number,
+    length: number
+): number => {
+    const str = bitString.substr(start, length);
+    return parseInt(str, 2);
+};
 
-function decodeBitsToDate(bitString, start, length) {
-    return new Date(decodeBitsToInt(bitString, start, length) * 100);
-}
+const decodeBitsToDate = (
+    bitString: string,
+    start: number,
+    length: number
+): Date => new Date(decodeBitsToInt(bitString, start, length) * 100);
 
-function decodeBitsToBool(bitString, start) {
-    return parseInt(bitString.substr(start, 1), 2) === 1;
-}
-function decode6BitCharacters(bitString, start, length) {
+const decodeBitsToBool = (bitString: string, start: number): boolean => {
+    const str = bitString.substr(start, 1);
+    return parseInt(str, 2) === 1;
+};
+
+const decode6BitCharacters = (
+    bitString: string,
+    start: number,
+    length: number
+): string => {
     let decoded = '';
     let decodeStart = start;
     while (decodeStart < start + length) {
@@ -96,15 +106,15 @@ function decode6BitCharacters(bitString, start, length) {
         decodeStart += 6;
     }
     return decoded;
-}
+};
 
-function encodeFields({ input, fields }) {
+const encodeFields = ({ input, fields }) => {
     return fields.reduce((acc, field) => {
         // eslint-disable-next-line no-use-before-define, no-param-reassign
         acc += encodeField({ input, field });
         return acc;
     }, '');
-}
+};
 
 const encodeField = ({ input, field }) => {
     const { name, type, numBits, encoder, validator } = field;
@@ -120,7 +130,7 @@ const encodeField = ({ input, field }) => {
     const bitCount = typeof numBits === 'function' ? numBits(input) : numBits;
 
     const inputValue = input[name];
-    const fieldValue =
+    const fieldValue: any =
         inputValue === null || inputValue === undefined ? '' : inputValue;
     switch (type) {
         case 'int':
@@ -181,7 +191,7 @@ const decodeFields = ({ input, fields, startPosition = 0 }) => {
     };
 };
 
-function decodeField({ input, output, startPosition, field }) {
+const decodeField = ({ input, output, startPosition, field }): Object => {
     const { type, numBits, decoder, validator, listCount } = field;
     if (typeof validator === 'function') {
         if (!validator(output)) {
@@ -196,7 +206,7 @@ function decodeField({ input, output, startPosition, field }) {
 
     const bitCount = typeof numBits === 'function' ? numBits(output) : numBits;
 
-    const listEntryCount: String = (() => {
+    const listEntryCount: number = (() => {
         if (typeof listCount === 'function') {
             return listCount(output);
         }
@@ -216,11 +226,7 @@ function decodeField({ input, output, startPosition, field }) {
             };
         case 'bits':
             return {
-                fieldValue: decode6BitCharacters(
-                    input,
-                    startPosition,
-                    bitCount
-                ),
+                fieldValue: input.substr(startPosition, bitCount),
             };
         case '6bitchar':
             return {
@@ -249,14 +255,14 @@ function decodeField({ input, output, startPosition, field }) {
             log.warn(`Cookie definition field found without decoder or type`);
             return {};
     }
-}
+};
 
 /**
  * Encode the data properties to a bit string. Encoding will encode
  * either `selectedVendorIds` or the `vendorRangeList` depending on
  * the value of the `isRange` flag.
  */
-function encodeDataToBits(data, definitionMap) {
+const encodeDataToBits = (data, definitionMap) => {
     const { cookieVersion } = data;
 
     if (typeof cookieVersion !== 'number') {
@@ -271,13 +277,13 @@ function encodeDataToBits(data, definitionMap) {
         const cookieFields = definitionMap[cookieVersion].fields;
         return encodeFields({ input: data, fields: cookieFields });
     }
-}
+};
 
 /**
  * Take all fields required to encode the cookie and produce the
  * URL safe Base64 encoded value.
  */
-const encodeCookieValue = (data, definitionMap): String => {
+const encodeCookieValue = (data, definitionMap): string => {
     const binaryValue = encodeDataToBits(data, definitionMap);
     if (binaryValue) {
         // Pad length to multiple of 8
@@ -302,10 +308,10 @@ const encodeCookieValue = (data, definitionMap): String => {
     }
 };
 
-function decodeCookieBitValue(
+const decodeCookieBitValue = (
     bitString,
     definitionMap
-): { input: String, fields: Object } {
+) => {
     const cookieVersion = decodeBitsToInt(bitString, 0, NUM_BITS_VERSION);
     if (typeof cookieVersion !== 'number') {
         log.error('Could not find cookieVersion to decode');
@@ -324,12 +330,12 @@ function decodeCookieBitValue(
         fields: cookieFields,
     });
     return decodedObject;
-}
+};
 
 /**
  * Decode the (URL safe Base64) value of a cookie into an object.
  */
-const decodeCookieValue = (cookieValue: String, definitionMap) => {
+const decodeCookieValue = (cookieValue: string, definitionMap) => {
     // Replace safe characters
     const unsafe =
         cookieValue.replace(/-/g, '+').replace(/_/g, '/') +

@@ -1,6 +1,6 @@
 // @flow
-
-import { _ } from './cookieutils';
+import { _, decodeCookieValue, encodeCookieValue } from './cookieutils';
+import { vendorVersionMap } from './cmp-env';
 
 const {
     encodeIntToBits,
@@ -11,9 +11,16 @@ const {
     decodeBitsToDate,
     decodeBitsToBool,
     decode6BitCharacters,
+    decodeCookieBitValue,
 } = _;
 
-jest.mock('commercial/modules/cmp/log', () => jest.fn());
+jest.mock('commercial/modules/cmp/log', () => ({
+    log: {
+        debug: jest.fn(),
+        error: jest.fn(),
+        warn: jest.fn(),
+    },
+}));
 
 jest.mock('lib/config', () => ({
     switches: {
@@ -91,5 +98,58 @@ describe('cookieutils', () => {
         const bitString = encode6BitCharacters(string);
         const decoded = decode6BitCharacters(bitString, 0, 12);
         expect(decoded).toBe('ST');
+    });
+
+    it('decodes a cookie bit value', () => {
+        const inputValue = '0000010000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000010000010001000011010000000000011100000000000000000000000000000000000110011010000000';
+
+        const decoded = decodeCookieBitValue(inputValue, vendorVersionMap);
+        expect(decoded).toBe('BAAAAAAAAAAAAABABBENABwAAAAAZoA');
+    });
+
+    it('encodes the vendor cookie object to the expected string', () => {
+        const encodedString = encodeCookieValue(
+            {
+                cookieVersion: 1,
+                created: '1970-01-01T00:00:00.000Z',
+                lastUpdated: '1970-01-01T00:00:00.000Z',
+                cmpId: 1,
+                cmpVersion: 1,
+                consentScreen: 1,
+                consentLanguage: 'EN',
+                vendorListVersion: 1,
+                purposeIdBitString: '110000000000000000000000',
+                maxVendorId: 6,
+                isRange: false,
+                vendorIdBitString: '110100',
+            },
+            vendorVersionMap
+    );
+        expect(encodedString).toBe('BAAAAAAAAAAAAABABBENABwAAAAAZoA');
+    });
+
+    it('decodes vendor cookie object from a valid string', () => {
+        const result = JSON.stringify(
+            decodeCookieValue(
+                'BAAAAAAAAAAAAABABBENABwAAAAAZoA',
+                vendorVersionMap
+            )
+        );
+        const expected = JSON.stringify({
+            cookieVersion: 1,
+            created: '1970-01-01T00:00:00.000Z',
+            lastUpdated: '1970-01-01T00:00:00.000Z',
+            cmpId: 1,
+            cmpVersion: 1,
+            consentScreen: 1,
+            consentLanguage: 'EN',
+            vendorListVersion: 1,
+            purposeIdBitString: '110000000000000000000000',
+            maxVendorId: 6,
+            isRange: false,
+            vendorIdBitString: '110100',
+        });
+
+        expect(result).toEqual(expected);
     });
 });

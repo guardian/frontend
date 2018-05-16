@@ -1,4 +1,6 @@
 // @flow
+import type { VendorVersionMap } from './types';
+
 const vendorVersion = {
     version: 1,
     fields: [
