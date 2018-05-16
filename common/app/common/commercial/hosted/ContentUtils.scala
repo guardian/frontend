@@ -2,8 +2,9 @@ package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.ElementType.Image
 import com.gu.contentapi.client.model.v1.{Asset, Content, Element}
+import conf.Configuration
 import model.{ImageMedia, Element => ModelElement}
-import views.support.{ImgSrc, Item300}
+import views.support.{Item300, Item700, Item1200}
 
 object ContentUtils {
 
@@ -34,4 +35,10 @@ object ContentUtils {
 
   def thumbnailUrl(item: Content): String =
     Item300.bestSrcFor(imageMedia(item)) getOrElse ""
+
+  def imageForSocialShare(content: Content): String = {
+    findLargestMainImageAsset(content)
+      .flatMap(_.file)
+      .getOrElse(Configuration.images.fallbackLogo)
+  }
 }
