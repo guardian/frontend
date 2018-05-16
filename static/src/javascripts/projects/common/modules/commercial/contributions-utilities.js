@@ -318,9 +318,6 @@ const makeABTestVariant = (
                                 }
 
                                 if (this.options.isAdSlot) {
-                                    // TODO: remove logging
-                                    console.log('adding epic add slot');
-                                    console.log(component.get(0));
                                     addSlot(component.get(0), true)
                                 }
 
