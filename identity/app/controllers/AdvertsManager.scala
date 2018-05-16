@@ -31,8 +31,7 @@ class AdvertsManager(
 
     if(IdentityAdConsentsSwitch.isSwitchedOff) {
       NotFound(views.html.errors._404())
-    }
-    else {
+    } else {
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
       val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
 
