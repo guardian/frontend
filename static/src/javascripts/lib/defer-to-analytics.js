@@ -1,20 +1,20 @@
 // @flow
-import mediator from 'lib/mediator';
+import config from 'lib/config';
 
-let analyticsReady = false;
-
-mediator.on('analytics:ready', () => {
-    analyticsReady = true;
+const analyticsReady = new Promise(resolve => {
+    const check = () => {
+        if (config.get('modules.media.analyticsReady')) {
+            resolve(true);
+            return;
+        } else {
+            setTimeout(check, 100);
+        }
+    };
+    check();
 });
 
 const deferToAnalytics = (afterAnalytics: () => void): void => {
-    if (analyticsReady) {
-        afterAnalytics();
-    } else {
-        mediator.on('analytics:ready', () => {
-            afterAnalytics();
-        });
-    }
+    analyticsReady.then(afterAnalytics);
 };
 
 export default deferToAnalytics;

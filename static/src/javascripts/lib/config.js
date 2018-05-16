@@ -5,6 +5,10 @@
 // eslint-disable-next-line guardian-frontend/global-config
 const config: Object = window.guardian.config;
 
+config.modules.media = {
+    analyticsReady: false
+};
+
 // allows you to safely get items from config using a query of
 // dot or bracket notation, with optional default fallback
 const get = (path: string = '', defaultValue: any): any => {
