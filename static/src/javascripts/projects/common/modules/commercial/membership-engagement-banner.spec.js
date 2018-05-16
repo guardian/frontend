@@ -3,7 +3,7 @@ import fakeMediator from 'lib/mediator';
 import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import { engagementBannerParams as engagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
-import membershipEngagementBanner from 'common/modules/commercial/membership-engagement-banner';
+import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const engagementBannerParams: any = engagementBannerParams_;

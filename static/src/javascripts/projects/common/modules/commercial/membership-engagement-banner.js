@@ -12,6 +12,7 @@ import { engagementBannerParams } from 'common/modules/commercial/membership-eng
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 import {
     submitComponentEvent,
@@ -216,8 +217,10 @@ const canShow = (): Promise<boolean> => {
     return Promise.resolve(false);
 };
 
-export default {
+const membershipEngagementBanner: Banner = {
     id: 'membershipEngagementBanner',
     show,
     canShow,
 };
+
+export { membershipEngagementBanner };
