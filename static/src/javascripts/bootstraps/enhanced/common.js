@@ -240,12 +240,6 @@ const startPinterest = (): void => {
     }
 };
 
-// const membershipEngagementBanner = (): void => {
-//     if (config.switches.membershipEngagementBanner) {
-//         membershipEngagementBannerInit();
-//     }
-// };
-
 const initialiseEmail = (): void => {
     // Initalise email embedded in page
     initEmail();
