@@ -5,7 +5,6 @@ const analyticsReady = new Promise(resolve => {
     const check = () => {
         if (config.get('modules.media.analyticsReady')) {
             resolve(true);
-            return;
         } else {
             setTimeout(check, 100);
         }

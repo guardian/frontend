@@ -6,7 +6,7 @@
 const config: Object = window.guardian.config;
 
 config.modules.media = {
-    analyticsReady: false
+    analyticsReady: false,
 };
 
 // allows you to safely get items from config using a query of
