@@ -74,11 +74,6 @@ const show = (): void => {
     msg.show(makeHtml(template, bindableClassNames));
 };
 
-const test = {
-    onAgree,
-    bindableClassNames,
-};
-
 const banner = {
     id: 'first-pv-consent-banner',
     canShow,
@@ -90,4 +85,9 @@ const init = (): Promise<void> =>
         if (can) show();
     });
 
-export { init, test, banner };
+const _ = {
+    onAgree,
+    bindableClassNames,
+};
+
+export { init, _, banner };

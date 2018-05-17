@@ -1,5 +1,5 @@
 // @flow
-import { banner, test } from './first-pv-consent-banner';
+import { banner, _ as test } from './first-pv-consent-banner';
 
 const getAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
     .getAdConsentState;
@@ -16,8 +16,6 @@ beforeEach(() => {
     Message.mockReset();
     Message.prototype.show = jest.fn(() => true);
     Message.prototype.hide = jest.fn(() => true);
-});
-afterEach(() => {
     Message.prototype.show.mockRestore();
 });
 
