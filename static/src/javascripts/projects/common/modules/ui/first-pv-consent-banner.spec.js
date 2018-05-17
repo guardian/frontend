@@ -1,5 +1,8 @@
 // @flow
-import { banner, _ as test } from './first-pv-consent-banner';
+import {
+    firstPvConsentBanner as banner,
+    _ as test,
+} from './first-pv-consent-banner';
 
 const getAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
     .getAdConsentState;
