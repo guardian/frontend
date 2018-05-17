@@ -5,7 +5,7 @@ const getAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
     .getAdConsentState;
 const setAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
     .setAdConsentState;
-const Message = require('common/modules/ui/message').Message;
+const Message: any = require('common/modules/ui/message').Message;
 
 afterEach(() => {
     jest.clearAllMocks();
