@@ -14,8 +14,8 @@
         },
         "tests": { @JavaScript(experiments.ActiveExperiments.getJavascriptConfig) },
         "modules": { 
-            "media": {
-                "analyticsReady": false
+            "tracking": {
+                "ready": null
             }
         },
         "images": {

@@ -1,19 +1,8 @@
 // @flow
 import config from 'lib/config';
 
-const analyticsReady = new Promise(resolve => {
-    const check = () => {
-        if (config.get('modules.media.analyticsReady')) {
-            resolve(true);
-        } else {
-            setTimeout(check, 100);
-        }
-    };
-    check();
-});
-
 const deferToAnalytics = (afterAnalytics: () => void): void => {
-    analyticsReady.then(afterAnalytics);
+    config.get('modules.tracking.ready').then(afterAnalytics);
 };
 
 export default deferToAnalytics;

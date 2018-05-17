@@ -97,7 +97,7 @@ const init = (options: Object = {}): void => {
         loc = options.location; // allow a fake location to be passed in for testing
     }
     addHandlers();
-    config.modules.media.analyticsReady = true;
+    config.set('modules.tracking.ready', Promise.resolve());
 };
 
 export default {
