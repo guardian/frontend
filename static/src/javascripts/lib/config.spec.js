@@ -69,7 +69,7 @@ describe('Config', () => {
         expect(config.get('page.qwert')).toBeUndefined();
     });
 
-    it('`set` should return default value for non-existing key with a default', () => {
+    it('`get` should return default value for non-existing key with a default', () => {
         expect(config.get('page.qwert', ['I am the default'])).toEqual([
             'I am the default',
         ]);
@@ -81,7 +81,7 @@ describe('Config', () => {
         );
     });
 
-    it('`get` should safely set (or orverride) a value deep inside the config object', () => {
+    it('`set` should safely set (or orverride) a value deep inside the config object', () => {
         config.set('some.random.path', 'hello');
         expect(config.get('some.random.path')).toEqual('hello');
     });
