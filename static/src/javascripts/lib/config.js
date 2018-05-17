@@ -20,6 +20,21 @@ const get = (path: string = '', defaultValue: any): any => {
     return defaultValue;
 };
 
+// let S = { l1, l2, ..., ln } be a non-empty ordered set of labels
+// let s = l1.l2.....ln be the string reprentation of S
+// set(s, x) is the function that takes any value x into the config
+// object following the path described by S, making sure that path
+// actually leads somewhere.
+const set = (path: string, value: any): void => {
+    const pathSegments = path.split('.');
+    const last = pathSegments.pop();
+    pathSegments.reduce(
+        // eslint-disable-next-line no-return-assign
+        (obj, subpath) => obj[subpath] || (obj[subpath] = {}),
+        config
+    )[last] = value;
+};
+
 const hasTone = (name: string): boolean =>
     (config.page.tones || '').includes(name);
 
@@ -63,6 +78,7 @@ export default Object.assign(
     {},
     {
         get,
+        set,
         hasTone,
         hasSeries,
         referencesOfType,

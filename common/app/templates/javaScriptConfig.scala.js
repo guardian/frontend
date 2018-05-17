@@ -13,7 +13,11 @@
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
         "tests": { @JavaScript(experiments.ActiveExperiments.getJavascriptConfig) },
-        "modules": { },
+        "modules": { 
+            "tracking": {
+                "ready": null
+            }
+        },
         "images": {
             "commercial": {
                 "ab-icon": "@Static("images/commercial/ab-icon.png")",
