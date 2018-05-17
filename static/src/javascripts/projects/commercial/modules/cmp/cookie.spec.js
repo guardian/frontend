@@ -1,16 +1,18 @@
 // @flow
-/* eslint-disable max-nested-callbacks */
-import { vendorVersionMap } from './cmp-env';
 
-import { _, writeVendorConsentCookie, readVendorConsentCookie } from './cookie';
+import {
+    _,
+    encodeVendorConsentData,
+    decodeVendorConsentData,
+    readVendorConsentCookie,
+    writeVendorConsentCookie,
+} from './cookie';
 
-import type { VendorConsentData, CmpConfig } from './types';
+import type { VendorConsentData } from './types';
 
 const {
     encodeVendorCookieValue,
     decodeVendorCookieValue,
-    encodeVendorConsentData,
-    decodeVendorConsentData,
     encodeVendorIdsToBits,
     decodeBitsToIds,
     encodePurposeIdsToBits,
@@ -67,26 +69,18 @@ const vendorList = {
             name: 'Umbrella',
         },
         {
-            id: 5,
+            id: 8,
             name: 'Aperture',
         },
         {
-            id: 6,
+            id: 10,
             name: 'Pierce and Pierce',
         },
     ],
 };
 
-const config: CmpConfig = {
-    globalConsentLocation: '',
-    globalVendorListLocation: 'gu',
-    gdprApplies: true,
-    storeConsentGlobally: false,
-    storePublisherData: false,
-    logging: false,
-};
-
 const aDate = new Date('2018-07-15 PDT');
+const maxVendorId = vendorList.vendors[vendorList.vendors.length - 1].id;
 
 const vendorConsentData: VendorConsentData = {
     cookieVersion: 1,
@@ -95,7 +89,7 @@ const vendorConsentData: VendorConsentData = {
     consentScreen: 1,
     consentLanguage: 'EN',
     vendorListVersion: 1,
-    maxVendorId: 6,
+    maxVendorId,
     created: aDate,
     lastUpdated: aDate,
     selectedPurposeIds: [1, 2],
@@ -132,7 +126,7 @@ describe('cookie', () => {
         cookieValue = '';
     });
 
-    it('encodePurposeIdsToBits', () => {
+    it('can encodePurposeIdsToBits', () => {
         const purposes = [
             {
                 id: 1,
@@ -145,46 +139,82 @@ describe('cookie', () => {
         ];
 
         const result = encodePurposeIdsToBits(purposes, [1, 2]);
-        expect(result).toBe('111000001010101010001101');
+        expect(result).toBe('11');
     });
 
-    it('encodeVendorIdsToBits', () => {
+    it('can encodeVendorIdsToBits', () => {
         const result = encodeVendorIdsToBits(6, [1, 2, 4]);
         expect(result).toBe('110100');
     });
 
-    it('decodeBitsToIds', () => {
+    it('can decodeBitsToIds', () => {
         expect(decodeBitsToIds('110100')).toEqual([1, 2, 4]);
         expect(decodeBitsToIds('11')).toEqual([1, 2]);
     });
 
-    it('writes and reads the local cookie when globalConsent = false', () => {
+    it('correctly encodes the vendor cookie object to a string', () => {
         const consentData = {
             cookieVersion: 1,
             cmpId: 1,
+            cmpVersion: 1,
             vendorListVersion: 1,
+            maxVendorId: 0,
             created: aDate,
             lastUpdated: aDate,
         };
 
+        expect(encodeVendorConsentData({ ...consentData, vendorList })).toEqual(
+            'BAAAAAAAAAAAAABABAAAABAAAAAAAA'
+        );
+
+        expect(
+            encodeVendorConsentData({ ...vendorConsentData, vendorList })
+        ).toEqual('BAAAAAAAAAAAAABABBENABwAAAAApoA');
+    });
+
+    it('decodes the vendor cookie object from a string', () => {
+        const consentData = {
+            cookieVersion: 1,
+            cmpId: 1,
+            cmpVersion: 1,
+            vendorListVersion: 1,
+            maxVendorId: 0,
+            created: aDate,
+            lastUpdated: aDate,
+        };
+        // the encoding process will add defaults for missing properties
+        const generatedDefaults = {
+            selectedPurposeIds: [],
+            selectedVendorIds: [],
+            consentLanguage: 'AA',
+            consentScreen: 0,
+        };
+
+        expect(
+            decodeVendorConsentData('BAAAAAAAAAAAAABABAAAABAAAAAAAA')
+        ).toEqual({ ...consentData, ...generatedDefaults });
+        expect(
+            decodeVendorConsentData('BAAAAAAAAAAAAABABBENABwAAAAApoA')
+        ).toEqual(vendorConsentData);
+    });
+
+    it('writes and reads the local cookie', () => {
         return writeVendorConsentCookie({
             ...vendorConsentData,
             vendorList,
         }).then(() =>
             readVendorConsentCookie().then(fromCookie => {
                 expect(document.cookie).toEqual(
-                    'euconsent=BAAAAAAAAAAAAABABBENABAAAAAAUAA; path=/; expires=Fri, 07 Jul 94226 23:00:00 GMT; domain=.theguardian.com'
+                    'euconsent=BAAAAAAAAAAAAABABBENABwAAAAApoA; path=/; expires=Fri, 07 Jul 94226 23:00:00 GMT; domain=.theguardian.com'
                 );
-                expect(fromCookie).toEqual(consentData);
+                expect(fromCookie).toEqual(vendorConsentData);
             })
         );
     });
 
     it('converts selected vendor list to a range', () => {
-        const maxVendorId = Math.max(
-            ...vendorList.vendors.map(vendor => vendor.id)
-        );
-        const ranges = convertVendorsToRanges(maxVendorId, [2, 3, 4]);
+        const maxId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
+        const ranges = convertVendorsToRanges(maxId, [2, 3, 4]);
 
         expect(ranges).toEqual([
             {
@@ -196,10 +226,8 @@ describe('cookie', () => {
     });
 
     it('converts selected vendor list to multiple ranges', () => {
-        const maxVendorId = Math.max(
-            ...vendorList.vendors.map(vendor => vendor.id)
-        );
-        const ranges = convertVendorsToRanges(maxVendorId, [2, 3, 5, 6, 10]);
+        const maxId = Math.max(...vendorList.vendors.map(vendor => vendor.id));
+        const ranges = convertVendorsToRanges(maxId, [2, 3, 5, 6, 10]);
 
         expect(ranges).toEqual([
             {

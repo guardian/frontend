@@ -12,9 +12,14 @@ import {
     decodeCookieValue,
 } from 'commercial/modules/cmp/cookieutils';
 
-import type { VendorConsentData, VendorData } from './types';
+import type {
+    VendorConsentData,
+    VendorData,
+    VendorList,
+    SelectedIds,
+} from './types';
 
-const encodeVendorCookieValue = (vendorData: Object): string =>
+const encodeVendorCookieValue = (vendorData: VendorData): string =>
     encodeCookieValue(vendorData, vendorVersionMap);
 
 const decodeVendorCookieValue = (cookieValue: string) =>
@@ -208,16 +213,15 @@ const writeVendorConsentCookie = (vendorConsentData: VendorConsentData) => {
 };
 
 export {
+    encodeVendorConsentData,
+    decodeVendorConsentData,
     readVendorConsentCookie,
     writeVendorConsentCookie,
-    VENDOR_CONSENT_COOKIE_NAME,
 };
 
 export const _ = {
     encodeVendorCookieValue,
     decodeVendorCookieValue,
-    encodeVendorConsentData,
-    decodeVendorConsentData,
     encodeVendorIdsToBits,
     decodeBitsToIds,
     encodePurposeIdsToBits,

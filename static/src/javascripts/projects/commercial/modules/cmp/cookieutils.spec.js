@@ -103,11 +103,27 @@ describe('cookieutils', () => {
     it('decodes a cookie bit value', () => {
         const inputValue = '0000010000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000010000010001000011010000000000011100000000000000000000000000000000000110011010000000';
 
-        const decoded = decodeCookieBitValue(inputValue, vendorVersionMap);
-        expect(decoded).toBe('BAAAAAAAAAAAAABABBENABwAAAAAZoA');
+        const expected = JSON.stringify({
+            cookieVersion: 1,
+            created: '1970-01-01T00:00:00.000Z',
+            lastUpdated: '1970-01-01T00:00:00.000Z',
+            cmpId: 1,
+            cmpVersion: 1,
+            consentScreen: 1,
+            consentLanguage: 'EN',
+            vendorListVersion: 1,
+            purposeIdBitString: '110000000000000000000000',
+            maxVendorId: 6,
+            isRange: false,
+            vendorIdBitString: '110100',
+        });
+        const decoded = JSON.stringify(
+            decodeCookieBitValue(inputValue, vendorVersionMap)
+        );
+        expect(decoded).toEqual(expected);
     });
 
-    it('encodes the vendor cookie object to the expected string', () => {
+    it('encodes a vendor cookie object to the expected base64 string', () => {
         const encodedString = encodeCookieValue(
             {
                 cookieVersion: 1,
@@ -128,7 +144,7 @@ describe('cookieutils', () => {
         expect(encodedString).toBe('BAAAAAAAAAAAAABABBENABwAAAAAZoA');
     });
 
-    it('decodes vendor cookie object from a valid string', () => {
+    it('decodes a vendor cookie object from a valid base64 string', () => {
         const result = JSON.stringify(
             decodeCookieValue(
                 'BAAAAAAAAAAAAABABBENABwAAAAAZoA',

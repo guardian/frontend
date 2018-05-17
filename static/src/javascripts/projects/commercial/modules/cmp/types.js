@@ -14,8 +14,32 @@ export type ConsentData = {
     consentData: string,
 };
 
+export type Purpose = {
+    id: number,
+    name: string,
+    description: string,
+};
+
+export type Vendor = {
+    id: number,
+    name: string,
+    policyUrl: ?string,
+};
+
+export type SelectedIds = {
+    selectedPurposeIds: Array<number>,
+    selectedVendorIds: Array<number>
+}
+
+export type VendorList = {
+    vendorListVersion: number,
+    lastUpdated: Date,
+    purposes: Array<Purpose>,
+    vendors: Array<Vendor>,
+};
+
 export type VendorData = {
-    vendorList: Object,
+    vendorList: VendorList,
     selectedPurposeIds: Array<number>,
     selectedVendorIds: Array<number>,
     maxVendorId: number,
@@ -36,6 +60,12 @@ export type VendorConsentData = {
 };
 
 export type VendorVersionMap = {};
+
+export type Store = {
+    persistedVendorConsentData: VendorConsentData,
+    vendorList: VendorList,
+    allowedVendorIds: Array<number>,
+};
 
 export type Cmp = {
     commandQueue: Array<any>,
