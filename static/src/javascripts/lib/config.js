@@ -28,8 +28,11 @@ const get = (path: string = '', defaultValue: any): any => {
 const set = (path: string, value: any): void => {
     const pathSegments = path.split('.');
     const last = pathSegments.pop();
-    // eslint-disable-next-line no-return-assign
-    pathSegments.reduce((c, x) => c[x] || (c[x] = {}), config)[last] = value;
+    pathSegments.reduce(
+        // eslint-disable-next-line no-return-assign
+        (obj, subpath) => obj[subpath] || (obj[subpath] = {}),
+        config
+    )[last] = value;
 };
 
 const hasTone = (name: string): boolean =>
