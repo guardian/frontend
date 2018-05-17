@@ -451,12 +451,12 @@ $header-image-size-desktop: 100px;
 }
 
 // Temporary Royal Wedding customisation to specific special report container
-[data-component='six-by-nine'] {
+[data-component='royal-wedding'] {
     background-color: #e7edef;
     padding-bottom: 0;
 
     .fc-container__inner {
-        background: url('https://s3-eu-west-1.amazonaws.com/uploads-origin.guim.co.uk/2018/05/16/himandher.png') no-repeat;
+        background: url('https://uploads.guim.co.uk/2018/05/17/himandher.png') no-repeat;
         background-size: 170px 150px;
         background-position: left bottom;
 
@@ -466,7 +466,49 @@ $header-image-size-desktop: 100px;
         }
     }
 
+    &:not(.fc-container--rolled-up) {
+        @include mq(leftCol) {
+            .fc-container__header__title {
+                display: block;
+                position: absolute;
+                padding-left: $gs-gutter;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: gs-span(2) + $gs-gutter;
+
+                @include mq(wide) {
+                    width: gs-span(4) - $gs-gutter * 3;
+                }
+            }
+
+            .fc-container__header__title:before {
+                background-image: url('https://uploads.guim.co.uk/2018/05/17/confetti_AA.png'),
+                  url('https://uploads.guim.co.uk/2018/05/17/confetti_spin.gif'),
+                  url('https://uploads.guim.co.uk/2018/05/17/confetti_CC.png');
+                background-size: 500px 500px, 400px 400px, 300px 300px;
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity .3s ease-in-out;
+                animation: confetti 4s linear infinite;
+            }
+
+            .fc-container__header__title:hover:before {
+                opacity: 1;
+            }
+        }
+    }
+
     .fc-container__header {
+        position: static;
+
         @include mq($until: leftCol) {
             min-height: 35px;
         }
@@ -479,8 +521,10 @@ $header-image-size-desktop: 100px;
         }
     }
 
-    @include mq($until: tablet) {
-        .fc-container__header__title {
+    .fc-container__header__title {
+        padding-top: 0 !important;
+
+        @include mq($until: tablet) {
             // Clears space between toggle and container title
             padding-right: 100px;
         }
@@ -541,7 +585,7 @@ $header-image-size-desktop: 100px;
         }
 
         @include mq(wide) {
-            left: gs-span(16) + 10px;
+            left: gs-span(16) + $gs-gutter + $gs-gutter / 2;
         }
     }
 
@@ -555,14 +599,17 @@ $header-image-size-desktop: 100px;
         }
 
         .fc-container__toggle {
-            width: 100px;
-
             &:after {
                 content: 'Maybe I am a royalist';
 
             }
         }
     }
+}
+
+@keyframes confetti {
+  0% { background-position: 0 0, 0 0, 0 0;}
+  100% { background-position: 500px 1000px, 0 400px, 0 300px;}
 }
 
 .fc-container__toggle {
