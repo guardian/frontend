@@ -69,7 +69,7 @@ describe('Config', () => {
         expect(config.get('page.qwert')).toBeUndefined();
     });
 
-    it('`get` should return default value for non-existing key with a default', () => {
+    it('`set` should return default value for non-existing key with a default', () => {
         expect(config.get('page.qwert', ['I am the default'])).toEqual([
             'I am the default',
         ]);

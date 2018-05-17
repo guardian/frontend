@@ -21,14 +21,13 @@ const get = (path: string = '', defaultValue: any): any => {
 };
 
 // let S = { l1, l2, ..., ln } be a non-empty ordered set of labels
-// let l1.l2.....ln be the string reprentation of S
-// set(S, x) is the function that takes any value x into the config
+// let s = l1.l2.....ln be the string reprentation of S
+// set(s, x) is the function that takes any value x into the config
 // object following the path described by S, making sure that path
 // actually leads somewhere.
 const set = (path: string, value: any): void => {
     const pathSegments = path.split('.');
     const last = pathSegments.pop();
-    // eslint should embrace mutation, a core feature of javascript, indeed the only one
     // eslint-disable-next-line no-return-assign
     pathSegments.reduce((c, x) => c[x] || (c[x] = {}), config)[last] = value;
 };
