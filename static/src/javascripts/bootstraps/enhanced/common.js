@@ -35,6 +35,7 @@ import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
 import { cookiesBanner } from 'common/modules/ui/cookiesBanner';
+import { banner as firstPvConsentBanner } from 'common/modules/ui/first-pv-consent-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
@@ -273,7 +274,9 @@ const initialiseEmail = (): void => {
 const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
-        cookiesBanner,
+        config.get('switches.idAdConsents', false)
+            ? firstPvConsentBanner
+            : cookiesBanner,
         breakingNews,
         smartAppBanner,
         membershipEngagementBanner,
