@@ -75,7 +75,7 @@ const getIndexSiteId = (): string => {
     const site = config.page.pbIndexSites.find(
         s => s.bp === getBreakpointKey()
     );
-    return site ? site.id : '';
+    return site && site.id ? site.id.toString() : '';
 };
 
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
@@ -174,10 +174,13 @@ const sonobiBidder: PrebidBidder = {
 };
 
 const indexExchangeBidder: PrebidBidder = {
-    name: 'indexExchange',
-    bidParams: (): PrebidIndexExchangeParams => ({
-        id: '185406',
-        siteID: getIndexSiteId(),
+    name: 'ix',
+    bidParams: (
+        slotId: string,
+        sizes: PrebidSize[]
+    ): PrebidIndexExchangeParams => ({
+        siteId: getIndexSiteId(),
+        size: sizes[0],
     }),
 };
 
