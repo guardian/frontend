@@ -483,9 +483,7 @@ $header-image-size-desktop: 100px;
             }
 
             .fc-container__header__title:before {
-                background-image: url('https://uploads.guim.co.uk/2018/05/17/confetti_AA.png'),
-                    url('https://uploads.guim.co.uk/2018/05/17/confetti_spin.gif'),
-                    url('https://uploads.guim.co.uk/2018/05/17/confetti_CC.png');
+                background-image: url('https://uploads.guim.co.uk/2018/05/17/confetti_AA.png'), url('https://uploads.guim.co.uk/2018/05/17/confetti_spin.gif'), url('https://uploads.guim.co.uk/2018/05/17/confetti_CC.png');
                 background-size: 500px 500px, 400px 400px, 300px 300px;
                 content: '';
                 display: block;
