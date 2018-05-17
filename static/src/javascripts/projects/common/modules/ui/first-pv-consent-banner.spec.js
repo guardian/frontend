@@ -7,16 +7,13 @@ const setAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
     .setAdConsentState;
 const Message: any = require('common/modules/ui/message').Message;
 
-afterEach(() => {
+beforeEach(() => {
     jest.clearAllMocks();
+    Message.mockReset();
     setAdConsentState(0, null);
     setAdConsentState(1, null);
-});
-beforeEach(() => {
-    Message.mockReset();
     Message.prototype.show = jest.fn(() => true);
     Message.prototype.hide = jest.fn(() => true);
-    Message.prototype.show.mockRestore();
 });
 
 jest.mock('common/modules/ui/message', () => ({
@@ -45,6 +42,10 @@ describe('First PV consents banner', () => {
         return banner.canShow().then(showable => {
             expect(showable).toBe(false);
         });
+    });
+    it('should show a message', () => {
+        banner.show();
+        expect(Message.prototype.show).toHaveBeenCalled();
     });
     it('should contain an agree button', () => {
         banner.show();
