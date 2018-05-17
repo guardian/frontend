@@ -541,7 +541,7 @@ $header-image-size-desktop: 100px;
         width: 100px;
         padding: 0 37px 0 0;
         text-align: right;
-        top: 0;
+        top: $gs-baseline / 3;
 
         .fc-container__toggle__text {
             display: none;
@@ -570,6 +570,7 @@ $header-image-size-desktop: 100px;
         }
 
         @include mq(tablet) {
+            top: 0;
             left: gs-span(9);
             transform: translateX(-100%);
         }
