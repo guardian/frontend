@@ -450,59 +450,84 @@ $header-image-size-desktop: 100px;
     transition: opacity .25s linear; // Used to fade-in new updates
 }
 
+// Temporary Royal Wedding customisation to specific special report container
+[data-component='six-by-nine'] {
+    background-color: #e7edef;
+    padding-bottom: 0;
 
+    .fc-container__inner {
+        background: url('https://s3-eu-west-1.amazonaws.com/uploads-origin.guim.co.uk/2018/05/16/himandher.png') no-repeat;
+        background-size: 170px 150px;
+        background-position: left bottom;
 
-[data-component='the-lives-of-grenfell-tower'] {
-    &.fc-container--story-package {
-        background: #ffd9e1;
+        @include mq($until: leftCol) {
+            background-size: 85px 75px;
+            padding-bottom: 70px;
+        }
     }
 
-    .fc-item__avatar {
-        border-radius: 0;
+    .fc-container__header {
+        @include mq($until: leftCol) {
+            min-height: 35px;
+        }
+    }
 
-        &:before {
-            content: '';
-            background: url('https://s3-eu-west-1.amazonaws.com/uploads-origin.guim.co.uk/2018/05/15/heart.png');
-            background-size: cover;
-            display: block;
-            position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
-            bottom: 0;
+    .fc-container__body {
+        @include mq($from: leftCol, $until: wide ) {
+            // Overides .fc-container--first {padding-top: 0;}
+            padding-top: $gs-baseline * 3 !important;
         }
     }
 
     @include mq($until: tablet) {
         .fc-container__header__title {
+            // Clears space between toggle and container title
             padding-right: 100px;
         }
     }
 
     .fc-container__toggle {
-        background-color: $lifestyle-garnett-media-main-1;
-        border-radius: 24px;
+        box-sizing: border-box;
         color: $garnett-neutral-1;
         display: block;
         font-size: 12px;
         font-weight: 600;
-        min-height: 24px;
-        line-height: 18px !important;
-        min-width: auto;
-        padding: 0 10px;
-        top: $gs-baseline / 2;
+        min-height: 32px;
+        line-height: 15px;
+        min-width: none;
+        max-width: none;
+        width: 100px;
+        padding: 0 37px 0 0;
+        text-align: right;
+        top: 0;
 
-        .fc-container__toggle__text,
-        .inline-arrow {
+        .fc-container__toggle__text {
             display: none;
         }
 
+        .inline-arrow {
+            background-color: $lifestyle-garnett-media-main-1;
+            border-radius: 100%;
+            display: block;
+            height: 32px;
+            position: absolute;
+            left: auto;
+            right: 0;
+            top: 0;
+            width: 32px;
+
+            svg {
+                display: block;
+                margin: 11px auto 0;
+                width: 20px;
+            }
+        }
+
         &:after {
-            content: 'Republican?';
+            content: 'Not a royalist?';
         }
 
         @include mq(tablet) {
-            top: 2px;
             left: gs-span(9);
             transform: translateX(-100%);
         }
@@ -516,25 +541,25 @@ $header-image-size-desktop: 100px;
         }
 
         @include mq(wide) {
-            left: gs-span(16) + 12px;
+            left: gs-span(16) + 10px;
         }
     }
 
     &.fc-container--rolled-up {
-        .fc-container__toggle {
-            &:after {
-                content: 'Royalist?';
+        padding-bottom: 0;
 
-            }
+        .fc-container__inner {
+            background: none;
+            min-height: 40px;
+            padding-bottom: 0;
         }
 
-        .fc-container__header__title {
-            .fc-container__title__text {
-                display: none;
-            }
+        .fc-container__toggle {
+            width: 100px;
 
-            a:after {
-                content: "Nothing to see here";
+            &:after {
+                content: 'Maybe I am a royalist';
+
             }
         }
     }
