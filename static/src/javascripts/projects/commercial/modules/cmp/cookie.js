@@ -212,11 +212,28 @@ const writeVendorConsentCookie = (vendorConsentData: VendorConsentData) => {
     );
 };
 
+const generateConsentSelection = (
+    canPersonalise: boolean,
+    vendorList: VendorList
+): SelectedIds => {
+    if (canPersonalise) {
+        return {
+            selectedPurposeIds: vendorList.purposes.map(p => p.id),
+            selectedVendorIds: vendorList.vendors.map(v => v.id),
+        }
+    }
+    return {
+        selectedPurposeIds: [],
+        selectedVendorIds: [],
+    }
+}
+
 export {
     encodeVendorConsentData,
     decodeVendorConsentData,
     readVendorConsentCookie,
     writeVendorConsentCookie,
+    generateConsentSelection,
 };
 
 export const _ = {

@@ -6,6 +6,7 @@ import {
     decodeVendorConsentData,
     readVendorConsentCookie,
     writeVendorConsentCookie,
+    generateConsentSelection,
 } from './cookie';
 
 import type { VendorConsentData } from './types';
@@ -367,6 +368,22 @@ describe('cookie', () => {
 
         expect(bitString).toEqual('BAAAAAAAAAAAAABABBENABAKqMAAVMA');
         expect(decoded).toEqual(consentData);
+    });
+
+    it('magically generates the complete selection when consent = true', () => {
+        const result = generateConsentSelection(true, vendorList);
+        expect(result).toEqual({
+            selectedPurposeIds: [1, 2, 3, 4],
+            selectedVendorIds: [1, 2, 3, 4, 8, 10]
+        });
+    });
+
+    it('magically generates the complete selection when consent = false', () => {
+        const result = generateConsentSelection(false, vendorList);
+        expect(result).toEqual({
+            selectedPurposeIds: [],
+            selectedVendorIds: []
+        });
     });
 });
 
