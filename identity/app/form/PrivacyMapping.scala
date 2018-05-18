@@ -122,7 +122,7 @@ object PrivacyFormData extends SafeLogging {
     * Filter out any invalid consents that are still lingering in Mongo DB.
     *
     * For example, if consent id is renamed, then some users might still have the old consent.
-    *qq
+    *
     * @param userDO Identity User domain model from IDAPI defiend that might contain some old invalid consents
     * @return list of valid consents
     */
