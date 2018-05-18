@@ -54,6 +54,7 @@ object StoryHtmlPage {
       ),
       bodyTag(classes = bodyClasses)(
         message(),
+        tlsWarning(),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         survey() when SurveySwitch.isSwitchedOn,
