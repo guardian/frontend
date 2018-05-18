@@ -1,12 +1,19 @@
 // @flow
 import { breakingNews } from 'common/modules/onward/breaking-news';
-import { local as localStorageStub } from 'lib/storage';
 
 jest.mock('lib/storage', () => ({
     local: {
-        get: jest.fn(),
+        get: jest.fn(key => {
+            if (key === 'gu.breaking-news.hidden') {
+                return {
+                    alert_1: false,
+                    alert_2: false,
+                    alert_3: false,
+                };
+            }
+        }),
         set: jest.fn(),
-        isAvailable: jest.fn(),
+        isAvailable: jest.fn().mockReturnValue(true),
     },
 }));
 jest.mock('lib/config', () => ({
@@ -16,80 +23,71 @@ jest.mock('lib/config', () => ({
         section: 'football',
     },
 }));
-jest.mock('lib/fetch-json', () => jest.fn());
+jest.mock('lib/fetch-json', () =>
+    jest.fn().mockReturnValue(
+        Promise.resolve({
+            webTitle: 'Breaking News',
+            collections: [
+                {
+                    href: 'global',
+                    content: [
+                        {
+                            headline: 'alert 1',
+                            id: 'alert_1',
+                            frontPublicationDate: Date.now(),
+                        },
+                    ],
+                },
+                {
+                    href: 'uk',
+                    content: [
+                        {
+                            headline: 'alert 2',
+                            id: 'alert_2',
+                            frontPublicationDate: Date.now() - 1000,
+                        },
+                    ],
+                },
+                {
+                    href: 'sport',
+                    content: [
+                        {
+                            headline: 'alert 3',
+                            id: 'alert_3',
+                            frontPublicationDate: Date.now() - 2000,
+                        },
+                    ],
+                },
+            ],
+        })
+    )
+);
 jest.mock('common/modules/ui/relativedates', () => ({
-    isWithinSeconds: jest.fn(() => true),
+    isWithinSeconds: jest.fn().mockReturnValue(true),
 }));
 jest.mock('lodash/utilities/template', () => jest.fn());
 jest.useFakeTimers();
 
+const isAvailableMock: any = require('lib/storage').local.isAvailable;
+const getMock: any = require('lib/storage').local.get;
+const setMock: any = require('lib/storage').local.set;
 const fakeFetchJson: any = require('lib/fetch-json');
-const fakeRelativeDates: any = require('common/modules/ui/relativedates');
+const isWithinSecondsMock: any = require('common/modules/ui/relativedates')
+    .isWithinSeconds;
 const fakeTemplate: any = require('lodash/utilities/template');
 
 const BREAKING_NEWS_DELAY = 3000;
 
+beforeEach(() => {
+    isAvailableMock.mockClear();
+    getMock.mockClear();
+    isWithinSecondsMock.mockClear();
+    fakeFetchJson.mockClear();
+    fakeTemplate.mockClear();
+});
+
 describe('breaking news', () => {
     const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
-
-    beforeEach(() => {
-        localStorageStub.get.mockImplementation(key => {
-            if (key === knownAlertIDsStorageKey) {
-                return {
-                    alert_1: false,
-                    alert_2: false,
-                    alert_3: false,
-                };
-            }
-        });
-        localStorageStub.isAvailable.mockReturnValue(true);
-        fakeRelativeDates.isWithinSeconds.mockReturnValue(true);
-        fakeFetchJson.mockReturnValue(
-            Promise.resolve({
-                webTitle: 'Breaking News',
-                collections: [
-                    {
-                        href: 'global',
-                        content: [
-                            {
-                                headline: 'alert 1',
-                                id: 'alert_1',
-                                frontPublicationDate: Date.now(),
-                            },
-                        ],
-                    },
-                    {
-                        href: 'uk',
-                        content: [
-                            {
-                                headline: 'alert 2',
-                                id: 'alert_2',
-                                frontPublicationDate: Date.now() - 1000,
-                            },
-                        ],
-                    },
-                    {
-                        href: 'sport',
-                        content: [
-                            {
-                                headline: 'alert 3',
-                                id: 'alert_3',
-                                frontPublicationDate: Date.now() - 2000,
-                            },
-                        ],
-                    },
-                ],
-            })
-        );
-    });
-
-    afterEach(() => {
-        localStorageStub.get.mockReset();
-        localStorageStub.isAvailable.mockReset();
-        fakeRelativeDates.isWithinSeconds.mockReset();
-        fakeFetchJson.mockReset();
-        fakeTemplate.mockReset();
-    });
 
     describe('canShow', () => {
         it('should return true', () =>
@@ -98,7 +96,7 @@ describe('breaking news', () => {
             }));
 
         it('should return false if user cannot dismiss alerts', () => {
-            localStorageStub.isAvailable.mockReturnValue(false);
+            isAvailableMock.mockReturnValueOnce(false);
 
             return breakingNews.canShow().then(canShow => {
                 expect(canShow).toBe(false);
@@ -106,7 +104,7 @@ describe('breaking news', () => {
         });
 
         it('should return false if fetchBreakingNews returns no collection', () => {
-            fakeFetchJson.mockReturnValue(
+            fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
                 })
@@ -118,7 +116,7 @@ describe('breaking news', () => {
         });
 
         it('should return false if fetchBreakingNews returns an empty collection', () => {
-            fakeFetchJson.mockReturnValue(
+            fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
                     collections: [],
@@ -131,7 +129,7 @@ describe('breaking news', () => {
         });
 
         it('should return false if fetchBreakingNews returns a collection with no content', () => {
-            fakeFetchJson.mockReturnValue(
+            fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
                     collections: [{}],
@@ -144,7 +142,7 @@ describe('breaking news', () => {
         });
 
         it('should return false if fetchBreakingNews returns a collection with empty content', () => {
-            fakeFetchJson.mockReturnValue(
+            fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
                     collections: [
@@ -161,7 +159,7 @@ describe('breaking news', () => {
         });
 
         it('should return false if fetchBreakingNews returns a collection with no relevant alerts', () => {
-            fakeFetchJson.mockReturnValue(
+            fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
                     collections: [
@@ -179,7 +177,7 @@ describe('breaking news', () => {
         });
 
         it('should return false if fetchBreakingNews returns a collection a relevent alert that has already been dismissed', () => {
-            localStorageStub.get.mockImplementation(key => {
+            getMock.mockImplementationOnce(key => {
                 if (key === knownAlertIDsStorageKey) {
                     return {
                         alert_1: true,
@@ -187,7 +185,7 @@ describe('breaking news', () => {
                 }
             });
 
-            fakeFetchJson.mockReturnValue(
+            fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
                     collections: [
@@ -209,9 +207,9 @@ describe('breaking news', () => {
         });
 
         it('should return false if fetchBreakingNews returns a collection with relevent alerts that are over 20 mins old', () => {
-            fakeRelativeDates.isWithinSeconds.mockReturnValue(false);
+            isWithinSecondsMock.mockReturnValueOnce(false);
 
-            localStorageStub.get.mockImplementation(key => {
+            getMock.mockImplementationOnce(key => {
                 if (key === knownAlertIDsStorageKey) {
                     return {
                         alert_1: false,
@@ -219,7 +217,7 @@ describe('breaking news', () => {
                 }
             });
 
-            fakeFetchJson.mockReturnValue(
+            fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
                     collections: [
@@ -242,7 +240,7 @@ describe('breaking news', () => {
         });
 
         it('should return false if relevant alert for a different edition', () => {
-            fakeFetchJson.mockReturnValue(
+            fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
                     collections: [
@@ -264,8 +262,6 @@ describe('breaking news', () => {
                 expect(canShow).toBe(false);
             });
         });
-
-        it('should show an edition alert before a section alert', () => {});
     });
 
     describe('show', () => {
@@ -284,7 +280,7 @@ describe('breaking news', () => {
         });
 
         it('should wait 3 seconds before displaying new alert', () => {
-            localStorageStub.get.mockImplementation(key => {
+            getMock.mockImplementationOnce(key => {
                 if (key === knownAlertIDsStorageKey) {
                     return {
                         alert_2: false,
@@ -299,9 +295,9 @@ describe('breaking news', () => {
                 if (canShow) {
                     breakingNews.show();
 
-                    const callLength = localStorageStub.set.mock.calls.length;
-                    const lastCallArgs =
-                        localStorageStub.set.mock.calls[callLength - 1];
+                    const callLength = setMock.mock.calls.length;
+
+                    const lastCallArgs = setMock.mock.calls[callLength - 1];
 
                     if (document) {
                         const fadeInElems = document.querySelectorAll(
@@ -316,6 +312,7 @@ describe('breaking news', () => {
                     }
 
                     jest.runAllTimers();
+
                     expect(setTimeout.mock.calls[0][1]).toBe(
                         BREAKING_NEWS_DELAY
                     );
@@ -337,6 +334,7 @@ describe('breaking news', () => {
                     }
 
                     expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
+
                     expect(lastCallArgs[1]).toEqual({
                         alert_1: false,
                         alert_2: false,
@@ -353,9 +351,8 @@ describe('breaking news', () => {
                 if (canShow) {
                     breakingNews.show();
 
-                    const callLength = localStorageStub.set.mock.calls.length;
-                    const lastCallArgs =
-                        localStorageStub.set.mock.calls[callLength - 1];
+                    const callLength = setMock.mock.calls.length;
+                    const lastCallArgs = setMock.mock.calls[callLength - 1];
 
                     if (document) {
                         const fadeInElems = document.querySelectorAll(
@@ -399,7 +396,8 @@ describe('breaking news', () => {
 
         it('should show a global alert before an edition alert', () => {
             const pubDate = Date.now();
-            fakeFetchJson.mockReturnValue(
+
+            fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
                     collections: [
@@ -427,7 +425,7 @@ describe('breaking news', () => {
                 })
             );
 
-            localStorageStub.get.mockImplementation(key => {
+            getMock.mockImplementationOnce(key => {
                 if (key === knownAlertIDsStorageKey) {
                     return {
                         alert_1: false,
@@ -442,9 +440,8 @@ describe('breaking news', () => {
                 if (canShow) {
                     breakingNews.show();
 
-                    const callLength = localStorageStub.set.mock.calls.length;
-                    const lastCallArgs =
-                        localStorageStub.set.mock.calls[callLength - 1];
+                    const callLength = setMock.mock.calls.length;
+                    const lastCallArgs = setMock.mock.calls[callLength - 1];
 
                     if (document) {
                         const fadeInElems = document.querySelectorAll(
@@ -488,7 +485,8 @@ describe('breaking news', () => {
 
         it('should show an edition alert before a section alert', () => {
             const pubDate = Date.now();
-            fakeFetchJson.mockReturnValue(
+
+            fakeFetchJson.mockReturnValueOnce(
                 Promise.resolve({
                     webTitle: 'Breaking News',
                     collections: [
@@ -516,7 +514,7 @@ describe('breaking news', () => {
                 })
             );
 
-            localStorageStub.get.mockImplementation(key => {
+            getMock.mockImplementationOnce(key => {
                 if (key === knownAlertIDsStorageKey) {
                     return {
                         alert_1: false,
@@ -531,9 +529,8 @@ describe('breaking news', () => {
                 if (canShow) {
                     breakingNews.show();
 
-                    const callLength = localStorageStub.set.mock.calls.length;
-                    const lastCallArgs =
-                        localStorageStub.set.mock.calls[callLength - 1];
+                    const callLength = setMock.mock.calls.length;
+                    const lastCallArgs = setMock.mock.calls[callLength - 1];
 
                     if (document) {
                         const fadeInElems = document.querySelectorAll(

@@ -190,36 +190,34 @@ const show = (): void => {
     }, alertDelay);
 };
 
-const canShow = (): Promise<boolean> =>
-    new Promise(resolve => {
-        if (userCanDismissAlerts()) {
-            knownAlertIDs = local.get(knownAlertIDsStorageKey) || {};
+const canShow = (): Promise<boolean> => {
+    if (userCanDismissAlerts()) {
+        knownAlertIDs = local.get(knownAlertIDsStorageKey) || {};
 
-            fetchBreakingNews()
-                .then(parseResponse)
-                .then(getRelevantAlerts)
-                .then(pruneKnownAlertIDs)
-                .then(filterAlertsByDismissed)
-                .then(filterAlertsByAge)
-                .then(pickNewest)
-                .then(alert => {
-                    if (alert) {
-                        alertToShow = alert;
-                        resolve(true);
-                    } else {
-                        resolve(false);
-                    }
-                })
-                .catch(ex => {
-                    reportError(ex, {
-                        feature: 'breaking-news',
-                    });
-                    resolve(false);
+        return fetchBreakingNews()
+            .then(parseResponse)
+            .then(getRelevantAlerts)
+            .then(pruneKnownAlertIDs)
+            .then(filterAlertsByDismissed)
+            .then(filterAlertsByAge)
+            .then(pickNewest)
+            .then(alert => {
+                if (alert) {
+                    alertToShow = alert;
+                    return true;
+                }
+                return false;
+            })
+            .catch(ex => {
+                reportError(ex, {
+                    feature: 'breaking-news',
                 });
-        } else {
-            resolve(false);
-        }
-    });
+                return false;
+            });
+    }
+
+    return Promise.resolve(false);
+};
 
 const breakingNews: Banner = {
     id: 'breakingNewsBanner',
