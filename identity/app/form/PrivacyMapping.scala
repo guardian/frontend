@@ -130,7 +130,8 @@ object PrivacyFormData extends SafeLogging {
     def consentExistsInModel(consent:Consent): Boolean =
       Try(Consent.wording(consent.id, consent.version)).isSuccess
 
-    val (validConsents, invalidConsents) = userDO.consents.partition(consentExistsInModel)
+    val newUserConsents = Consent.addNewDefaults(userDO.consents)
+    val (validConsents, invalidConsents) = newUserConsents.partition(consentExistsInModel)
 
     invalidConsents.foreach(consent =>
       logger.error(s"User ${userDO.id} has invalid consent! Remove consent from Mongo DB: $consent"))
