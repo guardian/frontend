@@ -30,7 +30,10 @@ const set = (path: string, value: any): void => {
     const last = pathSegments.pop();
     pathSegments.reduce(
         // eslint-disable-next-line no-return-assign
-        (obj, subpath) => typeof obj[subpath] === 'object' ? obj[subpath] : (obj[subpath] = {}),
+        (obj, subpath) =>
+            typeof obj[subpath] === 'object'
+                ? obj[subpath]
+                : (obj[subpath] = {}),
         config
     )[last] = value;
 };
