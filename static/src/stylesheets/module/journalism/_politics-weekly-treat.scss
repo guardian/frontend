@@ -1,0 +1,81 @@
+.politics-weekly-treat {
+    font-weight: 700;
+
+    @include mq(leftCol) {
+        float: left;
+        width: $left-column;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+
+    svg {
+        overflow: visible;
+    }
+
+    margin-bottom: 115px;
+}
+
+.politics-weekly-treat__overlay {
+    position: absolute;
+    top: 120px;
+}
+
+.politics-weekly-treat__podcast {
+    background: $news-garnett-highlight;
+
+    color: $garnett-neutral-1;
+    font-size: 14px;
+    font-family: $f-serif-text;
+
+    padding: 4px 3px 6px;
+
+    display: inline-block;
+}
+
+.politics-weekly-treat__podcast-details {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.politics-weekly-treat__podcast-title {
+    background: $garnett-neutral-1;
+    color: $garnett-neutral-5;
+
+    font-size: 18px;
+    font-family: $f-sans-serif-text;
+
+    padding: 4px 3px 5px;
+
+    display: inline-block;
+    flex: 1 1 0;
+}
+.politics-weekly-treat__podcast-title span {
+    width: 100%;
+}
+
+.politics-weekly-treat__player {
+    background: #e9eff1;
+    font-size: 13px;
+
+    padding: 2px 5px 2px 1px;
+
+    display: inline-flex;
+    align-items: center;
+    flex: 1 1 0;
+
+    *:first-child {
+        padding-right: 6px;
+    }
+    *:last-child {
+        padding-left: 6px;
+    }
+}
+
+.politics-weekly-treat__episode-title {
+    font-size: 13px;
+    font-family: $f-sans-serif-text;
+    line-height: 16px;
+}
+
