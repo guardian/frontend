@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { BoopableBox } from 'common/modules/identity/ad-prefs/BoopableBox';
+import { FeedbackFlashBox } from 'common/modules/identity/ad-prefs/FeedbackFlashBox';
 import fastdom from 'lib/fastdom-promise';
 import {
     getAdConsentState,
@@ -125,13 +125,13 @@ class ConsentBoxes extends Component<
                 );
             }
         });
-        if (this.boopableBoxRef) this.boopableBoxRef.boop();
+        if (this.FeedbackFlashBoxRef) this.FeedbackFlashBoxRef.flash();
         this.setState({
             changesPending: false,
         });
     }
 
-    boopableBoxRef: ?BoopableBox = null;
+    FeedbackFlashBoxRef: ?FeedbackFlashBox = null;
 
     render() {
         return (
@@ -159,12 +159,12 @@ class ConsentBoxes extends Component<
                         type="submit">
                         Save changes
                     </button>
-                    <BoopableBox
+                    <FeedbackFlashBox
                         ref={child => {
-                            this.boopableBoxRef = child;
+                            this.FeedbackFlashBoxRef = child;
                         }}>
                         Saved
-                    </BoopableBox>
+                    </FeedbackFlashBox>
                 </div>
             </form>
         );
