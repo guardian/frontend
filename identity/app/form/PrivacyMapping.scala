@@ -130,12 +130,7 @@ object PrivacyFormData extends SafeLogging {
     def consentExistsInModel(consent:Consent): Boolean =
       Try(Consent.wording(consent.id, consent.version)).isSuccess
 
-    def applyMissingDefaults(userDoConsents: List[Consent]): List[Consent] = {
-      val missingDefaultsConsentIds = defaultConsents.map(_.id).filterNot(userDoConsents.map(_.id).contains)
-      userDO.consents ++ defaultConsents.filter(c => missingDefaultsConsentIds.contains(c.id))
-    }
-
-    val newUserConsents = applyMissingDefaults(userDO.consents)
+    val newUserConsents = Consent.addNewDefaults(userDO.consents)
     val (validConsents, invalidConsents) = newUserConsents.partition(consentExistsInModel)
 
     invalidConsents.foreach(consent =>
