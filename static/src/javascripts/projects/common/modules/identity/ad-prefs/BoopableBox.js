@@ -1,16 +1,20 @@
+// @flow
 import React, { Component } from 'react';
+
+type BoopableBoxProps = {
+    children?: any,
+};
 
 class BoopableBox extends Component<
     BoopableBoxProps,
     {
         booping: boolean,
     }
-    > {
-
-    constructor(props:BoopableBoxProps) {
-        super(props)
+> {
+    constructor(props: BoopableBoxProps) {
+        super(props);
         this.state = {
-            booping: false
+            booping: false,
         };
     }
 
@@ -34,4 +38,4 @@ class BoopableBox extends Component<
     }
 }
 
-export {BoopableBox}
+export { BoopableBox };

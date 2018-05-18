@@ -34,10 +34,6 @@ type ConsentBoxProps = {
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
 
-type BoopableBoxProps = {
-    children?: any,
-}
-
 class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
     handleChange(event: SyntheticInputEvent<HTMLInputElement>): void {
         if (event.target.checked) {
@@ -96,7 +92,7 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
 
 class ConsentBoxes extends Component<
     {},
-    { consentsWithState: AdConsentWithState[], changesPending:boolean }
+    { consentsWithState: AdConsentWithState[], changesPending: boolean }
 > {
     constructor(props: {}) {
         super(props);
@@ -115,7 +111,7 @@ class ConsentBoxes extends Component<
         consentsWithState[consentId].state = state;
         this.setState({
             consentsWithState,
-            changesPending
+            changesPending,
         });
     }
 
@@ -131,7 +127,7 @@ class ConsentBoxes extends Component<
         });
         if (this.boopableBoxRef) this.boopableBoxRef.boop();
         this.setState({
-            changesPending: false
+            changesPending: false,
         });
     }
 
@@ -139,7 +135,9 @@ class ConsentBoxes extends Component<
 
     render() {
         return (
-            <form className="identity-ad-prefs-manager" onSubmit={ev => this.onSubmit(ev)}>
+            <form
+                className="identity-ad-prefs-manager"
+                onSubmit={ev => this.onSubmit(ev)}>
                 <div>
                     {this.state.consentsWithState.map(
                         (consentWithState, index) => (
@@ -155,7 +153,12 @@ class ConsentBoxes extends Component<
                     )}
                 </div>
                 <div className="identity-ad-prefs-manager__footer">
-                    <button disabled={this.state.changesPending?null:'disabled'} className="manage-account__button manage-account__button--center" type="submit">Save changes</button>
+                    <button
+                        disabled={this.state.changesPending ? null : 'disabled'}
+                        className="manage-account__button manage-account__button--center"
+                        type="submit">
+                        Save changes
+                    </button>
                     <BoopableBox
                         ref={child => {
                             this.boopableBoxRef = child;
