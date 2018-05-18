@@ -42,12 +42,11 @@ object ConsentChannel {
   def isSmsChannel(consentField: Field, user: User): Boolean =
     consentField("id").value.exists(_ == TextConsentChannel.id)
 
-  def isOptOutChannel(consentField: Field, user: User): Boolean = {
+  def isOptOutChannel(consentField: Field, user: User): Boolean =
     consentField("id").value match {
       case Some(PhoneOptOutConsentChannel.id) | Some(PostOptOutConsentChannel.id) => true
       case _ => false
     }
-  }
 
   def isMarketResearch(consentField: Field, user: User) : Boolean =
     consentField("id").value.exists(_ == MarketResearchConsentChannel.id)
