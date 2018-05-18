@@ -10,7 +10,12 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 
-const rootSelector: string = '.js-manage-account__ad-prefs';
+type AdConsentState = ?boolean;
+
+type AdConsentWithState = {
+    consent: AdConsent,
+    state: AdConsentState,
+};
 
 type ConsentRadioButtonProps = {
     value: string,
@@ -19,6 +24,41 @@ type ConsentRadioButtonProps = {
     consent: AdConsent,
     onToggle: () => void,
 };
+
+type ConsentBoxProps = {
+    consent: AdConsent,
+    state: AdConsentState,
+    onUpdate: (state: AdConsentState) => void,
+};
+
+class BoopableBox extends Component<
+    {
+        children?: any,
+    },
+    {
+        booping: boolean,
+    }
+> {
+    boop() {
+        this.setState({ booping: true });
+        setTimeout(() => {
+            this.setState({ booping: false });
+        }, 500);
+    }
+
+    render() {
+        return (
+            <div
+                style={{
+                    display: this.state.booping ? 'block' : 'none',
+                }}>
+                {this.props.children}
+            </div>
+        );
+    }
+}
+
+const rootSelector: string = '.js-manage-account__ad-prefs';
 
 class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
     handleChange(event: SyntheticInputEvent<HTMLInputElement>): void {
@@ -50,26 +90,8 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
     }
 }
 
-type ConsentBoxProps = { consent: AdConsent };
-
-class ConsentBox extends Component<
-    ConsentBoxProps,
-    { consentState: ?boolean }
-> {
-    constructor(props: ConsentBoxProps) {
-        super(props);
-        this.state = {
-            consentState: getAdConsentState(this.props.consent),
         };
-    }
-
-    setConsentTo(state: boolean): void {
-        setAdConsentState(this.props.consent, state);
-        this.setState({
-            consentState: getAdConsentState(this.props.consent),
-        });
-    }
-
+class ConsentBox extends Component<ConsentBoxProps, {}> {
     render() {
         return (
             <fieldset>
@@ -80,16 +102,16 @@ class ConsentBox extends Component<
                     <ConsentRadioButton
                         label="Turn on"
                         value="true"
-                        checked={this.state.consentState === true}
+                        checked={this.props.state === true}
                         consent={this.props.consent}
-                        onToggle={() => this.setConsentTo(true)}
+                        onToggle={() => this.props.onUpdate(true)}
                     />
                     <ConsentRadioButton
                         label="Turn off"
                         value="false"
-                        checked={this.state.consentState === false}
+                        checked={this.props.state === false}
                         consent={this.props.consent}
-                        onToggle={() => this.setConsentTo(false)}
+                        onToggle={() => this.props.onUpdate(false)}
                     />
                 </div>
             </fieldset>
@@ -97,14 +119,68 @@ class ConsentBox extends Component<
     }
 }
 
-class ConsentBoxes extends Component<{}, {}> {
+class ConsentBoxes extends Component<
+    {},
+    { consentsWithState: AdConsentWithState[] }
+> {
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            consentsWithState: allAdConsents.map((consent: AdConsent) => ({
+                consent,
+                state: getAdConsentState(consent),
+            })),
+        };
+    }
+
+    onUpdate(consentId, state: AdConsentState) {
+        const consentsWithState = { ...this.state }.consentsWithState;
+        consentsWithState[consentId].state = state;
+        this.setState({
+            consentsWithState,
+        });
+    }
+
+    onSubmit(event: SyntheticInputEvent<HTMLFormElement>) {
+        event.preventDefault();
+        this.state.consentsWithState.forEach(consentWithState => {
+            if (consentWithState.state) {
+                setAdConsentState(
+                    consentWithState.consent,
+                    consentWithState.state
+                );
+            }
+        });
+        if (this.boopableBoxRef) this.boopableBoxRef.boop();
+    }
+
+    boopableBoxRef: ?BoopableBox = null;
+
     render() {
         return (
-            <div>
-                {allAdConsents.map((consent: AdConsent) => (
-                    <ConsentBox consent={consent} key={consent.cookie} />
-                ))}
-            </div>
+            <form onSubmit={ev => this.onSubmit(ev)}>
+                <div>
+                    {this.state.consentsWithState.map(
+                        (consentWithState, index) => (
+                            <ConsentBox
+                                consent={consentWithState.consent}
+                                state={consentWithState.state}
+                                key={consentWithState.consent.cookie}
+                                onUpdate={(state: AdConsentState) => {
+                                    this.onUpdate(index, state);
+                                }}
+                            />
+                        )
+                    )}
+                </div>
+                <button type="submit">Save changes</button>
+                <BoopableBox
+                    ref={child => {
+                        this.boopableBoxRef = child;
+                    }}>
+                    Saved
+                </BoopableBox>
+            </form>
         );
     }
 }
