@@ -20,9 +20,11 @@ const setAdConsentState = (provider: AdConsent, state: boolean): void => {
 };
 
 const getAdConsentState = (provider: AdConsent): ?boolean => {
-    const cookie = getCookie(provider.cookie).split(',')[0];
-    if (cookie === '1') return true;
-    if (cookie === '0') return false;
+    const cookieRaw = getCookie(provider.cookie);
+    if (!cookieRaw) return null;
+    const cookieParsed = cookieRaw.split(',')[0];
+    if (cookieParsed === '1') return true;
+    if (cookieParsed === '0') return false;
     return null;
 };
 
