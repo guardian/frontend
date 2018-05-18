@@ -1,0 +1,13 @@
+.identity-ad-prefs-manager__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: $gs-baseline;
+
+    > .manage-account__button {
+        &[disabled] {
+            pointer-events: none;
+            opacity: .5;
+        }
+    }
+}

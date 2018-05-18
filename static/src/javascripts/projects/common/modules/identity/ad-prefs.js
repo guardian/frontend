@@ -31,14 +31,26 @@ type ConsentBoxProps = {
     onUpdate: (state: AdConsentState) => void,
 };
 
+type BoopableBoxProps = {
+    children?: any,
+}
+
+const rootSelector: string = '.js-manage-account__ad-prefs';
+
 class BoopableBox extends Component<
-    {
-        children?: any,
-    },
+    BoopableBoxProps,
     {
         booping: boolean,
     }
 > {
+
+    constructor(props:BoopableBoxProps) {
+        super(props)
+        this.state = {
+            booping: false
+        };
+    }
+
     boop() {
         this.setState({ booping: true });
         setTimeout(() => {
@@ -49,6 +61,7 @@ class BoopableBox extends Component<
     render() {
         return (
             <div
+                className="identity-ad-prefs-manager__boop"
                 style={{
                     display: this.state.booping ? 'block' : 'none',
                 }}>
@@ -57,8 +70,6 @@ class BoopableBox extends Component<
         );
     }
 }
-
-const rootSelector: string = '.js-manage-account__ad-prefs';
 
 class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
     handleChange(event: SyntheticInputEvent<HTMLInputElement>): void {
@@ -120,11 +131,12 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
 
 class ConsentBoxes extends Component<
     {},
-    { consentsWithState: AdConsentWithState[] }
+    { consentsWithState: AdConsentWithState[], changesPending:boolean }
 > {
     constructor(props: {}) {
         super(props);
         this.state = {
+            changesPending: false,
             consentsWithState: allAdConsents.map((consent: AdConsent) => ({
                 consent,
                 state: getAdConsentState(consent),
@@ -134,9 +146,11 @@ class ConsentBoxes extends Component<
 
     onUpdate(consentId, state: AdConsentState) {
         const consentsWithState = { ...this.state }.consentsWithState;
+        const changesPending = consentsWithState[consentId].state !== state;
         consentsWithState[consentId].state = state;
         this.setState({
             consentsWithState,
+            changesPending
         });
     }
 
@@ -151,13 +165,16 @@ class ConsentBoxes extends Component<
             }
         });
         if (this.boopableBoxRef) this.boopableBoxRef.boop();
+        this.setState({
+            changesPending: false
+        });
     }
 
     boopableBoxRef: ?BoopableBox = null;
 
     render() {
         return (
-            <form onSubmit={ev => this.onSubmit(ev)}>
+            <form className="identity-ad-prefs-manager" onSubmit={ev => this.onSubmit(ev)}>
                 <div>
                     {this.state.consentsWithState.map(
                         (consentWithState, index) => (
@@ -172,13 +189,15 @@ class ConsentBoxes extends Component<
                         )
                     )}
                 </div>
-                <button type="submit">Save changes</button>
-                <BoopableBox
-                    ref={child => {
-                        this.boopableBoxRef = child;
-                    }}>
-                    Saved
-                </BoopableBox>
+                <div className="identity-ad-prefs-manager__footer">
+                    <button disabled={this.state.changesPending?null:'disabled'} className="manage-account__button manage-account__button--center" type="submit">Save changes</button>
+                    <BoopableBox
+                        ref={child => {
+                            this.boopableBoxRef = child;
+                        }}>
+                        Saved
+                    </BoopableBox>
+                </div>
             </form>
         );
     }
