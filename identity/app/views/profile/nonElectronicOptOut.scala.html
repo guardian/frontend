@@ -27,6 +27,19 @@
                         )(messages)
                     </li>
                 }
+                @if(isMarketResearch(consentField, user)) {
+                    <p class="form__heading">Market Research</p>
+                    <p class="identity-title-explainer">From time to time we may contact you for market research purposes inviting you to complete a survey, or take part in a group discussion. Normally, this invitation would be sent via email, but we may
+                        also contact you by phone.</p>
+                    <li>
+                    @fragments.consentSwitch(
+                        consentField,
+                        boldTitle = false,
+                        titleProvider = wording => wording.description.getOrElse(""),
+                        descriptionProvider = _ => None
+                    )(messages)
+                    </li>
+                }
             }
         </ul>
     </div>

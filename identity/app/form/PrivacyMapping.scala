@@ -122,7 +122,7 @@ object PrivacyFormData extends SafeLogging {
     * Filter out any invalid consents that are still lingering in Mongo DB.
     *
     * For example, if consent id is renamed, then some users might still have the old consent.
-    *
+    *qq
     * @param userDO Identity User domain model from IDAPI defiend that might contain some old invalid consents
     * @return list of valid consents
     */
@@ -130,7 +130,13 @@ object PrivacyFormData extends SafeLogging {
     def consentExistsInModel(consent:Consent): Boolean =
       Try(Consent.wording(consent.id, consent.version)).isSuccess
 
-    val (validConsents, invalidConsents) = userDO.consents.partition(consentExistsInModel)
+    def applyMissingDefaults(userDoConsents: List[Consent]): List[Consent] = {
+      val missingDefaults = defaultConsents.map(_.id).filterNot(userDoConsents.map(_.id).contains)
+      userDO.consents ++ defaultConsents.filter(c => missingDefaults.contains(c.id))
+    }
+
+    val newUserConsents = applyMissingDefaults(userDO.consents)
+    val (validConsents, invalidConsents) = newUserConsents.partition(consentExistsInModel)
 
     invalidConsents.foreach(consent =>
       logger.error(s"User ${userDO.id} has invalid consent! Remove consent from Mongo DB: $consent"))

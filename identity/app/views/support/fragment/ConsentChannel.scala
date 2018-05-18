@@ -9,12 +9,14 @@ object ConsentChannel {
   case object PhoneOptOutConsentChannel extends ConsentChannelBehaviour("phone_optout")
   case object PostOptOutConsentChannel  extends ConsentChannelBehaviour("post_optout")
   case object MarketResearchConsentChannel extends ConsentChannelBehaviour("market_research_optout")
+  case object ProfilingConsentChannel extends ConsentChannelBehaviour("profiling_optout")
 
   private val channelsIds = List(
     TextConsentChannel.id,
     PhoneOptOutConsentChannel.id,
     PostOptOutConsentChannel.id,
-    MarketResearchConsentChannel.id
+    MarketResearchConsentChannel.id,
+    ProfilingConsentChannel.id
   )
 
   def channelsProvidedBy(user: User): List[ConsentChannelBehaviour] = {
@@ -40,11 +42,16 @@ object ConsentChannel {
   def isSmsChannel(consentField: Field, user: User): Boolean =
     consentField("id").value.exists(_ == TextConsentChannel.id)
 
-  def isOptOutChannel(consentField: Field, user: User): Boolean =
+  def isOptOutChannel(consentField: Field, user: User): Boolean = {
     consentField("id").value match {
-      case Some(PhoneOptOutConsentChannel.id) | Some(PostOptOutConsentChannel.id) | Some(MarketResearchConsentChannel.id) => true
+      case Some(PhoneOptOutConsentChannel.id) | Some(PostOptOutConsentChannel.id) => true
       case _ => false
     }
+  }
+
+  def isMarketResearch(consentField: Field, user: User) : Boolean =
+    consentField("id").value.exists(_ == MarketResearchConsentChannel.id)
+
 
   def isChannel(consentField: Field): Boolean = {
     consentField("id").value.exists { id => channelsIds.contains(id) }
