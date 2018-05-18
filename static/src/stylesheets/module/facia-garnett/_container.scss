@@ -467,23 +467,29 @@ $header-image-size-desktop: 100px;
         }
     }
 
-    &:not(.fc-container--rolled-up) {
+    &.fc-container--first:not(.fc-container--rolled-up) {
         @include mq(leftCol) {
             .fc-container__header__title {
-                display: block;
-                position: absolute;
-                padding-left: $gs-gutter;
-                padding-top: $gs-baseline / 2;
-                left: 0;
                 top: -$gs-baseline / 2;
-                bottom: 0;
-                width: gs-span(2) + $gs-gutter;
+                padding-top: $gs-baseline / 2;
+            }
+        }
+    }
 
-                @include mq(wide) {
-                    width: gs-span(4) - $gs-gutter * 3;
-                }
+    &.fc-container--first {
+        .fc-container__toggle {
+            @include mq(leftCol) {
+                top: -$gs-baseline / 4;
             }
 
+            @include mq(wide) {
+                top: 0;
+            }
+        }
+    }
+
+    &:not(.fc-container--rolled-up) {
+        @include mq(leftCol) {
             .fc-container__header__title:before {
                 background-image: url('https://uploads.guim.co.uk/2018/05/17/confetti_AA.png'), url('https://uploads.guim.co.uk/2018/05/17/confetti_spin.gif'), url('https://uploads.guim.co.uk/2018/05/17/confetti_CC.png');
                 background-size: 500px 500px, 400px 400px, 300px 300px;
@@ -522,6 +528,28 @@ $header-image-size-desktop: 100px;
     }
 
     .fc-container__header__title {
+        @include mq(leftCol) {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+            padding-top: $gs-baseline / 2;
+            left: 0;
+            bottom: 0;
+            top: 0;
+            width: gs-span(2) + $gs-gutter * 2 ;
+        }
+
+        @include mq(wide) {
+            width: gs-span(4) - $gs-gutter * 2;
+        }
+
+
+        &:after {
+            content: none;
+        }
+
         @include mq($until: tablet) {
             // Clears space between toggle and container title
             padding-right: 100px;
@@ -545,7 +573,10 @@ $header-image-size-desktop: 100px;
 
         &:focus {
             outline: 0;
-            text-decoration: underline;
+
+            .inline-arrow {
+                background-color: darken($lifestyle-garnett-media-main-1, 10%);
+            }
         }
 
         .fc-container__toggle__text {
@@ -575,7 +606,6 @@ $header-image-size-desktop: 100px;
         }
 
         @include mq(tablet) {
-            top: 0;
             left: gs-span(9) + $gs-gutter;
             transform: translateX(-100%);
         }
@@ -597,7 +627,15 @@ $header-image-size-desktop: 100px;
         padding-bottom: 0;
 
         .fc-container__header__title {
-            padding-top: 0 !important;
+            @include mq(leftCol) {
+                position: relative;
+                padding: 0 0 ($gs-baseline / 2);
+                width: gs-span(2);
+            }
+
+            @include mq(wide) {
+                width: gs-span(3);
+            }
         }
 
         .fc-container__inner {
@@ -609,7 +647,6 @@ $header-image-size-desktop: 100px;
         .fc-container__toggle {
             &:after {
                 content: 'Maybe I am a royalist';
-
             }
         }
     }
