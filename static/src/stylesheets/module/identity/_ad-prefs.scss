@@ -1,3 +1,17 @@
+.identity-ad-prefs-manager {
+
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+        legend {
+            position: absolute;
+            left: -2000px;
+        }
+    }
+
+}
+
 .identity-ad-prefs-manager__footer {
     display: flex;
     justify-content: space-between;
@@ -10,4 +24,10 @@
             opacity: .5;
         }
     }
+}
+
+.identity-ad-prefs-input {
+    display: block;
+    background: $garnett-neutral-3;
+    border-top: 1px solid $garnett-neutral-4;
 }

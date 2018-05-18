@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import { BoopableBox } from 'common/modules/identity/ad-prefs/BoopableBox';
 import fastdom from 'lib/fastdom-promise';
 import {
     getAdConsentState,
@@ -31,44 +32,10 @@ type ConsentBoxProps = {
     onUpdate: (state: AdConsentState) => void,
 };
 
-type BoopableBoxProps = {
-    children?: any,
-}
-
 const rootSelector: string = '.js-manage-account__ad-prefs';
 
-class BoopableBox extends Component<
-    BoopableBoxProps,
-    {
-        booping: boolean,
-    }
-> {
-
-    constructor(props:BoopableBoxProps) {
-        super(props)
-        this.state = {
-            booping: false
-        };
-    }
-
-    boop() {
-        this.setState({ booping: true });
-        setTimeout(() => {
-            this.setState({ booping: false });
-        }, 500);
-    }
-
-    render() {
-        return (
-            <div
-                className="identity-ad-prefs-manager__boop"
-                style={{
-                    display: this.state.booping ? 'block' : 'none',
-                }}>
-                {this.props.children}
-            </div>
-        );
-    }
+type BoopableBoxProps = {
+    children?: any,
 }
 
 class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
@@ -84,19 +51,17 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
         const name = `gu-ad-prefs-${this.props.consent.cookie}`;
 
         return (
-            <div>
-                <label htmlFor={id}>
-                    <input
-                        type="radio"
-                        name={name}
-                        id={id}
-                        value={this.props.value.toString()}
-                        checked={this.props.checked}
-                        onChange={this.handleChange.bind(this)}
-                    />
-                    {this.props.label}
-                </label>
-            </div>
+            <label className="identity-ad-prefs-input" htmlFor={id}>
+                <input
+                    type="radio"
+                    name={name}
+                    id={id}
+                    value={this.props.value.toString()}
+                    checked={this.props.checked}
+                    onChange={this.handleChange.bind(this)}
+                />
+                {this.props.label}
+            </label>
         );
     }
 }
