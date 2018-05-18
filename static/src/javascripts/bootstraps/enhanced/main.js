@@ -83,6 +83,12 @@ const bootEnhanced = (): void => {
         ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
     ]);
 
+    /** common sets up many things that subsequent modules may need.
+     * here we make sure it runs first; it's a nice way to avoid
+     * race conditions caused by one of the modules below having
+     * a transitive dependency on a module that has already been
+     * loaded.
+     */
     import(/* webpackMode: "eager" */ 'bootstraps/enhanced/common')
         .then(({ init }) => {
             bootstrapContext('common', init);
