@@ -83,14 +83,14 @@ const bootEnhanced = (): void => {
         ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
     ]);
 
-    import(/* webpackMode: "eager" */'bootstraps/enhanced/common')
+    import(/* webpackMode: "eager" */ 'bootstraps/enhanced/common')
         .then(({ init }) => {
             bootstrapContext('common', init);
         })
         .then(() => {
             // geolocation
             catchErrorsWithContext([['geolocation', geolocationInit]]);
-        
+
             // Front
             if (config.page.isFront) {
                 require.ensure(
@@ -104,8 +104,11 @@ const bootEnhanced = (): void => {
                     'facia'
                 );
             }
-        
-            if (config.page.contentType === 'Article' && !config.page.isMinuteArticle) {
+
+            if (
+                config.page.contentType === 'Article' &&
+                !config.page.isMinuteArticle
+            ) {
                 require.ensure(
                     [],
                     require => {
@@ -121,7 +124,7 @@ const bootEnhanced = (): void => {
                     'article'
                 );
             }
-        
+
             if (config.page.contentType === 'Crossword') {
                 require.ensure(
                     [],
@@ -134,7 +137,7 @@ const bootEnhanced = (): void => {
                     'crosswords'
                 );
             }
-        
+
             if (config.page.contentType === 'LiveBlog') {
                 require.ensure(
                     [],
@@ -151,7 +154,7 @@ const bootEnhanced = (): void => {
                     'live-blog'
                 );
             }
-        
+
             if (config.page.isMinuteArticle) {
                 require.ensure(
                     [],
@@ -168,7 +171,7 @@ const bootEnhanced = (): void => {
                     'article-minute'
                 );
             }
-        
+
             if (config.isMedia || config.page.contentType === 'Interactive') {
                 require.ensure(
                     [],
@@ -181,11 +184,13 @@ const bootEnhanced = (): void => {
                     'trail'
                 );
             }
-        
+
             fastdom
                 .read(() =>
                     qwery(
-                        `${config.switches.enhancedVideoPlayer ? 'video, ' : ''} audio`
+                        `${
+                            config.switches.enhancedVideoPlayer ? 'video, ' : ''
+                        } audio`
                     )
                 )
                 .then(els => {
@@ -203,7 +208,7 @@ const bootEnhanced = (): void => {
                         );
                     }
                 });
-        
+
             if (config.page.contentType === 'Gallery') {
                 require.ensure(
                     [],
@@ -220,7 +225,7 @@ const bootEnhanced = (): void => {
                     'gallery'
                 );
             }
-        
+
             if (config.page.contentType === 'ImageContent') {
                 require.ensure(
                     [],
@@ -237,7 +242,7 @@ const bootEnhanced = (): void => {
                     'image-content'
                 );
             }
-        
+
             if (config.page.section === 'football') {
                 require.ensure(
                     [],
@@ -250,12 +255,12 @@ const bootEnhanced = (): void => {
                     'football'
                 );
             }
-        
+
             if (config.page.section === 'sport') {
                 // Leaving this here for now as it's a tiny bootstrap.
                 bootstrapContext('sport', initSport);
             }
-    
+
             if (config.page.section === 'identity') {
                 require.ensure(
                     [],
@@ -268,7 +273,7 @@ const bootEnhanced = (): void => {
                     'profile'
                 );
             }
-        
+
             if (config.page.isPreferencesPage) {
                 require.ensure(
                     [],
@@ -281,7 +286,7 @@ const bootEnhanced = (): void => {
                     'preferences'
                 );
             }
-        
+
             if (config.page.section === 'newsletter-signup-page') {
                 require.ensure(
                     [],
@@ -294,7 +299,7 @@ const bootEnhanced = (): void => {
                     'newsletters'
                 );
             }
-        
+
             // use a #force-sw hash fragment to force service worker registration for local dev
             if (
                 (window.location.protocol === 'https:' &&
@@ -306,7 +311,7 @@ const bootEnhanced = (): void => {
                     navigator.serviceWorker.register('/service-worker.js');
                 }
             }
-        
+
             if (config.page.pageId === 'help/accessibility-help') {
                 require.ensure(
                     [],
@@ -319,7 +324,7 @@ const bootEnhanced = (): void => {
                     'accessibility'
                 );
             }
-            
+
             fastdom.read(() => {
                 if ($('.youtube-media-atom').length > 0) {
                     require.ensure(
@@ -334,20 +339,21 @@ const bootEnhanced = (): void => {
                     );
                 }
             });
-        
+
             if (window.location.hash.includes('experiments')) {
                 require.ensure(
                     [],
                     require => {
                         bootstrapContext(
                             'experiments',
-                            require('common/modules/experiments').showExperiments
+                            require('common/modules/experiments')
+                                .showExperiments
                         );
                     },
                     'experiments'
                 );
             }
-            
+
             // Mark the end of synchronous execution.
             markTime('App End');
             catchErrorsWithContext([
@@ -363,7 +369,6 @@ const bootEnhanced = (): void => {
                 ],
             ]);
         });
-
 };
 
 export { bootEnhanced };

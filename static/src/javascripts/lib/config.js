@@ -28,11 +28,13 @@ const get = (path: string = '', defaultValue: any): any => {
 const set = (path: string, value: any): void => {
     const pathSegments = path.split('.');
     const last = pathSegments.pop();
-    pathSegments.reduce(
-        // eslint-disable-next-line no-return-assign
-        (obj, subpath) => typeof obj[subpath] === 'object' ? obj[subpath] : (obj[subpath] = {}),
-        config
-    )[last] = value;
+    pathSegments.reduce((obj, subpath) => {
+        if (typeof obj[subpath] === 'object') {
+            return obj[subpath];
+        }
+        obj[subpath] = {};
+        return obj[subpath];
+    }, config)[last] = value;
 };
 
 const hasTone = (name: string): boolean =>
