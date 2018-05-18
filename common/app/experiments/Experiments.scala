@@ -10,7 +10,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialAdRefresh,
     OrielParticipation,
-    LotameParticipation
+    LotameParticipation,
+    OldTLSSupportDeprecation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -45,4 +46,13 @@ object LotameParticipation extends Experiment(
   owners = Seq(Owner.withGithub("janua")),
   sellByDate = new LocalDate(2018, 6, 28),
   participationGroup = Perc1D
+)
+
+object OldTLSSupportDeprecation extends Experiment(
+  name = "old-tls-support-deprecation",
+  description = "This will turn on a deprecation notice to any user who is accessing our site using TLS v1.0 or v1.1",
+  owners = Seq(Owner.withGithub("natalialkb")),
+  sellByDate = new LocalDate(2018, 6, 13),
+  // Custom group based on header set in Fastly
+  participationGroup = TLSSupport
 )
