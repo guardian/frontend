@@ -6,10 +6,10 @@ import {
     decodeVendorConsentData,
     readVendorConsentCookie,
     writeVendorConsentCookie,
-    generateConsentSelection,
+    generateVendorData,
 } from './cookie';
 
-import type { VendorConsentData } from './types';
+import type { VendorConsentData, VendorConsentResult } from './types';
 
 const {
     encodeVendorCookieValue,
@@ -33,7 +33,7 @@ const OriginalDate = global.Date;
 global.Date = jest.fn(() => new OriginalDate(0));
 
 const vendorList = {
-    version: 1,
+    vendorListVersion: 1,
     purposes: [
         {
             id: 1,
@@ -83,7 +83,7 @@ const vendorList = {
 const aDate = new Date('2018-07-15 PDT');
 const maxVendorId = vendorList.vendors[vendorList.vendors.length - 1].id;
 
-const vendorConsentData: VendorConsentData = {
+const vendorConsentData: VendorConsentResult = {
     cookieVersion: 1,
     cmpId: 1,
     cmpVersion: 1,
@@ -154,14 +154,15 @@ describe('cookie', () => {
     });
 
     it('correctly encodes the vendor cookie object to a string', () => {
-        const consentData = {
+        const consentData: VendorConsentData = {
             cookieVersion: 1,
             cmpId: 1,
             cmpVersion: 1,
             vendorListVersion: 1,
-            maxVendorId: 0,
             created: aDate,
             lastUpdated: aDate,
+            consentLanguage: 'AA',
+            consentScreen: 0,
         };
 
         expect(encodeVendorConsentData({ ...consentData, vendorList })).toEqual(
@@ -174,21 +175,21 @@ describe('cookie', () => {
     });
 
     it('decodes the vendor cookie object from a string', () => {
-        const consentData = {
+        const consentData: VendorConsentData = {
             cookieVersion: 1,
             cmpId: 1,
             cmpVersion: 1,
             vendorListVersion: 1,
-            maxVendorId: 0,
             created: aDate,
             lastUpdated: aDate,
+            consentLanguage: 'AA',
+            consentScreen: 0,
         };
         // the encoding process will add defaults for missing properties
         const generatedDefaults = {
+            maxVendorId: 0,
             selectedPurposeIds: [],
             selectedVendorIds: [],
-            consentLanguage: 'AA',
-            consentScreen: 0,
         };
 
         expect(
@@ -256,6 +257,7 @@ describe('cookie', () => {
             lastUpdated: aDate,
             cmpId: 1,
             vendorListVersion: 1,
+            maxVendorId: 2,
         };
 
         const bitString = encodeVendorCookieValue(consentData);
@@ -269,6 +271,7 @@ describe('cookie', () => {
             lastUpdated: aDate,
             cmpId: 1,
             vendorListVersion: 1,
+            maxVendorId: 2,
         };
 
         const bitString = encodeVendorCookieValue(consentData);
@@ -370,20 +373,16 @@ describe('cookie', () => {
         expect(decoded).toEqual(consentData);
     });
 
-    it('magically generates the complete selection when consent = true', () => {
-        const result = generateConsentSelection(true, vendorList);
-        expect(result).toEqual({
-            selectedPurposeIds: [1, 2, 3, 4],
-            selectedVendorIds: [1, 2, 3, 4, 8, 10]
-        });
+    it('can generate the complete VendorData when consent = true', () => {
+        const result = generateVendorData(true, vendorList);
+        expect(result.selectedPurposeIds).toEqual([1, 2, 3, 4]);
+        expect(result.selectedVendorIds).toEqual([1, 2, 3, 4, 8, 10]);
     });
 
-    it('magically generates the complete selection when consent = false', () => {
-        const result = generateConsentSelection(false, vendorList);
-        expect(result).toEqual({
-            selectedPurposeIds: [],
-            selectedVendorIds: []
-        });
+    it('can generate the complete VendorData when consent = ', () => {
+        const result = generateVendorData(false, vendorList);
+        expect(result.selectedPurposeIds).toEqual([]);
+        expect(result.selectedVendorIds).toEqual([]);
     });
 });
 

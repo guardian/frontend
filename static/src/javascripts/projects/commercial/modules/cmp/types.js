@@ -8,32 +8,36 @@ export type CmpConfig = {
     logging: string | boolean,
 };
 
-export type ConsentData = {
+export type ConsentDataResponse = {
     gdprApplies: boolean,
     hasGlobalScope: boolean,
     consentData: string,
 };
 
+export type ConsentData = {
+    cookieVersion: number,
+    cmpId: number,
+    cmpVersion: number,
+    consentScreen: number,
+    consentLanguage: string,
+    created: Date,
+    lastUpdated: Date,
+};
+
 export type Purpose = {
     id: number,
     name: string,
-    description: string,
 };
 
 export type Vendor = {
     id: number,
     name: string,
-    policyUrl: ?string,
+    policyUrl?: string,
 };
-
-export type SelectedIds = {
-    selectedPurposeIds: Array<number>,
-    selectedVendorIds: Array<number>
-}
 
 export type VendorList = {
     vendorListVersion: number,
-    lastUpdated: Date,
+    lastUpdated?: string,
     purposes: Array<Purpose>,
     vendors: Array<Vendor>,
 };
@@ -49,22 +53,23 @@ export type VendorConsentData = {
     cookieVersion: number,
     cmpId: number,
     cmpVersion: number,
-    consentScreen: number,
-    consentLanguage: string,
     vendorListVersion: number,
-    maxVendorId: number,
     created: Date,
     lastUpdated: Date,
+    consentScreen: number,
+    consentLanguage: string,
+};
+
+export type VendorConsentResult = VendorConsentData & {
+    maxVendorId: number,
     selectedPurposeIds: Array<number>,
     selectedVendorIds: Array<number>,
 };
 
-export type VendorVersionMap = {};
-
 export type Store = {
-    persistedVendorConsentData: VendorConsentData,
     vendorList: VendorList,
-    allowedVendorIds: Array<number>,
+    persistedVendorConsentData?: VendorConsentResult,
+    allowedVendorIds?: Array<number>,
 };
 
 export type Cmp = {

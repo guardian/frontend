@@ -1,5 +1,4 @@
 // @flow
-import type { VendorVersionMap } from './types';
 
 const vendorVersion = {
     version: 1,
@@ -62,6 +61,7 @@ const vendorVersion = {
 
 export const VENDOR_CONSENT_COOKIE_NAME = 'euconsent';
 export const VENDOR_CONSENT_COOKIE_MAX_AGE = 33696000;
+export const CMP_GLOBAL_NAME = '__cmp';
 
 export const defaultConfig = {
     globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',

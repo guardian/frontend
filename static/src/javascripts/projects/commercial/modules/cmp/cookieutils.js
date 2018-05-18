@@ -1,6 +1,5 @@
 // @flow
 import { log } from 'commercial/modules/cmp/log';
-import { vendorVersionMap } from 'commercial/modules/cmp/cmp-env';
 
 const SIX_BIT_ASCII_OFFSET = 65;
 const NUM_BITS_VERSION = 6;
@@ -191,7 +190,7 @@ const decodeFields = ({ input, fields, startPosition = 0 }) => {
     };
 };
 
-const decodeField = ({ input, output, startPosition, field }): Object => {
+const decodeField = ({ input, output, startPosition, field }) => {
     const { type, numBits, decoder, validator, listCount } = field;
     if (typeof validator === 'function') {
         if (!validator(output)) {
@@ -283,7 +282,7 @@ const encodeDataToBits = (data, definitionMap) => {
  * Take all fields required to encode the cookie and produce the
  * URL safe Base64 encoded value.
  */
-const encodeCookieValue = (data, definitionMap): string => {
+const encodeCookieValue = (data, definitionMap): ?string => {
     const binaryValue = encodeDataToBits(data, definitionMap);
     if (binaryValue) {
         // Pad length to multiple of 8
@@ -308,15 +307,12 @@ const encodeCookieValue = (data, definitionMap): string => {
     }
 };
 
-const decodeCookieBitValue = (
-    bitString,
-    definitionMap
-) => {
+const decodeCookieBitValue = (bitString, definitionMap) => {
     const cookieVersion = decodeBitsToInt(bitString, 0, NUM_BITS_VERSION);
     if (typeof cookieVersion !== 'number') {
         log.error('Could not find cookieVersion to decode');
         return {};
-    } else if (!vendorVersionMap[cookieVersion]) {
+    } else if (!definitionMap[cookieVersion]) {
         log.error(
             `Could not find definition to decode cookie version ${
                 cookieVersion
@@ -335,7 +331,7 @@ const decodeCookieBitValue = (
 /**
  * Decode the (URL safe Base64) value of a cookie into an object.
  */
-const decodeCookieValue = (cookieValue: string, definitionMap) => {
+const decodeCookieValue = (cookieValue: string, definitionMap): string => {
     // Replace safe characters
     const unsafe =
         cookieValue.replace(/-/g, '+').replace(/_/g, '/') +

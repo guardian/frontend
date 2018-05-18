@@ -14,9 +14,9 @@ import {
 
 import type {
     VendorConsentData,
+    VendorConsentResult,
     VendorData,
     VendorList,
-    SelectedIds,
 } from './types';
 
 const encodeVendorCookieValue = (vendorData: VendorData): string =>
@@ -119,6 +119,7 @@ const encodeVendorConsentData = (vendorData: VendorData): string => {
         maxVendorId,
         selectedVendorIds
     );
+
     const rangesData: string = encodeVendorCookieValue({
         ...vendorData,
         maxVendorId,
@@ -135,7 +136,7 @@ const encodeVendorConsentData = (vendorData: VendorData): string => {
     return noRangesData.length < rangesData.length ? noRangesData : rangesData;
 };
 
-const decodeVendorConsentData = (cookieValue: string): VendorConsentData => {
+const decodeVendorConsentData = (cookieValue: string): VendorConsentResult => {
     const {
         cookieVersion,
         cmpId,
@@ -153,7 +154,7 @@ const decodeVendorConsentData = (cookieValue: string): VendorConsentData => {
         vendorRangeList,
     } = decodeVendorCookieValue(cookieValue);
 
-    const cookieData: VendorConsentData = {
+    const cookieData: VendorConsentResult = {
         cookieVersion,
         cmpId,
         cmpVersion,
@@ -212,28 +213,38 @@ const writeVendorConsentCookie = (vendorConsentData: VendorConsentData) => {
     );
 };
 
-const generateConsentSelection = (
+const generateVendorData = (
     canPersonalise: boolean,
     vendorList: VendorList
-): SelectedIds => {
+): VendorData => {
+    const allVendors = vendorList.vendors.map(_ => _.id);
+    const maxVendorId = Math.max(0, ...allVendors);
+
     if (canPersonalise) {
+        const selectedPurposeIds = vendorList.purposes.map(_ => _.id);
+        const selectedVendorIds = allVendors;
+
         return {
-            selectedPurposeIds: vendorList.purposes.map(p => p.id),
-            selectedVendorIds: vendorList.vendors.map(v => v.id),
-        }
+            vendorList,
+            selectedPurposeIds,
+            selectedVendorIds,
+            maxVendorId,
+        };
     }
     return {
+        vendorList,
         selectedPurposeIds: [],
         selectedVendorIds: [],
-    }
-}
+        maxVendorId,
+    };
+};
 
 export {
     encodeVendorConsentData,
     decodeVendorConsentData,
     readVendorConsentCookie,
     writeVendorConsentCookie,
-    generateConsentSelection,
+    generateVendorData,
 };
 
 export const _ = {
