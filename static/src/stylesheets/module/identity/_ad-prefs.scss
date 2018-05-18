@@ -30,4 +30,10 @@
     display: block;
     background: $garnett-neutral-3;
     border-top: 1px solid $garnett-neutral-4;
+    padding: $gs-baseline / 8 $gs-baseline / 2 $gs-baseline;
+    margin-top: $gs-baseline / 2;
+    input {
+        margin: 0 $gs-baseline / 4 0 0;
+        float: none;
+    }
 }
