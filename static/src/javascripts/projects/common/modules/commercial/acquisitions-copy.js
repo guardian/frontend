@@ -33,6 +33,14 @@ const ctaLinkSentence = (
         supportUrl
     }" target="_blank" class="u-underline">Make a contribution</a>`;
 
+// double highlight
+const controlP1Highlight =
+    '&hellip; we have a small favour to ask. More people are reading the Guardian than ever but advertising revenues across the media are falling fast. <span class="contributions__highlight">And unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can.</span> So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.';
+
+// drop ads falling
+const dropAdsFallingP1 =
+    '&hellip; we have a small favour to ask. Unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can. More people are reading the Guardian than ever but our independent, investigative journalism takes a lot of time, money and hard work to produce. So you can see why we need to ask for your help. We do it because we believe our perspective matters &ndash; because it might well be your perspective, too.';
+
 /*
  Exported instances of AcquisitionsEpicTemplateCopy
  */
@@ -45,6 +53,18 @@ export const control: AcquisitionsEpicTemplateCopy = {
 export const regulars: AcquisitionsEpicTemplateCopy = {
     heading: controlHeadingRegulars,
     p1: controlP1Regulars,
+    p2: controlP2(controlP2FirstSentence),
+};
+
+export const doubleHighlightCopy = {
+    heading: controlHeading,
+    p1: controlP1Highlight,
+    p2: controlP2(controlP2FirstSentence),
+};
+
+export const dropAdsFallingCopy = {
+    heading: controlHeading,
+    p1: dropAdsFallingP1,
     p2: controlP2(controlP2FirstSentence),
 };
 
