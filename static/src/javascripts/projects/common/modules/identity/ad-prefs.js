@@ -90,7 +90,6 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
     }
 }
 
-        };
 class ConsentBox extends Component<ConsentBoxProps, {}> {
     render() {
         return (
