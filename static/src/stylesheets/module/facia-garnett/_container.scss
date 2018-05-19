@@ -459,7 +459,10 @@ $header-image-size-desktop: 100px;
         background: url('https://uploads.guim.co.uk/2018/05/17/himandher.png') no-repeat;
         background-size: 170px 150px;
         background-position: left bottom;
-        overflow: visible;
+        
+        @include mq(tablet) {
+            overflow: visible;
+        }
 
         @include mq($until: leftCol) {
             background-size: 85px 75px;
