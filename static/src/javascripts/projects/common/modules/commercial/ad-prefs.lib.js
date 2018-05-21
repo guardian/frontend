@@ -15,13 +15,16 @@ const thirdPartyTrackingAdConsent: AdConsent = {
 const allAdConsents: AdConsent[] = [thirdPartyTrackingAdConsent];
 
 const setAdConsentState = (provider: AdConsent, state: boolean): void => {
-    addCookie(provider.cookie, state ? '1' : '0', 365 * 6, true);
+    const cookie = [state ? '1' : '0', Date.now()].join(',');
+    addCookie(provider.cookie, cookie, 30 * 18, true);
 };
 
 const getAdConsentState = (provider: AdConsent): ?boolean => {
-    const cookie = getCookie(provider.cookie);
-    if (cookie === '1') return true;
-    if (cookie === '0') return false;
+    const cookieRaw = getCookie(provider.cookie);
+    if (!cookieRaw) return null;
+    const cookieParsed = cookieRaw.split(',')[0];
+    if (cookieParsed === '1') return true;
+    if (cookieParsed === '0') return false;
     return null;
 };
 
