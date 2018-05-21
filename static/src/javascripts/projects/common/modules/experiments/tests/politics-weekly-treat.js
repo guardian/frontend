@@ -5,16 +5,16 @@ import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 
 const runTest = function() {
-    const container = document.querySelector('.facia-page section:first-child');  //headlines container
+    const container = document.querySelector('.facia-page section:first-child'); // headlines container
 
     if (container) {
         const treats = container.querySelector('.treats__container');
         if (treats) {
-            const newTreat = template(treatHtml, {data: {variant: 'a'}});
+            const newTreat = template(treatHtml, { data: { variant: 'a' } });
             treats.innerHTML = newTreat;
         }
     }
-}
+};
 
 const trackClick = function(complete: () => void) {
     const treat = document.querySelector('.politics-weekly-treat');
@@ -23,7 +23,7 @@ const trackClick = function(complete: () => void) {
             complete();
         };
     }
-}
+};
 
 const trackImpression = function(track: () => void) {
     const treat = document.querySelector('.politics-weekly-treat');
@@ -32,8 +32,8 @@ const trackImpression = function(track: () => void) {
             (entries, self) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                      self.disconnect();
-                      track();
+                        self.disconnect();
+                        track();
                     }
                 });
             },
@@ -41,21 +41,22 @@ const trackImpression = function(track: () => void) {
         );
         observer.observe(treat);
     }
-}
+};
 
 export const PoliticsWeeklyTreat = {
     id: 'PoliticsWeeklyTreat',
     start: '2018-05-05',
     expiry: '2018-06-01',
     author: 'Tom Forbes',
-    description: 'Test linking to Politics Weekly podcast latest episode using a treat in the Headlines container',
+    description:
+        'Test linking to Politics Weekly podcast latest episode using a treat in the Headlines container',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'Measure click-through across the variants',
     audienceCriteria: '',
     showForSensitive: true,
     canRun() {
-        return config.page.pageId === "uk" && getBreakpoint() !== 'mobile';
+        return config.page.pageId === 'uk' && getBreakpoint() !== 'mobile';
     },
 
     variants: [
@@ -63,7 +64,7 @@ export const PoliticsWeeklyTreat = {
             id: 'a',
             test: runTest,
             impression: trackImpression,
-            success: trackClick
-        }
+            success: trackClick,
+        },
     ],
 };
