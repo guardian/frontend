@@ -106,7 +106,7 @@ class ConsentBoxes extends Component<
     }
 
     onUpdate(consentId: number, state: AdConsentState): void {
-        const consentsWithState = { ...this.state }.consentsWithState;
+        const consentsWithState = [...this.state.consentsWithState];
         const changesPending = consentsWithState[consentId].state !== state;
         consentsWithState[consentId].state = state;
         this.setState({
