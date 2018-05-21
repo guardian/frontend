@@ -19,8 +19,8 @@
     content: '';
     width: 58px;
     border-top: 1px solid $garnett-neutral-2;
-    display: inline-block;
-    margin-bottom: -10px;
+    margin-top: 5px;
+    display: block;
 }
 
 .politics-weekly-treat__overlay {
@@ -74,12 +74,19 @@
     display: inline-flex;
     align-items: center;
     flex: 1 1 0;
-
+}
+.politics-weekly-treat__player-variant-a {
     *:first-child {
         padding-right: 6px;
     }
     *:last-child {
         padding-left: 6px;
+    }
+}
+.politics-weekly-treat__player-variant-b {
+    *:first-child {
+        padding-left: 3px;
+        padding-right: 4px;
     }
 }
 
