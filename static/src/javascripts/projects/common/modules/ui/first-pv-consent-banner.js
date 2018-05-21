@@ -67,7 +67,7 @@ const hasUnsetAdChoices = (): boolean =>
 const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices()].every(_ => _ === true));
 
-const trackInteraction = (interaction: string) => {
+const trackInteraction = (interaction: string): void => {
     ophan.record({
         component: 'first-pv-consent',
         action: interaction,
