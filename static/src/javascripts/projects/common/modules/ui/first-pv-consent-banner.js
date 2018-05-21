@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { Message } from 'common/modules/ui/message';
-import checkIcon from 'svgs/icon/arrow-right.svg';
+import checkIcon from 'svgs/icon/tick.svg';
 import {
     getAdConsentState,
     setAdConsentState,
@@ -48,14 +48,17 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
         tpl.consentText
     }</div>
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__actions">
-        <a href="${
-            tpl.linkToPreferences
-        }" data-link-name="first-pv-consent : to-prefs" class="site-message--first-pv-consent__button site-message--first-pv-consent__button--link">${
-    tpl.choicesButton
-}</a>
-        <button data-link-name="first-pv-consent : agree" class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
-            classes.agree
-        }">${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
+        <button 
+            data-link-name="first-pv-consent : agree" 
+            class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
+                classes.agree
+            }"
+        >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
+        <a 
+            href="${tpl.linkToPreferences}" 
+            data-link-name="first-pv-consent : to-prefs" 
+            class="site-message--first-pv-consent__button site-message--first-pv-consent__button--link"
+        >${tpl.choicesButton}</a>
     </div>
 `;
 
