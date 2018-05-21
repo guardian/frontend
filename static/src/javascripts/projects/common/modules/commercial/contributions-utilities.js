@@ -288,9 +288,6 @@ const makeABTestVariant = (
             const render = (templateFn: ?EpicTemplate) =>
                 copyPromise
                     .then((copy: AcquisitionsEpicTemplateCopy) => {
-                        if (this.options.isAdSlot) {
-                            return this.options.adSlotEpicTemplate();
-                        }
                         const renderTemplate: EpicTemplate =
                             templateFn ||
                             (this.options && this.options.template);

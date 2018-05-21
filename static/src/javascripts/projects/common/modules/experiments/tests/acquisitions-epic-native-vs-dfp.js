@@ -51,7 +51,8 @@ export const acquisitionsEpicNativeVsDfp = makeABTest({
             products: ['CONTRIBUTION'],
             options: {
                 isUnlimited: true, // TODO: remove
-                adSlotEpicTemplate,
+                template: adSlotEpicTemplate,
+                isAdSlot: true,
             },
         },
     ],
