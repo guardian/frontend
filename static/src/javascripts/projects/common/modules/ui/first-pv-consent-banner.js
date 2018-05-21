@@ -13,7 +13,6 @@ import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
 
 const lifeTimeViewsKey: string = 'first-pv-consent.lifetime-views';
-const displayEventKey: string = 'first-pv-consent : display';
 const lifetimeDisplayEventKey: string = 'first-pv-consent : viewed-times :';
 
 type Template = {
@@ -78,11 +77,9 @@ const trackInteraction = (interaction: string): void => {
 
 const show = (): void => {
     userPrefs.set(lifeTimeViewsKey, (userPrefs.get(lifeTimeViewsKey) || 0) + 1);
-
-    [
-        displayEventKey,
-        `${lifetimeDisplayEventKey} ${userPrefs.get(lifeTimeViewsKey)}`,
-    ].forEach(trackInteraction);
+    trackInteraction(
+        `${lifetimeDisplayEventKey} ${userPrefs.get(lifeTimeViewsKey)}`
+    );
 
     const msg = new Message('first-pv-consent', {
         important: true,
