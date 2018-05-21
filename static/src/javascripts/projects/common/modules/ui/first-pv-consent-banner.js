@@ -6,7 +6,14 @@ import {
     setAdConsentState,
     allAdConsents,
 } from 'common/modules/commercial/ad-prefs.lib';
+import userPrefs from 'common/modules/user-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
+
+import { trackNonClickInteraction } from 'common/modules/analytics/google';
+import ophan from 'ophan/ng';
+
+const lifeTimeViewsKey: string = 'first-pv-consent.lifetime-views';
+const lifetimeDisplayEventKey: string = 'first-pv-consent : viewed-times :';
 
 type Template = {
     consentText: string,
@@ -37,10 +44,10 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__actions">
         <a href="${
             tpl.linkToPreferences
-        }" class="site-message--first-pv-consent__button site-message--first-pv-consent__button--link">${
+        }" data-link-name="first-pv-consent : to-prefs" class="site-message--first-pv-consent__button site-message--first-pv-consent__button--link">${
     tpl.choicesButton
 }</a>
-        <button class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
+        <button data-link-name="first-pv-consent : agree" class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
             classes.agree
         }">${tpl.agreeButton}</button>
     </div>
@@ -59,7 +66,21 @@ const hasUnsetAdChoices = (): boolean =>
 const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices()].every(_ => _ === true));
 
+const trackInteraction = (interaction: string): void => {
+    ophan.record({
+        component: 'first-pv-consent',
+        action: interaction,
+        value: interaction,
+    });
+    trackNonClickInteraction(interaction);
+};
+
 const show = (): void => {
+    userPrefs.set(lifeTimeViewsKey, (userPrefs.get(lifeTimeViewsKey) || 0) + 1);
+    trackInteraction(
+        `${lifetimeDisplayEventKey} ${userPrefs.get(lifeTimeViewsKey)}`
+    );
+
     const msg = new Message('first-pv-consent', {
         important: true,
         permanent: true,

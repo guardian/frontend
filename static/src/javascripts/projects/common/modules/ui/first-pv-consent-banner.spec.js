@@ -16,8 +16,16 @@ beforeEach(() => {
     Message.prototype.hide = jest.fn(() => true);
 });
 
+jest.mock('ophan/ng', () => ({
+    record: jest.fn(),
+}));
+
 jest.mock('common/modules/ui/message', () => ({
     Message: jest.fn(),
+}));
+
+jest.mock('common/modules/analytics/google', () => ({
+    trackNonClickInteraction: jest.fn(),
 }));
 
 jest.mock('common/modules/commercial/ad-prefs.lib', () => {
