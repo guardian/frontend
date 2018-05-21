@@ -6,7 +6,15 @@ import {
     setAdConsentState,
     allAdConsents,
 } from 'common/modules/commercial/ad-prefs.lib';
+import userPrefs from 'common/modules/user-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
+
+import { trackNonClickInteraction } from 'common/modules/analytics/google';
+import ophan from 'ophan/ng';
+
+const lifeTimeViewsKey: string = 'first-pv-consent.lifetime-views';
+const displayEventKey: string = 'sign-in-eb : display';
+const lifetimeDisplayEventKey: string = 'sign-in-eb : viewed-times :';
 
 type Template = {
     consentText: string,
@@ -59,7 +67,23 @@ const hasUnsetAdChoices = (): boolean =>
 const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices()].every(_ => _ === true));
 
+const trackInteraction = (interaction: string) => {
+    ophan.record({
+        component: 'first-pv-consent',
+        action: interaction,
+        value: interaction,
+    });
+    trackNonClickInteraction(interaction);
+};
+
 const show = (): void => {
+    userPrefs.set(lifeTimeViewsKey, (userPrefs.get(lifeTimeViewsKey) || 0) + 1);
+
+    [
+        displayEventKey,
+        `${lifetimeDisplayEventKey} ${userPrefs.get(lifeTimeViewsKey)}`,
+    ].forEach(trackInteraction);
+
     const msg = new Message('first-pv-consent', {
         important: true,
         permanent: true,
