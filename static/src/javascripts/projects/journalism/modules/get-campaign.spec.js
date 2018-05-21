@@ -101,13 +101,13 @@ describe('Finding the callouts to display ', () => {
     });
 
     // change this when new targeting rules come in
-    it('if there are two or more callout campaigns, it shows the first one', () => {
+    it('if there are two or more callout campaigns, it shows the last one', () => {
         config.page.campaigns = twoCampaigns;
         const callout2 = {
-            title: 'Has this happened to you?',
-            description: 'Tell us your story and upload a file',
+            title: 'Do you have a supermarket near you?',
+            description: 'How far away is it?',
             formFields: [],
-            formId: 2994970,
+            formId: 3028078,
         };
         expect(getCampaign()).toEqual(callout2);
     });
