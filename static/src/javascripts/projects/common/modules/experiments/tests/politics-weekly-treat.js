@@ -4,14 +4,16 @@ import treatHtml from 'raw-loader!journalism/views/politicsWeeklyTreat.html';
 import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 
-const runTest = function() {
-    const container = document.querySelector('.facia-page section:first-child'); // headlines container
+const runTest = function(variant: String): () => void {
+    return () => {
+        const container = document.querySelector('.facia-page section:first-child'); // headlines container
 
-    if (container) {
-        const treats = container.querySelector('.treats__container');
-        if (treats) {
-            const newTreat = template(treatHtml, { data: { variant: 'a' } });
-            treats.innerHTML = newTreat;
+        if (container) {
+            const treats = container.querySelector('.treats__container');
+            if (treats) {
+                const newTreat = template(treatHtml, { variant } );
+                treats.innerHTML = newTreat;
+            }
         }
     }
 };
@@ -62,7 +64,13 @@ export const PoliticsWeeklyTreat = {
     variants: [
         {
             id: 'a',
-            test: runTest,
+            test: runTest('a'),
+            impression: trackImpression,
+            success: trackClick,
+        },
+        {
+            id: 'b',
+            test: runTest('b'),
             impression: trackImpression,
             success: trackClick,
         },
