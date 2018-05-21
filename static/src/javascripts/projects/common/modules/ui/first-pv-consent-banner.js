@@ -41,13 +41,13 @@ const bindableClassNames: BindableClassNames = {
 };
 
 const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__head">${
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head">${
         tpl.heading
     }</div>
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__intro">${
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${
         tpl.consentText
     }</div>
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__actions">
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--actions">
         <button 
             data-link-name="first-pv-consent : agree" 
             class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
@@ -57,7 +57,7 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
         <a 
             href="${tpl.linkToPreferences}" 
             data-link-name="first-pv-consent : to-prefs" 
-            class="site-message--first-pv-consent__button site-message--first-pv-consent__button--link"
+            class="site-message--first-pv-consent__link"
         >${tpl.choicesButton}</a>
     </div>
 `;
