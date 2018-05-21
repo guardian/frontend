@@ -4,18 +4,22 @@ import treatHtml from 'raw-loader!journalism/views/politicsWeeklyTreat.html';
 import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 
-const runTest = function(variant: String): () => void {
+const runTest = function(variant: string): () => void {
     return () => {
-        const container = document.querySelector('.facia-page section:first-child'); // headlines container
+        const headlinesContainer = document.querySelector(
+            '.facia-page section:first-child'
+        );
 
-        if (container) {
-            const treats = container.querySelector('.treats__container');
+        if (headlinesContainer) {
+            const treats = headlinesContainer.querySelector(
+                '.treats__container'
+            );
             if (treats) {
-                const newTreat = template(treatHtml, { variant } );
+                const newTreat = template(treatHtml, { variant });
                 treats.innerHTML = newTreat;
             }
         }
-    }
+    };
 };
 
 const trackClick = function(complete: () => void) {

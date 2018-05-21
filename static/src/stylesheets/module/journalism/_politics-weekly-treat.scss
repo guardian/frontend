@@ -24,7 +24,6 @@
 }
 
 .politics-weekly-treat__overlay {
-    /*position: relative;*/
     margin-top: -40px;
 }
 
@@ -38,14 +37,12 @@
     padding: 4px 3px 6px;
 
     display: inline-block;
-
-    /*position: absolute;
-    bottom: 100%;*/
 }
 
 .politics-weekly-treat__podcast-details {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
+    width: min-content;
 }
 
 .politics-weekly-treat__podcast-title {
@@ -56,9 +53,6 @@
     font-family: $f-sans-serif-text;
 
     padding: 4px 3px 5px;
-
-    display: inline-block;
-    flex: 1 1 0;
 }
 .politics-weekly-treat__podcast-title span {
     width: 100%;
@@ -72,8 +66,6 @@
     padding: 2px 5px 2px 1px;
 
     display: inline-flex;
-    align-items: center;
-    flex: 1 1 0;
 }
 .politics-weekly-treat__player-variant-a {
     *:first-child {
@@ -97,3 +89,6 @@
     color: $garnett-neutral-1;
 }
 
+.politics-weekly-treat__episode-title span {
+    width: 100%;
+}
