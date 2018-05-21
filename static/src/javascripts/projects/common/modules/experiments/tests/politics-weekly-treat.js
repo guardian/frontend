@@ -51,6 +51,7 @@ const trackImpression = function(track: () => void) {
 
 export const PoliticsWeeklyTreat = {
     id: 'PoliticsWeeklyTreat',
+    // TODO - correct dates
     start: '2018-05-05',
     expiry: '2018-06-01',
     author: 'Tom Forbes',
