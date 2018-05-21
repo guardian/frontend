@@ -29,12 +29,14 @@
         padding: 0 $gs-gutter/2 $gs-baseline*2;
         min-height: gs-height(2);
         //This allows the headline block to be aligned to the left and not run full width
+        width: 90%;
         width: calc(90vw - #{$gs-gutter});
         max-width: none;
 
         @include mq($from: tablet) {
             margin-left: $gs-gutter;
-            width: 100vw;
+            //120 needed so that container always runs to edge
+            width: 120%;
             padding-left: 0;
         }
 
