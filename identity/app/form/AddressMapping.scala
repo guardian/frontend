@@ -7,10 +7,13 @@ import play.api.i18n.{Messages, MessagesProvider}
 
 trait AddressMapping extends Mappings {
 
-  private val AddressLinePattern = """[^\w\s'#,./-]""".r
+  private val validAddressChars = Seq('\'','#',',','.','/','-')
+  private def isValidAddressChar(char: Char): Boolean =
+    char.isLetterOrDigit || char.isUnicodeIdentifierPart || char.isUnicodeIdentifierStart || char.isWhitespace || validAddressChars.contains(char)
+
   private def idAddressLine(implicit messagesProvider: MessagesProvider): Mapping[String] = textField verifying (
     Messages("error.address"),
-    { value => value.isEmpty || AddressLinePattern.findFirstIn(value).isEmpty }
+    { value => value.isEmpty || value.forall(isValidAddressChar)}
   )
 
   def idAddress(implicit messagesProvider: MessagesProvider): Mapping[AddressFormData] = mapping(

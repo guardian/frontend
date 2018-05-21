@@ -8,6 +8,7 @@ import {
     sessionVisitsKey,
     lifeTimeViewsKey,
     lastSeenAtKey,
+    showFeedbackSegue,
 } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { bindableClassNames } from 'common/modules/identity/global/sign-in-engagement-banner/template';
 
@@ -16,7 +17,6 @@ const userPrefs: any = userPrefs_;
 const Message: any = Message_;
 
 const validGaCookie = 'GA1.2.xx.1524903850';
-const oldGaCookie = 'GA1.2.xx.1515096983';
 const newGaCookie = 'GA1.2.xx.1525096983';
 
 const timestampToday = 1525096983756;
@@ -33,6 +33,9 @@ jest.spyOn(Date, 'now').mockImplementation(() => timestampToday);
 jest.useFakeTimers();
 
 jest.mock('lib/mediator');
+jest.mock('ophan/ng', () => ({
+    record: jest.fn(),
+}));
 jest.mock('lib/storage', () => ({
     local: {
         get: jest.fn(() => 10),
@@ -161,7 +164,7 @@ describe('Sign in engagement banner', () => {
     describe('With lifetime views', () => {
         it('should not show any messages for visitors who have seen the alert 4+ times', () => {
             userPrefs.get.mockImplementation(_ => {
-                if (_ === lifeTimeViewsKey) return 4;
+                if (_ === lifeTimeViewsKey) return 5;
                 return passingStore(_);
             });
             const canShowPr = canShow();
@@ -181,6 +184,20 @@ describe('Sign in engagement banner', () => {
                 expect(showable).toBe(true);
             });
         });
+        it('should not ask for feedback views 1-3', () => {
+            userPrefs.get.mockImplementation(_ => {
+                if (_ === lifeTimeViewsKey) return 1;
+                return passingStore(_);
+            });
+            return expect(showFeedbackSegue()).toBe(false);
+        });
+        it('should ask for feedback in the last view', () => {
+            userPrefs.get.mockImplementation(_ => {
+                if (_ === lifeTimeViewsKey) return 4;
+                return passingStore(_);
+            });
+            return expect(showFeedbackSegue()).toBe(true);
+        });
     });
 
     describe('With GA cookie', () => {
@@ -197,20 +214,7 @@ describe('Sign in engagement banner', () => {
                 expect(showable).toBe(false);
             });
         });
-        it('should not show if the cookie is too old', () => {
-            getCookie.mockImplementation(name => {
-                if (name === '_ga') {
-                    return oldGaCookie;
-                }
-                return null;
-            });
-            const canShowPr = canShow();
-            jest.runAllTimers();
-            return canShowPr.then(showable => {
-                expect(showable).toBe(false);
-            });
-        });
-        it('should show if the cookie is between 1 month & 1 day', () => {
+        it('should show if the cookie is old enough', () => {
             getCookie.mockImplementation(name => {
                 if (name === '_ga') {
                     return validGaCookie;

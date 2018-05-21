@@ -1,16 +1,17 @@
 // @flow
 
+export type PrebidSize = [number, number];
+
 export type PrebidSonobiParams = {
     ad_unit: string,
     dom_id: string,
-    floor: number,
     appNexusTargeting: string,
     pageViewId: string,
 };
 
 export type PrebidIndexExchangeParams = {
-    id: string,
-    siteID: string,
+    siteId: string,
+    size: PrebidSize,
 };
 
 export type PrebidTrustXParams = {
@@ -48,8 +49,6 @@ export type PrebidSlotLabel =
 export type PrebidBidLabel = 'edn-UK' | 'edn-INT' | 'geo-NA' | 'deal-FirstLook';
 
 export type PrebidLabel = PrebidSlotLabel | PrebidBidLabel;
-
-export type PrebidSize = [number, number];
 
 export type PrebidSlot = {
     key: PrebidSlotKey,

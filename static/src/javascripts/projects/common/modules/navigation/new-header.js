@@ -16,7 +16,11 @@ type MenuAndTriggerEls = {
 };
 
 const enhanced = {};
+const clickstreamListeners = {};
 const SEARCH_STORAGE_KEY = 'gu.recent.search';
+const MY_ACCOUNT_ID = 'my-account-toggle';
+const MENU_TOGGLE_ID = 'main-menu-toggle';
+const EDITION_PICKER_TOGGLE_ID = 'edition-picker-toggle';
 
 const getMenu = (): ?HTMLElement =>
     document.getElementsByClassName('js-main-menu')[0];
@@ -75,6 +79,21 @@ const toggleMenuSection = (section: HTMLElement): void => {
     } else {
         closeMenuSection(section);
     }
+};
+
+const removeClickstreamListener = (menuId: string): void => {
+    const clickHandler = clickstreamListeners[menuId];
+    mediator.off('module:clickstream:click', clickHandler);
+    delete clickstreamListeners[menuId];
+};
+
+const registerClickstreamListener = (
+    menuId: string,
+    clickHandler: () => void
+) => {
+    removeClickstreamListener(menuId);
+    mediator.on('module:clickstream:click', clickHandler);
+    clickstreamListeners[menuId] = clickHandler;
 };
 
 const toggleMenu = (): void => {
@@ -162,18 +181,22 @@ const toggleMenu = (): void => {
                     min: 'desktop',
                 })
             ) {
-                mediator.on('module:clickstream:click', function triggerToggle(
-                    clickSpec
-                ) {
+                const menuId = menu.getAttribute('id');
+                const triggerToggle = clickSpec => {
                     const elem = clickSpec ? clickSpec.target : null;
 
-                    // if anywhere else but the links are clicked, the dropdown will close
                     if (elem !== menu) {
                         toggleMenu();
-                        // remove event when the dropdown closes
-                        mediator.off('module:clickstream:click', triggerToggle);
+                        // remove event listener when the menu closes
+                        if (menuId) {
+                            removeClickstreamListener(menuId);
+                        }
                     }
-                });
+                };
+                // if anywhere outside the menu is clicked the menu will close
+                if (menuId) {
+                    registerClickstreamListener(menuId, triggerToggle);
+                }
             }
         } else {
             removeEnhancedMenuMargin().then(() => {
@@ -229,22 +252,40 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
 
             menu.setAttribute('aria-hidden', hiddenAttr);
             menu.classList.toggle(openClass, !isOpen);
-
             if (!isOpen) {
-                mediator.on('module:clickstream:click', function triggerToggle(
-                    clickSpec
-                ) {
+                const menuId = menu.getAttribute('id');
+                const triggerToggle = clickSpec => {
                     const elem = clickSpec ? clickSpec.target : null;
 
-                    // if anywhere else but the links are clicked, the dropdown will close
                     if (elem !== menu) {
                         toggleDropdown(menuAndTriggerEls);
-                        // remove event when the dropdown closes
-                        mediator.off('module:clickstream:click', triggerToggle);
+                        // remove event listener when the dropdown closes
+                        if (menuId) {
+                            removeClickstreamListener(menuId);
+                        }
                     }
-                });
+                };
+                // if anywhere outside the menu is clicked the dropdown will close
+                registerClickstreamListener(menuId, triggerToggle);
             }
         });
+    });
+};
+
+const returnFocusToButton = (btnId: string): void => {
+    fastdom.read(() => document.getElementById(btnId)).then(btn => {
+        if (btn) {
+            btn.focus();
+            /**
+             * As we're closing the menu with the ESC key we no longer need the
+             * clickstream listener that toggles the menu on a click outside the menu
+             * so let's unregister it here
+             * */
+            const menuId = btn.getAttribute('aria-controls');
+            if (menuId) {
+                removeClickstreamListener(menuId);
+            }
+        }
     });
 };
 
@@ -262,7 +303,57 @@ const initiateUserAccountDropdown = (): void => {
                     toggleDropdown(userAccountDropdownEls)
                 );
             }
+
+            const { menu } = userAccountDropdownEls;
+
+            if (menu) {
+                menu.addEventListener('keyup', (event: KeyboardEvent): void => {
+                    if (event.key === 'Escape') {
+                        toggleDropdown(userAccountDropdownEls);
+                        returnFocusToButton(MY_ACCOUNT_ID);
+                    }
+                });
+            }
         });
+};
+
+const toggleEditionPicker = (): void => {
+    const menu: ?HTMLElement = document.querySelector(
+        '.js-edition-dropdown-menu'
+    );
+
+    const trigger: ?HTMLElement = document.querySelector(
+        '.js-edition-picker-trigger'
+    );
+
+    if (menu && trigger) {
+        const editionPickerDropdownEls: MenuAndTriggerEls = {
+            menu,
+            trigger,
+        };
+
+        toggleDropdown(editionPickerDropdownEls);
+    }
+};
+
+const buttonClickHandlers = {
+    [MENU_TOGGLE_ID]: toggleMenu,
+    [EDITION_PICKER_TOGGLE_ID]: toggleEditionPicker,
+};
+
+const menuKeyHandlers = {
+    [MENU_TOGGLE_ID]: (event: KeyboardEvent): void => {
+        if (event.key === 'Escape') {
+            toggleMenu();
+            returnFocusToButton(MENU_TOGGLE_ID);
+        }
+    },
+    [EDITION_PICKER_TOGGLE_ID]: (event: KeyboardEvent): void => {
+        if (event.key === 'Escape') {
+            toggleEditionPicker();
+            returnFocusToButton(EDITION_PICKER_TOGGLE_ID);
+        }
+    },
 };
 
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
@@ -270,46 +361,20 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
-        const checkboxClassAttr = checkbox.getAttribute('class');
         const dataLinkName = checkbox.getAttribute('data-link-name');
-
-        const menuEl: ?HTMLElement = document.querySelector(
-            '.js-edition-dropdown-menu'
+        const label: ?HTMLElement = document.querySelector(
+            `label[for='${checkboxId}']`
         );
-        const triggerEl: ?HTMLElement = document.querySelector(
-            '.js-edition-picker-trigger'
-        );
-
-        const buttonClickHandlers = {};
-
-        buttonClickHandlers['main-menu-toggle'] = toggleMenu;
-
-        if (
-            menuEl &&
-            menuEl instanceof HTMLElement &&
-            triggerEl &&
-            triggerEl instanceof HTMLElement
-        ) {
-            const editionPickerDropdownEls: MenuAndTriggerEls = {
-                menu: menuEl,
-                trigger: triggerEl,
-            };
-
-            buttonClickHandlers['edition-picker-toggle'] = toggleDropdown.bind(
-                null,
-                editionPickerDropdownEls
-            );
-        }
 
         const enhance = () => {
-            const eventHandler = buttonClickHandlers[checkboxId];
+            button.setAttribute('id', checkboxId);
 
-            if (checkboxClassAttr) {
-                button.setAttribute('class', checkboxClassAttr);
+            const clickHandler = buttonClickHandlers[checkboxId];
+
+            if (clickHandler) {
+                button.addEventListener('click', clickHandler);
             }
 
-            button.addEventListener('click', () => eventHandler());
-            button.setAttribute('id', checkboxId);
             button.setAttribute('aria-expanded', 'false');
 
             if (dataLinkName) {
@@ -318,6 +383,31 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
 
             if (checkboxControls) {
                 button.setAttribute('aria-controls', checkboxControls);
+
+                const menu = document.getElementById(checkboxControls);
+                const keyHandler = menuKeyHandlers[checkboxId];
+
+                if (menu && keyHandler) {
+                    menu.addEventListener('keyup', keyHandler);
+                }
+            }
+
+            if (label) {
+                label.classList.forEach(className => {
+                    button.classList.add(className);
+                });
+
+                button.classList.add(`${checkboxId}-button`);
+
+                const labelTabIndex = label.getAttribute('tabindex');
+
+                if (labelTabIndex) {
+                    button.setAttribute('tabindex', labelTabIndex);
+                }
+
+                button.innerHTML = label.innerHTML;
+
+                label.remove();
             }
 
             if (checkbox.parentNode) {

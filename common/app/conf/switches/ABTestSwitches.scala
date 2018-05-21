@@ -78,18 +78,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-spacefinder-simplify",
-    "Alters the rules for inserting ads on desktop breakpoints.",
-    owners = Seq(Owner.withGithub("katebee")),
+    "ab-acquisitions-epic-always-ask-april-story",
+    "turn on always ask for this story",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 22),
+    sellByDate = new LocalDate(2018, 6, 5),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-always-ask-april-story",
-    "turn on always ask for this story",
+    "ab-acquisitions-epic-double-highlight-drop-ads-falling",
+    "Try 2 variants - one adding a double highlight and one removing the ads falling line",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 6, 5),

@@ -1,31 +1,25 @@
 @mixin immersiveCommon() {
     .fc-item__kicker {
+        color: $news-garnett-highlight;
         display: block;
+    }
+
+    .fc-item__headline {
+        color: #ffffff;
     }
 
     .fc-item__container {
         overflow: hidden;
+        position: relative;
+    }
+
+    .fc-item__standfirst,
+    .fc-sublinks {
+        display: none;
     }
 
     .fc-item__content {
-        background-color: $immersive-garnett-main-1;
-    }
-
-    //Todo better way to get this immersive card type to set the height when sublinks. This is fixed height enough to fit two lines of sublink
-    &.fc-item--has-sublinks-3 .fc-item__content,
-    &.fc-item--has-sublinks-2 .fc-item__content {
-        @include mq($from: tablet) {
-            padding-bottom: $gs-gutter * 3.6;
-        }
-    }
-
-    .fc-item__content {
-        position: absolute;
-        left: 0;
-
-        @include mq($from: tablet) {
-            position: relative;
-        }
+        position: relative;
     }
 
     .fc-item__headline {
@@ -40,37 +34,33 @@
         }
     }
 
-    .fc-slice--h-q-q & .fc-item__standfirst,
-    &.fc-item--three-quarters-tablet .fc-item__standfirst,
-    &.fc-item--three-quarters-tall-tablet .fc-item__standfirst {
-        display: block;
-        @include mq($from: tablet) {
-            margin-top: $gs-baseline * 2;
-        }
-    }
-
-    .fc-sublink__title {
-        color: #ffffff;
-    }
-
     // ensures image is positioned relative to fc-item__container
     .u-responsive-ratio {
         position: static;
     }
-
-    .fc-item__footer--horizontal {
-        position: absolute;
-        bottom: 0;
-    }
-
 }
 
 @mixin immersiveBottom() {
     @include immersiveCommon();
 
     .fc-item__content {
-        bottom: 0;
-        right: 0;
+        margin: 0 30px 0 0;
+    }
+
+    &.fc-item--third-tablet  {
+        @include mq($from: tablet) {
+            .fc-item__content {
+                max-width: gs-span(3);
+            }
+        }
+    }
+
+    &.fc-item--half-tablet  {
+        @include mq($from: tablet) {
+            .fc-item__content {
+                max-width: gs-span(4);
+            }
+        }
     }
 
     &.fc-item--three-quarters-tall-tablet {
@@ -82,22 +72,9 @@
     }
 
     &.fc-item--standard-mobile {
-        @include mq($from: mobile, $until: tablet) {
+        @include mq($until: tablet) {
             .u-responsive-ratio {
-                padding-bottom: 100%;
-            }
-        }
-    }
-
-    &.fc-item--has-sublinks-1 {
-        .fc-item__footer--horizontal {
-            display: none;
-        }
-        .fc-item__footer--vertical {
-            display: block;
-
-            .fc-sublinks {
-                margin-left: 0;
+                padding-bottom: 60%;
             }
         }
     }
@@ -107,10 +84,13 @@
     @include immersiveCommon();
 
     .fc-item__content {
-        bottom: 0;
-        top: 0;
-    }
+        margin: 0 auto 0 0;
+        min-width: gs-span(5) - ($gs-gutter * 2);
 
+        @include mq(desktop) {
+            min-width: gs-span(6);
+        }
+    }
 
     .u-responsive-ratio {
         padding-bottom: 45%;
@@ -120,20 +100,12 @@
 @mixin immersiveRight() {
     @include immersiveCommon();
 
-    .fc-item__content {
-        left: auto;
-        right: 0;
-        bottom: 0;
-        top: 0;
-    }
-
-
     .u-responsive-ratio {
         padding-bottom: 45%;
     }
 }
 
-.fc-item--type-immersive {
+.fc-item--type-immersive.fc-item--has-boosted-title {
 
     // ?# It is very easy to opt out as the below, but
     // it increases the cyclomatic complexity of all selectors.
@@ -161,10 +133,6 @@
             content: '/';
         }
 
-        .fc-item__standfirst {
-            color: #ffffff;
-        }
-
         .fc-item__meta {
             margin-left: auto;
             color: #ffffff;
@@ -175,7 +143,7 @@
         }
 
         &.fc-item--standard-mobile {
-            @include mq($from: mobile, $until: tablet) {
+            @include mq($until: tablet) {
                 @include immersiveBottom();
             }
         }
@@ -189,36 +157,17 @@
             }
         }
 
-        @mixin immersiveSublinks() {
-            &[class*='fc-item--has-sublinks'] {
-                .fc-item__footer--horizontal {
-                    display: none;
-                }
-                .fc-sublinks,
-                .fc-sublink,
-                .fc-item__footer--vertical {
-                    display: block;
-                }
-                .fc-sublinks,
-                .fc-sublink {
-                    margin-left: 0;
-                }
-            }
-        }
-
         &.fc-item--full-media-75-tablet,
         &.fc-item--full-media-50-tablet,
         &.fc-item--three-quarters-tablet {
             @include mq($from: tablet) {
                 @include immersiveLeft();
-                @include immersiveSublinks();
             }
         }
 
         &.fc-item--three-quarters-right-tablet {
             @include mq($from: tablet) {
                 @include immersiveRight();
-                @include immersiveSublinks();
             }
         }
     }

@@ -1,20 +1,10 @@
 // @flow
-import mediator from 'lib/mediator';
-
-let analyticsReady = false;
-
-mediator.on('analytics:ready', () => {
-    analyticsReady = true;
-});
+import config from 'lib/config';
 
 const deferToAnalytics = (afterAnalytics: () => void): void => {
-    if (analyticsReady) {
-        afterAnalytics();
-    } else {
-        mediator.on('analytics:ready', () => {
-            afterAnalytics();
-        });
-    }
+    try {
+        config.get('modules.tracking.ready').then(afterAnalytics);
+    } catch (e) {} // eslint-disable-line no-empty
 };
 
 export default deferToAnalytics;

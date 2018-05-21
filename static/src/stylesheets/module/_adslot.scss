@@ -239,7 +239,7 @@
     }
 }
 
-.ad-slot--container-inline:not(.ad-slot--fluid) {
+.ad-slot--container-inline:not(.ad-slot--fluid):not(.ad-slot--gc) {
     .ad-slot__content {
         margin: 0 auto;
     }
@@ -444,6 +444,12 @@
     }
 }
 
+.ad-slot--gc {
+    .ad-slot__label {
+        display: none;
+    }
+}
+
 .ad-slot--fabric-v1 {
     min-height: 250px;
 }
@@ -482,11 +488,11 @@
 
 .ad-slot--offset-right {
     @include mq(desktop) {
-        margin-right: -20em;
+        margin-right: -320px;
     }
 
     @include mq(wide) {
-        margin-right: -25em;
+        margin-right: -400px;
     }
 }
 

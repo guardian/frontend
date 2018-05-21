@@ -15,6 +15,16 @@ trait IdentitySwitches {
     exposeClientSide = true
   )
 
+  val IdentityAdConsentsSwitch = Switch(
+    SwitchGroup.Identity,
+    "id-ad-consents",
+    "If switched on, allows access to /adverts/manage and replaces the cookie banner.",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 6, 25), // GDPR goes into effect + 1 month
+    exposeClientSide = true
+  )
+
   val IdentityShowOptInEngagementBanner = Switch(
     SwitchGroup.Identity,
     "id-show-opt-in-engagement-banner",

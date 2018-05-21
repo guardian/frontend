@@ -80,4 +80,9 @@ describe('Config', () => {
             false
         );
     });
+
+    it('`set` should safely set (or orverride) a value deep inside the config object', () => {
+        config.set('some.random.path', 'hello');
+        expect(config.get('some.random.path')).toEqual('hello');
+    });
 });

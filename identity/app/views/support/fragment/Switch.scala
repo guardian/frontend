@@ -4,6 +4,7 @@ package views.support.fragment
 
 object Switch {
   sealed trait SwitchBehaviour
+  case object AdvertSwitch extends SwitchBehaviour // Ad prefereces
   case object ConsentSwitch extends SwitchBehaviour // Marketing consent like supporter, jobs, etc.
   case object NewsletterSwitch extends SwitchBehaviour // Newsletter consent like Guardian Today, etc.
 

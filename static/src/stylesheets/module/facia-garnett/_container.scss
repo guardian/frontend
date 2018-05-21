@@ -450,6 +450,216 @@ $header-image-size-desktop: 100px;
     transition: opacity .25s linear; // Used to fade-in new updates
 }
 
+// Temporary Royal Wedding customisation to specific special report container
+[data-component='royal-wedding'] {
+    background-color: #e7edef;
+    padding-bottom: 0;
+
+    .fc-container__inner {
+        background: url('https://uploads.guim.co.uk/2018/05/17/himandher.png') no-repeat;
+        background-size: 170px 150px;
+        background-position: left bottom;
+        
+        @include mq(tablet) {
+            overflow: visible;
+        }
+
+        @include mq($until: leftCol) {
+            background-size: 85px 75px;
+            padding-bottom: 70px;
+        }
+    }
+
+    &.fc-container--first:not(.fc-container--rolled-up) {
+        @include mq(leftCol) {
+            .fc-container__header__title {
+                top: -$gs-baseline / 2;
+                padding-top: $gs-baseline / 2;
+            }
+        }
+    }
+
+    &.fc-container--first {
+        .fc-container__toggle {
+            @include mq(leftCol) {
+                top: -$gs-baseline / 4;
+            }
+
+            @include mq(wide) {
+                top: 0;
+            }
+        }
+    }
+
+    &:not(.fc-container--rolled-up) {
+        @include mq(leftCol) {
+            .fc-container__header__title:before {
+                background-image: url('https://uploads.guim.co.uk/2018/05/17/confetti_AA.png'), url('https://uploads.guim.co.uk/2018/05/17/confetti_spin.gif'), url('https://uploads.guim.co.uk/2018/05/17/confetti_CC.png');
+                background-size: 500px 500px, 400px 400px, 300px 300px;
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity .3s ease-in-out;
+                animation: confetti 4.5s linear infinite;
+            }
+
+            .fc-container__header__title:hover:before {
+                opacity: 1;
+            }
+        }
+    }
+
+    .fc-container__header {
+        position: static;
+
+        @include mq($until: leftCol) {
+            min-height: 35px;
+        }
+    }
+
+    .fc-container__body {
+        @include mq($from: leftCol, $until: wide) {
+            // Overides .fc-container--first {padding-top: 0;}
+            padding-top: $gs-baseline * 3 !important;
+        }
+    }
+
+    .fc-container__header__title {
+        @include mq(leftCol) {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+            padding-top: $gs-baseline / 2;
+            left: 0;
+            bottom: 0;
+            top: 0;
+            width: gs-span(2) + $gs-gutter * 2 ;
+        }
+
+        @include mq(wide) {
+            width: gs-span(4) - $gs-gutter * 2;
+        }
+
+
+        &:after {
+            content: none;
+        }
+
+        @include mq($until: tablet) {
+            // Clears space between toggle and container title
+            padding-right: 100px;
+        }
+    }
+
+    .fc-container__toggle {
+        box-sizing: border-box;
+        color: $garnett-neutral-1;
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        min-height: 32px;
+        line-height: 15px;
+        min-width: none;
+        max-width: none;
+        width: 100px;
+        padding: 0 37px 0 0;
+        text-align: right;
+        top: $gs-baseline / 3;
+
+        &:focus {
+            outline: 0;
+
+            .inline-arrow {
+                background-color: darken($lifestyle-garnett-media-main-1, 10%);
+            }
+        }
+
+        .fc-container__toggle__text {
+            display: none;
+        }
+
+        .inline-arrow {
+            background-color: $lifestyle-garnett-media-main-1;
+            border-radius: 100%;
+            display: block;
+            height: 32px;
+            position: absolute;
+            left: auto;
+            right: 0;
+            top: 0;
+            width: 32px;
+
+            svg {
+                display: block;
+                margin: 11px auto 0;
+                width: 20px;
+            }
+        }
+
+        &:after {
+            content: 'Not a royalist?';
+        }
+
+        @include mq(tablet) {
+            left: gs-span(9) + $gs-gutter;
+            transform: translateX(-100%);
+        }
+
+        @include mq(desktop) {
+            left: gs-span(12) + $gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            left: gs-span(14) + $gs-gutter;
+        }
+
+        @include mq(wide) {
+            left: gs-span(16) + $gs-gutter + $gs-gutter / 2;
+        }
+    }
+
+    &.fc-container--rolled-up {
+        padding-bottom: 0;
+
+        .fc-container__header__title {
+            @include mq(leftCol) {
+                position: relative;
+                padding: 0 0 ($gs-baseline / 2);
+                width: gs-span(2);
+            }
+
+            @include mq(wide) {
+                width: gs-span(3);
+            }
+        }
+
+        .fc-container__inner {
+            background: none;
+            min-height: 40px;
+            padding-bottom: 0;
+        }
+
+        .fc-container__toggle {
+            &:after {
+                content: 'Maybe I am a royalist';
+            }
+        }
+    }
+}
+
+@keyframes confetti {
+    0% { background-position: 0 0, 0 0, 0 0;}
+    100% { background-position: 500px 1000px, 0 400px, 0 300px;}
+}
+
 .fc-container__toggle {
     @include fs-textSans(3);
     min-height: gs-height(1);
@@ -460,6 +670,11 @@ $header-image-size-desktop: 100px;
     border: 0;
     background-color: transparent;
     color: #ffffff;
+
+    [data-component='headlines'] & {
+        // Ensures toggle is never visible in Headlines container
+        display: none;
+    }
 
     .inline-icon {
         transform: rotate(180deg);

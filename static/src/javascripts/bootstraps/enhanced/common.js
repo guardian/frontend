@@ -15,7 +15,7 @@ import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 import { requestUserSegmentsFromId } from 'common/modules/commercial/user-ad-targeting';
 import { initDonotUseAdblock } from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
-import CommentCount from 'common/modules/discussion/comment-count';
+import { initCommentCount } from 'common/modules/discussion/comment-count';
 import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
@@ -31,7 +31,8 @@ import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-pr
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
-import cookiesBanner from 'common/modules/ui/cookiesBanner';
+import { init as initCookiesBanner } from 'common/modules/ui/cookiesBanner';
+import { init as initFirstPvConsentBanner } from 'common/modules/ui/first-pv-consent-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initCustomSmartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
@@ -178,7 +179,7 @@ const startRegister = (): void => {
 
 const initDiscussion = (): void => {
     if (config.switches.enableDiscussionSwitch) {
-        CommentCount.init();
+        initCommentCount();
     }
 };
 
@@ -282,11 +283,19 @@ const initialiseEmail = (): void => {
     });
 };
 
+const showFirstVisitBanner = (): void => {
+    if (config.get('switches.idAdConsents', false)) {
+        initFirstPvConsentBanner();
+    } else {
+        initCookiesBanner();
+    }
+};
+
 const init = (): void => {
     catchErrorsWithContext([
         // Analytics comes at the top. If you think your thing is more important then please think again...
         ['c-analytics', loadAnalytics],
-        ['c-cookies-banner', cookiesBanner.init],
+        ['c-first-visit-banner', showFirstVisitBanner],
         ['c-identity', initIdentity],
         ['c-adverts', requestUserSegmentsFromId],
         ['c-discussion', initDiscussion],

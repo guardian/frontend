@@ -1,0 +1,57 @@
+@()(implicit request: RequestHeader, context: model.ApplicationContext)
+@*
+GDPR personalised advertisement setting component inspired by
+https://support.google.com/dfp_premium/answer/7678538
+*@
+
+@*
+ EEA Countries
+*@
+<amp-geo layout="nodisplay">
+  <script type="application/json">
+   {
+       "ISOCountryGroups": {
+           "eea": [ "at", "be", "bg", "cy", "cz", "de", "dk", "ee", "es", "fi", "fr",
+                    "gb", "uk", "gr", "hr", "hu", "ie", "is", "it", "li", "lt", "lu",
+                    "lv", "mt", "nl", "no", "pl", "pt", "ro", "se", "si", "sk" ]
+       }
+   }
+  </script>
+</amp-geo>
+
+@*
+   Default policy as described in https://trello.com/c/UipfsepW
+*@
+<amp-consent layout="nodisplay" id="the-adconsent-element">
+  <script type="application/json">
+   {
+       "consents": {
+           "adconsent": {
+               "promptIfUnknownForGeoGroup": "eea"
+           }
+       },
+       "policy": {
+           "default": {
+               "waitFor": { "adconsent": [] },
+               "timeout": {
+                   "seconds": 0,
+                   "fallbackAction": "dismiss"
+               }
+           }
+       }
+   }
+  </script>
+
+@*
+  Interface stubs (to be activated with promptUI: 'adconsent-ui' in the 'adconsent'
+  and with postPromptUI: 'post-adconsent-ui in the top application/json structure above.
+  <div id="adconsent-ui" class="with-uk-frame consent-ui">
+      <button on="tap:the-adconsent-element.accept"  role="button">YES DO PERSONALISE</button>
+      <button on="tap:the-adconsent-element.reject"  role="button">DO NOT PERSONALISE</button>
+      <button on="tap:the-adconsent-element.dismiss" role="button">CLOSE</button>
+  </div>
+  <div id="post-adconsent-ui">
+      <button on="tap:the-adconsent-element.prompt"  role="button">AD PERSONALISATION SETTING</button>
+  </div>
+*@
+</amp-consent>
