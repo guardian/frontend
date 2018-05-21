@@ -94,7 +94,7 @@ class ConsentBoxes extends Component<
     {},
     { consentsWithState: AdConsentWithState[], changesPending: boolean }
 > {
-    constructor(props: {}) {
+    constructor(props: {}): void {
         super(props);
         this.state = {
             changesPending: false,
@@ -105,7 +105,7 @@ class ConsentBoxes extends Component<
         };
     }
 
-    onUpdate(consentId, state: AdConsentState) {
+    onUpdate(consentId: number, state: AdConsentState): void {
         const consentsWithState = { ...this.state }.consentsWithState;
         const changesPending = consentsWithState[consentId].state !== state;
         consentsWithState[consentId].state = state;
@@ -115,7 +115,7 @@ class ConsentBoxes extends Component<
         });
     }
 
-    onSubmit(event: SyntheticInputEvent<HTMLFormElement>) {
+    onSubmit(event: SyntheticInputEvent<HTMLFormElement>): void {
         event.preventDefault();
         this.state.consentsWithState.forEach(consentWithState => {
             if (consentWithState.state) {

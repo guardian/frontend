@@ -11,14 +11,14 @@ class FeedbackFlashBox extends Component<
         flashing: boolean,
     }
 > {
-    constructor(props: FeedbackFlashBoxProps) {
+    constructor(props: FeedbackFlashBoxProps): void {
         super(props);
         this.state = {
             flashing: false,
         };
     }
 
-    flash() {
+    flash(): void {
         this.setState({ flashing: true });
         setTimeout(() => {
             this.setState({ flashing: false });
