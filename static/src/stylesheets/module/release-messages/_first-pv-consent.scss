@@ -60,8 +60,17 @@ $underline: hsla(0, 100%, 100%, .5);
             align-items: center;
         }
     }
+    .site-message--first-pv-consent__head {
+        @include fs-header(4);
+        font-size: 24px;
+        position: relative;
+        padding-bottom: $gs-baseline/3;
+        line-height: get-line-height(header, 2);    
+        width: gs-span(4);
+        flex: 0 0 auto;
+    }
     .site-message--first-pv-consent__intro {
-        flex: 1 1 auto;
+        flex: 1 1 0;
         a {
             @extend %link;
             color: currentColor;
@@ -69,6 +78,7 @@ $underline: hsla(0, 100%, 100%, .5);
     }
     .site-message--first-pv-consent__actions {
         flex: 0 0 auto;
+        margin-right: gs-span(1);
     }
 }
 
@@ -86,4 +96,7 @@ $underline: hsla(0, 100%, 100%, .5);
 
 .site-message--first-pv-consent__block {
     margin: $gs-gutter / 2 0;
+    &:not(:last-child) {
+        margin-right: $gs-gutter*2;
+    }
 }
