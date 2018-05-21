@@ -27,7 +27,7 @@ export const acquisitionsEpicNativeVsDfp = makeABTest({
     id: 'AcquisitionsEpicNativeVsDfp',
     campaignId: 'epic_native_vs_dfp',
     start: '2018-05-16', // TODO: update
-    expiry: '2018-05-19', // TODO: update
+    expiry: '2018-05-25', // TODO: update
     author: 'Guy Dawson',
     description:
         'See if there is any difference in annualised value between serving the Epic natively vs DFP',
