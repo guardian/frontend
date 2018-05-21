@@ -118,7 +118,7 @@ class ConsentBoxes extends Component<
     onSubmit(event: SyntheticInputEvent<HTMLFormElement>): void {
         event.preventDefault();
         this.state.consentsWithState.forEach(consentWithState => {
-            if (consentWithState.state) {
+            if (typeof consentWithState.state === 'boolean') {
                 setAdConsentState(
                     consentWithState.consent,
                     consentWithState.state
