@@ -95,14 +95,14 @@
     margin-top: $gs-gutter;
 
     .identity-ad-prefs-input__wording {
-        margin: $gs-baseline/2 0 0 $left-padding;
+        margin: $gs-baseline/2 $left-padding 0;
         display: block;
     }
     .identity-ad-prefs-input__label {
         @include fs-textSans(5);
         @include circular();
         display: block;
-        background: $garnett-neutral-3;
+        background: $news-garnett-highlight;
         padding: $gs-gutter / 1.5;
         padding-left: $left-padding;
         font-weight: 800;
