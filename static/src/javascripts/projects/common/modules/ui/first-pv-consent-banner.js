@@ -19,7 +19,7 @@ const lifetimeDisplayEventKey: string = 'first-pv-consent : viewed-times :';
 
 type Template = {
     heading: string,
-    consentText: string,
+    consentText: string[],
     agreeButton: string,
     choicesButton: string,
     linkToPreferences: string,
@@ -41,12 +41,14 @@ const links: Links = {
 
 const template: Template = {
     heading: `Your privacy`,
-    consentText: `We use cookies to improve your experience on our site and to show you relevant advertising. 
-To find out more, read our updated <a data-link-name="first-pv-consent : to-privacy" href="${
-        links.privacy
-    }">privacy policy</a> and <a data-link-name="first-pv-consent : to-cookies" href="${
-        links.cookies
-    }">cookie policy</a>.`,
+    consentText: [
+        `We use cookies to improve your experience on our site and to show you relevant advertising.`,
+        `To find out more, read our updated <a data-link-name="first-pv-consent : to-privacy" href="${
+            links.privacy
+        }">privacy policy</a> and <a data-link-name="first-pv-consent : to-cookies" href="${
+            links.cookies
+        }">cookie policy</a>.`,
+    ],
     agreeButton: 'OK',
     choicesButton: 'More information',
     linkToPreferences: `${config.get('page.idUrl')}/adverts/manage`,
@@ -60,9 +62,9 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head">${
         tpl.heading
     }</div>
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${
-        tpl.consentText
-    }</div>
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${tpl.consentText
+        .map(_ => `<p>${_}</p>`)
+        .join('')}</div>
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--actions">
         <button 
             data-link-name="first-pv-consent : agree" 
