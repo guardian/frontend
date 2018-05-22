@@ -8,6 +8,7 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import userPrefs from 'common/modules/user-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
@@ -95,20 +96,15 @@ const show = (): void => {
     msg.show(makeHtml(template, bindableClassNames));
 };
 
-const banner = {
+const firstPvConsentBanner: Banner = {
     id: 'first-pv-consent-banner',
     canShow,
     show,
 };
 
-const init = (): Promise<void> =>
-    canShow().then(can => {
-        if (can) show();
-    });
-
-const _ = {
+export const _ = {
     onAgree,
     bindableClassNames,
 };
 
-export { init, _, banner };
+export { firstPvConsentBanner };
