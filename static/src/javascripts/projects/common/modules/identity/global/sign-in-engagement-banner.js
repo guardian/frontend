@@ -113,10 +113,17 @@ const hide = (msg: Message): void => {
     msg.hide();
 };
 
+const hasSeen = (): boolean => {
+    const messageStates = userPrefs.get('messages');
+
+    return messageStates && messageStates.indexOf(messageCode) > -1;
+}
+
 const canShow = (): Promise<boolean> => {
     const conditions = isForcedDisplay()
         ? [true]
         : [
+              !hasSeen(),
               isNotSignedIn(),
               isNotPaidContent(),
               hasSeenBannerOnceInLastTwoDays(),

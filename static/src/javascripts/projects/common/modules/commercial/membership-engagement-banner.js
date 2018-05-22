@@ -225,7 +225,7 @@ const canShow = (): Promise<boolean> => {
 };
 
 const membershipEngagementBanner: Banner = {
-    id: 'membershipEngagementBanner',
+    id: messageCode,
     show,
     canShow,
 };

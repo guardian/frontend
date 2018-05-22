@@ -9,6 +9,7 @@ import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
 import bean from 'bean';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import userPrefs from 'common/modules/user-prefs';
 
 const accountDataUpdateLink = accountDataUpdateWarningLink =>
     `${config.get('page.idUrl')}/${
@@ -17,13 +18,15 @@ const accountDataUpdateLink = accountDataUpdateWarningLink =>
             : `${accountDataUpdateWarningLink}/edit`
     }`;
 
+const messageCode = 'membership-action-required';
+
 const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
     const gaTracker = config.get('googleAnalytics.trackers.editorial');
-    const newMessage = new Message('membership-action-required', {
-        cssModifierClass: 'membership-action-required',
+    const newMessage = new Message(messageCode, {
+        cssModifierClass: messageCode,
         trackDisplay: true,
-        siteMessageLinkName: 'membership-action-required',
-        siteMessageComponentName: 'membership-action-required',
+        siteMessageLinkName: messageCode,
+        siteMessageComponentName: messageCode,
         customJs: () => {
             bean.on(document, 'click', '.js-site-message-close', () => {
                 window.ga(
@@ -52,8 +55,14 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
 };
 const updateLink = accountDataUpdateWarning();
 
+const hasSeen = (): boolean => {
+    const messageStates = userPrefs.get('messages');
+
+    return messageStates && messageStates.indexOf(messageCode) > -1;
+}
+
 const canShow: () => Promise<boolean> = () =>
-    Promise.resolve(updateLink !== null);
+    Promise.resolve(!hasSeen() && updateLink !== null);
 
 const show: () => void = () => {
     if (updateLink) {
@@ -62,7 +71,7 @@ const show: () => void = () => {
 };
 
 export const membershipBanner: Banner = {
-    id: 'membership-action-required',
+    id: messageCode,
     show,
     canShow,
 };
