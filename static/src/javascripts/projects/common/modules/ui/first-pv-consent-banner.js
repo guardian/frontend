@@ -52,7 +52,7 @@ const template: Template = {
     ],
     agreeButton: 'OK',
     choicesButton: 'More information',
-    linkToPreferences: `${config.get('page.idUrl')}/adverts/manage`,
+    linkToPreferences: `${config.get('page.idUrl')}/privacy-settings`,
 };
 
 const bindableClassNames: BindableClassNames = {

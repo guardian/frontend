@@ -15,6 +15,7 @@ $btn-height: ($gs-baseline*3.5);
 
 .site-message.site-message--first-pv-consent {
     padding: ($gs-baseline / 2) 0 $gs-baseline;
+    background: $sport-away;
 
     .site-message__media {
         display: none;
@@ -25,13 +26,11 @@ $btn-height: ($gs-baseline*3.5);
     .site-message__copy {
         display: block;
         margin: 0 $gs-gutter / 2;
-        @include mq(mobileLandscape) {
-            margin-left: $gs-gutter;
-            margin-right: $gs-gutter;
-        }
-        @include mq(tablet) {
+        @include mq(desktop) {
             display: flex;
             align-items: flex-start;
+            margin-left: $gs-gutter;
+            margin-right: $gs-gutter;
         }
     }
 }
@@ -75,14 +74,12 @@ $btn-height: ($gs-baseline*3.5);
 }
 
 .site-message--first-pv-consent__block {
-    @include fs-textSans(3);
-
     &:not(:last-child) {
         margin-right: $gs-gutter;
     }
     &.site-message--first-pv-consent__block--head {
         @include fs-header(4);
-        @include mq(tablet) {
+        @include mq(desktop) {
             width: gs-span(2);
         }
         @include mq(wide) {
@@ -97,6 +94,7 @@ $btn-height: ($gs-baseline*3.5);
         line-height: get-line-height(header, 2);
     }
     &.site-message--first-pv-consent__block--intro {
+        @include fs-bodyCopy(2)
         flex: 1 1 0;
         a {
             @extend %link;
@@ -104,17 +102,19 @@ $btn-height: ($gs-baseline*3.5);
         }
     }
     &.site-message--first-pv-consent__block--actions {
+        @include fs-textSans(3);
         flex: 0 0 auto;
-        @include mq($until: tablet) {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: $gs-baseline;
+        margin-top: $gs-baseline / 4;
+        .site-message--first-pv-consent__button {
+            margin-right: $gs-baseline;
         }
-        @include mq(tablet) {
-            .site-message--first-pv-consent__button--main {
-                margin-bottom: $gs-baseline / 2;
-            }
+        .site-message--first-pv-consent__button,
+        .site-message--first-pv-consent__link {
+            display: inline-block;
+            vertical-align: baseline;
+        }
+        @include mq($until: desktop) {
+            margin-top: $gs-baseline;
         }
         @include mq(desktop) {
             width: gs-span(3);
