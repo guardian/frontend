@@ -57,6 +57,8 @@ const init = (banners: Array<Banner>): Promise<void> => {
                 }
 
                 if (!results.includes('pending')) {
+                    console.log('results --->', results);
+
                     resolve();
                 }
             };

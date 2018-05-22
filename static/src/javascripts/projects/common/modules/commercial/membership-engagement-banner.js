@@ -13,6 +13,7 @@ import { isBlocked } from 'common/modules/commercial/membership-engagement-banne
 import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import userPrefs from 'common/modules/user-prefs';
 
 import {
     submitComponentEvent,
@@ -195,6 +196,12 @@ const showBanner = (params: EngagementBannerParams): void => {
     }
 };
 
+const hasSeen = (): boolean => {
+    const messageStates = userPrefs.get('messages');
+
+    return messageStates && messageStates.indexOf(messageCode) > -1;
+}
+
 let bannerParams;
 
 const show = (): void => {
@@ -210,7 +217,7 @@ const canShow = (): Promise<boolean> => {
 
     bannerParams = deriveBannerParams(getGeoLocation());
 
-    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
+    if (bannerParams && getVisitCount() >= bannerParams.minArticles && !hasSeen()) {
         return canDisplayMembershipEngagementBanner();
     }
 
