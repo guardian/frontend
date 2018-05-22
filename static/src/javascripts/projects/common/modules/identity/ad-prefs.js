@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { FeedbackFlashBox } from 'common/modules/identity/ad-prefs/FeedbackFlashBox';
+import { ConsentBox } from 'common/modules/identity/ad-prefs/ConsentBox';
+
 import fastdom from 'lib/fastdom-promise';
 import {
     getAdConsentState,
@@ -16,20 +18,6 @@ type AdConsentWithState = {
     state: ?boolean,
 };
 
-type ConsentRadioButtonProps = {
-    value: string,
-    label: string,
-    checked: boolean,
-    consent: AdConsent,
-    onToggle: () => void,
-};
-
-type ConsentBoxProps = {
-    consent: AdConsent,
-    state: ?boolean,
-    onUpdate: (state: ?boolean) => void,
-};
-
 type AdPrefsWrapperProps = {
     getAdConsentState: (consent: AdConsent) => ?boolean,
     setAdConsentState: (consent: AdConsent, state: boolean) => void,
@@ -37,62 +25,6 @@ type AdPrefsWrapperProps = {
 };
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
-
-class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
-    handleChange(event: SyntheticInputEvent<HTMLInputElement>): void {
-        if (event.target.checked) {
-            this.props.onToggle();
-        }
-    }
-    render() {
-        const id = `gu-ad-prefs-${this.props.value.toString()}-${
-            this.props.consent.cookie
-        }`;
-        const name = `gu-ad-prefs-${this.props.consent.cookie}`;
-
-        return (
-            <label className="identity-ad-prefs-input" htmlFor={id}>
-                <input
-                    type="radio"
-                    name={name}
-                    id={id}
-                    value={this.props.value.toString()}
-                    checked={this.props.checked}
-                    onChange={this.handleChange.bind(this)}
-                />
-                {this.props.label}
-            </label>
-        );
-    }
-}
-
-class ConsentBox extends Component<ConsentBoxProps, {}> {
-    render() {
-        return (
-            <fieldset>
-                <legend>
-                    Allow personalised ads from {this.props.consent.label}
-                </legend>
-                <div>
-                    <ConsentRadioButton
-                        label="Turn on"
-                        value="true"
-                        checked={this.props.state === true}
-                        consent={this.props.consent}
-                        onToggle={() => this.props.onUpdate(true)}
-                    />
-                    <ConsentRadioButton
-                        label="Turn off"
-                        value="false"
-                        checked={this.props.state === false}
-                        consent={this.props.consent}
-                        onToggle={() => this.props.onUpdate(false)}
-                    />
-                </div>
-            </fieldset>
-        );
-    }
-}
 
 class AdPrefsWrapper extends Component<
     AdPrefsWrapperProps,
@@ -113,7 +45,10 @@ class AdPrefsWrapper extends Component<
 
     onUpdate(consentId: number, state: ?boolean): void {
         const consentsWithState = [...this.state.consentsWithState];
-        const changesPending = consentsWithState[consentId].state !== state;
+        const changesPending =
+            this.props.getAdConsentState(
+                consentsWithState[consentId].consent
+            ) !== state;
         consentsWithState[consentId].state = state;
         this.setState({
             consentsWithState,

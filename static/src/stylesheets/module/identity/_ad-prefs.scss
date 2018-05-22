@@ -1,3 +1,48 @@
+.identity-ad-prefs-area {
+
+    .u-underline {
+        color: $garnett-neutral-1;
+    }
+
+    padding-bottom: $gs-baseline * 3;
+
+    &.identity-ad-prefs-area--header {
+        border-bottom: 1px solid $garnett-neutral-4;
+    }
+
+    .identity-ad-prefs-area__section {
+        @include fs-textSans(3);
+
+        max-width: gs-span(11);
+        margin: 0 $gs-gutter / 2;
+        padding-top: $gs-baseline/2;
+
+        @include mq(mobileLandscape) {
+            margin: 0 $gs-gutter;
+        }
+
+        .identity-ad-prefs-manager {
+            max-width: gs-span(8);
+        }
+
+        & + .identity-ad-prefs-area__section {
+            margin-top: $gs-baseline * 4;
+        }
+
+        &:not(:first-child) {
+            border-top: 1px solid $garnett-neutral-4;
+        }
+    }
+
+    .identity-title--small {
+        margin-bottom: $gs-baseline / 2;
+        &:not(:first-child) {
+            margin-top: $gs-baseline * 2;
+        }
+    }
+
+}
+
 .identity-ad-prefs-manager {
     fieldset {
         border: 0;
@@ -10,7 +55,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: $gs-baseline;
+    margin-top: $gs-gutter;
 
     > .manage-account__button {
         &[disabled] {
@@ -20,14 +65,56 @@
     }
 }
 
+.identity-ad-prefs-manager__flash {
+    color: $status-positive-garnett;
+    font-weight: bold;
+    opacity: 0;
+    &.identity-ad-prefs-manager__flash--flashing {
+        animation: identity-ad-prefs-manager-flash 2s both;
+    }
+}
+
+@keyframes identity-ad-prefs-manager-flash {
+    0% {
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 .identity-ad-prefs-input {
-    display: block;
-    background: $garnett-neutral-3;
-    border-top: 1px solid $garnett-neutral-4;
-    padding: $gs-baseline / 8 $gs-baseline / 2 $gs-baseline;
-    margin-top: $gs-baseline / 2;
-    input {
-        margin: 0 $gs-baseline / 4 0 0;
-        float: none;
+
+    $left-padding: $gs-gutter / 1.5 + 16px + $gs-gutter/2;
+    margin-top: $gs-gutter;
+
+    .identity-ad-prefs-input__wording {
+        margin: $gs-baseline/2 $left-padding 0;
+        display: block;
+    }
+    .identity-ad-prefs-input__label {
+        @include fs-textSans(5);
+        @include circular();
+        display: block;
+        background: $news-garnett-highlight;
+        padding: $gs-gutter / 1.5;
+        padding-left: $left-padding;
+        font-weight: 800;
+        position: relative;
+        input {
+            margin: auto;
+            padding: 0;
+            float: none;
+            position: absolute;
+            left: $gs-gutter;
+            top: 0;
+            bottom: 0;
+        }
     }
 }
