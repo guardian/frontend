@@ -278,11 +278,11 @@ const initialiseBanner = (): void => {
             ? firstPvConsentBanner
             : cookiesBanner,
         breakingNews,
-        smartAppBanner,
+        membershipBanner,
         membershipEngagementBanner,
         optInEngagementBanner,
         signInEngagementBanner,
-        membershipBanner,
+        smartAppBanner,
     ];
     initBannerPicker(bannerList);
 };

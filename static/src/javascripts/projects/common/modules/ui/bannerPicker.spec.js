@@ -220,11 +220,18 @@ describe('bannerPicker', () => {
             resolveList[1](true);
 
             return asyncTest.then(() => {
-                const trackingObj = {
+                const successTrackingObj = {
                     component: 'banner-picker',
                     value: `banner-1`,
                 };
-                expect(fakeOphan.record).toHaveBeenCalledWith(trackingObj);
+
+                const timeoutTrackingObj = {
+                    component: 'banner-picker-timeout',
+                    value: `banner-0`,
+                };
+
+                expect(fakeOphan.record).toHaveBeenCalledWith(successTrackingObj);
+                expect(fakeOphan.record).toHaveBeenCalledWith(timeoutTrackingObj);
                 expect(banners[0].show).not.toHaveBeenCalled();
                 expect(banners[1].show).toHaveBeenCalled();
             });
