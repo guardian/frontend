@@ -273,10 +273,13 @@ const initialiseEmail = (): void => {
 
 const initialiseBanner = (): void => {
     // ordered by priority
+
+    const canDisplayFirstPvBanner =
+        config.get('switches.idAdConsents', false) ||
+        window.location.hash.includes('pv-banner-display');
+
     const bannerList = [
-        config.get('switches.idAdConsents', false)
-            ? firstPvConsentBanner
-            : cookiesBanner,
+        canDisplayFirstPvBanner ? firstPvConsentBanner : cookiesBanner,
         breakingNews,
         membershipBanner,
         membershipEngagementBanner,
