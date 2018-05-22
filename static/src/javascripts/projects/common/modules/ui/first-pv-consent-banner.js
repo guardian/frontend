@@ -81,7 +81,12 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
 `;
 
 const isInEEA = (): boolean =>
-    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
+    [
+        (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU',
+        ['NO', 'IS', 'LI'].includes(
+            (getCookie('GU_country') || 'OTHER').toUpperCase()
+        ),
+    ].some(_ => _ === true);
 
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
