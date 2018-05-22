@@ -9,14 +9,11 @@ import {
     setAdConsentState,
     allAdConsents,
 } from 'common/modules/commercial/ad-prefs.lib';
-import type {
-    AdConsent,
-    AdConsentState,
-} from 'common/modules/commercial/ad-prefs.lib';
+import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 
 type AdConsentWithState = {
     consent: AdConsent,
-    state: AdConsentState,
+    state: ?boolean,
 };
 
 type ConsentRadioButtonProps = {
@@ -29,12 +26,12 @@ type ConsentRadioButtonProps = {
 
 type ConsentBoxProps = {
     consent: AdConsent,
-    state: AdConsentState,
-    onUpdate: (state: AdConsentState) => void,
+    state: ?boolean,
+    onUpdate: (state: ?boolean) => void,
 };
 
 type AdPrefsWrapperProps = {
-    getAdConsentState: (consent: AdConsent) => AdConsentState,
+    getAdConsentState: (consent: AdConsent) => ?boolean,
     setAdConsentState: (consent: AdConsent, state: boolean) => void,
     allAdConsents: AdConsent[],
 };
@@ -114,7 +111,7 @@ class AdPrefsWrapper extends Component<
         };
     }
 
-    onUpdate(consentId: number, state: AdConsentState): void {
+    onUpdate(consentId: number, state: ?boolean): void {
         const consentsWithState = [...this.state.consentsWithState];
         const changesPending = consentsWithState[consentId].state !== state;
         consentsWithState[consentId].state = state;
@@ -154,7 +151,7 @@ class AdPrefsWrapper extends Component<
                                 consent={consentWithState.consent}
                                 state={consentWithState.state}
                                 key={consentWithState.consent.cookie}
-                                onUpdate={(state: AdConsentState) => {
+                                onUpdate={(state: ?boolean) => {
                                     this.onUpdate(index, state);
                                 }}
                             />

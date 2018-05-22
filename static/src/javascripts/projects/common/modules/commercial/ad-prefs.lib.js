@@ -7,8 +7,6 @@ type AdConsent = {
     cookie: string,
 };
 
-type AdConsentState = ?boolean;
-
 const thirdPartyTrackingAdConsent: AdConsent = {
     label: 'Third party tracking',
     cookie: 'GU_TK',
@@ -21,7 +19,7 @@ const setAdConsentState = (provider: AdConsent, state: boolean): void => {
     addCookie(provider.cookie, cookie, 30 * 18, true);
 };
 
-const getAdConsentState = (provider: AdConsent): AdConsentState => {
+const getAdConsentState = (provider: AdConsent): ?boolean => {
     const cookieRaw = getCookie(provider.cookie);
     if (!cookieRaw) return null;
     const cookieParsed = cookieRaw.split(',')[0];
@@ -30,7 +28,7 @@ const getAdConsentState = (provider: AdConsent): AdConsentState => {
     return null;
 };
 
-export type { AdConsent, AdConsentState };
+export type { AdConsent };
 export {
     setAdConsentState,
     getAdConsentState,
