@@ -90,18 +90,24 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
     }
 }
 
-class ConsentBoxes extends Component<
-    {},
+class AdPrefsWrapper extends Component<
+    {
+        getAdConsentState: (consent: AdConsent) => AdConsentState,
+        setAdConsentState: (consent: AdConsent, state: AdConsentState) => void,
+        allAdConsents: AdConsent[],
+    },
     { consentsWithState: AdConsentWithState[], changesPending: boolean }
 > {
     constructor(props: {}): void {
         super(props);
         this.state = {
             changesPending: false,
-            consentsWithState: allAdConsents.map((consent: AdConsent) => ({
-                consent,
-                state: getAdConsentState(consent),
-            })),
+            consentsWithState: this.props.allAdConsents.map(
+                (consent: AdConsent) => ({
+                    consent,
+                    state: this.props.getAdConsentState(consent),
+                })
+            ),
         };
     }
 
@@ -119,7 +125,7 @@ class ConsentBoxes extends Component<
         event.preventDefault();
         this.state.consentsWithState.forEach(consentWithState => {
             if (typeof consentWithState.state === 'boolean') {
-                setAdConsentState(
+                this.props.setAdConsentState(
                     consentWithState.consent,
                     consentWithState.state
                 );
@@ -173,12 +179,18 @@ class ConsentBoxes extends Component<
 
 const enhanceAdPrefs = (): void => {
     fastdom
-        .read(() => document.querySelectorAll(rootSelector))
+        .read(() => [...document.querySelectorAll(rootSelector)])
         .then((wrapperEls: HTMLElement[]) => {
             wrapperEls.forEach(_ => {
                 fastdom.write(() => {
-                    _.classList.remove('is-hidden');
-                    render(<ConsentBoxes />, _);
+                    render(
+                        <AdPrefsWrapper
+                            allAdConsents={allAdConsents}
+                            getAdConsentState={getAdConsentState}
+                            setAdConsentState={setAdConsentState}
+                        />,
+                        _
+                    );
                 });
             });
         });
