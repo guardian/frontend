@@ -230,6 +230,7 @@ describe('bannerPicker', () => {
                     value: `banner-0`,
                 };
 
+                expect(fakeOphan.record).toHaveBeenCalledTimes(2);
                 expect(fakeOphan.record).toHaveBeenCalledWith(
                     successTrackingObj
                 );
