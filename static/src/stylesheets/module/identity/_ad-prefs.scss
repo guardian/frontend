@@ -1,5 +1,9 @@
 .identity-ad-prefs-area {
 
+    .u-underline {
+        color: $garnett-neutral-1;
+    }
+
     padding-bottom: $gs-baseline * 3;
 
     &.identity-ad-prefs-area--header {

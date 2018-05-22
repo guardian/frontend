@@ -45,7 +45,8 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
                     <span>{this.props.wording.title}</span>
                 </label>
                 {this.props.wording.text && (
-                    <span className="identity-ad-prefs-input__wording">{this.props.wording.text}</span>
+                    <span className="identity-ad-prefs-input__wording" dangerouslySetInnerHTML={{__html: this.props.wording.text}}>
+                    </span>
                 )}
             </div>
         );
@@ -58,7 +59,9 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
 
         return (
             <fieldset>
-                <legend className="identity-title identity-title--small">{wording.question}</legend>
+                <legend className="identity-title identity-title--small">
+                    {wording.question}
+                </legend>
                 <div>
                     <ConsentRadioButton
                         value="true"
