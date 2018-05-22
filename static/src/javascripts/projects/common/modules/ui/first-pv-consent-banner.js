@@ -1,5 +1,6 @@
 // @flow
 import config from 'lib/config';
+import { getCookie } from 'lib/cookies';
 import { Message } from 'common/modules/ui/message';
 import checkIcon from 'svgs/icon/tick.svg';
 import {
@@ -31,17 +32,21 @@ type BindableClassNames = {
 type Links = {
     privacy: string,
     cookies: string,
-}
+};
 
-const links :Links= {
+const links: Links = {
     privacy: 'https://www.theguardian.com/help/privacy-policy',
     cookies: 'https://www.theguardian.com/info/cookies',
-}
+};
 
 const template: Template = {
     heading: `Your privacy`,
     consentText: `We use cookies to improve your experience on our site and to show you relevant advertising. 
-To find out more, read our updated <a data-link-name="first-pv-consent : to-privacy" href="${links.privacy}">privacy policy</a> and <a data-link-name="first-pv-consent : to-cookies" href="${links.cookies}">cookie policy</a>.`,
+To find out more, read our updated <a data-link-name="first-pv-consent : to-privacy" href="${
+        links.privacy
+    }">privacy policy</a> and <a data-link-name="first-pv-consent : to-cookies" href="${
+        links.cookies
+    }">cookie policy</a>.`,
     agreeButton: 'OK',
     choicesButton: 'More information',
     linkToPreferences: `${config.get('page.idUrl')}/adverts/manage`,
@@ -73,6 +78,9 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     </div>
 `;
 
+const isInEEA = (): boolean =>
+    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
+
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
         setAdConsentState(_, true);
@@ -84,7 +92,7 @@ const hasUnsetAdChoices = (): boolean =>
     allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
 
 const canShow = (): Promise<boolean> =>
-    Promise.resolve([hasUnsetAdChoices()].every(_ => _ === true));
+    Promise.resolve([hasUnsetAdChoices(), isInEEA()].every(_ => _ === true));
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
