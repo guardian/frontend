@@ -1,5 +1,4 @@
 // @flow
-
 export type CmpConfig = {
     globalVendorListLocation: string,
     gdprApplies: boolean,

@@ -107,13 +107,11 @@ const decode6BitCharacters = (
     return decoded;
 };
 
-const encodeFields = ({ input, fields }) => {
-    return fields.reduce((acc, field) => {
+const encodeFields = ({ input, fields }) => fields.reduce((acc, field) => {
         // eslint-disable-next-line no-use-before-define, no-param-reassign
         acc += encodeField({ input, field });
         return acc;
     }, '');
-};
 
 const encodeField = ({ input, field }) => {
     const { name, type, numBits, encoder, validator } = field;
@@ -190,7 +188,7 @@ const decodeFields = ({ input, fields, startPosition = 0 }) => {
     };
 };
 
-const decodeField = ({ input, output, startPosition, field }) => {
+const decodeField = ({ input, output, startPosition, field }): Object => {
     const { type, numBits, decoder, validator, listCount } = field;
     if (typeof validator === 'function') {
         if (!validator(output)) {
@@ -290,7 +288,6 @@ const encodeCookieValue = (data, definitionMap): ?string => {
             binaryValue,
             7 - (binaryValue.length + 7) % 8
         );
-
         // Encode to bytes
         let bytes = '';
         for (let i = 0; i < paddedBinaryValue.length; i += 8) {
@@ -298,7 +295,6 @@ const encodeCookieValue = (data, definitionMap): ?string => {
                 parseInt(paddedBinaryValue.substr(i, 8), 2)
             );
         }
-
         // Make base64 string URL friendly
         return btoa(bytes)
             .replace(/\+/g, '-')
@@ -307,7 +303,7 @@ const encodeCookieValue = (data, definitionMap): ?string => {
     }
 };
 
-const decodeCookieBitValue = (bitString, definitionMap) => {
+const decodeCookieBitValue = (bitString, definitionMap): Object => {
     const cookieVersion = decodeBitsToInt(bitString, 0, NUM_BITS_VERSION);
     if (typeof cookieVersion !== 'number') {
         log.error('Could not find cookieVersion to decode');
@@ -331,7 +327,7 @@ const decodeCookieBitValue = (bitString, definitionMap) => {
 /**
  * Decode the (URL safe Base64) value of a cookie into an object.
  */
-const decodeCookieValue = (cookieValue: string, definitionMap): string => {
+const decodeCookieValue = (cookieValue: string, definitionMap: any): Object => {
     // Replace safe characters
     const unsafe =
         cookieValue.replace(/-/g, '+').replace(/_/g, '/') +

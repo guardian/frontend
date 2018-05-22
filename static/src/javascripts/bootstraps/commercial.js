@@ -7,6 +7,7 @@ import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
+import { init as initCmpService } from 'commercial/modules/cmp/cmp';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
 import { init as initCarrotTrafficDriver } from 'commercial/modules/carrot-traffic-driver';
@@ -28,6 +29,7 @@ import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import commentAdverts from 'commercial/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
+    ['cm-prepare-cmp', initCmpService],
     ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
