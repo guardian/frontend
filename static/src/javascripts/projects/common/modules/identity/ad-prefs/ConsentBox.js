@@ -2,8 +2,8 @@
 
 import React, { Component } from 'react';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
-import {getConsentWording} from "./wordings";
-import type {ConsentWording, CheckboxWording} from "./wordings";
+import { getConsentWording } from './wordings';
+import type { ConsentWording, CheckboxWording } from './wordings';
 
 type ConsentRadioButtonProps = {
     value: string,
@@ -42,9 +42,9 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
                     onChange={this.handleChange.bind(this)}
                 />
                 <strong>{this.props.wording.title}</strong>
-                {this.props.wording.text &&
-                    (<span>{this.props.wording.text}</span>)
-                }
+                {this.props.wording.text && (
+                    <span>{this.props.wording.text}</span>
+                )}
             </label>
         );
     }
@@ -52,14 +52,11 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
 
 class ConsentBox extends Component<ConsentBoxProps, {}> {
     render() {
-
         const wording: ConsentWording = getConsentWording(this.props.consent);
 
         return (
             <fieldset>
-                <legend>
-                    {wording.question}
-                </legend>
+                <legend>{wording.question}</legend>
                 <div>
                     <ConsentRadioButton
                         value="true"
