@@ -460,6 +460,7 @@ object NavLinks {
     podcasts,
     pictures,
     newsletters,
+    insideTheGuardian,
     digitalNewspaperArchive,
     crosswords
   )
@@ -469,6 +470,7 @@ object NavLinks {
     podcasts,
     pictures,
     newsletters,
+    insideTheGuardian,
     digitalNewspaperArchive,
     crosswords
   )
