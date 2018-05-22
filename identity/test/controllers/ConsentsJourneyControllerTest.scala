@@ -170,16 +170,6 @@ import scala.concurrent.Future
         contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
       }
 
-      "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
-        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listIdV1.toString))
-        when(api.userEmails(anyString(), any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
-
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(EmailNewsletters.guardianTodayUk.name))
-      }
-
     }
 
 
@@ -195,16 +185,6 @@ import scala.concurrent.Future
         val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
-      }
-
-      "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
-        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listIdV1.toString))
-        when(api.userEmails(anyString(), any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
-
-        val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(EmailNewsletters.guardianTodayUk.name))
       }
 
     }
@@ -225,16 +205,6 @@ import scala.concurrent.Future
         contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
       }
 
-      "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
-        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listIdV1.toString))
-        when(api.userEmails(anyString(), any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
-
-        val result = controller.displayConsentsJourneyThankYou().apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(EmailNewsletters.guardianTodayUk.name))
-      }
-
     }
 
 
@@ -244,16 +214,6 @@ import scala.concurrent.Future
         val result = controller.displayConsentsJourneyNewsletters().apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should not include xml.Utility.escape(Supporter.latestWording.wording)
-      }
-
-      "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
-        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listIdV1.toString))
-        when(api.userEmails(anyString(), any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
-
-        val result = controller.displayConsentsJourneyNewsletters().apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(EmailNewsletters.guardianTodayUk.name))
       }
 
     }
