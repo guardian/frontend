@@ -104,12 +104,14 @@ $btn-height: ($gs-baseline*3.5);
     &.site-message--first-pv-consent__block--actions {
         @include fs-textSans(3);
         flex: 0 0 auto;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
         margin-top: $gs-baseline / 4;
         .site-message--first-pv-consent__button {
             margin-right: $gs-baseline;
+        }
+        .site-message--first-pv-consent__button,
+        .site-message--first-pv-consent__link {
+            display: inline-block;
+            vertical-align: baseline;
         }
         @include mq($until: desktop) {
             margin-top: $gs-baseline;
