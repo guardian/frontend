@@ -11,11 +11,9 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 
-type AdConsentState = ?boolean;
-
 type AdConsentWithState = {
     consent: AdConsent,
-    state: AdConsentState,
+    state: ?boolean,
 };
 
 type ConsentRadioButtonProps = {
@@ -28,8 +26,14 @@ type ConsentRadioButtonProps = {
 
 type ConsentBoxProps = {
     consent: AdConsent,
-    state: AdConsentState,
-    onUpdate: (state: AdConsentState) => void,
+    state: ?boolean,
+    onUpdate: (state: ?boolean) => void,
+};
+
+type AdPrefsWrapperProps = {
+    getAdConsentState: (consent: AdConsent) => ?boolean,
+    setAdConsentState: (consent: AdConsent, state: boolean) => void,
+    allAdConsents: AdConsent[],
 };
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
@@ -90,22 +94,24 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
     }
 }
 
-class ConsentBoxes extends Component<
-    {},
+class AdPrefsWrapper extends Component<
+    AdPrefsWrapperProps,
     { consentsWithState: AdConsentWithState[], changesPending: boolean }
 > {
-    constructor(props: {}): void {
+    constructor(props: AdPrefsWrapperProps): void {
         super(props);
         this.state = {
             changesPending: false,
-            consentsWithState: allAdConsents.map((consent: AdConsent) => ({
-                consent,
-                state: getAdConsentState(consent),
-            })),
+            consentsWithState: this.props.allAdConsents.map(
+                (consent: AdConsent) => ({
+                    consent,
+                    state: this.props.getAdConsentState(consent),
+                })
+            ),
         };
     }
 
-    onUpdate(consentId: number, state: AdConsentState): void {
+    onUpdate(consentId: number, state: ?boolean): void {
         const consentsWithState = [...this.state.consentsWithState];
         const changesPending = consentsWithState[consentId].state !== state;
         consentsWithState[consentId].state = state;
@@ -119,7 +125,7 @@ class ConsentBoxes extends Component<
         event.preventDefault();
         this.state.consentsWithState.forEach(consentWithState => {
             if (typeof consentWithState.state === 'boolean') {
-                setAdConsentState(
+                this.props.setAdConsentState(
                     consentWithState.consent,
                     consentWithState.state
                 );
@@ -145,7 +151,7 @@ class ConsentBoxes extends Component<
                                 consent={consentWithState.consent}
                                 state={consentWithState.state}
                                 key={consentWithState.consent.cookie}
-                                onUpdate={(state: AdConsentState) => {
+                                onUpdate={(state: ?boolean) => {
                                     this.onUpdate(index, state);
                                 }}
                             />
@@ -173,12 +179,18 @@ class ConsentBoxes extends Component<
 
 const enhanceAdPrefs = (): void => {
     fastdom
-        .read(() => document.querySelectorAll(rootSelector))
+        .read(() => [...document.querySelectorAll(rootSelector)])
         .then((wrapperEls: HTMLElement[]) => {
             wrapperEls.forEach(_ => {
                 fastdom.write(() => {
-                    _.classList.remove('is-hidden');
-                    render(<ConsentBoxes />, _);
+                    render(
+                        <AdPrefsWrapper
+                            allAdConsents={allAdConsents}
+                            getAdConsentState={getAdConsentState}
+                            setAdConsentState={setAdConsentState}
+                        />,
+                        _
+                    );
                 });
             });
         });
