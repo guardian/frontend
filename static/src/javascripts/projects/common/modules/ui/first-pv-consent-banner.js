@@ -28,11 +28,22 @@ type BindableClassNames = {
     agree: string,
 };
 
+type Links = {
+    privacy: string,
+    cookies: string,
+}
+
+const links :Links= {
+    privacy: 'https://www.theguardian.com/help/privacy-policy',
+    cookies: 'https://www.theguardian.com/info/cookies',
+}
+
 const template: Template = {
     heading: `Your privacy`,
-    consentText: `Do you agree to the use of cookies on our website and the sharing of data with our partners to see ads that are more relevant to you? You can learn more in our updated privacy policy and cookie policy, effective 25 May 2018.`,
-    agreeButton: 'I agree',
-    choicesButton: 'Show me more options',
+    consentText: `We use cookies to improve your experience on our site and to show you relevant advertising. 
+To find out more, read our updated <a data-link-name="first-pv-consent : to-privacy" href="${links.privacy}">privacy policy</a> and <a data-link-name="first-pv-consent : to-cookies" href="${links.cookies}">cookie policy</a>.`,
+    agreeButton: 'OK',
+    choicesButton: 'More information',
     linkToPreferences: `${config.get('page.idUrl')}/adverts/manage`,
 };
 
