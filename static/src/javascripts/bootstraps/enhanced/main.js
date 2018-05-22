@@ -180,27 +180,22 @@ const bootEnhanced = (): void => {
         );
     }
 
-    fastdom
-        .read(() =>
-            qwery(
-                `${config.switches.enhancedVideoPlayer ? 'video, ' : ''} audio`
-            )
-        )
-        .then(els => {
-            if (els.length) {
-                require.ensure(
-                    [],
-                    require => {
-                        bootstrapContext(
-                            'media-player',
-                            require('bootstraps/enhanced/media-player')
-                                .initMediaPlayer
-                        );
-                    },
-                    'media-player'
-                );
-            }
-        });
+    if (config.get('switches.enhancedVideoPlayer')) {
+        const els = qwery('video');
+        if (els.length) {
+            require.ensure(
+                [],
+                require => {
+                    bootstrapContext(
+                        'media-player',
+                        require('bootstraps/enhanced/media-player')
+                            .initMediaPlayer
+                    );
+                },
+                'media-player'
+            );
+        }
+    }
 
     if (config.page.contentType === 'Gallery') {
         require.ensure(
@@ -329,6 +324,21 @@ const bootEnhanced = (): void => {
                     );
                 },
                 'youtube'
+            );
+        }
+    });
+
+    fastdom.read(() => {
+        if ($('.gu-media--audio').length > 0) {
+            require.ensure(
+                [],
+                require => {
+                    bootstrapContext(
+                        'audio',
+                        require('bootstraps/enhanced/audio').init
+                    );
+                },
+                'audio'
             );
         }
     });

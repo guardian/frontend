@@ -261,7 +261,7 @@ if (config.page.isFront) {
 or check if there `isMedia` or a video or audio element exists on the page in order to require the mainMedia JS:
 
 ```js
-if ((config.isMedia || qwery('video, audio').length) && !config.page.isHosted) {
+if ((config.isMedia || qwery('video').length) && !config.page.isHosted) {
 	require(['bootstraps/enhanced/media/main'], function (media) {
 		bootstrapContext('media', media);
 	});
