@@ -240,7 +240,7 @@ const makeABTestVariant = (
                 });
                 submitABTestComplete();
             }),
-        adSlotEpicTemplate = null,
+        isAdSlot = false,
     } = options;
 
     if (usesIframe) {
@@ -276,8 +276,7 @@ const makeABTestVariant = (
             impression,
             success,
             iframeId,
-            adSlotEpicTemplate,
-            isAdSlot: typeof adSlotEpicTemplate === 'function',
+            isAdSlot,
         },
 
         test() {
