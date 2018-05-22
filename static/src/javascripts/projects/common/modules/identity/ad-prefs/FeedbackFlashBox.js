@@ -22,16 +22,18 @@ class FeedbackFlashBox extends Component<
         this.setState({ flashing: true });
         setTimeout(() => {
             this.setState({ flashing: false });
-        }, 500);
+        },2000);
     }
 
     render() {
         return (
             <div
-                className="identity-ad-prefs-manager__flash"
-                style={{
-                    display: this.state.flashing ? 'block' : 'none',
-                }}>
+                className={[
+                    'identity-ad-prefs-manager__flash',
+                    this.state.flashing ? 'identity-ad-prefs-manager__flash--flashing' : ''
+                ].join(' ')}
+                aria-hidden="true"
+            >
                 {this.props.children}
             </div>
         );

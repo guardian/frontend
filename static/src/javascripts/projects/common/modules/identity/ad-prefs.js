@@ -45,7 +45,7 @@ class AdPrefsWrapper extends Component<
 
     onUpdate(consentId: number, state: ?boolean): void {
         const consentsWithState = [...this.state.consentsWithState];
-        const changesPending = consentsWithState[consentId].state !== state;
+        const changesPending = this.props.getAdConsentState(consentsWithState[consentId].consent) !== state;
         consentsWithState[consentId].state = state;
         this.setState({
             consentsWithState,
