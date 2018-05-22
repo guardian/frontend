@@ -189,15 +189,6 @@
     " data-journey="@journey" data-component="identity-consent-journey-@journey">
         @renderBlocks(
             journey match {
-                case NewsletterConsentsJourney => {
-                    List(
-                        ConsentStep(
-                            name = "error",
-                            title = "Sorry",
-                            content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
-                        )
-                    )
-                }
                 case ThankYouConsentsJourney => {
                     List(
                         ConsentBanner(
