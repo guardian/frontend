@@ -66,7 +66,7 @@ const init = (banners: Array<Banner>): Promise<void> => {
             // checks that take longer than TIME_LIMIT are forced to fail
             const timeout = setTimeout(() => {
                 hasTimedOut = true;
-                
+
                 pushToResults(false);
 
                 const trackingObj = {
