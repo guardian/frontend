@@ -4,7 +4,7 @@ import { thirdPartyTrackingAdConsent } from 'common/modules/commercial/ad-prefs.
 
 type CheckboxWording = {
     title: string,
-    text: ?string,
+    text?: string,
 };
 
 type ConsentWording = {
@@ -18,13 +18,11 @@ const ThirdPartyConsentWording: ConsentWording = {
         'We use cookies to improve your experience on our site and to show you relevant advertising.',
     yesCheckbox: {
         title: 'OK',
-        text:
-            `You can change your mind at any time by taking the steps set out in our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>, where you can also learn more about what cookies are and how they are used by The Guardian.`,
+        text: `You can change your mind at any time by taking the steps set out in our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>, where you can also learn more about what cookies are and how they are used by The Guardian.`,
     },
     noCheckbox: {
         title: 'I want to manage the use of advertising cookies',
-        text:
-            `This option will reduce the number of advertising partners who will serve you with relevant adverts, although you may still see some advertising that has been tailored to you. If you wish to take further steps to disable cookies on The Guardian, including advertising cookies, please follow the instructions in our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>.`,
+        text: `This option will reduce the number of advertising partners who will serve you with relevant adverts, although you may still see some advertising that has been tailored to you. If you wish to take further steps to disable cookies on The Guardian, including advertising cookies, please follow the instructions in our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>.`,
     },
 };
 

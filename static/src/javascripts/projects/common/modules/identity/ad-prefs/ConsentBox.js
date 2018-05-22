@@ -45,8 +45,12 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
                     <span>{this.props.wording.title}</span>
                 </label>
                 {this.props.wording.text && (
-                    <span className="identity-ad-prefs-input__wording" dangerouslySetInnerHTML={{__html: this.props.wording.text}}>
-                    </span>
+                    <span
+                        className="identity-ad-prefs-input__wording"
+                        dangerouslySetInnerHTML={{
+                            __html: this.props.wording.text,
+                        }}
+                    />
                 )}
             </div>
         );
