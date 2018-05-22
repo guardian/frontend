@@ -69,7 +69,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
       when(client.me(any[Auth])).thenReturn(Future(Right(user)))
       when(mockFunc.apply(1)) thenReturn mock[Result]
-      when(profileRedirectService.toProfileRedirect(any[User], any[RequestHeader])).thenReturn(Future(NoRedirect))
+      when(profileRedirectService.toProfileRedirect(any[User], any[RequestHeader])).thenReturn(NoRedirect)
 
       val result = actions.manageAccountRedirectAction(originalUrl).apply(callMock)(request)
 
@@ -105,7 +105,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(None)
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(Some(userWithRpCookie))
       when(client.me(any[Auth])).thenReturn(Future(Right(user)))
-      when(profileRedirectService.toConsentsRedirect(any[User], any[RequestHeader])).thenReturn(Future(NoRedirect))
+      when(profileRedirectService.toConsentsRedirect(any[User], any[RequestHeader])).thenReturn(NoRedirect)
 
       val mockFunc = mock[Int => Result]
       when(mockFunc.apply(1)) thenReturn mock[Result]
@@ -124,7 +124,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(recentlyAuthedUser))
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
       when(client.me(any[Auth])).thenReturn(Future(Right(user)))
-      when(profileRedirectService.toConsentsRedirect(any[User], any[RequestHeader])).thenReturn(Future(NoRedirect))
+      when(profileRedirectService.toConsentsRedirect(any[User], any[RequestHeader])).thenReturn(NoRedirect)
 
       val mockFunc = mock[Int => Result]
       when(mockFunc.apply(1)) thenReturn mock[Result]
