@@ -9,9 +9,10 @@ import {
     setAdConsentState,
     allAdConsents,
 } from 'common/modules/commercial/ad-prefs.lib';
-import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
-
-type AdConsentState = ?boolean;
+import type {
+    AdConsent,
+    AdConsentState,
+} from 'common/modules/commercial/ad-prefs.lib';
 
 type AdConsentWithState = {
     consent: AdConsent,
@@ -30,6 +31,12 @@ type ConsentBoxProps = {
     consent: AdConsent,
     state: AdConsentState,
     onUpdate: (state: AdConsentState) => void,
+};
+
+type AdPrefsWrapperProps = {
+    getAdConsentState: (consent: AdConsent) => AdConsentState,
+    setAdConsentState: (consent: AdConsent, state: boolean) => void,
+    allAdConsents: AdConsent[],
 };
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
@@ -91,14 +98,10 @@ class ConsentBox extends Component<ConsentBoxProps, {}> {
 }
 
 class AdPrefsWrapper extends Component<
-    {
-        getAdConsentState: (consent: AdConsent) => AdConsentState,
-        setAdConsentState: (consent: AdConsent, state: AdConsentState) => void,
-        allAdConsents: AdConsent[],
-    },
+    AdPrefsWrapperProps,
     { consentsWithState: AdConsentWithState[], changesPending: boolean }
 > {
-    constructor(props: {}): void {
+    constructor(props: AdPrefsWrapperProps): void {
         super(props);
         this.state = {
             changesPending: false,
