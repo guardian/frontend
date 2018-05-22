@@ -7,6 +7,7 @@ import template from 'lodash/utilities/template';
 import { loadCssPromise } from 'lib/load-css-promise';
 import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 /**
  * Rules:
@@ -85,20 +86,10 @@ const show = (): void => {
     });
 };
 
-const init = (): void => {
-    canShow().then(result => {
-        if (result) {
-            show();
-        }
-    });
-};
-
-// TODO: remove once bannerPicker is in use
-export { init };
-
-// To be used by bannerPicker
-export default {
+const smartAppBanner: Banner = {
     id: 'smartAppBanner',
     show,
     canShow,
 };
+
+export { smartAppBanner };

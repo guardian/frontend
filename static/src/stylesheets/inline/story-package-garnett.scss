@@ -63,6 +63,9 @@
         }
     }
 
+    .fc-container__inner {
+        border-top: 0;
+    }
 
     //These need to be this specific as elsewhere in pillars.scss these are targeted using 3 selectors
     .fc-item,

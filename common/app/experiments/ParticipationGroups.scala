@@ -29,7 +29,7 @@ object ParticipationGroups extends enumeratum.Enum[ParticipationGroup] {
   case object Perc10A extends ParticipationGroup("X-GU-Experiment-10perc-A")
   case object Perc20A extends ParticipationGroup("X-GU-Experiment-20perc-A")
   case object Perc50 extends ParticipationGroup("X-GU-Experiment-50perc")
-
+  case object TLSSupport extends ParticipationGroup("X-GU-old-tls-traffic")
   override val values: immutable.IndexedSeq[ParticipationGroup] = findValues
 
 }

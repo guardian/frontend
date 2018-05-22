@@ -5,8 +5,11 @@
     .identity-wrapper {
         padding-bottom: 0;
     }
+    .identity-title {
+        margin-bottom: ($gs-gutter * 1.5);
+    }
     .tabs__container {
-        margin: ($gs-gutter * 1.5) auto 0 -1px;
+        margin: 0 auto 0 -1px;
         .tabs__tab a {
             font-weight: 400!important;
             /*text can't fit otherwise*/

@@ -6,21 +6,20 @@ import { elementInView } from 'lib/element-inview';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
 import { isBreakpoint } from 'lib/detect';
 
-type State = {
-    position: number,
-    length: number,
-    videoWidth: number,
-    container: Element,
-};
-
 type Action = {
     type: string,
 };
 
 type Position = {
     position: number,
-    atStart: boolean,
-    atEnd: boolean,
+    atStart?: boolean,
+    atEnd?: boolean,
+};
+
+type State = Position & {
+    length: number,
+    videoWidth: number,
+    container: Element,
 };
 
 const updateYouTubeVideo = (currentItem: ?Element): void => {
@@ -93,6 +92,9 @@ const reducers = {
                 ];
                 overlayLinks.forEach(el => {
                     el.classList.add('u-faux-block-link__overlay');
+                    // make visible to screen readers / keyboard users
+                    el.removeAttribute('tabindex');
+                    el.removeAttribute('aria-hidden');
                 });
 
                 const atomWrapper = [
@@ -162,22 +164,61 @@ const update = (state: State, container: Element): Promise<number> => {
         const activeEl = container.querySelector(
             '.video-playlist__item--active'
         );
-        if (activeEl != null)
+
+        if (activeEl != null) {
             activeEl.classList.remove('video-playlist__item--active');
+            $('.youtube-media-atom__iframe', activeEl).hide();
+            $('.video-overlay .fc-item__link', activeEl).attr('tabindex', '-1');
+            $('.video-overlay .fc-item__link', activeEl).attr(
+                'aria-hidden',
+                'true'
+            );
+        }
+
         const newActive = container.querySelector(
             `.js-video-playlist-item-${state.position}`
         );
-        if (newActive != null)
+
+        if (newActive != null) {
             newActive.classList.add('video-playlist__item--active');
+            $('.youtube-media-atom__iframe', newActive).show();
+            $('.video-overlay .fc-item__link', newActive).removeAttr(
+                'tabindex'
+            );
+            $('.video-overlay .fc-item__link', newActive).removeAttr(
+                'aria-hidden'
+            );
+        }
 
         container.classList.remove(
             'video-playlist--end',
             'video-playlist--start'
         );
+
+        if (state.atStart) {
+            container.classList.add('video-playlist--start');
+            $('.video-title__link', container).removeAttr('tabindex');
+            $('.video-title__link', container).removeAttr('aria-hidden');
+            $('.treats__treat', container).removeAttr('tabindex');
+            $('.treats__treat', container).removeAttr('aria-hidden');
+            $('.js-video-playlist-prev', container).attr('aria-hidden', 'true');
+            $('.js-video-playlist-prev', container).attr('tabindex', '-1');
+        } else {
+            $('.video-title__link', container).attr('tabindex', '-1');
+            $('.video-title__link', container).attr('aria-hidden', 'true');
+            $('.treats__treat', container).attr('tabindex', '-1');
+            $('.treats__treat', container).attr('aria-hidden', 'true');
+            $('.js-video-playlist-prev', container).removeAttr('aria-hidden');
+            $('.js-video-playlist-prev', container).attr('tabindex', '0');
+        }
+
         if (state.atEnd) {
             container.classList.add('video-playlist--end');
-        } else if (state.atStart) {
-            container.classList.add('video-playlist--start');
+            $('.js-video-playlist-next', container).attr('aria-hidden', 'true');
+            $('.js-video-playlist-next', container).attr('tabindex', '-1');
+        } else {
+            $('.js-video-playlist-next', container).removeAttr('aria-hidden');
+            $('.js-video-playlist-next', container).attr('tabindex', '0');
         }
 
         // fetch the next image (for desktop)
@@ -218,14 +259,31 @@ const setupDispatches = (
         });
     });
 
+    bean.on(container, 'keypress', '.js-video-playlist-next', e => {
+        if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            dispatch({
+                type: 'NEXT',
+            });
+        }
+    });
+
     bean.on(container, 'click', '.js-video-playlist-prev', () => {
         dispatch({
             type: 'PREV',
         });
     });
+
+    bean.on(container, 'keypress', '.js-video-playlist-prev', e => {
+        if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            dispatch({
+                type: 'PREV',
+            });
+        }
+    });
 };
 
-// #? is this over-kill? should we use Redux?
 const reducer = (previousState: State, action: Action): State =>
     reducers[action.type]
         ? reducers[action.type](previousState)
@@ -271,5 +329,11 @@ export const videoContainerInit = (container: Element) => {
     setupDispatches(store.dispatch, container);
     store.subscribe(() => {
         update(store.getState(), container);
+    });
+
+    $('.video-playlist__item:not(.video-playlist__item--first)').each($el => {
+        $('.youtube-media-atom__iframe', $el).hide();
+        $('.video-overlay .fc-item__link', $el).attr('tabindex', '-1');
+        $('.video-overlay .fc-item__link', $el).attr('aria-hidden', 'true');
     });
 };

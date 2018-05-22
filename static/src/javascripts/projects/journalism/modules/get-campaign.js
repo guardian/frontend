@@ -6,11 +6,11 @@ export const getCampaign = () => {
     const isCallout = campaign => campaign.fields._type === 'callout';
     const allCampaigns = config.get('page.campaigns');
 
-    // targeting should become better once the campaigns tool works
+    // take the last added campaign as campaign to show
     const allCallouts = allCampaigns.filter(isCallout);
-    const campaignToShow = allCallouts.shift();
+    const campaignToShow = allCallouts[allCallouts.length - 1];
 
-    if (campaignToShow !== undefined) {
+    if (campaignToShow) {
         const {
             callout,
             description,

@@ -41,8 +41,8 @@ object IdentityHtmlPage {
       bodyTag(classes = defaultBodyClasses())(
         views.html.layout.identityFlexWrap(page.isFlow)(
           skipToMainContent(),
-          views.html.layout.identityHeader(hideNavigation=page.isFlow) when page.metadata.hasSlimHeader,
-          header() when !page.metadata.hasSlimHeader
+          views.html.layout.identityHeader(hideNavigation=page.isFlow) when !page.usesGuardianHeader,
+          header() when page.usesGuardianHeader
         )(
           content
         )(

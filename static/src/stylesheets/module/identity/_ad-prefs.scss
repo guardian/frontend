@@ -1,0 +1,33 @@
+.identity-ad-prefs-manager {
+    fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.identity-ad-prefs-manager__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: $gs-baseline;
+
+    > .manage-account__button {
+        &[disabled] {
+            pointer-events: none;
+            opacity: .5;
+        }
+    }
+}
+
+.identity-ad-prefs-input {
+    display: block;
+    background: $garnett-neutral-3;
+    border-top: 1px solid $garnett-neutral-4;
+    padding: $gs-baseline / 8 $gs-baseline / 2 $gs-baseline;
+    margin-top: $gs-baseline / 2;
+    input {
+        margin: 0 $gs-baseline / 4 0 0;
+        float: none;
+    }
+}

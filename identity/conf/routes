@@ -63,6 +63,11 @@ POST        /email-prefs                            controllers.editprofile.Edit
 
 
 ########################################################################################################################
+# PUBLIC EDIT PROFILE
+########################################################################################################################
+GET         /privacy-settings                       controllers.AdvertsManager.renderAdvertsManager(returnUrl : Option[String])
+
+########################################################################################################################
 # Consents journey
 ########################################################################################################################
 GET         /consents/newsletters                   controllers.editprofile.EditProfileController.displayConsentsJourneyNewsletters

@@ -1,6 +1,5 @@
 @()(implicit request: RequestHeader)
 @import conf.switches.Switches._
-@import experiments.{ ActiveExperiments, LineHeightFontSize }
 
 /**
  * Choose how the browser should render the page before any painting begins.
@@ -121,10 +120,6 @@
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
     }
 
-    @if(ActiveExperiments.isParticipating(LineHeightFontSize)) {
-      docClass += ' commercial-line-height';
-    }
-
     @if(FontKerningSwitch.isSwitchedOn) {
         if (window.location.hash !== '#no-kern') {docClass += ' should-kern'}
     } else {
@@ -155,7 +150,7 @@
 
     // % used for padding-bottom isn't supported on Grid items in FireFox <53
     // unless explicit width is set on the element with padding-bottom.
-    // .force-percentage-padding ensures width is explicitly set so padding-bottom 
+    // .force-percentage-padding ensures width is explicitly set so padding-bottom
     // works on responsive-ratio media.
     // https://bugzilla.mozilla.org/show_bug.cgi?id=958714
     if(forcePercentagePadding()) {
