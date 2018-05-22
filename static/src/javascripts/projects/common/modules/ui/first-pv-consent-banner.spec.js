@@ -6,6 +6,12 @@ const getAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
 const setAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
     .setAdConsentState;
 const Message: any = require('common/modules/ui/message').Message;
+const getCookie: any = require('lib/cookies').getCookie;
+
+const passingCookies = _ => {
+    if (_ === 'GU_country') return 'NO';
+    else if (_ === 'GU_geo_continent') return 'EU';
+};
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -14,10 +20,15 @@ beforeEach(() => {
     setAdConsentState(1, null);
     Message.prototype.show = jest.fn(() => true);
     Message.prototype.hide = jest.fn(() => true);
+    getCookie.mockImplementation(passingCookies);
 });
 
 jest.mock('ophan/ng', () => ({
     record: jest.fn(),
+}));
+
+jest.mock('lib/cookies', () => ({
+    getCookie: jest.fn(() => null),
 }));
 
 jest.mock('common/modules/ui/message', () => ({
@@ -40,17 +51,6 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => {
 });
 
 describe('First PV consents banner', () => {
-    it('should show up with null consents', () =>
-        banner.canShow().then(showable => {
-            expect(showable).toBe(true);
-        }));
-    it('should not show with set consents', () => {
-        setAdConsentState(0, true);
-        setAdConsentState(1, false);
-        return banner.canShow().then(showable => {
-            expect(showable).toBe(false);
-        });
-    });
     it('should show a message', () => {
         banner.show();
         expect(Message.prototype.show).toHaveBeenCalled();
@@ -61,6 +61,41 @@ describe('First PV consents banner', () => {
             test.bindableClassNames.agree
         );
     });
+
+    describe('With consents', () => {
+        it('should show up with null consents', () =>
+            banner.canShow().then(showable => {
+                expect(showable).toBe(true);
+            }));
+        it('should not show with set consents', () => {
+            setAdConsentState(0, true);
+            setAdConsentState(1, false);
+            return banner.canShow().then(showable => {
+                expect(showable).toBe(false);
+            });
+        });
+    });
+
+    describe('With location', () => {
+        it('should render inside the EU', async () =>
+            expect(await banner.canShow()).toBe(true));
+        it('should render inside the EEA', async () => {
+            getCookie.mockImplementation(_ => {
+                if (_ === 'GU_geo_continent') return '??';
+                else if (_ === 'GU_country') return 'NO';
+            });
+            return expect(await banner.canShow()).toBe(true);
+        });
+
+        it('should not render outside the EEA', async () => {
+            getCookie.mockImplementation(_ => {
+                if (_ === 'GU_geo_continent') return '??';
+                else if (_ === 'GU_country') return '??';
+            });
+            return expect(await banner.canShow()).toBe(false);
+        });
+    });
+
     describe('After agreeing', () => {
         it('should set all consents as true on agree', () => {
             test.onAgree(Message.prototype);
