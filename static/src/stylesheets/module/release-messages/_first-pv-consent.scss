@@ -15,6 +15,7 @@ $btn-height: ($gs-baseline*3.5);
 
 .site-message.site-message--first-pv-consent {
     padding: ($gs-baseline / 2) 0 $gs-baseline;
+    background: $sport-away;
 
     .site-message__media {
         display: none;
@@ -75,8 +76,6 @@ $btn-height: ($gs-baseline*3.5);
 }
 
 .site-message--first-pv-consent__block {
-    @include fs-textSans(3);
-
     &:not(:last-child) {
         margin-right: $gs-gutter;
     }
@@ -97,6 +96,7 @@ $btn-height: ($gs-baseline*3.5);
         line-height: get-line-height(header, 2);
     }
     &.site-message--first-pv-consent__block--intro {
+        @include fs-bodyCopy(2)
         flex: 1 1 0;
         a {
             @extend %link;
@@ -104,11 +104,16 @@ $btn-height: ($gs-baseline*3.5);
         }
     }
     &.site-message--first-pv-consent__block--actions {
+        @include fs-textSans(3);
         flex: 0 0 auto;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: $gs-baseline / 4;
+        .site-message--first-pv-consent__button {
+            margin-right: $gs-baseline;
+        }
         @include mq($until: tablet) {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-top: $gs-baseline;
         }
         @include mq(tablet) {
