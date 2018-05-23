@@ -456,6 +456,13 @@ $modal-close-size: $gs-gutter * 1.75;
     }
 }
 
+.manage-account__list--item {
+    margin-bottom: 25px;
+    .label {
+        cursor: default;
+    }
+}
+
 .manage-account-flexrow {
     @include mq(tablet) {
         display: flex;

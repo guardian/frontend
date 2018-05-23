@@ -199,21 +199,46 @@
 
     <fieldset class="fieldset">
         <div class="fieldset__heading">
-            <h2 class="form__heading">Profiling</h2>
+            <h2 class="form__heading">Your data & privacy</h2>
         </div>
         <div class="fieldset__fields">
             <ul class="u-unstyled">
-                @accountDetailsForm.error("statusFields.allowThirdPartyProfiling").map { error =>
-                    <div class="form__error">@error.message</div>
-                }
+                <li class="manage-account__list--item">
+                    <div class="fieldset__heading">
+                        <h2 class="form__heading"><b>Profiling</b></h2>
+                    </div>
+                    @accountDetailsForm.error("statusFields.allowThirdPartyProfiling").map { error =>
+                        <div class="form__error">@error.message</div>
+                    }
 
-                <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
+                    <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
 
-                @checkboxField(
-                    Checkbox(
-                        accountDetailsForm("allowThirdPartyProfiling"),
-                        ('_label, "Allow matching with third party data"), Symbol("data-test-id") -> "profiling")
-                )(nonInputFields, messages)
+                    @checkboxField(
+                        Checkbox(
+                            accountDetailsForm("allowThirdPartyProfiling"),
+                            ('_label, "Allow matching with third party data"), Symbol("data-test-id") -> "profiling")
+                    )(nonInputFields, messages)
+                </li>
+                <li class="manage-account__list--item">
+                    <div class="fieldset__heading">
+                        <h2 class="form__heading"><b>Privacy policy</b></h2>
+                    </div>
+                    <label class="label">To find out about what personal data we collect, how we use it, disclose, transfer and store it, please visit our <a href="https://www.theguardian.com/help/privacy-policy" class="u-underline">privacy policy
+                        page</a>.</label>
+                </li>
+                <li class="manage-account__list--item">
+                    <div class="fieldset__heading">
+                        <h2 class="form__heading"><b>Cookies</b></h2>
+                    </div>
+                    <label class="label">To learn more about how cookies are used by The Guardian and how to switch cookies off in your browser, please visit our <a href="https://www.theguardian.com/info/cookies" class="u-underline">cookie policy page</a>.</label>
+                </li>
+                <li class="manage-account__list--item">
+                    <div class="fieldset__heading">
+                        <h2 class="form__heading"><b>Delete your account</b></h2>
+                    </div>
+                    <label class="label">If for whatever reason you no longer wish to have an account with the Guardian, please click the link below to go though the account deletion process.</label>
+                    <a href="@idUrlBuilder.buildUrl("/delete", idRequest)" class="u-underline">Delete your account</a>
+                </li>
             </ul>
         </div>
     </fieldset>
