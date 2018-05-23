@@ -114,4 +114,19 @@ describe('cmp', () => {
             expect(typeof result.consentData).toEqual('string');
         });
     });
+
+    it('processes messages from iframes', () => {
+        const source = {
+            postMessage: jest.fn(),
+        };
+        const processSpy = jest.spyOn(cmp, 'processCommand');
+        cmp.receiveMessage({
+            data: {
+                __cmpCall: { command: 'showConsentTool' },
+            },
+            origin: {},
+            source,
+        });
+        expect(processSpy.mock.calls[0][0]).toMatch('showConsentTool');
+    });
 });

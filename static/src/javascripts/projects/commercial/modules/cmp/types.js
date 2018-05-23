@@ -65,16 +65,15 @@ export type VendorConsentResult = VendorConsentData & {
     selectedVendorIds: Array<number>,
 };
 
-export type Store = {
-    vendorList: VendorList,
-    persistedVendorConsentData?: VendorConsentResult,
-    allowedVendorIds?: Array<number>,
+export type VendorConsentResponse = VendorConsentData & {
+    maxVendorId: number,
+    purposeConsents: { [string]: number },
+    vendorConsents: { [string]: number },
 };
 
-export type Cmp = {
-    commandQueue: Array<any>,
-    config: CmpConfig,
-    addLocatorFrame: () => void,
-    receiveMessage: () => void,
-    listen: () => void,
+export type Store = {
+    vendorList: VendorList,
+    vendorConsentData?: VendorConsentResult,
+    vendorConsentResponse?: VendorConsentResponse,
+    allowedVendorIds?: Array<number>,
 };

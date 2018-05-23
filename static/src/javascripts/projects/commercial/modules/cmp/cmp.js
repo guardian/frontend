@@ -12,18 +12,39 @@ import {
 import type {
     CmpConfig,
     VendorList,
+    VendorData,
+    VendorConsentData,
+    VendorConsentResult,
+    VendorConsentResponse,
     Store,
 } from 'commercial/modules/cmp/types';
 
-const readConsentCookie = (cookieName: string): ?boolean => {
+const readConsentCookie = (cookieName: string): boolean | null => {
     const cookieVal: ?string = getCookie(cookieName);
     if (cookieVal && cookieVal.split(',')[0] === '1') return true;
     if (cookieVal && cookieVal.split(',')[0] === '0') return false;
     return null;
 };
 
+const generateVendorConsentResult = (
+    canPersonalise: boolean,
+    vendorList: VendorList
+): VendorConsentResult => {
+    const vendorData = generateVendorData(canPersonalise, vendorList);
+    const consentData: VendorConsentData = {
+        cookieVersion: 1,
+        cmpId: 1,
+        cmpVersion: 1,
+        vendorListVersion: 1,
+        created: new Date(),
+        lastUpdated: new Date(),
+        consentLanguage: 'EN',
+        consentScreen: 0,
+    };
+    return { ...consentData, ...vendorData };
+};
+
 const generateStore = (vendorList: VendorList): Store => {
-    // if cookie is set get the first value of the CSL to interpret later...
     const allowedVendors: Array<number> = vendorList.vendors.map(_ => _.id);
     const canPersonalise = readConsentCookie('GU_TK');
 
@@ -31,15 +52,12 @@ const generateStore = (vendorList: VendorList): Store => {
         vendorList,
         allowedVendorIds: allowedVendors,
     };
-
     if (typeof canPersonalise === 'boolean') {
-        const consentSelection = generateVendorData(
+        log.info(`Generating vendor data from value: ${canPersonalise}`);
+        store.vendorConsentData = generateVendorConsentResult(
             canPersonalise,
             store.vendorList
         );
-        // encode and decode becuase this
-        const encoded = encodeVendorConsentData(consentSelection);
-        store.persistedVendorConsentData = decodeVendorConsentData(encoded);
     }
     return store;
 };
@@ -54,27 +72,28 @@ class CmpService {
     commandQueue: Array<any>;
     store: Store;
     generateConsentString: () => string;
-    getVendorConsentsObject: () => void;
+    getVendorConsentsObject: () => VendorConsentResponse;
     processCommand: () => void;
 
     constructor(store: Store) {
         this.isLoaded = false;
         this.cmpReady = false;
         this.config = defaultConfig;
-        this.eventListeners = {};
+        this.eventListeners = [];
         this.store = store;
+        this.processCommand.receiveMessage = this.receiveMessage;
         this.commandQueue = [];
     }
 
     generateConsentString = () => {
-        const { persistedVendorConsentData, vendorList } = this.store;
+        const { vendorConsentData, vendorList } = this.store;
 
-        if (persistedVendorConsentData && vendorList) {
+        if (vendorConsentData && vendorList) {
             log.info('persisted vendor consent data found');
             // the encoding can fail if the format of the persisted data is incorrect!
             // TODO: Zero trust! we need to catch any errors, and log them...
             return encodeVendorConsentData({
-                ...persistedVendorConsentData,
+                ...vendorConsentData,
                 vendorList,
             });
         }
@@ -85,8 +104,11 @@ class CmpService {
         // The API spec suggests vendors use a timeout in case data is missing.
     };
 
-    getVendorConsentsObject = (vendorIds: ?Array<number>) => {
-        return { vendorIds };
+    getVendorConsentsObject = (
+        vendorIds: ?Array<number>
+    ): VendorConsentResponse => {
+        // TODO
+        // return generateVendorConsentResult();
     };
 
     commands = {
@@ -97,7 +119,6 @@ class CmpService {
                 hasGlobalScope: this.config.storeConsentGlobally,
                 ...this.getVendorConsentsObject(vendorIds),
             };
-
             callback(consent, true);
         },
 
@@ -127,13 +148,25 @@ class CmpService {
             };
             callback(result, true);
         },
+
+        addEventListener: (event: string, callback) => {
+            const eventSet = this.eventListeners[event] || [];
+            eventSet.push(callback);
+            this.eventListeners[event] = eventSet;
+            if (event === 'isLoaded' && this.isLoaded) {
+                callback({ event });
+            }
+            if (event === 'cmpReady' && this.cmpReady) {
+                callback({ event });
+            }
+        },
     }
 
     processCommand = (command: string, parameter: any, callback: any): void => {
         if (typeof this.commands[command] !== 'function') {
             log.error(`Invalid CMP command "${command}"`);
         } else if (
-            !this.store.persistedVendorConsentData &&
+            !this.store.vendorConsentData &&
             (command === 'getVendorConsents' || command === 'getConsentData')
         ) {
             // Special case where we have the full CMP implementation loaded but
@@ -220,4 +253,4 @@ export const init = (): void => {
     cmp.processCommandQueue();
 };
 
-export const _ = { CMP_GLOBAL_NAME, CmpService, generateStore };
+export const _ = { CmpService, generateStore };

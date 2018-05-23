@@ -19,8 +19,11 @@ import type {
     VendorList,
 } from './types';
 
-const encodeVendorCookieValue = (vendorData: VendorData): string =>
-    encodeCookieValue(vendorData, vendorVersionMap);
+const encodeVendorCookieValue = (data: VendorConsentResult): ?string => {
+    if (data && data.cookieVersion) {
+        return encodeCookieValue(data, vendorVersionMap);
+    }
+};
 
 const decodeVendorCookieValue = (cookieValue: string) =>
     decodeCookieValue(cookieValue, vendorVersionMap);
@@ -91,18 +94,18 @@ const convertVendorsToRanges = (
     return ranges;
 };
 
-const encodeVendorConsentData = (vendorData: VendorData): string => {
+const encodeVendorConsentData = (consentData: VendorConsentData): string => {
     const {
         vendorList = {},
         selectedPurposeIds = [],
         selectedVendorIds = [],
         maxVendorId,
-    } = vendorData;
+    } = consentData;
     const { purposes } = vendorList;
 
     // Encode the data with and without ranges and return the smallest encoded payload
-    const noRangesData: string = encodeVendorCookieValue({
-        ...vendorData,
+    const noRangesData: ?string = encodeVendorCookieValue({
+        ...consentData,
         maxVendorId,
         purposeIdBitString: encodePurposeIdsToBits(
             purposes,
@@ -120,8 +123,8 @@ const encodeVendorConsentData = (vendorData: VendorData): string => {
         selectedVendorIds
     );
 
-    const rangesData: string = encodeVendorCookieValue({
-        ...vendorData,
+    const rangesData: ?string = encodeVendorCookieValue({
+        ...consentData,
         maxVendorId,
         purposeIdBitString: encodePurposeIdsToBits(
             purposes,
@@ -133,7 +136,13 @@ const encodeVendorConsentData = (vendorData: VendorData): string => {
         vendorRangeList,
     });
 
-    return noRangesData.length < rangesData.length ? noRangesData : rangesData;
+    if (noRangesData && rangesData) {
+        return noRangesData.length < rangesData.length
+            ? noRangesData
+            : rangesData;
+    }
+    log.error('Could not encode vendor consent data');
+    return '';
 };
 
 const decodeVendorConsentData = (cookieValue: string): VendorConsentResult => {

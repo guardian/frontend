@@ -1,5 +1,6 @@
 // @flow
 import { log } from 'commercial/modules/cmp/log';
+import type { VendorConsentData, VendorConsentResult } from 'commercial/modules/cmp/types';
 
 const SIX_BIT_ASCII_OFFSET = 65;
 const NUM_BITS_VERSION = 6;
@@ -259,7 +260,7 @@ const decodeField = ({ input, output, startPosition, field }): Object => {
  * either `selectedVendorIds` or the `vendorRangeList` depending on
  * the value of the `isRange` flag.
  */
-const encodeDataToBits = (data, definitionMap) => {
+const encodeDataToBits = (data: { cookieVersion: number }, definitionMap) => {
     const { cookieVersion } = data;
 
     if (typeof cookieVersion !== 'number') {
@@ -280,7 +281,10 @@ const encodeDataToBits = (data, definitionMap) => {
  * Take all fields required to encode the cookie and produce the
  * URL safe Base64 encoded value.
  */
-const encodeCookieValue = (data, definitionMap): ?string => {
+const encodeCookieValue = (
+    data: { cookieVersion: number },
+    definitionMap: Object
+): ?string => {
     const binaryValue = encodeDataToBits(data, definitionMap);
     if (binaryValue) {
         // Pad length to multiple of 8
