@@ -98,7 +98,7 @@ class AdPrefsWrapper extends Component<
                         disabled={this.state.changesPending ? null : 'disabled'}
                         className="manage-account__button manage-account__button--center"
                         type="submit">
-                        Save changes
+                        Save my settings
                     </button>
                     <FeedbackFlashBox
                         ref={child => {
