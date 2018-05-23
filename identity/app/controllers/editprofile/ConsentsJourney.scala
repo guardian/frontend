@@ -24,7 +24,8 @@ trait ConsentsJourney
   def displayConsentsJourneyThankYou: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageThankYou, None)
 
-  /** GET /consents/staywithus */
+  /** previously GET /consents/staywithus, now unused - but may come back */
+  //TODO: remove this once confirmed branded version of journey not needed
   def displayConsentsJourneyGdprCampaign: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageGdprCampaign, None)
 
