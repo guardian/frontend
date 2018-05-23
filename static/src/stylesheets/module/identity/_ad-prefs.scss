@@ -60,9 +60,9 @@
 
 .identity-ad-prefs-manager__footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    margin-top: $gs-gutter;
+    margin-top: $gs-gutter * 2;
 
     > .manage-account__button {
         &[disabled] {
@@ -98,7 +98,7 @@
 
 .identity-ad-prefs-input {
 
-    $left-padding: $gs-gutter / 1.5 + 16px + $gs-gutter/2;
+    $left-padding: $gs-gutter / 1.5 + 16px + $gs-gutter / 1.5;
     margin-top: $gs-gutter;
 
     .identity-ad-prefs-input__wording {
@@ -107,21 +107,22 @@
     }
     .identity-ad-prefs-input__label {
         @include fs-textSans(5);
-        @include circular();
-        display: block;
+        border-radius: $gs-baseline * 1.75;
+        display: flex;
         background: $news-garnett-highlight;
-        padding: $gs-gutter / 1.5;
-        padding-left: $left-padding;
+        padding: $gs-baseline ($gs-gutter / 1.5) $gs-baseline $left-padding;
+        min-height: $gs-baseline * 1.5;
+        align-items: center;
+        justify-content: flex-start;
         font-weight: 800;
         position: relative;
         input {
-            margin: auto;
+            margin: 0;
             padding: 0;
             float: none;
             position: absolute;
             left: $gs-gutter;
-            top: 0;
-            bottom: 0;
+            top: $gs-baseline * 1.35;
         }
     }
 }
