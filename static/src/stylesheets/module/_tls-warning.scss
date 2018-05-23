@@ -13,15 +13,13 @@ $tls-warning-rule: darken($garnett-nav-background, 20%);
 
         &__item {
             float: left;
-            &:first-child {
-                .tls-warning__browser-link {
-                    &:before {
-                        border-left: none;
-                    }
+            &:first-child .tls-warning__browser-link {
+                &:before {
+                    border-left: 0;
+                }
 
-                    &__logo {
-                        padding-left: 0;
-                    }
+                &__logo {
+                    padding-left: 0;
                 }
             }
         }
