@@ -160,6 +160,7 @@ describe('bannerPicker', () => {
                     expect(fakeOphan.record).toHaveBeenCalledWith(trackingObj);
                     banners.forEach((banner, index) => {
                         if (index === test.successfulIndex) {
+                            expect(banner.show).toHaveBeenCalledTimes(1);
                             expect(banner.show).toHaveBeenCalled();
                         } else {
                             expect(banner.show).not.toHaveBeenCalled();
