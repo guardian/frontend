@@ -6,10 +6,9 @@ import {
     decodeVendorConsentData,
     readVendorConsentCookie,
     writeVendorConsentCookie,
-    generateVendorData,
 } from './cookie';
 
-import type { VendorConsentData, VendorConsentResult } from './types';
+import type { VendorConsentData, ConsentData } from './types';
 
 const {
     encodeVendorCookieValue,
@@ -83,7 +82,7 @@ const vendorList = {
 const aDate = new Date('2018-07-15 PDT');
 const maxVendorId = vendorList.vendors[vendorList.vendors.length - 1].id;
 
-const vendorConsentData: VendorConsentResult = {
+const vendorConsentData: VendorConsentData = {
     cookieVersion: 1,
     cmpId: 1,
     cmpVersion: 1,
@@ -97,7 +96,7 @@ const vendorConsentData: VendorConsentResult = {
     selectedVendorIds: [1, 2, 4],
 };
 
-describe('cookie', () => {
+describe('CMP cookie', () => {
     let cookieValue = '';
 
     Object.defineProperty(document, 'domain', { value: 'www.theguardian.com' });
@@ -154,7 +153,7 @@ describe('cookie', () => {
     });
 
     it('correctly encodes the vendor cookie object to a string', () => {
-        const consentData: VendorConsentData = {
+        const consentData: ConsentData = {
             cookieVersion: 1,
             cmpId: 1,
             cmpVersion: 1,
@@ -175,7 +174,7 @@ describe('cookie', () => {
     });
 
     it('decodes the vendor cookie object from a string', () => {
-        const consentData: VendorConsentData = {
+        const consentData: ConsentData = {
             cookieVersion: 1,
             cmpId: 1,
             cmpVersion: 1,
@@ -371,18 +370,6 @@ describe('cookie', () => {
 
         expect(bitString).toEqual('BAAAAAAAAAAAAABABBENABAKqMAAVMA');
         expect(decoded).toEqual(consentData);
-    });
-
-    it('can generate the complete VendorData when consent = true', () => {
-        const result = generateVendorData(true, vendorList);
-        expect(result.selectedPurposeIds).toEqual([1, 2, 3, 4]);
-        expect(result.selectedVendorIds).toEqual([1, 2, 3, 4, 8, 10]);
-    });
-
-    it('can generate the complete VendorData when consent = ', () => {
-        const result = generateVendorData(false, vendorList);
-        expect(result.selectedPurposeIds).toEqual([]);
-        expect(result.selectedVendorIds).toEqual([]);
     });
 });
 

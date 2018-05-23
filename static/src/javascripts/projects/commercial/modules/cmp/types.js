@@ -13,16 +13,6 @@ export type ConsentDataResponse = {
     consentData: string,
 };
 
-export type ConsentData = {
-    cookieVersion: number,
-    cmpId: number,
-    cmpVersion: number,
-    consentScreen: number,
-    consentLanguage: string,
-    created: Date,
-    lastUpdated: Date,
-};
-
 export type Purpose = {
     id: number,
     name: string,
@@ -48,7 +38,7 @@ export type VendorData = {
     maxVendorId: number,
 };
 
-export type VendorConsentData = {
+export type ConsentData = {
     cookieVersion: number,
     cmpId: number,
     cmpVersion: number,
@@ -59,21 +49,14 @@ export type VendorConsentData = {
     consentLanguage: string,
 };
 
-export type VendorConsentResult = VendorConsentData & {
+export type VendorConsentData = ConsentData & {
     maxVendorId: number,
     selectedPurposeIds: Array<number>,
     selectedVendorIds: Array<number>,
 };
 
-export type VendorConsentResponse = VendorConsentData & {
+export type VendorConsentResponse = ConsentData & {
     maxVendorId: number,
     purposeConsents: { [string]: number },
     vendorConsents: { [string]: number },
-};
-
-export type Store = {
-    vendorList: VendorList,
-    vendorConsentData?: VendorConsentResult,
-    vendorConsentResponse?: VendorConsentResponse,
-    allowedVendorIds?: Array<number>,
 };

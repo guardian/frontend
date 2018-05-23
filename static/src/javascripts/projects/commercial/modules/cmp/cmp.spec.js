@@ -2,7 +2,7 @@
 import { log as log_ } from './log';
 import { _, init } from './cmp';
 
-const { CmpService, generateStore } = _;
+const { CmpService } = _;
 
 const log: any = log_;
 
@@ -73,12 +73,6 @@ describe('cmp', () => {
     beforeEach(() => {
         cmp = new CmpService({ vendorList });
         jest.resetAllMocks();
-    });
-
-    it('can generate a store', () => {
-        const store = generateStore(vendorList);
-        expect(store.allowedVendorIds).toEqual([1, 2, 3, 4, 5, 6]);
-        expect(store.vendorList).toEqual(vendorList);
     });
 
     it('ping executes', () => {

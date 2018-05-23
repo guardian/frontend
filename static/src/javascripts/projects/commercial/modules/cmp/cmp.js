@@ -1,23 +1,12 @@
 // @flow
-import { getCookie } from 'lib/cookies';
 import { log } from 'commercial/modules/cmp/log';
+import { CmpStore } from 'commercial/modules/cmp/store';
+import { getCookie } from 'lib/cookies';
 import { vendorList as globalVendorList } from 'commercial/modules/cmp/vendorlist';
 import { defaultConfig, CMP_GLOBAL_NAME } from 'commercial/modules/cmp/cmp-env';
-import {
-    encodeVendorConsentData,
-    decodeVendorConsentData,
-    generateVendorData,
-} from 'commercial/modules/cmp/cookie';
+import { encodeVendorConsentData } from 'commercial/modules/cmp/cookie';
 
-import type {
-    CmpConfig,
-    VendorList,
-    VendorData,
-    VendorConsentData,
-    VendorConsentResult,
-    VendorConsentResponse,
-    Store,
-} from 'commercial/modules/cmp/types';
+import type { CmpConfig } from 'commercial/modules/cmp/types';
 
 const readConsentCookie = (cookieName: string): boolean | null => {
     const cookieVal: ?string = getCookie(cookieName);
@@ -26,56 +15,19 @@ const readConsentCookie = (cookieName: string): boolean | null => {
     return null;
 };
 
-const generateVendorConsentResult = (
-    canPersonalise: boolean,
-    vendorList: VendorList
-): VendorConsentResult => {
-    const vendorData = generateVendorData(canPersonalise, vendorList);
-    const consentData: VendorConsentData = {
-        cookieVersion: 1,
-        cmpId: 1,
-        cmpVersion: 1,
-        vendorListVersion: 1,
-        created: new Date(),
-        lastUpdated: new Date(),
-        consentLanguage: 'EN',
-        consentScreen: 0,
-    };
-    return { ...consentData, ...vendorData };
-};
-
-const generateStore = (vendorList: VendorList): Store => {
-    const allowedVendors: Array<number> = vendorList.vendors.map(_ => _.id);
-    const canPersonalise = readConsentCookie('GU_TK');
-
-    const store: Store = {
-        vendorList,
-        allowedVendorIds: allowedVendors,
-    };
-    if (typeof canPersonalise === 'boolean') {
-        log.info(`Generating vendor data from value: ${canPersonalise}`);
-        store.vendorConsentData = generateVendorConsentResult(
-            canPersonalise,
-            store.vendorList
-        );
-    }
-    return store;
-};
-
 /* fam, I am not talking about that config... */
 /* eslint-disable guardian-frontend/no-direct-access-config */
 class CmpService {
-    isLoaded: ?boolean;
-    cmpReady: ?boolean;
+    isLoaded: boolean;
+    cmpReady: boolean;
     config: CmpConfig;
     eventListeners: ?any;
     commandQueue: Array<any>;
-    store: Store;
+    store: CmpStore;
     generateConsentString: () => string;
-    getVendorConsentsObject: () => VendorConsentResponse;
     processCommand: () => void;
 
-    constructor(store: Store) {
+    constructor(store: CmpStore) {
         this.isLoaded = false;
         this.cmpReady = false;
         this.config = defaultConfig;
@@ -88,7 +40,7 @@ class CmpService {
     generateConsentString = () => {
         const { vendorConsentData, vendorList } = this.store;
 
-        if (vendorConsentData && vendorList) {
+        if (this.store.vendorConsentData && this.store.vendorList) {
             log.info('persisted vendor consent data found');
             // the encoding can fail if the format of the persisted data is incorrect!
             // TODO: Zero trust! we need to catch any errors, and log them...
@@ -104,20 +56,13 @@ class CmpService {
         // The API spec suggests vendors use a timeout in case data is missing.
     };
 
-    getVendorConsentsObject = (
-        vendorIds: ?Array<number>
-    ): VendorConsentResponse => {
-        // TODO
-        // return generateVendorConsentResult();
-    };
-
     commands = {
         getVendorConsents: (vendorIds: ?Array<number>, callback = () => {}) => {
             const consent = {
                 metadata: this.generateConsentString(),
                 gdprApplies: this.config.gdprApplies,
                 hasGlobalScope: this.config.storeConsentGlobally,
-                ...this.getVendorConsentsObject(vendorIds),
+                ...this.store.getVendorConsentsObject(vendorIds),
             };
             callback(consent, true);
         },
@@ -240,8 +185,16 @@ class CmpService {
 export const init = (): void => {
     // Pull queued command from __cmp stub
     const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
+    // Initialize the store with all of our consent data
+    const store = new CmpStore(
+        1,
+        1,
+        1,
+        readConsentCookie('GU_TK'),
+        globalVendorList
+    );
     // init the CmpService with a generated store of data...
-    const cmp = new CmpService(generateStore(globalVendorList));
+    const cmp = new CmpService(store);
     // Expose `processCommand` as the CMP implementation
     window[CMP_GLOBAL_NAME] = cmp.processCommand;
     // Notify listeners that the CMP is loaded
@@ -253,4 +206,4 @@ export const init = (): void => {
     cmp.processCommandQueue();
 };
 
-export const _ = { CmpService, generateStore };
+export const _ = { CmpService };
