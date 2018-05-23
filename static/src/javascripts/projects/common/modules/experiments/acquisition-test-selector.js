@@ -14,6 +14,7 @@ import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
 import { acquisitionsEpicAlwaysAskAprilStory } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-april-story';
 import { AcquisitionsEpicDoubleHighlightDropAdsFalling } from 'common/modules/experiments/tests/acquisitions-epic-double-highlight-drop-ads-falling';
+import { AcquisitionsEpicBorderThankyou } from 'common/modules/experiments/tests/acquisitions-epic-border-thankyou';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
@@ -41,6 +42,7 @@ export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicAlwaysAskAprilStory,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
+    AcquisitionsEpicBorderThankyou,
     AcquisitionsEpicDoubleHighlightDropAdsFalling,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
