@@ -1,10 +1,10 @@
 // @flow
 import ophan from 'ophan/ng';
+import userPrefs from 'common/modules/user-prefs';
 import type {
     AdConsent,
     AdConsentWithState,
 } from 'common/modules/commercial/ad-prefs.lib';
-import userPrefs from 'common/modules/user-prefs';
 
 const lifeTimeViewsKey: string = 'first-pv-consent.lifetime-views';
 
