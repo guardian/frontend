@@ -9,19 +9,17 @@ import fastdom from 'lib/fastdom-promise';
 import {
     getAdConsentState,
     setAdConsentState,
-    allAdConsents,
+    getAllAdConsentsWithState,
 } from 'common/modules/commercial/ad-prefs.lib';
-import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
-
-type AdConsentWithState = {
-    consent: AdConsent,
-    state: ?boolean,
-};
+import type {
+    AdConsent,
+    AdConsentWithState,
+} from 'common/modules/commercial/ad-prefs.lib';
 
 type AdPrefsWrapperProps = {
     getAdConsentState: (consent: AdConsent) => ?boolean,
     setAdConsentState: (consent: AdConsent, state: boolean) => void,
-    allAdConsents: AdConsent[],
+    initialConsentsWithState: AdConsentWithState[],
 };
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
@@ -34,12 +32,7 @@ class AdPrefsWrapper extends Component<
         super(props);
         this.state = {
             changesPending: false,
-            consentsWithState: this.props.allAdConsents.map(
-                (consent: AdConsent) => ({
-                    consent,
-                    state: this.props.getAdConsentState(consent),
-                })
-            ),
+            consentsWithState: [...this.props.initialConsentsWithState],
         };
     }
 
@@ -129,7 +122,7 @@ const enhanceAdPrefs = (): void => {
                 fastdom.write(() => {
                     render(
                         <AdPrefsWrapper
-                            allAdConsents={allAdConsents}
+                            initialConsentsWithState={getAllAdConsentsWithState()}
                             getAdConsentState={getAdConsentState}
                             setAdConsentState={setAdConsentState}
                         />,

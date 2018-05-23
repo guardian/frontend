@@ -8,15 +8,13 @@ import {
     setAdConsentState,
     allAdConsents,
 } from 'common/modules/commercial/ad-prefs.lib';
-import userPrefs from 'common/modules/user-prefs';
+import { trackNonClickInteraction } from 'common/modules/analytics/google';
+import ophan from 'ophan/ng';
+import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
-import ophan from 'ophan/ng';
-
-const lifeTimeViewsKey: string = 'first-pv-consent.lifetime-views';
-const lifetimeDisplayEventKey: string = 'first-pv-consent : viewed-times :';
+const displayEventKey: string = 'first-pv-consent : display';
 
 type Template = {
     heading: string,
@@ -108,10 +106,8 @@ const trackInteraction = (interaction: string): void => {
 };
 
 const show = (): void => {
-    userPrefs.set(lifeTimeViewsKey, (userPrefs.get(lifeTimeViewsKey) || 0) + 1);
-    trackInteraction(
-        `${lifetimeDisplayEventKey} ${userPrefs.get(lifeTimeViewsKey)}`
-    );
+    upAlertViewCount();
+    trackInteraction(displayEventKey);
 
     const msg = new Message(messageCode, {
         important: true,
