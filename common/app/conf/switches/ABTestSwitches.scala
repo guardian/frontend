@@ -88,16 +88,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-double-highlight-drop-ads-falling",
-    "Try 2 variants - one adding a double highlight and one removing the ads falling line",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 5),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-border-thankyou",
     "Try 2 variants - one adding a border to the epic and one with copy thanking our readers",
     owners = Seq(Owner.withGithub("jranks123")),
