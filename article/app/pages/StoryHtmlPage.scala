@@ -2,7 +2,7 @@ package pages
 
 import common.Edition
 import conf.switches.Switches._
-import experiments.{ActiveExperiments, LotameParticipation}
+import experiments.{ActiveExperiments, Excluded, LotameParticipation, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
 import html.Styles
 import model.{ApplicationContext, Page}
@@ -54,7 +54,7 @@ object StoryHtmlPage {
       ),
       bodyTag(classes = bodyClasses)(
         message(),
-        tlsWarning(),
+        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         survey() when SurveySwitch.isSwitchedOn,

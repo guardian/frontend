@@ -47,6 +47,8 @@ trait ExperimentsDefinition {
       Excluded
     }
   }
+
+  def isIncluded(experiment: Experiment)(implicit request: RequestHeader): Boolean = {
+    isParticipating(experiment) || isControl(experiment)
+  }
 }
-
-
