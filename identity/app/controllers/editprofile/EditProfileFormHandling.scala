@@ -6,7 +6,9 @@ import com.gu.identity.model.{EmailNewsletters, User}
 import form.{AccountFormData, UserFormData}
 import model.{IdentityPage, NoCache}
 import pages.IdentityHtmlPage
+import play.api.data.Form
 import play.api.mvc.{Action, AnyContent, Result}
+import services.{EmailPrefsData, ProfileRedirect}
 import utils.ConsentOrder.userWithOrderedConsents
 
 import scala.concurrent.Future
@@ -45,7 +47,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
           originalUser.copy(user = userUser)
 
         }
-        
+
         profileFormsView(
           page = page,
           forms = ProfileForms(userWithOrderedConsents(user, consentHint), PublicEditProfilePage),
@@ -102,13 +104,11 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     consentHint: Option[String] = None)
     (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    val emailFilledFormFuture = newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData)
-    val redirectDecisionFuture = redirectDecisionService.toProfileRedirect(user, request)
+    val emailFilledForm: Future[Form[EmailPrefsData]] =
+      newsletterService.subscriptions(request.user.getId, idRequestParser(request).trackingData)
+    val redirectDecision: ProfileRedirect = redirectDecisionService.toProfileRedirect(user, request)
 
-    for {
-      emailFilledForm <- emailFilledFormFuture
-      redirectDecision <- redirectDecisionFuture
-    } yield {
+    emailFilledForm.map { emailFilledForm =>
       NoCache(Ok(
         IdentityHtmlPage.html(
           content = views.html.profileForms(

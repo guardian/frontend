@@ -70,7 +70,6 @@ GET         /privacy-settings                       controllers.AdvertsManager.r
 ########################################################################################################################
 # Consents journey
 ########################################################################################################################
-GET         /consents/newsletters                   controllers.editprofile.EditProfileController.displayConsentsJourneyNewsletters
 GET         /consents/thank-you                     controllers.editprofile.EditProfileController.displayConsentsJourneyThankYou
 GET         /consents/staywithus                    controllers.editprofile.EditProfileController.displayConsentsJourneyGdprCampaign
 GET         /consents                               controllers.editprofile.EditProfileController.displayConsentsJourney(consentHint: Option[String])

@@ -207,16 +207,5 @@ import scala.concurrent.Future
 
     }
 
-
-    "using displayConsentsJourneyNewsletters" should {
-
-      "not have consent checkboxes" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourneyNewsletters().apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should not include xml.Utility.escape(Supporter.latestWording.wording)
-      }
-
-    }
-
   }
 }
