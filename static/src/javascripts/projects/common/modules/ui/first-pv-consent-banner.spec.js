@@ -80,20 +80,17 @@ describe('First PV consents banner', () => {
     });
 
     describe('With location', () => {
-        it('should render inside the EU', async () =>
-            expect(await banner.canShow()).toBe(true));
-        it('should render inside the EEA', async () => {
+        it('should render inside the EU', async () => {
             getCookie.mockImplementation(_ => {
-                if (_ === 'GU_geo_continent') return '??';
-                else if (_ === 'GU_country') return 'NO';
+                if (_ === 'GU_geo_continent') return 'EU';
+                return null;
             });
             return expect(await banner.canShow()).toBe(true);
         });
-
-        it('should not render outside the EEA', async () => {
+        it('should not render outside the EU', async () => {
             getCookie.mockImplementation(_ => {
                 if (_ === 'GU_geo_continent') return '??';
-                else if (_ === 'GU_country') return '??';
+                return null;
             });
             return expect(await banner.canShow()).toBe(false);
         });
