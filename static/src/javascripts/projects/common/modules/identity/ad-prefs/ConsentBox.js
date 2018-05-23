@@ -38,6 +38,9 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
                         type="radio"
                         name={name}
                         id={id}
+                        data-link-name={`ad-prefs - ${
+                            this.props.consent.cookie
+                        } - ${this.props.value.toString()}`}
                         value={this.props.value.toString()}
                         checked={this.props.checked}
                         onChange={this.handleChange.bind(this)}

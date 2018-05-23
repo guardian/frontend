@@ -50,6 +50,9 @@ class AdPrefsWrapper extends Component<
                 consentsWithState[consentId].consent
             ) !== state;
         consentsWithState[consentId].state = state;
+        if (this.SubmitButtonRef) {
+            this.SubmitButtonRef.scrollIntoView(false);
+        }
         this.setState({
             consentsWithState,
             changesPending,
@@ -72,7 +75,8 @@ class AdPrefsWrapper extends Component<
         });
     }
 
-    FeedbackFlashBoxRef: ?FeedbackFlashBox = null;
+    FeedbackFlashBoxRef: ?FeedbackFlashBox;
+    SubmitButtonRef: ?HTMLElement;
 
     render() {
         return (
@@ -93,12 +97,17 @@ class AdPrefsWrapper extends Component<
                         )
                     )}
                 </div>
-                <div className="identity-ad-prefs-manager__footer">
+                <div
+                    className="identity-ad-prefs-manager__footer"
+                    ref={child => {
+                        this.SubmitButtonRef = child;
+                    }}>
                     <button
                         disabled={this.state.changesPending ? null : 'disabled'}
                         className="manage-account__button manage-account__button--center"
+                        data-link-name="ad-prefs : submit"
                         type="submit">
-                        Save changes
+                        Save my settings
                     </button>
                     <FeedbackFlashBox
                         ref={child => {
