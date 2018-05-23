@@ -38,6 +38,7 @@ class AdPrefsWrapper extends Component<
         super(props);
         this.state = {
             changesPending: false,
+            flashing: false,
             consentsWithState: this.props.allAdConsents.map(
                 (consent: AdConsent) => ({
                     consent,
