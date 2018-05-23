@@ -13,7 +13,6 @@ $tls-warning-rule: darken($garnett-nav-background, 20%);
 
         &__item {
             float: left;
-            width: gs-span(2.1);
             &:first-child {
                 .tls-warning__browser-link {
                     &:before {
@@ -33,6 +32,8 @@ $tls-warning-rule: darken($garnett-nav-background, 20%);
         display: block;
         position: relative;
         font-size: 0;
+        min-height: gs-height(1.7);
+        padding-right: $gs-gutter * 3 / 2;
 
         &:hover {
             .tls-warning__browser-link__title {
