@@ -48,8 +48,6 @@ import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
-import { optInEngagementBanner } from 'common/modules/identity/global/opt-in-engagement-banner.js';
-
 import ophan from 'ophan/ng';
 
 const initialiseTopNavItems = (): void => {
@@ -283,7 +281,6 @@ const initialiseBanner = (): void => {
         breakingNews,
         membershipBanner,
         membershipEngagementBanner,
-        optInEngagementBanner,
         signInEngagementBanner,
         smartAppBanner,
     ];
