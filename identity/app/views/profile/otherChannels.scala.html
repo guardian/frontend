@@ -6,7 +6,8 @@
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 <fieldset class="fieldset fieldset--manage-account-noborder">
     <div class="fieldset__heading">
-        <h2 class="form__heading">How else can we get in touch with you?</h2>
+        <h2 class="form__heading">Other ways we may contact you about our products and services</h2>
+        <p class="form__note">From time to time, we’d love to be able to update you about our products and services via telephone and post.</p>
     </div>
     <div class="fieldset__fields">
         @views.html.profile.nonElectronicOptOut(idUrlBuilder, idRequest, privacyForm, user)(request, messages)
