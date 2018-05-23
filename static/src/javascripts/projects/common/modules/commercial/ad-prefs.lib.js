@@ -1,10 +1,16 @@
 // @flow
 
 import { addCookie, getCookie } from 'lib/cookies';
+import { onConsentSet } from 'common/modules/analytics/send-ad-prefs';
 
 type AdConsent = {
     label: string,
     cookie: string,
+};
+
+type AdConsentWithState = {
+    consent: AdConsent,
+    state: ?boolean,
 };
 
 const thirdPartyTrackingAdConsent: AdConsent = {
@@ -17,9 +23,7 @@ const allAdConsents: AdConsent[] = [thirdPartyTrackingAdConsent];
 const setAdConsentState = (provider: AdConsent, state: boolean): void => {
     const cookie = [state ? '1' : '0', Date.now()].join(',');
     addCookie(provider.cookie, cookie, 30 * 18, true);
-    import('common/modules/analytics/send-ad-prefs').then(module => {
-        module.onConsentSet(provider, state);
-    });
+    onConsentSet(provider, state);
 };
 
 const getAdConsentState = (provider: AdConsent): ?boolean => {
@@ -31,10 +35,17 @@ const getAdConsentState = (provider: AdConsent): ?boolean => {
     return null;
 };
 
-export type { AdConsent };
+const getAllAdConsentsWithState = (): AdConsentWithState[] =>
+    allAdConsents.map((consent: AdConsent) => ({
+        consent,
+        state: getAdConsentState(consent),
+    }));
+
+export type { AdConsent, AdConsentWithState };
 export {
     setAdConsentState,
     getAdConsentState,
+    getAllAdConsentsWithState,
     allAdConsents,
     thirdPartyTrackingAdConsent,
 };

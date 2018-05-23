@@ -1,9 +1,8 @@
 // @flow
 import ophan from 'ophan/ng';
-import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
-import {
-    allAdConsents,
-    getAdConsentState,
+import type {
+    AdConsent,
+    AdConsentWithState,
 } from 'common/modules/commercial/ad-prefs.lib';
 import userPrefs from 'common/modules/user-prefs';
 
@@ -27,13 +26,15 @@ const onConsentSet = (consent: AdConsent, status: ?boolean): void => {
     });
 };
 
-const trackConsentCookies = (): void => {
-    allAdConsents.forEach((consent: AdConsent) => {
+const trackConsentCookies = (
+    allConsentsWithState: AdConsentWithState[]
+): void => {
+    allConsentsWithState.forEach((consentWithState: AdConsentWithState) => {
         ophan.record({
             component: `ad-prefs`,
             value: `pv : ${String(
-                getAdConsentState(consent)
-            )} : ${consent.cookie.toLowerCase()}`,
+                consentWithState.state
+            )} : ${consentWithState.consent.cookie.toLowerCase()}`,
         });
     });
 };
