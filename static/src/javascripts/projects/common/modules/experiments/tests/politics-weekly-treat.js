@@ -7,7 +7,7 @@ import { getBreakpoint } from 'lib/detect';
 const runTest = function(variant: string): () => void {
     return () => {
         const headlinesContainer = document.querySelector(
-            '.facia-page section:first-child'
+            '.facia-page #headlines'
         );
 
         if (headlinesContainer) {
@@ -52,11 +52,11 @@ const trackImpression = function(track: () => void) {
 export const PoliticsWeeklyTreat = {
     id: 'PoliticsWeeklyTreat',
     // TODO - correct dates
-    start: '2018-05-05',
+    start: '2018-04-24',
     expiry: '2018-06-01',
     author: 'Tom Forbes',
     description:
-        'Test linking to Politics Weekly podcast latest episode using a treat in the Headlines container',
+        'Test linking to latest episode of Politics Weekly podcast using a treat in the Headlines container',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'Measure click-through across the variants',
