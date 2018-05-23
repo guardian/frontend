@@ -14,6 +14,9 @@ import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/u
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
 import { getKruxSegments as getKruxSegments_ } from 'common/modules/commercial/krux';
 
+import { getAdConsentState as getAdConsentState_ } from 'common/modules/commercial/ad-prefs.lib';
+
+const getAdConsentState: any = getAdConsentState_;
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
 const getParticipations: any = getParticipations_;
@@ -49,6 +52,10 @@ jest.mock('common/modules/commercial/krux', () => ({
     getKruxSegments: jest.fn(),
 }));
 jest.mock('lodash/functions/once', () => fn => fn);
+
+jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
+    getAdConsentState: jest.fn(),
+}));
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
@@ -87,6 +94,8 @@ describe('Build Page Targeting', () => {
             pageViewId: 'presetOphanPageViewId',
         };
 
+        // Reset mocking to default values.
+        getAdConsentState.mockReturnValue(null);
         getCookie.mockReturnValue('ng101');
 
         getBreakpoint.mockReturnValue('mobile');
@@ -136,7 +145,16 @@ describe('Build Page Targeting', () => {
         expect(pageTargeting.tn).toEqual(['news']);
         expect(pageTargeting.vl).toEqual('90');
         expect(pageTargeting.pv).toEqual('presetOphanPageViewId');
+        expect(pageTargeting.pa).toEqual(undefined);
         expect(pageTargeting.cc).toEqual('US');
+    });
+
+    it('should set correct personalized ad (pa) param', () => {
+        getAdConsentState.mockReturnValueOnce(true);
+        expect(buildPageTargeting().pa).toBe('t');
+
+        getAdConsentState.mockReturnValueOnce(false);
+        expect(buildPageTargeting().pa).toBe('f');
     });
 
     it('should set correct edition param', () => {
@@ -192,8 +210,6 @@ describe('Build Page Targeting', () => {
         config.ophan.pageViewId = '123456';
         getUserSegments.mockReturnValue([]);
         getKruxSegments.mockReturnValue([]);
-
-        console.log(buildPageTargeting());
 
         expect(buildPageTargeting()).toEqual({
             sens: 'f',

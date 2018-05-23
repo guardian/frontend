@@ -21,3 +21,22 @@ To see hashed JS bundles locally you can set assets.useHashedBundles=true in you
 ## How do I run identity and access profile pages locally?
 
 You'll need to [setup nginx](https://github.com/guardian/frontend/blob/2e00099b6509024fd5a9f04aa7daea03e08281ac/nginx/README.md) and then set-up the [identity frontend](https://github.com/guardian/identity-frontend)
+
+## How do I link a badge to a secret tag?
+
+Sometimes we want to create a badge for a story, but don't want the world to know what that story is until it is released. We therefore need to encrypt the tag name that the badge is being applied to. This all happens in [Badges.scala](https://github.com/guardian/frontend/blob/master/common/app/model/Badges.scala).
+
+To link a badge to a secret tag:
+
+1. Install `pwgen`, a random string generator. Mac users can install this using Homebrew: `brew install pwgen`
+2. Generate a bunch of random strings: `pwgen -n -y 20`. Copy one of them to the clipboard. This will be the salt.
+3. From the command line, run `sbt`. Inside `sbt` run `console`
+4. From the console run: `import java.security.MessageDigest`
+5. From the console run: `import java.math.BigInteger`
+6. From the console run: `val input = "[salt from the clipboard]" + "your/secret/tag"`
+7. From the console run: `val digest = MessageDigest.getInstance("MD5")`
+8. From the console run: `digest.update(input.getBytes(), 0, input.length)`
+9. From the console run: `new BigInteger(1, digest.digest()).toString(16)`
+10. The result of the last step is your encrypted tag
+11. In the `Badges` object, add a new val: `val specialReport = SpecialBadge("[salt]", "[encrypted tag]", Static("path/to/Badge.svg"))`
+12. In CODE create an article with your new tag and ensure the badge is applied correctly
