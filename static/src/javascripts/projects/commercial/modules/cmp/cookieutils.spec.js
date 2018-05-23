@@ -101,7 +101,8 @@ describe('cookieutils', () => {
     });
 
     it('decodes a cookie bit value', () => {
-        const inputValue = '0000010000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000010000010001000011010000000000011100000000000000000000000000000000000110011010000000';
+        const inputValue =
+            '0000010000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000010000010001000011010000000000011100000000000000000000000000000000000110011010000000';
 
         const expected = JSON.stringify({
             cookieVersion: 1,
@@ -140,7 +141,7 @@ describe('cookieutils', () => {
                 vendorIdBitString: '110100',
             },
             vendorVersionMap
-    );
+        );
         expect(encodedString).toBe('BAAAAAAAAAAAAABABBENABwAAAAAZoA');
     });
 

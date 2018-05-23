@@ -105,7 +105,7 @@ class CmpService {
                 callback({ event });
             }
         },
-    }
+    };
 
     processCommand = (command: string, parameter: any, callback: any): void => {
         if (typeof this.commands[command] !== 'function') {

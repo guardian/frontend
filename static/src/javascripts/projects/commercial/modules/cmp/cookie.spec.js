@@ -199,8 +199,8 @@ describe('CMP cookie', () => {
         ).toEqual(vendorConsentData);
     });
 
-    it('writes and reads the local cookie', () => {
-        return writeVendorConsentCookie({
+    it('writes and reads the local cookie', () =>
+        writeVendorConsentCookie({
             ...vendorConsentData,
             vendorList,
         }).then(() =>
@@ -210,8 +210,7 @@ describe('CMP cookie', () => {
                 );
                 expect(fromCookie).toEqual(vendorConsentData);
             })
-        );
-    });
+        ));
 
     it('converts selected vendor list to a range', () => {
         const maxId = Math.max(...vendorList.vendors.map(vendor => vendor.id));

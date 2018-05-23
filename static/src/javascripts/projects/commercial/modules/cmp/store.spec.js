@@ -1,11 +1,7 @@
 // @flow
 import { CmpStore, _ } from './store';
 
-import type {
-    VendorConsentData,
-    ConsentData,
-    VendorData,
-} from './types';
+import type { VendorConsentData, ConsentData, VendorData } from './types';
 
 const {
     getVendorConsentData,

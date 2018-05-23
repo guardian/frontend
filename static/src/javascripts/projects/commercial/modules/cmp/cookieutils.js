@@ -1,6 +1,5 @@
 // @flow
 import { log } from 'commercial/modules/cmp/log';
-import type { VendorConsentData, VendorConsentResult } from 'commercial/modules/cmp/types';
 
 const SIX_BIT_ASCII_OFFSET = 65;
 const NUM_BITS_VERSION = 6;
@@ -108,7 +107,8 @@ const decode6BitCharacters = (
     return decoded;
 };
 
-const encodeFields = ({ input, fields }) => fields.reduce((acc, field) => {
+const encodeFields = ({ input, fields }) =>
+    fields.reduce((acc, field) => {
         // eslint-disable-next-line no-use-before-define, no-param-reassign
         acc += encodeField({ input, field });
         return acc;

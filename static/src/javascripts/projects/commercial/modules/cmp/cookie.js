@@ -12,12 +12,7 @@ import {
     decodeCookieValue,
 } from 'commercial/modules/cmp/cookieutils';
 
-import type {
-    VendorConsentData,
-    VendorConsentResponse,
-    VendorData,
-    VendorList,
-} from './types';
+import type { VendorConsentData } from './types';
 
 const encodeVendorCookieValue = (data: VendorConsentData): ?string => {
     if (data && data.cookieVersion) {
