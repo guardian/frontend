@@ -125,10 +125,7 @@ $pillars: (
         color: map-get($palette, kicker);
     }
 
-    &.fc-item--half-tablet.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
-    &.fc-item--third-tablet.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
-    &.fc-item--three-quarters-tablet.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
-    &.fc-item--third-tablet.fc-item--type-immersive.fc-item--has-boosted-title  {
+    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile {
         .fc-item__content {
             background-color: map-get($palette, kicker);
         }
@@ -172,23 +169,16 @@ $pillars: (
         }
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker,
-    &.fc-item--list-media-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker,
-    &.fc-item--list-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker
+    &.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__kicker
     {
         color: map-get($palette, kicker);
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title:not(.fc-item--pillar-special-report) .fc-item__standfirst {
+    &.fc-item--type-immersive.fc-item--has-boosted-title:not(.fc-item--pillar-special-report) .fc-item__standfirst {
         color: $garnett-neutral-1;
     }
 
-    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon,
-    &.fc-item--standard-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__meta,
-    &.fc-item--list-media-tablet.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon,
-    &.fc-item--list-media-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__meta,
-    &.fc-item--list-tablet.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon,
-    &.fc-item--list-tablet.fc-item--type-immersive.fc-item--has-boosted-title .fc-item__meta
+    &.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon
     {
         fill: $garnett-neutral-6;
         color: $garnett-neutral-6;
@@ -342,6 +332,18 @@ $pillars: (
 
 .fc-item--pillar-special-report,
 .fc-item--pillar-special-report.fc-item--type-feature {
+    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile {
+        .fc-item__content {
+            background-color: $story-package-garnett;
+        }
+
+        &:hover {
+            .fc-item__content {
+                background-color: darken($story-package-garnett, 5%);
+            }
+        }
+    }
+
     &.fc-item--type-comment {
         .fc-item__headline,
         .fc-item__standfirst {
