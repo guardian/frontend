@@ -23,6 +23,18 @@
     display: block;
 }
 
+.politics-weekly-treat__logo svg {
+    @include mq(leftCol) {
+        width: 120px;
+        height: 120px;
+    }
+
+    @include mq(wide) {
+        width: 140px;
+        height: 140px;
+    }
+}
+
 .politics-weekly-treat__overlay {
     margin-top: -40px;
 }
@@ -32,27 +44,38 @@
 
     color: $garnett-neutral-1;
     font-size: 14px;
-    font-family: $f-serif-text;
+    font-family: $f-serif-headline;
 
-    padding: 4px 3px 6px;
-
+    padding: 0 3px 1px 3px;
     display: inline-block;
 }
 
-.politics-weekly-treat__podcast-details {
-    display: flex;
-    flex-direction: column;
-    width: min-content;
-}
-
 .politics-weekly-treat__podcast-title {
-    background: $garnett-neutral-1;
     color: $garnett-neutral-5;
-
     font-size: 18px;
-    font-family: $f-sans-serif-text;
+    font-family: $f-serif-headline;
 
-    padding: 4px 3px 5px;
+    display: inline-block;
+
+    @include mq(leftCol) {
+        line-height: 1.3;
+        color: pink;
+    }
+    @include mq(wide) {
+        color: green;
+    }
+}
+.politics-weekly-treat__podcast-title span {
+    background: $garnett-neutral-1;
+
+    @include mq(leftCol) {
+        padding: 2px 3px 5px;
+    }
+    @include mq(wide) {
+        padding: 4px 3px 5px;
+    }
+
+    box-decoration-break: clone;
 }
 
 .politics-weekly-treat__player {
@@ -60,16 +83,27 @@
     font-size: 13px;
     color: $garnett-neutral-1;
 
-    padding: 2px 5px 2px 1px;
+    @include mq(leftCol) {
+        padding: 2px 2px 2px 1px;
+    }
+    @include mq(wide) {
+        padding: 2px 3px 2px 1px;
+    }
 
     display: inline-flex;
+    align-items: center;
 }
 .politics-weekly-treat__player-variant-a {
     *:first-child {
-        padding-right: 6px;
+        padding-right: 2px;
     }
     *:last-child {
-        padding-left: 6px;
+        @include mq(leftCol) {
+            padding-left: 1px;
+        }
+        @include mq(wide) {
+            padding-left: 2px;
+        }
     }
 }
 .politics-weekly-treat__player-variant-b {
@@ -84,4 +118,42 @@
     font-family: $f-sans-serif-text;
     line-height: 16px;
     color: $garnett-neutral-1;
+    max-width: 170px;
+}
+.politics-weekly-treat__episode-title:hover {
+    text-decoration: underline;
+}
+
+.politics-weekly-treat__timestamp {
+    font-family: $f-sans-serif-text
+}
+.politics-weekly-treat__timestamp span {
+    /* Disable link decoration on hover */
+    display: inline-block;
+}
+
+.politics-weekly-treat__player-wave-large {
+    @include mq(leftCol) {
+        display: none;
+    }
+    @include mq(wide) {
+        display: inline;
+    }
+}
+.politics-weekly-treat__player-wave-small {
+    @include mq(leftCol) {
+        display: inline;
+    }
+    @include mq(wide) {
+        display: none;
+    }
+}
+
+.politics-weekly-treat__player-button {
+    @include mq(leftCol) {
+        width: 22px;
+    }
+    @include mq(wide) {
+        width: 24px;
+    }
 }
