@@ -1,7 +1,7 @@
 // @flow
 
 import { addCookie, getCookie } from 'lib/cookies';
-import { onConsentSet } from 'common/modules/analytics/send-ad-prefs';
+import { onConsentSet } from 'common/modules/analytics/send-privacy-prefs';
 
 type AdConsent = {
     label: string,

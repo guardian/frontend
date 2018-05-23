@@ -10,7 +10,7 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
-import { upAlertViewCount } from 'common/modules/analytics/send-ad-prefs';
+import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 

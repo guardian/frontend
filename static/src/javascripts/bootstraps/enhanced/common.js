@@ -48,7 +48,7 @@ import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
-import { trackConsentCookies } from 'common/modules/analytics/send-ad-prefs';
+import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs';
 import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
 import ophan from 'ophan/ng';
 

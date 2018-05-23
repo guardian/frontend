@@ -6,22 +6,22 @@ import type {
     AdConsentWithState,
 } from 'common/modules/commercial/ad-prefs.lib';
 
-const lifeTimeViewsKey: string = 'first-pv-consent.lifetime-views';
+const alertViewCount: string = 'first-pv-consent.lifetime-views';
 
 const getAlertViewCount = (): number =>
-    parseInt(userPrefs.get(lifeTimeViewsKey), 10);
+    parseInt(userPrefs.get(alertViewCount) || 0, 10);
 
 const upAlertViewCount = (): void => {
-    userPrefs.set(lifeTimeViewsKey, (userPrefs.get(lifeTimeViewsKey) || 0) + 1);
+    userPrefs.set(alertViewCount, getAlertViewCount() + 1);
 };
 
 const onConsentSet = (consent: AdConsent, status: ?boolean): void => {
     ophan.record({
-        component: `ad-prefs`,
+        component: `privacy-prefs`,
         value: `set : ${String(status)} : ${consent.cookie.toLowerCase()}`,
     });
     ophan.record({
-        component: `ad-prefs`,
+        component: `privacy-prefs`,
         value: `set-with-alert-views : ${getAlertViewCount()} : ${consent.cookie.toLowerCase()}`,
     });
 };
@@ -31,7 +31,7 @@ const trackConsentCookies = (
 ): void => {
     allConsentsWithState.forEach((consentWithState: AdConsentWithState) => {
         ophan.record({
-            component: `ad-prefs`,
+            component: `privacy-prefs`,
             value: `pv : ${String(
                 consentWithState.state
             )} : ${consentWithState.consent.cookie.toLowerCase()}`,
