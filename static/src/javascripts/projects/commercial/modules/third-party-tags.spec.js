@@ -18,6 +18,8 @@ afterEach(() => {
     }
 });
 
+jest.mock('ophan/ng', () => null);
+
 jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
     initOutbrain: jest.fn(),
 }));
