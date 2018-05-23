@@ -447,7 +447,7 @@ import scala.concurrent.Future
         status(result) should be(200)
         contentAsString(result) should include ("updated")
 
-        verify(api).updateUserEmails(userId, Subscriber("Text", Nil), testAuth, trackingData)
+        verify(api).updateUserEmails(userId, Subscriber("HTML", Nil), testAuth, trackingData)
       }
 
       "respond with error body if IDAPI post email endpoint returns error" in new EditProfileFixture {
@@ -459,7 +459,7 @@ import scala.concurrent.Future
         status(result) should not be(200)
         contentAsString(result) should include ("There was an error saving your preferences")
 
-        verify(api).updateUserEmails(userId, Subscriber("Text", Nil), testAuth, trackingData)
+        verify(api).updateUserEmails(userId, Subscriber("HTML", Nil), testAuth, trackingData)
       }
     }
 
@@ -468,7 +468,7 @@ import scala.concurrent.Future
         user.statusFields.setHasRepermissioned(false)
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
+          .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))
 
         val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(303)
@@ -478,7 +478,7 @@ import scala.concurrent.Future
         user.statusFields.setHasRepermissioned(true)
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
+          .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))
 
         val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
