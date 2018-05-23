@@ -3,6 +3,7 @@ package pages
 import common.Edition
 import conf.switches.Switches.WeAreHiring
 import controllers.InteractivePage
+import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
 import model.{ApplicationContext, Page}
@@ -55,6 +56,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
       ),
       bodyTag(classes = bodyClasses)(
         message(),
+        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),

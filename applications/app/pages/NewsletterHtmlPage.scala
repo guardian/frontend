@@ -2,6 +2,7 @@ package pages
 
 import common.Edition
 import conf.switches.Switches.WeAreHiring
+import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
 import model.{ApplicationContext, SimplePage}
@@ -42,6 +43,7 @@ object NewsletterHtmlPage extends HtmlPage[SimplePage] {
       ),
       bodyTag(classes = defaultBodyClasses)(
         message(),
+        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
