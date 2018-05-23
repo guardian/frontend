@@ -13,7 +13,7 @@ $tls-warning-rule: darken($garnett-nav-background, 20%);
 
         &__item {
             float: left;
-            width: gs-span(3);
+            width: gs-span(2.1);
             &:first-child {
                 .tls-warning__browser-link {
                     &:before {
@@ -53,17 +53,18 @@ $tls-warning-rule: darken($garnett-nav-background, 20%);
         &__logo,
         &__title {
             display: inline-block;
-            padding-left: $gs-gutter;
+            padding-left: $gs-gutter / 2;
             padding-bottom: $gs-baseline;
+            vertical-align: middle;
         }
 
         &__logo {
             height: 50px;
-            vertical-align: middle;
         }
 
         &__title {
             font-size: .9rem;
+            max-width: 50px;
         }
     }
 
