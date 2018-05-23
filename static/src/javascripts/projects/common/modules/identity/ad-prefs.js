@@ -28,7 +28,11 @@ const rootSelector: string = '.js-manage-account__ad-prefs';
 
 class AdPrefsWrapper extends Component<
     AdPrefsWrapperProps,
-    { consentsWithState: AdConsentWithState[], changesPending: boolean, flashing: boolean }
+    {
+        consentsWithState: AdConsentWithState[],
+        changesPending: boolean,
+        flashing: boolean,
+    }
 > {
     constructor(props: AdPrefsWrapperProps): void {
         super(props);
@@ -110,8 +114,7 @@ class AdPrefsWrapper extends Component<
                         type="submit">
                         Save my settings
                     </button>
-                    <FeedbackFlashBox
-                        flashing={this.state.flashing}>
+                    <FeedbackFlashBox flashing={this.state.flashing}>
                         Your settings have been saved.
                     </FeedbackFlashBox>
                 </div>

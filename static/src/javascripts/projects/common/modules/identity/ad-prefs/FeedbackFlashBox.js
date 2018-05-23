@@ -3,13 +3,10 @@ import React, { Component } from 'react';
 
 type FeedbackFlashBoxProps = {
     children?: any,
-    flashing: boolean
+    flashing: boolean,
 };
 
-class FeedbackFlashBox extends Component<
-    FeedbackFlashBoxProps
-> {
-
+class FeedbackFlashBox extends Component<FeedbackFlashBoxProps> {
     render() {
         return (
             <div
