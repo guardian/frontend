@@ -141,7 +141,7 @@ object NavLinks {
       NavLink("Saturday review", "/theguardian/guardianreview")
     )
   )
-  val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/membership/series/inside-the-guardian")
+  val insideTheGuardian = NavLink("Inside the Guardian", "https://www.theguardian.com/membership")
   val observer = NavLink("The Observer", "/observer",
     children = List(
       NavLink("Comment", "/theobserver/news/comment"),
