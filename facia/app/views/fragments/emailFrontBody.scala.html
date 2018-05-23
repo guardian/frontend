@@ -125,6 +125,13 @@
     }
 }
 
+@freeTextWithImage(card: ContentCard) = {
+    @faciaCard(classesForCard(card)) {
+        @row(Seq("no-pad")){@imgFromCard(card)}
+        @row(Seq("free-text"))(Html(card.header.headline))
+    }
+}
+
 @freeText(text: String) = {
     @fullRow(Seq("free-text"))(Html(text))
 }
@@ -132,7 +139,12 @@
 @renderCard(card: ContentCard, cardStyle: EmailCardStyle, isBranded: Boolean) = {
     @cardStyle match {
         case EmailHidden => { }
-        case EmailFreeText => { @freeText(card.header.headline) }
+        case EmailFreeText if card.displayElement.isEmpty => {
+            @freeText(card.header.headline)
+        }
+        case EmailFreeText => {
+            @freeTextWithImage(card)
+        }
         case layoutStyle: EmailFaciaCard => {
             @card.cardStyle match {
                 case ExternalLink => {
