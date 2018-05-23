@@ -49,6 +49,7 @@ import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
 import ophan from 'ophan/ng';
+import { trackConsentCookies } from '../../projects/common/modules/analytics/send-ad-prefs';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -291,6 +292,7 @@ const init = (): void => {
     catchErrorsWithContext([
         // Analytics comes at the top. If you think your thing is more important then please think again...
         ['c-analytics', loadAnalytics],
+        ['c-consent-cookie-tracking', trackConsentCookies],
         ['c-identity', initIdentity],
         ['c-adverts', requestUserSegmentsFromId],
         ['c-discussion', initDiscussion],

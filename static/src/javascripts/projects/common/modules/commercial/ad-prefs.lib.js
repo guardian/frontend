@@ -17,6 +17,9 @@ const allAdConsents: AdConsent[] = [thirdPartyTrackingAdConsent];
 const setAdConsentState = (provider: AdConsent, state: boolean): void => {
     const cookie = [state ? '1' : '0', Date.now()].join(',');
     addCookie(provider.cookie, cookie, 30 * 18, true);
+    import('common/modules/analytics/send-ad-prefs').then(module => {
+        module.onConsentSet(provider, state);
+    });
 };
 
 const getAdConsentState = (provider: AdConsent): ?boolean => {
