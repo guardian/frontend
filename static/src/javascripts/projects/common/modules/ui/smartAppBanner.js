@@ -54,6 +54,8 @@ const isDevice = (): boolean => isIOS() || isAndroid();
 
 const validImpressionCount = (): boolean => impressions < 4;
 
+const messageCode: string = isIOS() ? 'ios' : 'android';
+
 const canUseSmartBanner = (): boolean =>
     config.get('switches.smartAppBanner') &&
     getUserAgent.browser === 'Safari' &&
@@ -68,11 +70,10 @@ const canShow = (): Promise<boolean> =>
 
 const show = (): void => {
     loadCssPromise.then(() => {
-        const platform = isIOS() ? 'ios' : 'android';
-        const msg = new Message(platform);
+        const msg = new Message(messageCode);
         const fullTemplate = tmp + (getBreakpoint() === 'mobile' ? '' : tablet);
 
-        msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
+        msg.show(template(fullTemplate, DATA[messageCode.toUpperCase()]));
 
         addCookie(COOKIE_IMPRESSION_KEY, String(impressions + 1));
 
@@ -87,7 +88,7 @@ const show = (): void => {
 };
 
 const smartAppBanner: Banner = {
-    id: 'smartAppBanner',
+    id: messageCode,
     show,
     canShow,
 };

@@ -1,5 +1,6 @@
 // @flow
 import ophan from 'ophan/ng';
+import userPrefs from 'common/modules/user-prefs';
 
 export type Banner = {
     id: string,
@@ -37,6 +38,7 @@ const init = (banners: Array<Banner>): Promise<void> => {
 
     return new Promise(resolve => {
         const TIME_LIMIT = 2000;
+        const messageStates = userPrefs.get('messages');
 
         banners.forEach((banner, index) => {
             const pushToResults = (result: boolean): void => {
@@ -57,34 +59,44 @@ const init = (banners: Array<Banner>): Promise<void> => {
                 }
 
                 if (!results.includes('pending')) {
-                    console.log('results --->', results);
-
                     resolve();
                 }
             };
 
-            let hasTimedOut = false;
+            const hasUserAcknowledgedBanner = (): boolean =>
+                messageStates && messageStates.includes(banner.id);
 
-            // checks that take longer than TIME_LIMIT are forced to fail
-            const timeout = setTimeout(() => {
-                hasTimedOut = true;
-
+            /**
+             * if the banner has been seen and dismissed
+             * we don't want to show it. Previously this rule was
+             * enforced in the show() of Message.js
+             * */
+            if (hasUserAcknowledgedBanner()) {
                 pushToResults(false);
+            } else {
+                let hasTimedOut = false;
 
-                const trackingObj = {
-                    component: 'banner-picker-timeout',
-                    value: banner.id,
-                };
+                // checks that take longer than TIME_LIMIT are forced to fail
+                const timeout = setTimeout(() => {
+                    hasTimedOut = true;
 
-                ophan.record(trackingObj);
-            }, TIME_LIMIT);
+                    pushToResults(false);
 
-            banner.canShow().then(result => {
-                if (!hasTimedOut) {
-                    clearTimeout(timeout);
-                    pushToResults(result);
-                }
-            });
+                    const trackingObj = {
+                        component: 'banner-picker-timeout',
+                        value: banner.id,
+                    };
+
+                    ophan.record(trackingObj);
+                }, TIME_LIMIT);
+
+                banner.canShow().then(result => {
+                    if (!hasTimedOut) {
+                        clearTimeout(timeout);
+                        pushToResults(result);
+                    }
+                });
+            }
         });
     });
 };

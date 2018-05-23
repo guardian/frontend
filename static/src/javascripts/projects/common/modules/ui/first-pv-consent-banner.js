@@ -39,6 +39,7 @@ const links: Links = {
     privacy: 'https://www.theguardian.com/help/privacy-policy',
     cookies: 'https://www.theguardian.com/info/cookies',
 };
+const messageCode: string = 'first-pv-consent';
 
 const template: Template = {
     heading: `Your privacy`,
@@ -117,7 +118,7 @@ const show = (): void => {
         `${lifetimeDisplayEventKey} ${userPrefs.get(lifeTimeViewsKey)}`
     );
 
-    const msg = new Message('first-pv-consent', {
+    const msg = new Message(messageCode, {
         important: true,
         permanent: true,
         customJs: () => {
@@ -132,7 +133,7 @@ const show = (): void => {
 };
 
 const firstPvConsentBanner: Banner = {
-    id: 'first-pv-consent-banner',
+    id: messageCode,
     canShow,
     show,
 };

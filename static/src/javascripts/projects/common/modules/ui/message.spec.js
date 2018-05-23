@@ -65,7 +65,6 @@ describe('Message', () => {
         const m = new Message('foo');
         m.acknowledge();
         expect(userPrefs.get('messages')).toEqual(['foo']);
-        expect(m.hasSeen()).toEqual(true);
     });
 
     it('Block messages from overwriting each other', () => {

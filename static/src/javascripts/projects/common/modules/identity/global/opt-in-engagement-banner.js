@@ -93,7 +93,6 @@ const checkUser = (): Promise<boolean> =>
 
 const getDisplayConditions = (): boolean[] => {
     const basics = [
-        !hasSeen(),
         shouldDisplayBasedOnExperimentFlag(),
         shouldDisplayifNotInSignInTestVariant(),
         shouldDisplayBasedOnLocalHasVisitedConsentsFlag(),
@@ -126,12 +125,6 @@ const hide = (msg: Message) => {
     msg.hide();
     dismiss();
 };
-
-const hasSeen = (): boolean => {
-    const messageStates = userPrefs.get('messages');
-
-    return messageStates && messageStates.indexOf(messageCode) > -1;
-}
 
 const canShow = (): Promise<boolean> => {
     const conditions = getDisplayConditions();

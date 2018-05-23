@@ -9,7 +9,6 @@ import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
 import bean from 'bean';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import userPrefs from 'common/modules/user-prefs';
 
 const accountDataUpdateLink = accountDataUpdateWarningLink =>
     `${config.get('page.idUrl')}/${
@@ -18,7 +17,7 @@ const accountDataUpdateLink = accountDataUpdateWarningLink =>
             : `${accountDataUpdateWarningLink}/edit`
     }`;
 
-const messageCode = 'membership-action-required';
+const messageCode: string = 'membership-action-required';
 
 const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
     const gaTracker = config.get('googleAnalytics.trackers.editorial');
@@ -55,14 +54,8 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
 };
 const updateLink = accountDataUpdateWarning();
 
-const hasSeen = (): boolean => {
-    const messageStates = userPrefs.get('messages');
-
-    return messageStates && messageStates.indexOf(messageCode) > -1;
-}
-
 const canShow: () => Promise<boolean> = () =>
-    Promise.resolve(!hasSeen() && updateLink !== null);
+    Promise.resolve(updateLink !== null);
 
 const show: () => void = () => {
     if (updateLink) {
