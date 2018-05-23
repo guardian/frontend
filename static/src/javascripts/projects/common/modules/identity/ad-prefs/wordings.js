@@ -22,7 +22,7 @@ const ThirdPartyConsentWording: ConsentWording = {
     },
     noCheckbox: {
         title: 'I want to manage the use of advertising cookies',
-        text: `Choosing this option will inmediately reduce the number of advertising partners who will serve you with relevant adverts, although you may still see some advertising that has been tailored to you. <strong>However, if you wish to disable cookies on The Guardian, including advertising cookies, you will need to take further steps. Please follow the instructions in our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>.</strong>`,
+        text: `Choosing this option will immediately reduce the number of advertising partners who will serve you with relevant adverts, although you may still see some advertising that has been tailored to you. <strong>However, if you wish to disable cookies on The Guardian, including advertising cookies, you will need to take further steps. Please follow the instructions in our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>.</strong>`,
     },
 };
 
