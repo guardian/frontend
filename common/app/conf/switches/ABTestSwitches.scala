@@ -95,4 +95,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2018, 6, 5),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-audio-page-hide-image",
+    "On the audio page remove the trail image at the top to push play button higher up page",
+    owners = Seq(Owner.withGithub("ajwl")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 6, 22),
+    exposeClientSide = true
+  )
 }
