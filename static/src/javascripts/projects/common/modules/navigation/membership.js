@@ -17,13 +17,15 @@ const accountDataUpdateLink = accountDataUpdateWarningLink =>
             : `${accountDataUpdateWarningLink}/edit`
     }`;
 
+const messageCode: string = 'membership-action-required';
+
 const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
     const gaTracker = config.get('googleAnalytics.trackers.editorial');
-    const newMessage = new Message('membership-action-required', {
-        cssModifierClass: 'membership-action-required',
+    const newMessage = new Message(messageCode, {
+        cssModifierClass: messageCode,
         trackDisplay: true,
-        siteMessageLinkName: 'membership-action-required',
-        siteMessageComponentName: 'membership-action-required',
+        siteMessageLinkName: messageCode,
+        siteMessageComponentName: messageCode,
         customJs: () => {
             bean.on(document, 'click', '.js-site-message-close', () => {
                 window.ga(
@@ -62,7 +64,7 @@ const show: () => void = () => {
 };
 
 export const membershipBanner: Banner = {
-    id: 'membership-action-required',
+    id: messageCode,
     show,
     canShow,
 };

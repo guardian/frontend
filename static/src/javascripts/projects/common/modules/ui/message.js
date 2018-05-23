@@ -65,9 +65,8 @@ class Message {
 
         // don't let messages unknowingly overwrite each other
         if (
-            (!this.$siteMessageContainer.hasClass('is-hidden') &&
-                !this.important) ||
-            this.hasSeen()
+            !this.$siteMessageContainer.hasClass('is-hidden') &&
+            !this.important
         ) {
             // if we're not showing a banner message, display it in the footer
             if (this.pinOnHide) {
@@ -75,6 +74,7 @@ class Message {
             }
             return false;
         }
+
         $('.js-site-message-copy').html(message);
 
         // Add a blocking overlay if needed
@@ -189,11 +189,6 @@ class Message {
         if (this.pinOnHide) {
             this.$footerMessage.removeClass('is-hidden');
         }
-    }
-
-    hasSeen(): boolean {
-        const messageStates = userPrefs.get(this.prefs);
-        return messageStates && messageStates.indexOf(this.id) > -1;
     }
 
     remember(): void {
