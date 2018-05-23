@@ -1,0 +1,48 @@
+@(
+    idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+
+@buildIdentityUrl(endpoint: String) = {
+    @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
+}
+
+<div class="email-subscription__fieldset">
+
+    <fieldset class="fieldset">
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Email settings</h2>
+        </div>
+
+        <div class="fieldset__fields email-subscription__options">
+            <ul class="u-unstyled">
+                <li>
+                    <p>
+                        <a href="@buildIdentityUrl("account/edit")" class="u-underline" data-link-name="identity : email : update">
+                            Update your email address
+                        </a>
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        <a href="https://jobs.theguardian.com/your-jobs/?ActiveSection=JbeList" class="u-underline" data-link-name="identity : jobs : alert-settings">
+                            Edit your Job Alert settings
+                        </a>
+                    </p>
+                </li>
+                <li>
+                    <button type="button" class="manage-account__button--mini manage-account__button--icon manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all">
+                        <span class="email-unsubscribe-all__label js-unsubscribe--basic manage-account__button-flexwrap">
+                            Unsubscribe from all newsletters
+                            @fragments.inlineSvg("cross", "icon")
+                        </span>
+                        <span class="email-unsubscribe-all__label js-unsubscribe--confirm hide" aria-hidden>
+                            Are you sure?
+                        </span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+    </fieldset>
+
+</div>

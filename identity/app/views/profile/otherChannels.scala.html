@@ -1,14 +1,10 @@
-@import _root_.form.IdFormHelpers.nonInputFields
-@import views.support.fragment.ConsentChannel._
-@import views.support.fragment.Switch._
-
 @(
     idUrlBuilder: services.IdentityUrlBuilder,
     idRequest: services.IdentityRequest,
     privacyForm: Form[_root_.form.PrivacyFormData],
     user: com.gu.identity.model.User
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
-<fieldset class="fieldset">
+<fieldset class="fieldset fieldset--manage-account-noborder">
     <div class="fieldset__heading">
         <h2 class="form__heading">How else can we get in touch with you?</h2>
     </div>

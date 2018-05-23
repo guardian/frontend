@@ -29,7 +29,7 @@
             @views.html.profile.smsConsent(idUrlBuilder, idRequest, privacyForm, user)(request, messages)
         </div>
     </fieldset>
-    }
+}
 
 @marketingConsentForm = {
     <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
@@ -101,6 +101,9 @@
 <hr class="manage-account-divider" />
 @marketingConsentForm
 @smsConsent
+
+@* EMAIL SETTINGS *@
+@views.html.profile.emailSettings(idRequest, idUrlBuilder)
 
 @* CHANNELS *@
 <hr class="manage-account-divider" />
