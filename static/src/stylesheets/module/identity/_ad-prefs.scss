@@ -20,7 +20,7 @@
         margin: 0 $gs-gutter / 2;
         padding-top: $gs-baseline/2;
 
-        @include mq(desktop) {
+        @include mq(leftCol) {
             padding-left: gs-span(2) + $gs-gutter;
         }
         @include mq(wide) {
