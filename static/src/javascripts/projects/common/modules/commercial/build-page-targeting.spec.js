@@ -8,6 +8,7 @@ import {
     getReferrer as getReferrer_,
     getBreakpoint as getBreakpoint_,
 } from 'lib/detect';
+import { getSync as getSync_ } from 'lib/geolocation';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
@@ -20,6 +21,7 @@ const getKruxSegments: any = getKruxSegments_;
 const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
+const getSync: any = getSync_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config', () => ({}));
@@ -30,6 +32,9 @@ jest.mock('lib/detect', () => ({
     getBreakpoint: jest.fn(),
     getReferrer: jest.fn(),
     hasPushStateSupport: jest.fn(),
+}));
+jest.mock('lib/geolocation', () => ({
+    getSync: jest.fn(),
 }));
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
@@ -100,6 +105,8 @@ describe('Build Page Targeting', () => {
 
         local.set('gu.alreadyVisited', 0);
 
+        getSync.mockReturnValue('US');
+
         expect.hasAssertions();
     });
 
@@ -129,6 +136,7 @@ describe('Build Page Targeting', () => {
         expect(pageTargeting.tn).toEqual(['news']);
         expect(pageTargeting.vl).toEqual('90');
         expect(pageTargeting.pv).toEqual('presetOphanPageViewId');
+        expect(pageTargeting.cc).toEqual('US');
     });
 
     it('should set correct edition param', () => {
@@ -185,6 +193,8 @@ describe('Build Page Targeting', () => {
         getUserSegments.mockReturnValue([]);
         getKruxSegments.mockReturnValue([]);
 
+        console.log(buildPageTargeting());
+
         expect(buildPageTargeting()).toEqual({
             sens: 'f',
             bp: 'mobile',
@@ -193,6 +203,7 @@ describe('Build Page Targeting', () => {
             ab: ['MtMaster-variantName'],
             pv: '123456',
             fr: '0',
+            cc: 'US',
         });
     });
 
