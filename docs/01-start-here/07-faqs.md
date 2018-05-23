@@ -28,15 +28,11 @@ Sometimes we want to create a badge for a story, but don't want the world to kno
 
 To link a badge to a secret tag:
 
-1. Install `pwgen`, a random string generator. Mac users can install this using Homebrew: `brew install pwgen`
-2. Generate a bunch of random strings: `pwgen -n -y 20`. Copy one of them to the clipboard. This will be the salt.
-3. From the command line, run `sbt`. Inside `sbt` run `console`
-4. From the console run: `import java.security.MessageDigest`
-5. From the console run: `import java.math.BigInteger`
-6. From the console run: `val input = "[salt from the clipboard]" + "your/secret/tag"`
-7. From the console run: `val digest = MessageDigest.getInstance("MD5")`
-8. From the console run: `digest.update(input.getBytes(), 0, input.length)`
-9. From the console run: `new BigInteger(1, digest.digest()).toString(16)`
-10. The result of the last step is your encrypted tag
-11. In the `Badges` object, add a new val: `val specialReport = SpecialBadge("[salt]", "[encrypted tag]", Static("path/to/Badge.svg"))`
-12. In CODE create an article with your new tag and ensure the badge is applied correctly
+1. Run `sbt "badgeHash [your tag]`"
+2. The output looks like
+```
+salt=XXXXXXXXX
+hash=XXXXXXXXX
+```
+3. In the `Badges` object, add a new val: `val specialReport = SpecialBadge("[salt]", "[hashed tag]", Static("path/to/Badge.svg"))`
+4. In CODE create an article with your new tag and ensure the badge is applied correctly
