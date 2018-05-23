@@ -64,8 +64,13 @@
     justify-content: flex-start;
     align-items: center;
 
+    /*the page auto scrolls to
+    put the button in the viewport,
+    this lets it breathe a bit*/
+    margin-bottom: $gs-gutter / 2 * -1;
+    padding-bottom: $gs-gutter / 2;
+
     > .manage-account__button {
-        display: inline-flex;
         &[disabled] {
             pointer-events: none;
             opacity: .5;
@@ -129,6 +134,7 @@
             position: absolute;
             left: $gs-gutter;
             top: $gs-baseline * 1.35;
+            background: white;
         }
     }
 }
