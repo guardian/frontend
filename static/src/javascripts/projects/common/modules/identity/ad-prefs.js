@@ -105,6 +105,7 @@ class AdPrefsWrapper extends Component<
                     <button
                         disabled={this.state.changesPending ? null : 'disabled'}
                         className="manage-account__button manage-account__button--center"
+                        data-link-name="ad-prefs : submit"
                         type="submit">
                         Save my settings
                     </button>
