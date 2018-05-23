@@ -3,7 +3,14 @@ import { log } from 'commercial/modules/cmp/log';
 import { CmpStore } from 'commercial/modules/cmp/store';
 import { getCookie } from 'lib/cookies';
 import { vendorList as globalVendorList } from 'commercial/modules/cmp/vendorlist';
-import { defaultConfig, CMP_GLOBAL_NAME } from 'commercial/modules/cmp/cmp-env';
+import {
+    defaultConfig,
+    CMP_GLOBAL_NAME,
+    CMP_ID,
+    CMP_VERSION,
+    COOKIE_VERSION,
+    COOKIE_NAME,
+} from 'commercial/modules/cmp/cmp-env';
 import { encodeVendorConsentData } from 'commercial/modules/cmp/cookie';
 
 import type { CmpConfig } from 'commercial/modules/cmp/types';
@@ -21,7 +28,7 @@ class CmpService {
     isLoaded: boolean;
     cmpReady: boolean;
     config: CmpConfig;
-    eventListeners: ?any;
+    eventListeners: Object;
     commandQueue: Array<any>;
     store: CmpStore;
     generateConsentString: () => string;
@@ -31,7 +38,7 @@ class CmpService {
         this.isLoaded = false;
         this.cmpReady = false;
         this.config = defaultConfig;
-        this.eventListeners = [];
+        this.eventListeners = {};
         this.store = store;
         this.processCommand.receiveMessage = this.receiveMessage;
         this.commandQueue = [];
@@ -57,6 +64,7 @@ class CmpService {
     };
 
     commands = {
+        // $FlowFixMe
         getVendorConsents: (vendorIds: ?Array<number>, callback = () => {}) => {
             const consent = {
                 metadata: this.generateConsentString(),
@@ -66,7 +74,7 @@ class CmpService {
             };
             callback(consent, true);
         },
-
+        // $FlowFixMe
         getConsentData: (_, callback = () => {}): void => {
             const consentData = {
                 gdprApplies: this.config.gdprApplies,
@@ -75,7 +83,7 @@ class CmpService {
             };
             callback(consentData, true);
         },
-
+        // $FlowFixMe
         getVendorList: (vendorListVersion, callback = () => {}): void => {
             const { vendorList } = this.store;
             const { vendorListVersion: listVersion } = vendorList || {};
@@ -85,7 +93,7 @@ class CmpService {
                 callback(null, false);
             }
         },
-
+        // $FlowFixMe
         ping: (_, callback = () => {}): void => {
             const result = {
                 gdprAppliesGlobally: this.config.storeConsentGlobally,
@@ -93,7 +101,7 @@ class CmpService {
             };
             callback(result, true);
         },
-
+        // $FlowFixMe
         addEventListener: (event: string, callback) => {
             const eventSet = this.eventListeners[event] || [];
             eventSet.push(callback);
@@ -155,7 +163,7 @@ class CmpService {
             });
         }
     };
-
+    // $FlowFixMe
     receiveMessage = ({ data, origin, source }) => {
         const { __cmpCall: cmp } = data;
         if (cmp) {
@@ -187,10 +195,10 @@ export const init = (): void => {
     const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
     // Initialize the store with all of our consent data
     const store = new CmpStore(
-        1,
-        1,
-        1,
-        readConsentCookie('GU_TK'),
+        CMP_ID,
+        CMP_VERSION,
+        COOKIE_VERSION,
+        readConsentCookie(COOKIE_NAME),
         globalVendorList
     );
     // init the CmpService with a generated store of data...
@@ -198,7 +206,6 @@ export const init = (): void => {
     // Expose `processCommand` as the CMP implementation
     window[CMP_GLOBAL_NAME] = cmp.processCommand;
     // Notify listeners that the CMP is loaded
-    log.debug(`Successfully loaded CMP`);
     cmp.isLoaded = true;
     cmp.notify('isLoaded');
     // Execute any previously queued command
@@ -206,4 +213,4 @@ export const init = (): void => {
     cmp.processCommandQueue();
 };
 
-export const _ = { CmpService };
+export const _ = { CmpService, readConsentCookie };

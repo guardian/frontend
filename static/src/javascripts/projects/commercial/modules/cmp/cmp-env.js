@@ -17,26 +17,26 @@ const vendorVersion = {
         {
             name: 'vendorIdBitString',
             type: 'bits',
-            numBits: decodedObject => decodedObject.maxVendorId,
-            validator: decodedObject => !decodedObject.isRange,
+            numBits: (decodedObject: Object) => decodedObject.maxVendorId,
+            validator: (decodedObject: Object) => !decodedObject.isRange,
         },
         {
             name: 'defaultConsent',
             type: 'bool',
             numBits: 1,
-            validator: decodedObject => decodedObject.isRange,
+            validator: (decodedObject: Object) => decodedObject.isRange,
         },
         {
             name: 'numEntries',
             numBits: 12,
             type: 'int',
-            validator: decodedObject => decodedObject.isRange,
+            validator: (decodedObject: Object) => decodedObject.isRange,
         },
         {
             name: 'vendorRangeList',
             type: 'list',
-            listCount: decodedObject => decodedObject.numEntries,
-            validator: decodedObject => decodedObject.isRange,
+            listCount: (decodedObject: Object) => decodedObject.numEntries,
+            validator: (decodedObject: Object) => decodedObject.isRange,
             fields: [
                 {
                     name: 'isRange',
@@ -52,7 +52,7 @@ const vendorVersion = {
                     name: 'endVendorId',
                     type: 'int',
                     numBits: 16,
-                    validator: decodedObject => decodedObject.isRange,
+                    validator: (decodedObject: Object) => decodedObject.isRange,
                 },
             ],
         },
@@ -65,6 +65,7 @@ export const CMP_GLOBAL_NAME = '__cmp';
 export const CMP_ID = 1;
 export const CMP_VERSION = 1;
 export const COOKIE_VERSION = 1;
+export const COOKIE_NAME = 'GU_TK';
 
 export const defaultConfig = {
     globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
@@ -76,10 +77,7 @@ export const defaultConfig = {
 
 export const vendorVersionList = [vendorVersion];
 
-export const vendorVersionMap: VendorVersionMap = vendorVersionList.reduce(
-    (acc, definition) => {
-        acc[definition.version] = definition;
-        return acc;
-    },
-    {}
-);
+export const vendorVersionMap = vendorVersionList.reduce((acc, definition) => {
+    acc[definition.version] = definition;
+    return acc;
+}, {});

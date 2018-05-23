@@ -49,6 +49,7 @@ describe('cookieutils', () => {
 
     it('encodeDateToBits encodes a date to a bit string', () => {
         const date = new Date(1512661975200);
+        // $FlowFixMe I know arguments are missing, Flow... this is a test
         const bitString = encodeDateToBits(date);
         expect(bitString).toBe('1110000101100111011110011001101000');
     });
@@ -59,6 +60,7 @@ describe('cookieutils', () => {
     });
 
     it('encode6BitCharacters encodes a 6bitchar string to a bit string', () => {
+        // $FlowFixMe I know arguments are missing, Flow... this is a test
         const bitString = encode6BitCharacters('hello');
         expect(bitString).toBe('000111000100001011001011001110');
     });
@@ -71,6 +73,7 @@ describe('cookieutils', () => {
 
     it('decodeBitsToDate decodes a bit string to original encoded value', () => {
         const now = new Date('2018-07-15 PDT');
+        // $FlowFixMe I know arguments are missing, Flow... this is a test
         const bitString = encodeDateToBits(now);
         const decoded = decodeBitsToDate(bitString, 0, bitString.length);
         expect(decoded.getTime()).toBe(now.getTime());
@@ -78,23 +81,25 @@ describe('cookieutils', () => {
 
     it('decodeBitsToBool decodes a bit string to original encoded "true" value', () => {
         const bitString = encodeBoolToBits(true);
-        const decoded = decodeBitsToBool(bitString, 0, bitString.length);
+        const decoded = decodeBitsToBool(bitString, 0);
         expect(decoded).toEqual(true);
     });
     it('decodeBitsToBool decodes a bit string to original encoded "false" value', () => {
         const bitString = encodeBoolToBits(false);
-        const decoded = decodeBitsToBool(bitString, 0, bitString.length);
+        const decoded = decodeBitsToBool(bitString, 0);
         expect(decoded).toEqual(false);
     });
 
     it('decode6BitCharacters decodes a bit string to original encoded value', () => {
         const string = 'STUFF';
+        // $FlowFixMe I know arguments are missing, Flow... this is a test
         const bitString = encode6BitCharacters(string);
         const decoded = decode6BitCharacters(bitString, 0, bitString.length);
         expect(decoded).toEqual(string);
     });
     it('decode6BitCharacters decodes a bit string that is longer than length', () => {
         const string = 'STUFF';
+        // $FlowFixMe I know arguments are missing, Flow... this is a test
         const bitString = encode6BitCharacters(string);
         const decoded = decode6BitCharacters(bitString, 0, 12);
         expect(decoded).toBe('ST');

@@ -71,6 +71,7 @@ describe('cmp', () => {
     });
 
     beforeEach(() => {
+        // $FlowFixMe I know fields are missing, Flow... this is a test
         cmp = new CmpService({ vendorList });
         jest.resetAllMocks();
     });

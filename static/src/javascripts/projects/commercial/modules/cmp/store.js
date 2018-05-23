@@ -103,7 +103,7 @@ const getVendorConsentData = (
     cookieVersion: number,
     canPersonalise: boolean | null,
     vendorList: VendorList
-): VendorConsentData => {
+): ?VendorConsentData => {
     if (typeof canPersonalise === 'boolean') {
         const consentData = generateConsentData(
             cmpId,
@@ -122,8 +122,8 @@ export class CmpStore {
     consentData: ConsentData;
     canPersonalise: boolean | null;
     allowedVendorIds: Array<number>;
-    vendorConsentData: VendorConsentData;
-    vendorConsentResponse: VendorConsentResponse;
+    vendorConsentData: ?VendorConsentData;
+    vendorConsentResponse: ?VendorConsentResponse;
     getVendorConsentsObject: () => ?VendorConsentResponse;
 
     constructor(
@@ -155,15 +155,17 @@ export class CmpStore {
         vendorIds: ?Array<number>
     ): ?VendorConsentResponse => {
         log.info('generating the VendorConsentData....');
-        const consentDataResponse = generateVendorConsentResponse(
-            this.vendorConsentData,
-            this.vendorList,
-            vendorIds
-        );
-        return {
-            ...this.consentData,
-            ...consentDataResponse,
-        };
+        if (this.vendorConsentData) {
+            const consentDataResponse = generateVendorConsentResponse(
+                this.vendorConsentData,
+                this.vendorList,
+                vendorIds
+            );
+            return {
+                ...this.consentData,
+                ...consentDataResponse,
+            };
+        }
     };
 }
 

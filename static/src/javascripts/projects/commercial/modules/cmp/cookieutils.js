@@ -114,6 +114,7 @@ const encodeFields = ({ input, fields }) =>
         return acc;
     }, '');
 
+// $FlowFixMe
 const encodeField = ({ input, field }) => {
     const { name, type, numBits, encoder, validator } = field;
     if (typeof validator === 'function') {
@@ -260,7 +261,10 @@ const decodeField = ({ input, output, startPosition, field }): Object => {
  * either `selectedVendorIds` or the `vendorRangeList` depending on
  * the value of the `isRange` flag.
  */
-const encodeDataToBits = (data: { cookieVersion: number }, definitionMap) => {
+const encodeDataToBits = (
+    data: { cookieVersion: number },
+    definitionMap: Object
+) => {
     const { cookieVersion } = data;
 
     if (typeof cookieVersion !== 'number') {
@@ -307,7 +311,10 @@ const encodeCookieValue = (
     }
 };
 
-const decodeCookieBitValue = (bitString, definitionMap): Object => {
+const decodeCookieBitValue = (
+    bitString: string,
+    definitionMap: Object
+): Object => {
     const cookieVersion = decodeBitsToInt(bitString, 0, NUM_BITS_VERSION);
     if (typeof cookieVersion !== 'number') {
         log.error('Could not find cookieVersion to decode');
@@ -321,6 +328,7 @@ const decodeCookieBitValue = (bitString, definitionMap): Object => {
         return {};
     }
     const cookieFields = definitionMap[cookieVersion].fields;
+    // $FlowFixMe shhhh
     const { decodedObject } = decodeFields({
         input: bitString,
         fields: cookieFields,

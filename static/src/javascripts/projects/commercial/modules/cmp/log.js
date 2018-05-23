@@ -6,6 +6,7 @@ import { defaultConfig } from 'commercial/modules/cmp/cmp-env';
 const logLevels = ['debug', 'info', 'warn', 'error'];
 
 export const log = logLevels.reduce((logger, funcName, index) => {
+    // $FlowFixMe
     logger[funcName] = (...args) => {
         const consoleFunc = funcName === 'debug' ? 'log' : funcName;
         const { logging } = defaultConfig;

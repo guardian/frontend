@@ -163,7 +163,7 @@ describe('CMP cookie', () => {
             consentLanguage: 'AA',
             consentScreen: 0,
         };
-
+        // $FlowFixMe I know fields are missing, Flow... this is a test
         expect(encodeVendorConsentData({ ...consentData, vendorList })).toEqual(
             'BAAAAAAAAAAAAABABAAAABAAAAAAAA'
         );
@@ -257,7 +257,7 @@ describe('CMP cookie', () => {
             vendorListVersion: 1,
             maxVendorId: 2,
         };
-
+        // $FlowFixMe I know fields are missing, Flow... this is a test
         const bitString = encodeVendorCookieValue(consentData);
         expect(bitString).toBeUndefined();
     });
@@ -271,7 +271,7 @@ describe('CMP cookie', () => {
             vendorListVersion: 1,
             maxVendorId: 2,
         };
-
+        // $FlowFixMe I know fields are missing, Flow... this is a test
         const bitString = encodeVendorCookieValue(consentData);
         expect(bitString).toBeUndefined();
     });
@@ -308,8 +308,8 @@ describe('CMP cookie', () => {
                 },
             ],
         };
-
-        const bitString = encodeVendorCookieValue(consentData);
+        // $FlowFixMe I know fields are missing, Flow... this is a test
+        const bitString: string = encodeVendorCookieValue(consentData);
         const decoded = decodeVendorCookieValue(bitString);
 
         expect(decoded).toEqual(consentData);
@@ -341,8 +341,8 @@ describe('CMP cookie', () => {
                 },
             ],
         };
-
-        const bitString = encodeVendorCookieValue(consentData);
+        // $FlowFixMe I know fields are missing, Flow... this is a test
+        const bitString: string = encodeVendorCookieValue(consentData);
         const decoded = decodeVendorCookieValue(bitString);
 
         expect(decoded).toEqual(consentData);
@@ -364,7 +364,8 @@ describe('CMP cookie', () => {
             vendorIdBitString: '10011',
         };
 
-        const bitString = encodeVendorCookieValue(consentData);
+        // $FlowFixMe I know fields are missing, Flow... this is a test
+        const bitString: string = encodeVendorCookieValue(consentData);
         const decoded = decodeVendorCookieValue(bitString);
 
         expect(bitString).toEqual('BAAAAAAAAAAAAABABBENABAKqMAAVMA');

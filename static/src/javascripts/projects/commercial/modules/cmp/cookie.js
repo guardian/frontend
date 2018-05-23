@@ -89,7 +89,7 @@ const convertVendorsToRanges = (
     return ranges;
 };
 
-const encodeVendorConsentData = (consentData: VendorConsentData): string => {
+const encodeVendorConsentData = (consentData: any): string => {
     const {
         vendorList = {},
         selectedPurposeIds = [],
@@ -199,13 +199,15 @@ const decodeVendorConsentData = (cookieValue: string): VendorConsentData => {
     return cookieData;
 };
 
-const readVendorConsentCookie = () => {
+const readVendorConsentCookie = (): Promise<any> => {
     const cookie = getCookie(VENDOR_CONSENT_COOKIE_NAME);
     log.debug('Read consent data from local cookie', cookie);
     return Promise.resolve(cookie && decodeVendorConsentData(cookie));
 };
 
-const writeVendorConsentCookie = (vendorConsentData: VendorConsentData) => {
+const writeVendorConsentCookie = (
+    vendorConsentData: VendorConsentData
+): Promise<any> => {
     log.debug('Write consent data to local cookie', vendorConsentData);
     return Promise.resolve(
         addCookie(
