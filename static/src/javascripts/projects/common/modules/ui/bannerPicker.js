@@ -39,6 +39,7 @@ const init = (banners: Array<Banner>): Promise<void> => {
     return new Promise(resolve => {
         const TIME_LIMIT = 2000;
         const messageStates = userPrefs.get('messages');
+        let bannerPicked = false;
 
         banners.forEach((banner, index) => {
             const pushToResults = (result: boolean): void => {
@@ -46,9 +47,11 @@ const init = (banners: Array<Banner>): Promise<void> => {
 
                 const successfulBannerIndex = getSuccessfulBannerIndex();
 
-                if (successfulBannerIndex !== -1) {
+                if (!bannerPicked && successfulBannerIndex !== -1) {
                     const successfulBanner = banners[successfulBannerIndex];
                     successfulBanner.show();
+
+                    bannerPicked = true;
 
                     const trackingObj = {
                         component: 'banner-picker',
