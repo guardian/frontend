@@ -34,5 +34,5 @@ To link a badge to a secret tag:
 salt=XXXXXXXXX
 hash=XXXXXXXXX
 ```
-3. In the `Badges` object, add a new val: `val specialReport = SpecialBadge("[salt]", "[hashed tag]", Static("path/to/Badge.svg"))`
+3. In the `model.Badges` object, add a new val: `val specialReport = SpecialBadge("[salt]", "[hashed tag]", Static("path/to/Badge.svg"))`
 4. In CODE create an article with your new tag and ensure the badge is applied correctly
