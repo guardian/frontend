@@ -16,7 +16,8 @@ object ConsentOrder {
       "post_optout",
       "phone_optout",
       "sms",
-      "market_research_optout"
+      "market_research_optout",
+      "profiling_optout"
     )
 
   /**
