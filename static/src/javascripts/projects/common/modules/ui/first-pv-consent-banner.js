@@ -80,13 +80,8 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     </div>
 `;
 
-const isInEEA = (): boolean =>
-    [
-        (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU',
-        ['NO', 'IS', 'LI'].includes(
-            (getCookie('GU_country') || 'OTHER').toUpperCase()
-        ),
-    ].some(_ => _ === true);
+const isInEU = (): boolean =>
+    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
 
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
@@ -99,7 +94,7 @@ const hasUnsetAdChoices = (): boolean =>
     allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
 
 const canShow = (): Promise<boolean> =>
-    Promise.resolve([hasUnsetAdChoices(), isInEEA()].every(_ => _ === true));
+    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
