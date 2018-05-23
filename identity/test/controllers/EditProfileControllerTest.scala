@@ -440,7 +440,7 @@ import scala.concurrent.Future
 
     "saveEmailPreferences method is called with valid form body" should {
       "respond with success body if IDAPI post email endpoint returns 200" in new EditProfileFixture {
-        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken).withFormUrlEncodedBody("htmlPreference" -> "Text")
+        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken)
         when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
 
         val result = controller.saveEmailPreferencesAjax().apply(fakeRequestEmailPrefs)
@@ -451,7 +451,7 @@ import scala.concurrent.Future
       }
 
       "respond with error body if IDAPI post email endpoint returns error" in new EditProfileFixture {
-        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken).withFormUrlEncodedBody("htmlPreference" -> "Text")
+        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken)
         val errors = List(Error("Test message", "Test description", 500))
         when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(errors))
 

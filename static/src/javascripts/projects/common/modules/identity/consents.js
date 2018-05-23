@@ -14,11 +14,7 @@ import {
     bindAnalyticsEventsOnce as bindCheckboxAnalyticsEventsOnce,
 } from './modules/switch';
 import { addUpdatingState, removeUpdatingState } from './modules/button';
-import {
-    getCsrfTokenFromElement,
-    getNewsletterHtmlPreferenceFromElement,
-    ERR_IDENTITY_HTML_PREF_NOT_FOUND,
-} from './modules/fetchFormFields';
+import { getCsrfTokenFromElement } from './modules/fetchFormFields';
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
@@ -56,13 +52,11 @@ const submitPartialConsentForm = (formData: {}): Promise<void> => {
 
 const submitNewsletterAction = (
     csrfToken: string,
-    htmlPreference: string,
     action: string = 'none',
     newsletters: Array<string> = []
 ): Promise<void> => {
     const formData = new FormData();
     formData.append('csrfToken', csrfToken);
-    formData.append('htmlPreference', htmlPreference);
 
     switch (action) {
         case 'add':
@@ -162,17 +156,6 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
             resetUnsubscribeFromAll(buttonEl);
 
             return Promise.all([
-                getNewsletterHtmlPreferenceFromElement(buttonEl).catch(
-                    (error: Error) => {
-                        if (
-                            error.message === ERR_IDENTITY_HTML_PREF_NOT_FOUND
-                        ) {
-                            return 'HTML';
-                        }
-
-                        throw error;
-                    }
-                ),
                 fastdom
                     .read(() => [
                         ...document.querySelectorAll(
@@ -191,13 +174,8 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                     )[0]
                 ),
             ])
-                .then(([htmlPreference, newsletterIds, csrfToken]) =>
-                    submitNewsletterAction(
-                        csrfToken,
-                        htmlPreference,
-                        'remove',
-                        newsletterIds
-                    )
+                .then(([newsletterIds, csrfToken]) =>
+                    submitNewsletterAction(csrfToken, 'remove', newsletterIds)
                 )
                 .catch((err: Error) => {
                     pushError(err, 'reload').then(() => {
@@ -213,29 +191,15 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
 };
 
 const updateNewsletterSwitch = (labelEl: HTMLElement): Promise<void> =>
-    getNewsletterHtmlPreferenceFromElement(labelEl)
-        .catch((error: Error) => {
-            if (error.message === ERR_IDENTITY_HTML_PREF_NOT_FOUND) {
-                return 'HTML';
-            }
-
-            throw error;
-        })
-        .then((htmlPreference: string) =>
-            Promise.all([
-                htmlPreference,
-                getCsrfTokenFromElement(labelEl),
-                getCheckboxInfo(labelEl),
-                addSpinner(labelEl),
+    Promise.all([
+        getCsrfTokenFromElement(labelEl),
+        getCheckboxInfo(labelEl),
+        addSpinner(labelEl),
+    ])
+        .then(([token, info]) =>
+            submitNewsletterAction(token, info.checked ? 'add' : 'remove', [
+                info.name,
             ])
-        )
-        .then(([htmlPreference, token, info]) =>
-            submitNewsletterAction(
-                token,
-                htmlPreference,
-                info.checked ? 'add' : 'remove',
-                [info.name]
-            )
         )
         .catch((err: Error) => {
             pushError(err, 'reload').then(() => {
