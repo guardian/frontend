@@ -41,7 +41,7 @@
             @dataTestId.map{idValue => data-test-id="@idValue"}
             @{
                 if(redirect.isAllowedFrom(url))
-                    Html(s"href='${redirect.url}' data-tabs-ignore='true'")
+                Html(s"href='${idUrlBuilder.buildUrl(redirect.url, ("returnUrl", idUrlBuilder.buildUrl(url)))}' data-tabs-ignore='true'")
                 else
                     Html(s"href='$url'")
             }
