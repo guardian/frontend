@@ -27,7 +27,6 @@ const consentManagement = {
     cmpApi: 'iab',
     timeout: 8000,
     allowAuctionWithoutConsent: true,
-    consentRequired: true,
 };
 
 class PrebidAdUnit {
@@ -68,11 +67,19 @@ class PrebidAdUnit {
 
 class PrebidService {
     static initialise(): void {
-        window.pbjs.setConfig({
-            bidderTimeout,
-            priceGranularity,
-            consentManagement,
-        });
+
+        if(config.switches.enableConsentManagementService) {
+            window.pbjs.setConfig({
+                bidderTimeout,
+                priceGranularity,
+                consentManagement,
+            });
+        } else {
+            window.pbjs.setConfig({
+                bidderTimeout,
+                priceGranularity,
+            });
+        }
 
         // gather analytics from 0.01% of pageviews
         const inSample = getRandomIntInclusive(1, 10000) === 1;

@@ -22,12 +22,10 @@ const readConsentCookie = (cookieName: string): boolean | null => {
     return null;
 };
 
-/* fam, I am not talking about that config... */
-/* eslint-disable guardian-frontend/no-direct-access-config */
 class CmpService {
     isLoaded: boolean;
     cmpReady: boolean;
-    config: CmpConfig;
+    cmpConfig: CmpConfig;
     eventListeners: Object;
     commandQueue: Array<any>;
     store: CmpStore;
@@ -37,7 +35,7 @@ class CmpService {
     constructor(store: CmpStore) {
         this.isLoaded = false;
         this.cmpReady = false;
-        this.config = defaultConfig;
+        this.cmpConfig = defaultConfig;
         this.eventListeners = {};
         this.store = store;
         this.processCommand.receiveMessage = this.receiveMessage;
@@ -68,8 +66,8 @@ class CmpService {
         getVendorConsents: (vendorIds: ?Array<number>, callback = () => {}) => {
             const consent = {
                 metadata: this.generateConsentString(),
-                gdprApplies: this.config.gdprApplies,
-                hasGlobalScope: this.config.storeConsentGlobally,
+                gdprApplies: this.cmpConfig.gdprApplies,
+                hasGlobalScope: this.cmpConfig.storeConsentGlobally,
                 ...this.store.getVendorConsentsObject(vendorIds),
             };
             callback(consent, true);
@@ -77,8 +75,8 @@ class CmpService {
         // $FlowFixMe
         getConsentData: (_, callback = () => {}): void => {
             const consentData = {
-                gdprApplies: this.config.gdprApplies,
-                hasGlobalScope: this.config.storeConsentGlobally,
+                gdprApplies: this.cmpConfig.gdprApplies,
+                hasGlobalScope: this.cmpConfig.storeConsentGlobally,
                 consentData: this.generateConsentString(),
             };
             callback(consentData, true);
@@ -96,7 +94,7 @@ class CmpService {
         // $FlowFixMe
         ping: (_, callback = () => {}): void => {
             const result = {
-                gdprAppliesGlobally: this.config.storeConsentGlobally,
+                gdprAppliesGlobally: this.cmpConfig.storeConsentGlobally,
                 cmpLoaded: true,
             };
             callback(result, true);
@@ -191,26 +189,28 @@ class CmpService {
 }
 
 export const init = (): void => {
-    // Pull queued command from __cmp stub
-    const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
-    // Initialize the store with all of our consent data
-    const store = new CmpStore(
-        CMP_ID,
-        CMP_VERSION,
-        COOKIE_VERSION,
-        readConsentCookie(COOKIE_NAME),
-        globalVendorList
-    );
-    // init the CmpService with a generated store of data...
-    const cmp = new CmpService(store);
-    // Expose `processCommand` as the CMP implementation
-    window[CMP_GLOBAL_NAME] = cmp.processCommand;
-    // Notify listeners that the CMP is loaded
-    cmp.isLoaded = true;
-    cmp.notify('isLoaded');
-    // Execute any previously queued command
-    cmp.commandQueue = commandQueue;
-    cmp.processCommandQueue();
+    // Only run our CmpService if prepareCmp has added the stub
+    if (window[CMP_GLOBAL_NAME]) {
+        // Pull queued command from __cmp stub
+        const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
+        // Initialize the store with all of our consent data
+        const store = new CmpStore(
+            CMP_ID,
+            CMP_VERSION,
+            COOKIE_VERSION,
+            readConsentCookie(COOKIE_NAME),
+            globalVendorList
+        );
+        const cmp = new CmpService(store);
+        // Expose `processCommand` as the CMP implementation
+        window[CMP_GLOBAL_NAME] = cmp.processCommand;
+        // Notify listeners that the CMP is loaded
+        cmp.isLoaded = true;
+        cmp.notify('isLoaded');
+        // Execute any previously queued command
+        cmp.commandQueue = commandQueue;
+        cmp.processCommandQueue();
+    }
 };
 
 export const _ = { CmpService, readConsentCookie };
