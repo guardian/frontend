@@ -142,14 +142,14 @@ object Cached extends implicits.Dates {
 }
 
 object NoCache {
-  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "private, no-store")
+  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "private, no-store, no-cache")
 }
 
 case class NoCache[A](action: Action[A])(implicit val executionContext: ExecutionContext) extends Action[A] {
 
   override def apply(request: Request[A]): Future[Result] = {
     action(request) map { response => response.withHeaders(
-        ("Cache-Control", "private, no-store")
+        ("Cache-Control", "private, no-store, no-cache")
       )
     }
   }

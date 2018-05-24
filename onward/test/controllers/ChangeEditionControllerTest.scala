@@ -40,7 +40,7 @@ import test.{ConfiguredTestSuite, TestRequest}
   it should "not cache" in {
     val result = changeEditionController.render("us")(TestRequest())
 
-    header("Cache-Control", result) should be (Some("private, no-store"))
+    header("Cache-Control", result) should be (Some("private, no-store, no-cache"))
   }
 
   it should "not redirect to unknown editions" in {
