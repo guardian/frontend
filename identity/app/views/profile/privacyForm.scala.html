@@ -19,6 +19,18 @@
   consentHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
+@smsConsent = {
+    <fieldset class="fieldset fieldset--manage-account-noborder">
+        <div class="fieldset__heading">
+            <h2 class="form__heading"></h2>
+        </div>
+        <div class="fieldset__fields">
+            <p class="form__heading">Would you also like to hear about the above by SMS?</p>
+            @views.html.profile.smsConsent(idUrlBuilder, idRequest, privacyForm, user)(request, messages)
+        </div>
+    </fieldset>
+}
+
 @marketingConsentForm = {
     <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
@@ -36,8 +48,8 @@
         <fieldset class="fieldset fieldset--manage-account-noborder">
 
             <div class="fieldset__heading">
-                <h2 class="form__heading">What can we tell you about?</h2>
-                <p class="form__note">The Guardian would like to occasionally send you information about their products, services and events</p>
+                <h2 class="form__heading">What else would you like to hear about by email?</h2>
+                <p class="form__note">From time to time, we'd love to be able to send you information about our products, services and events.</p>
             </div>
 
             <div class="fieldset__fields">
@@ -45,16 +57,15 @@
                 <div class="manage-account__switches manage-account__switches--single-column">
                     <ul>
                     @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
-                        <li>
-                            @if(!isChannel(consentField)) {
+                        @if(!isChannel(consentField)) {
+                            <li>
                                 @if(index == 0) {
                                     @fragments.consentSwitch(consentField, consentHint)(messages)
                                 } else {
                                     @fragments.consentSwitch(consentField)(messages)
                                 }
-                            }
-
-                        </li>
+                            </li>
+                        }
                     }
                     </ul>
                 </div>
@@ -83,12 +94,16 @@
     </div>
 }
 
-@* MARKETING CONSENT *@
-@marketingConsentForm
-
 @* NEWSLETTERS *@
-<hr class="manage-account-divider" />
 @profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
+
+@* MARKETING CONSENT *@
+<hr class="manage-account-divider" />
+@marketingConsentForm
+@smsConsent
+
+@* EMAIL SETTINGS *@
+@views.html.profile.emailSettings(idRequest, idUrlBuilder)
 
 @* CHANNELS *@
 <hr class="manage-account-divider" />

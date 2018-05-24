@@ -1,6 +1,7 @@
 @import _root_.form.IdFormHelpers.nonInputFields
 @import views.support.fragment.ConsentChannel._
 @import views.support.fragment.Switch._
+@import com.gu.identity.model.Consent
 
 @(
     idUrlBuilder: services.IdentityUrlBuilder,
@@ -18,7 +19,9 @@
                 @fragments.form.switch(
                     title = "",
                     subheading = None,
-                    description = Some("I would like to receive updates about the Guardian products and services I’ve selected above <b>by SMS</b> (text messages)."),
+                    description = Some(
+                        Consent.CommunicationSms.latestWording.description.getOrElse("")
+                            .replaceFirst("The Guardian products and services I['’]ve selected above", "<b>$0</b>")),
                     behaviour = ConsentSwitch,
                     field = consentField("consented"),
                     extraFields = List("actor","id","version","timestamp","privacyPolicyVersion").map { field => fragments.form.hidden(consentField(field)) }

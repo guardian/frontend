@@ -28,7 +28,7 @@ class NewsletterService(
   def subscriptions(userId: String, trackingData: TrackingData): Future[Form[EmailPrefsData]] =
     api.userEmails(userId, trackingData).map {
       case Right(subscriber) =>
-        emailPrefsForm.fill(EmailPrefsData(subscriber.htmlPreference, subscriber.subscriptions.map(_.listId)))
+        emailPrefsForm.fill(EmailPrefsData(subscriber.subscriptions.map(_.listId)))
 
       case Left(idapiErrors) =>
         idapiErrors.foldLeft(emailPrefsForm) {
@@ -57,7 +57,7 @@ class NewsletterService(
           api.addSubscription(userId, EmailList(id), auth, trackingParameters)
         }
 
-        val newSubscriber = Subscriber(emailPrefsData.htmlPreference, Nil)
+        val newSubscriber = Subscriber("HTML", Nil) //TODO: remove the htmlPreference property from Subscriber as no longer used
         val updatePreferencesResponse = api.updateUserEmails(userId, newSubscriber, auth, trackingParameters)
 
         Future.sequence(updatePreferencesResponse :: unsubscribeResponse ++ subscribeResponse).map { responses =>
@@ -86,19 +86,14 @@ class NewsletterService(
 }
 
 case class EmailPrefsData(
-  htmlPreference: String,
   currentEmailSubscriptions: List[String],
   addEmailSubscriptions: List[String] = List(),
   removeEmailSubscriptions: List[String] = List()
 )
 
 object EmailPrefsData {
-  protected val validPrefs = Set("HTML", "Text")
-  def isValidHtmlPreference(pref: String): Boolean =  validPrefs contains pref
-
   val emailPrefsForm = Form(
     Forms.mapping(
-      "htmlPreference" -> Forms.text.verifying(isValidHtmlPreference _),
       "currentEmailSubscriptions" -> Forms.list(Forms.text),
       "addEmailSubscriptions" -> Forms.list(Forms.text),
       "removeEmailSubscriptions" -> Forms.list(Forms.text)
