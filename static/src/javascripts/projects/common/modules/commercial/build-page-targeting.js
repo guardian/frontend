@@ -2,6 +2,7 @@
 import config from 'lib/config';
 import { getCookie, removeCookie } from 'lib/cookies';
 import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'common/modules/commercial/krux';
@@ -180,6 +181,7 @@ const buildPageTargeting = once((adFree: ?boolean): Object => {
             vl: page.videoDuration
                 ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
                 : undefined,
+            cc: geolocationGetSync(),
         },
         page.sharedAdTargeting,
         paTargeting,
