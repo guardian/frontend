@@ -68,6 +68,19 @@
     )
 }
 
+@profilingConsentOptOutContent = {
+    @views.html.profile.profilingConsent(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
+}
+
+@profilingConsentOptOutStep = @{
+    ConsentStep(
+        name="profilingConsentOptOut",
+        title ="Using your data for marketing analysis",
+        content = profilingConsentOptOutContent,
+        show = true
+    )
+}
+
 @marketingStepContent = {
     <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
         @views.html.helper.CSRF.formField
@@ -147,7 +160,8 @@
 @defaultJourney = @{List(
     marketingConsentStep,
     smsStep,
-    nonElectronicOptOutStep
+    nonElectronicOptOutStep,
+    profilingConsentOptOutStep
 )}
 
 @confirmModal = {
