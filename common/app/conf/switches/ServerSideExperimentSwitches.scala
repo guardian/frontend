@@ -7,6 +7,8 @@ trait ServerSideExperimentSwitches {
   val ServerSideExperiments = {
     // It's for the side effect. Blame agents.
     val experiments = ActiveExperiments.allExperiments
+    println("===============")
+    println("Experiments", experiments)
     Switch(
       SwitchGroup.ServerSideExperiments,
       "server-side-tests",

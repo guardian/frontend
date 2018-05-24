@@ -11,7 +11,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialAdRefresh,
     OrielParticipation,
     LotameParticipation,
-    OldTLSSupportDeprecation
+    OldTLSSupportDeprecation,
+    AudioPageHideImage
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -55,4 +56,13 @@ object OldTLSSupportDeprecation extends Experiment(
   sellByDate = new LocalDate(2018, 6, 13),
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
+)
+
+//AB Test for audio
+object AudioPageHideImage extends Experiment(
+  name = "audio-page-hide-image",
+  description = "This will hide the image above the player on audio pages",
+  owners = Seq(Owner.withGithub("ajwl")),
+  sellByDate = new LocalDate(2018, 6, 23),
+  participationGroup = Perc50
 )

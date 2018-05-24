@@ -20,33 +20,11 @@ export const audioPageHideImage : ABTest = {
     variants: [
         {
             id: 'control',
-            test(context, config) {},
-
-            impression(track) {
-                /* call track() when the impression should be registered
-                  (e.g. your element is in view) */
-            },
-
-            success(complete) {
-                /* do something that determines whether the user has completed
-                   the test (e.g. set up an event listener) and call 'complete'
-                   afterwards */
-
-                complete();
-            }
+            test: () => {}
         },
         {
             id: 'hide-image',
-            test(context, config) {
-                context.querySelector('.trail-image').classList.add('hidden');
-            },
-
-            impression(track) {
-                track()
-            },
-
-            success(complete) {
-                complete();
+            test: (context, config) => {
             }
         }
     ]

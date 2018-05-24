@@ -37,6 +37,7 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
+import {initAudioAbTest} from "common/modules/media/ab-audio-page-hide-image";
 
 const setAdTestCookie = (): void => {
     const queryParams = getUrlVars();
@@ -201,6 +202,9 @@ const bootStandard = (): void => {
     addErrorHandler();
     addScrollHandler();
     addResizeHandler();
+
+    //Sorry to put an AB test in here but unfortunately it looks like here is where it has to go because otherwise the experience is outrageous
+    initAudioAbTest();
 
     // Set adtest query if url param declares it
     setAdTestCookie();

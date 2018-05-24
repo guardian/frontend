@@ -39,9 +39,21 @@ abstract case class Experiment(
   private def inControl(implicit request: RequestHeader): Boolean = checkHeader(participationGroup.headerName, _ == controlValue.value)
   private def matchesExtraHeader(implicit requestHeader: RequestHeader): Boolean = extraHeader.map(h => checkHeader(h.key, _ == h.value)).getOrElse(true)
 
-  def canRun(implicit request: RequestHeader): Boolean = isSwitchedOn && priorCondition
+  def canRun(implicit request: RequestHeader): Boolean = {
+    println("------")
+    println("isswitched on", isSwitchedOn)
+    println("priorCondition", priorCondition)
+    isSwitchedOn && priorCondition
+  }
 
-  def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = canRun && matchesExtraHeader && inVariant
+  def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = {
+    println("==============")
+    println("canrun", canRun)
+    println("matchesExtraheader", matchesExtraHeader)
+    println("inVariant", inVariant)
+//    canRun && matchesExtraHeader && inVariant
+    canRun && matchesExtraHeader //&& inVariant
+  }
   def isControl[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = canRun && inControl
   def value(implicit request: RequestHeader, canCheck: CanCheckExperiment): String = {
     val experimentValue = if(isParticipating) variantValue else if(isControl) controlValue else unknownValue

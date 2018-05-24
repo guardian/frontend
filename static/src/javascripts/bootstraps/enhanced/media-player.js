@@ -27,6 +27,8 @@ import { getVideoInfo, isGeoBlocked } from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { skipAd } from 'common/modules/media/videojs-plugins/skip-ad';
 import { isAdFreeUser } from 'common/modules/commercial/user-features';
+import { isInVariant, getVariant } from 'common/modules/experiments/utils';
+import { audioPageHideImage } from 'common/modules/experiments/tests/audio-page-hide-image.js';
 
 const initLoadingSpinner = (player: any): void => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -53,7 +55,6 @@ const upgradeVideoPlayerAccessibility = (player: any): void => {
 
 const createVideoPlayer = (el: HTMLElement, options: Object): any => {
     const player = videojs(el, options);
-
     const duration = parseInt(el.getAttribute('data-duration'), 10);
 
     player.ready(() => {
