@@ -7,7 +7,7 @@
     "tools/amp-validation"
   ],
   "engines": {
-    "yarn": "1.6.0"
+    "yarn": "1.7.0"
   },
   "dependencies": {
     "@guardian/atom-renderer": "0.14.4",
