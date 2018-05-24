@@ -1,17 +1,26 @@
 // @flow
 import { init } from 'common/modules/ui/bannerPicker';
 import fakeOphan from 'ophan/ng';
+import userPrefs_ from 'common/modules/user-prefs';
 
 jest.useFakeTimers();
+
 jest.mock('ophan/ng', () => ({
     record: jest.fn(),
 }));
 
-describe('bannerPicker', () => {
-    afterEach(() => {
-        fakeOphan.record.mockReset();
-    });
+jest.mock('common/modules/user-prefs', () => ({
+    get: jest.fn().mockReturnValue([]),
+}));
 
+const userPrefs: any = userPrefs_;
+
+beforeEach(() => {
+    userPrefs.get.mockClear();
+    fakeOphan.record.mockClear();
+});
+
+describe('bannerPicker', () => {
     describe('bannerPicker picks correct banner to show', () => {
         // resultsSeq is the order banner's checks will resolve in the test
         const tests = [
@@ -151,6 +160,7 @@ describe('bannerPicker', () => {
                     expect(fakeOphan.record).toHaveBeenCalledWith(trackingObj);
                     banners.forEach((banner, index) => {
                         if (index === test.successfulIndex) {
+                            expect(banner.show).toHaveBeenCalledTimes(1);
                             expect(banner.show).toHaveBeenCalled();
                         } else {
                             expect(banner.show).not.toHaveBeenCalled();
@@ -237,6 +247,34 @@ describe('bannerPicker', () => {
                 expect(fakeOphan.record).toHaveBeenCalledWith(
                     timeoutTrackingObj
                 );
+                expect(banners[0].show).not.toHaveBeenCalled();
+                expect(banners[1].show).toHaveBeenCalled();
+            });
+        });
+    });
+
+    describe('bannerPicker fails banner without calling canShow if it has already been acknowledged by user', () => {
+        it('should call show() for banner at index 1 if index 0 timesout', () => {
+            const banners = [
+                {
+                    id: 'banner-0',
+                    canShow: jest.fn(),
+                    show: jest.fn(),
+                },
+                {
+                    id: 'banner-1',
+                    canShow: jest.fn().mockReturnValue(Promise.resolve(true)),
+                    show: jest.fn(),
+                },
+            ];
+
+            userPrefs.get.mockReturnValueOnce(['banner-0']);
+
+            const asyncTest = init(banners);
+
+            return asyncTest.then(() => {
+                expect(banners[0].canShow).not.toHaveBeenCalled();
+                expect(banners[1].canShow).toHaveBeenCalled();
                 expect(banners[0].show).not.toHaveBeenCalled();
                 expect(banners[1].show).toHaveBeenCalled();
             });

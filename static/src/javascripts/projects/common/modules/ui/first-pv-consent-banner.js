@@ -8,15 +8,13 @@ import {
     setAdConsentState,
     allAdConsents,
 } from 'common/modules/commercial/ad-prefs.lib';
-import userPrefs from 'common/modules/user-prefs';
+import { trackNonClickInteraction } from 'common/modules/analytics/google';
+import ophan from 'ophan/ng';
+import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
-import ophan from 'ophan/ng';
-
-const lifeTimeViewsKey: string = 'first-pv-consent.lifetime-views';
-const lifetimeDisplayEventKey: string = 'first-pv-consent : viewed-times :';
+const displayEventKey: string = 'first-pv-consent : display';
 
 type Template = {
     heading: string,
@@ -39,6 +37,7 @@ const links: Links = {
     privacy: 'https://www.theguardian.com/help/privacy-policy',
     cookies: 'https://www.theguardian.com/info/cookies',
 };
+const messageCode: string = 'first-pv-consent';
 
 const template: Template = {
     heading: `Your privacy`,
@@ -81,13 +80,8 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     </div>
 `;
 
-const isInEEA = (): boolean =>
-    [
-        (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU',
-        ['NO', 'IS', 'LI'].includes(
-            (getCookie('GU_country') || 'OTHER').toUpperCase()
-        ),
-    ].some(_ => _ === true);
+const isInEU = (): boolean =>
+    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
 
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
@@ -100,7 +94,7 @@ const hasUnsetAdChoices = (): boolean =>
     allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
 
 const canShow = (): Promise<boolean> =>
-    Promise.resolve([hasUnsetAdChoices(), isInEEA()].every(_ => _ === true));
+    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -112,12 +106,10 @@ const trackInteraction = (interaction: string): void => {
 };
 
 const show = (): void => {
-    userPrefs.set(lifeTimeViewsKey, (userPrefs.get(lifeTimeViewsKey) || 0) + 1);
-    trackInteraction(
-        `${lifetimeDisplayEventKey} ${userPrefs.get(lifeTimeViewsKey)}`
-    );
+    upAlertViewCount();
+    trackInteraction(displayEventKey);
 
-    const msg = new Message('first-pv-consent', {
+    const msg = new Message(messageCode, {
         important: true,
         permanent: true,
         customJs: () => {
@@ -132,7 +124,7 @@ const show = (): void => {
 };
 
 const firstPvConsentBanner: Banner = {
-    id: 'first-pv-consent-banner',
+    id: messageCode,
     canShow,
     show,
 };

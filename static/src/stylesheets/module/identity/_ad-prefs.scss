@@ -4,10 +4,13 @@
         color: $garnett-neutral-1;
     }
 
-    padding-bottom: $gs-baseline * 3;
-
-    &.identity-ad-prefs-area--header {
-        border-bottom: 1px solid $garnett-neutral-4;
+    .gs-container {
+        padding-bottom: $gs-baseline * 3;
+    }
+    &:not(:last-child) {
+        .gs-container {
+            border-bottom: 1px solid $garnett-neutral-4;
+        }
     }
 
     .identity-ad-prefs-area__section {
@@ -16,6 +19,13 @@
         max-width: gs-span(11);
         margin: 0 $gs-gutter / 2;
         padding-top: $gs-baseline/2;
+
+        @include mq(leftCol) {
+            padding-left: gs-span(2) + $gs-gutter;
+        }
+        @include mq(wide) {
+            padding-left: gs-span(3) + $gs-gutter;
+        }
 
         @include mq(mobileLandscape) {
             margin: 0 $gs-gutter;
@@ -29,9 +39,11 @@
             margin-top: $gs-baseline * 4;
         }
 
-        &:not(:first-child) {
-            border-top: 1px solid $garnett-neutral-4;
+        &.identity-ad-prefs-area__section--help {
+            margin-top: $gs-baseline * 2;
+            opacity: .75;
         }
+
     }
 
     .identity-title--small {
@@ -52,15 +64,37 @@
 }
 
 .identity-ad-prefs-manager__footer {
+    margin-top: $gs-gutter * 2;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: $gs-gutter;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+
+    @include mq(mobileLandscape) {
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    /*the page auto scrolls to
+    put the button in the viewport,
+    this lets it breathe a bit*/
+    margin-bottom: $gs-gutter / 2 * -1;
+    padding-bottom: $gs-gutter / 2;
 
     > .manage-account__button {
+        opacity: .9999; /*this fixes the button on uc browser somehow*/
         &[disabled] {
             pointer-events: none;
             opacity: .5;
+        }
+    }
+    > .identity-ad-prefs-manager__flash {
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: $gs-gutter / 4;
+        @include mq(mobileLandscape) {
+            margin: 0 0 0 $gs-gutter;
         }
     }
 }
@@ -69,29 +103,15 @@
     color: $status-positive-garnett;
     font-weight: bold;
     opacity: 0;
+    transition: .1s;
     &.identity-ad-prefs-manager__flash--flashing {
-        animation: identity-ad-prefs-manager-flash 2s both;
-    }
-}
-
-@keyframes identity-ad-prefs-manager-flash {
-    0% {
-        opacity: 0;
-    }
-    5% {
         opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
     }
 }
 
 .identity-ad-prefs-input {
 
-    $left-padding: $gs-gutter / 1.5 + 16px + $gs-gutter/2;
+    $left-padding: $gs-gutter / 1.5 + 16px + $gs-gutter / 1.5;
     margin-top: $gs-gutter;
 
     .identity-ad-prefs-input__wording {
@@ -100,21 +120,23 @@
     }
     .identity-ad-prefs-input__label {
         @include fs-textSans(5);
-        @include circular();
-        display: block;
+        border-radius: $gs-baseline * 1.75;
+        display: flex;
         background: $news-garnett-highlight;
-        padding: $gs-gutter / 1.5;
-        padding-left: $left-padding;
+        padding: $gs-baseline ($gs-gutter / 1.5) $gs-baseline $left-padding;
+        min-height: $gs-baseline * 1.5;
+        align-items: center;
+        justify-content: flex-start;
         font-weight: 800;
         position: relative;
         input {
-            margin: auto;
+            margin: 0;
             padding: 0;
             float: none;
             position: absolute;
             left: $gs-gutter;
-            top: 0;
-            bottom: 0;
+            top: $gs-baseline * 1.35;
+            background: #ffffff;
         }
     }
 }

@@ -9,37 +9,35 @@ import fastdom from 'lib/fastdom-promise';
 import {
     getAdConsentState,
     setAdConsentState,
-    allAdConsents,
+    getAllAdConsentsWithState,
 } from 'common/modules/commercial/ad-prefs.lib';
-import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
-
-type AdConsentWithState = {
-    consent: AdConsent,
-    state: ?boolean,
-};
+import type {
+    AdConsent,
+    AdConsentWithState,
+} from 'common/modules/commercial/ad-prefs.lib';
 
 type AdPrefsWrapperProps = {
     getAdConsentState: (consent: AdConsent) => ?boolean,
     setAdConsentState: (consent: AdConsent, state: boolean) => void,
-    allAdConsents: AdConsent[],
+    initialConsentsWithState: AdConsentWithState[],
 };
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
 
 class AdPrefsWrapper extends Component<
     AdPrefsWrapperProps,
-    { consentsWithState: AdConsentWithState[], changesPending: boolean }
+    {
+        consentsWithState: AdConsentWithState[],
+        changesPending: boolean,
+        flashing: boolean,
+    }
 > {
     constructor(props: AdPrefsWrapperProps): void {
         super(props);
         this.state = {
             changesPending: false,
-            consentsWithState: this.props.allAdConsents.map(
-                (consent: AdConsent) => ({
-                    consent,
-                    state: this.props.getAdConsentState(consent),
-                })
-            ),
+            flashing: false,
+            consentsWithState: [...this.props.initialConsentsWithState],
         };
     }
 
@@ -50,9 +48,13 @@ class AdPrefsWrapper extends Component<
                 consentsWithState[consentId].consent
             ) !== state;
         consentsWithState[consentId].state = state;
+        if (this.SubmitButtonRef) {
+            this.SubmitButtonRef.scrollIntoView(false);
+        }
         this.setState({
             consentsWithState,
             changesPending,
+            flashing: false,
         });
     }
 
@@ -66,13 +68,14 @@ class AdPrefsWrapper extends Component<
                 );
             }
         });
-        if (this.FeedbackFlashBoxRef) this.FeedbackFlashBoxRef.flash();
         this.setState({
             changesPending: false,
+            flashing: true,
         });
     }
 
-    FeedbackFlashBoxRef: ?FeedbackFlashBox = null;
+    FeedbackFlashBoxRef: ?FeedbackFlashBox;
+    SubmitButtonRef: ?HTMLElement;
 
     render() {
         return (
@@ -93,18 +96,20 @@ class AdPrefsWrapper extends Component<
                         )
                     )}
                 </div>
-                <div className="identity-ad-prefs-manager__footer">
+                <div
+                    className="identity-ad-prefs-manager__footer"
+                    ref={child => {
+                        this.SubmitButtonRef = child;
+                    }}>
                     <button
                         disabled={this.state.changesPending ? null : 'disabled'}
                         className="manage-account__button manage-account__button--center"
+                        data-link-name="ad-prefs : submit"
                         type="submit">
-                        Save changes
+                        Save my settings
                     </button>
-                    <FeedbackFlashBox
-                        ref={child => {
-                            this.FeedbackFlashBoxRef = child;
-                        }}>
-                        Saved
+                    <FeedbackFlashBox flashing={this.state.flashing}>
+                        Your settings have been saved.
                     </FeedbackFlashBox>
                 </div>
             </form>
@@ -120,7 +125,7 @@ const enhanceAdPrefs = (): void => {
                 fastdom.write(() => {
                     render(
                         <AdPrefsWrapper
-                            allAdConsents={allAdConsents}
+                            initialConsentsWithState={getAllAdConsentsWithState()}
                             getAdConsentState={getAdConsentState}
                             setAdConsentState={setAdConsentState}
                         />,

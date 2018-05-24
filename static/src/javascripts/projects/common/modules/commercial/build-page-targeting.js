@@ -2,11 +2,16 @@
 import config from 'lib/config';
 import { getCookie, removeCookie } from 'lib/cookies';
 import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'common/modules/commercial/krux';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
+import {
+    getAdConsentState,
+    thirdPartyTrackingAdConsent,
+} from 'common/modules/commercial/ad-prefs.lib';
 import { getParticipations } from 'common/modules/experiments/utils';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
@@ -151,6 +156,13 @@ const buildAppNexusTargeting = once((pageTargeting: Object): string =>
 
 const buildPageTargeting = once((adFree: ?boolean): Object => {
     const page: Object = config.page;
+    const adConsentState: ?boolean = getAdConsentState(
+        thirdPartyTrackingAdConsent
+    );
+
+    // personalised ads targeting
+    const paTargeting: Object =
+        adConsentState !== null ? { pa: adConsentState ? 't' : 'f' } : {};
     const adFreeTargeting: Object = adFree ? { af: 't' } : {};
     const pageTargets: Object = Object.assign(
         {
@@ -169,8 +181,10 @@ const buildPageTargeting = once((adFree: ?boolean): Object => {
             vl: page.videoDuration
                 ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
                 : undefined,
+            cc: geolocationGetSync(),
         },
         page.sharedAdTargeting,
+        paTargeting,
         adFreeTargeting,
         getWhitelistedQueryParams()
     );

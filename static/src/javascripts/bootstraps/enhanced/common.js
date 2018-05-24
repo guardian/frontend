@@ -48,8 +48,8 @@ import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
-import { optInEngagementBanner } from 'common/modules/identity/global/opt-in-engagement-banner.js';
-
+import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs';
+import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
 import ophan from 'ophan/ng';
 
 const initialiseTopNavItems = (): void => {
@@ -283,17 +283,20 @@ const initialiseBanner = (): void => {
         breakingNews,
         membershipBanner,
         membershipEngagementBanner,
-        optInEngagementBanner,
         signInEngagementBanner,
         smartAppBanner,
     ];
     initBannerPicker(bannerList);
 };
 
+const initialiseConsentCookieTracking = (): void =>
+    trackConsentCookies(getAllAdConsentsWithState());
+
 const init = (): void => {
     catchErrorsWithContext([
         // Analytics comes at the top. If you think your thing is more important then please think again...
         ['c-analytics', loadAnalytics],
+        ['c-consent-cookie-tracking', initialiseConsentCookieTracking],
         ['c-identity', initIdentity],
         ['c-adverts', requestUserSegmentsFromId],
         ['c-discussion', initDiscussion],
