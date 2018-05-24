@@ -1,6 +1,6 @@
 // @flow
-import { log as log_ } from './log';
 import { _, init } from './cmp';
+import { log as log_ } from './log';
 
 const { CmpService } = _;
 
@@ -76,7 +76,7 @@ describe('cmp', () => {
     let cmp;
 
     beforeEach(() => {
-        // $FlowFixMe I know fields are missing, Flow... this is a test
+        // $FlowFixMe I know the Store is a Mock Flow... this is a test
         cmp = new CmpService(new StoreMock(globalVendorList));
         jest.resetAllMocks();
     });
@@ -101,7 +101,7 @@ describe('cmp', () => {
         cmp.processCommand('getVendorConsents', null, result => {
             expect(result).toEqual({
                 metadata: undefined,
-                gdprApplies: true,
+                gdprApplies: false,
                 hasGlobalScope: false,
             });
         });
@@ -118,7 +118,7 @@ describe('cmp', () => {
         cmp.processCommand('getConsentData', null, result => {
             expect(result).toEqual({
                 consentData: undefined,
-                gdprApplies: true,
+                gdprApplies: false,
                 hasGlobalScope: false,
             });
         });

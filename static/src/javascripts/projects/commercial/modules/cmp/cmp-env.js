@@ -68,11 +68,10 @@ export const COOKIE_VERSION = 1;
 export const COOKIE_NAME = 'GU_TK';
 
 export const defaultConfig = {
-    globalVendorListLocation: 'https://vendorlist.consensu.org/vendorlist.json',
     storeConsentGlobally: false,
     storePublisherData: false,
     logging: false,
-    gdprApplies: true,
+    gdprApplies: false,
 };
 
 export const vendorVersionList = [vendorVersion];

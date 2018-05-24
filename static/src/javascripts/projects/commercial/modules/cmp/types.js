@@ -1,10 +1,10 @@
 // @flow
 export type CmpConfig = {
-    globalVendorListLocation: string,
     gdprApplies: boolean,
     storeConsentGlobally: boolean,
     storePublisherData: boolean,
     logging: string | boolean,
+    globalVendorListLocation?: string,
 };
 
 export type ConsentDataResponse = {

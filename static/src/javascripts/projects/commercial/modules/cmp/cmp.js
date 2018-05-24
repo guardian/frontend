@@ -23,6 +23,9 @@ const readConsentCookie = (cookieName: string): boolean | null => {
     return null;
 };
 
+const isInEU = (): boolean =>
+    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
+
 class CmpService {
     isLoaded: boolean;
     cmpReady: boolean;
@@ -36,14 +39,17 @@ class CmpService {
     constructor(store: CmpStore) {
         this.isLoaded = false;
         this.cmpReady = false;
-        this.cmpConfig = defaultConfig;
-        this.eventListeners = {};
         this.store = store;
-        this.processCommand.receiveMessage = this.receiveMessage;
         this.commandQueue = [];
+        this.eventListeners = {};
+        this.processCommand.receiveMessage = this.receiveMessage;
+        this.cmpConfig = defaultConfig;
         if (getUrlVars().cmpdebug) {
             this.cmpConfig.logging = 'debug';
             log.info('Set logging level to DEBUG');
+        }
+        if (isInEU()) {
+            this.cmpConfig.gdprApplies = true;
         }
     }
 
@@ -182,9 +188,9 @@ class CmpService {
 }
 
 export const init = (): void => {
-    // Only run our CmpService if prepareCmp has added the stub
+    // Only run our CmpService if prepareCmp has added the CMP stub
     if (window[CMP_GLOBAL_NAME]) {
-        // Pull queued command from __cmp stub
+        // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
         // Initialize the store with all of our consent data
         const store = new CmpStore(
@@ -197,11 +203,11 @@ export const init = (): void => {
         const cmp = new CmpService(store);
         // Expose `processCommand` as the CMP implementation
         window[CMP_GLOBAL_NAME] = cmp.processCommand;
-        // Notify listeners that the CMP is loaded
+        cmp.commandQueue = commandQueue;
         cmp.isLoaded = true;
+        // Notify listeners that the CMP is loaded
         cmp.notify('isLoaded');
         // Execute any previously queued command
-        cmp.commandQueue = commandQueue;
         cmp.processCommandQueue();
     }
 };

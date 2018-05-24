@@ -57,8 +57,8 @@ try {
                 cmp.config = {
                     storeConsentGlobally: false,
                     storePublisherData: false,
-                    logging: 'debug',
-                    gdprApplies: true,
+                    logging: false,
+                    gdprApplies: false,
                 }
                 return cmp;
             }());
