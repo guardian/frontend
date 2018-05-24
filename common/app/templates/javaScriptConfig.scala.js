@@ -32,7 +32,7 @@
                 "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")",
                 "info-logo": "@Static("images/acquisitions/info-logo.svg")"
 
-            },
+            }
         },
         "stylesheets": {
             "fonts": {
