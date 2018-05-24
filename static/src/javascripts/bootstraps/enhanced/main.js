@@ -196,7 +196,7 @@ const bootEnhanced = (): void => {
                     qwery(
                         `${
                             config.switches.enhancedVideoPlayer ? 'video, ' : ''
-                            } audio`
+                        } audio`
                     )
                 )
                 .then(els => {
