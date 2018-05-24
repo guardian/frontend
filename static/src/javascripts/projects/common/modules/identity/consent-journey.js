@@ -1,7 +1,6 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
-import { addCookie } from 'lib/cookies';
 
 import loadEnhancers from './modules/loadEnhancers';
 import { getContents, show as showModal } from './modules/modal';
