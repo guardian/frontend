@@ -20,7 +20,7 @@ export const log = logLevels.reduce((logger, funcName, index) => {
             ) {
                 const [message, ...rest] = [...args];
                 console[consoleFunc](
-                    `${funcName.toUpperCase()} - (CMP) ${message}`,
+                    `${funcName.toUpperCase()}: (CMP) ${message}`,
                     ...rest
                 );
             }

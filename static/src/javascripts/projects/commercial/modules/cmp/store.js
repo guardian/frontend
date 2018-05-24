@@ -154,8 +154,8 @@ export class CmpStore {
     getVendorConsentsObject = (
         vendorIds: ?Array<number>
     ): ?VendorConsentResponse => {
-        log.info('generating the VendorConsentData....');
         if (this.vendorConsentData) {
+            log.info('GetVendorConsentsObject: Can return data');
             const consentDataResponse = generateVendorConsentResponse(
                 this.vendorConsentData,
                 this.vendorList,
@@ -166,6 +166,7 @@ export class CmpStore {
                 ...consentDataResponse,
             };
         }
+        return {};
     };
 }
 

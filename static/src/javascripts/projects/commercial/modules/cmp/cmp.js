@@ -2,6 +2,7 @@
 import { log } from 'commercial/modules/cmp/log';
 import { CmpStore } from 'commercial/modules/cmp/store';
 import { getCookie } from 'lib/cookies';
+import { getUrlVars } from 'lib/url';
 import { vendorList as globalVendorList } from 'commercial/modules/cmp/vendorlist';
 import {
     defaultConfig,
@@ -40,13 +41,17 @@ class CmpService {
         this.store = store;
         this.processCommand.receiveMessage = this.receiveMessage;
         this.commandQueue = [];
+        if (getUrlVars('cmpdebug')) {
+            this.cmpConfig.logging = 'debug';
+            log.info('Set logging level to DEBUG')
+        }
     }
 
     generateConsentString = () => {
         const { vendorConsentData, vendorList } = this.store;
 
         if (this.store.vendorConsentData && this.store.vendorList) {
-            log.info('persisted vendor consent data found');
+            log.info('GenerateConsentString: Persisted vendor consent data found');
             // the encoding can fail if the format of the persisted data is incorrect!
             // TODO: Zero trust! we need to catch any errors, and log them...
             return encodeVendorConsentData({
@@ -54,10 +59,9 @@ class CmpService {
                 vendorList,
             });
         }
-        // else...
         // TODO: if the persisted data is missing we will need to generate it
-        log.info('no vendor consent data found');
-        // however, if the consent is null, we should fail...
+        log.info('GenerateConsentString: No vendor consent data found');
+        // however, if the consent cookie is missing, we should return nothing.
         // The API spec suggests vendors use a timeout in case data is missing.
     };
 
@@ -77,7 +81,7 @@ class CmpService {
             const consentData = {
                 gdprApplies: this.cmpConfig.gdprApplies,
                 hasGlobalScope: this.cmpConfig.storeConsentGlobally,
-                consentData: this.generateConsentString(),
+                consentData: this.generateConsentString() || undefined,
             };
             callback(consentData, true);
         },
@@ -116,20 +120,6 @@ class CmpService {
     processCommand = (command: string, parameter: any, callback: any): void => {
         if (typeof this.commands[command] !== 'function') {
             log.error(`Invalid CMP command "${command}"`);
-        } else if (
-            !this.store.vendorConsentData &&
-            (command === 'getVendorConsents' || command === 'getConsentData')
-        ) {
-            // Special case where we have the full CMP implementation loaded but
-            // we still queue these commands until there is data available.
-            log.info(
-                `Queuing command: ${command} until consent data is available`
-            );
-            this.commandQueue.push({
-                command,
-                parameter,
-                callback,
-            });
         } else {
             log.info(`Proccess command: ${command}, parameter: ${parameter}`);
             this.commands[command](parameter, callback);
