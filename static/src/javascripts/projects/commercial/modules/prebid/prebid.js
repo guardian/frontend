@@ -53,8 +53,8 @@ class PrebidService {
             priceGranularity,
         });
 
-        // gather analytics from 0.01% of pageviews
-        const inSample = getRandomIntInclusive(1, 10000) === 1;
+        // gather analytics from 0.1% (1/1000) of pageviews
+        const inSample = getRandomIntInclusive(1, 1000) === 1;
         if (
             config.switches.prebidAnalytics &&
             (inSample || config.page.isDev)
