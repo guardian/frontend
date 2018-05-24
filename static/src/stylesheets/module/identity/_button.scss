@@ -147,10 +147,6 @@
     @include identity-button($news-garnett-highlight)
 }
 
-.manage-account__button--gdpr-oi-campaign {
-    @include identity-button($news-garnett-highlight)
-}
-
 .manage-account__button--secondary {
     @include identity-button(hsla(0, 100%, 100%, 0));
     border: 1px solid $garnett-neutral-4;
