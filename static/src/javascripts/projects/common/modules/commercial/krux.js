@@ -60,9 +60,7 @@ const configureSegments = () => {
 };
 
 const onLoad = () => {
-    if (config.switches.includePersonalisedAdsConsent) {
-        configureSegments();
-    }
+    configureSegments();
 };
 
 const retrieve = (n: string): string => {
