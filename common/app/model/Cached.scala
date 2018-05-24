@@ -107,6 +107,8 @@ object Cached extends implicits.Dates {
   */
   private def cacheHeaders(maxAge: Int, result: Result, maybeHash: Option[(Hash, Option[String])]) = {
     val now = DateTime.now
+    val expiresTime = if (LongCacheSwitch.isSwitchedOn) now + min(maxAge, 60).seconds else now + maxAge.seconds
+
     val staleWhileRevalidateSeconds = max(maxAge / 10, 1)
     val surrogateCacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
 
@@ -136,20 +138,28 @@ object Cached extends implicits.Dates {
       // the cache headers that make their way through to the browser
       "Cache-Control" -> cacheControl,
 
+      "Expires" -> expiresTime.toHttpDateTimeString,
       "Date" -> now.toHttpDateTimeString,
       "ETag" -> etagHeaderString)
   }
 }
 
+object PrivateCache {
+  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "private")
+}
+
 object NoCache {
-  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "private, no-store")
+  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
 }
 
 case class NoCache[A](action: Action[A])(implicit val executionContext: ExecutionContext) extends Action[A] {
 
   override def apply(request: Request[A]): Future[Result] = {
-    action(request) map { response => response.withHeaders(
-        ("Cache-Control", "private, no-store")
+    action(request) map { response =>
+      response.withHeaders(
+        ("Cache-Control", "no-cache, no-store, must-revalidate"),
+        ("Pragma", "no-cache"),
+        ("Expires", "0")
       )
     }
   }
