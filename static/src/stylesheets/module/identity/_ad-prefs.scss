@@ -83,6 +83,7 @@
     padding-bottom: $gs-gutter / 2;
 
     > .manage-account__button {
+        opacity: .9999; /*this fixes the button on uc browser somehow*/
         &[disabled] {
             pointer-events: none;
             opacity: .5;
