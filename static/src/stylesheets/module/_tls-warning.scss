@@ -61,7 +61,7 @@ $tls-warning-rule: darken($garnett-nav-background, 20%);
     display: block;
     position: relative;
     font-size: 0;
-    padding-right: $gs-gutter * 3 / 2;
+    padding-right: $gs-gutter * 2;
 
     &:hover {
         .tls-warning__browser-link__title {
