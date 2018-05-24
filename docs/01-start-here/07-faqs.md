@@ -28,7 +28,7 @@ Sometimes we want to create a badge for a story, but don't want the world to kno
 
 To link a badge to a secret tag:
 
-1. Run `sbt "badgeHash [your tag]`"
+1. Run `sbt "badgeHash [your tag]"`
 2. The output looks like
 ```
 salt=XXXXXXXXX
