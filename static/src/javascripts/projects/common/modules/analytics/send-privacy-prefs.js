@@ -13,6 +13,10 @@ const getAlertViewCount = (): number =>
 
 const upAlertViewCount = (): void => {
     userPrefs.set(alertViewCount, getAlertViewCount() + 1);
+    ophan.record({
+        component: `privacy-prefs`,
+        value: `lifetime-alert-views : ${getAlertViewCount()}`,
+    });
 };
 
 const resetAlertViewCount = (): void => {
@@ -23,10 +27,6 @@ const onConsentSet = (consent: AdConsent, status: ?boolean): void => {
     ophan.record({
         component: `privacy-prefs`,
         value: `set : ${String(status)} : ${consent.cookie.toLowerCase()}`,
-    });
-    ophan.record({
-        component: `privacy-prefs`,
-        value: `set-with-alert-views : ${getAlertViewCount()} : ${consent.cookie.toLowerCase()}`,
     });
     resetAlertViewCount();
 };
@@ -41,12 +41,6 @@ const trackConsentCookies = (
                 consentWithState.state
             )} : ${consentWithState.consent.cookie.toLowerCase()}`,
         });
-        if (typeof consentWithState.state !== 'boolean') {
-            ophan.record({
-                component: `privacy-prefs`,
-                value: `pv : null-with-alert-views : ${getAlertViewCount()} : ${consentWithState.consent.cookie.toLowerCase()}`,
-            });
-        }
     });
 };
 
