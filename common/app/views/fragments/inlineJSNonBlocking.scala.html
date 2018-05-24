@@ -1,5 +1,5 @@
 @import common.InlineJs
-@import conf.switches.Switches.IdentityProfileNavigationSwitch
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch, enableConsentManagementService}
 @import conf.Configuration
 @import model.Page
 @import templates.inlineJS.nonBlocking.js._
@@ -23,7 +23,7 @@
     @InlineJs(showUserName().body, "showUserName.js")
 }
 
-@if(true) {
+@if(enableConsentManagementService.isSwitchedOn) {
     // add CMP stub and attach main script to the head
     @InlineJs(prepareCmp().body, "prepareCmp.js")
 }
