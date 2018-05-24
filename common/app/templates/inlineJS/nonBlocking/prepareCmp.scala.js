@@ -17,6 +17,7 @@ try {
                             var frame = document.createElement('iframe');
                             frame.style.display = 'none';
                             frame.name = '__cmpLocator';
+                            frame.setAttribute('aria-hidden', true);
                             document.body.appendChild(frame);
                         } else {
                             setTimeout(addLocatorFrame, 5);

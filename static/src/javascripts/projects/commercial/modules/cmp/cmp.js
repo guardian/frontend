@@ -164,6 +164,7 @@ class CmpService {
     receiveMessage = ({ data, origin, source }) => {
         const { __cmpCall: cmp } = data;
         if (cmp) {
+            log.debug(`Message from: ${origin}`);
             const { callId, command, parameter } = cmp;
             this.processCommand(command, parameter, returnValue =>
                 source.postMessage(
@@ -205,10 +206,12 @@ export const init = (): void => {
         window[CMP_GLOBAL_NAME] = cmp.processCommand;
         cmp.commandQueue = commandQueue;
         cmp.isLoaded = true;
-        // Notify listeners that the CMP is loaded
         cmp.notify('isLoaded');
         // Execute any previously queued command
         cmp.processCommandQueue();
+
+        cmp.cmpReady = true;
+        cmp.notify('cmpReady');
     }
 };
 
