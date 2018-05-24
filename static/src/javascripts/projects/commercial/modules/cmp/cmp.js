@@ -43,7 +43,7 @@ class CmpService {
         this.commandQueue = [];
         if (getUrlVars('cmpdebug')) {
             this.cmpConfig.logging = 'debug';
-            log.info('Set logging level to DEBUG')
+            log.info('Set logging level to DEBUG');
         }
     }
 
@@ -51,7 +51,9 @@ class CmpService {
         const { vendorConsentData, vendorList } = this.store;
 
         if (this.store.vendorConsentData && this.store.vendorList) {
-            log.info('GenerateConsentString: Persisted vendor consent data found');
+            log.info(
+                'GenerateConsentString: Persisted vendor consent data found'
+            );
             // the encoding can fail if the format of the persisted data is incorrect!
             // TODO: Zero trust! we need to catch any errors, and log them...
             return encodeVendorConsentData({
@@ -68,13 +70,14 @@ class CmpService {
     commands = {
         // $FlowFixMe
         getVendorConsents: (vendorIds: ?Array<number>, callback = () => {}) => {
-            const consent = {
-                metadata: this.generateConsentString(),
+            const consent = this.store.getVendorConsentsObject(vendorIds) || {};
+            const result = {
+                metadata: this.generateConsentString() || undefined,
                 gdprApplies: this.cmpConfig.gdprApplies,
                 hasGlobalScope: this.cmpConfig.storeConsentGlobally,
-                ...this.store.getVendorConsentsObject(vendorIds),
+                ...consent,
             };
-            callback(consent, true);
+            callback(result, true);
         },
         // $FlowFixMe
         getConsentData: (_, callback = () => {}): void => {

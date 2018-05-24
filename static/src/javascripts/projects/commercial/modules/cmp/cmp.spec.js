@@ -15,7 +15,7 @@ jest.mock('commercial/modules/cmp/log', () => ({
     },
 }));
 
-const vendorList = {
+const globalVendorList = {
     vendorListVersion: 1,
     purposes: [
         {
@@ -63,17 +63,26 @@ const vendorList = {
     ],
 };
 
+class StoreMock {
+    vendorList: Object;
+
+    constructor(vendorList) {
+        this.vendorList = vendorList;
+    }
+    getVendorConsentsObject = jest.fn(() => {});
+}
+
 describe('cmp', () => {
     let cmp;
 
-    it('exists', () => {
-        expect(init).toBeDefined();
-    });
-
     beforeEach(() => {
         // $FlowFixMe I know fields are missing, Flow... this is a test
-        cmp = new CmpService({ vendorList });
+        cmp = new CmpService(new StoreMock(globalVendorList));
         jest.resetAllMocks();
+    });
+
+    it('exists', () => {
+        expect(init).toBeDefined();
     });
 
     it('ping executes', () => {
@@ -90,23 +99,28 @@ describe('cmp', () => {
 
     it('getVendorConsents executes', () => {
         cmp.processCommand('getVendorConsents', null, result => {
-            expect(Object.keys(result.purposeConsents).length).toEqual(
-                vendorList.purposes.length
-            );
-            expect(Object.keys(result.vendorConsents).length).toEqual(6);
+            expect(result).toEqual({
+                metadata: undefined,
+                gdprApplies: true,
+                hasGlobalScope: false,
+            });
         });
     });
 
     it('getVendorList executes', () => {
         cmp.processCommand('getVendorList', null, result => {
-            expect(result.purposes).toEqual(vendorList.purposes);
-            expect(result.vendors).toEqual(vendorList.vendors);
+            expect(result.purposes).toEqual(globalVendorList.purposes);
+            expect(result.vendors).toEqual(globalVendorList.vendors);
         });
     });
 
     it('getConsentData executes', () => {
         cmp.processCommand('getConsentData', null, result => {
-            expect(typeof result.consentData).toEqual('string');
+            expect(result).toEqual({
+                consentData: undefined,
+                gdprApplies: true,
+                hasGlobalScope: false,
+            });
         });
     });
 
