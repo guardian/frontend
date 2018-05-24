@@ -20,7 +20,10 @@ import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
 import { Search } from 'common/modules/navigation/search';
-import { initMembership } from 'common/modules/navigation/membership';
+import {
+    initMembership,
+    membershipBanner,
+} from 'common/modules/navigation/membership';
 import {
     logHistory,
     logSummary,
@@ -31,19 +34,22 @@ import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-pr
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
-import { init as initCookiesBanner } from 'common/modules/ui/cookiesBanner';
-import { init as initFirstPvConsentBanner } from 'common/modules/ui/first-pv-consent-banner';
+import { cookiesBanner } from 'common/modules/ui/cookiesBanner';
+import { firstPvConsentBanner } from 'common/modules/ui/first-pv-consent-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
-import { init as initCustomSmartAppBanner } from 'common/modules/ui/smartAppBanner';
+import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
-import { breakingNewsInit } from 'common/modules/onward/breaking-news';
 import { initPinterest } from 'common/modules/social/pinterest';
-import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
-import { signInEngagementBannerInit } from 'common/modules/identity/global/sign-in-engagement-banner';
+import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
+import { signInEngagementBanner } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
+import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
+import { breakingNews } from 'common/modules/onward/breaking-news';
+import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs';
+import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
 import ophan from 'ophan/ng';
 
 const initialiseTopNavItems = (): void => {
@@ -224,18 +230,6 @@ const initOpenOverlayOnClick = (): void => {
     });
 };
 
-const loadBreakingNews = (): void => {
-    if (
-        config.switches.breakingNews &&
-        config.page.section !== 'identity' &&
-        !config.page.isHosted
-    ) {
-        breakingNewsInit().catch(() => {
-            // breaking news may not load if local storage is unavailable - this is fine
-        });
-    }
-};
-
 const initPublicApi = (): void => {
     // BE CAREFUL what you expose here...
     window.guardian.api = {};
@@ -244,12 +238,6 @@ const initPublicApi = (): void => {
 const startPinterest = (): void => {
     if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
         initPinterest();
-    }
-};
-
-const membershipEngagementBanner = (): void => {
-    if (config.switches.membershipEngagementBanner) {
-        membershipEngagementBannerInit();
     }
 };
 
@@ -283,25 +271,37 @@ const initialiseEmail = (): void => {
     });
 };
 
-const showFirstVisitBanner = (): void => {
-    if (config.get('switches.idAdConsents', false)) {
-        initFirstPvConsentBanner();
-    } else {
-        initCookiesBanner();
-    }
+const initialiseBanner = (): void => {
+    // ordered by priority
+
+    const canDisplayFirstPvBanner =
+        config.get('switches.idAdConsents', false) ||
+        window.location.hash.includes('pv-banner-display');
+
+    const bannerList = [
+        canDisplayFirstPvBanner ? firstPvConsentBanner : cookiesBanner,
+        breakingNews,
+        membershipBanner,
+        membershipEngagementBanner,
+        signInEngagementBanner,
+        smartAppBanner,
+    ];
+    initBannerPicker(bannerList);
 };
+
+const initialiseConsentCookieTracking = (): void =>
+    trackConsentCookies(getAllAdConsentsWithState());
 
 const init = (): void => {
     catchErrorsWithContext([
         // Analytics comes at the top. If you think your thing is more important then please think again...
         ['c-analytics', loadAnalytics],
-        ['c-first-visit-banner', showFirstVisitBanner],
+        ['c-consent-cookie-tracking', initialiseConsentCookieTracking],
         ['c-identity', initIdentity],
         ['c-adverts', requestUserSegmentsFromId],
         ['c-discussion', initDiscussion],
         ['c-test-cookie', testCookie],
         ['c-event-listeners', windowEventListeners],
-        ['c-breaking-news', loadBreakingNews],
         ['c-block-link', fauxBlockLink],
         ['c-iframe', checkIframe],
         ['c-tabs', showTabs],
@@ -314,7 +314,6 @@ const init = (): void => {
         ['c-id-cookie-refresh', idCookieRefresh],
         ['c-history-nav', showHistoryInMegaNav],
         ['c-start-register', startRegister],
-        ['c-smart-banner', initCustomSmartAppBanner],
         ['c-adblock', showAdblockMessage],
         ['c-cookies', cleanupCookies],
         ['c-localStorage', cleanupLocalStorage],
@@ -324,11 +323,10 @@ const init = (): void => {
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
         ['c-pinterest', startPinterest],
-        ['c-show-membership-engagement-banner', membershipEngagementBanner],
-        ['c-show-sign-in-engagment-banner', signInEngagementBannerInit],
         ['c-email', initialiseEmail],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
+        ['c-banner-picker', initialiseBanner],
     ]);
 };
 

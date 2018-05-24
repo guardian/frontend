@@ -243,9 +243,8 @@ export class SearchTool {
         this.$input.val(inputValue);
     }
 
-    renderList(results: Array<City>, numOfResults: number): void {
+    renderList(results: Array<City>, resultsToShow: number): void {
         const docFragment = document.createDocumentFragment();
-        const resultsToShow = results.length - numOfResults;
 
         results.slice(0, resultsToShow).forEach((item, index) => {
             const li = document.createElement('li');

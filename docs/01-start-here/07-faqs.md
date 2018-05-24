@@ -21,3 +21,18 @@ To see hashed JS bundles locally you can set assets.useHashedBundles=true in you
 ## How do I run identity and access profile pages locally?
 
 You'll need to [setup nginx](https://github.com/guardian/frontend/blob/2e00099b6509024fd5a9f04aa7daea03e08281ac/nginx/README.md) and then set-up the [identity frontend](https://github.com/guardian/identity-frontend)
+
+## How do I link a badge to a secret tag?
+
+Sometimes we want to create a badge for a story, but don't want the world to know what that story is until it is released. We therefore need to encrypt the tag name that the badge is being applied to. This all happens in [Badges.scala](https://github.com/guardian/frontend/blob/master/common/app/model/Badges.scala).
+
+To link a badge to a secret tag:
+
+1. Run `sbt "badgeHash [your tag]"`
+2. The output looks like
+```
+salt=XXXXXXXXX
+hash=XXXXXXXXX
+```
+3. In the `model.Badges` object, add a new val: `val specialReport = SpecialBadge("[salt]", "[hashed tag]", Static("path/to/Badge.svg"))`
+4. In CODE create an article with your new tag and ensure the badge is applied correctly

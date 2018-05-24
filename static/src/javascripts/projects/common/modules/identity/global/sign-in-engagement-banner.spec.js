@@ -3,14 +3,16 @@ import { getCookie as getCookie_ } from 'lib/cookies';
 import { Message as Message_ } from 'common/modules/ui/message';
 import userPrefs_ from 'common/modules/user-prefs';
 import {
-    show,
-    canShow,
+    signInEngagementBanner,
     sessionVisitsKey,
     lifeTimeViewsKey,
     lastSeenAtKey,
     showFeedbackSegue,
 } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { bindableClassNames } from 'common/modules/identity/global/sign-in-engagement-banner/template';
+
+const show = signInEngagementBanner.show;
+const canShow = signInEngagementBanner.canShow;
 
 const getCookie: any = getCookie_;
 const userPrefs: any = userPrefs_;

@@ -1,7 +1,4 @@
-@import form.IdFormHelpers.nonInputFields
-@import com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
-@import views.html.fragments.form.radioField
-@import views.support.`package`.Seq2zipWithRowInfo
+@import com.gu.identity.model.EmailNewsletters
 
 @import services.EmailPrefsData
 
@@ -34,56 +31,9 @@
             </p>
         </div>
         <div class="fieldset__fields">
-            @fragments.emailListCategories(emailPrefsForm,availableLists,emailSubscriptions)(request, messages)
+            @fragments.emailListCategories(emailPrefsForm, availableLists, emailSubscriptions)(request, messages)
         </div>
     </fieldset>
-
-
-    <div class="email-subscription__fieldset">
-
-        <fieldset class="fieldset">
-            <div class="fieldset__heading">
-                <h2 class="form__heading">Settings</h2>
-            </div>
-
-            <div class="fieldset__fields email-subscription__options">
-                <ul class="u-unstyled">
-                    <li>
-                        <p>
-                            <a href="@buildIdentityUrl("account/edit")" class="u-underline" data-link-name="identity : email : update">
-                                Update your email address
-                            </a>
-                        </p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="https://jobs.theguardian.com/your-jobs/?ActiveSection=JbeList" class="u-underline" data-link-name="identity : jobs : alert-settings">
-                                Edit your Job Alert settings
-                            </a>
-                        </p>
-                    </li>
-                    <li>
-                        <a href="#identity-modal--newsletterFormat" class="u-underline js-email-subscription__formatFieldsetToggle" data-link-name="identity : email : format">
-                            Change format
-                        </a>
-                    </li>
-                    <li>
-                        <button type="button" class="manage-account__button--mini manage-account__button--icon manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all">
-                            <span class="email-unsubscribe-all__label js-unsubscribe--basic manage-account__button-flexwrap">
-                                Unsubscribe from all newsletters
-                                @fragments.inlineSvg("cross", "icon")
-                            </span>
-                            <span class="email-unsubscribe-all__label js-unsubscribe--confirm hide" aria-hidden>
-                                Are you sure?
-                            </span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-
-        </fieldset>
-
-    </div>
 
     <fieldset class="fieldset fieldset--manage-account-rightsubmit js-manage-account__ajaxForm-submit">
         <div class="fieldset__heading"></div>
@@ -95,38 +45,5 @@
             </ul>
         </div>
     </fieldset>
-
-    @newsletterModalContents = {
-        <fieldset class="fieldset">
-            <div class="fieldset__heading">
-                <h2 class="form__heading">Formatting</h2>
-            </div>
-
-            <div class="fieldset__fields">
-                <ul class="u-unstyled">
-
-                    <li class="form-field @if(emailPrefsForm("htmlPreference").errors.nonEmpty) {form-field--error}">
-                        <label class="label" for="htmlPreference">In which format would you like to receive email?</label>
-                        <div class="form-field__note">
-                            HTML emails have formatted text, images and look better. Text emails are quicker to download, but don't contain images or any formatting.
-                            <br />
-                            We recommend HTML emails.
-                        </div>
-
-                        @radioField(emailPrefsForm("htmlPreference"), List("HTML" -> "HTML (images and text)", "Text" -> "Text"))(nonInputFields, messages)
-
-                    </li>
-
-                    <li>
-                        <button type="submit" class="manage-account__button save__button js-save-button" data-link-name="Save email preferences">Save</button>
-                    </li>
-                </ul>
-            </div>
-
-        </fieldset>
-    }
-
-    @fragments.modal("newsletterFormat",newsletterModalContents)
-
 
 </form>

@@ -7,6 +7,7 @@ import template from 'lodash/utilities/template';
 import { loadCssPromise } from 'lib/load-css-promise';
 import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 /**
  * Rules:
@@ -53,6 +54,8 @@ const isDevice = (): boolean => isIOS() || isAndroid();
 
 const validImpressionCount = (): boolean => impressions < 4;
 
+const messageCode: string = isIOS() ? 'ios' : 'android';
+
 const canUseSmartBanner = (): boolean =>
     config.get('switches.smartAppBanner') &&
     getUserAgent.browser === 'Safari' &&
@@ -67,11 +70,10 @@ const canShow = (): Promise<boolean> =>
 
 const show = (): void => {
     loadCssPromise.then(() => {
-        const platform = isIOS() ? 'ios' : 'android';
-        const msg = new Message(platform);
+        const msg = new Message(messageCode);
         const fullTemplate = tmp + (getBreakpoint() === 'mobile' ? '' : tablet);
 
-        msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
+        msg.show(template(fullTemplate, DATA[messageCode.toUpperCase()]));
 
         addCookie(COOKIE_IMPRESSION_KEY, String(impressions + 1));
 
@@ -85,20 +87,10 @@ const show = (): void => {
     });
 };
 
-const init = (): void => {
-    canShow().then(result => {
-        if (result) {
-            show();
-        }
-    });
-};
-
-// TODO: remove once bannerPicker is in use
-export { init };
-
-// To be used by bannerPicker
-export default {
-    id: 'smartAppBanner',
+const smartAppBanner: Banner = {
+    id: messageCode,
     show,
     canShow,
 };
+
+export { smartAppBanner };

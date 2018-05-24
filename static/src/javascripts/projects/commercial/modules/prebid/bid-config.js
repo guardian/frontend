@@ -6,6 +6,7 @@ import {
     buildPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import type {
+    PrebidBid,
     PrebidBidder,
     PrebidImproveParams,
     PrebidImproveSizeParam,
@@ -173,17 +174,6 @@ const sonobiBidder: PrebidBidder = {
     }),
 };
 
-const indexExchangeBidder: PrebidBidder = {
-    name: 'ix',
-    bidParams: (
-        slotId: string,
-        sizes: PrebidSize[]
-    ): PrebidIndexExchangeParams => ({
-        siteId: getIndexSiteId(),
-        size: sizes[0],
-    }),
-};
-
 const trustXBidder: PrebidBidder = {
     name: 'trustx',
     bidParams: (slotId: string): PrebidTrustXParams => ({
@@ -209,21 +199,58 @@ const xaxisBidder: PrebidBidder = {
     labelAll: ['edn-UK', 'deal-FirstLook'],
 };
 
-const bidders: PrebidBidder[] = [];
+// There's an IX bidder for every size that the slot can take
+const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
+    if (config.switches.prebidIndexExchange) {
+        const indexSiteId = getIndexSiteId();
+        return slotSizes.map(size => ({
+            name: 'ix',
+            bidParams: (): PrebidIndexExchangeParams => ({
+                siteId: indexSiteId,
+                size,
+            }),
+        }));
+    }
+    return [];
+};
+
+const otherBidders: PrebidBidder[] = [];
 if (config.switches.prebidSonobi) {
-    bidders.push(sonobiBidder);
-}
-if (config.switches.prebidIndexExchange) {
-    bidders.push(indexExchangeBidder);
+    otherBidders.push(sonobiBidder);
 }
 if (config.switches.prebidTrustx) {
-    bidders.push(trustXBidder);
+    otherBidders.push(trustXBidder);
 }
 if (config.switches.prebidImproveDigital) {
-    bidders.push(improveDigitalBidder);
+    otherBidders.push(improveDigitalBidder);
 }
 if (config.switches.prebidXaxis) {
-    bidders.push(xaxisBidder);
+    otherBidders.push(xaxisBidder);
 }
 
-export { bidders };
+const bidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
+    const combinedBidders = otherBidders.slice();
+    Array.prototype.push.apply(
+        combinedBidders,
+        indexExchangeBidders(slotSizes)
+    );
+    return combinedBidders;
+};
+
+export const bids: (string, PrebidSize[]) => PrebidBid[] = (
+    slotId,
+    slotSizes
+) =>
+    bidders(slotSizes).map((bidder: PrebidBidder) => {
+        const bid: PrebidBid = {
+            bidder: bidder.name,
+            params: bidder.bidParams(slotId, slotSizes),
+        };
+        if (bidder.labelAny) {
+            bid.labelAny = bidder.labelAny;
+        }
+        if (bidder.labelAll) {
+            bid.labelAll = bidder.labelAll;
+        }
+        return bid;
+    });

@@ -92,7 +92,8 @@
         "Culture"        -> cultureEmails,
         "Lifestyle"      -> lifestyleEmails,
         "Comment"        -> commentEmails,
-        "Work"           -> workEmails
+        "Work"           -> workEmails,
+        "From the Papers" -> fromThePapersEmails
     ).map { case (theme, newsletters) =>
         <div class="newsletters-category" name="@theme">
             @emailListCategoryList(theme, newsletters)

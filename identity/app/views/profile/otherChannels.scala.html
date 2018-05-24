@@ -1,7 +1,3 @@
-@import _root_.form.IdFormHelpers.nonInputFields
-@import views.support.fragment.ConsentChannel._
-@import views.support.fragment.Switch._
-
 @(
     idUrlBuilder: services.IdentityUrlBuilder,
     idRequest: services.IdentityRequest,
@@ -10,17 +6,18 @@
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 <fieldset class="fieldset fieldset--manage-account-noborder">
     <div class="fieldset__heading">
-        <h2 class="form__heading">SMS updates</h2>
+        <h2 class="form__heading">Other ways we may contact you about our products and services</h2>
+        <p class="form__note">From time to time, we’d love to be able to update you about our products and services via telephone and post.</p>
     </div>
     <div class="fieldset__fields">
-        @views.html.profile.smsConsent(idUrlBuilder, idRequest, privacyForm, user)(request, messages)
+        @views.html.profile.nonElectronicOptOut(idUrlBuilder, idRequest, privacyForm, user)(request, messages)
     </div>
 </fieldset>
 <fieldset class="fieldset">
     <div class="fieldset__heading">
-        <h2 class="form__heading">How else can we get in touch with you?</h2>
+        <h2 class="form__heading">Using your data for marketing analysis</h2>
     </div>
     <div class="fieldset__fields">
-        @views.html.profile.nonElectronicOptOut(idUrlBuilder, idRequest, privacyForm, user)(request, messages)
+        @views.html.profile.profilingConsent(idUrlBuilder, idRequest, privacyForm, user)(request, messages)
     </div>
 </fieldset>

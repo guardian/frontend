@@ -12,6 +12,7 @@ import { engagementBannerParams } from 'common/modules/commercial/membership-eng
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { getSync as getGeoLocation } from 'lib/geolocation';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 import {
     submitComponentEvent,
@@ -122,10 +123,6 @@ const messageModifierClass = (
 };
 
 const showBanner = (params: EngagementBannerParams): void => {
-    if (isBlocked()) {
-        return;
-    }
-
     const test = getUserTest();
     const variant = getUserVariant(test);
     const paypalAndCreditCardImage =
@@ -198,23 +195,32 @@ const showBanner = (params: EngagementBannerParams): void => {
     }
 };
 
-const membershipEngagementBannerInit = (): Promise<void> => {
-    const bannerParams = deriveBannerParams(getGeoLocation());
-    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
-        return canDisplayMembershipEngagementBanner().then(canShow => {
-            if (canShow) {
-                mediator.on(
-                    'modules:onwards:breaking-news:ready',
-                    breakingShown => {
-                        if (!breakingShown) {
-                            showBanner(bannerParams);
-                        }
-                    }
-                );
-            }
-        });
+let bannerParams;
+
+const show = (): void => {
+    if (bannerParams) {
+        showBanner(bannerParams);
     }
-    return Promise.resolve(undefined);
 };
 
-export { membershipEngagementBannerInit };
+const canShow = (): Promise<boolean> => {
+    if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
+        return Promise.resolve(false);
+    }
+
+    bannerParams = deriveBannerParams(getGeoLocation());
+
+    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
+        return canDisplayMembershipEngagementBanner();
+    }
+
+    return Promise.resolve(false);
+};
+
+const membershipEngagementBanner: Banner = {
+    id: messageCode,
+    show,
+    canShow,
+};
+
+export { membershipEngagementBanner };

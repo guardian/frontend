@@ -196,7 +196,7 @@ $sport-away:             #003f64;
 // Stati
 // =============================================================================
 
-$status-positive-garnett:   #bbce00;
+$status-positive-garnett:   #3db540;
 $status-neutral-garnett:    $garnett-neutral-6;
 $status-negative-garnett:   $error;
 
@@ -207,7 +207,7 @@ $status-negative:           $error;
 // Quiz colours
 // =============================================================================
 
-$quiz-correct:           #3db540;
+$quiz-correct:           $status-positive-garnett;
 $quiz-incorrect:         #c3021b;
 
 // Social

@@ -6,10 +6,10 @@ import { local } from 'lib/storage';
 import config from 'lib/config';
 import ophan from 'ophan/ng';
 import userPrefs from 'common/modules/user-prefs';
-import mediator from 'lib/mediator';
 import { signInEngagementBannerDisplay } from 'common/modules/experiments/tests/sign-in-engagement-banner-display';
 import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 import { mainHtml, feedbackHtml } from './sign-in-engagement-banner/content';
 
@@ -105,24 +105,6 @@ const isInTestVariant = (): boolean => {
 const isForcedDisplay = (): boolean =>
     window.location.hash.includes(forceDisplayHash);
 
-const bannerDoesNotCollide = (): Promise<boolean> =>
-    new Promise(show => {
-        setTimeout(() => {
-            show(true);
-        }, 1000);
-
-        mediator.on('modules:onwards:breaking-news:ready', breakingShown => {
-            if (!breakingShown) {
-                show(true);
-            } else {
-                show(false);
-            }
-        });
-        mediator.on('membership-message:display', () => {
-            show(false);
-        });
-    });
-
 const hide = (msg: Message): void => {
     userPrefs.set(
         lifeTimeClosesKey,
@@ -142,7 +124,6 @@ const canShow = (): Promise<boolean> => {
               hasSeenBannerLessThanFourTimesTotal(),
               isRecurringVisitor(),
               hasReadOver4Articles(),
-              bannerDoesNotCollide(),
               isInTestVariant(),
           ];
 
@@ -215,24 +196,17 @@ const show = (): void => {
     });
 };
 
-const signInEngagementBannerInit = (): Promise<void> =>
-    canShow().then((shouldDisplay: boolean) => {
-        if (shouldDisplay) show();
-    });
-
 /* this needs to be a side effect */
 recordSessionVisit();
 
-export default {
+const signInEngagementBanner: Banner = {
     id: 'signInEngagementBanner',
-    show,
     canShow,
+    show,
 };
 
 export {
-    signInEngagementBannerInit,
-    canShow,
-    show,
+    signInEngagementBanner,
     sessionVisitsKey,
     lifeTimeViewsKey,
     sessionStartedAtKey,

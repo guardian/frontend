@@ -3,115 +3,58 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { FeedbackFlashBox } from 'common/modules/identity/ad-prefs/FeedbackFlashBox';
+import { ConsentBox } from 'common/modules/identity/ad-prefs/ConsentBox';
+
 import fastdom from 'lib/fastdom-promise';
 import {
     getAdConsentState,
     setAdConsentState,
-    allAdConsents,
+    getAllAdConsentsWithState,
 } from 'common/modules/commercial/ad-prefs.lib';
-import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
+import type {
+    AdConsent,
+    AdConsentWithState,
+} from 'common/modules/commercial/ad-prefs.lib';
 
-type AdConsentState = ?boolean;
-
-type AdConsentWithState = {
-    consent: AdConsent,
-    state: AdConsentState,
-};
-
-type ConsentRadioButtonProps = {
-    value: string,
-    label: string,
-    checked: boolean,
-    consent: AdConsent,
-    onToggle: () => void,
-};
-
-type ConsentBoxProps = {
-    consent: AdConsent,
-    state: AdConsentState,
-    onUpdate: (state: AdConsentState) => void,
+type AdPrefsWrapperProps = {
+    getAdConsentState: (consent: AdConsent) => ?boolean,
+    setAdConsentState: (consent: AdConsent, state: boolean) => void,
+    initialConsentsWithState: AdConsentWithState[],
 };
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
 
-class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
-    handleChange(event: SyntheticInputEvent<HTMLInputElement>): void {
-        if (event.target.checked) {
-            this.props.onToggle();
-        }
+class AdPrefsWrapper extends Component<
+    AdPrefsWrapperProps,
+    {
+        consentsWithState: AdConsentWithState[],
+        changesPending: boolean,
+        flashing: boolean,
     }
-    render() {
-        const id = `gu-ad-prefs-${this.props.value.toString()}-${
-            this.props.consent.cookie
-        }`;
-        const name = `gu-ad-prefs-${this.props.consent.cookie}`;
-
-        return (
-            <label className="identity-ad-prefs-input" htmlFor={id}>
-                <input
-                    type="radio"
-                    name={name}
-                    id={id}
-                    value={this.props.value.toString()}
-                    checked={this.props.checked}
-                    onChange={this.handleChange.bind(this)}
-                />
-                {this.props.label}
-            </label>
-        );
-    }
-}
-
-class ConsentBox extends Component<ConsentBoxProps, {}> {
-    render() {
-        return (
-            <fieldset>
-                <legend>
-                    Allow personalised ads from {this.props.consent.label}
-                </legend>
-                <div>
-                    <ConsentRadioButton
-                        label="Turn on"
-                        value="true"
-                        checked={this.props.state === true}
-                        consent={this.props.consent}
-                        onToggle={() => this.props.onUpdate(true)}
-                    />
-                    <ConsentRadioButton
-                        label="Turn off"
-                        value="false"
-                        checked={this.props.state === false}
-                        consent={this.props.consent}
-                        onToggle={() => this.props.onUpdate(false)}
-                    />
-                </div>
-            </fieldset>
-        );
-    }
-}
-
-class ConsentBoxes extends Component<
-    {},
-    { consentsWithState: AdConsentWithState[], changesPending: boolean }
 > {
-    constructor(props: {}): void {
+    constructor(props: AdPrefsWrapperProps): void {
         super(props);
         this.state = {
             changesPending: false,
-            consentsWithState: allAdConsents.map((consent: AdConsent) => ({
-                consent,
-                state: getAdConsentState(consent),
-            })),
+            flashing: false,
+            consentsWithState: [...this.props.initialConsentsWithState],
         };
     }
 
-    onUpdate(consentId: number, state: AdConsentState): void {
+    onUpdate(consentId: number, state: ?boolean): void {
         const consentsWithState = [...this.state.consentsWithState];
-        const changesPending = consentsWithState[consentId].state !== state;
+        const changesPending =
+            this.props.getAdConsentState(
+                consentsWithState[consentId].consent
+            ) !== state;
         consentsWithState[consentId].state = state;
+        if (this.SubmitButtonRef) {
+            this.SubmitButtonRef.scrollIntoView(false);
+        }
         this.setState({
             consentsWithState,
             changesPending,
+            flashing: false,
         });
     }
 
@@ -119,19 +62,20 @@ class ConsentBoxes extends Component<
         event.preventDefault();
         this.state.consentsWithState.forEach(consentWithState => {
             if (typeof consentWithState.state === 'boolean') {
-                setAdConsentState(
+                this.props.setAdConsentState(
                     consentWithState.consent,
                     consentWithState.state
                 );
             }
         });
-        if (this.FeedbackFlashBoxRef) this.FeedbackFlashBoxRef.flash();
         this.setState({
             changesPending: false,
+            flashing: true,
         });
     }
 
-    FeedbackFlashBoxRef: ?FeedbackFlashBox = null;
+    FeedbackFlashBoxRef: ?FeedbackFlashBox;
+    SubmitButtonRef: ?HTMLElement;
 
     render() {
         return (
@@ -145,25 +89,27 @@ class ConsentBoxes extends Component<
                                 consent={consentWithState.consent}
                                 state={consentWithState.state}
                                 key={consentWithState.consent.cookie}
-                                onUpdate={(state: AdConsentState) => {
+                                onUpdate={(state: ?boolean) => {
                                     this.onUpdate(index, state);
                                 }}
                             />
                         )
                     )}
                 </div>
-                <div className="identity-ad-prefs-manager__footer">
+                <div
+                    className="identity-ad-prefs-manager__footer"
+                    ref={child => {
+                        this.SubmitButtonRef = child;
+                    }}>
                     <button
                         disabled={this.state.changesPending ? null : 'disabled'}
                         className="manage-account__button manage-account__button--center"
+                        data-link-name="ad-prefs : submit"
                         type="submit">
-                        Save changes
+                        Save my settings
                     </button>
-                    <FeedbackFlashBox
-                        ref={child => {
-                            this.FeedbackFlashBoxRef = child;
-                        }}>
-                        Saved
+                    <FeedbackFlashBox flashing={this.state.flashing}>
+                        Your settings have been saved.
                     </FeedbackFlashBox>
                 </div>
             </form>
@@ -173,12 +119,18 @@ class ConsentBoxes extends Component<
 
 const enhanceAdPrefs = (): void => {
     fastdom
-        .read(() => document.querySelectorAll(rootSelector))
+        .read(() => [...document.querySelectorAll(rootSelector)])
         .then((wrapperEls: HTMLElement[]) => {
             wrapperEls.forEach(_ => {
                 fastdom.write(() => {
-                    _.classList.remove('is-hidden');
-                    render(<ConsentBoxes />, _);
+                    render(
+                        <AdPrefsWrapper
+                            initialConsentsWithState={getAllAdConsentsWithState()}
+                            getAdConsentState={getAdConsentState}
+                            setAdConsentState={setAdConsentState}
+                        />,
+                        _
+                    );
                 });
             });
         });
