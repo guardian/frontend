@@ -511,16 +511,6 @@ $identity-header-height: 48px;
     display: none;
 }
 
-/* Email prefs page
-   ========================================================================== */
-@include mq(desktop) {
-    .fieldset__fields {
-        &.identity-email-categories-fieldset {
-            width: gs-span(8);
-            max-width: gs-span(8);
-        }
-    }
-}
 
 /* Delete Account page
    ========================================================================== */
