@@ -25,7 +25,7 @@ const bidderTimeout = 1500;
 
 const consentManagement = {
     cmpApi: 'iab',
-    timeout: 8000,
+    timeout: 200,
     allowAuctionWithoutConsent: true,
 };
 
