@@ -67,8 +67,7 @@ class PrebidAdUnit {
 
 class PrebidService {
     static initialise(): void {
-
-        if(config.switches.enableConsentManagementService) {
+        if (config.switches.enableConsentManagementService) {
             window.pbjs.setConfig({
                 bidderTimeout,
                 priceGranularity,

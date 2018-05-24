@@ -22,6 +22,9 @@ export type Vendor = {
     id: number,
     name: string,
     policyUrl?: string,
+    purposeIds?: Array<number>,
+    legIntPurposeIds?: Array<number>,
+    featureIds?: Array<number>,
 };
 
 export type VendorList = {
