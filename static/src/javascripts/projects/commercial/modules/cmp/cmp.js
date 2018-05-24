@@ -41,7 +41,7 @@ class CmpService {
         this.store = store;
         this.processCommand.receiveMessage = this.receiveMessage;
         this.commandQueue = [];
-        if (getUrlVars('cmpdebug')) {
+        if (getUrlVars().cmpdebug) {
             this.cmpConfig.logging = 'debug';
             log.info('Set logging level to DEBUG');
         }
