@@ -69,8 +69,8 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
             <button 
                 data-link-name="first-pv-consent : agree" 
                 class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
-        classes.agree
-        }"
+                    classes.agree
+                }"
             >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
             <a 
                 href="${tpl.linkToPreferences}" 
