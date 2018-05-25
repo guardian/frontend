@@ -244,6 +244,8 @@ final case class MetaData (
   sensitive: Boolean = false
 ){
   val sectionId = section map (_.value) getOrElse ""
+  lazy val neilsenApid: String = Neilsen.apidFromString(sectionId)
+
   private val fullAdUnitPath = AdUnitMaker.make(id, adUnitSuffix)
 
   def hasPageSkin(edition: Edition): Boolean = DfpAgent.hasPageSkin(fullAdUnitPath, this, edition)

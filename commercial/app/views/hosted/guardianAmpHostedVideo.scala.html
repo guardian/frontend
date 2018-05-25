@@ -35,6 +35,20 @@
         <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
     </amp-analytics>
 
+    <amp-analytics type="nielsen">
+        <script type="application/json">
+            {
+                "vars": {
+                    "apid": "@page.metadata.neilsenApid",
+                    "apv": "1.0",
+                    "apn": "The Guardian",
+                    "section": "@page.metadata.sectionId",
+                    "segC": "Guardian - Google AMP"
+                }
+            }
+        </script>
+    </amp-analytics>
+
     <div class="main-body">
       @guardianHostedHeader(if(page.fontColour.isDark) "hosted-video-page hosted-page--bright" else "hosted-video-page", page, isAMP = true)
       <div class="hosted-page l-side-margins hosted__side hosted-video-page @if(page.fontColour.isDark) {hosted-page--bright}">
