@@ -43,9 +43,9 @@ const template: Template = {
     heading: `Your privacy`,
     consentText: [
         `We use cookies to improve your experience on our site and to show you relevant&nbsp;advertising.`,
-        `To find out more, read our updated <a data-link-name="first-pv-consent : to-privacy" href="${
+        `To find out more, read our updated <a class="u-underline" data-link-name="first-pv-consent : to-privacy" href="${
             links.privacy
-        }">privacy policy</a> and <a data-link-name="first-pv-consent : to-cookies" href="${
+        }">privacy policy</a> and <a class="u-underline" data-link-name="first-pv-consent : to-cookies" href="${
             links.cookies
         }">cookie policy</a>.`,
     ],
@@ -75,7 +75,7 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
             <a 
                 href="${tpl.linkToPreferences}" 
                 data-link-name="first-pv-consent : to-prefs" 
-                class="site-message--first-pv-consent__link"
+                class="site-message--first-pv-consent__link u-underline"
             >${tpl.choicesButton}</a>
         </div>
     </div>
