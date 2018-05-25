@@ -1030,3 +1030,22 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     width: 100%;
     height: 100%;
 }
+
+
+.banner-cta-text {
+    font-weight: bold;
+}
+
+
+//Test specific CSS
+.highlight-test {
+    .banner-cta-text {
+        font-weight: normal;
+        background-color: #000000;
+        color: #ffffff;
+        margin-left: 3px;
+        padding-left: 2px;
+        padding-right: 5px;
+        padding-bottom: 3px;
+    }
+}
