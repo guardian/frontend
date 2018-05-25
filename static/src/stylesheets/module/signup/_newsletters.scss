@@ -224,8 +224,10 @@
 }
 
 // TONE SPECIFIC MODS
-@mixin newsletter-card--tone($border, $cta: $garnett-neutral-1) {
-    border-top-color: $border;
+@mixin newsletter-card--tone() {
+    $cta: $garnett-neutral-1;
+
+    border-top-color: $neutral-3;
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {
@@ -234,8 +236,8 @@
 
             &:hover,
             &:focus {
-                border-color: darken($cta, 10%);
-                background-color: darken($cta, 10%);
+                border-color: lighten($cta, 30%);
+                background-color: lighten($cta, 30%);
             }
         }
     }
@@ -258,32 +260,32 @@
 
 // TONE SPECIFIC MODS - FEATURE
 .newsletter-card--tone-feature {
-    @include newsletter-card--tone($features-support-3, $features-support-1)
+    @include newsletter-card--tone()
 }
 
 // TONE SPECIFIC MODS - COMMENT
 .newsletter-card--tone-comment {
-    @include newsletter-card--tone($comment-support-4, $comment-support-4)
+    @include newsletter-card--tone()
 }
 
 // TONE SPECIFIC MODS - MEDIA
 .newsletter-card--tone-media {
-    @include newsletter-card--tone($multimedia-main-2)
+    @include newsletter-card--tone()
 }
 
 // GARNETT TONES
 .newsletter-card--tone-news {
-    @include newsletter-card--tone($news-garnett-main-1)
+    @include newsletter-card--tone()
 }
 .newsletter-card--tone-opinion {
-    @include newsletter-card--tone($opinion-garnett-main-1)
+    @include newsletter-card--tone()
 }
 .newsletter-card--tone-sport {
-    @include newsletter-card--tone($sport-garnett-main-1)
+    @include newsletter-card--tone()
 }
 .newsletter-card--tone-lifestyle {
-    @include newsletter-card--tone($lifestyle-garnett-main-1)
+    @include newsletter-card--tone()
 }
 .newsletter-card--tone-culture {
-    @include newsletter-card--tone($culture-garnett-main-1)
+    @include newsletter-card--tone()
 }
