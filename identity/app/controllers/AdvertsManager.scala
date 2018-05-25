@@ -9,7 +9,6 @@ import play.api.http.HttpConfiguration
 import play.api.mvc._
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import utils.SafeLogging
-import conf.switches.Switches.IdentityAdConsentsSwitch
 
 
 class AdvertsManager(
