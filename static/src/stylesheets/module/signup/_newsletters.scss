@@ -38,8 +38,7 @@
 
 .newsletter-card {
     margin-bottom: $gs-baseline;
-    border-top: 1px solid $news-accent;
-    border-bottom: 1px solid $neutral-3;
+    border-top: 1px solid $neutral-3;
     background-color: $comment-support-2;
     padding: $gs-baseline / 2 $gs-gutter / 2 $gs-baseline;
     box-sizing: border-box;
@@ -120,22 +119,37 @@
     }
 
     .newsletter-card__lozenge--preview {
-        color: $news-main-1;
+        border-color: $garnett-neutral-1;
+        color: $garnett-neutral-1;
         background-color: transparent;
         float: right;
 
         &:hover,
         &:focus,
         &:active {
-            background-color: darken($comment-support-2, 10%);
+            border-color: $garnett-neutral-1;
+            background-color: rgba(0, 0, 0, .1)
         }
     }
 
     .inline-arrow-right {
-        fill: $news-main-1;
+        fill: $garnett-neutral-1;
         position: absolute;
         height: $gs-baseline;
         line-height: $gs-baseline;
+    }
+}
+
+.newsletter-card__signup {
+    .newsletter-card__lozenge {
+        border-color: $garnett-neutral-1;
+        background-color: $garnett-neutral-1;
+
+        &:hover,
+        &:focus {
+            border-color: lighten($garnett-neutral-1, 30%);
+            background-color: lighten($garnett-neutral-1, 30%);
+        }
     }
 }
 
@@ -221,69 +235,4 @@
     @include mq(wide) {
         width: gs-span(3);
     }
-}
-
-// TONE SPECIFIC MODS
-@mixin newsletter-card--tone($border, $cta: $garnett-neutral-1) {
-    border-top-color: $border;
-
-    .newsletter-card__signup {
-        .newsletter-card__lozenge {
-            border-color: $cta;
-            background-color: $cta;
-
-            &:hover,
-            &:focus {
-                border-color: darken($cta, 10%);
-                background-color: darken($cta, 10%);
-            }
-        }
-    }
-
-    .newsletter-card__lozenge--preview {
-        border-color: $cta;
-        color: $cta;
-
-        &:hover,
-        &:focus,
-        &:active {
-            border-color: $cta;
-        }
-
-        .inline-arrow-right {
-            fill: $cta;
-        }
-    }
-}
-
-// TONE SPECIFIC MODS - FEATURE
-.newsletter-card--tone-feature {
-    @include newsletter-card--tone($features-support-3, $features-support-1)
-}
-
-// TONE SPECIFIC MODS - COMMENT
-.newsletter-card--tone-comment {
-    @include newsletter-card--tone($comment-support-4, $comment-support-4)
-}
-
-// TONE SPECIFIC MODS - MEDIA
-.newsletter-card--tone-media {
-    @include newsletter-card--tone($multimedia-main-2)
-}
-
-// GARNETT TONES
-.newsletter-card--tone-news {
-    @include newsletter-card--tone($news-garnett-main-1)
-}
-.newsletter-card--tone-opinion {
-    @include newsletter-card--tone($opinion-garnett-main-1)
-}
-.newsletter-card--tone-sport {
-    @include newsletter-card--tone($sport-garnett-main-1)
-}
-.newsletter-card--tone-lifestyle {
-    @include newsletter-card--tone($lifestyle-garnett-main-1)
-}
-.newsletter-card--tone-culture {
-    @include newsletter-card--tone($culture-garnett-main-1)
 }
