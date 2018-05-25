@@ -1,7 +1,7 @@
 $btn-height: ($gs-baseline*3.5);
 
 .site-message.site-message--first-pv-consent {
-    padding: ($gs-baseline / 2) 0 $gs-baseline * 2;
+    padding: ($gs-baseline / 2) 0 $gs-baseline * 4;
     background: $sport-away;
 
     .u-underline {
@@ -97,6 +97,7 @@ $btn-height: ($gs-baseline*3.5);
         line-height: 24px;
         flex: 1 1 0;
         margin-top: 3px;
+        max-width: gs-span(8);
         a {
             color: currentColor;
         }
