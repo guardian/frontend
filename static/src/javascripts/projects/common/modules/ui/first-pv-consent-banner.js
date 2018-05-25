@@ -42,10 +42,10 @@ const messageCode: string = 'first-pv-consent';
 const template: Template = {
     heading: `Your privacy`,
     consentText: [
-        `We use cookies to improve your experience on our site and to show you relevant advertising.`,
-        `To find out more, read our updated <a data-link-name="first-pv-consent : to-privacy" href="${
+        `We use cookies to improve your experience on our site and to show you relevant&nbsp;advertising.`,
+        `To find out more, read our updated <a class="u-underline" data-link-name="first-pv-consent : to-privacy" href="${
             links.privacy
-        }">privacy policy</a> and <a data-link-name="first-pv-consent : to-cookies" href="${
+        }">privacy policy</a> and <a class="u-underline" data-link-name="first-pv-consent : to-cookies" href="${
             links.cookies
         }">cookie policy</a>.`,
     ],
@@ -64,19 +64,20 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     }</div>
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${tpl.consentText
         .map(_ => `<p>${_}</p>`)
-        .join('')}</div>
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--actions">
-        <button 
-            data-link-name="first-pv-consent : agree" 
-            class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
-                classes.agree
-            }"
-        >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
-        <a 
-            href="${tpl.linkToPreferences}" 
-            data-link-name="first-pv-consent : to-prefs" 
-            class="site-message--first-pv-consent__link"
-        >${tpl.choicesButton}</a>
+        .join('')}
+        <div class="site-message--first-pv-consent__actions">
+            <button 
+                data-link-name="first-pv-consent : agree" 
+                class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
+                    classes.agree
+                }"
+            >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
+            <a 
+                href="${tpl.linkToPreferences}" 
+                data-link-name="first-pv-consent : to-prefs" 
+                class="site-message--first-pv-consent__link u-underline"
+            >${tpl.choicesButton}</a>
+        </div>
     </div>
 `;
 
