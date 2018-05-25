@@ -1,5 +1,5 @@
 @import common.InlineJs
-@import conf.switches.Switches.IdentityProfileNavigationSwitch
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch, enableConsentManagementService}
 @import conf.Configuration
 @import model.Page
 @import templates.inlineJS.nonBlocking.js._
@@ -21,6 +21,11 @@
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
     // Insert username in top bar on page load
     @InlineJs(showUserName().body, "showUserName.js")
+}
+
+@if(enableConsentManagementService.isSwitchedOn) {
+    // add CMP stub and attach main script to the head
+    @InlineJs(prepareCmp().body, "prepareCmp.js")
 }
 
 // ************* ANALYTICS *************
