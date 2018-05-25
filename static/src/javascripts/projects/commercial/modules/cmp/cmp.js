@@ -18,8 +18,10 @@ import type { CmpConfig } from 'commercial/modules/cmp/types';
 
 const readConsentCookie = (cookieName: string): boolean | null => {
     const cookieVal: ?string = getCookie(cookieName);
-    if (cookieVal && cookieVal.split(',')[0] === '1') return true;
-    if (cookieVal && cookieVal.split(',')[0] === '0') return false;
+    if (cookieVal && cookieVal.replace(',', '.').split('.')[0] === '1')
+        return true;
+    if (cookieVal && cookieVal.replace(',', '.').split('.')[0] === '0')
+        return false;
     return null;
 };
 
