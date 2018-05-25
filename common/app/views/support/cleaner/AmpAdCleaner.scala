@@ -5,10 +5,7 @@ import model.Article
 import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpAd, AmpAdDataSlot, HtmlCleaner}
 
-import conf.switches.Switches.includePersonalisedAdsConsent
-
 import scala.collection.JavaConverters._
-import scala.xml.{Attribute, Null}
 
 object AmpAdCleaner {
   val AD_LIMIT = 8
@@ -100,7 +97,7 @@ case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends
       // data-block-on-consent should not have ANY value
       // according to https://www.ampproject.org/docs/reference/components/amp-consent
       // This is not compatible with proper XML, hence the stringware hack
-        
+
       // This cannot be activated until we designed a solution to either inject/synchronise consent from our storage
       // or gather it in AMP.
       // ( ampAd % Attribute(null, "data-block-on-consent", "PLEASEREMOVEME", Null) ).toString().replaceFirst("=\"PLEASEREMOVEME\"", "")

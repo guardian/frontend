@@ -55,15 +55,28 @@
     )
 }
 
-@nonElectronicOptOutContent = {
-    @views.html.profile.nonElectronicOptOut(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
+@nonElectronicContactContent = {
+    @views.html.profile.nonElectronicContact(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
 }
 
-@nonElectronicOptOutStep = @{
+@nonElectronicContactStep = @{
     ConsentStep(
-        name = "nonElectronicOptOut",
+        name = "nonElectronicContact",
         title = "How else can we get in touch with you?",
-        content = nonElectronicOptOutContent,
+        content = nonElectronicContactContent,
+        show = true
+    )
+}
+
+@profilingConsentOptOutContent = {
+    @views.html.profile.profilingConsent(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
+}
+
+@profilingConsentOptOutStep = @{
+    ConsentStep(
+        name="profilingConsentOptOut",
+        title ="Using your data for marketing analysis",
+        content = profilingConsentOptOutContent,
         show = true
     )
 }
@@ -147,7 +160,8 @@
 @defaultJourney = @{List(
     marketingConsentStep,
     smsStep,
-    nonElectronicOptOutStep
+    nonElectronicContactStep,
+    profilingConsentOptOutStep
 )}
 
 @confirmModal = {
