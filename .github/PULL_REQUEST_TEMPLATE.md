@@ -2,17 +2,31 @@
 
 ## What is the value of this and can you measure success?
 
-## Does this affect other platforms - Amp, Apps, etc?
+## Checklist
 
-## Does this affect GLabs Paid Content Pages? Should it have support for Paid Content?
+### Does this affect other platforms?
+
+- [ ] AMP
+- [ ] Apps
+- [ ] Other (please specify)
+
+### Does this affect GLabs Paid Content Pages? Should it have support for Paid Content?
+
 <!-- if there are versions of this content with the paid styling (teal and grey) then they will need to be checked -->
 <!-- content can be found here: https://www.theguardian.com/tone/advertisement-features -->
 
+- [ ] No
+- [ ] Yes (please give details)
 
-## Screenshots
+### Accessibility test checklist
 
-## Tested in CODE?
+<!-- for changes that affect how a page appears in the browser -->
 
-<!-- AB test? https://git.io/v1V0x -->
-<!-- AMP question? https://git.io/v9zIE -->
-<!-- Does this PR meet the contributing guidelines? https://git.io/v1VEJ -->
+- [ ] [Tested with screen reader](https://accessibility.gutools.co.uk/testing/web/screen-readers/)
+- [ ] [Navigable with keyboard](https://accessibility.gutools.co.uk/testing/web/keyboard-navigation/)
+- [ ] [Colour contrast passed](https://accessibility.gutools.co.uk/testing/web/colour-contrast/)
+
+### Tested
+
+- [ ] Locally
+- [ ] On CODE
