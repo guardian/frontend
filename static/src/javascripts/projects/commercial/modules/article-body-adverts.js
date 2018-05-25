@@ -72,11 +72,13 @@ const filterNearbyCandidates = (maximumAdHeight: number) => (
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     const isImmersive = config.get('page.isImmersive');
+    const hasShowcase = qwery('.media-primary--showcase').length !== 0;
+    const needsExtraPadding = isImmersive || hasShowcase;
 
     const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: isImmersive ? 700 : 300,
+        minAbove: needsExtraPadding ? 700 : 300,
         minBelow: 700,
         selectors: {
             ' > h2': {
