@@ -1,4 +1,9 @@
 // @flow
+const ERR_INVALID_COOKIE_NAME = `Cookie must not contain invalid characters (space, tab and the following characters: '()<>@,;"/[]?={}')`;
+
+const isValidCookieValue = (name: string): boolean =>
+    !/[()<>@,;"\\/[\]?={} \t]/g.test(name);
+
 const getShortDomain = (
     { isCrossSubdomain = false }: { isCrossSubdomain: boolean } = {}
 ): string => {
@@ -43,6 +48,10 @@ const addCookie = (
 ): void => {
     const expires = new Date();
 
+    if ([name, value].map(isValidCookieValue).some(_ => _ === false)) {
+        throw Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`);
+    }
+
     if (daysToLive) {
         expires.setDate(expires.getDate() + daysToLive);
     } else {
@@ -70,6 +79,10 @@ const addForMinutes = (
 ): void => {
     const expires = new Date();
 
+    if ([name, value].map(isValidCookieValue).some(_ => _ === false)) {
+        throw Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`);
+    }
+
     expires.setMinutes(expires.getMinutes() + minutesToLive);
     document.cookie = `${name}=${
         value
@@ -77,6 +90,9 @@ const addForMinutes = (
 };
 
 const addSessionCookie = (name: string, value: string): void => {
+    if ([name, value].map(isValidCookieValue).some(_ => _ === false)) {
+        throw Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`);
+    }
     document.cookie = `${name}=${value}; path=/;${getDomainAttribute()}`;
 };
 
@@ -113,4 +129,5 @@ export {
     addForMinutes,
     removeCookie,
     getCookie,
+    isValidCookieValue,
 };

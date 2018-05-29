@@ -6,6 +6,7 @@ import {
     addForMinutes,
     removeCookie,
     getCookie,
+    isValidCookieValue,
 } from 'lib/cookies';
 
 // Mock the Date constructor to always return the beginning of time
@@ -61,6 +62,21 @@ describe('Cookies', () => {
                 'cookie-2-name=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT; domain=.theguardian.com'
             )
         );
+    });
+
+    describe('isValidCookieValue', () => {
+        it('should be able to detect malformed cookies', () => {
+            expect(isValidCookieValue('bad,cookie')).toBeFalsy();
+            expect(isValidCookieValue('bad;cookie')).toBeFalsy();
+            expect(isValidCookieValue('bad cookie')).toBeFalsy();
+            expect(isValidCookieValue('bad  cookie')).toBeFalsy();
+            expect(isValidCookieValue('bad=cookie')).toBeFalsy();
+        });
+
+        it('should be able to detect good cookies', () => {
+            expect(isValidCookieValue('good-cookie')).toBeTruthy();
+            expect(isValidCookieValue('cool.cookie')).toBeTruthy();
+        });
     });
 
     it('should be able to set a cookie', () => {
