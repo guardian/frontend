@@ -48,4 +48,9 @@ export const slots: PrebidSlot[] = [
         sizes: [[300, 250]],
         labelAny: ['mobile', 'tablet', 'desktop'],
     },
+    {
+        key: 'comments',
+        sizes: [[300, 250]],
+        labelAny: ['desktop'],
+    },
 ];
