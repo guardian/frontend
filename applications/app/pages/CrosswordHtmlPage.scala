@@ -10,6 +10,7 @@ import play.twirl.api.Html
 import crosswords.{AccessibleCrosswordPage, CrosswordPage, CrosswordPageWithSvg, CrosswordSearchPageNoResult, CrosswordSearchPageWithResults}
 import views.html.fragments._
 import crosswords.{accessibleCrosswordContent, crosswordContent, crosswordNoResult, crosswordSearch, printableCrosswordBody}
+import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
@@ -50,6 +51,7 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
       ),
       bodyTag(classes = defaultBodyClasses)(
         message(),
+        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
