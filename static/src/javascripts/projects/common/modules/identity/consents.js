@@ -5,7 +5,7 @@ import debounce from 'debounce-promise';
 import fastdom from 'lib/fastdom-promise';
 import loadEnhancers from './modules/loadEnhancers';
 
-import { push as pushError } from './modules/show-errors';
+import {push as pushError} from './modules/show-errors';
 import {
     addSpinner,
     removeSpinner,
@@ -13,8 +13,8 @@ import {
     getInfo as getCheckboxInfo,
     bindAnalyticsEventsOnce as bindCheckboxAnalyticsEventsOnce,
 } from './modules/switch';
-import { addUpdatingState, removeUpdatingState } from './modules/button';
-import { getCsrfTokenFromElement } from './modules/fetchFormFields';
+import {addUpdatingState, removeUpdatingState} from './modules/button';
+import {getCsrfTokenFromElement} from './modules/fetchFormFields';
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
@@ -149,6 +149,17 @@ const confirmUnsubscriptionFromAll = (
             })
         );
 
+const unsubscribeFromAll = (csrfToken: string) => {
+    return reqwest({
+        url: `/user/email-subscriptions`,
+        method: 'DELETE',
+        withCredentials: true,
+        headers: {
+            'Csrf-Token': csrfToken
+        }
+    });
+};
+
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     buttonEl.addEventListener('click', () => {
         if (buttonEl.classList.contains('js-confirm-unsubscribe')) {
@@ -174,8 +185,8 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                     )[0]
                 ),
             ])
-                .then(([newsletterIds, csrfToken]) =>
-                    submitNewsletterAction(csrfToken, 'remove', newsletterIds)
+                .then(([_, csrfToken]) =>
+                    unsubscribeFromAll(csrfToken)
                 )
                 .catch((err: Error) => {
                     pushError(err, 'reload').then(() => {
@@ -294,7 +305,7 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                                 `.${checkAllCheckboxClassName}`
                             ) === null &&
                             $checkbox.closest(`.${checkAllIgnoreClassName}`) ===
-                                null
+                            null
                     );
                 })
             );
@@ -332,7 +343,7 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
                     })
                     .then(() => {
                         wrappedCheckboxEl.dispatchEvent(
-                            new Event('change', { bubbles: true })
+                            new Event('change', {bubbles: true})
                         );
                     });
             });
