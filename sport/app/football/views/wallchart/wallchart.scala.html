@@ -1,72 +1,109 @@
 @(competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStageLike])(implicit request: RequestHeader)
-
-@competitionStages.map {
-    case knockoutStage: _root_.football.model.KnockoutSpider => {
-        <div class="facia-container facia-container--layout-content">
-            <div class="container">
-                <div class="facia-container__inner">
-                    <div class="container__border hide-on-mobile"></div>
-                    <h3 class="container__title">
-                        <span class="container__title__label u-text-hyphenate">knockout stage</span>
-                    </h3>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName knockout chart">
-                            @football.views.html.wallchart.knockoutSpider(competition, knockoutStage)
+<div class="l-side-margins wc-overview">
+    <div class="facia-container facia-container--layout-content facia-header">
+        <div class="facia-header__inner gs-container">
+            <div class="facia-header__column">
+                @fragments.inlineSvg("world_cup_badge", "badges", List("world__cup-svg", "world__cup-badge"))
+                <h1 class="container__title"><span class="container__title__label">World cup 2018</span></h1>
+            </div>
+            <div class="facia-header__column">
+                <div class="wc-match__date">
+                    <span class="wc-label wc-label__title">Next match</span>
+                    <span class="wc-label">16:00 Thu 14 June</span>
+                </div>
+            </div>
+            <div class="facia-header__column">
+                <div class="wc-match__badges">
+                    <span class="wc-label wc-badge__flag"></span>
+                    <span class="wc-label wc-badge__flag"></span>
+                </div>
+                <div class="wc-match__teams">
+                    <span class="wc-label wc-label__title">Group A</span>
+                    <span class="wc-label">RUS vs SAU</span>
+                </div>
+            </div>
+            <div class="facia-header__column">
+                    <span class="wc-player-image wc-player-image__offset"><img src="https://uploads.guim.co.uk/2018/05/24/world_cup_cut_out_1.png"></span>
+                    <span class="wc-player-image"><img src="https://uploads.guim.co.uk/2018/05/24/world_cup_cut_out_2.png"></span>
+            </div>
+        </div>
+    </div>
+    @competitionStages.map {
+        case knockoutStage: _root_.football.model.KnockoutSpider => {
+            <div class="facia-container facia-container--layout-content">
+                <div class="container">
+                    <div class="facia-container__inner">
+                        <div class="container__border hide-on-mobile"></div>
+                        <div class="fc-container__header">
+                            <h3 class="container__title">
+                                <span class="container__title__label u-text-hyphenate">Knockout stage</span>
+                            </h3>
+                        </div>
+                        <div class="container__body">
+                            <div data-link-name="@competition.fullName knockout chart">
+                                @football.views.html.wallchart.knockoutSpider(competition, knockoutStage)
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-    case groupStage:  _root_.football.model.Groups => {
-        <div class="facia-container facia-container--layout-content">
-            <div class="container">
-                <div class="facia-container__inner">
-                    <div class="container__border hide-on-mobile"></div>
-                    <h3 class="container__title">
-                        <span class="container__title__label u-text-hyphenate">groups</span>
-                    </h3>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName groups">
-                            @football.views.html.wallchart.groups(competition, groupStage)
+        }
+        case groupStage:  _root_.football.model.Groups => {
+            <div class="facia-container facia-container--layout-content">
+                <div class="container">
+                    <div class="facia-container__inner">
+                        <div class="container__border hide-on-mobile"></div>
+                        <div class="fc-container__header">
+                            <h3 class="container__title">
+                                <span class="container__title__label u-text-hyphenate">Groups</span>
+                            </h3>
+                        </div>
+                        <div class="container__body">
+                            <div data-link-name="@competition.fullName groups">
+                                @football.views.html.wallchart.groups(competition, groupStage)
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-    case leagueStage:  _root_.football.model.League => {
-        <div class="facia-container facia-container--layout-content">
-            <div class="container">
-                <div class="facia-container__inner">
-                    <div class="container__border hide-on-mobile"></div>
-                    <h3 class="container__title">
-                        <span class="container__title__label u-text-hyphenate">league</span>
-                    </h3>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName leagues">
-                            @football.views.html.wallchart.league(competition, leagueStage)
+        }
+        case leagueStage:  _root_.football.model.League => {
+            <div class="facia-container facia-container--layout-content">
+                <div class="container">
+                    <div class="facia-container__inner">
+                        <div class="container__border hide-on-mobile"></div>
+                        <div class="fc-container__header">
+                            <h3 class="container__title">
+                                <span class="container__title__label u-text-hyphenate">League</span>
+                            </h3>
+                        </div>
+                        <div class="container__body">
+                            <div data-link-name="@competition.fullName leagues">
+                                @football.views.html.wallchart.league(competition, leagueStage)
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-    case knockoutStage: _root_.football.model.KnockoutList => {
-        <div class="facia-container facia-container--layout-content">
-            <div class="container">
-                <div class="facia-container__inner">
-                    <div class="container__border hide-on-mobile"></div>
-                    <h3 class="container__title">
-                        <span class="container__title__label u-text-hyphenate">knockout stage</span>
-                    </h3>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName knockout chart">
-                            @football.views.html.wallchart.knockoutList(competition, knockoutStage)
+        }
+        case knockoutStage: _root_.football.model.KnockoutList => {
+            <div class="facia-container facia-container--layout-content">
+                <div class="container">
+                    <div class="facia-container__inner">
+                        <div class="container__border hide-on-mobile"></div>
+                        <div class="fc-container__header">
+                            <h3 class="container__title">
+                                <span class="container__title__label u-text-hyphenate">Knockout stage</span>
+                            </h3>
+                        </div>
+                        <div class="container__body">
+                            <div data-link-name="@competition.fullName knockout chart">
+                                @football.views.html.wallchart.knockoutList(competition, knockoutStage)
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     }
-}
+</div>
