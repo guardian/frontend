@@ -1,6 +1,8 @@
+@import com.gu.identity.model.User
 @(
     idRequest: services.IdentityRequest,
-    idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+    idUrlBuilder: services.IdentityUrlBuilder,
+    user: User)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @buildIdentityUrl(endpoint: String) = {
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
@@ -15,17 +17,23 @@
 
         <div class="fieldset__fields email-subscription__options">
             <ul class="u-unstyled">
+                @if(user.primaryEmailAddress != null && user.primaryEmailAddress.nonEmpty) {
+                    <li>
+                        <p>
+                            You are receiving newsletters, notifications and all other emails to
+                            <b>@user.primaryEmailAddress</b><b>.</b>
+                        </p>
+                    </li>
+                }
                 <li>
                     <p>
-                        <a href="@buildIdentityUrl("account/edit")" class="u-underline" data-link-name="identity : email : update">
-                            Update your email address
-                        </a>
+                        <a href="@buildIdentityUrl("account/edit")" class="u-underline" data-link-name="identity : email : update">Change your email address</a>  (via Account & Privacy tab)
                     </p>
                 </li>
                 <li>
                     <p>
                         <a href="https://jobs.theguardian.com/your-jobs/?ActiveSection=JbeList" class="u-underline" data-link-name="identity : jobs : alert-settings">
-                            Edit your Job Alert settings
+                            Manage your Jobs alerts
                         </a>
                     </p>
                 </li>
