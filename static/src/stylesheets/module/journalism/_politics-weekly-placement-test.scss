@@ -1,3 +1,25 @@
+
+/* TEST B */
+
+.empty-box {
+    background-color: #808080;
+    padding: .5em 1em;
+    p {
+        color: #ffffff;
+    }
+}
+
+/* hide on mobile */
+@media (max-width: 400px) {
+    .b__container,
+    .c__container {
+        display: none;
+    }
+}
+
+
+/* TEST A */
+
 .politics-weekly-treat {
     font-weight: 700;
 
