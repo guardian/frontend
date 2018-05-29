@@ -49,10 +49,7 @@ import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
 import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs';
-import {
-    getAllAdConsentsWithState,
-    updateCookieString,
-} from 'common/modules/commercial/ad-prefs.lib';
+import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
 import ophan from 'ophan/ng';
 
 const initialiseTopNavItems = (): void => {
@@ -299,7 +296,6 @@ const init = (): void => {
     catchErrorsWithContext([
         // Analytics comes at the top. If you think your thing is more important then please think again...
         ['c-analytics', loadAnalytics],
-        ['c-update-cookie-string', updateCookieString],
         ['c-consent-cookie-tracking', initialiseConsentCookieTracking],
         ['c-identity', initIdentity],
         ['c-adverts', requestUserSegmentsFromId],
