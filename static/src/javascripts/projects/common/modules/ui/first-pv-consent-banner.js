@@ -116,12 +116,11 @@ const trackInteraction = (interaction: string): void => {
 const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
-const canBlockThePage = (): boolean => {
-    // TODO: enable the following checks, once page blocking behaviour has been approved by the business
-    return [false, hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(
+// TODO: enable the following checks, once page blocking behaviour has been approved by the business
+const canBlockThePage = (): boolean =>
+    [false, hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(
         _ => _ === true
     );
-};
 
 const show = (): void => {
     upAlertViewCount();
