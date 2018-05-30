@@ -51,7 +51,7 @@ trait EmailsTab
 
   def deleteAllSubscriptionsAndMarketingConsents(): Action[AnyContent] =
     csrfCheck {
-      consentAuthWithIdapiUserAction.async { implicit request =>
+      recentFullAuthWithIdapiUserAction.async { implicit request =>
         identityApiClient.unsubscribeFromAllEmailsAndOptoutMarketingConsents(request.user.auth).map {
           case Right(_) => NoContent
           case Left(errors) =>
