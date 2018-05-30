@@ -20,7 +20,7 @@ object CommercialClientLogging extends Experiment(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Owner.group(SwitchGroup.Commercial),
-  sellByDate = new LocalDate(2018, 5, 31),
+  sellByDate = new LocalDate(2018, 6, 29),
   participationGroup = Perc1A
 )
 
