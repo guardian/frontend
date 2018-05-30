@@ -79,6 +79,7 @@ class Message {
 
         // Add a blocking overlay if needed
         if (this.blocking) {
+            $('body, html').addClass('is-scroll-blocked');
             this.$siteMessageOverlay.removeClass('is-hidden');
             this.$siteMessageOverlay[0].addEventListener('click', () => {
                 this.$siteMessageContainer[0].focus();
@@ -186,6 +187,7 @@ class Message {
         $('#header').removeClass('js-site-message');
         $('.js-site-message').addClass('is-hidden');
         $('.js-site-message-overlay').addClass('is-hidden');
+        $('body, html').removeClass('is-scroll-blocked');
         if (this.pinOnHide) {
             this.$footerMessage.removeClass('is-hidden');
         }
