@@ -85,7 +85,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
 
       identityName match {
         case Some(listName) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
-        case _ => Cached(15.minute)(WithoutRevalidationResult(NotFound))
+        case _ => Cached(15.minute)(WithoutRevalidationResult(BadRequest))
       }
     }
   }
@@ -95,7 +95,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
       val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
       id match {
         case Some(listId) => Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
-        case _            => Cached(15.minute)(WithoutRevalidationResult(NotFound))
+        case _            => Cached(15.minute)(WithoutRevalidationResult(BadRequest))
       }
     }
   }
