@@ -117,9 +117,10 @@ const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
 const canBlockThePage = (): boolean => {
-    // TODO: enable the following check, once page blocking behaviour has been approved by the business
-    // [hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(_ => _ === true);
-    return false;
+    // TODO: enable the following checks, once page blocking behaviour has been approved by the business
+    [false, hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(
+        _ => _ === true
+    );
 };
 
 const show = (): void => {
