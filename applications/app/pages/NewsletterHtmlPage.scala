@@ -42,7 +42,6 @@ object NewsletterHtmlPage extends HtmlPage[SimplePage] {
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(
-        message(),
         tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
@@ -50,6 +49,7 @@ object NewsletterHtmlPage extends HtmlPage[SimplePage] {
         breakingNewsDiv(),
         newsletterContent(page),
         footer(),
+        message(),
         inlineJSNonBlocking(),
         analytics.base()
       ),
