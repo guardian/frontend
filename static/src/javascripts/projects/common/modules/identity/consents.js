@@ -162,19 +162,24 @@ const unsubscribeFromAll = (csrfToken: string): Promise<void> =>
         },
     });
 
-const toggleInputsWithSelector = (className: string, checked: boolean) => {
-    return fastdom
-        .read(() => [...document.querySelectorAll(`.${className} input[type="checkbox"]`)])
-        .then((boxes) => boxes.forEach((b) => b.checked = checked));
-};
+const toggleInputsWithSelector = (className: string, checked: boolean) =>
+    fastdom
+        .read(() => [
+            ...document.querySelectorAll(
+                `.${className} input[type="checkbox"]`
+            ),
+        ])
+        .then(boxes =>
+            boxes.forEach(b => {
+                b.checked = checked;
+            })
+        );
 
-const checkAllOptOuts = (): Promise<void> => {
-    return toggleInputsWithSelector(optOutClassName, true);
-};
+const checkAllOptOuts = (): Promise<void> =>
+    toggleInputsWithSelector(optOutClassName, true);
 
-const uncheckAllOptIns = (): Promise<void> => {
-    return toggleInputsWithSelector(optInClassName, false);
-};
+const uncheckAllOptIns = (): Promise<void> =>
+    toggleInputsWithSelector(optInClassName, false);
 
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     buttonEl.addEventListener('click', () => {
@@ -198,7 +203,9 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                 document.getElementsByClassName(newsletterCheckboxClassName)[0]
             )
                 .then(csrfToken => unsubscribeFromAll(csrfToken))
-                .then(() => Promise.all([checkAllOptOuts(), uncheckAllOptIns()]))
+                .then(() =>
+                    Promise.all([checkAllOptOuts(), uncheckAllOptIns()])
+                )
                 .catch((err: Error) => {
                     pushError(err, 'reload').then(() => {
                         window.scrollTo(0, 0);
