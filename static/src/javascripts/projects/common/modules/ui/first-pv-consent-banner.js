@@ -10,7 +10,10 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
-import { upAlertViewCount, getAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
+import {
+    upAlertViewCount,
+    getAlertViewCount,
+} from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
@@ -82,16 +85,17 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     </div>
 `;
 
-const isInEU  = (): boolean =>
+const isInEU = (): boolean =>
     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
 
 const isNotInHelpOrInfoPage = (): boolean =>
-    ['info','help'].every(_=>_!==config.get('page.section'));
+    ['info', 'help'].every(_ => _ !== config.get('page.section'));
 
 const hasUnsetAdChoices = (): boolean =>
     allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
 
-const hasSeenTooManyPages = (): boolean => (getAlertViewCount() > blockMessageAfterPageViewNo)
+const hasSeenTooManyPages = (): boolean =>
+    getAlertViewCount() > blockMessageAfterPageViewNo;
 
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
@@ -113,7 +117,7 @@ const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
 const canBlockThePage = (): boolean =>
-    [hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(_ => _ === true)
+    [hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(_ => _ === true);
 
 const show = (): void => {
     upAlertViewCount();

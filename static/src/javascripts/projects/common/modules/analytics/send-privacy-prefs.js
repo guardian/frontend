@@ -44,4 +44,9 @@ const trackConsentCookies = (
     });
 };
 
-export { onConsentSet, trackConsentCookies, upAlertViewCount, getAlertViewCount };
+export {
+    onConsentSet,
+    trackConsentCookies,
+    upAlertViewCount,
+    getAlertViewCount,
+};
