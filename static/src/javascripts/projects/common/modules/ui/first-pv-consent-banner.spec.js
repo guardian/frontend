@@ -109,7 +109,7 @@ describe('First PV consents banner', () => {
             getAlertViewCount.mockImplementation(() => 1);
             expect(test.canBlockThePage()).toBeFalsy();
         });
-        it('should block the page after x pvs', () => {
+        it('should not block the page after x pvs', () => {
             getAlertViewCount.mockImplementation(() => 999999);
             expect(test.canBlockThePage()).toBeTruthy();
         });
