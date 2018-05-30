@@ -23,7 +23,9 @@
 
 .site-message--banner {
     position: fixed;
-    position: sticky;
+    @supports (position: sticky) {
+        position: sticky;
+    }
     bottom: 0;
     width: 100%;
     z-index: $zindex-popover;
