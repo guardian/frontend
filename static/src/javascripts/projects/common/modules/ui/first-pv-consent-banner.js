@@ -118,7 +118,7 @@ const canShow = (): Promise<boolean> =>
 
 const canBlockThePage = (): boolean => {
     // TODO: enable the following checks, once page blocking behaviour has been approved by the business
-    [false, hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(
+    return [false, hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(
         _ => _ === true
     );
 };
