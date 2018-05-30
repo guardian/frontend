@@ -8,6 +8,21 @@
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
 }
 
+@confirmModal = {
+    <section class="identity-forms-message">
+        <h1>Are you sure?</h1>
+        <p>You've chosen not to receive any editorial or marketing newsletters from the Guardian.</p>
+
+        <p><strong>Are you sure you want to unsubscribe from these emails?</strong></p>
+
+        <footer class="identity-forms-message__options">
+            <button class="js-identity-modal__closer manage-account__button manage-account__button--main manage-account__button--center js-confirm-unsubscribe-all">Yes, unsubscribe me</button>
+            <button class="manage-account__button manage-account__button--secondary manage-account__button--center js-identity-modal__closer">Cancel</button>
+        </footer>
+
+    </section>
+}
+
 <div class="email-subscription__fieldset">
 
     <fieldset class="fieldset">
@@ -39,16 +54,16 @@
                 </li>
                 <li>
                     <button type="button" class="manage-account__button--mini manage-account__button--icon manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all">
-                        <span class="email-unsubscribe-all__label js-unsubscribe--basic manage-account__button-flexwrap">
+                        <span class="email-unsubscribe-all__label manage-account__button-flexwrap">
                             Unsubscribe from all newsletters and marketing emails
                             @fragments.inlineSvg("cross", "icon")
-                        </span>
-                        <span class="email-unsubscribe-all__label js-unsubscribe--confirm hide" aria-hidden>
-                            Are you sure?
                         </span>
                     </button>
                 </li>
             </ul>
+
+            @fragments.modal("confirm-unsubscribe-all", confirmModal)
+
         </div>
 
     </fieldset>
