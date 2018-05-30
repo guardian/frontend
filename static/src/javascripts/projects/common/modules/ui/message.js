@@ -22,7 +22,6 @@ class Message {
     blocking: boolean;
     trackDisplay: boolean;
     type: string;
-    pinOnHide: boolean;
     siteMessageComponentName: string;
     siteMessageLinkName: string;
     siteMessageCloseBtn: string;
@@ -34,7 +33,6 @@ class Message {
     $siteMessage: Object;
     $siteMessageContainer: Object;
     $siteMessageOverlay: Object;
-    $footerMessage: Object;
 
     constructor(id: string, options?: Object) {
         const opts = options || {};
@@ -44,7 +42,6 @@ class Message {
         this.blocking = opts.blocking || false;
         this.trackDisplay = opts.trackDisplay || false;
         this.type = opts.type || 'banner';
-        this.pinOnHide = opts.pinOnHide || false;
         this.siteMessageComponentName = opts.siteMessageComponentName || '';
         this.siteMessageLinkName = opts.siteMessageLinkName || '';
         this.siteMessageCloseBtn = opts.siteMessageCloseBtn || '';
@@ -53,15 +50,11 @@ class Message {
         this.cssModifierClass = opts.cssModifierClass || '';
         this.customJs = opts.customJs || noop;
         this.customOpts = opts.customOpts || {};
-        this.$footerMessage = $('.js-footer-message');
         this.$siteMessageContainer = $('.js-site-message');
         this.$siteMessageOverlay = $('.js-site-message-overlay');
     }
 
     show(message: string): boolean {
-        if (this.pinOnHide) {
-            $('.js-footer-site-message-copy').html(message);
-        }
 
         // don't let messages unknowingly overwrite each other
         if (
@@ -69,9 +62,6 @@ class Message {
             !this.important
         ) {
             // if we're not showing a banner message, display it in the footer
-            if (this.pinOnHide) {
-                this.$footerMessage.removeClass('is-hidden');
-            }
             return false;
         }
 
@@ -186,9 +176,6 @@ class Message {
         $('#header').removeClass('js-site-message');
         $('.js-site-message').addClass('is-hidden');
         $('.js-site-message-overlay').addClass('is-hidden');
-        if (this.pinOnHide) {
-            this.$footerMessage.removeClass('is-hidden');
-        }
     }
 
     remember(): void {
