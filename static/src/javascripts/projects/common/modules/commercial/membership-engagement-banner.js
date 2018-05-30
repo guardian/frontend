@@ -159,6 +159,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         ? params.template(templateParams)
         : acquisitionsBannerControlTemplate(templateParams);
     const messageShown = new Message(messageCode, {
+        pinOnHide: false,
         siteMessageLinkName: 'membership message',
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
