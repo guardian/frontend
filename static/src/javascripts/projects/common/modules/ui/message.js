@@ -55,7 +55,6 @@ class Message {
     }
 
     show(message: string): boolean {
-
         // don't let messages unknowingly overwrite each other
         if (
             !this.$siteMessageContainer.hasClass('is-hidden') &&
@@ -174,8 +173,8 @@ class Message {
 
     hide(): void {
         $('#header').removeClass('js-site-message');
-        $('.js-site-message').addClass('is-hidden');
-        $('.js-site-message-overlay').addClass('is-hidden');
+        this.$siteMessageContainer.addClass('is-hidden');
+        this.$siteMessageOverlay.addClass('is-hidden');
     }
 
     remember(): void {
