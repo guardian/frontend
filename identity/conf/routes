@@ -61,6 +61,8 @@ POST        /privacy/edit-ajax                      controllers.editprofile.Edit
 GET         /email-prefs                            controllers.editprofile.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
 POST        /email-prefs                            controllers.editprofile.EditProfileController.saveEmailPreferencesAjax
 
+DELETE      /user/email-subscriptions               controllers.editprofile.EditProfileController.deleteAllSubscriptionsAndMarketingConsents()
+
 
 ########################################################################################################################
 # PUBLIC EDIT PROFILE
