@@ -149,7 +149,7 @@ const confirmUnsubscriptionFromAll = (
             })
         );
 
-const unsubscribeFromAll = (csrfToken: string) =>
+const unsubscribeFromAll = (csrfToken: string): Promise<void> =>
     reqwest({
         url: `/user/email-subscriptions`,
         method: 'DELETE',
