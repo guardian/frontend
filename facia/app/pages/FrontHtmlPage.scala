@@ -55,7 +55,6 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(
-        message(),
         tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
@@ -64,6 +63,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
         breakingNewsDiv(),
         cleanedFrontBody(),
         footer(),
+        message(),
         inlineJSNonBlocking(),
         analytics.base()
       ),
