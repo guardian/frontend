@@ -36,7 +36,7 @@ type Links = {
 
 const displayEventKey: string = 'first-pv-consent : display';
 const messageCode: string = 'first-pv-consent';
-const blockMessageAfterPageViewNo = 4;
+const blockMessageAfterPageViewNo: number = 4;
 
 const links: Links = {
     privacy: 'https://www.theguardian.com/help/privacy-policy',
