@@ -13,7 +13,6 @@ import {
     getInfo as getCheckboxInfo,
     bindAnalyticsEventsOnce as bindCheckboxAnalyticsEventsOnce,
 } from './modules/switch';
-import { addUpdatingState, removeUpdatingState } from './modules/button';
 import { getCsrfTokenFromElement } from './modules/fetchFormFields';
 import { show as showModal } from './modules/modal';
 
@@ -109,26 +108,6 @@ const buildFormDataForFields = (
 const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
     fastdom.read(() => labelEl.querySelectorAll('[name][value]'));
 
-const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> =>
-    fastdom
-        .read(() => [
-            [...document.getElementsByClassName('js-unsubscribe--confirm')],
-            [...document.getElementsByClassName('js-unsubscribe--basic')],
-        ])
-        .then(([confirmEls, basicEls]) =>
-            fastdom.write(() => {
-                /* TODO:simplify this once classList.remove() is fixed */
-                [
-                    'email-unsubscribe--confirm',
-                    'js-confirm-unsubscribe',
-                ].forEach(classname => buttonEl.classList.remove(classname));
-                confirmEls.forEach(confirmEl =>
-                    confirmEl.classList.add('hide')
-                );
-                basicEls.forEach(basicEl => basicEl.classList.remove('hide'));
-            })
-        );
-
 const unsubscribeFromAll = (csrfToken: string): Promise<void> =>
     reqwest({
         url: `/user/email-subscriptions`,
@@ -160,19 +139,7 @@ const uncheckAllOptIns = (): Promise<void> =>
 
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     buttonEl.addEventListener('click', () => {
-        addUpdatingState(buttonEl);
-        resetUnsubscribeFromAll(buttonEl);
-        fastdom
-            .read(() => [
-                ...document.querySelectorAll(
-                    `.${newsletterCheckboxClassName} input:checked`
-                ),
-            ])
-            .then(checkboxes => {
-                checkboxes.forEach(inputEl => {
-                    inputEl.checked = false;
-                });
-            });
+        toggleInputsWithSelector(newsletterCheckboxClassName, false);
         return getCsrfTokenFromElement(
             document.getElementsByClassName(newsletterCheckboxClassName)[0]
         )
@@ -182,9 +149,6 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                 pushError(err, 'reload').then(() => {
                     window.scrollTo(0, 0);
                 });
-            })
-            .then(() => {
-                removeUpdatingState(buttonEl);
             });
     });
 };
