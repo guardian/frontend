@@ -21,6 +21,9 @@ const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
 const checkAllCheckboxClassName = 'js-manage-account__check-allCheckbox';
 const checkAllIgnoreClassName = 'js-manage-account__check-allCheckbox__ignore';
 
+const optOutClassName = 'fieldset__fields--opt-out';
+const optInClassName = 'fieldset__fields--opt-in';
+
 const requestDebounceTimeout = 150;
 
 const LC_CHECK_ALL = 'Select all';
@@ -159,6 +162,20 @@ const unsubscribeFromAll = (csrfToken: string): Promise<void> =>
         },
     });
 
+const toggleInputsWithSelector = (className: string, checked: boolean) => {
+    return fastdom
+        .read(() => [...document.querySelectorAll(`.${className} input[type="checkbox"]`)])
+        .then((boxes) => boxes.forEach((b) => b.checked = checked));
+};
+
+const checkAllOptOuts = (): Promise<void> => {
+    return toggleInputsWithSelector(optOutClassName, true);
+};
+
+const uncheckAllOptIns = (): Promise<void> => {
+    return toggleInputsWithSelector(optInClassName, false);
+};
+
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     buttonEl.addEventListener('click', () => {
         if (!buttonEl.classList.contains('js-confirm-unsubscribe')) {
@@ -181,6 +198,7 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
                 document.getElementsByClassName(newsletterCheckboxClassName)[0]
             )
                 .then(csrfToken => unsubscribeFromAll(csrfToken))
+                .then(() => Promise.all([checkAllOptOuts(), uncheckAllOptIns()]))
                 .catch((err: Error) => {
                     pushError(err, 'reload').then(() => {
                         window.scrollTo(0, 0);
