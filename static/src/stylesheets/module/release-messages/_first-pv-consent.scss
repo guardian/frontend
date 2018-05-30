@@ -12,7 +12,7 @@ $btn-height: ($gs-baseline*3.5);
     }
 
     @include mq(leftCol) {
-        padding-bottom: $gs-baseline * 6;
+        padding-bottom: $gs-baseline * 4;
     }
 
     .site-message__media {
@@ -25,10 +25,10 @@ $btn-height: ($gs-baseline*3.5);
         display: block;
         margin: 0 $gs-gutter / 2;
         @include mq(leftCol) {
-            display: flex;
-            align-items: flex-start;
-            margin-left: $gs-gutter;
-            margin-right: $gs-gutter;
+            padding-left: gs-span(2) + $gs-gutter * 1.5;
+        }
+        @include mq(wide) {
+            padding-left: gs-span(3) + $gs-gutter * 1.5;
         }
     }
 }
@@ -71,33 +71,20 @@ $btn-height: ($gs-baseline*3.5);
 }
 
 .site-message--first-pv-consent__block {
-    &:not(:last-child) {
-        margin-right: $gs-gutter;
-    }
+    max-width: gs-span(8);
     &.site-message--first-pv-consent__block--head {
-        @include fs-header(4);
-        @include mq(desktop) {
-            width: gs-span(2);
+        @include fs-headlineGarnett(4);
+        @include mq(leftCol) {
+            @include fs-headlineGarnett(6, true);
         }
-        @include mq(wide) {
-            width: gs-span(3);
-        }
-        @include mq($until: wide) {
-            @include font-size(20px, 24px);
-        }
-        flex: 0 0 auto;
-        position: relative;
-        padding-bottom: $gs-baseline / 2;
-        line-height: get-line-height(header, 2);
+        font-weight: bold;
+        padding-bottom: $gs-baseline;
         color: $news-garnett-highlight;
     }
     &.site-message--first-pv-consent__block--intro {
         @include fs-bodyCopy(2);
         font-size: 17px;
         line-height: 24px;
-        flex: 1 1 0;
-        margin-top: 3px;
-        max-width: gs-span(8);
         a {
             color: currentColor;
         }
@@ -106,8 +93,7 @@ $btn-height: ($gs-baseline*3.5);
 
 .site-message--first-pv-consent__actions {
     @include fs-textSans(3);
-    flex: 0 0 auto;
-    margin-top: $gs-baseline;
+    margin-top: $gs-baseline * 2;
     .site-message--first-pv-consent__button {
         margin-right: $gs-baseline;
     }
@@ -115,8 +101,5 @@ $btn-height: ($gs-baseline*3.5);
     .site-message--first-pv-consent__link {
         display: inline-block;
         vertical-align: baseline;
-    }
-    @include mq($until: desktop) {
-        margin-top: $gs-baseline;
     }
 }

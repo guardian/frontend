@@ -10,11 +10,9 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
-import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
+import { upAlertViewCount, getAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-
-const displayEventKey: string = 'first-pv-consent : display';
 
 type Template = {
     heading: string,
@@ -33,11 +31,14 @@ type Links = {
     cookies: string,
 };
 
+const displayEventKey: string = 'first-pv-consent : display';
+const messageCode: string = 'first-pv-consent';
+const blockMessageAfterPageViewNo = 0;
+
 const links: Links = {
     privacy: 'https://www.theguardian.com/help/privacy-policy',
     cookies: 'https://www.theguardian.com/info/cookies',
 };
-const messageCode: string = 'first-pv-consent';
 
 const template: Template = {
     heading: `Your privacy`,
@@ -81,8 +82,16 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     </div>
 `;
 
-const isInEU = (): boolean =>
+const isInEU  = (): boolean =>
     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
+
+const isNotInHelpOrInfoPage = (): boolean =>
+    ['info','help'].every(_=>_!==config.get('page.section'));
+
+const hasUnsetAdChoices = (): boolean =>
+    allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
+
+const hasSeenTooManyPages = (): boolean => (getAlertViewCount() > blockMessageAfterPageViewNo)
 
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
@@ -90,12 +99,6 @@ const onAgree = (msg: Message): void => {
     });
     msg.hide();
 };
-
-const hasUnsetAdChoices = (): boolean =>
-    allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
-
-const canShow = (): Promise<boolean> =>
-    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -106,6 +109,12 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
+const canShow = (): Promise<boolean> =>
+    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
+
+const canBlockThePage = (): boolean =>
+    [hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(_ => _ === true)
+
 const show = (): void => {
     upAlertViewCount();
     trackInteraction(displayEventKey);
@@ -113,6 +122,7 @@ const show = (): void => {
     const msg = new Message(messageCode, {
         important: true,
         permanent: true,
+        blocking: canBlockThePage(),
         customJs: () => {
             [
                 ...document.querySelectorAll(`.${bindableClassNames.agree}`),
