@@ -23,9 +23,6 @@
 
 .site-message--banner {
     position: fixed;
-    @supports (position: sticky) {
-        position: sticky;
-    }
     bottom: 0;
     width: 100%;
     z-index: $zindex-popover;
@@ -578,7 +575,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         position: absolute;
         right: 0;
         top: 0;
-        height: 95%;
+        height: 100%;
         @include mq($from: mobile) {
             padding-right: 10px;
         }
