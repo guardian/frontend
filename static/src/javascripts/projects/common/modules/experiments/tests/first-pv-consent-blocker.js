@@ -6,7 +6,7 @@ export const firstPvConsentBlocker: ABTest = {
     expiry: '2019-05-31',
     author: 'Laura gonzalez',
     description: 'This test will make the cookie consent banner blocking.',
-    audience: 0.1,
+    audience: 0.004,
     audienceOffset: 0.7,
     successMeasure: 'More consents',
     audienceCriteria: 'All web traffic who can see the banner',
