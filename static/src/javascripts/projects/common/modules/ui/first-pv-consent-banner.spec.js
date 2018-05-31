@@ -13,7 +13,6 @@ const getCookie: any = require('lib/cookies').getCookie;
 const config: any = require('lib/config');
 const {
     upAlertViewCount,
-    getAlertViewCount,
 }: any = require('common/modules/analytics/send-privacy-prefs');
 
 const passingCookies = _ => {
@@ -87,7 +86,7 @@ describe('First PV consents banner', () => {
             test.bindableClassNames.agree
         );
     });
-    
+
     describe('When blocking the page', () => {
         it('should not block info or help pages', () => {
             config.get.mockImplementation(() => 'info');
