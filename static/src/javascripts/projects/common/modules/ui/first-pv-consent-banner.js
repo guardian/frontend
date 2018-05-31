@@ -16,6 +16,8 @@ import {
 } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import { firstPvConsentBlocker } from 'common/modules/experiments/tests/first-pv-consent-blocker';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 
 type Template = {
     heading: string,
@@ -97,6 +99,12 @@ const hasUnsetAdChoices = (): boolean =>
 const hasSeenTooManyPages = (): boolean =>
     getAlertViewCount() > blockMessageAfterPageViewNo;
 
+const isInTestVariant = (): boolean => {
+    const variant = getVariant(firstPvConsentBlocker, 'variant');
+    if (!variant) return false;
+    return isInVariant(firstPvConsentBlocker, variant);
+};
+
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
         setAdConsentState(_, true);
@@ -116,9 +124,8 @@ const trackInteraction = (interaction: string): void => {
 const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
-// TODO: enable the following checks, once page blocking behaviour has been approved by the business
 const canBlockThePage = (): boolean =>
-    [false, hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(
+    [isInTestVariant(), hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(
         _ => _ === true
     );
 
