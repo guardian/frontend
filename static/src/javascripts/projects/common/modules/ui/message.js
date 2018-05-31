@@ -45,7 +45,7 @@ class Message {
         this.blocking = opts.blocking || false;
         this.trackDisplay = opts.trackDisplay || false;
         this.type = opts.type || 'banner';
-        this.position = opts.position || 'top';
+        this.position = opts.position || 'bottom';
         this.siteMessageComponentName = opts.siteMessageComponentName || '';
         this.siteMessageLinkName = opts.siteMessageLinkName || '';
         this.siteMessageCloseBtn = opts.siteMessageCloseBtn || '';
