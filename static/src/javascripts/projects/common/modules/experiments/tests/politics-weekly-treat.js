@@ -4,25 +4,19 @@ import treatHtml from 'raw-loader!journalism/views/politicsWeeklyTreat.html';
 import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 
-const runTest = function(variant: string): () => void {
-    return () => {
-        const headlinesContainer = document.querySelector(
-            '.facia-page #headlines'
-        );
+const runTest = (variant: string) => (): void => {
+    const headlinesContainer = document.querySelector('.facia-page #headlines');
 
-        if (headlinesContainer) {
-            const treats = headlinesContainer.querySelector(
-                '.treats__container'
-            );
-            if (treats) {
-                const newTreat = template(treatHtml, { variant });
-                treats.innerHTML = newTreat;
-            }
+    if (headlinesContainer) {
+        const treats = headlinesContainer.querySelector('.treats__container');
+        if (treats) {
+            const newTreat = template(treatHtml, { variant });
+            treats.innerHTML = newTreat;
         }
-    };
+    }
 };
 
-const trackClick = function(complete: () => void) {
+const trackClick = (complete: () => void): void => {
     const treat = document.querySelector('.politics-weekly-treat');
     if (treat) {
         treat.onclick = () => {
@@ -31,7 +25,7 @@ const trackClick = function(complete: () => void) {
     }
 };
 
-const trackImpression = function(track: () => void) {
+const trackImpression = (track: () => void): void => {
     const treat = document.querySelector('.politics-weekly-treat');
     if (treat) {
         const observer = new window.IntersectionObserver(
