@@ -55,7 +55,6 @@ object ContentHtmlPage extends HtmlPage[Page] {
         inlineJSBlocking()
       ),
       bodyTag(classes = bodyClasses)(
-        message(),
         tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
@@ -64,6 +63,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
         breakingNewsDiv(),
         content,
         footer(),
+        message(),
         inlineJSNonBlocking(),
         analytics.base()
       ),
