@@ -69,21 +69,23 @@
         <div class="col-sm-6">
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Big match special</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <form class="form-inline" role="form" action="/admin/football/fronts/matches/redirect" method="post">
-                @views.html.football.fragments.chooseLeague("competition", competitions)
-                @views.html.football.fragments.chooseTeam("team1", teams)
-                @views.html.football.fragments.chooseTeam("team2", teams)
-                <button type="submit" class="btn btn-success">Find matches</button>
-            </form>
-        </div>
-        <div class="col-sm-6">
-        </div>
-    </div>
+
+    {@ Disabling for now as broken - only provides countries in drop-down regardless of competition selected @}
+    <!--<div class="row">-->
+        <!--<div class="col-sm-12">-->
+            <!--<h2>Big match special</h2>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row">-->
+        <!--<div class="col-sm-6">-->
+            <!--<form class="form-inline" role="form" action="/admin/football/fronts/matches/redirect" method="post">-->
+                <!--@views.html.football.fragments.chooseLeague("competition", competitions)-->
+                <!--@views.html.football.fragments.chooseTeam("team1", teams)-->
+                <!--@views.html.football.fragments.chooseTeam("team2", teams)-->
+                <!--<button type="submit" class="btn btn-success">Find matches</button>-->
+            <!--</form>-->
+        <!--</div>-->
+        <!--<div class="col-sm-6">-->
+        <!--</div>-->
+    <!--</div>-->
 }
