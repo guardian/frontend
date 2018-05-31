@@ -8,6 +8,8 @@ import { isBreakpoint } from 'lib/detect';
 import { begin } from 'common/modules/analytics/register';
 import uniq from 'lodash/arrays/uniq';
 
+type MessagePosition = 'top' | 'bottom';
+
 /**
  * Message provides a common means of flash messaging a user in the UI.
  *
@@ -22,6 +24,7 @@ class Message {
     blocking: boolean;
     trackDisplay: boolean;
     type: string;
+    position: MessagePosition;
     siteMessageComponentName: string;
     siteMessageLinkName: string;
     siteMessageCloseBtn: string;
@@ -42,6 +45,7 @@ class Message {
         this.blocking = opts.blocking || false;
         this.trackDisplay = opts.trackDisplay || false;
         this.type = opts.type || 'banner';
+        this.position = opts.position || 'top';
         this.siteMessageComponentName = opts.siteMessageComponentName || '';
         this.siteMessageLinkName = opts.siteMessageLinkName || '';
         this.siteMessageCloseBtn = opts.siteMessageCloseBtn || '';
@@ -62,6 +66,11 @@ class Message {
         ) {
             // if we're not showing a banner message, display it in the footer
             return false;
+        }
+
+        // Move the message to the top if needed
+        if(this.position === 'top'){
+          document.body.insertBefore(this.$siteMessageContainer[0],document.body.childNodes[0])
         }
 
         $('.js-site-message-copy').html(message);
@@ -219,4 +228,5 @@ class Message {
     }
 }
 
+export type {MessagePosition}
 export { Message };
