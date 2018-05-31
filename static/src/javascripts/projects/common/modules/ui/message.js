@@ -70,8 +70,13 @@ class Message {
 
         // Move the message to the top if needed
         if(this.position === 'top'){
-          document.body.insertBefore(this.$siteMessageContainer[0],document.body.childNodes[0]);
-          this.$siteMessageContainer.addClass('site-message--on-top');
+            const bodyEl: ?HTMLElement = document.body;
+            if(!bodyEl) throw new Error('Missing <body>');
+            const bodyElFirstChild: ?Node = bodyEl.childNodes[0];
+            if(!bodyElFirstChild) throw new Error('<body> is empty');
+            
+            bodyEl.insertBefore(this.$siteMessageContainer[0],bodyElFirstChild);
+            this.$siteMessageContainer.addClass('site-message--on-top');
         }
 
         $('.js-site-message-copy').html(message);
