@@ -26,19 +26,21 @@
     z-index: $zindex-popover;
     position: fixed;
     bottom: 0;
-    @supports (position: sticky) {
-        position: sticky;
-        bottom: -1px;
-        /*chrome calculates sticky in dip
-        instead of real px and that can
-        sometimes leave a 1px gap in some
-        screen sizes*/
-    }
     &.site-message--on-top {
         bottom: auto;
         top: 0;
-        @supports (position: sticky) {
-            top: -1px;
+    }
+    @supports (position: sticky) {
+        html:not(.is-scroll-blocked) & {
+            position: sticky;
+            bottom: -1px;
+            /*chrome calculates sticky in dip
+            instead of real px and that can
+            sometimes leave a 1px gap in some
+            screen sizes*/
+            &.site-message--on-top {
+                top: -1px;
+            }
         }
     }
 }

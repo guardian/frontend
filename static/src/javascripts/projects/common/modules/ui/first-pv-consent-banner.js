@@ -10,12 +10,11 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
-import {
-    upAlertViewCount,
-    getAlertViewCount,
-} from 'common/modules/analytics/send-privacy-prefs';
+import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import { firstPvConsentBlocker } from 'common/modules/experiments/tests/first-pv-consent-blocker';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 
 type Template = {
     heading: string,
@@ -36,7 +35,6 @@ type Links = {
 
 const displayEventKey: string = 'first-pv-consent : display';
 const messageCode: string = 'first-pv-consent';
-const blockMessageAfterPageViewNo: number = 4;
 
 const links: Links = {
     privacy: 'https://www.theguardian.com/help/privacy-policy',
@@ -94,8 +92,11 @@ const isNotInHelpOrInfoPage = (): boolean =>
 const hasUnsetAdChoices = (): boolean =>
     allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
 
-const hasSeenTooManyPages = (): boolean =>
-    getAlertViewCount() > blockMessageAfterPageViewNo;
+const isInTestVariant = (): boolean => {
+    const variant = getVariant(firstPvConsentBlocker, 'variant');
+    if (!variant) return false;
+    return isInVariant(firstPvConsentBlocker, variant);
+};
 
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
@@ -116,11 +117,8 @@ const trackInteraction = (interaction: string): void => {
 const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
-// TODO: enable the following checks, once page blocking behaviour has been approved by the business
 const canBlockThePage = (): boolean =>
-    [false, hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(
-        _ => _ === true
-    );
+    [isInTestVariant(), isNotInHelpOrInfoPage()].every(_ => _ === true);
 
 const show = (): void => {
     upAlertViewCount();
