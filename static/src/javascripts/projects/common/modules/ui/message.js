@@ -69,13 +69,16 @@ class Message {
         }
 
         // Move the message to the top if needed
-        if(this.position === 'top'){
+        if (this.position === 'top') {
             const bodyEl: ?HTMLElement = document.body;
-            if(!bodyEl) throw new Error('Missing <body>');
+            if (!bodyEl) throw new Error('Missing <body>');
             const bodyElFirstChild: ?Node = bodyEl.childNodes[0];
-            if(!bodyElFirstChild) throw new Error('<body> is empty');
-            
-            bodyEl.insertBefore(this.$siteMessageContainer[0],bodyElFirstChild);
+            if (!bodyElFirstChild) throw new Error('<body> is empty');
+
+            bodyEl.insertBefore(
+                this.$siteMessageContainer[0],
+                bodyElFirstChild
+            );
             this.$siteMessageContainer.addClass('site-message--on-top');
         }
 
@@ -234,5 +237,5 @@ class Message {
     }
 }
 
-export type {MessagePosition}
+export type { MessagePosition };
 export { Message };
