@@ -51,6 +51,11 @@ jest.mock('common/modules/analytics/google', () => ({
     trackNonClickInteraction: jest.fn(),
 }));
 
+jest.mock('common/modules/experiments/utils', () => ({
+    getVariant: jest.fn(() => ({})),
+    isInVariant: jest.fn(() => true),
+}));
+
 jest.mock('common/modules/commercial/ad-prefs.lib', () => {
     const adConsentsState = [null, null];
     return {
@@ -82,39 +87,9 @@ describe('First PV consents banner', () => {
             test.bindableClassNames.agree
         );
     });
-
-    describe('should never block the page', () => {
-        it('should not block the page on the first pv', () => {
-            getAlertViewCount.mockImplementation(() => 1);
-            expect(test.canBlockThePage()).toBeFalsy();
-        });
-        it('should block the page after x pvs', () => {
-            getAlertViewCount.mockImplementation(() => 999999);
-            expect(test.canBlockThePage()).toBeFalsy();
-        });
+    
+    describe('When blocking the page', () => {
         it('should not block info or help pages', () => {
-            getAlertViewCount.mockImplementation(() => 999999);
-            config.get.mockImplementation(() => 'info');
-            expect(test.canBlockThePage()).toBeFalsy();
-            config.get.mockImplementation(() => 'help');
-            expect(test.canBlockThePage()).toBeFalsy();
-            config.get.mockImplementation(() => 'sport');
-            expect(test.canBlockThePage()).toBeFalsy();
-        });
-    });
-
-    // TODO: unskip these tests and delete the above test once the business approves blocking the page
-    describe.skip('When blocking the page', () => {
-        it('should not block the page on the first pv', () => {
-            getAlertViewCount.mockImplementation(() => 1);
-            expect(test.canBlockThePage()).toBeFalsy();
-        });
-        it('should not block the page after x pvs', () => {
-            getAlertViewCount.mockImplementation(() => 999999);
-            expect(test.canBlockThePage()).toBeTruthy();
-        });
-        it('should not block info or help pages', () => {
-            getAlertViewCount.mockImplementation(() => 999999);
             config.get.mockImplementation(() => 'info');
             expect(test.canBlockThePage()).toBeFalsy();
             config.get.mockImplementation(() => 'help');
