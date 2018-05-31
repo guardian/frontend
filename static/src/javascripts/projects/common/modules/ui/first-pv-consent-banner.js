@@ -10,10 +10,7 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
-import {
-    upAlertViewCount,
-    getAlertViewCount,
-} from 'common/modules/analytics/send-privacy-prefs';
+import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { firstPvConsentBlocker } from 'common/modules/experiments/tests/first-pv-consent-blocker';
@@ -38,7 +35,6 @@ type Links = {
 
 const displayEventKey: string = 'first-pv-consent : display';
 const messageCode: string = 'first-pv-consent';
-const blockMessageAfterPageViewNo: number = 4;
 
 const links: Links = {
     privacy: 'https://www.theguardian.com/help/privacy-policy',
@@ -96,9 +92,6 @@ const isNotInHelpOrInfoPage = (): boolean =>
 const hasUnsetAdChoices = (): boolean =>
     allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
 
-const hasSeenTooManyPages = (): boolean =>
-    getAlertViewCount() > blockMessageAfterPageViewNo;
-
 const isInTestVariant = (): boolean => {
     const variant = getVariant(firstPvConsentBlocker, 'variant');
     if (!variant) return false;
@@ -125,9 +118,7 @@ const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
 const canBlockThePage = (): boolean =>
-    [isInTestVariant(), hasSeenTooManyPages(), isNotInHelpOrInfoPage()].every(
-        _ => _ === true
-    );
+    [isInTestVariant(), isNotInHelpOrInfoPage()].every(_ => _ === true);
 
 const show = (): void => {
     upAlertViewCount();
