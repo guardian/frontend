@@ -46,7 +46,6 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
         inlineJSBlocking()
       ),
       bodyTag(classes = bodyClasses)(
-        message(),
         tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
@@ -54,6 +53,7 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
         breakingNewsDiv(),
         galleryBody(page),
         footer(),
+        message(),
         inlineJSNonBlocking(),
         analytics.base()
       ),
