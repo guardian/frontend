@@ -111,20 +111,21 @@
     align-items: center;
 }
 .politics-weekly-treat__player-variant-a {
-    *:first-child {
+    >:first-child {
         padding-right: 2px;
     }
-    *:last-child {
+    >:last-child {
         @include mq(leftCol) {
             padding-left: 1px;
         }
         @include mq(wide) {
-            padding-left: 2px;
+            padding-left: 4px;
+            padding-right: 2px;
         }
     }
 }
 .politics-weekly-treat__player-variant-b {
-    *:first-child {
+    >:first-child {
         @include mq(leftCol) {
             padding-left: 1px;
             padding-right: 1px;
