@@ -70,7 +70,7 @@ const canShow = (): Promise<boolean> =>
 
 const show = (): void => {
     loadCssPromise.then(() => {
-        const msg = new Message(messageCode);
+        const msg = new Message(messageCode,{position:'top'});
         const fullTemplate = tmp + (getBreakpoint() === 'mobile' ? '' : tablet);
 
         msg.show(template(fullTemplate, DATA[messageCode.toUpperCase()]));
