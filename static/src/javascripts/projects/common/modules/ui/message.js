@@ -70,7 +70,8 @@ class Message {
 
         // Move the message to the top if needed
         if(this.position === 'top'){
-          document.body.insertBefore(this.$siteMessageContainer[0],document.body.childNodes[0])
+          document.body.insertBefore(this.$siteMessageContainer[0],document.body.childNodes[0]);
+          this.$siteMessageContainer.addClass('site-message--on-top');
         }
 
         $('.js-site-message-copy').html(message);

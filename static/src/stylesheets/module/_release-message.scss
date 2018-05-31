@@ -29,6 +29,10 @@
     bottom: 0;
     width: 100%;
     z-index: $zindex-popover;
+    &.site-message--on-top {
+        bottom: auto;
+        top: 0;
+    }
 }
 
 .site-message--alt {
