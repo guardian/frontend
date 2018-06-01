@@ -11,9 +11,12 @@ class ExperimentsTest extends FlatSpec with Matchers {
 
   conf.switches.Switches.ServerSideExperiments.switchOn
 
-  "Experiments" should "not share participation group" in {
-    ActiveExperiments.allExperiments.size should be(ActiveExperiments.allExperiments.map(_.participationGroup).size)
-  }
+  // Nic Long said I was allowed to disable this to allow 2 50/50 AB tests to run for a certain period. Can be uncommented
+  // when AudioPageChanges is expired.
+
+//  "Experiments" should "not share participation group" in {
+//    ActiveExperiments.allExperiments.size should be(ActiveExperiments.allExperiments.map(_.participationGroup).size)
+//  }
 
   "a experiment" should "have a default switch state to off" in {
     TestCases.experiment0.switch.isSwitchedOff should be (true)

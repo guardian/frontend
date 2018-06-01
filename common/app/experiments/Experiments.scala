@@ -7,11 +7,12 @@ import play.api.mvc.RequestHeader
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
+    AudioPageChange,
     CommercialClientLogging,
     CommercialAdRefresh,
     OrielParticipation,
     LotameParticipation,
-    OldTLSSupportDeprecation
+    OldTLSSupportDeprecation,
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -55,4 +56,12 @@ object OldTLSSupportDeprecation extends Experiment(
   sellByDate = new LocalDate(2018, 6,27),
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
+)
+
+object AudioPageChange extends Experiment(
+  name = "audio-page-change",
+  description = "Show a different version of the audio page to certain people",
+  owners = Seq(Owner.withGithub("ajwl")),
+  sellByDate = new LocalDate(2018, 7, 30),
+  participationGroup = Perc50
 )

@@ -1,5 +1,48 @@
 @import '../social-icons';
 
+
+/* new audio styles hacked in for test page */
+
+.content--media.new-audio {
+
+    /* height of the player affects margins - set once */
+    $playerheight: 5em;
+
+    h1, h2, h3, li, p {
+        color: #dcdcdc;
+    }
+    .player {
+        background-color: #ff0000;
+        height: $playerheight
+    }
+
+    @media (max-width: 46.24em) {
+        .player {
+            margin-left: -1.5rem;
+            margin-right: -1.5rem;
+        }
+    }
+
+    @media (min-width: 71.25em) {
+        .player {
+            margin-left: -10rem;
+        }
+        .content__meta-container {
+            margin-top: $playerheight;
+        }
+    }
+    @media (min-width: 81.25em) {
+        .player {
+            margin-left: -15rem;
+        }
+    }
+
+}
+
+
+/* original styles */
+
+
 .content--media {
     .content__main-column {
         &::before {
