@@ -36,7 +36,7 @@
 }
 
 <fieldset class="fieldset">
-    <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/public/edit", idRequest)" role="main" method="post">
+    <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/public/edit", idRequest)" role="form" method="post">
         @views.html.helper.CSRF.formField
 
         @if(publicProfileForm.globalError.isDefined) {

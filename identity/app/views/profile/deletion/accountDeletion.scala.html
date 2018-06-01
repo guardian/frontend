@@ -88,7 +88,7 @@
                 </p>
             </div>
 
-            <form class="form" novalidate action="@idUrlBuilder.buildUrl("/delete", idRequest)" role="main" method="post" id="deleteForm">
+            <form class="form" novalidate action="@idUrlBuilder.buildUrl("/delete", idRequest)" method="post" id="deleteForm">
                 @views.html.helper.CSRF.formField
 
                 <div class="identity-section">

@@ -32,7 +32,7 @@
 }
 
 @marketingConsentForm = {
-    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="form" method="post">
         @views.html.helper.CSRF.formField
 
         @* This displays both global and key-bound errors *@
