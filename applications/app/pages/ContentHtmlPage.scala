@@ -4,7 +4,7 @@ import common.Edition
 import controllers.{ImageContentPage, MediaPage, QuizAnswersPage, TodayNewspaper}
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
-import model.{ApplicationContext, Page}
+import model.{ApplicationContext, Audio, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._
@@ -16,7 +16,7 @@ import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.{newspaperContent, quizAnswerContent}
 import html.HtmlPageHelpers.ContentCSSFile
 import conf.switches.Switches.WeAreHiring
-import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
+import experiments.{ActiveExperiments, OldTLSSupportDeprecation, AudioPageChange}
 
 object ContentHtmlPage extends HtmlPage[Page] {
 
@@ -33,12 +33,21 @@ object ContentHtmlPage extends HtmlPage[Page] {
   def html(page: Page)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: Page = page
 
+    def getMedia(page: MediaPage): Html  = {
+//      should return true.. but doesn't:
+//      if(ActiveExperiments.isParticipating(AudioPageChange)) { }
+        page.media match {
+          case a: Audio => audioBody(a, page)
+          case _ => mediaBody(page, displayCaption = false)
+        }
+    }
+
     val bodyClasses: Map[String, Boolean] = defaultBodyClasses() ++ Map(
       ("is-immersive", Page.getContent(page).exists(_.content.isImmersive))
     )
     val content: Html = page match {
       case p: ImageContentPage => imageContentBody(p)
-      case p: MediaPage => mediaBody(p, displayCaption = false)
+      case p: MediaPage => getMedia(p)
       case p: TodayNewspaper => newspaperContent(p)
       case p: QuizAnswersPage => quizAnswerContent(p)
       case unsupported => throw new RuntimeException(s"Type of content '${unsupported.getClass.getName}' is not supported by ${this.getClass.getName}")
@@ -72,3 +81,4 @@ object ContentHtmlPage extends HtmlPage[Page] {
   }
 
 }
+

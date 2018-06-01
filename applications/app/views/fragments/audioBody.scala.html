@@ -1,0 +1,87 @@
+
+@import model.Audio
+
+@(audio: Audio, page: MediaPage)(implicit request: RequestHeader, context: model.ApplicationContext, amp: Boolean = false)
+
+@import common.LinkTo
+@import views.support.{RenderClasses}
+@import views.support.ContributorLinks
+
+<div class="l-side-margins l-side-margins--media">
+    <article id="article" class="content--has-body content content--media new-audio" itemtype="audio" role="main">
+
+
+        @* @fragments.headTonal(audio, page) *@
+
+        <header class="content__head tonal__head tonal__head--tone-media">
+
+            <div class="content__header tonal__header">
+                <div class="gs-container">
+                    <div class="content__main-column u-cf">
+
+                        @fragments.meta.metaInline(audio, false)
+
+                        <div class="meta__social" data-component="share">
+                            @fragments.social(audio.sharelinks.pageShares, "top", amp = amp)
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="content__main tonal__main tonal__main--tone-media">
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--media content__main-column--audio">
+
+                    <div class="headline">
+                        <h1 class="content__headline" itemprop="headline">@audio.trail.headline </h1>
+                    </div>
+
+                    <div class="media-body">
+                        <div class="media-primary player">
+                            <p class="content__headline">||||||||||||||||||||||||||||||</p>
+                        </div>
+
+                        <div class="content__main-column__body" data-component="body">
+
+
+                            <input id="audio-details" type="radio" name="tabs" checked>
+                            <label for="audio-details" class="tab-header">Details</label>
+
+                            <input id="audio-transcript" type="radio" name="tabs">
+                            <label for="audio-transcript" class="tab-header">Transcript</label>
+
+                            <input id="audio-comment" type="radio" name="tabs">
+                            <label for="audio-comment" class="tab-header">Comments</label>
+
+
+                            <section id="audio-details" class="tab-body">
+                                @audio.trail.byline.map { text =>
+                                    <span class="content__headline--byline">@ContributorLinks(text, audio.tags.contributors)</span>
+                                }
+
+                                @if(audio.fields.body.nonEmpty){
+                                    <div class="from-content-api">
+                                    @Html(audio.fields.body)
+                                    </div>
+                                }
+                            </section>
+
+                            <section id="audio-transcript" class="tab-body">
+                                <p>Transcript is loreum ipsum etc etc </p>
+                            </section>
+
+                            <section id="audio-comment" class="tab-body">
+                                <p>Comments are loreum ipsum etc etc </p>
+                            </section>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </article>
+</div>

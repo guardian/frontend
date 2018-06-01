@@ -11,7 +11,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialAdRefresh,
     OrielParticipation,
     LotameParticipation,
-    OldTLSSupportDeprecation
+    OldTLSSupportDeprecation,
+    AudioPageChange
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -55,4 +56,12 @@ object OldTLSSupportDeprecation extends Experiment(
   sellByDate = new LocalDate(2018, 6, 13),
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
+)
+
+object AudioPageChange extends Experiment(
+  name = "audio-page-change",
+  description = "Show a different version of the audio page to certain people",
+  owners = Seq(Owner.withGithub("ajwl")),
+  sellByDate = new LocalDate(2018, 7, 5),
+  participationGroup = Perc50
 )

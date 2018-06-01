@@ -52,9 +52,13 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
 
   private def renderMedia(model: MediaPage)(implicit request: RequestHeader): Result = {
     val htmlResponse = () => ContentHtmlPage.html(model)
-    val jsonResponse = () => views.html.fragments.mediaBody(model, displayCaption = false)
+    val jsonResponse = model.media match {
+      case audio: Audio => () => views.html.fragments.audioBody(audio, model)
+      case _ => () => views.html.fragments.mediaBody(model, displayCaption = false)
+    }
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
+
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = lookup(path) map {
     case Left(model) => renderMedia(model)
