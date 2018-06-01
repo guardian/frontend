@@ -20,6 +20,8 @@ const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
 const checkAllCheckboxClassName = 'js-manage-account__check-allCheckbox';
 const checkAllIgnoreClassName = 'js-manage-account__check-allCheckbox__ignore';
+const unsubscribeButtonClassName = 'js-unsubscribe';
+const unsubscribeSuccessMessageClassName = 'js-unsubscribe-confirmation';
 
 const optOutClassName = 'fieldset__fields--opt-out';
 const optInClassName = 'fieldset__fields--opt-in';
@@ -144,13 +146,28 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
             document.getElementsByClassName(newsletterCheckboxClassName)[0]
         )
             .then(csrfToken => unsubscribeFromAll(csrfToken))
-            .then(() => Promise.all([checkAllOptOuts(), uncheckAllOptIns()]))
+            .then(() => Promise.all([checkAllOptOuts(), uncheckAllOptIns(), showUnsubscribeConfirmation()]))
             .catch((err: Error) => {
                 pushError(err, 'reload').then(() => {
                     window.scrollTo(0, 0);
                 });
             });
     });
+};
+
+const showUnsubscribeConfirmation = (): Promise<void> => {
+    const fetchElements = (): Promise<(HTMLButtonElement | HTMLDivElement)[]> =>
+        fastdom.read(() => [
+            `.${unsubscribeButtonClassName}`, `.${unsubscribeSuccessMessageClassName}`
+        ].map(_=>document.querySelector(_)));
+
+    const updateVisibility = (elems: (HTMLButtonElement | HTMLDivElement)[]): Promise<void> =>
+        fastdom.write(() => {
+            elems[0].style.display = 'none';
+            elems[1].style.display = 'inherit';
+        });
+
+    return fetchElements().then((elems) => updateVisibility(elems));
 };
 
 const bindUnsubscribeFromAllModalConfirmation = (
@@ -328,7 +345,7 @@ const enhanceConsents = (): void => {
         [`.${checkAllCheckboxClassName}`, bindCheckAllSwitch],
         [`.${consentCheckboxClassName}`, bindConsentSwitch],
         [`.${newsletterCheckboxClassName}`, bindNewsletterSwitch],
-        ['.js-unsubscribe', bindUnsubscribeFromAllModalConfirmation],
+        [`.${unsubscribeButtonClassName}`, bindUnsubscribeFromAllModalConfirmation],
         ['.js-confirm-unsubscribe-all', bindUnsubscribeFromAll],
     ];
     loadEnhancers(loaders);

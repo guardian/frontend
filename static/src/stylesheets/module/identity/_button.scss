@@ -156,6 +156,16 @@
     @extend %manage-account__button--light;
 }
 
+.manage-account__button--medium {
+    @include fs-textSans(5);
+    @include identity-button($identity-main);
+    min-width: $gs-baseline * 20;
+    display: inline-flex;
+    height: $gs-gutter * 1.8;
+    padding-left: $gs-gutter * 0.9;
+    padding-right: $gs-gutter * 0.9;
+}
+
 .manage-account__button--mini {
     @include fs-textSans(1);
     min-width: $gs-baseline * 20;
