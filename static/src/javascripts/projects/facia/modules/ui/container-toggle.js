@@ -14,9 +14,8 @@ const toggleText = {
     displayed: 'Hide',
 };
 
-const btnTmpl = ({ text, dataLink, icon }) => `
+const btnTmpl = ({ text, dataLink }) => `
     <button class="fc-container__toggle" data-link-name="${dataLink}">
-        ${icon}
         <span class="fc-container__toggle__text">${text}</span>
     </button>
 `;
@@ -32,7 +31,6 @@ export class ContainerToggle {
                 btnTmpl({
                     text: 'Hide',
                     dataLink: 'Show',
-                    icon: inlineSvg('arrowicon'),
                 })
             )
         );
