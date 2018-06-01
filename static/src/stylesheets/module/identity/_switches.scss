@@ -84,12 +84,12 @@ $checkbox-size: $gs-gutter / 1.25;
         .manage-account__switch-checkbox {
             border-color: $identity-main;
         }
-        input:checked + .manage-account__switch-checkbox {
+        input + .manage-account__switch-checkbox {
             box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px $identity-main;
         }
     }
 
-    input:focus:checked + .manage-account__switch-checkbox {
+    input:focus + .manage-account__switch-checkbox {
         box-shadow: 0 0 0 1px #ffffff, 0 0 0 2px $garnett-neutral-7;
     }
 
