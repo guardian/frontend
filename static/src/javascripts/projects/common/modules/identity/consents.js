@@ -139,6 +139,26 @@ const checkAllOptOuts = (): Promise<void> =>
 const uncheckAllOptIns = (): Promise<void> =>
     toggleInputsWithSelector(optInClassName, false);
 
+const showUnsubscribeConfirmation = (): Promise<void> => {
+    const fetchElements = (): Promise<(HTMLButtonElement | HTMLDivElement)[]> =>
+        fastdom.read(() =>
+            [
+                `.${unsubscribeButtonClassName}`,
+                `.${unsubscribeSuccessMessageClassName}`,
+            ].map(_ => document.querySelector(_))
+        );
+
+    const updateVisibility = (
+        elems: (HTMLButtonElement | HTMLDivElement)[]
+    ): Promise<void> =>
+        fastdom.write(() => {
+            elems[0].style.display = 'none';
+            elems[1].style.display = 'inherit';
+        });
+
+    return fetchElements().then(elems => updateVisibility(elems));
+};
+
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     buttonEl.addEventListener('click', () => {
         toggleInputsWithSelector(newsletterCheckboxClassName, false);
@@ -146,28 +166,19 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
             document.getElementsByClassName(newsletterCheckboxClassName)[0]
         )
             .then(csrfToken => unsubscribeFromAll(csrfToken))
-            .then(() => Promise.all([checkAllOptOuts(), uncheckAllOptIns(), showUnsubscribeConfirmation()]))
+            .then(() =>
+                Promise.all([
+                    checkAllOptOuts(),
+                    uncheckAllOptIns(),
+                    showUnsubscribeConfirmation(),
+                ])
+            )
             .catch((err: Error) => {
                 pushError(err, 'reload').then(() => {
                     window.scrollTo(0, 0);
                 });
             });
     });
-};
-
-const showUnsubscribeConfirmation = (): Promise<void> => {
-    const fetchElements = (): Promise<(HTMLButtonElement | HTMLDivElement)[]> =>
-        fastdom.read(() => [
-            `.${unsubscribeButtonClassName}`, `.${unsubscribeSuccessMessageClassName}`
-        ].map(_=>document.querySelector(_)));
-
-    const updateVisibility = (elems: (HTMLButtonElement | HTMLDivElement)[]): Promise<void> =>
-        fastdom.write(() => {
-            elems[0].style.display = 'none';
-            elems[1].style.display = 'inherit';
-        });
-
-    return fetchElements().then((elems) => updateVisibility(elems));
 };
 
 const bindUnsubscribeFromAllModalConfirmation = (
@@ -345,7 +356,10 @@ const enhanceConsents = (): void => {
         [`.${checkAllCheckboxClassName}`, bindCheckAllSwitch],
         [`.${consentCheckboxClassName}`, bindConsentSwitch],
         [`.${newsletterCheckboxClassName}`, bindNewsletterSwitch],
-        [`.${unsubscribeButtonClassName}`, bindUnsubscribeFromAllModalConfirmation],
+        [
+            `.${unsubscribeButtonClassName}`,
+            bindUnsubscribeFromAllModalConfirmation,
+        ],
         ['.js-confirm-unsubscribe-all', bindUnsubscribeFromAll],
     ];
     loadEnhancers(loaders);
