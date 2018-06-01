@@ -22,6 +22,7 @@ const renderError = (error: IdentityRenderableError): Promise<void> =>
         .then((errorHolderEl: HTMLElement) =>
             fastdom.write(() => {
                 const errorEl = document.createElement('div');
+                errorEl.setAttribute('role', 'alert');
                 errorEl.innerHTML = `<p>${error.message}.${
                     error.times > 1 ? ` (${error.times} times)` : ``
                 }</p>`;
