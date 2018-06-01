@@ -452,6 +452,7 @@ $header-image-size-desktop: 100px;
 
 .fc-container__toggle {
     @include fs-textSans(3);
+    background-color: transparent;
     position: absolute;
     top: $gs-baseline / 3;
     right: 0;

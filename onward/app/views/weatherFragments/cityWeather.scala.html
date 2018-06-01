@@ -4,19 +4,21 @@
 
 
 <div class="weather js-weather">
-    <div class="u-unstyled weather__current js-weather-current">
-        @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"), Some(weatherResponse.WeatherText))<span class="u-h">@weatherResponse.WeatherText</span>
-        <p class="weather__desc">
+    <div class="u-unstyled forecast__item forecast__item--current js-weather-current">
+        <div class="weather__time">
             <span class="u-h">The temperature</span>
-            <span class="weather__time">Now</span>
+            <span class="weather__time-value">Now</span>
+        </div>
+        @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"), Some(weatherResponse.WeatherText))<span class="u-h">@weatherResponse.WeatherText</span>
+        <div class="weather__temp">
             <span class="u-h">is</span>
             @defining(weatherResponse.temperatureForEdition(Edition(request))) { temp =>
                 <span class="weather__temp js-weather-temp">@math.round(temp.Value)°@temp.Unit</span>
             }
-        </p>
+        </div>
     </div>
     <button class="weather__toggle-forecast meta-button js-toggle-forecast mobile-only" data-link-name="weather-toggle-forecast"
-    href="#toggle-forecast"><span class="u-h">Toggle forecast</span>@fragments.inlineSvg("arrow", "icon", List("weather__toggle-icon"))
+    href="#toggle-forecast"><span class="u-h">Toggle forecast</span><i class="weather__toggle-icon"></i>
     </button>
     <ul class="js-weather-forecast forecast"></ul>
     <div class="weather__location">

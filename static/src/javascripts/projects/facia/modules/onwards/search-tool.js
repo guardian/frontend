@@ -102,13 +102,11 @@ export class SearchTool {
             $location.addClass('is-editing');
             $input.setSelectionRange(0, $input.value.length);
             $close.removeClass('u-h');
-            $edit.addClass('u-h');
         } else {
             $location.removeClass('is-editing');
             this.clear();
             this.setInputValue(this.inputTmp);
             $close.addClass('u-h');
-            $edit.removeClass('u-h');
         }
     }
 
