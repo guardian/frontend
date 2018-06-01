@@ -32,9 +32,8 @@ const fetch = options => {
 
                             reject(
                                 new Error(
-                                    `${errorMessage + statusCodeMessage}\n${
-                                        errorDetails
-                                    }`
+                                    `${errorMessage +
+                                        statusCodeMessage}\n${errorDetails}`
                                 )
                             );
                         } else {

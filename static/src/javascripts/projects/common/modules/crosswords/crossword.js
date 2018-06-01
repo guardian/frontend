@@ -510,8 +510,8 @@ class Crossword extends Component<*, CrosswordState> {
         const height = gridSize(this.rows);
 
         return {
-            x: 100 * x / width,
-            y: 100 * y / height,
+            x: (100 * x) / width,
+            y: (100 * y) / height,
         };
     }
 

@@ -138,12 +138,14 @@ const onInteractivesLoaded = memoize((rules: SpacefinderRules): Promise<
     const notLoaded: Element[] = qwery(
         '.element-interactive',
         rules.body
-    ).filter((interactive: Element): boolean => {
-        const iframe: HTMLIFrameElement[] = ([...interactive.children].filter(
-            isIframe
-        ): any[]);
-        return !(iframe.length && isIframeLoaded(iframe[0]));
-    });
+    ).filter(
+        (interactive: Element): boolean => {
+            const iframe: HTMLIFrameElement[] = ([
+                ...interactive.children,
+            ].filter(isIframe): any[]);
+            return !(iframe.length && isIframeLoaded(iframe[0]));
+        }
+    );
 
     return notLoaded.length === 0 || !('MutationObserver' in window)
         ? Promise.resolve()

@@ -115,9 +115,11 @@ const loadModules = (): Promise<void> => {
             ],
         ]);
     });
-    return Promise.all(modulePromises).then((): void => {
-        addEndTimeBaseline(primaryBaseline);
-    });
+    return Promise.all(modulePromises).then(
+        (): void => {
+            addEndTimeBaseline(primaryBaseline);
+        }
+    );
 };
 
 export const bootCommercial = (): Promise<void> => {

@@ -15,45 +15,50 @@ const init = (): ?boolean => {
         return false;
     }
 
-    mediator.once('modules:comments:renderComments:rendered', (): void => {
-        const $commentMainColumn: bonzo = $(
-            '.js-comments .content__main-column'
-        );
+    mediator.once(
+        'modules:comments:renderComments:rendered',
+        (): void => {
+            const $commentMainColumn: bonzo = $(
+                '.js-comments .content__main-column'
+            );
 
-        fastdom
-            .read(() => $commentMainColumn.dim().height)
-            .then((mainColHeight: number) => {
-                // if comments container is lower than 280px
-                if (mainColHeight < 280) {
-                    return;
-                }
+            fastdom
+                .read(() => $commentMainColumn.dim().height)
+                .then((mainColHeight: number) => {
+                    // if comments container is lower than 280px
+                    if (mainColHeight < 280) {
+                        return;
+                    }
 
-                const adSlots = createSlots('comments', {
-                    classes: 'mpu-banner-ad',
-                });
+                    const adSlots = createSlots('comments', {
+                        classes: 'mpu-banner-ad',
+                    });
 
-                fastdom
-                    .write(() => {
-                        $commentMainColumn.addClass('discussion__ad-wrapper');
-
-                        if (
-                            !config.page.isLiveBlog &&
-                            !config.page.isMinuteArticle
-                        ) {
+                    fastdom
+                        .write(() => {
                             $commentMainColumn.addClass(
-                                'discussion__ad-wrapper-wider'
+                                'discussion__ad-wrapper'
                             );
-                        }
 
-                        adSlots.forEach(adSlot => {
-                            $adSlotContainer.append(adSlot);
-                        });
-                        return adSlots[0];
-                    })
-                    // Add only the fist slot (DFP slot) to GTP
-                    .then((adSlot: HTMLElement) => addSlot(adSlot, false));
-            });
-    });
+                            if (
+                                !config.page.isLiveBlog &&
+                                !config.page.isMinuteArticle
+                            ) {
+                                $commentMainColumn.addClass(
+                                    'discussion__ad-wrapper-wider'
+                                );
+                            }
+
+                            adSlots.forEach(adSlot => {
+                                $adSlotContainer.append(adSlot);
+                            });
+                            return adSlots[0];
+                        })
+                        // Add only the fist slot (DFP slot) to GTP
+                        .then((adSlot: HTMLElement) => addSlot(adSlot, false));
+                });
+        }
+    );
 };
 
 export default init;

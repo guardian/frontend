@@ -83,9 +83,7 @@ class Controls extends Component<*, *> {
             if (hasSolutions) {
                 controls.clue.unshift(
                     <button
-                        className={`${buttonClassName} ${
-                            buttonCurrentClassName
-                        }`}
+                        className={`${buttonClassName} ${buttonCurrentClassName}`}
                         onClick={this.props.crossword.onCheat.bind(
                             this.props.crossword
                         )}
@@ -96,9 +94,7 @@ class Controls extends Component<*, *> {
                 );
                 controls.clue.unshift(
                     <button
-                        className={`${buttonClassName} ${
-                            buttonCurrentClassName
-                        }`}
+                        className={`${buttonClassName} ${buttonCurrentClassName}`}
                         onClick={this.props.crossword.onCheck.bind(
                             this.props.crossword
                         )}

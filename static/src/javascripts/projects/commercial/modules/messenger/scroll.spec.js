@@ -29,24 +29,24 @@ describe('Cross-frame messenger: scroll', () => {
      `;
 
     const mockIframePosition = (iframe: any, top: number) => {
-        jest
-            .spyOn(iframe, 'getBoundingClientRect')
-            .mockImplementationOnce(() => ({
+        jest.spyOn(iframe, 'getBoundingClientRect').mockImplementationOnce(
+            () => ({
                 left: 8,
                 right: 392,
                 height: 200,
                 width: 384,
                 top,
                 bottom: top + 200,
-            }));
+            })
+        );
     };
 
     beforeEach(() => {
-        jest
-            .spyOn(global, 'addEventListener')
-            .mockImplementation((_, callback) => {
+        jest.spyOn(global, 'addEventListener').mockImplementation(
+            (_, callback) => {
                 onScroll = callback;
-            });
+            }
+        );
         jest.spyOn(global, 'removeEventListener').mockImplementation(() => {
             onScroll = () => Promise.resolve();
         });

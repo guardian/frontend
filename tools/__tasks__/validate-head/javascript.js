@@ -25,11 +25,7 @@ module.exports = {
                                 batchedFiles.map(filePath =>
                                     execa
                                         .shell(
-                                            `git show HEAD:${
-                                                filePath
-                                            } | eslint --stdin --stdin-filename ${
-                                                filePath
-                                            }`
+                                            `git show HEAD:${filePath} | eslint --stdin --stdin-filename ${filePath}`
                                         )
                                         .catch(e => {
                                             errors.push(e);
