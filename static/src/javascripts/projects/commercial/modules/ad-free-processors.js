@@ -40,6 +40,30 @@ const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
     );
 };
 
+const shouldRewritePodcastSourceUrl = (audioSource: Element) => {
+    const typeAttribute = audioSource.getAttribute('type');
+    const isAudio = typeAttribute && typeAttribute.includes('audio');
+    const podcastUrl = isAudio && audioSource.getAttribute('src');
+    return podcastUrl && podcastUrl.includes('flex.acast.com');
+};
+
+const shouldRewritePodcastDownloadUrl = (audioSource: Element) => {
+    const podcastUrlFromHrefAttribute = audioSource.getAttribute('href');
+    return podcastUrlFromHrefAttribute && podcastUrlFromHrefAttribute.includes('flex.acast.com');
+};
+
+const rewriteSrcUrl = (elementWithSrc: Element) => {
+    const currentUrl = elementWithSrc.getAttribute('src');
+    const newUrl = currentUrl ? currentUrl.replace('flex.acast.com/', '') : null;
+    newUrl && elementWithSrc.setAttribute('src', newUrl)
+};
+
+const rewriteHrefUrl = (elementWithHref: Element) => {
+    const currentUrl = elementWithHref.getAttribute('href');
+    const newUrl = currentUrl ? currentUrl.replace('flex.acast.com/', '') : null;
+    newUrl && elementWithHref.setAttribute('href', newUrl)
+};
+
 const adFreeSlotRemove = (): Promise<void> => {
     const adSlotsToRemove: Array<Element> = qwery(dfpEnv.adSlotSelector).filter(
         shouldRemoveAdSlotWhenAdFree
@@ -53,6 +77,19 @@ const adFreeSlotRemove = (): Promise<void> => {
         '.fc-container'
     ).filter(shouldRemoveFaciaContainerWhenAdFree);
 
+    const removeAcastFromPodcastLinks = () => {
+        qwery('source')
+            .filter(shouldRewritePodcastSourceUrl)
+            .forEach((audioSource: Element) =>
+                rewriteSrcUrl(audioSource)
+            );
+        qwery('.podcast-meta__item__link')
+            .filter(shouldRewritePodcastDownloadUrl)
+            .forEach((downloadLinkElement: Element) =>
+                rewriteHrefUrl(downloadLinkElement)
+            );
+    };
+
     return fastdom.write(() => {
         adSlotsToRemove.forEach((adSlot: Element) => adSlot.remove());
         mpusToRemove.forEach((mpu: Element) =>
@@ -61,6 +98,7 @@ const adFreeSlotRemove = (): Promise<void> => {
         commercialFaciaContainersToRemove.forEach((faciaContainer: Element) =>
             faciaContainer.classList.add('u-h')
         );
+        removeAcastFromPodcastLinks();
     });
 };
 

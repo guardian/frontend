@@ -6,7 +6,7 @@ import reportError from 'lib/report-error';
 import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
-import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
+import { closeDisabledSlots } from 'commercial/modules/ad-free-processors';
 import { init as initCmpService } from 'commercial/modules/cmp/cmp';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
