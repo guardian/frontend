@@ -3,6 +3,15 @@ import template from 'lodash/utilities/template';
 import treatHtml from 'raw-loader!journalism/views/politicsWeeklyTreat.html';
 import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
+import { addClassesAndTitle } from 'common/views/svg';
+
+import logo from 'svgs/journalism/politics-weekly-treat/UK-Politics-420.svg';
+import aButton from 'svgs/journalism/politics-weekly-treat/a-play-btn-black.svg';
+import aWave from 'svgs/journalism/politics-weekly-treat/a-wave.svg';
+import aWaveSmall from 'svgs/journalism/politics-weekly-treat/a-wave-small.svg';
+import bIcon from 'svgs/journalism/politics-weekly-treat/b-AudioIcon.svg';
+import bWave from 'svgs/journalism/politics-weekly-treat/b-wave.svg';
+import bWaveSmall from 'svgs/journalism/politics-weekly-treat/b-wave-small.svg';
 
 const runTest = (variant: string) => (): void => {
     const headlinesContainer = document.querySelector('.facia-page #headlines');
@@ -10,7 +19,32 @@ const runTest = (variant: string) => (): void => {
     if (headlinesContainer) {
         const treats = headlinesContainer.querySelector('.treats__container');
         if (treats) {
-            const newTreat = template(treatHtml, { variant });
+            const newTreat = template(treatHtml, {
+                variant,
+                logo: logo.markup,
+                aButton: addClassesAndTitle(aButton.markup, [
+                    'politics-weekly-treat__player-button',
+                ]),
+                aWave: addClassesAndTitle(aWave.markup, [
+                    'politics-weekly-treat__player-wave',
+                    'politics-weekly-treat__player-wave-large',
+                ]),
+                aWaveSmall: addClassesAndTitle(aWaveSmall.markup, [
+                    'politics-weekly-treat__player-wave',
+                    'politics-weekly-treat__player-wave-small',
+                ]),
+                bIcon: addClassesAndTitle(bIcon.markup, [
+                    'politics-weekly-treat__player-button',
+                ]),
+                bWave: addClassesAndTitle(bWave.markup, [
+                    'politics-weekly-treat__player-wave',
+                    'politics-weekly-treat__player-wave-large',
+                ]),
+                bWaveSmall: addClassesAndTitle(bWaveSmall.markup, [
+                    'politics-weekly-treat__player-wave',
+                    'politics-weekly-treat__player-wave-small',
+                ]),
+            });
             treats.innerHTML = newTreat;
         }
     }

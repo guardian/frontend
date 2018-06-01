@@ -101,10 +101,10 @@
     color: $garnett-neutral-1;
 
     @include mq(leftCol) {
-        padding: 2px 4px 2px 1px;
+        padding: 1px 4px 0px 1px;
     }
     @include mq(wide) {
-        padding: 3px 1px 4px 2px;
+        padding: 3px 1px 0px 2px;
     }
 
     display: inline-flex;
@@ -116,11 +116,11 @@
     }
     >:last-child {
         @include mq(leftCol) {
-            padding-left: 1px;
+            padding-left: 2px;
+            padding-bottom: 1px;
         }
         @include mq(wide) {
-            padding-left: 4px;
-            padding-right: 2px;
+            padding: 0 2px 3px 4px;
         }
     }
 }
@@ -128,7 +128,7 @@
     >:first-child {
         @include mq(leftCol) {
             padding-left: 1px;
-            padding-right: 1px;
+            padding-right: 2px;
         }
         @include mq(wide) {
             padding-left: 0;
@@ -181,7 +181,7 @@
     }
 }
 
-.politics-weekly-treat__player-button {
+.politics-weekly-treat__player-button svg {
     @include mq(leftCol) {
         width: 22px;
     }
