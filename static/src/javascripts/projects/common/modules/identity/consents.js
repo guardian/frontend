@@ -168,9 +168,9 @@ const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
             .then(csrfToken => unsubscribeFromAll(csrfToken))
             .then(() =>
                 Promise.all([
-                    checkAllOptOuts(),
-                    uncheckAllOptIns(),
                     showUnsubscribeConfirmation(),
+                    uncheckAllOptIns(),
+                    checkAllOptOuts(),
                 ])
             )
             .catch((err: Error) => {
