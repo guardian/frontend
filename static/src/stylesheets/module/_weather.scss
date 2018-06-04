@@ -285,6 +285,10 @@ $weather-large-size: 50px;
         }
     }
 
+    @include mq(tablet, leftCol) {
+        margin-right: -$gs-gutter / 2;
+    }
+
     @include mq(leftCol) {
         border-top: 1px solid $neutral-5;
     }
@@ -292,6 +296,7 @@ $weather-large-size: 50px;
     .has-page-skin & {
         @include mq(wide) {
             border-top: 0;
+            margin-right: -$gs-gutter / 2;
         }
     }
 }
