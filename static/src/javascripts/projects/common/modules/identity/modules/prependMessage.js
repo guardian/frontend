@@ -30,7 +30,7 @@ const prependSuccessMessage = (
         const errorClass = classes.formSuccess.replace('.', '');
         prependMessage(message, location, errorClass);
     } else {
-        throw new Error('Location was null')
+        throw new Error('Location was null');
     }
 };
 
