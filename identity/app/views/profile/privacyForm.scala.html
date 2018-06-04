@@ -86,7 +86,7 @@
 
 @* This displays both global and key-bound errors *@
 @if(privacyForm.hasErrors) {
-    <div class="form__error" role="alert">
+    <div class="form__error" role="alert" aria-live="polite">
         Error processing the form. Your changes have not been saved:
         <p>@privacyForm.errors.map(formError => (formError.key, formError.message)).mkString(", ")</p>
     </div>
