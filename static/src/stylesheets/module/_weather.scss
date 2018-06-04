@@ -372,6 +372,12 @@ $weather-large-size: 50px;
         @include mq($until: wide) {
             display: none;
         }
+
+        .has-page-skin & {
+            @include mq(wide) {
+                display: none;
+            }
+        }
     }
 }
 
