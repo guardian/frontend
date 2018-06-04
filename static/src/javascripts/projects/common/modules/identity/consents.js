@@ -16,9 +16,7 @@ import {
 import { getCsrfTokenFromElement } from './modules/fetchFormFields';
 import { show as showModal } from './modules/modal';
 
-import {
-    prependSuccessMessage,
-} from './modules/prependMessage';
+import { prependSuccessMessage } from './modules/prependMessage';
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
