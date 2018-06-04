@@ -6,7 +6,7 @@ const classes = {
 
 const prependMessage = (
     message: string,
-    location: HTMLElement,
+    location: Element,
     clazz: string
 ): void => {
     const errorHtml = document.createElement('div');
