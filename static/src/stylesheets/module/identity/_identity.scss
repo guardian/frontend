@@ -70,7 +70,7 @@ $identity-header-height: 48px;
 }
 
 .identity-title-explainer {
-    @include fs-bodyCopy(1);
+    @include fs-bodyCopy(2);
     margin-bottom: $gs-baseline;
     &.identity-title-explainer--small {
         @include fs-textSans(2);

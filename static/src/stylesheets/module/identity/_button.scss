@@ -26,9 +26,9 @@
 
 .manage-account__button {
     $font-size: 5;
-    $height: $gs-baseline * 3.5;
+    $height: $gs-baseline * 3;
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
-    $padding-horizontal: $gs-gutter;
+    $padding-horizontal: $gs-gutter * 0.9;
     @include fs-textSans($font-size);
     @include identity-button($identity-main)
     height: $height;
@@ -36,7 +36,7 @@
     border: 0;
     cursor: pointer;
     float: left;
-    padding: $padding-vertical $padding-horizontal;
+    padding: $padding-vertical*1.1 $padding-horizontal $padding-vertical*0.9;
     min-width: $gs-baseline * 14;
     white-space: nowrap;
     text-overflow: clip;
@@ -154,30 +154,6 @@
 
 .manage-account__button--light {
     @extend %manage-account__button--light;
-}
-
-.manage-account__button--medium {
-    @include fs-textSans(5);
-    @include identity-button($identity-main);
-    min-width: $gs-baseline * 20;
-    display: inline-flex;
-    height: $gs-gutter * 1.8;
-    padding-left: $gs-gutter * .9;
-    padding-right: $gs-gutter * .9;
-}
-
-.manage-account__button--mini {
-    @include fs-textSans(1);
-    min-width: $gs-baseline * 20;
-    display: inline-flex;
-    height: $gs-gutter * 1.2;
-    line-height: $gs-gutter * 1.2;
-    padding-left: $gs-gutter / 1.6;
-    padding-right: $gs-gutter / 1.6;
-    .inline-icon {
-        width: $gs-gutter * 1.2;
-        height: $gs-gutter * 1.2;
-    }
 }
 
 %manage-account__button--light {
