@@ -6,7 +6,7 @@ const classes = {
 
 const prependMessage = (
     message: string,
-    location: HTMLElement,
+    location: Element,
     clazz: string
 ): void => {
     const errorHtml = document.createElement('div');
@@ -17,21 +17,17 @@ const prependMessage = (
     location.insertBefore(errorHtml, location.firstChild);
 };
 
-const prependErrorMessage = (message: string, location: HTMLElement): void => {
+const prependErrorMessage = (message: string, location: Element): void => {
     const errorClass = classes.formError.replace('.', '');
     prependMessage(message, location, errorClass);
 };
 
 const prependSuccessMessage = (
     message: string,
-    location: HTMLElement
+    location: Element
 ): void => {
-    if (location) {
-        const errorClass = classes.formSuccess.replace('.', '');
-        prependMessage(message, location, errorClass);
-    } else {
-        throw new Error('Location was null');
-    }
+    const errorClass = classes.formSuccess.replace('.', '');
+    prependMessage(message, location, errorClass);
 };
 
 export { prependErrorMessage, prependSuccessMessage };

@@ -157,10 +157,12 @@ const showUnsubscribeConfirmation = (): Promise<void> => {
         elem: HTMLButtonElement
     ): Promise<void> =>
         fastdom.write(() => {
-            prependSuccessMessage(
-                UNSUBSCRIPTION_SUCCESS_MESSAGE,
-                ((elem.parentElement: any): HTMLElement)
-            );
+            if (elem.parentElement) {
+                prependSuccessMessage(
+                    UNSUBSCRIPTION_SUCCESS_MESSAGE,
+                    elem.parentElement
+                );
+            }
             elem.classList.add(isHiddenClassName);
         });
 
