@@ -16,14 +16,15 @@ import {
 import { getCsrfTokenFromElement } from './modules/fetchFormFields';
 import { show as showModal } from './modules/modal';
 
-import { prependSuccessMessage, prependHtmlMessage } from './modules/prependMessage'
+import {
+    prependSuccessMessage,
+} from './modules/prependMessage';
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
 const checkAllCheckboxClassName = 'js-manage-account__check-allCheckbox';
 const checkAllIgnoreClassName = 'js-manage-account__check-allCheckbox__ignore';
 const unsubscribeButtonClassName = 'js-unsubscribe';
-const unsubscribeSuccessMessageClassName = 'js-unsubscribe-confirmation';
 const isHiddenClassName = 'is-hidden';
 const isLoadingClassName = 'loading';
 const optOutClassName = 'fieldset__fields--opt-out';
@@ -33,7 +34,8 @@ const requestDebounceTimeout = 150;
 
 const LC_CHECK_ALL = 'Select all';
 const LC_UNCHECK_ALL = 'Deselect all';
-const UNSUBSCRIPTION_SUCCESS_MESSAGE = 'You\'ve been unsubscribed from all Guardian marketing newsletters and emails.';
+const UNSUBSCRIPTION_SUCCESS_MESSAGE =
+    "You've been unsubscribed from all Guardian marketing newsletters and emails.";
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
 const submitPartialConsentFormDebouncedRq: ({}) => Promise<void> = debounce(
@@ -113,7 +115,10 @@ const buildFormDataForFields = (
 const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
     fastdom.read(() => labelEl.querySelectorAll('[name][value]'));
 
-const unsubscribeFromAll = (buttonEl: HTMLButtonElement, csrfToken: string): Promise<void> => {
+const unsubscribeFromAll = (
+    buttonEl: HTMLButtonElement,
+    csrfToken: string
+): Promise<void> => {
     buttonEl.classList.add(isLoadingClassName);
     return reqwest({
         url: `/user/email-subscriptions`,
@@ -154,7 +159,10 @@ const showUnsubscribeConfirmation = (): Promise<void> => {
         elem: HTMLButtonElement
     ): Promise<void> =>
         fastdom.write(() => {
-            prependSuccessMessage(UNSUBSCRIPTION_SUCCESS_MESSAGE, elem.parentElement);
+            prependSuccessMessage(
+                UNSUBSCRIPTION_SUCCESS_MESSAGE,
+                elem.parentElement
+            );
             elem.classList.add(isHiddenClassName);
         });
 

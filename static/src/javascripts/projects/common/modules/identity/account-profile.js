@@ -8,8 +8,11 @@ import $ from 'lib/$';
 import bean from 'bean';
 import bonzo from 'bonzo';
 import { pushUrl } from 'lib/url';
-import { prependSuccessMessage, prependErrorMessage } from './modules/prependMessage';
 import avatarApi from 'common/modules/avatar/api';
+import {
+    prependSuccessMessage,
+    prependErrorMessage,
+} from './modules/prependMessage';
 
 const classes = {
     forms: '.js-account-profile-forms',

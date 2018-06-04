@@ -1,3 +1,4 @@
+// @flow
 const classes = {
     formError: '.form__error',
     formSuccess: '.form__success',
