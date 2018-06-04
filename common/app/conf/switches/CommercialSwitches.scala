@@ -387,6 +387,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val prebidS2SOzoneBidder: Switch = Switch(
+    group = Commercial,
+    name = "prebid-s2sozone",
+    description = "Include S2S Ozone project adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val orielSonobiIntegration: Switch = Switch(
     group = Commercial,
     name = "oriel-sonobi-integration-test",

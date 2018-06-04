@@ -28,6 +28,22 @@ const consentManagement = {
     allowAuctionWithoutConsent: true,
 };
 
+const s2sConfig = {
+    accountId: '1',
+    enabled: true,
+    bidders: [
+        'appnexus',
+        'openx', // Defined in the doc.
+    ],
+    timeout: bidderTimeout,
+    adapter: 'prebidServer',
+    is_debug: 'false',
+    endpoint: 'http://elb.the-ozone-project.com/openrtb2/auction',
+    syncEndpoint: 'https://prebid.adnxs.com/pbs/v1/cookie_sync',
+    cookieSet: true,
+    cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
+};
+
 class PrebidAdUnit {
     code: ?string;
     bids: ?(PrebidBid[]);
@@ -54,18 +70,19 @@ class PrebidAdUnit {
 
 class PrebidService {
     static initialise(): void {
-        if (config.switches.enableConsentManagementService) {
-            window.pbjs.setConfig({
+        const pbjsConfig = Object.assign(
+            {},
+            {
                 bidderTimeout,
                 priceGranularity,
-                consentManagement,
-            });
-        } else {
-            window.pbjs.setConfig({
-                bidderTimeout,
-                priceGranularity,
-            });
-        }
+            },
+            config.switches.enableConsentManagementService
+                ? { consentManagement }
+                : {},
+            config.switches.prebidS2sozone ? { s2sConfig } : {}
+        );
+
+        window.pbjs.setConfig(pbjsConfig);
 
         // gather analytics from 10% of page views
         const inSample = getRandomIntInclusive(1, 10) === 1;
@@ -84,6 +101,8 @@ class PrebidService {
             ]);
         }
 
+        // This creates an 'unsealed' object. Flows
+        // allows dynamic assignment.
         window.pbjs.bidderSettings = {};
 
         if (config.switches.prebidSonobi) {
