@@ -6,7 +6,7 @@
 
 ### Does this affect other platforms?
 
-- [ ] AMP
+- [ ] AMP <!-- AMP question? https://git.io/v9zIE -->
 - [ ] Apps
 - [ ] Other (please specify)
 
@@ -30,3 +30,6 @@
 
 - [ ] Locally
 - [ ] On CODE
+
+<!-- AB test? https://git.io/v1V0x -->
+<!-- Does this PR meet the contributing guidelines? https://git.io/v1VEJ -->
