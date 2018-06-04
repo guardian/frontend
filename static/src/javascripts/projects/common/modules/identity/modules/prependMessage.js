@@ -22,10 +22,7 @@ const prependErrorMessage = (message: string, location: Element): void => {
     prependMessage(message, location, errorClass);
 };
 
-const prependSuccessMessage = (
-    message: string,
-    location: Element
-): void => {
+const prependSuccessMessage = (message: string, location: Element): void => {
     const errorClass = classes.formSuccess.replace('.', '');
     prependMessage(message, location, errorClass);
 };
