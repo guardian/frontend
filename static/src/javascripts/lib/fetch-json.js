@@ -28,9 +28,7 @@ const json = (
                     return JSON.parse(responseText);
                 } catch (ex) {
                     throw new Error(
-                        `Fetch error while requesting ${
-                            path
-                        }: Invalid JSON response`
+                        `Fetch error while requesting ${path}: Invalid JSON response`
                     );
                 }
             });

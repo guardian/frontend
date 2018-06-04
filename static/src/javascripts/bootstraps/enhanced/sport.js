@@ -23,13 +23,13 @@ const renderExtras = (extras: Array<Extra>): void => {
         belowArticleVisible(
             () => {
                 $('.js-after-article').append(
-                    $.create('<div class="football-extras"></div>').each(
-                        extrasContainer => {
+                    $
+                        .create('<div class="football-extras"></div>')
+                        .each(extrasContainer => {
                             extras.forEach(extra => {
                                 extrasContainer.appendChild(extra.content);
                             });
-                        }
-                    )
+                        })
                 );
             },
             () => {
@@ -47,9 +47,7 @@ const cricket = (): void => {
 
     if (matchDate && team) {
         const cricketScore = new Component();
-        cricketScore.endpoint = `/sport/cricket/match/${matchDate}/${
-            team
-        }.json`;
+        cricketScore.endpoint = `/sport/cricket/match/${matchDate}/${team}.json`;
 
         fastdom
             .read(() => document.querySelector('.js-cricket-score'))

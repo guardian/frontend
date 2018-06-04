@@ -32,10 +32,9 @@ const fetch = () =>
 const getEndpointsFromResponse = res => {
     let body = '';
     return new Promise((resolve, reject) => {
-        res
-            .on('data', chunk => {
-                body += chunk;
-            })
+        res.on('data', chunk => {
+            body += chunk;
+        })
             .on('end', () => {
                 const endpoints = JSON.parse(body).map(hit =>
                     hit.url.replace(/^https?:\/\/www\.theguardian\.com/, '')

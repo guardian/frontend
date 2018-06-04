@@ -35,8 +35,7 @@ switch (process.argv[2]) {
         const listAll = process.argv[3] === '--all';
 
         // for all the lines in the makefile, construct the message
-        fs
-            .readFileSync('makefile', 'utf8')
+        fs.readFileSync('makefile', 'utf8')
             .split('\n')
             .forEach((line, lineNumber, makefile) => {
                 // if this line is a target...

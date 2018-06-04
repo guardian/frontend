@@ -241,13 +241,10 @@ export const init = (start: () => void, stop: () => void): Promise<any> => {
     const im = config.page.hasInlineMerchandise
         ? attemptToAddInlineMerchAd()
         : Promise.resolve(false);
-    im
-        .then(
-            (inlineMerchAdded: boolean) =>
-                inlineMerchAdded
-                    ? trackAdRender('dfp-ad--im')
-                    : Promise.resolve()
-        )
+    im.then(
+        (inlineMerchAdded: boolean) =>
+            inlineMerchAdded ? trackAdRender('dfp-ad--im') : Promise.resolve()
+    )
         .then(addInlineAds)
         .then(stop);
 

@@ -307,12 +307,15 @@ const initiateUserAccountDropdown = (): void => {
             const { menu } = userAccountDropdownEls;
 
             if (menu) {
-                menu.addEventListener('keyup', (event: KeyboardEvent): void => {
-                    if (event.key === 'Escape') {
-                        toggleDropdown(userAccountDropdownEls);
-                        returnFocusToButton(MY_ACCOUNT_ID);
+                menu.addEventListener(
+                    'keyup',
+                    (event: KeyboardEvent): void => {
+                        if (event.key === 'Escape') {
+                            toggleDropdown(userAccountDropdownEls);
+                            returnFocusToButton(MY_ACCOUNT_ID);
+                        }
                     }
-                });
+                );
             }
         });
 };

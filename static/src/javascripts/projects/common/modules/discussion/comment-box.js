@@ -533,9 +533,7 @@ class CommentBox extends Component {
             }
 
             if (parentCommentAuthor && author && timestamp) {
-                parentCommentAuthor.innerHTML = `${author} @ ${
-                    timestamp
-                } said:`;
+                parentCommentAuthor.innerHTML = `${author} @ ${timestamp} said:`;
             }
 
             if (parentCommentBody && body) {

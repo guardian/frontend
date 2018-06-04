@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 type FeedbackFlashBoxProps = {
-    children?: any,
+    children: any,
     flashing: boolean,
 };
 

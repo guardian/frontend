@@ -45,7 +45,9 @@ const generateSassForSVG = svg => {
     const {
         name,
         data: fileData,
-        data: { info: { width = 0, height = 0 } },
+        data: {
+            info: { width = 0, height = 0 },
+        },
     } = svg;
     return `
             %svg-i-${name},
