@@ -29,7 +29,7 @@
 ### Tested
 
 - [ ] Locally
-- [ ] On CODE
+- [ ] On CODE (optional)
 
 <!-- AB test? https://git.io/v1V0x -->
 <!-- Does this PR meet the contributing guidelines? https://git.io/v1VEJ -->
