@@ -28,7 +28,7 @@
     $font-size: 5;
     $height: $gs-baseline * 3;
     $padding-vertical: ($height - get-line-height(textSans, $font-size))/2;
-    $padding-horizontal: $gs-gutter * 0.9;
+    $padding-horizontal: $gs-gutter * .9;
     @include fs-textSans($font-size);
     @include identity-button($identity-main)
     height: $height;
@@ -36,7 +36,7 @@
     border: 0;
     cursor: pointer;
     float: left;
-    padding: $padding-vertical*1.1 $padding-horizontal $padding-vertical*0.9;
+    padding: $padding-vertical * 1.1 $padding-horizontal $padding-vertical * .9;
     min-width: $gs-baseline * 14;
     white-space: nowrap;
     text-overflow: clip;
