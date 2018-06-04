@@ -23,6 +23,8 @@
     "lodash-node": "^2.4.1",
     "object-fit-videos": "^1.0.3",
     "ophan-tracker-js": "1.3.9",
+    "preact": "^8.2.9",
+    "preact-compat": "^3.18.0",
     "prebid.js": "https://github.com/guardian/Prebid.js.git#400046e4c10231884a4e76420f8904251361517c",
     "qwery": "3.4.2",
     "rangefix": "^0.2.5",
