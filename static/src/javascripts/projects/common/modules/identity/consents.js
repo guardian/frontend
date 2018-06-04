@@ -16,11 +16,15 @@ import {
 import { getCsrfTokenFromElement } from './modules/fetchFormFields';
 import { show as showModal } from './modules/modal';
 
+import { prependSuccessMessage } from './modules/prependMessage';
+
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
 const checkAllCheckboxClassName = 'js-manage-account__check-allCheckbox';
 const checkAllIgnoreClassName = 'js-manage-account__check-allCheckbox__ignore';
-
+const unsubscribeButtonClassName = 'js-unsubscribe';
+const isHiddenClassName = 'is-hidden';
+const isLoadingClassName = 'loading';
 const optOutClassName = 'fieldset__fields--opt-out';
 const optInClassName = 'fieldset__fields--opt-in';
 
@@ -28,7 +32,8 @@ const requestDebounceTimeout = 150;
 
 const LC_CHECK_ALL = 'Select all';
 const LC_UNCHECK_ALL = 'Deselect all';
-
+const UNSUBSCRIPTION_SUCCESS_MESSAGE =
+    "You've been unsubscribed from all Guardian marketing newsletters and emails.";
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
 const submitPartialConsentFormDebouncedRq: ({}) => Promise<void> = debounce(
@@ -108,8 +113,12 @@ const buildFormDataForFields = (
 const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
     fastdom.read(() => labelEl.querySelectorAll('[name][value]'));
 
-const unsubscribeFromAll = (csrfToken: string): Promise<void> =>
-    reqwest({
+const unsubscribeFromAll = (
+    buttonEl: HTMLButtonElement,
+    csrfToken: string
+): Promise<void> => {
+    buttonEl.classList.add(isLoadingClassName);
+    return reqwest({
         url: `/user/email-subscriptions`,
         method: 'DELETE',
         withCredentials: true,
@@ -117,6 +126,7 @@ const unsubscribeFromAll = (csrfToken: string): Promise<void> =>
             'Csrf-Token': csrfToken,
         },
     });
+};
 
 const toggleInputsWithSelector = (className: string, checked: boolean) =>
     fastdom
@@ -137,14 +147,42 @@ const checkAllOptOuts = (): Promise<void> =>
 const uncheckAllOptIns = (): Promise<void> =>
     toggleInputsWithSelector(optInClassName, false);
 
+const showUnsubscribeConfirmation = (): Promise<void> => {
+    const fetchButton = (): Promise<HTMLButtonElement> =>
+        fastdom.read(() =>
+            document.querySelector(`.${unsubscribeButtonClassName}`)
+        );
+
+    const updateVisibilityAndShowMessage = (
+        elem: HTMLButtonElement
+    ): Promise<void> =>
+        fastdom.write(() => {
+            if (elem.parentElement) {
+                prependSuccessMessage(
+                    UNSUBSCRIPTION_SUCCESS_MESSAGE,
+                    elem.parentElement
+                );
+            }
+            elem.classList.add(isHiddenClassName);
+        });
+
+    return fetchButton().then(button => updateVisibilityAndShowMessage(button));
+};
+
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     buttonEl.addEventListener('click', () => {
         toggleInputsWithSelector(newsletterCheckboxClassName, false);
         return getCsrfTokenFromElement(
             document.getElementsByClassName(newsletterCheckboxClassName)[0]
         )
-            .then(csrfToken => unsubscribeFromAll(csrfToken))
-            .then(() => Promise.all([checkAllOptOuts(), uncheckAllOptIns()]))
+            .then(csrfToken => unsubscribeFromAll(buttonEl, csrfToken))
+            .then(() =>
+                Promise.all([
+                    showUnsubscribeConfirmation(),
+                    uncheckAllOptIns(),
+                    checkAllOptOuts(),
+                ])
+            )
             .catch((err: Error) => {
                 pushError(err, 'reload').then(() => {
                     window.scrollTo(0, 0);
@@ -328,7 +366,10 @@ const enhanceConsents = (): void => {
         [`.${checkAllCheckboxClassName}`, bindCheckAllSwitch],
         [`.${consentCheckboxClassName}`, bindConsentSwitch],
         [`.${newsletterCheckboxClassName}`, bindNewsletterSwitch],
-        ['.js-unsubscribe', bindUnsubscribeFromAllModalConfirmation],
+        [
+            `.${unsubscribeButtonClassName}`,
+            bindUnsubscribeFromAllModalConfirmation,
+        ],
         ['.js-confirm-unsubscribe-all', bindUnsubscribeFromAll],
     ];
     loadEnhancers(loaders);
