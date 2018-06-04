@@ -13,7 +13,7 @@
     .facia-header__inner {
         padding-top: $gs-baseline / 2;
         background-color: $news-garnett-highlight;
-        padding-bottom: 0px;
+        padding-bottom: 0;
         display: flex;
         flex-direction: column;
 
@@ -26,7 +26,7 @@
     .facia-header__column {
         flex-basis: 100%;
         overflow: visible;
-        border-bottom: 1px solid #121212;
+        border-bottom: 1px solid $garnett-neutral-1;
         padding-bottom: $gs-gutter / 2;
 
         @include mq($from: desktop) {
@@ -73,16 +73,40 @@
                 display: block;
             }
         }
+
+        &.facia-header__column-flags {
+            display: flex;
+
+            .wc-match__badges {
+                order: 2;
+                margin-left: $gs-gutter / 2;
+
+                @include mq($from: desktop) {
+                    order: 0;
+                    margin-left: 0;
+                    margin-right: $gs-gutter / 2;
+                }
+            }
+        }
+    }
+
+    .container__title__label {
+        max-width: 150px;
+        display: inline-block;
+        font-size: 30px;
+        line-height: 26px;
+
+        @include mq($from: desktop) {
+            max-width: 110px;
+            font-size: 20px;
+            line-height: 22px;
+        }
     }
 
     .inline-world_cup_badge {
-        float: left;
         margin-right: $gs-gutter / 2;
         margin-left: $gs-gutter / 2;
-
-        @include mq($from: mobileLandscape) {
-            margin-left: $gs-gutter;
-        }
+        float: left;
 
         @include mq($from: desktop) {
             margin-left: $gs-gutter;
@@ -93,33 +117,36 @@
         width: 80px;
         height: 50px;
         float: left;
-        margin-right: $gs-gutter / 2;
-        margin-top: $gs-gutter / 4;
+        margin-top: 5px;
     }
 
     .wc-badge__flag {
-        border: 1px solid #121212;
+        border: 1px solid $garnett-neutral-1;
         width: 40px;
         height: 40px;
         border-radius: 50%;
         float: left;
+        background-color: $garnett-neutral-5;
 
         &:nth-child(1) {
             margin-right: -10px;
-            background-color: $news-garnett-highlight;
             z-index: 10;
             position: relative;
+        }
+
+        .team-crest {
+            display: block;
+            max-width: 24px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 12px;
+            height: auto;
+            border: 1px solid #999999;
         }
     }
 
     .world__cup-badge__svg {
         width: 100%;
-    }
-
-    .wc-match__date, .wc-match__teams {
-        span {
-            display: block;
-        }
     }
 
     .wc-label {
@@ -133,24 +160,23 @@
     }
 
     .wc-player-image {
-        height: gs-span(1.65);
+        height: 112px;
         overflow: hidden;
         display: inline-block;
-        margin-top: gs-span(-.4);
+        margin-top: -52px;
     }
 
     .wc-player-image__offset {
         display: none;
 
         @include mq($from: leftCol) {
-            margin-left: gs-span(1.1);
-            margin-right: gs-span(-.5);
+            margin-left: 68px;
+            margin-right: -60px;
             display: inline-block;
         }
 
         @include mq($from: wide) {
-            margin-left: gs-span(1.8);
-            margin-right: gs-span(-.5);
+            margin-left: 124px;
         }
     }
 }

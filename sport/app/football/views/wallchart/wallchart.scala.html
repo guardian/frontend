@@ -1,6 +1,7 @@
 @import football.model.CompetitionStageLike
 @import model.Competition
 @import conf.switches.Switches
+@import conf.Configuration
 
 @(competition: Competition, competitionStages: List[CompetitionStageLike], next: Option[pa.FootballMatch])(implicit request: RequestHeader)
 <div class="l-side-margins wc-overview">
@@ -17,18 +18,22 @@
                 @next.map { nextMatch =>
                 <div class="facia-header__column">
                     <div class="wc-match__date">
-                        <span class="wc-label wc-label__title">Next match</span>
-                        <span class="wc-label">@nextMatch.date.toString("HH:ss EE d MMM z")</span>
+                        <div class="wc-label wc-label__title">Next match</div>
+                        <div class="wc-label">@nextMatch.date.toString("HH:ss EE d MMM z")</div>
                     </div>
                 </div>
-                <div class="facia-header__column">
+                <div class="facia-header__column facia-header__column-flags">
                     <div class="wc-match__badges">
-                        <span class="wc-label wc-badge__flag"></span>
-                        <span class="wc-label wc-badge__flag"></span>
+                        <span class="wc-label wc-badge__flag">
+                            <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{nextMatch.homeTeam.id}.png" />
+                        </span>
+                        <span class="wc-label wc-badge__flag">
+                            <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{nextMatch.awayTeam.id}.png" />
+                        </span>
                     </div>
                     <div class="wc-match__teams">
-                        <span class="wc-label wc-label__title">@nextMatch.round.name.getOrElse(nextMatch.round.roundNumber)</span>
-                        <span class="wc-label">@pa.TeamCodes.codeFor(nextMatch.homeTeam) vs @pa.TeamCodes.codeFor(nextMatch.awayTeam)</span>
+                        <div class="wc-label wc-label__title">@nextMatch.round.name.getOrElse(nextMatch.round.roundNumber)</div>
+                        <div class="wc-label">@pa.TeamCodes.codeFor(nextMatch.homeTeam) vs @pa.TeamCodes.codeFor(nextMatch.awayTeam)</div>
                     </div>
                 </div>
                 }.getOrElse{
