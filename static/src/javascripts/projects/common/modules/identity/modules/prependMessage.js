@@ -6,7 +6,7 @@ const classes = {
 
 const prependMessage = (
     message: string,
-    location: Element,
+    location: HTMLElement,
     clazz: string
 ): void => {
     const errorHtml = document.createElement('div');
@@ -26,8 +26,12 @@ const prependSuccessMessage = (
     message: string,
     location: HTMLElement
 ): void => {
-    const errorClass = classes.formSuccess.replace('.', '');
-    prependMessage(message, location, errorClass);
+    if (location) {
+        const errorClass = classes.formSuccess.replace('.', '');
+        prependMessage(message, location, errorClass);
+    } else {
+        throw new Error('Location was null')
+    }
 };
 
 export { prependErrorMessage, prependSuccessMessage };
