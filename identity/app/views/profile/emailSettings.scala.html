@@ -34,7 +34,7 @@
             <ul class="u-unstyled">
                 @if(user.primaryEmailAddress != null && user.primaryEmailAddress.nonEmpty) {
                     <li>
-                        <p>
+                        <p class="identity-title-explainer">
                             You are receiving newsletters, notifications and all other emails to
                             <strong>@user.primaryEmailAddress</strong>.
                         </p>
@@ -56,9 +56,6 @@
                     <button type="button" class="manage-account__button--medium manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all">
                         Unsubscribe from all emails
                     </button>
-                    <div class="manage-account-unsubscribe__success js-unsubscribe-confirmation form__success">
-                        <h3>You've been unsubscribed from all Guardian marketing newsletters and emails.</h3>
-                    </div>
                 </li>
             </ul>
 

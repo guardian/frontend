@@ -8,6 +8,7 @@ import $ from 'lib/$';
 import bean from 'bean';
 import bonzo from 'bonzo';
 import { pushUrl } from 'lib/url';
+import { prependSuccessMessage, prependErrorMessage } from './modules/prependMessage';
 import avatarApi from 'common/modules/avatar/api';
 
 const classes = {
@@ -31,30 +32,6 @@ const messages = {
     avatarUploadSuccess:
         'Thank you for uploading your avatar. It will be checked by Guardian moderators shortly.',
     avatarUploadFailure: 'Sorry, something went wrong. Please try again.',
-};
-
-const prependMessage = (
-    message: string,
-    location: HTMLElement,
-    clazz: string
-): void => {
-    const errorHtml = document.createElement('div');
-    errorHtml.innerHTML = message;
-    errorHtml.className = clazz;
-    location.insertBefore(errorHtml, location.firstChild);
-};
-
-const prependErrorMessage = (message: string, location: HTMLElement): void => {
-    const errorClass = classes.formError.replace('.', '');
-    prependMessage(message, location, errorClass);
-};
-
-const prependSuccessMessage = (
-    message: string,
-    location: HTMLElement
-): void => {
-    const errorClass = classes.formSuccess.replace('.', '');
-    prependMessage(message, location, errorClass);
 };
 
 const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
