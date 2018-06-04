@@ -15,6 +15,22 @@ $weather-large-size: 50px;
             padding-top: $gs-baseline /2;
         }
     }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            &.fc-container--first {
+                padding-top: 0;
+            }
+
+            .fc-container__inner {
+                padding-top: 0;
+            }
+
+            .fc-container__header__title {
+                padding-top: $gs-baseline /2;
+            }
+        }
+    }
 }
 
 .weather {
@@ -37,6 +53,15 @@ $weather-large-size: 50px;
         flex-direction: column;
         margin-top: $gs-baseline * 2;
     }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            margin-top: 0;
+        }
+    }
 }
 
 .weather__icon {
@@ -50,6 +75,14 @@ $weather-large-size: 50px;
 
     @include mq(leftCol) {
         margin-bottom: $gs-baseline / 4;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            position: absolute;
+            left: $gs-gutter / 4;
+            top: $gs-baseline / 2 + $gs-baseline / 4;
+        }
     }
 
     &  > svg {
@@ -135,6 +168,13 @@ $weather-large-size: 50px;
         width: gs-span(3) + 4px;
     }
 
+    .has-page-skin & {
+        @include mq(wide) {
+            margin: ($gs-baseline / 4) ($gs-gutter / 2) 0 0;
+            width: gs-span(2) + 4px;
+        }
+    }
+
     .search-tool__input {
         @include fs-textSans(5);
         border-radius: 16px;
@@ -157,6 +197,16 @@ $weather-large-size: 50px;
 
             &:focus {
                 background-color: $neutral-6;
+            }
+        }
+
+        .has-page-skin & {
+            @include mq(wide) {
+                background-color: $neutral-7;
+
+                &:focus {
+                    background-color: $neutral-6;
+                }
             }
         }
     }
@@ -238,6 +288,12 @@ $weather-large-size: 50px;
     @include mq(leftCol) {
         border-top: 1px solid $neutral-5;
     }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            border-top: 0;
+        }
+    }
 }
 
 .forecast__item {
@@ -268,6 +324,17 @@ $weather-large-size: 50px;
         }
     }
 
+    .has-page-skin & {
+        @include mq(wide) {
+            flex: none;
+            padding-left: $weather-small-size + $gs-gutter / 2;
+
+            &:before {
+                bottom: 10px;
+            }
+        }
+    }
+
     &.forecast__item--0 {
         @include mq($until: tablet) {
             &:before {
@@ -278,6 +345,14 @@ $weather-large-size: 50px;
         @include mq(leftCol) {
             &:before {
                 content: none;
+            }
+        }
+
+        .has-page-skin & {
+            @include mq(wide) {
+                &:before {
+                    content: '';
+                }
             }
         }
     }
@@ -343,6 +418,36 @@ $weather-large-size: 50px;
 
         .weather__temp {
             font-size: 22px;
+        }
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            border-top: 0;
+            height: auto;
+            padding: 2px ($gs-gutter / 2) 0 ($weather-small-size + $gs-gutter / 2);
+
+            &:before {
+                content: '';
+            }
+
+            .weather__icon {
+                left: $gs-gutter / 4;
+                top: $gs-baseline / 2 + $gs-baseline / 4;
+
+                svg {
+                    height: $weather-small-size;
+                    width: $weather-small-size;
+                }
+            }
+
+            .weather__time {
+                padding-top: 0;
+            }
+
+            .weather__temp {
+                font-size: 18px;
+            }
         }
     }
 }
