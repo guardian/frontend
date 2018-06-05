@@ -33,6 +33,7 @@ class LeagueTableController(
         "Scottish Championship",
         "Scottish League One",
         "Scottish League Two",
+        "World Cup 2018",
         "Euro 2016",
         "Euro 2016 qualifying",
         "Champions League qualifying",
