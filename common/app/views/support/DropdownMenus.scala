@@ -16,7 +16,7 @@ object DropdownMenus {
   val accountDropdownMenu: List[DropdownMenuItem] = List(
     DropdownMenuItem(
       linkName = Some("comment activity"),
-      label = "Comments & Replies",
+      label = "Comments & replies",
       classList = List("js-add-comment-activity-link"),
       parentClassList = List("u-h","js-show-comment-activity")
     ),
