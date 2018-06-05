@@ -1,7 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import React, { Component, render } from 'preact-compat';
 import { FeedbackFlashBox } from 'common/modules/identity/ad-prefs/FeedbackFlashBox';
 import { ConsentBox } from 'common/modules/identity/ad-prefs/ConsentBox';
 

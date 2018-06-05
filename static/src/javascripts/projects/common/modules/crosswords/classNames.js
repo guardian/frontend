@@ -1,8 +1,5 @@
 // @flow
-const classNames = function(props: Object) {
-    return Object.keys(props)
+export const classNames = (props: Object) =>
+    Object.keys(props)
         .filter(f => props[f] === true)
         .join(' ');
-};
-
-export { classNames };
