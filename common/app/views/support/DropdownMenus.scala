@@ -41,11 +41,6 @@ object DropdownMenus {
       label = "Emails & marketing"
     ),
     DropdownMenuItem(
-      href =Some(s"${Configuration.id.url}/password/change"),
-      linkName = Some("change password"),
-      label = "Change password"
-    ),
-    DropdownMenuItem(
       href =Some(s"${Configuration.id.url}/signout"),
       linkName = Some("sign out"),
       label = "Sign out"
