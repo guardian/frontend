@@ -92,7 +92,7 @@ trait ABTestSwitches {
     "turn on always ask for this story",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 5),
+    sellByDate = new LocalDate(2018, 6, 29),
     exposeClientSide = true
   )
 
@@ -102,7 +102,7 @@ trait ABTestSwitches {
     "Try 2 variants - one adding a border to the epic and one with copy thanking our readers",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 5),
+    sellByDate = new LocalDate(2018, 6, 29),
     exposeClientSide = true
   )
 
@@ -112,7 +112,7 @@ trait ABTestSwitches {
     "Hihglight a line in the banner",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 5),
+    sellByDate = new LocalDate(2018, 6, 29),
     exposeClientSide = true
   )
 }
