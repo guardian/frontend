@@ -3,8 +3,10 @@ import $ from 'lib/$';
 import raven from 'lib/raven';
 import { buildGoogleAnalyticsEvent, getGoogleAnalyticsEventAction } from 'common/modules/video/ga-helper';
 import config from 'lib/config';
+import ophan from 'ophan/ng';
 
 const gaTracker = config.get('googleAnalytics.trackers.editorial');
+const isEmbed = !!window.guardian.isEmbed;
 
 const getCanonicalUrl = (dataset: Object): string =>
     dataset.canonicalUrl ||
@@ -13,7 +15,7 @@ const getCanonicalUrl = (dataset: Object): string =>
     // the fallback to window.location.pathname should only happen for main media on fronts
     window.location.pathname;
 
-const enhanceVideo = (
+const bindTrackingEvents = (
     el: HTMLMediaElement,
 ): void => {
     const mediaType = el.tagName.toLowerCase();
@@ -22,7 +24,7 @@ const enhanceVideo = (
     const canonicalUrl = getCanonicalUrl(dataset);
 
     const playHandler = () => {
-        // on play, fire GA event (ensure replays also fire event)
+        // on play, fire GA event
         const mediaEvent = {
             mediaId,
             mediaType,
@@ -46,7 +48,29 @@ const enhanceVideo = (
             )
         );
 
-        // on play, fire Ophan event (ensure replays also fire event)
+        // on play, fire Ophan event
+        const record = ophanEmbed => {
+            const eventObject = {
+                video: {
+                    id: mediaId,
+                    eventType: 'play',
+                },
+            };
+
+            ophanEmbed.record(eventObject);
+        };
+
+        if (isEmbed) {
+            require.ensure(
+                [],
+                require => {
+                    record(require('ophan/embed'));
+                },
+                'ophan-embed'
+            );
+        } else {
+            record(ophan);
+        }
 
         // don't fire events every time video is paused then restarted
         el.removeEventListener('play', playHandler);
@@ -57,15 +81,14 @@ const enhanceVideo = (
         // track re-plays
         el.addEventListener('play', playHandler);
     });
-
-    // hide download button in Chrome
-    el.setAttribute('controlsList', 'nodownload');
 };
 
 const initPlayer = (): void => {
     fastdom.read(() => {
         $('.js-gu-media--enhance').each(el => {
-            enhanceVideo(el, false);
+            bindTrackingEvents(el);
+            // hide download button in Chrome
+            el.setAttribute('controlsList', 'nodownload');
         });
     });
 };
