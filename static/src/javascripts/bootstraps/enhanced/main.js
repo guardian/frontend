@@ -191,11 +191,12 @@ const bootEnhanced = (): void => {
                 );
             }
 
+            // Old VideoJS Player
             fastdom
                 .read(() =>
                     qwery(
                         `${
-                            config.switches.enhancedVideoPlayer ? 'video, ' : ''
+                            config.switches.videojs ? 'video, ' : ''
                         } audio`
                     )
                 )

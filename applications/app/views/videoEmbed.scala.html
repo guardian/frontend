@@ -1,7 +1,7 @@
 @import conf.{Configuration, Static}
 @import model.{EmbedPage, VideoPlayer}
 @import views.support.{SeoOptimisedContentImage, StripHtmlTags, Video640}
-@import conf.switches.Switches.EnhancedVideoPlayerSwitch
+@import conf.switches.Switches.VideoJSSwitch
 
 @(page: EmbedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -100,7 +100,7 @@
         document.documentElement.className = docClass;
         </script>
 
-        @if(EnhancedVideoPlayerSwitch.isSwitchedOn) {
+        @if(VideoJSSwitch.isSwitchedOn) {
             <script>
             (function (document) {
                 var script = document.createElement('script');
