@@ -53,7 +53,7 @@ object StoryHtmlPage {
         blockthrough() when BlockthroughSwitch.isSwitchedOn
       ),
       bodyTag(classes = bodyClasses)(
-        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
+        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         survey() when SurveySwitch.isSwitchedOn,
