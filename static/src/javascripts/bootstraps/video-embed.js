@@ -2,6 +2,7 @@
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 import videojs from 'videojs';
+import 'videojs-embed';
 import $ from 'lib/$';
 import config from 'lib/config';
 import deferToAnalytics from 'lib/defer-to-analytics';
