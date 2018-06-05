@@ -13,7 +13,6 @@ import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acqui
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
 import { acquisitionsEpicAlwaysAskAprilStory } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-april-story';
-import { AcquisitionsEpicBorderThankyou } from 'common/modules/experiments/tests/acquisitions-epic-border-thankyou';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
@@ -41,7 +40,6 @@ export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicAlwaysAskAprilStory,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
-    AcquisitionsEpicBorderThankyou,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,
