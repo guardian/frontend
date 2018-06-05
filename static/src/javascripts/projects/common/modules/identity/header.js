@@ -1,16 +1,19 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
-import loadEnhancers from './modules/loadEnhancers';
 import { getUserFromCookie } from 'common/modules/identity/api';
+import loadEnhancers from './modules/loadEnhancers';
 
 const ERR_UNDEFINED_MENU = 'Undefined menu';
 
 const nameAccountMenu = (menuEl: HTMLElement): Promise<void> => {
     const user = getUserFromCookie();
     if (user && user.displayName) {
-        menuEl.innerText = user.displayName;
+        return fastdom.write(() => {
+            menuEl.innerText = user.displayName;
+        });
     }
+    return Promise.resolve();
 };
 
 const showAccountMenu = (
