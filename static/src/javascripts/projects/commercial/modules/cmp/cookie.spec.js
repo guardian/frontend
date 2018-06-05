@@ -375,5 +375,5 @@ describe('CMP cookie', () => {
 
 afterAll(() => {
     global.Date = OriginalDate;
-    expect(new Date()).not.toMatch(new RegExp('Thu Jan 01 1970'));
+    expect(new Date().toString()).not.toMatch(new RegExp('Thu Jan 01 1970'));
 });
