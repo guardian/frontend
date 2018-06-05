@@ -15,6 +15,5 @@ package object editprofile {
       extends IdentityPage(id, "Consent", isFlow = true)
 
   object ConsentJourneyPageThankYou extends ConsentJourneyPage("/consents/thank-you", ThankYouConsentsJourney)
-  object ConsentJourneyPageGdprCampaign extends ConsentJourneyPage("/consents/staywithus", GdprCampaignConsentsJourney)
   object ConsentJourneyPageDefault extends ConsentJourneyPage("/consents", DefaultConsentsJourney)
 }
