@@ -216,6 +216,30 @@ const bootEnhanced = (): void => {
                     }
                 });
 
+
+            // Native video player enhancements
+            if (!config.switches.videojs) {
+                fastdom
+                    .read(() =>
+                        qwery('video')
+                    )
+                    .then(els => {
+                        if (els.length) {
+                            require.ensure(
+                                [],
+                                require => {
+                                    bootstrapContext(
+                                        'video-player',
+                                        require('bootstraps/enhanced/video-player')
+                                            .initVideoPlayer
+                                    );
+                                },
+                                'video-player'
+                            );
+                        }
+                    });
+            }
+
             if (config.page.contentType === 'Gallery') {
                 require.ensure(
                     [],

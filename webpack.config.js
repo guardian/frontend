@@ -20,6 +20,14 @@ module.exports = {
             'bootstraps',
             'admin.js'
         ),
+        'videojs-embed': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts',
+            'bootstraps',
+            'videojs-embed.js'
+        ),
         'video-embed': path.join(
             __dirname,
             'static',
