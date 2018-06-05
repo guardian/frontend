@@ -26,11 +26,7 @@ case object RedirectToEmailValidationFromEmailPrefsOrConsentJourney extends Prof
   override def isAllowedFrom(url: String): Boolean = (url startsWith "/email-prefs") || (url startsWith "/consents")
 }
 
-case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents/staywithus") {
-  override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
-}
-
-case object RedirectToNewsletterConsentsFromEmailPrefs extends ProfileRedirect("/consents/newsletters") {
+case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents") {
   override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
 }
 
