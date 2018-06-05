@@ -24,6 +24,16 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  val WorldCupNextMatchSwitch = Switch(
+    SwitchGroup.Feature,
+    "world-cup-next-match",
+    "Used to toggle display of next match banner on world cup overview pages",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 8, 14),
+    exposeClientSide = false
+  )
+
   val FacebookShareImageLogoOverlay = Switch(
     SwitchGroup.Feature,
     "facebook-share-image-logo-overlay",
