@@ -45,10 +45,7 @@
                     Symbol("data-test-id") -> "email-address"))
 
                 <li class="form-field form-field--email-validation">
-                    @if(user.statusFields.userEmailValidated.getOrElse(false)){
-                        @fragments.inlineSvg("status-ok", "icon")
-                        <p class="form__note">Your email address has been validated.</p>
-                    }else{
+                    @if(!user.statusFields.userEmailValidated.getOrElse(false)){
                         @fragments.inlineSvg("status-alert", "icon")
                         <p class="form__note">
                             Please confirm your email address to post comments.<br />
