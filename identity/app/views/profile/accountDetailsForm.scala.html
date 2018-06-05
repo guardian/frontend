@@ -16,7 +16,7 @@
     <div class="form__note">These details will only be visible to you and the Guardian.</div>
 </fieldset>
 
-<form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="main" method="post">
+<form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="form" method="post">
     <button type="submit" class="is-hidden"></button>
     @views.html.helper.CSRF.formField
 

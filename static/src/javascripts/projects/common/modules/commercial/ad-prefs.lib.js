@@ -22,19 +22,6 @@ const thirdPartyTrackingAdConsent: AdConsent = {
 
 const allAdConsents: AdConsent[] = [thirdPartyTrackingAdConsent];
 
-// TODO: remove this after a reasonable time passes
-const updateCookieString = () => {
-    const cookieRaw = getCookie(thirdPartyTrackingAdConsent.cookie);
-    if (cookieRaw) {
-        addCookie(
-            thirdPartyTrackingAdConsent.cookie,
-            cookieRaw.replace(',', '.'),
-            cookieExpiryDate,
-            true
-        );
-    }
-};
-
 const setAdConsentState = (provider: AdConsent, state: boolean): void => {
     const cookie = [state ? '1' : '0', Date.now()].join('.');
     addCookie(provider.cookie, cookie, cookieExpiryDate, true);
@@ -44,7 +31,7 @@ const setAdConsentState = (provider: AdConsent, state: boolean): void => {
 const getAdConsentState = (provider: AdConsent): ?boolean => {
     const cookieRaw = getCookie(provider.cookie);
     if (!cookieRaw) return null;
-    const cookieParsed = cookieRaw.replace(',', '.').split('.')[0];
+    const cookieParsed = cookieRaw.split('.')[0];
     if (cookieParsed === '1') return true;
     if (cookieParsed === '0') return false;
     return null;
@@ -63,5 +50,4 @@ export {
     getAllAdConsentsWithState,
     allAdConsents,
     thirdPartyTrackingAdConsent,
-    updateCookieString,
 };

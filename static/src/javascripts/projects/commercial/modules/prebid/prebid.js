@@ -67,8 +67,8 @@ class PrebidService {
             });
         }
 
-        // gather analytics from 0.1% (1/1000) of pageviews
-        const inSample = getRandomIntInclusive(1, 1000) === 1;
+        // gather analytics from 1% of pageviews
+        const inSample = getRandomIntInclusive(1, 100) === 1;
         if (
             config.switches.prebidAnalytics &&
             (inSample || config.page.isDev)

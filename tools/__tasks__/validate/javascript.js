@@ -38,9 +38,7 @@ module.exports = {
             })),
         {
             description: 'Tools etc.',
-            task: `eslint --ignore-pattern /static/src --ignore-pattern . ${
-                config
-            }`,
+            task: `eslint --ignore-pattern /static/src --ignore-pattern . ${config}`,
             onError: error,
         },
         {

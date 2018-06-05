@@ -252,9 +252,7 @@ export class SearchTool {
             li.className = 'search-tool__item';
             li.innerHTML =
                 `<a role="button" href="#${item.id}"` +
-                ` id="${
-                    index
-                }sti" class="js-search-tool-link search-tool__link${
+                ` id="${index}sti" class="js-search-tool-link search-tool__link${
                     index === 0 ? ' active"' : '"'
                 } data-link-name="weather-search-tool" data-weather-id="${
                     item.id

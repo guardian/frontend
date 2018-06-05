@@ -52,8 +52,7 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(
-        message(),
-        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
+        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
@@ -61,6 +60,7 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
         breakingNewsDiv(),
         content,
         footer(),
+        message(),
         inlineJSNonBlocking(),
         analytics.base()
       ),

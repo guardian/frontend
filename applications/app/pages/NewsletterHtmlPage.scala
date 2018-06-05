@@ -42,14 +42,14 @@ object NewsletterHtmlPage extends HtmlPage[SimplePage] {
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(
-        message(),
-        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
+        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
         breakingNewsDiv(),
         newsletterContent(page),
         footer(),
+        message(),
         inlineJSNonBlocking(),
         analytics.base()
       ),

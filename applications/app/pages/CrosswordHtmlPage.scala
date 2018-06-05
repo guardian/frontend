@@ -50,8 +50,7 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(
-        message(),
-        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
+        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
@@ -59,6 +58,7 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
         breakingNewsDiv(),
         content,
         footer(),
+        message(),
         inlineJSNonBlocking(),
         analytics.base()
       ),

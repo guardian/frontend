@@ -1,6 +1,5 @@
 // @flow
-import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
+import React, { Component, findDOMNode } from 'preact-compat';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
@@ -510,8 +509,8 @@ class Crossword extends Component<*, CrosswordState> {
         const height = gridSize(this.rows);
 
         return {
-            x: 100 * x / width,
-            y: 100 * y / height,
+            x: (100 * x) / width,
+            y: (100 * y) / height,
         };
     }
 

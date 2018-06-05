@@ -43,10 +43,13 @@ export const init = () =>
             if (!overlay || !aboutBtns || !closeBtn) return;
 
             aboutBtns.forEach(btn => {
-                btn.addEventListener('click', (e: Event): mixed => {
-                    e.preventDefault();
-                    fastdom.write(() => overlay.classList.remove('u-h'));
-                });
+                btn.addEventListener(
+                    'click',
+                    (e: Event): mixed => {
+                        e.preventDefault();
+                        fastdom.write(() => overlay.classList.remove('u-h'));
+                    }
+                );
             });
             closeBtn.addEventListener('click', () => {
                 fastdom.write(() => overlay.classList.add('u-h'));

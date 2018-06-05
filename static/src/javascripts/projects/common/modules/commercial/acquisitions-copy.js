@@ -11,11 +11,7 @@ const controlP2 = (
     firstSentence: string,
     currencySymbol: string = getLocalCurrencySymbol()
 ) =>
-    `${
-        firstSentence
-    } <strong><span class="contributions__highlight">For as little as ${
-        currencySymbol
-    }1, you can support the Guardian &ndash; and it only takes a minute. Thank you.</span></strong>`;
+    `${firstSentence} <strong><span class="contributions__highlight">For as little as ${currencySymbol}1, you can support the Guardian &ndash; and it only takes a minute. Thank you.</span></strong>`;
 
 // control regulars
 const controlHeadingRegulars = 'Hello again &hellip;';
@@ -27,11 +23,7 @@ const ctaLinkSentence = (
     contributionUrl: string,
     currencySymbol: string
 ): string =>
-    `<span class="contributions__highlight"> For as little as ${
-        currencySymbol
-    }1, you can support the Guardian – and it only takes a minute.</span> <a href="${
-        supportUrl
-    }" target="_blank" class="u-underline">Make a contribution</a>`;
+    `<span class="contributions__highlight"> For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute.</span> <a href="${supportUrl}" target="_blank" class="u-underline">Make a contribution</a>`;
 
 // double highlight
 const controlP1Highlight =

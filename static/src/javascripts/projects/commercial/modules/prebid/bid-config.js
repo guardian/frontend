@@ -59,6 +59,8 @@ const getTrustXAdUnitId = (slotId: string): string => {
             return '2962';
         case 'dfp-ad--top-above-nav':
             return '2963';
+        case 'dfp-ad--comments':
+            return '3840';
         default:
             // for inline10 and onwards just use same IDs as inline9
             if (slotId.startsWith('dfp-ad--inline')) {
@@ -152,6 +154,7 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
 const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
     const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
     return key.endsWith('mostpop') ||
+        key.endsWith('comments') ||
         key.endsWith('inline1') ||
         (key.endsWith('inline') && !isDesktopArticle)
         ? { w: 300, h: 250 }

@@ -36,24 +36,27 @@ export const initCommentAdverts = (): ?boolean => {
         return false;
     }
 
-    mediator.once('modules:comments:renderComments:rendered', (): void => {
-        const $commentMainColumn: bonzo = $(
-            '.js-comments .content__main-column'
-        );
+    mediator.once(
+        'modules:comments:renderComments:rendered',
+        (): void => {
+            const $commentMainColumn: bonzo = $(
+                '.js-comments .content__main-column'
+            );
 
-        fastdom
-            .read(() => $commentMainColumn.dim().height)
-            .then((mainColHeight: number) => {
-                if (mainColHeight >= 800) {
-                    insertCommentAd($commentMainColumn);
-                } else {
-                    mediator.once(
-                        'discussion:comments:get-more-replies',
-                        () => {
-                            insertCommentAd($commentMainColumn);
-                        }
-                    );
-                }
-            });
-    });
+            fastdom
+                .read(() => $commentMainColumn.dim().height)
+                .then((mainColHeight: number) => {
+                    if (mainColHeight >= 800) {
+                        insertCommentAd($commentMainColumn);
+                    } else {
+                        mediator.once(
+                            'discussion:comments:get-more-replies',
+                            () => {
+                                insertCommentAd($commentMainColumn);
+                            }
+                        );
+                    }
+                });
+        }
+    );
 };

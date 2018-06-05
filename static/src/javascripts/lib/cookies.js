@@ -1,7 +1,7 @@
 // @flow
-const getShortDomain = (
-    { isCrossSubdomain = false }: { isCrossSubdomain: boolean } = {}
-): string => {
+const getShortDomain = ({
+    isCrossSubdomain = false,
+}: { isCrossSubdomain: boolean } = {}): string => {
     const domain = document.domain || '';
     // Trim any possible subdomain (will be shared with supporter, identity, etc)
     if (isCrossSubdomain) {
@@ -11,9 +11,9 @@ const getShortDomain = (
     return domain.replace(/^(www|m\.code|dev|m)\./, '.');
 };
 
-const getDomainAttribute = (
-    { isCrossSubdomain = false }: { isCrossSubdomain: boolean } = {}
-): string => {
+const getDomainAttribute = ({
+    isCrossSubdomain = false,
+}: { isCrossSubdomain: boolean } = {}): string => {
     const shortDomain = getShortDomain({ isCrossSubdomain });
     return shortDomain === 'localhost' ? '' : ` domain=${shortDomain};`;
 };
@@ -29,9 +29,7 @@ const removeCookie = (
     document.cookie = `${name}=;${path}${expires}`;
     if (!currentDomainOnly) {
         // also remove from the short domain
-        document.cookie = `${name}=;${path}${
-            expires
-        } domain=${getShortDomain()};`;
+        document.cookie = `${name}=;${path}${expires} domain=${getShortDomain()};`;
     }
 };
 
@@ -50,11 +48,11 @@ const addCookie = (
         expires.setDate(1);
     }
 
-    document.cookie = `${name}=${
-        value
-    }; path=/; expires=${expires.toUTCString()};${getDomainAttribute({
-        isCrossSubdomain,
-    })}`;
+    document.cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute(
+        {
+            isCrossSubdomain,
+        }
+    )}`;
 };
 
 const cleanUp = (names: string[]): void => {
@@ -71,9 +69,7 @@ const addForMinutes = (
     const expires = new Date();
 
     expires.setMinutes(expires.getMinutes() + minutesToLive);
-    document.cookie = `${name}=${
-        value
-    }; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
+    document.cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
 };
 
 const addSessionCookie = (name: string, value: string): void => {

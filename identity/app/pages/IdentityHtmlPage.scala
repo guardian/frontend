@@ -1,5 +1,6 @@
 package pages
 
+import conf.switches.Switches.WeAreHiring
 import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
@@ -33,6 +34,7 @@ object IdentityHtmlPage {
 
     htmlTag(
       headTag(
+        weAreHiring() when WeAreHiring.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(allStyles),
@@ -41,7 +43,7 @@ object IdentityHtmlPage {
       ),
       bodyTag(classes = defaultBodyClasses())(
         views.html.layout.identityFlexWrap(page.isFlow)(
-          tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
+          tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
           skipToMainContent(),
           views.html.layout.identityHeader(hideNavigation=page.isFlow) when !page.usesGuardianHeader,
           header() when page.usesGuardianHeader

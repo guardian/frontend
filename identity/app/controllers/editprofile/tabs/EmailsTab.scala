@@ -49,6 +49,18 @@ trait EmailsTab
       }
     }
 
+  def deleteAllSubscriptionsAndMarketingConsents(): Action[AnyContent] =
+    csrfCheck {
+      recentFullAuthWithIdapiUserAction.async { implicit request =>
+        identityApiClient.unsubscribeFromAllEmailsAndOptoutMarketingConsents(request.user.auth).map {
+          case Right(_) => NoContent
+          case Left(errors) =>
+            logger.error(s"Failed to unsubscribe User ${request.user.id} from all")
+            InternalServerError(Json.toJson(errors))
+        }
+      }
+    }
+
   /** POST /privacy/edit-ajax */
   def saveConsentPreferencesAjax: Action[AnyContent] =
     csrfCheck {

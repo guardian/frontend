@@ -66,10 +66,13 @@ class Toggles {
                 )
             ) {
                 control.classList.add(readyClass);
-                control.addEventListener('click', (e: MouseEvent): void => {
-                    e.preventDefault();
-                    this.toggle(control);
-                });
+                control.addEventListener(
+                    'click',
+                    (e: MouseEvent): void => {
+                        e.preventDefault();
+                        this.toggle(control);
+                    }
+                );
             }
         }
     }

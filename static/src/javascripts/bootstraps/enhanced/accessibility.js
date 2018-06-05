@@ -1,6 +1,6 @@
 // @flow
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import React, { Component, render } from 'preact-compat';
+
 import { saveState, isOn } from 'common/modules/accessibility/main';
 
 const DOM_ID: string = 'js-accessibility-preferences';

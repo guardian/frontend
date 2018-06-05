@@ -8,17 +8,19 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 const shouldDisableAdSlot = adSlot =>
     window.getComputedStyle(adSlot).display === 'none';
 
-const closeDisabledSlots = once((): Promise<void> => {
-    // Get all ad slots
-    let adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
+const closeDisabledSlots = once(
+    (): Promise<void> => {
+        // Get all ad slots
+        let adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
 
-    // remove the ones which should not be there
-    adSlots = adSlots.filter(shouldDisableAdSlot);
+        // remove the ones which should not be there
+        adSlots = adSlots.filter(shouldDisableAdSlot);
 
-    return fastdom.write(() => {
-        adSlots.forEach((adSlot: Element) => adSlot.remove());
-    });
-});
+        return fastdom.write(() => {
+            adSlots.forEach((adSlot: Element) => adSlot.remove());
+        });
+    }
+);
 
 const mpuCandidateClass: string = 'fc-slice__item--mpu-candidate';
 const mpuCandidateSelector: string = `.${mpuCandidateClass}`;

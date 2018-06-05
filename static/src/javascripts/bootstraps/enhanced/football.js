@@ -39,23 +39,26 @@ const renderNav = (
 
     return matchInfo
         .fetch()
-        .then((resp: Object): void => {
-            let $nav;
+        .then(
+            (resp: Object): void => {
+                let $nav;
 
-            if (resp.nav && resp.nav.trim().length > 0) {
-                $nav = $.create(resp.nav)
-                    .first()
-                    .each(nav => {
-                        if (match.id || $('.tabs__tab', nav).length > 2) {
-                            $('.js-sport-tabs').append(nav);
-                        }
-                    });
-            }
+                if (resp.nav && resp.nav.trim().length > 0) {
+                    $nav = $
+                        .create(resp.nav)
+                        .first()
+                        .each(nav => {
+                            if (match.id || $('.tabs__tab', nav).length > 2) {
+                                $('.js-sport-tabs').append(nav);
+                            }
+                        });
+                }
 
-            if (callback) {
-                callback(resp, $nav, matchInfo.endpoint);
+                if (callback) {
+                    callback(resp, $nav, matchInfo.endpoint);
+                }
             }
-        })
+        )
         .catch(() => {
             $('.score-container').remove();
             $('.js-score').removeClass('u-h');
@@ -142,102 +145,112 @@ const loaded = (elem: HTMLElement): void => {
 const init = (): void => {
     const extras = [];
 
-    isMatch((match: Object): void => {
-        $('article').addClass('content--has-scores');
+    isMatch(
+        (match: Object): void => {
+            $('article').addClass('content--has-scores');
 
-        extras[0] = {
-            ready: false,
-        };
-        if (match.pageType === 'stats') {
-            renderNav(match);
-        } else {
-            const $h = $('.js-score');
-            const scoreBoard = new ScoreBoard({
-                pageType: match.pageType,
-                parent: $h,
-                responseDataKey: 'matchSummary',
-                autoupdated: match.isLive,
-            });
+            extras[0] = {
+                ready: false,
+            };
+            if (match.pageType === 'stats') {
+                renderNav(match);
+            } else {
+                const $h = $('.js-score');
+                const scoreBoard = new ScoreBoard({
+                    pageType: match.pageType,
+                    parent: $h,
+                    responseDataKey: 'matchSummary',
+                    autoupdated: match.isLive,
+                });
 
-            renderNav(match, (resp, $nav, endpoint): void => {
-                // Test if template is not composed of just whitspace. A content validation check, apparently.
-                if (!/^\s+$/.test(scoreBoard.template || '')) {
-                    scoreBoard.endpoint = endpoint;
-                    scoreBoard.loadFromJson(resp.matchSummary);
-                } else {
-                    $h.removeClass('u-h');
-                }
+                renderNav(
+                    match,
+                    (resp, $nav, endpoint): void => {
+                        // Test if template is not composed of just whitspace. A content validation check, apparently.
+                        if (!/^\s+$/.test(scoreBoard.template || '')) {
+                            scoreBoard.endpoint = endpoint;
+                            scoreBoard.loadFromJson(resp.matchSummary);
+                        } else {
+                            $h.removeClass('u-h');
+                        }
 
-                // match stats
-                if (resp.hasStarted && $nav) {
-                    const statsUrl = $('.tab--stats a', $nav)
-                        .attr('href')
-                        .replace(/^.*\/\/[^/]+/, '');
+                        // match stats
+                        if (resp.hasStarted && $nav) {
+                            const statsUrl = $('.tab--stats a', $nav)
+                                .attr('href')
+                                .replace(/^.*\/\/[^/]+/, '');
 
-                    $.create(
-                        `<div class="match-stats__container js-match-stats"></div>`
-                    ).each(container => {
-                        statsFor(statsUrl)
-                            .fetch(container)
-                            .then(() => {
-                                // Chart is passed through seperately as when injected with the rest of the content it isn't responsive in Chrome
-                                let chart;
-                                $('.js-chart', container).each(el => {
-                                    chart = new TableDoughnut().render(el);
-                                });
-                                extras[0] = {
-                                    name: 'Match stats',
-                                    importance: 3,
-                                    content: container,
-                                    ready: true,
-                                    chart,
-                                };
-                                renderExtras(extras);
+                            $.create(
+                                `<div class="match-stats__container js-match-stats"></div>`
+                            ).each(container => {
+                                statsFor(statsUrl)
+                                    .fetch(container)
+                                    .then(() => {
+                                        // Chart is passed through seperately as when injected with the rest of the content it isn't responsive in Chrome
+                                        let chart;
+                                        $('.js-chart', container).each(el => {
+                                            chart = new TableDoughnut().render(
+                                                el
+                                            );
+                                        });
+                                        extras[0] = {
+                                            name: 'Match stats',
+                                            importance: 3,
+                                            content: container,
+                                            ready: true,
+                                            chart,
+                                        };
+                                        renderExtras(extras);
+                                    });
                             });
-                    });
-                } else {
-                    delete extras[0];
-                    renderExtras(extras);
-                }
+                        } else {
+                            delete extras[0];
+                            renderExtras(extras);
+                        }
 
-                // Group table & Match day
-                isCompetition((competition: string) => {
-                    extras[1] = {
-                        ready: false,
-                    };
+                        // Group table & Match day
+                        isCompetition((competition: string) => {
+                            extras[1] = {
+                                ready: false,
+                            };
 
-                    // Group table
-                    if (resp.group !== '') {
-                        renderTable(`${competition}/${resp.group}`, extras);
-                    }
+                            // Group table
+                            if (resp.group !== '') {
+                                renderTable(
+                                    `${competition}/${resp.group}`,
+                                    extras
+                                );
+                            }
 
-                    // Other games today
-                    $.create(
-                        `
+                            // Other games today
+                            $.create(
+                                `
                         <div class="js-football-match-day"
                              data-link-name="football-match-day-embed"></div>
                     `
-                    ).each(container => {
-                        matchDayFor(competition, resp.matchDate)
-                            .fetch(container)
-                            .then(() => {
-                                extras[1] = {
-                                    name: 'Today’s matches',
-                                    importance: 2,
-                                    content: container,
-                                    ready: true,
-                                };
-                                renderExtras(extras);
-                            })
-                            .catch(() => {
-                                delete extras[1];
-                                renderExtras(extras);
+                            ).each(container => {
+                                matchDayFor(competition, resp.matchDate)
+                                    .fetch(container)
+                                    .then(() => {
+                                        extras[1] = {
+                                            name: 'Today’s matches',
+                                            importance: 2,
+                                            content: container,
+                                            ready: true,
+                                        };
+                                        renderExtras(extras);
+                                    })
+                                    .catch(() => {
+                                        delete extras[1];
+                                        renderExtras(extras);
+                                    });
                             });
-                    });
-                });
-            });
+                        });
+                    }
+                );
+            }
         }
-    });
+    );
 
     isCompetition((competition: string) => {
         const $rightHandCol = $('.js-secondary-column').dim().height;
@@ -260,12 +273,14 @@ const init = (): void => {
             config.dateFromSlug()
         );
         const $img = $('.media-primary');
-        const $matchListContainer = $.create(
-            `
+        const $matchListContainer = $
+            .create(
+                `
             <div class="football-matches__container"
                   data-link-name="football-matches-clockwatch"></div>
         `
-        ).css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
+            )
+            .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
 
         $img.addClass('u-h');
 
@@ -290,8 +305,7 @@ const init = (): void => {
             loaded($matchListContainer[0]);
         };
 
-        ml
-            .fetch($matchListContainer[0])
+        ml.fetch($matchListContainer[0])
             .then(() => {
                 handleResponse(true);
             })

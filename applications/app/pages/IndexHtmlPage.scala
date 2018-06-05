@@ -49,8 +49,7 @@ object IndexHtml {
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(
-        message(),
-        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
+        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
@@ -58,6 +57,7 @@ object IndexHtml {
         breakingNewsDiv(),
         bodyContent,
         footer(),
+        message(),
         inlineJSNonBlocking(),
         analytics.base()
       ),

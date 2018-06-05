@@ -344,7 +344,7 @@ class HostedGallery {
         const ctaIndex: number = HostedGallery.ctaIndex() || -1;
         fastdom.write(() => {
             this.$images.each((image, index) => {
-                const opacity = (progress - index + 1) * 16 / 11 - 0.0625;
+                const opacity = ((progress - index + 1) * 16) / 11 - 0.0625;
                 bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
             });
 
@@ -381,7 +381,7 @@ class HostedGallery {
         const length = this.$images.length;
         const scrollHeight = scrollEl[0].scrollHeight;
         fastdom.write(() => {
-            scrollEl.scrollTop((index - 1) * scrollHeight / length);
+            scrollEl.scrollTop(((index - 1) * scrollHeight) / length);
         });
     }
 

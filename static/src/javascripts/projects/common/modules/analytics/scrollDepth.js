@@ -15,10 +15,10 @@ const getPercentageInViewPort = (el: HTMLElement): ?number => {
         } else if (rect.top > height) {
             return 0;
         } else if (rect.top > 0) {
-            return 100 / (rect.height || 1) * (height - rect.top);
+            return (100 / (rect.height || 1)) * (height - rect.top);
         }
 
-        return 100 / (rect.height || 1) * (Math.abs(rect.top) + height);
+        return (100 / (rect.height || 1)) * (Math.abs(rect.top) + height);
     }
 };
 

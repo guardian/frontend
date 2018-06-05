@@ -37,7 +37,8 @@ export type PrebidSlotKey =
     | 'right'
     | 'inline1'
     | 'inline'
-    | 'mostpop';
+    | 'mostpop'
+    | 'comments';
 
 export type PrebidSlotLabel =
     | 'mobile'

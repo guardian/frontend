@@ -7,9 +7,7 @@ import { submitForm } from 'journalism/modules/submit-form';
 
 const renderCampaign = (anchorNode: HTMLElement, calloutData): void => {
     const campaign = template(campaignForm, { data: calloutData });
-    const campaignDiv = `<figure class="element element-campaign">${
-        campaign
-    }</figure>`;
+    const campaignDiv = `<figure class="element element-campaign">${campaign}</figure>`;
 
     fastdom
         .write(() => {
