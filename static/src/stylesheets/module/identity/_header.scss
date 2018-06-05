@@ -69,7 +69,7 @@ $gutter: 5px;
 
 .identity-header__links {
     float: left;
-    height: $slim-nav-height - $gutter;
+    height: $slim-nav-height - ($gutter/2);
     display: flex;
     align-items: center;
 }
