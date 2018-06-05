@@ -55,7 +55,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(
-        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
+        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),

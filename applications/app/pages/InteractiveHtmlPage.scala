@@ -55,7 +55,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
         inlineJSBlocking()
       ),
       bodyTag(classes = bodyClasses)(
-        tlsWarning() when ActiveExperiments.isIncluded(OldTLSSupportDeprecation),
+        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
