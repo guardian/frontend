@@ -66,8 +66,13 @@ object NavLinks {
   val letters = NavLink("Letters", "/tone/letters")
 
   /* SPORT */
+
+  // TODO remove after world cup
+  val worldCup2018 = NavLink("World Cup 2018", "/football/world-cup-2018")
+
   val football = NavLink("Football", "/football",
     children = List(
+      worldCup2018,
       NavLink("Live scores", "/football/live", "football/live"),
       NavLink("Tables", "/football/tables", "football/tables"),
       NavLink("Fixtures", "/football/fixtures", "football/fixtures"),
@@ -77,6 +82,7 @@ object NavLinks {
     )
   )
   val soccer = football.copy(title = "Soccer")
+
   val cricket = NavLink("Cricket", "/sport/cricket")
   val cycling = NavLink("Cycling", "/sport/cycling")
   val rugbyUnion = NavLink("Rugby union", "/sport/rugby-union")
@@ -287,7 +293,7 @@ object NavLinks {
   //Sport Pillar
   val ukSportPillar = NavLink("Sport", "/sport", longTitle = "Sport home", iconName = "home",
     List(
-      football,
+      worldCup2018,
       rugbyUnion,
       cricket,
       tennis,
@@ -297,41 +303,45 @@ object NavLinks {
       boxing,
       rugbyLeague,
       racing,
-      usSports
+      usSports,
+      football
     )
   )
   val auSportPillar = ukSportPillar.copy(
     children = List(
-      football,
+      worldCup2018,
       AFL,
       NRL,
       aLeague,
       cricket,
       rugbyUnion,
-      tennis
+      tennis,
+      football
     )
   )
   val usSportPillar = ukSportPillar.copy(
     children = List(
-      soccer,
+      worldCup2018,
       NFL,
       tennis,
       MLB,
       MLS,
       NBA,
-      NHL
+      NHL,
+      soccer
     )
   )
   val intSportPillar = ukSportPillar.copy(
     children = List(
-      football,
+      worldCup2018,
       rugbyUnion,
       cricket,
       tennis,
       cycling,
       formulaOne,
       golf,
-      usSports
+      usSports,
+      football
     )
   )
 
