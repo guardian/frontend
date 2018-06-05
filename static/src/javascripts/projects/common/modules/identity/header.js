@@ -2,8 +2,16 @@
 
 import fastdom from 'lib/fastdom-promise';
 import loadEnhancers from './modules/loadEnhancers';
+import { getUserFromCookie } from 'common/modules/identity/api';
 
 const ERR_UNDEFINED_MENU = 'Undefined menu';
+
+const nameAccountMenu = (menuEl: HTMLElement): Promise<void> => {
+    const user = getUserFromCookie();
+    if (user && user.displayName) {
+        menuEl.innerText = user.displayName;
+    }
+};
 
 const showAccountMenu = (
     buttonEl: HTMLElement,
@@ -52,7 +60,10 @@ const bindNavToggle = (buttonEl: HTMLElement): void => {
 };
 
 const initHeader = (): void => {
-    const loaders = [['.js_identity-header__nav-toggle', bindNavToggle]];
+    const loaders = [
+        ['.js_identity-header__nav-toggle', bindNavToggle],
+        ['.js_identity-header__nav-name', nameAccountMenu],
+    ];
     loadEnhancers(loaders);
 };
 
