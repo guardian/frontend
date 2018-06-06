@@ -39,7 +39,7 @@
                                 }
                             >
                                 @(item.icon.map { icon =>
-                                    views.html.fragments.inlineSvg(icon, "icon")
+                                    views.html.fragments.inlineSvg(icon, "icon", isPresentation = true)
                                 })
                                 @item.label
                             </a>

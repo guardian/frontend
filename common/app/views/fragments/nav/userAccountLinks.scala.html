@@ -38,7 +38,7 @@
                         class="@{(List("menu-item__title") ++ item.classList).mkString(" ")}"
                     >
                         @(item.icon.map { icon =>
-                            views.html.fragments.inlineSvg(icon, "icon", List("menu-item__icon"))
+                            views.html.fragments.inlineSvg(icon, "icon", List("menu-item__icon"), isPresentation = true)
                         })
                         @item.label
                     </a>
