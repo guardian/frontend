@@ -13,6 +13,6 @@ object FrontsApi  {
       .withCredentials(Configuration.faciatool.crossAccountMandatoryCredentials)
       .withRegion(conf.Configuration.aws.region)
       .build()
-    ApiClient(Configuration.faciatool.crossAccountSourceBucket, "CODE", AmazonSdkS3Client(client))
+    ApiClient(Configuration.faciatool.crossAccountSourceBucket, Configuration.facia.stage.toUpperCase, AmazonSdkS3Client(client))
   }
 }
