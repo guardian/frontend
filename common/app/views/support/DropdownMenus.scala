@@ -59,7 +59,7 @@ object DropdownMenus {
       linkName = Some("sign out"),
       label = "Sign out",
       icon = Some(
-        views.html.fragments.inlineSvg("log-off", "icon")
+        views.html.fragments.inlineSvg("log-off", "icon", List("menu-item__icon"))
       ),
       divider = true,
     )
