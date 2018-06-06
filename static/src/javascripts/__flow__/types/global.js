@@ -32,4 +32,4 @@ declare var jsdom: {
     reconfigure: (settings: {}) => any
 };
 
-declare var Stripe
+declare var Stripe;

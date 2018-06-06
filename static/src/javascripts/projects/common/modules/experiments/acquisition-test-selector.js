@@ -15,7 +15,8 @@ import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests
 import { acquisitionsEpicAlwaysAskAprilStory } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-april-story';
 import { AcquisitionsEpicBorderThankyou } from 'common/modules/experiments/tests/acquisitions-epic-border-thankyou';
 import { acquisitionsEpicNativeVsDfp } from 'common/modules/experiments/tests/acquisitions-epic-native-vs-dfp';
-import { acquisitionsEpicAlwaysAskFromGoogleDoc } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-from-google-doc';
+import { acquisitionsEpicPaymentRequest } from 'common/modules/experiments/tests/acquisitions-epic-payment-request';
+import { acquisitionsEpicPaymentRequestLive } from 'common/modules/experiments/tests/acquisitions-epic-payment-request-live';
 
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
@@ -41,7 +42,8 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    acquisitionsEpicAlwaysAskFromGoogleDoc,
+    acquisitionsEpicPaymentRequest,
+    acquisitionsEpicPaymentRequestLive,
     acquisitionsEpicAlwaysAskAprilStory,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
