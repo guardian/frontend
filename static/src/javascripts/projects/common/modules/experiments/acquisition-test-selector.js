@@ -17,7 +17,6 @@ import { AcquisitionsEpicBorderThankyou } from 'common/modules/experiments/tests
 import { acquisitionsEpicNativeVsDfp } from 'common/modules/experiments/tests/acquisitions-epic-native-vs-dfp';
 import { acquisitionsEpicAlwaysAskFromGoogleDoc } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-from-google-doc';
 
-
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
 

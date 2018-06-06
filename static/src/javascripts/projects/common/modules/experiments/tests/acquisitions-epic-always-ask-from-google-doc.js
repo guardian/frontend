@@ -1,18 +1,18 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import { keywordExists } from 'lib/page';
-import fetchJSON from "../../../../../lib/fetch-json";
-import config from "../../../../../lib/config";
+import fetchJSON from 'lib/fetch-json';
 
 const abTestName = 'AcquisitionsEpicAlwaysAskFromGoogleDoc';
 
-const getCopyFromGoogleDoc = (url: string): Promise<AcquisitionsEpicTemplateCopy> =>
+const getCopyFromGoogleDoc = (
+    url: string
+): Promise<AcquisitionsEpicTemplateCopy> =>
     fetchJSON(url, {
         mode: 'cors',
     }).then(res => ({
         heading: res.sheets.Sheet1[0].heading,
         p1: res.sheets.Sheet1[0].p1,
-        p2: res.sheets.Sheet1[0].p2
+        p2: res.sheets.Sheet1[0].p2,
     }));
 
 export const acquisitionsEpicAlwaysAskFromGoogleDoc: EpicABTest = makeABTest({
@@ -30,7 +30,6 @@ export const acquisitionsEpicAlwaysAskFromGoogleDoc: EpicABTest = makeABTest({
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
-    canRun: () => config.get('page.contentId', '') === 'environment/2015/aug/28/languid-life-drowsy-wood',
 
     variants: [
         {
@@ -39,7 +38,9 @@ export const acquisitionsEpicAlwaysAskFromGoogleDoc: EpicABTest = makeABTest({
             options: {
                 isUnlimited: true,
                 testimonialBlock: '',
-                copy: getCopyFromGoogleDoc('https://interactive.guim.co.uk/docsdata-test/1Hoqzg-LeB0xJf2z0JwsfDTHdXKtq-7O5DsQhpqRm7ho.json')
+                copy: getCopyFromGoogleDoc(
+                    'https://interactive.guim.co.uk/docsdata-test/1Hoqzg-LeB0xJf2z0JwsfDTHdXKtq-7O5DsQhpqRm7ho.json'
+                ),
             },
         },
     ],
