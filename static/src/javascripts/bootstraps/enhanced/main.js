@@ -191,7 +191,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            // Old VideoJS Player
+            // Old VideoJS player
             fastdom
                 .read(() =>
                     qwery(
