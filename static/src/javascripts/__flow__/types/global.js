@@ -31,5 +31,3 @@ declare type ThirdPartyTag = {
 declare var jsdom: {
     reconfigure: (settings: {}) => any
 };
-
-declare var Stripe
