@@ -31,6 +31,8 @@ case class PressedCollection(
   hasMore: Boolean
 ) {
 
+  def withDisplayName(displayName: String): PressedCollection = copy(displayName = displayName)
+
   lazy val isEmpty: Boolean = curated.isEmpty && backfill.isEmpty && treats.isEmpty
 
   lazy val adFree = {

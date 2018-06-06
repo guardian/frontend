@@ -9,6 +9,9 @@ import com.gu.facia.client.models.{AnyPlatform, WebCollection}
 case class PressedCollectionVisibility(pressedCollection: PressedCollection, visible: Int) extends implicits.Collections {
   import PressedCollectionVisibility._
 
+  def withVisible(visible: Int): PressedCollectionVisibility = copy(visible = visible)
+  def withDisplayName(displayName: String): PressedCollectionVisibility = copy(pressedCollection = pressedCollection.withDisplayName(displayName))
+
   lazy val affectsDuplicates: Boolean = Container.affectsDuplicates(pressedCollection.collectionType)
   lazy val affectedByDuplicates: Boolean = Container.affectedByDuplicates(pressedCollection.collectionType)
 
