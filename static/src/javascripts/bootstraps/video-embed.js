@@ -1,3 +1,5 @@
+// @flow
+
 import { initVideoPlayer } from 'bootstraps/enhanced/video-player';
 
 // Let webpack know where to get files from

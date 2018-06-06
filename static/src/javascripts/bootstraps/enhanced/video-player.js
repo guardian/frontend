@@ -1,7 +1,12 @@
+// @flow
+
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import raven from 'lib/raven';
-import { buildGoogleAnalyticsEvent, getGoogleAnalyticsEventAction } from 'common/modules/video/ga-helper';
+import {
+    buildGoogleAnalyticsEvent,
+    getGoogleAnalyticsEventAction,
+} from 'common/modules/video/ga-helper';
 import config from 'lib/config';
 import ophan from 'ophan/ng';
 
@@ -15,9 +20,7 @@ const getCanonicalUrl = (dataset: Object): string =>
     // the fallback to window.location.pathname should only happen for main media on fronts
     window.location.pathname;
 
-const bindTrackingEvents = (
-    el: HTMLMediaElement,
-): void => {
+const bindTrackingEvents = (el: HTMLMediaElement): void => {
     const mediaType = el.tagName.toLowerCase();
     const dataset = el.dataset;
     const { mediaId } = dataset;
@@ -29,7 +32,7 @@ const bindTrackingEvents = (
             mediaId,
             mediaType,
             eventType: 'play',
-            isPreroll: false
+            isPreroll: false,
         };
         const events = {
             play: 'metric1',
