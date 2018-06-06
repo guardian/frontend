@@ -95,7 +95,6 @@ export class SearchTool {
         const $input = $('.js-search-tool-input')[0];
         const $location = $('.js-search-tool');
         const $close = $('.js-close-location');
-        const $edit = $('.js-edit-location');
 
         if (value) {
             this.inputTmp = $input.value;

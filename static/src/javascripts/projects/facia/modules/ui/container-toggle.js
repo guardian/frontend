@@ -4,7 +4,6 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
-import { inlineSvg } from 'common/views/svgs';
 
 type ToggleState = 'hidden' | 'displayed';
 
