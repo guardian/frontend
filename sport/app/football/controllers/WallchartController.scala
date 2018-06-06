@@ -5,7 +5,9 @@ import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{ImplicitControllerExecutionContext, Logging}
 import model.{ApplicationContext, Cached}
-import football.model.CompetitionStage
+import football.model.{CompetitionStage, KnockoutSpider}
+import org.joda.time.DateTime
+import pa.FootballMatch
 
 class WallchartController(
   competitionsService: CompetitionsService,
@@ -21,13 +23,23 @@ class WallchartController(
         "football",
         s"${competition.fullName} wallchart"
       )
-      val competitionStages = new CompetitionStage(competitionsService.competitions).stagesFromCompetition(competition)
+      val competitionStages = new CompetitionStage(competitionsService.competitions)
+        .stagesFromCompetition(competition, KnockoutSpider.orderings)
+
+      val nextMatch = WallchartController.nextMatch(competition.matches, DateTime.now())
 
       Cached(60) {
-        if(embed) RevalidatableResult.Ok(football.views.html.wallchart.embed(page, competition, competitionStages))
-        else RevalidatableResult.Ok(football.views.html.wallchart.page(page, competition, competitionStages))
+        if(embed) RevalidatableResult.Ok(football.views.html.wallchart.embed(page, competition, competitionStages, nextMatch))
+        else RevalidatableResult.Ok(football.views.html.wallchart.page(page, competition, competitionStages, nextMatch))
       }
     }.getOrElse(NotFound)
   }
 
+}
+
+object WallchartController {
+  def nextMatch(matches: Seq[FootballMatch], after: DateTime): Option[FootballMatch] = {
+    val ordered = matches.sortBy(_.date.getMillis)
+    ordered.find(game => game.date.isAfter(after))
+  }
 }

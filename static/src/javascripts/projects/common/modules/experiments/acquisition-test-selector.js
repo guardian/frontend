@@ -12,9 +12,10 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/acquisitions-epic-us-gun-campaign';
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
-import {acquisitionsEpicAlwaysAskFromGoogleDoc} from "common/modules/experiments/tests/acquisitions-epic-always-ask-from-google-doc";
-import { acquisitionsEpicPaymentRequest } from 'common/modules/experiments/tests/acquisitions-epic-payment-request';
-import { acquisitionsEpicPaymentRequestLive } from 'common/modules/experiments/tests/acquisitions-epic-payment-request-live';
+import { acquisitionsEpicAlwaysAskAprilStory } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-april-story';
+import { AcquisitionsEpicBorderThankyou } from 'common/modules/experiments/tests/acquisitions-epic-border-thankyou';
+import { acquisitionsEpicNativeVsDfp } from 'common/modules/experiments/tests/acquisitions-epic-native-vs-dfp';
+import { acquisitionsEpicAlwaysAskFromGoogleDoc } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-from-google-doc';
 
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
@@ -40,12 +41,12 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    acquisitionsEpicPaymentRequestLive,
-    acquisitionsEpicPaymentRequest,
     acquisitionsEpicAlwaysAskFromGoogleDoc,
-    // acquisitionsEpicAlwaysAskAprilStory,
+    acquisitionsEpicAlwaysAskAprilStory,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
+    AcquisitionsEpicBorderThankyou,
+    acquisitionsEpicNativeVsDfp,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

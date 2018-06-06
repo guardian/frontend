@@ -98,9 +98,9 @@ $ima-controls-height: 70px;
         padding-bottom: $vjs-control-height;
     }
 
-    &:hover .vjs-control-text {
+    &:hover .vjs-control-text,
+    &.youtube-play-btn-focussed .vjs-control-text {
         transform: scale(1.15);
-
     }
 
     .gu-media--audio &,

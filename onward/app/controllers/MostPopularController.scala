@@ -1,5 +1,8 @@
 package controllers
 
+import java.time.Instant
+import java.time.temporal.ChronoUnit
+
 import common._
 import contentapi.ContentApiClient
 import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
@@ -29,7 +32,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
   def render(path: String): Action[AnyContent] = Action.async { implicit request =>
     val edition = Edition(request)
     val globalPopular: Option[MostPopular] = {
-      var globalPopularContent = mostPopularAgent.mostPopular(edition)
+      val globalPopularContent = mostPopularAgent.mostPopular(edition)
       if (globalPopularContent.nonEmpty)
         Some(MostPopular("across the guardian", "", globalPopularContent.map(_.faciaContent)))
       else
@@ -134,13 +137,16 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader): Future[Option[MostPopular]] = {
     log.info(s"Fetching most popular: $path for edition $edition")
-    contentApiClient.getResponse(contentApiClient.item(path, edition)
+    val capiItem = contentApiClient.item(path, edition)
       .tag(None)
       .showMostViewed(true)
-    ).map{response =>
+
+    val capiItemWithDate = if (path == "film") capiItem.dateParam("from-date", Instant.now.minus(180, ChronoUnit.DAYS)) else capiItem
+
+    contentApiClient.getResponse(capiItemWithDate).map { response =>
       val heading = response.section.map(s => "in " + s.webTitle.toLowerCase).getOrElse("across the guardian")
-          val popular = response.mostViewed.getOrElse(Nil) take 10 map { RelatedContentItem(_) }
-          if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent)))
+      val popular = response.mostViewed.getOrElse(Nil) take 10 map (RelatedContentItem(_))
+      if (popular.isEmpty) None else Some(MostPopular(heading, path, popular.map(_.faciaContent)))
     }
   }
 }

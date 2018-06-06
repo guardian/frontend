@@ -74,9 +74,7 @@ const handleMembershipAccess = (): void => {
 
     const redirect = (): void => {
         window.location.assign(
-            `${membershipUrl}/membership-content?referringContent=${
-                contentId
-            }&membershipAccess=${membershipAccess}`
+            `${membershipUrl}/membership-content?referringContent=${contentId}&membershipAccess=${membershipAccess}`
         );
     };
 

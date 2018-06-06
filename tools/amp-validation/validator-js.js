@@ -52,8 +52,7 @@ const fetchValidator = devChannel => {
         const writeStream = fs.createWriteStream(filename);
 
         return new Promise((resolve, reject) => {
-            res
-                .pipe(writeStream)
+            res.pipe(writeStream)
                 .on('finish', () => resolve(writeStream.path))
                 .on('error', error => {
                     reject(error);

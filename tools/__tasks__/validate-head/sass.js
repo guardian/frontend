@@ -22,11 +22,7 @@ module.exports = {
                                 batchedFiles.map(filePath =>
                                     execa
                                         .shell(
-                                            `git show HEAD:${
-                                                filePath
-                                            } | sass-lint --no-exit --verbose --max-warnings 0 '${
-                                                filePath
-                                            }'`
+                                            `git show HEAD:${filePath} | sass-lint --no-exit --verbose --max-warnings 0 '${filePath}'`
                                         )
                                         .catch(e => {
                                             errors.push(e);

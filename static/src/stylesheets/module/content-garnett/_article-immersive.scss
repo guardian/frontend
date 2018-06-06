@@ -603,6 +603,7 @@
 
             @include mq($from: tablet) {
                 margin-left: -($gs-gutter / 2);
+                max-width: gs-span(4) + ($gs-gutter / 2);
                 padding: ($gs-baseline / 2) ($gs-gutter / 2);
             }
         }
@@ -614,6 +615,10 @@
             @include mq($from: tablet) {
                 margin-right: $gs-gutter / 2;
             }
+        }
+
+        .content__series-label {
+            display: inline;
         }
 
         .content__series-label__link {
@@ -789,15 +794,6 @@
     .content__meta-container {
         &:before {
             display: none;
-        }
-
-        .content__dateline {
-            display: block;
-            margin-left: auto;
-
-            @include mq($from: leftCol) {
-                margin: auto;
-            }
         }
     }
     .drop-cap {

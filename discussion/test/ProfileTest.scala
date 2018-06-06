@@ -33,8 +33,7 @@ import discussion.model.Profile
                     |  "privateFields":
                     |  {
                     |    "canPostComment": true,
-                    |    "isPremoderated": false,
-                    |    "isSocial": true
+                    |    "isPremoderated": false
                     |  }
                     |}}""".stripMargin
     val json = Json.parse(jsonStr)
@@ -48,7 +47,6 @@ import discussion.model.Profile
     val fields = privateFields.get
     fields.canPostComment should be(true)
     fields.isPremoderated should be(false)
-    fields.isSocial should be(true)
   }
 
 }

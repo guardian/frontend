@@ -1,5 +1,6 @@
 // @flow
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
+import bonzo from 'bonzo';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,
@@ -23,6 +24,37 @@ declare class YoutubePlayerEvent {
 }
 
 const players = {};
+const iframes = [];
+
+document.addEventListener('focusout', () => {
+    iframes.forEach(iframe => {
+        fastdom
+            .read(() => {
+                if (document.activeElement === iframe) {
+                    return $('.vjs-big-play-button', iframe.parentElement);
+                }
+            })
+            .then(($playButton: ?bonzo) => {
+                fastdom.write(() => {
+                    if ($playButton) {
+                        $playButton.addClass('youtube-play-btn-focussed');
+                    }
+                });
+            });
+    });
+});
+
+document.addEventListener('focusin', () => {
+    fastdom
+        .read(() => $('.vjs-big-play-button'))
+        .then(($playButton: ?bonzo) => {
+            fastdom.write(() => {
+                if ($playButton) {
+                    $playButton.removeClass('youtube-play-btn-focussed');
+                }
+            });
+        });
+});
 
 // retrieves actual id of atom without appended index
 const getTrackingId = (atomId: string): string => atomId.split('/')[0];
@@ -40,7 +72,7 @@ const recordPlayerProgress = (atomId: string): void => {
     }
 
     const currentTime = player.getCurrentTime();
-    const percentPlayed = Math.round(currentTime / player.duration * 100);
+    const percentPlayed = Math.round((currentTime / player.duration) * 100);
 
     if (percentPlayed >= pendingTrackingCalls[0]) {
         trackYoutubeEvent(pendingTrackingCalls[0], getTrackingId(atomId));
@@ -208,7 +240,7 @@ const onPlayerReady = (
         players[atomId].overlay = overlay;
 
         if (
-            !!config.page.section &&
+            !!config.get('page.section') &&
             isBreakpoint({
                 min: 'desktop',
             })
@@ -239,6 +271,8 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
             if (!iframe) {
                 return;
             }
+
+            iframes.push(iframe);
 
             // append index of atom as iframe.id must be unique
             iframe.id += `/${index}`;

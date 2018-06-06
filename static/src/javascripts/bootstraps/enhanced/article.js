@@ -16,7 +16,6 @@ import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { handleCompletion as handleQuizCompletion } from 'common/modules/atoms/quiz';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
-import { optInEngagementBannerInit } from 'common/modules/identity/global/opt-in-engagement-banner';
 import { initCampaign } from 'journalism/modules/render-campaign';
 import ophan from 'ophan/ng';
 
@@ -132,7 +131,6 @@ const init = () => {
         ['article-upgrade-membership-events', upgradeMembershipEvents],
         ['article-mediator-emit-event', modules.emitReadyEvent],
         ['article-handle-quiz-completion', handleQuizCompletion],
-        ['article-opt-in-engagement-banner', optInEngagementBannerInit],
         ['article-campaign', initCampaign],
     ]);
 };

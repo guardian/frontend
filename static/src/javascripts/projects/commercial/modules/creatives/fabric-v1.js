@@ -169,17 +169,15 @@ class FabricV1 {
                 Math.ceil(this.adSlot.getBoundingClientRect().top * 0.3) + 20;
             fastdom.write(() => {
                 if (this.scrollingBg) {
-                    this.scrollingBg.style.backgroundPosition = `50% ${
-                        scrollAmount
-                    }%`;
+                    this.scrollingBg.style.backgroundPosition = `50% ${scrollAmount}%`;
                     this.scrollingBg.classList.add('ad-scrolling-bg-parallax');
                 }
             });
         } else if (this.scrollType === 'fixed' && !hasBackgroundFixedSupport) {
             const adRect = this.adSlot.getBoundingClientRect();
             const vPos =
-                (window.innerHeight - adRect.bottom + adRect.height / 2) /
-                window.innerHeight *
+                ((window.innerHeight - adRect.bottom + adRect.height / 2) /
+                    window.innerHeight) *
                 100;
             fastdom.write(() => {
                 if (this.scrollingBg) {

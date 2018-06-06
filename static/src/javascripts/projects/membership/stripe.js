@@ -146,9 +146,9 @@ export const display = (
      */
     const handler: () => Event => void = () => {
         const product = $parent.data('product');
-        const endpoint = `${config.page.userAttributesApiUrl}/me/${
-            product
-        }-update-card`;
+        const endpoint = `${
+            config.page.userAttributesApiUrl
+        }/me/${product}-update-card`;
         const email = $button.data('email');
         return e => {
             e.preventDefault();

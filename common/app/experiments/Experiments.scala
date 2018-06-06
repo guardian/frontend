@@ -10,7 +10,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     CommercialClientLogging,
     CommercialAdRefresh,
     OrielParticipation,
-    LotameParticipation
+    LotameParticipation,
+    OldTLSSupportDeprecation
   )
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
@@ -19,7 +20,7 @@ object CommercialClientLogging extends Experiment(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Owner.group(SwitchGroup.Commercial),
-  sellByDate = new LocalDate(2018, 5, 31),
+  sellByDate = new LocalDate(2018, 6, 29),
   participationGroup = Perc1A
 )
 
@@ -27,7 +28,7 @@ object CommercialAdRefresh extends Experiment(
   name = "commercial-ad-refresh",
   description = "Users in this experiment will have their ad slots refreshed after 30 seconds",
   owners = Seq(Owner.withGithub("katebee")),
-  sellByDate = new LocalDate(2018, 5, 3),
+  sellByDate = new LocalDate(2018, 9, 27),
   participationGroup = Perc50
 )
 
@@ -45,4 +46,13 @@ object LotameParticipation extends Experiment(
   owners = Seq(Owner.withGithub("janua")),
   sellByDate = new LocalDate(2018, 6, 28),
   participationGroup = Perc1D
+)
+
+object OldTLSSupportDeprecation extends Experiment(
+  name = "old-tls-support-deprecation",
+  description = "This will turn on a deprecation notice to any user who is accessing our site using TLS v1.0 or v1.1",
+  owners = Seq(Owner.withGithub("natalialkb")),
+  sellByDate = new LocalDate(2018, 6, 13),
+  // Custom group based on header set in Fastly
+  participationGroup = TLSSupport
 )

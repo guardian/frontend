@@ -193,10 +193,10 @@ describe('Commercial features', () => {
             expect(features.highMerch).toBe(false);
         });
 
-        it('Does run outside of fronts', () => {
+        it('Does not run outside of fronts', () => {
             config.page.isFront = false;
             const features = new CommercialFeatures();
-            expect(features.highMerch).toBe(true);
+            expect(features.highMerch).toBe(false);
         });
 
         it('Does not run on minute articles', () => {
@@ -304,10 +304,10 @@ describe('Commercial features', () => {
             isAdFreeUser.mockReturnValue(true);
         });
 
-        // sad but true
-        it('Runs by default', () => {
+        // happy time!
+        it('Does not run by default', () => {
             const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(true);
+            expect(features.outbrain).toBe(false);
         });
 
         it('Is disabled under perf tests', () => {

@@ -47,7 +47,7 @@ import scala.concurrent.Future
     val httpConfiguration = HttpConfiguration.createWithDefaults()
 
     val userId: String = "123"
-    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
+    val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
     val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
@@ -170,43 +170,6 @@ import scala.concurrent.Future
         contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
       }
 
-      "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
-        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listIdV1.toString))
-        when(api.userEmails(anyString(), any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
-
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(EmailNewsletters.guardianTodayUk.name))
-      }
-
-    }
-
-
-    "using displayConsentsJourneyGdprCampaign" should {
-
-      "reference the GDPR campaign" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape("Stay with us"))
-      }
-
-      "have consent checkboxes" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
-      }
-
-      "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
-        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listIdV1.toString))
-        when(api.userEmails(anyString(), any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
-
-        val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(EmailNewsletters.guardianTodayUk.name))
-      }
-
     }
 
 
@@ -223,37 +186,6 @@ import scala.concurrent.Future
         val result = controller.displayConsentsJourneyThankYou().apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
         contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
-      }
-
-      "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
-        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listIdV1.toString))
-        when(api.userEmails(anyString(), any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
-
-        val result = controller.displayConsentsJourneyThankYou().apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(EmailNewsletters.guardianTodayUk.name))
-      }
-
-    }
-
-
-    "using displayConsentsJourneyNewsletters" should {
-
-      "not have consent checkboxes" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourneyNewsletters().apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should not include xml.Utility.escape(Supporter.latestWording.wording)
-      }
-
-      "prompt users with V1 emails to repermission" in new ConsentsJourneyFixture {
-        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listIdV1.toString))
-        when(api.userEmails(anyString(), any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
-
-        val result = controller.displayConsentsJourneyNewsletters().apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(EmailNewsletters.guardianTodayUk.name))
       }
 
     }

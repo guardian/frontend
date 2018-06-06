@@ -140,9 +140,7 @@ describe('Comment box', () => {
             }
         });
 
-        it(`should error on comments over ${
-            maxCommentLength
-        } characters`, () => {
+        it(`should error on comments over ${maxCommentLength} characters`, () => {
             const commentBody = commentBox.getElem('body');
 
             expect(commentBox.getElem('error')).toBeUndefined();

@@ -48,5 +48,3 @@ trait ExperimentsDefinition {
     }
   }
 }
-
-

@@ -106,17 +106,13 @@ const updateSelection = (): void => {
         const twitterText = encodeURIComponent(twitterMessage);
         const twitterShortUrl = `${config.page.shortUrl}/stw`;
         const twitterUrl = encodeURI(twitterShortUrl);
-        const twitterHref = `https://twitter.com/intent/tweet?text=%E2%80%9C${
-            twitterText
-        }%E2%80%9D&url=${twitterUrl}`;
+        const twitterHref = `https://twitter.com/intent/tweet?text=%E2%80%9C${twitterText}%E2%80%9D&url=${twitterUrl}`;
 
         const emailSubject = encodeURI(config.page.webTitle);
         const emailSelection = encodeURI(range.toString());
         const emailShortUrl = `${config.get('page.shortUrl')}/sbl`;
         const emailUrl = encodeURI(emailShortUrl);
-        const emailHref = `mailto:?subject=${emailSubject}&body=%E2%80%9C${
-            emailSelection
-        }%E2%80%9D ${emailUrl}`;
+        const emailHref = `mailto:?subject=${emailSubject}&body=%E2%80%9C${emailSelection}%E2%80%9D ${emailUrl}`;
 
         $twitterAction.attr('href', twitterHref);
         $emailAction.attr('href', emailHref);

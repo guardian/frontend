@@ -44,14 +44,19 @@ webpackBundler.watch(
             return browserSync.init(bsConfig);
         }
 
+        const info = stats.toJson();
         // send editing errors to console and browser
-        if (stats.hasErrors() || stats.hasWarnings()) {
-            console.log(chalk.red(stats.toString('errors-only')));
+        if (stats.hasErrors()) {
+            console.log(chalk.red(info.errors));
             return browserSync.sockets.emit('fullscreen:message', {
                 title: 'Webpack Error:',
-                body: stats.toString('errors-only'),
+                body: info.errors,
                 timeout: 100000,
             });
+        }
+
+        if (stats.hasWarnings()) {
+            console.warn(chalk.yellow(info.warnings));
         }
 
         // announce the changes

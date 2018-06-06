@@ -102,8 +102,7 @@ $quote-mark: 35px;
         }
     }
 
-    .byline,
-    .content__dateline {
+    .byline {
         padding-top: 0;
         padding-bottom: $gs-baseline*1.5;
         @include mq($until: phablet) {
@@ -154,17 +153,6 @@ $quote-mark: 35px;
         border-top: 0;
         padding-top: 0;
         padding-bottom: $gs-baseline;
-    }
-
-    .content__dateline {
-        border: 0;
-        min-height: 0;
-        // magic numbers are correcting line heights so vertical alignment appears even
-        margin-bottom: -4px;
-        display: block;
-        padding-bottom: $gs-baseline;
-        padding-top: 2px;
-        margin-top: -$gs-baseline / 4;
     }
 
     .old-article-message {
@@ -272,7 +260,8 @@ $quote-mark: 35px;
     }
 
     .content__article-body {
-        line-height: 1.4;
+        font-size: 17px;
+        line-height: 24px;
 
         @include mq(tablet) {
             margin-left: 0;
@@ -357,7 +346,8 @@ $quote-mark: 35px;
     .content__standfirst {
         @include fs-bodyCopy(2);
         font-weight: 700;
-        line-height: 20px;
+        font-size: 17px;
+        line-height: 22px;
         border-top: 0;
         color: $garnett-neutral-1;
         padding-top: 2px;
@@ -846,6 +836,7 @@ $quote-mark: 35px;
 
     .content__head {
         overflow: hidden;
+
         @include mq(phablet) {
             overflow: visible;
         }
@@ -855,6 +846,7 @@ $quote-mark: 35px;
         background-image: none;
         padding-top: 0;
         margin-bottom: 0;
+
         @include mq(leftCol) {
             @include multiline(8, $garnett-neutral-4, 8);
             padding-top: $gs-baseline * 3;
@@ -866,8 +858,6 @@ $quote-mark: 35px;
     .meta__twitter,
     .meta__email,
     .content__dateline {
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -878,24 +868,9 @@ $quote-mark: 35px;
         }
     }
 
-    .content__dateline {
-        // magic number used to align date stamp with standfirst baseline in opinion pieces per design
-        margin-top: 8px;
-
-        @include mq(leftCol) {
-            margin-top: -$gs-baseline/2;
-        }
-    }
-
-    .content__dateline:before {
-        @include mq($from: leftCol) {
-            @include multiline(1, $garnett-neutral-4);
-        }
-    }
-
     .meta__twitter,
     .meta__email {
-        display: block;
+        //display: block;
         padding-top: 8px;
         // magic number used to align date stamp with Twitter handle
         margin-top: -3px;
@@ -1058,13 +1033,6 @@ $quote-mark: 35px;
     .meta__numbers .inline-share svg,
     .social-icon__svg {
         fill: $garnett-neutral-4;
-    }
-
-    .content__dateline {
-        @include mq(phablet) {
-            @include multiline(1, $garnett-neutral-7, top);
-            padding-top: $gs-baseline;
-        }
     }
 
     .byline span {

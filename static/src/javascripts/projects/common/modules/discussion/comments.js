@@ -82,9 +82,7 @@ class Comments extends Component {
         const commentId = currentTarget.getAttribute('data-comment-id');
 
         if (commentId) {
-            const endpoint = `/discussion/comment/${
-                commentId
-            }.json?displayThreaded=true`;
+            const endpoint = `/discussion/comment/${commentId}.json?displayThreaded=true`;
 
             fetchJson(endpoint, {
                 mode: 'cors',
@@ -139,7 +137,8 @@ class Comments extends Component {
                     <button class="u-button-reset button button--show-more button--small button--tone-news d-show-more-replies__button">
                         ${plusIcon}Show ${numHiddenReplies} more ${repliesStr}
                     </button>`;
-                const $btn = $.create(btnMarkup)
+                const $btn = $
+                    .create(btnMarkup)
                     .attr({
                         'data-link-name': 'Show more replies',
                         'data-is-ajax': '',

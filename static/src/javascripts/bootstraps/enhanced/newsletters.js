@@ -60,9 +60,11 @@ const submitForm = (
     const csrfToken = encodeURIComponent(
         $('input[name="csrfToken"]', form).val()
     );
-    const formQueryString = `${inputs.email}=${email}&csrfToken=${
-        csrfToken
-    }&listName=${listName}&${inputs.dummy}=${dummyEmail}`;
+    const formQueryString = `${
+        inputs.email
+    }=${email}&csrfToken=${csrfToken}&listName=${listName}&${
+        inputs.dummy
+    }=${dummyEmail}`;
 
     return fetch(`${config.get('page.ajaxUrl')}/email`, {
         method: 'POST',

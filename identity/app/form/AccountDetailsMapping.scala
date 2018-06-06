@@ -2,7 +2,7 @@ package form
 
 import model.Titles
 import play.api.data.Forms._
-import com.gu.identity.model.{PrivateFields, User, UserDates}
+import com.gu.identity.model.{Consent, PrivateFields, User, UserDates}
 import idapiclient.UserUpdateDTO
 import play.api.data.Mapping
 import play.api.i18n.MessagesProvider
@@ -23,8 +23,7 @@ class AccountDetailsMapping
       "address"                   -> idAddress,
       "billingAddress"            -> optional(idAddress),
       "telephoneNumber"           -> optional(telephoneNumberMapping),
-      "deleteTelephoneNumber"     -> default(boolean, false),
-      "allowThirdPartyProfiling"  -> boolean
+      "deleteTelephoneNumber"     -> default(boolean, false)
     )(AccountFormData.apply)(AccountFormData.unapply _)
 
   protected def toUserFormData(user: User) = AccountFormData(user)
@@ -46,8 +45,7 @@ class AccountDetailsMapping
     ("privateFields.billingAddress4", "billingAddress.line4"),
     ("privateFields.billingPostcode", "billingAddress.postcode"),
     ("privateFields.billingCountry", "billingAddress.country"),
-    ("privateFields.telephoneNumber", "telephoneNumber"),
-    ("statusFields.allowThirdPartyProfiling", "allowThirdPartyProfiling")
+    ("privateFields.telephoneNumber", "telephoneNumber")
   )
 }
 
@@ -60,8 +58,7 @@ case class AccountFormData(
   address: AddressFormData,
   billingAddress: Option[AddressFormData],
   telephoneNumber: Option[TelephoneNumberFormData],
-  deleteTelephone: Boolean = false,
-  allowThirdPartyProfiling: Boolean = true
+  deleteTelephone: Boolean = false
 ) extends UserFormData {
 
   def toUserUpdateDTO(currentUser: User): UserUpdateDTO = UserUpdateDTO(
@@ -85,7 +82,6 @@ case class AccountFormData(
       billingCountry = billingAddress.flatMap(x => toUpdate(x.country, currentUser.privateFields.billingCountry)),
       telephoneNumber = telephoneNumber.flatMap(_.telephoneNumber)
     )),
-    statusFields = Some(currentUser.statusFields.copy(allowThirdPartyProfiling = Some(allowThirdPartyProfiling)))
   )
 }
 
@@ -118,7 +114,6 @@ object AccountFormData {
           billingPostcode.getOrElse(""),
           billingCountry.getOrElse("")))
     },
-    telephoneNumber = user.privateFields.telephoneNumber.map(TelephoneNumberFormData(_)),
-    allowThirdPartyProfiling = user.statusFields.allowThirdPartyProfiling.getOrElse(true)
+    telephoneNumber = user.privateFields.telephoneNumber.map(TelephoneNumberFormData(_))
   )
 }

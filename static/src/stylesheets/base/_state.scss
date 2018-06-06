@@ -50,6 +50,10 @@
     }
 }
 
+.is-scroll-blocked {
+    overflow: hidden;
+}
+
 .is-updating-cursor {
     cursor: wait;
 }

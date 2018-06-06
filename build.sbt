@@ -121,7 +121,6 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
   libraryDependencies ++= Seq(
     filters,
     identityModel,
-    identityRequest,
     identityCookie,
     liftJson,
     slf4jExt,
@@ -207,3 +206,24 @@ val main = root().aggregate(
     baseDirectory.value / "riff-raff.yaml" -> "riff-raff.yaml"
   )
 )
+val badgeHash = inputKey[Unit]("Generate special badge salts and hashes")
+badgeHash := {
+  import java.math.BigInteger
+  import java.security.MessageDigest
+  import complete.DefaultParsers._
+  import java.util.UUID
+
+  val result = spaceDelimited("<arg>").parsed.headOption.map { tag =>
+    val salt = UUID.randomUUID.toString.replaceAll("-", "")
+    val saltedTag = salt + tag
+    val digest = MessageDigest.getInstance("MD5")
+    digest.update(saltedTag.getBytes(), 0, saltedTag.length)
+    val hash = new BigInteger(1, digest.digest()).toString(16)
+    s"salt=$salt\nhash=$hash"
+  }.getOrElse {
+    "error: expected tag parameter"
+  }
+
+  println(result)
+}
+

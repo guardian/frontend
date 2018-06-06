@@ -7,6 +7,7 @@ import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
+import { init as initCmpService } from 'commercial/modules/cmp/cmp';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
 import { init as initCarrotTrafficDriver } from 'commercial/modules/carrot-traffic-driver';
@@ -28,24 +29,25 @@ import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import commentAdverts from 'commercial/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
-    ['cm-highMerch', initHighMerch],
+    ['cm-prepare-cmp', initCmpService],
     ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-paidContainers', paidContainers],
-    ['cm-paidforBand', initPaidForBand],
-    ['cm-carrot', initCarrotTrafficDriver],
+    ['cm-carrot', initCarrotTrafficDriver], // TODO: check if this should move into non-ad-free specifically
     ['cm-checkDispatcher', initCheckDispatcher],
-    ['cm-commentAdverts', commentAdverts],
 ];
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
+        ['cm-highMerch', initHighMerch],
         ['cm-prepare-sonobi-tag', prepareSonobiTag, true],
         ['cm-articleAsideAdverts', initArticleAsideAdverts, true],
         ['cm-articleBodyAdverts', initArticleBodyAdverts, true],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
-        ['cm-stickyTopBanner', initStickyTopBanner]
+        ['cm-stickyTopBanner', initStickyTopBanner],
+        ['cm-paidContainers', paidContainers],
+        ['cm-paidforBand', initPaidForBand],
+        ['cm-commentAdverts', commentAdverts]
     );
 }
 
@@ -113,9 +115,11 @@ const loadModules = (): Promise<void> => {
             ],
         ]);
     });
-    return Promise.all(modulePromises).then((): void => {
-        addEndTimeBaseline(primaryBaseline);
-    });
+    return Promise.all(modulePromises).then(
+        (): void => {
+            addEndTimeBaseline(primaryBaseline);
+        }
+    );
 };
 
 export const bootCommercial = (): Promise<void> => {

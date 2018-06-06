@@ -96,7 +96,6 @@ const init = (options: Object = {}): void => {
         loc = options.location; // allow a fake location to be passed in for testing
     }
     addHandlers();
-    mediator.emit('analytics:ready');
 };
 
 export default {

@@ -19,42 +19,43 @@
   consentHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
+@smsConsent = {
+    <fieldset class="fieldset fieldset--manage-account-noborder">
+        <div class="fieldset__heading">
+            <h2 class="form__heading"></h2>
+        </div>
+        <div class="fieldset__fields">
+            <p class="form__heading">Would you also like to hear about the above by SMS?</p>
+            @views.html.profile.smsConsent(idUrlBuilder, idRequest, privacyForm, user)(request, messages)
+        </div>
+    </fieldset>
+}
+
 @marketingConsentForm = {
-    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="form" method="post">
         @views.html.helper.CSRF.formField
-
-        @* This displays both global and key-bound errors *@
-        @if(privacyForm.hasErrors) {
-            <div class="form__error">
-                Error processing the form. Your changes have not been saved:
-                <p>@privacyForm.errors.map(formError => (formError.key, formError.message)).mkString(", ")</p>
-            </div>
-        }
-
-        <div class="js-errorHolder manage-account__errors"></div>
 
         <fieldset class="fieldset fieldset--manage-account-noborder">
 
             <div class="fieldset__heading">
-                <h2 class="form__heading">What can we tell you about?</h2>
-                <p class="form__note">The Guardian would like to occasionally send you information about their products, services and events</p>
+                <h2 class="form__heading">What else would you like to hear about by email?</h2>
+                <p class="form__note">From time to time, we'd love to be able to send you information about our products, services and events.</p>
             </div>
 
-            <div class="fieldset__fields">
+            <div class="fieldset__fields fieldset__fields--opt-in">
 
                 <div class="manage-account__switches manage-account__switches--single-column">
                     <ul>
                     @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consentField, index) =>
-                        <li>
-                            @if(!isChannel(consentField)) {
+                        @if(!isChannel(consentField)) {
+                            <li>
                                 @if(index == 0) {
                                     @fragments.consentSwitch(consentField, consentHint)(messages)
                                 } else {
                                     @fragments.consentSwitch(consentField)(messages)
                                 }
-                            }
-
-                        </li>
+                            </li>
+                        }
                     }
                     </ul>
                 </div>
@@ -83,12 +84,26 @@
     </div>
 }
 
-@* MARKETING CONSENT *@
-@marketingConsentForm
+@* This displays both global and key-bound errors *@
+@if(privacyForm.hasErrors) {
+    <div class="form__error" role="alert" aria-live="polite">
+        Error processing the form. Your changes have not been saved:
+        <p>@privacyForm.errors.map(formError => (formError.key, formError.message)).mkString(", ")</p>
+    </div>
+}
+
+<div class="js-errorHolder manage-account__errors"></div>
 
 @* NEWSLETTERS *@
-<hr class="manage-account-divider" />
 @profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
+
+@* MARKETING CONSENT *@
+<hr class="manage-account-divider" />
+@marketingConsentForm
+@smsConsent
+
+@* EMAIL SETTINGS *@
+@views.html.profile.emailSettings(idRequest, idUrlBuilder, user)
 
 @* CHANNELS *@
 <hr class="manage-account-divider" />

@@ -2,11 +2,13 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { spacefinderSimplify } from 'common/modules/experiments/tests/spacefinder-simplify';
+import { signInEngagementBannerDisplay } from './tests/sign-in-engagement-banner-display';
+import { firstPvConsentBlocker } from './tests/first-pv-consent-blocker';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
-    spacefinderSimplify,
+    signInEngagementBannerDisplay,
+    firstPvConsentBlocker,
 ].filter(Boolean);
 
 console.log('TESTS', TESTS);

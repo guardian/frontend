@@ -441,9 +441,7 @@ class Loader extends Component {
         }
 
         return fetchJson(
-            `/discussion/top-comments/${
-                discussionId
-            }.json?commentsClosed=${this.getDiscussionClosed().toString()}`,
+            `/discussion/top-comments/${discussionId}.json?commentsClosed=${this.getDiscussionClosed().toString()}`,
             {
                 mode: 'cors',
             }

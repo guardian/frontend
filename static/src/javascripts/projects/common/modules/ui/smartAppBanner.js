@@ -7,6 +7,7 @@ import template from 'lodash/utilities/template';
 import { loadCssPromise } from 'lib/load-css-promise';
 import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 /**
  * Rules:
@@ -16,6 +17,7 @@ import config from 'lib/config';
  * Persist close state
  */
 const COOKIE_IMPRESSION_KEY = 'GU_SMARTAPPBANNER';
+
 const DATA = {
     IOS: {
         LOGO: 'https://assets.guim.co.uk/images/apps/ios-logo.png',
@@ -34,32 +36,44 @@ const DATA = {
         STORE: 'in Google Play',
     },
 };
+
 const cookieVal = getCookie(COOKIE_IMPRESSION_KEY);
+
 const impressions =
     cookieVal && !Number.isNaN(cookieVal) ? parseInt(cookieVal, 10) : 0;
+
 const tmp =
     '<img src="<%=LOGO%>" class="app__logo" alt="Guardian App logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
     '<p class="app__copy">Instant alerts. Offline reading.<br/>Tailored to you.</p>' +
     '<p class="app__copy"><strong>FREE</strong> – <%=STORE%></p></div><a href="<%=LINK%>" class="app__link">View</a>';
+
 const tablet =
     '<img src="<%=SCREENSHOTS%>" class="app__screenshots" alt="screenshots" />';
 
 const isDevice = (): boolean => isIOS() || isAndroid();
 
-const canShow = (): boolean => impressions < 4;
+const validImpressionCount = (): boolean => impressions < 4;
+
+const messageCode: string = isIOS() ? 'ios' : 'android';
 
 const canUseSmartBanner = (): boolean =>
-    config.switches.smartAppBanner &&
+    config.get('switches.smartAppBanner') &&
     getUserAgent.browser === 'Safari' &&
     isIOS();
 
-const showMessage = (): void => {
+const canShow = (): Promise<boolean> =>
+    new Promise(resolve => {
+        const result =
+            !canUseSmartBanner() && isDevice() && validImpressionCount();
+        resolve(result);
+    });
+
+const show = (): void => {
     loadCssPromise.then(() => {
-        const platform = isIOS() ? 'ios' : 'android';
-        const msg = new Message(platform);
+        const msg = new Message(messageCode, { position: 'top' });
         const fullTemplate = tmp + (getBreakpoint() === 'mobile' ? '' : tablet);
 
-        msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
+        msg.show(template(fullTemplate, DATA[messageCode.toUpperCase()]));
 
         addCookie(COOKIE_IMPRESSION_KEY, String(impressions + 1));
 
@@ -73,18 +87,10 @@ const showMessage = (): void => {
     });
 };
 
-const init = (): void => {
-    if (!canUseSmartBanner() && isDevice() && canShow()) {
-        showMessage();
-    }
+const smartAppBanner: Banner = {
+    id: messageCode,
+    show,
+    canShow,
 };
 
-const isMessageShown = (): boolean =>
-    $('.site-message--android').css('display') === 'block' ||
-    $('.site-message--ios').css('display') === 'block';
-
-const getMessageHeight = (): number =>
-    $('.site-message--android').dim().height ||
-    $('.site-message--ios').dim().height;
-
-export { init, isMessageShown, getMessageHeight };
+export { smartAppBanner };

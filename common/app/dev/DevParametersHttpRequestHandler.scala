@@ -54,6 +54,7 @@ class DevParametersHttpRequestHandler(
   val commercialParams = Seq(
     "ad-unit", // allows overriding of the ad unit
     "adtest", // used to set ad-test cookie from admin domain
+    "adrefresh", // force adrefresh to be off with adrefresh=false in the URL
     "google_console", // two params for dfp console
     "googfc",
     "k", // keywords in commercial component requests
@@ -63,6 +64,7 @@ class DevParametersHttpRequestHandler(
     "0p19G", // Google AMP AB test parameter
     "dll", // Disable lazy loading of ads
     "iasdebug", // IAS troubleshooting
+    "cmpdebug", // CMP troubleshooting
     "utm_source", // Google Analytics source
     "utm_medium", // Google Analytics medium
     "utm_campaign", // Google Analytics campaign

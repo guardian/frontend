@@ -16,7 +16,7 @@ class Component {
     useBem: boolean;
     templateName: ?string;
     componentClass: ?string;
-    endpoint: ?string | ?() => string;
+    endpoint: ?string | ?(() => string);
     classes: ?Object;
     elem: ?(HTMLElement | HTMLAnchorElement | HTMLInputElement);
     template: ?string;
@@ -282,9 +282,8 @@ class Component {
 
         if (this.componentClass) {
             $elem.addClass(
-                `${this.componentClass + (elemName ? `__${elemName}` : '')}--${
-                    state
-                }`
+                `${this.componentClass +
+                    (elemName ? `__${elemName}` : '')}--${state}`
             );
         }
     }
@@ -295,9 +294,8 @@ class Component {
 
         if (this.componentClass) {
             $elem.removeClass(
-                `${this.componentClass + (elemName ? `__${elemName}` : '')}--${
-                    state
-                }`
+                `${this.componentClass +
+                    (elemName ? `__${elemName}` : '')}--${state}`
             );
         }
     }
@@ -308,9 +306,8 @@ class Component {
 
         if (this.componentClass) {
             $elem.toggleClass(
-                `${this.componentClass + (elemName ? `__${elemName}` : '')}--${
-                    state
-                }`
+                `${this.componentClass +
+                    (elemName ? `__${elemName}` : '')}--${state}`
             );
         }
     }
@@ -321,9 +318,8 @@ class Component {
 
         if (this.componentClass) {
             return $elem.hasClass(
-                `${this.componentClass + (elemName ? `__${elemName}` : '')}--${
-                    state
-                }`
+                `${this.componentClass +
+                    (elemName ? `__${elemName}` : '')}--${state}`
             );
         }
 

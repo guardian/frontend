@@ -9,8 +9,6 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { isInVariant, getVariant } from 'common/modules/experiments/utils';
-import { spacefinderSimplify } from 'common/modules/experiments/tests/spacefinder-simplify';
 
 type AdSize = {
     width: number,
@@ -73,14 +71,12 @@ const filterNearbyCandidates = (maximumAdHeight: number) => (
 };
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
-    const variant = getVariant(spacefinderSimplify, 'variant');
     const isImmersive = config.get('page.isImmersive');
-    const inTestVariant = variant && isInVariant(spacefinderSimplify, variant);
 
     const defaultRules = {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: inTestVariant && !isImmersive ? 300 : 700,
+        minAbove: isImmersive ? 700 : 300,
         minBelow: 700,
         selectors: {
             ' > h2': {
@@ -91,6 +87,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
             ' > :not(p):not(h2):not(.ad-slot)': {
                 minAbove: 35,
                 minBelow: 400,
+            },
+            ' figure.element--immersive': {
+                minAbove: 0,
+                minBelow: 600,
             },
         },
         filter: filterNearbyCandidates(adSizes.mpu.height),
@@ -103,11 +103,15 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
         minBelow: 800,
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
+            ' figure.element--immersive': {
+                minAbove: 0,
+                minBelow: 600,
+            },
         },
         filter: filterNearbyCandidates(adSizes.halfPage.height),
     };
 
-    const rules = inTestVariant && !isInline1 ? relaxedRules : defaultRules;
+    const rules = isInline1 ? defaultRules : relaxedRules;
 
     const insertAds = (paras: HTMLElement[]): Promise<number> => {
         const slots: Array<Promise<void>> = paras
@@ -237,13 +241,10 @@ export const init = (start: () => void, stop: () => void): Promise<any> => {
     const im = config.page.hasInlineMerchandise
         ? attemptToAddInlineMerchAd()
         : Promise.resolve(false);
-    im
-        .then(
-            (inlineMerchAdded: boolean) =>
-                inlineMerchAdded
-                    ? trackAdRender('dfp-ad--im')
-                    : Promise.resolve()
-        )
+    im.then(
+        (inlineMerchAdded: boolean) =>
+            inlineMerchAdded ? trackAdRender('dfp-ad--im') : Promise.resolve()
+    )
         .then(addInlineAds)
         .then(stop);
 

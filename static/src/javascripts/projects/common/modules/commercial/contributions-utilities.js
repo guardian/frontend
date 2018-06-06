@@ -25,8 +25,11 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
+import { addSlot } from 'commercial/modules/dfp/add-slot';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
+
+export type AdBlockEpicTemplate = () => HTMLElement;
 
 export type CtaUrls = {
     supportUrl: string,
@@ -237,6 +240,7 @@ const makeABTestVariant = (
                 });
                 submitABTestComplete();
             }),
+        isAdSlot = false,
     } = options;
 
     if (usesIframe) {
@@ -272,6 +276,7 @@ const makeABTestVariant = (
             impression,
             success,
             iframeId,
+            isAdSlot,
         },
 
         test() {
@@ -303,6 +308,10 @@ const makeABTestVariant = (
                                     component.insertAfter(targets);
                                 } else {
                                     component.insertBefore(targets);
+                                }
+
+                                if (this.options.isAdSlot) {
+                                    addSlot(component.get(0), true);
                                 }
 
                                 mediator.emit(parentTest.insertEvent, {

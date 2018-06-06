@@ -13,9 +13,13 @@
    League tables
    ========================================================================== */
 .table--football {
+    .td {
+        vertical-align: middle;
+    }
+
     .table-column--main {
         .team-name {
-            display: inline-block;
+            display: inline;
             overflow: hidden;
             white-space: nowrap;
             max-width: 100%;
@@ -54,17 +58,30 @@
             @include u-h;
         }
     }
+
+    .football-match--result,
+    .football-match--fixture {
+        >td {
+            padding-left: .3rem;
+            padding-right: .3rem;
+            &:first-child {
+                padding-left: .5rem;
+            }
+            &:last-child {
+                padding-right: .5rem;
+            }
+        }
+
+        .team-crest {
+            margin-right: 0;
+        }
+    }
 }
 
 .team-crest {
-    height: 22px;
+    height: 10px;
     margin-right: $gs-gutter/4;
-    width: 22px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center top;
-    display: inline-block;
-    vertical-align: top;
+    max-width: 15px;
 }
 
 // This is everything on the standalone pages

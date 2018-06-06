@@ -88,7 +88,10 @@
 
 
     @if(
-        item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && (item.content.isImmersive || !isPaidContent(page)))
+        item.tags.isVideo ||
+        item.tags.isAudio ||
+        (item.tags.isArticle && (item.content.isImmersive || !isPaidContent(page))) ||
+        item.tags.isGallery
     ) {
         @fragments.commercial.badge(item, page)
     }

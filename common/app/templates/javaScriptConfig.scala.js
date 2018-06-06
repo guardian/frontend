@@ -13,7 +13,11 @@
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}
         },
         "tests": { @JavaScript(experiments.ActiveExperiments.getJavascriptConfig) },
-        "modules": { },
+        "modules": {
+            "tracking": {
+                "ready": null
+            }
+        },
         "images": {
             "commercial": {
                 "ab-icon": "@Static("images/commercial/ab-icon.png")",
@@ -25,10 +29,9 @@
                 "adblock-coins-us": "@Static("images/membership/adblock-coins-us.png")"
             },
             "acquisitions": {
-                "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")"
-            },
-            "identity": {
-                "opt-in-new-vertical": "@Static("images/identity/opt-in-new-vertical.svg")"
+                "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")",
+                "info-logo": "@Static("images/acquisitions/info-logo.svg")"
+
             }
         },
         "stylesheets": {

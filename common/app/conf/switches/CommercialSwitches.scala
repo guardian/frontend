@@ -313,7 +313,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 15),
+    sellByDate = new LocalDate(2018, 6, 20),
     exposeClientSide = false
    )
 
@@ -415,5 +415,15 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false
+  )
+
+  val enableConsentManagementService: Switch = Switch(
+    group = Commercial,
+    name = "enable-consent-management-service",
+    description = "Enable our CMP service to run on each page, so that vendors can query the consent status.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 8, 23),
+    exposeClientSide = true
   )
 }

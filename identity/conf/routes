@@ -54,21 +54,31 @@ GET         /membership/edit                        controllers.editprofile.Edit
 GET         /contribution/recurring/edit            controllers.editprofile.EditProfileController.displayRecurringContributionForm
 GET         /digitalpack/edit                       controllers.editprofile.EditProfileController.displayDigitalPackForm
 
-GET         /privacy/edit                           controllers.editprofile.EditProfileController.displayPrivacyFormRedirect(consentsUpdated: Boolean ?= false, consentHint: Option[String])
 POST        /privacy/edit                           controllers.editprofile.EditProfileController.saveConsentPreferences
 POST        /privacy/edit-ajax                      controllers.editprofile.EditProfileController.saveConsentPreferencesAjax
 
 GET         /email-prefs                            controllers.editprofile.EditProfileController.displayEmailPrefsForm(consentsUpdated: Boolean ?= false, consentHint: Option[String])
 POST        /email-prefs                            controllers.editprofile.EditProfileController.saveEmailPreferencesAjax
 
+DELETE      /user/email-subscriptions               controllers.editprofile.EditProfileController.deleteAllSubscriptionsAndMarketingConsents()
+
+
+########################################################################################################################
+# PUBLIC EDIT PROFILE
+########################################################################################################################
+GET         /privacy-settings                       controllers.AdvertsManager.renderAdvertsManager(returnUrl : Option[String])
 
 ########################################################################################################################
 # Consents journey
 ########################################################################################################################
-GET         /consents/newsletters                   controllers.editprofile.EditProfileController.displayConsentsJourneyNewsletters
 GET         /consents/thank-you                     controllers.editprofile.EditProfileController.displayConsentsJourneyThankYou
-GET         /consents/staywithus                    controllers.editprofile.EditProfileController.displayConsentsJourneyGdprCampaign
 GET         /consents                               controllers.editprofile.EditProfileController.displayConsentsJourney(consentHint: Option[String])
 POST        /complete-consents                      controllers.editprofile.EditProfileController.submitRepermissionedFlag
 GET         /complete-consents                      controllers.editprofile.EditProfileController.displayConsentComplete
 ########################################################################################################################
+
+########################################################################################################################
+# Old routes
+########################################################################################################################
+GET         /consents/staywithus                    controllers.editprofile.EditProfileController.redirectToConsentsJourney()
+GET         /privacy/edit                           controllers.editprofile.EditProfileController.displayPrivacyFormRedirect(consentsUpdated: Boolean ?= false, consentHint: Option[String])

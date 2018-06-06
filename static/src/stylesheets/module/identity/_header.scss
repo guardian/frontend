@@ -41,18 +41,22 @@ $gutter: 5px;
         display: block;
     }
 
-    .gs-container {
+    .identity-header__nav-name {
+        max-width: gs-span(2);
+        vertical-align: middle;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .identity-header__container {
         display: flex;
         box-sizing: border-box;
         flex-direction: row-reverse;
         justify-content: space-between;
         align-items: flex-start;
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
-        @include mq(mobileLandscape) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
+        padding: 0;
     }
 }
 
@@ -65,7 +69,7 @@ $gutter: 5px;
 
 .identity-header__links {
     float: left;
-    height: $slim-nav-height - $gutter;
+    height: $slim-nav-height - ($gutter/2);
     display: flex;
     align-items: center;
 }
@@ -82,9 +86,6 @@ html body .identity-header__logo {
 
     .inline-the-guardian-roundel {
         display: block;
-        @include mq(wide) {
-            margin-right: gs-span(2);
-        }
     }
     .inline-the-guardian-logo {
         display: none;

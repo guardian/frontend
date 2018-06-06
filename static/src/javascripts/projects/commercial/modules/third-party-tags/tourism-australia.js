@@ -11,9 +11,7 @@ const getUrl = location => {
     const taUrl = location.href;
     const taCachebreak = new Date().getTime();
 
-    return `//tourismaustralia.sc.omtrdc.net/b/ss/${taAccount}/1/H.26.2/s${
-        taCachebreak
-    }?AQB=1&ndh=0&ns=tourismaustralia&pageName=${encodeURIComponent(
+    return `//tourismaustralia.sc.omtrdc.net/b/ss/${taAccount}/1/H.26.2/s${taCachebreak}?AQB=1&ndh=0&ns=tourismaustralia&pageName=${encodeURIComponent(
         taPageName
     )}&g= ${encodeURIComponent(taUrl)}&server=${encodeURIComponent(
         taServer

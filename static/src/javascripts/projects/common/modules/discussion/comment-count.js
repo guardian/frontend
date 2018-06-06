@@ -17,31 +17,13 @@ const getTemplate = (
     const { url, icon, count } = vals;
 
     if (type === 'content') {
-        return `<a href="${
-            url
-        }" data-link-name="Comment count" class="commentcount2 tone-colour">
-                    <h3 class="commentcount2__heading">${
-                        icon
-                    } <span class ="commentcount2__text u-h">Comments</span></h3>
-                    <span class="commentcount2__value tone-colour js_commentcount_actualvalue">${
-                        count
-                    }</span>
+        return `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour" aria-label="${count} comments">
+                    <h3 class="commentcount2__heading">${icon} <span class ="commentcount2__text u-h">Comments</span></h3>
+                    <span class="commentcount2__value tone-colour js_commentcount_actualvalue">${count}</span>
                 </a>`;
     }
 
-    if (type === 'contentImmersive') {
-        return `<a href="${
-            url
-        }" data-link-name="Comment count" class="commentcount2 tone-colour">
-                    ${icon}<span class="commentcount__value">${
-            count
-        }</span> Comments
-                </a>`;
-    }
-
-    return `<a class="fc-trail__count fc-trail__count--commentcount" href="${
-        url
-    }" data-link-name="Comment count">${icon} ${count}</a>`;
+    return `<a class="fc-trail__count fc-trail__count--commentcount" href="${url}" data-link-name="Comment count" aria-label="${count} comments">${icon} ${count}</a>`;
 };
 
 const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
@@ -143,12 +125,8 @@ const getCommentCounts = (context?: HTMLElement): Promise<void> => {
     return Promise.resolve();
 };
 
-const init = (): Promise<void> => {
+export const initCommentCount = (): Promise<void> => {
     mediator.on('modules:related:loaded', getCommentCounts);
 
     return getCommentCounts();
-};
-
-export default {
-    init,
 };

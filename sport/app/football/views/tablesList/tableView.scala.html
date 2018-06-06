@@ -40,7 +40,7 @@
                     <td class="table-column--sub">@entry.team.rank</td>
                     <td class="table-column--main">
                         <span class="team-name" data-abbr="@pa.TeamCodes.codeFor(entry.team)">
-                            <span class="team-crest" style="background-image: url(@Configuration.staticSport.path/football/crests/60/@{entry.team.id}.png);"></span>
+                            <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/60/@{entry.team.id}.png" />
                             @TeamUrl(entry.team).map{ url =>
                                 <a href="@TeamUrl(entry.team)" data-link-name="View team" class="team-name__long">
                                     @entry.team.name

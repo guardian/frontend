@@ -20,17 +20,9 @@ trait ConsentsJourney
 
   import authenticatedActions._
 
-  /** GET /consents/newsletters */
-  def displayConsentsJourneyNewsletters: Action[AnyContent] =
-    displayConsentJourneyForm(ConsentJourneyPageNewsletters, None)
-
   /** GET /consents/thank-you */
   def displayConsentsJourneyThankYou: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageThankYou, None)
-
-  /** GET /consents/staywithus */
-  def displayConsentsJourneyGdprCampaign: Action[AnyContent] =
-    displayConsentJourneyForm(ConsentJourneyPageGdprCampaign, None)
 
   /** GET /consents */
   def displayConsentsJourney(consentHint: Option[String] = None): Action[AnyContent] =
@@ -66,6 +58,13 @@ trait ConsentsJourney
         )
       }
     }
+
+  /** Handle redirects*/
+  def redirectToConsentsJourney: Action[AnyContent] = Action { implicit request =>
+    Redirect(
+      routes.EditProfileController.displayConsentsJourney(None),
+      MOVED_PERMANENTLY)
+  }
 
   private def displayConsentJourneyForm(
     page: ConsentJourneyPage,
@@ -141,7 +140,7 @@ trait ConsentsJourney
           newsletterService.getEmailSubscriptions(emailFilledForm),
           EmailNewsletters.all,
           consentHint,
-          skin = if(page == ConsentJourneyPageGdprCampaign) Some("gdpr-oi-campaign") else None
+          skin = None
         ))(page, request, context)
       ))
 

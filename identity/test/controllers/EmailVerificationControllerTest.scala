@@ -41,7 +41,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
   when(api.resendEmailValidationEmail(any[Auth], any[TrackingData], any[Option[String]])) thenReturn Future.successful(Right({}))
 
   val userId: String = "123"
-  val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
+  val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
   val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
   val authenticatedUser = AuthenticatedUser(user, testAuth, true)
   val phoneNumbers = PhoneNumbers
@@ -109,10 +109,10 @@ class EmailVerificationControllerTest extends path.FreeSpec
       }
 
       "should redirect to original returnUrl if it was already a consent journey" in {
-        when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://profile.theguardian.com/consents/staywithus"))
+        when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://profile.theguardian.com/consents"))
         val result = controller.verify(token)(testRequest)
         status(result) should be(SEE_OTHER)
-        redirectLocation(result).get should include("/consents/staywithus")
+        redirectLocation(result).get should include("/consents")
       }
     }
 

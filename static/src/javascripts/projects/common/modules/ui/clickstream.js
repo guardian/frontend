@@ -103,15 +103,19 @@ const initClickstream = (opts?: Options = {}) => {
     filters = opts.filter || [];
 
     // delegate, emit the derived tag
-    bean.add(document.body, 'click', (event: Event): void => {
-        const clickSpec = getClickSpec({
-            el: (event.target: any),
-            tags: [],
-            target: (event.target: any),
-        });
+    bean.add(
+        document.body,
+        'click',
+        (event: Event): void => {
+            const clickSpec = getClickSpec({
+                el: (event.target: any),
+                tags: [],
+                target: (event.target: any),
+            });
 
-        mediator.emit('module:clickstream:click', clickSpec);
-    });
+            mediator.emit('module:clickstream:click', clickSpec);
+        }
+    );
 };
 
 export { initClickstream };

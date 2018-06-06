@@ -2,6 +2,7 @@ package pages
 
 import common.Edition
 import conf.switches.Switches.WeAreHiring
+import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
 import model.{ApplicationContext, GalleryPage, Page}
@@ -45,13 +46,14 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
         inlineJSBlocking()
       ),
       bodyTag(classes = bodyClasses)(
-        message(),
+        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         galleryTop(),
         breakingNewsDiv(),
         galleryBody(page),
         footer(),
+        message(),
         inlineJSNonBlocking(),
         analytics.base()
       ),

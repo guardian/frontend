@@ -18,9 +18,6 @@ describe('Message', () => {
                     <div class="js-site-message-copy">...</div>
                     <button class="site-message__close"></button>
                 </div>
-                <div class="site-message--footer is-hidden js-footer-message">
-                    <div class="site-message__copy js-footer-site-message-copy u-cf"></div>
-                </div>'
             `;
         }
     });
@@ -32,16 +29,6 @@ describe('Message', () => {
     it('Show a message', () => {
         new Message('foo').show('hello world');
         expect($('.js-site-message-copy').text()).toEqual('hello world');
-        expect($('.js-footer-site-message-copy').text()).not.toEqual(
-            'hello world'
-        );
-        expect($('.js-site-message').hasClass('is-hidden')).toEqual(false);
-    });
-
-    it('Show a pinnable message', () => {
-        new Message('foo', { pinOnHide: true }).show('hello world');
-        expect($('.js-site-message-copy').text()).toEqual('hello world');
-        expect($('.js-footer-site-message-copy').text()).toEqual('hello world');
         expect($('.js-site-message').hasClass('is-hidden')).toEqual(false);
     });
 
@@ -50,22 +37,12 @@ describe('Message', () => {
         m.show('hello world');
         m.hide();
         expect($('.js-site-message').hasClass('is-hidden')).toEqual(true);
-        expect($('.js-footer-message').hasClass('is-hidden')).toEqual(true);
-    });
-
-    it('Hide a pinnable message', () => {
-        const m = new Message('foo', { pinOnHide: true });
-        m.show('hello world');
-        m.hide();
-        expect($('.js-site-message').hasClass('is-hidden')).toEqual(true);
-        expect($('.js-footer-message').hasClass('is-hidden')).toEqual(false);
     });
 
     it('Remember the user has acknowledged the message', () => {
         const m = new Message('foo');
         m.acknowledge();
         expect(userPrefs.get('messages')).toEqual(['foo']);
-        expect(m.hasSeen()).toEqual(true);
     });
 
     it('Block messages from overwriting each other', () => {

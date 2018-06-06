@@ -8,15 +8,24 @@ import fastdom from 'lib/fastdom-promise';
 import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
 import bean from 'bean';
-import mediator from 'lib/mediator';
+import type { Banner } from 'common/modules/ui/bannerPicker';
+
+const accountDataUpdateLink = accountDataUpdateWarningLink =>
+    `${config.get('page.idUrl')}/${
+        accountDataUpdateWarningLink === 'contribution'
+            ? 'contribution/recurring/edit'
+            : `${accountDataUpdateWarningLink}/edit`
+    }`;
+
+const messageCode: string = 'membership-action-required';
 
 const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
     const gaTracker = config.get('googleAnalytics.trackers.editorial');
-    const newMessage = new Message('membership-action-required', {
-        cssModifierClass: 'membership-action-required',
+    const newMessage = new Message(messageCode, {
+        cssModifierClass: messageCode,
         trackDisplay: true,
-        siteMessageLinkName: 'membership-action-required',
-        siteMessageComponentName: 'membership-action-required',
+        siteMessageLinkName: messageCode,
+        siteMessageComponentName: messageCode,
         customJs: () => {
             bean.on(document, 'click', '.js-site-message-close', () => {
                 window.ga(
@@ -38,21 +47,29 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
         },
     });
     newMessage.show(
-        `An action is needed on your Guardian account. Please <a href='${config.get(
-            'page.idUrl'
-        )}/${accountDataUpdateWarningLink}/edit'>update your details</a>`
+        `An action is needed on your Guardian account. Please <a href='${accountDataUpdateLink(
+            accountDataUpdateWarningLink
+        )}'>update your details</a>`
     );
 };
+const updateLink = accountDataUpdateWarning();
 
-const initMembership = (): void => {
-    const updateLink = accountDataUpdateWarning();
+const canShow: () => Promise<boolean> = () =>
+    Promise.resolve(updateLink !== null);
+
+const show: () => void = () => {
     if (updateLink) {
-        mediator.on('modules:onwards:breaking-news:ready', breakingShown => {
-            if (!breakingShown) {
-                showAccountDataUpdateWarningMessage(updateLink);
-            }
-        });
+        showAccountDataUpdateWarningMessage(updateLink);
     }
+};
+
+export const membershipBanner: Banner = {
+    id: messageCode,
+    show,
+    canShow,
+};
+
+export const initMembership = (): void => {
     if (isPayingMember()) {
         fastdom
             .read(() => document.getElementsByClassName('js-become-member'))
@@ -73,5 +90,3 @@ const initMembership = (): void => {
             });
     }
 };
-
-export { initMembership };

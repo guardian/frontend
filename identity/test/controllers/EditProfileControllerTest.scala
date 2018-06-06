@@ -50,7 +50,7 @@ import scala.concurrent.Future
     val httpConfiguration = HttpConfiguration.createWithDefaults()
 
     val userId: String = "123"
-    val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true), userEmailValidated = Some(true)))
+    val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
     val testAuth = ScGuU("abc", GuUCookieData(user, 0, None))
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
@@ -440,18 +440,18 @@ import scala.concurrent.Future
 
     "saveEmailPreferences method is called with valid form body" should {
       "respond with success body if IDAPI post email endpoint returns 200" in new EditProfileFixture {
-        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken).withFormUrlEncodedBody("htmlPreference" -> "Text")
+        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken)
         when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
 
         val result = controller.saveEmailPreferencesAjax().apply(fakeRequestEmailPrefs)
         status(result) should be(200)
         contentAsString(result) should include ("updated")
 
-        verify(api).updateUserEmails(userId, Subscriber("Text", Nil), testAuth, trackingData)
+        verify(api).updateUserEmails(userId, Subscriber("HTML", Nil), testAuth, trackingData)
       }
 
       "respond with error body if IDAPI post email endpoint returns error" in new EditProfileFixture {
-        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken).withFormUrlEncodedBody("htmlPreference" -> "Text")
+        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken)
         val errors = List(Error("Test message", "Test description", 500))
         when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(errors))
 
@@ -459,7 +459,7 @@ import scala.concurrent.Future
         status(result) should not be(200)
         contentAsString(result) should include ("There was an error saving your preferences")
 
-        verify(api).updateUserEmails(userId, Subscriber("Text", Nil), testAuth, trackingData)
+        verify(api).updateUserEmails(userId, Subscriber("HTML", Nil), testAuth, trackingData)
       }
     }
 
@@ -468,7 +468,7 @@ import scala.concurrent.Future
         user.statusFields.setHasRepermissioned(false)
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
+          .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))
 
         val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(303)
@@ -478,7 +478,7 @@ import scala.concurrent.Future
         user.statusFields.setHasRepermissioned(true)
         val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
         when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
-          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
+          .thenReturn(Future.successful(Right(Subscriber("HTML", userEmailSubscriptions))))
 
         val result = controller.displayEmailPrefsForm(false, None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)

@@ -6,6 +6,7 @@ import {
     buildPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
 import type {
+    PrebidBid,
     PrebidBidder,
     PrebidImproveParams,
     PrebidImproveSizeParam,
@@ -21,18 +22,51 @@ import {
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
 
+const isDesktopArticle =
+    getBreakpointKey() === 'D' && config.page.contentType === 'Article';
+
 const getTrustXAdUnitId = (slotId: string): string => {
-    switch (stripTrailingNumbersAbove1(stripMobileSuffix(slotId))) {
+    switch (stripMobileSuffix(slotId)) {
         case 'dfp-ad--inline1':
-        case 'dfp-ad--inline':
             return '2960';
+        case 'dfp-ad--inline2':
+            if (isDesktopArticle) return '3826';
+            return '3827';
+        case 'dfp-ad--inline3':
+            if (isDesktopArticle) return '3828';
+            return '3829';
+        case 'dfp-ad--inline4':
+            if (isDesktopArticle) return '3830';
+            return '3831';
+        case 'dfp-ad--inline5':
+            if (isDesktopArticle) return '3832';
+            return '3833';
+        case 'dfp-ad--inline6':
+            if (isDesktopArticle) return '3834';
+            return '3835';
+        case 'dfp-ad--inline7':
+            if (isDesktopArticle) return '3836';
+            return '3837';
+        case 'dfp-ad--inline8':
+            if (isDesktopArticle) return '3838';
+            return '3839';
+        case 'dfp-ad--inline9':
+            if (isDesktopArticle) return '3840';
+            return '3841';
         case 'dfp-ad--mostpop':
             return '2961';
         case 'dfp-ad--right':
             return '2962';
         case 'dfp-ad--top-above-nav':
             return '2963';
+        case 'dfp-ad--comments':
+            return '3840';
         default:
+            // for inline10 and onwards just use same IDs as inline9
+            if (slotId.startsWith('dfp-ad--inline')) {
+                if (isDesktopArticle) return '3840';
+                return '3841';
+            }
             console.log(
                 `PREBID: Failed to get TrustX ad unit for slot ${slotId}.`
             );
@@ -44,7 +78,7 @@ const getIndexSiteId = (): string => {
     const site = config.page.pbIndexSites.find(
         s => s.bp === getBreakpointKey()
     );
-    return site ? site.id : '';
+    return site && site.id ? site.id.toString() : '';
 };
 
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
@@ -119,14 +153,18 @@ const getImprovePlacementId = (sizes: PrebidSize[]): number => {
 // because it uses same placement ID for multiple slot sizes and has no other size information
 const getImproveSizeParam = (slotId: string): PrebidImproveSizeParam => {
     const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
-    const isInlineNotDesktopArticle =
-        key.endsWith('inline') &&
-        !(getBreakpointKey() === 'D' && config.page.contentType === 'Article');
     return key.endsWith('mostpop') ||
+        key.endsWith('comments') ||
         key.endsWith('inline1') ||
-        isInlineNotDesktopArticle
+        (key.endsWith('inline') && !isDesktopArticle)
         ? { w: 300, h: 250 }
         : {};
+};
+
+const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
+    if (contains(sizes, [970, 250])) return 13218365;
+    if (contains(sizes, [300, 600])) return 12984524;
+    return 13218372;
 };
 
 const sonobiBidder: PrebidBidder = {
@@ -134,17 +172,8 @@ const sonobiBidder: PrebidBidder = {
     bidParams: (slotId: string): PrebidSonobiParams => ({
         ad_unit: config.page.adUnit,
         dom_id: slotId,
-        floor: 0.5,
         appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
         pageViewId: config.ophan.pageViewId,
-    }),
-};
-
-const indexExchangeBidder: PrebidBidder = {
-    name: 'indexExchange',
-    bidParams: (): PrebidIndexExchangeParams => ({
-        id: '185406',
-        siteID: getIndexSiteId(),
     }),
 };
 
@@ -166,27 +195,65 @@ const improveDigitalBidder: PrebidBidder = {
 };
 
 const xaxisBidder: PrebidBidder = {
-    name: 'appnexus',
-    bidParams: (): PrebidXaxisParams => ({
-        placementId: 12984524,
+    name: 'xhb',
+    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
+        placementId: getXaxisPlacementId(sizes),
     }),
+    labelAll: ['edn-UK', 'deal-FirstLook'],
 };
 
-const bidders: PrebidBidder[] = [];
+// There's an IX bidder for every size that the slot can take
+const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
+    if (config.switches.prebidIndexExchange) {
+        const indexSiteId = getIndexSiteId();
+        return slotSizes.map(size => ({
+            name: 'ix',
+            bidParams: (): PrebidIndexExchangeParams => ({
+                siteId: indexSiteId,
+                size,
+            }),
+        }));
+    }
+    return [];
+};
+
+const otherBidders: PrebidBidder[] = [];
 if (config.switches.prebidSonobi) {
-    bidders.push(sonobiBidder);
-}
-if (config.switches.prebidIndexExchange) {
-    bidders.push(indexExchangeBidder);
+    otherBidders.push(sonobiBidder);
 }
 if (config.switches.prebidTrustx) {
-    bidders.push(trustXBidder);
+    otherBidders.push(trustXBidder);
 }
 if (config.switches.prebidImproveDigital) {
-    bidders.push(improveDigitalBidder);
+    otherBidders.push(improveDigitalBidder);
 }
 if (config.switches.prebidXaxis) {
-    bidders.push(xaxisBidder);
+    otherBidders.push(xaxisBidder);
 }
 
-export { bidders };
+const bidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
+    const combinedBidders = otherBidders.slice();
+    Array.prototype.push.apply(
+        combinedBidders,
+        indexExchangeBidders(slotSizes)
+    );
+    return combinedBidders;
+};
+
+export const bids: (string, PrebidSize[]) => PrebidBid[] = (
+    slotId,
+    slotSizes
+) =>
+    bidders(slotSizes).map((bidder: PrebidBidder) => {
+        const bid: PrebidBid = {
+            bidder: bidder.name,
+            params: bidder.bidParams(slotId, slotSizes),
+        };
+        if (bidder.labelAny) {
+            bid.labelAny = bidder.labelAny;
+        }
+        if (bidder.labelAll) {
+            bid.labelAll = bidder.labelAll;
+        }
+        return bid;
+    });

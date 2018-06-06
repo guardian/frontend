@@ -9,7 +9,7 @@
     <h1 class="identity-title" data-test-id="reauthentication-header">Confirm your identity</h1>
     <p>Your privacy is important to us. Please re-enter your password to access your personal data.</p>
 
-    <form class="form js-signin-form" novalidate action="@idUrlBuilder.buildUrl("/reauthenticate", idRequest)" role="main" method="post">
+    <form class="form js-signin-form" novalidate action="@idUrlBuilder.buildUrl("/reauthenticate", idRequest)" role="form" method="post">
         @if(reauthenticationForm.globalError.isDefined) {
             <div class="form__error">@reauthenticationForm.globalErrors.map(_.message).mkString(", ")</div>
         }

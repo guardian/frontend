@@ -2,9 +2,10 @@ package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common.Logging
-import common.commercial.hosted.ContentUtils.{findLargestMainImageAsset, thumbnailUrl}
+import common.commercial.hosted.ContentUtils.{findLargestMainImageAsset, imageForSocialShare, thumbnailUrl}
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.{Content, MetaData}
+import views.support.{ImgSrc, Item1200, Item700}
 
 case class HostedArticlePage(
   override val id: String,
@@ -37,6 +38,10 @@ object HostedArticlePage extends Logging {
 
       val mainImageAsset = findLargestMainImageAsset(content)
 
+      val openGraphImages: Seq[String] = Seq(ImgSrc(imageForSocialShare(content), Item1200))
+      val twitterImage: String = ImgSrc(imageForSocialShare(content), Item700)
+
+
       HostedArticlePage(
         id = content.id,
         campaign = HostedCampaign.fromContent(content),
@@ -50,7 +55,13 @@ object HostedArticlePage extends Logging {
         thumbnailUrl = thumbnailUrl(content),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
-        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = mainImageAsset.flatMap(_.file).toList),
+        metadata = HostedMetadata.fromContent(content)
+          .copy(
+            openGraphImages = openGraphImages,
+            twitterPropertiesOverrides = Map(
+              "twitter:image" -> twitterImage
+            )
+          ),
         content = Content.make(content)
       )
     }

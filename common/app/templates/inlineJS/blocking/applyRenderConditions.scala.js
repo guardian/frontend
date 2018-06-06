@@ -1,4 +1,4 @@
-@()
+@()(implicit request: RequestHeader)
 @import conf.switches.Switches._
 
 /**
@@ -150,7 +150,7 @@
 
     // % used for padding-bottom isn't supported on Grid items in FireFox <53
     // unless explicit width is set on the element with padding-bottom.
-    // .force-percentage-padding ensures width is explicitly set so padding-bottom 
+    // .force-percentage-padding ensures width is explicitly set so padding-bottom
     // works on responsive-ratio media.
     // https://bugzilla.mozilla.org/show_bug.cgi?id=958714
     if(forcePercentagePadding()) {

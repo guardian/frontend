@@ -46,13 +46,15 @@ const Doughnut = (data: Object, o: Object): bonzo => {
         y: h / 2,
     };
 
-    const $svg = $.create(
-        '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMinYMin" class="chart chart--doughnut"></svg>'
-    ).attr({
-        width: w,
-        height: h,
-        viewbox: `0 0 ${[w, h].join(' ')}`,
-    });
+    const $svg = $
+        .create(
+            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMinYMin" class="chart chart--doughnut"></svg>'
+        )
+        .attr({
+            width: w,
+            height: h,
+            viewbox: `0 0 ${[w, h].join(' ')}`,
+        });
 
     // Segments
     let segmentAngle;
@@ -68,7 +70,7 @@ const Doughnut = (data: Object, o: Object): bonzo => {
     let startRadius = -halfPI;
 
     data.forEach(datum => {
-        segmentAngle = datum.value / totalValue * doublePI;
+        segmentAngle = (datum.value / totalValue) * doublePI;
         endRadius = startRadius + segmentAngle;
         arc = (endRadius - startRadius) % doublePI > Math.PI ? 1 : 0;
         // TODO (jamesgorrie): functionalise
@@ -139,39 +141,35 @@ const Doughnut = (data: Object, o: Object): bonzo => {
         // labels
         $t = svgEl('text').attr('class', 'chart__label');
         if (obj.showValues) {
-            $t
-                .append(
-                    svgEl('tspan')
-                        .attr('class', 'chart__label-text')
-                        .text(datum.label)
-                        .attr({
-                            x: 0,
-                            dy: '0',
-                        })
-                )
-                .append(
-                    svgEl('tspan')
-                        .attr('class', 'chart__label-value')
-                        .text(datum.value)
-                        .attr({
-                            x: 0,
-                            dy: '.9em',
-                        })
-                );
+            $t.append(
+                svgEl('tspan')
+                    .attr('class', 'chart__label-text')
+                    .text(datum.label)
+                    .attr({
+                        x: 0,
+                        dy: '0',
+                    })
+            ).append(
+                svgEl('tspan')
+                    .attr('class', 'chart__label-value')
+                    .text(datum.value)
+                    .attr({
+                        x: 0,
+                        dy: '.9em',
+                    })
+            );
         } else {
             $t.text(datum.label);
         }
-        $t
-            .attr({
-                transform: translate([
-                    Math.cos(a) * r + center.x,
-                    Math.sin(a) * r + center.y,
-                ]),
-            })
-            .appendTo($g);
+        $t.attr({
+            transform: translate([
+                Math.cos(a) * r + center.x,
+                Math.sin(a) * r + center.y,
+            ]),
+        }).appendTo($g);
 
         $g.appendTo($svg);
-        startRadius += datum.value / totalValue * doublePI;
+        startRadius += (datum.value / totalValue) * doublePI;
     });
 
     // Unit of measurement

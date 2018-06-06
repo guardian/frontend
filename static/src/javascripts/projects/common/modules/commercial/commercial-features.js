@@ -83,6 +83,7 @@ class CommercialFeatures {
 
         this.highMerch =
             this.dfpAdvertising &&
+            !this.adFree &&
             !isMinuteArticle &&
             !isHosted &&
             !isInteractive &&
@@ -94,6 +95,7 @@ class CommercialFeatures {
 
         this.outbrain =
             this.dfpAdvertising &&
+            !this.adFree &&
             switches.outbrain &&
             !noadsUrl &&
             !sensitiveContent &&

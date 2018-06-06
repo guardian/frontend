@@ -26,11 +26,7 @@ case object RedirectToEmailValidationFromEmailPrefsOrConsentJourney extends Prof
   override def isAllowedFrom(url: String): Boolean = (url startsWith "/email-prefs") || (url startsWith "/consents")
 }
 
-case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents/staywithus") {
-  override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
-}
-
-case object RedirectToNewsletterConsentsFromEmailPrefs extends ProfileRedirect("/consents/newsletters") {
+case object RedirectToConsentsFromEmailPrefs extends ProfileRedirect("/consents") {
   override def isAllowedFrom(url: String): Boolean = url contains "email-prefs"
 }
 
@@ -50,36 +46,20 @@ class ProfileRedirectService(
 
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
 
-  def toConsentsRedirect[A](user: User, request: RequestHeader): Future[ProfileRedirect] = {
-    user.statusFields.isUserEmailValidated match {
-      case true => Future.successful(NoRedirect)
-      case false => Future.successful(RedirectToEmailValidationFromEmailPrefsOrConsentJourney)
-    }
-  }
+  def toConsentsRedirect[A](user: User, request: RequestHeader): ProfileRedirect =
+    if (user.statusFields.isUserEmailValidated) NoRedirect
+    else RedirectToEmailValidationFromEmailPrefsOrConsentJourney
 
-  def toProfileRedirect[A](user: User, request: RequestHeader): Future[ProfileRedirect] = {
 
-    def userHasRepermissioned: Boolean = user.statusFields.hasRepermissioned.contains(true)
-    def userEmailValidated: Boolean = user.statusFields.isUserEmailValidated
+  def toProfileRedirect[A](user: User, request: RequestHeader): ProfileRedirect = {
+
+    val userHasRepermissioned = user.statusFields.hasRepermissioned.contains(true)
+    val userEmailValidated = user.statusFields.isUserEmailValidated
 
     (userEmailValidated, userHasRepermissioned) match {
-      case (false, _) =>
-        Future.successful(RedirectToEmailValidationFromEmailPrefsOrConsentJourney)
-
-      case (true, false) =>
-        Future.successful(RedirectToConsentsFromEmailPrefs)
-
-      case (true, true) =>
-        newsletterService.subscriptions(
-          user.getId,
-          idRequestParser(request).trackingData
-        ).map {
-          emailFilledForm =>
-            if (newsletterService.getV1EmailSubscriptions(emailFilledForm).isEmpty)
-              NoRedirect
-            else
-              RedirectToNewsletterConsentsFromEmailPrefs
-        }
+      case (false, _) => RedirectToEmailValidationFromEmailPrefsOrConsentJourney
+      case (true, false) => RedirectToConsentsFromEmailPrefs
+      case (true, true) => NoRedirect
     }
   }
 

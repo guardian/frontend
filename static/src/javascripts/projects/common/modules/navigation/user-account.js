@@ -52,7 +52,7 @@ const showMyAccountIfNecessary = (): void => {
             return fastdom
                 .write(() => {
                     signIns.forEach(signIn => {
-                        signIn.classList.add('u-h');
+                        signIn.remove();
                     });
 
                     accountActionsLists.forEach(accountActions => {

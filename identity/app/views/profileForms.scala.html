@@ -41,7 +41,7 @@
             @dataTestId.map{idValue => data-test-id="@idValue"}
             @{
                 if(redirect.isAllowedFrom(url))
-                    Html(s"href='${redirect.url}' data-tabs-ignore='true'")
+                Html(s"href='${idUrlBuilder.buildUrl(redirect.url, ("returnUrl", idUrlBuilder.buildUrl(url)))}' data-tabs-ignore='true'")
                 else
                     Html(s"href='$url'")
             }
@@ -72,10 +72,10 @@
 <div class="tabs">
 
     <div class="identity-wrapper-header">
-        <div class="identity-wrapper monocolumn-wrapper">
+        <div class="identity-wrapper identity-wrapper--wide monocolumn-wrapper">
                 <h1 class="identity-title" data-test-id="edit-profile-header">Edit your profile</h1>
                 <ol class="tabs__container tabs__container--multiple js-tabs js-account-profile-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
-                    @tab(1, "Public", "/public/edit", None, redirect = redirectDecision)
+                    @tab(1, "Public profile", "/public/edit", None, redirect = redirectDecision)
 
                     @tab(2, "Account details", "/account/edit", Some("edit-account-details"), optionalClass="qa-account-details-tab", redirect = redirectDecision)
 
@@ -85,11 +85,11 @@
 
                     @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-contributions-tab", redirect = redirectDecision)
 
-                    @tab(6, "Emails", "/email-prefs", None, optionalClass="qa-privacy-tab", redirect = redirectDecision)
+                    @tab(6, "Emails & marketing", "/email-prefs", None, optionalClass="qa-privacy-tab", redirect = redirectDecision)
                 </ol>
         </div>
     </div>
-    <div class="identity-wrapper identity-wrapper--mma-body monocolumn-wrapper js-account-profile-forms">
+    <div class="identity-wrapper identity-wrapper--mma-body identity-wrapper--wide monocolumn-wrapper js-account-profile-forms">
 
                 <div class=" u-cf identity-section">
 
