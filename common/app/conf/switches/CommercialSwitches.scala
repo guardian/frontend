@@ -417,13 +417,13 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val includePersonalisedAdsConsent: Switch = Switch(
+  val enableConsentManagementService: Switch = Switch(
     group = Commercial,
-    name = "include-personalised-ads-consent",
-    description = "Include a flag with consent status in ad calls.",
+    name = "enable-consent-management-service",
+    description = "Enable our CMP service to run on each page, so that vendors can query the consent status.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 5, 25),
+    sellByDate = new LocalDate(2018, 8, 23),
     exposeClientSide = true
   )
 }

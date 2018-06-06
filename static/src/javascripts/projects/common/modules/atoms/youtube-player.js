@@ -2,6 +2,10 @@
 import fastdom from 'fastdom';
 
 import { loadScript } from 'lib/load-script';
+import {
+    getAdConsentState,
+    thirdPartyTrackingAdConsent,
+} from 'common/modules/commercial/ad-prefs.lib';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -58,13 +62,21 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: HTMLElement) => {
     }
 };
 
-const setupPlayer = (videoId: string, onReady, onStateChange) =>
-    new window.YT.Player(videoId, {
+const setupPlayer = (videoId: string, onReady, onStateChange) => {
+    const wantPersonalisedAds: boolean =
+        getAdConsentState(thirdPartyTrackingAdConsent) !== false;
+    return new window.YT.Player(videoId, {
         events: {
             onReady,
             onStateChange,
         },
+        embedConfig: {
+            adsConfig: {
+                nonPersonalizedAd: !wantPersonalisedAds,
+            },
+        },
     });
+};
 
 const hasPlayerStarted = event => event.target.getCurrentTime() > 0;
 

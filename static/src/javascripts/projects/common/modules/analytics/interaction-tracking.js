@@ -1,5 +1,4 @@
 // @flow
-import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { session } from 'lib/storage';
 import {
@@ -97,7 +96,6 @@ const init = (options: Object = {}): void => {
         loc = options.location; // allow a fake location to be passed in for testing
     }
     addHandlers();
-    config.set('modules.tracking.ready', Promise.resolve());
 };
 
 export default {

@@ -12,22 +12,31 @@ class FormstackIframe {
 
     init(): void {
         // Setup postMessage listener for events from "modules/identity/formstack"
-        window.addEventListener('message', (event: MessageEvent): void => {
-            if (event.origin === config.get('page.idUrl')) {
-                this.onMessage(event);
+        window.addEventListener(
+            'message',
+            (event: MessageEvent): void => {
+                if (event.origin === config.get('page.idUrl')) {
+                    this.onMessage(event);
+                }
             }
-        });
+        );
 
-        mediator.on('window:throttledResize', (): void => {
-            this.refreshHeight();
-        });
+        mediator.on(
+            'window:throttledResize',
+            (): void => {
+                this.refreshHeight();
+            }
+        );
 
         // Listen for load of form confirmation or error page,
         // which has no form, so won't instantiate the Formstack module
-        this.el.addEventListener('load', (): void => {
-            this.show();
-            this.refreshHeight();
-        });
+        this.el.addEventListener(
+            'load',
+            (): void => {
+                this.show();
+                this.refreshHeight();
+            }
+        );
     }
 
     onMessage(event: MessageEvent): void {

@@ -21,8 +21,8 @@ const ThirdPartyConsentWording: ConsentWording = {
         text: `You can change your mind at any time by taking the steps set out in our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>, where you can also learn more about what cookies are and how they are used by The Guardian.`,
     },
     noCheckbox: {
-        title: 'I want to manage the use of advertising cookies',
-        text: `This option will reduce the number of advertising partners who will serve you with relevant adverts, although you may still see some advertising that has been tailored to you. If you wish to take further steps to disable cookies on The Guardian, including advertising cookies, please follow the instructions in our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>.`,
+        title: 'I want to manage relevant advertising',
+        text: `Choosing this option will immediately reduce the number of advertising partners who will serve you with relevant adverts, although you may still see some advertising that has been tailored to you. However, if you wish to disable cookies on The Guardian, including advertising cookies, you will need to take further steps. Please follow the instructions in our <a class="u-underline" href="https://www.theguardian.com/info/cookies">cookie policy</a>.`,
     },
 };
 

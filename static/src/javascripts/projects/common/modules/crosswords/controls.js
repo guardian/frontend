@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component } from 'preact-compat';
 import { ConfirmButton } from 'common/modules/crosswords/confirm-button';
 
 const buttonClassName = 'button button--primary';
@@ -83,9 +83,7 @@ class Controls extends Component<*, *> {
             if (hasSolutions) {
                 controls.clue.unshift(
                     <button
-                        className={`${buttonClassName} ${
-                            buttonCurrentClassName
-                        }`}
+                        className={`${buttonClassName} ${buttonCurrentClassName}`}
                         onClick={this.props.crossword.onCheat.bind(
                             this.props.crossword
                         )}
@@ -96,9 +94,7 @@ class Controls extends Component<*, *> {
                 );
                 controls.clue.unshift(
                     <button
-                        className={`${buttonClassName} ${
-                            buttonCurrentClassName
-                        }`}
+                        className={`${buttonClassName} ${buttonCurrentClassName}`}
                         onClick={this.props.crossword.onCheck.bind(
                             this.props.crossword
                         )}

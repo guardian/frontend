@@ -55,21 +55,34 @@
     )
 }
 
-@nonElectronicOptOutContent = {
-    @views.html.profile.nonElectronicOptOut(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
+@nonElectronicContactContent = {
+    @views.html.profile.nonElectronicContact(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
 }
 
-@nonElectronicOptOutStep = @{
+@nonElectronicContactStep = @{
     ConsentStep(
-        name = "nonElectronicOptOut",
+        name = "nonElectronicContact",
         title = "How else can we get in touch with you?",
-        content = nonElectronicOptOutContent,
+        content = nonElectronicContactContent,
+        show = true
+    )
+}
+
+@profilingConsentOptOutContent = {
+    @views.html.profile.profilingConsent(idUrlBuilder, idRequest, forms.privacyForm, user)(request, messages)
+}
+
+@profilingConsentOptOutStep = @{
+    ConsentStep(
+        name="profilingConsentOptOut",
+        title ="Using your data for marketing analysis",
+        content = profilingConsentOptOutContent,
         show = true
     )
 }
 
 @marketingStepContent = {
-    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" method="post">
         @views.html.helper.CSRF.formField
         <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
@@ -98,22 +111,6 @@
     )
 }
 
-@introGdprCampaignStep= @{
-    ConsentStep(
-        name = "intro",
-        title = "Please select the emails you wish to continue receiving",
-        help = List(
-            ConsentStepHelpText(
-                s"Why are we asking you to re-subscribe? <strong><a class='u-underline' data-link-name='gdpr-oi-campaign : consents : to-landing' href='${LinkTo("https://www.theguardian.com/info/ng-interactive/2018/feb/21/stay-with-us")}'>Find out here</a></strong>"
-            ),
-            ConsentStepHelpText(
-                "You can change your preferences anytime by signing in, clicking My Account, then selecting Email Preferences."
-            )
-        ),
-        content = selectAllCheckboxContent
-    )
-}
-
 @introThankYouStep= @{
     ConsentStep(
         name = "intro",
@@ -133,7 +130,7 @@
 @introStep = @{
     ConsentStep(
         name = "intro",
-        title = "Please select the emails you wish to continue receiving",
+        title = "Please select the emails you wish to receive",
         help = List(
             ConsentStepHelpText(
                 "You can change your preferences anytime by signing in, clicking My Account, then selecting Email Preferences."
@@ -147,7 +144,8 @@
 @defaultJourney = @{List(
     marketingConsentStep,
     smsStep,
-    nonElectronicOptOutStep
+    nonElectronicContactStep,
+    profilingConsentOptOutStep
 )}
 
 @confirmModal = {
@@ -189,15 +187,6 @@
     " data-journey="@journey" data-component="identity-consent-journey-@journey">
         @renderBlocks(
             journey match {
-                case NewsletterConsentsJourney => {
-                    List(
-                        ConsentStep(
-                            name = "error",
-                            title = "Sorry",
-                            content = Html("<p class=\"form__error\">Something went wrong updating your newsletters.</p>")
-                        )
-                    )
-                }
                 case ThankYouConsentsJourney => {
                     List(
                         ConsentBanner(
@@ -207,12 +196,7 @@
                     ) ++ defaultJourney
 
                 }
-                case GdprCampaignConsentsJourney => {
-                    List(
-                        introGdprCampaignStep
-                    ) ++ defaultJourney
-                }
-                case DefaultConsentsJourney => {
+                case _ => {
                     List(
                         introStep
                     ) ++ defaultJourney
@@ -242,15 +226,6 @@
 
     </div>
 
-}
-
-@if(skin.contains("gdpr-oi-campaign")) {
-    <div class="identity-consent-hero identity-consent-hero--gdpr-oi-campaign">
-        <div class="identity-wrapper monocolumn-wrapper">
-            <img src="@Static("images/identity/missing.svg")" aria-hidden="true"/>
-            <h1 class="u-h">Missing Something?</h1>
-        </div>
-    </div>
 }
 
 <div class="identity-wrapper monocolumn-wrapper">

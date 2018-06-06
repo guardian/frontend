@@ -4,7 +4,7 @@
 @(hideNavigation: Boolean = false)(implicit page: model.Page, request: RequestHeader)
 
 <header class="identity-header" data-component="identity-nav">
-    <div class="gs-container identity-header__container">
+    <div class="identity-wrapper identity-wrapper--wide monocolumn-wrapper identity-header__container">
 
         @if(!hideNavigation) {
             <div class="identity-header__links">
@@ -17,7 +17,7 @@
                         aria-controls="my-account-dropdown"
                         data-link-name="identity-nav : menu : toggle"
                         >
-                            <span>My account</span>
+                            <span class="identity-header__nav-name js_identity-header__nav-name">My account</span>
                         </span>
                     </label>
                     <input type="checkbox" value="open" id="identity-header-account-menu-fallback" class="identity-header__nav-fallback u-h" title="Open Menu" />

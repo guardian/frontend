@@ -39,6 +39,11 @@
             margin-top: $gs-baseline * 4;
         }
 
+        &.identity-ad-prefs-area__section--help {
+            margin-top: $gs-baseline * 2;
+            opacity: .75;
+        }
+
     }
 
     .identity-title--small {
@@ -61,8 +66,15 @@
 .identity-ad-prefs-manager__footer {
     margin-top: $gs-gutter * 2;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+
+    @include mq(mobileLandscape) {
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+    }
 
     /*the page auto scrolls to
     put the button in the viewport,
@@ -71,15 +83,19 @@
     padding-bottom: $gs-gutter / 2;
 
     > .manage-account__button {
+        opacity: .9999; /*this fixes the button on uc browser somehow*/
         &[disabled] {
             pointer-events: none;
             opacity: .5;
         }
     }
     > .identity-ad-prefs-manager__flash {
-        margin-left: $gs-gutter;
         display: inline-block;
         vertical-align: middle;
+        margin-top: $gs-gutter / 4;
+        @include mq(mobileLandscape) {
+            margin: 0 0 0 $gs-gutter;
+        }
     }
 }
 
@@ -87,23 +103,9 @@
     color: $status-positive-garnett;
     font-weight: bold;
     opacity: 0;
+    transition: .1s;
     &.identity-ad-prefs-manager__flash--flashing {
-        animation: identity-ad-prefs-manager-flash 2s both;
-    }
-}
-
-@keyframes identity-ad-prefs-manager-flash {
-    0% {
-        opacity: 0;
-    }
-    5% {
         opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
     }
 }
 

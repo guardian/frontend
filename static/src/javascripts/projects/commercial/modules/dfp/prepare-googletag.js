@@ -71,23 +71,21 @@ const setDfpListeners = (): void => {
 };
 
 const setPersonalisedAds = (): void => {
-    if (config.switches.includePersonalisedAdsConsent) {
-        const wantPersonalisedAds: ?boolean = getAdConsentState(
-            thirdPartyTrackingAdConsent
-        );
-        switch (wantPersonalisedAds) {
-            // personalised ads have been explicitly accepted
-            case true:
-                window.googletag.pubads().setRequestNonPersonalizedAds(0);
-                break;
-            // personalised ads have been explicitly rejected
-            case false:
-                window.googletag.pubads().setRequestNonPersonalizedAds(1);
-                break;
-            // no preference has been specified
-            default:
-                window.googletag.pubads();
-        }
+    const wantPersonalisedAds: ?boolean = getAdConsentState(
+        thirdPartyTrackingAdConsent
+    );
+    switch (wantPersonalisedAds) {
+        // personalised ads have been explicitly accepted
+        case true:
+            window.googletag.pubads().setRequestNonPersonalizedAds(0);
+            break;
+        // personalised ads have been explicitly rejected
+        case false:
+            window.googletag.pubads().setRequestNonPersonalizedAds(1);
+            break;
+        // no preference has been specified
+        default:
+            window.googletag.pubads();
     }
 };
 

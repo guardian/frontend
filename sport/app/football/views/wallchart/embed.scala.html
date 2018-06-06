@@ -1,4 +1,4 @@
-@(page: model.Page, competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStageLike])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, competition: model.Competition, competitionStages: List[football.model.CompetitionStageLike], next: Option[pa.FootballMatch])(implicit request: RequestHeader, context: model.ApplicationContext)
 <!DOCTYPE html>
 <html class="js-off is-not-modern id--signed-out" lang="en-GB">
     <head>
@@ -8,7 +8,7 @@
     </head>
     <body id="top" itemscope itemtype="http://schema.org/WebPage">
         <div id="js-context" class="football-wallchart-embed">
-            @wallchart(competition, competitionStages)
+            @wallchart(competition, competitionStages, next)
             @fragments.analytics.base()(page, request, context)
         </div>
     </body>

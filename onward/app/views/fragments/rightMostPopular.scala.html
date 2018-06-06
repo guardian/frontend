@@ -20,7 +20,7 @@
                             </div>
                         }
                         <div class="media__body">
-                            <h4 class="right-most-popular-item__headline">@trail.properties.linkText</h4>
+                            <h4 class="right-most-popular-item__headline">@trail.header.headline</h4>
                             @trail.properties.maybeContent.map { content =>
                                 @if(content.tags.tags.exists(_.id == "tone/news")) {
                                     @fragments.contentAgeNotice(ContentOldAgeDescriber(content))

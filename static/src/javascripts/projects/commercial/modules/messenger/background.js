@@ -152,15 +152,13 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
 
             // we should scroll at a rate such that we don't run out of background (when non-repeating)
             const parallaxBackgroundMovement = Math.floor(
-                rect.bottom / (windowHeight + backgroundHeight) * 130
+                (rect.bottom / (windowHeight + backgroundHeight)) * 130
             );
 
             // #? Flow does not currently list backgroundPositionY in
             // CSSStyleDeclaration: https://github.com/facebook/flow/issues/396
             // ...So we have to use a more convoluted hack-around:
-            (background.style: any).backgroundPositionY = `${
-                parallaxBackgroundMovement
-            }%`;
+            (background.style: any).backgroundPositionY = `${parallaxBackgroundMovement}%`;
         });
     };
 
@@ -198,12 +196,15 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
 };
 
 const init = (register: RegisterListeners): void => {
-    register('background', (specs, ret, iframe): Promise<any> => {
-        if (iframe && specs) {
-            return setBackground(specs, iframe.closest('.js-ad-slot'));
+    register(
+        'background',
+        (specs, ret, iframe): Promise<any> => {
+            if (iframe && specs) {
+                return setBackground(specs, iframe.closest('.js-ad-slot'));
+            }
+            return Promise.resolve();
         }
-        return Promise.resolve();
-    });
+    );
 };
 
 export const _ = { setBackground, getStylesFromSpec };

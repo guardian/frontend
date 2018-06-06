@@ -60,9 +60,7 @@ const skipAd = function skipAd(mediaType: string, skipTimeout: number): void {
                                             ? 'You may skip this advert in '
                                             : 'Your video will start in '
                                     }
-                                    <span class="js-skip-remaining-time">${
-                                        skipTimeout
-                                    }</span> seconds
+                                    <span class="js-skip-remaining-time">${skipTimeout}</span> seconds
                                 </span>
                             </div>`;
 

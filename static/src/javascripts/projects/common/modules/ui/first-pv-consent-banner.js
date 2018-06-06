@@ -8,15 +8,13 @@ import {
     setAdConsentState,
     allAdConsents,
 } from 'common/modules/commercial/ad-prefs.lib';
-import userPrefs from 'common/modules/user-prefs';
-import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
-import type { Banner } from 'common/modules/ui/bannerPicker';
-
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
-
-const lifeTimeViewsKey: string = 'first-pv-consent.lifetime-views';
-const lifetimeDisplayEventKey: string = 'first-pv-consent : viewed-times :';
+import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
+import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
+import type { Banner } from 'common/modules/ui/bannerPicker';
+import { firstPvConsentBlocker } from 'common/modules/experiments/tests/first-pv-consent-blocker';
+import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 
 type Template = {
     heading: string,
@@ -35,19 +33,21 @@ type Links = {
     cookies: string,
 };
 
+const displayEventKey: string = 'first-pv-consent : display';
+const messageCode: string = 'first-pv-consent';
+
 const links: Links = {
     privacy: 'https://www.theguardian.com/help/privacy-policy',
     cookies: 'https://www.theguardian.com/info/cookies',
 };
-const messageCode: string = 'first-pv-consent';
 
 const template: Template = {
     heading: `Your privacy`,
     consentText: [
-        `We use cookies to improve your experience on our site and to show you relevant advertising.`,
-        `To find out more, read our updated <a data-link-name="first-pv-consent : to-privacy" href="${
+        `We use cookies to improve your experience on our site and to show you relevant&nbsp;advertising.`,
+        `To find out more, read our updated <a class="u-underline" data-link-name="first-pv-consent : to-privacy" href="${
             links.privacy
-        }">privacy policy</a> and <a data-link-name="first-pv-consent : to-cookies" href="${
+        }">privacy policy</a> and <a class="u-underline" data-link-name="first-pv-consent : to-cookies" href="${
             links.cookies
         }">cookie policy</a>.`,
     ],
@@ -66,24 +66,37 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     }</div>
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${tpl.consentText
         .map(_ => `<p>${_}</p>`)
-        .join('')}</div>
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--actions">
-        <button 
-            data-link-name="first-pv-consent : agree" 
-            class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
-                classes.agree
-            }"
-        >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
-        <a 
-            href="${tpl.linkToPreferences}" 
-            data-link-name="first-pv-consent : to-prefs" 
-            class="site-message--first-pv-consent__link"
-        >${tpl.choicesButton}</a>
+        .join('')}
+        <div class="site-message--first-pv-consent__actions">
+            <button 
+                data-link-name="first-pv-consent : agree" 
+                class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
+                    classes.agree
+                }"
+            >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
+            <a 
+                href="${tpl.linkToPreferences}" 
+                data-link-name="first-pv-consent : to-prefs" 
+                class="site-message--first-pv-consent__link u-underline"
+            >${tpl.choicesButton}</a>
+        </div>
     </div>
 `;
 
 const isInEU = (): boolean =>
     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
+
+const isNotInHelpOrInfoPage = (): boolean =>
+    ['info', 'help'].every(_ => _ !== config.get('page.section'));
+
+const hasUnsetAdChoices = (): boolean =>
+    allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
+
+const isInTestVariant = (): boolean => {
+    const variant = getVariant(firstPvConsentBlocker, 'variant');
+    if (!variant) return false;
+    return isInVariant(firstPvConsentBlocker, variant);
+};
 
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
@@ -91,12 +104,6 @@ const onAgree = (msg: Message): void => {
     });
     msg.hide();
 };
-
-const hasUnsetAdChoices = (): boolean =>
-    allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
-
-const canShow = (): Promise<boolean> =>
-    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -107,15 +114,20 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
+const canShow = (): Promise<boolean> =>
+    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
+
+const canBlockThePage = (): boolean =>
+    [isInTestVariant(), isNotInHelpOrInfoPage()].every(_ => _ === true);
+
 const show = (): void => {
-    userPrefs.set(lifeTimeViewsKey, (userPrefs.get(lifeTimeViewsKey) || 0) + 1);
-    trackInteraction(
-        `${lifetimeDisplayEventKey} ${userPrefs.get(lifeTimeViewsKey)}`
-    );
+    upAlertViewCount();
+    trackInteraction(displayEventKey);
 
     const msg = new Message(messageCode, {
         important: true,
         permanent: true,
+        blocking: canBlockThePage(),
         customJs: () => {
             [
                 ...document.querySelectorAll(`.${bindableClassNames.agree}`),
@@ -135,6 +147,7 @@ const firstPvConsentBanner: Banner = {
 
 export const _ = {
     onAgree,
+    canBlockThePage,
     bindableClassNames,
 };
 

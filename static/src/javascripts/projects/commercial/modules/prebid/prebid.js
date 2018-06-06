@@ -22,6 +22,12 @@ import {
 
 const bidderTimeout = 1500;
 
+const consentManagement = {
+    cmpApi: 'iab',
+    timeout: 200,
+    allowAuctionWithoutConsent: true,
+};
+
 class PrebidAdUnit {
     code: ?string;
     bids: ?(PrebidBid[]);
@@ -48,13 +54,21 @@ class PrebidAdUnit {
 
 class PrebidService {
     static initialise(): void {
-        window.pbjs.setConfig({
-            bidderTimeout,
-            priceGranularity,
-        });
+        if (config.switches.enableConsentManagementService) {
+            window.pbjs.setConfig({
+                bidderTimeout,
+                priceGranularity,
+                consentManagement,
+            });
+        } else {
+            window.pbjs.setConfig({
+                bidderTimeout,
+                priceGranularity,
+            });
+        }
 
-        // gather analytics from 0.01% of pageviews
-        const inSample = getRandomIntInclusive(1, 10000) === 1;
+        // gather analytics from 10% of page views
+        const inSample = getRandomIntInclusive(1, 10) === 1;
         if (
             config.switches.prebidAnalytics &&
             (inSample || config.page.isDev)

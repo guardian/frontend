@@ -243,9 +243,8 @@ export class SearchTool {
         this.$input.val(inputValue);
     }
 
-    renderList(results: Array<City>, numOfResults: number): void {
+    renderList(results: Array<City>, resultsToShow: number): void {
         const docFragment = document.createDocumentFragment();
-        const resultsToShow = results.length - numOfResults;
 
         results.slice(0, resultsToShow).forEach((item, index) => {
             const li = document.createElement('li');
@@ -253,9 +252,7 @@ export class SearchTool {
             li.className = 'search-tool__item';
             li.innerHTML =
                 `<a role="button" href="#${item.id}"` +
-                ` id="${
-                    index
-                }sti" class="js-search-tool-link search-tool__link${
+                ` id="${index}sti" class="js-search-tool-link search-tool__link${
                     index === 0 ? ' active"' : '"'
                 } data-link-name="weather-search-tool" data-weather-id="${
                     item.id

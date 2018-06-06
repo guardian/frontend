@@ -3,6 +3,8 @@ import { krux } from 'common/modules/commercial/krux';
 
 const { url, shouldRun } = krux;
 
+jest.mock('ophan/ng', () => null);
+
 jest.mock('lib/config', () => ({
     switches: { krux: false },
 }));

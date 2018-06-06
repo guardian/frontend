@@ -20,7 +20,7 @@ object CommercialClientLogging extends Experiment(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
   owners = Owner.group(SwitchGroup.Commercial),
-  sellByDate = new LocalDate(2018, 5, 31),
+  sellByDate = new LocalDate(2018, 6, 29),
   participationGroup = Perc1A
 )
 
@@ -28,7 +28,7 @@ object CommercialAdRefresh extends Experiment(
   name = "commercial-ad-refresh",
   description = "Users in this experiment will have their ad slots refreshed after 30 seconds",
   owners = Seq(Owner.withGithub("katebee")),
-  sellByDate = new LocalDate(2018, 5, 31),
+  sellByDate = new LocalDate(2018, 9, 27),
   participationGroup = Perc50
 )
 

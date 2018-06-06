@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.152"
+  val identityLibVersion = "3.159"
   val awsVersion = "1.11.240"
   val capiVersion = "12.0"
   val faciaVersion = "2.6.0"
@@ -35,7 +35,6 @@ object Dependencies {
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
-  val identityRequest = "com.gu.identity" %% "identity-request" % identityLibVersion
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.9.9"
   val jodaConvert = "org.joda" % "joda-convert" % "1.8.3"

@@ -14,29 +14,40 @@ const fullscreener = function fullscreener(): void {
 
     bonzo(clickbox).appendTo(this.contentEl());
 
-    bean.on(clickbox, 'click', (e: bean): void => {
-        if (this.paused()) {
-            this.play();
-        } else {
-            this.pause();
+    bean.on(
+        clickbox,
+        'click',
+        (e: bean): void => {
+            if (this.paused()) {
+                this.play();
+            } else {
+                this.pause();
+            }
+            e.stop();
         }
-        e.stop();
-    });
+    );
 
-    bean.on(clickbox, 'dblclick', (e: bean): void => {
-        e.stop();
-        if (this.isFullscreen()) {
-            this.exitFullscreen();
-        } else {
-            this.requestFullscreen();
+    bean.on(
+        clickbox,
+        'dblclick',
+        (e: bean): void => {
+            e.stop();
+            if (this.isFullscreen()) {
+                this.exitFullscreen();
+            } else {
+                this.requestFullscreen();
+            }
         }
-    });
+    );
 
-    this.on('fullscreenchange', (): void => {
-        if (this.isFullscreen()) {
-            this.trigger('player:fullscreen');
+    this.on(
+        'fullscreenchange',
+        (): void => {
+            if (this.isFullscreen()) {
+                this.trigger('player:fullscreen');
+            }
         }
-    });
+    );
 };
 
 export { fullscreener };

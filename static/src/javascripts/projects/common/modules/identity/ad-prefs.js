@@ -1,7 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import React, { Component, render } from 'preact-compat';
 import { FeedbackFlashBox } from 'common/modules/identity/ad-prefs/FeedbackFlashBox';
 import { ConsentBox } from 'common/modules/identity/ad-prefs/ConsentBox';
 
@@ -9,37 +8,35 @@ import fastdom from 'lib/fastdom-promise';
 import {
     getAdConsentState,
     setAdConsentState,
-    allAdConsents,
+    getAllAdConsentsWithState,
 } from 'common/modules/commercial/ad-prefs.lib';
-import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
-
-type AdConsentWithState = {
-    consent: AdConsent,
-    state: ?boolean,
-};
+import type {
+    AdConsent,
+    AdConsentWithState,
+} from 'common/modules/commercial/ad-prefs.lib';
 
 type AdPrefsWrapperProps = {
     getAdConsentState: (consent: AdConsent) => ?boolean,
     setAdConsentState: (consent: AdConsent, state: boolean) => void,
-    allAdConsents: AdConsent[],
+    initialConsentsWithState: AdConsentWithState[],
 };
 
 const rootSelector: string = '.js-manage-account__ad-prefs';
 
 class AdPrefsWrapper extends Component<
     AdPrefsWrapperProps,
-    { consentsWithState: AdConsentWithState[], changesPending: boolean }
+    {
+        consentsWithState: AdConsentWithState[],
+        changesPending: boolean,
+        flashing: boolean,
+    }
 > {
     constructor(props: AdPrefsWrapperProps): void {
         super(props);
         this.state = {
             changesPending: false,
-            consentsWithState: this.props.allAdConsents.map(
-                (consent: AdConsent) => ({
-                    consent,
-                    state: this.props.getAdConsentState(consent),
-                })
-            ),
+            flashing: false,
+            consentsWithState: [...this.props.initialConsentsWithState],
         };
     }
 
@@ -56,6 +53,7 @@ class AdPrefsWrapper extends Component<
         this.setState({
             consentsWithState,
             changesPending,
+            flashing: false,
         });
     }
 
@@ -69,9 +67,9 @@ class AdPrefsWrapper extends Component<
                 );
             }
         });
-        if (this.FeedbackFlashBoxRef) this.FeedbackFlashBoxRef.flash();
         this.setState({
             changesPending: false,
+            flashing: true,
         });
     }
 
@@ -109,11 +107,8 @@ class AdPrefsWrapper extends Component<
                         type="submit">
                         Save my settings
                     </button>
-                    <FeedbackFlashBox
-                        ref={child => {
-                            this.FeedbackFlashBoxRef = child;
-                        }}>
-                        Saved
+                    <FeedbackFlashBox flashing={this.state.flashing}>
+                        Your settings have been saved.
                     </FeedbackFlashBox>
                 </div>
             </form>
@@ -129,7 +124,7 @@ const enhanceAdPrefs = (): void => {
                 fastdom.write(() => {
                     render(
                         <AdPrefsWrapper
-                            allAdConsents={allAdConsents}
+                            initialConsentsWithState={getAllAdConsentsWithState()}
                             getAdConsentState={getAdConsentState}
                             setAdConsentState={setAdConsentState}
                         />,

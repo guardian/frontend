@@ -17,6 +17,7 @@ jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
     getUserFromCookie: jest.fn(),
 }));
+jest.mock('ophan/ng', () => null);
 jest.mock('common/modules/analytics/beacon', () => {});
 jest.mock('lib/detect', () => ({
     hasCrossedBreakpoint: jest.fn(),
@@ -143,7 +144,8 @@ describe('DFP', () => {
             document.body.innerHTML = domSnippet;
         }
 
-        $style = $.create('<style type="text/css"></style>')
+        $style = $
+            .create('<style type="text/css"></style>')
             .html(`body:after{ content: "wide"}`)
             .appendTo('head');
         const pubAds = {

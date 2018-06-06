@@ -76,7 +76,7 @@ const addContentEvents = (
         'timeupdate',
         throttle(() => {
             const percent = Math.round(
-                player.currentTime() / player.duration() * 100
+                (player.currentTime() / player.duration()) * 100
             );
 
             if (percent >= 25) {
@@ -196,7 +196,7 @@ const bindContentEvents = (player: Object) => {
         },
         timeupdate() {
             const progress = Math.round(
-                parseInt(player.currentTime() / player.duration() * 100, 10)
+                parseInt((player.currentTime() / player.duration()) * 100, 10)
             );
             QUARTILES.reverse().some(quart => {
                 if (progress >= quart) {

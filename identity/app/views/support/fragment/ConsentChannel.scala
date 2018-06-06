@@ -51,6 +51,8 @@ object ConsentChannel {
   def isMarketResearch(consentField: Field, user: User) : Boolean =
     consentField("id").value.exists(_ == MarketResearchConsentChannel.id)
 
+  def isProfilingChannel(consentField:Field, user: User): Boolean =
+    consentField("id").value.exists(_ == ProfilingConsentChannel.id)
 
   def isChannel(consentField: Field): Boolean = {
     consentField("id").value.exists { id => channelsIds.contains(id) }
