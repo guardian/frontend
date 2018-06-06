@@ -52,9 +52,7 @@ const bindNavToggle = (buttonEl: HTMLElement): void => {
 };
 
 const initHeader = (): void => {
-    const loaders = [
-        ['.js_identity-header__nav-toggle', bindNavToggle],
-    ];
+    const loaders = [['.js_identity-header__nav-toggle', bindNavToggle]];
     loadEnhancers(loaders);
 };
 
