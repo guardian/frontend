@@ -37,9 +37,9 @@
                         }
                         class="@{(List("menu-item__title") ++ item.classList).mkString(" ")}"
                     >
-                        @if(item.icon.isDefined) {
-                            @item.icon
-                        }
+                        @(item.icon.map { icon =>
+                            views.html.fragments.inlineSvg(icon, "icon", List("menu-item__icon"))
+                        })
                         @item.label
                     </a>
                 </li>

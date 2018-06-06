@@ -12,7 +12,7 @@ object DropdownMenus {
     label: String,
     classList: List[String] = List(),
     parentClassList: List[String] = List(),
-    icon: Option[Html] = None,
+    icon: Option[String] = None,
     divider: Boolean = false,
   )
 
@@ -59,7 +59,7 @@ object DropdownMenus {
       linkName = Some("sign out"),
       label = "Sign out",
       icon = Some(
-        views.html.fragments.inlineSvg("log-off", "icon", List("menu-item__icon"))
+        "log-off"
       ),
       divider = true,
     )

@@ -44,9 +44,9 @@
                     data-link-name="nav2 : topbar : @item.linkName"
                     }
             >
-            @if(item.icon.isDefined) {
-                @item.icon
-            }
+                @(item.icon.map { icon =>
+                    views.html.fragments.inlineSvg(icon, "icon")
+                })
                 @item.label
             </a>
         </li>
