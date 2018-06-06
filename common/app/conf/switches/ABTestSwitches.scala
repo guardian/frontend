@@ -102,7 +102,7 @@ trait ABTestSwitches {
     "See if there is any difference in annualised value between serving the Epic natively vs DFP",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 6, 5), // After weekend
+    sellByDate = new LocalDate(2018, 6, 19), // Tuesday
     exposeClientSide = true
   )
 }

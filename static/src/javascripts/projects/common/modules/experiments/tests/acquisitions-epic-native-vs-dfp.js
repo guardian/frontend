@@ -26,8 +26,8 @@ const adSlotEpicTemplate: AdBlockEpicTemplate = (): HTMLElement => {
 export const acquisitionsEpicNativeVsDfp = makeABTest({
     id: 'AcquisitionsEpicNativeVsDfp',
     campaignId: 'epic_native_vs_dfp',
-    start: '2018-05-22',
-    expiry: '2018-06-05', // After weekend
+    start: '2018-06-06',
+    expiry: '2018-06-19', // Tuesday
     author: 'Guy Dawson',
     description:
         'See if there is any difference in annualised value between serving the Epic natively vs DFP',
