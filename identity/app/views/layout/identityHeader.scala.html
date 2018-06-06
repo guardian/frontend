@@ -23,6 +23,9 @@
                     <input type="checkbox" value="open" id="identity-header-account-menu-fallback" class="identity-header__nav-fallback u-h" title="Open Menu" />
                     <ul class="identity-dropdown" id="my-account-dropdown" aria-hidden="true">
                     @for((item) <- accountDropdownMenu) {
+                        @if(item.divider) {
+                            <hr/>
+                        }
                         <li
                             class="@{(List("identity-dropdown__item") ++ item.parentClassList).mkString(" ")}"
                         >
@@ -35,6 +38,9 @@
                                     data-link-name="identity-nav : menu : @item.linkName"
                                 }
                             >
+                                @(item.icon.map { icon =>
+                                    views.html.fragments.inlineSvg(icon, "icon")
+                                })
                                 @item.label
                             </a>
                         </li>
