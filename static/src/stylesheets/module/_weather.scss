@@ -369,7 +369,11 @@ $weather-large-size: 50px;
     }
 
     &.forecast__item--3 {
-        @include mq($until: wide) {
+        @include mq($until: mobileMedium) {
+            display: none;
+        }
+
+        @include mq(tablet, wide) {
             display: none;
         }
 
