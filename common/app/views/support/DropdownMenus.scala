@@ -1,6 +1,7 @@
 package views.support
 
 import conf.Configuration
+import play.twirl.api.Html
 
 
 object DropdownMenus {
@@ -10,7 +11,9 @@ object DropdownMenus {
     linkName: Option[String]  = None,
     label: String,
     classList: List[String] = List(),
-    parentClassList: List[String] = List()
+    parentClassList: List[String] = List(),
+    icon: Option[Html] = None,
+    divider: Boolean = false,
   )
 
   val accountDropdownMenu: List[DropdownMenuItem] = List(
@@ -31,19 +34,34 @@ object DropdownMenus {
       label = "Account details",
     ),
     DropdownMenuItem(
-      href = Some(s"${Configuration.id.url}/digitalpack/edit"),
-      linkName = Some("subscriptions"),
-      label = "Digital Pack",
-    ),
-    DropdownMenuItem(
       href = Some(s"${Configuration.id.url}/email-prefs"),
       linkName = Some("email prefs"),
       label = "Emails & marketing"
     ),
     DropdownMenuItem(
+      href = Some(s"${Configuration.id.url}/membership/edit"),
+      linkName = Some("membership"),
+      label = "Membership",
+      divider = true,
+    ),
+    DropdownMenuItem(
+      href = Some(s"${Configuration.id.url}/contribution/recurring/edit"),
+      linkName = Some("contributions"),
+      label = "Contributions",
+    ),
+    DropdownMenuItem(
+      href = Some(s"${Configuration.id.url}/digitalpack/edit"),
+      linkName = Some("subscriptions"),
+      label = "Digital Pack",
+    ),
+    DropdownMenuItem(
       href = Some(s"${Configuration.id.url}/signout"),
       linkName = Some("sign out"),
-      label = "Sign out"
+      label = "Sign out",
+      icon = Some(
+        views.html.fragments.inlineSvg("log-off", "icon")
+      ),
+      divider = true,
     )
   )
 
