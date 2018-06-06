@@ -11,8 +11,6 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     firstPvConsentBlocker,
 ].filter(Boolean);
 
-console.log('TESTS', TESTS);
-
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
     TESTS.filter(test => {
         if (isExpired(test.expiry)) {
