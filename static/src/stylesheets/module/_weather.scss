@@ -233,7 +233,7 @@ $weather-large-size: 50px;
 .weather__close-location,
 .weather__edit-location {
     position: absolute;
-    top: ($gs-baseline / 2) + 1px;
+    top: ($gs-baseline / 2) + 2px;
     display: block;
     z-index: 5;
 
