@@ -8,7 +8,7 @@ import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuer
 import com.gu.facia.api.models.{Collection, Front}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
-import com.gu.facia.client.models.{Breaking, ConfigJson, Metadata, Special}
+import com.gu.facia.client.models.{Breaking, Canonical, ConfigJson, Metadata, Special}
 import common._
 import common.commercial.CommercialProperties
 import conf.Configuration
@@ -80,7 +80,75 @@ object EmbedJsonHtml {
   implicit val format = Json.format[EmbedJsonHtml]
 }
 
-trait FapiFrontPress extends Logging {
+case class EmailFrontPath(path: String, edition: String)
+
+object EmailFrontPath {
+  def fromPath(path: String): Option[EmailFrontPath] = path match {
+    case "email/uk/daily" => Some(EmailFrontPath(path, "uk"))
+    case "email/us/daily" => Some(EmailFrontPath(path, "us"))
+    case "email/au/daily" => Some(EmailFrontPath(path, "au"))
+    case _ => None
+  }
+}
+
+case class EmailExtraCollections(canoncial: PressedCollectionVisibility,
+                                 special: Option[PressedCollectionVisibility],
+                                 branded: Option[PressedCollectionVisibility])
+
+trait EmailFrontPress extends Logging {
+  implicit def fapiClient: ApiClient
+
+  def collectionsIdsFromConfigForPath(path: String, config: ConfigJson): List[String]
+  def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollectionVisibility]
+  def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)]
+
+  private def mergeExtraEmailCollections(pressedCollections: List[PressedCollectionVisibility], emailCollections: EmailExtraCollections) = {
+    emailCollections.canoncial :: pressedCollections
+  }
+
+  def pressEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    for {
+      config <- Response.Async.Right(fapiClient.config)
+      collectionIds = collectionsIdsFromConfigForPath(emailFrontPath.path, config)
+      collectionIdsEnriched = collectionIds// enrichEmailFronts(emailFrontPath.path, config)(collectionsIds)
+      pressedCollections <- Response.traverse(collectionIdsEnriched.map(generateCollectionJsonFromFapiClient))
+      extraEmailCollections <- buildExtraEmailCollections(emailFrontPath, config)
+      allPressedCollections = mergeExtraEmailCollections(pressedCollections, extraEmailCollections)
+      seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(emailFrontPath.path))
+    } yield seoWithProperties match {
+      case (seoData, frontProperties) =>
+        val webCollections = allPressedCollections.filter(PressedCollectionVisibility.isWebCollection)
+
+        val dedupliatedCollections = PressedCollectionVisibility.deduplication(webCollections)
+          .map(_.pressedCollectionVersions)
+          .toList
+        PressedPageVersions.fromPressedCollections(emailFrontPath.path, seoData, frontProperties, dedupliatedCollections)
+    }
+  }
+
+  def buildExtraEmailCollections(frontPath: EmailFrontPath, config: ConfigJson)(implicit ec: ExecutionContext): Response[EmailExtraCollections] = {
+    def findCollectionId(metadata: Metadata) = {
+      for {
+        front <- config.fronts.get(frontPath.edition).toList
+        collectionId <- front.collections
+        collectionConfig <- config.collections.get(collectionId) if collectionConfig.metadata.exists(_.contains(metadata))
+      } yield collectionId
+    }
+
+    val canonicalCollectionId = findCollectionId(Canonical)
+      .headOption
+      .getOrElse(throw new RuntimeException(s"Unable to find Canonical headline on ${frontPath.edition}"))
+
+    val breakingCollectionId = findCollectionId(Breaking)
+
+    generateCollectionJsonFromFapiClient(canonicalCollectionId).map { canonicalPressed =>
+      EmailExtraCollections(canonicalPressed.copy(visible = 6), None, None)
+    }
+  }
+
+}
+
+trait FapiFrontPress extends EmailFrontPress with Logging {
 
   implicit val capiClient: CapiContentApiClient
   implicit def fapiClient: ApiClient
@@ -281,29 +349,35 @@ trait FapiFrontPress extends Logging {
       case Nil => Nil
     }
 
-  private def enrichEmailFronts(path: String, config: ConfigJson)(collections: List[String]) =
-    path match {
+  private def enrichEmailFronts(path: String, config: ConfigJson)(collections: List[String]): List[String] =
+  {
+    val x = path match {
       case "email/uk/daily" => withHighPriorityCollections("uk", config, collections)
       case "email/us/daily" => withHighPriorityCollections("us", config, collections)
       case "email/au/daily" => withHighPriorityCollections("au", config, collections)
       case _ => collections
     }
+    x
+  }
 
-  private def getCollectionIdsForPath(path: String)(implicit executionContext: ExecutionContext): Response[List[String]] =
-    Response.Async.Right(fapiClient.config) map { config =>
-      Front.frontsFromConfig(config)
-        .find(_.id == path)
-        .map(_.collections)
-        .map(enrichEmailFronts(path, config))
-        .getOrElse {
+  def collectionsIdsFromConfigForPath(path: String, config: ConfigJson): List[String] = {
+    Front.frontsFromConfig(config)
+      .find(_.id == path)
+      .map(_.collections)
+      .getOrElse {
         log.warn(s"There are no collections for path $path")
         throw new IllegalStateException(s"There are no collections for path $path")
       }
-    }
+  }
 
   def getPressedFrontForPath(path: String)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    EmailFrontPath.fromPath(path).fold(pressFront(path))(pressEmailFront)
+  }
+
+  def pressFront(path: String)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
     for {
-      collectionIds <- getCollectionIdsForPath(path)
+      config <- Response.Async.Right(fapiClient.config)
+      collectionIds = collectionsIdsFromConfigForPath(path, config)
       pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(path))
     } yield seoWithProperties match {
@@ -317,7 +391,7 @@ trait FapiFrontPress extends Logging {
     }
   }
 
-  private def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)] =
+  def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)] =
     for {
       itemResp <- getCapiItemResponseForPath(path)
     } yield {
