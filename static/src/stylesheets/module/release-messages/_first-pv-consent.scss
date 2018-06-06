@@ -1,4 +1,5 @@
 $underline: hsla(0, 100%, 100%, .5);
+$btn-height: ($gs-baseline*3.5);
 
 %link {
     text-decoration: underline;
@@ -12,36 +13,10 @@ $underline: hsla(0, 100%, 100%, .5);
     }
 }
 
-.site-message--first-pv-consent__button {
-    @include fs-textSans(3);
-    @include circular;
-    height: $btn-height;
-    background: transparent;
-    padding: 0 $gs-gutter;
-    display: inline-block;
-    display: inline-flex;
-    color: currentColor;
-    vertical-align: middle;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-
-    &.site-message--first-pv-consent__button--link {
-        @extend %link;
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    &.site-message--first-pv-consent__button--main {
-        border: 1px solid $underline;
-        &:hover {
-            border-color: currentColor;
-        }
-    }
-}
-
-
 .site-message.site-message--first-pv-consent {
+    padding: ($gs-baseline / 2) 0 $gs-baseline;
+    background: $sport-away;
+
     .site-message__media {
         display: none;
     }
@@ -49,41 +24,103 @@ $underline: hsla(0, 100%, 100%, .5);
         padding: 0;
     }
     .site-message__copy {
-        margin: 0 $gs-gutter / 2;
         display: block;
-        @include mq(mobileLandscape) {
+        margin: 0 $gs-gutter / 2;
+        @include mq(desktop) {
+            display: flex;
+            align-items: flex-start;
             margin-left: $gs-gutter;
             margin-right: $gs-gutter;
         }
-        @include mq(tablet) {
-            display: flex;
-            align-items: center;
+    }
+}
+
+.site-message--first-pv-consent__button {
+    @include fs-textSans(5);
+    @include circular;
+    height: $btn-height;
+    background: $news-garnett-highlight;
+    color: $garnett-neutral-1;
+    padding: 0 ($gs-gutter*1.25) 0 ($gs-gutter*1.25)+($btn-height*.5);
+    display: block;
+    align-items: flex-start;
+    justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+    border: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    &:hover {
+        background: darken($news-garnett-highlight, 1%);
+    }
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        margin: auto;
+        width: $btn-height;
+        height: $btn-height;
+        transform: scale(.5);
+        g, path {
+            fill: $garnett-neutral-1;
         }
     }
-    .site-message--first-pv-consent__intro {
-        flex: 1 1 auto;
+}
+
+.site-message--first-pv-consent__link {
+    @extend %link;
+    display: block;
+}
+
+.site-message--first-pv-consent__block {
+    &:not(:last-child) {
+        margin-right: $gs-gutter;
+    }
+    &.site-message--first-pv-consent__block--head {
+        @include fs-header(4);
+        @include mq(desktop) {
+            width: gs-span(2);
+        }
+        @include mq(wide) {
+            width: gs-span(3);
+        }
+        @include mq($until: wide) {
+            @include font-size(20px, 24px);
+        }
+        flex: 0 0 auto;
+        position: relative;
+        padding-bottom: $gs-baseline/3;
+        line-height: get-line-height(header, 2);
+    }
+    &.site-message--first-pv-consent__block--intro {
+        @include fs-bodyCopy(2)
+        flex: 1 1 0;
         a {
             @extend %link;
             color: currentColor;
         }
     }
-    .site-message--first-pv-consent__actions {
+    &.site-message--first-pv-consent__block--actions {
+        @include fs-textSans(3);
         flex: 0 0 auto;
-    }
-}
-
-.site-message--first-pv-consent__actions {
-    .site-message--first-pv-consent__button {
-        margin: 0 $gs-gutter / 4;
-        &:first-child {
-            margin-left: 0;
+        margin-top: $gs-baseline / 4;
+        .site-message--first-pv-consent__button {
+            margin-right: $gs-baseline;
         }
-        &:last-child {
-            margin-right: 0;
+        .site-message--first-pv-consent__button,
+        .site-message--first-pv-consent__link {
+            display: inline-block;
+            vertical-align: baseline;
+        }
+        @include mq($until: desktop) {
+            margin-top: $gs-baseline;
+        }
+        @include mq(desktop) {
+            width: gs-span(3);
+        }
+        @include mq(wide) {
+            margin-right: gs-span(1) + $gs-gutter;
         }
     }
-}
-
-.site-message--first-pv-consent__block {
-    margin: $gs-gutter / 2 0;
 }

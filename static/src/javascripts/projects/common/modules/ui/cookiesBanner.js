@@ -14,6 +14,7 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
  */
 
 const EU_COOKIE_MSG = 'GU_EU_MSG';
+const messageCode: string = 'cookies';
 
 const canShow = (): Promise<boolean> => {
     const geoContinentCookie = getCookie('GU_geo_continent');
@@ -40,13 +41,13 @@ const show = (): void => {
         important: true,
     };
     const cookieLifeDays = 365;
-    const msg = new Message('cookies', opts);
+    const msg = new Message(messageCode, opts);
     msg.show(txt);
     addCookie(EU_COOKIE_MSG, 'seen', cookieLifeDays);
 };
 
 const cookiesBanner: Banner = {
-    id: 'cookiesBanner',
+    id: messageCode,
     show,
     canShow,
 };

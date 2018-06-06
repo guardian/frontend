@@ -124,13 +124,12 @@ class AuthenticatedActions(
     new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
-      def filter[A](request: AuthRequest[A]) = {
-        redirectService.toProfileRedirect(request.user, request).map { redirect =>
-          if (redirect.isAllowedFrom(pageId))
-            Some(sendUserToUserRedirectDecision(request, redirect))
-          else
-            None
-        }
+      def filter[A](request: AuthRequest[A]): Future[Option[Result]] = Future.successful {
+        val redirect = redirectService.toProfileRedirect(request.user, request)
+        if (redirect.isAllowedFrom(pageId))
+          Some(sendUserToUserRedirectDecision(request, redirect))
+        else
+          None
       }
     }
 
@@ -145,13 +144,12 @@ class AuthenticatedActions(
     new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
-      def filter[A](request: AuthRequest[A]) = {
-        redirectService.toConsentsRedirect(request.user, request).map { redirect =>
-          if (redirect.isAllowedFrom(request.path))
-            Some(sendUserToUserRedirectDecision(request, redirect))
-          else
-            None
-        }
+      def filter[A](request: AuthRequest[A]): Future[Option[Result]] = Future.successful {
+        val redirect = redirectService.toConsentsRedirect(request.user, request)
+        if (redirect.isAllowedFrom(request.path))
+          Some(sendUserToUserRedirectDecision(request, redirect))
+        else
+          None
       }
     }
 

@@ -4,13 +4,12 @@ import 'prebid.js/build/dist/prebid';
 import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { bidders } from 'commercial/modules/prebid/bidder-config';
+import { bids } from 'commercial/modules/prebid/bid-config';
 import { labels } from 'commercial/modules/prebid/labels';
 import { slots } from 'commercial/modules/prebid/slot-config';
 import { priceGranularity } from 'commercial/modules/prebid/price-config';
 import type {
     PrebidBid,
-    PrebidBidder,
     PrebidMediaTypes,
     PrebidSlot,
     PrebidSlotLabel,
@@ -32,19 +31,7 @@ class PrebidAdUnit {
 
     constructor(advert: Advert, slot: PrebidSlot) {
         this.code = advert.id;
-        this.bids = bidders.map((bidder: PrebidBidder) => {
-            const bid: PrebidBid = {
-                bidder: bidder.name,
-                params: bidder.bidParams(advert.id, slot.sizes),
-            };
-            if (bidder.labelAny) {
-                bid.labelAny = bidder.labelAny;
-            }
-            if (bidder.labelAll) {
-                bid.labelAll = bidder.labelAll;
-            }
-            return bid;
-        });
+        this.bids = bids(advert.id, slot.sizes);
         this.mediaTypes = { banner: { sizes: slot.sizes } };
         if (slot.labelAny) {
             this.labelAny = slot.labelAny;

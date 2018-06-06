@@ -1,6 +1,8 @@
 // @flow
 import config from 'lib/config';
+import { getCookie } from 'lib/cookies';
 import { Message } from 'common/modules/ui/message';
+import checkIcon from 'svgs/icon/tick.svg';
 import {
     getAdConsentState,
     setAdConsentState,
@@ -17,7 +19,8 @@ const lifeTimeViewsKey: string = 'first-pv-consent.lifetime-views';
 const lifetimeDisplayEventKey: string = 'first-pv-consent : viewed-times :';
 
 type Template = {
-    consentText: string,
+    heading: string,
+    consentText: string[],
     agreeButton: string,
     choicesButton: string,
     linkToPreferences: string,
@@ -27,11 +30,30 @@ type BindableClassNames = {
     agree: string,
 };
 
+type Links = {
+    privacy: string,
+    cookies: string,
+};
+
+const links: Links = {
+    privacy: 'https://www.theguardian.com/help/privacy-policy',
+    cookies: 'https://www.theguardian.com/info/cookies',
+};
+const messageCode: string = 'first-pv-consent';
+
 const template: Template = {
-    consentText: `Do you agree to the use of cookies on our website and the sharing of data with our partners to see ads that are more relevant to you? You can learn more in our updated privacy policy and cookie policy, effective 25 May 2018.`,
-    agreeButton: 'I agree',
-    choicesButton: 'Show me more options',
-    linkToPreferences: `${config.get('page.idUrl')}/adverts/manage`,
+    heading: `Your privacy`,
+    consentText: [
+        `We use cookies to improve your experience on our site and to show you relevant advertising.`,
+        `To find out more, read our updated <a data-link-name="first-pv-consent : to-privacy" href="${
+            links.privacy
+        }">privacy policy</a> and <a data-link-name="first-pv-consent : to-cookies" href="${
+            links.cookies
+        }">cookie policy</a>.`,
+    ],
+    agreeButton: 'OK',
+    choicesButton: 'More information',
+    linkToPreferences: `${config.get('page.idUrl')}/privacy-settings`,
 };
 
 const bindableClassNames: BindableClassNames = {
@@ -39,20 +61,29 @@ const bindableClassNames: BindableClassNames = {
 };
 
 const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__intro">${
-        tpl.consentText
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head">${
+        tpl.heading
     }</div>
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__actions">
-        <a href="${
-            tpl.linkToPreferences
-        }" data-link-name="first-pv-consent : to-prefs" class="site-message--first-pv-consent__button site-message--first-pv-consent__button--link">${
-    tpl.choicesButton
-}</a>
-        <button data-link-name="first-pv-consent : agree" class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
-            classes.agree
-        }">${tpl.agreeButton}</button>
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${tpl.consentText
+        .map(_ => `<p>${_}</p>`)
+        .join('')}</div>
+    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--actions">
+        <button 
+            data-link-name="first-pv-consent : agree" 
+            class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
+                classes.agree
+            }"
+        >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
+        <a 
+            href="${tpl.linkToPreferences}" 
+            data-link-name="first-pv-consent : to-prefs" 
+            class="site-message--first-pv-consent__link"
+        >${tpl.choicesButton}</a>
     </div>
 `;
+
+const isInEU = (): boolean =>
+    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
 
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
@@ -65,7 +96,7 @@ const hasUnsetAdChoices = (): boolean =>
     allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
 
 const canShow = (): Promise<boolean> =>
-    Promise.resolve([hasUnsetAdChoices()].every(_ => _ === true));
+    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
@@ -82,7 +113,7 @@ const show = (): void => {
         `${lifetimeDisplayEventKey} ${userPrefs.get(lifeTimeViewsKey)}`
     );
 
-    const msg = new Message('first-pv-consent', {
+    const msg = new Message(messageCode, {
         important: true,
         permanent: true,
         customJs: () => {
@@ -97,7 +128,7 @@ const show = (): void => {
 };
 
 const firstPvConsentBanner: Banner = {
-    id: 'first-pv-consent-banner',
+    id: messageCode,
     canShow,
     show,
 };

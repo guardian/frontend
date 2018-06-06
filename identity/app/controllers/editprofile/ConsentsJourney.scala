@@ -20,10 +20,6 @@ trait ConsentsJourney
 
   import authenticatedActions._
 
-  /** GET /consents/newsletters */
-  def displayConsentsJourneyNewsletters: Action[AnyContent] =
-    displayConsentJourneyForm(ConsentJourneyPageNewsletters, None)
-
   /** GET /consents/thank-you */
   def displayConsentsJourneyThankYou: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageThankYou, None)

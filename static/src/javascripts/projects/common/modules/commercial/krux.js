@@ -71,8 +71,12 @@ const retrieve = (n: string): string => {
     return local.getRaw(k) || getCookie(`${k}=([^;]*)`) || '';
 };
 
-export const getKruxSegments = (): Array<string> =>
-    retrieve('segs') ? retrieve('segs').split(',') : [];
+export const getKruxSegments = (): Array<string> => {
+    const wantPersonalisedAds: boolean =
+        getAdConsentState(thirdPartyTrackingAdConsent) !== false;
+    const segments: string = wantPersonalisedAds ? retrieve('segs') : '';
+    return segments ? segments.split(',') : [];
+};
 
 export const krux: ThirdPartyTag = {
     shouldRun: config.switches.krux,

@@ -41,6 +41,9 @@ const controlP1Highlight =
 const dropAdsFallingP1 =
     '&hellip; we have a small favour to ask. Unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can. More people are reading the Guardian than ever but our independent, investigative journalism takes a lot of time, money and hard work to produce. So you can see why we need to ask for your help. We do it because we believe our perspective matters &ndash; because it might well be your perspective, too.';
 
+const thankyouP2FirstSentence =
+    'Thank you to the many people who have already supported us financially &ndash; your contribution is what makes stories like you’ve just read possible. We increasingly need our readers to fund our work so that we can continue holding power to account and producing fearless journalism.</br></br>';
+
 /*
  Exported instances of AcquisitionsEpicTemplateCopy
  */
@@ -66,6 +69,12 @@ export const dropAdsFallingCopy = {
     heading: controlHeading,
     p1: dropAdsFallingP1,
     p2: controlP2(controlP2FirstSentence),
+};
+
+export const thankyou = {
+    heading: controlHeading,
+    p1: controlP1,
+    p2: controlP2(thankyouP2FirstSentence),
 };
 
 export const liveblogCopy = (
