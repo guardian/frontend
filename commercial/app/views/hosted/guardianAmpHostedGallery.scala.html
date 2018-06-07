@@ -4,6 +4,7 @@
 @import com.gu.contentapi.client.model.v1.Asset
 @import com.gu.contentapi.client.model.v1.AssetType
 @import play.api.Mode
+@import model.Nielsen
 @(page: HostedGalleryPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import views.html.hosted._
 @import conf.Configuration
@@ -43,6 +44,7 @@
             <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
         </amp-analytics>
 
+        @if(Nielsen.isTestingPath(request.path)) {
         <amp-analytics type="nielsen">
             <script type="application/json">
                 {
@@ -56,7 +58,7 @@
                 }
             </script>
         </amp-analytics>
-
+        }
         <div class="main-body hosted-gallery-page__main-body">
 
             @guardianHostedHeader(if(page.fontColour.isDark) "hosted-gallery-page hosted-page--bright" else "hosted-gallery-page", page, isAMP = true)

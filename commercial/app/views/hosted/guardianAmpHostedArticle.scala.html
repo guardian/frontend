@@ -1,5 +1,6 @@
 @import common.commercial.hosted.HostedArticlePage
 @import play.api.Mode
+@import model.Nielsen
 @(page: HostedArticlePage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import model.hosted.HostedAmp.ampify
 @import views.html.hosted._
@@ -31,6 +32,7 @@
             <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
         </amp-analytics>
 
+        @if(Nielsen.isTestingPath(request.path)) {
         <amp-analytics type="nielsen">
             <script type="application/json">
                 {
@@ -44,6 +46,7 @@
                 }
             </script>
         </amp-analytics>
+        }
 
         <div class="main-body">
             <div class="hosted__header"><div class="hosted__headerwrap"><div class="hostedbadge">

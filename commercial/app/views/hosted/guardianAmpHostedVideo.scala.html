@@ -4,6 +4,7 @@
 @import conf.Configuration.environment
 @import conf.Configuration.site.host
 @import play.api.Mode
+@import model.Nielsen
 @(page: HostedVideoPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <!doctype html>
@@ -35,6 +36,7 @@
         <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
     </amp-analytics>
 
+    @if(Nielsen.isTestingPath(request.path)) {
     <amp-analytics type="nielsen">
         <script type="application/json">
             {
@@ -48,6 +50,7 @@
             }
         </script>
     </amp-analytics>
+    }
 
     <div class="main-body">
       @guardianHostedHeader(if(page.fontColour.isDark) "hosted-video-page hosted-page--bright" else "hosted-video-page", page, isAMP = true)

@@ -244,7 +244,7 @@ final case class MetaData (
   sensitive: Boolean = false
 ){
   val sectionId = section map (_.value) getOrElse ""
-  lazy val neilsenApid: String = Neilsen.apidFromString(sectionId)
+  lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
 
   private val fullAdUnitPath = AdUnitMaker.make(id, adUnitSuffix)
 
