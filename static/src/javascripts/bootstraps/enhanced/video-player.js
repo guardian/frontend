@@ -56,7 +56,7 @@ const bindTrackingEvents = (el: HTMLMediaElement): void => {
             const eventObject = {
                 video: {
                     id: mediaId,
-                    eventType: 'play',
+                    eventType: 'video:content:play',
                 },
             };
 
