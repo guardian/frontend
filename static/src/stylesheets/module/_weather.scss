@@ -409,7 +409,7 @@ $weather-large-size: 50px;
     @include mq(leftCol) {
         border-top: 1px solid $neutral-5;
         position: relative;
-        height: $weather-large-size + $gs-baseline * 2;
+        min-height: $weather-large-size + $gs-baseline * 2;
         padding-left: $weather-large-size + $gs-gutter / 2;
 
         &:before {
@@ -439,7 +439,7 @@ $weather-large-size: 50px;
     .has-page-skin & {
         @include mq(wide) {
             border-top: 0;
-            height: auto;
+            min-height: auto;
             padding: 2px ($gs-gutter / 2) 0 ($weather-small-size + $gs-gutter / 2);
 
             &:before {

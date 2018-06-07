@@ -104,8 +104,6 @@ $header-image-size-desktop: 100px;
 
 .fc-container__header {
     @include mq($until: leftCol) {
-        overflow: hidden;
-
         .fc-container__header__title {
             float: left;
             padding-right: $gs-gutter / 4;
