@@ -123,7 +123,11 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             JsonFront(faciaPage)
           else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
             if (shouldOnlyReturnHeadline(request)) {
-                RevalidatableResult.Ok(faciaPage.collections.head.curated.head.header.headline)
+              val headline = for {
+                topCollection <- faciaPage.collections.headOption
+                topCurated <- topCollection.curated.headOption
+              } yield topCurated.header.headline
+                RevalidatableResult.Ok(headline.getOrElse("Error: Could not extract headline from front"))
             } else {
               val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
               RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse)
