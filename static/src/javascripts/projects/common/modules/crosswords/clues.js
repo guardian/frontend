@@ -47,7 +47,7 @@ class Clues extends Component<*, *> {
     }
 
     componentDidMount() {
-        this.$cluesNode = (findDOMNode(this.refs.clues): any);
+        this.$cluesNode = (findDOMNode(this.clues): any);
 
         const height =
             this.$cluesNode.scrollHeight - this.$cluesNode.clientHeight;
@@ -84,7 +84,7 @@ class Clues extends Component<*, *> {
 
     scrollIntoView(clue: Object) {
         const buffer = 100;
-        const node: HTMLElement = (findDOMNode(this.refs[clue.id]): any);
+        const node: HTMLElement = (findDOMNode(this[clue.id]): any);
         const visible =
             node.offsetTop - buffer > this.$cluesNode.scrollTop &&
             node.offsetTop + buffer <
@@ -103,7 +103,9 @@ class Clues extends Component<*, *> {
                 .filter(clue => clue.entry.direction === direction)
                 .map(clue => (
                     <Clue
-                        ref={clue.entry.id}
+                        ref={clueRef => {
+                            this[clue.entry.id] = clueRef;
+                        }}
                         id={clue.entry.id}
                         key={clue.entry.id}
                         number={clue.entry.number}
@@ -122,7 +124,11 @@ class Clues extends Component<*, *> {
                 className={`crossword__clues--wrapper ${
                     this.state.showGradient ? '' : 'hide-gradient'
                 }`}>
-                <div className="crossword__clues" ref="clues">
+                <div
+                    className="crossword__clues"
+                    ref={clues => {
+                        this.clues = clues;
+                    }}>
                     <div className="crossword__clues--across">
                         <h3 className={headerClass}>Across</h3>
                         <ol className="crossword__clues-list">

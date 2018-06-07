@@ -20,7 +20,7 @@ class HiddenInput extends Component<*, *> {
             })
         ) {
             fastdom.read(() => {
-                const offsets = bonzo(findDOMNode(this.refs.input)).offset();
+                const offsets = bonzo(findDOMNode(this.input)).offset();
                 const clueHeight = document.getElementsByClassName(
                     'crossword__sticky-clue'
                 )[0].offsetHeight;
@@ -59,7 +59,11 @@ class HiddenInput extends Component<*, *> {
 
     render() {
         return (
-            <div className="crossword__hidden-input-wrapper" ref="wrapper">
+            <div
+                className="crossword__hidden-input-wrapper"
+                ref={wrapper => {
+                    this.wrapper = wrapper;
+                }}>
                 <input
                     type="text"
                     className="crossword__hidden-input"
@@ -73,7 +77,9 @@ class HiddenInput extends Component<*, *> {
                     autoComplete="off"
                     spellCheck="false"
                     autoCorrect="off"
-                    ref="input"
+                    ref={input => {
+                        this.input = input;
+                    }}
                 />
             </div>
         );

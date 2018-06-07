@@ -10,7 +10,7 @@
     "yarn": "1.7.0"
   },
   "dependencies": {
-    "@guardian/atom-renderer": "0.14.4",
+    "@guardian/atom-renderer": "0.14.6",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
     "classnames": "~2.2.0",
