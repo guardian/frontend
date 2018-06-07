@@ -52,11 +52,11 @@ $gutter: 5px;
 
     .identity-header__container {
         display: flex;
-        box-sizing: border-box;
         flex-direction: row-reverse;
         justify-content: space-between;
         align-items: flex-start;
-        padding: 0;
+        padding-top: 0;
+        padding-bottom: 0;
     }
 }
 
