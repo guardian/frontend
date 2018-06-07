@@ -80,12 +80,12 @@ const trackImpression = (track: () => void): void => {
 export const PoliticsWeeklyTreat = {
     id: 'PoliticsWeeklyTreat',
     // TODO - correct dates
-    start: '2018-04-24',
-    expiry: '2018-06-01',
+    start: '2018-06-07',
+    expiry: '2018-06-13',
     author: 'Tom Forbes',
     description:
         'Test linking to latest episode of Politics Weekly podcast using a treat in the Headlines container',
-    audience: 1,
+    audience: 0.5,
     audienceOffset: 0,
     successMeasure: 'Measure click-through across the variants',
     audienceCriteria: '',
