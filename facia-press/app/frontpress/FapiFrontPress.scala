@@ -114,7 +114,7 @@ trait EmailFrontPress extends Logging {
       pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
       extraEmailCollections <- buildExtraEmailCollections(emailFrontPath, config, pressedCollections)
       allPressedCollections = mergeExtraEmailCollections(pressedCollections, extraEmailCollections)
-      seoWithProperties: (SeoData, FrontProperties) <- Response.Async.Right(getFrontSeoAndProperties(emailFrontPath.path))
+      seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(emailFrontPath.path))
     } yield seoWithProperties match {
       case (seoData, frontProperties) => generatePressedVersions(emailFrontPath.path, allPressedCollections, seoData, frontProperties)
     }
@@ -213,7 +213,7 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
       }.fold(
         e => {
           StatusNotification.notifyFailedJob(path, isLive = isLiveContent, e)
-          throw new RuntimeException(s"${e.cause} ${e.message}")
+          e.cause.map(throw _).getOrElse(throw new RuntimeException(e.message))
         },
         _ => StatusNotification.notifyCompleteJob(path, isLive = isLiveContent)
       )
