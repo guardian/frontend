@@ -4,19 +4,21 @@
 
 
 <div class="weather js-weather">
-    <div class="u-unstyled weather__current js-weather-current">
-        @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"), Some(weatherResponse.WeatherText))<span class="u-h">@weatherResponse.WeatherText</span>
-        <p class="weather__desc">
+    <div class="u-unstyled forecast__item forecast__item--current js-weather-current">
+        <div class="weather__time">
             <span class="u-h">The temperature</span>
-            <span class="weather__time">Now</span>
+            <span class="weather__time-value">Now</span>
+        </div>
+        @fragments.inlineSvg(s"weather-${weatherResponse.WeatherIcon}", "weather", Seq("weather__icon","js-weather-icon"), Some(weatherResponse.WeatherText))<span class="u-h">@weatherResponse.WeatherText</span>
+        <div class="weather__temp">
             <span class="u-h">is</span>
             @defining(weatherResponse.temperatureForEdition(Edition(request))) { temp =>
                 <span class="weather__temp js-weather-temp">@math.round(temp.Value)°@temp.Unit</span>
             }
-        </p>
+        </div>
     </div>
     <button class="weather__toggle-forecast meta-button js-toggle-forecast mobile-only" data-link-name="weather-toggle-forecast"
-    href="#toggle-forecast"><span class="u-h">Toggle forecast</span>@fragments.inlineSvg("arrow", "icon", List("weather__toggle-icon"))
+    href="#toggle-forecast"><span class="u-h">Toggle forecast</span><i class="weather__toggle-icon"></i>
     </button>
     <ul class="js-weather-forecast forecast"></ul>
     <div class="weather__location">
@@ -24,7 +26,7 @@
             <div class="search-tool__form u-cf">
                 <label class="u-h" for="editlocation">Edit your location</label>
                 <input id="editlocation" class="search-tool__input js-search-tool-input" type="text" data-link-name="weather-edit-location" value="<%=city%>" aria-label="enter location" />
-                @fragments.inlineSvg("search-36", "icon", List("weather__search-icon", "weather__edit-location", "js-edit-location"))
+                @fragments.inlineSvg("search-36", "icon", List("weather__search-icon", "weather__edit-location"))
                 <button class="search-tool__btn">@fragments.inlineSvg("search-36", "icon")<span class="u-h">Search for city</span></button>
             </div>
             <ul class="u-unstyled search-tool__list js-search-tool-list"></ul>

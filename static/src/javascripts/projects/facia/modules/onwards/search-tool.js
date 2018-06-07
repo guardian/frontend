@@ -95,20 +95,17 @@ export class SearchTool {
         const $input = $('.js-search-tool-input')[0];
         const $location = $('.js-search-tool');
         const $close = $('.js-close-location');
-        const $edit = $('.js-edit-location');
 
         if (value) {
             this.inputTmp = $input.value;
             $location.addClass('is-editing');
             $input.setSelectionRange(0, $input.value.length);
             $close.removeClass('u-h');
-            $edit.addClass('u-h');
         } else {
             $location.removeClass('is-editing');
             this.clear();
             this.setInputValue(this.inputTmp);
             $close.addClass('u-h');
-            $edit.removeClass('u-h');
         }
     }
 
