@@ -2,8 +2,8 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { firstPvConsentBlocker } from './tests/first-pv-consent-blocker';
 import { PoliticsWeeklyTreat } from 'common/modules/experiments/tests/politics-weekly-treat';
+import { firstPvConsentBlocker } from './tests/first-pv-consent-blocker';
 import { signInEngagementBannerDisplay } from './tests/sign-in-engagement-banner-display';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
