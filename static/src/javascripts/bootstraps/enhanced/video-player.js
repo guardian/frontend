@@ -2,6 +2,7 @@
 
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
+import bean from 'bean';
 import raven from 'lib/raven';
 import {
     buildGoogleAnalyticsEvent,
@@ -76,13 +77,21 @@ const bindTrackingEvents = (el: HTMLMediaElement): void => {
         }
 
         // don't fire events every time video is paused then restarted
-        el.removeEventListener('play', playHandler);
+        bean.off(el, 'play', playHandler);
     };
 
-    el.addEventListener('play', playHandler);
-    el.addEventListener('ended', () => {
+    bean.on(el, 'play', playHandler);
+    bean.on(el, 'ended', () => {
         // track re-plays
-        el.addEventListener('play', playHandler);
+        bean.on(el, 'play', playHandler);
+    });
+    bean.on(el, 'play pause', () => {
+        // synthetic click on data-component="main video"
+        const figure: HTMLElement = (el.parentNode &&
+            el.parentNode.parentNode &&
+            el.parentNode.parentNode.parentNode: any);
+
+        figure.click();
     });
 };
 
