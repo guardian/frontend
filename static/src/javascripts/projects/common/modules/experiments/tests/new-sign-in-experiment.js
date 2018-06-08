@@ -18,7 +18,7 @@ export const newSignInExperiment: ABTest = {
     author: 'Laura gonzalez',
     description:
         'This test will send a % of users to the new sign in experience.',
-    audience: 0.05,
+    audience: 0.1,
     audienceOffset: 0.5,
     successMeasure: 'Users in the new sign in experience sign in more',
     audienceCriteria: 'n/a',
