@@ -165,10 +165,10 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val EnhancedVideoPlayerSwitch = Switch(
+  val VideoJSSwitch = Switch(
     SwitchGroup.Feature,
-    "enhanced-video-player",
-    "If this is switched on then videos are enhanced using our JavaScript player",
+    "videojs",
+    "If this is switched on then videos are enhanced using VideoJS",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = On,
     sellByDate = new LocalDate(2018, 7, 19),

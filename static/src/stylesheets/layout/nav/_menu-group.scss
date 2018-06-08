@@ -54,16 +54,16 @@
     position: relative;
 }
 
-.menu-group--editions {
+.menu-group--editions,
+.menu-group--membership {
     padding-bottom: 0;
 
     .menu-group {
         background-color: darken($nav-background-colour, 10%);
+        .menu-item-divider {
+            background-color: darken($nav-background-colour, 20%);
+        }
     }
-}
-
-.menu-group--membership-actions {
-    background-color:  $nav-darker-colour;
 }
 
 .menu-group--footer {

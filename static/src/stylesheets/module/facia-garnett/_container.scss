@@ -104,8 +104,6 @@ $header-image-size-desktop: 100px;
 
 .fc-container__header {
     @include mq($until: leftCol) {
-        overflow: hidden;
-
         .fc-container__header__title {
             float: left;
             padding-right: $gs-gutter / 4;
@@ -335,7 +333,7 @@ $header-image-size-desktop: 100px;
     line-height: 16px;
     font-weight: 500;
     display: none;
-    margin-top: $gs-baseline;
+    margin: ($gs-baseline / 3) 0 $gs-baseline;
 
     @include mq(tablet) {
         display: block;
@@ -452,69 +450,37 @@ $header-image-size-desktop: 100px;
 
 .fc-container__toggle {
     @include fs-textSans(3);
-    min-height: gs-height(1);
-    min-width: gs-span(1);
+    background-color: transparent;
     position: absolute;
-    top: -3px;
+    top: $gs-baseline / 3;
     right: 0;
     border: 0;
-    background-color: transparent;
-    color: #ffffff;
+    padding: 0;
+    color: $neutral-2;
+    text-align: right;
+
+    &:hover,
+    &:focus {
+        color: $neutral-1;
+    }
 
     [data-component='headlines'] & {
         // Ensures toggle is never visible in Headlines container
         display: none;
     }
 
-    .inline-icon {
-        transform: rotate(180deg);
-        position: absolute;
-        top: 6px;
-        left: 50%;
-        margin-left: -12px;
-        fill: $neutral-1;
-
-        .fc-container--rolled-up & {
-            transform: rotate(0deg);
-        }
-    }
-
-    @include mq(tablet) {
-        text-align: right;
-        color: $neutral-2;
-
-        .fc-container--paid-content & {
-            border-left-width: 0;
-        }
-        &:hover,
-        &:focus {
-            color: $neutral-1;
-        }
-        .inline-icon {
-            display: none;
-        }
-        .fc-container__toggle__text {
-            display: block;
-        }
-    }
-
     @include mq(leftCol) {
-        left: gs-span(13) + $gs-gutter;
+        left: gs-span(14);
+        transform: translateX(-100%);
     }
 
     @include mq(wide) {
-        left: gs-span(15) + $gs-gutter;
+        left: gs-span(16);
 
         .has-page-skin & {
             left: auto;
         }
     }
-}
-
-.fc-container__toggle__text {
-    display: none;
-    position: relative;
-    top: -2px;
 }
 
 .fc-container--media {

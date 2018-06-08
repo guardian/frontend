@@ -26,11 +26,14 @@
         My account
     </label>
 
-    <ul class="dropdown-menu js-user-account-dropdown-menu"
+    <ul class="dropdown-menu dropdown-menu--light js-user-account-dropdown-menu"
     id="my-account-dropdown"
     aria-hidden="true">
 
     @for((item) <- accountDropdownMenu) {
+        @if(item.divider) {
+            <hr/>
+        }
         <li class="@{(List("dropdown-menu__item") ++ item.parentClassList).mkString(" ")}">
             <a
             class="@{(List("dropdown-menu__title") ++ item.classList).mkString(" ")}"
@@ -41,7 +44,10 @@
                     data-link-name="nav2 : topbar : @item.linkName"
                     }
             >
-            @item.label
+                @(item.icon.map { icon =>
+                    views.html.fragments.inlineSvg(icon, "icon", isPresentation = true)
+                })
+                @item.label
             </a>
         </li>
     }

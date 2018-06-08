@@ -32,7 +32,6 @@ module.exports = {
         'react/no-multi-comp': 'off',
         'react/no-find-dom-node': 'off',
         'react/jsx-no-bind': 'off',
-        'react/no-string-refs': 'off',
         'react/prefer-stateless-function': 'off',
         'react/jsx-filename-extension': 'off',
 

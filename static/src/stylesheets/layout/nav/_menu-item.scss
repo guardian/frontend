@@ -24,6 +24,22 @@
     }
 }
 
+.menu-item-divider {
+    height: 1px;
+    width: 100%;
+    background: $nav-darker-colour;
+    border: 0;
+    margin: $gs-baseline/2 0 0 $menu-spacing-left-small;
+
+    @include mq(tablet) {
+        margin-left: $menu-spacing-left-medium;
+    }
+
+    @include mq(desktop) {
+        margin-left: ($gs-baseline / 2) 0;
+    }
+}
+
 .menu-item__title {
     background-color: transparent;
     border: 0;
@@ -174,6 +190,10 @@
     .inline-home__svg {
         height: 16px;
         width: 16px;
+    }
+
+    .inline-log-off__svg {
+        height: .8em;
     }
 
     .inline-share-facebook__svg,
