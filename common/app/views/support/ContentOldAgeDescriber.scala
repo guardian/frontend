@@ -34,7 +34,7 @@ class ContentOldAgeDescriber {
       if (pubDate.isBefore(DateTime.now().minusDays(warnLimitDays))) {
         val ageMillis = DateTime.now().getMillis - pubDate.getMillis
         val years = TimeUnit.MILLISECONDS.toDays(ageMillis) / 365
-        val months = TimeUnit.MILLISECONDS.toDays(ageMillis) / 28
+        val months = TimeUnit.MILLISECONDS.toDays(ageMillis) / 30
         val weeks = TimeUnit.MILLISECONDS.toDays(ageMillis) / 7
         val days = TimeUnit.MILLISECONDS.toDays(ageMillis)
 
