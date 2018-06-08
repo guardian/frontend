@@ -68,7 +68,16 @@ object NavLinks {
   /* SPORT */
 
   // TODO remove after world cup
-  val worldCup2018 = NavLink("World Cup 2018", "/football/world-cup-2018")
+  val worldCup2018 = NavLink(
+    title = "World Cup 2018",
+    url = "/football/world-cup-2018",
+    children = List(
+      NavLink("Fixtures and standings", "/football/world-cup-2018/overview"),
+      NavLink("Player-by-player guide", "/football/ng-interactive/2018/jun/05/world-cup-2018-complete-guide-players-ratings-goals-caps"),
+      NavLink("Experts' Network", "/football/series/world-cup-2018-guardian-experts-network"),
+      NavLink("All-time XIs", "/football/series/world-cup-all-time-xis"),
+    )
+  )
 
   val football = NavLink("Football", "/football",
     children = List(
@@ -594,6 +603,7 @@ object NavLinks {
     "football/competitions",
     "football/results",
     "football/fixtures",
+    "football/world-cup-2018", // TODO remove after world cup
     "education",
     "crosswords/crossword-blog",
     "crosswords/series/crossword-editor-update",
