@@ -45,5 +45,4 @@ GET         /facebook-ia/remote.html                                        cont
 GET         /ads.txt                                                        commercial.controllers.AdsDotTextViewController.renderTextFile()
 
 # Prebid analytics
-PUT         /commercial/api/hb                                              commercial.controllers.PrebidAnalyticsController.insert()
-OPTIONS     /commercial/api/hb                                              commercial.controllers.PrebidAnalyticsController.getOptions
+POST        /commercial/api/hb                                              commercial.controllers.PrebidAnalyticsController.insert()
