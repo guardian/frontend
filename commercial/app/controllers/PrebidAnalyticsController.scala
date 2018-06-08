@@ -12,8 +12,8 @@ import conf.Configuration.environment.isProd
 import conf.switches.Switches.prebidAnalytics
 import model.Cached.WithoutRevalidationResult
 import model.{CacheTime, Cached, TinyResponse}
-import play.api.libs.json.JsValue
-import play.api.libs.json.Json.{prettyPrint, toBytes}
+import play.api.libs.json.Json
+import play.api.libs.json.Json.prettyPrint
 import play.api.mvc._
 
 import scala.concurrent.ExecutionContext
@@ -31,33 +31,23 @@ class PrebidAnalyticsController(val controllerComponents: ControllerComponents) 
       .build()
   }
 
-  private val newLine = "\n".getBytes
+  private val charset = "UTF-8"
 
-  private def streamAnalytics(json: JsValue) = {
-    val record  = new Record().withData(ByteBuffer.wrap(toBytes(json) ++ newLine))
+  private def streamAnalytics(analytics: String) = {
+    val record  = new Record().withData(ByteBuffer.wrap(s"$analytics\n".getBytes(charset)))
     val request = new PutRecordRequest().withDeliveryStreamName(prebidAnalyticsStream).withRecord(record)
     val result  = firehose.putRecordFuture(request)
     result.failed foreach {
-      case NonFatal(e) => log.error(s"Failed to put '$json'", e)
+      case NonFatal(e) => log.error(s"Failed to put '$analytics'", e)
     }
   }
 
-  private def serve404[A](implicit request: Request[A]) =
-    Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
-
-  def insert(): Action[JsValue] = Action(parse.json) { implicit request =>
+  def insert(): Action[String] = Action(parse.text) { implicit request =>
     if (prebidAnalytics.isSwitchedOn) {
       if (isProd) streamAnalytics(request.body)
-      else log.info(prettyPrint(request.body))
+      else log.info(prettyPrint(Json.parse(request.body)))
       TinyResponse.noContent()
     } else
-      serve404
-  }
-
-  def getOptions: Action[AnyContent] = Action { implicit request =>
-    if (prebidAnalytics.isSwitchedOn)
-      TinyResponse.noContent(Some("OPTIONS, PUT"))
-    else
-      serve404
+      Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
   }
 }
