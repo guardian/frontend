@@ -41,7 +41,6 @@ import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
-import { signInEngagementBanner } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
@@ -277,7 +276,6 @@ const initialiseBanner = (): void => {
         breakingNews,
         membershipBanner,
         membershipEngagementBanner,
-        signInEngagementBanner,
         smartAppBanner,
     ];
     initBannerPicker(bannerList);
