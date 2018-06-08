@@ -21,8 +21,7 @@ $gutter: 5px;
         height: 1px;
         display: block;
         z-index: 0;
-        background: #000000;
-        opacity: .14;
+        background: $rule;
     }
 
     .identity-dropdown {
@@ -57,13 +56,6 @@ $gutter: 5px;
         align-items: flex-start;
         padding-top: 0;
         padding-bottom: 0;
-    }
-}
-
-.identity-wrapper-page-flex.identity-wrapper-page-flex--flow {
-    .identity-header, .identity-header:after {
-        background-color: transparent;
-        border-color: $garnett-neutral-4;
     }
 }
 
