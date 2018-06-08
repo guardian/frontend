@@ -13,8 +13,6 @@ import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { firstPvConsentBlocker } from 'common/modules/experiments/tests/first-pv-consent-blocker';
-import { getVariant, isInVariant } from 'common/modules/experiments/utils';
 
 type Template = {
     heading: string,
@@ -86,17 +84,8 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
 const isInEU = (): boolean =>
     (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
 
-const isNotInHelpOrInfoPage = (): boolean =>
-    ['info', 'help'].every(_ => _ !== config.get('page.section'));
-
 const hasUnsetAdChoices = (): boolean =>
     allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
-
-const isInTestVariant = (): boolean => {
-    const variant = getVariant(firstPvConsentBlocker, 'variant');
-    if (!variant) return false;
-    return isInVariant(firstPvConsentBlocker, variant);
-};
 
 const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
@@ -117,9 +106,6 @@ const trackInteraction = (interaction: string): void => {
 const canShow = (): Promise<boolean> =>
     Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
 
-const canBlockThePage = (): boolean =>
-    [isInTestVariant(), isNotInHelpOrInfoPage()].every(_ => _ === true);
-
 const show = (): void => {
     upAlertViewCount();
     trackInteraction(displayEventKey);
@@ -127,7 +113,6 @@ const show = (): void => {
     const msg = new Message(messageCode, {
         important: true,
         permanent: true,
-        blocking: canBlockThePage(),
         customJs: () => {
             [
                 ...document.querySelectorAll(`.${bindableClassNames.agree}`),
@@ -147,7 +132,6 @@ const firstPvConsentBanner: Banner = {
 
 export const _ = {
     onAgree,
-    canBlockThePage,
     bindableClassNames,
 };
 
