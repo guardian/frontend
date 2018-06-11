@@ -31,6 +31,8 @@ case class PressedCollection(
   hasMore: Boolean
 ) {
 
+  lazy val isEmpty: Boolean = curated.isEmpty && backfill.isEmpty && treats.isEmpty
+
   lazy val adFree = {
     copy(
       curated = curated.filterNot(_.isPaidFor),
