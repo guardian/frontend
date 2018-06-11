@@ -4,14 +4,12 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 
 const addEditLink = (containerEl: HTMLElement): void => {
-
     const myUserId: string = config.get('user.id');
     const pageUserId: string = containerEl.dataset.userid;
 
     const parentNode: ?Element = containerEl.parentElement;
 
-    if(parentNode && myUserId === pageUserId) {
-
+    if (parentNode && myUserId === pageUserId) {
         const linkEl = document.createElement('a');
         linkEl.innerText = 'Edit your public profile';
         linkEl.href = `${config.get('page.idUrl')}/public/edit`;
@@ -21,11 +19,10 @@ const addEditLink = (containerEl: HTMLElement): void => {
         holderEl.appendChild(linkEl);
         holderEl.classList.add('user-profile__edit-link');
 
-        fastdom.write(()=>{
+        fastdom.write(() => {
             containerEl.insertAdjacentElement('afterend', holderEl);
-        })
+        });
     }
-
 };
 
 const initUserEditLink = (): Promise<void> =>
