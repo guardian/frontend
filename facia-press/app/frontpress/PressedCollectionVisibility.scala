@@ -24,12 +24,12 @@ case class PressedCollectionVisibility(pressedCollection: PressedCollection, vis
   }
 
   lazy val pressedCollectionVersions: PressedCollectionVersions = {
-    val liteCurated = pressedCollection.curated.take(visible)
-    val liteBackfill = pressedCollection.backfill.take(visible - liteCurated.length)
-    val hasMore = pressedCollection.curatedPlusBackfillDeduplicated.length > visible
-    val liteCollection = pressedCollection.copy(curated = liteCurated, backfill = liteBackfill, hasMore = hasMore)
-    val fullCollection = pressedCollection.copy(hasMore = hasMore)
-    PressedCollectionVersions(liteCollection, fullCollection)
+    PressedCollectionVersions(
+      pressedCollection.lite(visible),
+      pressedCollection.full(visible),
+      pressedCollection.adFree.lite(visible),
+      pressedCollection.adFree.full(visible)
+    )
   }
 
   def deduplicate(against: Seq[HeaderUrl]): PressedCollectionVisibility = {

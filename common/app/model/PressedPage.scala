@@ -72,7 +72,20 @@ case object LiteType extends PressedPageType {
   override def suffix = ".lite"
 }
 
-case class PressedPageVersions(lite: PressedPage, full: PressedPage)
+case object FullAdFreeType extends PressedPageType {
+  override def suffix = ".adfree"
+}
+
+case object LiteAdFreeType extends PressedPageType {
+  override def suffix = ".lite.adfree"
+}
+
+case class PressedCollectionVersions(lite: PressedCollection,
+                                     full: PressedCollection,
+                                     liteAdFree: PressedCollection,
+                                     fullAdFree: PressedCollection)
+
+case class PressedPageVersions(lite: PressedPage, full: PressedPage, liteAdFree: PressedPage, fullAdFree: PressedPage)
 
 object PressedPageVersions {
   def fromPressedCollections(id: String,
@@ -80,19 +93,21 @@ object PressedPageVersions {
                              frontProperties: FrontProperties,
                              pressedCollections: List[PressedCollectionVersions]): PressedPageVersions = {
     PressedPageVersions(
-      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.lite)),
-      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.full))
+      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.lite)).filterEmpty,
+      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.full)).filterEmpty,
+      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.liteAdFree)).filterEmpty,
+      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.fullAdFree)).filterEmpty
     )
   }
 }
-
-case class PressedCollectionVersions(lite: PressedCollection, full: PressedCollection)
 
 case class PressedPage (
   id: String,
   seoData: SeoData,
   frontProperties: FrontProperties,
   collections: List[PressedCollection]) extends StandalonePage {
+
+  lazy val filterEmpty: PressedPage = copy(collections = collections.filterNot(_.isEmpty))
 
   override val metadata: MetaData = PressedPage.makeMetadata(id, seoData, frontProperties, collections)
   val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
