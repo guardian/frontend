@@ -180,10 +180,6 @@
         @include mq(tablet) {
             border-left: 1px solid $sport-garnett-main-1;
 
-            .fc-item__container:before {
-                height: 3px;
-            }
-
             .fc-sublink__title:before {
                 left: -5px;
             }
