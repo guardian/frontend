@@ -157,7 +157,8 @@
         }
     }
 
-    .fc-slice__item + .fc-slice__item:before {
+    .fc-slice__item + .fc-slice__item:before,
+    .fc-slice--h14-q-q .fc-item--standard-tablet:before {
         content: none;
     }
 
