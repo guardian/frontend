@@ -106,7 +106,7 @@
 }
 
 [data-component='world-cup-2018'] {
-    background: url("https://uploads.guim.co.uk/2018/06/11/worldcup_bg_01.png");
+    background: url('https://uploads.guim.co.uk/2018/06/11/worldcup_bg_01.png');
     background-repeat: no-repeat;
     background-position: top left;
     background-size: 1600px;
@@ -123,7 +123,7 @@
 
         a:before {
             content: '';
-            background: url("https://uploads.guim.co.uk/2018/06/08/worldCupLogo_01.svg");
+            background: url('https://uploads.guim.co.uk/2018/06/08/worldCupLogo_01.svg');
             background-repeat: no-repeat;
             background-size: contain;
             display: block;

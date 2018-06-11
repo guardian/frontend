@@ -466,11 +466,11 @@ $header-image-size-desktop: 100px;
 
         .fc-item__content {
             &:before {
-                background-image: url("https://uploads.guim.co.uk/2018/06/11/byline-mask.png");
+                background-image: url('https://uploads.guim.co.uk/2018/06/11/byline-mask.png');
                 background-repeat: no-repeat;
                 background-size: contain;
                 background-position: right;
-                content: "";
+                content: '';
                 position: absolute;
                 bottom: 9px;
                 right: 10px;
