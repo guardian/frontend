@@ -14,6 +14,7 @@ import { enhanceConsentJourney } from 'common/modules/identity/consent-journey';
 import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
 import { initHeader } from 'common/modules/identity/header';
 import { initUserAvatars } from 'common/modules/discussion/user-avatars';
+import { initUserEditLink } from 'common/modules/discussion/user-edit-link';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { enhanceAdPrefs } from 'common/modules/identity/ad-prefs';
 
@@ -53,6 +54,7 @@ const initProfile = (): void => {
         ['password-toggle', passwordToggle],
         ['init-validation-email', initValidationEmail],
         ['init-user-avatars', initUserAvatars],
+        ['init-user-edit-link', initUserEditLink],
         ['init-tabs', initTabs],
         ['init-account-profile', initAccountProfile],
         ['setup-loading-animation', setupLoadingAnimation],

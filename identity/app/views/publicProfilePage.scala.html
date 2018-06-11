@@ -12,7 +12,7 @@
             <div class="identity-title identity-title--public-profile">
                 <div class="user-profile__avatar user-avatar" data-userid="@user.id"></div>
                 <div class="user-profile__rows">
-                    <h1 class="user-profile__name">@user.publicFields.displayName</h1>
+                    <h1 class="user-profile__name" data-userid="@user.id">@user.publicFields.displayName</h1>
                     @user.dates.accountCreatedDate.map { accountCreatedDate =>
                         <p class="user-profile__last-seen">
                             Registered on @accountCreatedDate.toString("d MMM yyyy")

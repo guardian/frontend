@@ -80,6 +80,7 @@ $identity-header-height: 48px;
 
 .identity-title--public-profile {
     display: flex;
+    align-items: center;
     @include mq(desktop) {
         float: left;
         white-space: nowrap;
