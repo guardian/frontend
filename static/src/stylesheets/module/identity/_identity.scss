@@ -79,6 +79,7 @@ $identity-header-height: 48px;
 }
 
 .identity-title--public-profile {
+    display: flex;
     @include mq(desktop) {
         float: left;
         white-space: nowrap;
@@ -208,7 +209,7 @@ $identity-header-height: 48px;
     float: left;
     height: 60px;
     width: 60px;
-    margin-right: $gs-gutter/2;
+    margin-right: $gs-gutter;
 }
 
 .user-profile {
@@ -241,11 +242,13 @@ $identity-header-height: 48px;
     }
 }
 .user-profile__last-seen,
-.user-profile__web-page {
+.user-profile__web-page,
+.user-profile__edit-link {
     @include fs-textSans(1);
     display: block;
     color: $neutral-2-contrasted;
     font-weight: normal;
+    margin: 0;
 }
 .user-profile__web-page {
     @include ellipsis();
