@@ -1,28 +1,3 @@
-/**
- * Membership messages
- */
-@mixin site-message-dark-text {
-    &,
-    .site-message__actions,
-    .site-message__actions__item,
-    path,
-    button,
-    a {
-        color: #333333;
-        fill: #333333;
-        border-color: #333333;
-    }
-}
-
-.site-message--adblock-message,
-.site-message--membership-message-default {
-    background: $membership-default;
-}
-
-/*
- * Prominent membership message as a feature
- */
-
 @mixin scale-paypal-logo($width) {
     width: $width;
     height: $width * .14;
@@ -81,7 +56,17 @@
 }
 
 .site-message--membership-prominent {
-    @include site-message-dark-text;
+    &,
+    .site-message__actions,
+    .site-message__actions__item,
+    path,
+    button,
+    a {
+        color: #333333;
+        fill: #333333;
+        border-color: #333333;
+    }
+
     background-color: $news-garnett-highlight;
     svg {
         fill: #000000;
