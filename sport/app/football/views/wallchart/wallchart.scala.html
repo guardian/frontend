@@ -7,12 +7,12 @@
 <div class="l-side-margins wc-overview">
 
     @* Remove once switch expires (temporary addition for world cup 2018 - competition '700'). *@
-    @if(Switches.WorldCupNextMatchSwitch.isSwitchedOn && competition.id == "700") {
+    @if(Switches.WorldCup2018Chrome.isSwitchedOn && competition.id == "700") {
         <div class="facia-container facia-container--layout-content facia-header">
             <div class="facia-header__inner gs-container">
                 <div class="facia-header__column">
                     @fragments.inlineSvg("world_cup_badge", "badges", List("world__cup-svg", "world__cup-badge"))
-                    <h1 class="container__title"><span class="container__title__label">World cup 2018</span></h1>
+                    <h1 class="container__title"><span class="container__title__label">World Cup 2018</span></h1>
                 </div>
 
                 @next.map { nextMatch =>
@@ -126,5 +126,16 @@
                 </div>
             </div>
         }
+    }
+
+    @if(Switches.WorldCup2018Chrome.isSwitchedOn && competition.id == "700") {
+        <div class="gs-container">
+            <div class="content__main-column content__main-column--article js-content-main-column">
+                <p><em>Thirty-two nations are playing 64 games across 11 different Russian cities over one month and two days to decide the winner of the World Cup – the greatest prize in football and the most prestigious in world sport. The tournament begins in Moscow's Luzhniki Stadium on 14 June and ends in the same place on 15 July.</em></p>
+                <p><em>Most of the best players in the world are taking part – Lionel Messi of Argentina and Cristiano Ronaldo from Portugal have almost certainly their last chance to win the tournament. Mohamed Salah of Egypt and Kylian Mbappé of France are among the stars trying to cement their growing global reputation.</em></p>
+                <p><em>This year's tournament is the 21st in its 88-year history. Only Russia qualified automatically, as the host nation. Germany, winners in 2014, had to go through a two-year qualifying process to return to the World Cup as one of Europe's 14 representatives (including Russia). The tournament also includes three from North America, five from South America, five from Africa, three from Asia, and Australia. The qualification process finished in November 2017.</em></p>
+                <p><em>Conspicuous non-qualifiers for the tournament include four-time winners Italy, three-time finalists Holland and the USA, who failed to make it to the finals for the first time since 1986.</em></p>
+            </div>
+        </div>
     }
 </div>
