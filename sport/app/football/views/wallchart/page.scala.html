@@ -1,9 +1,9 @@
 @import _root_.football.model.CompetitionStageLike
 @import model.{Competition, Page}
 
-@(page: Page, competition: Competition, competitionStages: List[CompetitionStageLike])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: Page, competition: Competition, competitionStages: List[CompetitionStageLike], next: Option[pa.FootballMatch])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @mainLegacy(page, Some("football")){
 }{
-    @wallchart(competition, competitionStages)
+    @wallchart(competition, competitionStages, next)
 }

@@ -2,13 +2,13 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { signInEngagementBannerDisplay } from './tests/sign-in-engagement-banner-display';
-import { firstPvConsentBlocker } from './tests/first-pv-consent-blocker';
+import { PoliticsWeeklyTreat } from 'common/modules/experiments/tests/politics-weekly-treat';
+import { newSignInExperiment } from './tests/new-sign-in-experiment';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
-    signInEngagementBannerDisplay,
-    firstPvConsentBlocker,
+    newSignInExperiment,
+    PoliticsWeeklyTreat,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>

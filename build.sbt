@@ -121,7 +121,6 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
   libraryDependencies ++= Seq(
     filters,
     identityModel,
-    identityRequest,
     identityCookie,
     liftJson,
     slf4jExt,

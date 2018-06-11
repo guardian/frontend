@@ -18,31 +18,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-new-sign-in-experiment",
+    "This test will send a % of users to the new sign in experience",
+    owners = Seq(Owner.withGithub("walaura")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 7),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-liveblog",
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 1, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-engagement-banner-display",
-    "This test will show a sign in engagement banner to non signed in users",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 1, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-first-pv-consent-blocker",
-    "This test will make the cookie consent banner blocking",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019,5, 31),
     exposeClientSide = true
   )
 
@@ -92,7 +82,7 @@ trait ABTestSwitches {
     "turn on always ask for this story",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 5),
+    sellByDate = new LocalDate(2018, 6, 29),
     exposeClientSide = true
   )
 
@@ -102,7 +92,7 @@ trait ABTestSwitches {
     "Try 2 variants - one adding a border to the epic and one with copy thanking our readers",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 5),
+    sellByDate = new LocalDate(2018, 6, 29),
     exposeClientSide = true
   )
 
@@ -112,7 +102,17 @@ trait ABTestSwitches {
     "Hihglight a line in the banner",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 5),
+    sellByDate = new LocalDate(2018, 6, 29),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-native-vs-dfp",
+    "See if there is any difference in annualised value between serving the Epic natively vs DFP",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 6, 19), // Tuesday
     exposeClientSide = true
   )
 }

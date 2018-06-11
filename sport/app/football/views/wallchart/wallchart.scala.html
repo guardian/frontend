@@ -1,72 +1,141 @@
-@(competition: model.Competition, competitionStages: List[_root_.football.model.CompetitionStageLike])(implicit request: RequestHeader)
+@import football.model.CompetitionStageLike
+@import model.Competition
+@import conf.switches.Switches
+@import conf.Configuration
 
-@competitionStages.map {
-    case knockoutStage: _root_.football.model.KnockoutSpider => {
-        <div class="facia-container facia-container--layout-content">
-            <div class="container">
-                <div class="facia-container__inner">
-                    <div class="container__border hide-on-mobile"></div>
-                    <h3 class="container__title">
-                        <span class="container__title__label u-text-hyphenate">knockout stage</span>
-                    </h3>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName knockout chart">
-                            @football.views.html.wallchart.knockoutSpider(competition, knockoutStage)
-                        </div>
+@(competition: Competition, competitionStages: List[CompetitionStageLike], next: Option[pa.FootballMatch])(implicit request: RequestHeader)
+<div class="l-side-margins wc-overview">
+
+    @* Remove once switch expires (temporary addition for world cup 2018 - competition '700'). *@
+    @if(Switches.WorldCup2018Chrome.isSwitchedOn && competition.id == "700") {
+        <div class="facia-container facia-container--layout-content facia-header">
+            <div class="facia-header__inner gs-container">
+                <div class="facia-header__column">
+                    @fragments.inlineSvg("world_cup_badge", "badges", List("world__cup-svg", "world__cup-badge"))
+                    <h1 class="container__title"><span class="container__title__label">World Cup 2018</span></h1>
+                </div>
+
+                @next.map { nextMatch =>
+                <div class="facia-header__column">
+                    <div class="wc-match__date">
+                        <div class="wc-label wc-label__title">Next match</div>
+                        <div class="wc-label">@nextMatch.date.toString("HH:ss EE d MMM z")</div>
                     </div>
+                </div>
+                <div class="facia-header__column facia-header__column-flags">
+                    <div class="wc-match__badges">
+                        <span class="wc-label wc-badge__flag">
+                            <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{nextMatch.homeTeam.id}.png" />
+                        </span>
+                        <span class="wc-label wc-badge__flag">
+                            <img class="team-crest" alt="" src="@Configuration.staticSport.path/football/crests/120/@{nextMatch.awayTeam.id}.png" />
+                        </span>
+                    </div>
+                    <div class="wc-match__teams">
+                        <div class="wc-label wc-label__title">@nextMatch.round.name.getOrElse(nextMatch.round.roundNumber)</div>
+                        <div class="wc-label">@pa.TeamCodes.codeFor(nextMatch.homeTeam) vs @pa.TeamCodes.codeFor(nextMatch.awayTeam)</div>
+                    </div>
+                </div>
+                }.getOrElse{
+                <div class="facia-header__column"></div>
+                <div class="facia-header__column"></div>
+                }
+
+                <div class="facia-header__column">
+                    <span class="wc-player-image wc-player-image__offset"><img src="https://uploads.guim.co.uk/2018/05/24/world_cup_cut_out_1.png"></span>
+                    <span class="wc-player-image"><img src="https://uploads.guim.co.uk/2018/05/24/world_cup_cut_out_2.png"></span>
                 </div>
             </div>
         </div>
     }
-    case groupStage:  _root_.football.model.Groups => {
-        <div class="facia-container facia-container--layout-content">
-            <div class="container">
-                <div class="facia-container__inner">
-                    <div class="container__border hide-on-mobile"></div>
-                    <h3 class="container__title">
-                        <span class="container__title__label u-text-hyphenate">groups</span>
-                    </h3>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName groups">
-                            @football.views.html.wallchart.groups(competition, groupStage)
+
+    @competitionStages.map {
+        case knockoutStage: _root_.football.model.KnockoutSpider => {
+            <div class="facia-container facia-container--layout-content">
+                <div class="container">
+                    <div class="facia-container__inner">
+                        <div class="container__border hide-on-mobile"></div>
+                        <div class="fc-container__header">
+                            <h3 class="container__title">
+                                <span class="container__title__label u-text-hyphenate">Knockout stage</span>
+                            </h3>
+                        </div>
+                        <div class="container__body">
+                            <div data-link-name="@competition.fullName knockout chart">
+                                @football.views.html.wallchart.knockoutSpider(competition, knockoutStage)
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-    case leagueStage:  _root_.football.model.League => {
-        <div class="facia-container facia-container--layout-content">
-            <div class="container">
-                <div class="facia-container__inner">
-                    <div class="container__border hide-on-mobile"></div>
-                    <h3 class="container__title">
-                        <span class="container__title__label u-text-hyphenate">league</span>
-                    </h3>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName leagues">
-                            @football.views.html.wallchart.league(competition, leagueStage)
+        }
+        case groupStage:  _root_.football.model.Groups => {
+            <div class="facia-container facia-container--layout-content">
+                <div class="container">
+                    <div class="facia-container__inner">
+                        <div class="container__border hide-on-mobile"></div>
+                        <div class="fc-container__header">
+                            <h3 class="container__title">
+                                <span class="container__title__label u-text-hyphenate">Groups</span>
+                            </h3>
+                        </div>
+                        <div class="container__body">
+                            <div data-link-name="@competition.fullName groups">
+                                @football.views.html.wallchart.groups(competition, groupStage)
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-    case knockoutStage: _root_.football.model.KnockoutList => {
-        <div class="facia-container facia-container--layout-content">
-            <div class="container">
-                <div class="facia-container__inner">
-                    <div class="container__border hide-on-mobile"></div>
-                    <h3 class="container__title">
-                        <span class="container__title__label u-text-hyphenate">knockout stage</span>
-                    </h3>
-                    <div class="container__body">
-                        <div data-link-name="@competition.fullName knockout chart">
-                            @football.views.html.wallchart.knockoutList(competition, knockoutStage)
+        }
+        case leagueStage:  _root_.football.model.League => {
+            <div class="facia-container facia-container--layout-content">
+                <div class="container">
+                    <div class="facia-container__inner">
+                        <div class="container__border hide-on-mobile"></div>
+                        <div class="fc-container__header">
+                            <h3 class="container__title">
+                                <span class="container__title__label u-text-hyphenate">League</span>
+                            </h3>
+                        </div>
+                        <div class="container__body">
+                            <div data-link-name="@competition.fullName leagues">
+                                @football.views.html.wallchart.league(competition, leagueStage)
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        }
+        case knockoutStage: _root_.football.model.KnockoutList => {
+            <div class="facia-container facia-container--layout-content">
+                <div class="container">
+                    <div class="facia-container__inner">
+                        <div class="container__border hide-on-mobile"></div>
+                        <div class="fc-container__header">
+                            <h3 class="container__title">
+                                <span class="container__title__label u-text-hyphenate">Knockout stage</span>
+                            </h3>
+                        </div>
+                        <div class="container__body">
+                            <div data-link-name="@competition.fullName knockout chart">
+                                @football.views.html.wallchart.knockoutList(competition, knockoutStage)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    @if(Switches.WorldCup2018Chrome.isSwitchedOn && competition.id == "700") {
+        <div class="gs-container">
+            <div class="content__main-column content__main-column--article js-content-main-column">
+                <p><em>Thirty-two nations are playing 64 games across 11 different Russian cities over one month and two days to decide the winner of the World Cup – the greatest prize in football and the most prestigious in world sport. The tournament begins in Moscow's Luzhniki Stadium on 14 June and ends in the same place on 15 July.</em></p>
+                <p><em>Most of the best players in the world are taking part – Lionel Messi of Argentina and Cristiano Ronaldo from Portugal have almost certainly their last chance to win the tournament. Mohamed Salah of Egypt and Kylian Mbappé of France are among the stars trying to cement their growing global reputation.</em></p>
+                <p><em>This year's tournament is the 21st in its 88-year history. Only Russia qualified automatically, as the host nation. Germany, winners in 2014, had to go through a two-year qualifying process to return to the World Cup as one of Europe's 14 representatives (including Russia). The tournament also includes three from North America, five from South America, five from Africa, three from Asia, and Australia. The qualification process finished in November 2017.</em></p>
+                <p><em>Conspicuous non-qualifiers for the tournament include four-time winners Italy, three-time finalists Holland and the USA, who failed to make it to the finals for the first time since 1986.</em></p>
+            </div>
         </div>
     }
-}
+</div>

@@ -97,6 +97,9 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     (editionalisedPath != path) && request.getQueryString("page").isEmpty
   }
 
+  private[this] def shouldOnlyReturnHeadline(request: RequestHeader): Boolean =
+    request.getQueryString("format").contains("email-headline")
+
   def redirectTo(path: String)(implicit request: RequestHeader): Future[Result] = successful {
     val params = request.rawQueryStringOption.map(q => s"?$q").getOrElse("")
     Cached(CacheTime.Facia)(WithoutRevalidationResult(Found(LinkTo(s"/$path$params"))))
@@ -111,27 +114,29 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
     val futureResult = frontJsonFapi.getLite(path).flatMap {
       case Some(faciaPage) =>
-        successful(
+        successful(Cached(CacheTime.Facia)(
           if (request.isRss) {
             val body = TrailsToRss.fromPressedPage(faciaPage)
-            Cached(CacheTime.Facia) {
-              RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
-            }
+            RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
           }
           else if (request.isJson)
-            Cached(CacheTime.Facia)(JsonFront(faciaPage))
+            JsonFront(faciaPage)
           else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
-            val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
-            Cached(CacheTime.Facia) {
+            if (shouldOnlyReturnHeadline(request)) {
+              val headline = for {
+                topCollection <- faciaPage.collections.headOption
+                topCurated <- topCollection.curated.headOption
+              } yield topCurated.header.headline
+                RevalidatableResult.Ok(headline.getOrElse("Error: Could not extract headline from front"))
+            } else {
+              val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
               RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse)
             }
           }
           else {
-            Cached(CacheTime.Facia) {
-                RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
-            }
+            RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
           }
-        )
+        ))
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t)}

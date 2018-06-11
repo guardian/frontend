@@ -173,17 +173,6 @@ import scala.concurrent.Future
     }
 
 
-    "using displayConsentsJourneyGdprCampaign" should {
-
-      "have consent checkboxes" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourneyGdprCampaign.apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
-      }
-
-    }
-
-
     "using displayConsentsJourneyThankYou" should {
 
       "thank you" in new ConsentsJourneyFixture {
