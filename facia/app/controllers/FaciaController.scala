@@ -2,11 +2,11 @@ package controllers
 
 import common._
 import controllers.front._
-import layout.{CollectionEssentials, FaciaCard, FaciaContainer, Front, ContentCard, FaciaCardAndIndex}
+import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.facia.PressedCollection
-import model.pressed.CollectionConfig
+import model.pressed.{CollectionConfig, PressedContent}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
@@ -123,11 +123,11 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             JsonFront(faciaPage)
           else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
             if (shouldOnlyReturnHeadline(request)) {
-              val headline = for {
+              val webTitle = for {
                 topCollection <- faciaPage.collections.headOption
                 topCurated <- topCollection.curated.headOption
-              } yield topCurated.header.headline
-                RevalidatableResult.Ok(headline.getOrElse("Error: Could not extract headline from front"))
+              } yield topCurated.properties.webTitle
+              webTitle.map(RevalidatableResult.Ok(_)).getOrElse(WithoutRevalidationResult(NotFound("Could not extract headline from front")))
             } else {
               val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
               RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse)
