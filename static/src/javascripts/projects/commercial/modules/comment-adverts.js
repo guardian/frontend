@@ -32,6 +32,11 @@ export const initCommentAdverts = (): ?boolean => {
             .then((adSlot: HTMLElement) => addSlot(adSlot, false));
     };
 
+    if (isUserLoggedIn() && mainColHeight >= 300) {
+        insertCommentAd($commentMainColumn);
+    }
+
+
     if (!commercialFeatures.commentAdverts || !$adSlotContainer.length) {
         return false;
     }
