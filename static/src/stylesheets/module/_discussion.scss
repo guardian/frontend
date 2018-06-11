@@ -29,6 +29,13 @@ $avatarPadding: $gs-gutter / 2;
     display: none;
 }
 
+.discussion__main-comments, .discussion__pagination  {
+    @include mq(desktop) {
+        margin-right: 0;
+        max-width: gs-span(8);
+    }
+}
+
 .id--signed-in .content--liveblog + .content-footer .discussion .content__main-column {
     // align comments with main column on liveblogs
     @include mq(desktop) {
