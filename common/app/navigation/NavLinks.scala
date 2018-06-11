@@ -76,6 +76,7 @@ object NavLinks {
       NavLink("Player-by-player guide", "/football/ng-interactive/2018/jun/05/world-cup-2018-complete-guide-players-ratings-goals-caps"),
       NavLink("Experts' Network", "/football/series/world-cup-2018-guardian-experts-network"),
       NavLink("All-time XIs", "/football/series/world-cup-all-time-xis"),
+      football // Note: this is not ideal for US edition
     )
   )
 
