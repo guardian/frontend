@@ -38,7 +38,7 @@ const s2sConfig = {
     timeout: bidderTimeout,
     adapter: 'prebidServer',
     is_debug: 'false',
-    endpoint: 'http://elb.the-ozone-project.com/openrtb2/auction',
+    endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
     syncEndpoint: 'https://prebid.adnxs.com/pbs/v1/cookie_sync',
     cookieSet: true,
     cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
