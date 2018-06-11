@@ -138,11 +138,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-always-ask-from-google-doc",
+    "ab-acquisitions-epic-from-google-doc-one-variant",
     "Serves an epic with copy from a Google Doc",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 5),
+    sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
 }

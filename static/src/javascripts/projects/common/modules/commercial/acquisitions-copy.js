@@ -1,5 +1,6 @@
 // @flow
 import { getLocalCurrencySymbol } from 'lib/geolocation';
+import fetchJSON from 'lib/fetch-json';
 
 // control
 const controlHeading = 'Since you’re here &hellip;';
@@ -80,3 +81,24 @@ export const liveblogCopy = (
         getLocalCurrencySymbol()
     )}. - Guardian HQ`,
 });
+
+export const getCopyFromGoogleDoc = (
+    url: string,
+    sheetName: string
+): Promise<AcquisitionsEpicTemplateCopy> =>
+    fetchJSON(url, {
+        mode: 'cors',
+    }).then(res => {
+        const rows = res && res.sheets && res.sheets[sheetName];
+        const row = rows && rows[0];
+
+        if (row.heading && row.p1 && row.p2) {
+            return {
+                heading: row.heading,
+                p1: row.p1,
+                p2: controlP2(row.p2),
+            }
+        } else {
+            return control;
+        }
+    });
