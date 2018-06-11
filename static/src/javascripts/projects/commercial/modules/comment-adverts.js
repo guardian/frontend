@@ -5,6 +5,7 @@ import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import type bonzo from 'bonzo';
 
