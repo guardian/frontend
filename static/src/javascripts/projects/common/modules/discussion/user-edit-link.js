@@ -12,6 +12,7 @@ const addEditLink = (containerEl: HTMLElement): void => {
     if (parentNode && myUserId === pageUserId) {
         const linkEl = document.createElement('a');
         linkEl.innerText = 'Edit your public profile';
+        linkEl.dataset.linkName = 'comments : edit profile';
         linkEl.href = `${config.get('page.idUrl')}/public/edit`;
         linkEl.classList.add('u-underline');
 
