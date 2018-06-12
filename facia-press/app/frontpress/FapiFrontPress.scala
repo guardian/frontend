@@ -245,7 +245,7 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
   def pressByPathId(path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
     for {
      _ <- pressPath(path)
-     _ <- Future.traverse(dependentFrontPaths.getOrElse("path", Nil))(pressPath)
+     _ <- Future.traverse(dependentFrontPaths.getOrElse(path, Nil))(pressPath)
     } yield ()
   }
 
