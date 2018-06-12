@@ -106,13 +106,13 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   def renderFrontJsonLite(path: String): Action[AnyContent] = Action.async { implicit request =>
-    frontJsonFapi.getLite(path).map {
+    frontJsonFapi.get(path, liteRequestType).map {
         case Some(pressedPage) => Cached(CacheTime.Facia)(JsonComponent(FapiFrontJsonLite.get(pressedPage)))
         case None => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))}
   }
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureResult = frontJsonFapi.getLite(path).flatMap {
+    val futureResult = frontJsonFapi.get(path, liteRequestType).flatMap {
       case Some(faciaPage) =>
         successful(Cached(CacheTime.Facia)(
           if (request.isRss) {
@@ -196,7 +196,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] = Action.async { implicit request =>
-    frontJsonFapi.get(path).flatMap {
+    frontJsonFapi.get(path, fullRequestType).flatMap {
       case Some(pressedPage) =>
         val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
         val maybeResponse =
@@ -225,15 +225,15 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     )
   }
 
-  private def getPressedCollection(collectionId: String): Future[Option[PressedCollection]] =
+  private def getPressedCollection(collectionId: String)(implicit request: RequestHeader): Future[Option[PressedCollection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
-      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+      frontJsonFapi.get(path, fullRequestType).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(successful(None))
 
-  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[List[PressedCollection]] =
-    frontJsonFapi.get(path).map { maybePage =>
+  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String)(implicit requestHeader: RequestHeader): Future[List[PressedCollection]] =
+    frontJsonFapi.get(path, fullRequestType).map { maybePage =>
       maybePage.map { faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
         faciaPage
@@ -266,6 +266,9 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   def renderAgentContents: Action[AnyContent] = Action {
     Ok(ConfigAgent.contentsAsJsonString)
   }
+
+  def fullRequestType(implicit request: RequestHeader): PressedPageType = if (request.isAdFree) FullAdFreeType else FullType
+  def liteRequestType(implicit request: RequestHeader): PressedPageType = if (request.isAdFree) LiteAdFreeType else LiteType
 }
 
 class FaciaControllerImpl(

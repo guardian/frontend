@@ -1,10 +1,10 @@
 package controllers.front
 
-import common.{FaciaPressMetrics, Logging, StopWatch}
+import common.{FaciaPressMetrics, Logging}
 import concurrent.{BlockingOperations, FutureSemaphore}
 import conf.Configuration
 import metrics.DurationMetric
-import model.{FullType, LiteType, PressedPage}
+import model.{PressedPage, PressedPageType}
 import play.api.libs.json.Json
 import services.S3
 
@@ -20,12 +20,8 @@ trait FrontJsonFapi extends Logging {
 
   private def getAddressForPath(path: String, prefix: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2$prefix.json"
 
-  def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.get $path") {
-    pressedPageFromS3(getAddressForPath(path, FullType.suffix))
-  }
-
-  def getLite(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.getLite $path") {
-    pressedPageFromS3(getAddressForPath(path, LiteType.suffix))
+  def get(path: String, pageType: PressedPageType)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.get $path") {
+    pressedPageFromS3(getAddressForPath(path, pageType.suffix))
   }
 
   private def parsePressedPage(jsonStringOpt: Option[String])(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = futureSemaphore.execute {
