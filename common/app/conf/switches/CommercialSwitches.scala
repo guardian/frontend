@@ -267,16 +267,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AdBlockMessage = Switch(
-    Commercial,
-    "adblock",
-    "Switch for the Adblock Message.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val KruxVideoTracking = Switch(
     Commercial,
     "krux-video-tracking",
