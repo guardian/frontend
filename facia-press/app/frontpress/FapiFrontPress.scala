@@ -188,9 +188,9 @@ trait EmailFrontPress extends Logging {
       }
     }
 
-    val canonicalPressedF = pressedCollectionFromMetaTag(Canonical, "headlines", 6)
-    val breakingPressedF = pressedCollectionFromMetaTag(Breaking, "breaking news", 5)
-    val specialPressedF = pressedCollectionFromMetaTag(Special, "special report", 1)
+    val canonicalPressedF = pressedCollectionFromMetaTag(Canonical, "Headlines", 6)
+    val breakingPressedF = pressedCollectionFromMetaTag(Breaking, "Breaking news", 5)
+    val specialPressedF = pressedCollectionFromMetaTag(Special, "Special report", 1)
 
     for {
       canonicalPressedO <- canonicalPressedF
