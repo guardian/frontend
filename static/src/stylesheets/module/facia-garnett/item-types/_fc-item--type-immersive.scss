@@ -138,10 +138,14 @@
 
     // All cards but certain types
     .fc-item:not(.fc-item--type-live):not(.fc-item--type-media) {
-        background-color: #ffffff !important;
+        background-color: #f1f8fc !important;
 
         &:hover {
-            background-color: $garnett-neutral-3 !important;
+            background-color: darken(#f1f8fc, 4%) !important;
+
+            .fc-trail__count {
+                background: transparent !important;
+            }
         }
 
         .fc-item__headline {
@@ -165,7 +169,7 @@
     // All cards
     .fc-item {
         .fc-item__container:before {
-            background-color: $sport-garnett-main-1;
+            background-color: rgba($sport-garnett-main-1, .4);
         }
 
         .fc-item__kicker {
@@ -175,11 +179,11 @@
         }
 
         .fc-sublink__title:before {
-            border-color: $sport-garnett-main-1;
+            border-color: rgba($sport-garnett-main-1, .4);
         }
 
         @include mq(tablet) {
-            border-left: 1px solid $sport-garnett-main-1;
+            border-left: 1px solid rgba($sport-garnett-main-1, .4);
 
             .fc-sublink__title:before {
                 left: -5px;
@@ -190,7 +194,8 @@
     // Comment cards
     .fc-item--type-comment {
         // Forces blue colour scheme on all comment cards
-        .fc-item__meta {
+        .fc-item__meta,
+        .fc-trail__count {
             background: none;
         }
 

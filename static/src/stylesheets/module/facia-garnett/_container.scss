@@ -449,10 +449,9 @@ $header-image-size-desktop: 100px;
 }
 
 [data-component='world-cup-2018'] {
-    .fc-item--has-cutout.fc-item--type-comment {
+    .fc-item--has-cutout.fc-item--type-comment:not(.fc-item--list-tablet) {
         .fc-item__avatar {
             background-color: transparent !important;
-            overflow: visible;
 
             img {
                 filter: grayscale(100%);
@@ -477,6 +476,20 @@ $header-image-size-desktop: 100px;
                 z-index: 1;
                 height: 90px;
                 width: 200px;
+            }
+        }
+
+        &.fc-item--half-tablet .fc-item__content:before {
+            height: 112px;
+
+            @include mq(tablet) {
+                height: 164px;
+                bottom: $gs-baseline / 2;
+            }
+
+            @include mq(desktop) {
+                height: 190px;
+                width: 230px;
             }
         }
 
