@@ -243,9 +243,18 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
       .showAtoms("media")
 
   def pressByPathId(path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
+    def pressDependentPaths(paths: Seq[String]): Future[Unit] = {
+      Future
+        .traverse(paths)(pressPath)
+        .recover {
+          case e => log.error(s"Error when pressing $paths", e)
+        }
+        .map(_ => ())
+    }
+
     for {
      _ <- pressPath(path)
-     _ <- Future.traverse(dependentFrontPaths.getOrElse(path, Nil))(pressPath)
+     _ <- pressDependentPaths(dependentFrontPaths.getOrElse(path, Nil))
     } yield ()
   }
 
