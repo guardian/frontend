@@ -17,7 +17,7 @@
         <div class="football-match__details">
             @if(round.name.exists(_ == "Final")) {
                 <div class="bigfatfinal">
-                    <img src="http://sport.guim.co.uk/football/world-cup-2014/brazil.svg" class="bigfatfinal__image" />
+                    @fragments.inlineSvg("world_cup_badge", "badges", List("world__cup-svg", "world__cup-badge", "bigfatfinal__image"))
                     <div class="football-match__name"><b>Final</b></div>
                 </div>
             }

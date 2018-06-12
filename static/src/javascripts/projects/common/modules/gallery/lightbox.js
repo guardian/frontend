@@ -251,33 +251,37 @@ class GalleryLightbox {
             })
         );
 
-        bean.on(this.$swipeContainer[0], 'touchend', (): void => {
-            let direction;
+        bean.on(
+            this.$swipeContainer[0],
+            'touchend',
+            (): void => {
+                let direction;
 
-            if (Math.abs(dx) > threshold) {
-                direction = dx > threshold ? 1 : -1;
-            } else {
-                direction = 0;
-            }
+                if (Math.abs(dx) > threshold) {
+                    direction = dx > threshold ? 1 : -1;
+                } else {
+                    direction = 0;
+                }
 
-            dx = 0;
+                dx = 0;
 
-            if (direction === 1) {
-                if (this.index > 1) {
-                    this.trigger('prev');
+                if (direction === 1) {
+                    if (this.index > 1) {
+                        this.trigger('prev');
+                    } else {
+                        this.trigger('reload');
+                    }
+                } else if (direction === -1) {
+                    if (this.index < this.$slides.length) {
+                        this.trigger('next');
+                    } else {
+                        this.trigger('reload');
+                    }
                 } else {
                     this.trigger('reload');
                 }
-            } else if (direction === -1) {
-                if (this.index < this.$slides.length) {
-                    this.trigger('next');
-                } else {
-                    this.trigger('reload');
-                }
-            } else {
-                this.trigger('reload');
             }
-        });
+        );
     }
 
     disableHover(): void {

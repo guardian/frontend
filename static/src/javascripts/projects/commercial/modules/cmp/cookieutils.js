@@ -271,9 +271,7 @@ const encodeDataToBits = (
         log.error('Could not find cookieVersion to encode');
     } else if (!definitionMap[cookieVersion]) {
         log.error(
-            `Could not find definition to encode cookie version ${
-                cookieVersion
-            }`
+            `Could not find definition to encode cookie version ${cookieVersion}`
         );
     } else {
         const cookieFields = definitionMap[cookieVersion].fields;
@@ -294,7 +292,7 @@ const encodeCookieValue = (
         // Pad length to multiple of 8
         const paddedBinaryValue = padRight(
             binaryValue,
-            7 - (binaryValue.length + 7) % 8
+            7 - ((binaryValue.length + 7) % 8)
         );
         // Encode to bytes
         let bytes = '';
@@ -321,9 +319,7 @@ const decodeCookieBitValue = (
         return {};
     } else if (!definitionMap[cookieVersion]) {
         log.error(
-            `Could not find definition to decode cookie version ${
-                cookieVersion
-            }`
+            `Could not find definition to decode cookie version ${cookieVersion}`
         );
         return {};
     }

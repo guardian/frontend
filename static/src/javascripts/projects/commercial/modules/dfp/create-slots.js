@@ -103,6 +103,14 @@ const adSlotDefinitions = {
             mobile: [adSizes.fluid],
         },
     },
+    epic: {
+        label: false,
+        refresh: false,
+        name: 'epic',
+        sizeMappings: {
+            mobile: [adSizes.fluid],
+        },
+    },
 };
 
 /*

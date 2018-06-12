@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
 
+const fs = require('fs');
+const { promisify } = require('util');
 const path = require('path');
 const execa = require('execa');
 const chalk = require('chalk');
 const getChangedFiles = require('../tools/__tasks__/lib/get-changed-files');
+
+const writeFile = promisify(fs.writeFile);
 
 const confirmIfMasterMessage = `${chalk.red(
     `${chalk.inverse(
@@ -72,9 +76,9 @@ const updateTOC = changed => {
     if (changed.some(file => file.includes('docs/'))) {
         const docs = path.resolve('docs');
         const readme = path.resolve(docs, 'README.md');
-        return execa(path.resolve(docs, 'generate-toc.sh'), ['>', readme], {
-            stdio: 'inherit',
-        })
+        return execa
+            .stdout(path.resolve(docs, 'generate-toc.sh'))
+            .then(toc => writeFile(readme, toc, 'utf8'))
             .then(() => execa.sync('git', ['add', readme]))
             .then(() => changed);
     }

@@ -1,8 +1,8 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component } from 'preact-compat';
 
 type FeedbackFlashBoxProps = {
-    children?: any,
+    children: any,
     flashing: boolean,
 };
 

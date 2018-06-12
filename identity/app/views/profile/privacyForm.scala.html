@@ -32,18 +32,8 @@
 }
 
 @marketingConsentForm = {
-    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="form" method="post">
         @views.html.helper.CSRF.formField
-
-        @* This displays both global and key-bound errors *@
-        @if(privacyForm.hasErrors) {
-            <div class="form__error">
-                Error processing the form. Your changes have not been saved:
-                <p>@privacyForm.errors.map(formError => (formError.key, formError.message)).mkString(", ")</p>
-            </div>
-        }
-
-        <div class="js-errorHolder manage-account__errors"></div>
 
         <fieldset class="fieldset fieldset--manage-account-noborder">
 
@@ -52,7 +42,7 @@
                 <p class="form__note">From time to time, we'd love to be able to send you information about our products, services and events.</p>
             </div>
 
-            <div class="fieldset__fields">
+            <div class="fieldset__fields fieldset__fields--opt-in">
 
                 <div class="manage-account__switches manage-account__switches--single-column">
                     <ul>
@@ -94,6 +84,16 @@
     </div>
 }
 
+@* This displays both global and key-bound errors *@
+@if(privacyForm.hasErrors) {
+    <div class="form__error" role="alert" aria-live="polite">
+        Error processing the form. Your changes have not been saved:
+        <p>@privacyForm.errors.map(formError => (formError.key, formError.message)).mkString(", ")</p>
+    </div>
+}
+
+<div class="js-errorHolder manage-account__errors"></div>
+
 @* NEWSLETTERS *@
 @profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
 
@@ -103,7 +103,7 @@
 @smsConsent
 
 @* EMAIL SETTINGS *@
-@views.html.profile.emailSettings(idRequest, idUrlBuilder)
+@views.html.profile.emailSettings(idRequest, idUrlBuilder, user)
 
 @* CHANNELS *@
 <hr class="manage-account-divider" />

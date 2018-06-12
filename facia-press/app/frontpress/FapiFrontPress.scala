@@ -121,6 +121,8 @@ trait FapiFrontPress extends Logging {
       .map { pressedFronts: PressedPageVersions =>
         putPressedPage(path, pressedFronts.full, FullType)
         putPressedPage(path, pressedFronts.lite, LiteType)
+        putPressedPage(path, pressedFronts.fullAdFree, FullAdFreeType)
+        putPressedPage(path, pressedFronts.liteAdFree, LiteAdFreeType)
       }.fold(
         e => {
           StatusNotification.notifyFailedJob(path, isLive = isLiveContent, e)
@@ -159,6 +161,8 @@ trait FapiFrontPress extends Logging {
     val metric: SamplerMetric = pressedType match {
       case FullType => FaciaPressMetrics.FrontPressContentSize
       case LiteType => FaciaPressMetrics.FrontPressContentSizeLite
+      case LiteAdFreeType => FaciaPressMetrics.FrontPressContentSizeLite
+      case FullAdFreeType => FaciaPressMetrics.FrontPressContentSize
     }
 
     metric.recordSample(json.getBytes.length, new DateTime())

@@ -109,10 +109,10 @@ class EmailVerificationControllerTest extends path.FreeSpec
       }
 
       "should redirect to original returnUrl if it was already a consent journey" in {
-        when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://profile.theguardian.com/consents/staywithus"))
+        when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://profile.theguardian.com/consents"))
         val result = controller.verify(token)(testRequest)
         status(result) should be(SEE_OTHER)
-        redirectLocation(result).get should include("/consents/staywithus")
+        redirectLocation(result).get should include("/consents")
       }
     }
 

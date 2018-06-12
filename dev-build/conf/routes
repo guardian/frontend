@@ -275,8 +275,7 @@ GET            /advertiser-content/:campaignName/:pageName/autoplay.json        
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET            /commercial/prebid/revenue                                                                                        controllers.admin.commercial.TeamKPIController.renderPrebidDashboard()
-PUT            /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.insert()
-OPTIONS        /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.getOptions
+POST           /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.insert()
 
 # Commercial Admin
 GET         /commercial                                                                                                          controllers.admin.CommercialController.renderCommercialMenu()

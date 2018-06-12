@@ -5,14 +5,16 @@
 
 @for((forecast, index) <- forecasts.drop(1).zipWithIndex) {
     <li class="forecast__item forecast__item--@index">
-        <p class="weather__desc">
+        <div class="weather__time">
             <span class="u-h">The temperature at</span>
-            <time class="weather__time">@forecast.hourString</time>
+            <time class="weather__time-value">@forecast.hourString</time>
+        </div>
+        @fragments.inlineSvg(s"weather-${forecast.weatherIcon}", "weather", Seq("weather__icon","js-weather-icon"))<span class="u-h">@forecast.weatherText</span>
+        <div class="weather__temp">
             <span class="u-h">will be</span>
             @defining(forecast.temperatureForEdition(Edition(request))) { temp =>
-                <span class="weather__temp">@temp</span>
+                <span class="weather__temp-value">@temp</span>
             }
-        </p>
-        @fragments.inlineSvg(s"weather-${forecast.weatherIcon}", "weather", Seq("weather__icon","js-weather-icon"))<span class="u-h">@forecast.weatherText</span>
+        </div>
     </li>
 }

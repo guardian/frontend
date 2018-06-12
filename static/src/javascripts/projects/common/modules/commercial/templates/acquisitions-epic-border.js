@@ -18,9 +18,7 @@ export const acquisitionsEpicBorderTemplate = ({
     )}" alt="Info">`;
 
     return `
-        <div class="contributions__epic contributions__epic_border" data-component="${
-            componentName
-        }">
+        <div class="contributions__epic contributions__epic_border" data-component="${componentName}">
         <div>
             <div>
                 <h2 class="contributions__title contributions__title--epic">

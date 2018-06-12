@@ -65,6 +65,16 @@ trait MatchesList extends Football with RichList with implicits.Collections {
     val nextMatchDate = matchDates.takeWhile(dateComesFirstInList(_, date)).lastOption
     nextMatchDate.map(s"$baseUrl/" + _.toString("yyyy/MMM/dd"))
   }
+
+  def getPageTitle: String = {
+    pageType match {
+      case "live" => "Live football scores"
+      case "matches" => "Football scores"
+      case "fixtures" => "Football fixtures"
+      case "results" => "Football results"
+      case _ => pageType
+    }
+  }
 }
 
 trait Fixtures extends MatchesList {

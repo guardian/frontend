@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component } from 'preact-compat';
 import { markup as closeCentralIcon } from 'svgs/icon/close-central.svg';
 import {
     cellsForClue,

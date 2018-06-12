@@ -1,0 +1,33 @@
+<div class="politics-weekly-treat">
+    <a href="https://www.theguardian.com/politics/audio/2018/jun/07/general-election-anniversary-politics-weekly-podcast?CMP=politics-weekly-treat-<%=variant%>">
+        <div class="politics-weekly-treat__logo">
+            <%= logo %>
+        </div>
+
+        <div class="politics-weekly-treat__overlay">
+
+            <div class="politics-weekly-treat__podcast">Podcast</div>
+
+            <div class="politics-weekly-treat__podcast-title"><span>UK Politics Weekly</span></div>
+
+            <% if(variant === "a") { %>
+            <div class="politics-weekly-treat__player politics-weekly-treat__player-variant-a">
+                <%= aButton %>
+                <%= aWave %>
+                <%= aWaveSmall %>
+                <div class="politics-weekly-treat__timestamp">
+                    <span>45:18</span>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="politics-weekly-treat__player politics-weekly-treat__player-variant-b">
+                <%= bIcon %>
+                <%= bWave %>
+                <%= bWaveSmall %>
+            </div>
+            <% } %>
+
+            <div class="politics-weekly-treat__episode-title">General election anniversary</div>
+        </div>
+    </a>
+</div>

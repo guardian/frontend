@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component } from 'preact-compat';
 
 const round = x => Math.round(x * 100) / 100;
 /**
@@ -13,7 +13,7 @@ const getPosition = (
     i: number
 ): { left: string, top: string } => {
     const diameter = 40;
-    const theta = angle * Math.PI / 180 * i;
+    const theta = ((angle * Math.PI) / 180) * i;
 
     return {
         left: `${diameter + round(diameter * Math.sin(theta))}%`,

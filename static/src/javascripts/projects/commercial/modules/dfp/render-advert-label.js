@@ -32,9 +32,7 @@ export const renderAdvertLabel = (adSlotNode: any): Promise<null> => {
             feedbackThanksMessage =
                 '<i class="ad-feedback__thanks-message"> Thanks for your feedback </i>';
         }
-        const labelDiv = `<div class="ad-slot__label">Advertisement${
-            feedbackPopup
-        }${feedbackThanksMessage}</div>`;
+        const labelDiv = `<div class="ad-slot__label">Advertisement${feedbackPopup}${feedbackThanksMessage}</div>`;
         return fastdom.write(() => {
             adSlotNode.insertAdjacentHTML('afterbegin', labelDiv);
         });

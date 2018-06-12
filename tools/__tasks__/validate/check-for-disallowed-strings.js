@@ -21,9 +21,9 @@ module.exports = {
                             if (matches.length > maxOccurrences) {
                                 const msg = [
                                     chalk.red(
-                                        `More than ${
-                                            maxOccurrences
-                                        } match for regex ${regex.source}`
+                                        `More than ${maxOccurrences} match for regex ${
+                                            regex.source
+                                        }`
                                     ),
                                     chalk.red(message),
                                     ...matches,

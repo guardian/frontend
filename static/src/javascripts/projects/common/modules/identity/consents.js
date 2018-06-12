@@ -13,19 +13,27 @@ import {
     getInfo as getCheckboxInfo,
     bindAnalyticsEventsOnce as bindCheckboxAnalyticsEventsOnce,
 } from './modules/switch';
-import { addUpdatingState, removeUpdatingState } from './modules/button';
 import { getCsrfTokenFromElement } from './modules/fetchFormFields';
+import { show as showModal } from './modules/modal';
+
+import { prependSuccessMessage } from './modules/prependMessage';
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
 const checkAllCheckboxClassName = 'js-manage-account__check-allCheckbox';
 const checkAllIgnoreClassName = 'js-manage-account__check-allCheckbox__ignore';
+const unsubscribeButtonClassName = 'js-unsubscribe';
+const isHiddenClassName = 'is-hidden';
+const isLoadingClassName = 'loading';
+const optOutClassName = 'fieldset__fields--opt-out';
+const optInClassName = 'fieldset__fields--opt-in';
 
 const requestDebounceTimeout = 150;
 
 const LC_CHECK_ALL = 'Select all';
 const LC_UNCHECK_ALL = 'Deselect all';
-
+const UNSUBSCRIPTION_SUCCESS_MESSAGE =
+    "You've been unsubscribed from all Guardian marketing newsletters and emails.";
 const ERR_MALFORMED_HTML = 'Something went wrong';
 
 const submitPartialConsentFormDebouncedRq: ({}) => Promise<void> = debounce(
@@ -105,88 +113,89 @@ const buildFormDataForFields = (
 const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
     fastdom.read(() => labelEl.querySelectorAll('[name][value]'));
 
-const resetUnsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> =>
+const unsubscribeFromAll = (
+    buttonEl: HTMLButtonElement,
+    csrfToken: string
+): Promise<void> => {
+    buttonEl.classList.add(isLoadingClassName);
+    return reqwest({
+        url: `/user/email-subscriptions`,
+        method: 'DELETE',
+        withCredentials: true,
+        headers: {
+            'Csrf-Token': csrfToken,
+        },
+    });
+};
+
+const toggleInputsWithSelector = (className: string, checked: boolean) =>
     fastdom
         .read(() => [
-            [...document.getElementsByClassName('js-unsubscribe--confirm')],
-            [...document.getElementsByClassName('js-unsubscribe--basic')],
+            ...document.querySelectorAll(
+                `.${className} input[type="checkbox"]`
+            ),
         ])
-        .then(([confirmEls, basicEls]) =>
-            fastdom.write(() => {
-                /* TODO:simplify this once classList.remove() is fixed */
-                [
-                    'email-unsubscribe--confirm',
-                    'js-confirm-unsubscribe',
-                ].forEach(classname => buttonEl.classList.remove(classname));
-                confirmEls.forEach(confirmEl =>
-                    confirmEl.classList.add('hide')
-                );
-                basicEls.forEach(basicEl => basicEl.classList.remove('hide'));
+        .then(boxes =>
+            boxes.forEach(b => {
+                b.checked = checked;
             })
         );
 
-const confirmUnsubscriptionFromAll = (
-    buttonEl: HTMLButtonElement
-): Promise<void> =>
-    fastdom
-        .read(() => [
-            [
-                ...document.getElementsByClassName(
-                    'email-unsubscribe-all__label'
-                ),
-            ],
-        ])
-        .then(([unsubAllLabelEls]) =>
-            fastdom.write(() => {
-                /* TODO:simplify this once classList.remove() is fixed */
-                [
-                    'email-unsubscribe--confirm',
-                    'js-confirm-unsubscribe',
-                ].forEach(classname => buttonEl.classList.add(classname));
-                unsubAllLabelEls.forEach(unsubAllLabelEl =>
-                    unsubAllLabelEl.classList.toggle('hide')
-                );
-            })
+const checkAllOptOuts = (): Promise<void> =>
+    toggleInputsWithSelector(optOutClassName, true);
+
+const uncheckAllOptIns = (): Promise<void> =>
+    toggleInputsWithSelector(optInClassName, false);
+
+const showUnsubscribeConfirmation = (): Promise<void> => {
+    const fetchButton = (): Promise<HTMLButtonElement> =>
+        fastdom.read(() =>
+            document.querySelector(`.${unsubscribeButtonClassName}`)
         );
+
+    const updateVisibilityAndShowMessage = (
+        elem: HTMLButtonElement
+    ): Promise<void> =>
+        fastdom.write(() => {
+            if (elem.parentElement) {
+                prependSuccessMessage(
+                    UNSUBSCRIPTION_SUCCESS_MESSAGE,
+                    elem.parentElement
+                );
+            }
+            elem.classList.add(isHiddenClassName);
+        });
+
+    return fetchButton().then(button => updateVisibilityAndShowMessage(button));
+};
 
 const bindUnsubscribeFromAll = (buttonEl: HTMLButtonElement) => {
     buttonEl.addEventListener('click', () => {
-        if (buttonEl.classList.contains('js-confirm-unsubscribe')) {
-            addUpdatingState(buttonEl);
-            resetUnsubscribeFromAll(buttonEl);
-
-            return Promise.all([
-                fastdom
-                    .read(() => [
-                        ...document.querySelectorAll(
-                            `.${newsletterCheckboxClassName} input:checked`
-                        ),
-                    ])
-                    .then(checkboxes => {
-                        checkboxes.forEach(inputEl => {
-                            inputEl.checked = false;
-                        });
-                        return checkboxes.map(inputEl => inputEl.name);
-                    }),
-                getCsrfTokenFromElement(
-                    document.getElementsByClassName(
-                        newsletterCheckboxClassName
-                    )[0]
-                ),
-            ])
-                .then(([newsletterIds, csrfToken]) =>
-                    submitNewsletterAction(csrfToken, 'remove', newsletterIds)
-                )
-                .catch((err: Error) => {
-                    pushError(err, 'reload').then(() => {
-                        window.scrollTo(0, 0);
-                    });
-                })
-                .then(() => {
-                    removeUpdatingState(buttonEl);
+        toggleInputsWithSelector(newsletterCheckboxClassName, false);
+        return getCsrfTokenFromElement(
+            document.getElementsByClassName(newsletterCheckboxClassName)[0]
+        )
+            .then(csrfToken => unsubscribeFromAll(buttonEl, csrfToken))
+            .then(() =>
+                Promise.all([
+                    showUnsubscribeConfirmation(),
+                    uncheckAllOptIns(),
+                    checkAllOptOuts(),
+                ])
+            )
+            .catch((err: Error) => {
+                pushError(err, 'reload').then(() => {
+                    window.scrollTo(0, 0);
                 });
-        }
-        confirmUnsubscriptionFromAll(buttonEl);
+            });
+    });
+};
+
+const bindUnsubscribeFromAllModalConfirmation = (
+    buttonEl: HTMLButtonElement
+) => {
+    buttonEl.addEventListener('click', () => {
+        showModal('confirm-unsubscribe-all');
     });
 };
 
@@ -357,7 +366,11 @@ const enhanceConsents = (): void => {
         [`.${checkAllCheckboxClassName}`, bindCheckAllSwitch],
         [`.${consentCheckboxClassName}`, bindConsentSwitch],
         [`.${newsletterCheckboxClassName}`, bindNewsletterSwitch],
-        ['.js-unsubscribe', bindUnsubscribeFromAll],
+        [
+            `.${unsubscribeButtonClassName}`,
+            bindUnsubscribeFromAllModalConfirmation,
+        ],
+        ['.js-confirm-unsubscribe-all', bindUnsubscribeFromAll],
     ];
     loadEnhancers(loaders);
 };

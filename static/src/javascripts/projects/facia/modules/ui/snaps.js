@@ -114,14 +114,10 @@ const injectIframe = (el: HTMLElement): void => {
         maxIframeHeight
     );
     const containerEl = bonzo.create(
-        `<div style="width: 100%; height: ${
-            height
-        }px; overflow: hidden; -webkit-overflow-scrolling:touch"></div>`
+        `<div style="width: 100%; height: ${height}px; overflow: hidden; -webkit-overflow-scrolling:touch"></div>`
     )[0];
     const iframe = bonzo.create(
-        `<iframe src="${
-            src
-        }" style="width: 100%; height: 100%; border: none;"></iframe>`
+        `<iframe src="${src}" style="width: 100%; height: 100%; border: none;"></iframe>`
     )[0];
 
     bonzo(containerEl).append(iframe);

@@ -24,11 +24,6 @@ trait ConsentsJourney
   def displayConsentsJourneyThankYou: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageThankYou, None)
 
-  /** previously GET /consents/staywithus, now unused - but may come back */
-  //TODO: remove this once confirmed branded version of journey not needed
-  def displayConsentsJourneyGdprCampaign: Action[AnyContent] =
-    displayConsentJourneyForm(ConsentJourneyPageGdprCampaign, None)
-
   /** GET /consents */
   def displayConsentsJourney(consentHint: Option[String] = None): Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint)
@@ -63,6 +58,13 @@ trait ConsentsJourney
         )
       }
     }
+
+  /** Handle redirects*/
+  def redirectToConsentsJourney: Action[AnyContent] = Action { implicit request =>
+    Redirect(
+      routes.EditProfileController.displayConsentsJourney(None),
+      MOVED_PERMANENTLY)
+  }
 
   private def displayConsentJourneyForm(
     page: ConsentJourneyPage,

@@ -72,7 +72,7 @@ const recordPlayerProgress = (atomId: string): void => {
     }
 
     const currentTime = player.getCurrentTime();
-    const percentPlayed = Math.round(currentTime / player.duration * 100);
+    const percentPlayed = Math.round((currentTime / player.duration) * 100);
 
     if (percentPlayed >= pendingTrackingCalls[0]) {
         trackYoutubeEvent(pendingTrackingCalls[0], getTrackingId(atomId));

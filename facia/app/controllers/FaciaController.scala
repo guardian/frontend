@@ -97,41 +97,46 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     (editionalisedPath != path) && request.getQueryString("page").isEmpty
   }
 
+  private[this] def shouldOnlyReturnHeadline(request: RequestHeader): Boolean =
+    request.getQueryString("format").contains("email-headline")
+
   def redirectTo(path: String)(implicit request: RequestHeader): Future[Result] = successful {
     val params = request.rawQueryStringOption.map(q => s"?$q").getOrElse("")
     Cached(CacheTime.Facia)(WithoutRevalidationResult(Found(LinkTo(s"/$path$params"))))
   }
 
   def renderFrontJsonLite(path: String): Action[AnyContent] = Action.async { implicit request =>
-    frontJsonFapi.getLite(path).map {
+    frontJsonFapi.get(path, liteRequestType).map {
         case Some(pressedPage) => Cached(CacheTime.Facia)(JsonComponent(FapiFrontJsonLite.get(pressedPage)))
         case None => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))}
   }
 
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureResult = frontJsonFapi.getLite(path).flatMap {
+    val futureResult = frontJsonFapi.get(path, liteRequestType).flatMap {
       case Some(faciaPage) =>
-        successful(
+        successful(Cached(CacheTime.Facia)(
           if (request.isRss) {
             val body = TrailsToRss.fromPressedPage(faciaPage)
-            Cached(CacheTime.Facia) {
-              RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
-            }
+            RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
           }
           else if (request.isJson)
-            Cached(CacheTime.Facia)(JsonFront(faciaPage))
+            JsonFront(faciaPage)
           else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
-            val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
-            Cached(CacheTime.Facia) {
+            if (shouldOnlyReturnHeadline(request)) {
+              val headline = for {
+                topCollection <- faciaPage.collections.headOption
+                topCurated <- topCollection.curated.headOption
+              } yield topCurated.header.headline
+                RevalidatableResult.Ok(headline.getOrElse("Error: Could not extract headline from front"))
+            } else {
+              val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
               RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse)
             }
           }
           else {
-            Cached(CacheTime.Facia) {
-                RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
-            }
+            RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
           }
-        )
+        ))
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t)}
@@ -191,7 +196,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   def renderShowMore(path: String, collectionId: String): Action[AnyContent] = Action.async { implicit request =>
-    frontJsonFapi.get(path).flatMap {
+    frontJsonFapi.get(path, fullRequestType).flatMap {
       case Some(pressedPage) =>
         val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
         val maybeResponse =
@@ -220,15 +225,15 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     )
   }
 
-  private def getPressedCollection(collectionId: String): Future[Option[PressedCollection]] =
+  private def getPressedCollection(collectionId: String)(implicit request: RequestHeader): Future[Option[PressedCollection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
-      frontJsonFapi.get(path).map(_.flatMap{ faciaPage =>
+      frontJsonFapi.get(path, fullRequestType).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(successful(None))
 
-  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[List[PressedCollection]] =
-    frontJsonFapi.get(path).map { maybePage =>
+  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String)(implicit requestHeader: RequestHeader): Future[List[PressedCollection]] =
+    frontJsonFapi.get(path, fullRequestType).map { maybePage =>
       maybePage.map { faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
         faciaPage
@@ -261,6 +266,9 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   def renderAgentContents: Action[AnyContent] = Action {
     Ok(ConfigAgent.contentsAsJsonString)
   }
+
+  def fullRequestType(implicit request: RequestHeader): PressedPageType = if (request.isAdFree) FullAdFreeType else FullType
+  def liteRequestType(implicit request: RequestHeader): PressedPageType = if (request.isAdFree) LiteAdFreeType else LiteType
 }
 
 class FaciaControllerImpl(

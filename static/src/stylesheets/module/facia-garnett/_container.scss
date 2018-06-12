@@ -104,8 +104,6 @@ $header-image-size-desktop: 100px;
 
 .fc-container__header {
     @include mq($until: leftCol) {
-        overflow: hidden;
-
         .fc-container__header__title {
             float: left;
             padding-right: $gs-gutter / 4;
@@ -335,7 +333,7 @@ $header-image-size-desktop: 100px;
     line-height: 16px;
     font-weight: 500;
     display: none;
-    margin-top: $gs-baseline;
+    margin: ($gs-baseline / 3) 0 $gs-baseline;
 
     @include mq(tablet) {
         display: block;
@@ -450,71 +448,114 @@ $header-image-size-desktop: 100px;
     transition: opacity .25s linear; // Used to fade-in new updates
 }
 
+[data-component='world-cup-2018'] {
+    .fc-item--has-cutout.fc-item--type-comment:not(.fc-item--list-tablet) {
+        .fc-item__avatar {
+            background-color: transparent !important;
+
+            img {
+                filter: grayscale(100%);
+                position: relative;
+            }
+        }
+
+        .u-faux-block-link__overlay {
+            z-index: 1;
+        }
+
+        &.fc-item--half-tablet,
+        &.fc-item--standard-tablet,
+        &.fc-item--list-media-tablet {
+            .fc-item__content:before {
+                background-image: url('https://uploads.guim.co.uk/2018/06/11/byline-mask.png');
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: right;
+                content: '';
+                position: absolute;
+                bottom: 9px;
+                right: 10px;
+                z-index: 1;
+                height: 90px;
+                width: 200px;
+            }
+        }
+
+        &.fc-item--half-tablet .fc-item__content:before {
+            height: 112px;
+
+            @include mq(tablet) {
+                height: 164px;
+                bottom: $gs-baseline / 2;
+            }
+
+            @include mq(desktop) {
+                height: 190px;
+                width: 230px;
+            }
+        }
+
+        &.fc-item--standard-tablet .fc-item__content:before {
+            @include mq(tablet) {
+                height: 114px;
+                bottom: $gs-baseline / 2;
+            }
+
+            @include mq(desktop) {
+                height: 138px;
+            }
+        }
+
+        &.fc-item--list-media-tablet .fc-item__content:before {
+            @include mq(tablet) {
+                height: 76px;
+                bottom: 5px;
+            }
+        }
+
+        &.fc-item--list-media-tablet {
+            @include mq($until: tablet) {
+                .fc-item__content:before {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
 .fc-container__toggle {
     @include fs-textSans(3);
-    min-height: gs-height(1);
-    min-width: gs-span(1);
+    background-color: transparent;
     position: absolute;
-    top: -3px;
+    top: $gs-baseline / 3;
     right: 0;
     border: 0;
-    background-color: transparent;
-    color: #ffffff;
+    padding: 0;
+    color: $neutral-2;
+    text-align: right;
+
+    &:hover,
+    &:focus {
+        color: $neutral-1;
+    }
 
     [data-component='headlines'] & {
         // Ensures toggle is never visible in Headlines container
         display: none;
     }
 
-    .inline-icon {
-        transform: rotate(180deg);
-        position: absolute;
-        top: 6px;
-        left: 50%;
-        margin-left: -12px;
-        fill: $neutral-1;
-
-        .fc-container--rolled-up & {
-            transform: rotate(0deg);
-        }
-    }
-
-    @include mq(tablet) {
-        text-align: right;
-        color: $neutral-2;
-
-        .fc-container--paid-content & {
-            border-left-width: 0;
-        }
-        &:hover,
-        &:focus {
-            color: $neutral-1;
-        }
-        .inline-icon {
-            display: none;
-        }
-        .fc-container__toggle__text {
-            display: block;
-        }
-    }
-
     @include mq(leftCol) {
-        left: gs-span(13) + $gs-gutter;
+        left: gs-span(14);
+        transform: translateX(-100%);
     }
 
     @include mq(wide) {
-        left: gs-span(15) + $gs-gutter;
+        left: gs-span(16);
 
         .has-page-skin & {
             left: auto;
         }
     }
-}
-
-.fc-container__toggle__text {
-    display: none;
-    position: relative;
-    top: -2px;
 }
 
 .fc-container--media {

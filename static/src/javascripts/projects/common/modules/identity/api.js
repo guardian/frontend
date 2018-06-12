@@ -157,6 +157,7 @@ export const getUserEmailSignUps = (): Promise<any> => {
             url: (idApiRoot || '') + endpoint,
             type: 'jsonp',
             crossOrigin: true,
+            withCredentials: true,
         });
 
         return request;

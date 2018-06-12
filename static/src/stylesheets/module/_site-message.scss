@@ -17,15 +17,32 @@
     right: 0;
     top: 0;
     background: $garnett-neutral-1;
-    opacity: .85;
+    opacity: .7;
     z-index: $zindex-popover - 1;
 }
 
 .site-message--banner {
-    position: fixed;
-    bottom: 0;
     width: 100%;
     z-index: $zindex-popover;
+    position: fixed;
+    bottom: 0;
+    &.site-message--on-top {
+        bottom: auto;
+        top: 0;
+    }
+    @supports (position: sticky) {
+        html:not(.is-scroll-blocked) body:not(.is-hosted-content) & {
+            position: sticky;
+            bottom: -1px;
+            /*chrome calculates sticky in dip
+            instead of real px and that can
+            sometimes leave a 1px gap in some
+            screen sizes*/
+            &.site-message--on-top {
+                top: -1px;
+            }
+        }
+    }
 }
 
 .site-message--alt {
@@ -203,21 +220,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     &:focus,
     &:active {
         border-color: #ffffff;
-    }
-}
-
-/* EU cookie policy message
-   ========================================================================== */
-.site-message--cookies {
-    .site-message__copy {
-        margin-right: $gs-gutter*2;
-        a {
-            color: #ffffff;
-            text-decoration: underline;
-        }
-    }
-    .site-message__media .inline-icon {
-        display: none;
     }
 }
 
@@ -431,353 +433,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
-/**
- * Membership messages
- */
-@mixin site-message-dark-text {
-    &,
-    .site-message__actions,
-    .site-message__actions__item,
-    path,
-    button,
-    a {
-        color: #333333;
-        fill: #333333;
-        border-color: #333333;
-    }
-}
-
-.site-message--adblock-message,
-.site-message--membership-message-default {
-    background: $membership-default;
-}
-
-.site-message--membership-message-deep-purple {
-    background: $features-main-1;
-}
-
-.site-message--membership-message-yellow {
-    @include site-message-dark-text;
-    background: #fff200;
-}
-
-.site-message--membership-message-vibrant-blue {
-    @include site-message-dark-text;
-    background: $news-main-2;
-}
-
-.site-message--membership-message-light-blue {
-    @include site-message-dark-text;
-    background: #aad8f1;
-}
-
-.site-message--membership-message-teal {
-    @include site-message-dark-text;
-    background: $news-support-3;
-}
-
-.site-message--contributions-message {
-    @include site-message-dark-text;
-    background: $multimedia-main-2;
-}
-
-/*
- * Prominent membership message as a feature
- */
-
-@mixin scale-paypal-logo($width) {
-    width: $width;
-    height: $width * .14;
-}
-
-.membership__paypal-logo {
-    @include scale-paypal-logo(100px);
-    display: inline-block;
-    padding-right: 7px;
-    padding-top: 16px;
-
-    @include mq($from: mobileMedium) {
-        @include scale-paypal-logo(130px);
-        padding-top: 15px;
-    }
-
-
-    @include mq(desktop) {
-        @include scale-paypal-logo(175px);
-    }
-
-    @include mq($from: wide) {
-        padding-top: 21px;
-    }
-}
-
-.membership__support-button {
-    margin-top: $gs-gutter/2;
-    min-width: 160px;
-    @include mq(desktop) {
-    }
-}
-
-.membership__message-text {
-    margin-right: $gs-gutter/2;
-}
-
-
-.membership__paypal-container {
-    text-decoration: none;
-    margin-top: 0px;
-    margin-bottom: -$gs-gutter/2;
-    display: flex;
-    flex-direction: row;
-    @include mq($from: mobileMedium) {
-        margin-top: auto;
-    }
-
-    @include mq($from: desktop) {
-        min-width: 200px;
-        margin-bottom: $gs-gutter/4;
-        margin-left: $gs-gutter*2;
-        flex-direction: column;
-    }
-
-    @include mq($from: wide) {
-        flex-direction: row;
-    }
-}
-
-.membership__engagement-message-button-caption {
-    text-decoration: none;
-}
-
-
-.site-message--membership-prominent {
-    max-height: 80%;
-
-    .site-message__message {
-        padding-right: 45px;
-        @include mq($until: tablet) {
-            padding-left: 5px;
-        }
-        @include mq($from: tablet) {
-            padding-left: 10px;
-        }
-        @include mq($from: desktop) {
-            padding-left: 15px;
-            padding-right: 40px;
-        }
-    }
-    .site-message__media {
-        display: none;
-    }
-    .site-message__close {
-        vertical-align: top;
-        width: 36px;
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        @include mq($from: mobile) {
-            padding-right: 10px;
-        }
-        @include mq($from: tablet) {
-            padding-right: 20px;
-        }
-    }
-    .site-message__inner {
-        display: block;
-        padding-top: 5px;
-        padding-left: 5px;
-        padding-right: 5px;
-        padding-bottom: 10px;
-    }
-
-    .site-message__copy {
-        display: block;
-    }
-
-    .big-test-container {
-        margin-top: 8px;
-        margin-left: 10px;
-    }
-
-    .site-message__message--membership {
-
-        display: flex;
-        flex-direction: column;
-        @include mq($from: desktop) {
-            flex-direction: row;
-        }
-
-
-        max-width: none;
-
-        .membership__message-text {
-            @include mq(desktop) {
-                font-size: 25px;
-            }
-        }
-
-        .membership__message-text-long {
-            max-width: 630px;
-
-            line-height: 20px;
-            @include mq($from: tablet) {
-                line-height: 22px;
-            }
-
-            .membership__message-text {
-                font-weight: 400;
-                font-size: 16px;
-                @include mq($from: tablet) {
-                    font-size: 18px;
-                }
-            }
-        }
-
-        margin-right: 5px;
-        font-weight: 900;
-        @include mq($from: mobile) {
-            font-size: 16px;
-            line-height: 20px;
-            margin-right: $gs-gutter/4;
-        }
-        @include mq($from: tablet) {
-            font-size: 24px;
-            line-height: 28px;
-            margin-right: $gs-gutter;
-        }
-        @include mq($from: desktop) {
-            font-size: 28px;
-            line-height: 32px;
-            margin-right: $gs-gutter;
-        }
-    }
-    .message-button-rounded__cta {
-        @include clearfix;
-        @include circular;
-        @include fs-textSans(2);
-        border: 0;
-        display: flex;
-        width: auto;
-        text-decoration: none;
-        @include mq($from: mobile) {
-            font-size: 12px;
-            line-height: 24px;
-            height: 24px;
-            margin-top: 3px;
-            padding-left: 9px;
-            svg {
-                position: relative;
-                top: -3px;
-                height: 24px;
-                width: 14px;
-                padding-left: 5px;
-                padding-right: 5px;
-            }
-        }
-        @include mq($from: tablet) {
-            font-size: 14px;
-            line-height: 28px;
-            height: 28px;
-            margin-top: 5px;
-            top: -5px;
-            padding-left: 12px;
-            svg {
-                top: -2px;
-                height: 28px;
-                width: 18px;
-                padding-left: 10px;
-                padding-right: 5px;
-            }
-        }
-        @include mq($from: desktop) {
-            font-size: 14px;
-            line-height: 36px;
-            height: 36px;
-            margin-top: 10px;
-            top: -5px;
-            padding-left: 15px;
-            svg {
-                top: 3px;
-                height: 36px;
-                width: 20px;
-                padding-left: 10px;
-                padding-right: 7px;
-            }
-        }
-        padding-right: 10px;
-        position: relative;
-        cursor: pointer;
-        background-color: transparent;
-        font-weight: bold;
-        a {
-            text-decoration: none;
-        }
-    }
-
-    #membership__engagement-message-text {
-        margin-right: 16px;
-    }
-
-    .message-button-rounded__cta.yellow {
-        svg path {
-            fill: #ffffff;
-        }
-        background-color: $garnett-neutral-1;
-        color: #ffffff;
-    }
-    .message-button-rounded__cta.purple {
-
-        svg path {
-            fill: #ffffff;
-        }
-        color: #ffffff;
-        background-color: #dc2a7d;
-    }
-    .message-button-rounded__cta.dark-blue {
-        svg path {
-            fill: #000333;
-        }
-        color: #000333;
-        background-color: #4bc6df;
-    }
-    .message-button-rounded__cta.bright-blue {
-        svg path {
-            fill: #ffffff;
-        }
-        color: #ffffff;
-        background-color: #005689;
-    }
-    .inline-arrow-white-right {
-        display: block;
-        float: right;
-        height: $gs-column-width/2;
-    }
-}
-
-.site-message--membership-prominent.yellow {
-    @include site-message-dark-text;
-    background-color: $news-garnett-highlight;
-    svg {
-        fill: #000000;
-    }
-}
-
-.site-message--membership-prominent.purple {
-    background-color: #7d0068;
-}
-
-.site-message--membership-prominent.bright-blue {
-    @include site-message-dark-text;
-    background-color: #4bc6df;
-    svg {
-        fill: #000000;
-    }
-}
-
-.site-message--membership-prominent.dark-blue {
-    background-color: #005689;
-}
 
 /*
  * Coin based adblock message

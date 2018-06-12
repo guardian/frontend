@@ -6,9 +6,8 @@ export const acquisitionsBannerControlTemplate = (
         <div class="site-message__message site-message__message--membership">
             <div class="membership__message-text-long">
                 <span class = "membership__message-text">
-                    ${params.messageText} <strong>${
-        params.ctaText
-    }</strong></span>
+                    ${params.messageText}${params.ctaText}
+                </span>
             </div>
             <span class="membership__paypal-container">
                 <img class="membership__paypal-logo" src="${

@@ -1,9 +1,26 @@
+@import com.gu.identity.model.User
 @(
     idRequest: services.IdentityRequest,
-    idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+    idUrlBuilder: services.IdentityUrlBuilder,
+    user: User)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @buildIdentityUrl(endpoint: String) = {
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
+}
+
+@confirmModal = {
+    <section class="identity-forms-message">
+        <h1>Are you sure?</h1>
+        <p>You've chosen not to receive any editorial or marketing newsletters from The Guardian.</p>
+
+        <p><strong>Are you sure you want to unsubscribe from these emails?</strong></p>
+
+        <footer class="identity-forms-message__options">
+            <button class="js-identity-modal__closer manage-account__button manage-account__button--main manage-account__button--center js-confirm-unsubscribe-all">Yes, unsubscribe me</button>
+            <button class="manage-account__button manage-account__button--secondary manage-account__button--center js-identity-modal__closer">Cancel</button>
+        </footer>
+
+    </section>
 }
 
 <div class="email-subscription__fieldset">
@@ -15,32 +32,35 @@
 
         <div class="fieldset__fields email-subscription__options">
             <ul class="u-unstyled">
+                @if(user.primaryEmailAddress != null && user.primaryEmailAddress.nonEmpty) {
+                    <li>
+                        <p class="identity-title-explainer">
+                            You are receiving newsletters, notifications and all other emails to
+                            <strong>@user.primaryEmailAddress</strong>.
+                        </p>
+                    </li>
+                }
                 <li>
                     <p>
-                        <a href="@buildIdentityUrl("account/edit")" class="u-underline" data-link-name="identity : email : update">
-                            Update your email address
-                        </a>
+                        <a href="@buildIdentityUrl("account/edit")" class="u-underline" data-link-name="identity : email : update">Change your email address</a>
                     </p>
                 </li>
                 <li>
                     <p>
                         <a href="https://jobs.theguardian.com/your-jobs/?ActiveSection=JbeList" class="u-underline" data-link-name="identity : jobs : alert-settings">
-                            Edit your Job Alert settings
+                            Manage your Jobs alerts
                         </a>
                     </p>
                 </li>
                 <li>
-                    <button type="button" class="manage-account__button--mini manage-account__button--icon manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all">
-                        <span class="email-unsubscribe-all__label js-unsubscribe--basic manage-account__button-flexwrap">
-                            Unsubscribe from all newsletters
-                            @fragments.inlineSvg("cross", "icon")
-                        </span>
-                        <span class="email-unsubscribe-all__label js-unsubscribe--confirm hide" aria-hidden>
-                            Are you sure?
-                        </span>
+                    <button type="button" class="manage-account__button email-unsubscribe js-unsubscribe" data-link-name="identity : email : unsubscribe-all">
+                        Unsubscribe from all emails
                     </button>
                 </li>
             </ul>
+
+            @fragments.modal("confirm-unsubscribe-all", confirmModal)
+
         </div>
 
     </fieldset>

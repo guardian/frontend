@@ -82,7 +82,7 @@
 }
 
 @marketingStepContent = {
-    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    <form action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" method="post">
         @views.html.helper.CSRF.formField
         <div class="manage-account__switches manage-account__switches--single-column">
             <ul>
@@ -108,22 +108,6 @@
         name = "marketing-consents",
         title = "Guardian products and services",
         content = marketingStepContent
-    )
-}
-
-@introGdprCampaignStep= @{
-    ConsentStep(
-        name = "intro",
-        title = "Please select the emails you wish to continue receiving",
-        help = List(
-            ConsentStepHelpText(
-                s"Why are we asking you to re-subscribe? <strong><a class='u-underline' data-link-name='gdpr-oi-campaign : consents : to-landing' href='${LinkTo("https://www.theguardian.com/info/ng-interactive/2018/feb/21/stay-with-us")}'>Find out here</a></strong>"
-            ),
-            ConsentStepHelpText(
-                "You can change your preferences anytime by signing in, clicking My Account, then selecting Email Preferences."
-            )
-        ),
-        content = selectAllCheckboxContent
     )
 }
 
@@ -212,12 +196,7 @@
                     ) ++ defaultJourney
 
                 }
-                case GdprCampaignConsentsJourney => {
-                    List(
-                        introGdprCampaignStep
-                    ) ++ defaultJourney
-                }
-                case DefaultConsentsJourney => {
+                case _ => {
                     List(
                         introStep
                     ) ++ defaultJourney

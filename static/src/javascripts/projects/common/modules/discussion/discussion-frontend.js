@@ -30,24 +30,27 @@ const loadDiscussionFrontend = (
 
         /* This event is emitted by a separate Preact comment count app, which is
            located in https://github.com/guardian/discussion-frontend */
-        emitter.once('comment-count', (value: number): void => {
-            if (value === 0) {
-                loader.setState('empty');
-            } else {
-                /* By the time discussion frontent loads, the number of comments
+        emitter.once(
+            'comment-count',
+            (value: number): void => {
+                if (value === 0) {
+                    loader.setState('empty');
+                } else {
+                    /* By the time discussion frontent loads, the number of comments
                    might have changed. If there are other comment counts element
                    in the page refresh their value. */
-                const otherValues = document.getElementsByClassName(
-                    'js_commentcount_actualvalue'
-                );
+                    const otherValues = document.getElementsByClassName(
+                        'js_commentcount_actualvalue'
+                    );
 
-                [...otherValues].forEach(el => {
-                    updateCommentCount(el, value);
-                });
+                    [...otherValues].forEach(el => {
+                        updateCommentCount(el, value);
+                    });
+                }
+
+                mediator.emit('comments-count-loaded');
             }
-
-            mediator.emit('comments-count-loaded');
-        });
+        );
     };
 
     const error = (err: Error): void => {

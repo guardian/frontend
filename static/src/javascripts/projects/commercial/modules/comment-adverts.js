@@ -7,53 +7,60 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import type bonzo from 'bonzo';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 
-const init = (): ?boolean => {
+export const initCommentAdverts = (): ?boolean => {
     const $adSlotContainer: bonzo = $('.js-discussion__ad-slot');
+
+    const insertCommentAd = ($commentMainColumn: bonzo): void => {
+        const adSlots = createSlots('comments', {
+            classes: 'mpu-banner-ad',
+        });
+        fastdom
+            .write(() => {
+                $commentMainColumn.addClass('discussion__ad-wrapper');
+
+                if (!config.page.isLiveBlog && !config.page.isMinuteArticle) {
+                    $commentMainColumn.addClass('discussion__ad-wrapper-wider');
+                }
+
+                adSlots.forEach(adSlot => {
+                    $adSlotContainer.append(adSlot);
+                });
+                return adSlots[0];
+            })
+            // Add only the fist slot (DFP slot) to GTP
+            .then((adSlot: HTMLElement) => addSlot(adSlot, false));
+    };
 
     if (!commercialFeatures.commentAdverts || !$adSlotContainer.length) {
         return false;
     }
 
-    mediator.once('modules:comments:renderComments:rendered', (): void => {
-        const $commentMainColumn: bonzo = $(
-            '.js-comments .content__main-column'
-        );
+    mediator.once(
+        'modules:comments:renderComments:rendered',
+        (): void => {
+            const $commentMainColumn: bonzo = $(
+                '.js-comments .content__main-column'
+            );
 
-        fastdom
-            .read(() => $commentMainColumn.dim().height)
-            .then((mainColHeight: number) => {
-                // if comments container is lower than 280px
-                if (mainColHeight < 280) {
-                    return;
-                }
-
-                const adSlots = createSlots('comments', {
-                    classes: 'mpu-banner-ad',
+            fastdom
+                .read(() => $commentMainColumn.dim().height)
+                .then((mainColHeight: number) => {
+                    if (
+                        mainColHeight >= 800 ||
+                        (isUserLoggedIn() && mainColHeight >= 300)
+                    ) {
+                        insertCommentAd($commentMainColumn);
+                    } else {
+                        mediator.once(
+                            'discussion:comments:get-more-replies',
+                            () => {
+                                insertCommentAd($commentMainColumn);
+                            }
+                        );
+                    }
                 });
-
-                fastdom
-                    .write(() => {
-                        $commentMainColumn.addClass('discussion__ad-wrapper');
-
-                        if (
-                            !config.page.isLiveBlog &&
-                            !config.page.isMinuteArticle
-                        ) {
-                            $commentMainColumn.addClass(
-                                'discussion__ad-wrapper-wider'
-                            );
-                        }
-
-                        adSlots.forEach(adSlot => {
-                            $adSlotContainer.append(adSlot);
-                        });
-                        return adSlots[0];
-                    })
-                    // Add only the fist slot (DFP slot) to GTP
-                    .then((adSlot: HTMLElement) => addSlot(adSlot, false));
-            });
-    });
+        }
+    );
 };
-
-export default init;

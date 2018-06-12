@@ -26,7 +26,7 @@ import {
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
-import commentAdverts from 'commercial/modules/comment-adverts';
+import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-prepare-cmp', initCmpService],
@@ -47,7 +47,7 @@ if (!commercialFeatures.adFree) {
         ['cm-stickyTopBanner', initStickyTopBanner],
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
-        ['cm-commentAdverts', commentAdverts]
+        ['cm-commentAdverts', initCommentAdverts]
     );
 }
 
@@ -115,9 +115,11 @@ const loadModules = (): Promise<void> => {
             ],
         ]);
     });
-    return Promise.all(modulePromises).then((): void => {
-        addEndTimeBaseline(primaryBaseline);
-    });
+    return Promise.all(modulePromises).then(
+        (): void => {
+            addEndTimeBaseline(primaryBaseline);
+        }
+    );
 };
 
 export const bootCommercial = (): Promise<void> => {
