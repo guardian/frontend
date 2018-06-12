@@ -98,7 +98,11 @@ const addForMinutes = (
 
 const addSessionCookie = (name: string, value: string): void => {
     if (!isValidCookieValue(name, value)) {
-        throw Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`);
+        reportError(
+            new Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`),
+            {},
+            false
+        );
     }
     document.cookie = `${name}=${value}; path=/;${getDomainAttribute()}`;
 };
