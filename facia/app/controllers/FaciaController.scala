@@ -126,8 +126,8 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
               val webTitle = for {
                 topCollection <- faciaPage.collections.headOption
                 topCurated <- topCollection.curatedPlusBackfillDeduplicated.headOption
-              } yield topCurated.properties.webTitle
-              webTitle.map(RevalidatableResult.Ok(_)).getOrElse(WithoutRevalidationResult(NotFound("Could not extract headline from front")))
+              } yield RevalidatableResult.Ok(topCurated.properties.webTitle)
+              webTitle.getOrElse(WithoutRevalidationResult(NotFound("Could not extract headline from front")))
             } else {
               val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
               RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse)
