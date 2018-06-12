@@ -31,7 +31,7 @@
         top: 0;
     }
     @supports (position: sticky) {
-        html:not(.is-scroll-blocked) & {
+        html:not(.is-scroll-blocked) body:not(.has-absolute-container) & {
             position: sticky;
             bottom: -1px;
             /*chrome calculates sticky in dip
