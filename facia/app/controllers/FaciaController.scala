@@ -225,14 +225,14 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     )
   }
 
-  private def getPressedCollection(collectionId: String): Future[Option[PressedCollection]] =
+  private def getPressedCollection(collectionId: String)(implicit request: RequestHeader): Future[Option[PressedCollection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
       frontJsonFapi.get(path, fullRequestType).map(_.flatMap{ faciaPage =>
         faciaPage.collections.find{ c => c.id == collectionId}
       })
     }.getOrElse(successful(None))
 
-  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String): Future[List[PressedCollection]] =
+  private def getSomeCollections(path: String, num: Int, offset: Int = 0, containerNameToFilter: String)(implicit requestHeader: RequestHeader): Future[List[PressedCollection]] =
     frontJsonFapi.get(path, fullRequestType).map { maybePage =>
       maybePage.map { faciaPage =>
         // To-do: change the filter to only exclude thrashers and empty collections, not items such as the big picture
