@@ -40,10 +40,8 @@
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
             ("has-super-sticky-banner", content.exists(_.tags.hasSuperStickyBanner)),
-            ("has-absolute-container", page match {
-                case page: commercial.hosted.HostedPage => true
-                case _ => false
-            }),
+            ("is-immersive", content.exists(_.content.isImmersive)),
+            ("is-hosted-content", page.metadata.isHosted),
             ("is-immersive-interactive", content.exists(content => content.tags.isInteractive && content.content.isImmersive))))"
         itemscope itemtype="http://schema.org/WebPage">
 
