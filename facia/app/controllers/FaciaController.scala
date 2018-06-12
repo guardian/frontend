@@ -106,7 +106,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 
   def renderFrontJsonLite(path: String): Action[AnyContent] = Action.async { implicit request =>
-    frontJsonFapi.get(path, fullRequestType).map {
+    frontJsonFapi.get(path, liteRequestType).map {
         case Some(pressedPage) => Cached(CacheTime.Facia)(JsonComponent(FapiFrontJsonLite.get(pressedPage)))
         case None => Cached(CacheTime.Facia)(JsonComponent(JsObject(Nil)))}
   }
