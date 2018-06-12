@@ -125,7 +125,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             if (shouldOnlyReturnHeadline(request)) {
               val webTitle = for {
                 topCollection <- faciaPage.collections.headOption
-                topCurated <- topCollection.curated.headOption
+                topCurated <- topCollection.curatedPlusBackfillDeduplicated.headOption
               } yield topCurated.properties.webTitle
               webTitle.map(RevalidatableResult.Ok(_)).getOrElse(WithoutRevalidationResult(NotFound("Could not extract headline from front")))
             } else {
