@@ -497,6 +497,14 @@ $header-image-size-desktop: 100px;
                 bottom: 5px;
             }
         }
+
+        &.fc-item--list-media-tablet {
+            @include mq($until: tablet) {
+                .fc-item__content:before {
+                    display: none;
+                }
+            }
+        }
     }
 }
 
