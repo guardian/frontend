@@ -53,6 +53,10 @@ case class PressedCollectionVisibility(pressedCollection: PressedCollection, vis
       }
   }
 
+  def mergeAndResize(target: PressedCollectionVisibility, size: Int) = {
+    withVisible(size).copy(pressedCollection = pressedCollection.merge(target.pressedCollection, size))
+  }
+
 }
 
 object PressedCollectionVisibility {

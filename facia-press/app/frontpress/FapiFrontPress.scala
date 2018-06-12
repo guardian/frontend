@@ -25,7 +25,6 @@ import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
 import layout.slices.Container
-
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
@@ -108,6 +107,10 @@ trait EmailFrontPress extends Logging {
   }
 
   def pressEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    if (emailFrontPath.edition == "us") pressUsEmailFront(emailFrontPath) else pressUkAuEmailFront(emailFrontPath)
+  }
+
+  def pressUkAuEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
     for {
       config <- Response.Async.Right(fapiClient.config)
       collectionIds = collectionsIdsFromConfigForPath(emailFrontPath.path, config)
@@ -120,10 +123,44 @@ trait EmailFrontPress extends Logging {
     }
   }
 
+  def pressUsEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    for {
+      config <- Response.Async.Right(fapiClient.config)
+      collectionIds = collectionsIdsFromConfigForPath(emailFrontPath.path, config)
+      enrichedCollectionIds = enrichUsFront(config, collectionIds)
+      pressedCollections <- Response.traverse(enrichedCollectionIds.map(generateCollectionJsonFromFapiClient))
+      seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(emailFrontPath.path))
+    } yield seoWithProperties match {
+      case (seoData, frontProperties) => generatePressedVersions(emailFrontPath.path, pressedCollections, seoData, frontProperties)
+    }
+  }
+
+  // After UK and AU emails are tested, US emails will use the same logic and this can be removed
+  private def enrichUsFront(config: ConfigJson, collections: List[String]): List[String] = {
+    def findCollectionByMetadata(metadata: Metadata, path: String, config: ConfigJson): Option[String] = {
+      val collectionId = for {
+        front <- config.fronts.get(path).toList
+        collectionId <- front.collections
+        collectionConfig <- config.collections.get(collectionId) if collectionConfig.metadata.exists(_.contains(metadata))
+      } yield collectionId
+      collectionId.headOption
+    }
+
+    collections match {
+      case head :: tail =>
+        List(
+          findCollectionByMetadata(Breaking, "us", config),
+          Some(head),
+          findCollectionByMetadata(Special, "us", config)
+        ).flatten ++ tail
+      case Nil => Nil
+    }
+  }
+
   def buildExtraEmailCollections(frontPath: EmailFrontPath,
                                  config: ConfigJson,
                                  pressedCollections: List[PressedCollectionVisibility])(implicit ec: ExecutionContext): Response[EmailExtraCollections] = {
-    def findCollectionId(metadata: Metadata) = {
+    def findCollectionIds(metadata: Metadata): List[String] = {
       for {
         front <- config.fronts.get(frontPath.edition).toList
         collectionId <- front.collections
@@ -131,34 +168,33 @@ trait EmailFrontPress extends Logging {
       } yield collectionId
     }
 
-    def renameMetaCollection(visible: Int, replacementName: String, metaCollection: PressedCollectionVisibility) = {
+    def renameMetaCollection(metaCollection: PressedCollectionVisibility, replacementName: String, visible: Int) = {
       if (pressedCollections.map(_.pressedCollection.displayName).contains(metaCollection.pressedCollection.displayName))
         metaCollection.withDisplayName(replacementName).withVisible(visible)
       else
         metaCollection.withVisible(visible)
     }
 
-    def pressedCollectionFromMetaTag(meta: Metadata): Response[Option[PressedCollectionVisibility]] = {
-      findCollectionId(meta).headOption.map { breakingCollectionId: String =>
-        generateCollectionJsonFromFapiClient(breakingCollectionId).map { pressedCollection: PressedCollectionVisibility =>
-          Some(pressedCollection)
-        }
-      }.getOrElse(Response.Right(None))
+    def mergeCollections(first: PressedCollectionVisibility, tail: List[PressedCollectionVisibility], replacementName: String, visible: Int): PressedCollectionVisibility = {
+      tail.foldLeft(first)(_.mergeAndResize(_, visible)).withDisplayName(replacementName)
     }
 
-    val canonicalCollectionId = findCollectionId(Canonical)
-      .headOption
-      .getOrElse(throw new RuntimeException(s"Unable to find Canonical headline on ${frontPath.edition}"))
-
-    val canonicalPressedF = generateCollectionJsonFromFapiClient(canonicalCollectionId).map { canonicalPressed =>
-      canonicalPressed.withVisible(6).withDisplayName("headlines")
+    def pressedCollectionFromMetaTag(meta: Metadata, replacementName: String, visible: Int): Response[Option[PressedCollectionVisibility]] = {
+      val collections: Response[List[PressedCollectionVisibility]] = Response.traverse(findCollectionIds(meta).map(generateCollectionJsonFromFapiClient))
+      collections.map {
+        case first :: second :: tail => Some(renameMetaCollection(mergeCollections(first, second :: tail, replacementName, visible), replacementName, visible))
+        case head :: Nil => Some(renameMetaCollection(head, replacementName, visible))
+        case Nil => None
+      }
     }
 
-    val breakingPressedF = pressedCollectionFromMetaTag(Breaking).map(_.map(renameMetaCollection(5, "breaking news", _)))
-    val specialPressedF = pressedCollectionFromMetaTag(Special).map(_.map(renameMetaCollection(1, "special report", _)))
+    val canonicalPressedF = pressedCollectionFromMetaTag(Canonical, "headlines", 6)
+    val breakingPressedF = pressedCollectionFromMetaTag(Breaking, "breaking news", 5)
+    val specialPressedF = pressedCollectionFromMetaTag(Special, "special report", 1)
 
     for {
-      canonicalPressed <- canonicalPressedF
+      canonicalPressedO <- canonicalPressedF
+      canonicalPressed = canonicalPressedO.getOrElse(throw new RuntimeException(s"Unable to find Canonical headline on ${frontPath.edition}"))
       breakingPressed <- breakingPressedF
       specialPressed <- specialPressedF
     } yield EmailExtraCollections(canonicalPressed, specialPressed, breakingPressed)
@@ -362,24 +398,6 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
     FAPI.backfillFromConfig(collection.collectionConfig, searchApiQuery, itemApiQuery)
       .map(_.map(PressedContent.make))
   }
-
-  private def findCollectionByMetadata(metadata: Metadata, path: String, config: ConfigJson): Option[String] =
-    (for {
-      front <- config.fronts.get(path).toList
-      collectionId <- front.collections
-      collectionConfig <- config.collections.get(collectionId) if collectionConfig.metadata.exists(_.contains(metadata))
-    } yield collectionId).headOption
-
-  private def withHighPriorityCollections(parentPath: String, config: ConfigJson, collections: List[String]): List[String] =
-    collections match {
-      case head :: tail =>
-        List(
-          findCollectionByMetadata(Breaking, parentPath, config),
-          Some(head),
-          findCollectionByMetadata(Special, parentPath, config)
-        ).flatten ++ tail
-      case Nil => Nil
-    }
 
   def generatePressedVersions(path: String, allPressedCollections: List[PressedCollectionVisibility], seoData: SeoData, frontProperties: FrontProperties): PressedPageVersions = {
     val webCollections = allPressedCollections.filter(PressedCollectionVisibility.isWebCollection)

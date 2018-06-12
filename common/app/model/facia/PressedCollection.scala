@@ -43,6 +43,12 @@ case class PressedCollection(
     )
   }
 
+  def merge(target: PressedCollection, visible: Int): PressedCollection = {
+    copy(backfill = backfill ++ target.curated ++ target.backfill).full(visible)
+  }
+
+  def totalSize: Int = curated.size + backfill.size
+
   def lite(visible: Int): PressedCollection = {
     val liteCurated = curated.take(visible)
     val liteBackfill = backfill.take(visible - liteCurated.length)
