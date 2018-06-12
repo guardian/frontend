@@ -169,6 +169,12 @@ trait EmailFrontPress extends Logging {
 
 trait FapiFrontPress extends EmailFrontPress with Logging {
 
+  val dependentFrontPaths: Map[String, Seq[String]] = Map(
+    "uk" -> Seq("email/uk/daily"),
+    "us" -> Seq("email/us/daily"),
+    "au" -> Seq("email/au/daily")
+  )
+
   implicit val capiClient: CapiContentApiClient
   implicit def fapiClient: ApiClient
   val capiClientForFrontsSeo: ContentApiClient
@@ -201,6 +207,13 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
       .showAtoms("media")
 
   def pressByPathId(path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
+    for {
+     _ <- pressPath(path)
+     _ <- Future.traverse(dependentFrontPaths.getOrElse("path", Nil))(pressPath)
+    } yield ()
+  }
+
+  private def pressPath(path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
 
     val stopWatch: StopWatch = new StopWatch
 
