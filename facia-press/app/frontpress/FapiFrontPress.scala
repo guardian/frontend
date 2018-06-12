@@ -428,13 +428,7 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
       pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(path))
     } yield seoWithProperties match {
-      case (seoData, frontProperties) =>
-        val webCollections = pressedCollections.filter(PressedCollectionVisibility.isWebCollection)
-
-        val dedupliatedCollections = PressedCollectionVisibility.deduplication(webCollections)
-          .map(_.pressedCollectionVersions)
-          .toList
-        PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, dedupliatedCollections)
+      case (seoData, frontProperties) => generatePressedVersions(path, pressedCollections, seoData, frontProperties)
     }
   }
 
