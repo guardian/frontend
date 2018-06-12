@@ -157,7 +157,8 @@
         }
     }
 
-    .fc-slice__item + .fc-slice__item:before {
+    .fc-slice__item + .fc-slice__item:before,
+    .fc-slice--h14-q-q .fc-item--standard-tablet:before {
         content: none;
     }
 
@@ -179,10 +180,6 @@
 
         @include mq(tablet) {
             border-left: 1px solid $sport-garnett-main-1;
-
-            .fc-item__container:before {
-                height: 3px;
-            }
 
             .fc-sublink__title:before {
                 left: -5px;
