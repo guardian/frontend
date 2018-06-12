@@ -1,265 +1,56 @@
-@mixin scale-paypal-logo($width) {
-    width: $width;
-    height: $width * .14;
+.site-message--engagement-banner-2018-05-18 {
+    background-color: $news-garnett-highlight;
+    max-height: 80%;
+
+    .site-message__close {
+        svg {
+            fill: $garnett-neutral-1;
+            border: $garnett-neutral-1;
+        }
+    }
+
+    .site-message__close-btn {
+        border-color: $garnett-neutral-1;
+    }
 }
 
-.membership__paypal-logo {
-    @include scale-paypal-logo(100px);
+.support-the-guardian-banner__text {
+    color: $garnett-neutral-1;
+
+    font-size: 16px;
+    line-height: 20px;
+
+    @include mq(tablet) {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
+
+.support-the-guardian-banner__highlight {
+
+}
+
+.support-the-guardian-banner__button {
+
+}
+
+.support-the-guardian-banner__payment-logos {
+    height: auto;
+    width: 100px;
     display: inline-block;
     padding-right: 7px;
     padding-top: 16px;
 
-    @include mq($from: mobileMedium) {
-        @include scale-paypal-logo(130px);
+    @include mq(mobileMedium) {
+        width: 130px;
         padding-top: 15px;
     }
 
-
     @include mq(desktop) {
-        @include scale-paypal-logo(175px);
+        width: 175px;
     }
 
-    @include mq($from: wide) {
+    @include mq(wide) {
         padding-top: 21px;
     }
-}
-
-.membership__support-button {
-    margin-top: $gs-gutter/2;
-    min-width: 160px;
-}
-
-.membership__message-text {
-    margin-right: $gs-gutter/2;
-}
-
-.membership__paypal-container {
-    text-decoration: none;
-    margin-top: 0px;
-    margin-bottom: -$gs-gutter/2;
-    display: flex;
-    flex-direction: row;
-    @include mq($from: mobileMedium) {
-        margin-top: auto;
-    }
-
-    @include mq($from: desktop) {
-        min-width: 200px;
-        margin-bottom: $gs-gutter/4;
-        margin-left: $gs-gutter*2;
-        flex-direction: column;
-    }
-
-    @include mq($from: wide) {
-        flex-direction: row;
-    }
-}
-
-.site-message--membership-prominent {
-    &,
-    .site-message__actions,
-    .site-message__actions__item,
-    path,
-    button,
-    a {
-        color: #333333;
-        fill: #333333;
-        border-color: #333333;
-    }
-
-    background-color: $news-garnett-highlight;
-    svg {
-        fill: #000000;
-    }
-
-    max-height: 80%;
-
-    .site-message__message {
-        padding-right: 45px;
-        @include mq($until: tablet) {
-            padding-left: 5px;
-        }
-        @include mq($from: tablet) {
-            padding-left: 10px;
-        }
-        @include mq($from: desktop) {
-            padding-left: 15px;
-            padding-right: 40px;
-        }
-    }
-    .site-message__media {
-        display: none;
-    }
-    .site-message__close {
-        vertical-align: top;
-        width: 36px;
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 95%;
-        @include mq($from: mobile) {
-            padding-right: 10px;
-        }
-        @include mq($from: tablet) {
-            padding-right: 20px;
-        }
-    }
-    .site-message__inner {
-        display: block;
-        padding-top: 5px;
-        padding-left: 5px;
-        padding-right: 5px;
-        padding-bottom: 10px;
-    }
-
-    .site-message__copy {
-        display: block;
-    }
-
-    .big-test-container {
-        margin-top: 8px;
-        margin-left: 10px;
-    }
-
-    .site-message__message--membership {
-
-        display: flex;
-        flex-direction: column;
-        @include mq($from: desktop) {
-            flex-direction: row;
-        }
-
-
-        max-width: none;
-
-        .membership__message-text {
-            @include mq(desktop) {
-                font-size: 25px;
-            }
-        }
-
-        .membership__message-text-long {
-            max-width: 630px;
-
-            line-height: 20px;
-            @include mq($from: tablet) {
-                line-height: 22px;
-            }
-
-            .membership__message-text {
-                font-weight: 400;
-                font-size: 16px;
-                @include mq($from: tablet) {
-                    font-size: 18px;
-                }
-            }
-        }
-
-        margin-right: 5px;
-        font-weight: 900;
-        @include mq($from: mobile) {
-            font-size: 16px;
-            line-height: 20px;
-            margin-right: $gs-gutter/4;
-        }
-        @include mq($from: tablet) {
-            font-size: 24px;
-            line-height: 28px;
-            margin-right: $gs-gutter;
-        }
-        @include mq($from: desktop) {
-            font-size: 28px;
-            line-height: 32px;
-            margin-right: $gs-gutter;
-        }
-    }
-    .message-button-rounded__cta {
-        @include clearfix;
-        @include circular;
-        @include fs-textSans(2);
-        border: 0;
-        display: flex;
-        width: auto;
-        text-decoration: none;
-        @include mq($from: mobile) {
-            font-size: 12px;
-            line-height: 24px;
-            height: 24px;
-            margin-top: 3px;
-            padding-left: 9px;
-            svg {
-                position: relative;
-                top: -3px;
-                height: 24px;
-                width: 14px;
-                padding-left: 5px;
-                padding-right: 5px;
-            }
-        }
-        @include mq($from: tablet) {
-            font-size: 14px;
-            line-height: 28px;
-            height: 28px;
-            margin-top: 5px;
-            top: -5px;
-            padding-left: 12px;
-            svg {
-                top: -2px;
-                height: 28px;
-                width: 18px;
-                padding-left: 10px;
-                padding-right: 5px;
-            }
-        }
-        @include mq($from: desktop) {
-            font-size: 14px;
-            line-height: 36px;
-            height: 36px;
-            margin-top: 10px;
-            top: -5px;
-            padding-left: 15px;
-            svg {
-                top: 3px;
-                height: 36px;
-                width: 20px;
-                padding-left: 10px;
-                padding-right: 7px;
-            }
-        }
-        padding-right: 10px;
-        position: relative;
-        cursor: pointer;
-        background-color: transparent;
-        font-weight: bold;
-        a {
-            text-decoration: none;
-        }
-    }
-
-    #membership__engagement-message-text {
-        margin-right: 16px;
-    }
-
-    .message-button-rounded__cta {
-        svg path {
-            fill: #ffffff;
-        }
-        background-color: $garnett-neutral-1;
-        color: #ffffff;
-    }
-    .inline-arrow-white-right {
-        display: block;
-        float: right;
-        height: $gs-column-width/2;
-    }
-}
-
-.banner-cta-text {
-    font-weight: normal;
-    background-color: #000000;
-    color: #ffffff;
-    margin-left: 3px;
-    padding-left: 2px;
-    padding-right: 5px;
-    padding-bottom: 3px;
 }

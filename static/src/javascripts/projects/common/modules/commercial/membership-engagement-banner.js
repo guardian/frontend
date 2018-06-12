@@ -84,7 +84,6 @@ const getUserVariantParams = (
  *  {
  *    minArticles: 5, // how many articles should the user see before they get the engagement banner?
  *    messageText: "..."
- *    colourStrategy: // a function to determine what css class to use for the banner's colour
  *    buttonCaption: "Become a Supporter"
  *  }
  *
@@ -111,23 +110,12 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
 
-const messageModifierClass = (
-    colourClass: string,
-    modifierClass: ?string
-): string => {
-    if (modifierClass) {
-        return `${colourClass} ${modifierClass}`;
-    }
-
-    return colourClass;
-};
 
 const showBanner = (params: EngagementBannerParams): void => {
     const test = getUserTest();
     const variant = getUserVariant(test);
     const paypalAndCreditCardImage =
         config.get('images.acquisitions.paypal-and-credit-card') || '';
-    const colourClass = params.colourStrategy();
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -149,7 +137,6 @@ const showBanner = (params: EngagementBannerParams): void => {
         messageText,
         ctaText,
         paypalAndCreditCardImage,
-        colourClass,
         linkUrl,
         buttonCaption,
         buttonSvg,
@@ -163,10 +150,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
         trackDisplay: true,
-        cssModifierClass: messageModifierClass(
-            colourClass,
-            params.bannerModifierClass
-        ),
+        cssModifierClass: params.bannerModifierClass,
     }).show(renderedBanner);
 
     if (messageShown) {
