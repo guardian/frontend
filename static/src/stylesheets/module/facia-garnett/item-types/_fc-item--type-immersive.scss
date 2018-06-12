@@ -106,14 +106,14 @@
 }
 
 [data-component='world-cup-2018'] {
-    background: url('https://uploads.guim.co.uk/2018/06/11/worldcup_bg_01.png');
+    background: url('https://uploads.guim.co.uk/2018/06/12/worldcup_bg_solid.png');
     background-repeat: no-repeat;
     background-position: top left;
-    background-size: 1600px;
+    background-size: 1000px;
 
-    @include mq(desktop) {
+    @include mq(tablet) {
         background-position: top;
-        background-size: 1600px;
+        background-size: 1300px;
     }
 
     .fc-container__header__title {
@@ -141,7 +141,7 @@
         background-color: #f1f8fc !important;
 
         &:hover {
-            background-color: darken(#f1f8fc, 4%) !important;
+            background-color: #ddecf5 !important;
 
             .fc-trail__count {
                 background: transparent !important;
