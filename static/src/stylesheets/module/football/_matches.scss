@@ -78,6 +78,12 @@
     .team-crest {
         float: left;
     }
+
+    .knockout--crest {
+        float: none;
+        vertical-align: middle;
+    }
+
 }
 
 .football-match__team--away {
@@ -91,6 +97,11 @@
 
     .team-crest {
         float: right;
+    }
+
+    .knockout--crest {
+        float: none;
+        vertical-align: middle;
     }
 }
 
