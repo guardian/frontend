@@ -84,8 +84,8 @@ class PrebidService {
 
         window.pbjs.setConfig(pbjsConfig);
 
-        // gather analytics from 10% of page views
-        const inSample = getRandomIntInclusive(1, 10) === 1;
+        // gather analytics from 20% (1 in 5) of page views
+        const inSample = getRandomIntInclusive(1, 5) === 1;
         if (
             config.switches.prebidAnalytics &&
             (inSample || config.page.isDev)
