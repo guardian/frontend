@@ -4,8 +4,8 @@ import reportError from 'lib/report-error';
 const ERR_INVALID_COOKIE_NAME = `Cookie must not contain invalid characters (space, tab and the following characters: '()<>@,;"/[]?={}')`;
 
 // subset of https://github.com/guzzle/guzzle/pull/1131
-const isValidCookieValue = (...names: string[]): boolean =>
-    !names.some(name => /[()<>@,;"\\/[\]?={} \t]/g.test(name));
+const isValidCookieValue = (name: string): boolean =>
+    !/[()<>@,;"\\/[\]?={} \t]/g.test(name);
 
 const getShortDomain = ({
     isCrossSubdomain = false,
@@ -49,7 +49,7 @@ const addCookie = (
 ): void => {
     const expires = new Date();
 
-    if (!isValidCookieValue(name, value)) {
+    if (!isValidCookieValue(name) || !isValidCookieValue(value)) {
         reportError(
             new Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`),
             {},
@@ -84,7 +84,7 @@ const addForMinutes = (
 ): void => {
     const expires = new Date();
 
-    if (!isValidCookieValue(name, value)) {
+    if (!isValidCookieValue(name) || !isValidCookieValue(value)) {
         reportError(
             new Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`),
             {},
@@ -97,7 +97,7 @@ const addForMinutes = (
 };
 
 const addSessionCookie = (name: string, value: string): void => {
-    if (!isValidCookieValue(name, value)) {
+    if (!isValidCookieValue(name) || !isValidCookieValue(value)) {
         reportError(
             new Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`),
             {},
