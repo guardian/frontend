@@ -16,6 +16,9 @@ import { acquisitionsEpicAlwaysAskAprilStory } from 'common/modules/experiments/
 import { AcquisitionsEpicBorderThankyou } from 'common/modules/experiments/tests/acquisitions-epic-border-thankyou';
 import { acquisitionsEpicNativeVsDfp } from 'common/modules/experiments/tests/acquisitions-epic-native-vs-dfp';
 import { acquisitionsEpicFromGoogleDocOneVariant } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-one-variant';
+import { acquisitionsEpicFromGoogleDocTwoVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-two-variants';
+import { acquisitionsEpicFromGoogleDocThreeVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-three-variants';
+import { acquisitionsEpicFromGoogleDocFourVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-four-variants';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
@@ -41,6 +44,9 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicFromGoogleDocOneVariant,
+    acquisitionsEpicFromGoogleDocTwoVariants,
+    acquisitionsEpicFromGoogleDocThreeVariants,
+    acquisitionsEpicFromGoogleDocFourVariants,
     acquisitionsEpicAlwaysAskAprilStory,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,

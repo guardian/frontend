@@ -115,4 +115,34 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-two-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-three-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-four-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
 }

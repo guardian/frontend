@@ -1,6 +1,7 @@
 // @flow
 import { getLocalCurrencySymbol } from 'lib/geolocation';
 import fetchJSON from 'lib/fetch-json';
+import config from "../../../../lib/config";
 
 // control
 const controlHeading = 'Since you’re here &hellip;';
@@ -59,10 +60,13 @@ export const liveblogCopy = (
 });
 
 export const getCopyFromGoogleDoc = (
-    url: string,
     sheetName: string
-): Promise<AcquisitionsEpicTemplateCopy> =>
-    fetchJSON(url, {
+): Promise<AcquisitionsEpicTemplateCopy> => {
+    const url = config.get('page.isDev')
+        ? 'https://interactive.guim.co.uk/docsdata-test/1Hoqzg-LeB0xJf2z0JwsfDTHdXKtq-7O5DsQhpqRm7ho.json'
+        : 'https://interactive.guim.co.uk/docsdata/1Hoqzg-LeB0xJf2z0JwsfDTHdXKtq-7O5DsQhpqRm7ho.json';
+
+    return fetchJSON(url, {
         mode: 'cors',
     }).then(res => {
         const rows = res && res.sheets && res.sheets[sheetName];
@@ -87,3 +91,4 @@ export const getCopyFromGoogleDoc = (
         }
         return control;
     });
+}
