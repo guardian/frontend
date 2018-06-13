@@ -124,10 +124,16 @@ a[href='/football/world-cup-2018'] {
         }
 
         &:not(.fc-container--rolled-up) {
-            background: url('https://uploads.guim.co.uk/2018/06/12/worldcup_bg_solid.png');
-            background-repeat: no-repeat;
-            background-position: top;
-            background-size: 1300px;
+            @include mq(leftCol) {
+                background: url('https://uploads.guim.co.uk/2018/06/12/worldcup_bg_solid.png');
+                background-repeat: no-repeat;
+                background-position: top;
+                background-size: 1140px;
+            }
+
+            @include mq(wide) {
+                background-size: 1300px;
+            }
         }
     }
 
