@@ -132,11 +132,22 @@ a[href='/football/world-cup-2018'] {
     }
 
      .fc-container__toggle {
-         top: 0;
+         top: $gs-baseline / 4;
+
+         &:hover,
+         &:focus {
+             outline: 0;
+
+             &:after {
+                 background-color: $sport-garnett-feature;
+             }
+         }
 
          &:after {
-             background: url('https://uploads.guim.co.uk/2018/06/13/hide-icon_opt.svg');
+             background: url('https://uploads.guim.co.uk/2018/06/13/hide-icon_ghost.svg');
+             background-color: $sport-garnett-main-1;
              background-size: cover;
+             border-radius: 50%;
              content: '';
              position: absolute;
              right: 0;
