@@ -87,11 +87,11 @@ object Cached extends implicits.Dates {
     if (cacheableStatusCodes.contains(cacheableResult.result.header.status)) {
       cacheableResult match {
         case RevalidatableResult(result, hash) =>
-          cacheHeaders(seconds, result, Some((hash, ifNoneMatch)))
+          val etag = s"""W/"hash${hash.string}""""
+          val newResult = if (ifNoneMatch.contains(etag)) Results.NotModified else result
+          cacheHeaders(seconds, newResult, Some(etag))
         case WithoutRevalidationResult(result) => cacheHeaders(seconds, result, None)
-        case PanicReuseExistingResult(result) =>
-          val maybeHash = ifNoneMatch.map(hash => (Hash(hash), ifNoneMatch))
-          cacheHeaders(seconds, result, maybeHash)
+        case PanicReuseExistingResult(result) => cacheHeaders(seconds, result, ifNoneMatch)
       }
     } else {
       cacheableResult.result
@@ -109,7 +109,7 @@ object Cached extends implicits.Dates {
     TLDR Surrogate-Control is used by the CDN, Cache-Control by the browser - do *not* add `private` to Cache-Control
     https://docs.fastly.com/guides/tutorials/cache-control-tutorial
   */
-  private def cacheHeaders(maxAge: Int, result: Result, maybeHash: Option[(Hash, Option[String])]): Result = {
+  private def cacheHeaders(maxAge: Int, result: Result, maybeEtag: Option[String]): Result = {
     val now = DateTime.now
     val staleWhileRevalidateSeconds = max(maxAge / 10, 1)
     val surrogateCacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
@@ -122,20 +122,11 @@ object Cached extends implicits.Dates {
       surrogateCacheControl
     }
 
-    val (etagHeaderString, validatedResult): (String, Result) = maybeHash.map { case (hash, maybeHashToMatch) =>
-      val etag = s"""W/"hash${hash.string}""""
-      if (maybeHashToMatch.contains(etag)) {
-        (etag, Results.NotModified)
-      } else if (maybeHashToMatch.contains(hash.string)) {
-        (hash.string, Results.NotModified)
-      } else {
-        (etag, result)
-      }
-    }.getOrElse(
-      (s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // setitng a random tag still helps
+    val etagHeaderString: String = maybeEtag.getOrElse(
+      s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""" // setting a random tag still helps
     )
 
-    validatedResult.withHeaders(
+    result.withHeaders(
 
       // the cache headers used by the CDN
       "Surrogate-Control" -> surrogateCacheControl,
