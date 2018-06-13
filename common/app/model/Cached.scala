@@ -89,7 +89,9 @@ object Cached extends implicits.Dates {
         case RevalidatableResult(result, hash) =>
           cacheHeaders(seconds, result, Some((hash, ifNoneMatch)))
         case WithoutRevalidationResult(result) => cacheHeaders(seconds, result, None)
-        case PanicReuseExistingResult(result) => cacheHeaders(seconds, result, None)
+        case PanicReuseExistingResult(result) =>
+          val maybeHash = ifNoneMatch.map(hash => (Hash(hash), ifNoneMatch))
+          cacheHeaders(seconds, result, maybeHash)
       }
     } else {
       cacheableResult.result
@@ -124,11 +126,13 @@ object Cached extends implicits.Dates {
       val etag = s"""W/"hash${hash.string}""""
       if (maybeHashToMatch.contains(etag)) {
         (etag, Results.NotModified)
+      } else if (maybeHashToMatch.contains(hash.string)) {
+        (hash.string, Results.NotModified)
       } else {
         (etag, result)
       }
     }.getOrElse(
-      (s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // just to see if they come back in
+      (s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", result) // setitng a random tag still helps
     )
 
     validatedResult.withHeaders(
