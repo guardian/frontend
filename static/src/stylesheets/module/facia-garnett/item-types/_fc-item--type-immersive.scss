@@ -164,6 +164,8 @@ a[href='/football/world-cup-2018'] {
     }
 
     &.fc-container--rolled-up {
+        padding-bottom: $gs-baseline !important;
+
         .fc-container__toggle:after {
             transform: rotate(135deg);
         }
