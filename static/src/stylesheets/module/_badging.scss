@@ -17,6 +17,7 @@
 
 .badge-slot__img {
     display: block;
+    max-height: 80px;
     width: 100%;
 }
 
@@ -26,7 +27,7 @@
     .content__header {
         @include mq($from: leftCol) {
             // Prevents badged labels area overlapping meta
-            min-height: gs-height(4);
+            min-height: gs-height(5);
         }
     }
 

@@ -105,13 +105,6 @@
     }
 }
 
-a[href='/football/world-cup-2018'],
-a[href='https://www.theguardian.com/football/world-cup-2018'] {
-    .badge-slot__img {
-        max-width: 45px;
-    }
-}
-
 [data-component='world-cup-2018'] {
     .fc-container__header__title a:hover {
         border-bottom: 0;
