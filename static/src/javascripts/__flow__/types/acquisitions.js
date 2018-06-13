@@ -1,7 +1,13 @@
+declare type AcquisitionsEpicTestimonialCopy = {
+    text: string,
+    name: string
+}
+
 declare type AcquisitionsEpicTemplateCopy = {
     heading?: string,
     p1: string,
     p2: string,
+    testimonial?: AcquisitionsEpicTestimonialCopy
 };
 
 declare type EngagementBannerTemplateParams = {

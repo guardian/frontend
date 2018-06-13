@@ -2,17 +2,13 @@
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import {
     control as acquisitionsCopyControl,
-    regulars as acquisitionsCopyRegulars,
 } from 'common/modules/commercial/acquisitions-copy';
-import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
-import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitInsertEvent,
     submitViewEvent,
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
-import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { elementInView } from 'lib/element-inview';
@@ -49,11 +45,11 @@ const defaultMaxViews: {
 
 const defaultButtonTemplate = (url: CtaUrls) => epicButtonsTemplate(url);
 
-const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
+const controlTemplate: EpicTemplate = ({ options = {} }, copy: AcquisitionsEpicTemplateCopy) =>
     acquisitionsEpicControlTemplate({
         copy,
+        testimonialBlock: copy.testimonial ? getTestimonialBlock(copy.testimonial) : '',
         componentName: options.componentName,
-        testimonialBlock: options.testimonialBlock,
         buttonTemplate: options.buttonTemplate({
             supportUrl: options.supportURL,
         }),
@@ -82,7 +78,7 @@ const getTargets = (
 };
 
 const getTestimonialBlock = (
-    testimonialParameters: AcquisitionsEpicTestimonialTemplateParameters
+    testimonialParameters: AcquisitionsEpicTestimonialCopy
 ) => acquisitionsTestimonialBlockTemplate(testimonialParameters);
 
 const isCompatibleWithEpic = (page: Object): boolean =>
@@ -119,17 +115,6 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
         test.locationCheck(storedGeolocation) &&
         tagsMatch
     );
-};
-
-const getCopy = (useTailor: boolean): Promise<AcquisitionsEpicTemplateCopy> => {
-    if (useTailor) {
-        return isRegular().then(
-            regular =>
-                regular ? acquisitionsCopyRegulars : acquisitionsCopyControl
-        );
-    }
-
-    return Promise.resolve(acquisitionsCopyControl);
 };
 
 const getCampaignCode = (
@@ -193,16 +178,12 @@ const makeABTestVariant = (
         }),
         template = controlTemplate,
         buttonTemplate = options.buttonTemplate || defaultButtonTemplate,
-        testimonialBlock = getTestimonialBlock(
-            acquisitionsTestimonialParametersControl
-        ),
         blockEngagementBanner = false,
         engagementBannerParams = {},
         isOutbrainCompliant = false,
         usesIframe = false,
         onInsert = noop,
         onView = noop,
-        useTailoredCopyForRegulars = false,
         insertAtSelector = '.submeta',
         insertMultiple = false,
         insertAfter = false,
@@ -261,14 +242,12 @@ const makeABTestVariant = (
             supportURL,
             template,
             buttonTemplate,
-            testimonialBlock,
             blockEngagementBanner,
             engagementBannerParams,
             isOutbrainCompliant,
             usesIframe,
             onInsert,
             onView,
-            useTailoredCopyForRegulars,
             insertAtSelector,
             insertMultiple,
             insertAfter,
@@ -282,7 +261,7 @@ const makeABTestVariant = (
         test() {
             const copyPromise =
                 (options.copy && Promise.resolve(options.copy)) ||
-                getCopy(useTailoredCopyForRegulars);
+                Promise.resolve(acquisitionsCopyControl);
 
             const render = (templateFn: ?EpicTemplate) =>
                 copyPromise
