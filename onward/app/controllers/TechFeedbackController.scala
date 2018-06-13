@@ -5,14 +5,16 @@ import common._
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, MetaData, NoCache, SectionId}
 import play.api.data.Form
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.api.libs.ws._
 import play.api.data.Forms._
 
 import scala.concurrent.duration._
+import scala.concurrent.Future
+import scala.util.Try
 
-class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerComponents) (implicit context: ApplicationContext) extends BaseController with Logging {
+class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerComponents) (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def submitFeedback(path: String): Action[AnyContent] = Action { implicit request =>
 
@@ -50,13 +52,44 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
 
   }
 
-  def techFeedback(path: String): Action[AnyContent] = Action { implicit request =>
-    val page = model.SimplePage(MetaData.make(
-      request.path,
-      Some(SectionId.fromId("info")),
-      "Thanks for your report"
-    ))
-    Cached(900)(RevalidatableResult.Ok(views.html.feedback(page, path)))
+  def techFeedback(path: String): Action[AnyContent] = {
+
+    Action.async { implicit request =>
+
+      val page = model.SimplePage(MetaData.make(
+        request.path,
+        Some(SectionId.fromId("info")),
+        "Thanks for your report"
+      ))
+
+      Try(ws.url(Configuration.feedback.feedbackHelpConfig)
+        .withRequestTimeout(3000.millis)
+        .get()
+        .map((resp: WSResponse) => {
+
+          val jsConfig: JsValue = Json.parse(resp.body)
+          val alerts: List[String] = (jsConfig \ "alerts").get.as[List[String]]
+
+          Cached(900)(RevalidatableResult.Ok(views.html.feedback(
+            page,
+            path,
+            Option(alerts)))
+          )
+
+      })).getOrElse(
+
+        Future.successful(
+          Cached(900)(RevalidatableResult.Ok(views.html.feedback(
+            page,
+            path,
+            Option.empty
+          )))
+        )
+
+      )
+
+    }
+
   }
 
 }
