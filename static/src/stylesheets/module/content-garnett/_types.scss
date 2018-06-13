@@ -842,6 +842,12 @@ $quote-mark: 35px;
         }
     }
 
+    .content__labels {
+        @include mq(leftCol) {
+            padding-bottom: $gs-baseline * 3;
+        }
+    }
+
     .content__meta-container {
         background-image: none;
         padding-top: 0;
