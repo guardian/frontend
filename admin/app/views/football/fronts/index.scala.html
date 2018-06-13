@@ -23,12 +23,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-12">
             <p>
                 <a href="/admin/football/fronts/fixtures/all" class="btn btn-success">All fixtures</a>
             </p>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-12">
             <form class="form-inline" role="form" action="/admin/football/fronts/fixtures/redirect" method="post">
                 @views.html.football.fragments.chooseLeague("competition", competitions)
                 <button type="submit" class="btn btn-success">Competition fixtures</button>
@@ -41,12 +41,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-12">
             <p>
                 <a href="/admin/football/fronts/results/all" class="btn btn-success">All results</a>
             </p>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-12">
             <form class="form-inline" role="form" action="/admin/football/fronts/results/redirect" method="post">
                 @views.html.football.fragments.chooseLeague("competition", competitions)
                 <button type="submit" class="btn btn-success">Competition results</button>
@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <form class="form-inline" role="form" action="/admin/football/fronts/tables/redirect" method="post">
                 @views.html.football.fragments.chooseLeague("competition", competitions)
                 @views.html.football.fragments.chooseGroup("group")
