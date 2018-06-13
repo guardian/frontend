@@ -518,7 +518,7 @@ case class TagCombiner(
 ) extends StandalonePage {
 
   private val webTitleOverrides: Map[String, String] = Map(
-    "football/football+tone/minutebyminute" -> "Live football scores"
+    "football/football+tone/minutebyminute" -> "Football live "
   )
 
   private val webTitle: String = webTitleOverrides.getOrElse(id, s"${leftTag.name} + ${rightTag.name}")
