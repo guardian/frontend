@@ -1,6 +1,9 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
-import { control as acquisitionsCopyControl, getCopyFromGoogleDoc } from 'common/modules/commercial/acquisitions-copy';
+import {
+    control as acquisitionsCopyControl,
+    getCopyFromGoogleDoc,
+} from 'common/modules/commercial/acquisitions-copy';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitInsertEvent,
@@ -435,20 +438,19 @@ const makeBannerABTestVariants = (
 
 const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
     const variants = [];
-    for (let i = 1; i <= count; i++) {
+
+    // i++ is disallowed by our linter
+    for (let i = 1; i <= count; i = i + 1) {
         variants.push({
             id: `variant_${i}`,
             products: [],
             options: {
-                copy: getCopyFromGoogleDoc(
-                    `variant_${i}`,
-                ),
-            }
+                copy: getCopyFromGoogleDoc(`variant_${i}`),
+            },
         });
     }
     return variants;
 };
-
 
 export {
     shouldShowReaderRevenue,
@@ -456,5 +458,5 @@ export {
     makeABTest,
     defaultButtonTemplate,
     makeBannerABTestVariants,
-    makeGoogleDocEpicVariants
+    makeGoogleDocEpicVariants,
 };

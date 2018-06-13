@@ -1,5 +1,8 @@
 // @flow
-import { makeABTest, makeGoogleDocEpicVariants } from 'common/modules/commercial/contributions-utilities';
+import {
+    makeABTest,
+    makeGoogleDocEpicVariants,
+} from 'common/modules/commercial/contributions-utilities';
 
 const abTestName = 'AcquisitionsEpicFromGoogleDocThreeVariants';
 
@@ -25,7 +28,7 @@ export const acquisitionsEpicFromGoogleDocThreeVariants: EpicABTest = makeABTest
                 id: 'control',
                 products: [],
             },
-            ...makeGoogleDocEpicVariants(3)
+            ...makeGoogleDocEpicVariants(3),
         ],
     }
 );

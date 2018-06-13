@@ -1,7 +1,7 @@
 // @flow
 import { getLocalCurrencySymbol } from 'lib/geolocation';
 import fetchJSON from 'lib/fetch-json';
-import config from "../../../../lib/config";
+import config from '../../../../lib/config';
 
 // control
 const controlHeading = 'Since you’re here &hellip;';
@@ -91,4 +91,4 @@ export const getCopyFromGoogleDoc = (
         }
         return control;
     });
-}
+};
