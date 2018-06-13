@@ -37,9 +37,8 @@
             @RemoveOuterParaHtml(card.header.headline)
         </a>
     }
-    @if(card.header.quoted) {
-        @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
-    }
+
+    @card.bylineText.map { byline => @row(Seq("byline")){@byline} }
 
     @card.starRating.map { numberOfStars =>
         @row(Seq("review-stars")) {
