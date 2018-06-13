@@ -131,43 +131,43 @@ a[href='/football/world-cup-2018'] {
         }
     }
 
-     .fc-container__toggle {
-         top: $gs-baseline / 4;
+    .fc-container__toggle {
+        top: $gs-baseline / 4;
 
-         &:hover,
-         &:focus {
-             outline: 0;
+        &:hover,
+        &:focus {
+            outline: 0;
 
-             &:after {
-                 background-color: $sport-garnett-feature;
-             }
-         }
+            &:after {
+                background-color: $sport-garnett-feature;
+            }
+        }
 
-         &:after {
-             background: url('https://uploads.guim.co.uk/2018/06/13/hide-icon_ghost.svg');
-             background-color: $sport-garnett-main-1;
-             background-size: cover;
-             border-radius: 50%;
-             content: '';
-             position: absolute;
-             right: 0;
-             top: -2px;
-             height: 24px;
-             width: 24px;
-             transition: transform .3s ease-in-out;
-         }
+        &:after {
+            background: url('https://uploads.guim.co.uk/2018/06/13/hide-icon_ghost.svg');
+            background-color: $sport-garnett-main-1;
+            background-size: cover;
+            border-radius: 50%;
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -2px;
+            height: 24px;
+            width: 24px;
+            transition: transform .3s ease-in-out;
+        }
 
-         .fc-container__toggle__text {
-             display: inline-block;
-             padding-right: 29px;
-         }
-     }
+        .fc-container__toggle__text {
+            display: inline-block;
+            padding-right: 29px;
+        }
+    }
 
-     &.fc-container--rolled-up {
-         .fc-container__toggle:after {
-             transform: rotate(135deg);
-         }
-     }
+    &.fc-container--rolled-up {
+        .fc-container__toggle:after {
+            transform: rotate(135deg);
+        }
+    }
 
     // All cards but certain types
     .fc-item:not(.fc-item--type-live):not(.fc-item--type-media) {
