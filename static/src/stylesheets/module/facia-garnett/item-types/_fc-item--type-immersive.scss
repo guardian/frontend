@@ -105,42 +105,36 @@
     }
 }
 
-[data-component='world-cup-2018'] {
-    background: url('https://uploads.guim.co.uk/2018/06/12/worldcup_bg_solid.png');
-    background-repeat: no-repeat;
-    background-position: top left;
-    background-size: 1000px;
+a[href='/football/world-cup-2018'] {
+    .badge-slot__img {
+        max-width: 45px;
+    }
+}
 
-    @include mq(tablet) {
-        background-position: top;
-        background-size: 1300px;
+[data-component='world-cup-2018'] {
+    .fc-container__header__title a:hover {
+        border-bottom: 0;
+        text-decoration: none;
     }
 
-    .fc-container__header__title {
-        .fc-container__title__text {
-            display: none;
+    @include mq(desktop) {
+        .badge-slot__img {
+            float: left;
+            padding-right: $gs-gutter / 4;
         }
 
-        a:before {
-            content: '';
-            background: url('https://uploads.guim.co.uk/2018/06/08/worldCupLogo_01.svg');
-            background-repeat: no-repeat;
-            background-size: contain;
-            display: block;
-            height: 70px;
-            width: 200px;
-
-            @include mq(desktop) {
-                width: auto;
-            }
-        }
+        background: url('https://uploads.guim.co.uk/2018/06/12/worldcup_bg_solid.png');
+        background-repeat: no-repeat;
+        background-position: top;
+        background-size: 1300px;
     }
 
     // All cards but certain types
     .fc-item:not(.fc-item--type-live):not(.fc-item--type-media) {
         background-color: #f1f8fc !important;
 
-        &:hover {
+        &:hover,
+        .u-faux-block-link--hover {
             background-color: #ddecf5 !important;
 
             .fc-trail__count {
