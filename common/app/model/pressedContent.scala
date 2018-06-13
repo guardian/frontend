@@ -253,7 +253,9 @@ final case class PressedProperties(
   href: Option[String],
   webUrl: Option[String],
   editionBrandings: Option[Seq[EditionBranding]]
-)
+) {
+  lazy val isPaidFor: Boolean = editionBrandings.exists(_.exists(branding => branding.branding.exists(_.isPaid) && branding.edition == Edition.defaultEdition))
+}
 
 object PressedCardHeader {
   def make(content: fapi.FaciaContent): PressedCardHeader = {
@@ -367,6 +369,8 @@ sealed trait PressedContent {
   def display: PressedDisplaySettings
   def maybePillar: Option[Pillar] = Pillar(properties.maybeContent)
   lazy val participatesInDeduplication: Boolean = properties.embedType.isEmpty
+
+  def isPaidFor: Boolean = properties.isPaidFor
 
   def branding(edition: Edition): Option[Branding] =
     for {

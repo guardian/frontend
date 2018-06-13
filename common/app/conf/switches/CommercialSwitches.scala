@@ -267,16 +267,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AdBlockMessage = Switch(
-    Commercial,
-    "adblock",
-    "Switch for the Adblock Message.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val KruxVideoTracking = Switch(
     Commercial,
     "krux-video-tracking",
@@ -381,6 +371,16 @@ trait CommercialSwitches {
     group = Commercial,
     name = "prebid-xaxis",
     description = "Include Xaxis adapter in Prebid auctions",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val prebidS2SOzoneBidder: Switch = Switch(
+    group = Commercial,
+    name = "prebid-s2sozone",
+    description = "Include S2S Ozone project adapter in Prebid auctions",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

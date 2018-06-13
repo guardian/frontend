@@ -448,6 +448,81 @@ $header-image-size-desktop: 100px;
     transition: opacity .25s linear; // Used to fade-in new updates
 }
 
+[data-component='world-cup-2018'] {
+    .fc-item--has-cutout.fc-item--type-comment:not(.fc-item--list-tablet) {
+        .fc-item__avatar {
+            background-color: transparent !important;
+
+            img {
+                filter: grayscale(100%);
+                position: relative;
+            }
+        }
+
+        .u-faux-block-link__overlay {
+            z-index: 1;
+        }
+
+        &.fc-item--half-tablet,
+        &.fc-item--standard-tablet,
+        &.fc-item--list-media-tablet {
+            .fc-item__content:before {
+                background-image: url('https://uploads.guim.co.uk/2018/06/11/byline-mask.png');
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: right;
+                content: '';
+                position: absolute;
+                bottom: 9px;
+                right: 10px;
+                z-index: 1;
+                height: 90px;
+                width: 200px;
+            }
+        }
+
+        &.fc-item--half-tablet .fc-item__content:before {
+            height: 112px;
+
+            @include mq(tablet) {
+                height: 164px;
+                bottom: $gs-baseline / 2;
+            }
+
+            @include mq(desktop) {
+                height: 190px;
+                width: 230px;
+            }
+        }
+
+        &.fc-item--standard-tablet .fc-item__content:before {
+            @include mq(tablet) {
+                height: 114px;
+                bottom: $gs-baseline / 2;
+            }
+
+            @include mq(desktop) {
+                height: 138px;
+            }
+        }
+
+        &.fc-item--list-media-tablet .fc-item__content:before {
+            @include mq(tablet) {
+                height: 76px;
+                bottom: 5px;
+            }
+        }
+
+        &.fc-item--list-media-tablet {
+            @include mq($until: tablet) {
+                .fc-item__content:before {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
 .fc-container__toggle {
     @include fs-textSans(3);
     background-color: transparent;

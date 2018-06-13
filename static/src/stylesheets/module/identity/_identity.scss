@@ -79,6 +79,8 @@ $identity-header-height: 48px;
 }
 
 .identity-title--public-profile {
+    display: flex;
+    align-items: center;
     @include mq(desktop) {
         float: left;
         white-space: nowrap;
@@ -153,7 +155,7 @@ $identity-header-height: 48px;
     }
 
     .social-signin__action--gplus {
-        background-color: #dd4b39;
+        background-color: #4285f4;
 
         @include mq(tablet) {
             margin-left: $gs-gutter/2;
@@ -241,11 +243,13 @@ $identity-header-height: 48px;
     }
 }
 .user-profile__last-seen,
-.user-profile__web-page {
+.user-profile__web-page,
+.user-profile__edit-link {
     @include fs-textSans(1);
     display: block;
     color: $neutral-2-contrasted;
     font-weight: normal;
+    margin: 0;
 }
 .user-profile__web-page {
     @include ellipsis();

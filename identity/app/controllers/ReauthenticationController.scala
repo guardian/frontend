@@ -32,7 +32,7 @@ class ReauthenticationController(
   with Mappings
   with Forms {
 
-  val page = IdentityPage("/reauthenticate", "Re-authenticate")
+  val page = IdentityPage("/reauthenticate", "Re-authenticate", isFlow = true)
 
   val form = Form(
     Forms.single(

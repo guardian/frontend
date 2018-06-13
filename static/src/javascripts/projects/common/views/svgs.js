@@ -37,8 +37,6 @@ import externalLink from 'svgs/icon/external-link.svg';
 import tick from 'svgs/icon/tick.svg';
 import glabsLogoSmall from 'svgs/logo/glabs-logo-small.svg';
 import logomembership from 'svgs/commercial/logo-membership.svg';
-import adblockCoinsUk from 'svgs/commercial/adblock-coins.svg';
-import adblockCoinsUs from 'svgs/commercial/adblock-coins-us.svg';
 import star from 'svgs/icon/star.svg';
 import chevronRight from 'svgs/icon/chevron-right.svg';
 
@@ -75,8 +73,6 @@ const svgs = {
     externalLink,
     tick,
     glabsLogoSmall,
-    adblockCoinsUk,
-    adblockCoinsUs,
     logomembership,
     star,
     chevronRight,

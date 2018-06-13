@@ -8,7 +8,7 @@ import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuer
 import com.gu.facia.api.models.{Collection, Front}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
-import com.gu.facia.client.models.{Breaking, ConfigJson, Metadata, Special}
+import com.gu.facia.client.models.{Breaking, Canonical, ConfigJson, Metadata, Special}
 import common._
 import common.commercial.CommercialProperties
 import conf.Configuration
@@ -25,7 +25,6 @@ import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
 import layout.slices.Container
-
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
@@ -80,7 +79,137 @@ object EmbedJsonHtml {
   implicit val format = Json.format[EmbedJsonHtml]
 }
 
-trait FapiFrontPress extends Logging {
+case class EmailFrontPath(path: String, edition: String)
+
+object EmailFrontPath {
+  def fromPath(path: String): Option[EmailFrontPath] = path match {
+    case "email/uk/daily" => Some(EmailFrontPath(path, "uk"))
+    case "email/us/daily" => Some(EmailFrontPath(path, "us"))
+    case "email/au/daily" => Some(EmailFrontPath(path, "au"))
+    case _ => None
+  }
+}
+
+case class EmailExtraCollections(canonical: PressedCollectionVisibility,
+                                 special: Option[PressedCollectionVisibility],
+                                 breaking: Option[PressedCollectionVisibility])
+
+trait EmailFrontPress extends Logging {
+
+  implicit def fapiClient: ApiClient
+  def generatePressedVersions(path: String, allPressedCollections: List[PressedCollectionVisibility], seoData: SeoData, frontProperties: FrontProperties): PressedPageVersions
+  def collectionsIdsFromConfigForPath(path: String, config: ConfigJson): List[String]
+  def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollectionVisibility]
+  def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)]
+
+  private def mergeExtraEmailCollections(pressedCollections: List[PressedCollectionVisibility], emailCollections: EmailExtraCollections): List[PressedCollectionVisibility] = {
+    emailCollections.breaking.toList ::: List(emailCollections.canonical) ::: emailCollections.special.toList ::: pressedCollections
+  }
+
+  def pressEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    if (emailFrontPath.edition == "us") pressUsEmailFront(emailFrontPath) else pressUkAuEmailFront(emailFrontPath)
+  }
+
+  def pressUkAuEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    for {
+      config <- Response.Async.Right(fapiClient.config)
+      collectionIds = collectionsIdsFromConfigForPath(emailFrontPath.path, config)
+      pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
+      extraEmailCollections <- buildExtraEmailCollections(emailFrontPath, config, pressedCollections)
+      allPressedCollections = mergeExtraEmailCollections(pressedCollections, extraEmailCollections)
+      seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(emailFrontPath.path))
+    } yield seoWithProperties match {
+      case (seoData, frontProperties) => generatePressedVersions(emailFrontPath.path, allPressedCollections, seoData, frontProperties)
+    }
+  }
+
+  def pressUsEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    for {
+      config <- Response.Async.Right(fapiClient.config)
+      collectionIds = collectionsIdsFromConfigForPath(emailFrontPath.path, config)
+      enrichedCollectionIds = enrichUsFront(config, collectionIds)
+      pressedCollections <- Response.traverse(enrichedCollectionIds.map(generateCollectionJsonFromFapiClient))
+      seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(emailFrontPath.path))
+    } yield seoWithProperties match {
+      case (seoData, frontProperties) => generatePressedVersions(emailFrontPath.path, pressedCollections, seoData, frontProperties)
+    }
+  }
+
+  // After UK and AU emails are tested, US emails will use the same logic and this can be removed
+  private def enrichUsFront(config: ConfigJson, collections: List[String]): List[String] = {
+    def findCollectionByMetadata(metadata: Metadata, path: String, config: ConfigJson): Option[String] = {
+      val collectionId = for {
+        front <- config.fronts.get(path).toList
+        collectionId <- front.collections
+        collectionConfig <- config.collections.get(collectionId) if collectionConfig.metadata.exists(_.contains(metadata))
+      } yield collectionId
+      collectionId.headOption
+    }
+
+    collections match {
+      case head :: tail =>
+        List(
+          findCollectionByMetadata(Breaking, "us", config),
+          Some(head),
+          findCollectionByMetadata(Special, "us", config)
+        ).flatten ++ tail
+      case Nil => Nil
+    }
+  }
+
+  def buildExtraEmailCollections(frontPath: EmailFrontPath,
+                                 config: ConfigJson,
+                                 pressedCollections: List[PressedCollectionVisibility])(implicit ec: ExecutionContext): Response[EmailExtraCollections] = {
+    def findCollectionIds(metadata: Metadata): List[String] = {
+      for {
+        front <- config.fronts.get(frontPath.edition).toList
+        collectionId <- front.collections
+        collectionConfig <- config.collections.get(collectionId) if collectionConfig.metadata.exists(_.contains(metadata))
+      } yield collectionId
+    }
+
+    def renameMetaCollection(metaCollection: PressedCollectionVisibility, replacementName: String, visible: Int) = {
+      if (pressedCollections.map(_.pressedCollection.displayName).contains(metaCollection.pressedCollection.displayName))
+        metaCollection.withDisplayName(replacementName).withVisible(visible)
+      else
+        metaCollection.withVisible(visible)
+    }
+
+    def mergeCollections(first: PressedCollectionVisibility, tail: List[PressedCollectionVisibility], replacementName: String, visible: Int): PressedCollectionVisibility = {
+      tail.foldLeft(first)(_.mergeAndResize(_, visible)).withDisplayName(replacementName)
+    }
+
+    def pressedCollectionFromMetaTag(meta: Metadata, replacementName: String, visible: Int): Response[Option[PressedCollectionVisibility]] = {
+      val collections: Response[List[PressedCollectionVisibility]] = Response.traverse(findCollectionIds(meta).map(generateCollectionJsonFromFapiClient))
+      collections.map {
+        case first :: second :: tail => Some(renameMetaCollection(mergeCollections(first, second :: tail, replacementName, visible), replacementName, visible))
+        case head :: Nil => Some(renameMetaCollection(head, replacementName, visible))
+        case Nil => None
+      }
+    }
+
+    val canonicalPressedF = pressedCollectionFromMetaTag(Canonical, "Headlines", 6)
+    val breakingPressedF = pressedCollectionFromMetaTag(Breaking, "Breaking news", 5)
+    val specialPressedF = pressedCollectionFromMetaTag(Special, "Special report", 1)
+
+    for {
+      canonicalPressedO <- canonicalPressedF
+      canonicalPressed = canonicalPressedO.getOrElse(throw new RuntimeException(s"Unable to find Canonical headline on ${frontPath.edition}"))
+      breakingPressed <- breakingPressedF
+      specialPressed <- specialPressedF
+    } yield EmailExtraCollections(canonicalPressed, specialPressed, breakingPressed)
+
+  }
+
+}
+
+trait FapiFrontPress extends EmailFrontPress with Logging {
+
+  val dependentFrontPaths: Map[String, Seq[String]] = Map(
+    "uk" -> Seq("email/uk/daily"),
+    "us" -> Seq("email/us/daily"),
+    "au" -> Seq("email/au/daily")
+  )
 
   implicit val capiClient: CapiContentApiClient
   implicit def fapiClient: ApiClient
@@ -114,6 +243,22 @@ trait FapiFrontPress extends Logging {
       .showAtoms("media")
 
   def pressByPathId(path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
+    def pressDependentPaths(paths: Seq[String]): Future[Unit] = {
+      Future
+        .traverse(paths)(pressPath)
+        .recover {
+          case e => log.error(s"Error when pressing $paths", e)
+        }
+        .map(_ => ())
+    }
+
+    for {
+     _ <- pressPath(path)
+     _ <- pressDependentPaths(dependentFrontPaths.getOrElse(path, Nil))
+    } yield ()
+  }
+
+  private def pressPath(path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
 
     val stopWatch: StopWatch = new StopWatch
 
@@ -121,10 +266,12 @@ trait FapiFrontPress extends Logging {
       .map { pressedFronts: PressedPageVersions =>
         putPressedPage(path, pressedFronts.full, FullType)
         putPressedPage(path, pressedFronts.lite, LiteType)
+        putPressedPage(path, pressedFronts.fullAdFree, FullAdFreeType)
+        putPressedPage(path, pressedFronts.liteAdFree, LiteAdFreeType)
       }.fold(
         e => {
           StatusNotification.notifyFailedJob(path, isLive = isLiveContent, e)
-          throw new RuntimeException(s"${e.cause} ${e.message}")
+          e.cause.map(throw _).getOrElse(throw new RuntimeException(e.message))
         },
         _ => StatusNotification.notifyCompleteJob(path, isLive = isLiveContent)
       )
@@ -159,6 +306,8 @@ trait FapiFrontPress extends Logging {
     val metric: SamplerMetric = pressedType match {
       case FullType => FaciaPressMetrics.FrontPressContentSize
       case LiteType => FaciaPressMetrics.FrontPressContentSizeLite
+      case LiteAdFreeType => FaciaPressMetrics.FrontPressContentSizeLite
+      case FullAdFreeType => FaciaPressMetrics.FrontPressContentSize
     }
 
     metric.recordSample(json.getBytes.length, new DateTime())
@@ -259,61 +408,40 @@ trait FapiFrontPress extends Logging {
       .map(_.map(PressedContent.make))
   }
 
-  private def findCollectionByMetadata(metadata: Metadata, path: String, config: ConfigJson): Option[String] =
-    (for {
-      front <- config.fronts.get(path).toList
-      collectionId <- front.collections
-      collectionConfig <- config.collections.get(collectionId) if collectionConfig.metadata.exists(_.contains(metadata))
-    } yield collectionId).headOption
+  def generatePressedVersions(path: String, allPressedCollections: List[PressedCollectionVisibility], seoData: SeoData, frontProperties: FrontProperties): PressedPageVersions = {
+    val webCollections = allPressedCollections.filter(PressedCollectionVisibility.isWebCollection)
+    val dedupliatedCollections = PressedCollectionVisibility.deduplication(webCollections)
+      .map(_.pressedCollectionVersions)
+      .toList
+    PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, dedupliatedCollections)
+  }
 
-  private def withHighPriorityCollections(parentPath: String, config: ConfigJson, collections: List[String]): List[String] =
-    collections match {
-      case head :: tail =>
-        List(
-          findCollectionByMetadata(Breaking, parentPath, config),
-          Some(head),
-          findCollectionByMetadata(Special, parentPath, config)
-        ).flatten ++ tail
-      case Nil => Nil
-    }
-
-  private def enrichEmailFronts(path: String, config: ConfigJson)(collections: List[String]) =
-    path match {
-      case "email/uk/daily" => withHighPriorityCollections("uk", config, collections)
-      case "email/us/daily" => withHighPriorityCollections("us", config, collections)
-      case "email/au/daily" => withHighPriorityCollections("au", config, collections)
-      case _ => collections
-    }
-
-  private def getCollectionIdsForPath(path: String)(implicit executionContext: ExecutionContext): Response[List[String]] =
-    Response.Async.Right(fapiClient.config) map { config =>
-      Front.frontsFromConfig(config)
-        .find(_.id == path)
-        .map(_.collections)
-        .map(enrichEmailFronts(path, config))
-        .getOrElse {
+  def collectionsIdsFromConfigForPath(path: String, config: ConfigJson): List[String] = {
+    Front.frontsFromConfig(config)
+      .find(_.id == path)
+      .map(_.collections)
+      .getOrElse {
         log.warn(s"There are no collections for path $path")
         throw new IllegalStateException(s"There are no collections for path $path")
       }
-    }
+  }
 
   def getPressedFrontForPath(path: String)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
+    EmailFrontPath.fromPath(path).fold(pressFront(path))(pressEmailFront)
+  }
+
+  def pressFront(path: String)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
     for {
-      collectionIds <- getCollectionIdsForPath(path)
+      config <- Response.Async.Right(fapiClient.config)
+      collectionIds = collectionsIdsFromConfigForPath(path, config)
       pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(path))
     } yield seoWithProperties match {
-      case (seoData, frontProperties) =>
-        val webCollections = pressedCollections.filter(PressedCollectionVisibility.isWebCollection)
-
-        val dedupliatedCollections = PressedCollectionVisibility.deduplication(webCollections)
-          .map(_.pressedCollectionVersions)
-          .toList
-        PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, dedupliatedCollections)
+      case (seoData, frontProperties) => generatePressedVersions(path, pressedCollections, seoData, frontProperties)
     }
   }
 
-  private def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)] =
+  def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)] =
     for {
       itemResp <- getCapiItemResponseForPath(path)
     } yield {
