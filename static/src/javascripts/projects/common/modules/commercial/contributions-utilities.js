@@ -439,8 +439,8 @@ const makeBannerABTestVariants = (
 const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
     const variants = [];
 
-    // i++ is disallowed by our linter
-    for (let i = 1; i <= count; i = i + 1) {
+    // wtf, our linter dislikes i++ AND i = i + 1
+    for (let i = 1; i <= count; i += 1) {
         variants.push({
             id: `variant_${i}`,
             products: [],
