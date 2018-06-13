@@ -136,9 +136,13 @@ class LeagueTableController(
         "football",
         s"${table.competition.fullName} table"
       )
+
+      // For world cup group snaps we are not going to link as we just want to show the full table
+      val isWorldCup = table.competition.id == "700"
+
       val groupTable = Table(table.competition, Seq(group), hasGroups = true)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(groupTable), table.competition.url, filters, Some(table.competition)))
-      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, group, multiGroup = false)
+      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, group, multiGroup = false, linkToCompetition = !isWorldCup)
       renderFormat(htmlResponse, jsonResponse, page)
     }
     response.getOrElse {
