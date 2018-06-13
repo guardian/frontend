@@ -4,7 +4,6 @@ import { getCopyFromGoogleDoc } from 'common/modules/commercial/acquisitions-cop
 
 const abTestName = 'AcquisitionsEpicFromGoogleDocOneVariant';
 
-
 export const acquisitionsEpicFromGoogleDocOneVariant: EpicABTest = makeABTest({
     id: abTestName,
     campaignId: abTestName,
@@ -27,12 +26,12 @@ export const acquisitionsEpicFromGoogleDocOneVariant: EpicABTest = makeABTest({
             products: [],
         },
         {
-            id: 'custom_copy',
+            id: 'variant_1',
             products: [],
             options: {
                 copy: getCopyFromGoogleDoc(
                     'https://interactive.guim.co.uk/docsdata-test/1Hoqzg-LeB0xJf2z0JwsfDTHdXKtq-7O5DsQhpqRm7ho.json',
-                    'Variant1'
+                    'variant_1'
                 ),
             },
         },

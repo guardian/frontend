@@ -1,8 +1,6 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
-import {
-    control as acquisitionsCopyControl,
-} from 'common/modules/commercial/acquisitions-copy';
+import { control as acquisitionsCopyControl } from 'common/modules/commercial/acquisitions-copy';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitInsertEvent,
@@ -45,10 +43,15 @@ const defaultMaxViews: {
 
 const defaultButtonTemplate = (url: CtaUrls) => epicButtonsTemplate(url);
 
-const controlTemplate: EpicTemplate = ({ options = {} }, copy: AcquisitionsEpicTemplateCopy) =>
+const controlTemplate: EpicTemplate = (
+    { options = {} },
+    copy: AcquisitionsEpicTemplateCopy
+) =>
     acquisitionsEpicControlTemplate({
         copy,
-        testimonialBlock: copy.testimonial ? getTestimonialBlock(copy.testimonial) : '',
+        testimonialBlock: copy.testimonial
+            ? acquisitionsTestimonialBlockTemplate(copy.testimonial)
+            : '',
         componentName: options.componentName,
         buttonTemplate: options.buttonTemplate({
             supportUrl: options.supportURL,
@@ -76,10 +79,6 @@ const getTargets = (
 
     return [];
 };
-
-const getTestimonialBlock = (
-    testimonialParameters: AcquisitionsEpicTestimonialCopy
-) => acquisitionsTestimonialBlockTemplate(testimonialParameters);
 
 const isCompatibleWithEpic = (page: Object): boolean =>
     page.contentType === 'Article' && !page.isMinuteArticle;
@@ -437,7 +436,6 @@ const makeBannerABTestVariants = (
 export {
     shouldShowReaderRevenue,
     shouldShowEpic,
-    getTestimonialBlock,
     makeABTest,
     defaultButtonTemplate,
     makeBannerABTestVariants,

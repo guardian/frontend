@@ -25,8 +25,9 @@ const thankyouP2FirstSentence =
     'Thank you to the many people who have already supported us financially &ndash; your contribution is what makes stories like you’ve just read possible. We increasingly need our readers to fund our work so that we can continue holding power to account and producing fearless journalism.</br></br>';
 
 const controlTestimonial = {
-    text: 'I appreciate there not being a paywall: it is more democratic for the media to be available for all and not a commodity to be purchased by a few. I’m happy to make a contribution so others with less means still have access to information.',
-    name: 'Thomasine, Sweden'
+    text:
+        'I appreciate there not being a paywall: it is more democratic for the media to be available for all and not a commodity to be purchased by a few. I’m happy to make a contribution so others with less means still have access to information.',
+    name: 'Thomasine, Sweden',
 };
 
 /*
@@ -36,7 +37,7 @@ export const control: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
     p1: controlP1,
     p2: controlP2(controlP2FirstSentence),
-    testimonial: controlTestimonial
+    testimonial: controlTestimonial,
 };
 
 export const thankyou = {
@@ -73,17 +74,16 @@ export const getCopyFromGoogleDoc = (
                 testimonial = {
                     testimonial: {
                         text: row.testimonialText,
-                        name: row.testimonialName
-                    }
+                        name: row.testimonialName,
+                    },
                 };
             }
             return {
                 heading: row.heading,
                 p1: row.p1,
                 p2: controlP2(row.p2),
-                ...testimonial
-            }
-        } else {
-            return control;
+                ...testimonial,
+            };
         }
+        return control;
     });
