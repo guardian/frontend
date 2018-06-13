@@ -123,11 +123,40 @@ a[href='/football/world-cup-2018'] {
             padding-right: $gs-gutter / 4;
         }
 
-        background: url('https://uploads.guim.co.uk/2018/06/12/worldcup_bg_solid.png');
-        background-repeat: no-repeat;
-        background-position: top;
-        background-size: 1300px;
+        &:not(.fc-container--rolled-up) {
+            background: url('https://uploads.guim.co.uk/2018/06/12/worldcup_bg_solid.png');
+            background-repeat: no-repeat;
+            background-position: top;
+            background-size: 1300px;
+        }
     }
+
+     .fc-container__toggle {
+         top: 0;
+
+         &:after {
+             background: url('https://uploads.guim.co.uk/2018/06/13/hide-icon_opt.svg');
+             background-size: cover;
+             content: '';
+             position: absolute;
+             right: 0;
+             top: -2px;
+             height: 24px;
+             width: 24px;
+             transition: transform .3s ease-in-out;
+         }
+
+         .fc-container__toggle__text {
+             display: inline-block;
+             padding-right: 29px;
+         }
+     }
+
+     &.fc-container--rolled-up {
+         .fc-container__toggle:after {
+             transform: rotate(135deg);
+         }
+     }
 
     // All cards but certain types
     .fc-item:not(.fc-item--type-live):not(.fc-item--type-media) {
