@@ -275,6 +275,30 @@ $identity-header-height: 48px;
     }
 }
 
+/* Email Change
+   ========================================================================== */
+
+.form-field.form-field--email-change {
+    position: relative;
+    padding-left: 24px;
+
+    .inline-icon {
+        background-color: $neutral-3;
+        border-radius: 1000px;
+        fill: $neutral-1;
+        height: 30px;
+        left: 0;
+        position: absolute;
+        width: 30px;
+
+        svg {
+            height: 30 / 2 + px;
+            margin-top: 30 / 4 + px;
+            margin-left: 30 / 4 + px;
+            width: 30 / 2 + px;
+        }
+    }
+}
 
 /* Public Profile Page
    ========================================================================== */
@@ -301,6 +325,8 @@ $identity-header-height: 48px;
         }
     }
 }
+
+
 
 
 /* Email subscriptions
