@@ -105,6 +105,12 @@
     }
 }
 
+[data-link-name='Front | /football/world-cup-2018'] [data-component='world-cup-2018'] {
+    .fc-container__toggle {
+        display: none;
+    }
+}
+
 [data-component='world-cup-2018'] {
     .fc-container__header__title a:hover {
         border-bottom: 0;
