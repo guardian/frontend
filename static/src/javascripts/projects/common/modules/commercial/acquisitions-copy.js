@@ -73,7 +73,7 @@ export const getCopyFromGoogleDoc = (
         const rows = res && res.sheets && res.sheets[sheetName];
         const row = rows && rows[0];
 
-        if (!row) {
+        if (!(row && row.heading && row.p1 && row.p2)) {
             reportError(
                 new Error('Could not fetch epic copy from Google Doc'),
                 { feature: 'epic-test' }
