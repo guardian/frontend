@@ -1,9 +1,9 @@
 package navigation
 
+
+import _root_.model.{NavItem, Page, Tags}
 import common.{Edition, editions}
-import model.NavItem
-import _root_.model.{Page, Tags}
-import NavLinks._
+import navigation.NavLinks._
 
 import scala.annotation.tailrec
 
