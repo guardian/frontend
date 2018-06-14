@@ -83,19 +83,19 @@ object Cached extends implicits.Dates {
   // conventionally cacheable. Typically we only cache 200 and 404 responses.
   def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result, None)
 
-  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]): Result =
-    if (cacheableStatusCodes.contains(cacheableResult.result.header.status)) {
-      cacheableResult match {
-        case RevalidatableResult(result, hash) =>
-          val etag = s"""W/"hash${hash.string}""""
-          val newResult = if (ifNoneMatch.contains(etag)) Results.NotModified else result
-          cacheHeaders(seconds, newResult, Some(etag))
-        case WithoutRevalidationResult(result) => cacheHeaders(seconds, result, None)
-        case PanicReuseExistingResult(result) => cacheHeaders(seconds, result, ifNoneMatch)
-      }
-    } else {
-      cacheableResult.result
+  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]): Result = {
+    cacheableResult match {
+      case RevalidatableResult(result, hash) if cacheableStatusCodes.contains(result.header.status) =>
+        val etag = s"""W/"hash${hash.string}""""
+        val newResult = if (ifNoneMatch.contains(etag)) Results.NotModified else result
+        cacheHeaders(seconds, newResult, Some(etag))
+      case WithoutRevalidationResult(result) if cacheableStatusCodes.contains(result.header.status) =>
+        cacheHeaders(seconds, result, None)
+      case PanicReuseExistingResult(result) =>
+        cacheHeaders(seconds, result, ifNoneMatch)
+      case result: CacheableResult => result.result
     }
+  }
 
   /*
     NOTE, if you change these headers make sure they are compatible with our Edge Cache
