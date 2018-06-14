@@ -12,18 +12,17 @@ jest.mock('common/modules/atoms/youtube-tracking', () => ({
 
 describe('youtube', () => {
     it('adds player to page', () => {
+        const atomId = 'atomA';
+        const assetId = 'assetC';
         if (document.body) {
-            document.body.innerHTML =
-                '<div data-media-atom-id="atomId" class="u-responsive-ratio u-responsive-ratio--hd youtube-media-atom">' +
-                '<div id="youtube-assetId"></div>' +
-                '</div>';
+            document.body.innerHTML = `<div data-media-atom-id="${atomId}" class="u-responsive-ratio u-responsive-ratio--hd youtube-media-atom"><div id="youtube-${assetId}"></div></div>`;
         }
+
         checkElemsForVideos();
+
         if (document.body) {
             expect(document.body.innerHTML).toBe(
-                '<div data-media-atom-id="atomId" class="u-responsive-ratio u-responsive-ratio--hd youtube-media-atom" data-unique-atom-id="atomId/0">' +
-                    '<div id="youtube-assetId"></div>' +
-                    '</div>'
+                `<div data-media-atom-id="${atomId}" class="u-responsive-ratio u-responsive-ratio--hd youtube-media-atom" data-unique-atom-id="${atomId}/0"><div id="youtube-${assetId}"></div></div>`
             );
         }
     });
