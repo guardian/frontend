@@ -1,6 +1,7 @@
 // @flow
 import { getLocalCurrencySymbol } from 'lib/geolocation';
 import fetchJSON from 'lib/fetch-json';
+import reportError from 'lib/report-error';
 import config from 'lib/config';
 
 // control
@@ -72,23 +73,30 @@ export const getCopyFromGoogleDoc = (
         const rows = res && res.sheets && res.sheets[sheetName];
         const row = rows && rows[0];
 
-        if (row.heading && row.p1 && row.p2) {
-            let testimonial = {};
-            if (row.testimonialText && row.testimonialName) {
-                testimonial = {
-                    testimonial: {
-                        text: row.testimonialText,
-                        name: row.testimonialName,
-                    },
-                };
-            }
-            return {
-                heading: row.heading,
-                p1: row.p1,
-                p2: controlP2(row.p2),
-                ...testimonial,
+        if (!row) {
+            reportError(
+                new Error('Could not fetch epic copy from Google Doc'),
+                {
+                    feature: 'epic-test'
+                }
+             );
+            return control;
+        }
+
+        let testimonial = {};
+        if (row.testimonialText && row.testimonialName) {
+            testimonial = {
+                testimonial: {
+                    text: row.testimonialText,
+                    name: row.testimonialName,
+                },
             };
         }
-        return control;
+        return {
+            heading: row.heading,
+            p1: row.p1,
+            p2: controlP2(row.p2),
+            ...testimonial,
+        };
     });
 };
