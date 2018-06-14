@@ -17,8 +17,13 @@
 
 .badge-slot__img {
     display: block;
-    max-height: 80px;
+    max-height: 45px;
     width: 100%;
+
+    @include mq(desktop) {
+        max-height: 55px;
+        width: auto;
+    }
 }
 
 /* Content Rules
@@ -27,7 +32,7 @@
     .content__header {
         @include mq($from: leftCol) {
             // Prevents badged labels area overlapping meta
-            min-height: gs-height(3.5);
+            min-height: gs-height(3);
         }
     }
 
