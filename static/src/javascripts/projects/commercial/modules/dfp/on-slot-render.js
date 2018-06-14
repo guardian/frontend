@@ -76,7 +76,6 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         const sizeString = advert.size && advert.size.toString();
         const isNotFluid = sizeString !== '0,0';
         const neverHasVideo =
-            advert.id !== 'dfp-ad--inline1' ||
             config.get('page.isFront') ||
             config.get('page.contentType') === 'LiveBlog';
         const isNonRefreshableLineItem =
