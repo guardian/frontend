@@ -204,7 +204,6 @@
         }
 
         @include mq($from: wide) {
-            margin-left: 70px;
             margin-left: 48px;
         }
     }
