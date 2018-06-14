@@ -384,6 +384,7 @@
         display: block;
     }
 }
+
 .football-knockout-chart--4-rounds,
 .football-knockout-chart--5-rounds {
     .football-round {
@@ -394,9 +395,11 @@
 .football-knockout-chart__timezone {
     @include fs-textSans(1);
     padding: $gs-baseline 0;
-    float: left;
     text-align: center;
     width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: $zindex-ui;
 }
 
 .football-rounds--second-half {

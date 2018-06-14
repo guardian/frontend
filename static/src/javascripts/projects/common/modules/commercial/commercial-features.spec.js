@@ -338,23 +338,22 @@ describe('Commercial features', () => {
     describe('Comment adverts', () => {
         beforeEach(() => {
             config.page.commentable = true;
-            // isAdFreeUser.mockReturnValue(true);
             isUserLoggedIn.mockReturnValue(true);
         });
 
-        it('Displays when page has comments and user is signed in', () => {
+        it('Displays when page has comments', () => {
+            const features = new CommercialFeatures();
+            expect(features.commentAdverts).toBe(true);
+        });
+
+        it('Will also display when the user is not logged in', () => {
+            isUserLoggedIn.mockReturnValue(false);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(true);
         });
 
         it('Does not display on minute articles', () => {
             config.page.isMinuteArticle = true;
-            const features = new CommercialFeatures();
-            expect(features.commentAdverts).toBe(false);
-        });
-
-        it('Does not appear when user signed out', () => {
-            isUserLoggedIn.mockReturnValue(false);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(false);
         });

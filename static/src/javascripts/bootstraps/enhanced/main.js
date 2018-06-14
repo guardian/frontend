@@ -383,21 +383,6 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            fastdom.read(() => {
-                if ($('.js-tls-warning').length > 0) {
-                    require.ensure(
-                        [],
-                        require => {
-                            bootstrapContext(
-                                'tls-warning',
-                                require('bootstraps/enhanced/tls-warning').init
-                            );
-                        },
-                        'tls-warning'
-                    );
-                }
-            });
-
             // Mark the end of synchronous execution.
             markTime('App End');
             catchErrorsWithContext([

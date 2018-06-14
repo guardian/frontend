@@ -24,10 +24,10 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val WorldCupNextMatchSwitch = Switch(
+  val WorldCup2018Chrome = Switch(
     SwitchGroup.Feature,
     "world-cup-next-match",
-    "Used to toggle display of next match banner on world cup overview pages",
+    "Used to toggle display of special world cup components/text on world cup overview page",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = On,
     sellByDate = new LocalDate(2018, 8, 14),

@@ -13,7 +13,6 @@ import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 import { requestUserSegmentsFromId } from 'common/modules/commercial/user-ad-targeting';
-import { initDonotUseAdblock } from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'common/modules/commercial/user-features';
 import { initCommentCount } from 'common/modules/discussion/comment-count';
 import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
@@ -41,7 +40,6 @@ import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
-import { signInEngagementBanner } from 'common/modules/identity/global/sign-in-engagement-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
@@ -93,10 +91,6 @@ const initialiseClickstream = (): void => {
     initClickstream({
         filter: ['a', 'button'],
     });
-};
-
-const showAdblockMessage = (): void => {
-    initDonotUseAdblock();
 };
 
 const loadAnalytics = (): void => {
@@ -277,7 +271,6 @@ const initialiseBanner = (): void => {
         breakingNews,
         membershipBanner,
         membershipEngagementBanner,
-        signInEngagementBanner,
         smartAppBanner,
     ];
     initBannerPicker(bannerList);
@@ -308,7 +301,6 @@ const init = (): void => {
         ['c-id-cookie-refresh', idCookieRefresh],
         ['c-history-nav', showHistoryInMegaNav],
         ['c-start-register', startRegister],
-        ['c-adblock', showAdblockMessage],
         ['c-cookies', cleanupCookies],
         ['c-localStorage', cleanupLocalStorage],
         ['c-overlay', initOpenOverlayOnClick],

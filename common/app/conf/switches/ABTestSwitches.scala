@@ -38,26 +38,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-engagement-banner-display",
-    "This test will show a sign in engagement banner to non signed in users",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 1, 24),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-first-pv-consent-blocker",
-    "This test will make the cookie consent banner blocking",
-    owners = Seq(Owner.withGithub("walaura")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019,5, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -110,16 +90,6 @@ trait ABTestSwitches {
     ABTests,
     "ab-acquisitions-epic-border-thankyou",
     "Try 2 variants - one adding a border to the epic and one with copy thanking our readers",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-engagement-banner-highlight",
-    "Hihglight a line in the banner",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 6, 29),
