@@ -19,10 +19,10 @@
                             <div class="from-content-api" itemprop="articleBody">
                                 <div class="from-content-api">
 
-                                    @if(alerts.nonEmpty){
+                                    @if(alerts.getOrElse(List()).nonEmpty){
                                         <div class="feedback__alertbox">
                                             <h2><span class="feedback__exclamation">!</span>Known Issues</h2>
-                                            @for(alert <- alerts){
+                                            @for(alert <- alerts.get){
                                                 <p class="feedback__alert">@alert</p>
                                             }
                                         </div>
@@ -88,16 +88,13 @@
 
                                     <p id="feedback__explainer"></p>
 
-                                </form>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="facia-container facia-container--layout-content">
-        @fragments.mostPopularPlaceholder("/")
         </div>
     </div>
 }
