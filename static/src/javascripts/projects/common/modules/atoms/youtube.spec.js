@@ -26,4 +26,18 @@ describe('youtube', () => {
             );
         }
     });
+
+    it('does not try to replace link to a video page with a player', () => {
+        const atomId = 'atomA';
+        const div = `<div data-media-atom-id="${atomId}" class="no-player u-responsive-ratio youtube-media-atom"><div class="vjs-big-play-button youtube-media-atom__overlay"><div class="youtube-media-atom__play-button vjs-control-text">Play Video</div></div></div>`;
+        if (document.body) {
+            document.body.innerHTML = div;
+        }
+
+        checkElemsForVideos();
+
+        if (document.body) {
+            expect(document.body.innerHTML).toBe(div);
+        }
+    });
 });

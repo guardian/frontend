@@ -265,7 +265,7 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
     if (!elem) return;
 
     fastdom.read(() => {
-        $('.youtube-media-atom', elem).each((el, index) => {
+        $('.youtube-media-atom:not(.no-player)', elem).each((el, index) => {
             const playerDiv = el.querySelector('div');
 
             if (!playerDiv) {
