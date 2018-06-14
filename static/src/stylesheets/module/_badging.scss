@@ -27,7 +27,7 @@
     .content__header {
         @include mq($from: leftCol) {
             // Prevents badged labels area overlapping meta
-            min-height: gs-height(5);
+            min-height: gs-height(3.5);
         }
     }
 
