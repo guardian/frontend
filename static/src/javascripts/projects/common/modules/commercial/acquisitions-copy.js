@@ -76,10 +76,8 @@ export const getCopyFromGoogleDoc = (
         if (!row) {
             reportError(
                 new Error('Could not fetch epic copy from Google Doc'),
-                {
-                    feature: 'epic-test'
-                }
-             );
+                { feature: 'epic-test' }
+            );
             return control;
         }
 
