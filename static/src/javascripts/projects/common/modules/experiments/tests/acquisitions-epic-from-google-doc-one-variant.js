@@ -13,10 +13,10 @@ export const acquisitionsEpicFromGoogleDocOneVariant: EpicABTest = makeABTest({
     start: '2018-04-17',
     expiry: '2019-06-05',
 
-    author: 'Jonathan Rankin',
-    description: 'Always ask on this specific story',
+    author: 'Joseph Smith',
+    description: 'Test copy fetched from a Google Doc',
     successMeasure: 'Conversion rate',
-    idealOutcome: 'Always ask on this story',
+    idealOutcome: 'Alternative copy makes more money than the control',
 
     audienceCriteria: 'All',
     audience: 1,
