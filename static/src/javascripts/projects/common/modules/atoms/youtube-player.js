@@ -37,7 +37,7 @@ const onPlayerStateChangeEvent = (
     handlers: Handlers,
     el: ?HTMLElement
 ) => {
-    if (el && config.page.isDev) {
+    if (el && config.get('page.isDev')) {
         const states = window.YT.PlayerState;
         const state: ?string = Object.keys(states).find(
             key => states[key] === event.data
