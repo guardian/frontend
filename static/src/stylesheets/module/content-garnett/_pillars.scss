@@ -311,7 +311,7 @@
 .content--pillar-opinion:not(.paid-content),
 .content--type-comment:not(.paid-content),
 .content--type-guardianview:not(.paid-content) {
-    @include colorPalatte($opinion-garnett-main-1, $opinion-garnett-main-1, $opinion-garnett-media-main-1);
+    @include colorPalatte($opinion-bold, $opinion-bold, $opinion-bright);
 }
 
 .content--pillar-arts.content--type-comment:not(.paid-content),
@@ -356,7 +356,7 @@
 }
 
 .content-footer--pillar-opinion:not(.paid-content) {
-    @include footerPalette($opinion-garnett-main-1);
+    @include footerPalette($opinion-bold);
 }
 
 .content-footer--pillar-sport:not(.paid-content) {
@@ -370,7 +370,7 @@
 
 .content--media:not(.paid-content).content--pillar-opinion,
 .immersive-main-media__headline-container.content--pillar-opinion {
-    @include mediaPalatte($opinion-garnett-media-main-1, opinion);
+    @include mediaPalatte($opinion-bright, opinion);
 }
 
 .content--media:not(.paid-content).content--pillar-arts,
@@ -413,7 +413,7 @@
 
     &.rich-link--pillar-opinion,
     &.tone-comment--item {
-        @include richLink($opinion-garnett-main-1, $garnett-neutral-3);
+        @include richLink($opinion-bold, $garnett-neutral-3);
     }
 
     &.rich-link--pillar-sport {
@@ -445,7 +445,7 @@
         }
 
         &.rich-link--pillar-opinion {
-            @include richLink(#ffffff, $opinion-garnett-main-1);
+            @include richLink(#ffffff, $opinion-bold);
         }
 
         &.rich-link--pillar-sport {

@@ -134,7 +134,7 @@
     @include kicker-override(lifestyle, $lifestyle-garnett-media-main-1);
     @include kicker-override(arts, $culture-garnett-media-main-1);
     @include kicker-override(sport, $sport-garnett-media-main-1);
-    @include kicker-override(opinion, $opinion-garnett-media-main-1);
+    @include kicker-override(opinion, $opinion-bright);
     @include kicker-override(news, $news-bright);
     @include kicker-override(special-report, $yellow-highlight);
 }

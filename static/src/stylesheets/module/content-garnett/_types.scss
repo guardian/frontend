@@ -784,7 +784,7 @@ $quote-mark: 35px;
 .content--type-guardianview:not(.content--type-column),
 .content--type-comment {
     .content__main {
-        background-color: $opinion-garnett-background;
+        background-color: $opinion-faded;
         padding-bottom: $gs-baseline/2;
 
         .rich-link {
@@ -798,7 +798,7 @@ $quote-mark: 35px;
         .element-pullquote,
         .element-pullquote:after
         {
-            background-color: darken($opinion-garnett-background, 7%);
+            background-color: darken($opinion-faded, 7%);
         }
 
         .element-pullquote blockquote p.pullquote-paragraph {

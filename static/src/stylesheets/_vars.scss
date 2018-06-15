@@ -76,14 +76,16 @@ $neutral-2-contrasted:   darken($neutral-2, 3%);
 // Garnett
 // =============================================================================
 
+
+// Neutrals (Greys)
 $black:                         #121212;
-$garnett-neutral-2: #999999;
-$garnett-neutral-3: #f6f6f6;
-$garnett-neutral-4: #dcdcdc;
-$garnett-neutral-5: #ffffff;
-$garnett-neutral-6: #767676;
-$garnett-neutral-7: #444444;
-$garnett-neutral-8: #ededed;
+$garnett-neutral-2:             #999999;
+$garnett-neutral-3:             #f6f6f6;
+$garnett-neutral-4:             #dcdcdc;
+$garnett-neutral-5:             #ffffff;
+$garnett-neutral-6:             #767676;
+$garnett-neutral-7:             #444444;
+$garnett-neutral-8:             #ededed;
 
 
 $yellow-highlight:              #ffe500;
@@ -95,11 +97,14 @@ $news-bright:                   #ff4e36;
 $news-pastel:                   #d65353;
 $news-faded:                    #ffe2de;
 
+// Opinion (Orange)
+$opinion-dark:                  #bd5318;
+$opinion-bold:                  #e05e00;
+$opinion-bright:                #ff7f0f;
+$opinion-pastel:                #d65353;
+$opinion-faded:                 #fef9f5;
 
-$opinion-garnett-main-1: #e05e00;
-$opinion-garnett-feature: #bd5318;
-$opinion-garnett-media-main-1: #ff7f0f;
-$opinion-garnett-background: #fef9f5;
+
 
 $sport-garnett-main-1: #0084c6;
 $sport-garnett-feature: #005689;
@@ -116,8 +121,10 @@ $lifestyle-garnett-media-main-1: #ffabdb;
 $live-garnett-main-1: #ad0006;
 $live-garnett-main-2: #ffbac8;
 $live-garnett-dead-background: #eaeaea;
+
 $live-garnett-sport1: $sport-garnett-feature;
 $live-garnett-sport2: #90dcff;
+
 $live-garnett-culture1: $culture-garnett-feature;
 $live-garnett-culture2: #e7d4b9;
 $live-garnett-lifestyle1: $lifestyle-garnett-feature;

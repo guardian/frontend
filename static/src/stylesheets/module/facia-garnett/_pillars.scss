@@ -15,16 +15,16 @@ $pillars: (
     ),
     opinion: (
         cardBackground: $garnett-neutral-3,
-        lines: $opinion-garnett-main-1,
-        kicker: $opinion-garnett-main-1,
+        lines: $opinion-bold,
+        kicker: $opinion-bold,
         headline: $black,
-        featureHeadline: $opinion-garnett-feature,
-        byline: $opinion-garnett-main-1,
+        featureHeadline: $opinion-dark,
+        byline: $opinion-bold,
         commentCount: $garnett-neutral-6,
-        headlineIcon: $opinion-garnett-main-1,
+        headlineIcon: $opinion-bold,
         metaText: $garnett-neutral-2,
-        cutoutBackground: $opinion-garnett-main-1,
-        invertedKicker: $opinion-garnett-media-main-1,
+        cutoutBackground: $opinion-bold,
+        invertedKicker: $opinion-bright,
         liveColour: #ffffff
     ),
     sport: (
@@ -104,7 +104,7 @@ $pillars: (
 
         .fc-item__timestamp,
         .fc-trail__count--commentcount {
-            background-color: darken($opinion-garnett-background, 3%);
+            background-color: darken($opinion-faded, 3%);
         }
     }
 
@@ -270,11 +270,11 @@ $pillars: (
         &.fc-item--pillar-sport,
         &.fc-item--pillar-arts,
         &.fc-item--pillar-lifestyle {
-            background-color: $opinion-garnett-background;
+            background-color: $opinion-faded;
         }
 
         .fc-item__container.u-faux-block-link--hover {
-            background-color: darken($opinion-garnett-background, 2%);
+            background-color: darken($opinion-faded, 2%);
         }
 
         .fc-item__avatar {
@@ -284,7 +284,7 @@ $pillars: (
         .fc-item__timestamp,
         .fc-trail__count--commentcount {
             color: map-get($palette, commentCount);
-            background-color: $opinion-garnett-background;
+            background-color: $opinion-faded;
 
             .inline-icon {
                 fill: map-get($palette, commentCount);
@@ -298,7 +298,7 @@ $pillars: (
 
             .fc-item__timestamp,
             .fc-trail__count--commentcount {
-                background-color: darken($opinion-garnett-background, 2%);
+                background-color: darken($opinion-faded, 2%);
             }
         }
     }

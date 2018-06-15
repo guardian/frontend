@@ -71,9 +71,9 @@
 }
 
 .content--pillar-opinion {
-    @include PillarColourTwo($opinion-garnett-main-1, $opinion-garnett-feature);
+    @include PillarColourTwo($opinion-bold, $opinion-dark);
 
-    background-color: $opinion-garnett-background;
+    background-color: $opinion-faded;
 }
 
 .content--pillar-sport {

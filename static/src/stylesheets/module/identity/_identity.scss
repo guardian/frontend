@@ -371,7 +371,7 @@ $identity-header-height: 48px;
         @include pillar-dropdown('Sport', $sport-garnett-main-1);
         @include pillar-dropdown('Culture', $culture-garnett-main-1);
         @include pillar-dropdown('Lifestyle', $lifestyle-garnett-main-1);
-        @include pillar-dropdown('Comment', $opinion-garnett-main-1);
+        @include pillar-dropdown('Comment', $opinion-bold);
         .dropdown__label {
             @include fs-bodyHeading(3);
             &:after {
