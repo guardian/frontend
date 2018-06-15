@@ -45,7 +45,7 @@
 }
 
 .pillar-scheme--Lifestyle {
-    @include PillarColourOne($lifestyle-garnett-main-1);
+    @include PillarColourOne($lifestyle-bold);
 }
 
 .menu-group {
@@ -76,7 +76,7 @@
     .menu-item:nth-child(5) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(5) > .menu-group .menu-item__title:focus,
     .menu-item__title--Lifestyle {
-        color: $lifestyle-garnett-main-1;
+        color: $lifestyle-bold;
     }
 }
 
@@ -114,10 +114,10 @@
     }
 
     &.pillar-link--Lifestyle {
-        color: $lifestyle-garnett-main-1;
+        color: $lifestyle-bold;
 
         &:after {
-            border-color: $lifestyle-garnett-feature;
+            border-color: $lifestyle-dark;
         }
     }
 }

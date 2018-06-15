@@ -36,7 +36,7 @@
     @include fs-headline(2);
     font-style: italic;
 }
-@each $pillar, $palette in (news: $news-dark, opinion: $opinion-bold, sport: $sport-bold, arts: $culture-bold, lifestyle: $lifestyle-garnett-main-1) {
+@each $pillar, $palette in (news: $news-dark, opinion: $opinion-bold, sport: $sport-bold, arts: $culture-bold, lifestyle: $lifestyle-bold) {
     .right-most-popular__byline--#{$pillar} {
         color: $palette;
     }

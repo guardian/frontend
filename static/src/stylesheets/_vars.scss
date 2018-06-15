@@ -112,20 +112,19 @@ $sport-pastel:                  #90dcff;
 $sport-faded:                   #f1f8fc;
 
 // Culture (Brown)
-$culture-dark:                  #6B5840;
+$culture-dark:                  #6b5840;
 $culture-bold:                  #a1845c;
 $culture-bright:                #eacca0;
 $culture-pastel:                #e7d4b9;
 $culture-faded:                 #fbf6ef;
 
+// Lifestyle (Magenta)
+$lifestyle-dark:                #7d0068;
+$lifestyle-bold:                #bb3b80;
+$lifestyle-bright:              #ffabdb;
+$lifestyle-pastel:              #fec8d3;
+$lifestyle-faded:               #feeef7;
 
-$culture-garnett-main-1: #a1845c;
-$culture-garnett-feature: #6b5840;
-$culture-garnett-media-main-1: #eacca0;
-
-$lifestyle-garnett-main-1: #bb3b80;
-$lifestyle-garnett-feature: #7d0068;
-$lifestyle-garnett-media-main-1: #ffabdb;
 
 $live-garnett-main-1: #ad0006;
 $live-garnett-main-2: #ffbac8;
@@ -134,9 +133,9 @@ $live-garnett-dead-background: #eaeaea;
 $live-garnett-sport1: $sport-dark;
 $live-garnett-sport2: #90dcff;
 
-$live-garnett-culture1: $culture-garnett-feature;
+$live-garnett-culture1: $culture-dark;
 $live-garnett-culture2: #e7d4b9;
-$live-garnett-lifestyle1: $lifestyle-garnett-feature;
+$live-garnett-lifestyle1: $lifestyle-dark;
 $live-garnett-lifestyle2: $live-garnett-main-2;
 
 $media-garnett-main-1: $multimedia-main-1;
