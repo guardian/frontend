@@ -1,6 +1,7 @@
 // @flow
 import fastdom from 'fastdom';
 
+import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import {
     getAdConsentState,
@@ -20,8 +21,10 @@ const loadYoutubeJs = () => {
     loadScript(scriptSrc, {});
 };
 
-const addVideoStartedClass = (el: HTMLElement) => {
-    el.classList.add('youtube__video-started');
+const addVideoStartedClass = (el: ?HTMLElement) => {
+    if (el) {
+        el.classList.add('youtube__video-started');
+    }
 };
 
 type Handlers = {
@@ -32,18 +35,30 @@ type Handlers = {
 const onPlayerStateChangeEvent = (
     event,
     handlers: Handlers,
-    el: HTMLElement
+    el: ?HTMLElement
 ) => {
+    if (el && config.get('page.isDev')) {
+        const states = window.YT.PlayerState;
+        const state: ?string = Object.keys(states).find(
+            key => states[key] === event.data
+        );
+        if (state) {
+            console.log(`Player ${el.id} is ${state}`);
+        }
+    }
+
     // change class according to the current state
     // TODO: Fix this so we can add poster image.
     fastdom.write(() => {
         ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(status => {
-            el.classList.toggle(
-                `youtube__video-${status.toLocaleLowerCase()}`,
-                event.data === window.YT.PlayerState[status]
-            );
+            if (el) {
+                el.classList.toggle(
+                    `youtube__video-${status.toLocaleLowerCase()}`,
+                    event.data === window.YT.PlayerState[status]
+                );
+                addVideoStartedClass(el);
+            }
         });
-        addVideoStartedClass(el);
     });
 
     if (handlers && typeof handlers.onPlayerStateChange === 'function') {
@@ -51,9 +66,11 @@ const onPlayerStateChangeEvent = (
     }
 };
 
-const onPlayerReadyEvent = (event, handlers: Handlers, el: HTMLElement) => {
+const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
     fastdom.write(() => {
-        el.classList.add('youtube__video-ready');
+        if (el) {
+            el.classList.add('youtube__video-ready');
+        }
     });
 
     // we should be able to remove this check once everything is using flow/ES^
@@ -62,13 +79,23 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: HTMLElement) => {
     }
 };
 
-const setupPlayer = (videoId: string, onReady, onStateChange) => {
+const setupPlayer = (
+    eltId: string,
+    videoId: string,
+    onReady,
+    onStateChange,
+    onError
+) => {
     const wantPersonalisedAds: boolean =
         getAdConsentState(thirdPartyTrackingAdConsent) !== false;
-    return new window.YT.Player(videoId, {
+    return new window.YT.Player(eltId, {
+        videoId,
+        width: '100%',
+        height: '100%',
         events: {
             onReady,
             onStateChange,
+            onError,
         },
         embedConfig: {
             adsConfig: {
@@ -80,26 +107,38 @@ const setupPlayer = (videoId: string, onReady, onStateChange) => {
 
 const hasPlayerStarted = event => event.target.getCurrentTime() > 0;
 
+const getPlayerIframe = videoId =>
+    document.getElementById(`youtube-${videoId}`);
+
 export const initYoutubePlayer = (
     el: HTMLElement,
     handlers: Handlers,
     videoId: string
 ): Promise<void> => {
     loadYoutubeJs();
-
     return promise.then(() => {
         const onPlayerStateChange = event => {
-            onPlayerStateChangeEvent(event, handlers, el);
+            onPlayerStateChangeEvent(event, handlers, getPlayerIframe(videoId));
         };
 
         const onPlayerReady = event => {
+            const iframe = getPlayerIframe(videoId);
             if (hasPlayerStarted(event)) {
-                addVideoStartedClass(el);
+                addVideoStartedClass(iframe);
             }
-
-            onPlayerReadyEvent(event, handlers, el);
+            onPlayerReadyEvent(event, handlers, iframe);
         };
 
-        return setupPlayer(videoId, onPlayerReady, onPlayerStateChange);
+        const onPlayerError = event => {
+            console.error(`YOUTUBE: ${event}`);
+        };
+
+        return setupPlayer(
+            el.id,
+            videoId,
+            onPlayerReady,
+            onPlayerStateChange,
+            onPlayerError
+        );
     });
 };

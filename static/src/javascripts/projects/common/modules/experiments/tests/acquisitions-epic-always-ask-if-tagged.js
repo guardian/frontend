@@ -27,7 +27,6 @@ export const acquisitionsEpicAlwaysAskIfTagged = makeABTest({
             options: {
                 isUnlimited: true,
                 successOnView: true,
-                useTailoredCopyForRegulars: true,
             },
         },
     ],

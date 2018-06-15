@@ -105,6 +105,12 @@
     }
 }
 
+[data-link-name='Front | /football/world-cup-2018'] [data-component='world-cup-2018'] {
+    .fc-container__toggle {
+        display: none;
+    }
+}
+
 [data-component='world-cup-2018'] {
     .fc-container__header__title a:hover {
         border-bottom: 0;
@@ -112,9 +118,10 @@
     }
 
     @include mq(desktop) {
-        .badge-slot__img {
+        .badge-slot {
             float: left;
-            padding-right: $gs-gutter / 4;
+            margin-right: $gs-gutter / 4;
+            width: auto;
         }
 
         &:not(.fc-container--rolled-up) {
@@ -128,6 +135,13 @@
             @include mq(wide) {
                 background-size: 1300px;
             }
+        }
+    }
+
+    @include mq(wide) {
+        //Forces 2018 onto new line
+        .fc-container__title__text {
+            margin-right: $gs-gutter;
         }
     }
 

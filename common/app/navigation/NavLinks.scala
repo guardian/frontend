@@ -72,7 +72,8 @@ object NavLinks {
     title = "World Cup 2018",
     url = "/football/world-cup-2018",
     children = List(
-      NavLink("Fixtures and standings", "/football/world-cup-2018/overview"),
+      NavLink("Fixtures and tables", "/football/world-cup-2018/overview"),
+      NavLink("Golden Boot", "/football/ng-interactive/2018/jun/14/golden-boot-standings-top-scorers-for-russia-2018-world-cup"),
       NavLink("Player-by-player guide", "/football/ng-interactive/2018/jun/05/world-cup-2018-complete-guide-players-ratings-goals-caps"),
       NavLink("Experts' Network", "/football/series/world-cup-2018-guardian-experts-network"),
       NavLink("All-time XIs", "/football/series/world-cup-all-time-xis"),

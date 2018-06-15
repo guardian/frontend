@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, render } from 'preact-compat';
+import { Component, hydrateApp } from '@guardian/dotcom-rendering/packages/guui';
 import {
     getPopularFiltered,
     deleteFromSummary,
@@ -97,7 +97,7 @@ const init = (): void => {
     );
 
     if (placeholder) {
-        render(<SummaryTagsSettings />, placeholder);
+        hydrateApp(<SummaryTagsSettings />, placeholder);
     }
 };
 

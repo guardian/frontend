@@ -24,14 +24,14 @@ declare class YoutubePlayerEvent {
 }
 
 const players = {};
-const iframes = [];
+const playerDivs = [];
 
 document.addEventListener('focusout', () => {
-    iframes.forEach(iframe => {
+    playerDivs.forEach(playerDiv => {
         fastdom
             .read(() => {
-                if (document.activeElement === iframe) {
-                    return $('.vjs-big-play-button', iframe.parentElement);
+                if (document.activeElement === playerDiv) {
+                    return $('.vjs-big-play-button', playerDiv.parentElement);
                 }
             })
             .then(($playButton: ?bonzo) => {
@@ -265,17 +265,14 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
     if (!elem) return;
 
     fastdom.read(() => {
-        $('.youtube-media-atom', elem).each((el, index) => {
-            const iframe = el.querySelector('iframe');
+        $('.youtube-media-atom:not(.no-player)', elem).each((el, index) => {
+            const playerDiv = el.querySelector('div');
 
-            if (!iframe) {
+            if (!playerDiv) {
                 return;
             }
 
-            iframes.push(iframe);
-
-            // append index of atom as iframe.id must be unique
-            iframe.id += `/${index}`;
+            playerDivs.push(playerDiv);
 
             // append index of atom as atomId must be unique
             const atomId = `${el.getAttribute('data-media-atom-id')}/${index}`;
@@ -286,17 +283,17 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
             initYoutubeEvents(getTrackingId(atomId));
 
             initYoutubePlayer(
-                iframe,
+                playerDiv,
                 {
                     onPlayerReady: onPlayerReady.bind(
                         null,
                         atomId,
                         overlay,
-                        iframe
+                        playerDiv
                     ),
                     onPlayerStateChange: onPlayerStateChange.bind(null, atomId),
                 },
-                iframe.id
+                playerDiv.dataset.assetId
             );
         });
     });
