@@ -8,7 +8,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 
 .hosted__glogo {
     padding: $gs-baseline/3 $gs-gutter/2;
-    background-color: $garnett-neutral-1;
+    background-color: $black;
     position: absolute;
     top: 0;
     right: 0;
@@ -61,7 +61,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 
 .hosted__cta.button,
 .hosted__cta.button:focus {
-    color: $neutral-1;
+    color: $black;
 }
 
 .hosted__cta.button {
@@ -74,7 +74,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 }
 
 .hosted__cta__svg {
-    fill: $neutral-1;
+    fill: $black;
     width: 16px;
     height: 16px;
 }
@@ -115,7 +115,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 .hosted-page:not(.hosted-page--bright) .hosted__cta-btn-text {
     background-color: #ffffff;
     border-color: #ffffff;
-    color: $neutral-1;
+    color: $black;
 }
 
 .hosted__cta-link {
@@ -257,13 +257,13 @@ $badge-width: $gs-column-width + $gs-gutter;
     height: 42px;
     width: 42px;
     background: transparent;
-    border: 1px solid $neutral-1;
+    border: 1px solid $black;
     color: #ffffff;
     float: right;
 }
 
 .hosted__lightbox-close__svg {
-    fill: $neutral-1;
+    fill: $black;
     margin-top: 4px;
     width: 20px;
     height: 20px;
@@ -290,7 +290,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 
 .hosted__next-page--tile {
     display: block;
-    color: $neutral-1;
+    color: $black;
     text-decoration: none;
     position: relative;
     min-height: 56px;
@@ -318,7 +318,7 @@ $badge-width: $gs-column-width + $gs-gutter;
 .hosted__header {
     width: 100%;
     height: $header-height;
-    background-color: $neutral-1;
+    background-color: $black;
     position: relative;
 }
 
@@ -356,7 +356,7 @@ $badge-width: $gs-column-width + $gs-gutter;
     height: auto;
     padding-top: 5px;
     padding-bottom: 6px;
-    color: $neutral-1;
+    color: $black;
     margin: 0 4px;
 }
 

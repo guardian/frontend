@@ -134,7 +134,7 @@ td.gsc-search-button {
 .gs-imageResult a.gs-title {
     &,
     b {
-        color: $neutral-1 !important;
+        color: $black !important;
     }
 
     &:visited {
@@ -147,7 +147,7 @@ td.gsc-search-button {
     &:active {
         &,
         b {
-            color: $neutral-1;
+            color: $black;
         }
     }
 

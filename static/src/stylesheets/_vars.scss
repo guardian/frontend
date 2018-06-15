@@ -76,7 +76,7 @@ $neutral-2-contrasted:   darken($neutral-2, 3%);
 // Garnett
 // =============================================================================
 
-$garnett-neutral-1: #121212;
+$black:                         #121212;
 $garnett-neutral-2: #999999;
 $garnett-neutral-3: #f6f6f6;
 $garnett-neutral-4: #dcdcdc;
@@ -162,7 +162,7 @@ $live-mute:              $features-support-3;
 
 $media-default:          $multimedia-main-2;
 $media-background:       $multimedia-support-5;
-$media-mute:             $neutral-1;
+$media-mute:             $black;
 
 $review-accent:          $comment-support-3;
 $review-background:      $comment-support-1;
@@ -232,7 +232,7 @@ $membership-default:     #bb3a7f;
 // Identity
 // =============================================================================
 
-$identity-main:          $garnett-neutral-1;
+$identity-main:          $black;
 
 // Commercial content
 // =============================================================================

@@ -1,6 +1,6 @@
 .site-message {
     @include fs-headline(1);
-    background: $garnett-neutral-1;
+    background: $black;
     display: block;
     color: #ffffff;
     outline: none;
@@ -16,7 +16,7 @@
     left: 0;
     right: 0;
     top: 0;
-    background: $garnett-neutral-1;
+    background: $black;
     opacity: .7;
     z-index: $zindex-popover - 1;
 }
@@ -258,7 +258,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         bottom: auto;
         width: $gs-gutter;
         height: $gs-gutter;
-        background-color: $neutral-1;
+        background-color: $black;
         box-shadow: 0 1px 0 $neutral-3;
 
         &:before {
@@ -268,7 +268,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             content: '×';
             left: 6px;
             top: 3px;
-            background-color: $neutral-1;
+            background-color: $black;
             color: $neutral-4;
         }
 
@@ -389,13 +389,13 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .app__heading {
         @include font($helvetica, normal, 14px);
-        color: $neutral-1 !important;
+        color: $black !important;
     }
 
     .app__copy {
         @include font($helvetica, 200, 12px, 14px);
         margin-bottom: 0;
-        color: $neutral-1;
+        color: $black;
 
         strong {
             font-weight: normal;

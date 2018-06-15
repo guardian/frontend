@@ -77,7 +77,7 @@
 
 .email-sub__text-input {
     border: 1px solid $form-primary-colour;
-    color: $neutral-1;
+    color: $black;
     height: 3em;
     outline: none;
     padding: .667em 1.25em;
@@ -137,7 +137,7 @@
     .inline-icon {
         background-color: $neutral-3;
         border-radius: 1000px;
-        fill: $neutral-1;
+        fill: $black;
         height: $icon-size;
         left: 0;
         position: absolute;
@@ -312,7 +312,7 @@
     .email-sub__submit-button {
         background-color: $neutral-4;
         border-color: $neutral-4;
-        color: $neutral-1;
+        color: $black;
     }
 
     .email-sub__message {
@@ -331,14 +331,14 @@
     .email-sub__submit-button {
         background-color: $neutral-4;
         border-color: $neutral-4;
-        color: $neutral-1;
+        color: $black;
     }
 }
 
 .email-sub--plaintone {
     .email-sub__message__headline,
     .email-sub__message__description {
-        color: $neutral-1;
+        color: $black;
     }
 }
 

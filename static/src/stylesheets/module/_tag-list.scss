@@ -19,7 +19,7 @@
     button {
         @include button-colour(
             transparent,
-            $neutral-1,
+            $black,
             $neutral-4
         );
         @include button-hover-colour(

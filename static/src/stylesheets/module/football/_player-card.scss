@@ -14,7 +14,7 @@ $player-card-avatar: (
     padding: $gs-baseline $gs-gutter/2;
     background: $neutral-8;
     border-top: 1px solid $sport-mid;
-    color: $neutral-1;
+    color: $black;
 
     @include mq(mobileLandscape) {
         margin-top: $gs-baseline/2;

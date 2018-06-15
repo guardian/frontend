@@ -1,5 +1,5 @@
 .gu-comlabel {
-    color: $neutral-1;
+    color: $black;
 
     .gu-comlabel__btn {
         @include f-textSans;
@@ -46,7 +46,7 @@
     svg {
         width: 13px;
         height: 13px;
-        fill: $neutral-1;
+        fill: $black;
         vertical-align: middle;
     }
 }

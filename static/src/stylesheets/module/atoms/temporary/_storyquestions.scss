@@ -20,7 +20,7 @@
 }
 
 .user__question-title--secondary {
-    color: $neutral-1;
+    color: $black;
     display: block;
     font-size: 18px;
     font-weight: 400;
@@ -97,7 +97,7 @@
     line-height: 18px;
     width: 90%;
     display: block;
-    color: $neutral-1;
+    color: $black;
 
     @include mq($from: tablet) {
         clear: none;

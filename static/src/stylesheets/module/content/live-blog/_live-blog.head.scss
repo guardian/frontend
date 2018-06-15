@@ -170,7 +170,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 .block-time__link {
-    color: $neutral-1;
+    color: $black;
 }
 
 .updated-time {
@@ -307,7 +307,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     .liveblog-block-byline__name {
         @include fs-bodyCopy(2);
         display: inline;
-        color: $neutral-1;
+        color: $black;
     }
 
     .block-elements {
@@ -574,7 +574,7 @@ $timeline-width: 15px;
     &:hover,
     &:visited,
     &:active {
-        color: $neutral-1;
+        color: $black;
         text-decoration: none;
     }
 
@@ -599,7 +599,7 @@ $timeline-width: 15px;
             background-color: $neutral-2;
         }
         &.live-blog__key-event--selected:before {
-            background-color: $neutral-1;
+            background-color: $black;
         }
 
         .timeline__item:first-child &:before,
@@ -707,7 +707,7 @@ $timeline-width: 15px;
         }
         .player-card__position {
             @include fs-textSans(2);
-            color: $neutral-1;
+            color: $black;
             font-weight: 700;
         }
     }
@@ -775,7 +775,7 @@ $timeline-width: 15px;
             color: $neutral-2;
         }
         .content__headline {
-            color: $neutral-1;
+            color: $black;
         }
     }
 }

@@ -111,7 +111,7 @@
     right: 0;
     bottom: 0;
     background-color: $neutral-5;
-    color: $neutral-1;
+    color: $black;
 }
 
 .immersive-main-media__loading-animation {
@@ -375,7 +375,7 @@
         }
 
         .pullquote-cite {
-            color: $neutral-1 !important; // important to override super specific tonal classes
+            color: $black !important; // important to override super specific tonal classes
         }
     }
 

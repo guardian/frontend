@@ -63,7 +63,7 @@
 .button--secondary {
     @include button-colour(
         $neutral-7,
-        $neutral-1
+        $black
     );
 
     @include button-hover-colour(
@@ -74,7 +74,7 @@
 .button--tertiary {
     @include button-colour(
         transparent,
-        $neutral-1,
+        $black,
         $neutral-4
     );
 
@@ -183,7 +183,7 @@
 .button--tone-live {
     @include button-colour(
         $neutral-6,
-        $neutral-1
+        $black
     );
 
     @include button-hover-colour(
@@ -194,7 +194,7 @@
 .button--tone-live-variant {
     @include button-colour(
         $neutral-8,
-        $neutral-1,
+        $black,
         $neutral-3
     );
 

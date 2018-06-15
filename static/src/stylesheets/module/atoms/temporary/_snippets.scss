@@ -88,7 +88,7 @@
 
 .explainer-snippet__credit {
     @include fs-textSans(1, true);
-    color: $neutral-1;
+    color: $black;
     margin: $gs-baseline 0;
     
     > .inline-icon {

@@ -6,11 +6,11 @@ $caption-button-size: 32px;
     width: $caption-button-size;
     height: $caption-button-size;
     z-index: 1;
-    background-color: rgba($neutral-1, .6);
+    background-color: rgba($black, .6);
     border-radius: 50%;
 
     &:hover {
-        background-color: rgba($neutral-1, 1);
+        background-color: rgba($black, 1);
     }
 }
 
@@ -54,10 +54,10 @@ $caption-button-size: 32px;
     background-color: $multimedia-support-5;
 
     &:hover {
-        background-color: rgba($neutral-1, 1);
+        background-color: rgba($black, 1);
     }
 }
 
 .reveal-caption__checkbox:focus ~ .reveal-caption {
-    background-color: rgba($neutral-1, 1);
+    background-color: rgba($black, 1);
 }

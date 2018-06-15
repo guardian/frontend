@@ -157,7 +157,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
     a {
         // this is a fallback for browsers that don't support inherit
-        color: $neutral-1;
+        color: $black;
         color: inherit;
     }
 
@@ -426,7 +426,7 @@ $fc-item-gutter: $gs-gutter / 4;
         content: '/';
         display: inline-block;
         margin-left: .2em;
-        color: mix($neutral-1, #ffffff, 20%);
+        color: mix($black, #ffffff, 20%);
     }
 
     &:hover:after {
@@ -658,7 +658,7 @@ $block-height: 71px;
 .fc-item__link,
 .fc-sublink__link {
     &:visited {
-        color: mix($neutral-1, #ffffff, 80%);
+        color: mix($black, #ffffff, 80%);
     }
 }
 

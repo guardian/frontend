@@ -38,7 +38,7 @@ $btn-height: ($gs-baseline*3.5);
     @include circular;
     height: $btn-height;
     background: $news-garnett-highlight;
-    color: $garnett-neutral-1;
+    color: $black;
     padding: 0 ($gs-gutter*1.25) 0 ($gs-gutter*1.25)+($btn-height*.5);
     display: block;
     align-items: flex-start;
@@ -61,7 +61,7 @@ $btn-height: ($gs-baseline*3.5);
         height: $btn-height;
         transform: scale(.5);
         g, path {
-            fill: $garnett-neutral-1;
+            fill: $black;
         }
     }
 }

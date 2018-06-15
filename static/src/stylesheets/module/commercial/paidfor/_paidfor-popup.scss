@@ -1,5 +1,5 @@
 .popup--paidfor {
-    background: $neutral-1;
+    background: $black;
     box-shadow: none;
     left: 100%;
     top: 100%;
@@ -19,7 +19,7 @@
     &::before {
         content: '';
         border: solid transparent;
-        border-bottom-color: $neutral-1;
+        border-bottom-color: $black;
         border-style: solid;
         border-width: 6px;
         height: 0;

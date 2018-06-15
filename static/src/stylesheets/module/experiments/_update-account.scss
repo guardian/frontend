@@ -1,6 +1,6 @@
 .site-message--membership-action-required {
     color: $garnett-neutral-5;
-    background: $garnett-neutral-1;
+    background: $black;
     &:after {
         @include multiline(3, $garnett-neutral-7, top);
         content: '';

@@ -605,7 +605,7 @@ $ima-controls-height: 70px;
     box-sizing: border-box;
     width: 100%;
     height: gs-height(1) + $gs-baseline;
-    color: $neutral-1;
+    color: $black;
     padding: $gs-baseline/3 $gs-gutter/2 0;
     border: 1px solid $neutral-3;
     outline: none;
@@ -726,7 +726,7 @@ $ima-controls-height: 70px;
     right: 8px;
     // width so text goes over two lines
     width: 140px;
-    background-color: rgba($neutral-1, .8);
+    background-color: rgba($black, .8);
     color: #ffffff;
     text-align: left;
 

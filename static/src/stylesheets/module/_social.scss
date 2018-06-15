@@ -171,14 +171,14 @@ category: Common
 }
 .paid-content, .paid-content.tonal--tone-media {
     .social-icon {
-        border: 1px solid $neutral-1;
+        border: 1px solid $black;
         &:hover,
         &:active,
         &:focus {
-            background-color: $garnett-neutral-1;
+            background-color: $black;
         }
         .social-icon__svg {
-            fill: $garnett-neutral-1;
+            fill: $black;
         }
         &:focus,
         &:hover {

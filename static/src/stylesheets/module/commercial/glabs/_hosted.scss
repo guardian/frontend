@@ -176,7 +176,7 @@ $hosted-video-height: 551px;
 .hosted__glogo {
     display: inline-block;
     padding: 4px $gs-gutter / 2;
-    background-color: $garnett-neutral-1;
+    background-color: $black;
     text-align: right;
 
     &:hover {
@@ -636,7 +636,7 @@ $hosted-video-height: 551px;
     &,
     &:focus,
     &:hover {
-        color: $neutral-1;
+        color: $black;
     }
 
     @include mq(mobile) {
@@ -648,7 +648,7 @@ $hosted-video-height: 551px;
         line-height: 26px;
 
         svg {
-            fill: $neutral-1;
+            fill: $black;
             width: 16px;
             height: 16px;
         }

@@ -26,7 +26,7 @@
     .facia-header__column {
         flex-basis: 100%;
         overflow: visible;
-        border-bottom: 1px solid $garnett-neutral-1;
+        border-bottom: 1px solid $black;
         padding-bottom: $gs-gutter / 2;
 
         @include mq($from: desktop) {
@@ -53,7 +53,7 @@
             @include mq($from: desktop) {
                 padding-left: $gs-gutter / 2;
                 flex-basis: 333px;
-                border-left: 1px solid $garnett-neutral-1;
+                border-left: 1px solid $black;
             }
 
             @include mq($from: leftCol) {
@@ -149,7 +149,7 @@
     }
 
     .wc-badge__flag {
-        border: 1px solid $garnett-neutral-1;
+        border: 1px solid $black;
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -179,7 +179,7 @@
 
     .wc-label {
         @include fs-textSans(5);
-        color: $garnett-neutral-1;
+        color: $black;
     }
 
     .wc-label__title {
@@ -282,7 +282,7 @@
     }
 
     .football-matches__date {
-        color: $neutral-1;
+        color: $black;
         font-weight: bold;
         float: none;
     }

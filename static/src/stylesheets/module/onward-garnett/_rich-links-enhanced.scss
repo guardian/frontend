@@ -137,7 +137,7 @@
             .rich-link__header,
             .rich-link__read-more-text {
                 @include f-textSans;
-                color: $neutral-1;
+                color: $black;
             }
             .rich-link__arrow-icon {
                 fill: $paid-article-brand;
@@ -145,7 +145,7 @@
         }
     }
     .rich-link__title {
-        color: $neutral-1;
+        color: $black;
     }
 }
 .rich-link__branding {

@@ -6,7 +6,7 @@
         @if (lightness($color) < 50) {
             color: #ffffff;
         } @else {
-            color: $garnett-neutral-1;
+            color: $black;
         }
     }
     &:not(.is-updating, .is-disabled):hover {

@@ -17,7 +17,7 @@
 .right-most-popular-item__headline {
     @include fs-headline(2);
     @include text-clamp(4);
-    color: $neutral-1;
+    color: $black;
     margin-bottom: 0;
 }
 
@@ -25,7 +25,7 @@
     &:hover,
     &:active,
     &:focus {
-        color: $neutral-1;
+        color: $black;
         text-decoration: underline;
     }
 

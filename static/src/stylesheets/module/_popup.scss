@@ -192,7 +192,7 @@ $control-offset: 36 + $gs-gutter/2;
     .brand-bar__item--action:hover {
         display: block;
         white-space: nowrap;
-        color: $neutral-1;
+        color: $black;
         line-height: $gs-baseline * 3;
     }
 
@@ -313,15 +313,15 @@ $control-offset: 36 + $gs-gutter/2;
 
     .ad-slot--dark & {
         background: $multimedia-support-5;
-        border-color: $neutral-1;
+        border-color: $black;
         color: $neutral-3;
         .popup__group-header {
             color: $neutral-3;
         }
         .popup__item--option {
-            border-top-color: $neutral-1;
+            border-top-color: $black;
             > button:hover {
-                background: $neutral-1;
+                background: $black;
             }
         }
     }

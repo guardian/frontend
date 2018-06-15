@@ -175,7 +175,7 @@
     .dumathoin-more__button {
         background: none;
         border-color: $neutral-4;
-        color: $neutral-1;
+        color: $black;
     }
 }
 
@@ -382,7 +382,7 @@
     .fc-item__title {
         @include f-textSans;
         font-weight: 600;
-        color: $neutral-1;
+        color: $black;
     }
 
     .fc-item__link,
@@ -455,7 +455,7 @@
 
     .badge__sponsor-name {
         @include f-textSans;
-        color: $neutral-1;
+        color: $black;
     }
 
     .inline-icon__svg {

@@ -1,7 +1,7 @@
 .paidfor-meta {
     @include f-textSans;
     background: $paidfor-background;
-    color: $neutral-1;
+    color: $black;
     font-size: get-font-size(textSans, 2);
 }
 
@@ -38,7 +38,7 @@
     svg {
         width: 12px;
         height: 9px;
-        fill: $neutral-1;
+        fill: $black;
 
     }
 

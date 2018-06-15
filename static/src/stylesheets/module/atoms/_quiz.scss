@@ -95,8 +95,8 @@
         }
 
         &:before {
-            background-color: $neutral-1;
-            box-shadow: 0px 0px 0px 1px $neutral-1, inset 0px 0px 0px 3px $comment-main-2;
+            background-color: $black;
+            box-shadow: 0px 0px 0px 1px $black, inset 0px 0px 0px 3px $comment-main-2;
         }
     }
 
@@ -185,8 +185,8 @@
     }
 
     :checked + &:before {
-        background-color: $neutral-1;
-        box-shadow: 0px 0px 0px 1px $neutral-1, inset 0px 0px 0px 3px $comment-main-2;
+        background-color: $black;
+        box-shadow: 0px 0px 0px 1px $black, inset 0px 0px 0px 3px $comment-main-2;
     }
 
     // highlight state (darker grey)
@@ -267,7 +267,7 @@
 .atom-quiz__answer__reveal-text {
     @include fs-textSans(1);
     display: none;
-    color: $neutral-1;
+    color: $black;
 
     .atom-quiz--is-results & {
         display: block;

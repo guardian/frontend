@@ -3,7 +3,7 @@ $pillars: (
         cardBackground: $garnett-neutral-3,
         lines: $news-garnett-main-1,
         kicker: $news-garnett-main-1,
-        headline: $garnett-neutral-1,
+        headline: $black,
         featureHeadline: $news-garnett-feature,
         byline: $news-garnett-main-1,
         commentCount: $garnett-neutral-2,
@@ -17,7 +17,7 @@ $pillars: (
         cardBackground: $garnett-neutral-3,
         lines: $opinion-garnett-main-1,
         kicker: $opinion-garnett-main-1,
-        headline: $garnett-neutral-1,
+        headline: $black,
         featureHeadline: $opinion-garnett-feature,
         byline: $opinion-garnett-main-1,
         commentCount: $garnett-neutral-6,
@@ -31,7 +31,7 @@ $pillars: (
         cardBackground: $garnett-neutral-3,
         lines: $sport-garnett-main-1,
         kicker: $sport-garnett-main-1,
-        headline: $garnett-neutral-1,
+        headline: $black,
         featureHeadline: $sport-garnett-feature,
         byline: $sport-garnett-main-1,
         commentCount: $garnett-neutral-2,
@@ -45,7 +45,7 @@ $pillars: (
         cardBackground: $garnett-neutral-3,
         lines: $culture-garnett-main-1,
         kicker: $culture-garnett-main-1,
-        headline: $garnett-neutral-1,
+        headline: $black,
         featureHeadline: $culture-garnett-feature,
         byline: $culture-garnett-main-1,
         commentCount: $garnett-neutral-2,
@@ -59,7 +59,7 @@ $pillars: (
         cardBackground: $garnett-neutral-3,
         lines: $lifestyle-garnett-main-1,
         kicker: $lifestyle-garnett-main-1,
-        headline: $garnett-neutral-1,
+        headline: $black,
         featureHeadline: $lifestyle-garnett-feature,
         byline: $lifestyle-garnett-main-1,
         commentCount: $garnett-neutral-2,
@@ -175,7 +175,7 @@ $pillars: (
     }
 
     &.fc-item--type-immersive.fc-item--has-boosted-title:not(.fc-item--pillar-special-report) .fc-item__standfirst {
-        color: $garnett-neutral-1;
+        color: $black;
     }
 
     &.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon
@@ -366,7 +366,7 @@ $pillars: (
 
         .youtube-media-atom__play-button.vjs-control-text {
             .inline-play svg {
-                fill: $garnett-neutral-1;
+                fill: $black;
             }
         }
     }

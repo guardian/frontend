@@ -111,7 +111,7 @@
     right: 0;
     bottom: 0;
     background-color: $neutral-5;
-    color: $neutral-1;
+    color: $black;
 }
 
 .immersive-main-media__loading-animation {
@@ -247,7 +247,7 @@
         }
 
         .pullquote-cite {
-            color: $neutral-1 !important; // important to override super specific tonal classes
+            color: $black !important; // important to override super specific tonal classes
         }
     }
 
@@ -581,7 +581,7 @@
             display: none;
             width: 50%;
             right: 0;
-            background-color: $garnett-neutral-1;
+            background-color: $black;
             z-index: 0;
             top: 0;
             bottom: 0;
@@ -629,7 +629,7 @@
                 display: none;
             }
 
-            background-color: $garnett-neutral-1;
+            background-color: $black;
             z-index: 10;
             position: relative;
             padding-left: $gs-gutter;
@@ -661,7 +661,7 @@
     .content__headline--immersive {
         @include fs-headline(6, true);
         line-height: 1.1;
-        color: $garnett-neutral-1;
+        color: $black;
         padding: 0;
         padding-bottom: $gs-baseline * 2;
         font-weight: 700;

@@ -252,7 +252,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: $neutral-1;
+            color: $black;
         }
     }
 
@@ -695,7 +695,7 @@
 }
 
 .paid-content {
-    color: $neutral-1;
+    color: $black;
 
 
     .content__standfirst,
@@ -726,7 +726,7 @@
         background-color: $paid-article;
 
         .caption :not(caption--main) {
-            color: $neutral-1;
+            color: $black;
         }
     }
 
@@ -748,19 +748,19 @@
         padding: $gs-baseline 0 $gs-baseline*2;
 
         .content__standfirst {
-            color: $neutral-1;
+            color: $black;
         }
     }
 
     .tone-media--item {
-        color: $neutral-1;
+        color: $black;
 
         .rich-link__container:before {
             background-color: $news-support-3
         }
 
         .rich-link__standfirst {
-            color: $neutral-1;
+            color: $black;
             font-family: $f-sans-serif-text;
         }
 
@@ -799,7 +799,7 @@
         font-weight: 400;
 
         .content__label__link {
-            color: $neutral-1;
+            color: $black;
         }
     }
 
@@ -819,7 +819,7 @@
         .content__headline,
         .from-content-api,
         .tonal__main .tone-colour {
-            color: $neutral-1;
+            color: $black;
 
             .inline-icon {
                 fill: $neutral-2;
@@ -851,7 +851,7 @@
 
         .tonal__main--tone-media .sharecount__value,
         .tonal__main--tone-media .commentcount2__value {
-            color: $neutral-1;
+            color: $black;
         }
 
         .byline,
@@ -868,7 +868,7 @@
             .tone-colour {
                 color: $neutral-2-contrasted;
                 &:hover {
-                    color: $neutral-1;
+                    color: $black;
                 }
             }
         }
@@ -884,7 +884,7 @@
         }
 
         .button--tone-media {
-            color: $neutral-1;
+            color: $black;
             background-color: $neutral-6;
             border-color: $neutral-6;
 
@@ -934,7 +934,7 @@
         }
 
         .vjs-volume-bar:before {
-            background-color: $neutral-1;
+            background-color: $black;
         }
 
         .end-slate-container--video {

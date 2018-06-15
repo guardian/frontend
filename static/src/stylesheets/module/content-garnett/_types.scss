@@ -3,7 +3,7 @@ $quote-mark: 35px;
 
 .content {
     padding-bottom: 0;
-    color: $garnett-neutral-1;
+    color: $black;
 }
 
 .content--liveblog,
@@ -301,7 +301,7 @@ $quote-mark: 35px;
         display: inline;
 
         svg {
-            stroke: $garnett-neutral-1;
+            stroke: $black;
             fill: transparent;
             height: 1.2em;
             width: 1.2em;
@@ -310,7 +310,7 @@ $quote-mark: 35px;
 
     .inline-star.star__item--golden {
         svg {
-            fill: $garnett-neutral-1;
+            fill: $black;
             stroke: none;
         }
     }
@@ -321,7 +321,7 @@ $quote-mark: 35px;
         font-size: 17px;
         line-height: 22px;
         border-top: 0;
-        color: $garnett-neutral-1;
+        color: $black;
         padding-top: 2px;
         margin-bottom: $gs-baseline;
         max-width: 80%;
@@ -646,7 +646,7 @@ $quote-mark: 35px;
     .content__labels {
         .content__label__link {
             @include mq(leftCol) {
-                color: $neutral-1;
+                color: $black;
             }
         }
     }
@@ -726,12 +726,12 @@ $quote-mark: 35px;
         }
 
         .content__headline--interview-wrapper {
-            background-color: $garnett-neutral-1;
+            background-color: $black;
             display: inline;
             position: relative;
             z-index: 10;
             color: #ffffff;
-            box-shadow: $gs-baseline / 2 0 0 $garnett-neutral-1, -$gs-baseline / 2 0 0 $garnett-neutral-1;
+            box-shadow: $gs-baseline / 2 0 0 $black, -$gs-baseline / 2 0 0 $black;
             box-decoration-break: clone;
             padding-bottom: $gs-baseline / 2;
         }
@@ -744,7 +744,7 @@ $quote-mark: 35px;
         font-weight: 500;
         background-color: $news-garnett-highlight;
         box-shadow: $gs-baseline / 2 0 0 $news-garnett-highlight, -$gs-baseline / 2 0 0 $news-garnett-highlight;
-        color: $garnett-neutral-1;
+        color: $black;
         margin-bottom: $gs-baseline;
         padding-bottom: $gs-baseline / 4;
         position: relative;
@@ -792,7 +792,7 @@ $quote-mark: 35px;
         }
 
         .rich-link.tone-media--item {
-            background-color: $neutral-1;
+            background-color: $black;
         }
 
         .element-pullquote,
@@ -802,7 +802,7 @@ $quote-mark: 35px;
         }
 
         .element-pullquote blockquote p.pullquote-paragraph {
-            color: $garnett-neutral-1;
+            color: $black;
         }
 
     }
@@ -918,7 +918,7 @@ $quote-mark: 35px;
 
 .content--media:not(.paid-content) {
     &.content--media {
-        background-color: $garnett-neutral-1;
+        background-color: $black;
     }
 
     .content__main {

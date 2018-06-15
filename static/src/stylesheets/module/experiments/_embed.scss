@@ -93,7 +93,7 @@
 
     &.active {
         background-color: $multimedia-main-2;
-        color: $neutral-1;
+        color: $black;
     }
 }
 
@@ -166,19 +166,19 @@
 a[href].contributions__contribute.contributions__contribute--epic {
     margin-top: 0;
     background-color: $news-garnett-highlight;
-    color: $garnett-neutral-1;
+    color: $black;
 
     svg path {
-        fill: $garnett-neutral-1;
+        fill: $black;
     }
 
     &:hover {
         background-color: #b3a000;
-        color: $garnett-neutral-1;
+        color: $black;
     }
 
     &:after {
-        background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="$neutral-1" stroke="$neutral-1" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
+        background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="$black" stroke="$black" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>');
     }
 }
 
@@ -193,7 +193,7 @@ a[href].contributions__contribute.contributions__contribute--epic {
     }
 
     &.active {
-        background-color: $neutral-1;
+        background-color: $black;
         color: $neutral-6;
     }
 }

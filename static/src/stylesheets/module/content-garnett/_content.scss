@@ -301,7 +301,7 @@
 .content__standfirst {
     @include fs-headline(2);
     margin-bottom: $gs-baseline/2;
-    color: $garnett-neutral-1;
+    color: $black;
 
     @include mq(tablet) {
         @include font-size(18px, 22px);
@@ -975,7 +975,7 @@
     }
 }
 .paid-content {
-    color: $neutral-1;
+    color: $black;
     .content__head {
         display: block;
         margin-left: 0;
@@ -998,16 +998,16 @@
         fill: $garnett-neutral-7;
     }
     a {
-        color: $garnett-neutral-1;
+        color: $black;
     }
     .u-underline {
         border-color: $garnett-neutral-2;
         &:hover,
         &:focus {
-            border-color: mix($garnett-neutral-1, $garnett-neutral-1, 50%);
+            border-color: mix($black, $black, 50%);
         }
         &:active {
-            border-color: $garnett-neutral-1;
+            border-color: $black;
         }
     }
     .element.element-pullquote {
@@ -1024,7 +1024,7 @@
     &.tonal--tone-media {
         background-color: $paid-article;
         .caption :not(caption--main) {
-            color: $neutral-1;
+            color: $black;
         }
     }
     &.content {
@@ -1041,11 +1041,11 @@
         min-height: $gs-baseline*8;
         padding: $gs-baseline 0 $gs-baseline*2;
         .content__standfirst {
-            color: $neutral-1;
+            color: $black;
         }
     }
     .tone-media--item {
-        color: $neutral-1;
+        color: $black;
         .rich-link__container:before {
             background-color: $news-support-3
         }
@@ -1078,7 +1078,7 @@
         @include f-textSans;
         font-weight: 400;
         .content__section-label__link {
-            color: $neutral-1;
+            color: $black;
         }
     }
     .meta__extras {
@@ -1089,7 +1089,7 @@
         .content__headline,
         .from-content-api,
         .tonal__main .tone-colour {
-            color: $neutral-1;
+            color: $black;
             .inline-icon {
                 fill: $neutral-2;
             }
@@ -1115,7 +1115,7 @@
         }
         .tonal__main--tone-media .sharecount__value,
         .tonal__main--tone-media .commentcount2__value {
-            color: $neutral-1;
+            color: $black;
         }
         .byline,
         .content__dateline,
@@ -1130,7 +1130,7 @@
             .tone-colour {
                 color: $neutral-2-contrasted;
                 &:hover {
-                    color: $neutral-1;
+                    color: $black;
                 }
             }
         }
@@ -1163,7 +1163,7 @@
             }
         }
         .vjs-volume-bar:before {
-            background-color: $neutral-1;
+            background-color: $black;
         }
         .end-slate-container--video {
             background-color: $paid-article;

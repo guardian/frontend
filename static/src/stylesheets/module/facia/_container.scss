@@ -437,7 +437,7 @@ $header-image-size-desktop: 100px;
         top: 6px;
         left: 50%;
         margin-left: -12px;
-        fill: $neutral-1;
+        fill: $black;
 
         .fc-container--rolled-up & {
             transform: rotate(0deg);
@@ -453,7 +453,7 @@ $header-image-size-desktop: 100px;
         }
         &:hover,
         &:focus {
-            color: $neutral-1;
+            color: $black;
         }
         .inline-icon {
             display: none;
@@ -501,7 +501,7 @@ $header-image-size-desktop: 100px;
 
 .fc-date-headline {
     @include fs-headline(2);
-    color: $neutral-1;
+    color: $black;
     display: block;
     padding-bottom: $gs-baseline / 2;
 }
