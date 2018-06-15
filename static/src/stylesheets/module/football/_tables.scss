@@ -127,6 +127,7 @@
 
 .c-football-table {
     @include table-football--medium;
+    width: 100%;
 }
 
 .football__group {
@@ -142,4 +143,10 @@
         top: 2px;
         float: right;
     }
+}
+
+.table__caption--bottom {
+    padding: 0;
+    margin: 0;
+    line-height: 1;
 }

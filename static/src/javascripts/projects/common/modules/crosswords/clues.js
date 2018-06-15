@@ -72,7 +72,8 @@ class Clues extends Component<*, *> {
                 min: 'tablet',
                 max: 'leftCol',
             }) &&
-            (!prev.focussed || prev.focussed.id !== this.props.focussed.id)
+            (this.props.focussed &&
+                (!prev.focussed || prev.focussed.id !== this.props.focussed.id))
         ) {
             fastdom.read(() => {
                 this.scrollIntoView(this.props.focussed);
