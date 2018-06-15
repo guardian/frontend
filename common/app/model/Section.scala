@@ -65,7 +65,6 @@ object SectionId {
 }
 
 object Nielsen {
-
   private sealed trait Apid
   private case object Guardian extends Apid
   private case object Books extends Apid
