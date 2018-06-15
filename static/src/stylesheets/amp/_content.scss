@@ -93,7 +93,7 @@
             left: -16px;
             content: counter(li);
             counter-increment: li;
-            color: $neutral-3;
+            color: $brightness-86;
         }
     }
 }
@@ -136,7 +136,7 @@
         height: 60px; //Intentionally off grid
         margin: ($gs-baseline / 2) ($gs-gutter / 2) ($gs-baseline / 2) 0;
         overflow: hidden;
-        background-color: $neutral-7;
+        background-color: $brightness-97;
         float: left;
     }
 

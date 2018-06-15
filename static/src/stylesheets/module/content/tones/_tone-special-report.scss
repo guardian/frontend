@@ -2,17 +2,17 @@
 
 @include tone-content(
     special-report, // $tone
-    $news-support-6, // $tonal__header-background
+    $brightness-46, // $tonal__header-background
     #ffffff, // $tonal__header-text
-    $special-report-accent, // $tonal__header-link
+    $yellow-highlight, // $tonal__header-link
     200, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $special-report-accent, // $tonal__headline-accent
-    lighten($news-support-6, 5%), // $tonal__standfirst-background
+    $yellow-highlight, // $tonal__headline-accent
+    lighten($brightness-46, 5%), // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    $news-support-6 // $tonal__article-link
+    $brightness-46 // $tonal__article-link
 );
 
 .tonal--tone-special-report {
@@ -24,44 +24,44 @@
         }
 
         .content__series-label__link {
-            color: $neutral-2;
+            color: $brightness-46;
         }
 
         .content__section-label__link {
-            color: $special-report-accent;
+            color: $yellow-highlight;
         }
 
         .u-underline {
-            color: $special-report-accent;
-            border-bottom-color: rgba($special-report-accent, .3);
+            color: $yellow-highlight;
+            border-bottom-color: rgba($yellow-highlight, .3);
 
             &:hover {
-                border-bottom-color: rgba($special-report-accent, .7);
+                border-bottom-color: rgba($yellow-highlight, .7);
             }
         }
     }
 
     &.content--media:not(.content--gallery) {
         .tonal__standfirst {
-            background-color: $multimedia-support-5;
+            background-color: $black;
         }
 
         a.tone-colour {
-            color: $special-report-accent;
+            color: $yellow-highlight;
 
             &:hover {
-                color: mix($special-report-accent, #ffffff, 70%);
+                color: mix($yellow-highlight, #ffffff, 70%);
             }
         }
     }
 
     &.tonal--tone-media {
-        background-color: $multimedia-support-5;
+        background-color: $black;
     }
 
     .immersive-main-media__headline-container--dark {
-        background-color: rgba($news-support-6, .6);
-        background: linear-gradient(rgba($news-support-6, .6), $news-support-6) !important;
+        background-color: rgba($brightness-46, .6);
+        background: linear-gradient(rgba($brightness-46, .6), $brightness-46) !important;
     }
 }
 
@@ -69,10 +69,10 @@
 .gallery__main-content {
     .tonal--tone-special-report {
         &.content {
-            background-color: $multimedia-support-5;
+            background-color: $black;
 
             .tonal__head {
-                background-color: lighten($news-support-6, 5%);
+                background-color: lighten($brightness-46, 5%);
             }
 
             .meta__extras,
@@ -130,6 +130,6 @@
     }
 
     .gallery__most-popular {
-        background-color: $multimedia-support-5;
+        background-color: $black;
     }
 }

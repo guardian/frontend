@@ -22,7 +22,7 @@ $disc-avatar-size: 44px;
 .disc-comment__meta {
     @include fs-textSans(1);
     margin-bottom: $gs-baseline*1.5;
-    color: $neutral-2-contrasted;
+    color: $brightness-46;
 
     @include mq(activityLeftCol) {
         float: right;
@@ -33,7 +33,7 @@ $disc-avatar-size: 44px;
     display: block;
 }
 .disc-comment__permalink {
-    color: $neutral-2;
+    color: $brightness-46;
 }
 .disc-comment__recommend {
     position: absolute;
@@ -47,7 +47,7 @@ $disc-avatar-size: 44px;
     margin-right: $gs-gutter/4;
 
     .disc-comment__recommend--active & {
-        color: $comment-default;
+        color: $opinion-bold;
     }
 }
 .disc-comment__recommend-button {
@@ -56,18 +56,18 @@ $disc-avatar-size: 44px;
     vertical-align: middle;
     height: 19px;
     width: 18px;
-    background-color: $neutral-2-contrasted;
+    background-color: $brightness-46;
 
     .i {
         vertical-align: middle;
     }
 
     .disc-comment__recommend--open & {
-        background-color: $news-default;
+        background-color: $sport-dark;
     }
 
     .disc-comment__recommend--active & {
-        background-color: $comment-default;
+        background-color: $opinion-bold;
     }
 }
 
@@ -112,5 +112,5 @@ $disc-avatar-size: 44px;
 }
 .disc-profile__date {
     @include fs-textSans(1);
-    color: $neutral-2-contrasted;
+    color: $brightness-46;
 }

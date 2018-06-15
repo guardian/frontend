@@ -99,7 +99,7 @@
         }
         .drop-cap {
             @include fs-textSans(4);
-            background-color: $neutral-2;
+            background-color: $brightness-46;
             display: inline-block;
             float: left;
             color: #ffffff;
@@ -117,7 +117,7 @@
         & :not(.element-atom--media) figcaption {
             font-size: 12px;
             line-height: 16px;
-            color: $neutral-2;
+            color: $brightness-46;
 
             &:before {
                 @include icon(information-circle-grey);

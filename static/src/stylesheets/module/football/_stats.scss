@@ -54,7 +54,7 @@
     &.match-stats__column--first {
         @include mq(tablet) {
             padding-right: 10px;
-            border-right: 1px solid $neutral-4;
+            border-right: 1px solid $brightness-86;
         }
     }
 }
@@ -216,7 +216,7 @@
 
 .match-stats__lineup--home {
     @include mq(tablet) {
-        border-right: $neutral-4 1px solid;
+        border-right: $brightness-86 1px solid;
         padding-right: 10px;
     }
 }

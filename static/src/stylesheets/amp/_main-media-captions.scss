@@ -29,7 +29,7 @@ $caption-button-size: 32px;
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba($multimedia-support-5, .8);
+        background: rgba($black, .8);
         color: #ffffff;
         display: none;
         padding: $gs-baseline / 2 $gs-gutter * 2 $gs-baseline $gs-gutter / 2;
@@ -51,7 +51,7 @@ $caption-button-size: 32px;
 }
 
 .reveal-caption__checkbox:checked ~ .reveal-caption {
-    background-color: $multimedia-support-5;
+    background-color: $black;
 
     &:hover {
         background-color: rgba($black, 1);

@@ -1,40 +1,40 @@
 .tone-dead--item {
     &.fc-item,
     &.rich-link {
-        background-color: $neutral-7;
+        background-color: $brightness-97;
     }
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($neutral-6, 2%);
+        background-color: darken($brightness-93, 2%);
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: $live-default;
+        background-color: $news-dark;
     }
 
     .fc-item__kicker,
     .fc-item__byline {
-        color: $live-accent;
+        color: $news-bold;
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, $neutral-7, 10%);
+        background-color: mix(#000000, $brightness-97, 10%);
     }
 
     .rich-link__read-more-text {
-        color: $neutral-2;
+        color: $brightness-46;
     }
 
     .rich-link__arrow-icon {
-        fill: $neutral-2;
+        fill: $brightness-46;
     }
 }
 
 .tone-dead--sublink {
     .fc-sublink__kicker {
-        color: $live-accent;
+        color: $news-bold;
     }
 
     @include sublink-style(editorial, feature, live, media, review) {
@@ -45,5 +45,5 @@
 }
 
 .tone-dead--most-popular .fc-item__kicker {
-    color: $live-accent;
+    color: $news-bold;
 }

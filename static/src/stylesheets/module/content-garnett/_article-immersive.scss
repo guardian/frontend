@@ -110,7 +110,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: $neutral-5;
+    background-color: $brightness-86;
     color: $black;
 }
 
@@ -138,7 +138,7 @@
 .immersive-main-media__headline-container--dark {
     transition: background 500ms ease-out 200ms, background-color 500ms ease-out 200ms;
     background-color: rgba(0, 0, 0, .6);
-    background: linear-gradient(rgba(0, 0, 0, .5), $multimedia-support-5);
+    background: linear-gradient(rgba(0, 0, 0, .5), $black);
 }
 
 .content__headline--immersive {
@@ -191,11 +191,11 @@
     }
 
     .u-underline {
-        color: $neutral-6;
-        border-bottom: 1px solid rgba($neutral-6, .4);
+        color: $brightness-93;
+        border-bottom: 1px solid rgba($brightness-93, .4);
 
         &:hover {
-            border-bottom-color: rgba($neutral-6, 1);
+            border-bottom-color: rgba($brightness-93, 1);
         }
     }
 
@@ -215,8 +215,8 @@
         width: auto;
         margin-left: 0;
         margin-bottom: $gs-baseline / 2;
-        border-top: 1px solid $neutral-7;
-        border-bottom: 1px solid $neutral-7;
+        border-top: 1px solid $brightness-97;
+        border-bottom: 1px solid $brightness-97;
         padding: 0;
         padding-top: .2em;
         padding-bottom: $gs-baseline * 3;
@@ -229,7 +229,7 @@
         }
 
         .inline-quote svg {
-            fill: $neutral-3;
+            fill: $brightness-86;
             width: 2.5em;
             height: 1.4em;
         }
@@ -243,7 +243,7 @@
         }
 
         .pullquote-paragraph {
-            color: $feature-default;
+            color: $lifestyle-bold;
         }
 
         .pullquote-cite {
@@ -372,7 +372,7 @@
         padding-top: $gs-baseline / 2;
 
         .content__label__link {
-            color: $paid-article-brand;
+            color: $paidfor-bold;
         }
     }
 
@@ -395,7 +395,7 @@
         border: 0;
         margin-top: $gs-baseline * 4;
         margin-bottom: $gs-baseline / 4;
-        background-color: $neutral-7;
+        background-color: $brightness-97;
     }
 
     .section-image {
@@ -442,10 +442,10 @@
     }
 
     .in-body-link--immersive {
-        color: $feature-default;
+        color: $lifestyle-bold;
 
         &:hover {
-            border-bottom-color: rgba($feature-default, .4);
+            border-bottom-color: rgba($lifestyle-bold, .4);
         }
     }
 

@@ -21,7 +21,7 @@
 
     &:after {
         @include mq($until: tablet) {
-            border-bottom: 1px solid $neutral-5;
+            border-bottom: 1px solid $brightness-86;
             bottom: -1px;
             content: '';
             left: $gs-gutter / 4;
@@ -44,11 +44,11 @@
 .subnav-link--toggle-more {
     background: transparent;
     border: 0;
-    color: $neutral-2;
+    color: $brightness-46;
 
     &:hover,
     &:focus {
-        color: $neutral-2;
+        color: $brightness-46;
         outline: 0;
     }
 }

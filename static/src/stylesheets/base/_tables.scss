@@ -43,8 +43,8 @@ td {
 }
 
 .table {
-    background: $neutral-8;
-    border-top: 1px solid $news-accent;
+    background: $brightness-97;
+    border-top: 1px solid $sport-bright;
     border-collapse: inherit;
 
     th,
@@ -61,11 +61,11 @@ td {
     }
 
     td {
-        border-top: 1px solid darken($neutral-8, 4%);
+        border-top: 1px solid darken($brightness-97, 4%);
     }
 
     abbr {
-        border-bottom: 1px dotted $neutral-8;
+        border-bottom: 1px dotted $brightness-97;
     }
 
     // Show / hide functionality
@@ -91,12 +91,12 @@ td {
     }
 
     tr:nth-child(odd) > td {
-        background-color: darken($neutral-8, 4%);
+        background-color: darken($brightness-97, 4%);
     }
 }
 
 .table-column--sub {
-    color: $status-neutral;
+    color: $brightness-46;
 }
 
 .table-column--main {
@@ -113,7 +113,7 @@ td {
 
 .table__headline {
     @include fs-bodyHeading(2);
-    border-top: 1px dotted $neutral-5;
+    border-top: 1px dotted $brightness-86;
     padding: $gs-baseline/2 0 $gs-baseline;
 }
 
@@ -122,9 +122,9 @@ td {
 // This is because the caption is outside the flow of the table
 .table__caption {
     padding: $table-baseline*2;
-    background: $neutral-8;
-    border-bottom: 1px solid darken($neutral-8, 4%);
-    border-top: 1px solid $news-accent;
+    background: $brightness-97;
+    border-bottom: 1px solid darken($brightness-97, 4%);
+    border-top: 1px solid $sport-bright;
     font-weight: bold;
     margin-bottom: -2px;
     position: relative;
@@ -134,7 +134,7 @@ td {
 .table__caption--bottom {
     font-weight: normal;
     border-bottom: 0;
-    border-top: 1px solid darken($neutral-8, 4%);
+    border-top: 1px solid darken($brightness-97, 4%);
     caption-side: bottom;
     text-align: center;
 }

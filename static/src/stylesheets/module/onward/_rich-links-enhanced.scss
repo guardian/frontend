@@ -30,7 +30,7 @@
 }
 
 .rich-link .u-faux-block-link--hover {
-    background-color: $neutral-6;
+    background-color: $brightness-93;
 
     .rich-link__image-container {
         background-color: #000000;
@@ -81,7 +81,7 @@
 }
 
 .rich-link__title .inline-quote {
-    fill: $neutral-2;
+    fill: $brightness-46;
     svg {
         height: 14px;
         width: 23px;
@@ -204,13 +204,13 @@
     &.tone-media--item,
     & {
         .rich-link__container {
-            background-color: $paid-article-card-bg;
+            background-color: $brightness-97;
             &:hover,
             &.u-faux-block-link--hover {
-                background: darken($paid-article-subheader, 7%);
+                background: darken($brightness-86, 7%);
             }
             &:before {
-                background-color: $paid-article-brand;
+                background-color: $paidfor-bold;
             }
             .rich-link__header,
             .rich-link__read-more-text {
@@ -218,7 +218,7 @@
                 color: $black;
             }
             .rich-link__arrow-icon {
-                fill: $paid-article-brand;
+                fill: $paidfor-bold;
             }
         }
     }
@@ -228,7 +228,7 @@
 }
 .rich-link__branding {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $brightness-46;
     font-weight: bold;
     margin: -$gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
 }

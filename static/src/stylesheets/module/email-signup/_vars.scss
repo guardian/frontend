@@ -1,33 +1,33 @@
 $form-elements-height: $gs-baseline * 3;
 $form-primary-colour: #ffffff;
-$form-secondary-colour: $news-support-1;
-$form-label-colour: $neutral-2;
+$form-secondary-colour: $sport-pastel;
+$form-label-colour: $brightness-46;
 $icon-size: 30px;
 $icon-padding: $icon-size + ($gs-gutter / 2);
 $rounded-adjustment: .66em;
 
 $tones: (
-    (analysis, $analysis-accent, $news-default),
-    (comment, $comment-support-4, $comment-support-4, $comment-support-4),
-    (feature, $feature-default, $feature-accent, $feature-mute),
-    (live, $live-default, $live-accent),
+    (analysis, $sport-bright, $sport-dark),
+    (comment, $opinion-bold, $opinion-bold, $opinion-bold),
+    (feature, $lifestyle-bold, $lifestyle-dark, $lifestyle-bold),
+    (live, $news-dark, $news-bold),
     (media, $black, $black),
-    (news, $news-default, $news-default),
-    (review, $comment-support-3, darken($comment-support-3, 10%), $review-background, $review-background),
-    (special-feature, $news-support-6, $news-support-6),
-    (plaindark, $neutral-4, $neutral-4, $neutral-4, $multimedia-main-1)
+    (news, $sport-dark, $sport-dark),
+    (review, $yellow-highlight, darken($yellow-highlight, 10%), $brightness-46, $brightness-46),
+    (special-feature, $brightness-46, $brightness-46),
+    (plaindark, $brightness-86, $brightness-86, $brightness-86, $brightness-20)
 );
 
 // Signup boxes embedded in articles have a coloured background
 // so the colour scheme is different.
 $article-tones: (
     // tone, title, accent, text, button-text, background
-    (analysis, $guardian-brand, $analysis-accent, $neutral-2, #ffffff,  #f1f1f1),
-    (comment, $black, $comment-support-4, $black, #ffffff, $comment-support-2),
-    (feature, #ffffff, $features-support-3, #ffffff, $features-support-1, $features-support-1),
-    (live, #ffffff, $features-support-3, #ffffff, $live-main-1, $live-main-1),
-    (media, #ffffff, $multimedia-main-2, #ffffff, $black, $multimedia-main-1),
-    (news, #ffffff, $news-support-1, #ffffff, $guardian-brand, $guardian-brand),
-    (review, #ffffff, $comment-support-3, #ffffff, #615b52, #615b52),
-    (special-feature, #ffffff, $multimedia-main-2, #ffffff, $news-support-6, $news-support-6)
+    (analysis, $guardian-brand, $sport-bright, $brightness-46, #ffffff,  #f1f1f1),
+    (comment, $black, $opinion-bold, $black, #ffffff, $brightness-93),
+    (feature, #ffffff, $lifestyle-pastel, #ffffff, $lifestyle-dark, $lifestyle-dark),
+    (live, #ffffff, $lifestyle-pastel, #ffffff, $news-dark, $news-dark),
+    (media, #ffffff, $yellow-highlight, #ffffff, $black, $brightness-20),
+    (news, #ffffff, $sport-pastel, #ffffff, $guardian-brand, $guardian-brand),
+    (review, #ffffff, $yellow-highlight, #ffffff, #615b52, #615b52),
+    (special-feature, #ffffff, $yellow-highlight, #ffffff, $brightness-46, $brightness-46)
 );

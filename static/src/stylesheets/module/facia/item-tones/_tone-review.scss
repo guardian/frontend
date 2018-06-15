@@ -1,7 +1,7 @@
 .tone-review--item {
     $c-headline: #ffffff;
 
-    background-color: $review-background;
+    background-color: $brightness-46;
 
     &,
     .fc-sublink__title {
@@ -10,50 +10,50 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($review-background, 6%);
+        background-color: darken($brightness-46, 6%);
     }
 
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, $review-background, 80%);
+            color: mix($c-headline, $brightness-46, 80%);
         }
     }
 
     .inline-quote {
-        fill: $review-accent;
+        fill: $yellow-highlight;
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: $review-accent;
+        background-color: $yellow-highlight;
     }
 
     .fc-item__kicker,
     .fc-item__byline,
     .rich-link__read-more-text {
-        color: $review-accent;
+        color: $yellow-highlight;
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, $review-background, 10%);
+        background-color: mix(#000000, $brightness-46, 10%);
     }
 
     .rich-link__arrow-icon {
-        fill: $review-accent;
+        fill: $yellow-highlight;
     }
 
     .fc-item__kicker:after,
     .fc-sublink__kicker:after {
-        color: mix($c-headline, $review-background, 20%);
+        color: mix($c-headline, $brightness-46, 20%);
     }
 
     .fc-item__standfirst {
-        color: mix($c-headline, $review-background, 60%);
+        color: mix($c-headline, $brightness-46, 60%);
     }
 
     .fc-item__meta {
-        color: $neutral-4;
+        color: $brightness-86;
     }
 
     .tone-news--sublink .fc-sublink__kicker {
@@ -63,16 +63,16 @@
 
 .tone-review--sublink {
     .fc-sublink__kicker {
-        color: $review-accent;
+        color: $yellow-highlight;
     }
 
     @include sublink-style(analysis, comment, dead, letters, news) {
         .fc-sublink__kicker {
-            color: $review-background;
+            color: $brightness-46;
         }
     }
 }
 
 .tone-review--most-popular .fc-item__kicker {
-    color: $review-background;
+    color: $brightness-46;
 }

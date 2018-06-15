@@ -153,13 +153,13 @@
             outline: 0;
 
             &:after {
-                background-color: $sport-garnett-feature;
+                background-color: $sport-dark;
             }
         }
 
         &:after {
             background: url('https://uploads.guim.co.uk/2018/06/13/hide-icon_ghost.svg');
-            background-color: $sport-garnett-main-1;
+            background-color: $sport-bold;
             background-size: cover;
             border-radius: 50%;
             content: '';

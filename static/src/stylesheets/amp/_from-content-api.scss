@@ -76,7 +76,7 @@
     margin: 16px 0 28px 24px;
 
     &.quoted {
-        color: $neutral-2;
+        color: $brightness-46;
         margin-left: initial;
         overflow: auto;
 
@@ -134,7 +134,7 @@
 .caption {
     font-size: 12px;
     line-height: 16px;
-    color: $neutral-2;
+    color: $brightness-46;
 
     a {
         color: inherit;
@@ -145,18 +145,18 @@
         margin-top: -$gs-baseline/4;
         width: 14px;
         height: 14px;
-        background-color: $neutral-3;
+        background-color: $brightness-86;
 
         .inline-information__svg {
             width: 4px;
             fill: #ffffff;
 
             .tonal--tone-media & {
-                fill: $multimedia-support-5;
+                fill: $black;
             }
 
             .content__main--minute-article & {
-                fill: $neutral-5;
+                fill: $brightness-86;
             }
         }
     }
@@ -227,7 +227,7 @@ figure.element-table {
         line-height: 20px;
 
         a {
-            color: $neutral-2;
+            color: $brightness-46;
 
             &:hover,
             &:focus,
@@ -270,7 +270,7 @@ figure.element-table {
         font-weight: 600;
     }
     tbody tr:nth-child(odd) td {
-        background-color: darken($neutral-8, 4%);
+        background-color: darken($brightness-97, 4%);
     }
 }
 
@@ -312,7 +312,7 @@ figure.element-table {
         p {
             font-size: 22px;
             line-height: 26px;
-            color: $neutral-2;
+            color: $brightness-46;
             margin-bottom: 0;
         }
     }
@@ -323,15 +323,15 @@ figure.element-table {
         font-size: 16px;
         line-height: 24px;
         font-style: normal;
-        color: $neutral-2;
+        color: $brightness-46;
 
         a,
         a:visited {
-            border-bottom: 1px solid $neutral-4;
+            border-bottom: 1px solid $brightness-86;
 
             &:hover {
                 text-decoration: none;
-                border-bottom: 1px solid $neutral-2;
+                border-bottom: 1px solid $brightness-46;
             }
         }
     }

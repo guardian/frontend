@@ -418,7 +418,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
 }
 
 .hosted-gallery__captions {
-    color: $neutral-7;
+    color: $brightness-97;
     height: 40px;
     flex: 1;
     position: relative;
@@ -437,7 +437,7 @@ $wideHeight: #{map-get($mq-breakpoints, wide) * 3/5 + $headerHeight + $footerHei
     @include f-textSans;
     font-size: 13px;
     height: 40px;
-    color: $neutral-7;
+    color: $brightness-97;
     position: absolute;
     right: 50px;
     left: 10px;
@@ -577,7 +577,7 @@ $progressColor: #ffffff;
         width: 37px;
         color: $progressColor;
         text-align: center;
-        text-shadow: 1px 1px 1px $neutral-2;
+        text-shadow: 1px 1px 1px $brightness-46;
         pointer-events: none;
     }
 

@@ -1,8 +1,8 @@
 @import 'svg';
 
 .contributions__embed  {
-    border-top: 1px solid $news-main-2;
-    background-color: $comment-support-2;
+    border-top: 1px solid $sport-bright;
+    background-color: $brightness-93;
     padding: 0 ($gs-gutter / 4) $gs-baseline;
 }
 
@@ -16,7 +16,7 @@
         margin-top: 0;
 
         // makes it override the block styles
-        border-top: 1px solid $multimedia-main-2;
+        border-top: 1px solid $yellow-highlight;
 
         padding: ($gs-baseline / 3) ($gs-gutter / 2) $gs-baseline;
 
@@ -87,12 +87,12 @@
     padding-bottom: .5em;
 
     &:hover {
-        background-color: $comment-support-1;
-        color: $neutral-6;
+        background-color: darken($yellow-highlight, 5%);
+        color: $brightness-93;
     }
 
     &.active {
-        background-color: $multimedia-main-2;
+        background-color: $yellow-highlight;
         color: $black;
     }
 }
@@ -136,7 +136,7 @@
 }
 
 .contributions__contribute {
-    background-color: $news-main-1;
+    background-color: $sport-dark;
     color: #ffffff;
     font-weight: bold;
     margin-top: $gs-baseline;
@@ -145,7 +145,7 @@
     padding-right: 0;
     margin-left: 0;
     &:hover {
-        background-color: darken($news-main-1, 5%);
+        background-color: darken($sport-dark, 5%);
         text-decoration: none;
     }
 
@@ -188,13 +188,13 @@ a[href].contributions__contribute.contributions__contribute--epic {
 
 .contributions__option-button--epic {
     &:hover {
-        background-color: $comment-support-1;
-        color: $neutral-6;
+        background-color: darken($yellow-highlight, 5%);
+        color: $brightness-93;
     }
 
     &.active {
         background-color: $black;
-        color: $neutral-6;
+        color: $brightness-93;
     }
 }
 
@@ -260,8 +260,8 @@ a[href].contributions__contribute.contributions__contribute--epic {
 }
 
 .contributions__epic_border {
-    border-top: 8px solid #121212;
-    border-left: 1px solid #121212;
+    border-top: 8px solid $black;
+    border-left: 1px solid $black;
     padding-left: 10px;
     padding-right: 10px;
 }

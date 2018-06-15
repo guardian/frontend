@@ -73,7 +73,7 @@ body:after {
         @include fs-textSans(3, true);
     }
 
-    color: $neutral-2;
+    color: $brightness-46;
 
     i {
         vertical-align: baseline;
@@ -82,7 +82,7 @@ body:after {
 
 .relative-timestamp {
     display: block;
-    color: $neutral-2;
+    color: $brightness-46;
     margin: 0;
 }
 

@@ -32,7 +32,7 @@
 }
 
 .search-tool__item {
-    border-top: 1px solid $neutral-5;
+    border-top: 1px solid $brightness-86;
 
     &:first-of-type {
         border-top: 0;
@@ -60,14 +60,14 @@
 
     &:hover,
     &.active {
-        background-color: $neutral-4;
+        background-color: $brightness-86;
         text-decoration: none;
     }
 }
 
 .search-tool__meta {
     @include fs-textSans(2);
-    color: $neutral-2;
+    color: $brightness-46;
     display: block;
     line-height: 16px;
 }

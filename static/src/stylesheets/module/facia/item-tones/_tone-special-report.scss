@@ -1,21 +1,21 @@
 .tone-special-report--item {
     &.fc-item,
     &.rich-link {
-        background-color: $news-support-6;
+        background-color: $brightness-46;
     }
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($news-support-6, 5%);
+        background-color: darken($brightness-46, 5%);
     }
 
     .inline-quote {
-        fill: $neutral-4;
+        fill: $brightness-86;
     }
 
     .rich-link__container:before,
     .fc-item__container:before {
-        background-color: $special-report-accent;
+        background-color: $yellow-highlight;
     }
 
     &,
@@ -27,7 +27,7 @@
     .fc-item__link,
     .fc-sublink__link {
         &:visited {
-            color: mix(#ffffff, $news-support-6, 80%);
+            color: mix(#ffffff, $brightness-46, 80%);
         }
     }
 
@@ -36,44 +36,44 @@
     .fc-item__byline,
     .rich-link__byline,
     .rich-link__read-more-text {
-        color: $special-report-accent;
+        color: $yellow-highlight;
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, $news-support-6, 10%);
+        background-color: mix(#000000, $brightness-46, 10%);
     }
 
     .fc-item__kicker--breaking-news {
-        color: lighten($live-default, 35%);
+        color: lighten($news-dark, 35%);
     }
 
     .fc-item__standfirst {
-        color: mix(#ffffff, $news-support-6, 80%);
+        color: mix(#ffffff, $brightness-46, 80%);
     }
 
     .rich-link__arrow-icon {
-        fill: $special-report-accent;
+        fill: $yellow-highlight;
     }
 
     .fc-item__kicker:after,
     .rich-link__kicker:after,
     .fc-sublink__kicker:after {
-        color: mix(#ffffff, $news-support-6, 20%);
+        color: mix(#ffffff, $brightness-46, 20%);
     }
 
     .fc-sublink__title:before {
-        border-color: mix(#ffffff, $news-support-6, 80%);
+        border-color: mix(#ffffff, $brightness-46, 80%);
     }
 
     .fc-item__meta {
-        color: $neutral-4;
+        color: $brightness-86;
     }
 }
 
 .tone-news--sublink {
     .fc-sublink__kicker,
     .fc-sublink__byline {
-        color: $news-default;
+        color: $sport-dark;
     }
 
     @include sublink-style(editorial, feature, live, media) {
@@ -84,5 +84,5 @@
 }
 
 .tone-news--most-popular .fc-item__kicker {
-    color: $news-default;
+    color: $sport-dark;
 }

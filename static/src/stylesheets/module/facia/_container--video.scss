@@ -1,13 +1,13 @@
 $video-width-desktop: 700px;
 
 .fc-container--video {
-    background-color: darken($media-background, 7%);
+    background-color: darken($black, 7%);
     padding-bottom: 0;
     margin-bottom: $gs-baseline;
 
     .gs-container {
-        background-color: $media-background;
-        border-top: 1px solid $media-default;
+        background-color: $black;
+        border-top: 1px solid $yellow-highlight;
     }
 
     .fc-container__inner {
@@ -69,12 +69,12 @@ $video-width-desktop: 700px;
 
     .treats__treat {
         background-color: transparent;
-        border-color: $media-default;
+        border-color: $yellow-highlight;
 
         &:hover {
-            border-color: $media-default;
-            background-color: $media-default;
-            color: $media-background;
+            border-color: $yellow-highlight;
+            background-color: $yellow-highlight;
+            color: $black;
         }
     }
 
@@ -100,7 +100,7 @@ $video-width-desktop: 700px;
 }
 
 .video-title {
-    color: $media-default;
+    color: $yellow-highlight;
     display: block;
     margin-bottom: $gs-baseline;
 
@@ -115,7 +115,7 @@ $video-width-desktop: 700px;
     overflow: hidden;
 
     @include mq(desktop, leftCol) {
-        background-color: darken($media-background, 5%);
+        background-color: darken($black, 5%);
 
         .has-page-skin & {
             background-color: transparent;
@@ -170,10 +170,10 @@ $video-width-desktop: 700px;
 
         &:hover .video-playlist__icon,
         &:focus .video-playlist__icon {
-            background-color: $media-default;
+            background-color: $yellow-highlight;
 
             svg {
-                fill: $media-background;
+                fill: $black;
             }
         }
     }
@@ -258,7 +258,7 @@ $video-width-desktop: 700px;
     display: inline-block;
     vertical-align: top;
     width: 70%;
-    background-color: $media-background;
+    background-color: $black;
     margin-left: $gs-gutter / 2;
     margin-bottom: $gs-baseline;
 
@@ -358,7 +358,7 @@ $video-width-desktop: 700px;
     white-space: normal;
     padding: 0 $gs-gutter/4 $gs-baseline * 2;
     box-sizing: border-box;
-    border-top: 1px solid $media-default;
+    border-top: 1px solid $yellow-highlight;
     color: #ffffff;
     background-color: rgba(0, 0, 0, .5);
     height: gs-height(3);
@@ -411,13 +411,13 @@ $video-width-desktop: 700px;
         color: #ffffff;
 
         &:visited {
-            color: $neutral-3;
+            color: $brightness-86;
         }
     }
 
     .fc-item__byline,
     .fc-item__kicker {
-        color: $media-default;
+        color: $yellow-highlight;
     }
 }
 
@@ -425,7 +425,7 @@ $video-width-desktop: 700px;
     @include fs-textSans(3);
     position: absolute;
     bottom: 2px;
-    color: $neutral-3;
+    color: $brightness-86;
 }
 
 .fc-item__video-container {

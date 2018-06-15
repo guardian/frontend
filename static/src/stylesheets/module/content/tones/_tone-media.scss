@@ -2,22 +2,22 @@
 
 @include tone-content(
     media, // $tone
-    $media-background, // $tonal__header-background
-    $neutral-6, // $tonal__header-text
-    $media-default, // $tonal__header-link
+    $black, // $tonal__header-background
+    $brightness-93, // $tonal__header-text
+    $yellow-highlight, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $media-default, // $tonal__headline-accent
-    $media-background, // $tonal__standfirst-background
-    $neutral-4, // $tonal__standfirst-text
+    $yellow-highlight, // $tonal__headline-accent
+    $black, // $tonal__standfirst-background
+    $brightness-86, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
-    $media-background, // $tonal__article-background
-    $media-default // $tonal__article-link
+    $black, // $tonal__article-background
+    $yellow-highlight // $tonal__article-link
 );
 
 // Podcast and media tones share page styling
 .tonal--tone-media {
-    color: $neutral-4;
+    color: $brightness-86;
     padding-top: 0;
 
     .byline,
@@ -27,25 +27,25 @@
     .meta__numbers .sharecount__heading,
     .meta__numbers .commentcount2__heading,
     .meta__numbers .sharecount__value {
-        color: $neutral-3;
+        color: $brightness-86;
     }
 
     .meta__numbers .commentcount2__value {
-        color: $neutral-4;
+        color: $brightness-86;
     }
 
     .meta__numbers .inline-comment-16 {
-        fill: $neutral-4;
+        fill: $brightness-86;
     }
 
     .meta__numbers .inline-share {
-        fill: $neutral-3;
+        fill: $brightness-86;
     }
 
     .commentcount2 {
         &:hover,
         &:focus {
-            color: $neutral-4;
+            color: $brightness-86;
         }
     }
 
@@ -54,15 +54,15 @@
     }
 
     .caption {
-        color: $neutral-4;
+        color: $brightness-86;
 
         a {
-            color: $neutral-4;
-            border-bottom: 1px solid $neutral-2;
+            color: $brightness-86;
+            border-bottom: 1px solid $brightness-46;
             transition: border-color .15s ease-out;
 
             &:hover {
-                border-bottom: 1px solid $neutral-7;
+                border-bottom: 1px solid $brightness-97;
                 text-decoration: none;
             }
         }
@@ -78,7 +78,7 @@
     .submeta,
     .submeta__keywords,
     .meta__number + .meta__number {
-        border-color: $media-mute;
+        border-color: $brightness-20;
     }
 
     .from-content-api {
@@ -89,33 +89,33 @@
         a,
         .u-underline {
             color: inherit;
-            border-bottom-color: $neutral-2;
+            border-bottom-color: $brightness-46;
 
             &:hover,
             &:focus {
-                border-color: mix($neutral-2, $neutral-4, 50%);
+                border-color: mix($brightness-46, $brightness-86, 50%);
             }
             &:active {
-                color: $media-default;
-                border-color: $media-default;
+                color: $yellow-highlight;
+                border-color: $yellow-highlight;
             }
         }
     }
 
     .submeta__section-labels .submeta__link {
-        color: $neutral-6;
+        color: $brightness-93;
     }
 
     .submeta__keywords .submeta__link {
-        color: $neutral-3;
+        color: $brightness-86;
     }
 
     .submeta__link:after {
-        color: $neutral-2;
+        color: $brightness-46;
     }
 
     &.content--paidgallery {
-        background: darken($paid-article, 63%);
+        background: darken($brightness-86, 63%);
 
         .tonal__standfirst,
         .ad-slot--gallery-inline {
@@ -128,7 +128,7 @@
 
         .gallery__divider,
         .ad-slot--dark .ad-slot__label {
-            border-top-color: $neutral-6;
+            border-top-color: $brightness-93;
         }
 
         .gallery__meta-container::before,
@@ -143,7 +143,7 @@
         .gallery__item + .gallery__item:not(.gallery__item--advert) .gallery__img-container {
             padding-top: 1.25rem;
             margin-top: 1.25rem;
-            border-top: 1px solid $neutral-6;
+            border-top: 1px solid $brightness-93;
         }
     }
 }

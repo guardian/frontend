@@ -95,7 +95,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
 
     &.manage-account__switch--hinted {
-        color: $features-main-1;
+        color: $lifestyle-dark;
     }
 
     &:before {
@@ -173,7 +173,7 @@ $checkbox-size: $gs-gutter / 1.25;
     contain: strict;
     height: $checkbox-size;
     width: $checkbox-size;
-    border: 1px solid $neutral-3;
+    border: 1px solid $brightness-86;
     border-radius: 2px;
     background-size: $checkbox-size / 1.5;
     background: #ffffff no-repeat center center;

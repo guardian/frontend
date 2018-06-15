@@ -34,7 +34,7 @@
     );
     @include button-hover-colour(
         #ffffff,
-        darken($neutral-3, 10%)
+        darken($brightness-86, 10%)
     );
     box-sizing: border-box;
     display: inline-block;
@@ -86,7 +86,7 @@
     &:active {
         .treats__treat {
             color: $black;
-            border-color: darken($neutral-3, 10%);
+            border-color: darken($brightness-86, 10%);
         }
     }
 }

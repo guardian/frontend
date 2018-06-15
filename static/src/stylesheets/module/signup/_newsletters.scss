@@ -38,8 +38,8 @@
 
 .newsletter-card {
     margin-bottom: $gs-baseline;
-    border-top: 1px solid $neutral-3;
-    background-color: $comment-support-2;
+    border-top: 1px solid $brightness-86;
+    background-color: $brightness-93;
     padding: $gs-baseline / 2 $gs-gutter / 2 $gs-baseline;
     box-sizing: border-box;
     width: 100%;
@@ -84,7 +84,7 @@
     .newsletter-card__text-input {
         @include fs-textSans(2);
         border-radius: 1000px 0 0 1000px;
-        border: 1px solid $neutral-3;
+        border: 1px solid $brightness-86;
         border-right: 0;
         float: left;
         padding-left: $gs-baseline;
@@ -95,8 +95,8 @@
     .newsletter-card__lozenge {
         @include fs-textSans(2);
         color: #ffffff;
-        border: 1px solid $news-main-1;
-        background-color: $news-main-1;
+        border: 1px solid $sport-dark;
+        background-color: $sport-dark;
         border-radius: 1000px;
         border-width: 1px;
         height: 3em;
@@ -106,8 +106,8 @@
 
         &:hover,
         &:focus {
-            border-color: darken($news-main-1, 10%);
-            background-color: darken($news-main-1, 10%);
+            border-color: darken($sport-dark, 10%);
+            background-color: darken($sport-dark, 10%);
         }
     }
 
@@ -163,11 +163,11 @@
 
 .newsletter-card__frequency {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $brightness-46;
     padding-bottom: $gs-baseline / 2;
 
     .inline-icon {
-        fill: $neutral-3;
+        fill: $brightness-86;
     }
 }
 
@@ -188,7 +188,7 @@
     }
 
     .inline-icon {
-        background-color: $neutral-3;
+        background-color: $brightness-86;
         border-radius: 1000px;
         fill: $black;
         height: $gs-baseline * 3;

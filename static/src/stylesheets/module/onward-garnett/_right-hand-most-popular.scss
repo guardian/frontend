@@ -13,7 +13,7 @@
     clear: left;
     padding-top: $gs-baseline/3;
     margin-bottom: $gs-baseline;
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
 
     &:first-child {
         padding-top: 0;
@@ -55,7 +55,7 @@
     &:active,
     &:visited {
         .right-most-popular-item__headline {
-            color: $neutral-2;
+            color: $brightness-46;
         }
     }
 }

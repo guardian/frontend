@@ -46,7 +46,7 @@
 }
 
 .site-message--alt {
-    background-color: $status-neutral;
+    background-color: $brightness-46;
 }
 
 .site-message__inner {
@@ -259,7 +259,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         width: $gs-gutter;
         height: $gs-gutter;
         background-color: $black;
-        box-shadow: 0 1px 0 $neutral-3;
+        box-shadow: 0 1px 0 $brightness-86;
 
         &:before {
             @include font(arial, bold, 14px);
@@ -269,7 +269,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             left: 6px;
             top: 3px;
             background-color: $black;
-            color: $neutral-4;
+            color: $brightness-86;
         }
 
         i {
@@ -360,7 +360,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             content: '×';
             top: -($gs-baseline/2);
             left: 2px;
-            color: $neutral-2;
+            color: $brightness-46;
         }
 
         i {

@@ -13,7 +13,7 @@
         display: block;
         width: 100%;
         height: 1px;
-        background-color: $neutral-4;
+        background-color: $brightness-86;
     }
 
     &:first-child:before {
@@ -69,13 +69,13 @@
     }
 
     .inline-icon {
-        fill: $neutral-2;
+        fill: $brightness-46;
     }
 
     .inline-camera,
     .inline-volume-high,
     .inline-video-icon {
-        fill: $media-default;
+        fill: $yellow-highlight;
     }
 
     .inline-video-icon svg {
@@ -99,7 +99,7 @@
         }
 
         .headline-list__count {
-            color: $neutral-3;
+            color: $brightness-86;
         }
     }
 

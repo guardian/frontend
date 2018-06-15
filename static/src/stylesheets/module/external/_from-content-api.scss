@@ -104,7 +104,7 @@
     }
 
     &.quoted {
-        color: $neutral-2;
+        color: $brightness-46;
         margin-left: initial;
         overflow: auto;
     }
@@ -168,7 +168,7 @@
 
 .caption {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $brightness-46;
 
     a {
         color: inherit;
@@ -179,18 +179,18 @@
         margin-top: -$gs-baseline/4;
         width: 14px;
         height: 14px;
-        background-color: $neutral-3;
+        background-color: $brightness-86;
 
         .inline-information__svg {
             width: 4px;
             fill: #ffffff;
 
             .tonal--tone-media & {
-                fill: $multimedia-support-5;
+                fill: $black;
             }
 
             .content__main--minute-article & {
-                fill: $neutral-5;
+                fill: $brightness-86;
             }
         }
     }
@@ -257,7 +257,7 @@ figure.element--thumbnail + h2 {
         @include fs-bodyCopy(1);
 
         a {
-            color: $neutral-2;
+            color: $brightness-46;
 
             &:hover,
             &:focus,
@@ -299,7 +299,7 @@ figure.element--thumbnail + h2 {
         font-weight: 600;
     }
     tbody tr:nth-child(odd) td {
-        background-color: darken($neutral-8, 4%);
+        background-color: darken($brightness-97, 4%);
     }
 }
 
@@ -364,7 +364,7 @@ figure.element--thumbnail + h2 {
 
         p {
             @include fs-headline(4);
-            color: $neutral-2;
+            color: $brightness-46;
             margin-bottom: 0;
             @include mq(tablet) {
                 @include fs-headline(3, true);
@@ -377,15 +377,15 @@ figure.element--thumbnail + h2 {
     cite {
         @include fs-bodyHeading(2);
         font-style: normal;
-        color: $neutral-2;
+        color: $brightness-46;
 
         a,
         a:visited {
-            border-bottom: 1px solid $neutral-4;
+            border-bottom: 1px solid $brightness-86;
 
             &:hover {
                 text-decoration: none;
-                border-bottom: 1px solid $neutral-2;
+                border-bottom: 1px solid $brightness-46;
             }
         }
     }

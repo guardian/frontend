@@ -45,7 +45,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         .meta__numbers {
             @include clearfix;
             border-bottom: 0;
-            border-top: 1px dotted $neutral-5;
+            border-top: 1px dotted $brightness-86;
             height: 36px;
             padding-bottom: $gs-baseline / 4;
             padding-top: $gs-baseline / 4;
@@ -58,7 +58,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
         @include mq(desktop) {
             padding-top: $gs-baseline/6;
-            border-top: 1px dotted $neutral-5;
+            border-top: 1px dotted $brightness-86;
         }
     }
 }
@@ -98,7 +98,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 .content--liveblog .content__main {
-    background-color: $neutral-8;
+    background-color: $brightness-97;
 }
 
 /* Timestamps
@@ -140,7 +140,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         $size: 12px;
         display: inline-block;
         content: '';
-        background-color: $live-default;
+        background-color: $news-dark;
         width: $size;
         height: $size;
         margin-bottom: -1px;
@@ -152,7 +152,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         @include fs-textSans(1);
         display: inline-block;
         margin-left: $gs-gutter/4;
-        color: $neutral-2;
+        color: $brightness-46;
         font-weight: normal;
     }
 
@@ -175,7 +175,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
 .updated-time {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $brightness-46;
     position: absolute;
     right: $gs-gutter;
     bottom: $gs-baseline / 3;
@@ -199,13 +199,13 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline;
     background-color: #ffffff;
-    border-top: 1px solid $neutral-3;
-    border-bottom: 1px solid $neutral-6;
+    border-top: 1px solid $brightness-86;
+    border-bottom: 1px solid $brightness-93;
 }
 
 .block.is-key-event,
 .block.is-summary {
-    border-top: 1px solid $live-accent;
+    border-top: 1px solid $news-bold;
 }
 
 .truncated-block {
@@ -221,7 +221,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 .block--notification {
-    border-top-color: $live-default;
+    border-top-color: $news-dark;
 }
 
 .notify {
@@ -232,7 +232,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
     @include fs-textSans(3);
     text-align: left;
     font-weight: bold;
-    color: $live-default;
+    color: $news-dark;
 }
 
 .autoupdate--has-animation {
@@ -242,15 +242,15 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 @keyframes new-block-animation {
-    0% { opacity: 0; border-top-color: $live-accent; }
-    100% { opacity: 1; border-top-color: $neutral-3; }
+    0% { opacity: 0; border-top-color: $news-bold; }
+    100% { opacity: 1; border-top-color: $brightness-86; }
 }
 
 /* Above/Below content
    ========================================================= */
 .blog {
     .content__keywords {
-        border-top: 1px dotted $neutral-3;
+        border-top: 1px dotted $brightness-86;
         line-height: 20px;
     }
 }
@@ -292,7 +292,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
        ========================================================= */
     .liveblog-block-byline {
         margin-bottom: $gs-baseline * .5;
-        border-bottom: 1px dotted $neutral-4;
+        border-bottom: 1px dotted $brightness-86;
         padding-bottom: $gs-baseline * .5;
     }
 
@@ -332,7 +332,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         }
 
         > blockquote {
-            color: $neutral-2;
+            color: $brightness-46;
         }
 
         /* Media
@@ -353,7 +353,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
                 background: none;
             }
             tr {
-                border-bottom: 1px solid darken($neutral-8, 4%);
+                border-bottom: 1px solid darken($brightness-97, 4%);
 
                 th:first-child,
                 td:first-child {
@@ -365,7 +365,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
                 }
             }
             thead {
-                border-top: 1px solid darken($neutral-8, 4%);
+                border-top: 1px solid darken($brightness-97, 4%);
             }
         }
 
@@ -400,7 +400,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         > .element-image,
         > .element-video {
             clear: left;
-            border-bottom: 2px solid $neutral-8;
+            border-bottom: 2px solid $brightness-97;
             margin-bottom: $gs-baseline;
             padding-bottom: $gs-baseline/2;
 
@@ -487,7 +487,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
         margin: 0;
 
         @include mq($until: desktop) {
-            background-color: $neutral-8;
+            background-color: $brightness-97;
             padding: $gs-baseline $content-gutter;
         }
 
@@ -514,7 +514,7 @@ $timeline-width: 15px;
         }
 
         .dropdown {
-            border-top: 1px solid $live-main-1;
+            border-top: 1px solid $news-dark;
             padding-top: $gs-baseline/2;
         }
     }
@@ -554,7 +554,7 @@ $timeline-width: 15px;
     width: 100%;
     overflow: hidden;
     min-height: gs-height(1) + $gs-baseline/3;
-    border-bottom: 1px solid $neutral-4;
+    border-bottom: 1px solid $brightness-86;
 
     &:last-child {
         border-bottom: 0;
@@ -581,7 +581,7 @@ $timeline-width: 15px;
     @include mq(desktop) {
         position: relative;
         padding: 0 $gs-gutter $gs-baseline*2;
-        border-left: 1px solid $neutral-5;
+        border-left: 1px solid $brightness-86;
 
         &:before {
             @include circular;
@@ -592,11 +592,11 @@ $timeline-width: 15px;
             left: ($timeline-width/2)*-1;
             width: $timeline-width;
             height: $timeline-width;
-            background-color: $neutral-3;
+            background-color: $brightness-86;
         }
 
         &:hover:before {
-            background-color: $neutral-2;
+            background-color: $brightness-46;
         }
         &.live-blog__key-event--selected:before {
             background-color: $black;
@@ -635,10 +635,10 @@ $timeline-width: 15px;
 .timeline__title {
     @include fs-textSans(3);
     display: table-cell;
-    border-color: $neutral-8;
+    border-color: $brightness-97;
 
     .timeline__link:hover & {
-        border-color: $neutral-2;
+        border-color: $brightness-46;
     }
 
     @include mq(desktop) {
@@ -658,12 +658,12 @@ $timeline-width: 15px;
 
     .tone-news--item {
         .fc-item__content {
-            background-color: darken($neutral-8, 3%);
+            background-color: darken($brightness-97, 3%);
         }
 
         .u-faux-block-link--hover {
             .fc-item__content {
-                background-color: darken($neutral-8, 8%);
+                background-color: darken($brightness-97, 8%);
             }
         }
     }
@@ -673,7 +673,7 @@ $timeline-width: 15px;
     @include fs-header(2);
     padding-top: $gs-baseline / 4;
     margin-bottom: ($gs-baseline/3)*4;
-    border-top: 1px solid $neutral-4;
+    border-top: 1px solid $brightness-86;
 }
 
 /* Football components
@@ -684,7 +684,7 @@ $timeline-width: 15px;
     }
 
     .tabs__tab--selected {
-        border-bottom-color: $neutral-8 !important;
+        border-bottom-color: $brightness-97 !important;
     }
 
     .match-summary {
@@ -699,7 +699,7 @@ $timeline-width: 15px;
             margin: $gs-baseline/2 $gs-gutter/2 0;
 
             @include mq(mobileLandscape) {
-                border-left: 1px solid darken($neutral-8, 4%);
+                border-left: 1px solid darken($brightness-97, 4%);
                 margin-left: $gs-gutter;
                 margin-right: $gs-gutter;
                 padding-left: $gs-gutter;
@@ -718,11 +718,11 @@ $timeline-width: 15px;
 
     @include mq(desktop) {
         .tabs__container--multiple {
-            background-color: $neutral-8;
+            background-color: $brightness-97;
         }
 
         .tabs__tab--selected .tab__link {
-            background-color: $neutral-8;
+            background-color: $brightness-97;
         }
 
         .match-summary {
@@ -766,13 +766,13 @@ $timeline-width: 15px;
         background-color: #ffffff;
 
         .content__labels {
-            border-bottom-color: $neutral-5;
+            border-bottom-color: $brightness-86;
         }
         .content__section-label__link {
-            color: $live-default;
+            color: $news-dark;
         }
         .content__series-label__link {
-            color: $neutral-2;
+            color: $brightness-46;
         }
         .content__headline {
             color: $black;

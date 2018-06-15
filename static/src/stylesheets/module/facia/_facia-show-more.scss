@@ -15,7 +15,7 @@
 .show-more__error-message {
     @include fs-textSans(3);
     transition: opacity 1.5s;
-    color: $status-negative;
+    color: $news-bold;
     display: inline-block;
     padding-top: $gs-baseline / 2;
     opacity: 1;
@@ -41,7 +41,7 @@
     }
 
     .inline-minus {
-        fill: $neutral-2;
+        fill: $brightness-46;
     }
 
     .fc-show-more--visible & {

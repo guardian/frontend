@@ -28,7 +28,7 @@
         left: 0;
         content: '';
         width: $gs-gutter * 6 + 2px;
-        border-top: 1px solid $neutral-3;
+        border-top: 1px solid $brightness-86;
 
         @include mq($from: tablet) {
             width: $gs-column-width * 2;

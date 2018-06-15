@@ -11,7 +11,7 @@
 .gallery__meta-container {
     &:before {
         content: '';
-        border-top: 1px solid $media-mute;
+        border-top: 1px solid $brightness-20;
         padding-top: $gs-baseline / 4;
         display: block;
         width: gs-span(1);
@@ -24,7 +24,7 @@
 }
 
 .gallery__divider {
-    border-top: 1px solid $media-mute;
+    border-top: 1px solid $brightness-20;
 
     @include mq(desktop) {
         padding-top: $gs-baseline / 2;
@@ -54,7 +54,7 @@
             top: 0;
             bottom: 0;
             left: -$gs-gutter/2;
-            border-left: 1px solid $media-mute;
+            border-left: 1px solid $brightness-20;
         }
     }
 }
@@ -70,7 +70,7 @@
         margin-left: -$gs-gutter;
         margin-right: -$gs-gutter;
         padding-top: $gs-baseline / 2;
-        border-top: 1px solid $media-mute;
+        border-top: 1px solid $brightness-20;
 
         &:first-of-type {
             border-top: 0;
@@ -132,7 +132,7 @@
 }
 
 .gallery__caption {
-    color: $neutral-4;
+    color: $brightness-86;
     margin-bottom: .5rem;
 
     @include mq(desktop) {
@@ -140,12 +140,12 @@
     }
 
     a {
-        color: $neutral-4;
-        border-bottom: 1px solid $neutral-2;
+        color: $brightness-86;
+        border-bottom: 1px solid $brightness-46;
         transition: border-color .15s ease-out;
 
         &:hover {
-            border-bottom: 1px solid $neutral-7;
+            border-bottom: 1px solid $brightness-97;
             text-decoration: none;
         }
     }
@@ -153,13 +153,13 @@
 
 .gallery__caption__title {
     @include fs-headline(2);
-    color: $neutral-5;
+    color: $brightness-86;
     display: block;
     margin-bottom: $gs-baseline/2;
 }
 
 .gallery__credit {
-    color: $neutral-3;
+    color: $brightness-86;
 
     @include mq(desktop) {
         padding-right: $gs-gutter / 2;
@@ -239,8 +239,8 @@
     }
 
     .meta__extras {
-        border-top: 1px dotted $media-mute;
-        border-bottom: 1px dotted $media-mute;
+        border-top: 1px dotted $brightness-20;
+        border-bottom: 1px dotted $brightness-20;
         margin-top: $gs-baseline / 2;
     }
 
@@ -301,7 +301,7 @@
     @include mq(desktop) {
         &:hover,
         .article__img-container:hover & {
-            background-color: $media-default;
+            background-color: $yellow-highlight;
 
             &.inline-expand-image {
                 fill: #000000;

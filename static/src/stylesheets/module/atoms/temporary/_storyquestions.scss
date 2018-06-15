@@ -9,8 +9,8 @@
 .user__question-title {
     @include fs-headline(3);
     font-weight: 900;
-    color: $news-main-1;
-    border-top: 1px solid $news-main-2;
+    color: $sport-dark;
+    border-top: 1px solid $sport-bright;
     padding-top: $gs-baseline / 2;
 
     @include mq($from: tablet) {
@@ -29,26 +29,26 @@
 .user__questions-text--wrapper {
     position: relative;
     overflow: hidden;
-    background-color: $neutral-8;
+    background-color: $brightness-97;
     margin-bottom: 0;
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
     padding-left: 8px;
 
     &.is-clicked {
-        background-color: $news-support-5;
+        background-color: $green-bright;
         padding-bottom: 0;
     }
 
     &.is-clicked + .storyquestion-submission-container {
-        background-color: $news-support-5;
+        background-color: $green-bright;
     }
 
     &:hover {
-        background-color: $news-support-1;
+        background-color: $sport-pastel;
 
         .user__question-upvote {
-            background-color: $news-main-1;
+            background-color: $sport-dark;
             color: #ffffff;
         }
         cursor: pointer;
@@ -56,12 +56,12 @@
 }
 
 .user__question-section {
-    border-top: 1px dotted $neutral-6;
+    border-top: 1px dotted $brightness-93;
     margin-top: $gs-baseline * 2;
 
     h3 {
         @include fs-textSans(2);
-        color: $neutral-2;
+        color: $brightness-46;
         font-weight: 200;
     }
 }
@@ -72,7 +72,7 @@
     display: block;
     //used to avoid fixed width across multiple break points.
     max-width: 77%;
-    color: $news-main-1;
+    color: $sport-dark;
     position: relative;
     margin-bottom: $gs-baseline;
 
@@ -112,9 +112,9 @@
     right: 10px;
     bottom: $gs-baseline;
     position: absolute;
-    color: $news-main-1;
+    color: $sport-dark;
     font-weight: 900;
-    border: 1px solid $news-main-1;
+    border: 1px solid $sport-dark;
     padding-top: $gs-baseline / 3;
     padding-bottom: 3px;
     float: right;

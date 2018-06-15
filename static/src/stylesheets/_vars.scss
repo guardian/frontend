@@ -64,14 +64,8 @@ $mq-breakpoints: (
 
 // Guss defaults overrides
 // =============================================================================
-
 $guss-column-rule: none;
 
-
-// Colours, take from pasteup/palette
-// =============================================================================
-
-$neutral-2-contrasted:   darken($neutral-2, 3%);
 
 // Neutrals
 // =============================================================================
@@ -89,9 +83,9 @@ $garnett-nav-background: #e9eff1;
 
 $yellow-highlight:       #ffe500;
 
+
 // Pillars
 // =============================================================================
-
 // News (Red)
 $news-dark:              #9c060b;
 $news-bold:              #c70000;
@@ -128,97 +122,40 @@ $lifestyle-pastel:       #fec8d3;
 $lifestyle-faded:        #feeef7;
 
 
+
+
+
+// Greens
+$green-dark:         #236925;
+$green-bold:         #3db540;
+$green-bright:       #33e638;
+$green-pastel:       #93d995;
+$green-faded:        #d1fcd2;
+
+
+$paidfor-dark:       #65a897;
+$paidfor-bold:       #69d1ca;
+
+
+
 // Tones
 // =============================================================================
-
-$news-default:           $news-main-1;
-$news-accent:            $news-main-2;
-
-$feature-default:        $features-support-1;
-$feature-accent:         $features-main-2;
-$feature-mute:           $features-support-3;
-
-$analysis-default:       $news-main-1;
-$analysis-accent:        $news-main-2;
-$analysis-mute:          $comment-support-2;
-$analysis-background:    $neutral-7;
-
-$comment-default:        $comment-support-4;
-$comment-accent:         $comment-main-2;
-$comment-background:     $comment-support-2;
-
-$live-default:           $live-main-1;
-$live-accent:            $live-main-2;
-$live-mute:              $features-support-3;
-
-$media-default:          $multimedia-main-2;
-$media-background:       $multimedia-support-5;
-$media-mute:             $black;
-
-$review-accent:          $comment-support-3;
-$review-background:      $comment-support-1;
-
-$editorial-default:      $news-main-1;
-$editorial-accent:       $news-support-1;
-
-$crosswordAccent1:       $news-main-1;
-$crosswordAccent2:       #ffd800;
-
-$story-package:          $news-support-7;
 $story-package-garnett:  #3f464a;
 
-$paidfor-background:     $news-support-3;
-//temporary change from #fce800 whilst secret special report is running
-$special-report-accent:  #ffd900;
+
 
 
 // Social icons
 // =============================================================================
-
-$social-email:           #767676;
+// $social-email:           #767676;
 $social-facebook:        #3067a3;
 $social-twitter:         #03b3ee;
-$social-gplus:           #4285F4;
+$social-gplus:           #4285f4;
 $social-whatsapp:        #59cb3f;
 $social-linkedin:        #0071a1;
 $social-pinterest:       #b9252c;
 $social-messenger:       #0084ff;
 
-
-// Stati
-// =============================================================================
-
-$status-positive-garnett:   #3db540;
-$status-neutral-garnett:    $brightness-46;
-$status-negative-garnett:   $error;
-
-$status-positive:           $success;
-$status-neutral:            $neutral-2;
-$status-negative:           $error;
-
-// Quiz colours
-// =============================================================================
-
-$quiz-correct:           $status-positive-garnett;
-$quiz-incorrect:         #c3021b;
-
-
-// Commercial content
-// =============================================================================
-
-$paid-article:              #d9d9d9;
-$paid-article-header:       #bfbfbf;
-$paid-article-header-bg:    #b8b8b8;
-$paid-article-subheader:    #cccccc;
-$paid-article-subheader-bg: #c4c4c4;
-$paid-article-card-bg:      $neutral-8;
-$paid-article-media-bg:     #bbb7b1;
-$paid-article-icon:         #767676;
-$paid-article-brand:        #69d1ca;
-$paid-article-mpu:          #cccccc;
-$paid-article-richlink:     #65a897;
-$rainbow-red:               #ed1c24; // from Guss
-$paid-card-kicker:          #626262;
 
 $garnett-small-button-size: 30px;
 $garnett-medium-button-size: 42px;
@@ -233,34 +170,32 @@ $garnett-x-large-button-icon: 24px;
 
 // MPU
 // =============================================================================
-
 $mpu-original-width: 300px;
 $mpu-original-height: 250px;
 $mpu-align-offset: 20px; // Align bottom of ad with text on desktop
 $mpu-ad-label-height: $gs-baseline*2;
 
+
 // Dimensions
 // =============================================================================
-
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
 $content-top-padding: $gs-baseline / 1.5;
 
+
 // Available image widths
 // these should match the ones in common/modules/ui/images.js
 // =============================================================================
-
 $available-image-widths: 140px, 220px, 300px, 460px, 620px, 700px, 860px, 940px, 1430px, 1920px;
+
 
 // Other variables common to many partials
 // =============================================================================
-
 $popup-toggle-arrow-size: 4px;
 
-/**
- * This shall stop the z-index chaos
- */
 
+// z-index
+// =============================================================================
 $zindex-ui: 1000;      // UI elements
 $zindex-ads: 1010;     // Ads
 $zindex-content: 1015; // Modals and overlays inside content

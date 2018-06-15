@@ -74,7 +74,7 @@ $identity-header-height: 48px;
     margin-bottom: $gs-baseline;
     &.identity-title-explainer--small {
         @include fs-textSans(2);
-        color: $neutral-2;
+        color: $brightness-46;
     }
 }
 
@@ -247,7 +247,7 @@ $identity-header-height: 48px;
 .user-profile__edit-link {
     @include fs-textSans(1);
     display: block;
-    color: $neutral-2-contrasted;
+    color: $brightness-46;
     font-weight: normal;
     margin: 0;
 }
@@ -362,7 +362,7 @@ $identity-header-height: 48px;
 
 .dropdown-styled.dropdown--email-subscription {
     @supports (transform: rotate(45deg)) {
-        border-color: $neutral-6;
+        border-color: $brightness-93;
         .dropdown__button {
             padding: $gs-baseline / 4 0 $gs-baseline;
             color: $black;

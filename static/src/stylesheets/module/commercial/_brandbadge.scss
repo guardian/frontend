@@ -4,7 +4,7 @@
 
 .badge {
     @include fs-textSans(1);
-    color: $neutral-2;
+    color: $brightness-46;
     font-weight: bold;
     margin-top: $gs-baseline / 2;
     padding-right: $gs-gutter / 2;
@@ -32,7 +32,7 @@
         width: $left-column;
         float: left;
         clear: left;
-        border-top: 1px dotted $neutral-5;
+        border-top: 1px dotted $brightness-86;
     }
 
     @include mq(wide) {
@@ -55,7 +55,7 @@
 
     > .badge__help {
         @include font-size(11);
-        color: $paid-article-icon;
+        color: $brightness-46;
         font-weight: normal;
     }
 }
@@ -65,7 +65,7 @@
         @include mq(tablet) {
             float: left;
             clear: left;
-            border-top: 1px dotted $neutral-5;
+            border-top: 1px dotted $brightness-86;
         }
     }
 }
@@ -89,7 +89,7 @@
 .content--media--audio:not(.paid-content),
 .content--gallery:not(.paid-content) {
     .badge {
-        color: $neutral-3;
+        color: $brightness-86;
     }
 
     .badge__help {
@@ -98,7 +98,7 @@
 }
 
 .badge--interactive {
-    border-top: 1px dotted $paid-article-icon;
+    border-top: 1px dotted $brightness-46;
 
     @include mq(desktop) {
         min-height: 135px;
@@ -112,7 +112,7 @@
     }
 
     .badge__link {
-        border-bottom-color: $paid-article-icon;
+        border-bottom-color: $brightness-46;
     }
 }
 

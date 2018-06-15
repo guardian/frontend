@@ -6,7 +6,7 @@
     width: 100%;
     height: 100%;
     padding-top: 2.5%;
-    background: $neutral-8;
+    background: $brightness-97;
     text-align: center;
 
     .button:last-of-type {
@@ -92,8 +92,8 @@
     width: $xword-cell-width;
     height: $xword-cell-width;
     line-height: $xword-cell-width;
-    border: 1px solid $neutral-3;
-    border-left: 1px solid $neutral-3;
+    border: 1px solid $brightness-86;
+    border-left: 1px solid $brightness-86;
 
     @include mq($until: mobileLandscape) {
         width: $xword-cell-width-small;
@@ -108,12 +108,12 @@
     }
 
     &:first-of-type {
-        border-left: 1px solid $neutral-3;
+        border-left: 1px solid $brightness-86;
     }
 
     &.has-value {
-        background: $neutral-4;
-        color: $neutral-3;
+        background: $brightness-86;
+        color: $brightness-86;
     }
 }
 
@@ -151,7 +151,7 @@
     position: absolute;
 
     &.entered {
-        color: $neutral-3;
+        color: $brightness-86;
     }
 }
 

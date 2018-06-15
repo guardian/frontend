@@ -148,7 +148,7 @@ blockquote {
 }
 
 .rich-link__container--paidcontent {
-    border-top-color: $paid-article-brand;
+    border-top-color: $paidfor-bold;
 
     & .rich-link__header {
         font-family: Helvetica, Arial, sans-serif;
@@ -159,7 +159,7 @@ blockquote {
 
     & .rich-link__read-more {
         font-family: Helvetica, Arial, sans-serif;
-        color: darken($paid-article-brand, 15%);
+        color: darken($paidfor-bold, 15%);
     }
 }
 

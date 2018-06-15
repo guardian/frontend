@@ -113,7 +113,7 @@
 
     .manage-account-cta--disabled {
         background: none;
-        color: $news-default;
+        color: $sport-dark;
 
         &:hover,
         &:focus {
@@ -121,13 +121,13 @@
             text-decoration: underline;
         }
         &:active {
-            color: $news-accent;
+            color: $sport-bright;
         }
     }
 
     .subscription-changed-title {
         @include fs-header(3);
-        border-top: 1px solid $neutral-4;
+        border-top: 1px solid $brightness-86;
         padding: 15px 0 20px;
         margin-top: $gs-gutter*2;
     }
@@ -143,7 +143,7 @@
         }
 
         .summary {
-            background-color: $neutral-8;
+            background-color: $brightness-97;
         }
 
         .summary-arrow {
@@ -188,16 +188,16 @@
     }
 
     .summary-header--current {
-        background-color: $neutral-2;
+        background-color: $brightness-46;
     }
     .summary-header--target {
-        background-color: $news-accent;
+        background-color: $sport-bright;
     }
 
     .summary-package {
         height: 57px;
-        border-top: 1px solid $neutral-4;
-        border-bottom: 1px solid $neutral-4;
+        border-top: 1px solid $brightness-86;
+        border-bottom: 1px solid $brightness-86;
 
         .summary-package__icon-container {
             display: inline-block;
@@ -315,7 +315,7 @@
 
     .manage-account__button.is-disabled {
         cursor: not-allowed;
-        background-color: $neutral-3;
+        background-color: $brightness-86;
     }
 
     .contribution-cancellation__keep-contributing {
@@ -344,8 +344,8 @@
     padding: 15px 0 15px 4px;
     margin: 32px 0 15px;
     background-color: #fff8e5;
-    border-top: 1px solid $comment-accent;
-    border-bottom: 1px solid $comment-accent;
+    border-top: 1px solid $brightness-46;
+    border-bottom: 1px solid $brightness-46;
 }
 
 .manage-account-divider {

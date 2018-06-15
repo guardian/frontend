@@ -118,7 +118,7 @@ td.gsc-search-button {
     @include f-headline;
     font-size: get-font-size(headline, 1) !important;
     line-height: get-line-height(headline, 1) !important;
-    color: $neutral-2 !important;
+    color: $brightness-46 !important;
 }
 // Hide URLs
 .gsc-url-top {
@@ -140,7 +140,7 @@ td.gsc-search-button {
     &:visited {
         &,
         b {
-            color: $neutral-2;
+            color: $brightness-46;
         }
     }
 
@@ -156,7 +156,7 @@ td.gsc-search-button {
     }
 }
 .gsc-expansionArea .gsc-result {
-    border-top: 1px solid $neutral-5 !important;
+    border-top: 1px solid $brightness-86 !important;
 }
 .gsc-webResult .gsc-result {
     padding-top: 2px;

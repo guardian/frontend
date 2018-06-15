@@ -2,15 +2,15 @@
 
 @include tone-content(
     live, // $tone
-    $live-default, // $tonal__header-background
-    $neutral-6, // $tonal__header-text
+    $news-dark, // $tonal__header-background
+    $brightness-93, // $tonal__header-text
     #ffffff, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $live-default, // $tonal__headline-accent
-    $live-accent, // $tonal__standfirst-background
+    $news-dark, // $tonal__headline-accent
+    $news-bold, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
-    $neutral-8, // $tonal__article-background
-    $live-default // $tonal__article-link
+    $brightness-97, // $tonal__article-background
+    $news-dark // $tonal__article-link
 );

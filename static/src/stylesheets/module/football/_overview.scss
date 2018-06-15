@@ -268,7 +268,7 @@
 }
 .football-group__container {
     @include mq(tablet) {
-        background: $neutral-8;
+        background: $brightness-97;
         flex: 1 1 auto;
         margin-bottom: 0;
     }
@@ -289,17 +289,17 @@
 
     .football-matches {
         .table__caption--top {
-            border-top: 1px solid darken($neutral-8, 4%);
+            border-top: 1px solid darken($brightness-97, 4%);
         }
     }
 
     .football-matches:first-child {
         .table__caption--top {
-            border-top: 1px solid $news-accent;
+            border-top: 1px solid $sport-bright;
         }
 
         .football-matches__date {
-            border-top: 1px solid darken($neutral-8, 4%);
+            border-top: 1px solid darken($brightness-97, 4%);
             display: block;
             margin-top: $gs-baseline/2;
             padding-top: $gs-baseline/2;
@@ -327,7 +327,7 @@
    ========================================================================== */
 .football-knockout-chart {
     padding: 0 $gs-gutter/2;
-    background: $neutral-8;
+    background: $brightness-97;
     display: none;
     position: relative;
 
@@ -345,7 +345,7 @@
     .football-match__team {
         height: ($gs-baseline/1.5)*2;
         padding: 0 0 $gs-baseline*1.5;
-        border: 1px solid $neutral-2;
+        border: 1px solid $brightness-46;
         border-top: 0;
         display: block;
         float: none;
@@ -366,14 +366,14 @@
         top: auto;
     }
     .football-match__victory-line {
-        border-left: 1px dotted $neutral-2;
+        border-left: 1px dotted $brightness-46;
         height: 50%;
         position: absolute;
         right: 0;
         top: 25%;
 
         &:after {
-            border-top: 1px dotted $neutral-2;
+            border-top: 1px dotted $brightness-46;
             content: ' ';
             display: block;
             position: absolute;
@@ -481,7 +481,7 @@
     }
     .football-match__victory-line {
         box-sizing: border-box;
-        border-right: 1px dotted $neutral-2;
+        border-right: 1px dotted $brightness-46;
         width: 100%;
 
         &:after {
@@ -491,7 +491,7 @@
 }
 .football-round__name {
     padding: $gs-baseline/2 0;
-    border-bottom: 1px solid $neutral-3;
+    border-bottom: 1px solid $brightness-86;
     font-weight: bold;
     text-align: center;
 }
@@ -502,7 +502,7 @@
 }
 
 .football-round--playoff {
-    background: $neutral-8;
+    background: $brightness-97;
     bottom: 0;
     height: 25%;
     left: 42.857142857%; // 50 - (100/7/2) Half off the width of a seventh to get it exactly center

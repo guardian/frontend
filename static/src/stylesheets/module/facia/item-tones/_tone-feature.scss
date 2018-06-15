@@ -1,7 +1,7 @@
 .tone-feature--item {
     $c-headline: #ffffff;
 
-    background-color: $feature-default;
+    background-color: $lifestyle-bold;
 
     &,
     .rich-link__link,
@@ -11,52 +11,52 @@
 
     .u-faux-block-link--hover,
     .fc-item__image-container {
-        background-color: darken($feature-default, 4%);
+        background-color: darken($lifestyle-bold, 4%);
     }
 
     .fc-item__link,
     .rich-link__link,
     .fc-sublink__link {
         &:visited {
-            color: mix($c-headline, $feature-default, 80%);
+            color: mix($c-headline, $lifestyle-bold, 80%);
         }
     }
 
     .inline-quote,
     .fc-item__meta .inline-icon {
-        fill: $feature-mute;
+        fill: $lifestyle-pastel;
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: $feature-mute;
+        background-color: $lifestyle-pastel;
     }
 
     .fc-item__kicker,
     .fc-item__byline,
     .fc-item__meta,
     .rich-link__read-more-text {
-        color: $feature-mute;
+        color: $lifestyle-pastel;
     }
 
     .fc-item__kicker--dreamsnap {
-        background-color: mix(#000000, $feature-default, 10%);
+        background-color: mix(#000000, $lifestyle-bold, 10%);
     }
 
     .rich-link__arrow-icon {
-        fill: $feature-mute;
+        fill: $lifestyle-pastel;
     }
 
     .fc-item__kicker:after,
     .fc-sublink__kicker:after {
-        color: mix($c-headline, $feature-default, 20%);
+        color: mix($c-headline, $lifestyle-bold, 20%);
     }
 
     .fc-item__standfirst,
     .rich-link__standfirst {
-        color: mix($c-headline, $feature-default, 80%);
+        color: mix($c-headline, $lifestyle-bold, 80%);
         ul > li:before {
-            background: mix($c-headline, $feature-default, 40%);
+            background: mix($c-headline, $lifestyle-bold, 40%);
         }
     }
 
@@ -68,22 +68,22 @@
     }
 
     .fc-sublink__title:before {
-        border-color: mix($c-headline, $feature-default, 40%);
+        border-color: mix($c-headline, $lifestyle-bold, 40%);
     }
 }
 
 .tone-feature--sublink {
     .fc-sublink__kicker {
-        color: $feature-default;
+        color: $lifestyle-bold;
     }
 
     @include sublink-style(editorial, feature, live, media, review) {
         .fc-sublink__kicker {
-            color: $feature-mute;
+            color: $lifestyle-pastel;
         }
     }
 }
 
 .tone-feature--most-popular .fc-item__kicker {
-    color: $feature-default;
+    color: $lifestyle-bold;
 }

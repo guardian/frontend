@@ -20,11 +20,11 @@
         @include button-colour(
             transparent,
             $black,
-            $neutral-4
+            $brightness-86
         );
         @include button-hover-colour(
             transparent,
-            darken($neutral-3, 10%)
+            darken($brightness-86, 10%)
         );
         border: 0;
         padding: 0 $gs-baseline / 2;

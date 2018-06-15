@@ -2,17 +2,17 @@
 
 @include tone-content(
     feature, // $tone
-    $feature-default, // $tonal__header-background
-    $neutral-6, // $tonal__header-text
-    $feature-mute, // $tonal__header-link
+    $lifestyle-bold, // $tonal__header-background
+    $brightness-93, // $tonal__header-text
+    $lifestyle-pastel, // $tonal__header-link
     200, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $feature-mute, // $tonal__headline-accent
-    $feature-accent, // $tonal__standfirst-background
+    $lifestyle-pastel, // $tonal__headline-accent
+    $lifestyle-bold, // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     #ffffff, // $tonal__article-background
-    $feature-default // $tonal__article-link
+    $lifestyle-bold // $tonal__article-link
 );
 
 .tonal--tone-feature {
@@ -24,17 +24,17 @@
         }
         .tone-colour,
         .content__section-label__link {
-            color: $feature-default;
+            color: $lifestyle-bold;
         }
         .content__series-label__link {
-            color: $neutral-2;
+            color: $brightness-46;
         }
         .u-underline {
-            color: $feature-default;
-            border-bottom-color: rgba($feature-default, .3);
+            color: $lifestyle-bold;
+            border-bottom-color: rgba($lifestyle-bold, .3);
 
             &:hover {
-                border-bottom-color: rgba($feature-default, .7);
+                border-bottom-color: rgba($lifestyle-bold, .7);
             }
         }
     }

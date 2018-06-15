@@ -42,7 +42,7 @@
 
 .toast__button {
     @include fs-textSans(1);
-    background-color: $live-main-2;
+    background-color: $news-bold;
     color: #ffffff;
     box-sizing: border-box;
     overflow: hidden;
@@ -54,7 +54,7 @@
     &:hover,
     &:focus {
         color: #ffffff;
-        background-color: $live-main-1;
+        background-color: $news-dark;
     }
 
     &.toast__button--closed {
@@ -154,19 +154,19 @@
     display: inline-block;
     position: relative;
     color: $black;
-    border: 1px solid $neutral-4;
+    border: 1px solid $brightness-86;
     height: $gs-baseline * 3;
     line-height: 38px;
     font-weight: bold;
     vertical-align: middle;
 
     &:hover {
-        border-color: $neutral-2;
+        border-color: $brightness-46;
         text-decoration: none;
     }
 
     svg {
-        fill: $neutral-2;
+        fill: $brightness-46;
         position: absolute;
     }
 
@@ -238,16 +238,16 @@
 
 .liveblog-navigation__link--disabled {
     cursor: default;
-    color: $neutral-5;
-    border-color: $neutral-6;
+    color: $brightness-86;
+    border-color: $brightness-93;
 
     svg {
-        fill: $neutral-5;
+        fill: $brightness-86;
     }
 
     &:hover,
     &:active {
-        color: $neutral-5;
-        border-color: $neutral-6;
+        color: $brightness-86;
+        border-color: $brightness-93;
     }
 }

@@ -94,7 +94,7 @@ $weather-large-size: 50px;
 
 .weather__time {
     font-size: 12px;
-    color: $neutral-2;
+    color: $brightness-46;
 }
 
 .weather__temp {
@@ -189,30 +189,30 @@ $weather-large-size: 50px;
         transition: background-color .2s ease-in-out;
 
         &:focus {
-            background-color: $neutral-7;
+            background-color: $brightness-97;
         }
 
         @include mq(tablet, leftCol) {
-            background-color: $neutral-7;
+            background-color: $brightness-97;
 
             &:focus {
-                background-color: $neutral-6;
+                background-color: $brightness-93;
             }
         }
 
         .has-page-skin & {
             @include mq(wide) {
-                background-color: $neutral-7;
+                background-color: $brightness-97;
 
                 &:focus {
-                    background-color: $neutral-6;
+                    background-color: $brightness-93;
                 }
             }
         }
     }
 
     .is-editing .search-tool__input {
-        background-color: $neutral-7;
+        background-color: $brightness-97;
     }
 
     .search-tool__btn {
@@ -253,7 +253,7 @@ $weather-large-size: 50px;
 
 .weather__search-icon,
 .weather__close-icon {
-    fill: $neutral-2;
+    fill: $brightness-46;
 
     svg {
         width: 16px;
@@ -275,8 +275,8 @@ $weather-large-size: 50px;
         display: none;
 
         .is-expanded & {
-            border-bottom: 1px solid $neutral-5;
-            border-top: 1px solid $neutral-5;
+            border-bottom: 1px solid $brightness-86;
+            border-top: 1px solid $brightness-86;
             padding: 0 0 ($gs-baseline / 2);
             display: flex;
             align-content: flex-end;
@@ -290,7 +290,7 @@ $weather-large-size: 50px;
     }
 
     @include mq(leftCol) {
-        border-top: 1px solid $neutral-5;
+        border-top: 1px solid $brightness-86;
     }
 
     .has-page-skin & {
@@ -308,7 +308,7 @@ $weather-large-size: 50px;
     position: relative;
 
     &:before {
-        border-left: 1px solid $neutral-5;
+        border-left: 1px solid $brightness-86;
         bottom: 10px;
         content: '';
         position: absolute;
@@ -407,7 +407,7 @@ $weather-large-size: 50px;
     }
 
     @include mq(leftCol) {
-        border-top: 1px solid $neutral-5;
+        border-top: 1px solid $brightness-86;
         position: relative;
         min-height: $weather-large-size + $gs-baseline * 2;
         padding-left: $weather-large-size + $gs-gutter / 2;

@@ -14,7 +14,7 @@
 
     @include mq(leftCol) {
         .fc-container__header__title {
-            border-top: 1px solid $news-accent;
+            border-top: 1px solid $sport-bright;
             padding-top: $gs-baseline / 4;
         }
 
@@ -40,7 +40,7 @@
 }
 
 .fc-container--outbrain {
-    background-color: $neutral-8;
+    background-color: $brightness-97;
     display: none;
 
     .fc-container__inner {
@@ -73,7 +73,7 @@
     margin-top: 0;
     margin-bottom: $gs-baseline * 2;
     padding-bottom: 0;
-    background: $neutral-7;
+    background: $brightness-97;
 
     .fc-container__inner {
         border-top: 0;
