@@ -88,7 +88,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules(?!\/@guardian\/dotcom-rendering)|vendor)/,
+                exclude: /(node_modules|vendor)/,
                 loader: 'babel-loader',
             },
             {
@@ -111,7 +111,6 @@ module.exports = {
         // but it's sufficient to scope it at the chunk level
         new webpack.ProvidePlugin({
             videojs: 'videojs',
-            React: 'react',
         }),
 
         new CircularDependencyPlugin({
