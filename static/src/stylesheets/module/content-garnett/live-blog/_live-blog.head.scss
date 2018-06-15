@@ -816,9 +816,9 @@ $timeline-width: 15px;
 
 $pillars: (
     news: (
-        pillarColor: $news-garnett-main-1,
+        pillarColor: $news-bold,
         kickerColor: $live-garnett-main-2,
-        altKickerColor: $news-garnett-main-1
+        altKickerColor: $news-bold
     ),
     opinion: (
         pillarColor: $opinion-garnett-main-1,
@@ -978,7 +978,7 @@ $pillars: (
 // *************** Has scores overrides ****************
 .content--has-scores.content--pillar-sport.content--liveblog {
     .content__header {
-        background-color: $news-garnett-highlight;
+        background-color: $yellow-highlight;
     }
 
     .match-summary__teams {

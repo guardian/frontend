@@ -301,7 +301,7 @@
 
 .content--interactive,
 .content--pillar-news:not(.paid-content) {
-    @include colorPalatte($news-garnett-main-1, $news-garnett-feature, $news-garnett-media-main-1);
+    @include colorPalatte($news-bold, $news-dark, $news-bright);
 }
 // #? There is a lot of :not(.paid-content) to avoid having to override
 // after the fact.
@@ -336,7 +336,7 @@
 .content--pillar-special-report.content--type-comment:not(.paid-content),
 .content--pillar-special-report.content--type-guardianview:not(.paid-content),
 .content--pillar-special-report:not(.paid-content) {
-    @include colorPalatte($story-package-garnett, $story-package-garnett, $news-garnett-highlight);
+    @include colorPalatte($story-package-garnett, $story-package-garnett, $yellow-highlight);
 
     .youtube-media-atom__play-button .inline-icon svg {
         fill: $black;
@@ -344,7 +344,7 @@
 }
 
 .content-footer--pillar-news:not(.paid-content) {
-    @include footerPalette($news-garnett-main-1);
+    @include footerPalette($news-bold);
 }
 
 .content-footer--pillar-arts:not(.paid-content) {
@@ -365,7 +365,7 @@
 
 .content--media.content--pillar-news,
 .immersive-main-media__headline-container.content--pillar-news {
-    @include mediaPalatte($news-garnett-media-main-1, news);
+    @include mediaPalatte($news-bright, news);
 }
 
 .content--media:not(.paid-content).content--pillar-opinion,
@@ -390,7 +390,7 @@
 
 .content--media:not(.paid-content).content--pillar-special-report,
 .immersive-main-media__headline-container.content--pillar-special-report {
-    @include mediaPalatte($news-garnett-highlight, pink);
+    @include mediaPalatte($yellow-highlight, pink);
 }
 
 .content--type-analysis {
@@ -408,7 +408,7 @@
 .rich-link:not(.rich-link--paidfor) {
     &,
     &.rich-link--pillar-news {
-        @include richLink($news-garnett-main-1, $garnett-neutral-3);
+        @include richLink($news-bold, $garnett-neutral-3);
     }
 
     &.rich-link--pillar-opinion,
@@ -441,7 +441,7 @@
 
     &.tone-live--item {
         &.rich-link--pillar-news {
-            @include richLink(#ffffff, $news-garnett-feature);
+            @include richLink(#ffffff, $news-dark);
         }
 
         &.rich-link--pillar-opinion {

@@ -29,7 +29,7 @@
 }
 
 .pillar-scheme--News {
-    @include PillarColourOne($news-garnett-main-1);
+    @include PillarColourOne($news-bold);
 }
 
 .pillar-scheme--Opinion {
@@ -52,7 +52,7 @@
     .menu-item:first-child > .menu-group .menu-item__title:hover,
     .menu-item:first-child > .menu-group .menu-item__title:focus,
     .menu-item__title--News {
-        color: $news-garnett-main-1;
+        color: $news-bold;
     }
 
     .menu-item:nth-child(2) > .menu-group .menu-item__title:hover,
@@ -82,10 +82,10 @@
 
 .pillar-link {
     &.pillar-link--News {
-        color: $news-garnett-main-1;
+        color: $news-bold;
 
         &:after {
-            border-color: $news-garnett-feature;
+            border-color: $news-dark;
         }
     }
 

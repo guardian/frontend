@@ -1,16 +1,16 @@
 $pillars: (
     news: (
         cardBackground: $garnett-neutral-3,
-        lines: $news-garnett-main-1,
-        kicker: $news-garnett-main-1,
+        lines: $news-bold,
+        kicker: $news-bold,
         headline: $black,
-        featureHeadline: $news-garnett-feature,
-        byline: $news-garnett-main-1,
+        featureHeadline: $news-dark,
+        byline: $news-bold,
         commentCount: $garnett-neutral-2,
-        headlineIcon: $news-garnett-main-1,
+        headlineIcon: $news-bold,
         metaText: $garnett-neutral-2,
-        cutoutBackground: $news-garnett-main-1,
-        invertedKicker: $news-garnett-media-main-1,
+        cutoutBackground: $news-bold,
+        invertedKicker: $news-bright,
         liveColour: $live-garnett-main-2
     ),
     opinion: (
@@ -71,16 +71,16 @@ $pillars: (
     ),
     special-report: (
         cardBackground: $story-package-garnett,
-        lines: $news-garnett-highlight,
-        kicker: $news-garnett-highlight,
+        lines: $yellow-highlight,
+        kicker: $yellow-highlight,
         headline: #ffffff,
         featureHeadline: #ffffff,
         byline: $story-package-garnett,
         commentCount: $garnett-neutral-2,
         headlineIcon: $story-package-garnett,
         metaText: $garnett-neutral-2,
-        cutoutBackground: $news-garnett-highlight,
-        invertedKicker: $news-garnett-highlight,
+        cutoutBackground: $yellow-highlight,
+        invertedKicker: $yellow-highlight,
         liveColour: #ffffff
     )
 );
@@ -352,7 +352,7 @@ $pillars: (
 
         .fc-item__byline {
             color: $story-package-garnett;
-            background-color: $news-garnett-highlight;
+            background-color: $yellow-highlight;
             display: inline;
         }
 
@@ -376,7 +376,7 @@ $pillars: (
     }
 
     .fc-sublink__kicker {
-        color: $news-garnett-highlight;
+        color: $yellow-highlight;
     }
 
     .fc-sublink__title {

@@ -275,7 +275,7 @@ $quote-mark: 35px;
 
     //Review stars
     .stars {
-        background-color: $news-garnett-highlight;
+        background-color: $yellow-highlight;
         display: inline-block;
         line-height: 0;
         padding: calc((#{$gs-baseline} / 2) - 2px);
@@ -742,8 +742,8 @@ $quote-mark: 35px;
         display: inline-block;
         font-style: italic;
         font-weight: 500;
-        background-color: $news-garnett-highlight;
-        box-shadow: $gs-baseline / 2 0 0 $news-garnett-highlight, -$gs-baseline / 2 0 0 $news-garnett-highlight;
+        background-color: $yellow-highlight;
+        box-shadow: $gs-baseline / 2 0 0 $yellow-highlight, -$gs-baseline / 2 0 0 $yellow-highlight;
         color: $black;
         margin-bottom: $gs-baseline;
         padding-bottom: $gs-baseline / 4;

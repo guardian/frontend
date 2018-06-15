@@ -67,7 +67,7 @@
 }
 
 .content--pillar-news {
-    @include PillarColourTwo($news-garnett-main-1, $news-garnett-feature);
+    @include PillarColourTwo($news-bold, $news-dark);
 }
 
 .content--pillar-opinion {
@@ -92,12 +92,17 @@
     @include PillarColourOne($story-package-garnett, $story-package-garnett);
     background-color: #eff1f2;
 
+<<<<<<< HEAD
     .content__label__link {
         background-color: $news-garnett-highlight;
+=======
+    .content__series-label__link {
+        background-color: $yellow-highlight;
+>>>>>>> news
         padding: ($gs-baseline / 4) ($gs-gutter / 4);
     }
 
     .content__meta-container .byline-img {
-        background-color: $news-garnett-highlight;
+        background-color: $yellow-highlight;
     }
 }

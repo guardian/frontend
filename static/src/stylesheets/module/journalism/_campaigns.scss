@@ -35,7 +35,7 @@
             margin-right: 10px;
 
             .speech-bubble {
-                background-color: $news-garnett-main-1;
+                background-color: $news-bold;
                 padding: 6px 10px 10px;
                 color: #ffffff;
                 line-height: 18px;
@@ -103,7 +103,7 @@
 }
 
 .content--pillar-news .campaign--snippet__handle:focus {
-    background-color: $news-garnett-main-1;
+    background-color: $news-bold;
 }
 
 .speech-bubble {
@@ -117,7 +117,7 @@
         position: absolute;
         bottom: -12px;
         left: 10px;
-        background: $news-garnett-main-1;
+        background: $news-bold;
     }
 }
 
