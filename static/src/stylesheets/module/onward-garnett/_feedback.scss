@@ -49,7 +49,7 @@
 }
 
 .feedback__alertbox {
-    background-color: #ca5353;
+    background-color: $news-garnett-main-1;
     color: white;
     font-size: 1.2em;
     padding: 0.5em;
@@ -62,11 +62,11 @@
     border: 2px solid #ffe0e0;
     border-radius: 99px;
     width: 1.5em;
+    height: 1.5em;
     text-align: center;
     display: inline-block;
     font-weight: bold;
     line-height: 1.7em;
-    height: 1.5em;
 }
 
 .feedback__alert {
