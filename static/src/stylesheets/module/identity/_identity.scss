@@ -369,7 +369,7 @@ $identity-header-height: 48px;
         }
         @include pillar-dropdown('News', $news-bold);
         @include pillar-dropdown('Sport', $sport-bold);
-        @include pillar-dropdown('Culture', $culture-garnett-main-1);
+        @include pillar-dropdown('Culture', $culture-bold);
         @include pillar-dropdown('Lifestyle', $lifestyle-garnett-main-1);
         @include pillar-dropdown('Comment', $opinion-bold);
         .dropdown__label {

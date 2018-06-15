@@ -132,7 +132,7 @@
 
     //These need to exist for all kickers because of tone on tone action
     @include kicker-override(lifestyle, $lifestyle-garnett-media-main-1);
-    @include kicker-override(arts, $culture-garnett-media-main-1);
+    @include kicker-override(arts, $culture-bright);
     @include kicker-override(sport, $sport-bright);
     @include kicker-override(opinion, $opinion-bright);
     @include kicker-override(news, $news-bright);

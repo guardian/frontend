@@ -317,7 +317,7 @@
 .content--pillar-arts.content--type-comment:not(.paid-content),
 .content--pillar-arts.content--type-guardianview:not(.paid-content),
 .content--pillar-arts:not(.paid-content) {
-    @include colorPalatte($culture-garnett-main-1, $culture-garnett-feature, $culture-garnett-media-main-1);
+    @include colorPalatte($culture-bold, $culture-dark, $culture-bright);
 }
 
 .content--pillar-lifestyle.content--type-comment:not(.paid-content),
@@ -348,7 +348,7 @@
 }
 
 .content-footer--pillar-arts:not(.paid-content) {
-    @include footerPalette($culture-garnett-feature);
+    @include footerPalette($culture-dark);
 }
 
 .content-footer--pillar-lifestyle:not(.paid-content) {
@@ -375,7 +375,7 @@
 
 .content--media:not(.paid-content).content--pillar-arts,
 .immersive-main-media__headline-container.content--pillar-arts {
-    @include mediaPalatte($culture-garnett-media-main-1, culture);
+    @include mediaPalatte($culture-bright, culture);
 }
 
 .content--media:not(.paid-content).content--pillar-lifestyle,
@@ -421,7 +421,7 @@
     }
 
     &.rich-link--pillar-arts {
-        @include richLink($culture-garnett-main-1, $garnett-neutral-3);
+        @include richLink($culture-bold, $garnett-neutral-3);
     }
 
     &.rich-link--pillar-lifestyle {
@@ -453,7 +453,7 @@
         }
 
         &.rich-link--pillar-arts {
-            @include richLink(#ffffff, $culture-garnett-feature);
+            @include richLink(#ffffff, $culture-dark);
         }
 
         &.rich-link--pillar-lifestyle {

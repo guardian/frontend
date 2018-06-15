@@ -41,7 +41,7 @@
 }
 
 .pillar-scheme--Culture {
-    @include PillarColourOne($culture-garnett-main-1);
+    @include PillarColourOne($culture-bold);
 }
 
 .pillar-scheme--Lifestyle {
@@ -70,7 +70,7 @@
     .menu-item:nth-child(4) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(4) > .menu-group .menu-item__title:focus,
     .menu-item__title--Culture {
-        color: $culture-garnett-main-1;
+        color: $culture-bold;
     }
 
     .menu-item:nth-child(5) > .menu-group .menu-item__title:hover,
@@ -106,10 +106,10 @@
     }
 
     &.pillar-link--Culture {
-        color: $culture-garnett-main-1;
+        color: $culture-bold;
 
         &:after {
-            border-color: $culture-garnett-feature;
+            border-color: $culture-dark;
         }
     }
 
