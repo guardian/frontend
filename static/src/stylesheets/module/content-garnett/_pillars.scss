@@ -330,7 +330,7 @@
 .content--pillar-sport.content--type-comment:not(.paid-content),
 .content--pillar-sport.content--type-guardianview:not(.paid-content),
 .content--pillar-sport:not(.paid-content) {
-    @include colorPalatte($sport-garnett-main-1, $sport-garnett-feature, $sport-garnett-media-main-1);
+    @include colorPalatte($sport-bold, $sport-dark, $sport-bright);
 }
 
 .content--pillar-special-report.content--type-comment:not(.paid-content),
@@ -360,7 +360,7 @@
 }
 
 .content-footer--pillar-sport:not(.paid-content) {
-    @include footerPalette($sport-garnett-main-1);
+    @include footerPalette($sport-bold);
 }
 
 .content--media.content--pillar-news,
@@ -385,7 +385,7 @@
 
 .content--media:not(.paid-content).content--pillar-sport,
 .immersive-main-media__headline-container.content--pillar-sport {
-    @include mediaPalatte($sport-garnett-media-main-1, sport);
+    @include mediaPalatte($sport-bright, sport);
 }
 
 .content--media:not(.paid-content).content--pillar-special-report,
@@ -417,7 +417,7 @@
     }
 
     &.rich-link--pillar-sport {
-        @include richLink($sport-garnett-main-1, $garnett-neutral-3);
+        @include richLink($sport-bold, $garnett-neutral-3);
     }
 
     &.rich-link--pillar-arts {
@@ -449,7 +449,7 @@
         }
 
         &.rich-link--pillar-sport {
-            @include richLink(#ffffff, $sport-garnett-feature);
+            @include richLink(#ffffff, $sport-dark);
         }
 
         &.rich-link--pillar-arts {

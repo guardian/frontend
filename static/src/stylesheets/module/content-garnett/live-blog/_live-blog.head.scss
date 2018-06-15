@@ -826,9 +826,9 @@ $pillars: (
         altKickerColor: $opinion-bold
     ),
     sport: (
-        pillarColor: $sport-garnett-feature,
+        pillarColor: $sport-dark,
         kickerColor:  $live-garnett-sport2,
-        altKickerColor: $sport-garnett-main-1
+        altKickerColor: $sport-bold
     ),
     arts: (
         pillarColor: $culture-garnett-feature,
@@ -876,7 +876,7 @@ $pillars: (
             border-bottom-color: $neutral-5;
         }
         .content__label__link {
-            color: $sport-garnett-feature;
+            color: $sport-dark;
         }
         .content__headline {
             color: $black;

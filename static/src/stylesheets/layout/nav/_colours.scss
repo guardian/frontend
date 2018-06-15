@@ -37,7 +37,7 @@
 }
 
 .pillar-scheme--Sport {
-    @include PillarColourOne($sport-garnett-main-1);
+    @include PillarColourOne($sport-bold);
 }
 
 .pillar-scheme--Culture {
@@ -64,7 +64,7 @@
     .menu-item:nth-child(3) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(3) > .menu-group .menu-item__title:focus,
     .menu-item__title--Sport {
-        color: $sport-garnett-main-1;
+        color: $sport-bold;
     }
 
     .menu-item:nth-child(4) > .menu-group .menu-item__title:hover,
@@ -98,10 +98,10 @@
     }
 
     &.pillar-link--Sport {
-        color: $sport-garnett-main-1;
+        color: $sport-bold;
 
         &:after {
-            border-color: $sport-garnett-feature;
+            border-color: $sport-dark;
         }
     }
 

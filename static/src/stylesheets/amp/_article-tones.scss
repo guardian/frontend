@@ -77,7 +77,7 @@
 }
 
 .content--pillar-sport {
-    @include PillarColourOne($sport-garnett-main-1, $sport-garnett-feature);
+    @include PillarColourOne($sport-bold, $sport-dark);
 }
 
 .content--pillar-arts {
