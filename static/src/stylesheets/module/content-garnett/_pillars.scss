@@ -33,7 +33,7 @@
     }
 
     .end-slate-container a {
-        color: $garnett-neutral-8;
+        color: $brightness-93;
     }
 
     .content__meta-container .byline-img,
@@ -100,8 +100,8 @@
 
     .meta__extras--crossword {
         .social-icon {
-            background: $garnett-neutral-5;
-            border: 1px solid $garnett-neutral-4;
+            background: $white;
+            border: 1px solid $brightness-86;
 
             &:hover {
                 background: $kickerColor;
@@ -113,7 +113,7 @@
             fill: $kickerColor;
 
             &:hover {
-                fill: $garnett-neutral-5;
+                fill: $white;
             }
         }
     }
@@ -140,12 +140,12 @@
     .comment-share-icon,
     .d-show-more-replies__button.button--show-more svg,
     .inline-reply.blue {
-        fill: $garnett-neutral-6;
+        fill: $brightness-46;
         left: $gs-gutter/3;
     }
 
     .discussion__top-border {
-        border-top: 1px solid $garnett-neutral-4;
+        border-top: 1px solid $brightness-86;
     }
 
     .button--primary {
@@ -166,13 +166,13 @@
     }
 
     .d-show-more-replies__button {
-        border: 1px solid $garnett-neutral-4;
-        background: $garnett-neutral-5;
+        border: 1px solid $brightness-86;
+        background: $white;
 
         &:focus,
         &:hover {
-            border: 1px solid darken($garnett-neutral-4, 20%);
-            background: $garnett-neutral-5;
+            border: 1px solid darken($brightness-86, 20%);
+            background: $white;
         }
     }
 
@@ -190,7 +190,7 @@
         &:focus,
         &:hover {
             svg {
-                fill: $garnett-neutral-5;
+                fill: $white;
             }
         }
     }
@@ -283,11 +283,11 @@
     }
 
     .social-icon__svg {
-        fill: $garnett-neutral-4;
+        fill: $brightness-86;
     }
 
     a.content__label__link {
-        color: $garnett-neutral-3;
+        color: $brightness-97;
     }
 
     .vjs-paused .vjs-play-control {
@@ -408,24 +408,24 @@
 .rich-link:not(.rich-link--paidfor) {
     &,
     &.rich-link--pillar-news {
-        @include richLink($news-bold, $garnett-neutral-3);
+        @include richLink($news-bold, $brightness-97);
     }
 
     &.rich-link--pillar-opinion,
     &.tone-comment--item {
-        @include richLink($opinion-bold, $garnett-neutral-3);
+        @include richLink($opinion-bold, $brightness-97);
     }
 
     &.rich-link--pillar-sport {
-        @include richLink($sport-bold, $garnett-neutral-3);
+        @include richLink($sport-bold, $brightness-97);
     }
 
     &.rich-link--pillar-arts {
-        @include richLink($culture-bold, $garnett-neutral-3);
+        @include richLink($culture-bold, $brightness-97);
     }
 
     &.rich-link--pillar-lifestyle {
-        @include richLink($lifestyle-bold, $garnett-neutral-3);
+        @include richLink($lifestyle-bold, $brightness-97);
     }
 
     &.rich-link--pillar-opinion {
@@ -434,7 +434,7 @@
         }
 
         .rich-link__container {
-            @include multiline(4, $garnett-neutral-4);
+            @include multiline(4, $brightness-86);
             padding-bottom: 13px;
         }
     }
@@ -469,10 +469,10 @@
     &.rich-link--audio,
     &.rich-link--gallery,
     &.rich-link--video {
-        background: $media-garnett-main-1;
+        background: $brightness-20;
 
         .u-faux-block-link--hover {
-            background-color: darken($media-garnett-main-1, 5%);
+            background-color: darken($brightness-20, 5%);
         }
 
         &,
@@ -486,6 +486,11 @@
     }
 }
 
+<<<<<<< HEAD
 .immersive-main-media__headline-container .content__label__link {
     color: $garnett-neutral-3;
+=======
+.immersive-main-media__headline-container .content__series-label__link {
+    color: $brightness-97;
+>>>>>>> neutrals
 }

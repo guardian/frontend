@@ -636,7 +636,7 @@
 }
 
 .meta__extras {
-    border-top: 1px solid $garnett-neutral-4;
+    border-top: 1px solid $brightness-86;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -992,16 +992,16 @@
     .content__dateline,
     .caption--main,
     .caption {
-        color: $garnett-neutral-7;
+        color: $brightness-27;
     }
     .inline-icon {
-        fill: $garnett-neutral-7;
+        fill: $brightness-27;
     }
     a {
         color: $black;
     }
     .u-underline {
-        border-color: $garnett-neutral-2;
+        border-color: $brightness-60;
         &:hover,
         &:focus {
             border-color: mix($black, $black, 50%);
@@ -1082,7 +1082,7 @@
         }
     }
     .meta__extras {
-        border-color: $garnett-neutral-7;
+        border-color: $brightness-27;
     }
 
     &.tonal--tone-media {

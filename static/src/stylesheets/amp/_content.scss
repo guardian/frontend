@@ -58,7 +58,7 @@
 }
 
 .content__head--byline-pic .content__header {
-    @include multiline(8, $garnett-neutral-4, bottom);
+    @include multiline(8, $brightness-86, bottom);
 }
 
 .content__standfirst {
@@ -102,7 +102,7 @@
     font-size: 12px;
     line-height: 16px;
     position: relative;
-    color: $garnett-neutral-6;
+    color: $brightness-46;
     box-sizing: border-box;
     padding-top: $gs-baseline / 6;
     margin-bottom: $gs-baseline / 2;
@@ -120,8 +120,8 @@
 
 .meta__extras {
     clear: both;
-    border-top: 1px solid $garnett-neutral-4;
-    border-bottom: 1px solid $garnett-neutral-4;
+    border-top: 1px solid $brightness-86;
+    border-bottom: 1px solid $brightness-86;
 }
 
 .content__meta-container {
@@ -184,11 +184,11 @@
 .meta__twitter,
 .meta__email {
     a {
-        color: $garnett-neutral-6;;
+        color: $brightness-46;;
     }
 
     svg {
-        fill: $garnett-neutral-6;
+        fill: $brightness-46;
         height: 12px;
         margin-bottom: -2px;
         width: 12px;
@@ -199,11 +199,11 @@
     font-size: 12px;
     line-height: 1;
     display: inline-block;
-    color: $garnett-neutral-6;
+    color: $brightness-46;
     margin-bottom: $gs-baseline;
 
     .old-article-message--clock svg {
-        fill: $garnett-neutral-6;
+        fill: $brightness-46;
         margin-bottom: -1px;
     }
 }

@@ -9,7 +9,7 @@
     z-index: $zindex-modal;
     text-align: left;
     max-width: 16em;
-    background-color: $gustyle-tone;
+    background-color: #fedd79;
 
     @include mq(gs-span(5) + $gs-gutter, phablet) {
         padding: $gs-baseline $gs-gutter / 4 * 3;

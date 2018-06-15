@@ -678,7 +678,7 @@
             bottom: -$gs-baseline * 2;
             left: -$gs-gutter / 2;
             width: 1px;
-            background-color: $garnett-neutral-4;
+            background-color: $brightness-86;
             content: '';
             display: none;
             @include mq($from: leftCol) {
@@ -734,7 +734,7 @@
             bottom: -$gs-baseline * 2;
             left: -$gs-gutter / 2;
             width: 1px;
-            background-color: $garnett-neutral-4;
+            background-color: $brightness-86;
             content: '';
             display: none;
             @include mq($from: leftCol) {

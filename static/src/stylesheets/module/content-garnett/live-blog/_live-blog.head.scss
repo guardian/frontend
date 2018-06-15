@@ -817,7 +817,7 @@ $timeline-width: 15px;
 $pillars: (
     news: (
         pillarColor: $news-bold,
-        kickerColor: $live-garnett-main-2,
+        kickerColor: $news-pastel,
         altKickerColor: $news-bold
     ),
     opinion: (
@@ -827,17 +827,17 @@ $pillars: (
     ),
     sport: (
         pillarColor: $sport-dark,
-        kickerColor:  $live-garnett-sport2,
+        kickerColor:  $sport-pastel,
         altKickerColor: $sport-bold
     ),
     arts: (
         pillarColor: $culture-dark,
-        kickerColor: $live-garnett-culture2,
+        kickerColor: $culture-pastel,
         altKickerColor: $culture-bold
     ),
     lifestyle: (
         pillarColor: $lifestyle-dark,
-        kickerColor: $live-garnett-lifestyle2,
+        kickerColor: $news-pastel,
         altKickerColor: $lifestyle-bold
     )
 );
@@ -958,11 +958,11 @@ $pillars: (
         }
 
         .content__header {
-            background: $garnett-neutral-5;
+            background: $white;
         }
 
         .tonal__standfirst {
-            background: $live-garnett-dead-background;
+            background: $brightness-93;
         }
 
         .content__standfirst a {

@@ -19,20 +19,20 @@
     }
 
     .button--secondary {
-        color: $garnett-neutral-6;
-        background: $garnett-neutral-8;
-        border: 1px solid $garnett-neutral-8;
+        color: $brightness-46;
+        background: $brightness-93;
+        border: 1px solid $brightness-93;
         &:hover,
         &:visited,
         &:focus {
-            background-color: darken($garnett-neutral-8, 10%);
-            border-color: darken($garnett-neutral-8, 10%);
+            background-color: darken($brightness-93, 10%);
+            border-color: darken($brightness-93, 10%);
         }
     }
 
     .button--secondary.crossword__controls__button--confirm {
         background-color: $black;
-        color: $garnett-neutral-5;
+        color: $white;
         border: 0;
     }
 }

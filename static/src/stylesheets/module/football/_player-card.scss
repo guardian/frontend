@@ -13,7 +13,7 @@ $player-card-avatar: (
 .player-card {
     padding: $gs-baseline $gs-gutter/2;
     background: $neutral-8;
-    border-top: 1px solid $sport-mid;
+    border-top: 1px solid $sport-dark;
     color: $black;
 
     @include mq(mobileLandscape) {
@@ -53,7 +53,7 @@ $player-card-avatar: (
 }
 .player-card__position {
     @include fs-textSans(4);
-    color: $sport-mid;
+    color: $sport-dark;
 }
 
 .player-card__stats {

@@ -1,8 +1,8 @@
 .site-message--membership-action-required {
-    color: $garnett-neutral-5;
+    color: $white;
     background: $black;
     &:after {
-        @include multiline(3, $garnett-neutral-7, top);
+        @include multiline(3, $brightness-27, top);
         content: '';
         display: block;
         height: 4px * 3; /*height of multiline (4px) times the number of lines (3)*/
@@ -10,7 +10,7 @@
         width: 100%;
     }
     a {
-        color: $garnett-neutral-5;
+        color: $white;
         font-weight: 900;
         text-decoration: underline;
     }

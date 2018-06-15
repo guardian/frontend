@@ -1,73 +1,73 @@
 $pillars: (
     news: (
-        cardBackground: $garnett-neutral-3,
+        cardBackground: $brightness-97,
         lines: $news-bold,
         kicker: $news-bold,
         headline: $black,
         featureHeadline: $news-dark,
         byline: $news-bold,
-        commentCount: $garnett-neutral-2,
+        commentCount: $brightness-60,
         headlineIcon: $news-bold,
-        metaText: $garnett-neutral-2,
+        metaText: $brightness-60,
         cutoutBackground: $news-bold,
         invertedKicker: $news-bright,
-        liveColour: $live-garnett-main-2
+        liveColour: $news-pastel
     ),
     opinion: (
-        cardBackground: $garnett-neutral-3,
+        cardBackground: $brightness-97,
         lines: $opinion-bold,
         kicker: $opinion-bold,
         headline: $black,
         featureHeadline: $opinion-dark,
         byline: $opinion-bold,
-        commentCount: $garnett-neutral-6,
+        commentCount: $brightness-46,
         headlineIcon: $opinion-bold,
-        metaText: $garnett-neutral-2,
+        metaText: $brightness-60,
         cutoutBackground: $opinion-bold,
         invertedKicker: $opinion-bright,
-        liveColour: #ffffff
+        liveColour: $opinion-pastel
     ),
     sport: (
-        cardBackground: $garnett-neutral-3,
+        cardBackground: $brightness-97,
         lines: $sport-bold,
         kicker: $sport-bold,
         headline: $black,
         featureHeadline: $sport-dark,
         byline: $sport-bold,
-        commentCount: $garnett-neutral-2,
+        commentCount: $brightness-60,
         headlineIcon: $sport-bold,
-        metaText: $garnett-neutral-2,
+        metaText: $brightness-60,
         cutoutBackground: $sport-dark,
         invertedKicker: $sport-bright,
-        liveColour: $live-garnett-sport2
+        liveColour: $sport-pastel
     ),
     arts: (
-        cardBackground: $garnett-neutral-3,
+        cardBackground: $brightness-97,
         lines: $culture-bold,
         kicker: $culture-bold,
         headline: $black,
         featureHeadline: $culture-dark,
         byline: $culture-bold,
-        commentCount: $garnett-neutral-2,
+        commentCount: $brightness-60,
         headlineIcon: $culture-bold,
-        metaText: $garnett-neutral-2,
+        metaText: $brightness-60,
         cutoutBackground: $culture-bold,
         invertedKicker: $culture-bright,
-        liveColour: $live-garnett-culture2
+        liveColour: $culture-pastel
     ),
     lifestyle: (
-        cardBackground: $garnett-neutral-3,
+        cardBackground: $brightness-97,
         lines: $lifestyle-bold,
         kicker: $lifestyle-bold,
         headline: $black,
         featureHeadline: $lifestyle-dark,
         byline: $lifestyle-bold,
-        commentCount: $garnett-neutral-2,
+        commentCount: $brightness-60,
         headlineIcon: $lifestyle-bold,
-        metaText: $garnett-neutral-2,
+        metaText: $brightness-60,
         cutoutBackground: $lifestyle-dark,
         invertedKicker: $lifestyle-bright,
-        liveColour: $live-garnett-lifestyle2
+        liveColour: $lifestyle-pastel
     ),
     special-report: (
         cardBackground: $story-package-garnett,
@@ -76,9 +76,9 @@ $pillars: (
         headline: #ffffff,
         featureHeadline: #ffffff,
         byline: $story-package-garnett,
-        commentCount: $garnett-neutral-2,
+        commentCount: $brightness-60,
         headlineIcon: $story-package-garnett,
-        metaText: $garnett-neutral-2,
+        metaText: $brightness-60,
         cutoutBackground: $yellow-highlight,
         invertedKicker: $yellow-highlight,
         liveColour: #ffffff
@@ -180,8 +180,8 @@ $pillars: (
 
     &.fc-item--type-immersive.fc-item--has-boosted-title .inline-icon
     {
-        fill: $garnett-neutral-6;
-        color: $garnett-neutral-6;
+        fill: $brightness-46;
+        color: $brightness-46;
     }
 
     .fc-item__standfirst {

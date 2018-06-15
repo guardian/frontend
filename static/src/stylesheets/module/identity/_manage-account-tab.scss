@@ -19,7 +19,7 @@
         padding: $gutter 0 0;
         height: auto;
         &:after {
-            @include multiline(4, $garnett-neutral-4, top);
+            @include multiline(4, $brightness-86, top);
             content: '';
             display: block;
             height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
@@ -333,7 +333,7 @@
 ========================================================================== */
 .manage-account-header {
     @include fs-header(3);
-    color: $identity-main;
+    color: $black;
 }
 
 .manage-account-headerWrapper {
@@ -349,7 +349,7 @@
 }
 
 .manage-account-divider {
-    @include multiline(4, $garnett-neutral-4, top);
+    @include multiline(4, $brightness-86, top);
     height: 4px * 4; /*height of multiline (4px) times the number of lines (4)*/
     border: 0;
     margin: $gs-baseline auto ($gs-baseline / 2);
@@ -412,7 +412,7 @@ $modal-close-size: $gs-gutter * 1.75;
 .identity-modal__closer {
     width: $modal-close-size;
     height: $modal-close-size;
-    color: $identity-main;
+    color: $black;
     border: 1px solid currentColor;
     border-radius: 100%;
     display: block;

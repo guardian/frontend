@@ -26,12 +26,12 @@
 
     .button--tertiary {
         background: transparent;
-        border: 1px solid $garnett-neutral-4;
+        border: 1px solid $brightness-86;
         &:hover,
         &:visited,
         &:focus {
             background-color: transparent;
-            border-color: darken($garnett-neutral-4, 15%);
+            border-color: darken($brightness-86, 15%);
         }
     }
 

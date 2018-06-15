@@ -332,7 +332,7 @@ $identity-header-height: 48px;
 /* Email subscriptions
    ========================================================================== */
 .email-subscription {
-    border-top: 1px solid $garnett-neutral-4;
+    border-top: 1px solid $brightness-86;
     margin-bottom: $gs-baseline*2;
     padding-top: $gs-baseline/3;
 
@@ -365,7 +365,7 @@ $identity-header-height: 48px;
         border-color: $neutral-6;
         .dropdown__button {
             padding: $gs-baseline / 4 0 $gs-baseline;
-            color: $identity-main;
+            color: $black;
         }
         @include pillar-dropdown('News', $news-bold);
         @include pillar-dropdown('Sport', $sport-bold);
@@ -401,7 +401,7 @@ $identity-header-height: 48px;
         }
         &:hover .dropdown__button,
         .dropdown__button:focus {
-            color: darken($identity-main, 15%);
+            color: darken($black, 15%);
             &:hover, &:focus {
                 text-decoration: underline;
             }
@@ -524,7 +524,7 @@ $identity-header-height: 48px;
 .identity-wrapper .activity-stream__empty {
     a {
         @extend %u-underline;
-        color: $identity-main;
+        color: $black;
     }
 
 }

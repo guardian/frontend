@@ -334,7 +334,7 @@ $block-height: 58px;
 
 .fc-item__meta {
     @include fs-textSans(1);
-    color: $garnett-neutral-6;
+    color: $brightness-46;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -342,7 +342,7 @@ $block-height: 58px;
     margin-left: auto;
 
     .inline-icon {
-        fill: $garnett-neutral-6;
+        fill: $brightness-46;
     }
 
     a {

@@ -20,7 +20,7 @@ from scrolling */
         margin-bottom: 0;
 
         &:after {
-            @include multiline(4, $garnett-neutral-4, bottom);
+            @include multiline(4, $brightness-86, bottom);
             background-color: #ffffff;
             content: '';
             display: block;

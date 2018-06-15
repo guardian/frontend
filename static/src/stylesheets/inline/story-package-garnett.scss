@@ -24,7 +24,7 @@
 }
 
 .fc-container--story-package {
-    background-color: $garnett-neutral-4;
+    background-color: $brightness-86;
 
     .fc-container__toggle {
         display: none;
@@ -102,7 +102,7 @@
     .fc-item--pillar-lifestyle.fc-item--type-comment
     {
         .fc-item__meta {
-            @include multiline(4, $garnett-neutral-6, $position: bottom);
+            @include multiline(4, $brightness-46, $position: bottom);
         }
 
         .fc-item__standfirst-wrapper .fc-item__meta {
@@ -124,7 +124,7 @@
 
     .treats__list-item {
         .treats__treat {
-            background-color: $garnett-neutral-4;
+            background-color: $brightness-86;
             border-color: $story-package-garnett;
             color: $story-package-garnett;
         }

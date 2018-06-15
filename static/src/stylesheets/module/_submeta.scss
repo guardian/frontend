@@ -1,21 +1,21 @@
 .submeta {
-    @include multiline(4, $garnett-neutral-4, top);
+    @include multiline(4, $brightness-86, top);
     margin-top: $gs-baseline;
     padding-top: $gs-baseline * 1.5;
 
     .content--media:not(.paid-content)  & {
-        @include multiline(4, $garnett-neutral-7, top);
+        @include multiline(4, $brightness-27, top);
 
         .submeta__keywords {
-            border-color: $garnett-neutral-7;
+            border-color: $brightness-27;
         }
     }
 
     .paid-content & {
-        @include multiline(4, $garnett-neutral-6, top);
+        @include multiline(4, $brightness-46, top);
 
         .submeta__keywords {
-            border-color: $garnett-neutral-6;
+            border-color: $brightness-46;
         }
     }
 }
@@ -26,13 +26,13 @@
 
 .submeta__label {
     @include fs-textSans(1);
-    color: $garnett-neutral-2;
+    color: $brightness-60;
     display: block;
     margin-top: -($gs-baseline / 4);
 }
 
 .submeta__keywords {
-    border-bottom: 1px solid $garnett-neutral-4;
+    border-bottom: 1px solid $brightness-86;
     margin-bottom: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
 }
@@ -63,7 +63,7 @@ article .submeta__links,
 
     &:after {
         @include trailing-slash;
-        color: $garnett-neutral-4;
+        color: $brightness-86;
     }
 }
 
