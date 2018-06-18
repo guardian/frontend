@@ -110,7 +110,7 @@ class LeagueTableController(
 
       val smallTableGroup = table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
-      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, smallTableGroup, multiGroup = table.multiGroup)
+      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, smallTableGroup, table.competition.fullName, multiGroup = table.multiGroup)
 
       renderFormat(htmlResponse, jsonResponse, page)
 
@@ -140,9 +140,13 @@ class LeagueTableController(
       // For world cup group snaps we are not going to link as we just want to show the full table
       val isWorldCup = table.competition.id == "700"
 
+      val heading = group.round.name
+        .map(name => s"${table.competition.fullName} - $name")
+        .getOrElse(table.competition.fullName)
+
       val groupTable = Table(table.competition, Seq(group), hasGroups = true)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(groupTable), table.competition.url, filters, Some(table.competition)))
-      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, group, multiGroup = false, linkToCompetition = !isWorldCup)
+      val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, group, heading, multiGroup = false, linkToCompetition = !isWorldCup)
       renderFormat(htmlResponse, jsonResponse, page)
     }
     response.getOrElse {
