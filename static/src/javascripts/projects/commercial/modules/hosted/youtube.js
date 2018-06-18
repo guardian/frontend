@@ -111,6 +111,6 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                 });
             },
         },
-        el.id
+        el.dataset.assetId
     );
 };
