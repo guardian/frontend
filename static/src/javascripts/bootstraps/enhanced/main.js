@@ -131,9 +131,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            if (
-                config.get('page.contentType') === 'Audio'
-            ) {
+            if (config.get('page.contentType') === 'Audio') {
                 require.ensure(
                     [],
                     require => {
