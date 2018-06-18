@@ -131,6 +131,21 @@ const bootEnhanced = (): void => {
                 );
             }
 
+            if (
+                config.get('page.contentType') === 'Audio'
+            ) {
+                require.ensure(
+                    [],
+                    require => {
+                        bootstrapContext(
+                            'media : trail',
+                            require('bootstraps/enhanced/trail').initTrails
+                        );
+                    },
+                    'trail'
+                );
+            }
+
             if (config.get('page.contentType') === 'Crossword') {
                 require.ensure(
                     [],
