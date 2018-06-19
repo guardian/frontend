@@ -67,9 +67,6 @@
 
         @heading.map{ h=>
             <caption class="table__caption table__caption--top">
-                @group.round.name.map{ groupName =>
-                    <div class="football-matches__group-name">@groupName</div>
-                }
                 <a href="@headingLink.getOrElse(competition.url)" class="football-matches__heading">@h</a>
             </caption>
         }
