@@ -10,15 +10,15 @@ case object LocalRender extends RenderType
 
 object RenderingTierPicker {
 
-  private def isUnSupportedType(page: PageWithStoryPackage): Boolean = {
+  private def isSupportedType(page: PageWithStoryPackage): Boolean = {
     page match {
-      case a:ArticlePage => false
-      case _ => true
+      case a:ArticlePage => true
+      case _ => false
     }
   }
 
-  private def hasUnsupportedElements(page: PageWithStoryPackage): Boolean = {
-    page.article.blocks.get.body.exists((block: BodyBlock) => {
+  private def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
+    ! page.article.blocks.get.body.exists((block: BodyBlock) => {
 
       val hasUnsupportedElements: Boolean = block.elements.flatMap {
         case b: TextBlockElement => None
@@ -31,16 +31,16 @@ object RenderingTierPicker {
     })
   }
 
-  private def canHaveAds(page: PageWithStoryPackage): Boolean = {
-    ! page.metadata.sensitive
+  private def isAdFree(page: PageWithStoryPackage): Boolean = {
+    page.metadata.sensitive
   }
 
   def getRenderTierFor(page: PageWithStoryPackage): RenderType = {
 
-    if(hasUnsupportedElements(page) || canHaveAds(page) || isUnSupportedType(page)){
-      LocalRender
-    } else {
+    if(hasOnlySupportedElements(page) && isAdFree(page) && isSupportedType(page)){
       RemoteRender
+    } else {
+      LocalRender
     }
 
   }
