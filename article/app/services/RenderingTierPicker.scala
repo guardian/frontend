@@ -50,11 +50,11 @@ object RenderingTierPicker {
 
     // todo: clean up
 
-    val canRemotelyRender = hasBlocks(page) &&
+    val canRemotelyRender = isSupportedType(page) &&
+      hasBlocks(page) &&
       hasOnlySupportedElements(page) &&
       discussionDisabled(page) &&
-      isAdFree(page) &&
-      isSupportedType(page)
+      isAdFree(page)
 
     if(canRemotelyRender){
       RemoteRender
