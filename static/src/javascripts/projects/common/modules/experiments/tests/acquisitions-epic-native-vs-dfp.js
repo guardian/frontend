@@ -11,11 +11,12 @@ import { createSlots } from 'commercial/modules/dfp/create-slots';
 // readers in the test will have ad blocker off,
 // but we might not include all readers who have ad blocker off.
 const isAdBlockerOff = (): boolean => {
-    const isActive = window.guardian.adBlockers.active;
-    if (isActive === null || isActive === undefined) {
-        return false;
-    }
-    return !isActive;
+    // const isActive = window.guardian.adBlockers.active;
+    // if (isActive === null || isActive === undefined) {
+    //     return false;
+    // }
+    // return !isActive;
+    return true;
 };
 
 const adSlotEpicTemplate: AdBlockEpicTemplate = (): HTMLElement => {

@@ -1,8 +1,6 @@
 // @flow
 import quoteSvg from 'svgs/icon/garnett-quote.svg';
 
-// @flow
-
 export type AcquisitionsEpicTestimonialTemplateParameters = {
     quoteSvg: string,
     testimonialMessage: string,

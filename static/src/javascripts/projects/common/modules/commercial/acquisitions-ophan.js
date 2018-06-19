@@ -3,7 +3,7 @@ import ophan from 'ophan/ng';
 import config from 'lib/config';
 import { constructQuery as constructURLQuery } from 'lib/url';
 
-type ComponentEventWithoutAction = {
+export type ComponentEventWithoutAction = {
     component: OphanComponent,
     value?: string,
     id?: string,

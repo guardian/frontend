@@ -6,6 +6,7 @@ import { queueAdvert } from 'commercial/modules/dfp/queue-advert';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 import { updateAdvertMetric } from 'commercial/modules/dfp/performance-logging';
+import { awaitGoogletagCmd } from 'commercial/modules/dfp/googletag-cmd';
 
 const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
     const advert: Advert = new Advert(adSlot);
@@ -23,11 +24,13 @@ const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
 };
 
 const addSlot = (adSlot: HTMLElement, forceDisplay: boolean) => {
-    window.googletag.cmd.push(() => {
-        if (!(adSlot.id in dfpEnv.advertIds)) {
-            // dynamically add ad slot
-            displayAd(adSlot, forceDisplay);
-        }
+    awaitGoogletagCmd.then(() => {
+        window.googletag.cmd.push(() => {
+            if (!(adSlot.id in dfpEnv.advertIds)) {
+                // dynamically add ad slot
+                displayAd(adSlot, forceDisplay);
+            }
+        });
     });
 };
 

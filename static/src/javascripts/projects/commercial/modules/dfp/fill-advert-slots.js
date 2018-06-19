@@ -8,6 +8,7 @@ import { displayLazyAds } from 'commercial/modules/dfp/display-lazy-ads';
 import { displayAds } from 'commercial/modules/dfp/display-ads';
 import { setupSonobi } from 'commercial/modules/dfp/prepare-sonobi-tag';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
+import { epicAdSlotId } from 'commercial/modules/dfp/dfp-epic-slot';
 
 // Pre-rendered ad slots that were rendered on the page by the server are collected here.
 // For dynamic ad slots that are created at js-runtime, see:
@@ -24,7 +25,8 @@ const fillAdvertSlots = (): Promise<void> => {
     return Promise.all(dependencies).then(() => {
         // Get all ad slots
         const adverts = qwery(dfpEnv.adSlotSelector)
-            .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
+            // TODO: more general solution for omitting the epic ad slot here
+            .filter(adSlot => !(adSlot.id in dfpEnv.advertIds) && adSlot.id !== epicAdSlotId)
             .map(adSlot => new Advert(adSlot));
         const currentLength = dfpEnv.adverts.length;
         dfpEnv.adverts = dfpEnv.adverts.concat(adverts);

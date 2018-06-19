@@ -98,7 +98,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-native-vs-dfp",
+    "ab-acquisitions-epic-native-vs-dfp-v2",
     "See if there is any difference in annualised value between serving the Epic natively vs DFP",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,

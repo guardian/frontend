@@ -27,6 +27,7 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
+import { stubGoogletagCmd } from 'commercial/modules/dfp/googletag-cmd';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-prepare-cmp', initCmpService],
@@ -138,9 +139,7 @@ export const bootCommercial = (): Promise<void> => {
     ]);
 
     // Stub the command queue
-    window.googletag = {
-        cmd: [],
-    };
+    stubGoogletagCmd();
 
     return loadHostedBundle()
         .then(loadModules)
