@@ -1,8 +1,9 @@
-.site-message--engagement-banner-2018-05-18 {
+.site-message--support-the-guardian-banner {
     background-color: $news-garnett-highlight;
     max-height: 80%;
 
     .site-message__close {
+        float: right;
         svg {
             fill: $garnett-neutral-1;
             border: $garnett-neutral-1;
@@ -11,14 +12,28 @@
 
     .site-message__close-btn {
         border-color: $garnett-neutral-1;
+        display: inline-block;
+    }
+
+    .site-message__roundel {
+        display: block;
+        float: right;
+        svg {
+            fill: $garnett-neutral-1;
+            border: $garnett-neutral-1;
+        }
+    }
+
+    .site-message__close-roundel {
+        display: inline-block;
     }
 }
 
 .support-the-guardian-banner__text {
     color: $garnett-neutral-1;
 
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 22px;
 
     @include mq(tablet) {
         font-size: 18px;

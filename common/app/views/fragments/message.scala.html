@@ -4,13 +4,16 @@
 <div class="site-message js-site-message is-hidden" tabindex="-1" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
     <div class="gs-container">
         <div class="site-message__inner js-site-message-inner">
-            <div class="site-message__media">
+            <div class="site-message__roundel">
                 @fragments.inlineSvg("marque-36", "icon", List("u-vertical-align-middle-icon"))
             </div>
             <div class="site-message__copy js-site-message-copy u-cf">
 
             </div>
             <div class="site-message__close">
+                <div class="site-message__close-roundel">
+                    @fragments.inlineSvg("marque-36", "icon", List("u-vertical-align-middle-icon"))
+                </div>
                 <button class="site-message__close-btn js-site-message-close" data-link-name="hide release message">
                     <span class="u-h">Close</span>
                     @fragments.inlineSvg("close", "icon", List("inline-close--small"))

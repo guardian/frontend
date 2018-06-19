@@ -11,12 +11,15 @@ export const acquisitionsBannerControlTemplate = (
             src="${params.paypalAndCreditCardImage}"
             alt="PayPal and credit card"
         >
-        <button class="support-the-guardian-banner__button href="${params.linkUrl}">
+        <button class="support-the-guardian-banner__button href="${
+            params.linkUrl
+        }">
             ${params.buttonCaption}${params.buttonSvg}
         </button>
     </div>
     <a
         class="u-faux-block-link__overlay"
-        target="_blank" href="${params.linkUrl}"
-    </a>
+        target="_blank"
+        href="${params.linkUrl}"
+    ></a>
     `;
