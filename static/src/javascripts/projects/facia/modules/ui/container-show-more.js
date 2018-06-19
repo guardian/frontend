@@ -10,6 +10,7 @@ import reportError from 'lib/report-error';
 import timeout from 'lib/timeout';
 import userPrefs from 'common/modules/user-prefs';
 import groupBy from 'lodash/collections/groupBy';
+import { isAdFreeUser } from 'common/modules/commercial/user-features';
 
 const HIDDEN_CLASS_NAME = 'fc-show-more--hidden';
 const VISIBLE_CLASS_NAME = 'fc-show-more--visible';
@@ -75,7 +76,11 @@ const dedupShowMore = ($container: bonzo, html: string): bonzo => {
 
     $(ITEM_SELECTOR, $html).each(article => {
         const $article = bonzo(article);
-        if ($article.attr(ARTICLE_ID_ATTRIBUTE) in seenArticles) {
+        const articleClass = $article.attr('class');
+        if (
+            $article.attr(ARTICLE_ID_ATTRIBUTE) in seenArticles ||
+            (isAdFreeUser() && articleClass && articleClass.contains('paid-content'))
+        ) {
             $article.remove();
         }
     });
