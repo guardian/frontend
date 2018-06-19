@@ -198,10 +198,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 }
 
-.site-message__close-roundel {
-    display: none;
-}
-
 .site-message__close-btn {
     @include fs-textSans(2);
     @include circular;

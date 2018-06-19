@@ -2,26 +2,36 @@
     background-color: $news-garnett-highlight;
     max-height: 80%;
 
-    .site-message__close {
-        float: right;
-        svg {
-            fill: $garnett-neutral-1;
-            border: $garnett-neutral-1;
+    .site-message__close,
+    .site-message__roundel {
+        display: none;
+    }
+
+    .site-message__inner {
+        display: block;
+        width: auto;
+    }
+
+    .site-message__copy {
+        //position: relative;
+        //vertical-align: middle;
+
+
+        display: block;
+
+
+        padding-top: 9px;
+        padding-bottom: 14px;
+
+        @include mq(tablet) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
         }
     }
 
     .site-message__close-btn {
         border-color: $garnett-neutral-1;
         display: inline-block;
-    }
-
-    .site-message__roundel {
-        display: block;
-        float: right;
-        svg {
-            fill: $garnett-neutral-1;
-            border: $garnett-neutral-1;
-        }
     }
 
     .site-message__close-roundel {
@@ -38,6 +48,8 @@
     @include mq(tablet) {
         font-size: 18px;
         line-height: 22px;
+
+        width: gs-span(8);
     }
 }
 
@@ -45,27 +57,113 @@
 
 }
 
-.support-the-guardian-banner__button {
+@mixin side-by-side-then-stacked {
+    display: inline-block;
+    vertical-align: middle;
 
+    @include mq(tablet) {
+        display: block;
+    }
+}
+
+.support-the-guardian-banner__cta {
+    @include mq(desktop) {
+        position: absolute;
+        left: gs-span(8);
+        bottom: 0;
+    }
+}
+
+.support-the-guardian-banner__button {
+    padding-right: 0;
+    font-size: 16px;
+    height: 36px;
+    line-height: 36px;
+    background-color: $garnett-neutral-1;
+    border-color: $garnett-neutral-1;
+    .inline-icon {
+        float: right;
+    }
+
+    @include side-by-side-then-stacked;
 }
 
 .support-the-guardian-banner__payment-logos {
     height: auto;
-    width: 100px;
-    display: inline-block;
-    padding-right: 7px;
-    padding-top: 16px;
+    width: 121px;
 
-    @include mq(mobileMedium) {
-        width: 130px;
-        padding-top: 15px;
-    }
+    @include side-by-side-then-stacked;
+}
 
-    @include mq(desktop) {
-        width: 175px;
-    }
+.support-the-guardian-banner__close {
+    float: right;
 
-    @include mq(wide) {
-        padding-top: 21px;
+    // TODO: try flexbox for this
+    .support-the-guardian-banner__close-btn,
+    .support-the-guardian-banner__roundel {
+        vertical-align: middle;
+        display: inline-block;
     }
 }
+
+@mixin support-the-guardian-banner-icon {
+    height: 36px;
+    width: 36px;
+}
+
+.support-the-guardian-banner__roundel {
+    @include support-the-guardian-banner-icon;
+}
+
+.support-the-guardian-banner__close-btn {
+    @include circular;
+    @include support-the-guardian-banner-icon;
+    display: block;
+
+    // TODO: for some reason, it's more centered with this 2px on top
+    padding: 2px 0 0;
+    background: transparent;
+    border: 1px solid rgba($garnett-neutral-1, .3);
+    color: $garnett-neutral-1;
+
+    svg {
+        fill: $garnett-neutral-1;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: $garnett-neutral-1;
+    }
+}
+
+
+
+//.site-message__close {
+//    padding-bottom: $gs-gutter/4;
+//    padding-top: $gs-gutter/4;
+//    padding-right: $gs-gutter;
+//
+//    @include mq(tablet) {
+//        padding-right: $gs-gutter/2;
+//    }
+//}
+//
+//.site-message__close-btn {
+//    @include fs-textSans(2);
+//    @include circular;
+//    display: block;
+//    padding: 0;
+//    height: $btn-height + 2px;
+//    width: $btn-height + 2px;
+//    background: transparent;
+//    border: 1px solid rgba(#ffffff, .3);
+//    color: #ffffff;
+//    float: right;
+//
+//    &:hover,
+//    &:focus,
+//    &:active {
+//        border-color: #ffffff;
+//    }
+//}
