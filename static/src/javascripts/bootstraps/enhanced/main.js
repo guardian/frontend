@@ -179,7 +179,8 @@ const bootEnhanced = (): void => {
             }
 
             if (
-                config.get('isMedia') ||
+                config.get('page.contentType') === 'Audio' ||
+                config.get('page.contentType') === 'Video' ||
                 config.get('page.contentType') === 'Interactive'
             ) {
                 require.ensure(
