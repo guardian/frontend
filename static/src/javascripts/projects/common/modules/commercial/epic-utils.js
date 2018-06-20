@@ -11,25 +11,31 @@ import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/
 import { control as epicTestimonialControlParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
-import { submitInsertEvent, submitViewEvent } from 'common/modules/commercial/acquisitions-ophan';
+import {
+    submitInsertEvent,
+    submitViewEvent,
+} from 'common/modules/commercial/acquisitions-ophan';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 
 import type { ReportedError } from 'lib/report-error';
-import type { ABTest, ComponentEventWithoutAction } from 'common/modules/commercial/acquisitions-ophan';
+import type {
+    ABTest,
+    ComponentEventWithoutAction,
+} from 'common/modules/commercial/acquisitions-ophan';
 
 export type EpicComponent = {
     html: HTMLDivElement,
     componentEvent?: ComponentEventWithoutAction,
-}
+};
 
 export const reportEpicError = (error: ReportedError): void => {
-    reportError(error, { feature: 'epic' }, false)
+    reportError(error, { feature: 'epic' }, false);
 };
 
 const controlEpicComponent = (abTest?: ABTest): EpicComponent => {
     const epicId = 'epic_control';
     const epicComponentType = 'ACQUISITIONS_EPIC';
-    const rawEpic =  acquisitionsEpicControlTemplate({
+    const rawEpic = acquisitionsEpicControlTemplate({
         copy: epicControlCopy,
         componentName: '', // TODO: confirm data-component not needed
         buttonTemplate: epicButtonsTemplate({
@@ -39,9 +45,11 @@ const controlEpicComponent = (abTest?: ABTest): EpicComponent => {
                 componentId: epicId, // TODO: check ok to use this
                 campaignCode: epicId,
                 abTest,
-            })
+            }),
         }),
-        testimonialBlock: acquisitionsTestimonialBlockTemplate(epicTestimonialControlParameters),
+        testimonialBlock: acquisitionsTestimonialBlockTemplate(
+            epicTestimonialControlParameters
+        ),
         epicClass: '',
         wrapperClass: '',
     });
@@ -53,7 +61,7 @@ const controlEpicComponent = (abTest?: ABTest): EpicComponent => {
                 componentType: epicComponentType,
                 id: epicId,
             },
-            abTest: abTest,
+            abTest,
         },
     };
 };
@@ -71,12 +79,11 @@ export const displayControlEpic = (abTest?: ABTest): Promise<EpicComponent> => {
     const epic = controlEpicComponent(abTest);
     const isEpicInserted = insertEpic(epic.html);
     if (isEpicInserted) {
-        return Promise.resolve(epic)
-    } else {
-        const error = new Error('unable to insert control Epic');
-        reportEpicError(error);
-        return Promise.reject(error);
+        return Promise.resolve(epic);
     }
+    const error = new Error('unable to insert control Epic');
+    reportEpicError(error);
+    return Promise.reject(error);
 };
 
 const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {

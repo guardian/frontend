@@ -1,7 +1,14 @@
+// @flow
 import { displayDFPEpic } from 'commercial/modules/dfp/dfp-epic-slot';
 
-import { defaultMaxViews, isEpicDisplayable } from 'common/modules/commercial/contributions-utilities';
-import { displayControlEpic, trackEpic } from 'common/modules/commercial/epic-utils';
+import {
+    defaultMaxViews,
+    isEpicDisplayable,
+} from 'common/modules/commercial/contributions-utilities';
+import {
+    displayControlEpic,
+    trackEpic,
+} from 'common/modules/commercial/epic-utils';
 
 const testName = 'AcquisitionsEpicNativeVsDfpV2';
 
@@ -31,8 +38,7 @@ export const acquisitionsEpicNativeVsDfpV2: ABTest = {
                 displayControlEpic({
                     name: testName,
                     variant: 'control',
-                })
-                    .then(trackEpic)
+                }).then(trackEpic);
             },
             options: variantOptions,
         },
@@ -40,15 +46,15 @@ export const acquisitionsEpicNativeVsDfpV2: ABTest = {
             id: 'dfp',
             test: () => {
                 displayDFPEpic(2000)
-                    .catch(() => {
-                        return displayControlEpic({
+                    .catch(() =>
+                        displayControlEpic({
                             name: testName,
                             variant: 'dfp',
                         })
-                    })
-                    .then(trackEpic)
+                    )
+                    .then(trackEpic);
             },
             options: variantOptions,
-        }
-    ]
+        },
+    ],
 };

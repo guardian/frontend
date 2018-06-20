@@ -26,7 +26,11 @@ const fillAdvertSlots = (): Promise<void> => {
         // Get all ad slots
         const adverts = qwery(dfpEnv.adSlotSelector)
             // TODO: more general solution for omitting the epic ad slot here
-            .filter(adSlot => !(adSlot.id in dfpEnv.advertIds) && adSlot.id !== epicAdSlotId)
+            .filter(
+                adSlot =>
+                    !(adSlot.id in dfpEnv.advertIds) &&
+                    adSlot.id !== epicAdSlotId
+            )
             .map(adSlot => new Advert(adSlot));
         const currentLength = dfpEnv.adverts.length;
         dfpEnv.adverts = dfpEnv.adverts.concat(adverts);

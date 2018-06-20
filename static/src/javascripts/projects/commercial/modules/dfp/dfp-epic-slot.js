@@ -5,7 +5,10 @@ import timeout from 'lib/timeout';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { awaitGoogletagCmd } from 'commercial/modules/dfp/googletag-cmd';
-import { insertEpic, reportEpicError } from 'common/modules/commercial/epic-utils';
+import {
+    insertEpic,
+    reportEpicError,
+} from 'common/modules/commercial/epic-utils';
 
 import type { EpicComponent } from 'common/modules/commercial/epic-utils';
 
@@ -29,30 +32,30 @@ const renderEpicSlot = (epic: HTMLDivElement): Promise<EpicComponent> => {
     const renderedEpic = new Promise(resolve => {
         awaitGoogletagCmd.then(() => {
             window.googletag.cmd.push(() => {
-                window.googletag.pubads().addEventListener('slotRenderEnded', event => {
-                    if (event.slot.getSlotElementId() === epicAdSlotId) {
-                        resolve(epic);
-                    }
-                });
+                window.googletag
+                    .pubads()
+                    .addEventListener('slotRenderEnded', event => {
+                        if (event.slot.getSlotElementId() === epicAdSlotId) {
+                            resolve(epic);
+                        }
+                    });
             });
         });
     });
 
-    return renderedEpic.then(epic => {
-        return {
-            html: epic,
-            componentEvent: {
-                component: {
-                    componentType: 'ACQUISITIONS_EPIC',
-                    componentId: 'gdnwb_copts_memco_epic_native_vs_dfp_v2_dfp',
-                },
-                abTest: {
-                    name: 'AcquisitionsEpicNativeVsDfpV2',
-                    variant: 'dfp',
-                },
+    return renderedEpic.then(epic => ({
+        html: epic,
+        componentEvent: {
+            component: {
+                componentType: 'ACQUISITIONS_EPIC',
+                componentId: 'gdnwb_copts_memco_epic_native_vs_dfp_v2_dfp',
             },
-        }
-    });
+            abTest: {
+                name: 'AcquisitionsEpicNativeVsDfpV2',
+                variant: 'dfp',
+            },
+        },
+    }));
 };
 
 export const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
@@ -61,13 +64,14 @@ export const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
     if (isEpicInserted) {
         return timeout(duration, renderEpicSlot(epic)).catch(err => {
             epic.remove();
-            const error = new Error('DFP epic slot wasn\'t rendered within ' + duration + ' milliseconds: ' + err);
+            const error = new Error(
+                `DFP epic slot wasn't rendered within ${duration} milliseconds: ${err}`
+            );
             reportEpicError(error);
             return Promise.reject(error);
-        })
-    } else {
-        const error = new Error('unable to insert DFP epic slot');
-        reportEpicError(error);
-        return Promise.reject(error);
+        });
     }
+    const error = new Error('unable to insert DFP epic slot');
+    reportEpicError(error);
+    return Promise.reject(error);
 };

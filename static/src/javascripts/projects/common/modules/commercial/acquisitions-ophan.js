@@ -6,7 +6,7 @@ import { constructQuery as constructURLQuery } from 'lib/url';
 export type ABTest = {
     name: string,
     variant: string,
-}
+};
 
 export type ComponentEventWithoutAction = {
     component: OphanComponent,
