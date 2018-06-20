@@ -3,6 +3,7 @@
 @(
   competition: Competition,
   group: Group,
+  heading: String,
   highlightTeamId: Option[String] = None,
   multiGroup: Boolean = false,
   linkToCompetition: Boolean = true
@@ -13,9 +14,11 @@
 
     @football.views.html.fragments.componentStyles()
 
-    @tableView(competition, group,
+    @tableView(
+        competition,
+        group,
         highlightTeamId = highlightTeamId,
-        heading = Some(competition.fullName),
+        heading = Some(heading),
         linkToCompetition = linkToCompetition
     )
 </div>
