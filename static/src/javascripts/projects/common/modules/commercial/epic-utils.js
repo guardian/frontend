@@ -12,6 +12,7 @@ import { control as epicTestimonialControlParameters } from 'common/modules/comm
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { submitInsertEvent, submitViewEvent } from 'common/modules/commercial/acquisitions-ophan';
+import { logView } from 'common/modules/commercial/acquisitions-view-log';
 
 import type { ReportedError } from 'lib/report-error';
 import type { ABTest, ComponentEventWithoutAction } from 'common/modules/commercial/acquisitions-ophan';
@@ -87,6 +88,13 @@ export const trackEpic = (epic: EpicComponent): void => {
     const componentEvent = epic.componentEvent;
     if (componentEvent) {
         submitInsertEvent(componentEvent);
-        awaitEpicViewed(epic.html).then(() => submitViewEvent(componentEvent))
+        awaitEpicViewed(epic.html).then(() => {
+            submitViewEvent(componentEvent);
+            // At the moment id is always derived from test name,
+            // but something more general will be required if an Epic isn't part of an AB test.
+            if (componentEvent.abTest) {
+                logView(componentEvent.abTest.name);
+            }
+        });
     }
 };
