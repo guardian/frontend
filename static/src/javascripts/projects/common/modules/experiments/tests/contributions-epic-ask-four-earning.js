@@ -30,7 +30,6 @@ export const askFourEarning: EpicABTest = makeABTest({
                     minDaysBetweenViews: 0,
                 },
 
-                useTailoredCopyForRegulars: true,
                 insertAtSelector: '.submeta',
                 successOnView: true,
             },

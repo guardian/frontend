@@ -98,11 +98,41 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-native-vs-dfp",
-    "See if there is any difference in annualised value between serving the Epic natively vs DFP",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 6, 19), // Tuesday
+    "ab-acquisitions-epic-from-google-doc-one-variant",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-two-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-three-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-four-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
 }

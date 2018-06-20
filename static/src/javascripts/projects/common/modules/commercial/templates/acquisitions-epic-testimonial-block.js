@@ -1,17 +1,17 @@
 // @flow
-import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
+import quoteSvg from 'svgs/icon/garnett-quote.svg';
 
 export const acquisitionsTestimonialBlockTemplate = (
-    params: AcquisitionsEpicTestimonialTemplateParameters
+    params: AcquisitionsEpicTestimonialCopy
 ) =>
-    `<div class="epic__testimonial-container epic__testimonial-container--subtle">
-        <div class="epic__testimonial-quote epic__testimonial-quote--subtle">
-            ${params.quoteSvg}
+    `<div class="epic__testimonial-container">
+        <div class="epic__testimonial-quote">
+            ${quoteSvg.markup}
         </div>
         <blockquote class="epic__testimonial-text">
-            ${params.testimonialMessage}
+            ${params.text}
             <cite class="epic__testimonial-name">
-                ${params.testimonialName}
+                ${params.name}
             </cite>
         </blockquote>
     </div>`;

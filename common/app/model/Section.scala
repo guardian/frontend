@@ -65,14 +65,6 @@ object SectionId {
 }
 
 object Nielsen {
-
-  private val testingPaths = Set(
-    "2017/dec/15/good-night-stories-for-rebel-girls-jk-rowling",
-    "2015/may/26/fc-united-manchester-benfica-united-fans",
-    "2016/apr/29/revitalised-and-calmed-by-an-english-wood-in-spring"
-  )
-  def isTestingPath(path: String): Boolean = testingPaths.exists(path.contains(_))
-
   private sealed trait Apid
   private case object Guardian extends Apid
   private case object Books extends Apid
