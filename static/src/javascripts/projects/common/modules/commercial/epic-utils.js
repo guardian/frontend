@@ -5,13 +5,13 @@ import { elementInView } from 'lib/element-inview';
 import reportError from 'lib/report-error';
 
 import { control as epicControlCopy } from 'common/modules/commercial/acquisitions-copy';
-import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { control as epicTestimonialControlParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import {
+    addTrackingCodesToUrl,
     submitInsertEvent,
     submitViewEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
@@ -28,12 +28,12 @@ export type EpicComponent = {
     componentEvent?: ComponentEventWithoutAction,
 };
 
-export const reportEpicError = (error: ReportedError): void => {
+const reportEpicError = (error: ReportedError): void => {
     reportError(error, { feature: 'epic' }, false);
 };
 
 const controlEpicComponent = (abTest?: ABTest): EpicComponent => {
-    const epicId = 'epic_control';
+    const epicId = 'epic_control'; // TODO: check ok to use this
     const epicComponentType = 'ACQUISITIONS_EPIC';
     const rawEpic = acquisitionsEpicControlTemplate({
         copy: epicControlCopy,
@@ -42,7 +42,7 @@ const controlEpicComponent = (abTest?: ABTest): EpicComponent => {
             supportUrl: addTrackingCodesToUrl({
                 base: supportContributeURL,
                 componentType: epicComponentType,
-                componentId: epicId, // TODO: check ok to use this
+                componentId: epicId,
                 campaignCode: epicId,
                 abTest,
             }),
@@ -66,7 +66,7 @@ const controlEpicComponent = (abTest?: ABTest): EpicComponent => {
     };
 };
 
-export const insertEpic = (epic: HTMLDivElement): boolean => {
+const insertEpic = (epic: HTMLDivElement): boolean => {
     const element = document.querySelector('.submeta');
     if (element && element.parentElement) {
         element.parentElement.insertBefore(epic, element);
@@ -75,7 +75,7 @@ export const insertEpic = (epic: HTMLDivElement): boolean => {
     return false;
 };
 
-export const displayControlEpic = (abTest?: ABTest): Promise<EpicComponent> => {
+const displayControlEpic = (abTest?: ABTest): Promise<EpicComponent> => {
     const epic = controlEpicComponent(abTest);
     const isEpicInserted = insertEpic(epic.html);
     if (isEpicInserted) {
@@ -91,7 +91,7 @@ const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
     return new Promise(resolve => inView.on('firstview', () => resolve()));
 };
 
-export const trackEpic = (epic: EpicComponent): void => {
+const trackEpic = (epic: EpicComponent): void => {
     const componentEvent = epic.componentEvent;
     if (componentEvent) {
         submitInsertEvent(componentEvent);
@@ -105,3 +105,5 @@ export const trackEpic = (epic: EpicComponent): void => {
         });
     }
 };
+
+export { reportEpicError, insertEpic, displayControlEpic, trackEpic };

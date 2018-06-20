@@ -37,7 +37,7 @@ export type CtaUrls = {
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
-export const defaultMaxViews: {
+const defaultMaxViews: {
     days: number,
     count: number,
     minDaysBetweenViews: number,
@@ -102,7 +102,7 @@ const shouldShowReaderRevenue = (
     );
 };
 
-export const isEpicDisplayable = (): boolean => {
+const isEpicDisplayable = (): boolean => {
     const page = config.get('page');
     if (!page) {
         return false;
@@ -470,4 +470,6 @@ export {
     makeABTest,
     defaultButtonTemplate,
     makeBannerABTestVariants,
+    defaultMaxViews,
+    isEpicDisplayable,
 };

@@ -12,7 +12,7 @@ import {
 
 import type { EpicComponent } from 'common/modules/commercial/epic-utils';
 
-export const epicAdSlotId = 'dfp-ad--epic';
+const epicAdSlotId = 'dfp-ad--epic';
 
 const createDFPEpicSlot = (): HTMLDivElement => {
     const adSlots = createSlots('epic', {});
@@ -25,8 +25,8 @@ const createDFPEpicSlot = (): HTMLDivElement => {
 // It can be made more generic in a couple of ways; either:
 // - delegate the submission of the component events to the iframe (so just remove the component event field); or
 // - obtain component event data from iframe via a message between windows
-const renderEpicSlot = (epic: HTMLDivElement): Promise<EpicComponent> => {
-    addSlot(epic, true);
+const renderEpicSlot = (epicSlot: HTMLDivElement): Promise<EpicComponent> => {
+    addSlot(epicSlot, true);
 
     // Putting a listener on mediator for modules:commercial:dfp:rendered didn't work (?)
     const renderedEpic = new Promise(resolve => {
@@ -36,7 +36,7 @@ const renderEpicSlot = (epic: HTMLDivElement): Promise<EpicComponent> => {
                     .pubads()
                     .addEventListener('slotRenderEnded', event => {
                         if (event.slot.getSlotElementId() === epicAdSlotId) {
-                            resolve(epic);
+                            resolve(epicSlot);
                         }
                     });
             });
@@ -58,7 +58,7 @@ const renderEpicSlot = (epic: HTMLDivElement): Promise<EpicComponent> => {
     }));
 };
 
-export const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
+const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
     const epic = createDFPEpicSlot();
     const isEpicInserted = insertEpic(epic);
     if (isEpicInserted) {
@@ -75,3 +75,5 @@ export const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
     reportEpicError(error);
     return Promise.reject(error);
 };
+
+export { epicAdSlotId, displayDFPEpic };
