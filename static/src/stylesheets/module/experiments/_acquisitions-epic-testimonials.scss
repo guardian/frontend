@@ -19,19 +19,19 @@
     }
 
     .epic__testimonial-text {
-        margin: 0;
-        padding: 0 (3 * $gs-gutter);
-
         @include fs-textSans(5);
         font-style: italic;
+
+        margin: 0;
+        padding: 0 (3 * $gs-gutter);
     }
 
     .epic__testimonial-name {
-        display: block;
-        margin-top: 5px;
-
         @include fs-textSans(3);
         font-style: normal;
+
+        display: block;
+        margin-top: 5px;
     }
 }
 
@@ -42,4 +42,3 @@
     // for instance .from-content-api cite
     @include testimonial-styles;
 }
-
