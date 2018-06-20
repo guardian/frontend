@@ -6,8 +6,10 @@ import {
     addForMinutes,
     removeCookie,
     getCookie,
-    isValidCookieValue,
+    _,
 } from 'lib/cookies';
+
+const { isValidCookieValue } = _;
 
 // Mock the Date constructor to always return the beginning of time
 const OriginalDate = global.Date;

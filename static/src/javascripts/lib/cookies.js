@@ -133,6 +133,10 @@ const getCookie = (name: string): ?string => {
     return null;
 };
 
+export const _ = {
+    isValidCookieValue,
+};
+
 export {
     cleanUp,
     addCookie,
@@ -140,5 +144,4 @@ export {
     addForMinutes,
     removeCookie,
     getCookie,
-    isValidCookieValue,
 };
