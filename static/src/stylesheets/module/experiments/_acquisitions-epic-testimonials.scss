@@ -1,77 +1,45 @@
-// CSS used for the Epic testimonials test
+@mixin testimonial-styles {
+    .epic__testimonial-container {
+        margin: $gs-baseline 0;
+        position: relative;
+    }
 
-// Common classes
+    .epic__testimonial-quote {
+        position: absolute;
+        left: $gs-gutter / 2;
+        top: 0;
 
-.epic__testimonial-container {
-    margin-top: $gs-gutter;
-    margin-bottom: $gs-gutter;
-}
+        span.inline-garnett-quote {
+            svg {
+                width: $gs-gutter;
+                height: $gs-gutter;
+                fill: $neutral-3;
+            }
+        }
+    }
 
-.epic__testimonial-quote {
-    position: relative;
-}
+    .epic__testimonial-text {
+        margin: 0;
+        padding: 0 (3 * $gs-gutter);
 
-.epic__testimonial-quote span {
-    position: absolute;
-}
+        @include fs-textSans(5);
+        font-style: italic;
+    }
 
-.epic__testimonial-container .epic__testimonial-quote .inline-garnett-quote svg {
-    fill: $multimedia-main-2;
-    width: $gs-gutter;
-    height: $gs-gutter;
-    padding-left: 10px;
-}
+    .epic__testimonial-name {
+        display: block;
+        margin-top: 5px;
 
-.epic__testimonial-text {
-    margin-bottom: 0;
-    font-family: $f-sans-serif-text;
-    font-style: italic;
-    padding-left: 2 * $gs-gutter;
-}
-
-.epic__testimonial-name {
-    display: block;
-    margin-top: 5px;
-    font-family: $f-sans-serif-text;
-    font-style: normal;
-}
-
-
-// Variant 1 - control
-
-// Variant 2 - prominent
-
-// Variant 3 - subtle
-
-.epic__testimonial-container--subtle .epic__testimonial-quote--subtle .inline-garnett-quote svg {
-    fill: $neutral-3;
-}
-
-
-
-// Remaining classes taken from previous pull request
-
-.contributions__epic--subtle {
-    // Unset border top as it will be set for the inline header element
-    border-top: 0;
-    background-color: #ffffff;
-    margin-top: $gs-baseline * 4;
-    margin-bottom: $gs-baseline * 4;
-}
-
-.contributions__title--epic--subtle {
-    @include fs-header(3);
-    display: inline;
-    border-top: 1px solid $multimedia-main-2;
-    padding-top: $gs-baseline / 3;
-}
-
-.contributions__paragraph--subtle {
-    margin-top: 0;
-}
-
-.contributions__epic--testimonial-usa {
-    .inline-quote svg {
-        fill: #ffbb00;
+        @include fs-textSans(3);
+        font-style: normal;
     }
 }
+
+@include testimonial-styles;
+
+.from-content-api {
+    // needed to override nested selectors from _from-content-api.scss,
+    // for instance .from-content-api cite
+    @include testimonial-styles;
+}
+
