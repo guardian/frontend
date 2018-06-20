@@ -44,12 +44,24 @@
 
     font-size: 17px;
     line-height: 22px;
+    margin-bottom: $gs-baseline;
 
     @include mq(tablet) {
-        font-size: 18px;
-        line-height: 22px;
 
-        width: gs-span(8);
+        // TODO: in gs-span?
+        width: 580px;
+    }
+
+    @include mq(desktop) {
+        display: inline-block;
+    }
+
+    @include mq(leftCol) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        margin-left: gs-span(3) + $gs-gutter;
     }
 }
 
@@ -57,20 +69,22 @@
 
 }
 
-@mixin side-by-side-then-stacked {
-    display: inline-block;
-    vertical-align: middle;
-
-    @include mq(tablet) {
-        display: block;
-    }
-}
-
 .support-the-guardian-banner__cta {
     @include mq(desktop) {
+        //display: inline-block;
+        //margin-left: $gs-gutter;
+
         position: absolute;
-        left: gs-span(8);
-        bottom: 0;
+        left: gs-span(8) + ($gs-gutter * 2);
+        bottom: $gs-gutter;
+    }
+
+    @include mq(leftCol) {
+        left: gs-span(10) + ($gs-gutter * 2);
+    }
+
+    @include mq(wide) {
+        left: gs-span(11) + ($gs-gutter * 2);
     }
 }
 
@@ -85,14 +99,25 @@
         float: right;
     }
 
-    @include side-by-side-then-stacked;
+    display: inline-block;
+    vertical-align: middle;
+
+    @include mq(tablet) {
+        display: block;
+        margin-bottom: 8px;
+    }
 }
 
 .support-the-guardian-banner__payment-logos {
     height: auto;
     width: 121px;
 
-    @include side-by-side-then-stacked;
+    display: inline-block;
+    vertical-align: middle;
+
+    @include mq(tablet) {
+        display: block;
+    }
 }
 
 .support-the-guardian-banner__close {

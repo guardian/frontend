@@ -19,16 +19,16 @@ export const acquisitionsBannerControlTemplate = (
         ${params.messageText}${params.ctaText}
     </div>
     <div class="support-the-guardian-banner__cta">
-        <img
-            class="support-the-guardian-banner__payment-logos"
-            src="${params.paypalAndCreditCardImage}"
-            alt="PayPal and credit card"
-        >
         <button class="button support-the-guardian-banner__button" href="${
             params.linkUrl
         }">
             ${params.buttonCaption}${params.buttonSvg}
         </button>
+        <img
+            class="support-the-guardian-banner__payment-logos"
+            src="${params.paypalAndCreditCardImage}"
+            alt="PayPal and credit card"
+        >
     </div>
     <a
         class="u-faux-block-link__overlay"
