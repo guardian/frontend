@@ -1,6 +1,5 @@
 // @flow
 
-import config from 'lib/config';
 import { getUrlVars } from 'lib/url';
 
 import type {
@@ -49,15 +48,14 @@ const setSlotAdRefresh = (event: ImpressionViewableEvent): void => {
 
   Returns a function to be used as a callback for GTP 'impressionViewable' event
 
-  Uses the global config and URL parameters.
+  Uses URL parameters.
 
  */
 export const onSlotViewableFunction = (): ImpressionViewableEventCallback => {
     const queryParams = getUrlVars();
 
     if (
-        queryParams.adrefresh !== 'false' &&
-        config.get('tests.commercialAdRefreshVariant')
+        queryParams.adrefresh !== 'false'
     ) {
         return setSlotAdRefresh;
     }
