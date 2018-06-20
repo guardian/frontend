@@ -13,7 +13,7 @@ $tones: (
     (live, $news-dark, $news-bold),
     (media, $black, $black),
     (news, $sport-dark, $sport-dark),
-    (review, $yellow-highlight, darken($yellow-highlight, 10%), $brightness-46, $brightness-46),
+    (review, $highlight-bold, darken($highlight-bold, 10%), $brightness-46, $brightness-46),
     (special-feature, $brightness-46, $brightness-46),
     (plaindark, $brightness-86, $brightness-86, $brightness-86, $brightness-20)
 );
@@ -26,8 +26,8 @@ $article-tones: (
     (comment, $black, $opinion-bold, $black, #ffffff, $brightness-93),
     (feature, #ffffff, $lifestyle-pastel, #ffffff, $lifestyle-dark, $lifestyle-dark),
     (live, #ffffff, $lifestyle-pastel, #ffffff, $news-dark, $news-dark),
-    (media, #ffffff, $yellow-highlight, #ffffff, $black, $brightness-20),
+    (media, #ffffff, $highlight-bold, #ffffff, $black, $brightness-20),
     (news, #ffffff, $sport-pastel, #ffffff, $guardian-brand, $guardian-brand),
-    (review, #ffffff, $yellow-highlight, #ffffff, #615b52, #615b52),
-    (special-feature, #ffffff, $yellow-highlight, #ffffff, $brightness-46, $brightness-46)
+    (review, #ffffff, $highlight-bold, #ffffff, #615b52, #615b52),
+    (special-feature, #ffffff, $highlight-bold, #ffffff, $brightness-46, $brightness-46)
 );

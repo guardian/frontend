@@ -1,7 +1,7 @@
-$tls-warning-rule: darken($garnett-nav-background, 20%);
+$tls-warning-rule: darken($nav-faded, 20%);
 
 .tls-warning {
-    background-color: $garnett-nav-background;
+    background-color: $nav-faded;
     color: $black;
     border-bottom: 1px solid $tls-warning-rule;
 
@@ -27,7 +27,7 @@ $tls-warning-rule: darken($garnett-nav-background, 20%);
         }
 
         path {
-            fill: $garnett-nav-background;
+            fill: $nav-faded;
         }
     }
 }

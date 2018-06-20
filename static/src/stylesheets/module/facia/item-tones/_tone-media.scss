@@ -21,7 +21,7 @@
     }
 
     .rich-link__arrow-icon {
-        fill: $yellow-highlight;
+        fill: $highlight-bold;
     }
 
     .inline-quote {
@@ -30,14 +30,14 @@
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: $yellow-highlight;
+        background-color: $highlight-bold;
     }
 
     .fc-item__kicker,
     .rich-link__kicker,
     .fc-item__byline,
     .rich-link__read-more-text {
-        color: $yellow-highlight;
+        color: $highlight-bold;
     }
 
     .fc-item__kicker:after,
@@ -59,7 +59,7 @@
 
 .tone-media--sublink {
     .fc-sublink__kicker {
-        color: $yellow-highlight;
+        color: $highlight-bold;
     }
 
     @include sublink-style(analysis, comment, letters, dead, news) {

@@ -336,7 +336,7 @@
 .content--pillar-special-report.content--type-comment:not(.paid-content),
 .content--pillar-special-report.content--type-guardianview:not(.paid-content),
 .content--pillar-special-report:not(.paid-content) {
-    @include colorPalatte($story-package-garnett, $story-package-garnett, $yellow-highlight);
+    @include colorPalatte($special-report-dark, $special-report-dark, $highlight-bold);
 
     .youtube-media-atom__play-button .inline-icon svg {
         fill: $black;
@@ -390,7 +390,7 @@
 
 .content--media:not(.paid-content).content--pillar-special-report,
 .immersive-main-media__headline-container.content--pillar-special-report {
-    @include mediaPalatte($yellow-highlight, pink);
+    @include mediaPalatte($highlight-bold, pink);
 }
 
 .content--type-analysis {

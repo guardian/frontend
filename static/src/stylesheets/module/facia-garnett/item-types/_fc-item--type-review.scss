@@ -1,7 +1,7 @@
 .fc-item--type-review {
     .fc-item__header {
         .stars {
-            background-color: $yellow-highlight;
+            background-color: $highlight-bold;
             display: inline-block;
             line-height: 0;
             padding: calc((#{$gs-baseline} / 2) - 2px);

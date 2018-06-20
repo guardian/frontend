@@ -48,7 +48,7 @@
             height: .8em;
             width: .8em;
             * {
-                fill: $nav-primary-colour;
+                fill: $black;
                 @supports(fill: currentColor) {
                     fill: currentColor;
                 }

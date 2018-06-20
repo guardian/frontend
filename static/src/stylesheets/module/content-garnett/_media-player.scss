@@ -338,7 +338,7 @@ $ima-controls-height: 70px;
 }
 
 .vjs-play-progress {
-    background-color: $yellow-highlight;
+    background-color: $highlight-bold;
     z-index: 2;
 }
 
@@ -380,11 +380,11 @@ $ima-controls-height: 70px;
 }
 
 .vjs-volume-level {
-    background-color: $yellow-highlight;
+    background-color: $highlight-bold;
 
     &:before {
         position: absolute;
-        background-color: $yellow-highlight;
+        background-color: $highlight-bold;
         height: 11px;
         width: 2px;
         top: -$gs-baseline/3;
@@ -536,7 +536,7 @@ $ima-controls-height: 70px;
     .vjs-overlay__duration {
         @include fs-headline(3);
         text-align: left;
-        color: $yellow-highlight;
+        color: $highlight-bold;
         padding: 0 $gs-gutter/2 $gs-baseline*2;
     }
 }
@@ -658,7 +658,7 @@ $ima-controls-height: 70px;
         }
 
         .vjs-control-text {
-            color: $yellow-highlight;
+            color: $highlight-bold;
         }
     }
 }
@@ -700,7 +700,7 @@ $ima-controls-height: 70px;
         display: inline-block;
         max-width: 90%;
         &:hover {
-            color: $yellow-highlight;
+            color: $highlight-bold;
         }
     }
 
@@ -712,7 +712,7 @@ $ima-controls-height: 70px;
         fill: #ffffff;
 
         &:hover {
-            fill: $yellow-highlight;
+            fill: $highlight-bold;
         }
     }
 }
@@ -829,7 +829,7 @@ $ima-controls-height: 70px;
             .fc-item__action {
                 color: #ffffff;
                 &:hover {
-                    color: $yellow-highlight;
+                    color: $highlight-bold;
                 }
             }
 
@@ -960,7 +960,7 @@ $ima-controls-height: 70px;
 }
 #ima-progress-div {
     height: 100%;
-    background-color: $yellow-highlight;
+    background-color: $highlight-bold;
 }
 #ima-play-pause-div,
 #ima-mute-div,
@@ -1045,7 +1045,7 @@ $ima-controls-height: 70px;
         text-align: left; //Required for end slate items
         height: get-line-height(headline, 1) * 3;
         .inline-video-icon {
-            fill: $yellow-highlight;
+            fill: $highlight-bold;
             svg {
                 height: .75em;
                 width: 1.1em;
@@ -1070,7 +1070,7 @@ $ima-controls-height: 70px;
 
     .vjs-big-play-button .vjs-control-text {
         &:before {
-            background-color: $yellow-highlight;
+            background-color: $highlight-bold;
         }
 
         &:after {

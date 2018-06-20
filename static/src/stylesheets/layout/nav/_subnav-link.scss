@@ -1,7 +1,7 @@
 .subnav-link {
     font-family: $f-serif-headline;
     font-weight: 400;
-    color: $nav-primary-colour;
+    color: $black;
     display: block;
     font-size: 14px;
     height: $veggie-burger-medium - $gs-baseline;
@@ -37,7 +37,7 @@
 
     &:hover,
     &:focus {
-        color: $nav-secondary-colour;
+        color: $brightness-27;
     }
 }
 

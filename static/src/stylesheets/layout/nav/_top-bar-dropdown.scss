@@ -5,10 +5,10 @@
     }
 
     & ~ .top-bar__item--dropdown {
-        color: $nav-primary-colour;
+        color: $black;
 
         &:hover {
-            color: $nav-secondary-colour;
+            color: $brightness-27;
         }
     }
 }
@@ -42,7 +42,7 @@
 
 .dropdown-menu__title {
     @include fs-textSans(4);
-    color: $nav-primary-colour;
+    color: $black;
     cursor: pointer;
     display: block;
     letter-spacing: .01rem;
@@ -55,7 +55,7 @@
 
     &:hover,
     &:focus {
-        color: $nav-primary-colour;
+        color: $black;
         background-color: $brightness-93;
         text-decoration: none;
     }
@@ -89,7 +89,7 @@
             height: .8em;
             width: .8em;
             g {
-                fill: $nav-primary-colour;
+                fill: $black;
                 @supports(fill: currentColor) {
                     fill: currentColor;
                 }
@@ -109,7 +109,7 @@
     &:after {
         // Tick icon
         content: '';
-        border: 2px solid $nav-secondary-colour;
+        border: 2px solid $brightness-27;
         border-top: 0;
         border-right: 0;
         position: absolute;

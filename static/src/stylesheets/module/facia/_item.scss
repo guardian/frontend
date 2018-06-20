@@ -241,7 +241,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .rich-link__title,
 .fc-sublink__link {
     .inline-video-icon {
-        fill: $yellow-highlight;
+        fill: $highlight-bold;
 
         > svg {
             height: .75em;
@@ -255,7 +255,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .rich-link--gallery .rich-link__title,
 .fc-sublink--gallery .fc-sublink__link {
     .inline-camera {
-        fill: $yellow-highlight;
+        fill: $highlight-bold;
 
         svg {
             height: .72em;
@@ -269,7 +269,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .rich-link--audio .rich-link__title,
 .fc-sublink--audio .fc-sublink__link {
     .inline-volume-high {
-        fill: $yellow-highlight;
+        fill: $highlight-bold;
 
         svg {
             height: .72em;

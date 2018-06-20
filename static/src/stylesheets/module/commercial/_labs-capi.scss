@@ -331,7 +331,7 @@
     }
 
     &.vergadain--media {
-        border-top-color: $yellow-highlight;
+        border-top-color: $highlight-bold;
         background: $brightness-20;
         color: #ffffff;
 
@@ -342,7 +342,7 @@
 
         .advert__title {
             > .inline-icon .inline-icon__svg {
-                fill: $yellow-highlight;
+                fill: $highlight-bold;
             }
         }
     }

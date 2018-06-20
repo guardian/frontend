@@ -77,17 +77,17 @@
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
     .fc-item.fc-item--type-feature
     {
-        background-color: $story-package-garnett;
+        background-color: $special-report-dark;
 
         &:hover {
-            background-color: darken($story-package-garnett, 5%);
+            background-color: darken($special-report-dark, 5%);
 
             .fc-trail__count--commentcount {
-                background-color: darken($story-package-garnett, 5%);
+                background-color: darken($special-report-dark, 5%);
             }
         }
         .fc-trail__count--commentcount {
-            background-color: $story-package-garnett;
+            background-color: $special-report-dark;
         }
 
         .fc-item__headline {
@@ -111,7 +111,7 @@
     }
 
     .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($story-package-garnett, 5%) !important;
+        background-color: darken($special-report-dark, 5%) !important;
     }
 
     .fc-item__standfirst {
@@ -125,8 +125,8 @@
     .treats__list-item {
         .treats__treat {
             background-color: $brightness-86;
-            border-color: $story-package-garnett;
-            color: $story-package-garnett;
+            border-color: $special-report-dark;
+            color: $special-report-dark;
         }
     }
 
@@ -136,5 +136,5 @@
     @include kicker-override(sport, $sport-bright);
     @include kicker-override(opinion, $opinion-bright);
     @include kicker-override(news, $news-bright);
-    @include kicker-override(special-report, $yellow-highlight);
+    @include kicker-override(special-report, $highlight-bold);
 }

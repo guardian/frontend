@@ -6,7 +6,7 @@
 
     .menu-group--primary > & {
         &:not(:last-child):after {
-            background-color: $rule;
+            background-color: $nav-dark;
             bottom: 0;
             content: '';
             display: block;
@@ -84,7 +84,7 @@
     }
 
     &:before {
-        border: 2px solid $nav-secondary-colour;
+        border: 2px solid $brightness-27;
         border-top: 0;
         border-left: 0;
         content: '';

@@ -2,18 +2,18 @@
     background-color: #eff1f2;
 
     .content__headline--byline .tone-colour {
-        background-color: $yellow-highlight;
+        background-color: $highlight-bold;
     }
 
     .content__series-label .content__label__link {
-        box-shadow: -3px 0 0 0 $yellow-highlight, 3px 0 0 0 $yellow-highlight;
+        box-shadow: -3px 0 0 0 $highlight-bold, 3px 0 0 0 $highlight-bold;
 
         @include mq(leftCol) {
             line-height: 24px;
         }
 
         .label__link-wrapper {
-            background: $yellow-highlight;
+            background: $highlight-bold;
             position: relative;
         }
     }
@@ -34,7 +34,7 @@
 
 .content--immersive.content--pillar-special-report:not(.immersive-main-media__gallery):not(.paid-content):not(.content--gallery):not(.content--minute-article) {
     .content__labels {
-        background-color: $yellow-highlight;
+        background-color: $highlight-bold;
 
         .content__series-label__link {
             color: $black;
@@ -43,10 +43,10 @@
 
     .immersive-main-media__headline-container .content__main-column,
     .immersive-main-media__headline-container::after {
-        background-color: $story-package-garnett;
+        background-color: $special-report-dark;
     }
 }
 
 .content--pillar-special-report.content--media:not(.paid-content) {
-    background-color: darken($story-package-garnett, 7%);
+    background-color: darken($special-report-dark, 7%);
 }

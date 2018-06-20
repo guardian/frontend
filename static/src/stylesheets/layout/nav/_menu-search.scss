@@ -25,7 +25,7 @@
 }
 
 .menu-search__search-box {
-    background-color: $nav-darker-colour;
+    background-color: $nav-bold;
     border: 0;
     border-radius: 1000px;
     box-sizing: border-box;
@@ -36,13 +36,13 @@
     width: 100%;
 
     &::placeholder {
-        color: $nav-primary-colour;
+        color: $black;
     }
 
     &:focus {
         background-color: #ffffff;
         box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
-        color: $nav-primary-colour;
+        color: $black;
         outline: none;
         padding-right: $gs-gutter * 2;
         transition: background-color 500ms;
@@ -64,7 +64,7 @@
     }
 
     .inline-search-36__svg {
-        fill: $nav-secondary-colour;
+        fill: $brightness-27;
         height: 22px;
         width: 22px;
     }
@@ -85,7 +85,7 @@
 
     &:before,
     &:after {
-        border: 2px solid $nav-primary-colour;
+        border: 2px solid $black;
         border-left: 0;
         border-top: 0;
         content: '';
@@ -121,7 +121,7 @@
 
     &:hover,
     &:active {
-        border-color: $nav-primary-colour;
+        border-color: $black;
     }
 
     &:focus {

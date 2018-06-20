@@ -15,7 +15,7 @@
 
     .rich-link__container:before,
     .fc-item__container:before {
-        background-color: $yellow-highlight;
+        background-color: $highlight-bold;
     }
 
     &,
@@ -36,7 +36,7 @@
     .fc-item__byline,
     .rich-link__byline,
     .rich-link__read-more-text {
-        color: $yellow-highlight;
+        color: $highlight-bold;
     }
 
     .fc-item__kicker--dreamsnap {
@@ -52,7 +52,7 @@
     }
 
     .rich-link__arrow-icon {
-        fill: $yellow-highlight;
+        fill: $highlight-bold;
     }
 
     .fc-item__kicker:after,

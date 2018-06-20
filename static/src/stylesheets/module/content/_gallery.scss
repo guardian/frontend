@@ -301,7 +301,7 @@
     @include mq(desktop) {
         &:hover,
         .article__img-container:hover & {
-            background-color: $yellow-highlight;
+            background-color: $highlight-bold;
 
             &.inline-expand-image {
                 fill: #000000;

@@ -4,10 +4,10 @@
     special-report, // $tone
     $brightness-46, // $tonal__header-background
     #ffffff, // $tonal__header-text
-    $yellow-highlight, // $tonal__header-link
+    $highlight-bold, // $tonal__header-link
     200, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $yellow-highlight, // $tonal__headline-accent
+    $highlight-bold, // $tonal__headline-accent
     lighten($brightness-46, 5%), // $tonal__standfirst-background
     #ffffff, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
@@ -28,15 +28,15 @@
         }
 
         .content__section-label__link {
-            color: $yellow-highlight;
+            color: $highlight-bold;
         }
 
         .u-underline {
-            color: $yellow-highlight;
-            border-bottom-color: rgba($yellow-highlight, .3);
+            color: $highlight-bold;
+            border-bottom-color: rgba($highlight-bold, .3);
 
             &:hover {
-                border-bottom-color: rgba($yellow-highlight, .7);
+                border-bottom-color: rgba($highlight-bold, .7);
             }
         }
     }
@@ -47,10 +47,10 @@
         }
 
         a.tone-colour {
-            color: $yellow-highlight;
+            color: $highlight-bold;
 
             &:hover {
-                color: mix($yellow-highlight, #ffffff, 70%);
+                color: mix($highlight-bold, #ffffff, 70%);
             }
         }
     }
