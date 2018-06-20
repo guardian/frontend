@@ -36,12 +36,12 @@
     padding-left: 8px;
 
     &.is-clicked {
-        background-color: $green-bright;
+        background-color: $green-bold;
         padding-bottom: 0;
     }
 
     &.is-clicked + .storyquestion-submission-container {
-        background-color: $green-bright;
+        background-color: $green-bold;
     }
 
     &:hover {
