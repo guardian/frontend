@@ -8,7 +8,7 @@ import { displayLazyAds } from 'commercial/modules/dfp/display-lazy-ads';
 import { displayAds } from 'commercial/modules/dfp/display-ads';
 import { setupSonobi } from 'commercial/modules/dfp/prepare-sonobi-tag';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
-import { epicAdSlotId } from 'commercial/modules/dfp/dfp-epic-slot';
+import { epicAdSlotId } from 'commercial/modules/epic/dfp-epic-slot-utils';
 
 // Pre-rendered ad slots that were rendered on the page by the server are collected here.
 // For dynamic ad slots that are created at js-runtime, see:

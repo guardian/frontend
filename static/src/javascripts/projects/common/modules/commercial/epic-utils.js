@@ -19,7 +19,7 @@ import { logView } from 'common/modules/commercial/acquisitions-view-log';
 
 import type { ReportedError } from 'lib/report-error';
 import type {
-    ABTest,
+    ABTestVariant,
     ComponentEventWithoutAction,
 } from 'common/modules/commercial/acquisitions-ophan';
 
@@ -32,7 +32,7 @@ const reportEpicError = (error: ReportedError): void => {
     reportError(error, { feature: 'epic' }, false);
 };
 
-const controlEpicComponent = (abTest?: ABTest): EpicComponent => {
+const controlEpicComponent = (abTest?: ABTestVariant): EpicComponent => {
     const epicId = 'epic_control'; // TODO: check ok to use this
     const epicComponentType = 'ACQUISITIONS_EPIC';
     const rawEpic = acquisitionsEpicControlTemplate({
@@ -75,7 +75,7 @@ const insertEpic = (epic: HTMLDivElement): boolean => {
     return false;
 };
 
-const displayControlEpic = (abTest?: ABTest): Promise<EpicComponent> => {
+const displayControlEpic = (abTest?: ABTestVariant): Promise<EpicComponent> => {
     const epic = controlEpicComponent(abTest);
     const isEpicInserted = insertEpic(epic.html);
     if (isEpicInserted) {

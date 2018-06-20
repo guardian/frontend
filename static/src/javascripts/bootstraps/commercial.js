@@ -28,12 +28,14 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { stubGoogletagCmd } from 'commercial/modules/dfp/googletag-cmd';
+import { initDFPEpicSlot } from 'commercial/modules/epic/dfp-epic-slot';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-prepare-cmp', initCmpService],
     ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
+    ['cm-dfp-epic', initDFPEpicSlot],
     ['cm-carrot', initCarrotTrafficDriver], // TODO: check if this should move into non-ad-free specifically
     ['cm-checkDispatcher', initCheckDispatcher],
 ];

@@ -3,7 +3,7 @@ import ophan from 'ophan/ng';
 import config from 'lib/config';
 import { constructQuery as constructURLQuery } from 'lib/url';
 
-export type ABTest = {
+export type ABTestVariant = {
     name: string,
     variant: string,
 };
@@ -12,7 +12,7 @@ export type ComponentEventWithoutAction = {
     component: OphanComponent,
     value?: string,
     id?: string,
-    abTest?: ABTest,
+    abTest?: ABTestVariant,
 };
 
 type AcquisitionLinkParams = {

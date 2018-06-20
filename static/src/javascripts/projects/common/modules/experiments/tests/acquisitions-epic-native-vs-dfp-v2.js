@@ -1,5 +1,4 @@
 // @flow
-import { displayDFPEpic } from 'commercial/modules/dfp/dfp-epic-slot';
 
 import {
     defaultMaxViews,
@@ -10,10 +9,17 @@ import {
     trackEpic,
 } from 'common/modules/commercial/epic-utils';
 
+import type { ABTestVariant } from 'common/modules/commercial/acquisitions-ophan';
+
 const testName = 'AcquisitionsEpicNativeVsDfpV2';
 
 const variantOptions = {
     maxViews: defaultMaxViews,
+};
+
+const dfpVariant: ABTestVariant = {
+    name: testName,
+    variant: 'dfp',
 };
 
 const epicNativeVsDfpV2: ABTest = {
@@ -43,20 +49,16 @@ const epicNativeVsDfpV2: ABTest = {
             options: variantOptions,
         },
         {
-            id: 'dfp',
-            test: () => {
-                displayDFPEpic(2000)
-                    .catch(() =>
-                        displayControlEpic({
-                            name: testName,
-                            variant: 'dfp',
-                        })
-                    )
-                    .then(trackEpic);
-            },
+            id: dfpVariant.variant,
+            test: () => {},
             options: variantOptions,
         },
     ],
 };
 
-export const acquisitionsEpicNativeVsDfpV2 = ((epicNativeVsDfpV2: any): AcquisitionsABTest);
+const acquisitionsEpicNativeVsDfpV2 = ((epicNativeVsDfpV2: any): AcquisitionsABTest);
+
+export {
+    dfpVariant,
+    acquisitionsEpicNativeVsDfpV2,
+}
