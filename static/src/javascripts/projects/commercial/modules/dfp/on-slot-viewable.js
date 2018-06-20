@@ -54,9 +54,7 @@ const setSlotAdRefresh = (event: ImpressionViewableEvent): void => {
 export const onSlotViewableFunction = (): ImpressionViewableEventCallback => {
     const queryParams = getUrlVars();
 
-    if (
-        queryParams.adrefresh !== 'false'
-    ) {
+    if (queryParams.adrefresh !== 'false') {
         return setSlotAdRefresh;
     }
 
