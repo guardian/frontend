@@ -11,13 +11,15 @@ const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
 const AD_FREE_USER_COOKIE = 'GU_AF1';
 const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
+const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
 
 const userHasData = (): boolean => {
     const cookie =
         getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
         getCookie(PAYING_MEMBER_COOKIE) ||
         getCookie(RECURRING_CONTRIBUTOR_COOKIE) ||
-        getCookie(AD_FREE_USER_COOKIE);
+        getCookie(AD_FREE_USER_COOKIE) ||
+        getCookie(DIGITAL_SUBSCRIBER_COOKIE);
     return !!cookie;
 };
 
@@ -43,6 +45,10 @@ const persistResponse = (JsonResponse: () => void) => {
         RECURRING_CONTRIBUTOR_COOKIE,
         JsonResponse.contentAccess.recurringContributor
     );
+    addCookie(
+        DIGITAL_SUBSCRIBER_COOKIE,
+        JsonResponse.contentAccess.digitalPack
+    );
 
     removeCookie(ACTION_REQUIRED_FOR_COOKIE);
     if ('alertAvailableFor' in JsonResponse) {
@@ -64,6 +70,7 @@ const deleteOldData = (): void => {
     removeCookie(RECURRING_CONTRIBUTOR_COOKIE);
     removeCookie(AD_FREE_USER_COOKIE);
     removeCookie(ACTION_REQUIRED_FOR_COOKIE);
+    removeCookie(DIGITAL_SUBSCRIBER_COOKIE);
 };
 
 const requestNewData = (): Promise<void> =>
@@ -136,6 +143,10 @@ const isRecurringContributor = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
     isUserLoggedIn() && getCookie(RECURRING_CONTRIBUTOR_COOKIE) !== 'false';
 
+const isDigitalSubscriber = (): boolean =>
+    // If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
+    isUserLoggedIn() && getCookie(DIGITAL_SUBSCRIBER_COOKIE) !== 'false';
+
 /*
     Whenever the checks are updated, please make sure to update
     applyRenderConditions.scala.js too, where the global CSS class, indicating
@@ -153,6 +164,7 @@ export {
     isContributor,
     isRecentContributor,
     isRecurringContributor,
+    isDigitalSubscriber,
     shouldSeeReaderRevenue,
     refresh,
     deleteOldData,

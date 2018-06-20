@@ -9,6 +9,7 @@ import {
     isPayingMember,
     isRecurringContributor,
     accountDataUpdateWarning,
+    isDigitalSubscriber,
 } from './user-features.js';
 
 jest.mock('projects/common/modules/identity/api', () => ({
@@ -35,6 +36,7 @@ const PERSISTENCE_KEYS = {
     RECURRING_CONTRIBUTOR_COOKIE: 'gu_recurring_contributor',
     AD_FREE_USER_COOKIE: 'GU_AF1',
     ACTION_REQUIRED_FOR_COOKIE: 'gu_action_required_for',
+    DIGITAL_SUBSCRIBER_COOKIE: 'gu_digital_subscriber',
 };
 
 const setAllFeaturesData = opts => {
@@ -48,6 +50,7 @@ const setAllFeaturesData = opts => {
         : new Date(currentTime + msInOneDay * 2);
     addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
     addCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE, 'true');
+    addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'true');
     addCookie(
         PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
         adFreeExpiryDate.getTime().toString()
@@ -72,6 +75,7 @@ const setExpiredAdFreeData = () => {
 const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE);
+    removeCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.ACTION_REQUIRED_FOR_COOKIE);
@@ -163,6 +167,9 @@ describe('Refreshing the features data', () => {
             expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBeNull();
             expect(
                 getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE)
+            ).toBeNull();
+            expect(
+                getCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE)
             ).toBeNull();
             expect(
                 getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
@@ -266,6 +273,37 @@ describe('The isRecurringContributor getter', () => {
     });
 });
 
+describe('The isDigitalSubscriber getter', () => {
+    it('Is false when the user is logged out', () => {
+        jest.resetAllMocks();
+        isUserLoggedIn.mockReturnValue(false);
+        expect(isDigitalSubscriber()).toBe(false);
+    });
+
+    describe('When the user is logged in', () => {
+        beforeEach(() => {
+            jest.resetAllMocks();
+            isUserLoggedIn.mockReturnValue(true);
+        });
+
+        it('Is true when the user has a `true` recurring contributor cookie', () => {
+            addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'true');
+            expect(isDigitalSubscriber()).toBe(true);
+        });
+
+        it('Is false when the user has a `false` recurring contributor cookie', () => {
+            addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'false');
+            expect(isDigitalSubscriber()).toBe(false);
+        });
+
+        it('Is true when the user has no recurring contributor cookie', () => {
+            // If we don't know, we err on the side of caution, rather than annoy paying users
+            removeCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE);
+            expect(isDigitalSubscriber()).toBe(true);
+        });
+    });
+});
+
 describe('Storing new feature data', () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -280,6 +318,7 @@ describe('Storing new feature data', () => {
                 contentAccess: {
                     paidMember: false,
                     recurringContributor: false,
+                    digitalPack: false,
                 },
                 adFree: false,
             })
@@ -291,6 +330,9 @@ describe('Storing new feature data', () => {
             expect(
                 getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE)
             ).toBe('false');
+            expect(getCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE)).toBe(
+                'false'
+            );
             expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBeNull();
         });
     });
@@ -301,6 +343,7 @@ describe('Storing new feature data', () => {
                 contentAccess: {
                     paidMember: true,
                     recurringContributor: true,
+                    digitalPack: true,
                 },
                 adFree: true,
             })
@@ -312,6 +355,9 @@ describe('Storing new feature data', () => {
             expect(
                 getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE)
             ).toBe('true');
+            expect(getCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE)).toBe(
+                'true'
+            );
             expect(
                 getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)
             ).toBeTruthy();
