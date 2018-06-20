@@ -16,7 +16,7 @@ const variantOptions = {
     maxViews: defaultMaxViews,
 };
 
-export const acquisitionsEpicNativeVsDfpV2: ABTest = {
+const epicNativeVsDfpV2: ABTest = {
     id: testName,
     campaignId: 'epic_native_vs_dfp_v2',
     start: '2018-06-20',
@@ -58,3 +58,5 @@ export const acquisitionsEpicNativeVsDfpV2: ABTest = {
         },
     ],
 };
+
+export const acquisitionsEpicNativeVsDfpV2 = ((epicNativeVsDfpV2: any): AcquisitionsABTest);
