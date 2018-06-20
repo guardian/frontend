@@ -1,16 +1,12 @@
 import { displayDFPEpic } from 'commercial/modules/dfp/dfp-epic-slot';
 
-import { displayControlEpic, trackEpic } from 'common/modules/commercial/epic-utils'
-
+import { defaultMaxViews, isEpicDisplayable } from 'common/modules/commercial/contributions-utilities';
+import { displayControlEpic, trackEpic } from 'common/modules/commercial/epic-utils';
 
 const testName = 'AcquisitionsEpicNativeVsDfpV2';
 
 const variantOptions = {
-    maxViews: {
-        days: 30,
-        count: 100,
-        minDaysBetweenViews: 0,
-    },
+    maxViews: defaultMaxViews,
 };
 
 export const acquisitionsEpicNativeVsDfpV2: ABTest = {
@@ -27,7 +23,7 @@ export const acquisitionsEpicNativeVsDfpV2: ABTest = {
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
-    canRun: () => true,
+    canRun: isEpicDisplayable,
     variants: [
         {
             id: 'control',
