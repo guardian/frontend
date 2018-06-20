@@ -1,6 +1,9 @@
 // @flow
 
 import $ from 'lib/$';
+import { elementInView } from 'lib/element-inview';
+import reportError from 'lib/report-error';
+
 import { control as epicControlCopy } from 'common/modules/commercial/acquisitions-copy';
 import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
@@ -8,15 +11,21 @@ import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/
 import { control as epicTestimonialControlParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
-import { elementInView } from 'lib/element-inview';
 import { submitInsertEvent, submitViewEvent } from 'common/modules/commercial/acquisitions-ophan';
+
+import type { ReportedError } from 'lib/report-error';
+import type { ABTest, ComponentEventWithoutAction } from 'common/modules/commercial/acquisitions-ophan';
 
 export type EpicComponent = {
     html: HTMLDivElement,
-    component: OphanComponent,
+    componentEvent?: ComponentEventWithoutAction,
 }
 
-export const controlEpicComponent = (): EpicComponent => {
+export const reportEpicError = (error: ReportedError): void => {
+    reportError(error, { feature: 'epic' }, false)
+};
+
+const controlEpicComponent = (abTest?: ABTest): EpicComponent => {
     const epicId = 'epic_control';
     const epicComponentType = 'ACQUISITIONS_EPIC';
     const rawEpic =  acquisitionsEpicControlTemplate({
@@ -27,6 +36,8 @@ export const controlEpicComponent = (): EpicComponent => {
                 base: supportContributeURL,
                 componentType: epicComponentType,
                 componentId: epicId, // TODO: check ok to use this
+                campaignCode: epicId,
+                abTest,
             })
         }),
         testimonialBlock: acquisitionsTestimonialBlockTemplate(epicTestimonialControlParameters),
@@ -36,9 +47,12 @@ export const controlEpicComponent = (): EpicComponent => {
     const epic = $.create(rawEpic).get(0);
     return {
         html: epic,
-        component: {
-            componentType: epicComponentType,
-            id: epicId,
+        componentEvent: {
+            component: {
+                componentType: epicComponentType,
+                id: epicId,
+            },
+            abTest: abTest,
         },
     };
 };
@@ -52,10 +66,16 @@ export const insertEpic = (epic: HTMLDivElement): boolean => {
     return false;
 };
 
-const displayControlEpic = (): Promise<EpicComponent> => {
-    const epic = controlEpicComponent();
+export const displayControlEpic = (abTest?: ABTest): Promise<EpicComponent> => {
+    const epic = controlEpicComponent(abTest);
     const isEpicInserted = insertEpic(epic.html);
-    return isEpicInserted ? Promise.resolve(epic) : Promise.reject('unable to insert control Epic');
+    if (isEpicInserted) {
+        return Promise.resolve(epic)
+    } else {
+        const error = new Error('unable to insert control Epic');
+        reportEpicError(error);
+        return Promise.reject(error);
+    }
 };
 
 const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
@@ -63,11 +83,10 @@ const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
     return new Promise(resolve => inView.on('firstview', () => resolve()));
 };
 
-const trackEpic = (epic: EpicComponent, abTest?: { name: string, variant: string }): void  => {
-    const componentEventWithoutAction = {
-        component: epic.component,
-        abTest: abTest,
-    };
-    submitInsertEvent(componentEventWithoutAction);
-    awaitEpicViewed(epic.html).then(() => submitViewEvent(componentEventWithoutAction))
+export const trackEpic = (epic: EpicComponent): void => {
+    const componentEvent = epic.componentEvent;
+    if (componentEvent) {
+        submitInsertEvent(componentEvent);
+        awaitEpicViewed(epic.html).then(() => submitViewEvent(componentEvent))
+    }
 };

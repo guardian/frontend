@@ -1,4 +1,4 @@
-import { displayDFPEpic, insertEpic } from 'commercial/modules/dfp/dfp-epic-slot';
+import { displayDFPEpic } from 'commercial/modules/dfp/dfp-epic-slot';
 
 import { displayControlEpic, trackEpic } from 'common/modules/commercial/epic-utils'
 
@@ -16,8 +16,8 @@ const variantOptions = {
 export const acquisitionsEpicNativeVsDfpV2: ABTest = {
     id: testName,
     campaignId: 'epic_native_vs_dfp_v2',
-    start: '2018-06-06', // TODO: update
-    expiry: '2018-06-19', // TODO: update
+    start: '2018-06-20',
+    expiry: '2018-07-04',
     author: 'Guy Dawson',
     description:
         'See if there is any difference in annualised value between serving the Epic natively vs DFP',
@@ -32,27 +32,25 @@ export const acquisitionsEpicNativeVsDfpV2: ABTest = {
         {
             id: 'control',
             test: () => {
-                displayControlEpic()
-                    .then(epic => {
-                        trackEpic(epic, {
-                            name: testName,
-                            variant: 'control',
-                        })
-                    })
+                displayControlEpic({
+                    name: testName,
+                    variant: 'control',
+                })
+                    .then(trackEpic)
             },
             options: variantOptions,
         },
         {
             id: 'dfp',
             test: () => {
-                displayDFPEpic(2)
-                    .catch(err => displayControlEpic())
-                    .then(epic => {
-                        trackEpic(epic, {
+                displayDFPEpic(2000)
+                    .catch(() => {
+                        return displayControlEpic({
                             name: testName,
                             variant: 'dfp',
                         })
                     })
+                    .then(trackEpic)
             },
             options: variantOptions,
         }
