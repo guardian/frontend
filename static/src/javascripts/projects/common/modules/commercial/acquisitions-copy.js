@@ -10,6 +10,13 @@ const controlP1 =
     '&hellip; we have a small favour to ask. More people are reading the Guardian than ever but advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.';
 const controlP2FirstSentence =
     ' If everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure.';
+
+const liveblogWorldCupPlayfulFirstSentence =
+    'Has our World Cup coverage made you feel peppier than a Jürgen Klopp team talk? Then help us by supporting our journalism.';
+
+const liveblogWorldCupDepthFirstSentence =
+    'We’re working hard to bring you an unbiased and in-depth view of the world’s most prestigious football tournament.  If you think that’s worth something, then please support our journalism.';
+
 const controlP2 = (
     firstSentence: string,
     currencySymbol: string = getLocalCurrencySymbol()
@@ -22,6 +29,13 @@ const ctaLinkSentence = (
     currencySymbol: string
 ): string =>
     `<span class="contributions__highlight"> For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute.</span> <a href="${supportUrl}" target="_blank" class="u-underline">Make a contribution</a>`;
+
+const ctaLinkSentenceWorldCupLiveblogPlayful = (
+    supportUrl: string,
+    contributionUrl: string,
+    currencySymbol: string
+): string =>
+    `<span class="contributions__highlight"> For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute.</span> Otherwise we’ll send Sergio Ramos round to sort you out. <a href="${supportUrl}" target="_blank" class="u-underline">Make a contribution</a>`;
 
 const thankyouP2FirstSentence =
     'Thank you to the many people who have already supported us financially &ndash; your contribution is what makes stories like you’ve just read possible. We increasingly need our readers to fund our work so that we can continue holding power to account and producing fearless journalism.</br></br>';
@@ -54,6 +68,30 @@ export const liveblogCopy = (
 ): AcquisitionsEpicTemplateCopy => ({
     p1: `Since you’re here ${controlP1}`,
     p2: `${controlP2FirstSentence} ${ctaLinkSentence(
+        supportUrl,
+        contributionsUrl,
+        getLocalCurrencySymbol()
+    )}. - Guardian HQ`,
+});
+
+export const liveblogWorldCupPlayfulCopy = (
+    supportUrl: string,
+    contributionsUrl: string
+): AcquisitionsEpicTemplateCopy => ({
+    p1: ``,
+    p2: `${liveblogWorldCupPlayfulFirstSentence} ${ctaLinkSentenceWorldCupLiveblogPlayful(
+        supportUrl,
+        contributionsUrl,
+        getLocalCurrencySymbol()
+    )}. - Guardian HQ`,
+});
+
+export const liveblogWorldCupDepthCopy = (
+    supportUrl: string,
+    contributionsUrl: string
+): AcquisitionsEpicTemplateCopy => ({
+    p1: ``,
+    p2: `${liveblogWorldCupDepthFirstSentence} ${ctaLinkSentence(
         supportUrl,
         contributionsUrl,
         getLocalCurrencySymbol()
