@@ -58,7 +58,4 @@ const epicNativeVsDfpV2: ABTest = {
 
 const acquisitionsEpicNativeVsDfpV2 = ((epicNativeVsDfpV2: any): AcquisitionsABTest);
 
-export {
-    dfpVariant,
-    acquisitionsEpicNativeVsDfpV2,
-}
+export { dfpVariant, acquisitionsEpicNativeVsDfpV2 };

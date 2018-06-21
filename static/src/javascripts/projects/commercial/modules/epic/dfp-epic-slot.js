@@ -3,7 +3,10 @@
 import { variantFor } from 'common/modules/experiments/segment-util';
 import { getActiveTests } from 'common/modules/experiments/ab-tests';
 import { displayDFPEpic } from 'commercial/modules/epic/dfp-epic-slot-utils';
-import { displayControlEpic, trackEpic } from 'common/modules/commercial/epic-utils';
+import {
+    displayControlEpic,
+    trackEpic,
+} from 'common/modules/commercial/epic-utils';
 import { dfpVariant } from 'common/modules/experiments/tests/acquisitions-epic-native-vs-dfp-v2';
 
 const shouldDisplayDFPEpic = (): boolean => {

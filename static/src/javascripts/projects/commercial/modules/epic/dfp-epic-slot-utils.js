@@ -73,7 +73,4 @@ const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
     return Promise.reject(error);
 };
 
-export {
-    epicAdSlotId,
-    displayDFPEpic,
-}
+export { epicAdSlotId, displayDFPEpic };
