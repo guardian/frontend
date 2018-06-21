@@ -118,7 +118,7 @@
     margin-top: $gs-baseline * 2;
 
     // Horizontal alignment
-    align-items: left;
+    align-items: flex-start;
 
     @include mq($from: mobileLandscape) {
         flex-direction: row;
@@ -171,7 +171,7 @@ a[href].contributions__contribute.contributions__contribute--epic {
     color: $garnett-neutral-1;
 
     svg path {
-        fill: $garnett-neutral-1; 
+        fill: $garnett-neutral-1;
     }
 
     &:hover {
