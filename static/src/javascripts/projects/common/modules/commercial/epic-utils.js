@@ -7,7 +7,6 @@ import reportError from 'lib/report-error';
 import { control as epicControlCopy } from 'common/modules/commercial/acquisitions-copy';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
-import { control as epicTestimonialControlParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import {
@@ -35,6 +34,12 @@ const reportEpicError = (error: ReportedError): void => {
 const controlEpicComponent = (abTest?: ABTestVariant): EpicComponent => {
     const epicId = 'epic_control'; // TODO: check ok to use this
     const epicComponentType = 'ACQUISITIONS_EPIC';
+    let testimonialBlock = '';
+    if (epicControlCopy.testimonial) {
+        testimonialBlock = acquisitionsTestimonialBlockTemplate(
+            epicControlCopy.testimonial
+        );
+    }
     const rawEpic = acquisitionsEpicControlTemplate({
         copy: epicControlCopy,
         componentName: '', // TODO: confirm data-component not needed
@@ -47,9 +52,7 @@ const controlEpicComponent = (abTest?: ABTestVariant): EpicComponent => {
                 abTest,
             }),
         }),
-        testimonialBlock: acquisitionsTestimonialBlockTemplate(
-            epicTestimonialControlParameters
-        ),
+        testimonialBlock,
         epicClass: '',
         wrapperClass: '',
     });
