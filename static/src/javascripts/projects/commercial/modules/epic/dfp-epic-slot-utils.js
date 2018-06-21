@@ -11,8 +11,6 @@ import {
 
 import type { EpicComponent } from 'common/modules/commercial/epic-utils';
 
-const epicAdSlotId = 'dfp-ad--epic';
-
 const createDFPEpicSlot = (): HTMLDivElement => {
     const adSlots = createSlots('epic', {});
     return ((adSlots[0]: any): HTMLDivElement);
@@ -33,7 +31,7 @@ const renderEpicSlot = (epicSlot: HTMLDivElement): Promise<EpicComponent> => {
             window.googletag
                 .pubads()
                 .addEventListener('slotRenderEnded', event => {
-                    if (event.slot.getSlotElementId() === epicAdSlotId) {
+                    if (event.slot.getSlotElementId() === 'dfp-ad--epic') {
                         resolve(epicSlot);
                     }
                 });
@@ -55,7 +53,7 @@ const renderEpicSlot = (epicSlot: HTMLDivElement): Promise<EpicComponent> => {
     }));
 };
 
-const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
+export const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
     const epic = createDFPEpicSlot();
     const isEpicInserted = insertEpic(epic);
     if (isEpicInserted) {
@@ -72,5 +70,3 @@ const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
     reportEpicError(error);
     return Promise.reject(error);
 };
-
-export { epicAdSlotId, displayDFPEpic };
