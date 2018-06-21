@@ -1,5 +1,6 @@
 // @flow
 
+import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { elementInView } from 'lib/element-inview';
 import reportError from 'lib/report-error';
@@ -69,24 +70,20 @@ const controlEpicComponent = (abTest?: ABTestVariant): EpicComponent => {
     };
 };
 
-const insertEpic = (epic: HTMLDivElement): boolean => {
-    const element = document.querySelector('.submeta');
-    if (element && element.parentElement) {
-        element.parentElement.insertBefore(epic, element);
-        return true;
-    }
-    return false;
-};
+const insertEpic = (epic: HTMLDivElement): Promise<void> =>
+    fastdom.read(() => document.querySelector('.submeta')).then(element => {
+        if (element && element.parentElement) {
+            element.parentElement.insertBefore(epic, element);
+            return Promise.resolve();
+        }
+        const error = new Error('unable to insert Epic');
+        reportEpicError(error);
+        return Promise.reject(error);
+    });
 
 const displayControlEpic = (abTest?: ABTestVariant): Promise<EpicComponent> => {
     const epic = controlEpicComponent(abTest);
-    const isEpicInserted = insertEpic(epic.html);
-    if (isEpicInserted) {
-        return Promise.resolve(epic);
-    }
-    const error = new Error('unable to insert control Epic');
-    reportEpicError(error);
-    return Promise.reject(error);
+    return insertEpic(epic.html).then(() => epic);
 };
 
 const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {

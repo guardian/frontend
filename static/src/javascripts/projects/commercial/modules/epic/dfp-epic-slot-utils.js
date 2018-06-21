@@ -53,20 +53,22 @@ const renderEpicSlot = (epicSlot: HTMLDivElement): Promise<EpicComponent> => {
     }));
 };
 
+const renderEpicSlotWithTimeout = (
+    epic: HTMLDivElement,
+    duration: number
+): Promise<EpicComponent> =>
+    timeout(duration, renderEpicSlot(epic)).catch(err => {
+        epic.remove();
+        const error = new Error(
+            `DFP epic slot wasn't rendered within ${duration} milliseconds: ${err}`
+        );
+        reportEpicError(error);
+        return Promise.reject(error);
+    });
+
 export const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
     const epic = createDFPEpicSlot();
-    const isEpicInserted = insertEpic(epic);
-    if (isEpicInserted) {
-        return timeout(duration, renderEpicSlot(epic)).catch(err => {
-            epic.remove();
-            const error = new Error(
-                `DFP epic slot wasn't rendered within ${duration} milliseconds: ${err}`
-            );
-            reportEpicError(error);
-            return Promise.reject(error);
-        });
-    }
-    const error = new Error('unable to insert DFP epic slot');
-    reportEpicError(error);
-    return Promise.reject(error);
+    return insertEpic(epic).then(() =>
+        renderEpicSlotWithTimeout(epic, duration)
+    );
 };
