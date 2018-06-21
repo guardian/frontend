@@ -90,7 +90,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
                   profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
 
                 case Right(updatedUser) =>
-                  val userChangedEmail: Option[String] = if (formData.toUserUpdateDTO(userDO).primaryEmailAddress.getOrElse(userDO.primaryEmailAddress) == userDO.primaryEmailAddress) None else formData.toUserUpdateDTO(userDO).primaryEmailAddress
+                  val userChangedEmail: Option[String] = formData.toUserUpdateDTO(userDO).primaryEmailAddress
                   profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser, changedEmail = userChangedEmail)
               }
           } // end of success
