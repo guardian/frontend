@@ -4,7 +4,6 @@ import timeout from 'lib/timeout';
 
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
-import { awaitGoogletagCmd } from 'commercial/modules/dfp/googletag-cmd';
 import {
     insertEpic,
     reportEpicError,
@@ -30,16 +29,14 @@ const renderEpicSlot = (epicSlot: HTMLDivElement): Promise<EpicComponent> => {
 
     // Putting a listener on mediator for modules:commercial:dfp:rendered didn't work (?)
     const renderedEpic = new Promise(resolve => {
-        awaitGoogletagCmd.then(() => {
-            window.googletag.cmd.push(() => {
-                window.googletag
-                    .pubads()
-                    .addEventListener('slotRenderEnded', event => {
-                        if (event.slot.getSlotElementId() === epicAdSlotId) {
-                            resolve(epicSlot);
-                        }
-                    });
-            });
+        window.googletag.cmd.push(() => {
+            window.googletag
+                .pubads()
+                .addEventListener('slotRenderEnded', event => {
+                    if (event.slot.getSlotElementId() === epicAdSlotId) {
+                        resolve(epicSlot);
+                    }
+                });
         });
     });
 
