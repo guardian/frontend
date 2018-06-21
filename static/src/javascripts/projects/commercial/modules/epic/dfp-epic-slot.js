@@ -21,11 +21,10 @@ const shouldDisplayDFPEpic = (): boolean => {
     return false;
 };
 
-export const initDFPEpicSlot = (): Promise<void> => {
+export const initDFPEpicSlot = (): void => {
     if (shouldDisplayDFPEpic()) {
         displayDFPEpic(2000)
             .catch(() => displayControlEpic(dfpVariant))
             .then(trackEpic);
     }
-    return Promise.resolve();
 };
