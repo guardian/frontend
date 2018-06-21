@@ -283,7 +283,7 @@ $identity-header-height: 48px;
     padding-left: $gs-gutter * 1.2;
 
     .inline-icon {
-        background-color: $garnett-neutral-2;
+        background-color: $garnett-neutral-4;
         border-radius: 1000px;
         fill: $garnett-neutral-7;
         height: 18px;
@@ -296,6 +296,8 @@ $identity-header-height: 48px;
             margin-top: 18 / 4 + px;
             margin-left: 18 / 4 + px;
             width: 18 / 2 + px;
+            transform: scale(1.2);
+            position: absolute;
         }
     }
 }
