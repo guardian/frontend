@@ -286,17 +286,17 @@ describe('The isDigitalSubscriber getter', () => {
             isUserLoggedIn.mockReturnValue(true);
         });
 
-        it('Is true when the user has a `true` recurring contributor cookie', () => {
+        it('Is true when the user has a `true` digital subscriber cookie', () => {
             addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'true');
             expect(isDigitalSubscriber()).toBe(true);
         });
 
-        it('Is false when the user has a `false` recurring contributor cookie', () => {
+        it('Is false when the user has a `false` digital subscriber cookie', () => {
             addCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE, 'false');
             expect(isDigitalSubscriber()).toBe(false);
         });
 
-        it('Is true when the user has no recurring contributor cookie', () => {
+        it('Is true when the user has no digital subscriber cookie', () => {
             // If we don't know, we err on the side of caution, rather than annoy paying users
             removeCookie(PERSISTENCE_KEYS.DIGITAL_SUBSCRIBER_COOKIE);
             expect(isDigitalSubscriber()).toBe(true);

@@ -144,7 +144,7 @@ const isRecurringContributor = (): boolean =>
     isUserLoggedIn() && getCookie(RECURRING_CONTRIBUTOR_COOKIE) !== 'false';
 
 const isDigitalSubscriber = (): boolean =>
-    // If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
+    // If the user is logged in, but has no cookie yet, play it safe and assume they're a digital subscriber
     isUserLoggedIn() && getCookie(DIGITAL_SUBSCRIBER_COOKIE) !== 'false';
 
 /*
@@ -153,7 +153,10 @@ const isDigitalSubscriber = (): boolean =>
     the user should not see the revenue messages, is added to the body
 */
 const shouldSeeReaderRevenue = (): boolean =>
-    !isPayingMember() && !isRecentContributor() && !isRecurringContributor();
+    !isPayingMember() &&
+    !isRecentContributor() &&
+    !isRecurringContributor() &&
+    !isDigitalSubscriber();
 
 const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
 
