@@ -10,7 +10,7 @@ case object LocalRender extends RenderType
 
 object RenderingTierPicker {
 
-  private def discussionDisabled(page: PageWithStoryPackage): Boolean = {
+  private def isDiscussionDisabled(page: PageWithStoryPackage): Boolean = {
     (! page.article.content.trail.isCommentable) && page.article.content.trail.isClosedForComments
   }
 
@@ -53,7 +53,7 @@ object RenderingTierPicker {
     val canRemotelyRender = isSupportedType(page) &&
       hasBlocks(page) &&
       hasOnlySupportedElements(page) &&
-      discussionDisabled(page) &&
+      isDiscussionDisabled(page) &&
       isAdFree(page)
 
     if(canRemotelyRender){
