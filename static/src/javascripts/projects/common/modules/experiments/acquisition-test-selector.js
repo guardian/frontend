@@ -14,7 +14,10 @@ import { acquisitionsEpicUSGunCampaign } from 'common/modules/experiments/tests/
 import { acquisitionsEpicAusEnvCampaign } from 'common/modules/experiments/tests/acquisitions-epic-aus-env-campaign';
 import { acquisitionsEpicAlwaysAskAprilStory } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-april-story';
 import { AcquisitionsEpicBorderThankyou } from 'common/modules/experiments/tests/acquisitions-epic-border-thankyou';
-import { acquisitionsEpicNativeVsDfp } from 'common/modules/experiments/tests/acquisitions-epic-native-vs-dfp';
+import { acquisitionsEpicFromGoogleDocOneVariant } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-one-variant';
+import { acquisitionsEpicFromGoogleDocTwoVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-two-variants';
+import { acquisitionsEpicFromGoogleDocThreeVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-three-variants';
+import { acquisitionsEpicFromGoogleDocFourVariants } from 'common/modules/experiments/tests/acquisitions-epic-from-google-doc-four-variants';
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
@@ -39,11 +42,14 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
  * acquisition tests in priority order (highest to lowest)
  */
 export const acquisitionsTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    acquisitionsEpicFromGoogleDocOneVariant,
+    acquisitionsEpicFromGoogleDocTwoVariants,
+    acquisitionsEpicFromGoogleDocThreeVariants,
+    acquisitionsEpicFromGoogleDocFourVariants,
     acquisitionsEpicAlwaysAskAprilStory,
     acquisitionsEpicAusEnvCampaign,
     acquisitionsEpicUSGunCampaign,
     AcquisitionsEpicBorderThankyou,
-    acquisitionsEpicNativeVsDfp,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

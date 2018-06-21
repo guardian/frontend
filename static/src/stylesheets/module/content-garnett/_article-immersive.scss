@@ -605,6 +605,10 @@
                 margin-left: -($gs-gutter / 2);
                 max-width: gs-span(4) + ($gs-gutter / 2);
                 padding: ($gs-baseline / 2) ($gs-gutter / 2);
+
+                .badge-slot {
+                    width: auto;
+                }
             }
         }
 

@@ -28,7 +28,8 @@ const initMoreInSection = (): void => {
     } = config.get('page', {});
 
     if (
-        !config.get('isMedia') ||
+        (config.get('page.contentType') !== 'Audio' &&
+            config.get('page.contentType') !== 'Video') ||
         !showRelatedContent ||
         isPaidContent ||
         !section
@@ -95,7 +96,10 @@ const initRelated = () => {
 };
 
 const initOnwardVideoContainer = (): void => {
-    if (!config.get('isMedia')) {
+    if (
+        config.get('page.contentType') !== 'Audio' &&
+        config.get('page.contentType') !== 'Video'
+    ) {
         return;
     }
 

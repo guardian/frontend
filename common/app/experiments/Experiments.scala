@@ -8,7 +8,6 @@ import play.api.mvc.RequestHeader
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     CommercialClientLogging,
-    CommercialAdRefresh,
     OrielParticipation,
     LotameParticipation,
     OldTLSSupportDeprecation
@@ -22,14 +21,6 @@ object CommercialClientLogging extends Experiment(
   owners = Owner.group(SwitchGroup.Commercial),
   sellByDate = new LocalDate(2018, 6, 29),
   participationGroup = Perc1A
-)
-
-object CommercialAdRefresh extends Experiment(
-  name = "commercial-ad-refresh",
-  description = "Users in this experiment will have their ad slots refreshed after 30 seconds",
-  owners = Seq(Owner.withGithub("katebee")),
-  sellByDate = new LocalDate(2018, 9, 27),
-  participationGroup = Perc50
 )
 
 object OrielParticipation extends Experiment(
@@ -52,7 +43,7 @@ object OldTLSSupportDeprecation extends Experiment(
   name = "old-tls-support-deprecation",
   description = "This will turn on a deprecation notice to any user who is accessing our site using TLS v1.0 or v1.1",
   owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2018, 6, 13),
+  sellByDate = new LocalDate(2018, 6,27),
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
 )

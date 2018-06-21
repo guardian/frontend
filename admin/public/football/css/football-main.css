@@ -157,3 +157,7 @@ label[for] {
 .quarter-sm {
     width: 160px;
 }
+
+.row {
+    margin: 2rem 0;
+}

@@ -1,17 +1,15 @@
 package views.support.cleaner
 
 import com.gu.contentapi.client.model.v1.{Asset, AssetType}
+import conf.switches.Switches
 import implicits.FakeRequests
 import model.content._
+import model.{ImageAsset, ImageMedia}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
 import test.{TestRequest, WithTestApplicationContext}
 import views.support.AtomsCleaner
-import conf.switches.Switches
-import model.{ImageAsset, ImageMedia}
-
-import scala.collection.JavaConverters._
 
 class AtomCleanerTest extends FlatSpec
   with Matchers
@@ -63,7 +61,7 @@ class AtomCleanerTest extends FlatSpec
                                </figure>""")
 
 
- private def clean(document: Document, atom:Option[Atoms], amp: Boolean): Document = {
+ private def clean(document: Document, amp: Boolean): Document = {
     val cleaner = AtomsCleaner(youTubeAtom, amp = amp)(TestRequest(), testApplicationContext)
     cleaner.clean(document)
     document
@@ -78,15 +76,14 @@ class AtomCleanerTest extends FlatSpec
 
   "AtomsCleaner" should "create YouTube template" in {
     Switches.UseAtomsSwitch.switchOn()
-    val result: Document = clean(doc, youTubeAtom, amp = false)
-    result.select("iframe").attr("id") shouldBe "youtube-nQuN9CUsdVg"
-    result.select("iframe").attr("src") should include("enablejsapi=1")
+    val result: Document = clean(doc, amp = false)
+    result.select("div").attr("id") shouldBe "youtube-nQuN9CUsdVg"
     result.select("figcaption").html should include("Bird")
   }
 
   "AtomsCleaner" should "use amp-youtube markup if amp is true" in {
     Switches.UseAtomsSwitch.switchOn()
-    val result: Document = clean(doc, youTubeAtom, amp = true)
+    val result: Document = clean(doc, amp = true)
     result.select("amp-youtube").attr("data-videoid") should be("nQuN9CUsdVg")
     result.select("amp-youtube").attr("id") should be("gu-video-youtube-887fb7b4-b31d-4a38-9d1f-26df5878cf9c")
   }
