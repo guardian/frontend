@@ -10,7 +10,8 @@ All of our Frontend metrics, alerts and monitoring are available in two places:
 * [CloudWatch](https://eu-west-1.console.aws.amazon.com/cloudwatch/) for health and performance metrics
 * [Kibana](https://logs.gutools.co.uk/app/kibana) for application logs
 
-You may also want to look at the [Fastly dashboard](https://manage.fastly.com/) and the  [CAPI Dashboard](http://status.capi.gutools.co.uk/)
+You may also want to look at the [Fastly dashboard](https://manage.fastly.com/) for service www.theguardian.com
+and the  [CAPI Dashboard](http://status.capi.gutools.co.uk/)
 
 ## Process and roles
 
@@ -115,22 +116,24 @@ app.
 If you suspect that there is a real issue with an app you can connect directly to the instance
 using to try and collect more runtime information. 
 
-You should start by picking an instance and detaching it from the load balancer so that it doesn't
-get killed or interfered with, and then connect to via ssm. 
-
 You should look for things like:
 
 * The application logs
 * Running ```top``` to get memory and cpu usage
 * Check diskspace with ```df -h```
 * Get the number of open file descriptors with ```lsof | wc -l```
+* Get a thread dump using ```jstack```
+
+If you are doing a more lengthy analysis of the machine, you should detach the instance from 
+the load balancer so that it doesn't get killed or interfered with. 
 
 ## Cleaning up after the incident is over
 
 [Keep following the P1 checklist for communications and process information after the incident is resolved](https://docs.google.com/document/d/1sAq378Oqm5NUG2_FJORDSd_Tag6gUUUsZaE9zUsgWHc/edit?usp=sharing)
 
 If you scaled frontend apps up, you should wait for latency and error rates have returned to normal
-before scaling back down again.
+before scaling back down again by setting the desired instances back to normal - the scaling policy
+will slowly remove instances until it reaches that number.
 
 If you rolled back because of a software defect, merge the fix into master, test it on CODE and then
 deploy to production.
