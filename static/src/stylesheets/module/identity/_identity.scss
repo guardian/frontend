@@ -280,12 +280,12 @@ $identity-header-height: 48px;
 
 .form-field.form-field--email-change {
     position: relative;
-    padding-left: 24px;
+    padding-left: $gs-gutter * 1.2;
 
     .inline-icon {
-        background-color: $neutral-3;
+        background-color: $garnett-neutral-2;
         border-radius: 1000px;
-        fill: $neutral-1;
+        fill: $garnett-neutral-7;
         height: 18px;
         left: 0;
         position: absolute;
