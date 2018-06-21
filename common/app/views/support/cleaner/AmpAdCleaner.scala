@@ -3,7 +3,7 @@ package views.support.cleaner
 import common.Edition
 import model.Article
 import org.jsoup.nodes.{Document, Element}
-import views.support.{AmpAd, AmpAdDataSlot, HtmlCleaner}
+import views.support.{AmpAd, AmpAdDataSlot, AmpAdRtcConfig, HtmlCleaner}
 
 import scala.collection.JavaConverters._
 
@@ -87,11 +87,15 @@ object AmpAdCleaner {
 case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends HtmlCleaner {
 
   def adAfter(element: Element): Element = {
-    val ampAd = <amp-ad data-npa-on-unknown-consent="true"
-              width="300" height="250" type="doubleclick" data-loading-strategy="prefer-viewability-over-views"
-              json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
-              data-slot={AmpAdDataSlot(article).toString()}>
-      </amp-ad>
+    val ampAd = <amp-ad
+                   data-npa-on-unknown-consent="true"
+                   width="300" height="250"
+                   type="doubleclick"
+                   data-loading-strategy="prefer-viewability-over-views"
+                   json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}
+                   data-slot={AmpAdDataSlot(article).toString()}
+                   rtc-config={AmpAdRtcConfig().toJsonString}
+                ></amp-ad>
 
     val ampAdString = {
       // data-block-on-consent should not have ANY value
