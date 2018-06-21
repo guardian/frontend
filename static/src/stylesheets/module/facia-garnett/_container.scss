@@ -109,11 +109,6 @@ $header-image-size-desktop: 100px;
             padding-right: $gs-gutter / 4;
         }
 
-        .fc-container__header__description {
-            margin-top: 5px;
-            text-align: left;
-        }
-
         .fc-container--tag & {
             border-bottom: 0;
         }
@@ -266,6 +261,7 @@ $header-image-size-desktop: 100px;
     @include fs-headline(2);
     padding-bottom: $gs-baseline / 2;
     color: $neutral-2;
+    clear: left;
     font-weight: 500;
 
     @include mq(tablet) {
@@ -274,7 +270,6 @@ $header-image-size-desktop: 100px;
 
     @include mq(leftCol) {
         width: $left-column;
-        clear: left;
         float: left;
         margin-top: 0;
     }
@@ -449,10 +444,9 @@ $header-image-size-desktop: 100px;
 }
 
 [data-component='world-cup-2018'] {
-    .fc-item--has-cutout.fc-item--type-comment {
+    .fc-item--has-cutout.fc-item--type-comment:not(.fc-item--list-tablet) {
         .fc-item__avatar {
             background-color: transparent !important;
-            overflow: visible;
 
             img {
                 filter: grayscale(100%);
@@ -464,8 +458,10 @@ $header-image-size-desktop: 100px;
             z-index: 1;
         }
 
-        .fc-item__content {
-            &:before {
+        &.fc-item--half-tablet,
+        &.fc-item--standard-tablet,
+        &.fc-item--list-media-tablet {
+            .fc-item__content:before {
                 background-image: url('https://uploads.guim.co.uk/2018/06/11/byline-mask.png');
                 background-repeat: no-repeat;
                 background-size: contain;
@@ -477,6 +473,20 @@ $header-image-size-desktop: 100px;
                 z-index: 1;
                 height: 90px;
                 width: 200px;
+            }
+        }
+
+        &.fc-item--half-tablet .fc-item__content:before {
+            height: 112px;
+
+            @include mq(tablet) {
+                height: 164px;
+                bottom: $gs-baseline / 2;
+            }
+
+            @include mq(desktop) {
+                height: 190px;
+                width: 230px;
             }
         }
 

@@ -1,16 +1,25 @@
 @import model.{Competition, Group}
 
-@(competition: Competition, group: Group, highlightTeamId: Option[String] = None, multiGroup: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(
+  competition: Competition,
+  group: Group,
+  heading: String,
+  highlightTeamId: Option[String] = None,
+  multiGroup: Boolean = false,
+  linkToCompetition: Boolean = true
+)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @if(!multiGroup) {
 <div data-component="football-table-embed" class="c-football-table table--hide-from-importance-1">
 
     @football.views.html.fragments.componentStyles()
 
-    @tableView(competition, group,
+    @tableView(
+        competition,
+        group,
         highlightTeamId = highlightTeamId,
-        heading = Some(competition.fullName),
-        linkToCompetition = true
+        heading = Some(heading),
+        linkToCompetition = linkToCompetition
     )
 </div>
 }else{

@@ -9,7 +9,8 @@
     // Generic
     &.facia-snap-embed {
         height: $slice-innerHeight;
-        margin: 0 $gs-gutter/2;
+        margin: 0;
+        padding: 0 $gs-gutter/2;
         position: relative;
         background: #ffffff;
     }
@@ -59,10 +60,9 @@
         z-index: 2;
         position: absolute;
         margin: 0;
-        padding: 10px 0;
+        padding: 0;
 
         .full-table-link {
-            margin-left: $gs-gutter/2;
             display: inline-block;
         }
 

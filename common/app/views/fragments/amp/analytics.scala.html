@@ -1,7 +1,6 @@
 @import play.api.Mode
 @import model.Tag
 @import play.api.libs.json.Json
-@import model.Nielsen
 @(content: model.Content, page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.Configuration
@@ -35,7 +34,6 @@ are used to generate the confidence graphs on the frontend dashboard.
 </amp-analytics>
 
 
-@if(Nielsen.isTestingPath(request.path)) {
 <amp-analytics type="nielsen">
     <script type="application/json">
         {
@@ -49,4 +47,3 @@ are used to generate the confidence graphs on the frontend dashboard.
         }
     </script>
 </amp-analytics>
-}

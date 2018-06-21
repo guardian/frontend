@@ -2,17 +2,14 @@
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import {
     control as acquisitionsCopyControl,
-    regulars as acquisitionsCopyRegulars,
+    getCopyFromGoogleDoc,
 } from 'common/modules/commercial/acquisitions-copy';
-import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
-import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitInsertEvent,
     submitViewEvent,
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
-import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { elementInView } from 'lib/element-inview';
@@ -25,11 +22,8 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
-import { addSlot } from 'commercial/modules/dfp/add-slot';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
-
-export type AdBlockEpicTemplate = () => HTMLElement;
 
 export type CtaUrls = {
     supportUrl: string,
@@ -49,11 +43,16 @@ const defaultMaxViews: {
 
 const defaultButtonTemplate = (url: CtaUrls) => epicButtonsTemplate(url);
 
-const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
+const controlTemplate: EpicTemplate = (
+    { options = {} },
+    copy: AcquisitionsEpicTemplateCopy
+) =>
     acquisitionsEpicControlTemplate({
         copy,
+        testimonialBlock: copy.testimonial
+            ? acquisitionsTestimonialBlockTemplate(copy.testimonial)
+            : '',
         componentName: options.componentName,
-        testimonialBlock: options.testimonialBlock,
         buttonTemplate: options.buttonTemplate({
             supportUrl: options.supportURL,
         }),
@@ -80,10 +79,6 @@ const getTargets = (
 
     return [];
 };
-
-const getTestimonialBlock = (
-    testimonialParameters: AcquisitionsEpicTestimonialTemplateParameters
-) => acquisitionsTestimonialBlockTemplate(testimonialParameters);
 
 const isCompatibleWithEpic = (page: Object): boolean =>
     page.contentType === 'Article' && !page.isMinuteArticle;
@@ -127,17 +122,6 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
         test.locationCheck(storedGeolocation) &&
         tagsMatch
     );
-};
-
-const getCopy = (useTailor: boolean): Promise<AcquisitionsEpicTemplateCopy> => {
-    if (useTailor) {
-        return isRegular().then(
-            regular =>
-                regular ? acquisitionsCopyRegulars : acquisitionsCopyControl
-        );
-    }
-
-    return Promise.resolve(acquisitionsCopyControl);
 };
 
 const getCampaignCode = (
@@ -201,16 +185,12 @@ const makeABTestVariant = (
         }),
         template = controlTemplate,
         buttonTemplate = options.buttonTemplate || defaultButtonTemplate,
-        testimonialBlock = getTestimonialBlock(
-            acquisitionsTestimonialParametersControl
-        ),
         blockEngagementBanner = false,
         engagementBannerParams = {},
         isOutbrainCompliant = false,
         usesIframe = false,
         onInsert = noop,
         onView = noop,
-        useTailoredCopyForRegulars = false,
         insertAtSelector = '.submeta',
         insertMultiple = false,
         insertAfter = false,
@@ -248,7 +228,6 @@ const makeABTestVariant = (
                 });
                 submitABTestComplete();
             }),
-        isAdSlot = false,
     } = options;
 
     if (usesIframe) {
@@ -269,14 +248,12 @@ const makeABTestVariant = (
             supportURL,
             template,
             buttonTemplate,
-            testimonialBlock,
             blockEngagementBanner,
             engagementBannerParams,
             isOutbrainCompliant,
             usesIframe,
             onInsert,
             onView,
-            useTailoredCopyForRegulars,
             insertAtSelector,
             insertMultiple,
             insertAfter,
@@ -284,13 +261,12 @@ const makeABTestVariant = (
             impression,
             success,
             iframeId,
-            isAdSlot,
         },
 
         test() {
             const copyPromise =
                 (options.copy && Promise.resolve(options.copy)) ||
-                getCopy(useTailoredCopyForRegulars);
+                Promise.resolve(acquisitionsCopyControl);
 
             const render = (templateFn: ?EpicTemplate) =>
                 copyPromise
@@ -316,10 +292,6 @@ const makeABTestVariant = (
                                     component.insertAfter(targets);
                                 } else {
                                     component.insertBefore(targets);
-                                }
-
-                                if (this.options.isAdSlot) {
-                                    addSlot(component.get(0), true);
                                 }
 
                                 mediator.emit(parentTest.insertEvent, {
@@ -463,13 +435,29 @@ const makeBannerABTestVariants = (
         return x;
     });
 
+const makeGoogleDocEpicVariants = (count: number): Array<Object> => {
+    const variants = [];
+
+    // wtf, our linter dislikes i++ AND i = i + 1
+    for (let i = 1; i <= count; i += 1) {
+        variants.push({
+            id: `variant_${i}`,
+            products: [],
+            options: {
+                copy: getCopyFromGoogleDoc(`variant_${i}`),
+            },
+        });
+    }
+    return variants;
+};
+
 export {
     shouldShowReaderRevenue,
     shouldShowEpic,
-    getTestimonialBlock,
     makeABTest,
     defaultButtonTemplate,
     makeBannerABTestVariants,
+    makeGoogleDocEpicVariants,
     defaultMaxViews,
     isEpicDisplayable,
 };

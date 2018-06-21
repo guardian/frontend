@@ -51,7 +51,7 @@ class HiddenInput extends Component<*, *> {
     }
 
     handleChange(event: SyntheticInputEvent<HTMLInputElement>) {
-        this.props.crossword.insertCharacter(event.target.value.toUpperCase());
+        this.props.crossword.insertCharacter(event.target.value);
         this.setState({
             value: '',
         });

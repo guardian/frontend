@@ -31,6 +31,8 @@ case class PressedCollection(
   hasMore: Boolean
 ) {
 
+  def withDisplayName(displayName: String): PressedCollection = copy(displayName = displayName)
+
   lazy val isEmpty: Boolean = curated.isEmpty && backfill.isEmpty && treats.isEmpty
 
   lazy val adFree = {
@@ -40,6 +42,12 @@ case class PressedCollection(
       treats = treats.filterNot(_.isPaidFor)
     )
   }
+
+  def merge(target: PressedCollection, visible: Int): PressedCollection = {
+    copy(backfill = backfill ++ target.curated ++ target.backfill).full(visible)
+  }
+
+  def totalSize: Int = curated.size + backfill.size
 
   def lite(visible: Int): PressedCollection = {
     val liteCurated = curated.take(visible)
