@@ -252,14 +252,14 @@
         float: right;
         height: $gs-column-width/2;
     }
-}
 
-.banner-cta-text {
-    font-weight: normal;
-    background-color: #000000;
-    color: #ffffff;
-    margin-left: 3px;
-    padding-left: 2px;
-    padding-right: 5px;
-    padding-bottom: 3px;
+    .support-the-guardian-banner__highlight {
+        font-weight: normal;
+        background-color: #000000;
+        color: #ffffff;
+        margin-left: 3px;
+        padding-left: 2px;
+        padding-right: 5px;
+        padding-bottom: 3px;
+    }
 }
