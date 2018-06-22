@@ -1,6 +1,6 @@
 // @flow
 
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import { elementInView } from 'lib/element-inview';
 import reportError from 'lib/report-error';
