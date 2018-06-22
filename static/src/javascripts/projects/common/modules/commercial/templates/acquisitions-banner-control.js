@@ -31,10 +31,10 @@ export const acquisitionsBannerControlTemplate = (
                 alt="PayPal and credit card"
             >
         </div>
-        <a
-            class="u-faux-block-link__overlay"
-            target="_blank"
-            href="${params.linkUrl}"
-        ></a>
     </div>
+    <a
+        class="u-faux-block-link__overlay"
+        target="_blank"
+        href="${params.linkUrl}"
+    ></a>
     `;

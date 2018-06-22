@@ -116,6 +116,11 @@
 .support-the-guardian-banner__close {
     float: right;
 
+    // we want the close button above the link overlay
+    // z-index only applies to positioned elements
+    position: relative;
+    z-index: 1;
+
     // TODO: try flexbox for this
     .support-the-guardian-banner__close-btn,
     .support-the-guardian-banner__roundel {
