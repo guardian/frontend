@@ -34,7 +34,7 @@ const epicNativeVsDfpV2: ABTest = {
     idealOutcome:
         'There is no difference between these two methods of serving the Epic',
     audienceCriteria: 'All',
-    audience: 1,
+    audience: 0.1,
     audienceOffset: 0,
     canRun: isEpicDisplayable,
     variants: [
