@@ -1,7 +1,6 @@
 // @flow
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import $ from 'lib/$';
-import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
@@ -124,5 +123,3 @@ export const setupEpicInLiveblog = (
         isAutoUpdateHandlerBound = true;
     }
 };
-
-export const pageId: string = config.get('page.pageId', '');

@@ -23,16 +23,11 @@ const controlP2 = (
 ) =>
     `${firstSentence} <strong><span class="contributions__highlight">For as little as ${currencySymbol}1, you can support the Guardian &ndash; and it only takes a minute. Thank you.</span></strong>`;
 
-const ctaLinkSentence = (
-    supportUrl: string,
-    contributionUrl: string,
-    currencySymbol: string
-): string =>
+const ctaLinkSentence = (supportUrl: string, currencySymbol: string): string =>
     `<span class="contributions__highlight"> For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute.</span> <a href="${supportUrl}" target="_blank" class="u-underline">Make a contribution</a>`;
 
 const ctaLinkSentenceWorldCupLiveblogPlayful = (
     supportUrl: string,
-    contributionUrl: string,
     currencySymbol: string
 ): string =>
     `<span class="contributions__highlight"> For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute.</span> Otherwise we’ll send Sergio Ramos round to sort you out. <a href="${supportUrl}" target="_blank" class="u-underline">Make a contribution</a>`;
@@ -63,37 +58,31 @@ export const thankyou = {
 };
 
 export const liveblogCopy = (
-    supportUrl: string,
-    contributionsUrl: string
+    supportUrl: string
 ): AcquisitionsEpicTemplateCopy => ({
     p1: `Since you’re here ${controlP1}`,
     p2: `${controlP2FirstSentence} ${ctaLinkSentence(
         supportUrl,
-        contributionsUrl,
         getLocalCurrencySymbol()
     )}. - Guardian HQ`,
 });
 
 export const liveblogWorldCupPlayfulCopy = (
-    supportUrl: string,
-    contributionsUrl: string
+    supportUrl: string
 ): AcquisitionsEpicTemplateCopy => ({
     p1: ``,
     p2: `${liveblogWorldCupPlayfulFirstSentence} ${ctaLinkSentenceWorldCupLiveblogPlayful(
         supportUrl,
-        contributionsUrl,
         getLocalCurrencySymbol()
     )}. - Guardian HQ`,
 });
 
 export const liveblogWorldCupDepthCopy = (
-    supportUrl: string,
-    contributionsUrl: string
+    supportUrl: string
 ): AcquisitionsEpicTemplateCopy => ({
     p1: ``,
     p2: `${liveblogWorldCupDepthFirstSentence} ${ctaLinkSentence(
         supportUrl,
-        contributionsUrl,
         getLocalCurrencySymbol()
     )}. - Guardian HQ`,
 });

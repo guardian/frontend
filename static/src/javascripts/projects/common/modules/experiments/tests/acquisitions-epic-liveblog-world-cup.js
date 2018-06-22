@@ -1,11 +1,7 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
-import {
-    setupEpicInLiveblog,
-    pageId,
-} from 'common/modules/commercial/contributions-liveblog-utilities';
+import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
     liveblogCopy,
     liveblogWorldCupPlayfulCopy,
@@ -18,10 +14,7 @@ const options = variantCopy => ({
     isUnlimited: true,
     template(variant) {
         return epicLiveBlogTemplate({
-            copy: variantCopy(
-                variant.options.supportURL,
-                variant.options.contributeURL
-            ),
+            copy: variantCopy(variant.options.supportURL),
             componentName: variant.options.componentName,
         });
     },
@@ -34,8 +27,6 @@ const options = variantCopy => ({
 export const acquisitionsEpicLiveblogWorldCup: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblogWorldCup',
     campaignId: 'epic_liveblog_world_cup',
-    campaignSuffix: pageId.replace(/-/g, '_').replace(/\//g, '__'),
-
     start: '2018-06-21',
     expiry: '2019-01-24',
 
@@ -50,11 +41,8 @@ export const acquisitionsEpicLiveblogWorldCup: EpicABTest = makeABTest({
     audience: 1,
     audienceOffset: 0,
 
-    pageCheck(page) {
-        return (
-            page.contentType === 'LiveBlog' && keywordExists(['World Cup 2018'])
-        );
-    },
+    pageCheck: page =>
+        page.contentType === 'LiveBlog' && keywordExists(['World Cup 2018']),
 
     variants: [
         {

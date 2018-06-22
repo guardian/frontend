@@ -1,17 +1,12 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import {
-    setupEpicInLiveblog,
-    pageId,
-} from 'common/modules/commercial/contributions-liveblog-utilities';
+import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
 
 export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
     campaignId: 'epic_liveblog',
-    campaignSuffix: pageId.replace(/-/g, '_').replace(/\//g, '__'),
-
     start: '2017-04-01',
     expiry: '2019-01-24',
 
@@ -40,10 +35,7 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
 
                 template(variant) {
                     return epicLiveBlogTemplate({
-                        copy: liveblogCopy(
-                            variant.options.supportURL,
-                            variant.options.contributeURL
-                        ),
+                        copy: liveblogCopy(variant.options.supportURL),
                         componentName: variant.options.componentName,
                     });
                 },

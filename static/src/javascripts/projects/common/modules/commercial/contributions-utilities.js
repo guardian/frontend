@@ -116,15 +116,8 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
     );
 };
 
-const getCampaignCode = (
-    campaignCodePrefix,
-    campaignID,
-    id,
-    campaignCodeSuffix
-) => {
-    const suffix = campaignCodeSuffix ? `_${campaignCodeSuffix}` : '';
-    return `${campaignCodePrefix}_${campaignID}_${id}${suffix}`;
-};
+const getCampaignCode = (campaignCodePrefix, campaignID, id) =>
+    `${campaignCodePrefix}_${campaignID}_${id}`;
 
 const makeEvent = (id: string, event: string): string => `${id}:${event}`;
 
@@ -162,8 +155,7 @@ const makeABTestVariant = (
         campaignCode = getCampaignCode(
             parentTest.campaignPrefix,
             parentTest.campaignId,
-            id,
-            parentTest.campaignSuffix
+            id
         ),
         supportURL = addTrackingCodesToUrl({
             base: `${options.supportBaseURL || supportContributeURL}`,
@@ -355,7 +347,6 @@ const makeABTest = ({
     locationCheck = () => true,
     dataLinkNames = '',
     campaignPrefix = 'gdnwb_copts_memco',
-    campaignSuffix = '',
     useLocalViewLog = false,
     overrideCanRun = false,
     useTargetingTool = false,
@@ -397,7 +388,6 @@ const makeABTest = ({
         dataLinkNames,
         campaignId,
         campaignPrefix,
-        campaignSuffix,
         useLocalViewLog,
         overrideCanRun,
         showToContributorsAndSupporters,
