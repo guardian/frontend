@@ -45,14 +45,14 @@
                 @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address"),
                     Symbol("data-test-id") -> "email-address"))
 
-                <li class="form-field form-field--email-change">
-                    @if(changedEmail.isDefined) {
+                @changedEmail.map { email =>
+                    <li class="form-field form-field--email-change">
                         @fragments.inlineSvg("envelope", "icon")
                         <p class="form__note">
-                            To verify your new email address <b>@changedEmail.get</b> please check your inbox - the confirmation email is on its way. In the meantime you should keep using your old credentials to sign in.<br />
+                            To verify your new email address <b>@email</b> please check your inbox - the confirmation email is on its way. In the meantime you should keep using your old credentials to sign in.<br />
                         </p>
-                    }
-                </li>
+                    </li>
+                }
 
                 <li class="form-field form-field--email-validation">
                     @if(!user.statusFields.userEmailValidated.getOrElse(false)){
