@@ -23,7 +23,7 @@ export const AcquisitionsEngagementBannerStylingTweaks: AcquisitionsABTest = {
 
     variants: makeBannerABTestVariants([
         {
-            id: 'control'
+            id: 'control',
         },
         {
             id: 'old_styling',

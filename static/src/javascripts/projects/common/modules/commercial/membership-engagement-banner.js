@@ -110,7 +110,6 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
 
-
 const showBanner = (params: EngagementBannerParams): void => {
     const test = getUserTest();
     const variant = getUserVariant(test);
@@ -150,7 +149,8 @@ const showBanner = (params: EngagementBannerParams): void => {
         siteMessageCloseBtn: 'hide',
         siteMessageComponentName: params.campaignCode,
         trackDisplay: true,
-        cssModifierClass: params.bannerModifierClass || 'support-the-guardian-banner',
+        cssModifierClass:
+            params.bannerModifierClass || 'support-the-guardian-banner',
     }).show(renderedBanner);
 
     if (messageShown) {
