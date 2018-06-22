@@ -15,24 +15,26 @@ export const acquisitionsBannerControlTemplate = (
             ${closeCentralIcon.markup}
         </button>
     </div>
-    <div class="support-the-guardian-banner__text">
-        ${params.messageText}${params.ctaText}
+    <div class="support-the-guardian-banner__container">
+        <div class="support-the-guardian-banner__text">
+            ${params.messageText}${params.ctaText}
+        </div>
+        <div class="support-the-guardian-banner__cta">
+            <button class="button support-the-guardian-banner__button" href="${
+                params.linkUrl
+            }">
+                ${params.buttonCaption}${params.buttonSvg}
+            </button>
+            <img
+                class="support-the-guardian-banner__payment-logos"
+                src="${params.paypalAndCreditCardImage}"
+                alt="PayPal and credit card"
+            >
+        </div>
+        <a
+            class="u-faux-block-link__overlay"
+            target="_blank"
+            href="${params.linkUrl}"
+        ></a>
     </div>
-    <div class="support-the-guardian-banner__cta">
-        <button class="button support-the-guardian-banner__button" href="${
-            params.linkUrl
-        }">
-            ${params.buttonCaption}${params.buttonSvg}
-        </button>
-        <img
-            class="support-the-guardian-banner__payment-logos"
-            src="${params.paypalAndCreditCardImage}"
-            alt="PayPal and credit card"
-        >
-    </div>
-    <a
-        class="u-faux-block-link__overlay"
-        target="_blank"
-        href="${params.linkUrl}"
-    ></a>
     `;

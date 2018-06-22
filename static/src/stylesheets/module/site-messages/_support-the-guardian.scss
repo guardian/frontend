@@ -21,7 +21,7 @@
 
 
         padding-top: 9px;
-        padding-bottom: 14px;
+        padding-bottom: 18px;
 
         @include mq(tablet) {
             padding-left: $gs-gutter;
@@ -44,10 +44,8 @@
 
     font-size: 17px;
     line-height: 22px;
-    margin-bottom: $gs-baseline;
 
     @include mq(tablet) {
-
         // TODO: in gs-span?
         width: 580px;
     }
@@ -55,36 +53,31 @@
     @include mq(desktop) {
         display: inline-block;
     }
-
-    @include mq(leftCol) {
-        margin-left: gs-span(2) + $gs-gutter;
-    }
-
-    @include mq(wide) {
-        margin-left: gs-span(3) + $gs-gutter;
-    }
 }
 
 .support-the-guardian-banner__highlight {
 
 }
 
-.support-the-guardian-banner__cta {
-    @include mq(desktop) {
-        //display: inline-block;
-        //margin-left: $gs-gutter;
-
-        position: absolute;
-        left: gs-span(8) + ($gs-gutter * 2);
-        bottom: $gs-gutter;
-    }
+.support-the-guardian-banner__container {
+    position: relative;
 
     @include mq(leftCol) {
-        left: gs-span(10) + ($gs-gutter * 2);
+        left: gs-span(2) + $gs-gutter;
     }
 
     @include mq(wide) {
-        left: gs-span(11) + ($gs-gutter * 2);
+        left: gs-span(3) + $gs-gutter;
+    }
+}
+
+.support-the-guardian-banner__cta {
+    margin-top: $gs-baseline;
+
+    @include mq(desktop) {
+        position: absolute;
+        left: gs-span(8) + $gs-gutter;
+        bottom: 0;
     }
 }
 
