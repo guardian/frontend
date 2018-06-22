@@ -35,8 +35,8 @@
     }
 
     .site-message__close-btn {
-        border-color: $garnett-neutral-1;
         display: inline-block;
+        border-color: $garnett-neutral-1;
     }
 
     .site-message__inner {
@@ -45,8 +45,9 @@
     }
 
     .site-message__copy {
-        display: block;
         @include padding;
+
+        display: block;
     }
 }
 
@@ -67,7 +68,7 @@
 
 .support-the-guardian-banner__highlight {
     font-weight: bold;
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 1px;
 }
 
