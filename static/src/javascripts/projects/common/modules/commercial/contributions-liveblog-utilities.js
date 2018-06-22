@@ -6,7 +6,6 @@ import mediator from 'lib/mediator';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 
-
 let isAutoUpdateHandlerBound = false;
 const INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';
 

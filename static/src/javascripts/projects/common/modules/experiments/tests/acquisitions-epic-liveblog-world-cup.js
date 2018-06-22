@@ -1,7 +1,6 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 
-import config from 'lib/config';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import {
     setupEpicInLiveblog,
@@ -13,13 +12,24 @@ import {
     liveblogWorldCupDepthCopy,
 } from 'common/modules/commercial/acquisitions-copy';
 
-const keyWordId = 'football/world-cup-2018';
+import { keywordExists } from 'lib/page';
 
-const tagsMatch = () =>
-    config
-        .get('page.keywordIds', '')
-        .split(',')
-        .includes(keyWordId);
+const options = variantCopy => ({
+    isUnlimited: true,
+    template(variant) {
+        return epicLiveBlogTemplate({
+            copy: variantCopy(
+                variant.options.supportURL,
+                variant.options.contributeURL
+            ),
+            componentName: variant.options.componentName,
+        });
+    },
+    test(renderFn, variant, test) {
+        const epicHtml = variant.options.template(variant);
+        setupEpicInLiveblog(epicHtml, test);
+    },
+});
 
 export const acquisitionsEpicLiveblogWorldCup: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblogWorldCup',
@@ -41,7 +51,9 @@ export const acquisitionsEpicLiveblogWorldCup: EpicABTest = makeABTest({
     audienceOffset: 0,
 
     pageCheck(page) {
-        return page.contentType === 'LiveBlog' && tagsMatch();
+        return (
+            page.contentType === 'LiveBlog' && keywordExists(['World Cup 2018'])
+        );
     },
 
     variants: [
@@ -49,70 +61,19 @@ export const acquisitionsEpicLiveblogWorldCup: EpicABTest = makeABTest({
             id: 'control',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-            options: {
-                isUnlimited: true,
-
-                template(variant) {
-                    return epicLiveBlogTemplate({
-                        copy: liveblogCopy(
-                            variant.options.supportURL,
-                            variant.options.contributeURL
-                        ),
-                        componentName: variant.options.componentName,
-                    });
-                },
-
-                test(renderFn, variant, test) {
-                    const epicHtml = variant.options.template(variant);
-                    setupEpicInLiveblog(epicHtml, test);
-                },
-            },
+            options: options(liveblogCopy),
         },
         {
             id: 'depth',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-            options: {
-                isUnlimited: true,
-
-                template(variant) {
-                    return epicLiveBlogTemplate({
-                        copy: liveblogWorldCupDepthCopy(
-                            variant.options.supportURL,
-                            variant.options.contributeURL
-                        ),
-                        componentName: variant.options.componentName,
-                    });
-                },
-
-                test(renderFn, variant, test) {
-                    const epicHtml = variant.options.template(variant);
-                    setupEpicInLiveblog(epicHtml, test);
-                },
-            },
+            options: options(liveblogWorldCupDepthCopy),
         },
         {
             id: 'playful',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-            options: {
-                isUnlimited: true,
-
-                template(variant) {
-                    return epicLiveBlogTemplate({
-                        copy: liveblogWorldCupPlayfulCopy(
-                            variant.options.supportURL,
-                            variant.options.contributeURL
-                        ),
-                        componentName: variant.options.componentName,
-                    });
-                },
-
-                test(renderFn, variant, test) {
-                    const epicHtml = variant.options.template(variant);
-                    setupEpicInLiveblog(epicHtml, test);
-                },
-            },
+            options: options(liveblogWorldCupPlayfulCopy),
         },
     ],
 });
