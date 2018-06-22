@@ -22,11 +22,8 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
-import { addSlot } from 'commercial/modules/dfp/add-slot';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
-
-export type AdBlockEpicTemplate = () => HTMLElement;
 
 export type CtaUrls = {
     supportUrl: string,
@@ -119,15 +116,8 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
     );
 };
 
-const getCampaignCode = (
-    campaignCodePrefix,
-    campaignID,
-    id,
-    campaignCodeSuffix
-) => {
-    const suffix = campaignCodeSuffix ? `_${campaignCodeSuffix}` : '';
-    return `${campaignCodePrefix}_${campaignID}_${id}${suffix}`;
-};
+const getCampaignCode = (campaignCodePrefix, campaignID, id) =>
+    `${campaignCodePrefix}_${campaignID}_${id}`;
 
 const makeEvent = (id: string, event: string): string => `${id}:${event}`;
 
@@ -165,8 +155,7 @@ const makeABTestVariant = (
         campaignCode = getCampaignCode(
             parentTest.campaignPrefix,
             parentTest.campaignId,
-            id,
-            parentTest.campaignSuffix
+            id
         ),
         supportURL = addTrackingCodesToUrl({
             base: `${options.supportBaseURL || supportContributeURL}`,
@@ -223,7 +212,6 @@ const makeABTestVariant = (
                 });
                 submitABTestComplete();
             }),
-        isAdSlot = false,
     } = options;
 
     if (usesIframe) {
@@ -257,7 +245,6 @@ const makeABTestVariant = (
             impression,
             success,
             iframeId,
-            isAdSlot,
         },
 
         test() {
@@ -289,10 +276,6 @@ const makeABTestVariant = (
                                     component.insertAfter(targets);
                                 } else {
                                     component.insertBefore(targets);
-                                }
-
-                                if (this.options.isAdSlot) {
-                                    addSlot(component.get(0), true);
                                 }
 
                                 mediator.emit(parentTest.insertEvent, {
@@ -364,7 +347,6 @@ const makeABTest = ({
     locationCheck = () => true,
     dataLinkNames = '',
     campaignPrefix = 'gdnwb_copts_memco',
-    campaignSuffix = '',
     useLocalViewLog = false,
     overrideCanRun = false,
     useTargetingTool = false,
@@ -406,7 +388,6 @@ const makeABTest = ({
         dataLinkNames,
         campaignId,
         campaignPrefix,
-        campaignSuffix,
         useLocalViewLog,
         overrideCanRun,
         showToContributorsAndSupporters,

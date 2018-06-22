@@ -38,6 +38,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-liveblog-world-cup",
+    "Tests some world-cup specific copy on world cup liveblogs",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 1, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -93,16 +103,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 6, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-native-vs-dfp",
-    "See if there is any difference in annualised value between serving the Epic natively vs DFP",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 6, 19), // Tuesday
     exposeClientSide = true
   )
 

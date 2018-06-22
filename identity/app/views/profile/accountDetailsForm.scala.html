@@ -10,7 +10,8 @@
     idUrlBuilder: services.IdentityUrlBuilder,
     idRequest: services.IdentityRequest,
     user: com.gu.identity.model.User,
-    accountDetailsForm: Form[_root_.form.AccountFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+    accountDetailsForm: Form[_root_.form.AccountFormData],
+    changedEmail: Option[String]= None)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @buildIdentityUrl(endpoint: String) = {
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
@@ -43,6 +44,15 @@
 
                 @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address"),
                     Symbol("data-test-id") -> "email-address"))
+
+                @changedEmail.map { email =>
+                    <li class="form-field form-field--email-change">
+                        @fragments.inlineSvg("envelope", "icon")
+                        <p class="form__note">
+                            To verify your new email address <b>@email</b> please check your inbox - the confirmation email is on its way. In the meantime you should keep using your old credentials to sign in.<br />
+                        </p>
+                    </li>
+                }
 
                 <li class="form-field form-field--email-validation">
                     @if(!user.statusFields.userEmailValidated.getOrElse(false)){

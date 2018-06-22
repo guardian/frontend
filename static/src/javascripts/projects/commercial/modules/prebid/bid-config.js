@@ -20,6 +20,7 @@ import type {
 } from 'commercial/modules/prebid/types';
 import {
     getBreakpointKey,
+    getRandomIntInclusive,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
@@ -280,7 +281,8 @@ const openxBidder: PrebidBidder = {
 
 const dummyServerSideBidders: PrebidBidder[] = [];
 
-if (config.switches.prebidS2sozone) {
+// Experimental. Only 0.01% of the PVs.
+if (config.switches.prebidS2sozone && getRandomIntInclusive(1, 10000) === 1) {
     dummyServerSideBidders.push(appnexusBidder);
     dummyServerSideBidders.push(openxBidder);
 }

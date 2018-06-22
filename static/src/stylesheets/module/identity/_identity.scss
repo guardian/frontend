@@ -275,6 +275,32 @@ $identity-header-height: 48px;
     }
 }
 
+/* Email Change
+   ========================================================================== */
+
+.form-field.form-field--email-change {
+    position: relative;
+    padding-left: $gs-gutter * 1.2;
+
+    .inline-icon {
+        background-color: $garnett-neutral-4;
+        border-radius: 1000px;
+        fill: $garnett-neutral-7;
+        height: 18px;
+        left: 0;
+        position: absolute;
+        width: 18px;
+
+        svg {
+            height: 18 / 2 + px;
+            margin-top: 18 / 4 + px;
+            margin-left: 18 / 4 + px;
+            width: 18 / 2 + px;
+            transform: scale(1.2);
+            position: absolute;
+        }
+    }
+}
 
 /* Public Profile Page
    ========================================================================== */
