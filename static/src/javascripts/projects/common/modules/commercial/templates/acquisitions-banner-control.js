@@ -10,7 +10,7 @@ export const acquisitionsBannerControlTemplate = (
         <div class="support-the-guardian-banner__roundel">
             ${marque36icon.markup}
         </div>
-        <button class="support-the-guardian-banner__close-btn js-site-message-close" data-link-name="hide release message">
+        <button class="button support-the-guardian-banner__close-button js-site-message-close" data-link-name="hide release message">
             <span class="u-h">Close</span>
             ${closeCentralIcon.markup}
         </button>
