@@ -75,6 +75,7 @@ class CommercialFeatures {
             !newRecipeDesign;
 
         this.carrotTrafficDriver =
+            !this.adFree &&
             this.articleBodyAdverts &&
             config.get('switches.carrotTrafficDriver', false) &&
             !config.page.isPaidContent;

@@ -33,7 +33,6 @@ const commercialModules: Array<Array<any>> = [
     ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-carrot', initCarrotTrafficDriver], // TODO: check if this should move into non-ad-free specifically
     ['cm-checkDispatcher', initCheckDispatcher],
 ];
 
@@ -47,7 +46,8 @@ if (!commercialFeatures.adFree) {
         ['cm-stickyTopBanner', initStickyTopBanner],
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
-        ['cm-commentAdverts', initCommentAdverts]
+        ['cm-commentAdverts', initCommentAdverts],
+        ['cm-carrot', initCarrotTrafficDriver],
     );
 }
 
