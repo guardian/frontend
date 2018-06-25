@@ -10,7 +10,7 @@
 
 import raven from 'lib/raven';
 
-type ReportedError = Error & {
+export type ReportedError = Error & {
     reported?: boolean,
 };
 

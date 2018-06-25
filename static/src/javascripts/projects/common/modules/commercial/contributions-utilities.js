@@ -97,6 +97,14 @@ const shouldShowReaderRevenue = (
     );
 };
 
+const isEpicDisplayable = (): boolean => {
+    const page = config.get('page');
+    if (!page) {
+        return false;
+    }
+    return isCompatibleWithEpic(page) && shouldShowReaderRevenue();
+};
+
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const worksWellWithPageTemplate = test.pageCheck(config.get('page'));
 
@@ -440,4 +448,6 @@ export {
     defaultButtonTemplate,
     makeBannerABTestVariants,
     makeGoogleDocEpicVariants,
+    defaultMaxViews,
+    isEpicDisplayable,
 };
