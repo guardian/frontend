@@ -103,7 +103,7 @@ trait EmailFrontPress extends Logging {
   def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)]
 
   private def mergeExtraEmailCollections(pressedCollections: List[PressedCollectionVisibility], emailCollections: EmailExtraCollections): List[PressedCollectionVisibility] = {
-    emailCollections.breaking :: emailCollections.canonical.toList ::: emailCollections.special ::: pressedCollections
+    emailCollections.breaking ::: emailCollections.canonical.toList ::: emailCollections.special ::: pressedCollections
   }
 
   def pressEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
