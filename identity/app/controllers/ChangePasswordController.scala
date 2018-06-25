@@ -76,12 +76,12 @@ class ChangePasswordController(
     }
   }
 
-  def renderPasswordConfirmation: Action[AnyContent] = Action{ implicit request =>
+  def renderPasswordConfirmation(returnUrl: Option[String]): Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
     NoCache(Ok(
       IdentityHtmlPage.html(
-        views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)
+        views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn, returnUrl)
       )(page, request, context)
     ))
   }
@@ -112,7 +112,7 @@ class ChangePasswordController(
             )
           } else {
             val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-            NoCache(SeeOther(routes.ChangePasswordController.renderPasswordConfirmation().url))
+            NoCache(SeeOther(routes.ChangePasswordController.renderPasswordConfirmation(None).url))
           }
         }
     }
