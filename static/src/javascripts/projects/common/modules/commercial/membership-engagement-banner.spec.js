@@ -287,7 +287,7 @@ describe('Membership engagement banner', () => {
                 membershipEngagementBanner.show();
 
                 expect(FakeMessage.mock.calls[0][1].cssModifierClass).toBe(
-                    'fake-colour-class'
+                    'support-the-guardian-banner'
                 );
             }));
     });
@@ -340,7 +340,7 @@ describe('Membership engagement banner', () => {
                 membershipEngagementBanner.show();
 
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                    /fake-colour-class/
+                    /support-the-guardian-banner/
                 );
             }));
 
