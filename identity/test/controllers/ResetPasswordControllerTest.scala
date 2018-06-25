@@ -1,14 +1,17 @@
 package controllers
 
+import java.net.URLEncoder
+
 import org.scalatest.path
 import org.scalatest.Matchers
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
-import idapiclient.{IdApiClient, TrackingData, Response}
+import idapiclient.{IdApiClient, Response, TrackingData}
 import test.{Fake, WithTestApplicationContext, WithTestExecutionContext, WithTestIdConfig}
 import play.api.test._
 import play.api.test.Helpers._
+
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 import com.gu.identity.model.User
@@ -73,9 +76,10 @@ class ResetPasswordControllerTest
        }
 
       "should propagate the returnUrl from the request" in Fake {
-        val result = resetPasswordController.processUpdatePasswordToken("1234", Some("https://profile.thegulocal.com/public/edit"))(fakeRequest)
+        val returnUrl = "https://profile.thegulocal.com/public/edit"
+        val result = resetPasswordController.processUpdatePasswordToken("1234", Some(returnUrl))(fakeRequest)
         status(result) should equal(SEE_OTHER)
-        header("Location", result).head should be ("/reset-password/1234?returnUrl=https://profile.thegulocal.com/public/edit")
+        header("Location", result).head should be (s"/reset-password/1234?returnUrl=${URLEncoder.encode(returnUrl, "UTF-8")}")
       }
     }
 
