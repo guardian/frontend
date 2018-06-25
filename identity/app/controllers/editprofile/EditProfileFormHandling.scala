@@ -89,7 +89,9 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
                   logger.error(s"Failed to process ${page.id} form submission for user ${userDO.getId}: $idapiErrors")
                   profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
 
-                case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
+                case Right(updatedUser) =>
+                  val userChangedEmail: Option[String] = formData.toUserUpdateDTO(userDO).primaryEmailAddress
+                  profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser, changedEmail = userChangedEmail)
               }
           } // end of success
         ) // end fold
@@ -101,7 +103,8 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
     forms: ProfileForms,
     user: User,
     consentsUpdated: Boolean = false,
-    consentHint: Option[String] = None)
+    consentHint: Option[String] = None,
+    changedEmail: Option[String] = None)
     (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     val emailFilledForm: Future[Form[EmailPrefsData]] =
@@ -122,7 +125,8 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
             newsletterService.getEmailSubscriptions(emailFilledForm),
             EmailNewsletters.all,
             consentsUpdated,
-            consentHint
+            consentHint,
+            changedEmail
           )
         )(page, request, context)
       ))

@@ -1,15 +1,15 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/guardian/frontend/badge.svg)](https://snyk.io/test/github/guardian/frontend)
 
 ## We're hiring!
-Ever thought about joining us? 
+Ever thought about joining us?
 https://workforus.theguardian.com/careers/digital-development/
 
 # Frontend
-[The Guardian](https://www.theguardian.com) website frontend.
+The Guardian website frontend.
 
-Frontend is [a set of Play Framework 2 Scala applications](https://github.com/guardian/frontend/wiki/Applications-architecture).
+**For everybody who engages with our journalism, [theguardian.com](https://www.theguardian.com) is an industry-best news website that is fast, accessible and easy to use. Unlike other ways of developing products, ours puts the audience first.**
 
-Frontend is built in two parts, using `make` for the client side asset build and SBT for the Play Framework backend.
+Frontend is [a set of Play Framework 2 Scala applications](https://github.com/guardian/frontend/wiki/Applications-architecture). It is built in two parts, using `make` for the client side asset build and SBT for the Play Framework backend.
 
 # Documentation
 
