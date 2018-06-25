@@ -8,9 +8,6 @@ import { supportContributeURL } from './support-utilities';
 
 const baseParams = {
     minArticles: 3,
-    colourStrategy() {
-        return 'membership-prominent yellow';
-    },
     campaignCode: 'gdnwb_copts_memco_banner',
 };
 
@@ -63,7 +60,7 @@ const supporterCost = (location: string): string => {
 };
 
 const supporterEngagementCtaCopyControl = (location: string): string =>
-    `<span class="banner-cta-text"> Support The Guardian from as little as ${supporterCost(
+    `<span class="support-the-guardian-banner__highlight"> Support The Guardian from as little as ${supporterCost(
         location
     )}.</span>`;
 

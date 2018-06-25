@@ -155,4 +155,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-styling-tweaks",
+    "Test the impact of some banner styling tweaks",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = On,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
 }

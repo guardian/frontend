@@ -1,26 +1,40 @@
 // @flow
+import marque36icon from 'svgs/icon/marque-36.svg';
+import closeCentralIcon from 'svgs/icon/close-central.svg';
+
 export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
 ) =>
-    `<div id="site-message__message">
-        <div class="site-message__message site-message__message--membership">
-            <div class="membership__message-text-long">
-                <span class = "membership__message-text">
-                    ${params.messageText}${params.ctaText}
-                </span>
-            </div>
-            <span class="membership__paypal-container">
-                <img class="membership__paypal-logo" src="${
-                    params.paypalAndCreditCardImage
-                }" alt="Paypal and credit card">
-                <span class="membership__support-button"><a class="message-button-rounded__cta ${
-                    params.colourClass
-                }" href="${params.linkUrl}">${params.buttonCaption}${
-        params.buttonSvg
-    }</a></span>
-            </span>
+    `
+    <div class="support-the-guardian-banner__close">
+        <div class="support-the-guardian-banner__roundel">
+            ${marque36icon.markup}
         </div>
-        <a class="u-faux-block-link__overlay js-engagement-message-link" target="_blank" href="${
-            params.linkUrl
-        }" data-link-name="Read more link"></a>
-    </div>`;
+        <button class="button support-the-guardian-banner__close-button js-site-message-close" data-link-name="hide release message">
+            <span class="u-h">Close</span>
+            ${closeCentralIcon.markup}
+        </button>
+    </div>
+    <div class="support-the-guardian-banner__container">
+        <div class="support-the-guardian-banner__text">
+            ${params.messageText}${params.ctaText}
+        </div>
+        <div class="support-the-guardian-banner__cta">
+            <button class="button support-the-guardian-banner__button" href="${
+                params.linkUrl
+            }">
+                ${params.buttonCaption}${params.buttonSvg}
+            </button>
+            <img
+                class="support-the-guardian-banner__payment-logos"
+                src="${params.paypalAndCreditCardImage}"
+                alt="PayPal and credit card"
+            >
+        </div>
+    </div>
+    <a
+        class="u-faux-block-link__overlay"
+        target="_blank"
+        href="${params.linkUrl}"
+    ></a>
+    `;
