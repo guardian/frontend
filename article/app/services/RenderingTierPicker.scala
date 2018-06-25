@@ -1,5 +1,6 @@
 package services
 
+import common.Logging
 import controllers.ArticlePage
 import model.PageWithStoryPackage
 import model.liveblog.{BodyBlock, ImageBlockElement, TextBlockElement}
@@ -47,8 +48,6 @@ object RenderingTierPicker {
   }
 
   def getRenderTierFor(page: PageWithStoryPackage): RenderType = {
-
-    // todo: clean up
 
     val canRemotelyRender = isSupportedType(page) &&
       hasBlocks(page) &&

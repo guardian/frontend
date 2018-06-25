@@ -6,7 +6,7 @@ import conf.switches.Switches
 import contentapi.ContentApiClient
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model._
+import model.{PageWithStoryPackage, _}
 import LiveBlogHelpers._
 import conf.Configuration
 import model.liveblog._
@@ -24,6 +24,7 @@ import scala.concurrent.Future
 import java.lang.System.currentTimeMillis
 
 import metrics.TimingMetric
+import services.{LocalRender, RemoteRender, RenderType, RenderingTierPicker}
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -116,6 +117,12 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       }
 
     case article: ArticlePage =>
+
+      RenderingTierPicker.getRenderTierFor(page) match {
+        case RemoteRender => log.logger.info("This was a remotely renderable article")
+        case _ =>
+      }
+
       val htmlResponse = () => {
         if (request.isEmail) ArticleEmailHtmlPage.html(article)
         else if (request.isAmp) views.html.articleAMP(article)
@@ -213,6 +220,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   }
 
   def renderArticle(path: String): Action[AnyContent] = {
+
     Action.async { implicit request =>
 
       if(request.isGuui){
