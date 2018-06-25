@@ -62,21 +62,27 @@ class ResetPasswordControllerTest
     "when the token provided is valid" - {
        when(api.userForToken(MockitoMatchers.any[String])).thenReturn(Future.successful(Right(user)))
        "should pass the token param to to the api" in Fake {
-         resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
+         resetPasswordController.processUpdatePasswordToken("1234", None)(fakeRequest)
          verify(api).userForToken(MockitoMatchers.eq("1234"))
        }
 
        "should render the reset password form when the user token has not expired" in Fake {
-         val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
+         val result = resetPasswordController.processUpdatePasswordToken("1234", None)(fakeRequest)
          status(result) should equal(SEE_OTHER)
          header("Location", result).head should be ("/reset-password/1234")
        }
+
+      "should propagate the returnUrl from the request" in Fake {
+        val result = resetPasswordController.processUpdatePasswordToken("1234", Some("https://profile.thegulocal.com/public/edit"))(fakeRequest)
+        status(result) should equal(SEE_OTHER)
+        header("Location", result).head should be ("/reset-password/1234?returnUrl=https://profile.thegulocal.com/public/edit")
+      }
     }
 
     "should render the reset password form when the user token is not valid" - {
       when(api.userForToken("1234")).thenReturn(Future.successful(Left(tokenExpired)))
       "should render to the the to the request new password form" in Fake {
-        val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
+        val result = resetPasswordController.processUpdatePasswordToken("1234", None)(fakeRequest)
         status(result) should equal(SEE_OTHER)
         header("Location", result).head should endWith ("/reset/resend")
       }
@@ -91,11 +97,11 @@ class ResetPasswordControllerTest
       when(signInService.getCookies(MockitoMatchers.any[Future[Response[CookiesResponse]]], MockitoMatchers.anyBoolean())(MockitoMatchers.any[ExecutionContext])).thenReturn(Future.successful(Right(cookieList)))
 
       "should call the api the password with the provided new password and token" in Fake {
-         resetPasswordController.resetPassword("1234")(fakeRequest)
+         resetPasswordController.resetPassword("1234", None)(fakeRequest)
          verify(api).resetPassword(MockitoMatchers.eq("1234"), MockitoMatchers.eq("newpassword"))
       }
       "should return password confirmation view in" in Fake {
-        val result = resetPasswordController.resetPassword("1234")(fakeRequest)
+        val result = resetPasswordController.resetPassword("1234", None)(fakeRequest)
          status(result) should be (SEE_OTHER)
         header("Location", result).head should be ("/password/reset-confirmation")
       }
@@ -107,7 +113,7 @@ class ResetPasswordControllerTest
 
       when(api.resetPassword("1234","newpassword")).thenReturn(Future.successful(Left(tokenExpired)))
       "should redirect to request request new password with a token expired" in Fake {
-        val result = resetPasswordController.resetPassword("1234")(fakeRequest)
+        val result = resetPasswordController.resetPassword("1234", None)(fakeRequest)
         status(result) should equal(SEE_OTHER)
         header("Location", result).head should endWith ("/reset/resend")
       }
@@ -118,7 +124,7 @@ class ResetPasswordControllerTest
 
       when(api.resetPassword("1234", "newpassword")).thenReturn(Future.successful(Left(accesssDenied)))
       "should redirect to request new password with a problem resetting your password" in Fake {
-        val result = resetPasswordController.resetPassword("1234")(fakeRequest)
+        val result = resetPasswordController.resetPassword("1234", None)(fakeRequest)
         status(result) should equal(SEE_OTHER)
         header("Location", result).head should be ("/reset")
       }
