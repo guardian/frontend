@@ -5,13 +5,13 @@ import timeout from 'lib/timeout';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import {
-    insertEpic,
+    insertAtSubmeta,
     reportEpicError,
 } from 'common/modules/commercial/epic-utils';
 
 import type { EpicComponent } from 'common/modules/commercial/epic-utils';
 
-const createDFPEpicSlot = (): HTMLDivElement => {
+const createEpicAdSlot = (): HTMLDivElement => {
     const adSlots = createSlots('epic', {});
     return ((adSlots[0]: any): HTMLDivElement);
 };
@@ -67,8 +67,8 @@ const renderEpicSlotWithTimeout = (
     });
 
 export const displayDFPEpic = (duration: number): Promise<EpicComponent> => {
-    const epic = createDFPEpicSlot();
-    return insertEpic(epic).then(() =>
-        renderEpicSlotWithTimeout(epic, duration)
+    const epicAdSlot = createEpicAdSlot();
+    return insertAtSubmeta(epicAdSlot).then(() =>
+        renderEpicSlotWithTimeout(epicAdSlot, duration)
     );
 };

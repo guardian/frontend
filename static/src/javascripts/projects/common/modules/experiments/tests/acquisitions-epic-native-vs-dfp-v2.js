@@ -50,6 +50,7 @@ const epicNativeVsDfpV2: ABTest = {
         },
         {
             id: dfpVariant.variant,
+            // The Epic in this variant is loaded by the function initDFPEpicSlot()
             test: () => {},
             options: variantOptions,
         },

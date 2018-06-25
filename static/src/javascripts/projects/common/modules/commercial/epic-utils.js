@@ -70,7 +70,7 @@ const controlEpicComponent = (abTest?: ABTestVariant): EpicComponent => {
     };
 };
 
-const insertEpic = (epic: HTMLDivElement): Promise<void> =>
+const insertAtSubmeta = (epic: HTMLDivElement): Promise<void> =>
     fastdom.read(() => document.querySelector('.submeta')).then(element => {
         if (element && element.parentElement) {
             element.parentElement.insertBefore(epic, element);
@@ -83,7 +83,7 @@ const insertEpic = (epic: HTMLDivElement): Promise<void> =>
 
 const displayControlEpic = (abTest?: ABTestVariant): Promise<EpicComponent> => {
     const epic = controlEpicComponent(abTest);
-    return insertEpic(epic.html).then(() => epic);
+    return insertAtSubmeta(epic.html).then(() => epic);
 };
 
 const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
@@ -106,4 +106,4 @@ const trackEpic = (epic: EpicComponent): void => {
     }
 };
 
-export { reportEpicError, insertEpic, displayControlEpic, trackEpic };
+export { reportEpicError, insertAtSubmeta, displayControlEpic, trackEpic };
