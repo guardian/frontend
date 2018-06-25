@@ -90,9 +90,9 @@ object EmailFrontPath {
   }
 }
 
-case class EmailExtraCollections(canonical: PressedCollectionVisibility,
-                                 special: Option[PressedCollectionVisibility],
-                                 breaking: Option[PressedCollectionVisibility])
+case class EmailExtraCollections(canonical: Option[PressedCollectionVisibility],
+                                 special: List[PressedCollectionVisibility],
+                                 breaking: List[PressedCollectionVisibility])
 
 trait EmailFrontPress extends Logging {
 
@@ -103,7 +103,7 @@ trait EmailFrontPress extends Logging {
   def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)]
 
   private def mergeExtraEmailCollections(pressedCollections: List[PressedCollectionVisibility], emailCollections: EmailExtraCollections): List[PressedCollectionVisibility] = {
-    emailCollections.breaking.toList ::: List(emailCollections.canonical) ::: emailCollections.special.toList ::: pressedCollections
+    emailCollections.breaking ::: emailCollections.canonical.toList ::: emailCollections.special ::: pressedCollections
   }
 
   def pressEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
@@ -168,36 +168,21 @@ trait EmailFrontPress extends Logging {
       } yield collectionId
     }
 
-    def renameMetaCollection(metaCollection: PressedCollectionVisibility, replacementName: String, visible: Int) = {
-      if (pressedCollections.map(_.pressedCollection.displayName).contains(metaCollection.pressedCollection.displayName))
-        metaCollection.withDisplayName(replacementName).withVisible(visible)
-      else
-        metaCollection.withVisible(visible)
+    def findMetaContainersWithLimit(metadata: Metadata, limit: Int): Response[List[PressedCollectionVisibility]] = {
+      Response
+        .traverse(findCollectionIds(metadata).map(generateCollectionJsonFromFapiClient))
+        .map(_.map(_.withVisible(limit)))
     }
 
-    def mergeCollections(first: PressedCollectionVisibility, tail: List[PressedCollectionVisibility], replacementName: String, visible: Int): PressedCollectionVisibility = {
-      tail.foldLeft(first)(_.mergeAndResize(_, visible)).withDisplayName(replacementName)
-    }
-
-    def pressedCollectionFromMetaTag(meta: Metadata, replacementName: String, visible: Int): Response[Option[PressedCollectionVisibility]] = {
-      val collections: Response[List[PressedCollectionVisibility]] = Response.traverse(findCollectionIds(meta).map(generateCollectionJsonFromFapiClient))
-      collections.map {
-        case first :: second :: tail => Some(renameMetaCollection(mergeCollections(first, second :: tail, replacementName, visible), replacementName, visible))
-        case head :: Nil => Some(renameMetaCollection(head, replacementName, visible))
-        case Nil => None
-      }
-    }
-
-    val canonicalPressedF = pressedCollectionFromMetaTag(Canonical, "Headlines", 6)
-    val breakingPressedF = pressedCollectionFromMetaTag(Breaking, "Breaking news", 5)
-    val specialPressedF = pressedCollectionFromMetaTag(Special, "Special report", 1)
+    val canonicalPressedF = findMetaContainersWithLimit(Canonical, 6)
+    val breakingPressedF = findMetaContainersWithLimit(Breaking, 5)
+    val specialPressedF = findMetaContainersWithLimit(Special, 1)
 
     for {
-      canonicalPressedO <- canonicalPressedF
-      canonicalPressed = canonicalPressedO.getOrElse(throw new RuntimeException(s"Unable to find Canonical headline on ${frontPath.edition}"))
+      canonicalPressed <- canonicalPressedF
       breakingPressed <- breakingPressedF
       specialPressed <- specialPressedF
-    } yield EmailExtraCollections(canonicalPressed, specialPressed, breakingPressed)
+    } yield EmailExtraCollections(canonicalPressed.headOption, specialPressed, breakingPressed)
 
   }
 

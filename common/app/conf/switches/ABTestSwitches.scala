@@ -108,6 +108,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-native-vs-dfp-v2",
+    "See if there is any difference in annualised value between serving the Epic natively vs DFP",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 7, 4),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-from-google-doc-one-variant",
     "Serves an epic with copy from a Google Doc",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -142,6 +152,16 @@ trait ABTestSwitches {
     "Serves an epic with copy from a Google Doc",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-styling-tweaks",
+    "Test the impact of some banner styling tweaks",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = On,
     sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
