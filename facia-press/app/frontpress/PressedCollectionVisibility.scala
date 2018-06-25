@@ -10,7 +10,6 @@ case class PressedCollectionVisibility(pressedCollection: PressedCollection, vis
   import PressedCollectionVisibility._
 
   def withVisible(visible: Int): PressedCollectionVisibility = copy(visible = visible)
-  def withDisplayName(displayName: String): PressedCollectionVisibility = copy(pressedCollection = pressedCollection.withDisplayName(displayName))
 
   lazy val affectsDuplicates: Boolean = Container.affectsDuplicates(pressedCollection.collectionType)
   lazy val affectedByDuplicates: Boolean = Container.affectedByDuplicates(pressedCollection.collectionType)
@@ -51,10 +50,6 @@ case class PressedCollectionVisibility(pressedCollection: PressedCollection, vis
         val againstContainsContent = against.contains(content.header.url)
         againstContainsContent && content.participatesInDeduplication
       }
-  }
-
-  def mergeAndResize(target: PressedCollectionVisibility, size: Int) = {
-    withVisible(size).copy(pressedCollection = pressedCollection.merge(target.pressedCollection, size))
   }
 
 }
