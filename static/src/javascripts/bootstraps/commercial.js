@@ -47,7 +47,7 @@ if (!commercialFeatures.adFree) {
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
         ['cm-commentAdverts', initCommentAdverts],
-        ['cm-carrot', initCarrotTrafficDriver],
+        ['cm-carrot', initCarrotTrafficDriver]
     );
 }
 
