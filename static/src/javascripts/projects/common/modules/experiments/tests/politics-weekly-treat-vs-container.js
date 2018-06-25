@@ -17,7 +17,6 @@ import containerButton from 'svgs/journalism/politics-weekly-container/play-btnb
 const runTreatTest = (): void => {
     const headlinesContainer = document.querySelector('.facia-page #headlines');
     if (headlinesContainer) {
-
         const newTreat = template(treatHtml, {
             logo: logo.markup,
             button: addClassesAndTitle(button.markup, [
@@ -35,15 +34,17 @@ const runTreatTest = (): void => {
 
         const breakpoint = getBreakpoint(true);
         if (breakpoint === 'leftCol' || breakpoint === 'wide') {
-            //In the headlines container's treat spot
+            // In the headlines container's treat spot
             const html = `<div>${newTreat}</div>`;
-            
-            const treats = headlinesContainer.querySelector('.treats__container');
+
+            const treats = headlinesContainer.querySelector(
+                '.treats__container'
+            );
             if (treats) {
                 treats.innerHTML = html;
             }
         } else {
-            //As a new section under headlines
+            // As a new section under headlines
             const html = `<section class='fc-container'><div class='fc-container__inner politics-weekly-treat__container'>${newTreat}</div></section>`;
             headlinesContainer.insertAdjacentHTML('afterend', html);
         }
