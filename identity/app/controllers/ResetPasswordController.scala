@@ -30,7 +30,7 @@ class ResetPasswordController(
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with implicits.Forms {
 
-  private val page = IdentityPage("/reset-password", "Reset Password")
+  private val page = IdentityPage("/reset-password", "Reset Password", isFlow = true)
 
   private val requestPasswordResetForm = Form(
     Forms.single(
