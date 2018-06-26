@@ -52,9 +52,9 @@ const runTreatTest = (): void => {
 };
 
 const runContainerTest = (): void => {
-    const spotlightContainer = document.querySelector('.facia-page #spotlight');
+    const headlinesContainer = document.querySelector('.facia-page #headlines');
 
-    if (spotlightContainer) {
+    if (headlinesContainer) {
         const newContainer = template(containerHtml, {
             logo: logo.markup,
             button: addClassesAndTitle(containerButton.markup, [
@@ -64,7 +64,7 @@ const runContainerTest = (): void => {
                 'politics-weekly-container__wave',
             ]),
         });
-        spotlightContainer.insertAdjacentHTML('beforebegin', newContainer);
+        headlinesContainer.insertAdjacentHTML('afterend', newContainer);
     }
 };
 
