@@ -281,7 +281,8 @@ const makeABTestVariant = (
                                 insertMultiple
                             );
 
-                            awaitEpicButtonClicked().then(() => submitClickEvent({
+                            awaitEpicButtonClicked().then(() =>
+                                submitClickEvent({
                                     component: {
                                         componentType: parentTest.componentType,
                                         products,
@@ -291,7 +292,7 @@ const makeABTestVariant = (
                                     abTest: {
                                         name: parentTest.id,
                                         variant: id,
-                                    }
+                                    },
                                 })
                             );
 
