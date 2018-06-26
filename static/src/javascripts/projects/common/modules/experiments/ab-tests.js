@@ -3,14 +3,14 @@ import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
-import { PoliticsWeeklyTreatVsContainer } from 'common/modules/experiments/tests/politics-weekly-treat-vs-container';
+import { FootballWeeklyTreatVsContainer } from 'common/modules/experiments/tests/football-weekly-treat-vs-container';
 import { newSignInExperiment } from './tests/new-sign-in-experiment';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
     newSignInExperiment,
     commercialPrebidSafeframe,
-    PoliticsWeeklyTreatVsContainer,
+    FootballWeeklyTreatVsContainer,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>

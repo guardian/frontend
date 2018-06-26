@@ -13,10 +13,10 @@ trait JournalismSwitches {
     exposeClientSide = false
   )
 
-  val PoliticsWeeklyTreatVsContainerSwitch = Switch(
+  val FootballWeeklyTreatVsContainerSwitch = Switch(
     SwitchGroup.Journalism,
-    "ab-politics-weekly-treat-vs-container",
-    "Display treat linking to latest Politics Weekly in UK network front",
+    "ab-football-weekly-treat-vs-container",
+    "Display treat linking to latest Football Weekly in UK network front",
     owners = Seq(Owner.withName("journalism team")),
     safeState = On,
     sellByDate = never,
