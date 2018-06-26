@@ -11,6 +11,8 @@ case class PressedCollectionVisibility(pressedCollection: PressedCollection, vis
 
   def withVisible(visible: Int): PressedCollectionVisibility = copy(visible = visible)
 
+  def withoutTrailTextOnTail: PressedCollectionVisibility = copy(pressedCollection = pressedCollection.withoutTrailTextOnTail)
+
   lazy val affectsDuplicates: Boolean = Container.affectsDuplicates(pressedCollection.collectionType)
   lazy val affectedByDuplicates: Boolean = Container.affectedByDuplicates(pressedCollection.collectionType)
 

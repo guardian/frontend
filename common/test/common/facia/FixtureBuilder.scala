@@ -1,4 +1,4 @@
-package common.commercial
+package common.facia
 
 import model.pressed._
 
@@ -45,7 +45,7 @@ object FixtureBuilder {
       id.toString,
       cardStyle = DefaultCardstyle,
       webPublicationDateOption = None,
-      trailText = None,
+      trailText = Some("trail text"),
       mediaType = None,
       starRating = None,
       shortUrlPath = None,
