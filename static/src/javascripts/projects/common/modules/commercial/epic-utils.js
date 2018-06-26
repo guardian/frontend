@@ -94,8 +94,8 @@ const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
     return new Promise(resolve => inView.on('firstview', () => resolve()));
 };
 
-const awaitEpicButtonClicked = (): Promise<void> => {
-    return new Promise(resolve => {
+const awaitEpicButtonClicked = (): Promise<void> =>
+    new Promise(resolve => {
         mediator.on('module:clickstream:click', (clickSpec: Spec | boolean) => {
             if (clickSpec === true || clickSpec === false) {
                 return;
@@ -104,9 +104,8 @@ const awaitEpicButtonClicked = (): Promise<void> => {
             if (isEpicClick) {
                 resolve();
             }
-        })
-    })
-};
+        });
+    });
 
 const trackEpic = (epic: EpicComponent): void => {
     const componentEvent = epic.componentEvent;
@@ -120,7 +119,7 @@ const trackEpic = (epic: EpicComponent): void => {
                 logView(componentEvent.abTest.name);
             }
         });
-        awaitEpicButtonClicked().then(() => submitClickEvent(componentEvent))
+        awaitEpicButtonClicked().then(() => submitClickEvent(componentEvent));
     }
 };
 
