@@ -800,7 +800,7 @@ object GarnettQuoteCleaner extends HtmlCleaner {
 }
 
 case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean],
-  contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with Logging {
+  contentType: String, appendDisclaimer: Option[Boolean] = None) extends HtmlCleaner with Logging {
 
   override def clean(document: Document): Document = {
     if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn,
@@ -811,13 +811,17 @@ case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffilia
 }
 
 object AffiliateLinksCleaner {
-  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Boolean, contentType: String, skimlinksId: String): Document = {
-    val links = html.getElementsByAttribute("href")
 
-    val supportedLinks: mutable.Seq[Element] = links.asScala.filter(isAffiliatable)
+  def getAffiliateableLinks(html:Document): mutable.Seq[Element] =
+    html.getElementsByAttribute("href").asScala.filter(isAffiliatable)
+
+  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Option[Boolean], contentType: String, skimlinksId: String): Document = {
+
+    val supportedLinks: mutable.Seq[Element] = getAffiliateableLinks(html)
     supportedLinks.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
 
-    if (supportedLinks.nonEmpty) insertAffiliateDisclaimer(html, contentType)
+    val shouldAppendDisclaimer = appendDisclaimer.getOrElse(supportedLinks.nonEmpty)
+    if (shouldAppendDisclaimer) insertAffiliateDisclaimer(html, contentType)
     else html
   }
 
@@ -840,5 +844,9 @@ object AffiliateLinksCleaner {
     } else {
       switchedOn && supportedSections.contains(section)
     }
+  }
+
+  def stringContainsAffiliateableLinks(s: String): Boolean = {
+    getAffiliateableLinks(Jsoup.parseBodyFragment(s)).nonEmpty
   }
 }
