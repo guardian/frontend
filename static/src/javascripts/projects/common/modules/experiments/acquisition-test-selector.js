@@ -31,6 +31,8 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
     } = v.options.maxViews;
 
     const isUnlimited = v.options.isUnlimited;
+    // Should all acquisition tests be of type EpicABTest?
+    // $FlowFixMe
     const testId = t.useLocalViewLog ? t.id : undefined;
 
     const withinViewLimit =
