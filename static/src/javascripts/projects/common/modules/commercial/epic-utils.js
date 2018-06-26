@@ -123,4 +123,4 @@ const trackEpic = (epic: EpicComponent): void => {
     }
 };
 
-export { reportEpicError, insertAtSubmeta, displayControlEpic, trackEpic };
+export { reportEpicError, insertAtSubmeta, displayControlEpic, trackEpic, awaitEpicButtonClicked };
