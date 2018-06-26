@@ -111,6 +111,7 @@ module.exports = {
         // but it's sufficient to scope it at the chunk level
         new webpack.ProvidePlugin({
             videojs: 'videojs',
+            React: 'react',
         }),
 
         new CircularDependencyPlugin({
