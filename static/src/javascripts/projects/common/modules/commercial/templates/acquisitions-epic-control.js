@@ -14,7 +14,7 @@ export const acquisitionsEpicControlTemplate = ({
     epicClass?: string,
     wrapperClass?: string,
 }) =>
-    `<div class="contributions__epic ${epicClass}" data-component="${componentName}">
+    `<div class="contributions__epic ${epicClass}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
             <div>
                 <h2 class="contributions__title contributions__title--epic">
