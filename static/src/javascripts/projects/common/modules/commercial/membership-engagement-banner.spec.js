@@ -157,7 +157,9 @@ describe('Membership engagement banner', () => {
 
         it('should return false user variant is blocked for test', () => {
             fakeVariantFor.mockImplementationOnce(() => ({
-                blockEngagementBanner: true,
+                options: {
+                    blockEngagementBanner: true,
+                },
             }));
 
             return membershipEngagementBanner.canShow().then(canShow => {
