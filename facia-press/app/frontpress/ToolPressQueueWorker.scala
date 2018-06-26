@@ -19,7 +19,7 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
     throw new RuntimeException("Required property 'frontpress.sqs.tool_queue_url' not set")
   }
 
-  override def retryPress(message: Message[PressJob]): Boolean = false
+  override def shouldRetryPress(message: Message[PressJob]): Boolean = false
 
   override def process(message: Message[PressJob]): Future[Unit] = {
     val PressJob(FrontPath(path), pressType, creationTime, forceConfigUpdate) = message.get

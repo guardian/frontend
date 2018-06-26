@@ -13,11 +13,11 @@ import scala.concurrent.{ExecutionContext, Future}
 class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorker: ToolPressQueueWorker)(implicit executionContext: ExecutionContext) extends JsonQueueWorker[SNSNotification] {
   override val deleteOnFailure: Boolean = true
 
-  def retryPress(message: common.Message[SNSNotification]): Boolean = {
+  def shouldRetryPress(message: common.Message[SNSNotification]): Boolean = {
     ConfigAgent.getFrontPriorityFromConfig(message.get.Message) match {
       case Some(TrainingPriority) => false
       case Some(_) => true
-      case _ => false
+      case None => false
     }
   }
 

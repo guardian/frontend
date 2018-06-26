@@ -72,7 +72,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
 
   def process(message: Message[A]): Future[Unit]
 
-  def retryPress(message: Message[A]): Boolean
+  def shouldRetryPress(message: Message[A]): Boolean
 
   final protected def getAndProcess: Future[Unit] = {
     val getRequest = queue.receiveOne(new ReceiveMessageRequest().withWaitTimeSeconds(WaitTimeSeconds)) flatMap {
@@ -93,7 +93,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
             consecutiveProcessingErrors.recordSuccess()
 
           case Failure(error) =>
-            if (retryPress(message)) {
+            if (shouldRetryPress(message)) {
               log.warn(s"JsonQueueWorker getAndProcess retrying $message", error)
               queue.retryMessageAfter(message.handle, 5)
             } else if (deleteOnFailure) {
