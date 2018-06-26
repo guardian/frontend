@@ -94,7 +94,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
 
           case Failure(error) =>
             if (retryPress(message)) {
-              log.warn(s"Retrying $message", error)
+              log.warn(s"JsonQueueWorker getAndProcess retrying $message", error)
               queue.retryMessageAfter(message.handle, 5)
             } else if (deleteOnFailure) {
               queue.delete(receipt).failed.foreach {
