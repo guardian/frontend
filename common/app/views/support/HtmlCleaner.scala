@@ -817,10 +817,11 @@ object AffiliateLinksCleaner {
 
   def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Option[Boolean], contentType: String, skimlinksId: String): Document = {
 
-    val supportedLinks: mutable.Seq[Element] = getAffiliateableLinks(html)
-    supportedLinks.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+    val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
+    linksToReplace.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
 
-    val shouldAppendDisclaimer = appendDisclaimer.getOrElse(supportedLinks.nonEmpty)
+    // respect appendDisclaimer, or if it's not set then always add the disclaimer if affilate links have been added
+    val shouldAppendDisclaimer = appendDisclaimer.getOrElse(linksToReplace.nonEmpty)
     if (shouldAppendDisclaimer) insertAffiliateDisclaimer(html, contentType)
     else html
   }
