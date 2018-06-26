@@ -426,4 +426,14 @@ trait CommercialSwitches {
     sellByDate = new LocalDate(2018, 8, 23),
     exposeClientSide = true
   )
+
+  val pageViewAnalytics: Switch = Switch(
+    group = Commercial,
+    name = "page-view-analytics",
+    description = "Gather commercial analytics from page view",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
