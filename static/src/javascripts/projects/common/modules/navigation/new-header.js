@@ -425,9 +425,9 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
 };
 
 const enhanceMenuToggles = (): void => {
-    const checkboxs = [
+    const checkboxs: Array<HTMLInputElement> = ([
         ...document.getElementsByClassName('js-enhance-checkbox'),
-    ];
+    ]: Array<any>);
 
     checkboxs.forEach(checkbox => {
         if (!enhanced[checkbox.id] && !checkbox.checked) {
