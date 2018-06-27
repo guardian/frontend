@@ -4,9 +4,7 @@
   "private": true,
   "workspaces": [
     "dev/eslint-plugin-guardian-frontend",
-    "tools/amp-validation",
-    "node_modules/@guardian/dotcom-rendering/packages/pasteup",
-    "node_modules/@guardian/dotcom-rendering/packages/guui"
+    "tools/amp-validation"
   ],
   "engines": {
     "yarn": "1.7.0"
