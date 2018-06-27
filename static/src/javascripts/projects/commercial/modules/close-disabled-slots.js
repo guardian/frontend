@@ -42,12 +42,8 @@ const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
     );
 };
 
-const shouldRemovePaidForRichLinksWhenAdFree = richLink => {
-    return (
-      richLink &&
-      commercialFeatures.adFree
-    );
-};
+const shouldRemovePaidForRichLinksWhenAdFree = richLink =>
+    richLink && commercialFeatures.adFree;
 
 const adFreeSlotRemove = (): Promise<void> => {
     const adSlotsToRemove: Array<Element> = qwery(dfpEnv.adSlotSelector).filter(
