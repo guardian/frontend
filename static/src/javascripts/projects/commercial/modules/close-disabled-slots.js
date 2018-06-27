@@ -42,6 +42,13 @@ const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
     );
 };
 
+const shouldRemovePaidForRichLinksWhenAdFree = richLink => {
+    return (
+      richLink &&
+      commercialFeatures.adFree
+    );
+};
+
 const adFreeSlotRemove = (): Promise<void> => {
     const adSlotsToRemove: Array<Element> = qwery(dfpEnv.adSlotSelector).filter(
         shouldRemoveAdSlotWhenAdFree
@@ -55,6 +62,10 @@ const adFreeSlotRemove = (): Promise<void> => {
         '.fc-container'
     ).filter(shouldRemoveFaciaContainerWhenAdFree);
 
+    const paidForRichLinksToRemove: Array<Element> = qwery(
+        '.rich-link--paidfor'
+    ).filter(shouldRemovePaidForRichLinksWhenAdFree);
+
     return fastdom.write(() => {
         adSlotsToRemove.forEach((adSlot: Element) => adSlot.remove());
         mpusToRemove.forEach((mpu: Element) =>
@@ -63,6 +74,12 @@ const adFreeSlotRemove = (): Promise<void> => {
         commercialFaciaContainersToRemove.forEach((faciaContainer: Element) =>
             faciaContainer.classList.add('u-h')
         );
+        paidForRichLinksToRemove.forEach((paidForRichLinkElement: Element) => {
+            const parentContainer = paidForRichLinkElement.parentElement;
+            if (parentContainer) {
+                parentContainer.classList.add('u-h');
+            }
+        });
     });
 };
 
