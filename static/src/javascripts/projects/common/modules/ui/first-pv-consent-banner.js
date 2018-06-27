@@ -143,4 +143,4 @@ export const _ = {
     bindableClassNames,
 };
 
-export { firstPvConsentBanner, canShow, track, bindClickHandlers };
+export { firstPvConsentBanner, canShow, track, bindClickHandlers, messageCode };

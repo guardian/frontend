@@ -6,16 +6,22 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
+import {
+    messageCode as supportTheGuardianMessageCode
+} from 'common/modules/commercial/membership-engagement-banner';
 import {addTrackingCodesToUrl} from "common/modules/commercial/acquisitions-ophan";
 import {
     track as trackFirstPvConsent,
     bindClickHandlers as bindFirstPvConsentClickHandlers,
-    canShow as canShowFirstPvConsent
+    canShow as canShowFirstPvConsent,
+    messageCode as firstPvConsentMessageCode,
 } from 'common/modules/ui/first-pv-consent-banner';
 import {
     canShow as canShowSupportTheGuardianBanner
 } from 'common/modules/commercial/membership-engagement-banner';
 import marque36icon from 'svgs/icon/marque-36.svg';
+import userPrefs from "common/modules/user-prefs";
+import uniq from 'lodash/arrays/uniq';
 
 
 type Template = {
@@ -98,8 +104,8 @@ const bannerTemplateParams: EngagementBannerTemplateParams = {
 };
 
 const bannerHtml = `
-    <div class="site-message js-site-message site-message--banner" tabindex="-1" role="dialog" aria-label="welcome" aria-describedby="site-message__message" data-component="AcquisitionsEngagementBannerStylingTweaks_control">
-        <div class="site-message--support-the-guardian-banner">
+    <div class="site-message js-site-message js-double-site-message site-message--banner" tabindex="-1" role="dialog" aria-label="welcome" aria-describedby="site-message__message" data-component="AcquisitionsEngagementBannerStylingTweaks_control">
+        <div class="js-support-the-guardian-site-message site-message--support-the-guardian-banner">
             <div class="gs-container">
                 <div class="site-message__inner js-site-message-inner">
                     <div class="site-message__roundel">
@@ -112,8 +118,7 @@ const bannerHtml = `
             </div>
         </div>
     
-    
-        <div class="site-message--first-pv-consent" tabindex="-1" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
+        <div class="js-first-pv-consent-site-message site-message--first-pv-consent" tabindex="-1" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
             <div class="gs-container">
                 <div class="site-message__inner js-site-message-inner">
                     <div class="site-message__roundel">
@@ -128,17 +133,48 @@ const bannerHtml = `
     </div>
 `;
 
+class SpecialMessage extends Message {
+    hide() {
+        const consentBanner = document.querySelector('.js-first-pv-consent-site-message');
+        if (consentBanner) {
+            consentBanner.remove();
+        }
+    }
+}
+
 const show = (): void => {
     trackFirstPvConsent();
     if (document.body) {
         document.body.insertAdjacentHTML('beforeend', bannerHtml);
     }
-    bindFirstPvConsentClickHandlers(new Message('blah'));
+    bindFirstPvConsentClickHandlers(new SpecialMessage(firstPvConsentMessageCode));
+
+    const supportTheGuardianBanner = document.querySelector('.js-support-the-guardian-site-message');
+    if (supportTheGuardianBanner) {
+        const closeButton = supportTheGuardianBanner.querySelector('.js-site-message-close');
+        if (closeButton) {
+            closeButton.addEventListener('click', (ev: Event) => {
+                supportTheGuardianBanner.remove();
+
+                // acknowledge banner
+                const messageStates = userPrefs.get('messages') || [];
+                messageStates.push(supportTheGuardianMessageCode);
+                userPrefs.set('messages', uniq(messageStates));
+            })
+        }
+    }
 };
+
+const messageStates = userPrefs.get('messages');
+
+const userHasAcknowledgedFirstPvConsent: boolean = messageStates.includes(firstPvConsentMessageCode);
+
+const userHasAcknowledgedSupportTheGuardian: boolean = messageStates.includes(supportTheGuardianMessageCode);
 
 const firstPvConsentPlusSupportTheGuardianBanner: Banner = {
     id: messageCode,
-    canShow: () => canShowFirstPvConsent() && canShowSupportTheGuardianBanner(),
+    canShow: () =>
+        canShowFirstPvConsent() && canShowSupportTheGuardianBanner() && !userHasAcknowledgedFirstPvConsent && !userHasAcknowledgedSupportTheGuardian,
     show,
 };
 
