@@ -102,15 +102,7 @@ trait EmailFrontPress extends Logging {
   def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollectionVisibility]
   def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)]
 
-  private def mergeExtraEmailCollections(pressedCollections: List[PressedCollectionVisibility], emailCollections: EmailExtraCollections): List[PressedCollectionVisibility] = {
-    emailCollections.breaking ::: emailCollections.canonical.toList ::: emailCollections.special ::: pressedCollections
-  }
-
   def pressEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
-    if (emailFrontPath.edition == "us") pressUsEmailFront(emailFrontPath) else pressUkAuEmailFront(emailFrontPath)
-  }
-
-  def pressUkAuEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
     for {
       config <- Response.Async.Right(fapiClient.config)
       collectionIds = collectionsIdsFromConfigForPath(emailFrontPath.path, config)
@@ -124,41 +116,11 @@ trait EmailFrontPress extends Logging {
     }
   }
 
-  def pressUsEmailFront(emailFrontPath: EmailFrontPath)(implicit executionContext: ExecutionContext): Response[PressedPageVersions] = {
-    for {
-      config <- Response.Async.Right(fapiClient.config)
-      collectionIds = collectionsIdsFromConfigForPath(emailFrontPath.path, config)
-      enrichedCollectionIds = enrichUsFront(config, collectionIds)
-      pressedCollections <- Response.traverse(enrichedCollectionIds.map(generateCollectionJsonFromFapiClient))
-      seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(emailFrontPath.path))
-    } yield seoWithProperties match {
-      case (seoData, frontProperties) => generatePressedVersions(emailFrontPath.path, pressedCollections, seoData, frontProperties)
-    }
+  private def mergeExtraEmailCollections(pressedCollections: List[PressedCollectionVisibility], emailCollections: EmailExtraCollections): List[PressedCollectionVisibility] = {
+    emailCollections.breaking ::: emailCollections.canonical.toList ::: emailCollections.special ::: pressedCollections
   }
 
-  // After UK and AU emails are tested, US emails will use the same logic and this can be removed
-  private def enrichUsFront(config: ConfigJson, collections: List[String]): List[String] = {
-    def findCollectionByMetadata(metadata: Metadata, path: String, config: ConfigJson): Option[String] = {
-      val collectionId = for {
-        front <- config.fronts.get(path).toList
-        collectionId <- front.collections
-        collectionConfig <- config.collections.get(collectionId) if collectionConfig.metadata.exists(_.contains(metadata))
-      } yield collectionId
-      collectionId.headOption
-    }
-
-    collections match {
-      case head :: tail =>
-        List(
-          findCollectionByMetadata(Breaking, "us", config),
-          Some(head),
-          findCollectionByMetadata(Special, "us", config)
-        ).flatten ++ tail
-      case Nil => Nil
-    }
-  }
-
-  def buildExtraEmailCollections(frontPath: EmailFrontPath,
+  private def buildExtraEmailCollections(frontPath: EmailFrontPath,
                                  config: ConfigJson,
                                  pressedCollections: List[PressedCollectionVisibility])(implicit ec: ExecutionContext): Response[EmailExtraCollections] = {
     def findCollectionIds(metadata: Metadata): List[String] = {
