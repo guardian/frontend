@@ -15,6 +15,8 @@ import {
 import {
     canShow as canShowSupportTheGuardianBanner
 } from 'common/modules/commercial/membership-engagement-banner';
+import marque36icon from 'svgs/icon/marque-36.svg';
+
 
 type Template = {
     heading: string,
@@ -96,22 +98,42 @@ const bannerTemplateParams: EngagementBannerTemplateParams = {
 };
 
 const bannerHtml = `
-    ${acquisitionsBannerControlTemplate(bannerTemplateParams)}
-    ${firstPvConsentHtml(template, bindableClassNames)}
+    <div class="site-message js-site-message site-message--banner" tabindex="-1" role="dialog" aria-label="welcome" aria-describedby="site-message__message" data-component="AcquisitionsEngagementBannerStylingTweaks_control">
+        <div class="site-message--support-the-guardian-banner">
+            <div class="gs-container">
+                <div class="site-message__inner js-site-message-inner">
+                    <div class="site-message__roundel">
+                        ${marque36icon.markup}
+                    </div>
+                    <div class="site-message__copy js-site-message-copy u-cf">
+                        ${acquisitionsBannerControlTemplate(bannerTemplateParams)}
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="site-message--first-pv-consent" tabindex="-1" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
+            <div class="gs-container">
+                <div class="site-message__inner js-site-message-inner">
+                    <div class="site-message__roundel">
+                        ${marque36icon.markup}
+                    </div>
+                    <div class="site-message__copy js-site-message-copy u-cf">
+                        ${firstPvConsentHtml(template, bindableClassNames)}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 `;
-
 
 const show = (): void => {
     trackFirstPvConsent();
-
-    const msg = new Message(messageCode, {
-        important: true,
-        permanent: true,
-        customJs: () => {
-            bindFirstPvConsentClickHandlers(msg);
-        },
-    });
-    msg.show(bannerHtml);
+    if (document.body) {
+        document.body.insertAdjacentHTML('beforeend', bannerHtml);
+    }
+    bindFirstPvConsentClickHandlers(new Message('blah'));
 };
 
 const firstPvConsentPlusSupportTheGuardianBanner: Banner = {
