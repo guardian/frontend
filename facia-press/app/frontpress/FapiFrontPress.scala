@@ -116,10 +116,11 @@ trait EmailFrontPress extends Logging {
       collectionIds = collectionsIdsFromConfigForPath(emailFrontPath.path, config)
       pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
       extraEmailCollections <- buildExtraEmailCollections(emailFrontPath, config, pressedCollections)
-      allPressedCollections = mergeExtraEmailCollections(pressedCollections, extraEmailCollections)
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(emailFrontPath.path))
     } yield seoWithProperties match {
-      case (seoData, frontProperties) => generatePressedVersions(emailFrontPath.path, allPressedCollections, seoData, frontProperties)
+      case (seoData, frontProperties) =>
+        val allPressedCollections = mergeExtraEmailCollections(pressedCollections, extraEmailCollections).map(_.withoutTrailTextOnTail)
+        generatePressedVersions(emailFrontPath.path, allPressedCollections, seoData, frontProperties)
     }
   }
 
