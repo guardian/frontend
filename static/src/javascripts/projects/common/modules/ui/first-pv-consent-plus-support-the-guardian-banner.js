@@ -1,18 +1,20 @@
 // @flow
 import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
 import { Message } from 'common/modules/ui/message';
 import checkIcon from 'svgs/icon/tick.svg';
-import {
-    getAdConsentState,
-    setAdConsentState,
-    allAdConsents,
-} from 'common/modules/commercial/ad-prefs.lib';
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
-import ophan from 'ophan/ng';
-import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
-import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
+import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
+import {addTrackingCodesToUrl} from "common/modules/commercial/acquisitions-ophan";
+import {
+    track as trackFirstPvConsent,
+    bindClickHandlers as bindFirstPvConsentClickHandlers,
+    canShow as canShowFirstPvConsent
+} from 'common/modules/ui/first-pv-consent-banner';
+import {
+    canShow as canShowSupportTheGuardianBanner
+} from 'common/modules/commercial/membership-engagement-banner';
 
 type Template = {
     heading: string,
@@ -31,7 +33,6 @@ type Links = {
     cookies: string,
 };
 
-const displayEventKey: string = 'first-pv-consent : display';
 const messageCode: string = 'first-pv-consent';
 
 const links: Links = {
@@ -45,9 +46,9 @@ const template: Template = {
         `We use cookies to improve your experience on our site and to show you relevant&nbsp;advertising.`,
         `To find out more, read our updated <a class="u-underline" data-link-name="first-pv-consent : to-privacy" href="${
             links.privacy
-            }">privacy policy</a> and <a class="u-underline" data-link-name="first-pv-consent : to-cookies" href="${
+        }">privacy policy</a> and <a class="u-underline" data-link-name="first-pv-consent : to-cookies" href="${
             links.cookies
-            }">cookie policy</a>.`,
+        }">cookie policy</a>.`,
     ],
     agreeButton: 'OK',
     choicesButton: 'More information',
@@ -58,19 +59,19 @@ const bindableClassNames: BindableClassNames = {
     agree: 'js-first-pv-consent-agree',
 };
 
-const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
+const firstPvConsentHtml = (tpl: Template, classes: BindableClassNames): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head">${
-    tpl.heading
+        tpl.heading
     }</div>
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${tpl.consentText
-    .map(_ => `<p>${_}</p>`)
-    .join('')}
+        .map(_ => `<p>${_}</p>`)
+        .join('')}
         <div class="site-message--first-pv-consent__actions">
             <button 
                 data-link-name="first-pv-consent : agree" 
                 class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
-    classes.agree
-    }"
+                    classes.agree
+                }"
             >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
             <a 
                 href="${tpl.linkToPreferences}" 
@@ -81,66 +82,47 @@ const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     </div>
 `;
 
-const isInEU = (): boolean =>
-    (getCookie('GU_geo_continent') || 'OTHER').toUpperCase() === 'EU';
+const bannerParams: EngagementBannerParams = engagementBannerParams(geolocationGetSync());
 
-const hasUnsetAdChoices = (): boolean =>
-    allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
-
-const onAgree = (msg: Message): void => {
-    allAdConsents.forEach(_ => {
-        setAdConsentState(_, true);
-    });
-    msg.hide();
+const bannerTemplateParams: EngagementBannerTemplateParams = {
+    messageText: bannerParams.messageText,
+    ctaText: bannerParams.ctaText,
+    buttonCaption: bannerParams.buttonCaption,
+    linkUrl: addTrackingCodesToUrl({
+        base: bannerParams.linkUrl,
+        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        componentId: 'first_pv_consent_plus_support_the_guardian_banner',
+    })
 };
 
-const trackInteraction = (interaction: string): void => {
-    ophan.record({
-        component: 'first-pv-consent',
-        action: interaction,
-        value: interaction,
-    });
-    trackNonClickInteraction(interaction);
-};
+const bannerHtml = `
+    ${acquisitionsBannerControlTemplate(bannerTemplateParams)}
+    ${firstPvConsentHtml(template, bindableClassNames)}
+`;
 
-const canShow = (): Promise<boolean> =>
-    Promise.resolve([hasUnsetAdChoices(), isInEU()].every(_ => _ === true));
-
-const track = (): void => {
-    upAlertViewCount();
-    trackInteraction(displayEventKey);
-};
-
-const bindClickHandlers = (msg: Message): void => {
-    [
-        ...document.querySelectorAll(`.${bindableClassNames.agree}`),
-    ].forEach(agreeButtonEl => {
-        agreeButtonEl.addEventListener('click', () => onAgree(msg));
-    });
-};
 
 const show = (): void => {
-    track();
+    trackFirstPvConsent();
 
     const msg = new Message(messageCode, {
         important: true,
         permanent: true,
         customJs: () => {
-            bindClickHandlers(msg);
+            bindFirstPvConsentClickHandlers(msg);
         },
     });
-    msg.show(makeHtml(template, bindableClassNames));
+    msg.show(bannerHtml);
 };
 
-const firstPvConsentBanner: Banner = {
+const firstPvConsentPlusSupportTheGuardianBanner: Banner = {
     id: messageCode,
-    canShow,
+    canShow: () => canShowFirstPvConsent() && canShowSupportTheGuardianBanner(),
     show,
 };
 
-export const _ = {
-    onAgree,
-    bindableClassNames,
-};
+// export const _ = {
+//     onAgree,
+//     bindableClassNames,
+// };
 
-export { firstPvConsentBanner, canShow, track, bindClickHandlers };
+export { firstPvConsentPlusSupportTheGuardianBanner };

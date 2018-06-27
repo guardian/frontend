@@ -201,4 +201,4 @@ const membershipEngagementBanner: Banner = {
     canShow,
 };
 
-export { membershipEngagementBanner };
+export { membershipEngagementBanner, canShow };
