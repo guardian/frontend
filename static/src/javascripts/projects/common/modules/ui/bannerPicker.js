@@ -8,13 +8,12 @@ export type Banner = {
     show: () => void,
 };
 
-const init = (banners: Array<Banner>): Promise<void> => {
-    const results: Array<'pending' | boolean> = new Array(banners.length).fill(
-        'pending',
-        0
-    );
+const init = (bannerSets: Array<Array<Banner>>): Promise<void> => {
+    const results: Array<'pending' | boolean> = new Array(
+        bannerSets.length
+    ).fill('pending', 0);
 
-    const getSuccessfulBannerIndex = (): number => {
+    const getSuccessfulBannerSetIndex = (): number => {
         const firstCheckPassedIndex = results.findIndex(item => item === true);
 
         // if no check has passed firstCheckPassedIndex equals -1
@@ -39,23 +38,26 @@ const init = (banners: Array<Banner>): Promise<void> => {
     return new Promise(resolve => {
         const TIME_LIMIT = 2000;
         const messageStates = userPrefs.get('messages');
-        let bannerPicked = false;
+        let bannerSetPicked = false;
 
-        banners.forEach((banner, index) => {
+        bannerSets.forEach((bannerSet, index) => {
             const pushToResults = (result: boolean): void => {
                 results[index] = result;
 
-                const successfulBannerIndex = getSuccessfulBannerIndex();
+                const successfulBannerSetIndex = getSuccessfulBannerSetIndex();
 
-                if (!bannerPicked && successfulBannerIndex !== -1) {
-                    const successfulBanner = banners[successfulBannerIndex];
-                    successfulBanner.show();
+                if (!bannerSetPicked && successfulBannerSetIndex !== -1) {
+                    const successfulBannerSet =
+                        bannerSets[successfulBannerSetIndex];
+                    successfulBannerSet.forEach(banner => banner.show());
 
-                    bannerPicked = true;
+                    bannerSetPicked = true;
 
                     const trackingObj = {
                         component: 'banner-picker',
-                        value: successfulBanner.id,
+                        value: successfulBannerSet
+                            .map(banner => banner.id)
+                            .join('|'),
                     };
 
                     ophan.record(trackingObj);
@@ -66,15 +68,16 @@ const init = (banners: Array<Banner>): Promise<void> => {
                 }
             };
 
-            const hasUserAcknowledgedBanner = (): boolean =>
-                messageStates && messageStates.includes(banner.id);
+            const hasUserAcknowledgedAnyBannerInSet = (): boolean =>
+                messageStates &&
+                bannerSet.some(banner => messageStates.includes(banner.id));
 
             /**
              * if the banner has been seen and dismissed
              * we don't want to show it. Previously this rule was
              * enforced in the show() of Message.js
              * */
-            if (hasUserAcknowledgedBanner()) {
+            if (hasUserAcknowledgedAnyBannerInSet()) {
                 pushToResults(false);
             } else {
                 let hasTimedOut = false;
@@ -87,18 +90,22 @@ const init = (banners: Array<Banner>): Promise<void> => {
 
                     const trackingObj = {
                         component: 'banner-picker-timeout',
-                        value: banner.id,
+                        value: bannerSet.map(banner => banner.id).join('|'),
                     };
 
                     ophan.record(trackingObj);
                 }, TIME_LIMIT);
 
-                banner.canShow().then(result => {
-                    if (!hasTimedOut) {
-                        clearTimeout(timeout);
-                        pushToResults(result);
+                Promise.all(bannerSet.map(banner => banner.canShow())).then(
+                    canShowArray => {
+                        if (!hasTimedOut) {
+                            clearTimeout(timeout);
+                            pushToResults(
+                                canShowArray.every(canShow => canShow)
+                            );
+                        }
                     }
-                });
+                );
             }
         });
     });

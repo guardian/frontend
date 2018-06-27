@@ -267,11 +267,12 @@ const initialiseEmail = (): void => {
 const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
-        firstPvConsentBanner,
-        breakingNews,
-        membershipBanner,
-        membershipEngagementBanner,
-        smartAppBanner,
+        [firstPvConsentBanner, membershipEngagementBanner],
+        [firstPvConsentBanner],
+        [breakingNews],
+        [membershipBanner],
+        [membershipEngagementBanner],
+        [smartAppBanner],
     ];
     initBannerPicker(bannerList);
 };
