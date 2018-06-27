@@ -30,17 +30,25 @@ object RenderingTierPicker {
   }
 
   private def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
-    ! page.article.blocks.get.body.exists((block: BodyBlock) => {
 
-      val hasUnsupportedElements: Boolean = block.elements.flatMap {
-        case b: TextBlockElement => None
-        case b: ImageBlockElement => None
-        case b => Some(b)
-      }.nonEmpty
+    page.article.blocks match {
 
-      hasUnsupportedElements
+      case Some(b) => ! page.article.blocks.get.body.exists((block: BodyBlock) => {
 
-    })
+        val hasUnsupportedElements: Boolean = block.elements.flatMap {
+          case b: TextBlockElement => None
+          case b: ImageBlockElement => None
+          case b => Some(b)
+        }.nonEmpty
+
+        hasUnsupportedElements
+
+      })
+
+      case None => true
+
+    }
+
   }
 
   private def isAdFree(page: PageWithStoryPackage): Boolean = {
