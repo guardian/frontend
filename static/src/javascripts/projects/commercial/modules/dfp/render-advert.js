@@ -5,7 +5,10 @@ import raven from 'lib/raven';
 import fastdom from 'lib/fastdom-promise';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { adSizes } from 'commercial/modules/ad-sizes';
-import { stickyMpu } from 'commercial/modules/sticky-mpu';
+import { stickyMpu, stickyCommentsAd } from 'commercial/modules/sticky-mpu';
+import { stickyMpu, stickyCommentsAd } from 'commercial/modules/sticky-mpu';
+=======
+>>>>>>> Stashed changes
 import { applyCreativeTemplate } from 'commercial/modules/dfp/apply-creative-template';
 import { renderAdvertLabel } from 'commercial/modules/dfp/render-advert-label';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
@@ -70,7 +73,14 @@ sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
  */
 sizeCallbacks[adSizes.mpu] = (_, advert) => {
     if (advert.node.classList.contains('js-sticky-mpu')) {
-        stickyMpu(advert.node);
+        if (advert.node.classList.contains('ad-slot--right')) {
+            stickyMpu(advert.node);
+        }
+        if (advert.node.classList.contains('ad-slot--comments')) {
+            stickyCommentsAd(advert.node);
+        }
+=======
+>>>>>>> Stashed changes
     }
 };
 
@@ -80,6 +90,9 @@ sizeCallbacks[adSizes.mpu] = (_, advert) => {
 sizeCallbacks[adSizes.halfPage] = (_, advert) => {
     if (advert.node.classList.contains('js-sticky-mpu')) {
         stickyMpu(advert.node);
+    }
+    if (advert.node.classList.contains('ad-slot--comments')) {
+        stickyCommentsAd(advert.node);
     }
 };
 

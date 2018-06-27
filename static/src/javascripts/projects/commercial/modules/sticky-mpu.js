@@ -19,8 +19,40 @@ const onResize = (specs, _, iframe: ?HTMLElement) => {
     }
 };
 
+const stickyCommentsAd = (adSlot: HTMLElement) => {
+    const dataName = adSlot.dataset.name;
+    if (dataName !== 'comments') {
+        return;
+    }
+
+    stickySlot = adSlot;
+
+    const referenceElement: any = document.querySelector('.js-comments');
+
+    if (!referenceElement || !adSlot) {
+        return;
+    }
+
+    fastdom
+        .read(() => referenceElement.offsetHeight - 600)
+        .then(newHeight =>
+            fastdom.write(() => {
+                (adSlot.parentNode: any).style.height = `${newHeight}px`;
+            })
+        )
+        .then(() => {
+            if (noSticky) {
+                stickyElement = new Sticky(adSlot);
+                stickyElement.init();
+                register('resize', onResize);
+            }
+            mediator.emit('page:commercial:sticky-mpu');
+        });
+};
+
 const stickyMpu = (adSlot: HTMLElement) => {
-    if (adSlot.getAttribute('data-name') !== 'right') {
+    const dataName = adSlot.dataset.name;
+    if (dataName !== 'right') {
         return;
     }
 
@@ -67,4 +99,4 @@ stickyMpu.whenRendered = new Promise(resolve => {
     mediator.on('page:commercial:sticky-mpu', resolve);
 });
 
-export { stickyMpu };
+export { stickyMpu, stickyCommentsAd };
