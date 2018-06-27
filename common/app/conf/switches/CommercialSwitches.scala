@@ -57,6 +57,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val NoAdsAdFreeCompatibilityModeSwitch = Switch(
+    Commercial,
+    "no-ads-ad-free-compatibility",
+    "When on, #noads works in ad-free mode. Off, #noads reverts to old behaviour",
+    owners = Seq(Owner.withGithub("JustinPinner")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdFreeTrialSwitch = Switch(
     Commercial,
     "ad-free-subscription-trial",

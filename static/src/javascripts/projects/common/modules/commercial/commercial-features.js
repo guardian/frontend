@@ -25,8 +25,12 @@ class CommercialFeatures {
 
     constructor(config: any = defaultConfig) {
         // this is used for SpeedCurve tests
-        const noadsUrl = window.location.hash.match(/[#&]noads(&.*)?$/);
-        const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
+        const switches = config.switches;
+        const testNoAdsUrl = window.location.hash.match(/[#&]noads(&.*)?$/);
+        const isNoAdsUrl = testNoAdsUrl ? true : false;
+        const externalAdvertising = (switches.noAdsAdFreeCompatibility
+            ? !userPrefs.isOff('adverts')
+            : !isNoAdsUrl && !userPrefs.isOff('adverts'));
         const sensitiveContent =
             config.page.shouldHideAdverts ||
             config.page.section === 'childrens-books-site';
@@ -38,7 +42,6 @@ class CommercialFeatures {
         const isIdentityPage =
             config.page.contentType === 'Identity' ||
             config.page.section === 'identity'; // needed for pages under profile.* subdomain
-        const switches = config.switches;
         const isWidePage = getBreakpoint() === 'wide';
         const supportsSticky =
             document.documentElement &&
@@ -55,7 +58,9 @@ class CommercialFeatures {
         this.adFree =
             switches.commercial &&
             switches.adFreeSubscriptionTrial &&
-            isAdFreeUser();
+            (switches.noAdsAdFreeCompatibility
+                ? (isNoAdsUrl || isAdFreeUser())
+                : isAdFreeUser());
 
         this.dfpAdvertising =
             switches.commercial && externalAdvertising && !sensitiveContent;
@@ -98,7 +103,6 @@ class CommercialFeatures {
             this.dfpAdvertising &&
             !this.adFree &&
             switches.outbrain &&
-            !noadsUrl &&
             !sensitiveContent &&
             isArticle &&
             !config.page.isPreview &&

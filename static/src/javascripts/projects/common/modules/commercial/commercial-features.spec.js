@@ -63,6 +63,7 @@ describe('Commercial features', () => {
             commercial: true,
             enableDiscussionSwitch: true,
             adFreeSubscriptionTrial: false,
+            noAdsAdFreeCompatibility: false,
         };
 
         config.get.mockReturnValue('');
@@ -102,12 +103,24 @@ describe('Commercial features', () => {
             expect(features.dfpAdvertising).toBe(false);
         });
 
-        it('Is skipped for speedcurve tests', () => {
+        it('Is skipped for speedcurve tests in default mode', () => {
             // We don't want external dependencies getting in the way of perf tests
             window.location.hash = '#noads';
             const features = new CommercialFeatures();
             expect(features.dfpAdvertising).toBe(false);
+            expect(features.adFree).toBe(false);
         });
+
+        it('Is loaded for speedcurve tests in ad-free compatibility mode', () => {
+            // We want controlled external dependencies operational for perf tests
+            config.switches.adFreeSubscriptionTrial = true;
+            config.switches.noAdsAdFreeCompatibility = true;
+            window.location.hash = '#noads';
+            const features = new CommercialFeatures();
+            expect(features.dfpAdvertising).toBe(true);
+            expect(features.adFree).toBe(true);
+        });
+
     });
 
     describe('Article body adverts', () => {
@@ -272,9 +285,18 @@ describe('Commercial features', () => {
             expect(features.outbrain).toBe(true);
         });
 
-        it('Is disabled under perf tests', () => {
+        it('Is disabled under perf tests in default mode', () => {
             window.location.hash = '#noads';
             const features = new CommercialFeatures();
+            expect(features.outbrain).toBe(false);
+        });
+
+        it('Is disabled under perf tests in ad-free compatibility mode', () => {
+            config.switches.adFreeSubscriptionTrial = true;
+            config.switches.noAdsAdFreeCompatibility = true;
+            window.location.hash = '#noads';
+            const features = new CommercialFeatures();
+            expect(features.adFree).toBe(true);
             expect(features.outbrain).toBe(false);
         });
 
@@ -310,9 +332,19 @@ describe('Commercial features', () => {
             expect(features.outbrain).toBe(false);
         });
 
-        it('Is disabled under perf tests', () => {
+        it('Is disabled under perf tests in default mode', () => {
+            config.switches.noAdsAdFreeCompatibility = false;
             window.location.hash = '#noads';
             const features = new CommercialFeatures();
+            expect(features.adFree).toBe(true);
+            expect(features.outbrain).toBe(false);
+        });
+
+        it('Is disabled under perf tests in ad-free compatibility mode', () => {
+            config.switches.noAdsAdFreeCompatibility = true;
+            window.location.hash = '#noads';
+            const features = new CommercialFeatures();
+            expect(features.adFree).toBe(true);
             expect(features.outbrain).toBe(false);
         });
 
