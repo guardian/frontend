@@ -15,7 +15,8 @@
                             <tr>
                                 <td class="ft__links">
                                     <a href="https://profile.theguardian.com/email-prefs">Manage your emails</a> |
-                                    <a href="%%unsub_center_url%%">Unsubscribe</a>
+                                    <a href="%%unsub_center_url%%">Unsubscribe</a> |
+                                    <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">Trouble viewing?</a>
                                 </td>
                             </tr>
                             <tr>
