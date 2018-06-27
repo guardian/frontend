@@ -6,6 +6,7 @@ import {
 } from 'common/modules/commercial/acquisitions-copy';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
+    submitClickEvent,
     submitInsertEvent,
     submitViewEvent,
     addTrackingCodesToUrl,
@@ -22,6 +23,7 @@ import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templ
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
+import { awaitEpicButtonClicked } from 'common/modules/commercial/epic-utils';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -277,6 +279,21 @@ const makeABTestVariant = (
                             const targets = getTargets(
                                 insertAtSelector,
                                 insertMultiple
+                            );
+
+                            awaitEpicButtonClicked().then(() =>
+                                submitClickEvent({
+                                    component: {
+                                        componentType: parentTest.componentType,
+                                        products,
+                                        campaignCode,
+                                        id: campaignCode,
+                                    },
+                                    abTest: {
+                                        name: parentTest.id,
+                                        variant: id,
+                                    },
+                                })
                             );
 
                             if (targets.length > 0) {
