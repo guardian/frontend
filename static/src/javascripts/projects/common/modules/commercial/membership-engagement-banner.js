@@ -113,8 +113,6 @@ const selectSequentiallyFrom = (array: Array<string>): string =>
 const showBanner = (params: EngagementBannerParams): void => {
     const test = getUserTest();
     const variant = getUserVariant(test);
-    const paypalAndCreditCardImage =
-        config.get('images.acquisitions.paypal-and-credit-card') || '';
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -131,14 +129,11 @@ const showBanner = (params: EngagementBannerParams): void => {
                 : undefined,
     });
     const buttonCaption = params.buttonCaption;
-    const buttonSvg = inlineSvg('arrowWhiteRight');
     const templateParams = {
         messageText,
         ctaText,
-        paypalAndCreditCardImage,
         linkUrl,
         buttonCaption,
-        buttonSvg,
     };
 
     const renderedBanner: string = params.template

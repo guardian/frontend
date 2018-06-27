@@ -1,6 +1,8 @@
 // @flow
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
+import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
+import config from 'lib/config';
 
 export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
@@ -23,11 +25,11 @@ export const acquisitionsBannerControlTemplate = (
             <button class="button support-the-guardian-banner__button" href="${
                 params.linkUrl
             }">
-                ${params.buttonCaption}${params.buttonSvg}
+                ${params.buttonCaption}${arrowWhiteRight.markup}
             </button>
             <img
                 class="support-the-guardian-banner__payment-logos"
-                src="${params.paypalAndCreditCardImage}"
+                src="${config.get('images.acquisitions.paypal-and-credit-card')}"
                 alt="PayPal and credit card"
             >
         </div>
