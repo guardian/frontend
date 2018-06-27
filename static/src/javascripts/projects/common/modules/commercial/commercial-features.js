@@ -27,10 +27,10 @@ class CommercialFeatures {
         // this is used for SpeedCurve tests
         const switches = config.switches;
         const testNoAdsUrl = window.location.hash.match(/[#&]noads(&.*)?$/);
-        const isNoAdsUrl = testNoAdsUrl ? true : false;
-        const externalAdvertising = (switches.noAdsAdFreeCompatibility
+        const isNoAdsUrl = !!testNoAdsUrl;
+        const externalAdvertising = switches.noAdsAdFreeCompatibility
             ? !userPrefs.isOff('adverts')
-            : !isNoAdsUrl && !userPrefs.isOff('adverts'));
+            : !isNoAdsUrl && !userPrefs.isOff('adverts');
         const sensitiveContent =
             config.page.shouldHideAdverts ||
             config.page.section === 'childrens-books-site';
@@ -59,7 +59,7 @@ class CommercialFeatures {
             switches.commercial &&
             switches.adFreeSubscriptionTrial &&
             (switches.noAdsAdFreeCompatibility
-                ? (isNoAdsUrl || isAdFreeUser())
+                ? isNoAdsUrl || isAdFreeUser()
                 : isAdFreeUser());
 
         this.dfpAdvertising =

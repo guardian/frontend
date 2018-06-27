@@ -120,7 +120,6 @@ describe('Commercial features', () => {
             expect(features.dfpAdvertising).toBe(true);
             expect(features.adFree).toBe(true);
         });
-
     });
 
     describe('Article body adverts', () => {
