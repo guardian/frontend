@@ -757,6 +757,7 @@ case class GalleryLightbox(
   val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   val isInPicturesSeries = tags.tags.exists(_.id == "lifeandstyle/series/in-pictures")
+  lazy val containsAffiliateableLinks: Boolean = largestCrops.flatMap(_.caption.map(AffiliateLinksCleaner.stringContainsAffiliateableLinks)).contains(true)
 
   val javascriptConfig: JsObject = {
     val imageJson = for {
