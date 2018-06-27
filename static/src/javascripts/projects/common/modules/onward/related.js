@@ -6,6 +6,7 @@ import fetchJSON from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 import { begin, error, end } from 'common/modules/analytics/register';
 import { Expandable } from 'common/modules/ui/expandable';
+import { isAdFreeUser } from 'common/modules/commercial/user-features';
 
 const buildExpandable = (el: HTMLElement): void => {
     new Expandable({
@@ -81,7 +82,8 @@ const related = (opts: Object): void => {
         }
     } else if (
         config.get('switches.relatedContent') &&
-        config.get('page.showRelatedContent')
+        config.get('page.showRelatedContent') &&
+        !isAdFreeUser()
     ) {
         const container =
             document.body && document.body.querySelector('.js-related');
