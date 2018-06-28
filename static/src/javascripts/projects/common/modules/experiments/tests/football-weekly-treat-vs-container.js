@@ -6,12 +6,16 @@ import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 import { addClassesAndTitle } from 'common/views/svg';
 
-import logo from 'svgs/journalism/football-weekly-treat/UK-Politics-420.svg';
+import logo from 'svgs/journalism/football-weekly-treat/football-daily-circle480.svg';
 import button from 'svgs/journalism/football-weekly-treat/a-play-btn-black.svg';
-import wave from 'svgs/journalism/football-weekly-treat/wave.svg';
 import waveSmall from 'svgs/journalism/football-weekly-treat/wave-small.svg';
+import waveLarge from 'svgs/journalism/football-weekly-treat/wave-large.svg';
+import waveMedium from 'svgs/journalism/football-weekly-treat/wave-medium.svg';
 
-import containerWave from 'svgs/journalism/football-weekly-container/waveform.svg';
+import containerWaveLarge from 'svgs/journalism/football-weekly-container/waveform.svg';
+import containerWaveTablet from 'svgs/journalism/football-weekly-container/waveform-tablet.svg';
+import containerWaveMobile from 'svgs/journalism/football-weekly-container/waveform-mobile.svg';
+import containerWaveTiny from 'svgs/journalism/football-weekly-container/waveform-tiny.svg';
 import containerButton from 'svgs/journalism/football-weekly-container/play-btnbig.svg';
 
 const getHeadlineText = (el): string => {
@@ -35,13 +39,17 @@ const runTreatTest = (): void => {
             button: addClassesAndTitle(button.markup, [
                 'football-weekly-treat__player-button',
             ]),
-            wave: addClassesAndTitle(wave.markup, [
-                'football-weekly-treat__player-wave',
-                'football-weekly-treat__player-wave-large',
-            ]),
             waveSmall: addClassesAndTitle(waveSmall.markup, [
                 'football-weekly-treat__player-wave',
                 'football-weekly-treat__player-wave-small',
+            ]),
+            waveLarge: addClassesAndTitle(waveLarge.markup, [
+                'football-weekly-treat__player-wave',
+                'football-weekly-treat__player-wave-large',
+            ]),
+            waveMedium: addClassesAndTitle(waveMedium.markup, [
+                'football-weekly-treat__player-wave',
+                'football-weekly-treat__player-wave-medium',
             ]),
         });
 
@@ -58,7 +66,7 @@ const runTreatTest = (): void => {
             }
         } else {
             // As a new section under headlines
-            const html = `<section class='fc-container'><div class='fc-container__inner football-weekly-treat__container'>${newTreat}</div></section>`;
+            const html = `<section class='fc-container football-weekly-treat__container'><div class='fc-container__inner'>${newTreat}</div></section>`;
             headlinesContainer.insertAdjacentHTML('afterend', html);
         }
     }
@@ -81,8 +89,17 @@ const runContainerTest = (): void => {
             button: addClassesAndTitle(containerButton.markup, [
                 'football-weekly-container__button',
             ]),
-            wave: addClassesAndTitle(containerWave.markup, [
-                'football-weekly-container__wave',
+            waveLarge: addClassesAndTitle(containerWaveLarge.markup, [
+                'football-weekly-container__wave-large',
+            ]),
+            waveTablet: addClassesAndTitle(containerWaveTablet.markup, [
+                'football-weekly-container__wave-tablet',
+            ]),
+            waveMobile: addClassesAndTitle(containerWaveMobile.markup, [
+                'football-weekly-container__wave-mobile',
+            ]),
+            waveTiny: addClassesAndTitle(containerWaveTiny.markup, [
+                'football-weekly-container__wave-tiny',
             ]),
         });
         oldBody.innerHTML = newContainer;

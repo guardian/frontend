@@ -3,15 +3,19 @@
 
     @include mq(leftCol) {
         float: left;
-        width: $left-column;
-    }
-
-    @include mq(wide) {
-        width: $left-column-wide;
+        width: 140px;
     }
 
     svg {
         overflow: visible;
+    }
+
+    a {
+        display: flex;
+
+        @include mq(leftCol) {
+            display: block;
+        }
     }
 }
 
@@ -27,10 +31,22 @@
 
 .football-weekly-treat__container {
     background-color: $garnett-neutral-3;
+    border-top: 0.0625rem solid #dfdfdf;
+    border-bottom: 0.0625rem solid #dfdfdf;
+    margin-bottom: 30px;
+
+    .fc-container__inner {
+        border-top: none;
+        padding-top: 10px;
+    }
 }
 
 .football-weekly-treat__logo {
-    padding-right: 30px;
+    padding-right: 10px;
+
+    @include mq(phablet) {
+        padding-right: 30px;
+    }
 
     @include mq(leftCol) {
         padding-right: 0;
@@ -38,15 +54,19 @@
 }
 
 .football-weekly-treat__logo, .football-weekly-treat__overlay {
-    display: inline-block;
     @include mq(leftCol) {
         display: block;
     }
 }
 
 .football-weekly-treat__logo svg {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
+
+    @include mq(mobileMedium) {
+        width: 100px;
+        height: 100px;
+    }
 
     @include mq(leftCol) {
         width: 120px;
@@ -60,7 +80,11 @@
 }
 
 .football-weekly-treat__overlay {
-    margin-top: -35px;
+    flex: 1;
+
+    @include mq(leftCol) {
+        margin-top: -35px;
+    }
 
     @include mq(wide) {
         margin-top: -40px;
@@ -88,11 +112,15 @@
 
 .football-weekly-treat__podcast-title {
     color: $garnett-neutral-5;
-    font-size: 18px;
     font-family: $f-serif-headline;
 
     line-height: 1.3;
     padding-bottom: 5px;
+
+    font-size: 16px;
+    @include mq(mobileMedium) {
+        font-size: 18px;
+    }
 
     @include mq(wide) {
         line-height: 1.5;
@@ -103,11 +131,6 @@
     background: $garnett-neutral-1;
 
     padding: 2px 3px 5px;
-
-    @include mq(wide) {
-        display: inline-block;
-        padding: 1px 3px 4px;
-    }
 
     box-decoration-break: clone;
 }
@@ -120,11 +143,11 @@
     padding: 3px 1px 0 2px;
 
     @include mq(leftCol) {
-        padding: 1px 4px 0 1px;
+        padding: 1px 5px 0 1px;
     }
 
     @include mq(wide) {
-        padding: 3px 1px 0 2px;
+        padding: 3px 5px 0 2px;
     }
 
     display: inline-flex;
@@ -134,7 +157,7 @@
         padding-right: 2px;
     }
     >:last-child {
-        padding: 0 2px 3px 6px;
+        padding: 0 2px 3px 2px;
 
         @include mq(leftCol) {
             padding-left: 2px;
@@ -169,23 +192,23 @@
     text-decoration: underline;
 }
 
-.football-weekly-treat__timestamp {
-    font-family: $f-sans-serif-text
-}
-.football-weekly-treat__timestamp span {
-    /* Disable link decoration on hover */
-    display: inline-block;
+.football-weekly-treat__player-wave-medium {
+    display: inline;
+
+    @include mq(mobileMedium) {
+        display: none;
+    }
 }
 
 .football-weekly-treat__player-wave-large {
-    display: inline;
+    display: none;
+
+    @include mq(mobileMedium) {
+        display: inline;
+    }
 
     @include mq(leftCol) {
         display: none;
-    }
-
-    @include mq(wide) {
-        display: inline;
     }
 }
 .football-weekly-treat__player-wave-small {
@@ -194,14 +217,14 @@
     @include mq(leftCol) {
         display: inline;
     }
-
-    @include mq(wide) {
-        display: none;
-    }
 }
 
 .football-weekly-treat__player-button svg {
-    width: 24px;
+    width: 22px;
+
+    @include mq(mobileMedium) {
+        width: 24px;
+    }
 
     @include mq(leftCol) {
         width: 22px;
