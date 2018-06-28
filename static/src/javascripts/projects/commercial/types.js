@@ -2,6 +2,7 @@
 
 /* eslint no-use-before-define: "off" */
 
+/* bla bla */
 export type AdSizes = { [k: string]: Array<AdSize> };
 export type AdSize = SingleSizeArray | NamedSize;
 
