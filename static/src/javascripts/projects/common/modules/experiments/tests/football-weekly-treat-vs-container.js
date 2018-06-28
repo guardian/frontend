@@ -18,19 +18,22 @@ import containerWaveMobile from 'svgs/journalism/football-weekly-container/wavef
 import containerWaveTiny from 'svgs/journalism/football-weekly-container/waveform-tiny.svg';
 import containerButton from 'svgs/journalism/football-weekly-container/play-btnbig.svg';
 
-const getHeadlineText = (el): string => {
-    return el.textContent.split(/[-–]/)[0]
-};
+const getHeadlineText = (el: Element): string =>
+    el.textContent.split(/[-–]/)[0];
 
 const runTreatTest = (): void => {
-    //Get the headline from podcast container and insert the test treat
-    const podcastContainer = document.querySelector('.facia-page #world-cup-daily');
+    // Get the headline from podcast container and insert the test treat
+    const podcastContainer = document.querySelector(
+        '.facia-page #world-cup-daily'
+    );
     const headlinesContainer = document.querySelector('.facia-page #headlines');
 
     if (headlinesContainer && podcastContainer) {
-        const headline = podcastContainer.querySelector('a.js-headline-text');
+        const headline: Element = podcastContainer.querySelector(
+            'a.js-headline-text'
+        );
         const headlineText = getHeadlineText(headline);
-        const url = headline.getAttribute("href");
+        const url = headline.getAttribute('href');
 
         const newTreat = template(treatHtml, {
             headline: headlineText,
@@ -73,14 +76,16 @@ const runTreatTest = (): void => {
 };
 
 const runContainerTest = (): void => {
-    //Find existing container and replace its body with test design
-    const podcastContainer = document.querySelector('.facia-page #world-cup-daily');
+    // Find existing container and replace its body with test design
+    const podcastContainer = document.querySelector(
+        '.facia-page #world-cup-daily'
+    );
     const headlinesContainer = document.querySelector('.facia-page #headlines');
 
     if (headlinesContainer && podcastContainer) {
         const oldBody = podcastContainer.querySelector('.fc-container__body');
         const headline = oldBody.querySelector('a.js-headline-text');
-        const url = headline.getAttribute("href");
+        const url = headline.getAttribute('href');
 
         const newContainer = template(containerHtml, {
             headline: getHeadlineText(headline),

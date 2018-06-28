@@ -202,6 +202,7 @@
 
 .football-weekly-treat__player-wave-large {
     display: none;
+    padding: 0 5px;
 
     @include mq(mobileMedium) {
         display: inline;
