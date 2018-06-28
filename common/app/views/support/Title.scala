@@ -33,10 +33,16 @@ object Title {
     s"${title.trim} | The Guardian"
   }
 
+  private def titleFromSectionId(sectionId: String): String = sectionId.toLowerCase match {
+    case "theobserver" => "The Observer"
+    case _ => sectionId
+  }
+
   private def getSectionConsideringWebtitle(webTitle: String, section: Option[String]): String =
     section.filter(_.nonEmpty)
       .filterNot(_.toLowerCase == webTitle.toLowerCase)
       .filterNot(SectionsToIgnore.contains)
+      .map(titleFromSectionId)
       .fold("") { s => s" | ${s.capitalize}"}
 
   private def pagination(page: Page) = page.metadata.pagination.filterNot(_.isFirstPage).map{ pagination =>
