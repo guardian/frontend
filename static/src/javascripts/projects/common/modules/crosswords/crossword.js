@@ -129,7 +129,7 @@ class Crossword extends Component<*, CrosswordState> {
         }
     }
 
-    onKeyDown(event: Event): void {
+    onKeyDown(event: KeyboardEvent): void {
         const cell = this.state.cellInFocus;
 
         if (event.keyCode === keycodes.tab) {

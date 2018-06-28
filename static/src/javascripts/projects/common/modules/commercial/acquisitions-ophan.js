@@ -50,6 +50,12 @@ export const submitViewEvent = (componentEvent: ComponentEventWithoutAction) =>
         action: 'VIEW',
     });
 
+export const submitClickEvent = (componentEvent: ComponentEventWithoutAction) =>
+    submitComponentEvent({
+        ...componentEvent,
+        action: 'CLICK',
+    });
+
 // Treats url as immutable, i.e. returns a new object
 // rather than modifying the existing one in place.
 // If the url already has an acquisitionData JSON parameter,

@@ -32,7 +32,7 @@
 
                 @if(article.tags.isInterview) {
                     @article.trail.byline.map { text =>
-                        <span class="content__headline--byline-interview">By @ContributorLinks(text, article.tags.contributors)</span>
+                        <span class="content__headline--byline-interview">@ContributorLinks(text, article.tags.contributors)</span>
                     }
                 }
             </div>
@@ -61,7 +61,7 @@
 
                 @if(article.tags.isInterview) {
                     @article.trail.byline.map { text =>
-                        <span class="content__headline--byline-interview">By @ContributorLinks(text, article.tags.contributors)</span>
+                        <span class="content__headline--byline-interview">@ContributorLinks(text, article.tags.contributors)</span>
                     }
                 }
                 @if(article.content.hasTonalHeaderIllustration) {

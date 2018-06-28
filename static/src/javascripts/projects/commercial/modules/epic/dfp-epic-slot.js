@@ -7,7 +7,7 @@ import {
     displayControlEpic,
     trackEpic,
 } from 'common/modules/commercial/epic-utils';
-import { dfpVariant } from 'common/modules/experiments/tests/acquisitions-epic-native-vs-dfp-v2';
+import { dfpVariant } from 'common/modules/experiments/tests/acquisitions-epic-native-vs-dfp-v3';
 
 const shouldDisplayDFPEpic = (): boolean => {
     const tests = getActiveTests();
@@ -23,7 +23,7 @@ const shouldDisplayDFPEpic = (): boolean => {
 
 export const initDFPEpicSlot = (): void => {
     if (shouldDisplayDFPEpic()) {
-        displayDFPEpic(2000)
+        displayDFPEpic(4000)
             .catch(() => displayControlEpic(dfpVariant))
             .then(trackEpic);
     }

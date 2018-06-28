@@ -94,6 +94,9 @@ const getAdvertIframe = (adSlot: Element): Promise<HTMLIFrameElement> =>
         if (!contentFrame) {
             reject();
         } else if (
+            // According to Flow, readyState exists on the Document, not the HTMLIFrameElement
+            // Is this different for old IE?
+            // $FlowFixMe
             contentFrame.readyState &&
             contentFrame.readyState !== 'complete'
         ) {
@@ -101,6 +104,7 @@ const getAdvertIframe = (adSlot: Element): Promise<HTMLIFrameElement> =>
             const getIeIframe = e => {
                 const updatedIFrame = e.srcElement;
 
+                // $FlowFixMe
                 if (updatedIFrame && updatedIFrame.readyState === 'complete') {
                     updatedIFrame.removeEventListener(
                         'readystatechange',

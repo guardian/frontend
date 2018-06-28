@@ -800,7 +800,7 @@ object GarnettQuoteCleaner extends HtmlCleaner {
 }
 
 case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffiliateLinks: Option[Boolean],
-  contentType: String, appendDisclaimer: Boolean = true) extends HtmlCleaner with Logging {
+  contentType: String, appendDisclaimer: Option[Boolean] = None) extends HtmlCleaner with Logging {
 
   override def clean(document: Document): Document = {
     if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinkSections.isSwitchedOn,
@@ -811,13 +811,18 @@ case class AffiliateLinksCleaner(pageUrl: String, sectionId: String, showAffilia
 }
 
 object AffiliateLinksCleaner {
-  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Boolean, contentType: String, skimlinksId: String): Document = {
-    val links = html.getElementsByAttribute("href")
 
-    val supportedLinks: mutable.Seq[Element] = links.asScala.filter(isAffiliatable)
-    supportedLinks.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+  def getAffiliateableLinks(html:Document): mutable.Seq[Element] =
+    html.getElementsByAttribute("href").asScala.filter(isAffiliatable)
 
-    if (supportedLinks.nonEmpty) insertAffiliateDisclaimer(html, contentType)
+  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Option[Boolean], contentType: String, skimlinksId: String): Document = {
+
+    val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
+    linksToReplace.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+
+    // respect appendDisclaimer, or if it's not set then always add the disclaimer if affilate links have been added
+    val shouldAppendDisclaimer = appendDisclaimer.getOrElse(linksToReplace.nonEmpty)
+    if (shouldAppendDisclaimer) insertAffiliateDisclaimer(html, contentType)
     else html
   }
 
@@ -840,5 +845,9 @@ object AffiliateLinksCleaner {
     } else {
       switchedOn && supportedSections.contains(section)
     }
+  }
+
+  def stringContainsAffiliateableLinks(s: String): Boolean = {
+    getAffiliateableLinks(Jsoup.parseBodyFragment(s)).nonEmpty
   }
 }
