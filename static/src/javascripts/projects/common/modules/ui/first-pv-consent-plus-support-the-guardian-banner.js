@@ -21,7 +21,6 @@ import {
 } from 'common/modules/commercial/membership-engagement-banner';
 import marque36icon from 'svgs/icon/marque-36.svg';
 import userPrefs from "common/modules/user-prefs";
-import uniq from 'lodash/arrays/uniq';
 
 
 type Template = {
@@ -41,7 +40,7 @@ type Links = {
     cookies: string,
 };
 
-const messageCode: string = 'first-pv-consent';
+const messageCode: string = 'first-pv-consent-plus-support-the-guardian';
 
 const links: Links = {
     privacy: 'https://www.theguardian.com/help/privacy-policy',
@@ -133,54 +132,68 @@ const bannerHtml = `
     </div>
 `;
 
-class SpecialMessage extends Message {
+class SubMessage extends Message {
+    elementSelector: string;
+
+    constructor(id: string, elementSelector: string, options?: Object) {
+        super(id, options);
+        this.elementSelector = elementSelector;
+    }
+
     hide() {
-        const consentBanner = document.querySelector('.js-first-pv-consent-site-message');
-        if (consentBanner) {
-            consentBanner.remove();
+        const element = document.querySelector(this.elementSelector);
+        if (element) {
+            const parent = element.parentElement;
+            element.remove();
+            if (parent && parent.childElementCount === 0) {
+                parent.remove();
+            }
+        }
+
+        // Don't display the double banner again
+        // if either of the sub-banners has been hidden
+        firstPvConsentPlusSupportTheGuardianMessage.remember();
+    }
+
+    bindCloseHandler() {
+        const element = document.querySelector(this.elementSelector);
+        if (element) {
+            const closeButton = element.querySelector('.js-site-message-close');
+            if (closeButton) {
+                closeButton.addEventListener('click', (ev: Event) => {
+                    this.acknowledge();
+                })
+            }
         }
     }
+
+    isAcknowledged(): boolean {
+        const messageStates = userPrefs.get(this.prefs) || [];
+        return messageStates.includes(this.id);
+    }
 }
+
+const firstPvConsentMessage = new SubMessage(firstPvConsentMessageCode, '.js-first-pv-consent-site-message');
+const supportTheGuardianMessage = new SubMessage(supportTheGuardianMessageCode, '.js-support-the-guardian-site-message');
+const firstPvConsentPlusSupportTheGuardianMessage = new Message(messageCode);
 
 const show = (): void => {
     trackFirstPvConsent();
     if (document.body) {
         document.body.insertAdjacentHTML('beforeend', bannerHtml);
     }
-    bindFirstPvConsentClickHandlers(new SpecialMessage(firstPvConsentMessageCode));
-
-    const supportTheGuardianBanner = document.querySelector('.js-support-the-guardian-site-message');
-    if (supportTheGuardianBanner) {
-        const closeButton = supportTheGuardianBanner.querySelector('.js-site-message-close');
-        if (closeButton) {
-            closeButton.addEventListener('click', (ev: Event) => {
-                supportTheGuardianBanner.remove();
-
-                // acknowledge banner
-                const messageStates = userPrefs.get('messages') || [];
-                messageStates.push(supportTheGuardianMessageCode);
-                userPrefs.set('messages', uniq(messageStates));
-            })
-        }
-    }
+    bindFirstPvConsentClickHandlers(firstPvConsentMessage);
+    supportTheGuardianMessage.bindCloseHandler();
 };
-
-const messageStates = userPrefs.get('messages');
-
-const userHasAcknowledgedFirstPvConsent: boolean = messageStates.includes(firstPvConsentMessageCode);
-
-const userHasAcknowledgedSupportTheGuardian: boolean = messageStates.includes(supportTheGuardianMessageCode);
 
 const firstPvConsentPlusSupportTheGuardianBanner: Banner = {
     id: messageCode,
+    // TODO: WHY DOES GU_TK NOT GET SET IN DEV MODE?
     canShow: () =>
-        canShowFirstPvConsent() && canShowSupportTheGuardianBanner() && !userHasAcknowledgedFirstPvConsent && !userHasAcknowledgedSupportTheGuardian,
+        canShowFirstPvConsent() &&
+        canShowSupportTheGuardianBanner() &&
+        Promise.resolve(!(firstPvConsentMessage.isAcknowledged() || supportTheGuardianMessage.isAcknowledged())),
     show,
 };
-
-// export const _ = {
-//     onAgree,
-//     bindableClassNames,
-// };
 
 export { firstPvConsentPlusSupportTheGuardianBanner };
