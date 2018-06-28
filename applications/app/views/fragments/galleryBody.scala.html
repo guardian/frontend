@@ -70,7 +70,7 @@
 
             <div class="gallery__figcaption">
                 @image.caption.map { caption =>
-                    <div class="gallery__caption" itemprop="caption">@GalleryCaptionCleaners(page, caption, rowInfo.isLast)</div>
+                    <div class="gallery__caption" itemprop="caption">@GalleryCaptionCleaners(page, caption, rowInfo.rowNum == 1)</div>
                 }
                 @if(image.displayCredit) {
                     @image.credit.map { credit =>
