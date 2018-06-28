@@ -29,9 +29,7 @@ const runTreatTest = (): void => {
     const headlinesContainer = document.querySelector('.facia-page #headlines');
 
     if (headlinesContainer && podcastContainer) {
-        const headline = podcastContainer.querySelector(
-            'a.js-headline-text'
-        );
+        const headline = podcastContainer.querySelector('a.js-headline-text');
         if (headline) {
             const headlineText = getHeadlineText(headline);
             const url = headline.getAttribute('href');
@@ -103,21 +101,25 @@ const runContainerTest = (): void => {
                         button: addClassesAndTitle(containerButton.markup, [
                             'football-weekly-container__button',
                         ]),
-                        waveLarge: addClassesAndTitle(containerWaveLarge.markup, [
-                            'football-weekly-container__wave-large',
-                        ]),
-                        waveTablet: addClassesAndTitle(containerWaveTablet.markup, [
-                            'football-weekly-container__wave-tablet',
-                        ]),
-                        waveMobile: addClassesAndTitle(containerWaveMobile.markup, [
-                            'football-weekly-container__wave-mobile',
-                        ]),
+                        waveLarge: addClassesAndTitle(
+                            containerWaveLarge.markup,
+                            ['football-weekly-container__wave-large']
+                        ),
+                        waveTablet: addClassesAndTitle(
+                            containerWaveTablet.markup,
+                            ['football-weekly-container__wave-tablet']
+                        ),
+                        waveMobile: addClassesAndTitle(
+                            containerWaveMobile.markup,
+                            ['football-weekly-container__wave-mobile']
+                        ),
                         waveTiny: addClassesAndTitle(containerWaveTiny.markup, [
                             'football-weekly-container__wave-tiny',
                         ]),
                     });
                     oldBody.innerHTML = newContainer;
-                    podcastContainer.className += 'football-weekly-container__visible';
+                    podcastContainer.className +=
+                        'football-weekly-container__visible';
                 }
             }
         }
