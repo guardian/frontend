@@ -166,7 +166,7 @@ object NavLinks {
       NavLink("Observer Magazine", "/theobserver/magazine")
     )
   )
-  val digitalNewspaperArchive = NavLink("Digital archive", "https://theguardian.newspapers.com")
+  val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink("Crosswords", "/crosswords",
     children = List(
       NavLink("Blog", "/crosswords/crossword-blog"),
