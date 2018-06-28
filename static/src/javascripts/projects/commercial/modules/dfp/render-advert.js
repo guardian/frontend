@@ -87,7 +87,7 @@ sizeCallbacks[adSizes.halfPage] = (_, advert) => {
         stickyMpu(advert.node);
     }
     if (advert.node.classList.contains('ad-slot--comments')) {
-        stickyCommentsAd(advert.node);
+        stickyCommentsMpu(advert.node);
     }
 };
 
