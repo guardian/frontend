@@ -29,48 +29,52 @@ const runTreatTest = (): void => {
     const headlinesContainer = document.querySelector('.facia-page #headlines');
 
     if (headlinesContainer && podcastContainer) {
-        const headline: Element = podcastContainer.querySelector(
+        const headline = podcastContainer.querySelector(
             'a.js-headline-text'
         );
-        const headlineText = getHeadlineText(headline);
-        const url = headline.getAttribute('href');
+        if (headline) {
+            const headlineText = getHeadlineText(headline);
+            const url = headline.getAttribute('href');
 
-        const newTreat = template(treatHtml, {
-            headline: headlineText,
-            url: `${url}?CMP=football-weekly-treat`,
-            logo: logo.markup,
-            button: addClassesAndTitle(button.markup, [
-                'football-weekly-treat__player-button',
-            ]),
-            waveSmall: addClassesAndTitle(waveSmall.markup, [
-                'football-weekly-treat__player-wave',
-                'football-weekly-treat__player-wave-small',
-            ]),
-            waveLarge: addClassesAndTitle(waveLarge.markup, [
-                'football-weekly-treat__player-wave',
-                'football-weekly-treat__player-wave-large',
-            ]),
-            waveMedium: addClassesAndTitle(waveMedium.markup, [
-                'football-weekly-treat__player-wave',
-                'football-weekly-treat__player-wave-medium',
-            ]),
-        });
+            if (url) {
+                const newTreat = template(treatHtml, {
+                    headline: headlineText,
+                    url: `${url}?CMP=football-weekly-treat`,
+                    logo: logo.markup,
+                    button: addClassesAndTitle(button.markup, [
+                        'football-weekly-treat__player-button',
+                    ]),
+                    waveSmall: addClassesAndTitle(waveSmall.markup, [
+                        'football-weekly-treat__player-wave',
+                        'football-weekly-treat__player-wave-small',
+                    ]),
+                    waveLarge: addClassesAndTitle(waveLarge.markup, [
+                        'football-weekly-treat__player-wave',
+                        'football-weekly-treat__player-wave-large',
+                    ]),
+                    waveMedium: addClassesAndTitle(waveMedium.markup, [
+                        'football-weekly-treat__player-wave',
+                        'football-weekly-treat__player-wave-medium',
+                    ]),
+                });
 
-        const breakpoint = getBreakpoint(true);
-        if (breakpoint === 'leftCol' || breakpoint === 'wide') {
-            // In the headlines container's treat spot
-            const html = `<div>${newTreat}</div>`;
+                const breakpoint = getBreakpoint(true);
+                if (breakpoint === 'leftCol' || breakpoint === 'wide') {
+                    // In the headlines container's treat spot
+                    const html = `<div>${newTreat}</div>`;
 
-            const treats = headlinesContainer.querySelector(
-                '.treats__container'
-            );
-            if (treats) {
-                treats.innerHTML = html;
+                    const treats = headlinesContainer.querySelector(
+                        '.treats__container'
+                    );
+                    if (treats) {
+                        treats.innerHTML = html;
+                    }
+                } else {
+                    // As a new section under headlines
+                    const html = `<section class='fc-container football-weekly-treat__container'><div class='fc-container__inner'>${newTreat}</div></section>`;
+                    headlinesContainer.insertAdjacentHTML('afterend', html);
+                }
             }
-        } else {
-            // As a new section under headlines
-            const html = `<section class='fc-container football-weekly-treat__container'><div class='fc-container__inner'>${newTreat}</div></section>`;
-            headlinesContainer.insertAdjacentHTML('afterend', html);
         }
     }
 };
@@ -84,31 +88,39 @@ const runContainerTest = (): void => {
 
     if (headlinesContainer && podcastContainer) {
         const oldBody = podcastContainer.querySelector('.fc-container__body');
-        const headline = oldBody.querySelector('a.js-headline-text');
-        const url = headline.getAttribute('href');
 
-        const newContainer = template(containerHtml, {
-            headline: getHeadlineText(headline),
-            url: `${url}?CMP=football-weekly-container`,
-            logo: logo.markup,
-            button: addClassesAndTitle(containerButton.markup, [
-                'football-weekly-container__button',
-            ]),
-            waveLarge: addClassesAndTitle(containerWaveLarge.markup, [
-                'football-weekly-container__wave-large',
-            ]),
-            waveTablet: addClassesAndTitle(containerWaveTablet.markup, [
-                'football-weekly-container__wave-tablet',
-            ]),
-            waveMobile: addClassesAndTitle(containerWaveMobile.markup, [
-                'football-weekly-container__wave-mobile',
-            ]),
-            waveTiny: addClassesAndTitle(containerWaveTiny.markup, [
-                'football-weekly-container__wave-tiny',
-            ]),
-        });
-        oldBody.innerHTML = newContainer;
-        podcastContainer.className += 'football-weekly-container__visible';
+        if (oldBody) {
+            const headline = oldBody.querySelector('a.js-headline-text');
+
+            if (headline) {
+                const url = headline.getAttribute('href');
+
+                if (url) {
+                    const newContainer = template(containerHtml, {
+                        headline: getHeadlineText(headline),
+                        url: `${url}?CMP=football-weekly-container`,
+                        logo: logo.markup,
+                        button: addClassesAndTitle(containerButton.markup, [
+                            'football-weekly-container__button',
+                        ]),
+                        waveLarge: addClassesAndTitle(containerWaveLarge.markup, [
+                            'football-weekly-container__wave-large',
+                        ]),
+                        waveTablet: addClassesAndTitle(containerWaveTablet.markup, [
+                            'football-weekly-container__wave-tablet',
+                        ]),
+                        waveMobile: addClassesAndTitle(containerWaveMobile.markup, [
+                            'football-weekly-container__wave-mobile',
+                        ]),
+                        waveTiny: addClassesAndTitle(containerWaveTiny.markup, [
+                            'football-weekly-container__wave-tiny',
+                        ]),
+                    });
+                    oldBody.innerHTML = newContainer;
+                    podcastContainer.className += 'football-weekly-container__visible';
+                }
+            }
+        }
     }
 };
 
