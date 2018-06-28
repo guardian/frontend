@@ -13,8 +13,9 @@ const AD_FREE_USER_COOKIE = 'GU_AF1';
 const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
 
-const forcedAdFreeMode: boolean =
-    !!window.location.hash.match(/[#&]noadsaf(&.*)?$/);
+const forcedAdFreeMode: boolean = !!window.location.hash.match(
+    /[#&]noadsaf(&.*)?$/
+);
 
 const userHasData = (): boolean => {
     const cookie =

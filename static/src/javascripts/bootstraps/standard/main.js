@@ -214,10 +214,12 @@ const bootStandard = (): void => {
     // set a short-lived cookie to trigger server-side ad-freeness
     // if the user is genuinely ad-free, this one will be overwritten
     // in user-features
-    if (!!window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
+    if (window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
         const forcedAdFreeValidMinutes = 5;
         const forcedAdFreeExpiryTime = new Date();
-        forcedAdFreeExpiryTime.setTime(forcedAdFreeExpiryTime.getTime() + (forcedAdFreeValidMinutes * 60000));
+        forcedAdFreeExpiryTime.setTime(
+            forcedAdFreeExpiryTime.getTime() + forcedAdFreeValidMinutes * 60000
+        );
         addCookie('GU_AF1', forcedAdFreeExpiryTime.getTime().toString());
     }
 
