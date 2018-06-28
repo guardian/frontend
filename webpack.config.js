@@ -88,7 +88,9 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules|vendor)/,
+                // TODO: @guardian/dotcom-rendering is not properly published or pre-transpiled, so we have to
+                // transpile it as part of the frontend build step for now
+                exclude: /(node_modules(?!\/@guardian\/dotcom-rendering)|vendor)/,
                 loader: 'babel-loader',
             },
             {

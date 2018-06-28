@@ -10,22 +10,24 @@ const noSticky: boolean = !!(
     document.documentElement.classList.contains('has-no-sticky')
 );
 let stickyElement: Sticky;
-let rightSlot: HTMLElement;
+let stickySlot: HTMLElement;
 
 const onResize = (specs, _, iframe: ?HTMLElement) => {
-    if (rightSlot.contains(iframe)) {
+    if (stickySlot.contains(iframe)) {
         unregister('resize', onResize);
         stickyElement.updatePosition();
     }
 };
 
-const stickyCommentsAd = (adSlot: HTMLElement) => {
+const isStickyMpuSlot = (adSlot: HTMLElement) => {
     const dataName = adSlot.dataset.name;
-    if (dataName !== 'comments') {
-        return;
-    }
+    return dataName === 'comments' || dataName === 'right';
+};
 
-    stickySlot = adSlot;
+const stickyCommentsMpu = (adSlot: HTMLElement) => {
+    if (isStickyMpuSlot(adSlot)) {
+        stickySlot = adSlot;
+    }
 
     const referenceElement: any = document.querySelector('.js-comments');
 
@@ -51,12 +53,9 @@ const stickyCommentsAd = (adSlot: HTMLElement) => {
 };
 
 const stickyMpu = (adSlot: HTMLElement) => {
-    const dataName = adSlot.dataset.name;
-    if (dataName !== 'right') {
-        return;
+    if (isStickyMpuSlot(adSlot)) {
+        stickySlot = adSlot;
     }
-
-    rightSlot = adSlot;
 
     const referenceElement: any = document.querySelector(
         '.js-article__body,.js-liveblog-body-content'
@@ -99,4 +98,4 @@ stickyMpu.whenRendered = new Promise(resolve => {
     mediator.on('page:commercial:sticky-mpu', resolve);
 });
 
-export { stickyMpu, stickyCommentsAd };
+export { stickyMpu, stickyCommentsMpu };

@@ -108,6 +108,14 @@ describe('Commercial features', () => {
             const features = new CommercialFeatures();
             expect(features.dfpAdvertising).toBe(false);
         });
+
+        it('Is enabled for speedcurve tests of ad-free mode', () => {
+            config.switches.adFreeSubscriptionTrial = true;
+            window.location.hash = '#noadsaf';
+            const features = new CommercialFeatures();
+            expect(features.dfpAdvertising).toBe(true);
+            expect(features.adFree).toBe(true);
+        });
     });
 
     describe('Article body adverts', () => {

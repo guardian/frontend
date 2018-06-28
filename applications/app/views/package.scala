@@ -30,7 +30,7 @@ object IndexCleaner {
 }
 
 object GalleryCaptionCleaners {
-  def apply(page: GalleryPage, caption: String, isLastRow: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+  def apply(page: GalleryPage, caption: String, isFirstRow: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
     val cleaners = List(
       GalleryCaptionCleaner,
       AffiliateLinksCleaner(
@@ -38,7 +38,7 @@ object GalleryCaptionCleaners {
         page.gallery.content.metadata.sectionId,
         page.gallery.content.fields.showAffiliateLinks,
         "gallery",
-        appendDisclaimer = Some(isLastRow && page.item.lightbox.containsAffiliateableLinks)))
+        appendDisclaimer = Some(isFirstRow && page.item.lightbox.containsAffiliateableLinks)))
 
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(caption)) { case (html, cleaner) => cleaner.clean(html) }
     Html(cleanedHtml.toString)
