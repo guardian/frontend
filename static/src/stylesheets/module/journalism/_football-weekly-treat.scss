@@ -31,12 +31,12 @@
 
 .football-weekly-treat__container {
     background-color: $garnett-neutral-3;
-    border-top: 0.0625rem solid #dfdfdf;
-    border-bottom: 0.0625rem solid #dfdfdf;
+    border-top: .0625rem solid #dfdfdf;
+    border-bottom: .0625rem solid #dfdfdf;
     margin-bottom: 30px;
 
     .fc-container__inner {
-        border-top: none;
+        border-top: 0;
         padding-top: 10px;
     }
 }
@@ -157,7 +157,7 @@
         padding-right: 2px;
     }
     >:last-child {
-        padding: 0 2px 3px 2px;
+        padding: 0 2px 3px;
 
         @include mq(leftCol) {
             padding-left: 2px;
