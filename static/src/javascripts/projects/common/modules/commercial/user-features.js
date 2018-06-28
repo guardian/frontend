@@ -13,6 +13,9 @@ const AD_FREE_USER_COOKIE = 'GU_AF1';
 const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
 
+const forcedAdFreeMode: boolean =
+    !!window.location.hash.match(/[#&]noadsaf(&.*)?$/);
+
 const userHasData = (): boolean => {
     const cookie =
         getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
@@ -55,7 +58,7 @@ const persistResponse = (JsonResponse: () => void) => {
         addCookie(ACTION_REQUIRED_FOR_COOKIE, JsonResponse.alertAvailableFor);
     }
 
-    if (adFreeDataIsPresent() && !JsonResponse.adFree) {
+    if (adFreeDataIsPresent() && !JsonResponse.adFree && !forcedAdFreeMode) {
         removeCookie(AD_FREE_USER_COOKIE);
     }
     if (switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
@@ -116,7 +119,7 @@ const userHasDataAfterSignout = (): boolean =>
 const refresh = (): Promise<void> => {
     if (isUserLoggedIn() && userNeedsNewFeatureData()) {
         return requestNewData();
-    } else if (userHasDataAfterSignout()) {
+    } else if (userHasDataAfterSignout() && !forcedAdFreeMode) {
         deleteOldData();
     }
     return Promise.resolve();
