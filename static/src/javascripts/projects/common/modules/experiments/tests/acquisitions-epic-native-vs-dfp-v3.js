@@ -11,7 +11,7 @@ import {
 
 import type { ABTestVariant } from 'common/modules/commercial/acquisitions-ophan';
 
-const testName = 'AcquisitionsEpicNativeVsDfpV2';
+const testName = 'AcquisitionsEpicNativeVsDfpV3';
 
 const variantOptions = {
     maxViews: defaultMaxViews,
@@ -22,11 +22,11 @@ const dfpVariant: ABTestVariant = {
     variant: 'dfp',
 };
 
-const epicNativeVsDfpV2: ABTest = {
+const epicNativeVsDfpV3: ABTest = {
     id: testName,
-    campaignId: 'epic_native_vs_dfp_v2',
-    start: '2018-06-20',
-    expiry: '2018-07-04',
+    campaignId: 'epic_native_vs_dfp_v3',
+    start: '2018-06-27',
+    expiry: '2018-07-11',
     author: 'Guy Dawson',
     description:
         'See if there is any difference in annualised value between serving the Epic natively vs DFP',
@@ -57,6 +57,6 @@ const epicNativeVsDfpV2: ABTest = {
     ],
 };
 
-const acquisitionsEpicNativeVsDfpV2 = ((epicNativeVsDfpV2: any): AcquisitionsABTest);
+const acquisitionsEpicNativeVsDfpV3 = ((epicNativeVsDfpV3: any): AcquisitionsABTest);
 
-export { dfpVariant, acquisitionsEpicNativeVsDfpV2 };
+export { dfpVariant, acquisitionsEpicNativeVsDfpV3 };

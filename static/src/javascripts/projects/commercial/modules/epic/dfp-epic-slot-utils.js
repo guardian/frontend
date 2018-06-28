@@ -43,10 +43,10 @@ const renderEpicSlot = (epicSlot: HTMLDivElement): Promise<EpicComponent> => {
         componentEvent: {
             component: {
                 componentType: 'ACQUISITIONS_EPIC',
-                id: 'gdnwb_copts_memco_epic_native_vs_dfp_v2_dfp',
+                id: 'gdnwb_copts_memco_epic_native_vs_dfp_v3_dfp',
             },
             abTest: {
-                name: 'AcquisitionsEpicNativeVsDfpV2',
+                name: 'AcquisitionsEpicNativeVsDfpV3',
                 variant: 'dfp',
             },
         },
