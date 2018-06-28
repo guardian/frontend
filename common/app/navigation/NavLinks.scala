@@ -166,7 +166,7 @@ object NavLinks {
       NavLink("Observer Magazine", "/theobserver/magazine")
     )
   )
-  val digitalNewspaperArchive = NavLink("Digital archive", "https://theguardian.newspapers.com")
+  val digitalNewspaperArchive = NavLink("Digital Archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink("Crosswords", "/crosswords",
     children = List(
       NavLink("Blog", "/crosswords/crossword-blog"),
@@ -474,7 +474,6 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     observer,
-    digitalNewspaperArchive,
     NavLink("Professional networks", "/guardian-professional"),
     crosswords,
     guardianMasterClasses
@@ -486,7 +485,6 @@ object NavLinks {
     pictures,
     newsletters,
     insideTheGuardian,
-    digitalNewspaperArchive,
     crosswords
   )
   val usOtherLinks = List(
@@ -496,7 +494,6 @@ object NavLinks {
     pictures,
     newsletters,
     insideTheGuardian,
-    digitalNewspaperArchive,
     crosswords
   )
   val intOtherLinks = List(
@@ -508,7 +505,6 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     observer,
-    digitalNewspaperArchive,
     crosswords
   )
 
@@ -516,18 +512,22 @@ object NavLinks {
     jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
     dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
-    ukMasterClasses
+    ukMasterClasses,
+    digitalNewspaperArchive
   )
   val auBrandExtensions = List(
-    auEvents
+    auEvents,
+    digitalNewspaperArchive
   )
   val usBrandExtensions= List(
-    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader")
+    jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
+    digitalNewspaperArchive
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
     dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
-    holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader")
+    holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
+    digitalNewspaperArchive
   )
 
   // Tertiary Navigation
