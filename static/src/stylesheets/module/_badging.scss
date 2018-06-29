@@ -48,4 +48,10 @@ a[href^='https://www.theguardian.com/society/series/nhs-at-70'] {
     .fc-container__title__text {
         display: none;
     }
+
+    & > .badge-slot__img {
+        @include mq($until: leftCol) {
+            max-width: gs-span(1);
+        }
+    }
 }
