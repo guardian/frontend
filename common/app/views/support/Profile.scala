@@ -134,13 +134,13 @@ object TwitterImage extends OverlayBase64 {
     val live = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8xNi90d2l0dGVyX2xpdmUucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
     def starRating(rating: Int) = {
         val image = rating match {
-            case 0 => s"blend64=${overlayUrlBase64("twitter_stars--0.png")}"
-            case 1 => s"blend64=${overlayUrlBase64("twitter_stars--1.png")}"
-            case 2 => s"blend64=${overlayUrlBase64("twitter_stars--2.png")}"
-            case 3 => s"blend64=${overlayUrlBase64("twitter_stars--3.png")}"
-            case 4 => s"blend64=${overlayUrlBase64("twitter_stars--4.png")}"
-            case 5 => s"blend64=${overlayUrlBase64("twitter_stars--5.png")}"
-            case _ => s"blend64=${overlayUrlBase64("twitter_default.png")}"
+            case 0 => s"blend64=${overlayUrlBase64("tg-review-0.png")}"
+            case 1 => s"blend64=${overlayUrlBase64("tg-review-1.png")}"
+            case 2 => s"blend64=${overlayUrlBase64("tg-review-2.png")}"
+            case 3 => s"blend64=${overlayUrlBase64("tg-review-3.png")}"
+            case 4 => s"blend64=${overlayUrlBase64("tg-review-4.png")}"
+            case 5 => s"blend64=${overlayUrlBase64("tg-review-5.png")}"
+            case _ => s"blend64=${overlayUrlBase64("tg-default.png")}"
         }
         new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
     }
@@ -152,13 +152,13 @@ object FacebookOpenGraphImage extends OverlayBase64 {
     val live = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8xNi9mYWNlYm9va19saXZlLnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
     def starRating(rating: Int) = {
         val image = rating match {
-            case 0 => s"blend64=${overlayUrlBase64("facebook_stars--0.png")}"
-            case 1 => s"blend64=${overlayUrlBase64("facebook_stars--1.png")}"
-            case 2 => s"blend64=${overlayUrlBase64("facebook_stars--2.png")}"
-            case 3 => s"blend64=${overlayUrlBase64("facebook_stars--3.png")}"
-            case 4 => s"blend64=${overlayUrlBase64("facebook_stars--4.png")}"
-            case 5 => s"blend64=${overlayUrlBase64("facebook_stars--5.png")}"
-            case _ => s"blend64=${overlayUrlBase64("facebook_default.png")}"
+            case 0 => s"blend64=${overlayUrlBase64("tg-review-0.png")}"
+            case 1 => s"blend64=${overlayUrlBase64("tg-review-1.png")}"
+            case 2 => s"blend64=${overlayUrlBase64("tg-review-2.png")}"
+            case 3 => s"blend64=${overlayUrlBase64("tg-review-3.png")}"
+            case 4 => s"blend64=${overlayUrlBase64("tg-review-4.png")}"
+            case 5 => s"blend64=${overlayUrlBase64("tg-review-5.png")}"
+            case _ => s"blend64=${overlayUrlBase64("tg-default.png")}"
         }
         new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
     }
