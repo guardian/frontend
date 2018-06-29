@@ -48,6 +48,9 @@ const getPillar = pillarClass => {
     return pillar;
 };
 
+const supportsCSSGrid =
+    window.CSS && window.CSS.supports && window.CSS.supports('display', 'grid');
+
 const init = (): void => {
     const placeholder: ?HTMLElement = document.getElementById(
         'audio-component-container'
@@ -68,13 +71,28 @@ const init = (): void => {
         const pillar = getPillar(pillarClassName);
 
         render(
-            <AudioContainer
-                source={source}
-                mediaId={mediaId}
-                downloadUrl={downloadUrl}
-                iTunesUrl={iTunesUrl}
-                pillar={pillar}
-            />,
+            supportsCSSGrid ? (
+                <AudioContainer
+                    source={source}
+                    mediaId={mediaId}
+                    downloadUrl={downloadUrl}
+                    iTunesUrl={iTunesUrl}
+                    pillar={pillar}
+                />
+            ) : (
+                <audio src={source} controls mediaId={mediaId}>
+                    <track
+                        src={source}
+                        kind="captions"
+                        srcLang="en"
+                        label="English"
+                    />
+                    <p>
+                        Sorry your browser does not support audio, here is
+                        <a href={source}>a link to the audio</a> instead.
+                    </p>
+                </audio>
+            ),
             placeholder
         );
     }
