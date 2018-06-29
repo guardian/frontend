@@ -2,7 +2,6 @@
 .campaign--snippet {
     border-top: 1px $garnett-neutral-4 solid;
     border-bottom: 1px $garnett-neutral-4 solid;
-    //background: $garnett-neutral-8;
     position: relative;
     padding: 0 0 6px;
     margin: 16px 0 36px -10px;
@@ -37,10 +36,10 @@
 
             .speech-bubble {
                 background-color: $news-garnett-main-1;
-                padding: 3px 10px 10px 10px;
+                padding: 3px 8px 10px 9px;
                 color: #ffffff;
                 line-height: 18px;
-                min-width: 83px;
+                min-width: 84px;
             }
         }
     }
@@ -55,7 +54,7 @@
     line-height: 22px;
     font-family: $f-serif-headline;
     font-weight: 500;
-    padding-top: 3px;
+    padding-top: 1px;
 }
 
 .campaign--snippet__heading-logo {
@@ -134,6 +133,7 @@
     flex-direction: column;
     padding: 0 .5em 2em;
     border-top: 1px $garnett-neutral-4 solid;
+    background: $garnett-neutral-8;
 
     [type=radio], [type=checkbox] {
         margin-left: 0;
