@@ -1,10 +1,11 @@
 
 .campaign--snippet {
     border-top: 1px $garnett-neutral-4 solid;
-    background: $garnett-neutral-8;
+    border-bottom: 1px $garnett-neutral-4 solid;
+    //background: $garnett-neutral-8;
     position: relative;
     padding: 0 0 6px;
-    margin: 16px 0 36px;
+    margin: 16px 0 36px -10px;
     font-size: 14px;
     line-height: 21px;
 
@@ -36,14 +37,10 @@
 
             .speech-bubble {
                 background-color: $news-garnett-main-1;
-                padding: 6px 10px 10px;
+                padding: 3px 10px 10px 10px;
                 color: #ffffff;
                 line-height: 18px;
             }
-        }
-        > .heading {
-            flex: auto;
-            font-weight: bold;
         }
     }
 }
@@ -52,10 +49,17 @@
     margin: 0 0 16px;
 }
 
-.campaign--snippet__headline, .campaign--snippet__heading-logo {
+.campaign--snippet__headline {
+    font-size: 18px;
+    font-family: $f-serif-headline;
+    font-weight: 500;
+    padding-top: 3px;
+}
+
+.campaign--snippet__heading-logo {
     font-size: 18px;
     line-height: 22px;
-    font-family: $f-serif-text;
+    font-family: $f-serif-headline;
     font-weight: 500;
 }
 
@@ -111,9 +115,9 @@
 
     &::after {
         content: '';
-        width: 14px;
-        height: 12px;
-        border-radius: 0 0 14px;
+        width: 20px;
+        height: 22px;
+        border-radius: 0 0 18px;
         position: absolute;
         bottom: -12px;
         left: 10px;
@@ -223,8 +227,3 @@
         }
     }
 }
-
-
-
-
-
