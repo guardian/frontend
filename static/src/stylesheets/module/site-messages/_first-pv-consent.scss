@@ -41,7 +41,6 @@ $btn-height: ($gs-baseline*3.5);
         .site-message--double-banner & {
             @include mq(tablet) {
                 display: flex;
-                flex: 0 0 auto;
             }
         }
 
@@ -153,10 +152,10 @@ $btn-height: ($gs-baseline*3.5);
         margin-top: $gs-baseline;
 
         @include mq(tablet) {
-            align-self: flex-end;
+            margin-left: auto;
             display: flex;
             flex-direction: column;
-            justify-items: flex-end;
+            align-items: flex-end;
         }
     }
 
