@@ -68,10 +68,11 @@
     color: #ffffff;
     font-family: $f-sans-serif-text;
     font-size: 13px;
+    font-weight: bold;
     position: absolute;
     bottom: 0;
     transform: translate(0, 50%);
-    padding: 0 15px 0 7px;
+    padding: 0 15px 0 6px;
     margin-left: 5px;
     span {
         display: inline-flex;
@@ -79,9 +80,9 @@
     }
     .icon {
         fill: #ffffff;
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
+        width: 16px;
+        height: 16px;
+        margin: 0 6px 0 4px;
     }
 }
 
@@ -99,7 +100,7 @@
     -webkit-box-align: center;
     align-items: center;
     border: 0;
-    margin: 0;
+    margin: 0 0 0 10px;
 
     svg:not(:root) {
         overflow: hidden;
