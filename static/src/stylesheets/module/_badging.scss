@@ -41,3 +41,11 @@
         float: none;
     }
 }
+
+// NHS at 70 is a typographic logo so we don't want repetition of the words
+a[href^='https://www.theguardian.com/society/series/nhs-at-70'] {
+    &.content__series-label__link,
+    .fc-container__title__text {
+        display: none;
+    }
+}
