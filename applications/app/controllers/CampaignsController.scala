@@ -6,7 +6,6 @@ import model._
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
-import java.net.URLEncoder
 
 import scala.concurrent._
 
@@ -30,7 +29,6 @@ class CampaignsController(
         }
         else {
           log.error(s"Reader contribution to callout was sent to Formstack but not saved correctly: ${res}")
-          println(s"Reader contribution to callout was sent to Formstack but not saved correctly: ${res}")
           Future(BadRequest("Sorry your story couldn't be saved"))
         }
       }
