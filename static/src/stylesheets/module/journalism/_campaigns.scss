@@ -40,6 +40,7 @@
                 padding: 3px 10px 10px 10px;
                 color: #ffffff;
                 line-height: 18px;
+                min-width: 83px;
             }
         }
     }
@@ -51,6 +52,7 @@
 
 .campaign--snippet__headline {
     font-size: 18px;
+    line-height: 22px;
     font-family: $f-serif-headline;
     font-weight: 500;
     padding-top: 3px;
@@ -58,7 +60,6 @@
 
 .campaign--snippet__heading-logo {
     font-size: 18px;
-    line-height: 22px;
     font-family: $f-serif-headline;
     font-weight: 500;
 }
