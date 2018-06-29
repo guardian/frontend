@@ -165,4 +165,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-prebid-safeframe",
+    "Test the impact of serving prebid ads in safeframes",
+    owners = Seq(Owner.withGithub("jeteve")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
 }
