@@ -16,7 +16,7 @@ class CampaignsController(
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with Logging {
 
-  private val endpoint = Configuration.journalism.campaignsUrl
+  private val endpoint = Configuration.journalism.calloutsUrl
 
   def formSubmit() = Action.async { implicit request =>
 
