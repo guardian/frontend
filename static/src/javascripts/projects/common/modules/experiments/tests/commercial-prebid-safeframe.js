@@ -16,16 +16,11 @@ export const commercialPrebidSafeframe: ABTest = {
     variants: [
         {
             id: 'control',
-            test: (): void => {
-                console.log('In control');
-            },
+            test: (): void => {},
         },
         {
             id: 'variant',
-            test: (): void => {
-                console.log('In variant');
-                // TODO insert code that sends render=safeframe to sonobi prebid
-            },
+            test: (): void => {},
         },
     ],
 };
