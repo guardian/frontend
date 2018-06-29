@@ -26,6 +26,7 @@ class CommercialFeatures {
     constructor(config: any = defaultConfig) {
         // this is used for SpeedCurve tests
         const noadsUrl = window.location.hash.match(/[#&]noads(&.*)?$/);
+        const forceAdFree = window.location.hash.match(/[#&]noadsaf(&.*)?$/);
         const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
         const sensitiveContent =
             config.page.shouldHideAdverts ||
@@ -55,7 +56,7 @@ class CommercialFeatures {
         this.adFree =
             switches.commercial &&
             switches.adFreeSubscriptionTrial &&
-            isAdFreeUser();
+            (!!forceAdFree || isAdFreeUser());
 
         this.dfpAdvertising =
             switches.commercial && externalAdvertising && !sensitiveContent;

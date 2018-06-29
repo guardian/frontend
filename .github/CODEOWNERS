@@ -1,0 +1,5 @@
+# See https://help.github.com/articles/about-codeowners/
+
+# Commercial Dev code
+/static/src/javascripts/projects/commercial/ @guardian/commercial-dev
+/commercial/ @guardian/commercial-dev
