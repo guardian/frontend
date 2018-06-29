@@ -235,6 +235,9 @@ class GalleryLightbox {
         const touchMove = (e: TouchEvent): void => {
             e.preventDefault();
 
+            // Flow doesn't accept the WebKit-specific TouchEvent.scale
+            // https://developer.apple.com/documentation/webkitjs/touchevent/1632169-scale
+            // $FlowFixMe
             if (e.touches.length > 1 || (e.scale && e.scale !== 1)) {
                 return;
             }

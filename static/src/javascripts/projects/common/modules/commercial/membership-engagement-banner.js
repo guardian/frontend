@@ -94,7 +94,11 @@ const deriveBannerParams = (location: string): ?EngagementBannerParams => {
     const campaignId = userTest ? userTest.campaignId : undefined;
     const userVariant = getUserVariant(userTest);
 
-    if (userVariant && userVariant.blockEngagementBanner) {
+    if (
+        userVariant &&
+        userVariant.options &&
+        userVariant.options.blockEngagementBanner
+    ) {
         return;
     }
 

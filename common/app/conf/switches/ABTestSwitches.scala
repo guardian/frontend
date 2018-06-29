@@ -18,7 +18,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-new-sign-in-experiment",
+    "ab-new-sign-in-experiment-bump",
     "This test will send a % of users to the new sign in experience",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
@@ -108,11 +108,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-native-vs-dfp-v2",
+    "ab-acquisitions-epic-native-vs-dfp-v3",
     "See if there is any difference in annualised value between serving the Epic natively vs DFP",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 7, 4),
+    sellByDate = new LocalDate(2018, 7, 11),
     exposeClientSide = true
   )
 
@@ -149,6 +149,16 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-acquisitions-epic-from-google-doc-four-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-five-variants",
     "Serves an epic with copy from a Google Doc",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,

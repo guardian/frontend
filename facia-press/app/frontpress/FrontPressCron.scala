@@ -1,16 +1,25 @@
 package frontpress
 
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
+import com.gu.facia.api.models.TrainingPriority
 import common.FaciaPressMetrics.FrontPressCronSuccess
 import common.{JsonMessageQueue, SNSNotification}
 import conf.switches.Switches.FrontPressJobSwitch
 import conf.Configuration
+import services.ConfigAgent
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorker: ToolPressQueueWorker)(implicit executionContext: ExecutionContext) extends JsonQueueWorker[SNSNotification] {
-  lazy val queueUrl: Option[String] = Configuration.faciatool.frontPressCronQueue
   override val deleteOnFailure: Boolean = true
+
+  def shouldRetryPress(message: common.Message[SNSNotification]): Boolean = {
+    ConfigAgent.getFrontPriorityFromConfig(message.get.Message) match {
+      case Some(TrainingPriority) => false
+      case Some(_) => true
+      case None => false
+    }
+  }
 
   override val queue: JsonMessageQueue[SNSNotification] = (Configuration.faciatool.frontPressCronQueue map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials

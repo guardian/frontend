@@ -293,7 +293,7 @@ trait CommercialSwitches {
     description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = new LocalDate(2018, 6, 28),
+    sellByDate = new LocalDate(2018, 9, 12),
     exposeClientSide = false
   )
 
@@ -385,16 +385,6 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  val orielSonobiIntegration: Switch = Switch(
-    group = Commercial,
-    name = "oriel-sonobi-integration-test",
-    description = "This is a short test to test the integration between Oriel and Sonobi",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 28),
-    exposeClientSide = false
   )
 
   val AffiliateLinks: Switch = Switch(

@@ -82,10 +82,14 @@ const breakpoints: Array<Breakpoint> = [
 let currentBreakpoint: BreakpointName;
 let currentTweakpoint: BreakpointName;
 let supportsPushState: boolean;
+// #?: Consider dropping support for vendor-specific implementations
 let pageVisibility =
     document.visibilityState ||
+    // $FlowFixMe
     document.webkitVisibilityState ||
+    // $FlowFixMe
     document.mozVisibilityState ||
+    // $FlowFixMe
     document.msVisibilityState ||
     'visible';
 

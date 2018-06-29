@@ -4,6 +4,7 @@ import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import { elementInView } from 'lib/element-inview';
 import reportError from 'lib/report-error';
+import mediator from 'lib/mediator';
 
 import { control as epicControlCopy } from 'common/modules/commercial/acquisitions-copy';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
@@ -12,12 +13,14 @@ import { supportContributeURL } from 'common/modules/commercial/support-utilitie
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import {
     addTrackingCodesToUrl,
+    submitClickEvent,
     submitInsertEvent,
     submitViewEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 
 import type { ReportedError } from 'lib/report-error';
+import type { Spec } from 'common/modules/ui/clickstream';
 import type {
     ABTestVariant,
     ComponentEventWithoutAction,
@@ -91,6 +94,19 @@ const awaitEpicViewed = (epic: HTMLDivElement): Promise<void> => {
     return new Promise(resolve => inView.on('firstview', () => resolve()));
 };
 
+const awaitEpicButtonClicked = (): Promise<void> =>
+    new Promise(resolve => {
+        mediator.on('module:clickstream:click', (clickSpec: Spec | boolean) => {
+            if (clickSpec === true || clickSpec === false) {
+                return;
+            }
+            const isEpicClick = clickSpec.tags.find(tag => tag === 'epic');
+            if (isEpicClick) {
+                resolve();
+            }
+        });
+    });
+
 const trackEpic = (epic: EpicComponent): void => {
     const componentEvent = epic.componentEvent;
     if (componentEvent) {
@@ -103,7 +119,14 @@ const trackEpic = (epic: EpicComponent): void => {
                 logView(componentEvent.abTest.name);
             }
         });
+        awaitEpicButtonClicked().then(() => submitClickEvent(componentEvent));
     }
 };
 
-export { reportEpicError, insertAtSubmeta, displayControlEpic, trackEpic };
+export {
+    reportEpicError,
+    insertAtSubmeta,
+    displayControlEpic,
+    trackEpic,
+    awaitEpicButtonClicked,
+};

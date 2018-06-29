@@ -348,7 +348,9 @@ final case class PressedCard(
   shortUrl: String,
   group: String,
   isLive: Boolean
-)
+) {
+  def withoutTrailText: PressedCard = copy(trailText = None)
+}
 
 // EnrichedContent is an optionally-present field of the PressedContent class.
 // It contains additional content that has been pre-fetched by facia-press, to
@@ -369,6 +371,8 @@ sealed trait PressedContent {
   def display: PressedDisplaySettings
   def maybePillar: Option[Pillar] = Pillar(properties.maybeContent)
   lazy val participatesInDeduplication: Boolean = properties.embedType.isEmpty
+
+  def withoutTrailText: PressedContent
 
   def isPaidFor: Boolean = properties.isPaidFor
 
@@ -412,7 +416,10 @@ final case class CuratedContent(
   override val display: PressedDisplaySettings,
   enriched: Option[EnrichedContent], // This is currently an option, as we introduce the new field. It can then become a value type.
   supportingContent: List[PressedContent],
-  cardStyle: CardStyle ) extends PressedContent
+  cardStyle: CardStyle ) extends PressedContent {
+
+  override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+}
 
 object SupportingCuratedContent {
   def make(content: fapi.SupportingCuratedContent): SupportingCuratedContent = {
@@ -432,7 +439,9 @@ final case class SupportingCuratedContent(
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
   override val display: PressedDisplaySettings,
-  cardStyle: CardStyle) extends PressedContent
+  cardStyle: CardStyle) extends PressedContent {
+  override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+}
 
 object LinkSnap {
   def make(content: fapi.LinkSnap): LinkSnap = {
@@ -453,7 +462,9 @@ final case class LinkSnap(
   override val discussion: PressedDiscussionSettings,
   override val display: PressedDisplaySettings,
   enriched: Option[EnrichedContent] // This is currently an option, as we introduce the new field. It can then become a value type.
-) extends PressedContent
+) extends PressedContent {
+  override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+}
 
 object LatestSnap {
   def make(content: fapi.LatestSnap): LatestSnap = {
@@ -471,7 +482,10 @@ final case class LatestSnap(
   override val header: PressedCardHeader,
   override val card: PressedCard,
   override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings) extends PressedContent
+  override val display: PressedDisplaySettings) extends PressedContent {
+
+  override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
+}
 
 object KickerProperties {
   def make(kicker: fapiutils.ItemKicker): KickerProperties = KickerProperties(fapiutils.ItemKicker.kickerText(kicker))

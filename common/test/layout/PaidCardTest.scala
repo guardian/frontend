@@ -1,6 +1,6 @@
 package layout
 
-import common.commercial.FixtureBuilder.mkPressedContent
+import common.facia.FixtureBuilder.mkPressedContent
 import model.pressed.{FreeHtmlKicker, ItemKicker, KickerProperties}
 import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
