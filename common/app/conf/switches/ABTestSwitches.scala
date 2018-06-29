@@ -138,6 +138,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-from-google-doc-five-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-engagement-banner-styling-tweaks",
     "Test the impact of some banner styling tweaks",
     owners = Seq(Owner.withGithub("joelochlann")),
