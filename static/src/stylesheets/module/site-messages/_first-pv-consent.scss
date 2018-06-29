@@ -2,6 +2,19 @@ $btn-height: ($gs-baseline*3.5);
 
 .site-message--first-pv-consent {
     padding: ($gs-baseline / 2) 0 $gs-baseline * 2;
+
+    a {
+        color: currentColor;
+    }
+
+    .site-message--double-banner & {
+        padding: ($gs-baseline / 2) 0;
+
+        @include mq(tablet) {
+            padding: $gs-baseline 0;
+        }
+    }
+
     background: $sport-away;
 
     .u-underline {
@@ -24,6 +37,14 @@ $btn-height: ($gs-baseline*3.5);
     .site-message__copy {
         display: block;
         margin: 0 $gs-gutter / 2;
+
+        .site-message--double-banner & {
+            @include mq(tablet) {
+                display: flex;
+                flex: 0 0 auto;
+            }
+        }
+
         @include mq(leftCol) {
             padding-left: gs-span(2) + $gs-gutter * 1.5;
         }
@@ -39,6 +60,15 @@ $btn-height: ($gs-baseline*3.5);
     height: $btn-height;
     background: $news-garnett-highlight;
     color: $garnett-neutral-1;
+
+    .site-message--double-banner & {
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: border-color .15s ease-out;
+        height: 36px;
+    }
+
     padding: 0 ($gs-gutter*1.25) 0 ($gs-gutter*1.25)+($btn-height*.5);
     display: block;
     align-items: flex-start;
@@ -51,6 +81,12 @@ $btn-height: ($gs-baseline*3.5);
     &:hover {
         background: darken($news-garnett-highlight, 1%);
     }
+
+    .site-message--double-banner &:hover {
+        background: transparent;
+        border-color: #ffffff;
+    }
+
     svg {
         position: absolute;
         top: 0;
@@ -62,6 +98,10 @@ $btn-height: ($gs-baseline*3.5);
         transform: scale(.5);
         g, path {
             fill: $garnett-neutral-1;
+
+            .site-message--double-banner & {
+                fill: #ffffff;
+            }
         }
     }
 }
@@ -80,20 +120,46 @@ $btn-height: ($gs-baseline*3.5);
         font-weight: bold;
         padding-bottom: $gs-baseline;
         color: $news-garnett-highlight;
+
+        .site-message--double-banner & {
+            display: none;
+        }
     }
     &.site-message--first-pv-consent__block--intro {
         @include fs-bodyCopy(2);
         font-size: 17px;
         line-height: 24px;
-        a {
-            color: currentColor;
+
+        .site-message--double-banner & {
+            @include fs-textSans(2);
+            @include mq(tablet) {
+                @include fs-textSans(5);
+                display: inline-block;
+                width: gs-span(7);
+            }
         }
+    }
+
+    .site-message--double-banner & p {
+        display: inline;
     }
 }
 
 .site-message--first-pv-consent__actions {
     @include fs-textSans(3);
     margin-top: $gs-baseline * 2;
+
+    .site-message--double-banner & {
+        margin-top: $gs-baseline;
+
+        @include mq(tablet) {
+            align-self: flex-end;
+            display: flex;
+            flex-direction: column;
+            justify-items: flex-end;
+        }
+    }
+
     .site-message--first-pv-consent__button {
         margin-right: $gs-baseline;
     }
@@ -101,5 +167,17 @@ $btn-height: ($gs-baseline*3.5);
     .site-message--first-pv-consent__link {
         display: inline-block;
         vertical-align: baseline;
+
+        .site-message--double-banner & {
+            font-weight: bold;
+
+            @include mq(tablet) {
+                display: block;
+            }
+
+            @include mq(desktop) {
+                display: inline;
+            }
+        }
     }
 }
