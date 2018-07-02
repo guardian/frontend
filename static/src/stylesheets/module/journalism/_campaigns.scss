@@ -5,12 +5,17 @@
     position: relative;
     padding: 0 0 6px;
     margin: 16px 0 36px -10px;
-    font-size: 14px;
-    line-height: 21px;
 
     &:not([open]) .is-on,
     &[open] .is-off {
         display: none;
+    }
+    p {
+        font-size: 14px;
+        line-height: 18px;
+        font-family: $f-serif-headline;
+        font-weight: 400;
+        padding-top: 5px;
     }
 }
 
@@ -19,7 +24,6 @@
 .campaign--snippet > summary {
     outline: none;
     padding: 0;
-    border-top: 1px $garnett-neutral-4 solid;
     list-style: none;
 
     &::-webkit-details-marker {
@@ -72,7 +76,7 @@
     position: absolute;
     bottom: 0;
     transform: translate(0, 50%);
-    padding: 0 15px 0 6px;
+    padding: 3px 15px 0 6px;
     margin-left: 5px;
     span {
         display: inline-flex;
@@ -82,7 +86,7 @@
         fill: #ffffff;
         width: 16px;
         height: 16px;
-        margin: 0 6px 0 4px;
+        margin: -3px 6px 0 4px;
     }
 }
 
@@ -131,8 +135,7 @@
 .campaign--snippet form {
     display: flex;
     flex-direction: column;
-    padding: 0 .5em 2em;
-    border-top: 1px $garnett-neutral-4 solid;
+    //padding: 0 .5em 2em;
     background: $garnett-neutral-8;
 
     [type=radio], [type=checkbox] {
@@ -144,7 +147,7 @@
 .campaign--snippet .form_input {
 
     &:not(:first-child) {
-        margin: 12px 0;
+        margin: 0 0 20px 0;
     }
     &.form_input--radio .form_field,
     &.form_input--checkbox .form_field {
@@ -161,17 +164,18 @@
 
     textarea {
         max-width: 100%;
-        min-width: 100%;
-        min-height: 25px;
+        min-height: 50px;
     }
 
     .form_option_container {
         display: flex;
-        margin-left: .3em;
         label {
             flex: initial;
-            margin-right: 1em;
-            margin-left: .5em;
+            margin: 2px 0 0 4px;
+            font-size: 14px;
+            line-height: 18px;
+            font-weight: 400;
+            font-family: $f-serif-headline;
         }
     }
 }
@@ -179,10 +183,11 @@
 .campaign--snippet .form_field {
     display: flex;
     flex-direction: column;
+    border-top: 1px solid $garnett-neutral-4;
 
     input {
         align-self: stretch;
-        padding: 3px 5px 4px;
+        padding: 10px 0 10px 4px;
     }
 
     input,
@@ -190,14 +195,27 @@
     textarea {
         border: 1px solid var(--c-garnett-neutral-8);
         font-family: $f-sans-serif-text;
+        font-size: 14px;
+        margin: 0 10px;
     }
     .form_field_label {
-        margin-left: .3em;
+        margin: 1px 0 6px 3px;
+        padding-left: 10px;
+        font-size: 14px;
+        line-height: 18px;
         font-weight: 500;
         font-family: $f-serif-headline;
+
         span {
-            font-weight: normal;
-            display: table; /* hack to force new line for span */
+            font-weight: 200;
+
+            &::before {
+                content: "(";
+            }
+
+            &::after {
+                content: ")";
+            }
         }
     }
 }
@@ -205,9 +223,11 @@
 .campaign--snippet .form_footer {
     display: flex;
     flex-direction: row;
+    border-top: 1px $garnett-neutral-4 solid;
 
     .form_submit {
         flex: auto;
+        padding: 4px 0 40px 10px;
         .button {
             background-color: #c70000;
             color: #ffffff;
@@ -222,10 +242,18 @@
         text-align: right;
         display: flex;
         font-family: $f-sans-serif-text;
+        font-size: 14px;
+        margin-right: 10px;
+
         a {
             flex: auto;
-            align-self: center;
+            align-self: flex-start;
             color: #121212;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 }
