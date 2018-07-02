@@ -24,7 +24,6 @@ import scala.concurrent.Future
 import java.lang.System.currentTimeMillis
 
 import metrics.TimingMetric
-import services.{LocalRender, RemoteRender, RenderType, RenderingTierPicker}
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -118,11 +117,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
     case article: ArticlePage =>
 
-      RenderingTierPicker.getRenderTierFor(page) match {
-        case RemoteRender => log.logger.info(s"Remotely renderable article $path")
-        case _ =>
-      }
-
       val htmlResponse = () => {
         if (request.isEmail) ArticleEmailHtmlPage.html(article)
         else if (request.isAmp) views.html.articleAMP(article)
@@ -142,7 +136,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       Action.async { implicit request =>
 
         def renderWithRange(range: BlockRange) =
-          mapModel(path, range = Some(range), asArticle=false) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
+          mapModel(path, range = Some(range)) {// temporarily only ask for blocks too for things we know are new live blogs until until the migration is done and we can always use blocks
             render(path, _)
           }
 
@@ -157,7 +151,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     Action.async { implicit request =>
 
       def renderWithRange(range: BlockRange) =
-        mapModel(path, Some(range), asArticle=false) { model =>
+        mapModel(path, Some(range)) { model =>
           range match {
             case SinceBlockId(lastBlockId) => renderNewerUpdates(model, SinceBlockId(lastBlockId), isLivePage)
             case _ => render(path, model)
@@ -167,7 +161,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       lastUpdate.map(ParseBlockId.fromBlockId) match {
         case Some(ParsedBlockId(id)) => renderWithRange(SinceBlockId(id))
         case Some(InvalidFormat) => Future.successful(Cached(10)(WithoutRevalidationResult(NotFound))) // page param there but couldn't extract a block id
-        case None => if (rendered.contains(false)) mapModel(path, Some(Canonical), asArticle=false) { model => blockText(model, 6) } else renderWithRange(Canonical) // no page param
+        case None => if (rendered.contains(false)) mapModel(path, Some(Canonical)) { model => blockText(model, 6) } else renderWithRange(Canonical) // no page param
       }
     }
   }
@@ -210,9 +204,9 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
   }
 
   // for the GUUI demo. Same as mapModel except the render method should return a  Future[Result] instead of Result
-  def mapModelGUUI(path: String, range: Option[BlockRange] = None, asArticle: Boolean=true)(render: PageWithStoryPackage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
+  def mapModelGUUI(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Future[Result])(implicit request: RequestHeader): Future[Result] = {
 
-    lookup(path, range).map((itemResp: ItemResponse) => responseToModelOrResult(range, asArticle)(itemResp)).recover(convertApiExceptions).flatMap {
+    lookup(path, range).map((itemResp: ItemResponse) => responseToModelOrResult(range)(itemResp)).recover(convertApiExceptions).flatMap {
       case Left(model) => render(model)
       case Right(other) => Future.successful(RenderOtherStatus(other))
     }
@@ -235,7 +229,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       } else {
 
         timedFuture(
-          mapModel(path, Some(ArticleBlocks)) {
+          mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
             render(path, _)
           },
           ArticleRenderingMetrics.LocalRenderingMetric
@@ -248,8 +242,8 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
   // range: None means the url didn't include /live/, Some(...) means it did.  Canonical just means no url parameter
   // if we switch to using blocks instead of body for articles, then it no longer needs to be Optional
-  def mapModel(path: String, range: Option[BlockRange] = None, asArticle: Boolean = true)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
-    lookup(path, range) map responseToModelOrResult(range, asArticle) recover convertApiExceptions map {
+  def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
       case Left(model) => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
@@ -268,8 +262,8 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("body")
       capiItem.showBlocks(blocksParam)
     }.getOrElse(capiItem)
-
     contentApiClient.getResponse(capiItemWithBlocks)
+
   }
 
   /**
@@ -279,7 +273,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     * @param response
    * @return Either[PageWithStoryPackage, Result]
    */
-  def responseToModelOrResult(range: Option[BlockRange], asArticle:Boolean)(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
+  def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
 
     val supportedContent = response.content.filter(isSupported).map(Content(_))
     val supportedContentResult = ModelOrResult(supportedContent, response)
@@ -289,7 +283,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
       case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
         Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
-      case liveBlog: Article if liveBlog.isLiveBlog && !asArticle =>
+      case liveBlog: Article if liveBlog.isLiveBlog =>
         range.map {
           createLiveBlogModel(liveBlog, response, _)
         }.getOrElse(Right(NotFound))
