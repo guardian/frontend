@@ -46,7 +46,7 @@
         .football-matches__date {
             margin: 0;
             padding: $title-padding;
-            border-top: 1px solid darken($neutral-8, 4%);
+            border-top: 1px solid $garnett-neutral-4;
         }
     }
 
@@ -256,4 +256,16 @@ $footballBadgeSizeDesktop: 120px;
     background: $neutral-8;
     width: 100%;
     padding: $gs-baseline/1.5;
+}
+
+.knockout-snap {
+    width: 100%;
+}
+
+.facia-snap.facia-snap--football.facia-snap-embed.facia-snap-point--huge {
+    height: auto;
+}
+
+.facia-snap--football .inline-icon {
+    fill: #ffffff; /* override garnett styling */
 }
