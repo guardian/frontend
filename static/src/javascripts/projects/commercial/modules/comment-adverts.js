@@ -16,6 +16,9 @@ export const initCommentAdverts = (): ?boolean => {
         const adSlots = createSlots('comments', {
             classes: 'mpu-banner-ad',
         });
+        adSlots.forEach(adSlot => {
+            adSlot.classList.add('js-sticky-mpu');
+        });
         fastdom
             .write(() => {
                 $commentMainColumn.addClass('discussion__ad-wrapper');

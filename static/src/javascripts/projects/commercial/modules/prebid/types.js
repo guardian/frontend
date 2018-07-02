@@ -7,6 +7,7 @@ export type PrebidSonobiParams = {
     dom_id: string,
     appNexusTargeting: string,
     pageViewId: string,
+    render?: string,
 };
 
 export type PrebidIndexExchangeParams = {

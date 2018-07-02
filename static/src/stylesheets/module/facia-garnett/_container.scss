@@ -458,6 +458,11 @@ $header-image-size-desktop: 100px;
             z-index: 1;
         }
 
+        .fc-sublinks,
+        .fc-item__meta {
+            z-index: 2;
+        }
+
         &.fc-item--half-tablet,
         &.fc-item--standard-tablet,
         &.fc-item--list-media-tablet {
