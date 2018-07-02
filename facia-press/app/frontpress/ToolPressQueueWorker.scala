@@ -1,6 +1,7 @@
 package frontpress
 
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
+import com.gu.facia.api.models.{Draft, FrontPath, Live, PressJob}
 import common._
 import conf.Configuration
 import services._
@@ -8,7 +9,7 @@ import services._
 import scala.concurrent.{ExecutionContext, Future}
 
 class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress)(implicit executionContext: ExecutionContext) extends JsonQueueWorker[PressJob] with Logging {
-  override lazy val queue = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
+  override lazy val queue: JsonMessageQueue[PressJob] = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials
 
     JsonMessageQueue[PressJob](
