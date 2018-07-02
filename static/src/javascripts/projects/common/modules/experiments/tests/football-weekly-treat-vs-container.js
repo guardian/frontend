@@ -23,7 +23,7 @@ const getHeadlineText = (el: Element): string =>
 
 const runTreatTest = (): void => {
     // Get the headline from podcast container and insert the test treat
-    const podcastContainer = document.getElementById('world-cup-daily-podcast');
+    const podcastContainer = document.getElementById('podcast');
     const headlinesContainer = document.getElementById('headlines');
 
     if (headlinesContainer && podcastContainer) {
@@ -77,7 +77,7 @@ const runTreatTest = (): void => {
 
 const runContainerTest = (): void => {
     // Find existing container and replace its body with test design
-    const podcastContainer = document.getElementById('world-cup-daily-podcast');
+    const podcastContainer = document.getElementById('podcast');
     const headlinesContainer = document.getElementById('headlines');
 
     if (headlinesContainer && podcastContainer) {
