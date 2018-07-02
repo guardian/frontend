@@ -276,7 +276,7 @@ GET            /commercial/anx/anxresize.js                                     
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET            /commercial/prebid/revenue                                                                                        controllers.admin.commercial.TeamKPIController.renderPrebidDashboard()
 POST           /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.insert()
-POST           /commercial/api/pv                                                                                                commercial.controllers.PageViewAnalyticsController.store()
+POST           /commercial/api/pv                                                                                                commercial.controllers.PageViewAnalyticsController.insert()
 
 # Commercial Admin
 GET         /commercial                                                                                                          controllers.admin.CommercialController.renderCommercialMenu()
