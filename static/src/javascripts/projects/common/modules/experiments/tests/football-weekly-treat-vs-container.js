@@ -155,12 +155,11 @@ const trackImpression = (name: string) => (track: () => void): void => {
 
 export const FootballWeeklyTreatVsContainer = {
     id: 'FootballWeeklyTreatVsContainer',
-    // TODO - correct dates
-    start: '2018-06-20',
-    expiry: '2018-07-13',
+    start: '2018-07-02',
+    expiry: '2018-07-11',
     author: 'Tom Forbes',
     description:
-        'Test linking to latest episode of Football Weekly podcast using a treat in the Headlines container',
+        'Test linking to latest episode of Football Weekly podcast using a treat vs a container',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'Measure click-through across the variants',
