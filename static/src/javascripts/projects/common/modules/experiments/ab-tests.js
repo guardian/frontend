@@ -2,15 +2,15 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { PoliticsWeeklyTreat } from 'common/modules/experiments/tests/politics-weekly-treat';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
+import { FootballWeeklyTreatVsContainer } from 'common/modules/experiments/tests/football-weekly-treat-vs-container';
 import { newSignInExperiment } from './tests/new-sign-in-experiment';
 
 export const TESTS: $ReadOnlyArray<ABTest> = [
     getAcquisitionTest(),
     newSignInExperiment,
-    PoliticsWeeklyTreat,
     commercialPrebidSafeframe,
+    FootballWeeklyTreatVsContainer,
 ].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
