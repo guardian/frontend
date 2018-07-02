@@ -23,10 +23,8 @@ const getHeadlineText = (el: Element): string =>
 
 const runTreatTest = (): void => {
     // Get the headline from podcast container and insert the test treat
-    const podcastContainer = document.querySelector(
-        '.facia-page #world-cup-daily'
-    );
-    const headlinesContainer = document.querySelector('.facia-page #headlines');
+    const podcastContainer = document.getElementById('world-cup-daily');
+    const headlinesContainer = document.getElementById('headlines');
 
     if (headlinesContainer && podcastContainer) {
         const headline = podcastContainer.querySelector('a.js-headline-text');
@@ -79,10 +77,8 @@ const runTreatTest = (): void => {
 
 const runContainerTest = (): void => {
     // Find existing container and replace its body with test design
-    const podcastContainer = document.querySelector(
-        '.facia-page #world-cup-daily'
-    );
-    const headlinesContainer = document.querySelector('.facia-page #headlines');
+    const podcastContainer = document.getElementById('world-cup-daily');
+    const headlinesContainer = document.getElementById('headlines');
 
     if (headlinesContainer && podcastContainer) {
         const oldBody = podcastContainer.querySelector('.fc-container__body');
