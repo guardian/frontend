@@ -1,0 +1,187 @@
+.site-message--support-the-guardian-banner {
+    background-color: $news-garnett-highlight;
+    max-height: 80%;
+
+    // we have our own close button - see .support-the-guardian-banner__close-button
+    .site-message__close {
+        display: none;
+    }
+
+    @mixin padding {
+        padding-top: 9px;
+        padding-bottom: 18px;
+
+        @include mq(tablet) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+    }
+
+    .site-message__roundel {
+        @include padding;
+
+        display: none;
+        position: absolute;
+        svg {
+            fill: $garnett-neutral-1;
+        }
+
+        // Because this roundel "jumps" from the right to left
+        // at leftCol width, we display this one and hide the other
+        // one at this point. See also: .support-the-guardian-banner__roundel
+        @include mq(leftCol) {
+            display: block;
+        }
+    }
+
+    .site-message__close-btn {
+        display: inline-block;
+        border-color: $garnett-neutral-1;
+    }
+
+    .site-message__inner {
+        display: block;
+        width: auto;
+    }
+
+    .site-message__copy {
+        @include padding;
+
+        display: block;
+    }
+}
+
+.support-the-guardian-banner__text {
+    color: $garnett-neutral-1;
+
+    font-size: 17px;
+    line-height: 22px;
+
+    @include mq(tablet) {
+        width: 580px;
+    }
+
+    @include mq(desktop) {
+        display: inline-block;
+    }
+}
+
+.support-the-guardian-banner__highlight {
+    font-weight: bold;
+    background-color: #ffffff;
+    padding: 1px;
+}
+
+.support-the-guardian-banner__container {
+    position: relative;
+
+    @include mq(leftCol) {
+        left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        left: gs-span(3) + $gs-gutter;
+    }
+}
+
+.support-the-guardian-banner__cta {
+    margin-top: $gs-baseline;
+
+    @include mq(desktop) {
+        position: absolute;
+        left: gs-span(8) + $gs-gutter;
+        bottom: 0;
+    }
+}
+
+.support-the-guardian-banner__button {
+    display: inline-block;
+    vertical-align: middle;
+
+    height: 36px;
+    padding-right: 0;
+    margin-right: $gs-gutter / 4;
+
+    font-size: 14px;
+    line-height: 36px;
+
+    background-color: $garnett-neutral-1;
+    border-color: $garnett-neutral-1;
+
+    .inline-icon {
+        float: right;
+
+        svg {
+            // weirdly needed for vertical centering
+            padding-top: 3px;
+        }
+    }
+
+    @include mq(tablet) {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 16px;
+    }
+}
+
+.support-the-guardian-banner__payment-logos {
+    display: inline-block;
+    vertical-align: middle;
+
+    height: auto;
+    width: 114px;
+
+    @include mq(tablet) {
+        display: block;
+        width: 121px;
+    }
+}
+
+.support-the-guardian-banner__close {
+    float: right;
+
+    // we want the close button above the link overlay
+    // z-index only applies to positioned elements
+    position: relative;
+    z-index: 1;
+
+    // to remove the space between inline-block children
+    font-size: 0;
+}
+
+.support-the-guardian-banner__close-button,
+.support-the-guardian-banner__roundel {
+    display: inline-block;
+    vertical-align: middle;
+
+    height: 36px;
+    width: 36px;
+}
+
+.support-the-guardian-banner__roundel {
+    // Because this roundel "jumps" from the right to left
+    // at leftCol width, we hide this one and display the other
+    // one at this point. See also: .site-message__roundel
+    @include mq(leftCol) {
+        display: none;
+    }
+}
+
+.support-the-guardian-banner__close-button {
+    // for some reason, it's more centered with this 2px on top
+    padding: 2px 0 0;
+
+    background: transparent;
+    border: 1px solid rgba($garnett-neutral-1, .3);
+    color: $garnett-neutral-1;
+
+    svg {
+        fill: $garnett-neutral-1;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        border-color: $garnett-neutral-1;
+    }
+}

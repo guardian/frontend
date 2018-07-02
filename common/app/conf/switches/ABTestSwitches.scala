@@ -18,7 +18,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-new-sign-in-experiment",
+    "ab-new-sign-in-experiment-bump",
     "This test will send a % of users to the new sign in experience",
     owners = Seq(Owner.withGithub("walaura")),
     safeState = Off,
@@ -31,6 +31,16 @@ trait ABTestSwitches {
     "ab-acquisitions-epic-liveblog",
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 1, 24),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-liveblog-world-cup",
+    "Tests some world-cup specific copy on world cup liveblogs",
+    owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 1, 24),
     exposeClientSide = true
@@ -78,31 +88,82 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-always-ask-april-story",
-    "turn on always ask for this story",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-border-thankyou",
-    "Try 2 variants - one adding a border to the epic and one with copy thanking our readers",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-native-vs-dfp",
+    "ab-acquisitions-epic-native-vs-dfp-v3",
     "See if there is any difference in annualised value between serving the Epic natively vs DFP",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2018, 6, 19), // Tuesday
+    sellByDate = new LocalDate(2018, 7, 11),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-one-variant",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-two-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-three-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-four-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-from-google-doc-five-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-engagement-banner-styling-tweaks",
+    "Test the impact of some banner styling tweaks",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = On,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-prebid-safeframe",
+    "Test the impact of serving prebid ads in safeframes",
+    owners = Seq(Owner.withGithub("jeteve")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
 }

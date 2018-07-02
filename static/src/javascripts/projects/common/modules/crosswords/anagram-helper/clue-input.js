@@ -26,7 +26,7 @@ class ClueInput extends Component<*, *> {
         this.props.onChange(e.target.value.toLowerCase());
     }
 
-    onKeyDown(e: Event) {
+    onKeyDown(e: KeyboardEvent) {
         const el: HTMLElement = (findDOMNode(this): any);
 
         if (e.keyCode === 13 && el) {

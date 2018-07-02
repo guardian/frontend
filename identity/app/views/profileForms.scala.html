@@ -18,7 +18,8 @@
     emailSubscriptions: List[String],
     availableLists: EmailNewsletters,
     consentsUpdated: Boolean,
-    consentHint: Option[String]
+    consentHint: Option[String],
+    changedEmail: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @*
@@ -96,7 +97,7 @@
                     <div class="tabs__content">
                         @content(1, "/public/edit")(profile.publicProfileForm(idUrlBuilder, idRequest, user, forms.publicForm))
 
-                        @content(2, "/account/edit")(profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm))
+                        @content(2, "/account/edit")(profile.accountDetailsForm(idUrlBuilder, idRequest, user, forms.accountForm, changedEmail))
 
                         @content(3, "/membership/edit")(profile.membershipDetailsForm(idUrlBuilder, idRequest, user))
 

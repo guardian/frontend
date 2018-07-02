@@ -77,7 +77,6 @@ jest.mock(
         engagementBannerParams: jest.fn(() => ({
             minArticles: 1,
             products: ['CONTRIBUTION'],
-            colourStrategy: jest.fn(() => ''),
             linkUrl: 'fake-link-url',
         })),
     })
@@ -158,7 +157,9 @@ describe('Membership engagement banner', () => {
 
         it('should return false user variant is blocked for test', () => {
             fakeVariantFor.mockImplementationOnce(() => ({
-                blockEngagementBanner: true,
+                options: {
+                    blockEngagementBanner: true,
+                },
             }));
 
             return membershipEngagementBanner.canShow().then(canShow => {
@@ -190,7 +191,6 @@ describe('Membership engagement banner', () => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
                 products: ['CONTRIBUTION'],
-                colourStrategy: jest.fn(() => 'fake-colour-class'),
                 campaignCode: 'fake-campaign-code',
                 linkUrl: 'fake-link-url',
             }));
@@ -259,7 +259,6 @@ describe('Membership engagement banner', () => {
         beforeEach(() => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
-                colourStrategy: jest.fn(() => 'fake-colour-class'),
                 linkUrl: 'fake-link-url',
             }));
             fakeVariantFor.mockImplementationOnce(() => ({
@@ -290,7 +289,7 @@ describe('Membership engagement banner', () => {
                 membershipEngagementBanner.show();
 
                 expect(FakeMessage.mock.calls[0][1].cssModifierClass).toBe(
-                    'fake-colour-class'
+                    'support-the-guardian-banner'
                 );
             }));
     });
@@ -299,7 +298,6 @@ describe('Membership engagement banner', () => {
         beforeEach(() => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
-                colourStrategy: jest.fn(() => 'fake-colour-class'),
                 messageText: 'fake-message-text',
                 linkUrl: 'fake-link-url',
                 buttonCaption: 'fake-button-caption',
@@ -344,7 +342,7 @@ describe('Membership engagement banner', () => {
                 membershipEngagementBanner.show();
 
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                    /fake-colour-class/
+                    /support-the-guardian-banner/
                 );
             }));
 

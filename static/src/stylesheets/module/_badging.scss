@@ -17,7 +17,13 @@
 
 .badge-slot__img {
     display: block;
+    max-height: 45px;
     width: 100%;
+
+    @include mq(desktop) {
+        max-height: 55px;
+        width: auto;
+    }
 }
 
 /* Content Rules
@@ -26,12 +32,38 @@
     .content__header {
         @include mq($from: leftCol) {
             // Prevents badged labels area overlapping meta
-            min-height: gs-height(4);
+            min-height: gs-height(3);
         }
     }
 
     .content__section-label,
     .content__series-label {
         float: none;
+    }
+}
+
+// NHS at 70 is a typographic logo so we don't want repetition of the words
+a[href^='https://www.theguardian.com/society/series/nhs-at-70'] {
+    &.content__series-label__link,
+    .fc-container__title__text {
+        @include mq(desktop) {
+            display: none;
+        }
+    }
+
+    & > .badge-slot__img {
+        @include mq($until: desktop) {
+            display: none;
+        }
+
+        @include mq($until: leftCol) {
+            max-width: gs-span(1);
+        }
+    }
+
+    .fc-container__header__title & .badge-slot {
+        @include mq($until: desktop) {
+            display: none;
+        }
     }
 }

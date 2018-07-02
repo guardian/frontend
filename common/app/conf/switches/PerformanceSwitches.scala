@@ -35,6 +35,16 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val PanicShedding = Switch(
+    SwitchGroup.Performance,
+    "panic-shedding",
+    "If this switch is on then all apps will return 304 Not Modified to all requests with an If-None-Match header (aka 'serve stale whenever possible')",
+    owners = Owner.group(SwitchGroup.Performance),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val interactivePressing = Switch(
     SwitchGroup.Performance,
     "interactive-pressing",

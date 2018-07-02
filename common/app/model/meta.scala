@@ -517,10 +517,16 @@ case class TagCombiner(
   pagination: Option[Pagination] = None
 ) extends StandalonePage {
 
+  private val webTitleOverrides: Map[String, String] = Map(
+    "football/football+tone/minutebyminute" -> "Football live "
+  )
+
+  private val webTitle: String = webTitleOverrides.getOrElse(id, s"${leftTag.name} + ${rightTag.name}")
+
   override val metadata: MetaData = MetaData.make(
     id = id,
     section = leftTag.metadata.section,
-    webTitle = s"${leftTag.name} + ${rightTag.name}",
+    webTitle = webTitle,
     pagination = pagination,
     description = Some(DotcomContentType.TagIndex.toString),
     commercial = Some(

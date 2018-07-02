@@ -129,7 +129,7 @@ class Crossword extends Component<*, CrosswordState> {
         }
     }
 
-    onKeyDown(event: Event): void {
+    onKeyDown(event: KeyboardEvent): void {
         const cell = this.state.cellInFocus;
 
         if (event.keyCode === keycodes.tab) {
@@ -371,9 +371,14 @@ class Crossword extends Component<*, CrosswordState> {
     returnPosition: ?number;
 
     insertCharacter(character: string): void {
+        const characterUppercase = character.toUpperCase();
         const cell = this.state.cellInFocus;
-        if (/[A-Z]/.test(character) && character.length === 1 && cell) {
-            this.setCellValue(cell.x, cell.y, character);
+        if (
+            /[A-Za-zÀ-ÿ]/.test(characterUppercase) &&
+            characterUppercase.length === 1 &&
+            cell
+        ) {
+            this.setCellValue(cell.x, cell.y, characterUppercase);
             this.save();
             this.focusNext();
         }

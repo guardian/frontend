@@ -267,16 +267,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AdBlockMessage = Switch(
-    Commercial,
-    "adblock",
-    "Switch for the Adblock Message.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val KruxVideoTracking = Switch(
     Commercial,
     "krux-video-tracking",
@@ -303,7 +293,7 @@ trait CommercialSwitches {
     description = "Turn on to include the analytics ONLY for Oriel. Turn off to include the FULL integration script. Depends on AB test switch.",
     owners = group(Commercial),
     safeState = On,
-    sellByDate = new LocalDate(2018, 6, 28),
+    sellByDate = new LocalDate(2018, 9, 12),
     exposeClientSide = false
   )
 
@@ -313,7 +303,7 @@ trait CommercialSwitches {
     description = "Include the blockthrough script for testing the vendors effectiveness at circumventing ad-blocking.",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 20),
+    sellByDate = new LocalDate(2018, 8, 22),
     exposeClientSide = false
    )
 
@@ -397,16 +387,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val orielSonobiIntegration: Switch = Switch(
-    group = Commercial,
-    name = "oriel-sonobi-integration-test",
-    description = "This is a short test to test the integration between Oriel and Sonobi",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 28),
-    exposeClientSide = false
-  )
-
   val AffiliateLinks: Switch = Switch(
     group = Commercial,
     name = "affiliate-links",
@@ -434,6 +414,16 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = new LocalDate(2018, 8, 23),
+    exposeClientSide = true
+  )
+
+  val pageViewAnalytics: Switch = Switch(
+    group = Commercial,
+    name = "page-view-analytics",
+    description = "Gather commercial analytics from page view",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
     exposeClientSide = true
   )
 }

@@ -1,6 +1,9 @@
 // @flow
 
 import config from 'lib/config';
+
+import { getTestVariantId } from 'common/modules/experiments/utils.js';
+
 import {
     buildAppNexusTargeting,
     buildPageTargeting,
@@ -20,6 +23,7 @@ import type {
 } from 'commercial/modules/prebid/types';
 import {
     getBreakpointKey,
+    getRandomIntInclusive,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from 'commercial/modules/prebid/utils';
@@ -213,12 +217,19 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
 
 const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
-    bidParams: (slotId: string): PrebidSonobiParams => ({
-        ad_unit: config.page.adUnit,
-        dom_id: slotId,
-        appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
-        pageViewId: config.ophan.pageViewId,
-    }),
+    bidParams: (slotId: string): PrebidSonobiParams =>
+        Object.assign(
+            {},
+            {
+                ad_unit: config.page.adUnit,
+                dom_id: slotId,
+                appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
+                pageViewId: config.ophan.pageViewId,
+            },
+            getTestVariantId('CommercialPrebidSafeframe') === 'variant'
+                ? { render: 'safeframe' }
+                : {}
+        ),
 };
 
 const trustXBidder: PrebidBidder = {
@@ -280,7 +291,8 @@ const openxBidder: PrebidBidder = {
 
 const dummyServerSideBidders: PrebidBidder[] = [];
 
-if (config.switches.prebidS2sozone) {
+// Experimental. Only 0.01% of the PVs.
+if (config.switches.prebidS2sozone && getRandomIntInclusive(1, 10000) === 1) {
     dummyServerSideBidders.push(appnexusBidder);
     dummyServerSideBidders.push(openxBidder);
 }

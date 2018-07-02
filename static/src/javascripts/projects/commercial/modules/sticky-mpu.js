@@ -10,21 +10,52 @@ const noSticky: boolean = !!(
     document.documentElement.classList.contains('has-no-sticky')
 );
 let stickyElement: Sticky;
-let rightSlot: HTMLElement;
+let stickySlot: HTMLElement;
 
 const onResize = (specs, _, iframe: ?HTMLElement) => {
-    if (rightSlot.contains(iframe)) {
+    if (stickySlot.contains(iframe)) {
         unregister('resize', onResize);
         stickyElement.updatePosition();
     }
 };
 
-const stickyMpu = (adSlot: HTMLElement) => {
-    if (adSlot.getAttribute('data-name') !== 'right') {
+const isStickyMpuSlot = (adSlot: HTMLElement) => {
+    const dataName = adSlot.dataset.name;
+    return dataName === 'comments' || dataName === 'right';
+};
+
+const stickyCommentsMpu = (adSlot: HTMLElement) => {
+    if (isStickyMpuSlot(adSlot)) {
+        stickySlot = adSlot;
+    }
+
+    const referenceElement: any = document.querySelector('.js-comments');
+
+    if (!referenceElement || !adSlot) {
         return;
     }
 
-    rightSlot = adSlot;
+    fastdom
+        .read(() => referenceElement.offsetHeight - 600)
+        .then(newHeight =>
+            fastdom.write(() => {
+                (adSlot.parentNode: any).style.height = `${newHeight}px`;
+            })
+        )
+        .then(() => {
+            if (noSticky) {
+                stickyElement = new Sticky(adSlot);
+                stickyElement.init();
+                register('resize', onResize);
+            }
+            mediator.emit('page:commercial:sticky-mpu');
+        });
+};
+
+const stickyMpu = (adSlot: HTMLElement) => {
+    if (isStickyMpuSlot(adSlot)) {
+        stickySlot = adSlot;
+    }
 
     const referenceElement: any = document.querySelector(
         '.js-article__body,.js-liveblog-body-content'
@@ -67,4 +98,4 @@ stickyMpu.whenRendered = new Promise(resolve => {
     mediator.on('page:commercial:sticky-mpu', resolve);
 });
 
-export { stickyMpu };
+export { stickyMpu, stickyCommentsMpu };

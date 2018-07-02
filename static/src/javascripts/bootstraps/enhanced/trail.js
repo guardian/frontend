@@ -15,7 +15,7 @@ import { MostPopular } from 'common/modules/onward/popular';
 import { related } from 'common/modules/onward/related';
 import { TonalComponent } from 'common/modules/onward/tonal';
 import { loadShareCounts } from 'common/modules/social/share-count';
-import { onwardVideo } from 'common/modules/video/onward-container';
+// import { onwardVideo } from 'common/modules/video/onward-container';
 import { moreInSeriesContainerInit } from 'common/modules/video/more-in-series-container';
 
 const initMoreInSection = (): void => {
@@ -28,7 +28,8 @@ const initMoreInSection = (): void => {
     } = config.get('page', {});
 
     if (
-        !config.get('isMedia') ||
+        (config.get('page.contentType') !== 'Audio' &&
+            config.get('page.contentType') !== 'Video') ||
         !showRelatedContent ||
         isPaidContent ||
         !section
@@ -94,8 +95,15 @@ const initRelated = () => {
     }
 };
 
+/**
+ * TODO: reinstate this when styling is correct
+ * https://trello.com/c/dq7QQQZ1
+
 const initOnwardVideoContainer = (): void => {
-    if (!config.get('isMedia')) {
+    if (
+        config.get('page.contentType') !== 'Audio' &&
+        config.get('page.contentType') !== 'Video'
+    ) {
         return;
     }
 
@@ -110,6 +118,7 @@ const initOnwardVideoContainer = (): void => {
         onwardVideo(el, mediaType);
     });
 };
+ */
 
 const initOnwardContent = () => {
     insertOrProximity('.js-onward', () => {
@@ -128,7 +137,9 @@ const initOnwardContent = () => {
                 });
         }
     });
-    initOnwardVideoContainer();
+    // TODO: reinstate this when styling is correct
+    // https://trello.com/c/dq7QQQZ1
+    // initOnwardVideoContainer();
 };
 
 const initDiscussion = () => {

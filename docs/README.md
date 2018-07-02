@@ -9,6 +9,7 @@
 - [Development tips](01-start-here/05-development-tips.md)
 - [Testing tips](01-start-here/06-testing-tips.md)
 - [FAQs](01-start-here/07-faqs.md)
+- [Incident Response & Triage](01-start-here/08-incidents.md)
 
 ## [Architecture](02-architecture/)
 - [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)
@@ -30,13 +31,14 @@
 - [Testing externally on your localhost](03-dev-howtos/09-testing-externally-on-localhost.md)
 - [Testing AMIs or provisioning in AWS](03-dev-howtos/10-testing-platform.md)
 - [Accessing HTTP access logs for your localhost](03-dev-howtos/11-access-logs-for-your-localhost.md)
-- [Update configuration](03-dev-howtos/12-Update-configuration.md)
+- [Update configuration in Systems Manager Parameter Store](03-dev-howtos/12-Update-configuration.md)
 - [Implement Google Analytics](03-dev-howtos/13-implement-google-analytics.md)
 - [Overriding default configuration](03-dev-howtos/14-override-default-configuration.md)
 - [Updating the test database](03-dev-howtos/15-updating-test-database.md)
 - [Working with Google AMP](03-dev-howtos/16-working-with-amp.md)
 - [Working with emails](03-dev-howtos/17-working-with-emails.md)
 - [Apply the special report tone](03-dev-howtos/18-apply-the-special-report-tone.md)
+- [Tracking components in the Data Lake](03-dev-howtos/19-tracking-components-in-the-data-lake.md)
 
 ## [Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
@@ -74,3 +76,4 @@
 - First line of every documentation file should contain its title (used to generated the table of content).
 - Store all the images in an `/images` subfolder in the same directory the document referencing them will be.
 - Table of content (TOC) is generated automatically with every commit, all changes will be staged accordingly.
+

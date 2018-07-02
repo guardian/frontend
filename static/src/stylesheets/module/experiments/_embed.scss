@@ -51,8 +51,6 @@
 .contributions__highlight {
     background-color: $news-garnett-highlight;
     padding: 4px 2px;
-    margin-left: -2px;
-    margin-right: -2px;
 }
 
 .contributions__hidden {
@@ -118,7 +116,7 @@
     margin-top: $gs-baseline * 2;
 
     // Horizontal alignment
-    align-items: left;
+    align-items: flex-start;
 
     @include mq($from: mobileLandscape) {
         flex-direction: row;
@@ -171,7 +169,7 @@ a[href].contributions__contribute.contributions__contribute--epic {
     color: $garnett-neutral-1;
 
     svg path {
-        fill: $garnett-neutral-1; 
+        fill: $garnett-neutral-1;
     }
 
     &:hover {

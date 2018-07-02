@@ -19,7 +19,7 @@
     background-color: lighten($media-background, 2.5%);
 }
 
-.ad-slot--right {
+.ad-slot--right, .ad-slot--comments {
     position: sticky;
     top: 0;
 

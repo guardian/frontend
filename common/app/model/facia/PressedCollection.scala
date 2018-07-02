@@ -41,6 +41,14 @@ case class PressedCollection(
     )
   }
 
+  def withoutTrailTextOnTail: PressedCollection = (curated, backfill) match {
+    case (curatedHead :: tail, _) => copy(curated = curatedHead :: tail.map(_.withoutTrailText), backfill = backfill.map(_.withoutTrailText))
+    case (_, backfillHead :: tail) => copy(backfill = backfillHead :: tail.map(_.withoutTrailText))
+    case _ => this
+  }
+
+  def totalSize: Int = curated.size + backfill.size
+
   def lite(visible: Int): PressedCollection = {
     val liteCurated = curated.take(visible)
     val liteBackfill = backfill.take(visible - liteCurated.length)
