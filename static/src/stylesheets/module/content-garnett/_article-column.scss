@@ -149,14 +149,14 @@
     .content__series-label--column {
         font-size: 20px;
 
-        .content__series-label__link {
+        .content__label__link {
             color: #ffffff;
             font-weight: 700;
         }
     }
 
     &.content--pillar-special-report {
-        .content__series-label__link {
+        .content__label__link {
             color: $news-garnett-highlight;
         }
     }

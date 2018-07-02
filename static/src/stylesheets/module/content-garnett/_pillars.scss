@@ -25,7 +25,7 @@
 
     .byline,
     .content--media .content__headline,
-    .content__section-label__link,
+    .content__label__link,
     .old-article-message,
     .pullquote-cite,
     a {
@@ -262,7 +262,7 @@
     }
 }
 @mixin mediaPalatte($mediaColor, $pillar) {
-    .content__section-label__link,
+    .content__label__link,
     .youtube-media-atom__bottom-bar__duration {
         color: $mediaColor;
     }
@@ -286,7 +286,7 @@
         fill: $garnett-neutral-4;
     }
 
-    a.content__series-label__link {
+    a.content__label__link {
         color: $garnett-neutral-3;
     }
 
@@ -486,6 +486,6 @@
     }
 }
 
-.immersive-main-media__headline-container .content__series-label__link {
+.immersive-main-media__headline-container .content__label__link {
     color: $garnett-neutral-3;
 }

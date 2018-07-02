@@ -189,7 +189,7 @@
     }
 }
 
-.content__section-label {
+.content__label {
     @include fs-header(2);
     display: inline;
     padding-right: $gs-gutter/3;
@@ -199,34 +199,12 @@
         line-height: get-line-height(header, 2);
         padding-right: 0;
     }
-
-    .content--interactive & {
-        padding-right: $gs-gutter/3 !important;
-    }
 }
 
-.content__series-label {
-    display: inline;
-    font-family: $f-serif-headline;
-    font-size: 16px;
-    line-height: 19px;
-
-    @include mq($until: tablet) {
-        font-weight: 800;
-    }
-
-    @include mq(tablet) {
-        display: inline;
-    }
-
-    @include mq(leftCol) {
-        @include fs-headline(2);
-        display: block;
-    }
-}
-
-.content__series-label__link {
-    color: $neutral-2;
+.content__label ~ .content__label {
+    display: block;
+    @include fs-header(1);
+    font-weight: normal;
 }
 
 @include mq(leftCol, wide) {

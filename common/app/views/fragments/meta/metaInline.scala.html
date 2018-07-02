@@ -21,36 +21,16 @@
                 </a>
             </div>
         }
-
-        @if(item.content.isPaidContent && item.content.isImmersive) {
-          <div class="content__section-label--advertisement">
-              <a class="content__section-label__link content__section-label__link--advertisement" href="@LinkTo {/@item.content.sectionLabelLink}">
-                  @Html(Localisation(item.content.sectionLabelName))
-              </a>
-          </div>
-        } else {
-            @if(!(item.content.isImmersive && item.content.tags.isArticle || item.content.isColumn)) {
-              <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
-                  <a class="content__section-label__link"
-                      data-link-name="article section"
-                      href="@LinkTo {/@item.content.sectionLabelLink}">
-                      <span class="label__link-wrapper">
-                          @Html(Localisation(item.content.sectionLabelName))
-                      </span>
-                  </a>
-              </div>
-          }
-        }
     }
 
     @item.content.blogOrSeriesTag.map { series =>
         <div class="@RenderClasses(Map(
-                "content__series-label--immersive-article" -> (item.content.isImmersive && item.content.tags.isArticle),
+                "content__series-label--immersive-article content__label" -> (item.content.isImmersive && item.content.tags.isArticle),
                 "content__series-label--photo-essay" -> item.content.isPhotoEssay,
                 "content__series-label--column" -> item.content.isColumn
-            ), "content__series-label")
+            ), "content__series-label content__label")
           ">
-            <a class="content__series-label__link" href="@LinkTo {/@series.id}">
+            <a class="content__label__link" href="@LinkTo {/@series.id}">
                 <span class="label__link-wrapper">
                     @series.name
                 </span>
@@ -71,9 +51,31 @@
         }
     }.getOrElse {
         @if(item.content.isFromTheObserver && !item.content.isImmersive) {
-            <div class="content__series-label">
-                <a class="content__series-label__link" href="https://www.theguardian.com/observer">The Observer</a>
+            <div class="content__series-label content__label">
+                <a class="content__label__link" href="https://www.theguardian.com/observer">The Observer</a>
             </div>
+        }
+    }
+
+    @if(!amp) {
+        @if(item.content.isPaidContent && item.content.isImmersive) {
+          <div class="content__section-label--advertisement">
+              <a class="content__label__link content__section-label__link--advertisement" href="@LinkTo {/@item.content.sectionLabelLink}">
+                  @Html(Localisation(item.content.sectionLabelName))
+              </a>
+          </div>
+        } else {
+            @if(!(item.content.isImmersive && item.content.tags.isArticle || item.content.isColumn)) {
+              <div class="content__section-label content__label @if(item.content.tags.isGallery) { content__section-label--gallery }">
+                  <a class="content__label__link"
+                      data-link-name="article section"
+                      href="@LinkTo {/@item.content.sectionLabelLink}">
+                      <span class="label__link-wrapper">
+                          @Html(Localisation(item.content.sectionLabelName))
+                      </span>
+                  </a>
+              </div>
+          }
         }
     }
 </div>

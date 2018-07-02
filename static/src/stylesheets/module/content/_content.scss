@@ -200,7 +200,7 @@
     font-weight: bold;
 }
 
-.content__series-label__link {
+.content__label__link {
     color: $neutral-2;
 }
 
@@ -798,7 +798,7 @@
         @include f-textSans;
         font-weight: 400;
 
-        .content__section-label__link {
+        .content__label__link {
             color: $neutral-1;
         }
     }
@@ -845,7 +845,7 @@
         .meta__numbers .sharecount__heading,
         .meta__numbers .commentcount2__heading,
         .content__dateline,
-        .content__series-label__link {
+        .content__label__link {
             color: $neutral-2-contrasted;
         }
 

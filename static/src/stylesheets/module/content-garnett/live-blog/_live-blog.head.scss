@@ -853,7 +853,7 @@ $pillars: (
             background: darken(map-get($palette, pillarColor), 5);
         }
 
-        .content__section-label__link[href] {
+        .content__label__link[href] {
             color: map-get($palette, kickerColor);
         }
 
@@ -875,11 +875,8 @@ $pillars: (
         .content__labels {
             border-bottom-color: $neutral-5;
         }
-        .content__section-label__link {
+        .content__label__link {
             color: $sport-garnett-feature;
-        }
-        .content__series-label__link {
-            color: $sport-garnett-main-1;
         }
         .content__headline {
             color: $garnett-neutral-1;
@@ -899,7 +896,7 @@ $pillars: (
     .content__head,
     .content__standfirst,
     .content__standfirst a[href],
-    .content__series-label__link[href] {
+    .content__label__link[href] {
         color: #ffffff;
     }
 
@@ -956,12 +953,8 @@ $pillars: (
             color: $garnett-neutral-1;
         }
 
-        .content__section-label__link {
+        .content__label__link {
             color: map-get($palette, altKickerColor);
-        }
-
-        .content__series-label__link {
-            color: $garnett-neutral-6;
         }
 
         .content__header {
@@ -996,8 +989,7 @@ $pillars: (
     }
 
     .content__labels {
-        .content__section-label__link,
-        .content__series-label__link {
+        .content__label__link {
             color: $neutral-1;
         }
     }
