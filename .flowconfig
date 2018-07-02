@@ -13,6 +13,9 @@ static/src/javascripts/__flow__/types
 ####### ATOM LIBRARY #######
 node_modules/@guardian/atom-renderer/dist/__flow__/types
 
+####### DOTCOM RENDERING #######
+node_modules/@guardian/dotcom-rendering/flow-typed
+
 [options]
 emoji=true
 
