@@ -697,7 +697,9 @@ $quote-mark: 35px;
     .content__headline-showcase-wrapper {
         .content__header {
             @include mq($from: desktop) {
-                margin-bottom: calc(-#{$gs-baseline} * 7 - 2px);
+                @supports (display: grid) {
+                    margin-bottom: calc(-#{$gs-baseline} * 7 - 2px);
+                }
             }
         }
     }
