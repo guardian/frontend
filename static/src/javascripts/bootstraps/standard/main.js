@@ -203,9 +203,6 @@ const bootStandard = (): void => {
     // Set adtest query if url param declares it
     setAdTestCookie();
 
-    // Remove the old ad-free cookie - we can delete this line in a few days
-    removeCookie('GU_AFU');
-
     // If we turn off the ad-free trial, immediately remove the cookie
     if (!config.get('switches.adFreeSubscriptionTrial')) {
         removeCookie('GU_AF1');
@@ -215,12 +212,14 @@ const bootStandard = (): void => {
     // if the user is genuinely ad-free, this one will be overwritten
     // in user-features
     if (window.location.hash.match(/[#&]noadsaf(&.*)?$/)) {
-        const forcedAdFreeValidMinutes = 5;
+        const daysToLive = 1;
+        const isCrossSubDomain = true;
+        const forcedAdFreeValidSeconds = 30;
         const forcedAdFreeExpiryTime = new Date();
         forcedAdFreeExpiryTime.setTime(
-            forcedAdFreeExpiryTime.getTime() + forcedAdFreeValidMinutes * 60000
+            forcedAdFreeExpiryTime.getTime() + forcedAdFreeValidSeconds * 1000
         );
-        addCookie('GU_AF1', forcedAdFreeExpiryTime.getTime().toString());
+        addCookie('GU_AF1', forcedAdFreeExpiryTime.getTime().toString(), daysToLive, isCrossSubDomain);
     }
 
     // set local storage: gu.alreadyVisited
