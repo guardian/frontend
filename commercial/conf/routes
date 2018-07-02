@@ -46,4 +46,4 @@ GET         /ads.txt                                                        comm
 
 # Analytics
 POST        /commercial/api/hb                                              commercial.controllers.PrebidAnalyticsController.insert()
-POST        /commercial/api/pv                                              commercial.controllers.PageViewAnalyticsController.store()
+POST        /commercial/api/pv                                              commercial.controllers.PageViewAnalyticsController.insert()

@@ -119,7 +119,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     case article: ArticlePage =>
 
       RenderingTierPicker.getRenderTierFor(page) match {
-        case RemoteRender => log.logger.info("This was a remotely renderable article")
+        case RemoteRender => log.logger.info(s"Remotely renderable article $path")
         case _ =>
       }
 

@@ -1,6 +1,9 @@
 // @flow
 
 import config from 'lib/config';
+
+import { getTestVariantId } from 'common/modules/experiments/utils.js';
+
 import {
     buildAppNexusTargeting,
     buildPageTargeting,
@@ -214,12 +217,19 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
 
 const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
-    bidParams: (slotId: string): PrebidSonobiParams => ({
-        ad_unit: config.page.adUnit,
-        dom_id: slotId,
-        appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
-        pageViewId: config.ophan.pageViewId,
-    }),
+    bidParams: (slotId: string): PrebidSonobiParams =>
+        Object.assign(
+            {},
+            {
+                ad_unit: config.page.adUnit,
+                dom_id: slotId,
+                appNexusTargeting: buildAppNexusTargeting(buildPageTargeting()),
+                pageViewId: config.ophan.pageViewId,
+            },
+            getTestVariantId('CommercialPrebidSafeframe') === 'variant'
+                ? { render: 'safeframe' }
+                : {}
+        ),
 };
 
 const trustXBidder: PrebidBidder = {

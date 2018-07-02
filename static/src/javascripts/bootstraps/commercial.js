@@ -8,6 +8,7 @@ import { init as initArticleAsideAdverts } from 'commercial/modules/article-asid
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { init as initCmpService } from 'commercial/modules/cmp/cmp';
+import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-tracker';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as prepareSonobiTag } from 'commercial/modules/dfp/prepare-sonobi-tag';
 import { init as initCarrotTrafficDriver } from 'commercial/modules/carrot-traffic-driver';
@@ -31,6 +32,7 @@ import { initDFPEpicSlot } from 'commercial/modules/epic/dfp-epic-slot';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-prepare-cmp', initCmpService],
+    ['cm-track-cmp-consent', trackCmpConsent],
     ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-prepare-googletag', prepareGoogletag, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
