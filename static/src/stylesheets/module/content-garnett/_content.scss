@@ -190,7 +190,7 @@
 }
 
 .content__label {
-    @include fs-header(2);
+    @include fs-header(1);
     display: inline;
     padding-right: $gs-gutter / 3;
 
@@ -513,11 +513,8 @@
     border-top: 0;
     color: $garnett-neutral-1;
     font-style: italic;
-    line-height: 20px;
     min-height: 0;
-    margin-top: -$gs-baseline/4;
-    // magic numbers are correcting line heights so vertical alignment appears even
-    padding-top: 4px;
+    margin-bottom: $gs-baseline / 3;
     font-weight: normal;
     width: 100%;
 
