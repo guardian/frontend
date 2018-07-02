@@ -219,7 +219,12 @@ const bootStandard = (): void => {
         forcedAdFreeExpiryTime.setTime(
             forcedAdFreeExpiryTime.getTime() + forcedAdFreeValidSeconds * 1000
         );
-        addCookie('GU_AF1', forcedAdFreeExpiryTime.getTime().toString(), daysToLive, isCrossSubDomain);
+        addCookie(
+            'GU_AF1',
+            forcedAdFreeExpiryTime.getTime().toString(),
+            daysToLive,
+            isCrossSubDomain
+        );
     }
 
     // set local storage: gu.alreadyVisited
