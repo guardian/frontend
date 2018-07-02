@@ -202,8 +202,8 @@
 }
 
 .content__label ~ .content__label {
-    display: block;
     @include fs-header(1);
+    display: block;
     font-weight: normal;
 }
 
