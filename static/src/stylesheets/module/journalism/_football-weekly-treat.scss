@@ -11,6 +11,7 @@
     }
 
     a {
+        text-decoration-color: $garnett-neutral-1;
         display: flex;
 
         @include mq(leftCol) {
