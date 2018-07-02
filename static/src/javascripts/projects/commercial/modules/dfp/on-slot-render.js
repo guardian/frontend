@@ -75,10 +75,6 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
         // Set refresh field based on the outcome of the slot render.
         const sizeString = advert.size && advert.size.toString();
         const isNotFluid = sizeString !== '0,0';
-        const neverHasVideo =
-            advert.id !== 'dfp-ad--inline1' ||
-            config.get('page.isFront') ||
-            config.get('page.contentType') === 'LiveBlog';
         const isNonRefreshableLineItem =
             event.lineItemId &&
             config
@@ -86,10 +82,7 @@ export const onSlotRender = (event: SlotRenderEndedEvent): void => {
                 .includes(event.lineItemId);
 
         advert.shouldRefresh =
-            isNotFluid &&
-            neverHasVideo &&
-            !config.page.hasPageSkin &&
-            !isNonRefreshableLineItem;
+            isNotFluid && !config.page.hasPageSkin && !isNonRefreshableLineItem;
 
         renderAdvert(advert, event).then(emitRenderEvents);
     }

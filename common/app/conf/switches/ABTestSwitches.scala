@@ -88,26 +88,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-always-ask-april-story",
-    "turn on always ask for this story",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-border-thankyou",
-    "Try 2 variants - one adding a border to the epic and one with copy thanking our readers",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 6, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-native-vs-dfp-v3",
     "See if there is any difference in annualised value between serving the Epic natively vs DFP",
     owners = Seq(Owner.withGithub("Mullefa")),
@@ -158,6 +138,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-from-google-doc-five-variants",
+    "Serves an epic with copy from a Google Doc",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 6, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-engagement-banner-styling-tweaks",
     "Test the impact of some banner styling tweaks",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -165,4 +155,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 6, 5),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-prebid-safeframe",
+    "Test the impact of serving prebid ads in safeframes",
+    owners = Seq(Owner.withGithub("jeteve")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 9, 30),
+    exposeClientSide = true
+  )
+
 }

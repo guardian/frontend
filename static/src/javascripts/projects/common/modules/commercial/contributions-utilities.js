@@ -20,7 +20,6 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { noop } from 'lib/noop';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
-import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'common/modules/commercial/user-features';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic-utils';
@@ -51,9 +50,6 @@ const controlTemplate: EpicTemplate = (
 ) =>
     acquisitionsEpicControlTemplate({
         copy,
-        testimonialBlock: copy.testimonial
-            ? acquisitionsTestimonialBlockTemplate(copy.testimonial)
-            : '',
         componentName: options.componentName,
         buttonTemplate: options.buttonTemplate({
             supportUrl: options.supportURL,
