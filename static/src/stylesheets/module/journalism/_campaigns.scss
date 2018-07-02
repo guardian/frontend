@@ -200,22 +200,23 @@
     }
     .form_field_label {
         margin: 1px 0 6px 3px;
-        padding-left: 10px;
-        font-size: 14px;
-        line-height: 18px;
+        padding: 0 10px;
+        font-size: 16px;
+        line-height: 20px;
         font-weight: 500;
         font-family: $f-serif-headline;
 
         span {
             font-weight: 200;
+            margin-right: 10px;
 
-            &::before {
-                content: "(";
-            }
+            //&::before {
+            //    content: "(";
+            //}
 
-            &::after {
-                content: ")";
-            }
+            //&::after {
+            //    content: ")";
+            //}
         }
     }
 }
