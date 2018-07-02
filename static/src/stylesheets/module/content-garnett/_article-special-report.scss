@@ -8,6 +8,10 @@
     .content__series-label .content__label__link {
         box-shadow: -3px 0 0 0 $news-garnett-highlight, 3px 0 0 0 $news-garnett-highlight;
 
+        @include mq(leftCol) {
+            line-height: 24px;
+        }
+
         .label__link-wrapper {
             background: $news-garnett-highlight;
             position: relative;
