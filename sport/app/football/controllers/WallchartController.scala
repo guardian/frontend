@@ -43,7 +43,7 @@ class WallchartController(
           .collectFirst({ case spider: KnockoutSpider => spider })
           .map(spider=>
             Cached(60) {
-              JsonComponent(football.views.html.wallchart.snap(competition, spider))
+              JsonComponent(football.views.html.wallchart.wallchartComponent(competition, spider))
             }
           ).getOrElse(NotFound)
       }
