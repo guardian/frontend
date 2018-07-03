@@ -260,10 +260,16 @@ $footballBadgeSizeDesktop: 120px;
 
 .knockout-snap {
     width: 100%;
+
+    .football-match__crest, .facia-snap--football .football-team__form {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
 }
 
 .facia-snap.facia-snap--football.facia-snap-embed.facia-snap-point--huge {
-    height: auto;
+    height: auto !important; // height is normally set on the parent snap element in Facia
 }
 
 .facia-snap--football .inline-icon {
