@@ -1,5 +1,5 @@
 .site-message--support-the-guardian-banner {
-    background-color: $news-garnett-highlight;
+    background-color: $highlight-bold;
     max-height: 80%;
 
     // we have our own close button - see .support-the-guardian-banner__close-button
@@ -23,7 +23,7 @@
         display: none;
         position: absolute;
         svg {
-            fill: $garnett-neutral-1;
+            fill: $black;
         }
 
         // Because this roundel "jumps" from the right to left
@@ -36,7 +36,7 @@
 
     .site-message__close-btn {
         display: inline-block;
-        border-color: $garnett-neutral-1;
+        border-color: $black;
     }
 
     .site-message__inner {
@@ -52,7 +52,7 @@
 }
 
 .support-the-guardian-banner__text {
-    color: $garnett-neutral-1;
+    color: $black;
 
     font-size: 17px;
     line-height: 22px;
@@ -105,8 +105,8 @@
     font-size: 14px;
     line-height: 36px;
 
-    background-color: $garnett-neutral-1;
-    border-color: $garnett-neutral-1;
+    background-color: $black;
+    border-color: $black;
 
     .inline-icon {
         float: right;
@@ -172,16 +172,16 @@
     padding: 2px 0 0;
 
     background: transparent;
-    border: 1px solid rgba($garnett-neutral-1, .3);
-    color: $garnett-neutral-1;
+    border: 1px solid rgba($black, .3);
+    color: $black;
 
     svg {
-        fill: $garnett-neutral-1;
+        fill: $black;
     }
 
     &:hover,
     &:focus,
     &:active {
-        border-color: $garnett-neutral-1;
+        border-color: $black;
     }
 }

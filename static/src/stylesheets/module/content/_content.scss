@@ -200,13 +200,8 @@
     font-weight: bold;
 }
 
-<<<<<<< HEAD
 .content__label__link {
-    color: $neutral-2;
-=======
-.content__series-label__link {
     color: $brightness-46;
->>>>>>> Removing old tonal colours
 }
 
 @include mq(leftCol, wide) {
@@ -850,13 +845,8 @@
         .meta__numbers .sharecount__heading,
         .meta__numbers .commentcount2__heading,
         .content__dateline,
-<<<<<<< HEAD
         .content__label__link {
-            color: $neutral-2-contrasted;
-=======
-        .content__series-label__link {
             color: $brightness-46;
->>>>>>> Removing old tonal colours
         }
 
         .tonal__main--tone-media .sharecount__value,

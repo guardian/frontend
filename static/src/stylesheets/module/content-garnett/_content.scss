@@ -211,14 +211,9 @@
         display: block;
     }
 
-<<<<<<< HEAD
     @include mq($until: tablet) {
         display: none;
     }
-=======
-.content__series-label__link {
-    color: $brightness-46;
->>>>>>> Removing old tonal colours
 }
 
 @include mq(leftCol, wide) {
