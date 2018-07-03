@@ -186,7 +186,7 @@ const buildPageTargeting = once(
                     ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
                     : undefined,
                 cc: geolocationGetSync(),
-                s: page.section,
+                s: page.section, // for reference in a macro, so cannot be extracted from ad unit
             },
             page.sharedAdTargeting,
             paTargeting,
