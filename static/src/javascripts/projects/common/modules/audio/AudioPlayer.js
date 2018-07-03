@@ -15,7 +15,6 @@ import {
     mobile,
     desktop,
 } from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
-import ophan from 'ophan/ng';
 
 import download from 'svgs/journalism/audio-player/download.svg';
 import pauseBtn from 'svgs/journalism/audio-player/pause-btn.svg';
@@ -26,7 +25,7 @@ import fastForward from 'svgs/journalism/audio-player/fast-forward.svg';
 import fastBackwardActive from 'svgs/journalism/audio-player/fast-backward-active.svg';
 import fastForwardActive from 'svgs/journalism/audio-player/fast-forward-active.svg';
 
-import { formatTime } from './utils';
+import { formatTime, sendToOphan, checkForTimeEvents } from './utils';
 
 import ProgressBar from './ProgressBar';
 import Time from './Time';
@@ -324,6 +323,8 @@ export default class AudioPlayer extends Component<Props, State> {
         this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
         this.source = this.context.createMediaElementSource(this.audio);
         this.source.connect(this.analyser);
+        this.analyser.connect(this.context.destination);
+        this.audio.crossOrigin = 'anonymous';
 
         // eslint-disable-next-line react/no-did-mount-set-state
         this.setState(
@@ -350,9 +351,15 @@ export default class AudioPlayer extends Component<Props, State> {
     };
 
     onTimeUpdate = () => {
+        const percentPlayed = Math.round(
+            (this.audio.currentTime / this.state.duration) * 100
+        );
+        if (percentPlayed > this.state.currentOffset) {
+            checkForTimeEvents(this.props.mediaId, percentPlayed);
+        }
         this.setState({
             currentTime: this.audio.currentTime,
-            currentOffset: (this.audio.currentTime / this.state.duration) * 100,
+            currentOffset: percentPlayed,
         });
     };
 
@@ -408,18 +415,9 @@ export default class AudioPlayer extends Component<Props, State> {
             }
         );
         if (!this.state.hasBeenPlayed) {
-            this.sendToOphan(this.props.mediaId);
+            sendToOphan(this.props.mediaId, 'play');
             this.setState({ hasBeenPlayed: true });
         }
-    };
-
-    sendToOphan = (id: string) => {
-        ophan.record({
-            audio: {
-                id,
-                eventType: 'audio:content:play',
-            },
-        });
     };
 
     forward = () => {
