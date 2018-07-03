@@ -51,8 +51,7 @@ export const initCommentAdverts = (): ?boolean => {
                 .read(() => $commentMainColumn.dim().height)
                 .then((mainColHeight: number) => {
                     if (
-                        mainColHeight >= 800 ||
-                        (isUserLoggedIn() && mainColHeight >= 300)
+                        mainColHeight >= 800
                     ) {
                         insertCommentAd($commentMainColumn);
                     } else {
