@@ -7,7 +7,7 @@ import { engagementBannerParams } from 'common/modules/commercial/membership-eng
 import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import {
     messageCode as supportTheGuardianMessageCode,
-    canShow as canShowSupportTheGuardianBanner
+    canShow as canShowSupportTheGuardianBanner,
 } from 'common/modules/commercial/membership-engagement-banner';
 import {
     track as trackFirstPvConsent,
@@ -19,7 +19,6 @@ import {
     bindableClassNames as firstPvConsentBindableClassNames,
 } from 'common/modules/ui/first-pv-consent-banner';
 import marque36icon from 'svgs/icon/marque-36.svg';
-import userPrefs from 'common/modules/user-prefs';
 
 const messageCode: string = 'first-pv-consent-plus-support-the-guardian';
 
@@ -75,26 +74,31 @@ const bannerHtml = `
 
 class SubMessage extends Message {
     elementSelector: string;
+    parent: Message;
 
-    constructor(id: string, elementSelector: string, options?: Object) {
+    constructor(
+        id: string,
+        elementSelector: string,
+        parent: Message,
+        options?: Object
+    ) {
         super(id, options);
         this.elementSelector = elementSelector;
+        this.parent = parent;
     }
 
     hide() {
         const element = document.querySelector(this.elementSelector);
         if (element) {
-            const parent = element.parentElement;
+            const parentElement = element.parentElement;
             element.remove();
-            if (parent && parent.childElementCount === 0) {
-                parent.remove();
+            if (parentElement && parentElement.childElementCount === 0) {
+                parentElement.remove();
             }
         }
 
-        // Don't display the double banner again
-        // if either of the sub-banners has been hidden
-        const firstPvConsentPlusSupportTheGuardianMessage = new Message(messageCode);
-        firstPvConsentPlusSupportTheGuardianMessage.remember();
+        // Don't display parent again if any sub-message has been hidden
+        this.parent.remember();
     }
 
     bindCloseHandler() {
@@ -108,20 +112,19 @@ class SubMessage extends Message {
             }
         }
     }
-
-    isAcknowledged(): boolean {
-        const messageStates = userPrefs.get(this.prefs) || [];
-        return messageStates.includes(this.id);
-    }
 }
+
+const firstPvConsentPlusSupportTheGuardianMessage = new Message(messageCode);
 
 const firstPvConsentMessage = new SubMessage(
     firstPvConsentMessageCode,
-    '.js-first-pv-consent-site-message'
+    '.js-first-pv-consent-site-message',
+    firstPvConsentPlusSupportTheGuardianMessage
 );
 const supportTheGuardianMessage = new SubMessage(
     supportTheGuardianMessageCode,
-    '.js-support-the-guardian-site-message'
+    '.js-support-the-guardian-site-message',
+    firstPvConsentPlusSupportTheGuardianMessage
 );
 
 const show = (): void => {
@@ -141,8 +144,8 @@ const firstPvConsentPlusSupportTheGuardianBanner: Banner = {
         canShowSupportTheGuardianBanner() &&
         Promise.resolve(
             !(
-                firstPvConsentMessage.isAcknowledged() ||
-                supportTheGuardianMessage.isAcknowledged()
+                firstPvConsentMessage.isRemembered() ||
+                supportTheGuardianMessage.isRemembered()
             )
         ),
     show,
