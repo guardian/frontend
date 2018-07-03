@@ -69,7 +69,7 @@ $btn-height: ($gs-baseline*3.5);
     .site-message--double-banner & {
         background: transparent;
         color: #ffffff;
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, .5);
         transition: border-color .15s ease-out;
         height: 36px;
     }

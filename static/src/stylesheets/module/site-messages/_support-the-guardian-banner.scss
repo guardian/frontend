@@ -62,12 +62,12 @@
 }
 
 .support-the-guardian-banner__text {
+    @include banner-copy-alignment;
+
     color: $garnett-neutral-1;
 
     font-size: 17px;
     line-height: 22px;
-
-    @include banner-copy-alignment;
 }
 
 .support-the-guardian-banner__cta {
