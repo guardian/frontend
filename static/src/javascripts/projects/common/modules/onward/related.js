@@ -73,6 +73,9 @@ const related = (opts: Object): void => {
     let popularInTag;
     let componentName;
 
+    const shouldHideForAdFree =
+        commercialFeatures.adFree && config.get('page.isPaidContent');
+
     if (config.get('page.hasStoryPackage')) {
         const expandable =
             document.body && document.body.querySelector('.related-trails');
@@ -83,7 +86,7 @@ const related = (opts: Object): void => {
     } else if (
         config.get('switches.relatedContent') &&
         config.get('page.showRelatedContent') &&
-        !commercialFeatures.adFree
+        !shouldHideForAdFree
     ) {
         const container =
             document.body && document.body.querySelector('.js-related');
