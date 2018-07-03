@@ -724,7 +724,6 @@ final case class Tags(
   def javascriptConfig: Map[String, JsValue] = Map(
     ("keywords", JsString(keywords.map { _.name }.mkString(","))),
     ("keywordIds", JsString(keywordIds.mkString(","))),
-    ("hasSuperStickyBanner", JsBoolean(false)),
     ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
     ("richLink", JsString(richLink.getOrElse(""))),
     ("author", JsString(contributors.map(_.name).mkString(","))),

@@ -15,8 +15,7 @@ object Section {
 
     val javascriptConfigOverrides: Map[String, JsValue] = Map(
       "keywords" -> JsString(webTitle),
-      "keywordIds" -> JsString(keywordIds.mkString(",")),
-      "hasSuperStickyBanner" -> JsBoolean(false)
+      "keywordIds" -> JsString(keywordIds.mkString(","))
     )
 
     val metadata = MetaData (

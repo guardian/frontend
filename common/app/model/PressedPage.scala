@@ -26,7 +26,6 @@ object PressedPage {
     val faciaPageMetaData: Map[String, JsValue] = Map(
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
-      "hasSuperStickyBanner" -> JsBoolean(false),
       "isPaidContent" -> JsBoolean(frontProperties.isPaidContent)
     )
 

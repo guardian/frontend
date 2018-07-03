@@ -119,7 +119,6 @@ class CommercialFeatures {
 
         this.paidforBand =
             config.page.isPaidContent &&
-            !config.page.hasSuperStickyBanner &&
             !supportsSticky;
 
         this.adFeedback = false;
