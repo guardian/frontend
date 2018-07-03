@@ -11,9 +11,9 @@ class PrebidAnalyticsController(val controllerComponents: ControllerComponents) 
 
   private implicit val ec: ExecutionContext = controllerComponents.executionContext
 
-  private val stream = Analytics.storeJsonBody(Switches.prebidAnalytics, prebidAnalyticsStream, log) _
-
   def insert(): Action[String] = Action(parse.text) { implicit request =>
-    stream(request)
+    val stream = Analytics.storeJsonBody(Switches.prebidAnalytics, prebidAnalyticsStream, log) _
+
+    stream(request.body)
   }
 }

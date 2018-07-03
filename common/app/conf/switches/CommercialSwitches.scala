@@ -420,7 +420,7 @@ trait CommercialSwitches {
   val pageViewAnalytics: Switch = Switch(
     group = Commercial,
     name = "page-view-analytics",
-    description = "Gather commercial analytics from page view",
+    description = "Gather commercial analytics from page views",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,

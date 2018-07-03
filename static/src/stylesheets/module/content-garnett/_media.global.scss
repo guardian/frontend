@@ -1,5 +1,63 @@
 @import '../social-icons';
 
+
+/* new audio styles hacked in for test page */
+
+.content--media.new-audio {
+
+    * {
+        box-sizing: border-box;
+    }
+    figure#audio-component-container {
+        margin-bottom: 12px;
+    }
+    @media (min-width: 1300px) {
+        figure#audio-component-container {
+            margin-bottom: 36px;
+        }
+    }
+    ul {
+        margin: 0;
+        list-style-type: none;
+        line-height: 1.5rem;
+        img {
+            display: inline-block;
+        }
+    }
+
+    h1, h2, h3, li, p {
+        color: #dcdcdc;
+    }
+    .player {
+        line-height: 0;
+    }
+
+    @media (max-width: 46.24em) {
+        .player {
+            margin: 0 -.55rem;
+        }
+    }
+
+    @media (min-width: 71.25em) {
+        .player {
+            margin-left: -10rem;
+        }
+        .content__meta-container {
+            top: auto;
+        }
+    }
+    @media (min-width: 81.25em) {
+        .player {
+            margin-left: -15rem;
+        }
+    }
+
+}
+
+
+/* original styles */
+
+
 .content--media {
     .content__main-column {
         &::before {
