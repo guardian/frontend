@@ -207,6 +207,7 @@
     @include mq(leftCol) {
         font-size: 16px;
         line-height: 18px;
+        margin-bottom: $gs-baseline;
         display: block;
     }
 
