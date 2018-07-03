@@ -149,7 +149,7 @@
 
 .content__labels {
     box-sizing: border-box;
-    padding: $gs-baseline/2 0 0;
+    padding: ($gs-baseline / 2 + $gs-baseline / 4) 0 0;
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     overflow: hidden;
@@ -189,44 +189,30 @@
     }
 }
 
-.content__section-label {
-    @include fs-header(2);
+.content__label {
+    @include fs-header(1);
     display: inline;
-    padding-right: $gs-gutter/3;
+    padding-right: $gs-gutter / 3;
 
     @include mq(leftCol) {
         @include fs-header(4);
-        line-height: get-line-height(header, 2);
+        line-height: 20px;
         padding-right: 0;
     }
-
-    .content--interactive & {
-        padding-right: $gs-gutter/3 !important;
-    }
 }
 
-.content__series-label {
-    display: inline;
-    font-family: $f-serif-headline;
-    font-size: 16px;
-    line-height: 19px;
-
-    @include mq($until: tablet) {
-        font-weight: 800;
-    }
-
-    @include mq(tablet) {
-        display: inline;
-    }
+.content__label ~ .content__label {
+    font-weight: normal;
 
     @include mq(leftCol) {
-        @include fs-headline(2);
+        font-size: 16px;
+        line-height: 18px;
         display: block;
     }
-}
 
-.content__series-label__link {
-    color: $neutral-2;
+    @include mq($until: tablet) {
+        display: none;
+    }
 }
 
 @include mq(leftCol, wide) {
@@ -523,26 +509,22 @@
 }
 
 .byline {
-    @include fs-bodyHeading(2);
-    margin-bottom: 0;
-    display: inline-block;
-    padding-top: $gs-baseline/3;
-    line-height: 20px;
-    color: $neutral-2;
+    @include fs-header(1);
+    border-top: 0;
+    color: $garnett-neutral-1;
+    font-style: italic;
+    min-height: 0;
+    margin-bottom: $gs-baseline / 3;
+    font-weight: normal;
+    width: 100%;
 
-    @include mq(tablet) {
-        line-height: 22px;
+    @include mq($until: phablet) {
+        border-top: 0;
     }
 
-    @include mq(leftCol) {
-        clear: both;
-        margin-right: 0;
-        display: block;
-        border-top: 1px dotted $neutral-5;
-        box-sizing: border-box;
-        padding-top: $gs-baseline/6;
-        padding-bottom: $gs-baseline;
-        min-height: $gs-baseline*4;
+    span[itemprop='author'] {
+        font-weight: 700;
+        font-style: normal;
     }
 
     .content__meta-container--twitter &,

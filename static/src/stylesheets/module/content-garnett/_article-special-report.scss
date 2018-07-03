@@ -5,19 +5,16 @@
         background-color: $news-garnett-highlight;
     }
 
-    .content__series-label__link,
-    .content__section-label__link {
+    .content__series-label .content__label__link {
         box-shadow: -3px 0 0 0 $news-garnett-highlight, 3px 0 0 0 $news-garnett-highlight;
-    }
 
-    .label__link-wrapper {
-        background: $news-garnett-highlight;
-        position: relative;
-    }
-
-    .content__series-label {
         @include mq(leftCol) {
-            margin-top: -2px;
+            line-height: 24px;
+        }
+
+        .label__link-wrapper {
+            background: $news-garnett-highlight;
+            position: relative;
         }
     }
 
@@ -39,7 +36,7 @@
     .content__labels {
         background-color: $news-garnett-highlight;
 
-        .content__series-label__link {
+        .content__label__link {
             color: $garnett-neutral-1;
         }
     }
