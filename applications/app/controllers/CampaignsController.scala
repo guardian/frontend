@@ -23,18 +23,18 @@ class CampaignsController(
     val jsonBody: Option[JsValue] = request.body.asJson
 
     jsonBody.map { json =>
-      sendToFormstack(json).flatMap { res =>
+      sendToFormstack(json).map { res =>
         if (res.status == 201) {
-          Future.successful(Redirect(pageUrl))
+          Redirect(pageUrl)
         }
         else {
           log.error(s"Reader contribution to callout was sent to Formstack but not saved correctly: ${res}")
-          Future(BadRequest("Sorry your story couldn't be saved"))
+          InternalServerError("There was a problem processing your request, please try again later.")
         }
       }
     }.getOrElse{
       log.error(s"Reader contribution callout: No data submitted by the reader - post body was empty: ${jsonBody}")
-      Future(BadRequest("Sorry no data was found"))
+      Future.successful(BadRequest("No data was sent in the request"))
     }
 
   }
