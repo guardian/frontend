@@ -29,7 +29,9 @@ export const acquisitionsBannerControlTemplate = (
             </button>
             <img
                 class="support-the-guardian-banner__payment-logos"
-                src="${config.get('images.acquisitions.paypal-and-credit-card')}"
+                src="${config.get(
+                    'images.acquisitions.paypal-and-credit-card'
+                )}"
                 alt="PayPal and credit card"
             >
         </div>

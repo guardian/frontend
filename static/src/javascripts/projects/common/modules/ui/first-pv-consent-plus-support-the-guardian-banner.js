@@ -1,15 +1,14 @@
 // @flow
-import config from 'lib/config';
 import { Message } from 'common/modules/ui/message';
-import checkIcon from 'svgs/icon/tick.svg';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import {
-    messageCode as supportTheGuardianMessageCode
+    messageCode as supportTheGuardianMessageCode,
+    canShow as canShowSupportTheGuardianBanner
 } from 'common/modules/commercial/membership-engagement-banner';
-import {addTrackingCodesToUrl} from "common/modules/commercial/acquisitions-ophan";
 import {
     track as trackFirstPvConsent,
     bindClickHandlers as bindFirstPvConsentClickHandlers,
@@ -17,18 +16,16 @@ import {
     messageCode as firstPvConsentMessageCode,
     makeHtml as makeFirstPvConsentHtml,
     template as firstPvConsentTemplate,
-    bindableClassNames as firstPvConsentBindableClassNames
+    bindableClassNames as firstPvConsentBindableClassNames,
 } from 'common/modules/ui/first-pv-consent-banner';
-import {
-    canShow as canShowSupportTheGuardianBanner
-} from 'common/modules/commercial/membership-engagement-banner';
 import marque36icon from 'svgs/icon/marque-36.svg';
-import userPrefs from "common/modules/user-prefs";
-
+import userPrefs from 'common/modules/user-prefs';
 
 const messageCode: string = 'first-pv-consent-plus-support-the-guardian';
 
-const bannerParams: EngagementBannerParams = engagementBannerParams(geolocationGetSync());
+const bannerParams: EngagementBannerParams = engagementBannerParams(
+    geolocationGetSync()
+);
 
 const bannerTemplateParams: EngagementBannerTemplateParams = {
     messageText: bannerParams.messageText,
@@ -38,7 +35,7 @@ const bannerTemplateParams: EngagementBannerTemplateParams = {
         base: bannerParams.linkUrl,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         componentId: 'first_pv_consent_plus_support_the_guardian_banner',
-    })
+    }),
 };
 
 const bannerHtml = `
@@ -50,7 +47,9 @@ const bannerHtml = `
                         ${marque36icon.markup}
                     </div>
                     <div class="site-message__copy js-site-message-copy u-cf">
-                        ${acquisitionsBannerControlTemplate(bannerTemplateParams)}
+                        ${acquisitionsBannerControlTemplate(
+                            bannerTemplateParams
+                        )}
                     </div>
                 </div>
             </div>
@@ -63,7 +62,10 @@ const bannerHtml = `
                         ${marque36icon.markup}
                     </div>
                     <div class="site-message__copy js-site-message-copy u-cf">
-                        ${makeFirstPvConsentHtml(firstPvConsentTemplate, firstPvConsentBindableClassNames)}
+                        ${makeFirstPvConsentHtml(
+                            firstPvConsentTemplate,
+                            firstPvConsentBindableClassNames
+                        )}
                     </div>
                 </div>
             </div>
@@ -91,6 +93,7 @@ class SubMessage extends Message {
 
         // Don't display the double banner again
         // if either of the sub-banners has been hidden
+        const firstPvConsentPlusSupportTheGuardianMessage = new Message(messageCode);
         firstPvConsentPlusSupportTheGuardianMessage.remember();
     }
 
@@ -99,9 +102,9 @@ class SubMessage extends Message {
         if (element) {
             const closeButton = element.querySelector('.js-site-message-close');
             if (closeButton) {
-                closeButton.addEventListener('click', (ev: Event) => {
+                closeButton.addEventListener('click', () => {
                     this.acknowledge();
-                })
+                });
             }
         }
     }
@@ -112,9 +115,14 @@ class SubMessage extends Message {
     }
 }
 
-const firstPvConsentMessage = new SubMessage(firstPvConsentMessageCode, '.js-first-pv-consent-site-message');
-const supportTheGuardianMessage = new SubMessage(supportTheGuardianMessageCode, '.js-support-the-guardian-site-message');
-const firstPvConsentPlusSupportTheGuardianMessage = new Message(messageCode);
+const firstPvConsentMessage = new SubMessage(
+    firstPvConsentMessageCode,
+    '.js-first-pv-consent-site-message'
+);
+const supportTheGuardianMessage = new SubMessage(
+    supportTheGuardianMessageCode,
+    '.js-support-the-guardian-site-message'
+);
 
 const show = (): void => {
     trackFirstPvConsent();
@@ -131,7 +139,12 @@ const firstPvConsentPlusSupportTheGuardianBanner: Banner = {
     canShow: () =>
         canShowFirstPvConsent() &&
         canShowSupportTheGuardianBanner() &&
-        Promise.resolve(!(firstPvConsentMessage.isAcknowledged() || supportTheGuardianMessage.isAcknowledged())),
+        Promise.resolve(
+            !(
+                firstPvConsentMessage.isAcknowledged() ||
+                supportTheGuardianMessage.isAcknowledged()
+            )
+        ),
     show,
 };
 

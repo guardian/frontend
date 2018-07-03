@@ -45,9 +45,9 @@ const template: Template = {
         `We use cookies to improve your experience on our site and to show you relevant&nbsp;advertising.`,
         `To find out more, read our updated <a class="u-underline" data-link-name="first-pv-consent : to-privacy" href="${
             links.privacy
-            }">privacy policy</a> and <a class="u-underline" data-link-name="first-pv-consent : to-cookies" href="${
+        }">privacy policy</a> and <a class="u-underline" data-link-name="first-pv-consent : to-cookies" href="${
             links.cookies
-            }">cookie policy</a>.`,
+        }">cookie policy</a>.`,
     ],
     agreeButton: 'OK',
     choicesButton: 'More information',
@@ -60,18 +60,18 @@ const bindableClassNames: BindableClassNames = {
 
 const makeHtml = (tpl: Template, classes: BindableClassNames): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head">${
-    tpl.heading
+        tpl.heading
     }</div>
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${tpl.consentText
-    .map(_ => `<p>${_}</p>`)
-    .join('')}
+        .map(_ => `<p>${_}</p>`)
+        .join('')}
     </div>
     <div class="site-message--first-pv-consent__actions">
         <button 
             data-link-name="first-pv-consent : agree" 
             class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
-classes.agree
-}"
+                classes.agree
+            }"
         >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
         <a 
             href="${tpl.linkToPreferences}" 
@@ -112,11 +112,11 @@ const track = (): void => {
 };
 
 const bindClickHandlers = (msg: Message): void => {
-    [
-        ...document.querySelectorAll(`.${bindableClassNames.agree}`),
-    ].forEach(agreeButtonEl => {
-        agreeButtonEl.addEventListener('click', () => onAgree(msg));
-    });
+    [...document.querySelectorAll(`.${bindableClassNames.agree}`)].forEach(
+        agreeButtonEl => {
+            agreeButtonEl.addEventListener('click', () => onAgree(msg));
+        }
+    );
 };
 
 const show = (): void => {
@@ -143,4 +143,13 @@ export const _ = {
     bindableClassNames,
 };
 
-export { firstPvConsentBanner, canShow, track, bindClickHandlers, messageCode, makeHtml, template, bindableClassNames };
+export {
+    firstPvConsentBanner,
+    canShow,
+    track,
+    bindClickHandlers,
+    messageCode,
+    makeHtml,
+    template,
+    bindableClassNames,
+};

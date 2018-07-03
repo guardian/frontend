@@ -15,7 +15,10 @@ export const acquisitionsBannerTemplateOldStyling = (
             <span class="membership__paypal-container">
                 <img
                     class="membership__paypal-logo"
-                    src="${config.get('images.acquisitions.paypal-and-credit-card', '')}"
+                    src="${config.get(
+                        'images.acquisitions.paypal-and-credit-card',
+                        ''
+                    )}"
                     alt="Paypal and credit card"
                 >
                 <span class="membership__support-button">

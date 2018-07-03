@@ -5,7 +5,6 @@ import { adblockInUse } from 'lib/detect';
 import { Message } from 'common/modules/ui/message';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
-import { inlineSvg } from 'common/views/svgs';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
