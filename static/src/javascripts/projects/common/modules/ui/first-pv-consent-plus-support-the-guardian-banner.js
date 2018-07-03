@@ -15,6 +15,9 @@ import {
     bindClickHandlers as bindFirstPvConsentClickHandlers,
     canShow as canShowFirstPvConsent,
     messageCode as firstPvConsentMessageCode,
+    makeHtml as makeFirstPvConsentHtml,
+    template as firstPvConsentTemplate,
+    bindableClassNames as firstPvConsentBindableClassNames
 } from 'common/modules/ui/first-pv-consent-banner';
 import {
     canShow as canShowSupportTheGuardianBanner
@@ -23,71 +26,7 @@ import marque36icon from 'svgs/icon/marque-36.svg';
 import userPrefs from "common/modules/user-prefs";
 
 
-type Template = {
-    heading: string,
-    consentText: string[],
-    agreeButton: string,
-    choicesButton: string,
-    linkToPreferences: string,
-};
-
-type BindableClassNames = {
-    agree: string,
-};
-
-type Links = {
-    privacy: string,
-    cookies: string,
-};
-
 const messageCode: string = 'first-pv-consent-plus-support-the-guardian';
-
-const links: Links = {
-    privacy: 'https://www.theguardian.com/help/privacy-policy',
-    cookies: 'https://www.theguardian.com/info/cookies',
-};
-
-const template: Template = {
-    heading: `Your privacy`,
-    consentText: [
-        `We use cookies to improve your experience on our site and to show you relevant&nbsp;advertising.`,
-        `To find out more, read our updated <a class="u-underline" data-link-name="first-pv-consent : to-privacy" href="${
-            links.privacy
-        }">privacy policy</a> and <a class="u-underline" data-link-name="first-pv-consent : to-cookies" href="${
-            links.cookies
-        }">cookie policy</a>.`,
-    ],
-    agreeButton: 'OK',
-    choicesButton: 'More information',
-    linkToPreferences: `${config.get('page.idUrl')}/privacy-settings`,
-};
-
-const bindableClassNames: BindableClassNames = {
-    agree: 'js-first-pv-consent-agree',
-};
-
-const firstPvConsentHtml = (tpl: Template, classes: BindableClassNames): string => `
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head">${
-        tpl.heading
-    }</div>
-    <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">${tpl.consentText
-        .map(_ => `<p>${_}</p>`)
-        .join('')}
-    </div>
-    <div class="site-message--first-pv-consent__actions">
-        <button 
-            data-link-name="first-pv-consent : agree" 
-            class="site-message--first-pv-consent__button site-message--first-pv-consent__button--main ${
-                classes.agree
-            }"
-        >${checkIcon.markup}<span>${tpl.agreeButton}</span></button>
-        <a 
-            href="${tpl.linkToPreferences}" 
-            data-link-name="first-pv-consent : to-prefs" 
-            class="site-message--first-pv-consent__link u-underline"
-        >${tpl.choicesButton}</a>
-    </div>
-`;
 
 const bannerParams: EngagementBannerParams = engagementBannerParams(geolocationGetSync());
 
@@ -124,7 +63,7 @@ const bannerHtml = `
                         ${marque36icon.markup}
                     </div>
                     <div class="site-message__copy js-site-message-copy u-cf">
-                        ${firstPvConsentHtml(template, bindableClassNames)}
+                        ${makeFirstPvConsentHtml(firstPvConsentTemplate, firstPvConsentBindableClassNames)}
                     </div>
                 </div>
             </div>

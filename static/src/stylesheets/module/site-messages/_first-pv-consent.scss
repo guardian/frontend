@@ -139,12 +139,6 @@ $btn-height: ($gs-baseline*3.5);
             @include fs-textSans(2);
             @include mq(tablet) {
                 @include fs-textSans(5);
-                width: gs-span(7) + $gs-gutter;
-            }
-
-            @include mq(desktop) {
-                display: inline-block;
-                width: gs-span(7)  + $gs-gutter;
             }
 
             @include banner-copy-alignment;
@@ -176,7 +170,6 @@ $btn-height: ($gs-baseline*3.5);
         @include mq(desktop) {
             display: inline-block;
             vertical-align: bottom;
-            margin-left: gs-span(1) + $gs-gutter;
         }
     }
 

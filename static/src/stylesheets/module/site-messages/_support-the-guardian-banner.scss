@@ -67,15 +67,6 @@
     font-size: 17px;
     line-height: 22px;
 
-    @include mq(tablet) {
-        width: gs-span(7) + $gs-gutter;
-    }
-
-    @include mq(desktop) {
-        display: inline-block;
-        width: gs-span(7) + $gs-gutter;
-    }
-
     @include banner-copy-alignment;
 }
 
@@ -85,7 +76,6 @@
     @include mq(desktop) {
         display: inline-block;
         vertical-align: bottom;
-        margin-left: gs-span(1) + $gs-gutter;
     }
 }
 
