@@ -11,12 +11,136 @@
         display: none;
     }
 
+    &[open] {
+        background: $garnett-neutral-8;
+    }
+
     p {
         font-size: 14px;
         line-height: 18px;
         font-family: $f-serif-headline;
         font-weight: 400;
         padding-top: 5px;
+    }
+}
+
+article {
+    .speech-bubble {
+        background-color: $garnett-neutral-1;
+        &::after {
+            background-color: $garnett-neutral-1;
+        }
+    }
+    .form_submit {
+        button {
+            background-color: $garnett-neutral-1;
+        }
+    }
+    .campaign--snippet__handle{
+        background-color: $garnett-neutral-1;
+        &:hover, :active {
+            background-color: pink;
+        }
+    }
+}
+
+article.content--pillar-news {
+    .speech-bubble {
+        background-color: $news-garnett-main-1;
+        &::after {
+            background-color: $news-garnett-main-1;
+        }
+    }
+    .form_submit {
+        button {
+            background-color: $news-garnett-main-1;
+        }
+    }
+    .campaign--snippet__handle {
+        background-color: $garnett-neutral-1;
+        &:hover, :active {
+            background-color: $news-garnett-main-1;
+        }
+    }
+}
+
+article.content--pillar-sport {
+    .speech-bubble {
+        background-color: $sport-garnett-feature;
+        &::after {
+            background-color: $sport-garnett-feature;
+        }
+    }
+    .form_submit {
+        button {
+            background-color: $sport-garnett-feature;
+        }
+    }
+    .campaign--snippet__handle {
+        background-color: $garnett-neutral-1;
+        &:hover, :active {
+            background-color: $sport-garnett-feature;
+        }
+    }
+}
+
+article.content--pillar-opinion {
+    .speech-bubble {
+        background-color: $opinion-garnett-feature;
+        &::after {
+            background-color: $opinion-garnett-feature;
+        }
+    }
+    .form_submit {
+        button {
+            background-color: $opinion-garnett-feature;
+        }
+    }
+    .campaign--snippet__handle {
+        background-color: $garnett-neutral-1;
+        &:hover, :active {
+            background-color: $opinion-garnett-feature;
+        }
+    }
+}
+
+article.content--pillar-arts {
+    .speech-bubble {
+        background-color: $culture-garnett-feature;
+        &::after {
+            background-color: $culture-garnett-feature;
+        }
+    }
+    .form_submit {
+        button {
+            background-color: $culture-garnett-feature;
+        }
+    }
+    .campaign--snippet__handle {
+        background-color: $garnett-neutral-1;
+        &:hover, :active {
+            background-color: $culture-garnett-feature;
+        }
+    }
+}
+
+article.content--pillar-lifestyle {
+    .speech-bubble {
+        background-color: $lifestyle-garnett-main-1;
+        &::after {
+            background-color: $lifestyle-garnett-main-1;
+        }
+    }
+    .form_submit {
+        button {
+            background-color: $lifestyle-garnett-main-1;
+        }
+    }
+    .campaign--snippet__handle {
+        background-color: $garnett-neutral-1;
+        &:hover, :active {
+            background-color: $lifestyle-garnett-main-1;
+        }
     }
 }
 
@@ -40,7 +164,6 @@
             margin-right: 10px;
 
             .speech-bubble {
-                background-color: $news-garnett-main-1;
                 padding: 3px 8px 10px 9px;
                 color: #ffffff;
                 line-height: 18px;
@@ -69,7 +192,6 @@
 }
 
 .campaign--snippet__handle {
-    background: #121212;
     color: #ffffff;
     font-family: $f-sans-serif-text;
     font-size: 13px;
@@ -127,7 +249,6 @@
         position: absolute;
         bottom: -12px;
         left: 10px;
-        background: $news-garnett-main-1;
     }
 }
 
@@ -136,8 +257,6 @@
 .campaign--snippet form {
     display: flex;
     flex-direction: column;
-    //padding: 0 .5em 2em;
-    background: $garnett-neutral-8;
 
     [type=radio], [type=checkbox] {
         margin-left: 0;
@@ -213,14 +332,6 @@
         span {
             font-weight: 200;
             margin-right: 10px;
-
-            //&::before {
-            //    content: "(";
-            //}
-
-            //&::after {
-            //    content: ")";
-            //}
         }
     }
 }
@@ -234,7 +345,6 @@
         flex: auto;
         padding: 4px 0 40px 10px;
         .button {
-            background-color: #c70000;
             color: #ffffff;
             height: 30px;
             line-height: 30px;

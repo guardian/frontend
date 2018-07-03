@@ -40,7 +40,9 @@
                 <label for="<%=field.name%>"
                        class="form_field_label">
                     <%= field.label %>
-                    <span><%= field.description %></span>
+                    <% if(field.description) { %>
+                        <span>(<%= field.description %>)</span>
+                    <% } %>
                 </label>
 
                 <% if(field.type === "textarea") { %>
