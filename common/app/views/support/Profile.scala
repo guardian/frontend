@@ -127,7 +127,6 @@ trait OverlayBase64 {
   def overlayUrlBase64(overlay: String): String = Base64.getUrlEncoder.encodeToString(Static(s"images/overlays/$overlay").getBytes)
 }
 
-// Despite the base64 codes looking similar, the twitter overlay is a different size to the facebook overlay.
 object TwitterImage extends OverlayBase64 {
     val default = new ShareImage(s"blend64=${overlayUrlBase64("tg-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
     val opinions = new ShareImage(s"blend64=${overlayUrlBase64("tg-opinions")}", TwitterShareImageLogoOverlay.isSwitchedOn)
@@ -144,6 +143,7 @@ object TwitterImage extends OverlayBase64 {
         }
         new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
     }
+    val opinionsObserver = new ShareImage(s"blend64=${overlayUrlBase64("to-opinions")}", TwitterShareImageLogoOverlay.isSwitchedOn)
 }
 
 object FacebookOpenGraphImage extends OverlayBase64 {
@@ -162,6 +162,7 @@ object FacebookOpenGraphImage extends OverlayBase64 {
         }
         new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
     }
+    val opinionsObserver = new ShareImage(s"blend64=${overlayUrlBase64("to-opinions")}", FacebookShareImageLogoOverlay.isSwitchedOn)
 }
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {
