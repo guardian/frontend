@@ -2,18 +2,18 @@
     background-color: #eff1f2;
 
     .content__headline--byline .tone-colour {
-        background-color: $highlight-bold;
+        background-color: $highlight-main;
     }
 
     .content__series-label .content__label__link {
-        box-shadow: -3px 0 0 0 $highlight-bold, 3px 0 0 0 $highlight-bold;
+        box-shadow: -3px 0 0 0 $highlight-main, 3px 0 0 0 $highlight-main;
 
         @include mq(leftCol) {
             line-height: 24px;
         }
 
         .label__link-wrapper {
-            background: $highlight-bold;
+            background: $highlight-main;
             position: relative;
         }
     }
@@ -34,7 +34,7 @@
 
 .content--immersive.content--pillar-special-report:not(.immersive-main-media__gallery):not(.paid-content):not(.content--gallery):not(.content--minute-article) {
     .content__labels {
-        background-color: $highlight-bold;
+        background-color: $highlight-main;
 
         .content__series-label__link {
             color: $black;

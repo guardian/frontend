@@ -275,7 +275,7 @@ $quote-mark: 35px;
 
     //Review stars
     .stars {
-        background-color: $highlight-bold;
+        background-color: $highlight-main;
         display: inline-block;
         line-height: 0;
         padding: calc((#{$gs-baseline} / 2) - 2px);
@@ -742,8 +742,8 @@ $quote-mark: 35px;
         display: inline-block;
         font-style: italic;
         font-weight: 500;
-        background-color: $highlight-bold;
-        box-shadow: $gs-baseline / 2 0 0 $highlight-bold, -$gs-baseline / 2 0 0 $highlight-bold;
+        background-color: $highlight-main;
+        box-shadow: $gs-baseline / 2 0 0 $highlight-main, -$gs-baseline / 2 0 0 $highlight-main;
         color: $black;
         margin-bottom: $gs-baseline;
         padding-bottom: $gs-baseline / 4;
@@ -974,7 +974,7 @@ $quote-mark: 35px;
     .meta__extras,
     .meta__number:not(.u-h) + .meta__number,
     .meta__numbers {
-        border-color: $brightness-27;
+        border-color: $brightness-20;
     }
 
     .tonal__standfirst {
@@ -999,7 +999,7 @@ $quote-mark: 35px;
     }
 
     .content__meta-container {
-        @include multiline(4, $brightness-27, top);
+        @include multiline(4, $brightness-20, top);
     }
 
     .inline-icon,

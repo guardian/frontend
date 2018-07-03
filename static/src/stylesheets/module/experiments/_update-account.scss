@@ -2,7 +2,7 @@
     color: $white;
     background: $black;
     &:after {
-        @include multiline(3, $brightness-27, top);
+        @include multiline(3, $brightness-20, top);
         content: '';
         display: block;
         height: 4px * 3; /*height of multiline (4px) times the number of lines (3)*/

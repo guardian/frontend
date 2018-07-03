@@ -241,7 +241,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .rich-link__title,
 .fc-sublink__link {
     .inline-video-icon {
-        fill: $highlight-bold;
+        fill: $highlight-main;
 
         > svg {
             height: .75em;
@@ -255,7 +255,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .rich-link--gallery .rich-link__title,
 .fc-sublink--gallery .fc-sublink__link {
     .inline-camera {
-        fill: $highlight-bold;
+        fill: $highlight-main;
 
         svg {
             height: .72em;
@@ -269,7 +269,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .rich-link--audio .rich-link__title,
 .fc-sublink--audio .fc-sublink__link {
     .inline-volume-high {
-        fill: $highlight-bold;
+        fill: $highlight-main;
 
         svg {
             height: .72em;
@@ -517,7 +517,7 @@ $block-height: 71px;
     padding: $gs-baseline/4 $gs-baseline/2;
     border-top: 1px solid mix(#ffffff, $news-dark, 50%);
     border-bottom: 4px solid #cc2b12;
-    background-color: $news-bold;
+    background-color: $news-main;
 }
 
 .fc-item__liveblog-block__text:after {
@@ -531,8 +531,8 @@ $block-height: 71px;
     color: mix(#ffffff, $news-dark, 92%);
     height: 18px;
     padding-right: 8px;
-    background-color: $news-bold;
-    box-shadow: -5px 0 5px -2px $news-bold;
+    background-color: $news-main;
+    box-shadow: -5px 0 5px -2px $news-main;
 }
 
 .fc-item__liveblog-block__time {

@@ -67,25 +67,25 @@
 }
 
 .content--pillar-news {
-    @include PillarColourTwo($news-bold, $news-dark);
+    @include PillarColourTwo($news-main, $news-dark);
 }
 
 .content--pillar-opinion {
-    @include PillarColourTwo($opinion-bold, $opinion-dark);
+    @include PillarColourTwo($opinion-main, $opinion-dark);
 
     background-color: $opinion-faded;
 }
 
 .content--pillar-sport {
-    @include PillarColourOne($sport-bold, $sport-dark);
+    @include PillarColourOne($sport-main, $sport-dark);
 }
 
 .content--pillar-arts {
-    @include PillarColourOne($culture-bold, $culture-dark);
+    @include PillarColourOne($culture-main, $culture-dark);
 }
 
 .content--pillar-lifestyle {
-    @include PillarColourOne($lifestyle-bold, $lifestyle-dark);
+    @include PillarColourOne($lifestyle-main, $lifestyle-dark);
 }
 
 .tonal--tone-special-report {
@@ -93,11 +93,11 @@
     background-color: #eff1f2;
 
     .content__label__link {
-        background-color: $highlight-bold;
+        background-color: $highlight-main;
         padding: ($gs-baseline / 4) ($gs-gutter / 4);
     }
 
     .content__meta-container .byline-img {
-        background-color: $highlight-bold;
+        background-color: $highlight-main;
     }
 }

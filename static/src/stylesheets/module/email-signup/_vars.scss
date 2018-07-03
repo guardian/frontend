@@ -8,12 +8,12 @@ $rounded-adjustment: .66em;
 
 $tones: (
     (analysis, $sport-bright, $sport-dark),
-    (comment, $opinion-bold, $opinion-bold, $opinion-bold),
-    (feature, $lifestyle-bold, $lifestyle-dark, $lifestyle-bold),
-    (live, $news-dark, $news-bold),
+    (comment, $opinion-main, $opinion-main, $opinion-main),
+    (feature, $lifestyle-main, $lifestyle-dark, $lifestyle-main),
+    (live, $news-dark, $news-main),
     (media, $black, $black),
     (news, $sport-dark, $sport-dark),
-    (review, $highlight-bold, darken($highlight-bold, 10%), $brightness-46, $brightness-46),
+    (review, $highlight-main, darken($highlight-main, 10%), $brightness-46, $brightness-46),
     (special-feature, $brightness-46, $brightness-46),
     (plaindark, $brightness-86, $brightness-86, $brightness-86, $brightness-20)
 );
@@ -23,11 +23,11 @@ $tones: (
 $article-tones: (
     // tone, title, accent, text, button-text, background
     (analysis, $guardian-brand, $sport-bright, $brightness-46, #ffffff,  #f1f1f1),
-    (comment, $black, $opinion-bold, $black, #ffffff, $brightness-93),
+    (comment, $black, $opinion-main, $black, #ffffff, $brightness-93),
     (feature, #ffffff, $lifestyle-pastel, #ffffff, $lifestyle-dark, $lifestyle-dark),
     (live, #ffffff, $lifestyle-pastel, #ffffff, $news-dark, $news-dark),
-    (media, #ffffff, $highlight-bold, #ffffff, $black, $brightness-20),
+    (media, #ffffff, $highlight-main, #ffffff, $black, $brightness-20),
     (news, #ffffff, $sport-pastel, #ffffff, $guardian-brand, $guardian-brand),
-    (review, #ffffff, $highlight-bold, #ffffff, #615b52, #615b52),
-    (special-feature, #ffffff, $highlight-bold, #ffffff, $brightness-46, $brightness-46)
+    (review, #ffffff, $highlight-main, #ffffff, #615b52, #615b52),
+    (special-feature, #ffffff, $highlight-main, #ffffff, $brightness-46, $brightness-46)
 );

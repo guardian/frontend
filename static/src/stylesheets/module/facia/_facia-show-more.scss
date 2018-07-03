@@ -15,7 +15,7 @@
 .show-more__error-message {
     @include fs-textSans(3);
     transition: opacity 1.5s;
-    color: $news-bold;
+    color: $news-main;
     display: inline-block;
     padding-top: $gs-baseline / 2;
     opacity: 1;

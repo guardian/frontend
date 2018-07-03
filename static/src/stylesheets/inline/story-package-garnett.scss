@@ -136,5 +136,5 @@
     @include kicker-override(sport, $sport-bright);
     @include kicker-override(opinion, $opinion-bright);
     @include kicker-override(news, $news-bright);
-    @include kicker-override(special-report, $highlight-bold);
+    @include kicker-override(special-report, $highlight-main);
 }

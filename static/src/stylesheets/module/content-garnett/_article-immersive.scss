@@ -243,7 +243,7 @@
         }
 
         .pullquote-paragraph {
-            color: $lifestyle-bold;
+            color: $lifestyle-main;
         }
 
         .pullquote-cite {
@@ -442,10 +442,10 @@
     }
 
     .in-body-link--immersive {
-        color: $lifestyle-bold;
+        color: $lifestyle-main;
 
         &:hover {
-            border-bottom-color: rgba($lifestyle-bold, .4);
+            border-bottom-color: rgba($lifestyle-main, .4);
         }
     }
 
@@ -836,9 +836,9 @@
     }
 }
 
-@include immersivePillarColours('news', $news-bright, $news-bold);
-@include immersivePillarColours('opinion', $opinion-bright, $opinion-bold);
-@include immersivePillarColours('sport', $sport-bright, $sport-bold);
-@include immersivePillarColours('arts', $culture-bright, $culture-bold);
-@include immersivePillarColours('lifestyle', $lifestyle-bright, $lifestyle-bold);
-@include immersivePillarColours('special-report', $highlight-bold, $special-report-dark);
+@include immersivePillarColours('news', $news-bright, $news-main);
+@include immersivePillarColours('opinion', $opinion-bright, $opinion-main);
+@include immersivePillarColours('sport', $sport-bright, $sport-main);
+@include immersivePillarColours('arts', $culture-bright, $culture-main);
+@include immersivePillarColours('lifestyle', $lifestyle-bright, $lifestyle-main);
+@include immersivePillarColours('special-report', $highlight-main, $special-report-dark);

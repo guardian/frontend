@@ -21,7 +21,7 @@
 
     &.is-key-event,
     &.is-summary {
-        border-top: 1px solid $news-bold;
+        border-top: 1px solid $news-main;
     }
 }
 
@@ -202,7 +202,7 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     font-weight: bold;
     text-decoration: none;
-    background-color: $news-bold;
+    background-color: $news-main;
     color: #ffffff;
     border: 0;
     border-radius: 1000px;

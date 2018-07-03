@@ -308,7 +308,7 @@ $block-height: 58px;
     padding: $gs-baseline/4 $gs-baseline/2;
     border-top: 1px solid mix(#ffffff, $news-dark, 50%);
     border-bottom: 4px solid #cc2b12;
-    background-color: $news-bold;
+    background-color: $news-main;
 }
 
 .fc-item__liveblog-block__text:after {
@@ -322,8 +322,8 @@ $block-height: 58px;
     color: mix(#ffffff, $news-dark, 92%);
     height: 18px;
     padding-right: 8px;
-    background-color: $news-bold;
-    box-shadow: -5px 0 5px -2px $news-bold;
+    background-color: $news-main;
+    box-shadow: -5px 0 5px -2px $news-main;
 }
 
 .fc-item__liveblog-block__time {
@@ -443,7 +443,7 @@ $block-height: 58px;
     .fc-item__header
     {
         .fc-item__stars {
-            background-color: $highlight-bold;
+            background-color: $highlight-main;
             display: inline-block;
             line-height: 0;
             padding: $gs-baseline / 4;

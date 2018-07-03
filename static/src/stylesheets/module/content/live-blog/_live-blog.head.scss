@@ -205,7 +205,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 
 .block.is-key-event,
 .block.is-summary {
-    border-top: 1px solid $news-bold;
+    border-top: 1px solid $news-main;
 }
 
 .truncated-block {
@@ -242,7 +242,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 @keyframes new-block-animation {
-    0% { opacity: 0; border-top-color: $news-bold; }
+    0% { opacity: 0; border-top-color: $news-main; }
     100% { opacity: 1; border-top-color: $brightness-86; }
 }
 

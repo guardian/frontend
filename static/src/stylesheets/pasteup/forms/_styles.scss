@@ -74,21 +74,21 @@
 
 .form-field--error {
     .label {
-        color: $news-bold;
+        color: $news-main;
     }
 
     .text-input,
     .text-input:focus {
-        border-color: $news-bold;
+        border-color: $news-main;
     }
 }
 
 .form__error {
     @include fs-textSans(2);
-    background-color: lighten($news-bold, 55%);
-    border-bottom: 1px solid lighten($news-bold, 35%);
-    border-top: 1px solid lighten($news-bold, 35%);
-    color: $news-bold;
+    background-color: lighten($news-main, 55%);
+    border-bottom: 1px solid lighten($news-main, 35%);
+    border-top: 1px solid lighten($news-main, 35%);
+    color: $news-main;
     margin-top: 6px;
     padding: 7px ($gs-baseline/3)*2;
 }
@@ -104,7 +104,7 @@
 }
 
 .form-field__error {
-    color: $news-bold;
+    color: $news-main;
     margin-top: $gs-baseline/2;
 }
 

@@ -29,14 +29,14 @@
 }
 
 .right-most-popular__kicker {
-    color: $news-bold;
+    color: $news-main;
 }
 
 .right-most-popular__byline {
     @include fs-headline(2);
     font-style: italic;
 }
-@each $pillar, $palette in (news: $news-dark, opinion: $opinion-bold, sport: $sport-bold, arts: $culture-bold, lifestyle: $lifestyle-bold) {
+@each $pillar, $palette in (news: $news-dark, opinion: $opinion-main, sport: $sport-main, arts: $culture-main, lifestyle: $lifestyle-main) {
     .right-most-popular__byline--#{$pillar} {
         color: $palette;
     }

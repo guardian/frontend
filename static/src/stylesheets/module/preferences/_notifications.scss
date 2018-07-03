@@ -1,4 +1,4 @@
-@mixin notifcations-button-style($foreground: $news-bold, $background: #ffffff) {
+@mixin notifcations-button-style($foreground: $news-main, $background: #ffffff) {
     .notifications__toggle {
         border: 0;
         padding: 0;
@@ -49,7 +49,7 @@ $slider-clearence: 3px;
 }
 
 .live-notifications__slider--subscribed {
-    background-color: $news-bold;
+    background-color: $news-main;
 
     &:before {
         left: $slider-clearence * 7;

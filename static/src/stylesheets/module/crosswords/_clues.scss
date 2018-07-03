@@ -1,6 +1,6 @@
 .crossword__clues-header {
     @include fs-header(1);
-    border-top: 1px solid $lifestyle-bold;
+    border-top: 1px solid $lifestyle-main;
     border-bottom: 1px dotted $brightness-86;
     padding-bottom: $gs-baseline * .75;
 }

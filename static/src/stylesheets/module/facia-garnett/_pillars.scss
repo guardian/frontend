@@ -1,41 +1,41 @@
 $pillars: (
     news: (
         cardBackground: $brightness-97,
-        lines: $news-bold,
-        kicker: $news-bold,
+        lines: $news-main,
+        kicker: $news-main,
         headline: $black,
         featureHeadline: $news-dark,
-        byline: $news-bold,
+        byline: $news-main,
         commentCount: $brightness-60,
-        headlineIcon: $news-bold,
+        headlineIcon: $news-main,
         metaText: $brightness-60,
-        cutoutBackground: $news-bold,
+        cutoutBackground: $news-main,
         invertedKicker: $news-bright,
         liveColour: $news-pastel
     ),
     opinion: (
         cardBackground: $brightness-97,
-        lines: $opinion-bold,
-        kicker: $opinion-bold,
+        lines: $opinion-main,
+        kicker: $opinion-main,
         headline: $black,
         featureHeadline: $opinion-dark,
-        byline: $opinion-bold,
+        byline: $opinion-main,
         commentCount: $brightness-46,
-        headlineIcon: $opinion-bold,
+        headlineIcon: $opinion-main,
         metaText: $brightness-60,
-        cutoutBackground: $opinion-bold,
+        cutoutBackground: $opinion-main,
         invertedKicker: $opinion-bright,
         liveColour: $opinion-pastel
     ),
     sport: (
         cardBackground: $brightness-97,
-        lines: $sport-bold,
-        kicker: $sport-bold,
+        lines: $sport-main,
+        kicker: $sport-main,
         headline: $black,
         featureHeadline: $sport-dark,
-        byline: $sport-bold,
+        byline: $sport-main,
         commentCount: $brightness-60,
-        headlineIcon: $sport-bold,
+        headlineIcon: $sport-main,
         metaText: $brightness-60,
         cutoutBackground: $sport-dark,
         invertedKicker: $sport-bright,
@@ -43,27 +43,27 @@ $pillars: (
     ),
     arts: (
         cardBackground: $brightness-97,
-        lines: $culture-bold,
-        kicker: $culture-bold,
+        lines: $culture-main,
+        kicker: $culture-main,
         headline: $black,
         featureHeadline: $culture-dark,
-        byline: $culture-bold,
+        byline: $culture-main,
         commentCount: $brightness-60,
-        headlineIcon: $culture-bold,
+        headlineIcon: $culture-main,
         metaText: $brightness-60,
-        cutoutBackground: $culture-bold,
+        cutoutBackground: $culture-main,
         invertedKicker: $culture-bright,
         liveColour: $culture-pastel
     ),
     lifestyle: (
         cardBackground: $brightness-97,
-        lines: $lifestyle-bold,
-        kicker: $lifestyle-bold,
+        lines: $lifestyle-main,
+        kicker: $lifestyle-main,
         headline: $black,
         featureHeadline: $lifestyle-dark,
-        byline: $lifestyle-bold,
+        byline: $lifestyle-main,
         commentCount: $brightness-60,
-        headlineIcon: $lifestyle-bold,
+        headlineIcon: $lifestyle-main,
         metaText: $brightness-60,
         cutoutBackground: $lifestyle-dark,
         invertedKicker: $lifestyle-bright,
@@ -71,16 +71,16 @@ $pillars: (
     ),
     special-report: (
         cardBackground: $special-report-dark,
-        lines: $highlight-bold,
-        kicker: $highlight-bold,
+        lines: $highlight-main,
+        kicker: $highlight-main,
         headline: #ffffff,
         featureHeadline: #ffffff,
         byline: $special-report-dark,
         commentCount: $brightness-60,
         headlineIcon: $special-report-dark,
         metaText: $brightness-60,
-        cutoutBackground: $highlight-bold,
-        invertedKicker: $highlight-bold,
+        cutoutBackground: $highlight-main,
+        invertedKicker: $highlight-main,
         liveColour: #ffffff
     )
 );
@@ -352,7 +352,7 @@ $pillars: (
 
         .fc-item__byline {
             color: $special-report-dark;
-            background-color: $highlight-bold;
+            background-color: $highlight-main;
             display: inline;
         }
 
@@ -376,7 +376,7 @@ $pillars: (
     }
 
     .fc-sublink__kicker {
-        color: $highlight-bold;
+        color: $highlight-main;
     }
 
     .fc-sublink__title {

@@ -130,7 +130,7 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-discussion__message--error {
-    color: $news-bold;
+    color: $news-main;
 }
 
 .discussion__heading {
@@ -1206,7 +1206,7 @@ $comment-recommend-button-size: 19px;
 .d-discussion__error {
     @include fs-textSans(4);
     margin-top: ($gs-baseline / 3) * 2;
-    color: $news-bold;
+    color: $news-main;
 
     .d-discussion__error-text {
         display: inline-block;
@@ -1299,7 +1299,7 @@ $comment-recommend-button-size: 19px;
 
 .d-comment-box--invalid {
     .d-comment-box__body {
-        border-color: $news-bold;
+        border-color: $news-main;
     }
 }
 .d-comment-box--expanded .d-comment-box__body {
@@ -1564,9 +1564,9 @@ $comment-recommend-button-size: 19px;
 }
 
 .d-comment-box__onboarding-username-error-border {
-    border-color: $news-bold;
+    border-color: $news-main;
 }
 
 .d-comment-box__onboarding-username-error-message {
-    color: $news-bold;
+    color: $news-main;
 }

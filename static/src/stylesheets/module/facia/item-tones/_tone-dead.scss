@@ -16,7 +16,7 @@
 
     .fc-item__kicker,
     .fc-item__byline {
-        color: $news-bold;
+        color: $news-main;
     }
 
     .fc-item__kicker--dreamsnap {
@@ -34,7 +34,7 @@
 
 .tone-dead--sublink {
     .fc-sublink__kicker {
-        color: $news-bold;
+        color: $news-main;
     }
 
     @include sublink-style(editorial, feature, live, media, review) {
@@ -45,5 +45,5 @@
 }
 
 .tone-dead--most-popular .fc-item__kicker {
-    color: $news-bold;
+    color: $news-main;
 }

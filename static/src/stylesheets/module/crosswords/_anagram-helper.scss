@@ -14,13 +14,13 @@
     }
 
     .button--large {
-        background: $lifestyle-bold;
-        border: 1px solid $lifestyle-bold;
+        background: $lifestyle-main;
+        border: 1px solid $lifestyle-main;
         &:hover,
         &:visited,
         &:focus {
-            background-color: darken($lifestyle-bold, 10%);
-            border-color: darken($lifestyle-bold, 10%);
+            background-color: darken($lifestyle-main, 10%);
+            border-color: darken($lifestyle-main, 10%);
         }
     }
 

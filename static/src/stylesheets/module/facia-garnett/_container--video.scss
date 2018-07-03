@@ -166,7 +166,7 @@ $video-width-desktop: 700px;
 
         &:hover .video-playlist__icon,
         &:focus .video-playlist__icon {
-            background-color: $highlight-bold;
+            background-color: $highlight-main;
 
             svg {
                 fill: $black;
@@ -386,7 +386,7 @@ $video-width-desktop: 700px;
     white-space: normal;
     padding: 0 $gs-gutter/4 $gs-baseline * 2;
     box-sizing: border-box;
-    border-top: 1px solid $highlight-bold;
+    border-top: 1px solid $highlight-main;
     color: #ffffff;
     background-color: rgba(0, 0, 0, .9);
     min-height: gs-height(3);
@@ -447,7 +447,7 @@ $video-width-desktop: 700px;
 
     .fc-item__byline,
     .fc-item__kicker {
-        color: $highlight-bold;
+        color: $highlight-main;
     }
 
     .fc-item__kicker {

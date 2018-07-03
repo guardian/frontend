@@ -301,7 +301,7 @@
 
 .content--interactive,
 .content--pillar-news:not(.paid-content) {
-    @include colorPalatte($news-bold, $news-dark, $news-bright);
+    @include colorPalatte($news-main, $news-dark, $news-bright);
 }
 // #? There is a lot of :not(.paid-content) to avoid having to override
 // after the fact.
@@ -311,32 +311,32 @@
 .content--pillar-opinion:not(.paid-content),
 .content--type-comment:not(.paid-content),
 .content--type-guardianview:not(.paid-content) {
-    @include colorPalatte($opinion-bold, $opinion-bold, $opinion-bright);
+    @include colorPalatte($opinion-main, $opinion-main, $opinion-bright);
 }
 
 .content--pillar-arts.content--type-comment:not(.paid-content),
 .content--pillar-arts.content--type-guardianview:not(.paid-content),
 .content--pillar-arts:not(.paid-content) {
-    @include colorPalatte($culture-bold, $culture-dark, $culture-bright);
+    @include colorPalatte($culture-main, $culture-dark, $culture-bright);
 }
 
 .content--pillar-lifestyle.content--type-comment:not(.paid-content),
 .content--pillar-lifestyle.content--type-guardianview:not(.paid-content),
 .content--pillar-lifestyle:not(.paid-content),
 .content__head--crossword {
-    @include colorPalatte($lifestyle-bold, $lifestyle-dark, $lifestyle-bright);
+    @include colorPalatte($lifestyle-main, $lifestyle-dark, $lifestyle-bright);
 }
 
 .content--pillar-sport.content--type-comment:not(.paid-content),
 .content--pillar-sport.content--type-guardianview:not(.paid-content),
 .content--pillar-sport:not(.paid-content) {
-    @include colorPalatte($sport-bold, $sport-dark, $sport-bright);
+    @include colorPalatte($sport-main, $sport-dark, $sport-bright);
 }
 
 .content--pillar-special-report.content--type-comment:not(.paid-content),
 .content--pillar-special-report.content--type-guardianview:not(.paid-content),
 .content--pillar-special-report:not(.paid-content) {
-    @include colorPalatte($special-report-dark, $special-report-dark, $highlight-bold);
+    @include colorPalatte($special-report-dark, $special-report-dark, $highlight-main);
 
     .youtube-media-atom__play-button .inline-icon svg {
         fill: $black;
@@ -344,7 +344,7 @@
 }
 
 .content-footer--pillar-news:not(.paid-content) {
-    @include footerPalette($news-bold);
+    @include footerPalette($news-main);
 }
 
 .content-footer--pillar-arts:not(.paid-content) {
@@ -356,11 +356,11 @@
 }
 
 .content-footer--pillar-opinion:not(.paid-content) {
-    @include footerPalette($opinion-bold);
+    @include footerPalette($opinion-main);
 }
 
 .content-footer--pillar-sport:not(.paid-content) {
-    @include footerPalette($sport-bold);
+    @include footerPalette($sport-main);
 }
 
 .content--media.content--pillar-news,
@@ -390,7 +390,7 @@
 
 .content--media:not(.paid-content).content--pillar-special-report,
 .immersive-main-media__headline-container.content--pillar-special-report {
-    @include mediaPalatte($highlight-bold, pink);
+    @include mediaPalatte($highlight-main, pink);
 }
 
 .content--type-analysis {
@@ -408,24 +408,24 @@
 .rich-link:not(.rich-link--paidfor) {
     &,
     &.rich-link--pillar-news {
-        @include richLink($news-bold, $brightness-97);
+        @include richLink($news-main, $brightness-97);
     }
 
     &.rich-link--pillar-opinion,
     &.tone-comment--item {
-        @include richLink($opinion-bold, $brightness-97);
+        @include richLink($opinion-main, $brightness-97);
     }
 
     &.rich-link--pillar-sport {
-        @include richLink($sport-bold, $brightness-97);
+        @include richLink($sport-main, $brightness-97);
     }
 
     &.rich-link--pillar-arts {
-        @include richLink($culture-bold, $brightness-97);
+        @include richLink($culture-main, $brightness-97);
     }
 
     &.rich-link--pillar-lifestyle {
-        @include richLink($lifestyle-bold, $brightness-97);
+        @include richLink($lifestyle-main, $brightness-97);
     }
 
     &.rich-link--pillar-opinion {
@@ -445,7 +445,7 @@
         }
 
         &.rich-link--pillar-opinion {
-            @include richLink(#ffffff, $opinion-bold);
+            @include richLink(#ffffff, $opinion-main);
         }
 
         &.rich-link--pillar-sport {

@@ -992,10 +992,10 @@
     .content__dateline,
     .caption--main,
     .caption {
-        color: $brightness-27;
+        color: $brightness-20;
     }
     .inline-icon {
-        fill: $brightness-27;
+        fill: $brightness-20;
     }
     a {
         color: $black;
@@ -1082,7 +1082,7 @@
         }
     }
     .meta__extras {
-        border-color: $brightness-27;
+        border-color: $brightness-20;
     }
 
     &.tonal--tone-media {
@@ -1168,7 +1168,7 @@
         .end-slate-container--video {
             background-color: $brightness-86;
             .end-slate-container__heading {
-                color: $brightness-27;
+                color: $brightness-20;
             }
             .fc-item__container {
                 &:before {
@@ -1211,6 +1211,6 @@
         }
     }
     .fc-item__title svg {
-        fill: $highlight-bold;
+        fill: $highlight-main;
     }
 }

@@ -4,15 +4,15 @@
     media, // $tone
     $black, // $tonal__header-background
     $brightness-93, // $tonal__header-text
-    $highlight-bold, // $tonal__header-link
+    $highlight-main, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
-    $highlight-bold, // $tonal__headline-accent
+    $highlight-main, // $tonal__headline-accent
     $black, // $tonal__standfirst-background
     $brightness-86, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
     $black, // $tonal__article-background
-    $highlight-bold // $tonal__article-link
+    $highlight-main // $tonal__article-link
 );
 
 // Podcast and media tones share page styling
@@ -96,8 +96,8 @@
                 border-color: mix($brightness-46, $brightness-86, 50%);
             }
             &:active {
-                color: $highlight-bold;
-                border-color: $highlight-bold;
+                color: $highlight-main;
+                border-color: $highlight-main;
             }
         }
     }

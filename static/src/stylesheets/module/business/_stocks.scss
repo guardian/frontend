@@ -54,7 +54,7 @@ $stocks-icon-height: 10px;
 }
 
 @include stock('positive', green-bold, up);
-@include stock('negative', news-bold, down);
+@include stock('negative', news-main, down);
 @include stock('level', brightness-46, same);
 
 .stocks__stock-value {

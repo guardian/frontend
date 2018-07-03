@@ -167,9 +167,9 @@ $header-image-size-desktop: 100px;
         color: inherit;
 
         &:hover {
-            color: $news-bold;
+            color: $news-main;
             text-decoration: none;
-            border-bottom: 1px solid $news-bold;
+            border-bottom: 1px solid $news-main;
 
             & .inline-icon {
                 fill: $sport-bright;
@@ -279,7 +279,7 @@ $header-image-size-desktop: 100px;
     }
 
     a {
-        color: $brightness-27;
+        color: $brightness-20;
     }
 }
 
@@ -335,7 +335,7 @@ $header-image-size-desktop: 100px;
     }
 
     .fc-today__sub {
-        color: $news-bold;
+        color: $news-main;
         @include mq(wide) {
             .has-page-skin & {
                 border-top: 0;

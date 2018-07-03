@@ -122,22 +122,22 @@
     color: $black;
 
     .explainer-snippet__label {
-        color: $sport-bold;
+        color: $sport-main;
     }
 
     .explainer-snippet__handle {
-        background: $sport-bold;
+        background: $sport-main;
         color: #ffffff;
 
         &:hover,
         &:focus {
-            background-color: darken($sport-bold, 10%);
+            background-color: darken($sport-main, 10%);
         }
     }
 
     .explainer-snippet__body > p {
         &::before {
-            background-color: $sport-bold;
+            background-color: $sport-main;
         }
     }
 

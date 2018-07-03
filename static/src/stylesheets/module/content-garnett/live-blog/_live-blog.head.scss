@@ -285,7 +285,7 @@ $block-padding-left: gs-span(1) + $gs-gutter;
 }
 
 @keyframes new-block-animation {
-    0% { opacity: 0; border-top-color: $news-bold; }
+    0% { opacity: 0; border-top-color: $news-main; }
     100% { opacity: 1; border-top-color: $brightness-86; }
 }
 
@@ -816,29 +816,29 @@ $timeline-width: 15px;
 
 $pillars: (
     news: (
-        pillarColor: $news-bold,
+        pillarColor: $news-main,
         kickerColor: $news-pastel,
-        altKickerColor: $news-bold
+        altKickerColor: $news-main
     ),
     opinion: (
-        pillarColor: $opinion-bold,
+        pillarColor: $opinion-main,
         kickerColor: $opinion-dark,
-        altKickerColor: $opinion-bold
+        altKickerColor: $opinion-main
     ),
     sport: (
         pillarColor: $sport-dark,
         kickerColor:  $sport-pastel,
-        altKickerColor: $sport-bold
+        altKickerColor: $sport-main
     ),
     arts: (
         pillarColor: $culture-dark,
         kickerColor: $culture-pastel,
-        altKickerColor: $culture-bold
+        altKickerColor: $culture-main
     ),
     lifestyle: (
         pillarColor: $lifestyle-dark,
         kickerColor: $news-pastel,
-        altKickerColor: $lifestyle-bold
+        altKickerColor: $lifestyle-main
     )
 );
 
@@ -978,7 +978,7 @@ $pillars: (
 // *************** Has scores overrides ****************
 .content--has-scores.content--pillar-sport.content--liveblog {
     .content__header {
-        background-color: $highlight-bold;
+        background-color: $highlight-main;
     }
 
     .match-summary__teams {

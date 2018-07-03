@@ -114,7 +114,7 @@
 
 @mixin atom-quiz__answer__item--selected--is-incorrect {
     color: #ffffff;
-    background-color: $news-bold;
+    background-color: $news-main;
 
     .element-image {
         opacity: .8;

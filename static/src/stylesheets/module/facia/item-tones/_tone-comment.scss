@@ -12,7 +12,7 @@
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: $opinion-bold;
+        background-color: $opinion-main;
     }
 
     .fc-item__kicker,
@@ -20,7 +20,7 @@
     .fc-item__byline,
     .rich-link__byline,
     .rich-link__read-more-text {
-        color: $opinion-bold;
+        color: $opinion-main;
     }
 
     .fc-item__kicker--dreamsnap {
@@ -28,7 +28,7 @@
     }
 
     .rich-link__arrow-icon {
-        fill: $opinion-bold;
+        fill: $opinion-main;
     }
 
     .fc-item__standfirst,
@@ -42,7 +42,7 @@
 .tone-comment--sublink,
 %tone-comment--sublink {
     .fc-sublink__kicker {
-        color: $opinion-bold;
+        color: $opinion-main;
     }
 
     @include sublink-style(live, review, media) {
@@ -55,6 +55,6 @@
 .tone-comment--most-popular,
 %tone-comment--most-popular {
     .fc-item__kicker {
-        color: $opinion-bold;
+        color: $opinion-main;
     }
 }

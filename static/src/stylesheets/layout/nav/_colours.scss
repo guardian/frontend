@@ -29,60 +29,60 @@
 }
 
 .pillar-scheme--News {
-    @include PillarColourOne($news-bold);
+    @include PillarColourOne($news-main);
 }
 
 .pillar-scheme--Opinion {
-    @include PillarColourOne($opinion-bold);
+    @include PillarColourOne($opinion-main);
 }
 
 .pillar-scheme--Sport {
-    @include PillarColourOne($sport-bold);
+    @include PillarColourOne($sport-main);
 }
 
 .pillar-scheme--Culture {
-    @include PillarColourOne($culture-bold);
+    @include PillarColourOne($culture-main);
 }
 
 .pillar-scheme--Lifestyle {
-    @include PillarColourOne($lifestyle-bold);
+    @include PillarColourOne($lifestyle-main);
 }
 
 .menu-group {
     .menu-item:first-child > .menu-group .menu-item__title:hover,
     .menu-item:first-child > .menu-group .menu-item__title:focus,
     .menu-item__title--News {
-        color: $news-bold;
+        color: $news-main;
     }
 
     .menu-item:nth-child(2) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(2) > .menu-group .menu-item__title:focus,
     .menu-item__title--Opinion {
-        color: $opinion-bold;
+        color: $opinion-main;
     }
 
     .menu-item:nth-child(3) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(3) > .menu-group .menu-item__title:focus,
     .menu-item__title--Sport {
-        color: $sport-bold;
+        color: $sport-main;
     }
 
     .menu-item:nth-child(4) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(4) > .menu-group .menu-item__title:focus,
     .menu-item__title--Culture {
-        color: $culture-bold;
+        color: $culture-main;
     }
 
     .menu-item:nth-child(5) > .menu-group .menu-item__title:hover,
     .menu-item:nth-child(5) > .menu-group .menu-item__title:focus,
     .menu-item__title--Lifestyle {
-        color: $lifestyle-bold;
+        color: $lifestyle-main;
     }
 }
 
 .pillar-link {
     &.pillar-link--News {
-        color: $news-bold;
+        color: $news-main;
 
         &:after {
             border-color: $news-dark;
@@ -90,7 +90,7 @@
     }
 
     &.pillar-link--Opinion {
-        color: $opinion-bold;
+        color: $opinion-main;
 
         &:after {
             border-color: $opinion-dark;
@@ -98,7 +98,7 @@
     }
 
     &.pillar-link--Sport {
-        color: $sport-bold;
+        color: $sport-main;
 
         &:after {
             border-color: $sport-dark;
@@ -106,7 +106,7 @@
     }
 
     &.pillar-link--Culture {
-        color: $culture-bold;
+        color: $culture-main;
 
         &:after {
             border-color: $culture-dark;
@@ -114,7 +114,7 @@
     }
 
     &.pillar-link--Lifestyle {
-        color: $lifestyle-bold;
+        color: $lifestyle-main;
 
         &:after {
             border-color: $lifestyle-dark;

@@ -21,18 +21,18 @@
     }
 
     .inline-quote {
-        fill: $highlight-bold;
+        fill: $highlight-main;
     }
 
     .fc-item__container:before,
     .rich-link__container:before {
-        background-color: $highlight-bold;
+        background-color: $highlight-main;
     }
 
     .fc-item__kicker,
     .fc-item__byline,
     .rich-link__read-more-text {
-        color: $highlight-bold;
+        color: $highlight-main;
     }
 
     .fc-item__kicker--dreamsnap {
@@ -40,7 +40,7 @@
     }
 
     .rich-link__arrow-icon {
-        fill: $highlight-bold;
+        fill: $highlight-main;
     }
 
     .fc-item__kicker:after,
@@ -63,7 +63,7 @@
 
 .tone-review--sublink {
     .fc-sublink__kicker {
-        color: $highlight-bold;
+        color: $highlight-main;
     }
 
     @include sublink-style(analysis, comment, dead, letters, news) {

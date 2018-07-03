@@ -10,12 +10,12 @@
 }
 
 $pillars: (
-    news:      $news-bold,
-    opinion:   $opinion-bold,
-    sport:     $sport-bold,
-    arts:      $culture-bold,
-    lifestyle: $lifestyle-bold,
-    special-report: $highlight-bold
+    news:      $news-main,
+    opinion:   $opinion-main,
+    sport:     $sport-main,
+    arts:      $culture-main,
+    lifestyle: $lifestyle-main,
+    special-report: $highlight-main
 );
 
 .fc-item--type-analysis.fc-item--has-boosted-title {

@@ -327,10 +327,10 @@
     }
 
     .in-body-link--immersive {
-        color: $lifestyle-bold;
+        color: $lifestyle-main;
 
         &:hover {
-            border-bottom-color: rgba($lifestyle-bold, .4);
+            border-bottom-color: rgba($lifestyle-main, .4);
         }
     }
 
@@ -371,7 +371,7 @@
         }
 
         .pullquote-paragraph {
-            color: $lifestyle-bold;
+            color: $lifestyle-main;
         }
 
         .pullquote-cite {

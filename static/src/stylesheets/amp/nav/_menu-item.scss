@@ -45,23 +45,23 @@
 
 // TODO move to colours?
 .menu-item__title--News {
-    color: $news-bold;
+    color: $news-main;
 }
 
 .menu-item__title--Opinion {
-    color: $opinion-bold;
+    color: $opinion-main;
 }
 
 .menu-item__title--Sport {
-    color: $sport-bold;
+    color: $sport-main;
 }
 
 .menu-item__title--Culture {
-    color: $culture-bold;
+    color: $culture-main;
 }
 
 .menu-item__title--Lifestyle {
-    color: $lifestyle-bold;
+    color: $lifestyle-main;
 }
 
 .menu-item__title--primary {
@@ -84,7 +84,7 @@
     }
 
     &:before {
-        border: 2px solid $brightness-27;
+        border: 2px solid $brightness-20;
         border-top: 0;
         border-left: 0;
         content: '';

@@ -141,7 +141,7 @@ label[for=identity-header-account-menu-fallback]:focus {
     &:focus,
     label[for=identity-header-account-menu-fallback]:focus & {
         outline: 0;
-        color: $brightness-27;
+        color: $brightness-20;
         &:after {
             transform: translateY(0px) rotate(45deg);
         }

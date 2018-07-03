@@ -21,22 +21,22 @@
     }
 
     &:nth-child(1) {
-        color: $news-bold;
+        color: $news-main;
     }
 
     &:nth-child(2) {
-        color: $opinion-bold;
+        color: $opinion-main;
     }
 
     &:nth-child(3) {
-        color: $sport-bold;
+        color: $sport-main;
     }
 
     &:nth-child(4) {
-        color: $culture-bold;
+        color: $culture-main;
     }
 
     &:nth-child(5) {
-        color: $lifestyle-bold;
+        color: $lifestyle-main;
     }
 }

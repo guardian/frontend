@@ -289,7 +289,7 @@
         clear: left;
         position: relative;
         padding: 9px 0;
-        background-color: mix($sport-bold, #ffffff, 15%);
+        background-color: mix($sport-main, #ffffff, 15%);
 
         &:before {
             content: '';
@@ -299,7 +299,7 @@
             left: -10px;
             right: -10px;
             bottom: 0;
-            background-color: mix($sport-bold, #ffffff, 15%);
+            background-color: mix($sport-main, #ffffff, 15%);
 
             @include mq(mobileLandscape) {
                 left: -20px;
@@ -315,7 +315,7 @@
 
     .bar-fight__bar--home,
     .goal-attempts__on-target {
-        border-color: mix($sport-bold, #ffffff, 15%);
+        border-color: mix($sport-main, #ffffff, 15%);
     }
 }
 
