@@ -129,9 +129,9 @@ trait OverlayBase64 {
 
 // Despite the base64 codes looking similar, the twitter overlay is a different size to the facebook overlay.
 object TwitterImage extends OverlayBase64 {
-    val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX2RlZmF1bHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
-    val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX29waW5pb25zLnBuZw", TwitterShareImageLogoOverlay.isSwitchedOn)
-    val live = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8xNi90d2l0dGVyX2xpdmUucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val default = new ShareImage(s"blend64=${overlayUrlBase64("tg-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val opinions = new ShareImage(s"blend64=${overlayUrlBase64("tg-opinions")}", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val live = new ShareImage(s"blend64=${overlayUrlBase64("tg-live")}", TwitterShareImageLogoOverlay.isSwitchedOn)
     def starRating(rating: Int) = {
         val image = rating match {
             case 0 => s"blend64=${overlayUrlBase64("tg-review-0.png")}"
@@ -147,9 +147,9 @@ object TwitterImage extends OverlayBase64 {
 }
 
 object FacebookOpenGraphImage extends OverlayBase64 {
-    val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19kZWZhdWx0LnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
-    val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19vcGluaW9ucy5wbmc", FacebookShareImageLogoOverlay.isSwitchedOn)
-    val live = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8xNi9mYWNlYm9va19saXZlLnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val default = new ShareImage(s"blend64=${overlayUrlBase64("tg-default.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val opinions = new ShareImage(s"blend64=${overlayUrlBase64("tg-opinions")}", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val live = new ShareImage(s"blend64=${overlayUrlBase64("tg-live")}", FacebookShareImageLogoOverlay.isSwitchedOn)
     def starRating(rating: Int) = {
         val image = rating match {
             case 0 => s"blend64=${overlayUrlBase64("tg-review-0.png")}"
