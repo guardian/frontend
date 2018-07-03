@@ -1,9 +1,13 @@
 // @flow
 
 import config from 'lib/config';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { related } from './related';
 
 jest.mock('lib/config');
+jest.mock('common/modules/commercial/commercial-features', () => ({
+    commercialFeatures() {},
+}));
 jest.mock('common/modules/ui/expandable', () => ({
     Expandable: jest.fn(),
 }));
@@ -50,6 +54,21 @@ describe('onward/related', () => {
         ): any);
 
         config.switches.relatedContent = false;
+
+        related({});
+
+        expect(container.classList.contains('u-h')).toBe(true);
+    });
+
+    it('should hide if user has ad-free and the page is paid content', () => {
+        const container: HTMLElement = (document.querySelector(
+            '.js-related'
+        ): any);
+
+        config.switches.relatedContent = true;
+        config.page.showRelatedContent = true;
+        config.page.isPaidContent = true;
+        commercialFeatures.adFree = true;
 
         related({});
 
