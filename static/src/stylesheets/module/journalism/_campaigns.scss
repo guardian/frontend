@@ -10,6 +10,7 @@
     &[open] .is-off {
         display: none;
     }
+
     p {
         font-size: 14px;
         line-height: 18px;
@@ -166,7 +167,7 @@
 
     textarea {
         max-width: 100%;
-        min-height: 50px;
+        min-height: 80px;
     }
 
     .form_option_container {
