@@ -1,6 +1,5 @@
 package model
 
-import commercial.campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
 import common.Pagination
 import common.commercial.CommercialProperties
@@ -17,7 +16,7 @@ object Section {
     val javascriptConfigOverrides: Map[String, JsValue] = Map(
       "keywords" -> JsString(webTitle),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
-      "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds))
+      "hasSuperStickyBanner" -> JsBoolean(false)
     )
 
     val metadata = MetaData (

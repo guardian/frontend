@@ -1,6 +1,5 @@
 package model
 
-import commercial.campaigns.PersonalInvestmentsCampaign
 import com.gu.commercial.branding.Branding
 import com.gu.facia.api.models._
 import common.Edition
@@ -27,7 +26,7 @@ object PressedPage {
     val faciaPageMetaData: Map[String, JsValue] = Map(
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
-      "hasSuperStickyBanner" -> JsBoolean(PersonalInvestmentsCampaign.isRunning(keywordIds)),
+      "hasSuperStickyBanner" -> JsBoolean(false),
       "isPaidContent" -> JsBoolean(frontProperties.isPaidContent)
     )
 

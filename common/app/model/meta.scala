@@ -5,7 +5,6 @@ import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.DesignType
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
 import implicits.Dates.CapiRichDateTime
-import commercial.campaigns.PersonalInvestmentsCampaign
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
 import common.{Edition, ManifestData, Pagination}
@@ -717,8 +716,6 @@ final case class Tags(
   lazy val isTheMinuteArticle = tags.exists(t => t.id == "tone/minute")
   //this is for the immersive header to access this info
   lazy val isPaidContent = tags.exists( t => t.id == "tone/advertisement-features" )
-
-  lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
 
   lazy val keywordIds = keywords.map { _.id }
 
