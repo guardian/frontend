@@ -159,6 +159,8 @@
         }
         input {
             flex: initial;
+            margin: 0 4px 0 13px;
+            min-width: 16px;
         }
     }
 
@@ -198,6 +200,7 @@
         font-size: 14px;
         margin: 0 10px;
     }
+
     .form_field_label {
         margin: 1px 0 6px 3px;
         padding: 0 10px;
@@ -234,7 +237,7 @@
             color: #ffffff;
             height: 30px;
             line-height: 30px;
-            padding: 0 10px;
+            padding: 1px 16px;
             border: 0;
         }
     }
@@ -243,17 +246,21 @@
         text-align: right;
         display: flex;
         font-family: $f-sans-serif-text;
-        font-size: 14px;
-        margin-right: 10px;
+        font-size: 12px;
 
         a {
             flex: auto;
-            align-self: flex-start;
             color: #121212;
             text-decoration: none;
+            margin: 8px 0 0 0;
 
             &:hover {
                 text-decoration: underline;
+            }
+
+            @include mq(mobileMedium) {
+                font-size: 14px;
+                margin: 8px 10px 0 0;
             }
         }
     }
