@@ -65,8 +65,6 @@ describe('onward/related', () => {
             '.js-related'
         ): any);
 
-        config.switches.relatedContent = true;
-        config.page.showRelatedContent = true;
         config.page.isPaidContent = true;
         commercialFeatures.adFree = true;
 
