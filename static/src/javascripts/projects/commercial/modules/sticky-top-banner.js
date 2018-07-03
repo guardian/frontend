@@ -2,7 +2,6 @@
 import type { Advert } from 'commercial/modules/dfp/Advert';
 
 import { addEventListener } from 'lib/events';
-import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';

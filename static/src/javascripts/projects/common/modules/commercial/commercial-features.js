@@ -117,9 +117,7 @@ class CommercialFeatures {
         this.liveblogAdverts =
             isLiveBlog && this.dfpAdvertising && !this.adFree;
 
-        this.paidforBand =
-            config.page.isPaidContent &&
-            !supportsSticky;
+        this.paidforBand = config.page.isPaidContent && !supportsSticky;
 
         this.adFeedback = false;
     }
