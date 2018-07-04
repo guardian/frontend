@@ -6,7 +6,7 @@ import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, MetaData, NoCache, SectionId}
 import play.api.data.Form
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import play.api.mvc._
 import play.api.libs.ws._
 import play.api.data.Forms._
 
@@ -70,7 +70,7 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
           val jsConfig: JsValue = Json.parse(resp.body)
           val alerts: List[String] = (jsConfig \ "alerts").get.as[List[String]]
 
-          Cached(900)(RevalidatableResult.Ok(views.html.feedback(
+          Cached(60)(RevalidatableResult.Ok(views.html.feedback(
             page,
             path,
             Option(alerts)))
@@ -79,7 +79,7 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
       })).getOrElse(
 
         Future.successful(
-          Cached(900)(RevalidatableResult.Ok(views.html.feedback(
+          Cached(60)(RevalidatableResult.Ok(views.html.feedback(
             page,
             path,
             Option.empty
