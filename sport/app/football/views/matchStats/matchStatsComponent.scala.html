@@ -27,7 +27,7 @@
 
 @defining((page.hasPaStats, page.lineUp.homeTeam, page.lineUp.awayTeam, page.hasLineUp, page.lineUp, TeamColours(page.lineUp.homeTeam, page.lineUp.awayTeam))){ case (hasStats, home, away, hasLineUp, lineUp, teamColours) =>
 @if(hasStats) {
-    <div data-component="football-stats-embed" class="@RenderClasses(Map(
+    <div data-component="football-embed football-stats-embed" class="@RenderClasses(Map(
                 "match-stats" -> true,
                 "match-stats--darken-home" -> teamColours.homeTeamIsLight,
                 "match-stats--darken-away" -> teamColours.awayTeamIsLight

@@ -1,0 +1,17 @@
+@import model.Competition
+@import football.model.KnockoutSpider
+
+@(competition: Competition, knockoutStage: KnockoutSpider)(
+  implicit request: RequestHeader,
+  context: model.ApplicationContext
+)
+
+<style>
+    @Html(common.Assets.css.head(Some("football")))
+</style>
+
+@football.views.html.fragments.componentStyles()
+
+<div class="football-embed knockout-embed" data-link-name="@competition.fullName knockout chart">
+    @football.views.html.wallchart.knockoutSpider(competition, knockoutStage)
+</div>
