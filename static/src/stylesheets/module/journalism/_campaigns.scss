@@ -4,7 +4,10 @@
     border-bottom: 1px $garnett-neutral-4 solid;
     position: relative;
     padding: 0;
-    margin: 16px 0 36px -10px;
+    margin: 16px -10px 36px -10px;
+        @include mq(phablet) {
+            margin: 16px 0 36px -10px;
+        }
 
     &:not([open]) .is-on,
     &[open] .is-off {
