@@ -20,32 +20,42 @@
         line-height: 18px;
         font-family: $f-serif-headline;
         font-weight: 400;
-        padding-top: 5px;
+        padding-top: 2px;
     }
 }
 
 article {
     .speech-bubble {
-        background-color: $garnett-neutral-1;
+        color: $garnett-neutral-1;
+        background-color: $news-garnett-highlight;
         &::after {
-            background-color: $garnett-neutral-1;
+            color: $garnett-neutral-1;
+            background-color: $news-garnett-highlight;
         }
     }
     .form_submit {
         button {
-            background-color: $garnett-neutral-1;
+            color: $garnett-neutral-1;
+            background-color: $news-garnett-highlight;
         }
     }
     .campaign--snippet__handle{
+        color: $garnett-neutral-5;
         background-color: $garnett-neutral-1;
+
         &:hover, :active {
-            background-color: pink;
+            color: $garnett-neutral-1;
+            background-color: $news-garnett-highlight;
+            .icon {
+                fill: $garnett-neutral-1;
+            }
         }
     }
 }
 
 article.content--pillar-news {
     .speech-bubble {
+        color: $garnett-neutral-5;
         background-color: $news-garnett-main-1;
         &::after {
             background-color: $news-garnett-main-1;
@@ -53,19 +63,26 @@ article.content--pillar-news {
     }
     .form_submit {
         button {
+            color: $garnett-neutral-5;
             background-color: $news-garnett-main-1;
         }
     }
     .campaign--snippet__handle {
+        color: $garnett-neutral-5;
         background-color: $garnett-neutral-1;
         &:hover, :active {
+            color: $garnett-neutral-5;
             background-color: $news-garnett-main-1;
+            .icon {
+                fill: $garnett-neutral-5;
+            }
         }
     }
 }
 
 article.content--pillar-sport {
     .speech-bubble {
+        color: $garnett-neutral-5;
         background-color: $sport-garnett-feature;
         &::after {
             background-color: $sport-garnett-feature;
@@ -86,6 +103,7 @@ article.content--pillar-sport {
 
 article.content--pillar-opinion {
     .speech-bubble {
+        color: $garnett-neutral-5;
         background-color: $opinion-garnett-feature;
         &::after {
             background-color: $opinion-garnett-feature;
@@ -106,6 +124,7 @@ article.content--pillar-opinion {
 
 article.content--pillar-arts {
     .speech-bubble {
+        color: $garnett-neutral-5;
         background-color: $culture-garnett-feature;
         &::after {
             background-color: $culture-garnett-feature;
@@ -126,6 +145,7 @@ article.content--pillar-arts {
 
 article.content--pillar-lifestyle {
     .speech-bubble {
+        color: $garnett-neutral-5;
         background-color: $lifestyle-garnett-main-1;
         &::after {
             background-color: $lifestyle-garnett-main-1;
@@ -165,7 +185,6 @@ article.content--pillar-lifestyle {
 
             .speech-bubble {
                 padding: 3px 8px 10px 9px;
-                color: #ffffff;
                 line-height: 18px;
                 min-width: 84px;
             }
@@ -192,7 +211,7 @@ article.content--pillar-lifestyle {
 }
 
 .campaign--snippet__handle {
-    color: #ffffff;
+    //color: #ffffff;
     font-family: $f-sans-serif-text;
     font-size: 13px;
     font-weight: bold;
@@ -345,7 +364,7 @@ article.content--pillar-lifestyle {
         flex: auto;
         padding: 4px 0 40px 10px;
         .button {
-            color: #ffffff;
+            //color: #ffffff;
             height: 30px;
             line-height: 30px;
             padding: 1px 16px;
