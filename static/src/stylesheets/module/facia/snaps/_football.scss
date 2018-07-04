@@ -8,7 +8,7 @@
 
     // Generic
     &.facia-snap-embed {
-        height: $slice-innerHeight;
+        height: auto;
         margin: 0;
         padding: 0 $gs-gutter/2;
         position: relative;
@@ -46,7 +46,7 @@
         .football-matches__date {
             margin: 0;
             padding: $title-padding;
-            border-top: 1px solid darken($neutral-8, 4%);
+            border-top: 1px solid $garnett-neutral-4;
         }
     }
 
@@ -167,67 +167,6 @@
             @include fs-headline(2, true)
         }
     }
-
-    &.facia-snap-point--mini,
-    &.facia-snap-point--tiny {
-        @include table--hide-from-importance-3;
-
-        .competition-name {
-            display: none;
-        }
-
-        .team-name:after,
-        .team__name:after {
-            content: attr(data-abbr);
-        }
-        .team-name__long,
-        .team__name-long {
-            @include u-h;
-        }
-
-        .match-info__venue {
-            display: none;
-        }
-
-        .football-match__status {
-            padding-right: $gs-gutter/5;
-        }
-        .football-match__team--home {
-            padding-right: $gs-gutter*.5;
-        }
-        .football-match__team--away {
-            padding-left: $gs-gutter*.5;
-        }
-
-        .football-match--live,
-        .football-match--result {
-
-            .football-match__team {
-                display: block;
-                text-align: left;
-                padding: 0;
-                width: 100%;
-
-                .football-team__name {
-                    text-align: left;
-                    display: inline;
-                }
-                .team-name__long {
-                    display: none;
-                }
-                .football-team__score {
-                    display: inline;
-                    position: relative;
-                    right: 0;
-                    left: 30%;
-                }
-            }
-
-            .football-teams__battleline {
-                display: none;
-            }
-        }
-    }
 }
 
 $footballBadgeSizeMobile: 80px;
@@ -256,4 +195,31 @@ $footballBadgeSizeDesktop: 120px;
     background: $neutral-8;
     width: 100%;
     padding: $gs-baseline/1.5;
+}
+
+.knockout-embed {
+    width: 100%;
+
+    .football-match__crest, .facia-snap--football .football-team__form {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+}
+
+.facia-snap.facia-snap--football.facia-snap-embed {
+    height: auto !important; // height is normally set on the parent snap element in Facia
+}
+
+.facia-snap--football .inline-icon {
+    fill: #ffffff; /* override garnett styling */
+}
+
+.football-embed {
+    height: 14rem;
+    position: relative;
+}
+
+.football-embed.knockout-embed {
+    height: auto;
 }

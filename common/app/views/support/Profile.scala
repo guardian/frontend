@@ -5,7 +5,7 @@ import java.util.Base64
 
 import common.Logging
 import conf.switches.Switches.{FacebookShareImageLogoOverlay, ImageServerSwitch, TwitterShareImageLogoOverlay}
-import conf.Configuration
+import conf.{Configuration, Static}
 import layout.{BreakpointWidth, WidthsByBreakpoint}
 import model._
 import org.apache.commons.math3.fraction.Fraction
@@ -123,41 +123,72 @@ class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends
   }
 }
 
-// Despite the base64 codes looking similar, the twitter overlay is a different size to the facebook overlay.
-object TwitterImage {
-    val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX2RlZmF1bHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
-    val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX29waW5pb25zLnBuZw", TwitterShareImageLogoOverlay.isSwitchedOn)
-    val live = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8xNi90d2l0dGVyX2xpdmUucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
+trait OverlayBase64 {
+  def overlayUrlBase64(overlay: String): String = Base64.getUrlEncoder.encodeToString(Static(s"images/overlays/$overlay").getBytes)
+}
+
+object TwitterImage extends OverlayBase64 {
+    val default = new ShareImage(s"blend64=${overlayUrlBase64("tg-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val opinions = new ShareImage(s"blend64=${overlayUrlBase64("tg-opinions.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val live = new ShareImage(s"blend64=${overlayUrlBase64("tg-live.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
     def starRating(rating: Int) = {
         val image = rating match {
-            case 0 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS0wLnBuZw"
-            case 1 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS0xLnBuZw"
-            case 2 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS0yLnBuZw"
-            case 3 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS0zLnBuZw"
-            case 4 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS00LnBuZw"
-            case 5 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy90d2l0dGVyX3N0YXJzLS01LnBuZw"
-            case _ => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS90d2l0dGVyX2RlZmF1bHQucG5n"
+            case 0 => s"blend64=${overlayUrlBase64("tg-review-0.png")}"
+            case 1 => s"blend64=${overlayUrlBase64("tg-review-1.png")}"
+            case 2 => s"blend64=${overlayUrlBase64("tg-review-2.png")}"
+            case 3 => s"blend64=${overlayUrlBase64("tg-review-3.png")}"
+            case 4 => s"blend64=${overlayUrlBase64("tg-review-4.png")}"
+            case 5 => s"blend64=${overlayUrlBase64("tg-review-5.png")}"
+            case _ => s"blend64=${overlayUrlBase64("tg-default.png")}"
         }
         new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
     }
+    def starRatingObserver(rating: Int) = {
+        val image = rating match {
+            case 0 => s"blend64=${overlayUrlBase64("to-review-0.png")}"
+            case 1 => s"blend64=${overlayUrlBase64("to-review-1.png")}"
+            case 2 => s"blend64=${overlayUrlBase64("to-review-2.png")}"
+            case 3 => s"blend64=${overlayUrlBase64("to-review-3.png")}"
+            case 4 => s"blend64=${overlayUrlBase64("to-review-4.png")}"
+            case 5 => s"blend64=${overlayUrlBase64("to-review-5.png")}"
+            case _ => s"blend64=${overlayUrlBase64("to-default.png")}"
+        }
+        new ShareImage(image, TwitterShareImageLogoOverlay.isSwitchedOn)
+    }
+    val defaultObserver = new ShareImage(s"blend64=${overlayUrlBase64("to-default.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
+    val opinionsObserver = new ShareImage(s"blend64=${overlayUrlBase64("to-opinions.png")}", TwitterShareImageLogoOverlay.isSwitchedOn)
 }
 
-object FacebookOpenGraphImage {
-    val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19kZWZhdWx0LnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
-    val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19vcGluaW9ucy5wbmc", FacebookShareImageLogoOverlay.isSwitchedOn)
-    val live = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8xNi9mYWNlYm9va19saXZlLnBuZw", FacebookShareImageLogoOverlay.isSwitchedOn)
+object FacebookOpenGraphImage extends OverlayBase64 {
+    val default = new ShareImage(s"blend64=${overlayUrlBase64("tg-default.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val opinions = new ShareImage(s"blend64=${overlayUrlBase64("tg-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val live = new ShareImage(s"blend64=${overlayUrlBase64("tg-live.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
     def starRating(rating: Int) = {
         val image = rating match {
-            case 0 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tMC5wbmc"
-            case 1 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tMS5wbmc"
-            case 2 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tMi5wbmc"
-            case 3 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tMy5wbmc"
-            case 4 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tNC5wbmc"
-            case 5 => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMi8yMy9mYWNlYm9va19zdGFycy0tNS5wbmc"
-            case _ => "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxOC8wMS8zMS9mYWNlYm9va19kZWZhdWx0LnBuZw"
+            case 0 => s"blend64=${overlayUrlBase64("tg-review-0.png")}"
+            case 1 => s"blend64=${overlayUrlBase64("tg-review-1.png")}"
+            case 2 => s"blend64=${overlayUrlBase64("tg-review-2.png")}"
+            case 3 => s"blend64=${overlayUrlBase64("tg-review-3.png")}"
+            case 4 => s"blend64=${overlayUrlBase64("tg-review-4.png")}"
+            case 5 => s"blend64=${overlayUrlBase64("tg-review-5.png")}"
+            case _ => s"blend64=${overlayUrlBase64("tg-default.png")}"
         }
         new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
     }
+    def starRatingObserver(rating: Int) = {
+        val image = rating match {
+            case 0 => s"blend64=${overlayUrlBase64("to-review-0.png")}"
+            case 1 => s"blend64=${overlayUrlBase64("to-review-1.png")}"
+            case 2 => s"blend64=${overlayUrlBase64("to-review-2.png")}"
+            case 3 => s"blend64=${overlayUrlBase64("to-review-3.png")}"
+            case 4 => s"blend64=${overlayUrlBase64("to-review-4.png")}"
+            case 5 => s"blend64=${overlayUrlBase64("to-review-5.png")}"
+            case _ => s"blend64=${overlayUrlBase64("to-default.png")}"
+        }
+        new ShareImage(image, FacebookShareImageLogoOverlay.isSwitchedOn)
+    }
+    val defaultObserver = new ShareImage(s"blend64=${overlayUrlBase64("to-default.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
+    val opinionsObserver = new ShareImage(s"blend64=${overlayUrlBase64("to-opinions.png")}", FacebookShareImageLogoOverlay.isSwitchedOn)
 }
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {

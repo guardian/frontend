@@ -1,8 +1,8 @@
 package http
 
 import javax.inject.Inject
+
 import akka.stream.Materializer
-import cache.SurrogateKey
 import conf.switches.Switches
 import implicits.Responses._
 import model.{ApplicationContext, Cached}
@@ -11,6 +11,7 @@ import play.api.mvc._
 import play.filters.gzip.{GzipFilter, GzipFilterConfig}
 import experiments.LookedAtExperiments
 import model.Cached.PanicReuseExistingResult
+import org.apache.commons.codec.digest.DigestUtils
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -64,7 +65,7 @@ class SurrogateKeyFilter(implicit val mat: Materializer, executionContext: Execu
   private val SurrogateKeyHeader = "Surrogate-Key"
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    val surrogateKey = SurrogateKey(request)
+    val surrogateKey = DigestUtils.md5Hex(request.path)
     nextFilter(request).map{ result =>
       // Surrogate keys are space delimited, so string them together if there are already some present
       val key = result.header.headers.get(SurrogateKeyHeader).map(key => s"$key $surrogateKey").getOrElse(surrogateKey)

@@ -13,7 +13,7 @@ class PageViewAnalyticsController(val controllerComponents: ControllerComponents
   private implicit val ec: ExecutionContext = controllerComponents.executionContext
 
   def insert(): Action[Map[String, Seq[String]]] = Action(parse.formUrlEncoded) { implicit request =>
-    val stream = Analytics.storeJsonBody(Switches.pageViewAnalytics, pageViewAnalyticsStream, log) _
+    val stream = Analytics.storeJsonBody(Switches.commercialPageViewAnalytics, pageViewAnalyticsStream, log) _
 
     request.body.keys.headOption map { analytics =>
       stream(analytics)

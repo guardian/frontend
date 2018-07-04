@@ -9,7 +9,7 @@ import org.joda.time.DateTime
 case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineItem])
 
 class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Logging {
-  import DfpApi._
+  import dfp.DfpApi._
 
   private def readLineItems(stmtBuilder: StatementBuilder): DfpLineItems = {
 
@@ -61,6 +61,19 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
                       .withBindVariableValue("threshold", threshold.getMillis)
 
     readLineItems(stmtBuilder)
+  }
+
+  def readSponsorshipLineItemIds(): Seq[Long] = {
+
+    val stmtBuilder = new StatementBuilder()
+      .where("(status = :readyStatus OR status = :deliveringStatus) AND lineItemType = :sponsorshipType")
+      .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
+      .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
+      .withBindVariableValue("sponsorshipType", LineItemType.SPONSORSHIP.toString)
+      .orderBy("id ASC")
+
+    val lineItems = readLineItems(stmtBuilder)
+    (lineItems.validItems.map(_.id) ++ lineItems.invalidItems.map(_.id)).sorted
   }
 
   def readActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {

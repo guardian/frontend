@@ -18,8 +18,14 @@ import containerWaveMobile from 'svgs/journalism/football-weekly-container/wavef
 import containerWaveTiny from 'svgs/journalism/football-weekly-container/waveform-tiny.svg';
 import containerButton from 'svgs/journalism/football-weekly-container/play-btnbig.svg';
 
-const getHeadlineText = (el: Element): string =>
-    el.textContent.split(/[-–]/)[0];
+const getHeadlineText = (el: Element): string => {
+    const tokens = el.textContent.split(/[-–]/);
+    if (tokens.length > 1) {
+        tokens.pop();
+        return tokens.join('-');
+    }
+    return el.textContent;
+};
 
 const runTreatTest = (): void => {
     // Get the headline from podcast container and insert the test treat

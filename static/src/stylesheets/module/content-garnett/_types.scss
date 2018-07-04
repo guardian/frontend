@@ -102,14 +102,6 @@ $quote-mark: 35px;
         }
     }
 
-    .byline {
-        padding-top: 0;
-        padding-bottom: $gs-baseline*1.5;
-        @include mq($until: phablet) {
-            border-top: 0;
-        }
-    }
-
     .content__meta-container .byline-img {
         max-width: gs-span(1);
         float: left;
@@ -126,26 +118,6 @@ $quote-mark: 35px;
         @include mq(leftCol) {
             margin-top: $gs-baseline/2;
             max-width: none;
-        }
-    }
-
-    .byline {
-        @include fs-bodyCopy(2);
-        border-top: 0;
-        color: $garnett-neutral-1;
-        font-style: italic;
-        line-height: 20px;
-        min-height: 0;
-        margin-top: -$gs-baseline/4;
-        // magic numbers are correcting line heights so vertical alignment appears even
-        padding-top: 4px;
-        font-weight: normal;
-        width: 100%;
-        margin-bottom: -14px;
-
-        span[itemprop='author'] {
-            font-weight: 700;
-            font-style: normal;
         }
     }
 
@@ -672,8 +644,7 @@ $quote-mark: 35px;
 // *************** Matchreport overrides ****************
 .content--has-scores {
     .content__labels {
-        .content__series-label__link,
-        .content__section-label__link {
+        .content__label__link {
             @include mq(leftCol) {
                 color: $neutral-1;
             }
@@ -998,12 +969,6 @@ $quote-mark: 35px;
         &:hover {
             border-color: $garnett-neutral-4;
         }
-    }
-
-    .byline,
-    .byline span {
-        @include fs-bodyCopy(2);
-        font-style: normal;
     }
 
     .meta__extras,
