@@ -401,7 +401,7 @@ $identity-header-height: 48px;
         }
         &:hover .dropdown__button,
         .dropdown__button:focus {
-            color: darken($brightness-7,15%);
+            color: darken($brightness-7, 15%);
             &:hover, &:focus {
                 text-decoration: underline;
             }

@@ -1004,7 +1004,7 @@
         border-color: $brightness-60;
         &:hover,
         &:focus {
-            border-color: mix($brightness-7,$brightness-7,50%);
+            border-color: mix($brightness-7, $brightness-7, 50%);
         }
         &:active {
             border-color: $brightness-7;
@@ -1207,7 +1207,7 @@
     }
     &.content--media--audio {
         .content__headline:before {
-            @include icon(volume-high-brightness-7,$with-width: false);
+            @include icon(volume-high-brightness-7, $with-width: false);
         }
     }
     .fc-item__title svg {

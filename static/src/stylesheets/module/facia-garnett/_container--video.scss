@@ -1,7 +1,7 @@
 $video-width-desktop: 700px;
 
 .fc-container--video {
-    background-color: darken($brightness-7, 7%);
+    background-color: darken($brightness-7,  7%);
     padding-bottom: 0;
     margin-bottom: $gs-baseline;
 
@@ -111,7 +111,7 @@ $video-width-desktop: 700px;
     position: relative;
     overflow: hidden;
     @include mq(desktop, leftCol) {
-        background-color: darken($brightness-7, 5%);
+        background-color: darken($brightness-7,  5%);
 
         .has-page-skin & {
             background-color: transparent;

@@ -29,7 +29,7 @@
     @include ellipsis();
     @include button-colour(
         #ffffff,
-        $brightness-7,
+        $brightness-7, 
         $brightness-86
     );
     @include button-hover-colour(

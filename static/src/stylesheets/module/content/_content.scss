@@ -1002,7 +1002,7 @@
 
     &.content--media--audio {
         .content__headline:before {
-            @include icon(volume-high-brightness-7,$with-width: false);
+            @include icon(volume-high-brightness-7, $with-width: false);
         }
     }
 

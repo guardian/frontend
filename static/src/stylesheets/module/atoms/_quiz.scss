@@ -96,7 +96,7 @@
 
         &:before {
             background-color: $brightness-7;
-            box-shadow: 0px 0px 0px 1px $brightness-7,inset 0px 0px 0px 3px $opinion-bright;
+            box-shadow: 0px 0px 0px 1px $brightness-7, inset 0px 0px 0px 3px $opinion-bright;
         }
     }
 
@@ -186,7 +186,7 @@
 
     :checked + &:before {
         background-color: $brightness-7;
-        box-shadow: 0px 0px 0px 1px $brightness-7,inset 0px 0px 0px 3px $opinion-bright;
+        box-shadow: 0px 0px 0px 1px $brightness-7, inset 0px 0px 0px 3px $opinion-bright;
     }
 
     // highlight state (darker grey)

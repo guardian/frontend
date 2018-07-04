@@ -11,7 +11,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 .gallery-lightbox {
     display: none;
     position: fixed;
-    background-color: lighten($brightness-7,2.5%);
+    background-color: lighten($brightness-7, 2.5%);
     overflow: hidden;
     z-index: $zindex-lightbox;
 }
@@ -86,7 +86,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     height: 100%;
     position: relative;
     z-index: 3;
-    background-color: lighten($brightness-7,2.5%);
+    background-color: lighten($brightness-7, 2.5%);
     vertical-align: top;
 
     box-sizing: border-box;

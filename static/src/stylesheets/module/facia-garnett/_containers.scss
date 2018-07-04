@@ -53,7 +53,7 @@
             #ffffff
         );
         @include button-hover-colour(
-            darken($brightness-7, 10%)
+            darken($brightness-7,  10%)
         );
     }
 }

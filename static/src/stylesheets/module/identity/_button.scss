@@ -162,7 +162,7 @@
     text-decoration: underline;
     @supports (box-shadow: 0 0 0 red) {
         text-decoration: none;
-        box-shadow: inset 0 0 0 1px lighten($brightness-7,75%);
+        box-shadow: inset 0 0 0 1px lighten($brightness-7, 75%);
     }
     &:hover, &:focus, &:active {
         background-color: transparent!important;

@@ -2,16 +2,16 @@
 
 @include tone-content(
     media, // $tone
-    $brightness-7,// $tonal__header-background
+    $brightness-7, // $tonal__header-background
     $brightness-93, // $tonal__header-text
     $highlight-main, // $tonal__header-link
     400, // $tonal__headline-weight
     #ffffff, // $tonal__headline-colour
     $highlight-main, // $tonal__headline-accent
-    $brightness-7,// $tonal__standfirst-background
+    $brightness-7, // $tonal__standfirst-background
     $brightness-86, // $tonal__standfirst-text
     #ffffff, // $tonal__standfirst-link
-    $brightness-7,// $tonal__article-background
+    $brightness-7, // $tonal__article-background
     $highlight-main // $tonal__article-link
 );
 

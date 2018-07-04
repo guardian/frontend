@@ -731,7 +731,7 @@ $quote-mark: 35px;
             position: relative;
             z-index: 10;
             color: #ffffff;
-            box-shadow: $gs-baseline / 2 0 0 $brightness-7,-$gs-baseline / 2 0 0 $brightness-7;
+            box-shadow: $gs-baseline / 2 0 0 $brightness-7, -$gs-baseline / 2 0 0 $brightness-7;
             box-decoration-break: clone;
             padding-bottom: $gs-baseline / 2;
         }
