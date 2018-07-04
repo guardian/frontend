@@ -58,6 +58,7 @@ article.content--pillar-news {
         color: $garnett-neutral-5;
         background-color: $news-garnett-main-1;
         &::after {
+            color: $garnett-neutral-5;
             background-color: $news-garnett-main-1;
         }
     }
@@ -70,6 +71,7 @@ article.content--pillar-news {
     .campaign--snippet__handle {
         color: $garnett-neutral-5;
         background-color: $garnett-neutral-1;
+
         &:hover, :active {
             color: $garnett-neutral-5;
             background-color: $news-garnett-main-1;
@@ -85,18 +87,24 @@ article.content--pillar-sport {
         color: $garnett-neutral-5;
         background-color: $sport-garnett-feature;
         &::after {
+            color: $garnett-neutral-5;
             background-color: $sport-garnett-feature;
         }
     }
     .form_submit {
         button {
+            color: $garnett-neutral-5;
             background-color: $sport-garnett-feature;
         }
     }
     .campaign--snippet__handle {
+        color: $garnett-neutral-5;
         background-color: $garnett-neutral-1;
         &:hover, :active {
             background-color: $sport-garnett-feature;
+            .icon {
+                fill: $garnett-neutral-5;
+            }
         }
     }
 }
