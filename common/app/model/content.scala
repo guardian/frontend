@@ -302,7 +302,7 @@ final case class Content(
       metadata.sectionId == "childrens-books-site"
 
     val maybeDisableSticky = canDisableStickyTopBanner match {
-      case true if !tags.hasSuperStickyBanner => Some("disableStickyTopBanner", JsBoolean(true))
+      case true => Some("disableStickyTopBanner", JsBoolean(true))
       case _ if alwaysDisableStickyTopBanner  => Some("disableStickyTopBanner", JsBoolean(true))
       case _ => None
     }
