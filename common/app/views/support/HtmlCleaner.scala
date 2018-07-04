@@ -16,6 +16,7 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.HtmlFormat
 import services.SkimLinksCache
 import conf.Configuration.affiliatelinks._
+import conf.Configuration.site.host
 import views.html.fragments.affiliateLinksDisclaimer
 
 import scala.collection.JavaConverters._
@@ -836,7 +837,7 @@ object AffiliateLinksCleaner {
 
   def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
     val urlEncodedLink = URLEncode(link)
-    s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$pageUrl"
+    s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
   }
 
   def shouldAddAffiliateLinks(switchedOn: Boolean, section: String, showAffiliateLinks: Option[Boolean], supportedSections: Set[String]): Boolean = {
