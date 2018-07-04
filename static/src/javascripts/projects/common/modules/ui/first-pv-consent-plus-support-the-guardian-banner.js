@@ -138,7 +138,6 @@ const show = (): void => {
 
 const firstPvConsentPlusSupportTheGuardianBanner: Banner = {
     id: messageCode,
-    // TODO: WHY DOES GU_TK NOT GET SET IN DEV MODE?
     canShow: () =>
         canShowFirstPvConsent() &&
         canShowSupportTheGuardianBanner() &&
