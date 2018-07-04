@@ -5,10 +5,9 @@ import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.Cached.{WithoutRevalidationResult}
 import model.{PageWithStoryPackage, _}
 import LiveBlogHelpers._
-import conf.Configuration
 import model.liveblog._
 import org.joda.time.DateTime
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
@@ -16,10 +15,8 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import play.twirl.api.Html
 import views.support._
 
-import scala.concurrent.duration._
 import scala.concurrent.Future
 import java.lang.System.currentTimeMillis
 
@@ -27,6 +24,148 @@ import metrics.TimingMetric
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
+
+
+class ArticleControllerNew(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
+
+  val mapperer = new CAPILookup(contentApiClient)
+  val renderer = new Renderer()
+
+  // in nearly every case the first thing to do is look up the content in CAPI and then decide from there what to do
+  // with it.
+
+  // live live blog
+
+  def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] = {
+    throw new Exception("Not supported yet")
+  }
+
+  // liveblog json
+
+  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]): Action[AnyContent] = {
+    throw new Exception("Not supported yet")
+  }
+
+  // article (incl. non-live liveblogs)
+
+  def renderArticle(path: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      mapperer.mapModel(path, range = Some(ArticleBlocks)) {
+        renderer.render(path, _)
+      }
+    }
+  }
+
+  // article json
+
+  def renderJson(path: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      mapperer.mapModel(path, if (request.isGuuiJson) Some(ArticleBlocks) else None) {
+        renderer.render(path, _)
+      }
+    }
+  }
+
+}
+
+class Renderer() {
+
+  private def noAMP(renderPage: => Result)(implicit  request: RequestHeader): Result = {
+    if (request.isAmp) NotFound
+    else renderPage
+  }
+
+  def render(path: String, page: PageWithStoryPackage)(implicit request: RequestHeader): Result = page match {
+
+    case blog: LiveBlogPage =>
+      val htmlResponse = () => {
+        if (request.isAmp) views.html.liveBlogAMP(blog)
+        else LiveBlogHtmlPage.html(blog)
+      }
+      val jsonResponse = () => views.html.liveblog.liveBlogBody(blog)
+      renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
+
+    case minute: MinutePage =>
+      noAMP {
+        val htmlResponse = () => {
+          if (request.isEmail) ArticleEmailHtmlPage.html(minute)
+          else MinuteHtmlPage.html(minute)
+        }
+
+        val jsonResponse = () => views.html.fragments.minuteBody(minute)
+        renderFormat(htmlResponse, jsonResponse, minute, Switches.all)
+      }
+
+    case article: ArticlePage =>
+
+      val htmlResponse = () => {
+        if (request.isEmail) ArticleEmailHtmlPage.html(article)
+        else if (request.isAmp) views.html.articleAMP(article)
+        else ArticleHtmlPage.html(article)
+      }
+
+      val contentFieldsJson = if (request.isGuuiJson) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
+
+      val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
+      renderFormat(htmlResponse, jsonResponse, article)
+  }
+
+}
+
+
+class CAPILookup(contentApiClient: ContentApiClient) {
+
+  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
+
+  def mapModel(path: String, range: Option[BlockRange] = None)(render: PageWithStoryPackage => Result)(implicit request: RequestHeader): Future[Result] = {
+    lookup(path, range) map responseToModelOrResult(range) recover convertApiExceptions map {
+      case Left(model) => render(model)
+      case Right(other) => RenderOtherStatus(other)
+    }
+  }
+
+  private def lookup(path: String, range: Option[BlockRange])(implicit request: RequestHeader): Future[ItemResponse] = {
+    val edition = Edition(request)
+
+    val capiItem = contentApiClient.item(path, edition)
+      .showTags("all")
+      .showFields("all")
+      .showReferences("all")
+      .showAtoms("all")
+
+    val capiItemWithBlocks = range.map { blockRange =>
+      val blocksParam = blockRange.query.map(_.mkString(",")).getOrElse("body")
+      capiItem.showBlocks(blocksParam)
+    }.getOrElse(capiItem)
+
+    contentApiClient.getResponse(capiItemWithBlocks)
+
+  }
+
+  private def responseToModelOrResult(range: Option[BlockRange])(response: ItemResponse)(implicit request: RequestHeader): Either[PageWithStoryPackage, Result] = {
+
+    val supportedContent = response.content.filter(isSupported).map(Content(_))
+    val supportedContentResult = ModelOrResult(supportedContent, response)
+    val content: Either[PageWithStoryPackage, Result] = supportedContentResult.left.flatMap {
+      case minute: Article if minute.isTheMinute =>
+        Left(MinutePage(minute, StoryPackages(minute, response)))
+      // Enable an email format for 'Minute' content (which are actually composed as a LiveBlog), without changing the non-email display of the page
+      case liveBlog: Article if liveBlog.isLiveBlog && request.isEmail =>
+        Left(MinutePage(liveBlog, StoryPackages(liveBlog, response)))
+      case liveBlog: Article if liveBlog.isLiveBlog =>
+        range.map {
+          createLiveBlogModel(liveBlog, response, _)
+        }.getOrElse(Right(NotFound))
+      case article: Article =>
+        Left(ArticlePage(article, StoryPackages(article, response)))
+    }
+
+    content
+
+  }
+
+}
+
 
 class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, ws: WSClient)(implicit context: ApplicationContext) extends BaseController
     with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
@@ -174,29 +313,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  def remoteRenderArticle(payload: String): Future[String] = ws.url(Configuration.rendering.renderingEndpoint)
-    .withRequestTimeout(2000.millis)
-    .addHttpHeaders("Content-Type" -> "application/json")
-    .post(payload)
-    .map((response) =>
-      response.body
-    )
-
-  def remoteRender(path: String, model: PageWithStoryPackage)(implicit request: RequestHeader): Future[Result] = model match {
-
-    case article : ArticlePage =>
-      val contentFieldsJson = if (request.isGuui) List("contentFields" -> Json.toJson(ContentFields(article.article))) else List()
-      val jsonResponse = () => List(("html", views.html.fragments.articleBody(article))) ++ contentFieldsJson
-      val jsonPayload = JsonComponent.jsonFor(model, jsonResponse():_*)
-
-      remoteRenderArticle(jsonPayload).map(s => {
-        Cached(article){ RevalidatableResult.Ok(Html(s)) }
-      })
-
-    case _ => throw new Exception("Remote render not supported for this content type")
-
-  }
-
   def timedFuture[T](future: Future[T], metric: TimingMetric): Future[T] = {
       val start = currentTimeMillis
       future.onComplete(_ => metric.recordDuration(currentTimeMillis - start))
@@ -221,7 +337,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
         timedFuture(
           mapModelGUUI(path, Some(ArticleBlocks)){
-            remoteRender(path, _)
+            renderers.RemoteRender.remoteRender(ws, path, _)
           },
           ArticleRenderingMetrics.RemoteRenderingMetric
         )
