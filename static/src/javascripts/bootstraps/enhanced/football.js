@@ -22,7 +22,6 @@ import { MatchListLive } from 'common/modules/sport/football/match-list-live';
 import { tagPageStats } from 'common/modules/sport/football/tag-page-stats';
 import { ScoreBoard } from 'common/modules/sport/score-board';
 import { replaceLocaleTimestamps } from 'common/modules/ui/relativedates';
-import { init as dropdownInit } from 'common/modules/ui/dropdowns';
 
 declare type Extra = {
     content?: Element,
@@ -145,9 +144,6 @@ const loaded = (elem: HTMLElement): void => {
 
 const init = (): void => {
     const extras = [];
-
-    // bootstrap dropdowns as used for snaps
-    dropdownInit();
 
     isMatch(
         (match: Object): void => {
