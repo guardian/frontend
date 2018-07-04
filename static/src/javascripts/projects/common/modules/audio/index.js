@@ -5,8 +5,8 @@ import {
     React,
     render,
 } from '@guardian/dotcom-rendering/packages/guui';
-import ophan from 'ophan/ng';
 import Player from './AudioPlayer';
+import { sendToOphan } from './utils';
 
 type Props = {
     source: string,
@@ -32,15 +32,6 @@ class AudioContainer extends Component<Props, *> {
     }
 }
 
-const sendToOphan = id => {
-    ophan.record({
-        audio: {
-            id,
-            eventType: 'audio:content:ready',
-        },
-    });
-};
-
 const getPillar = pillarClass => {
     const pillarMatches = /pillar-([a-z]+)/g.exec(pillarClass);
     const pillar = pillarMatches ? pillarMatches[1].toLowerCase() : 'news';
@@ -63,7 +54,7 @@ const init = (): void => {
         const downloadUrl = placeholder.dataset.downloadUrl;
         const iTunesUrl = placeholder.dataset.itunesUrl;
 
-        sendToOphan(mediaId);
+        sendToOphan(mediaId, 'ready');
 
         const pillarClassName = Array.from(article.classList).filter(x =>
             x.includes('pillar')
