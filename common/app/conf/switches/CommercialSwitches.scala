@@ -417,9 +417,9 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val pageViewAnalytics: Switch = Switch(
+  val commercialPageViewAnalytics: Switch = Switch(
     group = Commercial,
-    name = "page-view-analytics",
+    name = "commercial-page-view-analytics",
     description = "Gather commercial analytics from page views",
     owners = group(Commercial),
     safeState = Off,
